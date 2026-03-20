@@ -6,10 +6,10 @@ import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } fro
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
 
-import { dispatchEvents, enterValue } from './components/test-helper.spec';
 import { SiDateInputDirective } from './si-date-input.directive';
 import { DatepickerInputConfig } from './si-datepicker.model';
 import { SiDatepickerModule } from './si-datepicker.module';
+import { dispatchEvents, enterValue } from './testing/test-helper';
 
 @Component({
   imports: [SiDatepickerModule, FormsModule],
@@ -32,7 +32,7 @@ class WrapperComponent {
   readonly validation = viewChild.required<NgControl>('validation');
   readonly siDateInputDirective = viewChild.required(SiDateInputDirective);
   date: Date | string = new Date('2022-03-12');
-  readonly disabled = signal<boolean | undefined>(undefined);
+  readonly disabled = signal(false);
   readonly config = signal<DatepickerInputConfig>({
     showTime: true,
     disabledTime: false
@@ -48,23 +48,17 @@ describe('SiDateInputDirective', () => {
   /** Update datepicker configuration */
   const updateConfig = async (c: DatepickerInputConfig): Promise<void> => {
     component.config.set(c);
-    fixture.detectChanges();
     await fixture.whenStable();
   };
 
   const dateInput = (): HTMLInputElement => element.querySelector<HTMLInputElement>('input')!;
 
   beforeEach(async () => {
-    jasmine.clock().install();
     fixture = TestBed.createComponent(WrapperComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     fixture.detectChanges();
     await fixture.whenStable();
-  });
-
-  afterEach(() => {
-    jasmine.clock().uninstall();
   });
 
   const getTestDate = (): Date => {
@@ -80,20 +74,18 @@ describe('SiDateInputDirective', () => {
 
   it('should consider short time format', async () => {
     component.date = getTestDate();
-    updateConfig({
+    await updateConfig({
       showTime: true,
       dateTimeFormat: 'dd.MM.yyyy, HH:mm'
     });
     dispatchEvents(dateInput(), ['focus', 'input']);
-
     await fixture.whenStable();
-    fixture.detectChanges();
     expect(component.siDateInput().nativeElement.value).toBe('12.03.2022, 05:30');
   });
 
   it('should consider default time format if showSeconds true', async () => {
     component.date = getTestDate();
-    updateConfig({
+    await updateConfig({
       showTime: true,
       showSeconds: true
     });
@@ -105,18 +97,18 @@ describe('SiDateInputDirective', () => {
   });
 
   it('should consider minDate criteria with time', async () => {
-    spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
+    vi.spyOn(component.siDateInputDirective(), 'validate');
     component.date = new Date('2020-03-12T13:13:13');
-    updateConfig({
+    await updateConfig({
       showTime: true,
       showSeconds: true,
       minDate: new Date('2021-03-12T13:13:12')
     });
     dispatchEvents(dateInput(), ['focus', 'change']);
 
-    jasmine.clock().tick(1);
     await fixture.whenStable();
 
+    expect(component.validation().errors).toBeDefined();
     expect(component.validation().errors?.minDate).toEqual({
       actual: component.date,
       min: component.config().minDate,
@@ -125,16 +117,15 @@ describe('SiDateInputDirective', () => {
   });
 
   it('should consider minDate criteria only date', async () => {
-    spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
+    vi.spyOn(component.siDateInputDirective(), 'validate');
     component.date = new Date('2020-03-12');
-    updateConfig({
+    await updateConfig({
       showTime: true,
       showSeconds: true,
       minDate: new Date('2021-03-13')
     });
     dispatchEvents(dateInput(), ['focus', 'change']);
 
-    jasmine.clock().tick(1);
     await fixture.whenStable();
 
     expect(component.validation().errors?.minDate).toEqual({
@@ -145,17 +136,17 @@ describe('SiDateInputDirective', () => {
   });
 
   it('should consider maxDate criteria with time', async () => {
-    spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
+    vi.spyOn(component.siDateInputDirective(), 'validate');
     component.date = new Date('2024-03-12T13:13:13');
-    updateConfig({
+    await updateConfig({
       showTime: true,
       showSeconds: true,
       maxDate: new Date('2023-03-12T13:13:12')
     });
     dispatchEvents(dateInput(), ['focus', 'change']);
 
-    jasmine.clock().tick(1);
     await fixture.whenStable();
+
     expect(component.validation().errors?.maxDate).toEqual({
       actual: component.date,
       max: component.config().maxDate,
@@ -164,17 +155,17 @@ describe('SiDateInputDirective', () => {
   });
 
   it('should consider maxDate criteria only date', async () => {
-    spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
+    vi.spyOn(component.siDateInputDirective(), 'validate');
     component.date = new Date('2024-03-12');
-    updateConfig({
+    await updateConfig({
       showTime: true,
       showSeconds: true,
       maxDate: new Date('2023-03-11')
     });
     dispatchEvents(dateInput(), ['focus', 'change']);
 
-    jasmine.clock().tick(1);
     await fixture.whenStable();
+
     expect(component.validation().errors?.maxDate).toEqual({
       actual: component.date,
       max: component.config().maxDate,
@@ -193,12 +184,12 @@ describe('SiDateInputDirective', () => {
 
   it('should trigger modelChange with undefined when input is blank string', async () => {
     // In case user remove the date string this should be reflected in the datepicker
-    const spy = spyOn<any>(component.siDateInputDirective(), 'onModelChange').and.callThrough();
+    const spy = vi.spyOn(component.siDateInputDirective() as any, 'onModelChange');
     enterValue(dateInput(), '   ');
 
     fixture.detectChanges();
     await fixture.whenStable();
-    expect((spy.calls.mostRecent().args[0]! as Date).getTime()).toBeNaN();
+    expect((vi.mocked(spy).mock.lastCall![0]! as Date).getTime()).toBeNaN();
   });
 
   it('should update displayed value when config changes', async () => {

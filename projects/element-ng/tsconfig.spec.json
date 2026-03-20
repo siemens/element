@@ -6,8 +6,6 @@
   },
   "exclude": ["**/schematics/", "**/*.vitest.spec.ts"],
   "include": [
-    "d*/**/*.spec.ts",
-    "e*/**/*.spec.ts",
     "f*/**/*.spec.ts",
     "g*/**/*.spec.ts",
     "h*/**/*.spec.ts",

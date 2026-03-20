@@ -9,11 +9,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiDatepickerComponent, SiDatepickerModule } from '.';
 import { runOnPushChangeDetection } from '../test-helpers';
-import { CalendarTestHelper, enterValue, generateKeyEvent } from './components/test-helper.spec';
 import { today } from './date-time-helper';
 import { DatepickerConfig, DateRange } from './si-datepicker.model';
 import { SiCalendarCellHarness } from './testing/si-calendar-cell.harness';
 import { SiDatepickerComponentHarness } from './testing/si-datepicker.harness';
+import { CalendarTestHelper, enterValue, generateKeyEvent } from './testing/test-helper';
 
 @Component({
   imports: [SiDatepickerModule],
@@ -29,10 +29,10 @@ import { SiDatepickerComponentHarness } from './testing/si-datepicker.harness';
 class TestHostComponent {
   readonly datePicker = viewChild.required(SiDatepickerComponent);
   readonly config = signal<DatepickerConfig>({});
-  readonly date = signal<Date>(new Date());
+  readonly date = signal<Date | undefined>(new Date());
   readonly dateRange = signal<DateRange | undefined>(undefined);
   changedDate?: Date;
-  rangeChanged(event: DateRange): void {}
+  rangeChanged(event: DateRange | undefined): void {}
 }
 
 describe('SiDatepickerComponent', () => {
@@ -52,7 +52,7 @@ describe('SiDatepickerComponent', () => {
   };
 
   beforeEach(async () => {
-    jasmine.clock().mockDate(new Date('2023-12-31'));
+    vi.setSystemTime(new Date('2023-12-31'));
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     component.config.set({});
@@ -92,7 +92,7 @@ describe('SiDatepickerComponent', () => {
   it('should toggle disabled time', async () => {
     component.date.set(new Date());
     await updateConfig({ ...component.config(), disabledTime: false, showTime: true });
-    const spy = spyOn<any>(datePicker, 'toggleDisabledTime').and.callThrough();
+    const spy = vi.spyOn(datePicker as any, 'toggleDisabledTime');
 
     const toggleTimeSwitch = await picker.considerTimeSwitch();
     expect(await toggleTimeSwitch.isChecked()).toBe(true);
@@ -279,7 +279,7 @@ describe('SiDatepickerComponent', () => {
     });
 
     it('should select range', async () => {
-      const spy = spyOn(component, 'rangeChanged');
+      const spy = vi.spyOn(component, 'rangeChanged');
       const cells = await loader.getAllHarnesses(SiCalendarCellHarness.with({ isDisabled: false }));
       // Select 1. and last of month
       for (const index of [0, -1]) {
@@ -289,11 +289,11 @@ describe('SiDatepickerComponent', () => {
       expect(spy).toHaveBeenCalledTimes(2);
       expect(
         await loader.getAllHarnesses(SiCalendarCellHarness.with({ isSelected: true }))
-      ).toHaveSize(2);
+      ).toHaveLength(2);
     });
 
     it('should select range crossing month boundary', async () => {
-      const spy = spyOn(component, 'rangeChanged');
+      const spy = vi.spyOn(component, 'rangeChanged');
 
       // Select 15. of month
       await picker.selectCell({ text: '15' });
@@ -305,23 +305,23 @@ describe('SiDatepickerComponent', () => {
       expect(spy).toHaveBeenCalledTimes(2);
       expect(
         await loader.getAllHarnesses(SiCalendarCellHarness.with({ isSelected: true }))
-      ).toHaveSize(1);
+      ).toHaveLength(1);
     });
 
     it('should change start date when end is before start', async () => {
-      const spy = spyOn(component, 'rangeChanged');
+      const spy = vi.spyOn(component, 'rangeChanged');
 
       // Select 16. and 15. of month
       await picker.selectCell({ text: '16' });
       await picker.selectCell({ text: '15' });
 
       expect(spy).toHaveBeenCalledTimes(2);
-      const dateRange = spy.calls.mostRecent().args[0];
+      const dateRange = vi.mocked(spy).mock.lastCall![0]!;
       expect(dateRange.end).toBeUndefined();
       expect(dateRange.start!.getDate()).toBe(15);
       expect(
         await loader.getAllHarnesses(SiCalendarCellHarness.with({ isSelected: true }))
-      ).toHaveSize(1);
+      ).toHaveLength(1);
     });
 
     it('should start a new range selection when user clicks in between range', async () => {
@@ -329,17 +329,17 @@ describe('SiDatepickerComponent', () => {
       await picker.selectCell({ text: '15' });
       await picker.selectCell({ text: '17' });
 
-      const spy = spyOn(component, 'rangeChanged');
+      const spy = vi.spyOn(component, 'rangeChanged');
       // Select 16. of month
       await picker.selectCell({ text: '16' });
 
       expect(spy).toHaveBeenCalledTimes(1);
-      const dateRange = spy.calls.mostRecent().args[0];
+      const dateRange = vi.mocked(spy).mock.lastCall![0]!;
       expect(dateRange.end).toBeUndefined();
       expect(dateRange.start!.getDate()).toBe(16);
       expect(
         await loader.getAllHarnesses(SiCalendarCellHarness.with({ isSelected: true }))
-      ).toHaveSize(1);
+      ).toHaveLength(1);
     });
 
     it('should start a new range selection when user clicks behind range', async () => {
@@ -347,18 +347,18 @@ describe('SiDatepickerComponent', () => {
       await picker.selectCell({ text: '15' });
       await picker.selectCell({ text: '17' });
 
-      const spy = spyOn(component, 'rangeChanged');
+      const spy = vi.spyOn(component, 'rangeChanged');
       // Select 18. of month
       await picker.selectCell({ text: '18' });
       fixture.detectChanges();
 
       expect(spy).toHaveBeenCalledTimes(1);
-      const dateRange = spy.calls.mostRecent().args[0];
+      const dateRange = vi.mocked(spy).mock.lastCall![0]!;
       expect(dateRange.end).toBeUndefined();
       expect(dateRange.start!.getDate()).toBe(18);
       expect(
         await loader.getAllHarnesses(SiCalendarCellHarness.with({ isSelected: true }))
-      ).toHaveSize(1);
+      ).toHaveLength(1);
     });
 
     it('should fallback to default value for invalid dates', async () => {

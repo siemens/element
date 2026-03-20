@@ -7,17 +7,18 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
+import type { Mock } from 'vitest';
 
-import { backdropClick, CalendarTestHelper, generateKeyEvent } from './components/test-helper.spec';
 import { SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive';
 import { SiDatepickerDirective } from './si-datepicker.directive';
 import { DatepickerInputConfig } from './si-datepicker.model';
 import { SiDatepickerModule } from './si-datepicker.module';
 import { SiDatepickerDirectiveComponentHarness } from './testing/si-datepicker.directive.harness';
 import { SiDatepickerComponentHarness } from './testing/si-datepicker.harness';
+import { backdropClick, CalendarTestHelper, generateKeyEvent } from './testing/test-helper';
 
 export type Spied<T> = {
-  [Method in keyof T]: jasmine.Spy;
+  [Method in keyof T]: Mock;
 };
 
 @Component({
@@ -29,7 +30,7 @@ export type Spied<T> = {
     placeholder="siDatepicker"
     class="form-control"
     siDatepicker
-    [autoClose]="autoClose"
+    [autoClose]="autoClose()"
     [siDatepickerConfig]="config()"
     [ngModelOptions]="{ standalone: true }"
     [ngModel]="date()"
@@ -48,7 +49,7 @@ class WrapperComponent {
     disabledTime: false,
     dateTimeFormat: 'mediumTime'
   });
-  autoClose = false;
+  readonly autoClose = signal(false);
 }
 
 describe('SiDatepickerDirective', () => {
@@ -82,13 +83,14 @@ describe('SiDatepickerDirective', () => {
 
   const getTestDate = (): Date => new Date('2022-03-12T05:30:20');
 
-  beforeEach(() => {
+  beforeEach(async () => {
     fixture = TestBed.createComponent(WrapperComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
 
     fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   describe('with minDate and maxDate', () => {
@@ -99,6 +101,7 @@ describe('SiDatepickerDirective', () => {
         minDate: new Date('2021-03-12'),
         maxDate: new Date('2023-03-12')
       });
+      await fixture.whenStable();
     });
 
     it('should validate minDate', async () => {
@@ -126,6 +129,7 @@ describe('SiDatepickerDirective', () => {
     beforeEach(async () => {
       fixture.detectChanges();
       getInput().focus();
+      await fixture.whenStable();
       expect(document.querySelector('si-datepicker-overlay')).toBeDefined();
     });
 
@@ -207,10 +211,10 @@ describe('SiDatepickerDirective', () => {
 
     it('should disable time when switch of Consider Time', async () => {
       fixture.detectChanges();
-      const disabledTime$ = spyOn(
+      const disabledTime$ = vi.spyOn(
         component.siDatePickerDirective().siDatepickerDisabledTime,
         'emit'
-      ).and.callThrough();
+      );
 
       const helper = new CalendarTestHelper(
         document.querySelector('si-datepicker-overlay') as HTMLElement
@@ -229,7 +233,7 @@ describe('SiDatepickerDirective', () => {
 
   describe('with autoClose', () => {
     beforeEach(async () => {
-      component.autoClose = true;
+      component.autoClose.set(true);
       await updateConfig({
         showTime: false
       });
@@ -237,7 +241,6 @@ describe('SiDatepickerDirective', () => {
     });
 
     it('should close after selection via click', async () => {
-      fixture.detectChanges();
       getInput().focus();
       await fixture.whenStable();
       const picker = await rootLoader.getHarness(SiDatepickerComponentHarness);
@@ -248,10 +251,10 @@ describe('SiDatepickerDirective', () => {
     });
 
     it('should close when switch of Consider Time', async () => {
-      fixture.detectChanges();
       await updateConfig({
         showTime: true
       });
+      await fixture.whenStable();
       getInput().focus();
       await fixture.whenStable();
       const picker = await rootLoader.getHarness(SiDatepickerComponentHarness);
