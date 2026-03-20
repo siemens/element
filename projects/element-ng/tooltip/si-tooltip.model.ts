@@ -7,10 +7,13 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 export type SiTooltipContent = TranslatableString | TemplateRef<any> | Type<any> | null | undefined;
 
+export type TooltipTrigger = 'hover' | 'focus';
+
 export interface SiTooltipConfig {
   id: string;
   tooltip: () => SiTooltipContent;
   tooltipContext: () => unknown;
+  trigger: () => TooltipTrigger;
 }
 
 export const SI_TOOLTIP_CONFIG = new InjectionToken<SiTooltipConfig>('SiTooltipConfig');
