@@ -4,7 +4,6 @@
  */
 import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { enterValue } from '@siemens/element-ng/datepicker/components/test-helper.spec';
 
 import { SiChangePasswordComponent as TestComponent } from './si-change-password.component';
 
@@ -19,6 +18,11 @@ const passwordStrengthValue = {
 describe('SiChangePasswordComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let component: ComponentRef<TestComponent>;
+
+  const enterValue = (input: HTMLInputElement, value: string): void => {
+    input.value = value;
+    input.dispatchEvent(new Event('input'));
+  };
 
   beforeEach(async () => {
     fixture = TestBed.createComponent(TestComponent);

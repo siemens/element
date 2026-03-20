@@ -7,8 +7,8 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiDatepickerModule } from '../si-datepicker.module';
+import { CalendarTestHelper, generateKeyEvent } from '../testing/test-helper';
 import { SiYearSelectionComponent as TestComponent } from './si-year-selection.component';
-import { CalendarTestHelper, generateKeyEvent } from './test-helper.spec';
 
 @Component({
   imports: [SiDatepickerModule, A11yModule, TestComponent],
