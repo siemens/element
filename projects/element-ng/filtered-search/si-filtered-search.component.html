@@ -2,7 +2,7 @@
   #scrollContainer
   class="search-container d-flex align-items-center overflow-auto py-2 w-100 ps-2 pe-2"
 >
-  @for (criterion of values(); track criterion) {
+  @for (criterion of values(); track criterion.value.name) {
     <si-filtered-search-value
       [editOnCreation]="autoEditCriteria"
       [definition]="criterion.config"
@@ -19,6 +19,7 @@
       [searchLabel]="searchLabel()"
       [onlySelectValue]="onlySelectValue()"
       [searchDebounceTime]="searchDebounceTime()"
+      (blurCriterion)="criterionBlur()"
       (submitCriterion)="focusNext($index, $event)"
       (deleteCriterion)="deleteCriterion($index, $event)"
       (valueChange)="valueChange($event, criterion)"

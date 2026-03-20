@@ -67,6 +67,7 @@ export class SiFilteredSearchValueComponent implements OnInit {
 
   readonly deleteCriterion = output<{ triggerSearch: boolean } | void>();
   readonly submitCriterion = output<{ freeText: string } | void>();
+  readonly blurCriterion = output<void>();
 
   protected readonly active = signal<boolean>(false);
   protected readonly icons = addIcons({ elementCancel });

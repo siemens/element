@@ -742,7 +742,13 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     }
   }
 
+  protected criterionBlur(): void {
+    this.trimWhitespaces();
+  }
+
   protected freeTextBlur(): void {
+    this.trimWhitespaces();
+
     queueMicrotask(() => {
       if (this.freeTextCriterion() && this.searchValue().length > 0) {
         this.createFreeTextPill(this.searchValue());
@@ -798,5 +804,37 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     ]);
     this.searchValue.set('');
     this.emitChangeEvent();
+  }
+
+  protected trimWhitespaces(): void {
+    const original = this.searchValue();
+    const trimmed = original.trim();
+    const searchChanged = trimmed !== original;
+    if (searchChanged) {
+      this.searchValue.set(trimmed);
+    }
+
+    let valuesChanged = false;
+    this.values.update(entries =>
+      entries.map(entry => {
+        const val = entry.value.value;
+        if (typeof val !== 'string') {
+          return entry;
+        }
+        const trimmedVal = val.trim();
+        if (trimmedVal === val) {
+          return entry;
+        }
+        valuesChanged = true;
+        return {
+          ...entry,
+          value: { ...entry.value, value: trimmedVal }
+        };
+      })
+    );
+
+    if (searchChanged || valuesChanged) {
+      this.emitChangeEvent();
+    }
   }
 }
