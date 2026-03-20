@@ -36,5 +36,6 @@
     (ngModelChange)="valueChange($event)"
     (typeaheadOnFullMatch)="valueTypeaheadFullMatch($event)"
     (typeaheadOnSelect)="valueTypeaheadSelect($event)"
+    (blur)="typeaheadBlur.emit()"
   />
 }

@@ -2190,7 +2190,7 @@ describe('SiFilteredSearchComponent', () => {
         await tick();
         await freeTextSearch.focus();
         await tick();
-        expect(spy).toHaveBeenCalledTimes(2);
+        expect(spy).toHaveBeenCalledTimes(3);
         expect(await freeTextSearch.getItems()).toEqual(['Bar']);
       });
 
