@@ -109,6 +109,8 @@ describe('SiDateRangeFilterComponent', () => {
 
   it('pre-selects matching offset, shows range "before"', async () => {
     await fixture.whenStable();
+    fixture.detectChanges();
+    await fixture.whenStable();
 
     const to = new Date();
     const from = new Date(to.getTime() - 2 * ONE_DAY);
@@ -188,7 +190,6 @@ describe('SiDateRangeFilterComponent', () => {
     await fixture.whenStable();
 
     element.querySelector<HTMLElement>('input.form-check-input[type=checkbox]')?.click();
-    await fixture.whenStable();
 
     dateInput('point1', '05/13/2023');
     dateInput('point2', '08/14/2023');
