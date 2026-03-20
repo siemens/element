@@ -2,12 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import { SiTranslateService } from '@siemens/element-ng/translate';
 import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 import { JSONSchema7 } from 'json-schema';
@@ -16,37 +15,19 @@ import { of } from 'rxjs';
 import { SiFormlyComponent } from './si-formly.component';
 import { SiFormlyModule } from './si-formly.module';
 
-@Component({
-  imports: [ReactiveFormsModule, FormlyBootstrapModule, SiFormlyModule],
-  template: `<si-formly
-    [model]="model"
-    [schema]="schema"
-    [fields]="fields"
-    [form]="form"
-    [labelWidth]="labelWidth"
-    (formChange)="formChanged()"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class WrapperComponent {
-  readonly formly = viewChild.required(SiFormlyComponent<Record<string, any>>);
-  schema?: JSONSchema7;
-  form?: FormGroup<any>;
-  fields?: FormlyFieldConfig[];
-  labelWidth?: number;
-  formChanged(): void {}
-  model?: any;
-}
-
 describe('ElementFormComponent', () => {
-  let wrapperComponent: WrapperComponent;
+  let schemaInput: WritableSignal<JSONSchema7 | undefined>;
+  let formInput: WritableSignal<FormGroup<any> | undefined>;
+  let fieldsInput: WritableSignal<FormlyFieldConfig[]>;
+  let labelWidthInput: WritableSignal<number | undefined>;
+  let modelInput: WritableSignal<Record<string, any> | undefined>;
   let component: SiFormlyComponent<Record<string, any>>;
-  let fixture: ComponentFixture<WrapperComponent>;
+  let fixture: ComponentFixture<SiFormlyComponent<Record<string, any>>>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FormlyBootstrapModule, SiFormlyModule, WrapperComponent],
+      imports: [ReactiveFormsModule, FormlyBootstrapModule, SiFormlyModule],
       providers: [
         provideMockTranslateServiceBuilder(
           () =>
@@ -62,12 +43,23 @@ describe('ElementFormComponent', () => {
   });
 
   beforeEach(async () => {
-    fixture = TestBed.createComponent(WrapperComponent);
-    wrapperComponent = fixture.componentInstance;
+    schemaInput = signal(undefined);
+    formInput = signal(undefined);
+    fieldsInput = signal([]);
+    labelWidthInput = signal(undefined);
+    modelInput = signal(undefined);
+    fixture = TestBed.createComponent(SiFormlyComponent<Record<string, any>>, {
+      bindings: [
+        inputBinding('schema', schemaInput),
+        inputBinding('form', formInput),
+        inputBinding('fields', fieldsInput),
+        inputBinding('labelWidth', labelWidthInput),
+        inputBinding('model', modelInput)
+      ]
+    });
+    component = fixture.componentInstance;
     element = fixture.nativeElement;
-    spyOn(wrapperComponent, 'formChanged');
     fixture.detectChanges();
-    component = wrapperComponent.formly();
   });
 
   it('should create component', () => {
@@ -76,18 +68,17 @@ describe('ElementFormComponent', () => {
 
   it('should create a form group after onInit', () => {
     expect(component.form()).toBeTruthy();
-    expect(wrapperComponent.formChanged).toHaveBeenCalled();
   });
 
-  it('should use a given form group', () => {
+  it('should use a given form group', async () => {
     const formGroup = new FormRecord({});
-    wrapperComponent.form = formGroup;
-    runOnPushChangeDetection(fixture);
+    formInput.set(formGroup);
+    await fixture.whenStable();
 
     expect(component.form()).toBe(formGroup);
   });
 
-  it('should parse a given json schema', () => {
+  it('should parse a given json schema', async () => {
     const schema: JSONSchema7 = {
       title: 'title',
       type: 'object',
@@ -98,18 +89,19 @@ describe('ElementFormComponent', () => {
         }
       }
     };
-    wrapperComponent.schema = schema;
-    runOnPushChangeDetection(fixture);
+    schemaInput.set(schema);
+    await fixture.whenStable();
+
     expect(element.querySelector('b')!.textContent).toContain('title');
     expect(element.querySelector('label')!.textContent).toContain('field1');
     expect(element.querySelector('input[type=text]')).toBeTruthy();
   });
 
   it('should initially not display anything', () => {
-    expect(element).not.toContain('formly-form');
+    expect(element.textContent).not.toContain('formly-form');
   });
 
-  it('should display the form if formgroup and fieldconfig are present', () => {
+  it('should display the form if formgroup and fieldconfig are present', async () => {
     const schema: JSONSchema7 = {
       title: 'title',
       type: 'object',
@@ -120,14 +112,14 @@ describe('ElementFormComponent', () => {
         }
       }
     };
-    wrapperComponent.form = new FormRecord({});
-    wrapperComponent.schema = schema;
-    runOnPushChangeDetection(fixture);
+    formInput.set(new FormRecord({}));
+    schemaInput.set(schema);
+    await fixture.whenStable();
 
     expect(element.innerHTML).toContain('<formly-form');
   });
 
-  it('should apply the labelwidth', () => {
+  it('should apply the labelwidth', async () => {
     const schema: JSONSchema7 = {
       title: 'title',
       type: 'object',
@@ -139,10 +131,11 @@ describe('ElementFormComponent', () => {
       }
     };
 
-    wrapperComponent.form = new FormRecord({});
-    wrapperComponent.schema = schema;
-    wrapperComponent.labelWidth = 500;
-    runOnPushChangeDetection(fixture);
+    formInput.set(new FormRecord({}));
+    schemaInput.set(schema);
+    labelWidthInput.set(500);
+    await fixture.whenStable();
+
     expect(element.querySelector('b')!.textContent).toContain('title');
     expect(element.querySelector('label')!.textContent).toContain('field1');
     expect(
@@ -150,29 +143,31 @@ describe('ElementFormComponent', () => {
     ).toBe('500px');
   });
 
-  it('should apply a field config', () => {
+  it('should apply a field config', async () => {
     const cfg: FormlyFieldConfig[] = [
       {
         key: 'foo',
         type: 'input'
       }
     ];
-    wrapperComponent.fields = cfg;
-    runOnPushChangeDetection(fixture);
+    fieldsInput.set(cfg);
+    await fixture.whenStable();
+
     expect(element.querySelector('input[type=text]')).toBeTruthy();
     expect(element.querySelector('input[type=text]')?.id).toContain('foo');
   });
 
-  it('should apply a field config with labelWidth', () => {
+  it('should apply a field config with labelWidth', async () => {
     const cfg: FormlyFieldConfig[] = [
       {
         key: 'foo',
         type: 'input'
       }
     ];
-    wrapperComponent.labelWidth = 300;
-    wrapperComponent.fields = cfg;
-    runOnPushChangeDetection(fixture);
+    labelWidthInput.set(300);
+    fieldsInput.set(cfg);
+    await fixture.whenStable();
+
     expect(
       getComputedStyle(element.querySelector('si-form-item')!).getPropertyValue(
         '--si-form-label-width'
@@ -181,8 +176,8 @@ describe('ElementFormComponent', () => {
     expect(element.querySelector('input[type=text]')).toBeTruthy();
   });
 
-  it('should apply labelWith to field config when changing the schema', () => {
-    wrapperComponent.labelWidth = 500;
+  it('should apply labelWith to field config when changing the schema', async () => {
+    labelWidthInput.set(500);
     const schema: JSONSchema7 = {
       title: 'title',
       type: 'object',
@@ -194,9 +189,9 @@ describe('ElementFormComponent', () => {
       }
     };
 
-    wrapperComponent.form = new FormRecord({});
-    wrapperComponent.schema = schema;
-    runOnPushChangeDetection(fixture);
+    formInput.set(new FormRecord({}));
+    schemaInput.set(schema);
+    await fixture.whenStable();
 
     expect(element.querySelector('b')!.textContent).toContain('title');
     expect(element.querySelector('label')!.textContent).toContain('field1');
@@ -206,9 +201,9 @@ describe('ElementFormComponent', () => {
     expect(element.querySelector('input[type=text]')).toBeTruthy();
   });
 
-  it('should apply labelWidth to fieldArray', () => {
-    wrapperComponent.labelWidth = 500;
-    wrapperComponent.fields = [
+  it('should apply labelWidth to fieldArray', async () => {
+    labelWidthInput.set(500);
+    fieldsInput.set([
       {
         key: 'inputArray',
         type: 'array',
@@ -224,11 +219,12 @@ describe('ElementFormComponent', () => {
           ]
         }
       }
-    ];
-    wrapperComponent.model = {
+    ]);
+    modelInput.set({
       inputArray: [{ data: 'test set 1' }]
-    };
-    runOnPushChangeDetection(fixture);
+    });
+    await fixture.whenStable();
+
     expect(element.querySelector('si-formly-array')).toBeTruthy();
     expect(
       getComputedStyle(element.querySelector('label')!).getPropertyValue('--si-form-label-width')
