@@ -221,7 +221,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDest
 
   @HostBinding('style.opacity') protected opacity = '0';
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.detailsActive) {
       this.updateDetailsFocusable();
       this.doAnimation(changes.detailsActive.currentValue);

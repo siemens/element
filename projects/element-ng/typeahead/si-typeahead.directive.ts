@@ -412,7 +412,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   }
 
   // Every time the main input changes, detect whether it is async and if it is not make an observable out of the array.
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.siTypeahead) {
       this.sourceSubscription?.unsubscribe();
       this.loadingSubscription?.unsubscribe();
