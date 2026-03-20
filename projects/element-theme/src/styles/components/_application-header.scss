@@ -103,6 +103,16 @@
   .application-header.show-navigation & {
     @extend %collapsible-expanded;
   }
+
+  .header-item {
+    &.active {
+      color: semantic-tokens.$element-action-primary;
+    }
+
+    &:hover {
+      color: semantic-tokens.$element-action-primary-hover;
+    }
+  }
 }
 
 .header-collapsible-actions {
@@ -211,12 +221,10 @@
 
         .header-item {
           &.active {
-            color: semantic-tokens.$element-action-primary;
             --si-header-item-border: #{semantic-tokens.$element-action-primary};
           }
 
           &:hover {
-            color: semantic-tokens.$element-action-primary-hover;
             --si-header-item-border: #{semantic-tokens.$element-action-primary-hover};
           }
         }
