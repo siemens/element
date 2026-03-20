@@ -18,6 +18,7 @@
     "d*/**/*.spec.ts",
     "e*/**/*.spec.ts",
     "f*/**/*.spec.ts",
+    "t*/**/*.spec.ts",
     "w*/**/*.spec.ts",
     "x*/**/*.spec.ts",
     "y*/**/*.spec.ts",

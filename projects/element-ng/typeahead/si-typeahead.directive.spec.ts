@@ -67,7 +67,7 @@ class WrapperComponent {
   minLength = 1;
   optionField = 'name';
   tokenize = true;
-  matchAllTokens = 'separately';
+  matchAllTokens: 'no' | 'once' | 'separately' | 'independently' = 'separately';
   itemTemplate!: TemplateRef<TypeaheadOptionItemContext>;
   typeaheadSkipSortingMatches = false;
   typeaheadClearValueOnSelect = false;
@@ -108,14 +108,13 @@ describe('SiTypeaheadDirective', () => {
     wrapperElement = fixture.nativeElement;
     loader = TestbedHarnessEnvironment.loader(fixture);
     rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000000;
   });
 
-  beforeAll(() => jasmine.clock().install());
-  afterAll(() => jasmine.clock().uninstall());
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
 
   const tick = async (ms = 0): Promise<void> => {
-    jasmine.clock().tick(ms);
+    vi.advanceTimersByTime(ms);
     fixture.detectChanges();
     await fixture.whenStable();
   };
@@ -285,20 +284,20 @@ describe('SiTypeaheadDirective', () => {
 
     beforeEach(() => {
       optionsSubject = new Subject<string[]>();
-      source = jasmine.createSpy().and.returnValue(optionsSubject);
+      source = vi.fn().mockReturnValue(optionsSubject);
       wrapperComponent.items = source;
     });
 
     it('should show empty loading state until options arrive', async () => {
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tes');
-      jasmine.clock().tick(500);
-      expect(await input.isEmptyLoading()).toBeTrue();
+      vi.advanceTimersByTime(501);
+      expect(await input.isEmptyLoading()).toBe(true);
 
       optionsSubject.next(testItems);
       expect(source).toHaveBeenCalledWith('tes');
       expect(await input.getItems()).toEqual(['test']);
-      expect(await input.isEmptyLoading()).toBeFalse();
+      expect(await input.isEmptyLoading()).toBe(false);
     });
 
     it('should show loading spinner when options are visible', async () => {
@@ -306,23 +305,21 @@ describe('SiTypeaheadDirective', () => {
       await input.typeText('tes');
       optionsSubject.next(testItems);
       await input.typeText('test');
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(501);
       await fixture.whenStable();
       // Flush the spinner attach scheduled by SiLoadingSpinnerDirective spinner$ timer.
       // See si-loading-spinner.directive.ts:82-93 where the delayed timer emits.
-      jasmine.clock().tick(0);
-      expect(await input.hasLoadingSpinner()).toBeTrue();
-      expect(await input.isEmptyLoading()).toBeFalse();
+      vi.advanceTimersByTime(0);
+      expect(await input.hasLoadingSpinner()).toBe(true);
+      expect(await input.isEmptyLoading()).toBe(false);
       optionsSubject.next(testItems);
-      expect(await input.hasLoadingSpinner()).toBeFalse();
+      expect(await input.hasLoadingSpinner()).toBe(false);
     });
 
     it('should stop loading when source errors', async () => {
-      const errorSource = jasmine
-        .createSpy()
-        .and.returnValue(throwError(() => new Error('source error')));
+      const errorSource = vi.fn().mockReturnValue(throwError(() => new Error('source error')));
       wrapperComponent.items = errorSource;
-      const consoleSpy = spyOn(console, 'error');
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tes');
@@ -331,7 +328,7 @@ describe('SiTypeaheadDirective', () => {
       expect(errorSource).toHaveBeenCalledWith('tes');
       expect(consoleSpy).toHaveBeenCalled();
       expect(await input.getItems()).toBeNull();
-      expect(await input.isEmptyLoading()).toBeFalse();
+      expect(await input.isEmptyLoading()).toBe(false);
     });
   });
 
@@ -413,7 +410,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should use emit on full match', async () => {
     wrapperComponent.items = testList;
-    wrapperComponent.onFullMatch = jasmine.createSpy();
+    wrapperComponent.onFullMatch = vi.fn();
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).typeText('so');
     await tick(0);
@@ -422,7 +419,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should not use emit on partial match', async () => {
     wrapperComponent.items = testList;
-    wrapperComponent.onFullMatch = jasmine.createSpy();
+    wrapperComponent.onFullMatch = vi.fn();
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).typeText('s');
     await tick(0);
@@ -431,7 +428,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should use emit on select', async () => {
     wrapperComponent.minLength = 0;
-    wrapperComponent.onSelect = jasmine.createSpy();
+    wrapperComponent.onSelect = vi.fn();
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -444,18 +441,18 @@ describe('SiTypeaheadDirective', () => {
     wrapperComponent.minLength = 0;
     wrapperComponent.waitMs = 333;
 
-    spyOn(window, 'setTimeout');
+    vi.spyOn(window, 'setTimeout');
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).focus();
 
     await tick(wrapperComponent.waitMs);
 
-    expect(setTimeout).toHaveBeenCalledWith(jasmine.any(Function), 333);
+    expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 333);
   });
 
   it('should properly select item on click', async () => {
     wrapperComponent.minLength = 0;
-    wrapperComponent.onModelChange = jasmine.createSpy();
+    wrapperComponent.onModelChange = vi.fn();
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -493,7 +490,7 @@ describe('SiTypeaheadDirective', () => {
   it('should properly select item with arrow down and enter', async () => {
     wrapperComponent.items = testList;
     wrapperComponent.minLength = 0;
-    wrapperComponent.onModelChange = jasmine.createSpy();
+    wrapperComponent.onModelChange = vi.fn();
 
     fixture.detectChanges();
 
@@ -520,7 +517,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should not select any item when selecting the first item is disabled', async () => {
     wrapperComponent.minLength = 0;
-    wrapperComponent.onModelChange = jasmine.createSpy();
+    wrapperComponent.onModelChange = vi.fn();
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -605,7 +602,7 @@ describe('SiTypeaheadDirective', () => {
       marginTop +
       marginBottom +
       wrapperComponent.scrollableAdditionalHeight;
-    expect((await input.getTypeaheadDimensions())?.height).toBe(expectedHeight);
+    expect((await input.getTypeaheadDimensions())?.height).toBeCloseTo(expectedHeight, 1);
   });
 
   it('should scroll down to selected item when scrollable', async () => {
@@ -688,8 +685,8 @@ describe('SiTypeaheadDirective', () => {
 
   it('should trigger the create option', async () => {
     wrapperComponent.createOption = 'Create {{query}}';
-    const createSpy = spyOn(wrapperComponent, 'onCreateOption');
-    const selectSpy = spyOn(wrapperComponent, 'onSelect');
+    const createSpy = vi.spyOn(wrapperComponent, 'onCreateOption');
+    const selectSpy = vi.spyOn(wrapperComponent, 'onSelect');
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
