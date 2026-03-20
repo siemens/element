@@ -21,7 +21,7 @@ describe('SiSystemBannerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display meesage', () => {
+  it('should display message', () => {
     expect(fixture.nativeElement.textContent.trim()).toBe('Test');
   });
 

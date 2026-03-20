@@ -12,7 +12,7 @@ import { SiAboutComponent } from '@siemens/element-ng/about';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  licenseIntro = `Provide a disclaimer here about the thrid-party software
+  licenseIntro = `Provide a disclaimer here about the third-party software
 licenses provided in the component list below.
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy

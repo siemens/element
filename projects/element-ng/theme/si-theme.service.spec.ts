@@ -200,7 +200,7 @@ describe('SiThemeService', () => {
       }
     });
 
-    it('setActiveTheme with element should call deactive theme on storage', async () => {
+    it('setActiveTheme with element should call deactivate theme on storage', async () => {
       store.deactivateTheme.and.callFake(() => of(true));
       setupTestBed(false, store);
       const result = await firstValueFrom(service.setActiveTheme(ELEMENT_THEME_NAME));
