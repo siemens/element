@@ -25,10 +25,6 @@
     "t*/**/*.spec.ts",
     "u*/**/*.spec.ts",
     "v*/**/*.spec.ts",
-    "w*/**/*.spec.ts",
-    "x*/**/*.spec.ts",
-    "y*/**/*.spec.ts",
-    "z*/**/*.spec.ts",
     "**/*.d.ts"
   ]
 }
