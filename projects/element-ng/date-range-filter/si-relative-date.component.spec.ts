@@ -14,7 +14,7 @@ const ONE_DAY = ONE_MINUTE * 60 * 24;
 @Component({
   imports: [SiRelativeDateComponent],
   template: `<si-relative-date
-    [enableTimeSelection]="enableTimeSelection"
+    [enableTimeSelection]="enableTimeSelection()"
     [value]="value()"
     [unitLabel]="unitLabel"
     [valueLabel]="valueLabel"
@@ -24,9 +24,9 @@ const ONE_DAY = ONE_MINUTE * 60 * 24;
 })
 class TestHostComponent {
   readonly value = signal(0);
-  enableTimeSelection = false;
-  unitLabel = t(() => $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`);
-  valueLabel = t(() => $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`);
+  readonly enableTimeSelection = signal(false);
+  readonly unitLabel = t(() => $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`);
+  readonly valueLabel = t(() => $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`);
 }
 
 describe('SiRelativeDateComponent', () => {
@@ -42,12 +42,6 @@ describe('SiRelativeDateComponent', () => {
     btn?.dispatchEvent(new Event('mousedown'));
     btn?.dispatchEvent(new Event('mouseup'));
   };
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [SiRelativeDateComponent, TestHostComponent]
-    })
-  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
@@ -101,7 +95,6 @@ describe('SiRelativeDateComponent', () => {
     element.querySelector<HTMLElement>('si-select .select')?.click();
     await fixture.whenStable();
     document.querySelector<HTMLElement>('.dropdown-menu [data-id=weeks]')?.click();
-    await fixture.whenStable();
 
     inputAction('.inc');
     await fixture.whenStable();
@@ -111,7 +104,7 @@ describe('SiRelativeDateComponent', () => {
   });
 
   it('handles time selection', async () => {
-    component.enableTimeSelection = true;
+    component.enableTimeSelection.set(true);
     await fixture.whenStable();
 
     element.querySelector<HTMLElement>('si-select .select')?.click();
