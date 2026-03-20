@@ -12,15 +12,21 @@ import { SiFormlyTranslateExtension } from './si-formly-translate.extension';
 
 describe('Formly translations', () => {
   let extension: SiFormlyTranslateExtension;
-  let mockTranslationService: jasmine.SpyObj<SiTranslateService>;
+  const translateAsyncSpy = vi.fn();
+  const mockTranslationService = {
+    translateAsync: translateAsyncSpy
+  } as unknown as SiTranslateService;
 
   beforeEach(() => {
-    mockTranslationService = jasmine.createSpyObj<SiTranslateService>(['translateAsync']);
-    mockTranslationService.translateAsync.and.returnValue(of('translated'));
+    translateAsyncSpy.mockReturnValue(of('translated'));
     TestBed.configureTestingModule({
       providers: [provideMockTranslateServiceBuilder(() => mockTranslationService)]
     });
     extension = TestBed.runInInjectionContext(() => new SiFormlyTranslateExtension());
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
   it('should not be called if translate is prohibited', () => {
@@ -55,8 +61,8 @@ describe('Formly translations', () => {
       }
     };
     extension.prePopulate(cfg);
-    expect(mockTranslationService.translateAsync.calls.argsFor(0)).toEqual(['foo']);
-    expect(mockTranslationService.translateAsync.calls.argsFor(1)).toEqual(['bar']);
+    expect(translateAsyncSpy.mock.calls[0]).toEqual(['foo']);
+    expect(translateAsyncSpy.mock.calls[1]).toEqual(['bar']);
 
     expect(cfg.expressions).toBeTruthy();
     expect(cfg.expressions?.['props.label']).toBeTruthy();
@@ -123,10 +129,10 @@ describe('Formly translations', () => {
       }
     };
     extension.prePopulate(cfg);
-    expect(mockTranslationService.translateAsync.calls.argsFor(0)).toEqual(['l1']);
-    expect(mockTranslationService.translateAsync.calls.argsFor(1)).toEqual(['l2']);
-    expect(mockTranslationService.translateAsync.calls.argsFor(2)).toEqual(['l3']);
-    expect(mockTranslationService.translateAsync.calls.argsFor(3)).toEqual(['l4']);
+    expect(translateAsyncSpy.mock.calls[0]).toEqual(['l1']);
+    expect(translateAsyncSpy.mock.calls[1]).toEqual(['l2']);
+    expect(translateAsyncSpy.mock.calls[2]).toEqual(['l3']);
+    expect(translateAsyncSpy.mock.calls[3]).toEqual(['l4']);
 
     expect(cfg.expressions?.['props.options.0.label']).toBeTruthy();
     expect(cfg.expressions?.['props.options.1.label']).toBeTruthy();

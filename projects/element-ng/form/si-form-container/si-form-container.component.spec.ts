@@ -18,12 +18,6 @@ import {
 } from '@siemens/element-ng/form';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
 
-// A timeout that works with `await`. We have to use `waitForAsync()``
-// in the tests below because `tick()` doesn't work because `ResizeObserver`
-// operates outside of the zone
-const timeout = async (ms: number): Promise<void> =>
-  new Promise(resolve => setTimeout(resolve, ms));
-
 interface TestForm {
   name: FormControl<string | null>;
   email: FormControl<string | null>;
@@ -166,17 +160,21 @@ describe('SiFormContainerComponent', () => {
     let fixture: ComponentFixture<TestHostWithNestingComponent>;
 
     beforeEach(() => {
+      vi.useFakeTimers();
       fixture = TestBed.createComponent(TestHostWithNestingComponent);
       fixture.detectChanges();
     });
 
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
     it('should create', async () => {
-      const spy = spyOn(SiResponsiveContainerDirective.prototype as any, 'setResponsiveSize');
-      await timeout(100);
-      fixture.detectChanges();
-      // ChangeDetection is weird. Checking for the container class never works. I don't know why.
-      // So it is verified instead that the `SiResponsiveContainerDirective` is only applied once.
-      expect(spy).toHaveBeenCalledOnceWith(100, 26); // 26px = 10px form example + 16px padding
+      const spy = vi.spyOn(SiResponsiveContainerDirective.prototype as any, 'setResponsiveSize');
+      await vi.advanceTimersByTimeAsync(100);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(100, 26);
     });
   });
 });

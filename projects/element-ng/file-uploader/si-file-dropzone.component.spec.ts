@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import type { Mock } from 'vitest';
 
 import { SiFileDropzoneComponent, UploadFile } from './index';
 
@@ -40,21 +40,17 @@ describe('SiFileDropzoneComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
   let element: HTMLElement;
-  let eventSpy: jasmine.Spy<(value?: UploadFile[]) => void>;
+  let eventSpy: Mock;
 
   const dropFiles = (dataTransfer: DataTransfer): void => {
     element.querySelector('.drag-and-drop')?.dispatchEvent(new DragEvent('drop', { dataTransfer }));
   };
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), TestHostComponent]
-    }).compileComponents();
-
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
-    eventSpy = spyOn(component.fileDropzone().filesAdded, 'emit');
+    eventSpy = vi.spyOn(component.fileDropzone().filesAdded, 'emit');
   });
 
   const createFileList = (files: string[], type?: string[]): DataTransfer => {
@@ -69,7 +65,7 @@ describe('SiFileDropzoneComponent', () => {
     return dt;
   };
 
-  const getFiles = (): UploadFile[] => eventSpy.calls.first().args[0]!;
+  const getFiles = (): UploadFile[] => vi.mocked(eventSpy).mock.calls[0][0]!;
 
   const createDirectoryItemsWithFiles = (): Partial<DataTransferItemList> => {
     return {
@@ -173,12 +169,7 @@ describe('SiFileDropzoneComponent', () => {
     component.accept = '.png';
     fixture.detectChanges();
 
-    const dndElement = element.querySelector<HTMLElement>('.drag-and-drop')!;
-    const dateTransfer = createFileListWithFileSizeOf1200Bytes(['first.png', 'second.PNG']);
-
-    const dataTransfer = new DataTransfer();
-    spyOnProperty(dataTransfer, 'files').and.returnValue(dateTransfer.files);
-    dndElement.dispatchEvent(new DragEvent('drop', { dataTransfer }));
+    dropFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.PNG']));
     fixture.detectChanges();
 
     const files = getFiles();

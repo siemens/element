@@ -4,13 +4,14 @@
  */
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiFormItemComponent } from './si-form-item.component';
 
 @Component({
   imports: [SiFormItemComponent],
   template: `
-    <si-form-item [label]="label()">
+    <si-form-item [label]="label()!">
       <input type="text" id="name" class="form-control" />
     </si-form-item>
   `,
@@ -18,7 +19,7 @@ import { SiFormItemComponent } from './si-form-item.component';
 })
 export class TestHostComponent {
   readonly formItem = viewChild.required(SiFormItemComponent);
-  readonly label = signal<string | null | undefined>(null);
+  readonly label = signal<TranslatableString | null | undefined>(null);
 }
 
 describe('SiFormItemComponent', () => {
