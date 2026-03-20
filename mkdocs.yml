@@ -192,6 +192,7 @@ nav:
     - Resize observer:                    'architecture/resize-observer.md'
     - Theming:                            'architecture/theming.md'
     - UI state:                           'architecture/ui-state.md'
+    - Zoneless:                           'architecture/zoneless.md'
   - Contributing:
     - Guidelines:                         'CONTRIBUTING.md'
     - Code of conduct:                    'CODE_OF_CONDUCT.md'
