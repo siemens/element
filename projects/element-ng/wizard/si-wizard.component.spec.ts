@@ -103,22 +103,33 @@ describe('SiWizardComponent', () => {
       const steps = element.querySelectorAll('.step');
       expect(steps.length).toBe(3);
       for (let i = 0; i < steps.length; i++) {
-        expect(steps[i].querySelector('.title')!.textContent).toEqual(hostComponent.steps()[i]);
+        expect(steps[i].querySelector<HTMLElement>('.title')).toHaveTextContent(
+          hostComponent.steps()[i]
+        );
       }
     });
 
     it('should only show next button', () => {
-      expect(element.querySelector('.wizard-btn-container .back')).toHaveClass('invisible');
-      expect(element.querySelector('.wizard-btn-container .next')).not.toHaveClass('invisible');
+      expect(element.querySelector<HTMLElement>('.wizard-btn-container .back')).toHaveClass(
+        'invisible'
+      );
+      expect(element.querySelector<HTMLElement>('.wizard-btn-container .next')).not.toHaveClass(
+        'invisible'
+      );
     });
 
     it('active step should have aria-current set on first step', () => {
-      expect(element.querySelector('a.active')?.getAttribute('aria-current')).toBe('step');
-      expect(element.querySelector('a.active .title')?.textContent).toBe('Step 1');
-      expect(element.querySelector('.step:nth-child(2) a')?.getAttribute('aria-current')).toBe(
+      expect(element.querySelector<HTMLElement>('a.active')).toHaveAttribute(
+        'aria-current',
+        'step'
+      );
+      expect(element.querySelector<HTMLElement>('a.active .title')).toHaveTextContent('Step 1');
+      expect(element.querySelector<HTMLElement>('.step:nth-child(2) a')).toHaveAttribute(
+        'aria-current',
         'false'
       );
-      expect(element.querySelector('.step:nth-child(3) a')?.getAttribute('aria-current')).toBe(
+      expect(element.querySelector<HTMLElement>('.step:nth-child(3) a')).toHaveAttribute(
+        'aria-current',
         'false'
       );
     });
@@ -131,21 +142,30 @@ describe('SiWizardComponent', () => {
     });
 
     it('should show back and next buttons', () => {
-      expect(element.querySelector('.wizard-btn-container .back')).not.toHaveClass('invisible');
-      expect(element.querySelector('.wizard-btn-container .next')).not.toHaveClass('invisible');
+      expect(element.querySelector<HTMLElement>('.wizard-btn-container .back')).not.toHaveClass(
+        'invisible'
+      );
+      expect(element.querySelector<HTMLElement>('.wizard-btn-container .next')).not.toHaveClass(
+        'invisible'
+      );
     });
 
     it('should hide save button', () => {
-      expect(element.querySelector('.btn.save')).toBeFalsy();
+      expect(element.querySelector<HTMLElement>('.btn.save')).not.toBeInTheDocument();
     });
 
     it('active step should have aria-current set on middle step', () => {
-      expect(element.querySelector('a.active')?.getAttribute('aria-current')).toBe('step');
-      expect(element.querySelector('a.active .title')?.textContent).toBe('Step 2');
-      expect(element.querySelector('.step:nth-child(1) a')?.getAttribute('aria-current')).toBe(
+      expect(element.querySelector<HTMLElement>('a.active')).toHaveAttribute(
+        'aria-current',
+        'step'
+      );
+      expect(element.querySelector<HTMLElement>('a.active .title')).toHaveTextContent('Step 2');
+      expect(element.querySelector<HTMLElement>('.step:nth-child(1) a')).toHaveAttribute(
+        'aria-current',
         'false'
       );
-      expect(element.querySelector('.step:nth-child(3) a')?.getAttribute('aria-current')).toBe(
+      expect(element.querySelector<HTMLElement>('.step:nth-child(3) a')).toHaveAttribute(
+        'aria-current',
         'false'
       );
     });
@@ -157,21 +177,30 @@ describe('SiWizardComponent', () => {
       });
 
       it('should show next button', () => {
-        expect(element.querySelector('.wizard-btn-container .next')).not.toHaveClass('invisible');
+        expect(element.querySelector<HTMLElement>('.wizard-btn-container .next')).not.toHaveClass(
+          'invisible'
+        );
       });
 
       it('should hide save and back button', () => {
-        expect(element.querySelector('.btn.save')).toBeFalsy();
-        expect(element.querySelector('.wizard-btn-container .back')).toHaveClass('invisible');
+        expect(element.querySelector<HTMLElement>('.btn.save')).not.toBeInTheDocument();
+        expect(element.querySelector<HTMLElement>('.wizard-btn-container .back')).toHaveClass(
+          'invisible'
+        );
       });
 
       it('active step should have aria-current back to first step', () => {
-        expect(element.querySelector('a.active')?.getAttribute('aria-current')).toBe('step');
-        expect(element.querySelector('a.active .title')?.textContent).toBe('Step 1');
-        expect(element.querySelector('.step:nth-child(2) a')?.getAttribute('aria-current')).toBe(
+        expect(element.querySelector<HTMLElement>('a.active')).toHaveAttribute(
+          'aria-current',
+          'step'
+        );
+        expect(element.querySelector<HTMLElement>('a.active .title')).toHaveTextContent('Step 1');
+        expect(element.querySelector<HTMLElement>('.step:nth-child(2) a')).toHaveAttribute(
+          'aria-current',
           'false'
         );
-        expect(element.querySelector('.step:nth-child(3) a')?.getAttribute('aria-current')).toBe(
+        expect(element.querySelector<HTMLElement>('.step:nth-child(3) a')).toHaveAttribute(
+          'aria-current',
           'false'
         );
       });
@@ -181,15 +210,15 @@ describe('SiWizardComponent', () => {
       hostComponent.steps.set(['Other Step']);
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      expect(element.querySelector('.back.invisible')).toBeTruthy();
-      expect(element.querySelector('a.active .title')?.textContent).toBe('Other Step');
+      expect(element.querySelector<HTMLElement>('.back.invisible')).toBeInTheDocument();
+      expect(element.querySelector<HTMLElement>('a.active .title')).toHaveTextContent('Other Step');
     });
 
     it('should update the index if an item was moved', () => {
       hostComponent.steps.set(['other step', 'and another', 'Step 2']);
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      expect(element.querySelector('a.active .title')?.textContent).toBe('Step 2');
+      expect(element.querySelector<HTMLElement>('a.active .title')).toHaveTextContent('Step 2');
     });
 
     describe('when current step is the last one', () => {
@@ -200,27 +229,36 @@ describe('SiWizardComponent', () => {
       });
 
       it('should show save and back button', () => {
-        expect(element.querySelector('.btn.save')).toBeTruthy();
-        expect(element.querySelector('.wizard-btn-container .back')).not.toHaveClass('invisible');
+        expect(element.querySelector<HTMLElement>('.btn.save')).toBeInTheDocument();
+        expect(element.querySelector<HTMLElement>('.wizard-btn-container .back')).not.toHaveClass(
+          'invisible'
+        );
       });
 
       it('should hide next button', () => {
-        expect(element.querySelector('.wizard-btn-container .next')).toHaveClass('invisible');
+        expect(element.querySelector<HTMLElement>('.wizard-btn-container .next')).toHaveClass(
+          'invisible'
+        );
       });
 
       it('should output on click of save button', () => {
-        spyOn(component.completionAction, 'emit');
+        vi.spyOn(component.completionAction, 'emit');
         element.querySelector<HTMLElement>('.btn.save')!.click();
         expect(component.completionAction.emit).toHaveBeenCalled();
       });
 
       it('active step should have aria-current on last step', () => {
-        expect(element.querySelector('a.active')?.getAttribute('aria-current')).toBe('step');
-        expect(element.querySelector('a.active .title')?.textContent).toBe('Step 3');
-        expect(element.querySelector('.step:nth-child(1) a')?.getAttribute('aria-current')).toBe(
+        expect(element.querySelector<HTMLElement>('a.active')).toHaveAttribute(
+          'aria-current',
+          'step'
+        );
+        expect(element.querySelector<HTMLElement>('a.active .title')).toHaveTextContent('Step 3');
+        expect(element.querySelector<HTMLElement>('.step:nth-child(1) a')).toHaveAttribute(
+          'aria-current',
           'false'
         );
-        expect(element.querySelector('.step:nth-child(2) a')?.getAttribute('aria-current')).toBe(
+        expect(element.querySelector<HTMLElement>('.step:nth-child(2) a')).toHaveAttribute(
+          'aria-current',
           'false'
         );
       });
@@ -230,14 +268,14 @@ describe('SiWizardComponent', () => {
   describe('cancel button', () => {
     it('should not contain cancel button', () => {
       fixture.detectChanges();
-      expect(element.querySelectorAll('[aria-label="Cancel"]')).toHaveSize(0);
+      expect(element.querySelector<HTMLElement>('[aria-label="Cancel"]')).not.toBeInTheDocument();
     });
 
     it('should contain cancel button', () => {
       hostComponent.hasCancel.set(true);
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      expect(element.querySelectorAll('[aria-label="Cancel"]')).toHaveSize(1);
+      expect(element.querySelector<HTMLElement>('[aria-label="Cancel"]')).toBeInTheDocument();
     });
   });
 
@@ -256,16 +294,24 @@ describe('SiWizardComponent', () => {
     });
 
     it('should not show navigation buttons', () => {
-      expect(element.querySelector('.wizard-btn-container .back')).toBeFalsy();
-      expect(element.querySelector('.wizard-btn-container .next')).toBeFalsy();
+      expect(
+        element.querySelector<HTMLElement>('.wizard-btn-container .back')
+      ).not.toBeInTheDocument();
+      expect(
+        element.querySelector<HTMLElement>('.wizard-btn-container .next')
+      ).not.toBeInTheDocument();
     });
 
     it('should go to next step without navigation buttons', () => {
       component.next();
       expect(component.index).toBe(1);
       fixture.detectChanges();
-      expect(element.querySelector('.wizard-btn-container .back')).toBeFalsy();
-      expect(element.querySelector('.wizard-btn-container .next')).toBeFalsy();
+      expect(
+        element.querySelector<HTMLElement>('.wizard-btn-container .back')
+      ).not.toBeInTheDocument();
+      expect(
+        element.querySelector<HTMLElement>('.wizard-btn-container .next')
+      ).not.toBeInTheDocument();
     });
 
     it('should go to previous step without navigation buttons', () => {
@@ -278,8 +324,12 @@ describe('SiWizardComponent', () => {
       component.back();
       expect(component.index).toBe(0);
       fixture.detectChanges();
-      expect(element.querySelector('.wizard-btn-container .back')).toBeFalsy();
-      expect(element.querySelector('.wizard-btn-container .next')).toBeFalsy();
+      expect(
+        element.querySelector<HTMLElement>('.wizard-btn-container .back')
+      ).not.toBeInTheDocument();
+      expect(
+        element.querySelector<HTMLElement>('.wizard-btn-container .next')
+      ).not.toBeInTheDocument();
     });
 
     it('should align save button to end on last step when navigation is hidden', () => {
@@ -290,9 +340,8 @@ describe('SiWizardComponent', () => {
       component.next(hostComponent.steps().length - 1);
       fixture.detectChanges();
 
-      const saveButton = element.querySelector('.btn.save');
-      expect(saveButton).toBeTruthy();
-      expect(saveButton).toHaveClass('end');
+      expect(element.querySelector<HTMLElement>('.btn.save')).toBeInTheDocument();
+      expect(element.querySelector<HTMLElement>('.btn.save')).toHaveClass('end');
     });
   });
 
@@ -300,13 +349,17 @@ describe('SiWizardComponent', () => {
     it('should not show navigation buttons inline if inlineNavigation is false', () => {
       hostComponent.inlineNavigation.set(false);
       fixture.detectChanges();
-      expect(element.querySelector('.container-wizard .wizard-btn-container .next')).toBeFalsy();
+      expect(
+        element.querySelector<HTMLElement>('.container-wizard .wizard-btn-container .next')
+      ).not.toBeInTheDocument();
     });
 
     it('should show navigation buttons inline if inlineNavigation is true', () => {
       hostComponent.inlineNavigation.set(true);
       fixture.detectChanges();
-      expect(element.querySelector('.container-wizard .wizard-btn-container .next')).toBeTruthy();
+      expect(
+        element.querySelector<HTMLElement>('.container-wizard .wizard-btn-container .next')
+      ).toBeInTheDocument();
     });
   });
 
@@ -317,18 +370,18 @@ describe('SiWizardComponent', () => {
       fixture.detectChanges();
       const steps = element.querySelectorAll('.step');
       expect(steps.length).toBe(0);
-      jasmine.clock().install();
+      vi.useFakeTimers();
       setTimeout(() => {
         hostComponent.generateSteps(3);
         fixture.changeDetectorRef.markForCheck();
         fixture.detectChanges();
       }, 100);
-      jasmine.clock().tick(100);
+      vi.advanceTimersByTime(100);
 
       await fixture.whenStable();
       const updatedSteps = element.querySelectorAll('.step');
       expect(updatedSteps.length).toBe(3);
-      jasmine.clock().uninstall();
+      vi.useRealTimers();
     });
   });
 
@@ -357,7 +410,7 @@ describe('SiWizardComponent', () => {
       hostComponent.showVerticalDivider.set(true);
       fixture.detectChanges();
       const container = fixture.debugElement.query(By.css('.vertical-divider'));
-      expect(container).toBeTruthy();
+      expect(container.nativeElement).toBeInTheDocument();
       const styles = getComputedStyle(container.nativeElement);
       expect(styles.borderRight).toBeTruthy();
     });
@@ -365,8 +418,7 @@ describe('SiWizardComponent', () => {
     it('should not have divider when showVerticalDivider is set to false', () => {
       hostComponent.showVerticalDivider.set(false);
       fixture.detectChanges();
-      const container = fixture.debugElement.query(By.css('.vertical-divider'));
-      expect(container).toBeFalsy();
+      expect(element.querySelector<HTMLElement>('.vertical-divider')).not.toBeInTheDocument();
     });
   });
 });

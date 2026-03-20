@@ -3,8 +3,22 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
     "lib": ["es2024", "dom", "esnext.disposable"],
-    "types": ["vitest/globals", "@siemens/element-translate-ng/localize-types"]
+    "types": [
+      "vitest/globals",
+      "vitest/browser",
+      "node",
+      "@siemens/element-translate-ng/localize-types"
+    ]
   },
   "exclude": ["**/schematics/**"],
-  "include": ["a*/**/*.spec.ts", "b*/**/*.spec.ts", "c*/**/*.spec.ts", "**/*.d.ts"]
+  "include": [
+    "a*/**/*.spec.ts",
+    "b*/**/*.spec.ts",
+    "c*/**/*.spec.ts",
+    "w*/**/*.spec.ts",
+    "x*/**/*.spec.ts",
+    "y*/**/*.spec.ts",
+    "z*/**/*.spec.ts",
+    "**/*.d.ts"
+  ]
 }
