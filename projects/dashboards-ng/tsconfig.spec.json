@@ -14,7 +14,8 @@
       "@siemens/dashboards-ng": [
         "projects/dashboards-ng/src/public-api.ts",
         "projects/dashboards-ng/src"
-      ]
+      ],
+      "@siemens/dashboards-ng/*": ["projects/dashboards-ng/*"]
     }
   },
   "include": ["**/*.spec.ts", "**/*.d.ts"]
