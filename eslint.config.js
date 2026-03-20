@@ -207,4 +207,15 @@ export const indexBarrelConfig = defineConfig({
   }
 });
 
-export default defineConfig(...tsConfig, ...templateConfig, ...indexBarrelConfig);
+export const strictLinterOptions = defineConfig({
+  linterOptions: {
+    reportUnusedDisableDirectives: 'error'
+  }
+});
+
+export default defineConfig(
+  ...tsConfig,
+  ...templateConfig,
+  ...indexBarrelConfig,
+  ...strictLinterOptions
+);

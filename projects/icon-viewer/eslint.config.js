@@ -1,4 +1,4 @@
-import { tsConfig, templateConfig } from '../../eslint.config.js';
+import { tsConfig, templateConfig, strictLinterOptions } from '../../eslint.config.js';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig(
@@ -11,5 +11,6 @@ export default defineConfig(
       }
     }
   },
-  ...templateConfig
+  ...templateConfig,
+  ...strictLinterOptions
 );
