@@ -24,7 +24,7 @@
     </div>
   }
   <div class="apps-scroll ms-n2 ps-2">
-    @for (category of categories(); track category; let first = $first) {
+    @for (category of categories(); track $index; let first = $first) {
       @if (!enableFavorites() || !hasFavorites() || first || showAllApps) {
         <div>
           @if (category.name) {
