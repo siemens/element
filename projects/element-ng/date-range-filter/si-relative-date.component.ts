@@ -13,7 +13,6 @@ import {
   signal,
   SimpleChanges
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import {
   SelectOption,
@@ -32,7 +31,6 @@ interface OffsetOption extends SelectOption<string> {
 @Component({
   selector: 'si-relative-date',
   imports: [
-    FormsModule,
     SiNumberInputComponent,
     SiSelectComponent,
     SiSelectSingleValueDirective,
