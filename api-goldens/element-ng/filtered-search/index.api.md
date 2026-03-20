@@ -12,7 +12,6 @@ import { OnChanges } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
-import { TypeaheadOption } from '@siemens/element-ng/typeahead';
 
 // @public
 export interface CriterionDefinition {
