@@ -2,17 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DebugElement,
-  inject,
-  ViewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
+import { provideRouter, RouterOutlet } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { of, Subject } from 'rxjs';
 
@@ -43,7 +36,7 @@ import { SiListPaneComponent } from './si-list-pane/si-list-pane.component';
       class="vh-100"
       stateId="si-list-details-1"
       [expandBreakpoint]="expandBreakpoint"
-      [disableResizing]="disableResizing"
+      [disableResizing]="disableResizing()"
       [(detailsActive)]="detailsActive"
     >
       <si-list-pane>
@@ -54,7 +47,7 @@ import { SiListPaneComponent } from './si-list-pane/si-list-pane.component';
         <span>list-data</span>
       </si-list-pane>
       <si-details-pane>
-        <si-details-pane-header [title]="detailsTitle" [hideBackButton]="hideBackButton">
+        <si-details-pane-header title="details-title" [hideBackButton]="hideBackButton()">
           <span>details-action</span>
         </si-details-pane-header>
         <span>details</span>
@@ -67,14 +60,11 @@ import { SiListPaneComponent } from './si-list-pane/si-list-pane.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
-  @ViewChild(SiListDetailsComponent, { static: true })
-  listDetails!: SiListDetailsComponent;
-  detailsTitle = 'details-title';
-  hideBackButton = false;
-  disableResizing = true;
-  expandBreakpoint = BOOTSTRAP_BREAKPOINTS.mdMinimum;
-  detailsActive = false;
-  cdRef = inject(ChangeDetectorRef);
+  readonly listDetails = viewChild.required(SiListDetailsComponent);
+  readonly hideBackButton = signal(false);
+  readonly disableResizing = signal(true);
+  readonly expandBreakpoint = BOOTSTRAP_BREAKPOINTS.mdMinimum;
+  readonly detailsActive = signal(false);
 }
 
 describe('ListDetailsComponent', () => {
@@ -154,15 +144,12 @@ describe('ListDetailsComponent', () => {
     };
 
     const resizeObserver = new Subject<ElementDimensions>();
-    const resizeSpy = jasmine.createSpyObj('ResizeObserverService', ['observe']);
+    const resizeSpy = {
+      observe: vi.fn((e: Element, t: number, i: boolean, im?: boolean) => resizeObserver)
+    };
 
     beforeEach(async () => {
-      resizeSpy.observe.and.callFake((e: Element, t: number, i: boolean, im?: boolean) => {
-        return resizeObserver;
-      });
-
       await TestBed.configureTestingModule({
-        imports: [WrapperComponent],
         providers: [
           {
             provide: ResizeObserverService,
@@ -180,14 +167,9 @@ describe('ListDetailsComponent', () => {
     });
 
     it('should change listWidth when split sizes change', async () => {
-      jasmine.clock().install();
-      component.disableResizing = false;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      component.disableResizing.set(false);
       await fixture.whenStable();
-      jasmine.clock().tick(100);
-      await fixture.whenStable();
-      jasmine.clock().uninstall();
+
       // drag si-split > .si-split-gutter 25% to the left
       const split = htmlElement.querySelector('si-split')!;
       const splitHandle = split.querySelector('.si-split-gutter') as HTMLElement;
@@ -195,52 +177,51 @@ describe('ListDetailsComponent', () => {
       const splitHandleBox = splitHandle.getBoundingClientRect();
       const x = splitBox.x + splitBox.width - splitHandleBox.width / 2;
       const y = splitBox.y + splitBox.height / 2;
-      const listWidth = component.listDetails.listWidth();
+      const listWidth = component.listDetails().listWidth();
       drag(splitHandle, x, y, x - 0.25 * splitBox.width, y);
       fixture.detectChanges();
       await fixture.whenStable();
-      expect(component.listDetails.listWidth()).not.toBe(listWidth);
+      expect(component.listDetails().listWidth()).not.toBe(listWidth);
     });
 
     it('should unset detailsActive when back button is clicked', async () => {
-      component.detailsActive = true;
+      component.detailsActive.set(true);
       resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-      fixture.detectChanges();
       await fixture.whenStable();
-      fixture.detectChanges();
+
       const backButton = htmlElement.querySelector('si-details-pane button')!;
       backButton.dispatchEvent(new Event('click'));
-      fixture.detectChanges();
-      expect(component.detailsActive).toBe(false);
+
+      expect(component.detailsActive()).toBe(false);
     });
 
-    it('should add host .expanded class when crossing expandBreakpoint', () => {
-      fixture.detectChanges();
+    it('should add host .expanded class when crossing expandBreakpoint', async () => {
+      await fixture.whenStable();
       const hostEl = htmlElement.querySelector('si-list-details')!;
       expect(hostEl.classList).toContain('expanded');
     });
 
     describe('animation state', () => {
       it('should be "collapsed" when detailsInactive & small', async () => {
-        component.detailsActive = false;
+        component.detailsActive.set(false);
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         await fixture.whenStable();
-        fixture.detectChanges();
+
         expect(getListDetails().classList).toContain('collapsed');
       });
 
       it('should be "expanded" when detailsActive & small', async () => {
-        component.detailsActive = true;
+        component.detailsActive.set(true);
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         await fixture.whenStable();
-        fixture.detectChanges();
+
         expect(getListDetails().classList).toContain('expanded');
       });
 
       it('should be "disabled" when in large mode regardless of detailsActive', async () => {
-        component.detailsActive = true;
+        component.detailsActive.set(true);
         await fixture.whenStable();
-        fixture.detectChanges();
+
         expect(getListDetails().classList).toContain('disabled');
       });
     });
@@ -248,75 +229,63 @@ describe('ListDetailsComponent', () => {
     describe('hasLargeSize changes', () => {
       it('should change hasLargeSize to true when crossing above breakpoint', async () => {
         await fixture.whenStable();
-        fixture.detectChanges();
-        expect(component.listDetails.hasLargeSize()).toBe(true);
+
+        expect(component.listDetails().hasLargeSize()).toBe(true);
       });
 
       it('should change hasLargeSize to false when dropping below breakpoint', async () => {
         await fixture.whenStable();
-        fixture.detectChanges();
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         await fixture.whenStable();
-        fixture.detectChanges();
-        expect(component.listDetails.hasLargeSize()).toBe(false);
+
+        expect(component.listDetails().hasLargeSize()).toBe(false);
       });
     });
 
     describe('interactivity', () => {
       it('should open details and then go back via the back-button click', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        fixture.detectChanges();
         await fixture.whenStable();
 
-        component.detailsActive = true;
-        component.cdRef.markForCheck();
-        fixture.detectChanges();
+        component.detailsActive.set(true);
         await fixture.whenStable();
-        fixture.detectChanges();
 
         expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBe(true);
 
         const backBtn = htmlElement.querySelector('si-details-pane button')!;
         backBtn.dispatchEvent(new Event('click'));
-        fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component.detailsActive).toBe(false);
+        expect(component.detailsActive()).toBe(false);
         expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBe(true);
       });
 
       it('should switch between split and static layouts as size & disableResizing change', async () => {
-        component.disableResizing = false;
-        fixture.detectChanges();
+        component.disableResizing.set(false);
         await fixture.whenStable();
         expect(getSiSplit()).toBeTruthy();
         expect(getListDetails()).toBeFalsy();
 
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        fixture.detectChanges();
         await fixture.whenStable();
         expect(getSiSplit()).toBeFalsy();
         expect(getListDetails()).toBeTruthy();
 
-        component.disableResizing = true;
-        fixture.detectChanges();
+        component.disableResizing.set(true);
         await fixture.whenStable();
         expect(getSiSplit()).toBeFalsy();
         expect(getListDetails()).toBeTruthy();
       });
 
       it('should keep both panes visible on large screens regardless of detailsActive', async () => {
-        fixture.detectChanges();
         await fixture.whenStable();
 
-        component.detailsActive = false;
-        fixture.detectChanges();
+        component.detailsActive.set(false);
         await fixture.whenStable();
         expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBe(true);
         expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBe(true);
 
-        component.detailsActive = true;
-        fixture.detectChanges();
+        component.detailsActive.set(true);
         await fixture.whenStable();
         expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBe(true);
         expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBe(true);
@@ -324,77 +293,72 @@ describe('ListDetailsComponent', () => {
     });
 
     describe('responsive behaviour', () => {
-      it('should show a si-split container when parts are resizable and container has large size', () => {
-        component.disableResizing = false;
-        fixture.detectChanges();
+      it('should show a si-split container when parts are resizable and container has large size', async () => {
+        component.disableResizing.set(false);
+        await fixture.whenStable();
         expect(getSiSplit()).toBeTruthy();
         expect(getListDetails()).toBeFalsy();
       });
 
-      it('should show a non-resizable div container when parts are not resizable or container does not have large size', () => {
+      it('should show a non-resizable div container when parts are not resizable or container does not have large size', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        component.disableResizing = false;
-        fixture.detectChanges();
+        component.disableResizing.set(false);
+        await fixture.whenStable();
         expect(getSiSplit()).toBeFalsy();
         expect(getListDetails()).toBeTruthy();
 
         resizeObserver.next({ width: component.expandBreakpoint + 1, height: 500 });
-        component.disableResizing = true;
-        fixture.detectChanges();
+        component.disableResizing.set(true);
+        await fixture.whenStable();
         expect(getSiSplit()).toBeFalsy();
         expect(getListDetails()).toBeTruthy();
 
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        component.disableResizing = true;
-        fixture.detectChanges();
+        component.disableResizing.set(true);
+        await fixture.whenStable();
         expect(getSiSplit()).toBeFalsy();
         expect(getListDetails()).toBeTruthy();
       });
 
       it('should only have the list pane in view on small screens when details are inactive', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        component.detailsActive = false;
-        fixture.detectChanges();
+        component.detailsActive.set(false);
         await fixture.whenStable();
         expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBe(false);
       });
 
       it('should set inert attribute to prevent focus on hidden details when details are inactive on small screens', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        component.detailsActive = false;
-        fixture.detectChanges();
+        component.detailsActive.set(false);
         await fixture.whenStable();
         expect(debugElement.query(By.css('si-details-pane[inert]'))).toBeTruthy();
       });
 
       it('should not set inert attribute when details are active on small screens', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        component.detailsActive = true;
-        fixture.detectChanges();
+        component.detailsActive.set(true);
         await fixture.whenStable();
         expect(debugElement.query(By.css('si-details-pane:not([inert])'))).toBeTruthy();
       });
 
-      it('should unset detailsActive when details back button was clicked on small screens', () => {
+      it('should unset detailsActive when details back button was clicked on small screens', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        component.detailsActive = true;
-        fixture.detectChanges();
+        component.detailsActive.set(true);
+        await fixture.whenStable();
         htmlElement.querySelector('button')?.click();
-        fixture.detectChanges();
-        expect(component.detailsActive).toBe(false);
+        expect(component.detailsActive()).toBe(false);
       });
 
-      it('should not show details back button when hideBackButton is true', () => {
+      it('should not show details back button when hideBackButton is true', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        component.hideBackButton = true;
-        fixture.detectChanges();
+        component.hideBackButton.set(true);
+        await fixture.whenStable();
         expect(htmlElement.querySelector('button')).toBeFalsy();
       });
 
       it('should only have the details pane in view on small screens when details are active', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        component.detailsActive = true;
-        fixture.detectChanges();
+        component.detailsActive.set(true);
         await fixture.whenStable();
         expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBe(false);
       });
@@ -415,13 +379,7 @@ describe('ListDetailsComponent', () => {
     class EmptyComponent {}
 
     @Component({
-      imports: [
-        SiListDetailsComponent,
-        SiListPaneComponent,
-        RouterLink,
-        RouterOutlet,
-        SiDetailsPaneComponent
-      ],
+      imports: [SiListDetailsComponent, SiListPaneComponent, RouterOutlet, SiDetailsPaneComponent],
       template: `
         <si-list-details>
           <si-list-pane />
@@ -461,52 +419,41 @@ describe('ListDetailsComponent', () => {
       });
     });
 
-    beforeEach(() => {
-      jasmine.clock().install();
-      jasmine.clock().mockDate();
-    });
-
-    afterEach(() => {
-      jasmine.clock().uninstall();
-    });
-
     it('should navigate back and forward in mobile mode by clicking', async () => {
-      spyOn(ResizeObserverService.prototype, 'observe').and.returnValue(
+      vi.spyOn(ResizeObserverService.prototype, 'observe').mockReturnValue(
         of({ width: 100, height: 100 })
       );
       routerHarness = await RouterTestingHarness.create('/list');
       debugElement = routerHarness.fixture.debugElement;
-      routerHarness.detectChanges();
+      await routerHarness.fixture.whenStable();
       // Also technical visible in mobile mode
       expect(debugElement.query(By.css('si-empty'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeFalsy();
       await routerHarness.navigateByUrl('/list/details');
-      routerHarness.detectChanges();
+      await routerHarness.fixture.whenStable();
       expect(debugElement.query(By.css('si-details-pane-body'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBe(true);
       debugElement.query(By.css('.si-details-header-back')).nativeElement.click();
-      routerHarness.detectChanges();
       await routerHarness.fixture.whenStable();
       expect(debugElement.query(By.css('si-empty'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeFalsy();
     });
 
     it('should navigate back and forward in mobile mode by navigation', async () => {
-      spyOn(ResizeObserverService.prototype, 'observe').and.returnValue(
+      vi.spyOn(ResizeObserverService.prototype, 'observe').mockReturnValue(
         of({ width: 100, height: 100 })
       );
       routerHarness = await RouterTestingHarness.create('/list');
       debugElement = routerHarness.fixture.debugElement;
-      routerHarness.detectChanges();
+      await routerHarness.fixture.whenStable();
       // Also technical visible in mobile mode
       expect(debugElement.query(By.css('si-empty'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeFalsy();
       await routerHarness.navigateByUrl('/list/details');
-      routerHarness.detectChanges();
+      await routerHarness.fixture.whenStable();
       expect(debugElement.query(By.css('si-details-pane-body'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBe(true);
       await routerHarness.navigateByUrl('/list');
-      routerHarness.detectChanges();
       await routerHarness.fixture.whenStable();
       expect(debugElement.query(By.css('si-empty'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeFalsy();

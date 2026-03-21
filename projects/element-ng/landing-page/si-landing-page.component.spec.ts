@@ -59,7 +59,7 @@ describe('SiLandingPageComponent', () => {
   it('executes the link action handler', () => {
     component.setInput('heading', 'required heading');
     component.setInput('subtitle', 'my subtitle');
-    const spy = jasmine.createSpy();
+    const spy = vi.fn();
     component.setInput('links', [{ title: 'Privacy Notice', action: spy }]);
     fixture.detectChanges();
     const links = fixture.nativeElement.querySelectorAll('footer a');

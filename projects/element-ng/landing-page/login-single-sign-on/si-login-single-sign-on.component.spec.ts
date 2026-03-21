@@ -24,7 +24,7 @@ describe('SiLoginSingleSignOnComponent', () => {
   });
 
   it('should emit ssoEvent on button click', () => {
-    spyOn(component.instance.ssoEvent, 'emit');
+    vi.spyOn(component.instance.ssoEvent, 'emit');
     const button = fixture.nativeElement.querySelector('button');
     button.click();
     expect(component.instance.ssoEvent.emit).toHaveBeenCalled();

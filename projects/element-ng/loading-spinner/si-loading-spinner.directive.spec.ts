@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiLoadingSpinnerModule } from './si-loading-spinner.module';
@@ -10,7 +10,7 @@ import { SiLoadingSpinnerModule } from './si-loading-spinner.module';
 @Component({
   imports: [SiLoadingSpinnerModule],
   template: `
-    <div [siLoading]="loading" [blocking]="blocking">
+    <div [siLoading]="loading()" [blocking]="blocking()">
       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
       invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
       justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
@@ -22,77 +22,59 @@ import { SiLoadingSpinnerModule } from './si-loading-spinner.module';
   `
 })
 export class TestHostComponent {
-  public loading = true;
-  public blocking = false;
+  readonly loading = signal(true);
+  readonly blocking = signal(false);
 }
 
 describe('SiLoadingSpinnerDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
+  let component: TestHostComponent;
   const initialDelay = 500;
 
   const isLoading = (): boolean => !!fixture.nativeElement.querySelector('.loading');
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SiLoadingSpinnerModule, TestHostComponent]
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
-  });
-
-  beforeEach(() => {
-    jasmine.clock().install();
+    component = fixture.componentInstance;
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should not display spinner before initial delay', async () => {
-    fixture.detectChanges();
-    jasmine.clock().tick(initialDelay - 10);
+    vi.advanceTimersByTime(initialDelay - 10);
     await fixture.whenStable();
     expect(isLoading()).toBe(false);
   });
 
   it('should display spinner after initial delay', async () => {
     await fixture.whenStable();
-    jasmine.clock().tick(initialDelay);
-    await fixture.whenStable();
+    vi.advanceTimersByTime(initialDelay);
     expect(isLoading()).toBe(true);
   });
 
   it('should skip showing spinner if canceled before initial delay', async () => {
     await fixture.whenStable();
-    jasmine.clock().tick(initialDelay - 10);
+    vi.advanceTimersByTime(initialDelay - 10);
     await fixture.whenStable();
     expect(isLoading()).toBe(false);
 
-    fixture.componentInstance.loading = false;
-    fixture.changeDetectorRef.markForCheck();
-    jasmine.clock().tick(600);
+    component.loading.set(false);
+    vi.advanceTimersByTime(600);
     await fixture.whenStable();
 
     expect(isLoading()).toBe(false);
   });
 
   it('should show and hide spinner', async () => {
-    jasmine.clock().tick(initialDelay);
-    await fixture.whenStable();
-    jasmine.clock().tick(initialDelay);
-    await fixture.whenStable();
+    await vi.advanceTimersByTimeAsync(initialDelay);
+    await vi.advanceTimersByTimeAsync(initialDelay);
     expect(isLoading()).toBe(true);
 
-    fixture.componentInstance.loading = false;
-    fixture.changeDetectorRef.markForCheck();
-    jasmine.clock().tick(500);
-    await fixture.whenStable();
-    // another one to update the DOM
-    jasmine.clock().tick(0);
-    await fixture.whenStable();
-
+    component.loading.set(false);
+    await vi.advanceTimersByTimeAsync(0);
     expect(isLoading()).toBe(false);
   });
 });

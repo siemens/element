@@ -3,13 +3,22 @@
  * SPDX-License-Identifier: MIT
  */
 import { TestBed } from '@angular/core/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SiTranslateNgxTModule } from '@siemens/element-translate-ng/ngx-translate';
+import { provideTranslateService, TranslateService } from '@ngx-translate/core';
+import {
+  provideMissingTranslationHandlerForElement,
+  provideNgxTranslateForElement
+} from '@siemens/element-translate-ng/ngx-translate';
 import { firstValueFrom, Observable, of, take, toArray } from 'rxjs';
 
 import { SiLocaleStore } from './si-locale-store';
 import { SI_LOCALE_CONFIG, SiLocaleConfig, SiLocaleService } from './si-locale.service';
 
+const TRANSLATE_PROVIDERS = [
+  provideTranslateService({
+    missingTranslationHandler: provideMissingTranslationHandlerForElement()
+  }),
+  provideNgxTranslateForElement()
+];
 class NoLocaleStore extends SiLocaleStore {
   get locale(): string | undefined {
     return undefined;
@@ -37,7 +46,7 @@ describe('SiLocaleService', () => {
   describe('with empty configuration', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [SiTranslateNgxTModule, TranslateModule.forRoot()]
+        providers: [...TRANSLATE_PROVIDERS]
       });
       service = TestBed.inject(SiLocaleService);
     });
@@ -72,8 +81,7 @@ describe('SiLocaleService', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [...TRANSLATE_PROVIDERS, { provide: SI_LOCALE_CONFIG, useValue: config }]
     });
     service = TestBed.inject(SiLocaleService);
     expect(service.config.defaultLocale).toBe('fr');
@@ -83,8 +91,7 @@ describe('SiLocaleService', () => {
     const config: SiLocaleConfig = {};
 
     TestBed.configureTestingModule({
-      imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [...TRANSLATE_PROVIDERS, { provide: SI_LOCALE_CONFIG, useValue: config }]
     });
     service = TestBed.inject(SiLocaleService);
     expect(service.config.defaultLocale).toBe('en');
@@ -96,8 +103,7 @@ describe('SiLocaleService', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [...TRANSLATE_PROVIDERS, { provide: SI_LOCALE_CONFIG, useValue: config }]
     });
     service = TestBed.inject(SiLocaleService);
     expect(service.config.availableLocales![0]).toBe('en');
@@ -109,8 +115,7 @@ describe('SiLocaleService', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [...TRANSLATE_PROVIDERS, { provide: SI_LOCALE_CONFIG, useValue: config }]
     });
     service = TestBed.inject(SiLocaleService);
     const translate = TestBed.inject(TranslateService);
@@ -126,8 +131,7 @@ describe('SiLocaleService', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [...TRANSLATE_PROVIDERS, { provide: SI_LOCALE_CONFIG, useValue: config }]
     });
     service = TestBed.inject(SiLocaleService);
     const translate = TestBed.inject(TranslateService);
@@ -142,8 +146,7 @@ describe('SiLocaleService', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [...TRANSLATE_PROVIDERS, { provide: SI_LOCALE_CONFIG, useValue: config }]
     });
     service = TestBed.inject(SiLocaleService);
     expect(service.locale$.value).toBe('en');
@@ -157,8 +160,7 @@ describe('SiLocaleService', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [...TRANSLATE_PROVIDERS, { provide: SI_LOCALE_CONFIG, useValue: config }]
     });
     service = TestBed.inject(SiLocaleService);
     expect(service.hasLocale('de')).toBe(true);
@@ -181,18 +183,18 @@ describe('SiLocaleService', () => {
       };
 
       TestBed.configureTestingModule({
-        imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
         providers: [
+          ...TRANSLATE_PROVIDERS,
           { provide: SI_LOCALE_CONFIG, useValue: config },
           { provide: SiLocaleStore, useClass: NoLocaleStore }
         ]
       });
 
-      service = TestBed.inject(SiLocaleService);
       translate = TestBed.inject(TranslateService);
     });
 
     it('should change the locale at translate service', async () => {
+      service = TestBed.inject(SiLocaleService);
       const firstEvent = await firstValueFrom(translate.onLangChange);
       // the initial browser locale
       expect(firstEvent.lang).toBe('en');
@@ -206,6 +208,7 @@ describe('SiLocaleService', () => {
     });
 
     it('should change the locale following the translate service changes', async () => {
+      service = TestBed.inject(SiLocaleService);
       const localePromise = firstValueFrom(service.locale$.pipe(take(2), toArray()));
 
       // wait for initial lang change to be processed
@@ -234,8 +237,8 @@ describe('SiLocaleService', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
       providers: [
+        ...TRANSLATE_PROVIDERS,
         { provide: SI_LOCALE_CONFIG, useValue: config },
         { provide: SiLocaleStore, useClass: DeLocaleStore }
       ]
@@ -251,8 +254,8 @@ describe('SiLocaleService', () => {
       localeInitializer: (localeId: string) => Promise.resolve()
     };
     TestBed.configureTestingModule({
-      imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
       providers: [
+        ...TRANSLATE_PROVIDERS,
         { provide: SI_LOCALE_CONFIG, useValue: config },
         { provide: SiLocaleStore, useClass: DeLocaleStore }
       ]
@@ -276,8 +279,8 @@ describe('SiLocaleService', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
       providers: [
+        ...TRANSLATE_PROVIDERS,
         { provide: SI_LOCALE_CONFIG, useValue: config },
         { provide: SiLocaleStore, useClass: DeLocaleStore }
       ]
