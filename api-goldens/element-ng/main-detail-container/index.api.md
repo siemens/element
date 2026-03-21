@@ -6,13 +6,12 @@
 
 import * as _angular_core from '@angular/core';
 import { OnChanges } from '@angular/core';
-import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
-export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDestroy {
+export class SiMainDetailContainerComponent implements OnInit, OnChanges {
     readonly containerClass: _angular_core.InputSignal<string>;
     readonly detailContainerClass: _angular_core.InputSignal<string>;
     readonly detailsActive: _angular_core.ModelSignal<boolean>;

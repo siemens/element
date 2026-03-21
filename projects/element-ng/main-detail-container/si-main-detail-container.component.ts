@@ -9,17 +9,18 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  DestroyRef,
   ElementRef,
-  HostBinding,
   inject,
   input,
   model,
   OnChanges,
-  OnDestroy,
   OnInit,
   output,
+  signal,
   SimpleChanges
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { elementBack } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import {
@@ -29,7 +30,7 @@ import {
 } from '@siemens/element-ng/resize-observer';
 import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/split';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
-import { Subscription } from 'rxjs';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'si-main-detail-container',
@@ -43,16 +44,20 @@ import { Subscription } from 'rxjs';
   templateUrl: './si-main-detail-container.component.html',
   styleUrl: './si-main-detail-container.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'si-layout-inner' }
+  host: {
+    class: 'si-layout-inner',
+    '[class.animate]': 'animate()',
+    '[style.opacity]': 'opacity()'
+  }
 })
-export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDestroy {
+export class SiMainDetailContainerComponent implements OnInit, OnChanges {
   protected readonly icons = addIcons({ elementBack });
 
-  private animationDuration = 500;
-  private resizeSubs?: Subscription;
-  private elementRef = inject(ElementRef);
-  private resizeObserver = inject(ResizeObserverService);
-  private changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly animationDuration = 500;
+  private readonly elementRef = inject(ElementRef);
+  private readonly resizeObserver = inject(ResizeObserverService);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
 
   /**
    * A numeric value defining the minimum width in px, which the container needs
@@ -217,9 +222,9 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDest
     return stateId ? `${stateId}-detail` : undefined;
   });
 
-  @HostBinding('class.animate') protected animate = false;
+  protected readonly animate = signal(false);
 
-  @HostBinding('style.opacity') protected opacity = '0';
+  protected readonly opacity = signal('0');
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.detailsActive) {
@@ -234,13 +239,10 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDest
   }
 
   ngOnInit(): void {
-    this.resizeSubs = this.resizeObserver
+    this.resizeObserver
       .observe(this.elementRef.nativeElement, 100, true)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(dimensions => this.determineLayout(dimensions));
-  }
-
-  ngOnDestroy(): void {
-    this.resizeSubs?.unsubscribe();
   }
 
   protected onSplitSizesChange(sizes: number[]): void {
@@ -274,18 +276,16 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDest
       this.hasLargeSizeChange.emit(this.hasLargeSize);
       this.changeDetectorRef.markForCheck();
     }
-    if (this.opacity === '0') {
-      this.opacity = '';
-      this.changeDetectorRef.markForCheck();
+    if (this.opacity() === '0') {
+      this.opacity.set('');
     }
   }
 
   private doAnimation(detailsActive: boolean): void {
-    this.animate = true;
-    setTimeout(() => {
-      this.animate = false;
-      this.changeDetectorRef.markForCheck();
-    }, this.animationDuration);
+    this.animate.set(true);
+    timer(this.animationDuration)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.animate.set(false));
     this.detailsActive.set(detailsActive);
   }
 
