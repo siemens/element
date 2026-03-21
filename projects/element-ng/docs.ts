@@ -51,6 +51,7 @@ export * from './modal';
 export * from './navbar';
 export * from './navbar-vertical';
 export * from './number-input';
+export * from './notification-item';
 export * from './pagination';
 export * from './password-strength';
 export * from './password-toggle';
