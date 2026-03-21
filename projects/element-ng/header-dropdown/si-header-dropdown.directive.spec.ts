@@ -111,11 +111,14 @@ describe('SiHeaderDropdown', () => {
 
     it('should emit only once on close', async () => {
       await trigger1Harness.toggle();
-      const openChangeSpy = spyOn(fixture.componentInstance.trigger1().openChange, 'emit');
+      const openChangeSpy = vi.spyOn(fixture.componentInstance.trigger1().openChange, 'emit');
       const dropdown1 = await trigger1Harness.getDropdown();
       const trigger2Harness = await dropdown1.getTrigger('Item 1-2');
       await trigger2Harness.toggle();
-      const openChangeTrigger2Spy = spyOn(fixture.componentInstance.trigger2().openChange, 'emit');
+      const openChangeTrigger2Spy = vi.spyOn(
+        fixture.componentInstance.trigger2().openChange,
+        'emit'
+      );
 
       await trigger2Harness
         .getDropdown()
