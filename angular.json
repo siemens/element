@@ -170,7 +170,7 @@
             "buildTarget": "element-ng:test-target",
             "browsers": ["chromium"],
             "browserViewport": "1280x720",
-            "exclude": ["[n-s]*/**", "schematics/**"],
+            "exclude": ["[n-r]*/**", "schematics/**"],
             "runnerConfig": true
           }
         },
