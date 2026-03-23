@@ -52,7 +52,7 @@
 
   &:is(.readonly, [readonly]) {
     &,
-    :is(:hover, :focus) {
+    &:is(:hover, :focus) {
       --border-color: #{semantic-tokens.$element-ui-4};
       background-color: variables.$input-bg;
     }
