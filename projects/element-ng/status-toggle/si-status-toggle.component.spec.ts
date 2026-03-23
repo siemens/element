@@ -152,7 +152,7 @@ describe('SiStatusToggleComponent', () => {
       it('should emit clicked button value with touch', () => {
         fixture.detectChanges();
 
-        spyOn(component.toggle().itemClick, 'emit');
+        vi.spyOn(component.toggle().itemClick, 'emit');
 
         touchClick(fixture, element.querySelectorAll<HTMLElement>('.status-toggle-item')[1], true);
         expect(component.toggle().value()).toEqual('B');
@@ -163,7 +163,7 @@ describe('SiStatusToggleComponent', () => {
     it('should emit clicked button value with mouse', () => {
       fixture.detectChanges();
 
-      spyOn(component.toggle().itemClick, 'emit');
+      vi.spyOn(component.toggle().itemClick, 'emit');
 
       touchClick(fixture, element.querySelectorAll<HTMLElement>('.status-toggle-item')[1], false);
       expect(component.toggle().value()).toEqual('B');

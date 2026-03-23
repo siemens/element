@@ -14,13 +14,13 @@ import { SiSelectHarness } from '@siemens/element-ng/select/testing';
 import { SelectOption, SelectItem, SiSelectComponent, SiSelectModule } from './index';
 import { SiSelectSelectionStrategy } from './selection/si-select-selection-strategy';
 
-const OPTIONS_LIST: readonly SelectOption<string>[] = [
+const OPTIONS_LIST: SelectOption<string>[] = [
   { type: 'option', value: 'good', icon: 'element-face-happy', label: 'Good' },
   { type: 'option', value: 'average', icon: 'element-face-neutral', label: 'Average' },
   { type: 'option', value: 'poor', icon: 'element-face-unhappy', label: 'Poor' }
 ];
 
-const OPTIONS_LIST_NEXT: readonly SelectOption<number>[] = [
+const OPTIONS_LIST_NEXT: SelectOption<number>[] = [
   { type: 'option', value: 0, icon: 'element-face-happy', label: 'Good' },
   { type: 'option', value: 1, icon: 'element-face-neutral', label: 'Average' },
   { type: 'option', value: 2, icon: 'element-face-unhappy', label: 'Poor' }
@@ -40,7 +40,7 @@ class FormHostComponent {
   });
   readonly select = viewChild.required<SiSelectComponent<string>>('select');
   readonly valueDirective = viewChild.required(SiSelectSelectionStrategy);
-  options = OPTIONS_LIST;
+  options: SelectOption<string>[] = OPTIONS_LIST;
   readonly = false;
 }
 
@@ -62,7 +62,7 @@ class TestHostComponent {
   readonly selectionStrategy = viewChild.required(SiSelectSelectionStrategy);
 
   value?: string;
-  options?: readonly SelectOption<string>[] = OPTIONS_LIST;
+  options?: SelectOption<string>[] = OPTIONS_LIST;
   disabled = false;
   readonly = false;
   hasFilter = false;
@@ -86,7 +86,7 @@ class TestHostNumberComponent {
   readonly selectionStrategy = viewChild.required(SiSelectSelectionStrategy);
 
   value?: number;
-  options? = OPTIONS_LIST_NEXT;
+  options?: SelectOption<number>[] = OPTIONS_LIST_NEXT;
   disabled = false;
   readonly = false;
   hasFilter = false;
@@ -113,7 +113,7 @@ class TestHostMultiComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
 
   values?: string[];
-  options?: readonly SelectItem<string>[] = [
+  options?: SelectItem<string>[] = [
     { type: 'option', value: 'good', label: 'Good' },
     { type: 'option', value: 'average', label: 'Average' },
     { type: 'option', value: 'poor', label: 'Poor' }
@@ -148,7 +148,7 @@ class TestHostMultiComponent {
   `
 })
 class TestHostCustomActionComponent {
-  options?: readonly SelectOption<string>[] = OPTIONS_LIST;
+  options?: SelectOption<string>[] = OPTIONS_LIST;
   actionClick(): void {}
 }
 
@@ -624,7 +624,7 @@ describe('SiSelectComponent', () => {
     });
 
     it('should close drop down on custom action click', async () => {
-      spyOn(component, 'actionClick');
+      vi.spyOn(component, 'actionClick');
 
       await selectHarness.clickActionByText({ text: 'close' });
       expect(await selectHarness.getList()).toBeNull();
@@ -632,7 +632,7 @@ describe('SiSelectComponent', () => {
     });
 
     it("shouldn't close drop down on custom action click", async () => {
-      spyOn(component, 'actionClick');
+      vi.spyOn(component, 'actionClick');
       await selectHarness.clickActionByText({ text: 'nothing' });
       expect(await selectHarness.getList()).toBeTruthy();
       expect(component.actionClick).toHaveBeenCalled();
