@@ -399,6 +399,11 @@ export type LoadRemoteModuleScriptOptions = {
   remoteEntry?: string;
   remoteName: string;
   exposedModule: string;
+  /**
+   * Optional nonce value applied to the script element for Content Security Policy (CSP) support.
+   * Supported in Module Federation v21.2.0+; safely ignored by earlier versions.
+   */
+  nonce?: string;
 };
 
 export type LoadRemoteModuleEsmOptions = {
