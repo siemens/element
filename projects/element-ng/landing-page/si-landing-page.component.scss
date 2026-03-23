@@ -26,6 +26,10 @@ $margin-bottom-footer: map.get(all-variables.$spacers, 9);
 }
 
 .landing-page-background {
+  background-image: var(
+    --si-landing-page-background-image,
+    url('../assets/images/landing-page-steel.webp')
+  );
   background-size: cover;
   background-position: center;
 

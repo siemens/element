@@ -3,7 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, TemplateRef, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  TemplateRef,
+  signal
+} from '@angular/core';
 import { CopyrightDetails, SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import {
@@ -62,7 +69,10 @@ import { LandingPageWarning } from './si-landing-page.model';
   ],
   templateUrl: './si-landing-page.component.html',
   styleUrl: './si-landing-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[style.--si-landing-page-background-image]': 'backgroundImageCssUrl()'
+  }
 })
 export class SiLandingPageComponent {
   /**
@@ -85,11 +95,15 @@ export class SiLandingPageComponent {
   readonly links = input<Link[]>([]);
 
   /**
-   * URL to custom background image
-   *
-   * @defaultValue './assets/images/landing-page-steel.webp'
+   * URL to custom background image. When not set, the default image shipped
+   * with the library is used (resolved via CSS).
    */
-  readonly backgroundImageUrl = input('./assets/images/landing-page-steel.webp');
+  readonly backgroundImageUrl = input<string>();
+
+  protected readonly backgroundImageCssUrl = computed(() => {
+    const url = this.backgroundImageUrl();
+    return url ? `url(${url})` : null;
+  });
 
   /**
    * URL to custom brand image.
