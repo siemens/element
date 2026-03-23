@@ -15,15 +15,15 @@ describe('SiSearchBarComponent', () => {
     input!.dispatchEvent(new Event('input'));
   };
 
-  const getParameterFromSpy = (spy: any): string => (spy as jasmine.Spy).calls.mostRecent().args[0];
+  const getParameterFromSpy = (spy: any): string =>
+    (spy as ReturnType<typeof vi.spyOn>).mock.lastCall![0] as string;
 
   beforeEach(() => {
-    jasmine.clock().install();
-    jasmine.clock().mockDate();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   describe('as form control', () => {
@@ -62,7 +62,7 @@ describe('SiSearchBarComponent', () => {
     });
 
     it('should reset search when clicking cancel button', () => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       testComponent.search.setValue('Test1234$');
       fixture.detectChanges();
       element.querySelector<HTMLElement>('button')!.click();
@@ -70,35 +70,34 @@ describe('SiSearchBarComponent', () => {
     });
 
     it('should trigger the change event on input', async () => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       fixture.detectChanges();
       fakeInput('Test1234$', element);
-      jasmine.clock().tick(400);
+      vi.advanceTimersByTime(400);
       await fixture.whenStable();
       expect(getParameterFromSpy(component.searchChange.emit)).toEqual('Test1234$');
     });
 
     it('should trigger the initial change event just once per value', async () => {
       fixture.detectChanges();
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       fakeInput('CodeTest1234$', element);
       fixture.detectChanges();
-      jasmine.clock().tick(400);
-      await fixture.whenStable();
+      await vi.advanceTimersByTimeAsync(400);
       expect(component.searchChange.emit).toHaveBeenCalledTimes(1);
     });
 
     it('should not prohibit characters by default', async () => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       fixture.detectChanges();
       fakeInput('Test1234$', element);
-      jasmine.clock().tick(400);
+      vi.advanceTimersByTime(400);
       await fixture.whenStable();
       expect(getParameterFromSpy(component.searchChange.emit)).toEqual('Test1234$');
     });
 
     it('should not prohibit characters if string is empty', () => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       testComponent.prohibitedCharacters = '1234$';
       fixture.detectChanges();
       fakeInput('', element);
@@ -106,17 +105,17 @@ describe('SiSearchBarComponent', () => {
     });
 
     it('should not prohibit characters if string is valid', async () => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       testComponent.prohibitedCharacters = '1234$';
       fixture.detectChanges();
       fakeInput('Test', element);
-      jasmine.clock().tick(400);
+      vi.advanceTimersByTime(400);
       await fixture.whenStable();
       expect(getParameterFromSpy(component.searchChange.emit)).toEqual('Test');
     });
 
     it('should prohibit characters if string is not valid', () => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       testComponent.prohibitedCharacters = '1234$';
       fixture.detectChanges();
       fakeInput('Test1234$', element);
@@ -133,7 +132,7 @@ describe('SiSearchBarComponent', () => {
     });
 
     it('should not emit values when changed via form control', () => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       fixture.componentInstance.search = new FormControl('Initial Value');
       fixture.detectChanges();
       expect(element.querySelector('input')!.value).toBe('Initial Value');
@@ -169,7 +168,7 @@ describe('SiSearchBarComponent', () => {
     });
 
     it('should not emit values when changed via value input', () => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       testComponent.value = 'Initial Value';
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();

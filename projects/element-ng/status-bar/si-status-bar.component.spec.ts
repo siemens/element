@@ -9,7 +9,7 @@ import {
   MockResizeObserver,
   mockResizeObserver,
   restoreResizeObserver
-} from '../resize-observer/mock-resize-observer.spec';
+} from '../resize-observer/mock-resize-observer.vitest.spec';
 import { runOnPushChangeDetection } from '../test-helpers';
 import { SiStatusBarComponent, StatusBarItem } from './index';
 
@@ -44,16 +44,12 @@ describe('SiStatusBarComponent', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
 
-    jasmine.clock().install();
-  });
-
-  afterAll(() => {
-    jasmine.clock().uninstall();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
     restoreResizeObserver();
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should display all items with relevant content', () => {
@@ -75,7 +71,7 @@ describe('SiStatusBarComponent', () => {
   });
 
   it('should invoke callback action if set', () => {
-    const spy = jasmine.createSpy();
+    const spy = vi.fn();
     component.items = [{ title: 'Success', status: 'success', value: 200, action: spy }];
     fixture.detectChanges();
     element.querySelector<HTMLElement>('si-status-bar-item')!.click();
@@ -90,13 +86,13 @@ describe('SiStatusBarComponent', () => {
 
     const mute = element.querySelector('.mute-button > si-icon') as HTMLElement;
     expect(mute).toBeTruthy();
-    expect(mute.getAttribute('data-icon')).toBe('elementSoundOn');
+    expect(mute).toHaveAttribute('data-icon', 'elementSoundOn');
 
     component.muteButton = false;
     // uninstall clock before doing runOnPushChangeDetection
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
     await runOnPushChangeDetection(fixture);
-    expect(mute.getAttribute('data-icon')).not.toBe('elementSoundOn');
+    expect(mute).not.toHaveAttribute('data-icon', 'elementSoundOn');
   });
 
   describe('responsive mode', () => {
@@ -106,7 +102,7 @@ describe('SiStatusBarComponent', () => {
       component.width.set(outerSize);
       fixture.detectChanges();
       MockResizeObserver.triggerResize({});
-      jasmine.clock().tick(200);
+      vi.advanceTimersByTime(200);
       fixture.detectChanges();
       await fixture.whenStable();
     };
@@ -203,12 +199,12 @@ describe('SiStatusBarComponent', () => {
 
       expander.click();
       fixture.detectChanges();
-      jasmine.clock().tick(1000);
+      vi.advanceTimersByTime(1000);
 
       expect(element.querySelector('.expanded')).toBeTruthy();
 
       expander.click();
-      jasmine.clock().tick(1000);
+      vi.advanceTimersByTime(1000);
       fixture.detectChanges();
 
       expect(element.querySelector('.expanded')).toBeFalsy();
