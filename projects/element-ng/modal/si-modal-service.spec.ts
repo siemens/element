@@ -29,18 +29,14 @@ describe('SiModalService', () => {
   let service!: SiModalService;
   let appRef!: ApplicationRef;
 
-  beforeEach(() => {
-    jasmine.clock().install();
-    TestBed.configureTestingModule({
-      imports: [DialogComponent, DialogTemplateComponent]
-    }).compileComponents();
-
+  beforeEach(async () => {
+    vi.useFakeTimers();
     service = TestBed.inject(SiModalService);
     appRef = TestBed.inject(ApplicationRef);
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   describe('with template', () => {
@@ -64,7 +60,7 @@ describe('SiModalService', () => {
       expect(bodyStyle.overflow).toBe('hidden');
 
       modalRef.hide();
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
       appRef.tick();
 
       expect(document.querySelector('si-modal')).toBeFalsy();
@@ -83,7 +79,7 @@ describe('SiModalService', () => {
       expect(modal?.innerHTML).toContain('test component');
 
       modalRef.hide();
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
       appRef.tick();
 
       expect(document.querySelector('si-modal')).toBeFalsy();
@@ -101,7 +97,7 @@ describe('SiModalService', () => {
       appRef.tick();
       expect(modal?.innerHTML).toContain('new input value');
       modalRef.hide();
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
       appRef.tick();
     });
   });
