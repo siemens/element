@@ -34,7 +34,7 @@
           colorVariant="base-0"
           prohibitedCharacters="*?"
           [placeholder]="searchPlaceholder() | translate"
-          [debounceTime]="searchInputDelay"
+          [debounceTime]="searchDebounceTime()"
           [showIcon]="true"
           (searchChange)="doSearch($event)"
         />
