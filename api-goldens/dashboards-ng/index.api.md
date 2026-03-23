@@ -129,6 +129,7 @@ export type LoadRemoteModuleScriptOptions = {
     remoteEntry?: string;
     remoteName: string;
     exposedModule: string;
+    nonce?: string;
 };
 
 // @public
