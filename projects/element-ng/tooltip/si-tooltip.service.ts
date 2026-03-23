@@ -4,12 +4,12 @@
  */
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { ComponentRef, ElementRef, inject, Injectable, Injector } from '@angular/core';
+import { ComponentRef, ElementRef, inject, Injectable, Injector, signal, WritableSignal } from '@angular/core';
 import { getOverlay, getPositionStrategy, positions } from '@siemens/element-ng/common';
 import { Subscription } from 'rxjs';
 
 import { TooltipComponent } from './si-tooltip.component';
-import { SI_TOOLTIP_CONFIG, SiTooltipContent } from './si-tooltip.model';
+import { SI_TOOLTIP_CONFIG, SiTooltipContent, TooltipTrigger } from './si-tooltip.model';
 
 /**
  * TooltipRef is attached to a specific element.
@@ -21,12 +21,15 @@ class TooltipRef {
   constructor(
     private overlayRef: OverlayRef,
     private element: ElementRef,
-    private injector?: Injector
+    private trigger: WritableSignal<TooltipTrigger>,
+    private injector: Injector
   ) {}
 
   private subscription?: Subscription;
 
-  show(): void {
+  show(trigger: TooltipTrigger = 'focus'): void {
+    this.trigger.set(trigger);
+
     if (this.overlayRef.hasAttached()) {
       return;
     }
@@ -72,6 +75,7 @@ export class SiTooltipService {
     tooltip: () => SiTooltipContent;
     tooltipContext: () => unknown;
   }): TooltipRef {
+    const trigger = signal<TooltipTrigger>('focus');
     const injector = Injector.create({
       parent: config.injector,
       providers: [
@@ -80,7 +84,8 @@ export class SiTooltipService {
           useValue: {
             id: config.describedBy,
             tooltip: config.tooltip,
-            tooltipContext: config.tooltipContext
+            tooltipContext: config.tooltipContext,
+            trigger
           }
         }
       ]
@@ -89,6 +94,7 @@ export class SiTooltipService {
     return new TooltipRef(
       getOverlay(config.element, this.overlay, false, config.placement),
       config.element,
+      trigger,
       injector
     );
   }
