@@ -5,7 +5,7 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import {
@@ -48,17 +48,18 @@ class EmptyComponent {}
 @Component({
   imports: [SiNavbarVerticalComponent],
   template: `<si-navbar-vertical
-    [items]="items"
-    [searchable]="searchable"
-    [textOnly]="textOnly"
+    [items]="items()"
+    [searchable]="true"
+    [textOnly]="textOnly()"
     [stateId]="stateId"
-    [collapsed]="collapsed"
+    [collapsed]="collapsed()"
+    [searchDebounceTime]="0"
     (searchEvent)="searchEvent($event)"
     (itemsChange)="itemsChange($event)"
   />`
 })
 class TestHostComponent {
-  items: (MenuItem | NavbarVerticalItem)[] = [
+  readonly items = signal<(MenuItem | NavbarVerticalItem)[]>([
     {
       title: 'item-1',
       link: './item-1'
@@ -67,11 +68,10 @@ class TestHostComponent {
       title: 'item-2',
       link: './item-2'
     }
-  ];
-  searchable = true;
-  textOnly = true;
+  ]);
+  readonly textOnly = signal(true);
   stateId?: string;
-  collapsed = false;
+  readonly collapsed = signal(false);
 
   searchEvent(event: string): void {}
 
@@ -116,18 +116,8 @@ describe('SiNavbarVertical', () => {
     let harness: SiNavbarVerticalHarness;
     beforeEach(async () => (harness = await harnessLoader.getHarness(SiNavbarVerticalHarness)));
 
-    beforeEach(() => {
-      jasmine.clock().install();
-      jasmine.clock().mockDate();
-    });
-
-    afterEach(() => {
-      jasmine.clock().uninstall();
-    });
-
     it('should expand/collapse navbar with click', async () => {
-      component.collapsed = true;
-      fixture.changeDetectorRef.markForCheck();
+      component.collapsed.set(true);
       expect(await harness.isCollapsed()).toBe(true);
       await harness.toggleCollapse();
       expect(await harness.isExpanded()).toBe(true);
@@ -136,9 +126,8 @@ describe('SiNavbarVertical', () => {
     });
 
     it('should expand on search button click with textonly false', async () => {
-      component.textOnly = false;
-      component.collapsed = true;
-      fixture.changeDetectorRef.markForCheck();
+      component.textOnly.set(false);
+      component.collapsed.set(true);
       await harness.clickSearch();
       expect(await harness.isExpanded()).toBe(true);
     });
@@ -162,8 +151,8 @@ describe('SiNavbarVertical', () => {
 
     it('should keep consumer provided collapsed state', async () => {
       const breakpointObserver = TestBed.inject(BreakpointObserverMock);
-      component.collapsed = true;
-      fixture.changeDetectorRef.markForCheck();
+      component.collapsed.set(true);
+      await fixture.whenStable();
       breakpointObserver.isSmall.next(false);
       fixture.detectChanges();
       breakpointObserver.isSmall.next(true);
@@ -173,32 +162,31 @@ describe('SiNavbarVertical', () => {
     });
 
     it('should open flyout menu', async () => {
-      component.collapsed = true;
-      component.items = [{ 'type': 'group', 'children': [], 'label': 'item-1' }];
-      fixture.changeDetectorRef.markForCheck();
+      component.collapsed.set(true);
+      component.items.set([{ 'type': 'group', 'children': [], 'label': 'item-1' }]);
+
       const item = await harness.findItemByLabel('item-1');
       await item.click();
-      await fixture.whenStable();
+
       expect(await item.isFlyout()).toBe(true);
       document.body.click();
-      await fixture.whenStable();
+
       expect(await item.isFlyout()).toBe(false);
     });
 
     it('should emit search event', async () => {
-      component.collapsed = true;
-      fixture.changeDetectorRef.markForCheck();
+      component.collapsed.set(true);
+
       await harness.toggleCollapse();
 
       const spySearch = spyOn(component, 'searchEvent');
       await harness.search('test');
-      jasmine.clock().tick(400);
       await fixture.whenStable();
-      expect(spySearch).toHaveBeenCalledOnceWith('test');
+      expect(spySearch).toHaveBeenCalledWith('test');
     });
 
     it('should support navigation', async () => {
-      component.items = [
+      component.items.set([
         {
           type: 'group',
           children: [
@@ -212,8 +200,8 @@ describe('SiNavbarVertical', () => {
           ],
           label: 'item1'
         }
-      ];
-      fixture.changeDetectorRef.markForCheck();
+      ]);
+      await fixture.whenStable();
 
       const item = await harness.findItemByLabel('item1');
       await item.click();
@@ -237,7 +225,7 @@ describe('SiNavbarVertical', () => {
     });
 
     it('should support navigation legacy item', async () => {
-      component.items = [
+      component.items.set([
         {
           items: [
             { title: 'sub-item1', link: 'item-1/sub-item-1' },
@@ -246,8 +234,7 @@ describe('SiNavbarVertical', () => {
           link: 'somewhere-else',
           title: 'item1'
         }
-      ];
-      fixture.changeDetectorRef.markForCheck();
+      ]);
 
       const [link, toggle] = await harness.findItems();
       await link.click();
@@ -284,10 +271,10 @@ describe('SiNavbarVertical', () => {
     });
 
     it('should load ui-state', async () => {
-      component.items = [
+      component.items.set([
         { title: 'item1', id: 'item1', items: [{ title: 'subItem1' }, { title: 'subItem2' }] },
         { title: 'item2', id: 'item2', items: [{ title: 'subItem1' }, { title: 'subItem2' }] }
-      ];
+      ]);
       const harness = await harnessLoader.getHarness(SiNavbarVerticalHarness);
       const [item1, item2] = await harness.findItems();
       expect(await item1.getLabel()).toEqual('item1');
@@ -297,11 +284,10 @@ describe('SiNavbarVertical', () => {
     });
 
     it('should save ui-state', async () => {
-      component.items = [
+      component.items.set([
         { title: 'item1', id: 'item1', items: [{ title: 'subItem1' }, { title: 'subItem2' }] },
         { title: 'item2', id: 'item2', items: [{ title: 'subItem1' }, { title: 'subItem2' }] }
-      ];
-
+      ]);
       const harness = await harnessLoader.getHarness(SiNavbarVerticalHarness);
       await harness.findItemByLabel('item2').then(item => item.click());
       const state = await uiStateService.load<any>(component.stateId!);
@@ -309,10 +295,10 @@ describe('SiNavbarVertical', () => {
     });
 
     it('should load/save UI State for new items style', async () => {
-      component.items = [
+      component.items.set([
         { type: 'group', children: [], label: 'item1', id: 'item1' },
         { type: 'group', children: [], label: 'item2', id: 'item2', expanded: true }
-      ];
+      ]);
 
       const harness = await harnessLoader.getHarness(SiNavbarVerticalHarness);
       const [item1, item2] = await harness.findItems();
@@ -333,7 +319,7 @@ describe('SiNavbarVertical', () => {
 
     it('should not restore expanded state on small screen', async () => {
       const breakpointObserver = TestBed.inject(BreakpointObserverMock);
-      component.collapsed = true;
+      component.collapsed.set(true);
       await uiStateService.save(component.stateId!, { preferCollapse: false });
       const harness = await harnessLoader.getHarness(SiNavbarVerticalHarness);
       breakpointObserver.isSmall.next(true);

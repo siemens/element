@@ -90,6 +90,7 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
     readonly navbarCollapseButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly navbarExpandButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly searchable: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly searchDebounceTime: _angular_core.InputSignal<number>;
     readonly searchEvent: _angular_core.OutputEmitterRef<string>;
     readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly skipLinkMainContentLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
