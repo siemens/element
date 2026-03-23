@@ -37,7 +37,9 @@
 - checkbox "Validate" [checked]
 - text: Validate
 - checkbox "Can wrap"
-- text: Can wrap Max. steps
+- text: Can wrap
+- checkbox "Use alias for step values"
+- text: Use alias for step values Max. steps
 - spinbutton "Max. steps"
 - text: Min. value
 - spinbutton "Min. value"

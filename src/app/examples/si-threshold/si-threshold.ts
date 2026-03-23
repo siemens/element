@@ -66,15 +66,15 @@ export class SampleComponent {
   ];
 
   readonly thresholdSteps: ThresholdStep[] = [
-    { value: undefined, optionValue: 'unhealthy' },
-    { value: 10, optionValue: 'poor' },
-    { value: 15, optionValue: 'average' },
-    { value: 20, optionValue: 'good' },
-    { value: 23, optionValue: 'very-good' },
-    { value: 26, optionValue: 'good' },
-    { value: 28, optionValue: 'average' },
-    { value: 33, optionValue: 'poor' },
-    { value: 40, optionValue: 'unhealthy' }
+    { value: undefined, optionValue: 'unhealthy', aliasLabel: 'No value' },
+    { value: 10, optionValue: 'poor', aliasLabel: 'Ten' },
+    { value: 15, optionValue: 'average', aliasLabel: 'Fifteen' },
+    { value: 20, optionValue: 'good', aliasLabel: 'Twenty' },
+    { value: 23, optionValue: 'very-good', aliasLabel: 'Twenty-three' },
+    { value: 26, optionValue: 'good', aliasLabel: 'Twenty-six' },
+    { value: 28, optionValue: 'average', aliasLabel: 'Twenty-eight' },
+    { value: 33, optionValue: 'poor', aliasLabel: 'Thirty-three' },
+    { value: 40, optionValue: 'unhealthy', aliasLabel: 'Forty' }
   ];
 
   canAddRemove = true;
@@ -90,4 +90,5 @@ export class SampleComponent {
   validation = true;
   valid = true;
   wrap = false;
+  useAliasForStepValues = false;
 }

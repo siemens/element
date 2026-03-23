@@ -29,6 +29,7 @@ import { SiThresholdComponent, ThresholdStep } from './index';
       [stepSize]="stepSize"
       [showDecIncButtons]="showDecIncButtons"
       [validation]="validation"
+      [useAliasForStepValues]="useAliasForStepValues"
       [(thresholdSteps)]="thresholdSteps"
       (validChange)="valid = $event"
       (thresholdStepsChange)="thresholdStepsChange($event)"
@@ -52,6 +53,7 @@ class TestHostComponent {
   validation!: boolean;
   valid = true;
   wrap = false;
+  useAliasForStepValues = false;
 
   thresholdStepsChange(steps: ThresholdStep[]): void {}
 }
@@ -232,5 +234,50 @@ describe('SiThresholdComponent', () => {
       .map(option => option.nativeElement.innerText);
 
     expect(readonlyOptions).toEqual(['Poor', 'Average', 'Good', 'Average', 'Poor']);
+  });
+
+  describe('useAliasForStepValues', () => {
+    beforeEach(async () => {
+      component.useAliasForStepValues = true;
+      component.thresholdSteps = [
+        { value: undefined, optionValue: 'poor' },
+        { value: 15, optionValue: 'average', aliasLabel: 'Low' },
+        { value: 20, optionValue: 'good', aliasLabel: 'Medium' },
+        { value: 30, optionValue: 'poor', aliasLabel: 'High' }
+      ];
+      await runOnPushChangeDetection(fixture);
+    });
+
+    it('should hide add and delete buttons', () => {
+      expect(element.querySelectorAll('[aria-label="Add step"]').length).toBe(0);
+      expect(element.querySelectorAll('[aria-label="Delete step"]').length).toBe(0);
+    });
+
+    it('should show readonly text inputs instead of number inputs', () => {
+      const numberInputs = element.querySelectorAll('si-number-input');
+      expect(numberInputs.length).toBe(0);
+
+      const textInputs = element.querySelectorAll<HTMLInputElement>('.ths-value input[readonly]');
+      expect(textInputs.length).toBe(3);
+    });
+
+    it('should display alias labels in readonly inputs', () => {
+      const textInputs = element.querySelectorAll<HTMLInputElement>('.ths-value input[readonly]');
+      expect(textInputs[0].value).toBe('Low');
+      expect(textInputs[1].value).toBe('Medium');
+      expect(textInputs[2].value).toBe('High');
+    });
+
+    it('should display empty value when aliasLabel is not set', async () => {
+      component.thresholdSteps = [
+        { value: undefined, optionValue: 'poor' },
+        { value: 15, optionValue: 'average' }
+      ];
+      await runOnPushChangeDetection(fixture);
+
+      const textInputs = element.querySelectorAll<HTMLInputElement>('.ths-value input[readonly]');
+      expect(textInputs.length).toBe(1);
+      expect(textInputs[0].value).toBe('');
+    });
   });
 });
