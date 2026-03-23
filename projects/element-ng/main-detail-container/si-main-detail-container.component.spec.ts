@@ -8,11 +8,13 @@ import {
   Component,
   DebugElement,
   inject,
+  signal,
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
+import { type Mock } from 'vitest';
 
 import {
   BOOTSTRAP_BREAKPOINTS,
@@ -27,12 +29,12 @@ import { SiMainDetailContainerComponent } from './si-main-detail-container.compo
     <si-main-detail-container
       class="vh-100"
       stateId="si-main-detail-container-1"
-      [heading]="heading"
-      [truncateHeading]="truncateHeading"
-      [detailsHeading]="detailsHeading"
-      [hideBackButton]="hideBackButton"
+      [heading]="heading()"
+      [truncateHeading]="truncateHeading()"
+      [detailsHeading]="detailsHeading()"
+      [hideBackButton]="hideBackButton()"
       [largeLayoutBreakpoint]="largeLayoutBreakpoint"
-      [resizableParts]="resizableParts"
+      [resizableParts]="resizableParts()"
       [(detailsActive)]="detailsActive"
       (hasLargeSizeChange)="hasLargeSizeChanged($event)"
       (mainContainerWidthChange)="mainContainerWidthChanged($event)"
@@ -49,16 +51,16 @@ import { SiMainDetailContainerComponent } from './si-main-detail-container.compo
 class WrapperComponent {
   readonly mainDetail = viewChild.required(SiMainDetailContainerComponent);
 
-  heading = 'heading';
-  truncateHeading = false;
-  detailsHeading = 'details-heading';
-  hideBackButton = false;
-  resizableParts = false;
+  readonly heading = signal('heading');
+  readonly truncateHeading = signal(false);
+  readonly detailsHeading = signal('details-heading');
+  readonly hideBackButton = signal(false);
+  readonly resizableParts = signal(false);
   largeLayoutBreakpoint = BOOTSTRAP_BREAKPOINTS.mdMinimum;
-  detailsActive = false;
+  readonly detailsActive = signal(false);
   cdRef = inject(ChangeDetectorRef);
   hasLargeSizeChanged(e: boolean): void {}
-  mainContainerWidthChanged(w: number): void {}
+  mainContainerWidthChanged(w: number | 'default'): void {}
 }
 
 describe('MainDetailContainerComponent', () => {
@@ -67,7 +69,7 @@ describe('MainDetailContainerComponent', () => {
   let debugElement: DebugElement;
   let htmlElement: HTMLElement;
 
-  let doAnimationSpy: jasmine.Spy;
+  let doAnimationSpy: Mock;
   const getSiSplit = (): HTMLElement => htmlElement.querySelector('si-split') as HTMLElement;
   const getMainDetailContainer = (): HTMLElement =>
     htmlElement.querySelector('.main-detail-container') as HTMLElement;
@@ -89,12 +91,12 @@ describe('MainDetailContainerComponent', () => {
 
   const animationDurationMilliseconds = 500;
   const resizeObserver = new Subject<ElementDimensions>();
-  const resizeSpy = jasmine.createSpyObj('ResizeObserverService', ['observe']);
+  const resizeSpy = {
+    observe: vi.fn()
+  };
 
   beforeEach(async () => {
-    resizeSpy.observe.and.callFake((e: Element, t: number, i: boolean, im?: boolean) => {
-      return resizeObserver;
-    });
+    resizeSpy.observe.mockReturnValue(resizeObserver);
 
     await TestBed.configureTestingModule({
       imports: [WrapperComponent],
@@ -111,59 +113,59 @@ describe('MainDetailContainerComponent', () => {
     debugElement = fixture.debugElement;
     htmlElement = debugElement.nativeElement;
     fixture.detectChanges();
-    doAnimationSpy = spyOn<any>(component.mainDetail(), 'doAnimation').and.callThrough();
+    // @ts-expect-error accessing private method for testing purposes
+    doAnimationSpy = vi.spyOn(component.mainDetail(), 'doAnimation');
     resizeObserver.next({ width: 800, height: 500 });
 
-    jasmine.clock().install();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should not contain si-split when #resizableParts is false', () => {
     expect(htmlElement.querySelector('si-split')).toBeFalsy();
   });
 
-  it('should contain si-split when #resizableParts is true', () => {
-    component.resizableParts = true;
-    fixture.detectChanges();
+  it('should contain si-split when #resizableParts is true', async () => {
+    component.resizableParts.set(true);
+    await fixture.whenStable();
 
     expect(htmlElement.querySelector('si-split')).toBeTruthy();
-    expect(htmlElement.querySelectorAll('si-split-part')).toHaveSize(2);
+    expect(htmlElement.querySelectorAll('si-split-part')).toHaveLength(2);
   });
 
-  it('should hide the heading component when heading input text is empty', () => {
-    component.heading = '';
-    fixture.detectChanges();
+  it('should hide the heading component when heading input text is empty', async () => {
+    component.heading.set('');
+    await fixture.whenStable();
 
     expect(htmlElement.querySelector('.si-layout-header')).toBeFalsy();
   });
 
-  it('should add text-truncate class to header when setting #truncateHeading', () => {
-    component.truncateHeading = true;
-    fixture.detectChanges();
+  it('should add text-truncate class to header when setting #truncateHeading', async () => {
+    component.truncateHeading.set(true);
+    await fixture.whenStable();
 
     expect(htmlElement.querySelector('.si-layout-title')?.classList).toContain('text-truncate');
   });
 
-  it('should remove details heading component when #detailsHeading is empty', () => {
-    component.detailsHeading = '';
-    fixture.detectChanges();
+  it('should remove details heading component when #detailsHeading is empty', async () => {
+    component.detailsHeading.set('');
+    await fixture.whenStable();
 
     expect(htmlElement.querySelector('.detail-heading')).toBeFalsy();
   });
 
   describe('toggling the detailsActive state', () => {
-    beforeEach(() => {
-      component.detailsActive = false;
-      fixture.detectChanges();
+    beforeEach(async () => {
+      component.detailsActive.set(false);
+      await fixture.whenStable();
     });
 
-    it('should apply a class indicating to animate the view change', () => {
+    it('should apply a class indicating to animate the view change', async () => {
       // prepare
-      component.detailsActive = true;
-      component.cdRef.markForCheck();
+      component.detailsActive.set(true);
       // act
       fixture.detectChanges();
       // expect
@@ -173,14 +175,13 @@ describe('MainDetailContainerComponent', () => {
 
     it('should remove a class indicating to animate the view change after a timeout', () => {
       // prepare
-      component.detailsActive = true;
-      component.cdRef.markForCheck();
+      component.detailsActive.set(true);
       fixture.detectChanges();
       // act
-      jasmine.clock().tick(animationDurationMilliseconds);
+      vi.advanceTimersByTime(animationDurationMilliseconds);
       fixture.detectChanges();
       // flush timeout
-      jasmine.clock().tick(0);
+      vi.advanceTimersByTime(0);
       fixture.detectChanges();
       // expect
       expect(doAnimationSpy).toHaveBeenCalledWith(true);
@@ -192,12 +193,12 @@ describe('MainDetailContainerComponent', () => {
   });
 
   describe('responsive behaviour', () => {
-    it('should show a si-split container when container parts should be resizable and when the container has large size', () => {
+    it('should show a si-split container when container parts should be resizable and when the container has large size', async () => {
       // prepare
       resizeObserver.next({ width: component.largeLayoutBreakpoint, height: 500 });
-      component.resizableParts = true;
+      component.resizableParts.set(true);
       // act
-      fixture.detectChanges();
+      await fixture.whenStable();
       // expect
       expect(getSiSplit()).toBeTruthy();
       expect(getMainDetailContainer()).toBeFalsy();
@@ -206,7 +207,7 @@ describe('MainDetailContainerComponent', () => {
     it('should show a non-resizable div container when container parts should not be resizable or when the container does not have large size', () => {
       // prepare
       resizeObserver.next({ width: component.largeLayoutBreakpoint - 1, height: 500 });
-      component.resizableParts = true;
+      component.resizableParts.set(true);
       // act
       fixture.detectChanges();
       // expect
@@ -215,7 +216,7 @@ describe('MainDetailContainerComponent', () => {
 
       // prepare
       resizeObserver.next({ width: component.largeLayoutBreakpoint, height: 500 });
-      component.resizableParts = false;
+      component.resizableParts.set(false);
       // act
       fixture.detectChanges();
       // expect
@@ -224,7 +225,7 @@ describe('MainDetailContainerComponent', () => {
 
       // prepare
       resizeObserver.next({ width: component.largeLayoutBreakpoint - 1, height: 500 });
-      component.resizableParts = false;
+      component.resizableParts.set(false);
       // act
       fixture.detectChanges();
       // expect
@@ -235,13 +236,13 @@ describe('MainDetailContainerComponent', () => {
     it('should only have the main pane in view on small screens when details are inactive', () => {
       // prepare
       resizeObserver.next({ width: component.largeLayoutBreakpoint - 1, height: 500 });
-      component.detailsActive = false;
+      component.detailsActive.set(false);
       // act
-      jasmine.clock().tick(animationDurationMilliseconds);
+      vi.advanceTimersByTime(animationDurationMilliseconds);
       fixture.detectChanges();
       const detailContainer = getDetailContainer();
       // flush timeout
-      jasmine.clock().tick(0);
+      vi.advanceTimersByTime(0);
       fixture.detectChanges();
       // expect
       expect(getInViewport(detailContainer)).toBe(false);
@@ -250,12 +251,12 @@ describe('MainDetailContainerComponent', () => {
     it('should set inert attribute to prevent focus hidden details when details are inactive', () => {
       // prepare
       resizeObserver.next({ width: component.largeLayoutBreakpoint - 1, height: 500 });
-      component.detailsActive = false;
+      component.detailsActive.set(false);
       // act
-      jasmine.clock().tick(animationDurationMilliseconds);
+      vi.advanceTimersByTime(animationDurationMilliseconds);
       fixture.detectChanges();
       // flush timeout
-      jasmine.clock().tick(0);
+      vi.advanceTimersByTime(0);
       fixture.detectChanges();
       // expect
       expect(debugElement.query(By.css('.detail-container[inert]'))).toBeTruthy();
@@ -264,12 +265,12 @@ describe('MainDetailContainerComponent', () => {
     it('should not set inert attribute when details are active', () => {
       // prepare
       resizeObserver.next({ width: component.largeLayoutBreakpoint - 1, height: 500 });
-      component.detailsActive = true;
+      component.detailsActive.set(true);
       // act
-      jasmine.clock().tick(animationDurationMilliseconds);
+      vi.advanceTimersByTime(animationDurationMilliseconds);
       fixture.detectChanges();
       // flush timeout
-      jasmine.clock().tick(0);
+      vi.advanceTimersByTime(0);
       fixture.detectChanges();
       // expect
       expect(debugElement.query(By.css('.detail-container :not([inert])'))).toBeTruthy();
@@ -281,33 +282,32 @@ describe('MainDetailContainerComponent', () => {
       resizeObserver.next({ width: component.largeLayoutBreakpoint - 1, height: 500 });
     });
 
-    it('should unset detailsActive when detail back button was clicked', () => {
+    it('should unset detailsActive when detail back button was clicked', async () => {
       // prepare
-      component.detailsActive = true;
-      fixture.detectChanges();
+      component.detailsActive.set(true);
+      await fixture.whenStable();
       // act
       htmlElement.querySelector('button')?.click();
-      fixture.detectChanges();
       // expect
-      expect(component.detailsActive).toBe(false);
+      expect(component.detailsActive()).toBe(false);
     });
 
-    it('should not show details back button', () => {
-      component.hideBackButton = true;
-      fixture.detectChanges();
+    it('should not show details back button', async () => {
+      component.hideBackButton.set(true);
+      await fixture.whenStable();
 
       expect(htmlElement.querySelector('button')).toBeFalsy();
     });
 
     it('should only have the detail pane in view on small screens when details are active', () => {
       // prepare
-      component.detailsActive = true;
+      component.detailsActive.set(true);
       // act
-      jasmine.clock().tick(animationDurationMilliseconds);
+      vi.advanceTimersByTime(animationDurationMilliseconds);
       fixture.detectChanges();
       const mainContainer = getMainContainer();
       // flush timeout
-      jasmine.clock().tick(0);
+      vi.advanceTimersByTime(0);
       fixture.detectChanges();
       // expect
       expect(getInViewport(mainContainer)).toBe(false);

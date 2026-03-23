@@ -85,7 +85,7 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [{ provide: SiLinkActionService, useValue: jasmine.createSpyObj(['emit']) }]
+        providers: [{ provide: SiLinkActionService, useValue: { emit: vi.fn() } }]
       });
       fixture = TestBed.createComponent(componentType);
       loader = TestbedHarnessEnvironment.loader(fixture);
@@ -94,10 +94,10 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
 
     it('should toggle checkbox', async () => {
       const checkboxIndex = 2;
-      const spy = spyOn(
+      const spy = vi.spyOn(
         fixture.componentInstance.items[checkboxIndex] as { action: (action?: any) => void },
         'action'
-      ).and.callThrough();
+      );
 
       await toggle();
       const checkMenuItem = await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'check' }));
@@ -167,7 +167,7 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
 
     it('should trigger an action', async () => {
       const actionIndex = 6;
-      const spy = spyOn(
+      const spy = vi.spyOn(
         fixture.componentInstance.items[actionIndex] as { action: (action?: any) => void },
         'action'
       );
@@ -179,9 +179,7 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
 
     it('should trigger action service', async () => {
       const actionIndex = 7;
-      const actionService = TestBed.inject(
-        SiLinkActionService
-      ) as jasmine.SpyObj<SiLinkActionService>;
+      const actionService = TestBed.inject(SiLinkActionService);
 
       await toggle();
       const menuItem = await rootLoader.getHarness(
