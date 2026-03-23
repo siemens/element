@@ -10,7 +10,7 @@ import {
   MockResizeObserver,
   mockResizeObserver,
   restoreResizeObserver
-} from './mock-resize-observer.spec';
+} from './testing/resize-observer.mock';
 
 @Component({
   imports: [SiResponsiveContainerDirective],
@@ -44,17 +44,17 @@ describe('SiResponsiveContainerDirective', () => {
   afterEach(() => restoreResizeObserver());
 
   const testSize = async (size: number, clazz: string): Promise<void> => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     component.width.set(size);
     fixture.detectChanges();
     MockResizeObserver.triggerResize({});
 
-    jasmine.clock().tick(100);
+    vi.advanceTimersByTime(100);
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(element.querySelector<HTMLElement>('div')!.className).toBe(clazz);
-    jasmine.clock().uninstall();
+    expect(element.querySelector<HTMLElement>('div')!).toHaveClass(clazz);
+    vi.useRealTimers();
   };
 
   it('sets correct si-container-* class', async () => {

@@ -26,6 +26,7 @@ export const restoreResizeObserver = (): void => {
 export class MockResizeObserver {
   static instance: MockResizeObserver;
   private callback: ResizeObserverCallback;
+  /** @defaultValue [] */
   observed: [Element, ResizeObserverOptions | undefined][] = [];
 
   constructor(callback: ResizeObserverCallback) {
@@ -33,12 +34,34 @@ export class MockResizeObserver {
     MockResizeObserver.instance = this;
   }
 
+  /**
+   * @defaultValue
+   * ```
+   * vi.fn(() => (this.observed = []))
+   * ```
+   */
   disconnect = vi.fn(() => (this.observed = []));
 
+  /**
+   * @defaultValue
+   * ```
+   * vi.fn((target: Element, options?: ResizeObserverOptions) =>
+  this.observed.push([target, options])
+  )
+   * ```
+   */
   observe = vi.fn((target: Element, options?: ResizeObserverOptions) =>
     this.observed.push([target, options])
   );
 
+  /**
+   * @defaultValue
+   * ```
+   * vi.fn(
+  (target: Element) => (this.observed = this.observed.filter(x => x[0] !== target))
+  )
+   * ```
+   */
   unobserve = vi.fn(
     (target: Element) => (this.observed = this.observed.filter(x => x[0] !== target))
   );

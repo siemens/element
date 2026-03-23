@@ -5,13 +5,14 @@
 import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subscription } from 'rxjs';
+import { Mock } from 'vitest';
 
+import { ElementDimensions, ResizeObserverService } from './resize-observer.service';
 import {
   MockResizeObserver,
   mockResizeObserver,
   restoreResizeObserver
-} from './mock-resize-observer.spec';
-import { ElementDimensions, ResizeObserverService } from './resize-observer.service';
+} from './testing/resize-observer.mock';
 
 @Component({
   template: `<div #theDiv [style.width.px]="width()" [style.height.px]="height()">Testli</div>`
@@ -33,7 +34,7 @@ describe('ResizeObserverService', () => {
   let component: TestHostComponent;
   let service: ResizeObserverService;
   let subscription: Subscription;
-  let spy: jasmine.Spy<(dim: ElementDimensions) => void>;
+  let spy: Mock<(dim: ElementDimensions) => void>;
 
   const subscribe = (initial: boolean): void => {
     subscription = service
@@ -56,7 +57,7 @@ describe('ResizeObserverService', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    spy = jasmine.createSpy();
+    spy = vi.fn();
   });
 
   afterEach(() => {
@@ -67,7 +68,7 @@ describe('ResizeObserverService', () => {
   it('emits initial size event when asked', async () => {
     subscribe(true);
     await timeout(10);
-    expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 100 }));
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
   });
 
   it('emits no initial size event when not asked', async () => {
@@ -87,7 +88,7 @@ describe('ResizeObserverService', () => {
       expect(spy).not.toHaveBeenCalled();
 
       await timeout(150);
-      expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 200, height: 100 }));
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
     }
   });
 
@@ -102,7 +103,7 @@ describe('ResizeObserverService', () => {
       expect(spy).not.toHaveBeenCalled();
 
       await timeout(150);
-      expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 200 }));
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 200 }));
     }
   });
 
@@ -111,20 +112,20 @@ describe('ResizeObserverService', () => {
 
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
-      const spy2: jasmine.Spy<(dim: ElementDimensions) => void> = jasmine.createSpy();
+      const spy2: Mock<(dim: ElementDimensions) => void> = vi.fn();
       const subs2 = service
         .observe(component.theDiv().nativeElement, 50, true)
         .subscribe(dim => spy2(dim));
 
       await timeout(20);
-      expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 100 }));
-      expect(spy2).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 100 }));
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
+      expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
 
       detectSizeChange(200, 100);
 
       await timeout(150);
-      expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 200, height: 100 }));
-      expect(spy2).toHaveBeenCalledWith(jasmine.objectContaining({ width: 200, height: 100 }));
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
+      expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
 
       subs2.unsubscribe();
     }
