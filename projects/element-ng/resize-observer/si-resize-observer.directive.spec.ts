@@ -4,14 +4,15 @@
  */
 import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockInstance } from 'vitest';
 
 import { ElementDimensions } from './index';
+import { SiResizeObserverDirective } from './si-resize-observer.directive';
 import {
   MockResizeObserver,
   mockResizeObserver,
   restoreResizeObserver
-} from './mock-resize-observer.spec';
-import { SiResizeObserverDirective } from './si-resize-observer.directive';
+} from './testing/resize-observer.mock';
 
 @Component({
   imports: [SiResizeObserverDirective],
@@ -39,7 +40,7 @@ class TestHostComponent {
 describe('SiResizeObserverDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
-  let spy: jasmine.Spy<(dim: ElementDimensions) => void>;
+  let spy: MockInstance;
 
   const detectSizeChange = (inlineSize: number = 100, blockSize: number = 100): void => {
     component.width.set(inlineSize);
@@ -50,34 +51,32 @@ describe('SiResizeObserverDirective', () => {
   };
 
   beforeEach(() => {
+    vi.useFakeTimers();
     mockResizeObserver();
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
-    spy = spyOn(component, 'resizeHandler');
+    spy = vi.spyOn(component, 'resizeHandler');
   });
 
-  beforeEach(() => jasmine.clock().install());
-
   afterEach(() => {
+    spy.mockClear();
     restoreResizeObserver();
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('emits initial size event', async () => {
     fixture.detectChanges();
-    jasmine.clock().tick(100);
+    vi.advanceTimersByTime(100);
     await fixture.whenStable();
     expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 100 });
   });
 
   it('emits on width change', async () => {
-    // not interested in the initial event
-    spy.calls.reset();
     detectSizeChange(200, 100);
 
     expect(component.resizeHandler).not.toHaveBeenCalled();
 
-    jasmine.clock().tick(100);
+    vi.advanceTimersByTime(100);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -85,14 +84,11 @@ describe('SiResizeObserverDirective', () => {
   });
 
   it('emits on height change', async () => {
-    // not interested in the initial event
-    spy.calls.reset();
-
     detectSizeChange(100, 200);
 
     expect(component.resizeHandler).not.toHaveBeenCalled();
 
-    jasmine.clock().tick(100);
+    vi.advanceTimersByTime(100);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -103,14 +99,18 @@ describe('SiResizeObserverDirective', () => {
 describe('SiResizeObserverDirective with emitInitial=false', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
-  let spy: jasmine.Spy<(dim: ElementDimensions) => void>;
+  let spy: MockInstance;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     component.emitInitial = false;
-    spy = spyOn(component, 'resizeHandler');
+    spy = vi.spyOn(component, 'resizeHandler');
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    spy.mockClear();
   });
 
   it('does not emit initial size event', () => {

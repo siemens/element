@@ -9,7 +9,7 @@ import {
   MockResizeObserver,
   mockResizeObserver,
   restoreResizeObserver
-} from '../resize-observer/mock-resize-observer.vitest.spec';
+} from '../resize-observer/testing/resize-observer.mock';
 import { SiAutoCollapsableListItemDirective } from './si-auto-collapsable-list-item.directive';
 import { SiAutoCollapsableListModule } from './si-auto-collapsable-list.module';
 
