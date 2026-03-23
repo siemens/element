@@ -23,7 +23,7 @@ import {
   SiSelectSimpleOptionsDirective,
   SiSelectSingleValueDirective
 } from '@siemens/element-ng/select';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiReadonlyThresholdOptionComponent } from './si-readonly-threshold-option.component';
 
@@ -37,6 +37,8 @@ export interface ThresholdStep {
   optionValue: string;
   /** When set to `false`, input fields are highlighted as invalid */
   valid?: boolean;
+  /** Optional alias label for the threshold step, used when `useAliasForStepValues` is `true` */
+  aliasLabel?: TranslatableString;
 }
 
 @Component({
@@ -176,6 +178,14 @@ export class SiThresholdComponent implements OnChanges {
    */
   readonly statusAriaLabel = input(t(() => $localize`:@@SI_THRESHOLD.STATUS:Status`));
 
+  /**
+   * When enabled, numeric step inputs are replaced with readonly text fields displaying the `aliasLabel` of each step.
+   * Add/remove step buttons are also hidden.
+   *
+   * @defaultValue false
+   */
+  readonly useAliasForStepValues = input(false, { transform: booleanAttribute });
+
   /** Fired when validation status changes */
   readonly validChange = output<boolean>();
 
@@ -197,6 +207,14 @@ export class SiThresholdComponent implements OnChanges {
   }
 
   private readonly numberInputs = viewChildren(SiNumberInputComponent);
+
+  protected readonly showAddRemoveButtons = computed(
+    () =>
+      !this.useAliasForStepValues() &&
+      this.canAddRemoveSteps() &&
+      !this.readonly() &&
+      !this.readonlyConditions()
+  );
 
   ngOnChanges(): void {
     this.validate();

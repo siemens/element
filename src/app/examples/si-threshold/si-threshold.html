@@ -15,6 +15,7 @@
       [stepSize]="stepSize"
       [showDecIncButtons]="showDecIncButtons"
       [validation]="validation"
+      [useAliasForStepValues]="useAliasForStepValues"
       (validChange)="valid = $event"
     />
   </div>
@@ -58,6 +59,11 @@
       <div class="col-sm-3">
         <si-form-item label="Can wrap">
           <input type="checkbox" class="form-check-input" [(ngModel)]="wrap" />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="Use alias for step values">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="useAliasForStepValues" />
         </si-form-item>
       </div>
     </div>

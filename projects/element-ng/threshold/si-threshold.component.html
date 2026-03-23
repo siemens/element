@@ -2,7 +2,7 @@
   <div class="ths-step">
     @if (!$first) {
       <div class="ths-value d-flex align-items-center">
-        @if (canAddRemoveSteps() && !readonly() && !readonlyConditions()) {
+        @if (showAddRemoveButtons()) {
           <button
             type="button"
             class="btn btn-circle btn-ghost m-4"
@@ -11,8 +11,7 @@
           >
             <si-icon [icon]="icons.elementDelete" />
           </button>
-        }
-        @if (!canAddRemoveSteps() || readonly() || readonlyConditions()) {
+        } @else {
           <div class="py-4 my-4">&#8203;</div>
         }
         <div class="line">
@@ -21,22 +20,31 @@
           <div class="segment" [class]="colors()[$index]"></div>
         </div>
         <div class="d-flex align-items-center text-nowrap m-4">
-          <si-number-input
-            #valueInput="ngModel"
-            class="form-control text-end"
-            [class.is-invalid]="step.valid === false"
-            [aria-label]="inputAriaLabel() | translate"
-            [readonly]="readonly()"
-            [ngModelOptions]="{ standalone: true }"
-            [min]="minValue()"
-            [max]="maxValue()"
-            [step]="stepSize()"
-            [unit]="unit()"
-            [showButtons]="showDecIncButtons()"
-            [required]="true"
-            [(ngModel)]="step.value"
-            (ngModelChange)="stepChange()"
-          />
+          @if (useAliasForStepValues()) {
+            <input
+              type="text"
+              readonly
+              class="form-control"
+              [value]="step.aliasLabel ?? '' | translate"
+            />
+          } @else {
+            <si-number-input
+              #valueInput="ngModel"
+              class="form-control text-end"
+              [class.is-invalid]="step.valid === false"
+              [aria-label]="inputAriaLabel() | translate"
+              [readonly]="readonly()"
+              [ngModelOptions]="{ standalone: true }"
+              [min]="minValue()"
+              [max]="maxValue()"
+              [step]="stepSize()"
+              [unit]="unit()"
+              [showButtons]="showDecIncButtons()"
+              [required]="true"
+              [(ngModel)]="step.value"
+              (ngModelChange)="stepChange()"
+            />
+          }
         </div>
       </div>
     }
@@ -47,7 +55,7 @@
       />
     }
     <div class="ths-option d-flex align-items-center">
-      @if (canAddRemoveSteps() && !readonly() && !readonlyConditions()) {
+      @if (showAddRemoveButtons()) {
         <button
           type="button"
           class="btn btn-circle btn-secondary m-4"
@@ -57,8 +65,7 @@
         >
           <si-icon [icon]="icons.elementPlus" />
         </button>
-      }
-      @if (!canAddRemoveSteps() || readonly() || readonlyConditions()) {
+      } @else {
         <div class="py-4 my-4">&#8203;</div>
       }
       <div class="line" [class]="colors()[$index]">

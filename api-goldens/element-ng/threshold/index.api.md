@@ -7,15 +7,15 @@
 import * as _angular_core from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { SelectOption } from '@siemens/element-ng/select';
-import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiThresholdComponent implements OnChanges {
-    readonly addAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly addAriaLabel: _angular_core.InputSignal<TranslatableString>;
     readonly canAddRemoveSteps: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly deleteAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly deleteAriaLabel: _angular_core.InputSignal<TranslatableString>;
     readonly horizontalLayout: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly inputAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly inputAriaLabel: _angular_core.InputSignal<TranslatableString>;
     readonly maxSteps: _angular_core.InputSignal<number>;
     readonly maxValue: _angular_core.InputSignal<number>;
     readonly minValue: _angular_core.InputSignal<number>;
@@ -23,10 +23,11 @@ export class SiThresholdComponent implements OnChanges {
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly readonlyConditions: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showDecIncButtons: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly statusAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly statusAriaLabel: _angular_core.InputSignal<TranslatableString>;
     readonly stepSize: _angular_core.InputSignal<number>;
     readonly thresholdSteps: _angular_core.ModelSignal<ThresholdStep[]>;
     readonly unit: _angular_core.InputSignal<string>;
+    readonly useAliasForStepValues: _angular_core.InputSignalWithTransform<boolean, unknown>;
     get valid(): boolean;
     readonly validation: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly validChange: _angular_core.OutputEmitterRef<boolean>;
@@ -38,6 +39,7 @@ export class SiThresholdModule {
 
 // @public
 export interface ThresholdStep {
+    aliasLabel?: TranslatableString;
     optionValue: string;
     valid?: boolean;
     value?: number;
