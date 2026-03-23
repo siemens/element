@@ -16,8 +16,6 @@ import { SiSelectHarness } from '../testing/si-select.harness';
 import { SiSelectLazyOptionsDirective } from './si-select-lazy-options.directive';
 import { SelectOptionSource } from './si-select-option.source';
 
-import createSpy = jasmine.createSpy;
-
 describe('SelectLazyOptionsDirective', () => {
   @Component({
     imports: [
@@ -53,12 +51,11 @@ describe('SelectLazyOptionsDirective', () => {
   });
 
   beforeEach(() => {
-    jasmine.clock().install();
-    jasmine.clock().mockDate();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should render initial value', async () => {
@@ -69,20 +66,19 @@ describe('SelectLazyOptionsDirective', () => {
   });
 
   it('should search for values', async () => {
-    component.optionSource.getOptionsForSearch = createSpy(
-      'getOptionsForSearch',
+    component.optionSource.getOptionsForSearch = vi.fn(
       (search: string): Observable<SelectItem<string>[]> => of(['result'].map(valueToOption))
-    ).and.callThrough();
+    );
 
     const harness = await loader.getHarness(SiSelectHarness);
     await harness.open();
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     await fixture.whenStable();
     const list = (await harness.getList())!;
 
     await list.sendKeys('search');
     expect(component.optionSource.getOptionsForSearch).not.toHaveBeenCalled();
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     await fixture.whenStable();
 
     expect(component.optionSource.getOptionsForSearch).toHaveBeenCalled();
@@ -100,13 +96,13 @@ describe('SelectLazyOptionsDirective', () => {
     const harness = await loader.getHarness(SiSelectHarness);
     await harness.open();
 
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     await fixture.whenStable();
 
     const list = (await harness.getList())!;
     await list.sendKeys('result');
 
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     await fixture.whenStable();
 
     await list.getItemByText('label: result-2').then(item => item.click());
@@ -123,7 +119,7 @@ describe('SelectLazyOptionsDirective', () => {
 
     const harness = await loader.getHarness(SiSelectHarness);
     await harness.open();
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     await fixture.whenStable();
     const list = (await harness.getList())!;
     expect(await list.getAllItemTexts()).toEqual(['label: value-0', 'label: value-1']);
@@ -138,7 +134,7 @@ describe('SelectLazyOptionsDirective', () => {
 
     await harness.open();
 
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     await fixture.whenStable();
 
     const list = (await harness.getList())!;
