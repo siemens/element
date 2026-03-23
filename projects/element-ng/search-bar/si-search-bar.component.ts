@@ -196,7 +196,11 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
   protected input(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     if (!this.isProhibitedCharactersUsed(value)) {
-      this.debouncer.next(value);
+      if (this.debounceTime() > 0) {
+        this.debouncer.next(value);
+      } else {
+        this.setSearch(value);
+      }
     }
   }
 

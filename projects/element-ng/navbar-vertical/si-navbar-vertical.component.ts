@@ -196,7 +196,11 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
   readonly skipLinkMainContentLabel = input(
     t(() => $localize`:@@SI_NAVBAR_VERTICAL.SKIP_LINK.MAIN_LABEL:Main content`)
   );
-
+  /**
+   * Debounce time for the search input
+   * @defaultValue 400
+   */
+  readonly searchDebounceTime = input(400);
   /**
    * Output for search bar input
    */
@@ -206,8 +210,6 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
   // Is required to prevent the navbar from running the padding animation on creation.
   @HostBinding('class.ready') protected readonly ready = true;
-
-  protected readonly searchInputDelay = 400;
 
   private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
   private breakpointObserver = inject(BreakpointObserver);
