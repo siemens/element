@@ -18,7 +18,7 @@ import {
   mockResizeObserver,
   MockResizeObserver,
   restoreResizeObserver
-} from '../resize-observer/mock-resize-observer.vitest.spec';
+} from '../resize-observer/testing/resize-observer.mock';
 import { BreadcrumbItem } from './breadcrumb-item.model';
 
 const TEST_ITEMS = [

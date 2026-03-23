@@ -12,7 +12,7 @@ import {
   MockResizeObserver,
   mockResizeObserver,
   restoreResizeObserver
-} from '../resize-observer/mock-resize-observer.vitest.spec';
+} from '../resize-observer/testing/resize-observer.mock';
 import { SiTabLinkComponent } from './si-tab-link.component';
 import { SiTabPortalComponent } from './si-tab-portal.component';
 import { SiTabComponent } from './si-tab.component';

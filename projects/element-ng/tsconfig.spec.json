@@ -10,7 +10,6 @@
     "o*/**/*.spec.ts",
     "p*/**/*.spec.ts",
     "q*/**/*.spec.ts",
-    "r*/**/*.spec.ts",
     "**/*.d.ts"
   ]
 }
