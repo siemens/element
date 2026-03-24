@@ -92,7 +92,7 @@ describe('SiPhoneNumberInputComponent', () => {
     const displaySelectedCountry = element.querySelector(
       '.dropdown-toggle .si-body'
     ) as HTMLElement;
-    expect(displaySelectedCountry.textContent).toContain('+49');
+    expect(displaySelectedCountry).toHaveTextContent('+49');
   });
 
   it('should show sorted country list in dropdown, irrespective of order passed in supportedCountryList', async () => {
@@ -124,7 +124,7 @@ describe('SiPhoneNumberInputComponent', () => {
     const displaySelectedCountry = element.querySelector(
       '.dropdown-toggle .si-body'
     ) as HTMLElement;
-    expect(displaySelectedCountry.textContent).toContain('+41');
+    expect(displaySelectedCountry).toHaveTextContent('+41');
   });
 
   it('should display all the countries  when user clears the search countries input', async () => {
@@ -162,7 +162,7 @@ describe('SiPhoneNumberInputComponent', () => {
     const displaySelectedCountry = element.querySelector(
       '.dropdown-toggle .si-body'
     ) as HTMLElement;
-    expect(displaySelectedCountry.textContent).toContain('+91');
+    expect(displaySelectedCountry).toHaveTextContent('+91');
     expect(inputElement.value).toEqual('1234 567 890');
   });
 
@@ -184,10 +184,10 @@ describe('SiPhoneNumberInputComponent', () => {
     const countryButton = fixture.debugElement.query(
       By.css('button[role="combobox"]')
     ).nativeElement;
-    expect(countryButton.textContent).toContain('+91');
+    expect(countryButton).toHaveTextContent('+91');
     component.form.reset();
     fixture.detectChanges();
-    expect(countryButton.textContent).toContain('+41');
+    expect(countryButton).toHaveTextContent('+41');
   });
 
   it('should update both the country code and phone number when manually entering a valid country code and phone number in the input', () => {
@@ -225,7 +225,7 @@ describe('SiPhoneNumberInputComponent', () => {
     fixture.detectChanges();
 
     const countryCode = element.querySelector<HTMLElement>('span.si-body');
-    expect(countryCode?.innerText.trim()).toContain('+1');
+    expect(countryCode).toHaveTextContent('+1');
   });
 
   it('should reflect country when not part of supportedCountries', () => {
@@ -234,7 +234,7 @@ describe('SiPhoneNumberInputComponent', () => {
     fixture.detectChanges();
 
     const countryCode = element.querySelector<HTMLElement>('span.si-body');
-    expect(countryCode?.innerText.trim()).toContain('+61');
+    expect(countryCode).toHaveTextContent('+61');
   });
 
   it('should be invalid if the country code is allowed but not the actual region (+1 but not CA)', () => {
@@ -277,19 +277,19 @@ describe('SiPhoneNumberInputComponent', () => {
     });
 
     it('should have class disabled', async () => {
-      expect(phoneInput.classList).toContain('disabled');
+      expect(phoneInput).toHaveClass('disabled');
     });
 
     it('should have attribute disabled on input', () => {
       const input = phoneInput.querySelector<HTMLInputElement>('input[type="tel"]');
-      expect(input).toBeTruthy();
-      expect(input!.getAttribute('disabled')).toBeDefined();
+      expect(input).toBeInTheDocument();
+      expect(input!).toHaveAttribute('disabled');
     });
 
     it('should not have tabindex 0', async () => {
-      expect(phoneInput.classList).toContain('disabled');
+      expect(phoneInput).toHaveClass('disabled');
       element = phoneInput.querySelector<HTMLElement>('button')!;
-      expect(element?.getAttribute('tabindex')).toBe('-1');
+      expect(element).toHaveAttribute('tabindex', '-1');
     });
   });
 
@@ -305,7 +305,7 @@ describe('SiPhoneNumberInputComponent', () => {
     });
 
     it('should have class readonly', async () => {
-      expect(phoneInput.classList).toContain('readonly');
+      expect(phoneInput).toHaveClass('readonly');
     });
 
     it('should not open country select', () => {
@@ -313,7 +313,7 @@ describe('SiPhoneNumberInputComponent', () => {
       selectCountry.click();
       fixture.detectChanges();
       const displaySelectedCountry = document.querySelector('.dropdown-menu') as HTMLElement;
-      expect(displaySelectedCountry).toBeNull();
+      expect(displaySelectedCountry).not.toBeInTheDocument();
     });
   });
 });
