@@ -291,7 +291,7 @@
     "native-charts-ng": {
       "projectType": "library",
       "root": "projects/native-charts-ng",
-      "sourceRoot": "projects/native-charts-ng/src",
+      "sourceRoot": "projects/native-charts-ng",
       "prefix": "si",
       "architect": {
         "build": {
@@ -299,14 +299,16 @@
           "options": {
             "tsConfig": "projects/native-charts-ng/tsconfig.lib.json",
             "project": "projects/native-charts-ng/ng-package.json"
+          },
+          "configurations": {
+            "development": {}
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/native-charts-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/native-charts-ng/karma.conf.cjs",
-            "codeCoverageExclude": ["projects/native-charts-ng/src/**/*.module.ts"]
+            "browsers": ["chromium"]
           }
         },
         "lint": {
