@@ -16,24 +16,21 @@ describe(`SiPhotoUploadComponent`, () => {
   let componentRef: ComponentRef<SiPhotoUploadComponent>;
   let fixture: ComponentFixture<SiPhotoUploadComponent>;
   let callback: (e: any) => void;
+  let originalFileReader: typeof FileReader;
 
-  const mockFileReader = (data: string): jasmine.Spy => {
-    const readerSpy = jasmine.createSpyObj(
-      'FileReader',
-      {
-        addEventListener: jasmine.createSpy('addEventListener'),
-        readAsDataURL: jasmine.createSpy('readAsDataURL')
-      },
-      {
-        result: data
-      }
-    );
-    readerSpy.addEventListener.and.callFake(
-      (event: string, cb: (e: any) => void) => (callback = cb)
-    );
-    readerSpy.readAsDataURL.and.callFake(() => callback(data));
+  const mockFileReader = (data: string): any => {
+    const readerSpy = {
+      addEventListener: vi.fn((event: string, cb: (e: any) => void) => (callback = cb)),
+      readAsDataURL: vi.fn(() => callback(data)),
+      result: data
+    };
 
-    spyOn(window, 'FileReader').and.returnValue(readerSpy);
+    originalFileReader = window.FileReader;
+    window.FileReader = class {
+      addEventListener = readerSpy.addEventListener;
+      readAsDataURL = readerSpy.readAsDataURL;
+      result = readerSpy.result;
+    } as any;
     return readerSpy;
   };
 
@@ -63,6 +60,12 @@ describe(`SiPhotoUploadComponent`, () => {
     componentRef = fixture.componentRef;
   });
 
+  afterEach(() => {
+    if (originalFileReader) {
+      window.FileReader = originalFileReader;
+    }
+  });
+
   it('should display placeholder', () => {
     componentRef.setInput('placeholderAltText', 'MX');
     fixture.detectChanges();
@@ -76,7 +79,7 @@ describe(`SiPhotoUploadComponent`, () => {
     fixture.detectChanges();
 
     const buttons = fixture.debugElement.queryAll(By.css('button'));
-    expect(buttons).toHaveSize(1);
+    expect(buttons).toHaveLength(1);
     expect(buttons[0].nativeElement.innerHTML.trim()).toEqual('Upload photo');
   });
 
@@ -84,7 +87,7 @@ describe(`SiPhotoUploadComponent`, () => {
     componentRef.setInput('readonly', true);
     fixture.detectChanges();
 
-    expect(fixture.debugElement.queryAll(By.css('button'))).toHaveSize(0);
+    expect(fixture.debugElement.queryAll(By.css('button'))).toHaveLength(0);
   });
 
   it('should show photo in readonly mode', () => {
@@ -99,7 +102,7 @@ describe(`SiPhotoUploadComponent`, () => {
     componentRef.setInput('sourcePhoto', redCropped);
     fixture.detectChanges();
     const buttons = fixture.debugElement.queryAll(By.css('button'));
-    expect(buttons).toHaveSize(2);
+    expect(buttons).toHaveLength(2);
 
     expect(buttons[0].nativeElement.innerHTML.trim()).toEqual('Change');
     expect(buttons[1].nativeElement.innerHTML.trim()).toEqual('Remove');
@@ -111,21 +114,21 @@ describe(`SiPhotoUploadComponent`, () => {
     fixture.detectChanges();
 
     const buttons = fixture.debugElement.queryAll(By.css('button'));
-    expect(buttons).toHaveSize(2);
+    expect(buttons).toHaveLength(2);
     expect(buttons[1].nativeElement.innerHTML.trim()).toEqual('Remove');
     buttons[1].nativeElement.click();
 
     fixture.detectChanges();
     await fixture.whenStable();
     expect(component.croppedPhoto()).toBeUndefined();
-    expect(fixture.debugElement.queryAll(By.css('button'))).toHaveSize(1);
-    expect(fixture.debugElement.query(By.css('img'))).toBeFalsy();
+    expect(fixture.debugElement.queryAll(By.css('button'))).toHaveLength(1);
+    expect(fixture.debugElement.query(By.css('img'))).not.toBeInTheDocument();
   });
 
   it('should show image in crop modal', async () => {
     fixture.detectChanges();
     const input = fixture.debugElement.query(By.css('input[type="file"]'));
-    spyOn(input.nativeElement, 'click').and.callFake(() => {
+    vi.spyOn(input.nativeElement, 'click').mockImplementation(() => {
       input.triggerEventHandler('change', {
         target: {
           files: [generateImage()]
@@ -139,16 +142,16 @@ describe(`SiPhotoUploadComponent`, () => {
     fixture.detectChanges();
     await fixture.whenStable();
     const modal = document.querySelector('si-modal');
-    expect(modal).toBeTruthy();
-    // cannot use jasmine.clock here
+    expect(modal).toBeInTheDocument();
+    // cannot use vi.useFakeTimers here
     await new Promise(resolve => setTimeout(resolve, 100)); // Allow cropping lib to process
-    expect(modal?.querySelector('img')).toBeTruthy();
+    expect(modal?.querySelector('img')).toBeInTheDocument();
   });
 
   it('should apply photo', async () => {
     fixture.detectChanges();
     const input = fixture.debugElement.query(By.css('input[type="file"]'));
-    spyOn(input.nativeElement, 'click').and.callFake(() => {
+    vi.spyOn(input.nativeElement, 'click').mockImplementation(() => {
       input.triggerEventHandler('change', {
         target: {
           files: [generateImage()]
@@ -162,7 +165,7 @@ describe(`SiPhotoUploadComponent`, () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // cannot use jasmine.clock here
+    // cannot use vi.useFakeTimers here
     await new Promise(resolve => setTimeout(resolve, 100)); // Allow cropping lib to process
 
     getButton(document.querySelector('si-modal')!, 'Apply').click();
@@ -176,7 +179,7 @@ describe(`SiPhotoUploadComponent`, () => {
     componentRef.setInput('disabledCropping', true);
     fixture.detectChanges();
     const input = fixture.debugElement.query(By.css('input[type="file"]'));
-    spyOn(input.nativeElement, 'click').and.callFake(() => {
+    vi.spyOn(input.nativeElement, 'click').mockImplementation(() => {
       input.triggerEventHandler('change', {
         target: {
           files: [generateImage()]
@@ -198,7 +201,7 @@ describe(`SiPhotoUploadComponent`, () => {
     componentRef.setInput('maxFileSize', 2);
 
     const input = fixture.debugElement.query(By.css('input[type="file"]'));
-    spyOn(input.nativeElement, 'click').and.callFake(() => {
+    vi.spyOn(input.nativeElement, 'click').mockImplementation(() => {
       input.triggerEventHandler('change', {
         target: {
           files: [generateImage()]
@@ -228,7 +231,7 @@ describe(`SiPhotoUploadComponent`, () => {
     fixture.detectChanges();
 
     const input = fixture.debugElement.query(By.css('input[type="file"]'));
-    spyOn(input.nativeElement, 'click').and.callFake(() => {
+    vi.spyOn(input.nativeElement, 'click').mockImplementation(() => {
       input.triggerEventHandler('change', {
         target: {
           files: [generateImage()]

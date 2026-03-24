@@ -21,11 +21,11 @@ describe('SiProgressbarComponent', () => {
     element = fixture.nativeElement;
     fixture.detectChanges();
     const progressElement = element.querySelector('div.progress-bar');
-    expect(progressElement?.getAttribute('aria-valuemin')).toEqual('0');
-    expect(progressElement?.getAttribute('aria-valuenow')).toEqual('0');
-    expect(progressElement?.getAttribute('aria-valuemax')).toEqual('100');
-    expect(progressElement?.getAttribute('aria-valuetext')).toEqual('0%');
-    expect(progressElement?.getAttribute('aria-label')).toEqual('Progress');
+    expect(progressElement).toHaveAttribute('aria-valuemin', '0');
+    expect(progressElement).toHaveAttribute('aria-valuenow', '0');
+    expect(progressElement).toHaveAttribute('aria-valuemax', '100');
+    expect(progressElement).toHaveAttribute('aria-valuetext', '0%');
+    expect(progressElement).toHaveAttribute('aria-label', 'Progress');
   });
 
   it('should set value to 10 and all corresponding attributes', () => {
@@ -34,11 +34,11 @@ describe('SiProgressbarComponent', () => {
     componentRef.setInput('max', 200);
     fixture.detectChanges();
     const progressElement = element.querySelector('div.progress-bar');
-    expect(progressElement?.getAttribute('aria-valuemin')).toEqual('0');
-    expect(progressElement?.getAttribute('aria-valuenow')).toEqual('10');
-    expect(progressElement?.getAttribute('aria-valuemax')).toEqual('200');
-    expect(progressElement?.getAttribute('aria-valuetext')).toEqual('5%');
-    expect(progressElement?.getAttribute('aria-label')).toEqual('Progress');
+    expect(progressElement).toHaveAttribute('aria-valuemin', '0');
+    expect(progressElement).toHaveAttribute('aria-valuenow', '10');
+    expect(progressElement).toHaveAttribute('aria-valuemax', '200');
+    expect(progressElement).toHaveAttribute('aria-valuetext', '5%');
+    expect(progressElement).toHaveAttribute('aria-label', 'Progress');
   });
 
   it('should be able to handle more than 100%', () => {
@@ -47,11 +47,11 @@ describe('SiProgressbarComponent', () => {
     componentRef.setInput('max', 200);
     fixture.detectChanges();
     const progressElement = element.querySelector('div.progress-bar');
-    expect(progressElement?.getAttribute('aria-valuemin')).toEqual('0');
-    expect(progressElement?.getAttribute('aria-valuenow')).toEqual('201');
-    expect(progressElement?.getAttribute('aria-valuemax')).toEqual('200');
-    expect(progressElement?.getAttribute('aria-valuetext')).toEqual('101%');
-    expect(progressElement?.getAttribute('aria-label')).toEqual('Progress');
+    expect(progressElement).toHaveAttribute('aria-valuemin', '0');
+    expect(progressElement).toHaveAttribute('aria-valuenow', '201');
+    expect(progressElement).toHaveAttribute('aria-valuemax', '200');
+    expect(progressElement).toHaveAttribute('aria-valuetext', '101%');
+    expect(progressElement).toHaveAttribute('aria-label', 'Progress');
   });
 
   it('should set the right percentage', () => {
@@ -60,7 +60,7 @@ describe('SiProgressbarComponent', () => {
     componentRef.setInput('max', 300);
     fixture.detectChanges();
     const progressElement = element.querySelector('div.progress-bar');
-    expect(progressElement?.getAttribute('aria-valuetext')).toEqual('42%');
+    expect(progressElement).toHaveAttribute('aria-valuetext', '42%');
   });
 
   it('should set aria-label', () => {
@@ -68,13 +68,13 @@ describe('SiProgressbarComponent', () => {
     componentRef.setInput('ariaLabel', 'Test');
     fixture.detectChanges();
     const progressElement = element.querySelector('div.progress-bar');
-    expect(progressElement?.getAttribute('aria-label')).toEqual('Test');
+    expect(progressElement).toHaveAttribute('aria-label', 'Test');
   });
 
   it('should display title if set', () => {
     element = fixture.nativeElement;
     componentRef.setInput('heading', 'Test Title');
     fixture.detectChanges();
-    expect((element.querySelector('span.si-h5') as HTMLSpanElement)?.innerText).toBe('Test Title');
+    expect(element.querySelector('span.si-h5')).toHaveTextContent('Test Title');
   });
 });
