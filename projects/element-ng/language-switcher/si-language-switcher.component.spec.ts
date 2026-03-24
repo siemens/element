@@ -4,13 +4,16 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SiTranslateNgxTModule } from '@siemens/element-translate-ng/ngx-translate';
+import { provideTranslateService, TranslateService } from '@ngx-translate/core';
+import {
+  provideMissingTranslationHandlerForElement,
+  provideNgxTranslateForElement
+} from '@siemens/element-translate-ng/ngx-translate';
 
 import { IsoLanguageValue, SiLanguageSwitcherComponent } from './index';
 
 @Component({
-  imports: [SiLanguageSwitcherComponent, SiTranslateNgxTModule],
+  imports: [SiLanguageSwitcherComponent],
   template: `<si-language-switcher
     [translationKey]="translationKey"
     [languageSwitcherLabel]="languageSwitcherLabel"
@@ -33,7 +36,12 @@ describe('SiLanguageSwitcherComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiTranslateNgxTModule, TranslateModule.forRoot(), TestHostComponent]
+      providers: [
+        provideNgxTranslateForElement(),
+        provideTranslateService({
+          missingTranslationHandler: provideMissingTranslationHandlerForElement()
+        })
+      ]
     })
   );
 
