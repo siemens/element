@@ -14,9 +14,6 @@ export default defineConfig({
     env: {
       TZ: 'UTC'
     },
-    coverage: {
-      reportsDirectory: 'dist/coverage/element-ng'
-    },
     isolate: true
   },
   resolve: {
