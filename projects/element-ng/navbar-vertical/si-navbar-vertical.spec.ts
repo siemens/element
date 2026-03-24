@@ -179,9 +179,8 @@ describe('SiNavbarVertical', () => {
 
       await harness.toggleCollapse();
 
-      const spySearch = spyOn(component, 'searchEvent');
+      const spySearch = vi.spyOn(component, 'searchEvent');
       await harness.search('test');
-      await fixture.whenStable();
       expect(spySearch).toHaveBeenCalledWith('test');
     });
 

@@ -2,7 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, viewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  inputBinding,
+  outputBinding,
+  signal,
+  viewChild,
+  WritableSignal
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -10,36 +18,20 @@ import { SiNumberInputComponent } from './si-number-input.component';
 
 @Component({
   imports: [FormsModule, ReactiveFormsModule, SiNumberInputComponent],
-  template: `<si-number-input
-    #input
-    [min]="min"
-    [max]="max"
-    [step]="step"
-    [placeholder]="placeholder"
-    [(value)]="value"
-    (valueChange)="valueChange($event)"
-  />`
-})
-class HostComponent {
-  value?: number = 10;
-  step = 1;
-  min = 0;
-  max = 100;
-  placeholder?: string;
-  readonly input = viewChild.required<SiNumberInputComponent>('input');
-  valueChange(any: number): void {}
-}
-
-@Component({
-  imports: [FormsModule, ReactiveFormsModule, SiNumberInputComponent],
   template: `<form [formGroup]="form">
-    <si-number-input #input formControlName="input" [required]="required" [min]="min" [max]="max" />
+    <si-number-input
+      #input
+      formControlName="input"
+      [required]="required()"
+      [min]="min()"
+      [max]="max()"
+    />
   </form>`
 })
 class FormHostComponent {
-  required?: boolean;
-  min?: number;
-  max?: number;
+  readonly required = signal(false);
+  readonly min = signal<number | undefined>(undefined);
+  readonly max = signal<number | undefined>(undefined);
   readonly form = inject(FormBuilder).group({ input: 10 });
   readonly input = viewChild.required<SiNumberInputComponent>('input');
 }
@@ -59,7 +51,7 @@ describe('SiNumberInputComponent', () => {
     const button = element.querySelector(target);
     button!.dispatchEvent(new MouseEvent('mousedown'));
     if (ticks) {
-      jasmine.clock().tick(ticks);
+      vi.advanceTimersByTime(ticks);
     }
     button!.dispatchEvent(new MouseEvent('mouseup'));
   };
@@ -71,147 +63,138 @@ describe('SiNumberInputComponent', () => {
   const numberValue = (): number | undefined =>
     element.querySelector<HTMLInputElement>('input')?.valueAsNumber;
 
-  beforeEach(() => {
-    jasmine.clock().install();
-  });
-
-  afterEach(() => {
-    jasmine.clock().uninstall();
-  });
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        SiNumberInputComponent,
-        FormHostComponent,
-        HostComponent,
-        AttributeComponent
-      ]
-    })
-  );
-
   describe('direct usage', () => {
-    let fixture: ComponentFixture<HostComponent>;
-    let component: HostComponent;
+    let fixture: ComponentFixture<SiNumberInputComponent>;
+    let value: WritableSignal<number | undefined>;
+    let step: WritableSignal<number | 'any'>;
+    let min: WritableSignal<number | undefined>;
+    let max: WritableSignal<number | undefined>;
+    let placeholder: WritableSignal<string | undefined>;
+    let valueChangeSpy = vi.fn();
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(HostComponent);
-      component = fixture.componentInstance;
+      value = signal<number | undefined>(10);
+      step = signal<number | 'any'>(1);
+      min = signal<number | undefined>(0);
+      max = signal<number | undefined>(100);
+      placeholder = signal<string | undefined>(undefined);
+      valueChangeSpy = vi.fn();
+
+      fixture = TestBed.createComponent(SiNumberInputComponent, {
+        bindings: [
+          inputBinding('value', value),
+          inputBinding('step', step),
+          inputBinding('min', min),
+          inputBinding('max', max),
+          inputBinding('placeholder', placeholder),
+          outputBinding<number | undefined>('valueChange', valueChangeSpy)
+        ]
+      });
       element = fixture.nativeElement;
     });
 
-    it('should support short press increments', () => {
-      component.value = 50;
-      fixture.detectChanges();
-      const spy = spyOn(component, 'valueChange');
+    it('should support short press increments', async () => {
+      value.set(50);
+      await fixture.whenStable();
 
       fakeClick('.inc');
-      expect(spy).toHaveBeenCalledWith(51);
+      expect(valueChangeSpy).toHaveBeenCalledWith(51);
     });
 
-    it('should increment with step precision', () => {
+    it('should increment with step precision', async () => {
       // without adjustments in component: 2.2 + 0.1 = 2.3000000000000003
-      component.step = 0.1;
-      component.value = 2.2;
-      fixture.detectChanges();
+      step.set(0.1);
+      value.set(2.2);
+      await fixture.whenStable();
 
       fakeClick('.inc');
-      expect(component.value).toBe(2.3);
+      expect(valueChangeSpy).toHaveBeenCalledWith(2.3);
     });
 
-    it('should support long press increments', () => {
-      component.value = 50;
-      fixture.detectChanges();
-      const spy = spyOn(component, 'valueChange');
-
+    it('should support long press increments', async () => {
+      value.set(50);
+      await fixture.whenStable();
+      vi.useFakeTimers();
       fakeClick('.inc', 2500);
-      expect(spy.calls.count()).toBeGreaterThan(8);
-      expect(spy.calls.mostRecent().args).toBeGreaterThan(55);
+      expect(valueChangeSpy.mock.calls.length).toBeGreaterThan(8);
+      expect(valueChangeSpy.mock.calls.at(-1)![0]).toBeGreaterThan(55);
+      vi.useRealTimers();
     });
 
-    it('should support short press decrements', () => {
-      component.value = 50;
-      fixture.detectChanges();
-      const spy = spyOn(component, 'valueChange');
+    it('should support short press decrements', async () => {
+      value.set(50);
+      await fixture.whenStable();
 
       fakeClick('.dec');
-      expect(spy).toHaveBeenCalledWith(49);
+      expect(valueChangeSpy).toHaveBeenCalledWith(49);
     });
 
-    it('should decrement with step precision', () => {
+    it('should decrement with step precision', async () => {
       // without adjustments in component: 5.9 - 0.1 = 5.800000000000001
-      component.step = 0.1;
-      component.value = 5.9;
-      fixture.detectChanges();
+      step.set(0.1);
+      value.set(5.9);
+      await fixture.whenStable();
 
       fakeClick('.dec');
-      expect(component.value).toBe(5.8);
+      expect(valueChangeSpy).toHaveBeenCalledWith(5.8);
     });
 
-    it('should support long press decrements', () => {
-      fixture.detectChanges();
-      const spy = spyOn(component, 'valueChange');
-
+    it('should support long press decrements', async () => {
+      await fixture.whenStable();
+      vi.useFakeTimers();
       fakeClick('.dec', 2500);
-      expect(spy.calls.count()).toBeGreaterThan(8);
-      expect(spy.calls.mostRecent().args[0]).toBeLessThan(45);
+      expect(valueChangeSpy.mock.calls.length).toBeGreaterThan(8);
+      expect(valueChangeSpy.mock.lastCall![0]).toBeLessThan(5);
+      vi.useRealTimers();
     });
 
-    it('should not go beyond upper limit', () => {
-      component.value = 200;
-      fixture.detectChanges();
+    it('should not go beyond upper limit', async () => {
+      value.set(200);
+      await fixture.whenStable();
 
       expect(incButton()?.disabled).toBeTruthy();
     });
 
-    it('should support upper custom limit', () => {
-      component.max = 200;
-      component.value = 150;
-      fixture.detectChanges();
-      const spy = spyOn(component, 'valueChange');
+    it('should support upper custom limit', async () => {
+      max.set(200);
+      value.set(150);
+      await fixture.whenStable();
 
       fakeClick('.inc');
-      expect(spy).toHaveBeenCalledWith(151);
+      expect(valueChangeSpy).toHaveBeenCalledWith(151);
     });
 
-    it('should not allow to decrement when lower limit is reached', () => {
-      component.value = -10;
-      fixture.detectChanges();
+    it('should not allow to decrement when lower limit is reached', async () => {
+      value.set(-10);
+      await fixture.whenStable();
 
       expect(decButton()?.disabled).toBeTruthy();
     });
 
-    it('should support lower custom limit', () => {
-      component.min = -200;
-      component.value = -150;
-      fixture.detectChanges();
-      const spy = spyOn(component, 'valueChange');
+    it('should support lower custom limit', async () => {
+      min.set(-200);
+      value.set(-150);
+      await fixture.whenStable();
 
       expect(decButton()?.disabled).toBeFalsy();
       fakeClick('.dec');
-      expect(spy).toHaveBeenCalledWith(-151);
+      expect(valueChangeSpy).toHaveBeenCalledWith(-151);
     });
 
-    it('should update value and min correctly', () => {
-      fixture.detectChanges();
+    it('should update value and min correctly', async () => {
+      min.set(10);
+      value.set(10);
+      await fixture.whenStable();
 
-      component.min = 10;
-      component.value = 10;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
       expect(decButton()?.disabled).toBeTruthy();
       expect(numberValue()).toBe(10);
     });
 
-    it('should display placeholder text', () => {
+    it('should display placeholder text', async () => {
+      placeholder.set('Placeholder');
+      value.set(undefined);
       fixture.detectChanges();
 
-      component.placeholder = 'Placeholder';
-      component.value = undefined;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
       expect(element.querySelector('input')!.placeholder).toBe('Placeholder');
     });
   });
@@ -226,61 +209,57 @@ describe('SiNumberInputComponent', () => {
       element = fixture.nativeElement;
     });
 
-    it('should set the initial value', () => {
-      fixture.detectChanges();
+    it('should set the initial value', async () => {
+      await fixture.whenStable();
       expect(numberValue()).toBe(10);
     });
 
-    it('marks component as touched', () => {
-      fixture.detectChanges();
+    it('marks component as touched', async () => {
+      await fixture.whenStable();
 
       fakeClick('.dec');
 
       expect(component.form.controls.input.touched).toBe(true);
     });
 
-    it('updates the value in the form', () => {
-      fixture.detectChanges();
+    it('updates the value in the form', async () => {
+      await fixture.whenStable();
 
       fakeClick('.dec');
 
       expect(component.form.controls.input.value).toBe(9);
     });
 
-    it('should invalidate with max', () => {
+    it('should invalidate with max', async () => {
       component.form.controls.input.setValue(2);
-      component.max = 1;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      component.max.set(1);
+      await fixture.whenStable();
 
       expect(component.form.controls.input.errors).toEqual({ max: { max: 1, actual: 2 } });
 
-      component.max = 2;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      component.max.set(2);
+      await fixture.whenStable();
 
       expect(component.form.controls.input.errors).toBeNull();
     });
 
-    it('should invalidate with min', () => {
+    it('should invalidate with min', async () => {
       component.form.controls.input.setValue(-1);
-      component.min = 0;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      component.min.set(0);
+      await fixture.whenStable();
 
       expect(component.form.controls.input.errors).toEqual({ min: { min: 0, actual: -1 } });
 
-      component.min = -1;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      component.min.set(-1);
+      await fixture.whenStable();
 
       expect(component.form.controls.input.errors).toBeNull();
     });
 
-    it('should invalidate with required', () => {
+    it('should invalidate with required', async () => {
       component.form.controls.input.setValue(null);
-      component.required = true;
-      fixture.detectChanges();
+      component.required.set(true);
+      await fixture.whenStable();
 
       expect(component.form.controls.input.errors).toEqual({ required: true });
     });
