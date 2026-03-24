@@ -5,11 +5,5 @@
     "types": ["jasmine", "@siemens/element-translate-ng/localize-types"]
   },
   "exclude": ["**/schematics/", "**/*.vitest.spec.ts"],
-  "include": [
-    "n*/**/*.spec.ts",
-    "o*/**/*.spec.ts",
-    "p*/**/*.spec.ts",
-    "q*/**/*.spec.ts",
-    "**/*.d.ts"
-  ]
+  "include": ["o*/**/*.spec.ts", "p*/**/*.spec.ts", "q*/**/*.spec.ts", "**/*.d.ts"]
 }
