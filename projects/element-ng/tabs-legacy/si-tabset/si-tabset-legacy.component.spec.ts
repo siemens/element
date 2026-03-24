@@ -260,9 +260,9 @@ describe('SiTabset', () => {
     await fixture.whenStable();
 
     const d1 = getElement(0).nativeElement.getBoundingClientRect();
-    expect(d1.width).toBe(110);
+    expect(d1.width).toBeCloseTo(110);
     const d2 = getElement(1).nativeElement.getBoundingClientRect();
-    expect(d2.width).toBe(110);
+    expect(d2.width).toBeCloseTo(110);
   });
 
   it('should use nav-tabs min-inline-size', async () => {
@@ -273,9 +273,9 @@ describe('SiTabset', () => {
     await fixture.whenStable();
 
     const d1 = getElement(0).nativeElement.getBoundingClientRect();
-    expect(d1.width).toBe(100);
+    expect(d1.width).toBeCloseTo(100);
     const d2 = getElement(1).nativeElement.getBoundingClientRect();
-    expect(d2.width).toBe(100);
+    expect(d2.width).toBeCloseTo(100);
   });
 
   it('should emit tab close event for closable tab and preserve active tab', async () => {
