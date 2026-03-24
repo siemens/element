@@ -9,21 +9,21 @@ Internationalization is the process of designing and developing a product for lo
 ### Internationalization (i18n)
 
 Internationalization (sometimes abbreviated as i18n) is the entire process of designing and developing a product that can be adapted to different languages and regions.
-Internationalization is the foundation for high-quality and efficient [localization](#localization-l10n).
+It is the foundation for high-quality and efficient [localization](#localization-l10n).
 
 ### Localization (l10n)
 
 Localization (sometimes abbreviated as l10n) is the process of adapting a product to the language and cultural norms of a specific target market so that it feels natural to local users. This goes beyond [simple translation](#translation) and includes script direction ([LTR](#ltr-left-to-right)/[RTL](#rtl-right-to-left)), formatting numbers, times, dates, and addresses, and adapting illustrations.
+Localization requires an [internationalized](#internationalization-i18n) product and must be performed for each target market.
+
+#### Localization example
 
 This example shows how values, dates, and times should be displayed after the product has been localized.
 <si-docs-component example="si-localization/si-localization" height="650"></si-docs-component>
 
-Localization requires an [internationalized](#internationalization-i18n) product and must be performed for each target market.
-
 ### Translation
 
 Translation is the central linguistic component of [localization](#localization-l10n), whereby the tone must be adapted to local requirements and the meaning must be conveyed accurately.
-
 It is important to consider that languages differ in terms of word order, plural rules, and punctuation.
 In addition, an English word can have multiple meanings and be translated into other languages using different words.
 
@@ -35,14 +35,17 @@ LTR refers to languages (e.g., English, German, French, Spanish) and scripts tha
 
 RTL refers to languages (e.g., Arabic, Hebrew, Persian) and writing systems that are written and read from right to left.
 
-It is important to consider that often the entire user interface must be mirrored, which imposes significant demands on [internationalization](#internationalization-i18n).
+Because of these differences, it's important for UX writers to consider that often the entire user interface must be mirrored, which imposes significant demands on [internationalization](#internationalization-i18n).
 
 ## UX Writing ---
 
 UX writers are the text experts in the product development team and therefore ideal ambassadors for internationalization.
 They need to be aware of the challenges of localization and understand how they can support UX designers in creating localization-friendly designs (e.g., [space for translation](#manage-space-for-translations)).
+This page gives recommendations on how UX writers can support localization teams and translators to minimize internationalization challenges.
 
-In addition, translation-friendly texts should be defined by thinking like a translator: “Is the text understandable without the visual context?”
+### Consider translation
+
+Translation-friendly texts should be created by UX writers thinking like a translator and asking the question: “Is the text understandable without the visual context?”. 
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
@@ -67,30 +70,31 @@ UX writing combines terminology, style and form to ensure a consistent UI for sp
 
 <!-- markdownlint-disable MD051 -->
 
+### Handover UX writing specifications
+
 The handover documentation to development must include the UX writing specifications (e.g., [placeholder names](#define-named-placeholders) or [grouping of texts](#grouping-of-texts)) as a basis for [implementing internationalization](#code).
 
 <!-- markdownlint-enable MD051 -->
 
-### Domain terminology
+### Use domain terminology
 
 - The terms are defined by experts (physicists, engineers, lawyers, etc.) from universities and various global companies specializing in specific domains.
-- Standardization bodies (e.g., [ISO](https://iso.org), [EN](https://cen.eu), [UL](https://ul.com), [IEC](https://iec.ch)) are standardizing common terms.
-- Avoid terms from quasi-industrial standards until they have been harmonized with official standardization bodies and are generally accepted.
+- Standardization bodies (e.g., [ISO](https://iso.org), [EN](https://cen.eu), [UL](https://ul.com), [IEC](https://iec.ch)) are the people responsible for standardizing common terms.
+- UX writers should avoid terms from quasi-industrial standards until they have been harmonized with official standardization bodies and are generally accepted.
 
 Common language serves multiple purposes:
 
 - Clarity of communication, common understanding between people and companies
-- Applicability across multiple systems/tools/hardware…
+- Applicability across multiple systems/tools/hardware, etc. 
 - Openness to third parties, breaking up of silos
 - Foundation for artificial intelligence
 
 #### Terms in various uses
 
 Many terms have various meanings related to a specific context or domain.
-
 Use the terminology database of domain to maintain a common language.
-UX writers are asked to request terms from the terminology maintainers of the domain (via the terminology database) if the term is not yet defined.
-Review the UI texts together with domain experts, and ensure that translations are done by translators with domain knowledge.
+UX writers should request terms from the terminology maintainers of the domain if the term is not yet defined (via terminology databases if available).
+Then UX writers should review the UI texts together with domain experts, and ensure that translations are done by translators with domain knowledge.
 
 !!! info "Meaning of the term `title`"
 
@@ -136,7 +140,7 @@ Avoid possible causes of misunderstandings by
 - only using the [predominant meaning](#terms-in-various-uses) of the term
 - annotating texts with a description (if supported by translation framework and file format)
 
-#### Grouping of texts
+#### Group texts
 
 Translators translate texts individually.
 In order to understand the context and maintain consistency, it is necessary to have related texts close together.
@@ -205,7 +209,7 @@ Always design with translation in mind, assuming text will grow.
 
 UX writers are ambassadors of internationalization and are asked to support UX designers in creating localization-friendly designs.
 
-#### Required space for translation
+#### Make space for translation
 
 The exact length of a translation cannot be predicted.
 Some generally accepted rules of thumb:
@@ -252,7 +256,7 @@ Before writing a new text, check whether one with the exact same meaning already
 </div>
 </div>
 
-Reusing the same instance of text…
+Reusing the same instance of text has the following advantages:
 
 - …reduces the volume sent to translators and lowers cost.
 - …increases the efficiency of product development and maintenance.
@@ -300,7 +304,7 @@ Use these sources to avoid superfluous translation efforts.
 
 ### Avoid directional terms on UI
 
-Directional terms might get incorrect if the user interface is mirrored for [RTL languages](#rtl-right-to-left).
+Directional terms might be incorrect if the user interface is mirrored for [RTL languages](#rtl-right-to-left).
 Use direction agnostic texts instead.
 
 <!-- markdownlint-disable MD038 -->
@@ -346,7 +350,7 @@ Keep sentences as one unit with placeholders.
 
 <!-- markdownlint-enable MD038 -->
 
-The verb (`EN:`"select" / `DE:`"auswählen") is at the beginning of the sentence in English but at the end in German.
+Note: The verb (`EN:`"select" / `DE:`"auswählen") is at the beginning of the sentence in English but at the end in German.
 
 ### Define named placeholders
 
@@ -409,9 +413,9 @@ It is important to consider these different rules early in the UX writing and im
     - 22-24 pliki
     - 25-31 plików
 
-#### Linguistic rules
+#### Consider different linguistic rules
 
-Depending on the language there might be up to 6 forms. Following language specific variability does exist:
+Depending on the language there might be up to 6 forms. The following language specific variability exists:
 
 | Forms | Grammatical rules                                                                                                   | Languages      |
 | :---: | ------------------------------------------------------------------------------------------------------------------- | -------------- |
@@ -428,7 +432,7 @@ Depending on the language there might be up to 6 forms. Following language speci
 |   4   | Special case for one and all numbers ending in `02`, `03`, or `04`                                                  | Slovenian      |
 |   6   | Special cases for one, two, all numbers ending in `02`, `03`, … `10`, all numbers ending in `11` … `99`, and others | Arabic         |
 
-The [plural rules specification from the Unicode CLDR project](https://cldr.unicode.org/index/cldr-spec/plural-rules) contains a detailed linguistic analysis.
+The [plural rules specification from the Unicode Common Locale Data Repository (CLDR)](https://cldr.unicode.org/index/cldr-spec/plural-rules) contains a detailed linguistic analysis.
 
 #### Use localization to handle pluralization
 
