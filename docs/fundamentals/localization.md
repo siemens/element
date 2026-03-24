@@ -45,7 +45,7 @@ This page gives recommendations on how UX writers can support localization teams
 
 ### Consider translation
 
-Translation-friendly texts should be created by UX writers thinking like a translator and asking the question: “Is the text understandable without the visual context?”. 
+Translation-friendly texts should be created by UX writers thinking like a translator and asking the question: “Is the text understandable without the visual context?”.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
@@ -85,7 +85,7 @@ The handover documentation to development must include the UX writing specificat
 Common language serves multiple purposes:
 
 - Clarity of communication, common understanding between people and companies
-- Applicability across multiple systems/tools/hardware, etc. 
+- Applicability across multiple systems/tools/hardware, etc.
 - Openness to third parties, breaking up of silos
 - Foundation for artificial intelligence
 
