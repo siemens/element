@@ -40,16 +40,14 @@ describe('SiNavbarVerticalItemComponent', () => {
   const mockNavbar = {
     collapsed: signal(false),
     textOnly: signal(false),
-    itemTriggered: jasmine.createSpy('itemTriggered')
+    itemTriggered: vi.fn()
   };
 
   beforeEach(async () => {
     mockNavbar.collapsed.set(false);
     mockNavbar.textOnly.set(false);
-    mockNavbar.itemTriggered.calls.reset();
 
     await TestBed.configureTestingModule({
-      imports: [TestHostComponent],
       providers: [{ provide: SI_NAVBAR_VERTICAL, useValue: mockNavbar }]
     }).compileComponents();
 
@@ -57,6 +55,8 @@ describe('SiNavbarVerticalItemComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
+  afterEach(() => vi.clearAllMocks());
 
   describe('formattedBadge() behavior through template', () => {
     it('should not display badge for undefined badge', () => {

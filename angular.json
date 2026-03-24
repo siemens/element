@@ -170,7 +170,7 @@
             "buildTarget": "element-ng:test-target",
             "browsers": ["chromium"],
             "browserViewport": "1280x720",
-            "exclude": ["[n-q]*/**", "schematics/**"],
+            "exclude": ["[o-q]*/**", "schematics/**"],
             "runnerConfig": true
           }
         },
@@ -179,7 +179,7 @@
           "options": {
             "tsConfig": "projects/element-ng/tsconfig.spec.json",
             "karmaConfig": "projects/element-ng/karma.conf.cjs",
-            "exclude": ["**/[a-mr-z]*/**", "schematics/**", "**/*.vitest.spec.ts"],
+            "exclude": ["**/[a-nr-z]*/**", "schematics/**", "**/*.vitest.spec.ts"],
             "assets": [
               {
                 "glob": "**/*",
