@@ -24,7 +24,7 @@ This example shows how values, dates, and times should be displayed after the pr
 ### Translation
 
 Translation is the central linguistic component of [localization](#localization-l10n), whereby the tone must be adapted to local requirements and the meaning must be conveyed accurately.
-It is important to consider that languages differ in terms of word order, plural rules, and punctuation.
+It is important for UX writers to consider that languages differ not only in terms of word order, plural rules, and punctuation, but an English word can have multiple meanings and be translated into other languages using completely different words.
 In addition, an English word can have multiple meanings and be translated into other languages using different words.
 
 ### LTR (Left-to-Right)
@@ -196,7 +196,7 @@ Design user interfaces by following these steps to ensure that translations have
 
 Fixing UI issues caused by long translations late in the development cycle is expensive and time-consuming.
 
-#### Awareness for length increase
+#### Be aware of length increase
 
 Always design with translation in mind, assuming text will grow.
 
@@ -207,7 +207,7 @@ Always design with translation in mind, assuming text will grow.
 - UI inconsistency  
   Different languages require different amounts of space, which makes it difficult to maintain a consistent look and feel.
 
-UX writers are ambassadors of internationalization and are asked to support UX designers in creating localization-friendly designs.
+Keeping these differences in length for translations in mind supports the whole design team to create localization-friendly designs.
 
 #### Make space for translation
 
@@ -373,7 +373,7 @@ Keep sentences understandable even with placeholders.
 
 <!-- markdownlint-disable MD051 -->
 
-Use locale-aware formatting (see [Code tab](#code)), and avoid UX writing depending on a single format.
+Use locale-aware formatting (see [Code tab](#code)), and avoid creating UI text that depends on one single format. This helps users to understand times, values, etc. and strengthens their confidence in using the system.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
@@ -392,7 +392,7 @@ Use locale-aware formatting (see [Code tab](#code)), and avoid UX writing depend
 
 <!-- markdownlint-enable MD051 -->
 
-### Pluralization
+### Consider pluralization rules
 
 Each language has its own grammatical rules that specify how texts containing numbers must be presented.
 It is important to consider these different rules early in the UX writing and implementation process to ensure that the product can be localized correctly.
