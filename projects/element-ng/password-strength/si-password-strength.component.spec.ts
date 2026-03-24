@@ -46,7 +46,7 @@ class WrapperComponent {
   );
   readonly inputElement = viewChild.required<ElementRef<HTMLInputElement>>('input');
   passwordStrengthConfig = { ...passwordStrengthValue };
-  passwordStrengthChangedFunc = jasmine.createSpy('passwordStrengthChanged', (event: any) => {});
+  passwordStrengthChangedFunc = vi.fn();
 }
 
 describe('SiPasswordStrengthDirective', () => {
@@ -81,20 +81,20 @@ describe('SiPasswordStrengthDirective', () => {
 
     expect(element.classList.length).toBe(0);
     expect(wrapperComponent.passwordStrengthChangedFunc).not.toHaveBeenCalledWith(
-      jasmine.any(Number)
+      expect.any(Number)
     );
 
     setInput('f');
 
     expect(element.classList.length).not.toBe(0);
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-4);
-    wrapperComponent.passwordStrengthChangedFunc.calls.reset();
+    wrapperComponent.passwordStrengthChangedFunc.mockClear();
 
     setInput('');
 
     expect(element.classList.length).toBe(0);
     expect(wrapperComponent.passwordStrengthChangedFunc).not.toHaveBeenCalledWith(
-      jasmine.any(Number)
+      expect.any(Number)
     );
   });
 
@@ -103,11 +103,11 @@ describe('SiPasswordStrengthDirective', () => {
 
     setInput('f');
 
-    expect(element.classList.contains('bad')).toBe(true);
+    expect(element).toHaveClass('bad');
 
     setInput('');
 
-    expect(element.classList.contains('bad')).toBe(false);
+    expect(element).not.toHaveClass('bad');
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-4);
   });
 
@@ -116,11 +116,11 @@ describe('SiPasswordStrengthDirective', () => {
 
     setInput('f3');
 
-    expect(element.classList.contains('weak')).toBe(true);
+    expect(element).toHaveClass('weak');
 
     setInput('');
 
-    expect(element.classList.contains('weak')).toBe(false);
+    expect(element).not.toHaveClass('weak');
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-3);
   });
 
@@ -129,11 +129,11 @@ describe('SiPasswordStrengthDirective', () => {
 
     setInput('s3K');
 
-    expect(element.classList.contains('medium')).toBe(true);
+    expect(element).toHaveClass('medium');
 
     setInput('');
 
-    expect(element.classList.contains('medium')).toBe(false);
+    expect(element).not.toHaveClass('medium');
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-2);
   });
 
@@ -142,11 +142,11 @@ describe('SiPasswordStrengthDirective', () => {
 
     setInput('s3K!');
 
-    expect(element.classList.contains('good')).toBe(true);
+    expect(element).toHaveClass('good');
 
     setInput('');
 
-    expect(element.classList.contains('good')).toBe(false);
+    expect(element).not.toHaveClass('good');
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-1);
   });
 
@@ -155,11 +155,11 @@ describe('SiPasswordStrengthDirective', () => {
 
     setInput('s3K!TEst');
 
-    expect(element.classList.contains('strong')).toBe(true);
+    expect(element).toHaveClass('strong');
 
     setInput('');
 
-    expect(element.classList.contains('strong')).toBe(false);
+    expect(element).not.toHaveClass('strong');
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(0);
   });
 
@@ -175,7 +175,7 @@ describe('SiPasswordStrengthDirective', () => {
     fixture.detectChanges();
 
     setInput('s3K! TEst');
-    expect(element.classList.contains('strong')).toBe(true);
+    expect(element).toHaveClass('strong');
   });
 
   it('should allow setting minRequiredPolicies', () => {
@@ -184,22 +184,20 @@ describe('SiPasswordStrengthDirective', () => {
 
     // skip the uppercase
     setInput('s3K!test');
-    expect(element.classList.contains('strong')).toBe(true);
+    expect(element).toHaveClass('strong');
   });
 
   it('should show the icon, toggle', () => {
     fixture.detectChanges();
 
     const icon = element.querySelector('button')!;
-    expect(icon).toBeTruthy();
-    expect(element.querySelector('si-password-toggle')?.classList).toContain(
-      'show-visibility-icon'
-    );
-    expect(element.querySelector<HTMLElement>('input')?.getAttribute('type')).toBe('password');
+    expect(icon).toBeInTheDocument();
+    expect(element.querySelector('si-password-toggle')).toHaveClass('show-visibility-icon');
+    expect(element.querySelector<HTMLElement>('input')).toHaveAttribute('type', 'password');
 
     element.querySelector('button')?.click();
     fixture.detectChanges();
 
-    expect(element.querySelector<HTMLElement>('input')?.getAttribute('type')).toBe('text');
+    expect(element.querySelector<HTMLElement>('input')).toHaveAttribute('type', 'text');
   });
 });

@@ -49,7 +49,7 @@ describe('SiPaginationComponent', () => {
 
     expect(getItems().length).toBe(6);
     expect(getSeparators().length).toBe(1);
-    expect(getCurrentItem().innerHTML).toContain('4');
+    expect(getCurrentItem()).toHaveTextContent('4');
   });
 
   it('show separator on end', () => {
@@ -60,7 +60,7 @@ describe('SiPaginationComponent', () => {
 
     expect(getItems().length).toBe(6);
     expect(getSeparators().length).toBe(1);
-    expect(getCurrentItem().innerHTML).toContain('17');
+    expect(getCurrentItem()).toHaveTextContent('17');
   });
 
   it('show separator on both sides', () => {
@@ -71,7 +71,7 @@ describe('SiPaginationComponent', () => {
 
     expect(getItems().length).toBe(5);
     expect(getSeparators().length).toBe(2);
-    expect(getCurrentItem().innerHTML).toContain('9');
+    expect(getCurrentItem()).toHaveTextContent('9');
   });
 
   it('should enable/disable buttons', () => {
@@ -82,24 +82,24 @@ describe('SiPaginationComponent', () => {
 
     let buttons = getNavButtons();
 
-    expect(buttons.item(0).disabled).toBe(true);
-    expect(buttons.item(1).disabled).toBe(false);
-    expect(getCurrentItem().innerHTML).toContain('1');
+    expect(buttons.item(0)).toBeDisabled();
+    expect(buttons.item(1)).toBeEnabled();
+    expect(getCurrentItem()).toHaveTextContent('1');
 
     (buttons.item(1) as HTMLElement).click();
     fixture.detectChanges();
 
     buttons = getNavButtons();
-    expect(buttons.item(0).disabled).toBe(false);
-    expect(buttons.item(1).disabled).toBe(false);
-    expect(getCurrentItem().innerHTML).toContain('2');
+    expect(buttons.item(0)).toBeEnabled();
+    expect(buttons.item(1)).toBeEnabled();
+    expect(getCurrentItem()).toHaveTextContent('2');
 
     (buttons.item(1) as HTMLElement).click();
     fixture.detectChanges();
 
     buttons = getNavButtons();
-    expect(buttons.item(0).disabled).toBe(false);
-    expect(buttons.item(1).disabled).toBe(true);
-    expect(getCurrentItem().innerHTML).toContain('3');
+    expect(buttons.item(0)).toBeEnabled();
+    expect(buttons.item(1)).toBeDisabled();
+    expect(getCurrentItem()).toHaveTextContent('3');
   });
 });
