@@ -12,7 +12,6 @@ import { SiTimepickerComponent as TestComponent } from './index';
   imports: [TestComponent, ReactiveFormsModule],
   template: `
     <si-timepicker
-      [disabled]="disabled()"
       [formControl]="time"
       [min]="min()"
       [max]="max()"
@@ -27,7 +26,6 @@ import { SiTimepickerComponent as TestComponent } from './index';
 })
 class WrapperComponent {
   readonly picker = viewChild.required<TestComponent>(TestComponent);
-  readonly disabled = signal(false);
   readonly time = new FormControl<Date | string | undefined>(undefined);
   readonly readonly = signal(false);
   readonly showMinutes = signal(true);
@@ -281,11 +279,8 @@ describe('SiTimepickerComponent', () => {
     });
 
     it('should disable component', () => {
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
       component.time.setValue('2021-01-12 18:23:58.435');
-      component.disabled.set(true);
-      fixture.changeDetectorRef.markForCheck();
+      component.time.disable();
       fixture.detectChanges();
       expect(getHours().disabled).toBeTruthy();
       expect(getMinutes().disabled).toBeTruthy();
