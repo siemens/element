@@ -151,15 +151,19 @@
 - switch "Consider time" [checked]
 - text: Consider time
 - group:
+  - text: hh
   - textbox "Hours":
     - /placeholder: hh
     - text: ""
+  - text: mm
   - textbox "Minutes":
     - /placeholder: mm
     - text: ""
+  - text: ss
   - textbox "Seconds":
     - /placeholder: ss
     - text: ""
+  - text: am/pm
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"

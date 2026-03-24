@@ -26,9 +26,9 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
     margin-inline-start: calc(-1 * $si-switch-inline-spacing);
     inline-size: $si-switch-inline-size !important; // stylelint-disable-line declaration-no-important
     block-size: #{$si-switch-size} !important; // stylelint-disable-line declaration-no-important
-    background-color: $si-switch-background-off-color;
+    background-color: variables.$element-base-1;
     transition: $si-switch-transition-length;
-    border: 0;
+    border: 1px solid variables.$element-ui-2;
     border-radius: #{$si-switch-size};
     appearance: none;
 
@@ -37,9 +37,9 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
       content: '';
       block-size: $si-switch-knob-size !important; // stylelint-disable-line declaration-no-important
       inline-size: $si-switch-knob-size !important; // stylelint-disable-line declaration-no-important
-      inset-inline-start: $si-switch-slider-margin;
-      inset-block-end: $si-switch-slider-margin;
-      background-color: $si-switch-slider-off-color;
+      inset-inline-start: calc(#{$si-switch-slider-margin} - 1px);
+      inset-block-end: calc(#{$si-switch-slider-margin} - 1px);
+      background-color: variables.$element-text-secondary;
       transition: $si-switch-transition-length;
       border-radius: 50%;
     }
@@ -49,14 +49,14 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
     }
 
     &:hover {
-      background-color: variables.$element-ui-4;
+      background-color: variables.$element-base-1-hover;
     }
 
     &:is(:checked, .checked) {
-      background-color: $si-switch-background-on-color;
+      background-color: variables.$element-action-primary;
 
       &:hover {
-        background-color: variables.$element-ui-0-hover;
+        background-color: variables.$element-action-primary-hover;
       }
 
       &:active {
@@ -64,7 +64,8 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
       }
 
       &:is(:disabled, .disabled) {
-        background-color: $si-switch-background-on-color;
+        background-color: variables.$element-action-primary;
+        border-color: variables.$element-action-primary;
       }
     }
 
@@ -74,7 +75,7 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
     }
 
     &:is(:checked, .checked)::before {
-      inset-inline-start: calc(#{$si-switch-slider-margin} + #{$si-switch-size});
+      inset-inline-start: calc(#{$si-switch-slider-margin} + #{$si-switch-size} - 1px);
       background-color: $si-switch-slider-on-color;
     }
   }
