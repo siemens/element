@@ -163,41 +163,23 @@
             }
           }
         },
-        "test-vitest": {
+        "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/element-ng/tsconfig.vitest.json",
+            "tsConfig": "projects/element-ng/tsconfig.spec.json",
             "buildTarget": "element-ng:test-target",
             "browsers": ["chromium"],
             "browserViewport": "1280x720",
-            "exclude": ["[o-q]*/**", "schematics/**"],
-            "runnerConfig": true
-          }
-        },
-        "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "tsConfig": "projects/element-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/element-ng/karma.conf.cjs",
-            "exclude": ["**/[a-nr-z]*/**", "schematics/**", "**/*.vitest.spec.ts"],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/element-ng/assets/images",
-                "output": "assets"
-              }
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/"]
+            "exclude": ["schematics/**"],
+            "runnerConfig": true,
+            "coverageThresholds": {
+              "statements": 85,
+              "branches": 70,
+              "functions": 85,
+              "lines": 85
             },
-            "styles": [
-              "projects/element-theme/src/theme.scss",
-              "projects/element-ng/test-styles.scss"
-            ],
-            "codeCoverageExclude": [
-              "projects/element-ng/**/*.module.ts",
-              "projects/element-ng/**/testing/**/*.ts"
-            ]
+            "coverageExclude": ["**/*.module.ts", "**/testing/**/*.ts"],
+            "coverageReporters": ["cobertura"]
           }
         },
         "lint": {

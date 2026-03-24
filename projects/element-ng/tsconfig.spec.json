@@ -2,8 +2,14 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
-    "types": ["jasmine", "@siemens/element-translate-ng/localize-types"]
+    "lib": ["es2024", "dom", "esnext.disposable"],
+    "types": [
+      "vitest/globals",
+      "vitest/browser",
+      "node",
+      "@siemens/element-translate-ng/localize-types"
+    ]
   },
-  "exclude": ["**/schematics/", "**/*.vitest.spec.ts"],
-  "include": ["o*/**/*.spec.ts", "p*/**/*.spec.ts", "q*/**/*.spec.ts", "**/*.d.ts"]
+  "exclude": ["**/schematics/**"],
+  "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

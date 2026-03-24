@@ -155,16 +155,16 @@ describe('SiPillsInputComponent', () => {
     });
 
     it('should update on blur', async () => {
-      jasmine.clock().install();
+      vi.useFakeTimers();
       csvInputElement.value = 'a,b';
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      jasmine.clock().tick(100);
+      vi.advanceTimersByTime(100);
       csvInputElement.dispatchEvent(new InputEvent('input'));
       csvInputElement.dispatchEvent(new FocusEvent('blur'));
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
       await fixture.whenStable();
-      jasmine.clock().uninstall();
+      vi.useRealTimers();
       expect(component.csvValue).toEqual(['a', 'b']);
     });
   });
@@ -216,7 +216,7 @@ describe('SiPillsInputComponent', () => {
         .dispatchEvent(new KeyboardEvent('keydown', { key: 'delete' }));
       fixture.detectChanges();
       await fixture.whenStable();
-      expect(componentElement.querySelector('si-input-pill')).toBeTruthy();
+      expect(componentElement.querySelector('si-input-pill')).toBeInTheDocument();
     });
   });
 });
