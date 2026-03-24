@@ -80,7 +80,7 @@ jobs:
       - name: Generate coverage summary
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          filename: 'dist/coverage/*/cobertura-coverage.xml'
+          filename: 'coverage/*/cobertura-coverage.xml'
           badge: true
           format: markdown
           output: both
@@ -93,15 +93,15 @@ jobs:
           # Extract coverage percentage from markdown and create JSON badge
           TOTAL_COVERAGE=$(grep -E "(Summary|Total)" code-coverage-results.md | grep -oE '[0-9]+(\.[0-9]+)?%' | head -1 | sed 's/%//')
           echo "Extracted coverage: $TOTAL_COVERAGE%"
-          echo "{\"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"$TOTAL_COVERAGE%\", \"color\": \"brightgreen\"}" > dist/coverage/coverage-summary.json
+          echo "{\"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"$TOTAL_COVERAGE%\", \"color\": \"brightgreen\"}" > coverage/coverage-summary.json
       - name: Extract coverage badge
         run: |
           # Extract only the badge line and total coverage line
-          head -n 2 code-coverage-results.md > dist/coverage/coverage-badge.md
+          head -n 2 code-coverage-results.md > coverage/coverage-badge.md
       - uses: actions/upload-artifact@v7
         with:
           name: coverage-reports
-          path: dist/coverage
+          path: coverage
           retention-days: 30
 
   verification:

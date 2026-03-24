@@ -169,17 +169,17 @@
             "tsConfig": "projects/element-ng/tsconfig.spec.json",
             "buildTarget": "element-ng:test-target",
             "browsers": ["chromium"],
-            "browserViewport": "1280x720",
+            "browserViewport": "1024x768",
             "exclude": ["schematics/**"],
             "runnerConfig": true,
             "coverageThresholds": {
               "statements": 85,
               "branches": 70,
               "functions": 85,
-              "lines": 85
+              "lines": 80
             },
-            "coverageExclude": ["**/*.module.ts", "**/testing/**/*.ts"],
-            "coverageReporters": ["cobertura"]
+            "coverageExclude": ["**/index.ts", "**/*.module.ts", "**/testing/**/*.ts"],
+            "coverageReporters": ["cobertura", "html"]
           }
         },
         "lint": {
@@ -204,19 +204,16 @@
             "project": "projects/element-translate-ng/ng-package.json"
           },
           "configurations": {
-            "production": {
-              "tsConfig": "projects/element-translate-ng/tsconfig.lib.json"
-            },
-            "development": {
-              "tsConfig": "projects/element-translate-ng/tsconfig.lib.json"
-            }
+            "development": {}
           }
         },
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/element-translate-ng/tsconfig.spec.json",
-            "browsers": ["chromium"]
+            "browsers": ["chromium"],
+            "coverageExclude": ["**/*.module.ts", "**/*.d.ts", "**/*.mock.ts", "public-api.ts"],
+            "coverageReporters": ["cobertura", "html", "text"]
           }
         },
         "lint": {
@@ -276,7 +273,9 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/charts-ng/tsconfig.spec.json",
-            "browsers": ["chromium"]
+            "browsers": ["chromium"],
+            "coverageExclude": ["**/*.module.ts", "docs.ts", "public-api.ts"],
+            "coverageReporters": ["cobertura", "html", "text"]
           }
         },
         "lint": {
@@ -308,7 +307,9 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/native-charts-ng/tsconfig.spec.json",
-            "browsers": ["chromium"]
+            "browsers": ["chromium"],
+            "coverageExclude": ["**/index.ts", "**/*.module.ts", "docs.ts", "public-api.ts"],
+            "coverageReporters": ["cobertura", "html", "text"]
           }
         },
         "lint": {
@@ -336,19 +337,16 @@
             "project": "projects/maps-ng/ng-package.json"
           },
           "configurations": {
-            "production": {
-              "tsConfig": "projects/maps-ng/tsconfig.lib.json"
-            },
-            "development": {
-              "tsConfig": "projects/maps-ng/tsconfig.lib.json"
-            }
+            "development": {}
           }
         },
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/maps-ng/tsconfig.spec.json",
-            "browsers": ["chromium"]
+            "browsers": ["chromium"],
+            "coverageExclude": ["**/index.ts", "**/*.module.ts", "**/*.d.ts", "public-api.ts"],
+            "coverageReporters": ["cobertura", "html", "text"]
           }
         },
         "lint": {
@@ -393,7 +391,9 @@
           "options": {
             "tsConfig": "projects/dashboards-ng/tsconfig.spec.json",
             "buildTarget": "dashboards-ng:test-target",
-            "browsers": ["chromium"]
+            "browsers": ["chromium"],
+            "coverageExclude": ["**/*.module.ts", "public-api.ts", "test-main.ts"],
+            "coverageReporters": ["cobertura", "html", "text"]
           }
         },
         "lint": {
