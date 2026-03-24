@@ -9,6 +9,7 @@
 
 :is(.form-control, .form-select) {
   --border-color: #{semantic-tokens.$element-ui-2};
+  --si-textarea-mask: #{semantic-tokens.$element-base-1};
   --si-input-padding-inline-end: calc(
     var(--si-feedback-icon-offset, 0px) + var(--si-action-icon-offset, 0px) +
       #{variables.$input-padding-x}
@@ -22,8 +23,8 @@
   font-size: variables.$input-font-size;
   font-weight: variables.$input-font-weight;
   line-height: variables.$input-line-height;
-  color: variables.$input-color;
-  background-color: variables.$input-bg;
+  color: semantic-tokens.$element-text-primary;
+  background-color: semantic-tokens.$element-base-1;
   background-clip: padding-box;
   border: variables.$input-border-width solid var(--border-color);
   border-radius: variables.$input-border-radius;
@@ -48,26 +49,36 @@
 
   &:is(:focus, :hover) {
     --border-color: #{semantic-tokens.$element-ui-1};
+    --si-textarea-mask: #{semantic-tokens.$element-base-input-experimental};
+    background-color: semantic-tokens.$element-base-input-experimental;
   }
 
   &:is(.readonly, [readonly]) {
     &,
     &:is(:hover, :focus) {
       --border-color: #{semantic-tokens.$element-ui-4};
-      background-color: variables.$input-bg;
+      --si-textarea-mask: transparent;
+      background-color: transparent;
+      color: semantic-tokens.$element-text-primary;
     }
   }
 
   &:is(.disabled, :disabled) {
     &,
     &:is(:hover, :focus) {
-      --border-color: #{semantic-tokens.$element-ui-3};
+      --border-color: #{semantic-tokens.$element-ui-4};
+      --si-textarea-mask: transparent;
+      background-color: transparent;
       color: semantic-tokens.$element-text-disabled;
     }
 
     &::placeholder {
       color: variables.$input-placeholder-disabled-color;
     }
+  }
+
+  &:not(:placeholder-shown):not(:focus):not(.readonly):not([readonly]) {
+    color: semantic-tokens.$element-text-secondary;
   }
 
   &:is(:disabled, [readonly]) {
@@ -101,9 +112,8 @@ textarea.form-control {
   padding-inline-start: calc(variables.$input-padding-x - 3px);
   padding-inline-end: calc(var(--si-input-padding-inline-end) - 3px);
   line-height: variables.$input-line-height;
-  // prevent scrollbar overlapping rounded borders
   box-shadow: 0 0 0 1px var(--border-color);
-  border: 3px solid variables.$input-bg !important; // stylelint-disable-line declaration-no-important
+  border: 3px solid var(--si-textarea-mask) !important; // stylelint-disable-line declaration-no-important
   outline-offset: 2px !important; // stylelint-disable-line declaration-no-important
 }
 
