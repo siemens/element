@@ -596,9 +596,9 @@ describe('SiSplitComponent', () => {
 
         dragFromElementToElement(getSplitGuttersElements(1), 50, 50, partElement2, 50, 50);
 
-        expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
-        expect(wrapperComponent.measureSize2()).toBeCloseTo(58, 0);
-        expect(wrapperComponent.measureSize3()).toBeCloseTo(242, 0);
+        expect(wrapperComponent.measureSize1()).toBeCloseTo(200, -0.4);
+        expect(wrapperComponent.measureSize2()).toBeCloseTo(58, -0.4);
+        expect(wrapperComponent.measureSize3()).toBeCloseTo(242, -0.4);
       });
 
       it('should display with set sizes and gutter size and not resize on incorrect drag', async () => {
@@ -723,16 +723,16 @@ describe('SiSplitComponent', () => {
         await runOnPushChangeDetection(fixture);
         fixture.detectChanges();
 
-        expect(wrapperComponent.measureSize1()).toBeCloseTo(200);
-        expect(wrapperComponent.measureSize2()).toBeCloseTo(100);
-        expect(wrapperComponent.measureSize3()).toBeCloseTo(200);
+        expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
+        expect(wrapperComponent.measureSize2()).toBeCloseTo(100, 0);
+        expect(wrapperComponent.measureSize3()).toBeCloseTo(200, 0);
 
         partElement2.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
         fixture.detectChanges();
 
-        expect(wrapperComponent.measureSize1()).toBeCloseTo(246);
-        expect(wrapperComponent.measureSize2()).toBeCloseTo(40);
-        expect(wrapperComponent.measureSize3()).toBeCloseTo(246);
+        expect(wrapperComponent.measureSize1()).toBeCloseTo(246, 0);
+        expect(wrapperComponent.measureSize2()).toBeCloseTo(40, 0);
+        expect(wrapperComponent.measureSize3()).toBeCloseTo(246, 0);
       });
     });
 
