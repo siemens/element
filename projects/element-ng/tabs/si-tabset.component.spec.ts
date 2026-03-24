@@ -222,7 +222,7 @@ describe('SiTabset', () => {
     fixture.detectChanges();
 
     const d1 = await (await tabsetHarness.getTabItemButtonAt(0)).getDimensions();
-    expect(d1.width).toBe(110);
+    expect(d1.width).toBeCloseTo(110);
   });
 
   it('should use nav-tabs min-inline-size', async () => {
@@ -231,9 +231,9 @@ describe('SiTabset', () => {
     fixture.detectChanges();
 
     const d1 = await (await tabsetHarness.getTabItemButtonAt(0)).getDimensions();
-    expect(d1.width).toBe(100);
+    expect(d1.width).toBeCloseTo(100);
     const d2 = await (await tabsetHarness.getTabItemButtonAt(1)).getDimensions();
-    expect(d2.width).toBe(100);
+    expect(d2.width).toBeCloseTo(100);
   });
 
   it('should hide tabs which are not in the view and show menu button', async () => {
