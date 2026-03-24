@@ -37,7 +37,7 @@ class TestHostComponent {
   imports: [FormsModule, ReactiveFormsModule, SiPasswordToggleModule],
   template: `
     <form [formGroup]="form">
-      <si-password-toggle #toggle showVisibilityIcon="true">
+      <si-password-toggle #toggle [showVisibilityIcon]="true">
         <input class="form-control" formControlName="input" />
       </si-password-toggle>
     </form>
@@ -69,17 +69,15 @@ describe('SiPasswordToggleComponent', () => {
     fixture.detectChanges();
 
     const icon = element.querySelector('button')!;
-    expect(icon).toBeTruthy();
-    expect(element.querySelector('si-password-toggle')?.classList).toContain(
-      'show-visibility-icon'
-    );
-    expect(element.querySelector<HTMLElement>('input')?.getAttribute('type')).toBe('password');
+    expect(icon).toBeInTheDocument();
+    expect(element.querySelector('si-password-toggle')).toHaveClass('show-visibility-icon');
+    expect(element.querySelector('input')).toHaveAttribute('type', 'password');
 
     element.querySelector('button')?.click();
 
     fixture.detectChanges();
 
-    expect(element.querySelector<HTMLElement>('input')?.getAttribute('type')).toBe('text');
+    expect(element.querySelector('input')).toHaveAttribute('type', 'text');
   });
 
   it('should hide the icon when disabled', () => {
@@ -87,10 +85,8 @@ describe('SiPasswordToggleComponent', () => {
     fixture.detectChanges();
 
     const icon = element.querySelector('button')!;
-    expect(icon).toBeFalsy();
-    expect(element.querySelector('si-password-toggle')?.classList).not.toContain(
-      'show-visibility-icon'
-    );
+    expect(icon).not.toBeInTheDocument();
+    expect(element.querySelector('si-password-toggle')).not.toHaveClass('show-visibility-icon');
   });
 
   describe('as form control', () => {

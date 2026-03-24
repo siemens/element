@@ -17,7 +17,6 @@ export default defineConfig(
           'projects/element-ng/tsconfig.docs.json',
           'projects/element-ng/tsconfig.lib.json',
           'projects/element-ng/tsconfig.spec.json',
-          'projects/element-ng/tsconfig.vitest.json',
           'projects/element-ng/tsconfig.schematics.json',
           'projects/element-ng/tsconfig.schematics.spec.json'
         ]

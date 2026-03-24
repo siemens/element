@@ -34,13 +34,13 @@ describe('SiPopoverDirective', () => {
     fixture.nativeElement.querySelector('button').click();
     await fixture.whenStable();
 
-    expect(document.querySelector('.popover')).toBeTruthy();
-    expect(document.querySelector('.popover')?.innerHTML).toContain('test popover content');
+    expect(document.querySelector('.popover')).toBeInTheDocument();
+    expect(document.querySelector('.popover')).toHaveTextContent('test popover content');
 
     fixture.nativeElement.querySelector('button').click();
     await fixture.whenStable();
 
-    expect(document.querySelector('.popover')).toBeFalsy();
+    expect(document.querySelector('.popover')).not.toBeInTheDocument();
   });
 
   it('should close when move focus outside', async () => {
@@ -52,18 +52,18 @@ describe('SiPopoverDirective', () => {
     button.dispatchEvent(focusEvent);
 
     await fixture.whenStable();
-    expect(document.querySelector('.popover')).toBeTruthy();
-    expect(document.querySelector('.popover')?.innerHTML).toContain('test popover content');
+    expect(document.querySelector('.popover')).toBeInTheDocument();
+    expect(document.querySelector('.popover')).toHaveTextContent('test popover content');
 
     const focusoutEvent = new Event('focusout', { bubbles: true });
     button.dispatchEvent(focusoutEvent);
 
     fixture.detectChanges();
-    expect(document.querySelector('.popover')).toBeFalsy();
+    expect(document.querySelector('.popover')).not.toBeInTheDocument();
   });
 
   it('should not emit hidden event if popover overlay is closed', () => {
-    const hiddenSpy = spyOn(wrapperComponent.popoverOverlay()!.hidden, 'emit').and.callThrough();
+    const hiddenSpy = vi.spyOn(wrapperComponent.popoverOverlay()!.hidden, 'emit');
     wrapperComponent.popoverOverlay()?.hide();
     expect(hiddenSpy).not.toHaveBeenCalled();
   });

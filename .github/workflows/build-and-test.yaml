@@ -71,8 +71,7 @@ jobs:
           path: dist
       - run: npm ci --prefer-offline --no-audit
       - run: npm run translate:test -- --watch=false --progress=false --coverage
-      - run: npm run lib:test -- --watch=false --progress=false --code-coverage
-      - run: npm run lib:test-vitest -- --watch=false --progress=false --coverage
+      - run: npm run lib:test -- --watch=false --progress=false --coverage
       - run: npm run schematics:test
       - run: npm run charts:test -- --watch=false --progress=false --coverage
       - run: npm run dashboards:test -- --watch=false --progress=false --coverage
