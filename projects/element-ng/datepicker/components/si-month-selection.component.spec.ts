@@ -2,66 +2,61 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { A11yModule } from '@angular/cdk/a11y';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { inputBinding, outputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { getLocaleMonthNames } from '../date-time-helper';
-import { SiDatepickerModule } from '../si-datepicker.module';
 import { CalendarTestHelper, generateKeyEvent } from '../testing/test-helper';
 import { SiMonthSelectionComponent as TestComponent } from './si-month-selection.component';
 
-@Component({
-  imports: [SiDatepickerModule, A11yModule, TestComponent],
-  template: `<si-month-selection
-    previousLabel="Previous Year"
-    nextLabel="Next Year"
-    [startDate]="startDate()"
-    [months]="months()"
-    [minDate]="minDate()"
-    [maxDate]="maxDate()"
-    [focusedDate]="focusedDate()"
-    (focusedDateChange)="focusedDate.set($event)"
-    (selectedValueChange)="selectionChange($event)"
-    (viewChange)="viewChange($event)"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class WrapperComponent {
-  readonly focusedDate = signal(new Date(2022, 2, 26));
-  readonly startDate = signal(new Date(2022, 2, 25));
-  readonly months = signal(getLocaleMonthNames('en'));
-  readonly minDate = signal<Date | undefined>(undefined);
-  readonly maxDate = signal<Date | undefined>(undefined);
-  view?: string;
-  activeMonth?: Date;
-  cancelled = false;
-
-  selectionChange(selection?: Date | null): void {
-    if (selection) {
-      this.startDate.set(selection);
-      this.focusedDate.set(selection);
-    } else {
-      this.cancelled = true;
-    }
-  }
-  activeMonthChange(current: Date): void {
-    this.activeMonth = current;
-  }
-  viewChange(view: 'year'): void {
-    this.view = view;
-  }
-}
-
 describe('SiMonthSelectionComponent', () => {
   let element: HTMLElement;
-  let fixture: ComponentFixture<WrapperComponent>;
-  let wrapperComponent: WrapperComponent;
+  let fixture: ComponentFixture<TestComponent>;
   let helper: CalendarTestHelper;
 
+  let focusedDate: WritableSignal<Date>;
+  let startDate: WritableSignal<Date>;
+  let months: WritableSignal<string[]>;
+  let minDate: WritableSignal<Date | undefined>;
+  let maxDate: WritableSignal<Date | undefined>;
+  let selectionChangeSpy = vi.fn();
+  let viewChangeSpy = vi.fn();
+  let cancelled: boolean;
+
   beforeEach(() => {
-    fixture = TestBed.createComponent(WrapperComponent);
-    wrapperComponent = fixture.componentInstance;
+    focusedDate = signal(new Date(2022, 2, 26));
+    startDate = signal(new Date(2022, 2, 25));
+    months = signal(getLocaleMonthNames('en'));
+    minDate = signal<Date | undefined>(undefined);
+    maxDate = signal<Date | undefined>(undefined);
+    cancelled = false;
+    selectionChangeSpy = vi.fn((selection?: Date | null) => {
+      if (selection) {
+        startDate.set(selection);
+        focusedDate.set(selection);
+      } else {
+        cancelled = true;
+      }
+    });
+    viewChangeSpy = vi.fn();
+
+    const previousLabel = signal('Previous Year');
+    const nextLabel = signal('Next Year');
+
+    fixture = TestBed.createComponent(TestComponent, {
+      bindings: [
+        inputBinding('previousLabel', previousLabel),
+        inputBinding('nextLabel', nextLabel),
+        inputBinding('startDate', startDate),
+        inputBinding('months', months),
+        inputBinding('minDate', minDate),
+        inputBinding('maxDate', maxDate),
+        inputBinding('focusedDate', focusedDate),
+        outputBinding<Date>('focusedDateChange', (date: Date) => focusedDate.set(date)),
+        outputBinding<Date | null>('selectedValueChange', selectionChangeSpy),
+        outputBinding<'year'>('viewChange', viewChangeSpy)
+      ]
+    });
     element = fixture.nativeElement;
     helper = new CalendarTestHelper(element);
     fixture.detectChanges();
@@ -73,41 +68,41 @@ describe('SiMonthSelectionComponent', () => {
   });
 
   it('should contain all months', () => {
-    const months = helper.getEnabledCells();
+    const monthCells = helper.getEnabledCells();
 
-    expect(months.length).toBe(12);
+    expect(monthCells.length).toBe(12);
   });
 
   it('shows selected month', () => {
-    const expected = wrapperComponent.months().at(wrapperComponent.focusedDate().getMonth());
+    const expected = months().at(focusedDate().getMonth());
     const selectedElement = element.querySelector('.selected')!;
-    expect(selectedElement.innerHTML.trim()).toBe(expected!);
+    expect(selectedElement).toHaveTextContent(expected!);
   });
 
   it('should mark active date', () => {
-    const expected = wrapperComponent.months().at(wrapperComponent.focusedDate().getMonth());
+    const expected = months().at(focusedDate().getMonth());
     const activeCell = helper.getEnabledCellWithText(expected!);
     expect(activeCell?.hasAttribute('cdkfocusinitial')).toBe(true);
   });
 
   it('should focus active date', () => {
-    const expected = wrapperComponent.months().at(wrapperComponent.focusedDate().getMonth());
+    const expected = months().at(focusedDate().getMonth());
     const activeCell = helper.getEnabledCellWithText(expected!);
     expect(activeCell?.hasAttribute('cdkFocusInitial')).toBeTruthy();
-    expect(activeCell?.getAttribute('tabindex')).toContain('0');
+    expect(activeCell).toHaveAttribute('tabindex', expect.stringContaining('0'));
   });
 
   it('should update focusedDate and takeover date on focus', () => {
     helper.getEnabledCells().at(0)?.dispatchEvent(new Event('focus'));
     fixture.detectChanges();
 
-    expect(wrapperComponent.focusedDate()).toEqual(new Date(2022, 0, 26));
+    expect(focusedDate()).toEqual(new Date(2022, 0, 26));
   });
 
   it('should emit viewChange', () => {
     helper.getOpenYearViewLink().click();
 
-    expect(wrapperComponent.view).toBe('year');
+    expect(viewChangeSpy).toHaveBeenCalledWith('year');
   });
 
   describe('with previous button', () => {
@@ -117,11 +112,11 @@ describe('SiMonthSelectionComponent', () => {
       getButton().click();
       fixture.detectChanges();
 
-      expect(helper.getOpenYearViewLink()?.innerHTML.trim()).toBe('2021');
+      expect(helper.getOpenYearViewLink()).toHaveTextContent('2021');
     });
 
     it('should be disabled when minDate same year', () => {
-      wrapperComponent.minDate.set(new Date(2022, 0, 1));
+      minDate.set(new Date(2022, 0, 1));
       fixture.detectChanges();
 
       const btn = getButton();
@@ -130,7 +125,7 @@ describe('SiMonthSelectionComponent', () => {
     });
 
     it('should be disabled when minDate after focusedDate', () => {
-      wrapperComponent.minDate.set(new Date(2023, 0, 1));
+      minDate.set(new Date(2023, 0, 1));
       fixture.detectChanges();
 
       const btn = getButton();
@@ -141,7 +136,7 @@ describe('SiMonthSelectionComponent', () => {
     it('should have aria-label', () => {
       const btn = getButton();
       expect(btn?.getAttributeNames()).toContain('aria-label');
-      expect(btn?.getAttribute('aria-label')).toBe('Previous Year');
+      expect(btn).toHaveAttribute('aria-label', 'Previous Year');
     });
   });
 
@@ -152,11 +147,11 @@ describe('SiMonthSelectionComponent', () => {
       getButton().click();
       fixture.detectChanges();
 
-      expect(helper.getOpenYearViewLink()?.innerHTML.trim()).toBe('2023');
+      expect(helper.getOpenYearViewLink()).toHaveTextContent('2023');
     });
 
     it('should be disabled when maxDate same year', () => {
-      wrapperComponent.maxDate.set(new Date(2022, 11, 1));
+      maxDate.set(new Date(2022, 11, 1));
       fixture.detectChanges();
 
       const btn = getButton();
@@ -165,7 +160,7 @@ describe('SiMonthSelectionComponent', () => {
     });
 
     it('should be disabled when maxDate before focusedDate', () => {
-      wrapperComponent.maxDate.set(new Date(2021, 0, 1));
+      maxDate.set(new Date(2021, 0, 1));
       fixture.detectChanges();
 
       const btn = getButton();
@@ -176,7 +171,7 @@ describe('SiMonthSelectionComponent', () => {
     it('should have aria-label', () => {
       const btn = getButton();
       expect(btn?.getAttributeNames()).toContain('aria-label');
-      expect(btn?.getAttribute('aria-label')).toBe('Next Year');
+      expect(btn).toHaveAttribute('aria-label', 'Next Year');
     });
   });
 
@@ -186,9 +181,7 @@ describe('SiMonthSelectionComponent', () => {
       let index = 0;
       monthCells.forEach(cell => {
         const label = cell.getAttribute('aria-label');
-        const expected = `${
-          wrapperComponent.months()[index]
-        } ${wrapperComponent.focusedDate().getFullYear()}`;
+        const expected = `${months()[index]} ${focusedDate().getFullYear()}`;
 
         expect(label).toBe(expected);
         index++;
@@ -208,73 +201,73 @@ describe('SiMonthSelectionComponent', () => {
       calendarBodyElement.dispatchEvent(generateKeyEvent('Escape'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.cancelled).toBe(true);
+      expect(cancelled).toBe(true);
     });
 
     it('should decrement month on left arrow press', () => {
       calendarBodyElement.dispatchEvent(generateKeyEvent('ArrowLeft'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.focusedDate()).toEqual(new Date(2022, 1, 26));
+      expect(focusedDate()).toEqual(new Date(2022, 1, 26));
     });
 
     it('should increment month on right arrow press', () => {
       calendarBodyElement.dispatchEvent(generateKeyEvent('ArrowRight'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.focusedDate()).toEqual(new Date(2022, 3, 26));
+      expect(focusedDate()).toEqual(new Date(2022, 3, 26));
     });
 
     it('should decrement year and move to december on left arrow press', () => {
-      wrapperComponent.focusedDate.set(new Date(2022, 0, 1));
+      focusedDate.set(new Date(2022, 0, 1));
       fixture.detectChanges();
 
       calendarBodyElement.dispatchEvent(generateKeyEvent('ArrowLeft'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.focusedDate()).toEqual(new Date(2021, 11, 1));
+      expect(focusedDate()).toEqual(new Date(2021, 11, 1));
     });
 
     it('should increment year and move to january on right arrow press', () => {
-      wrapperComponent.focusedDate.set(new Date(2022, 11, 1));
+      focusedDate.set(new Date(2022, 11, 1));
       fixture.detectChanges();
 
       calendarBodyElement.dispatchEvent(generateKeyEvent('ArrowRight'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.focusedDate()).toEqual(new Date(2023, 0, 1));
+      expect(focusedDate()).toEqual(new Date(2023, 0, 1));
     });
 
     it('should go up a row on up arrow press', () => {
       calendarBodyElement.dispatchEvent(generateKeyEvent('ArrowUp'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.focusedDate()).toEqual(new Date(2022, 0, 26));
+      expect(focusedDate()).toEqual(new Date(2022, 0, 26));
     });
 
     it('should go down a row on down arrow press', () => {
       calendarBodyElement.dispatchEvent(generateKeyEvent('ArrowDown'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.focusedDate()).toEqual(new Date(2022, 4, 26));
+      expect(focusedDate()).toEqual(new Date(2022, 4, 26));
     });
 
     it('should select focused date on click', () => {
       calendarBodyElement.dispatchEvent(generateKeyEvent('ArrowUp'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.focusedDate()).toEqual(new Date(2022, 0, 26));
+      expect(focusedDate()).toEqual(new Date(2022, 0, 26));
 
       const activeCell = calendarBodyElement.querySelector('[cdkfocusinitial]') as HTMLElement;
       activeCell.click();
-      expect(wrapperComponent.startDate()).toEqual(new Date(2022, 0, 1));
+      expect(startDate()).toEqual(new Date(2022, 0, 1));
     });
   });
 
   describe('range test', () => {
     beforeEach(() => {
-      wrapperComponent.minDate.set(new Date(2022, 1, 25));
-      wrapperComponent.maxDate.set(new Date(2022, 10, 25));
+      minDate.set(new Date(2022, 1, 25));
+      maxDate.set(new Date(2022, 10, 25));
       fixture.detectChanges();
     });
 
@@ -287,8 +280,8 @@ describe('SiMonthSelectionComponent', () => {
       const disabledCells = helper.getDisabledCells();
       disabledCells.forEach(c => {
         c.click();
-        expect(wrapperComponent.startDate()).toEqual(new Date(2022, 2, 25));
-        expect(wrapperComponent.focusedDate()).toEqual(new Date(2022, 2, 26));
+        expect(startDate()).toEqual(new Date(2022, 2, 25));
+        expect(focusedDate()).toEqual(new Date(2022, 2, 26));
       });
     });
   });

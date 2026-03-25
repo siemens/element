@@ -45,9 +45,9 @@ describe('SiValueWidgetComponent', () => {
     element = fixture.nativeElement;
   });
 
-  it('should have a heading', () => {
+  it('should have a heading', async () => {
     heading.set('TITLE_KEY');
-    fixture.detectChanges();
-    expect(element.querySelector('.card-header')!.innerHTML).toContain('TITLE_KEY');
+    await fixture.whenStable();
+    expect(element.querySelector('.card-header')!).toHaveTextContent('TITLE_KEY');
   });
 });

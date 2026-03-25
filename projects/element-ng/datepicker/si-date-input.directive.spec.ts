@@ -175,11 +175,11 @@ describe('SiDateInputDirective', () => {
 
   it('should disable input element when setting disabled property to true', () => {
     expect(component.siDateInputDirective().disabled()).toBe(false);
-    expect(dateInput().disabled).toBe(false);
+    expect(dateInput()).toBeEnabled();
 
     component.disabled.set(true);
     fixture.detectChanges();
-    expect(dateInput().disabled).toBe(true);
+    expect(dateInput()).toBeDisabled();
   });
 
   it('should trigger modelChange with undefined when input is blank string', async () => {
