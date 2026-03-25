@@ -3,7 +3,7 @@
 Element uses animations in many places to provide a smoother user experience. However, animations
 aren't always a good thing. An important aspect to accessibility is the possibility to reduce
 motion and that means the animations. The other place where animations are problematic are
-low-end or embedded devices that a lot less CPU/GPU power compared to a desktop PC/laptop or
+low-end or embedded devices that have a lot less CPU/GPU power compared to a desktop PC/laptop or
 a modern tablet.
 
 To support accessibility and embedded devices, Element provides a way to reduce/disable
