@@ -58,30 +58,28 @@ describe('SiNotificationItemComponent', () => {
 
   it('should create', () => {
     expect(fixture).toBeTruthy();
-    expect(element.querySelector('span.si-body.text-secondary')!.innerHTML).toContain(
-      'Today 12:00'
-    );
-    expect(element.querySelector('span.si-h5')!.innerHTML).toContain('Heading');
+    expect(element.querySelector('span.si-body.text-secondary')!).toHaveTextContent('Today 12:00');
+    expect(element.querySelector('span.si-h5')!).toHaveTextContent('Heading');
   });
 
   it('should display the description', async () => {
     description.set('Description');
     await fixture.whenStable();
-    expect(element.querySelectorAll('span.si-body')[1].innerHTML).toContain('Description');
+    expect(element.querySelectorAll('span.si-body')[1]).toHaveTextContent('Description');
   });
 
   it('should display the unread state', async () => {
     unread.set(true);
     await fixture.whenStable();
-    expect(element.querySelector('span.si-h5')).not.toBeTruthy();
-    expect(element.querySelector('span.si-h5-bold')).toBeTruthy();
-    expect(element.querySelector('span.dot')).toBeTruthy();
+    expect(element.querySelector('span.si-h5')).not.toBeInTheDocument();
+    expect(element.querySelector('span.si-h5-bold')).toBeInTheDocument();
+    expect(element.querySelector('span.dot')).toBeInTheDocument();
   });
 
   it('should link with the item link', async () => {
     itemLink.set({ type: 'link', href: '/test' });
     await fixture.whenStable();
-    expect(element.querySelector('a')?.getAttribute('href')).toBe('/test');
+    expect(element.querySelector('a')).toHaveAttribute('href', '/test');
   });
 
   it('should link with the router link', async () => {
@@ -119,7 +117,7 @@ describe('SiNotificationItemComponent', () => {
       ]
     });
     await fixture.whenStable();
-    expect(element.querySelector('button si-icon')).toBeTruthy();
+    expect(element.querySelector('button si-icon')).toBeInTheDocument();
   });
 
   it('should display the primary action action-button', async () => {
@@ -129,6 +127,6 @@ describe('SiNotificationItemComponent', () => {
       action: () => {}
     });
     await fixture.whenStable();
-    expect(element.querySelector('button')?.textContent).toContain('Action');
+    expect(element.querySelector('button')).toHaveTextContent('Action');
   });
 });
