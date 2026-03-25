@@ -160,7 +160,7 @@ describe('SiAboutComponent', () => {
     it('should not set the sanitizedUrl if iframe is not enabled', () => {
       licenseInfo.set({ title: 'Test' });
       fixture.detectChanges();
-      expect(element.querySelector<HTMLIFrameElement>('iframe')).toBeFalsy();
+      expect(element.querySelector<HTMLIFrameElement>('iframe')).not.toBeInTheDocument();
     });
 
     it('should set the sanitizedUrl if iframe is enabled', () => {
@@ -194,7 +194,7 @@ describe('SiAboutComponent', () => {
 
       const actual = getLicenseApi();
       for (let index = 0; index < modules.length; index++) {
-        expect(actual.at(index)?.textContent).toContain(modules.at(index)?.name);
+        expect(actual.at(index)).toHaveTextContent(modules.at(index)!.name);
       }
     });
 
@@ -212,7 +212,7 @@ describe('SiAboutComponent', () => {
       await fixture.whenStable();
       const actual = getLicenseFiles();
       expect(actual).toHaveLength(1);
-      expect(actual.at(0)?.textContent).toContain('Component 1');
+      expect(actual.at(0)).toHaveTextContent('Component 1');
     });
 
     it('should not fetch module license if already loaded', () => {
@@ -248,7 +248,7 @@ describe('SiAboutComponent', () => {
       expect(req.request.method).toEqual('GET');
 
       fixture.detectChanges();
-      expect(element.querySelector('.license-api-file-content')?.textContent).toEqual(content);
+      expect(element.querySelector('.license-api-file-content')).toHaveTextContent(content);
     });
 
     it('should not fetch license content if already loaded', async () => {
@@ -267,7 +267,7 @@ describe('SiAboutComponent', () => {
       await fixture.whenStable();
 
       httpMock.expectNone('/component1.txt');
-      expect(element.querySelector('.license-api-file-content')?.textContent).toEqual('License');
+      expect(element.querySelector('.license-api-file-content')).toHaveTextContent('License');
     });
   });
 });
