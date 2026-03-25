@@ -2,62 +2,59 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { inputBinding, outputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Filter } from './filter';
 import { SiFilterPillComponent } from './index';
 
-@Component({
-  imports: [SiFilterPillComponent],
-  template: `
-    <si-filter-pill [totalPills]="1" [filter]="filter" (deleteFilters)="deleteFilters($event)" />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class TestHostComponent {
-  filter!: Filter;
-  deleteFilters = (event: any): void => {};
-}
-
 describe('SiFilterPillComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
+  let fixture: ComponentFixture<SiFilterPillComponent>;
   let element: HTMLElement;
 
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [SiFilterPillComponent, TestHostComponent]
-    })
-  );
+  let filter: WritableSignal<Filter>;
+  let totalPills: WritableSignal<number>;
+  let deleteFiltersSpy: (event: Filter) => void;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
+    filter = signal<Filter>({
+      filterName: '',
+      title: '',
+      description: ''
+    });
+    totalPills = signal(1);
+    deleteFiltersSpy = vi.fn();
+
+    fixture = TestBed.createComponent(SiFilterPillComponent, {
+      bindings: [
+        inputBinding('filter', filter),
+        inputBinding('totalPills', totalPills),
+        outputBinding('deleteFilters', deleteFiltersSpy)
+      ]
+    });
     element = fixture.nativeElement;
   });
 
-  it('should correctly display the filter properties', () => {
-    component.filter = {
+  it('should correctly display the filter properties', async () => {
+    filter.set({
       filterName: 'location',
       title: 'Current Location',
       description: 'Florida'
-    };
-    fixture.detectChanges();
-    expect(element.querySelector('div.name')!.innerHTML).toBe('Current Location');
-    expect(element.querySelector('div.value')!.innerHTML).toBe('Florida');
+    });
+    await fixture.whenStable();
+    expect(element.querySelector('div.name')!).toHaveTextContent('Current Location');
+    expect(element.querySelector('div.value')!).toHaveTextContent('Florida');
   });
 
-  it('should emit a deleted event if deleted - for single pill', () => {
-    component.filter = {
+  it('should emit a deleted event if deleted - for single pill', async () => {
+    filter.set({
       filterName: 'lastName',
       title: 'Last Name',
       description: 'Your Last Name'
-    };
-    const spyEvent = vi.spyOn(component, 'deleteFilters');
-    fixture.detectChanges();
+    });
+    await fixture.whenStable();
     element.querySelector<HTMLElement>('[aria-label="Remove"]')?.click();
-    fixture.detectChanges();
-    expect(spyEvent).toHaveBeenCalled();
+    await fixture.whenStable();
+    expect(deleteFiltersSpy).toHaveBeenCalled();
   });
 });

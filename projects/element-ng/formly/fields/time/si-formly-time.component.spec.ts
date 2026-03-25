@@ -2,27 +2,25 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormRecord, ReactiveFormsModule } from '@angular/forms';
+import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { SiDatepickerModule, SiTimepickerComponent } from '@siemens/element-ng/datepicker';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { SiTimepickerComponent } from '@siemens/element-ng/datepicker';
 
 import { SiFormlyTimeComponent } from './si-formly-time.component';
 
 @Component({
   selector: 'si-formly-test',
-  imports: [ReactiveFormsModule, SiDatepickerModule, FormlyModule],
-  template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
+  imports: [FormlyModule],
+  template: ` <formly-form [form]="form" [fields]="fields()" [model]="model()" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
-  form = new FormRecord({});
-  fields!: FormlyFieldConfig[];
-  model: any;
-  options!: FormlyFormOptions;
-  cdRef = inject(ChangeDetectorRef);
+  readonly form = new FormRecord({});
+  readonly fields = signal<FormlyFieldConfig[]>([]);
+  readonly model = signal<any>({});
 }
 
 describe('formly time-type', () => {
@@ -34,8 +32,6 @@ describe('formly time-type', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
-        SiDatepickerModule,
         FormlyModule.forRoot({
           types: [
             {
@@ -43,8 +39,7 @@ describe('formly time-type', () => {
               component: SiFormlyTimeComponent
             }
           ]
-        }),
-        FormlyTestComponent
+        })
       ]
     }).compileComponents();
   });
@@ -55,13 +50,13 @@ describe('formly time-type', () => {
   });
 
   it('should not display labels by default', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'time',
         type: 'time',
         props: {}
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
@@ -70,7 +65,7 @@ describe('formly time-type', () => {
   });
 
   it('should set timepicker to readonly', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'time',
         type: 'time',
@@ -83,7 +78,7 @@ describe('formly time-type', () => {
           }
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
@@ -92,7 +87,7 @@ describe('formly time-type', () => {
   });
 
   it('should set timepicker hideLabels to false', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'time',
         type: 'time',
@@ -102,7 +97,7 @@ describe('formly time-type', () => {
           }
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
@@ -111,7 +106,7 @@ describe('formly time-type', () => {
   });
 
   it('should not use the padding-inline-end or class .form-control-has-icon', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'time',
         type: 'time',
@@ -122,7 +117,7 @@ describe('formly time-type', () => {
           }
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const inputFields = fixture.debugElement.queryAll(By.css(`input`));
@@ -132,7 +127,7 @@ describe('formly time-type', () => {
   });
 
   it('should set timepicker showMinutes to false', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'time',
         type: 'time',
@@ -140,10 +135,10 @@ describe('formly time-type', () => {
           timeConfig: { showMinutes: false }
         }
       }
-    ];
-    component.model = {
+    ]);
+    component.model.set({
       time: startDate
-    };
+    });
     fixture.detectChanges();
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
@@ -152,7 +147,7 @@ describe('formly time-type', () => {
   });
 
   it('should set timepicker showSeconds to true', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'time',
         type: 'time',
@@ -160,10 +155,10 @@ describe('formly time-type', () => {
           timeConfig: { showSeconds: true }
         }
       }
-    ];
-    component.model = {
+    ]);
+    component.model.set({
       time: startDate
-    };
+    });
     fixture.detectChanges();
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
@@ -172,7 +167,7 @@ describe('formly time-type', () => {
   });
 
   it('should set timepicker showSeconds to true', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'time',
         type: 'time',
@@ -180,10 +175,10 @@ describe('formly time-type', () => {
           timeConfig: { showMilliseconds: true }
         }
       }
-    ];
-    component.model = {
+    ]);
+    component.model.set({
       time: startDate
-    };
+    });
     fixture.detectChanges();
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
@@ -192,7 +187,7 @@ describe('formly time-type', () => {
   });
 
   it(`should set timepicker show meridian`, () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'time',
         type: 'time',
@@ -200,10 +195,10 @@ describe('formly time-type', () => {
           timeConfig: { showMeridian: true }
         }
       }
-    ];
-    component.model = {
+    ]);
+    component.model.set({
       time: startDate
-    };
+    });
     fixture.detectChanges();
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
@@ -212,7 +207,7 @@ describe('formly time-type', () => {
   });
 
   it(`should support date string value input`, () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'time',
         type: 'time',
@@ -223,10 +218,10 @@ describe('formly time-type', () => {
           }
         }
       }
-    ];
-    component.model = {
+    ]);
+    component.model.set({
       time: startDateString
-    };
+    });
     fixture.detectChanges();
 
     const expected = new Date(startDateString);
@@ -234,7 +229,7 @@ describe('formly time-type', () => {
   });
 
   it(`should support date string value input on model change`, () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'time',
         type: 'time',
@@ -245,17 +240,16 @@ describe('formly time-type', () => {
           }
         }
       }
-    ];
-    component.model = {
+    ]);
+    component.model.set({
       time: startDateString
-    };
+    });
     fixture.detectChanges();
 
     const newDateString = '2021-08-26T10:45:07.001';
-    component.model = {
+    component.model.set({
       time: newDateString
-    };
-    component.cdRef.detectChanges();
+    });
     fixture.detectChanges();
 
     const expected = new Date(newDateString);
