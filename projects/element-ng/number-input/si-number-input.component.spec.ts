@@ -152,7 +152,7 @@ describe('SiNumberInputComponent', () => {
       value.set(200);
       await fixture.whenStable();
 
-      expect(incButton()?.disabled).toBeTruthy();
+      expect(incButton()).toBeDisabled();
     });
 
     it('should support upper custom limit', async () => {
@@ -168,7 +168,7 @@ describe('SiNumberInputComponent', () => {
       value.set(-10);
       await fixture.whenStable();
 
-      expect(decButton()?.disabled).toBeTruthy();
+      expect(decButton()).toBeDisabled();
     });
 
     it('should support lower custom limit', async () => {
@@ -176,7 +176,7 @@ describe('SiNumberInputComponent', () => {
       value.set(-150);
       await fixture.whenStable();
 
-      expect(decButton()?.disabled).toBeFalsy();
+      expect(decButton()).toBeEnabled();
       fakeClick('.dec');
       expect(valueChangeSpy).toHaveBeenCalledWith(-151);
     });
@@ -186,7 +186,7 @@ describe('SiNumberInputComponent', () => {
       value.set(10);
       await fixture.whenStable();
 
-      expect(decButton()?.disabled).toBeTruthy();
+      expect(decButton()).toBeDisabled();
       expect(numberValue()).toBe(10);
     });
 
@@ -275,7 +275,7 @@ describe('SiNumberInputComponent', () => {
       });
 
       it('should have class disabled', async () => {
-        expect(numberInput.classList).toContain('disabled');
+        expect(numberInput).toHaveClass('disabled');
       });
 
       it('should have attribute disabled on input', () => {
@@ -298,19 +298,13 @@ describe('SiNumberInputComponent', () => {
 
     it('should set max attribute', () => {
       fixture.detectChanges();
-      expect(component.siNumberInput().inputElement().nativeElement?.getAttribute('max')).toBe(
-        '100'
-      );
+      expect(component.siNumberInput().inputElement().nativeElement).toHaveAttribute('max', '100');
     });
 
     it('should ignore min if it is not a number', () => {
       fixture.detectChanges();
-      expect(
-        component.siNumberInput().inputElement().nativeElement?.getAttribute('min')
-      ).toBeNull();
-      expect(component.siNumberInput().inputElement().nativeElement?.getAttribute('max')).toBe(
-        '100'
-      );
+      expect(component.siNumberInput().inputElement().nativeElement).not.toHaveAttribute('min');
+      expect(component.siNumberInput().inputElement().nativeElement).toHaveAttribute('max', '100');
     });
   });
 });
