@@ -8,11 +8,11 @@ import { FormRecord } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { DatepickerInputConfig } from '@siemens/element-ng/datepicker';
 import { SiFormModule } from '@siemens/element-ng/form';
-import { SiFormlyModule } from '@siemens/element-ng/formly';
+import { SiFormlyComponent } from '@siemens/element-ng/formly';
 
 @Component({
   selector: 'app-sample',
-  imports: [CommonModule, SiFormModule, SiFormlyModule],
+  imports: [CommonModule, SiFormModule, SiFormlyComponent],
   templateUrl: './si-dynamic-form-fields.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

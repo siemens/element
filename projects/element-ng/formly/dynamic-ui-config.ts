@@ -2,20 +2,9 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { CommonModule } from '@angular/common';
-import { inject, ModuleWithProviders, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyFieldMultiCheckbox } from '@ngx-formly/bootstrap/multicheckbox';
 import { FormlyFieldRadio } from '@ngx-formly/bootstrap/radio';
-import {
-  ConfigOption,
-  FORMLY_CONFIG,
-  FormlyConfig,
-  FormlyFormBuilder,
-  FormlyModule
-} from '@ngx-formly/core';
-import { SiFormModule } from '@siemens/element-ng/form';
+import { ConfigOption } from '@ngx-formly/core';
 
 import { SiFormlyButtonComponent } from './fields/button/si-formly-button.component';
 import { SiFormlyDateRangeComponent } from './fields/date-range/si-formly-date-range.component';
@@ -29,7 +18,6 @@ import { SiFormlyTextDisplayComponent } from './fields/text/si-formly-text-displ
 import { SiFormlyTextareaComponent } from './fields/textarea/si-formly-textarea.component';
 import { SiFormlyTimeComponent } from './fields/time/si-formly-time.component';
 import { SiFormlyTranslateExtension } from './si-formly-translate.extension';
-import { SiFormlyComponent } from './si-formly.component';
 import { SiFormlyAccordionComponent } from './structural/si-formly-accordion/si-formly-accordion.component';
 import { SiFormlyArrayComponent } from './structural/si-formly-array/si-formly-array.component';
 import { SiFormlyObjectGridComponent } from './structural/si-formly-object-grid/si-formly-object-grid.component';
@@ -41,7 +29,7 @@ import { SiFormlyHorizontalWrapperComponent } from './wrapper/si-formly-horizont
 import { SiFormlyIconWrapperComponent } from './wrapper/si-formly-icon-wrapper.component';
 import { SiFormlyWrapperComponent } from './wrapper/si-formly-wrapper.component';
 
-const dynamicUiConfig = (): ConfigOption => {
+export const dynamicUiConfig = (): ConfigOption => {
   return {
     types: [
       { name: 'string', extends: 'input' },
@@ -110,64 +98,3 @@ const dynamicUiConfig = (): ConfigOption => {
     ]
   };
 };
-
-@NgModule({
-  imports: [
-    CommonModule,
-    FormlyBootstrapModule,
-    FormlyModule,
-    ReactiveFormsModule,
-    SiFormlyIpInputComponent,
-    SiFormlyAccordionComponent,
-    SiFormlyArrayComponent,
-    SiFormlyButtonComponent,
-    SiFormlyDateTimeComponent,
-    SiFormlyEmailComponent,
-    SiFormlyHorizontalWrapperComponent,
-    SiFormlyIconWrapperComponent,
-    SiFormlyObjectComponent,
-    SiFormlyObjectGridComponent,
-    SiFormlyObjectPlainComponent,
-    SiFormlyObjectTabsetComponent,
-    SiFormlyPasswordComponent,
-    SiFormlySelectComponent,
-    SiFormlyTextareaComponent,
-    SiFormlyTextDisplayComponent,
-    SiFormlyWrapperComponent,
-    SiFormModule
-  ],
-  declarations: [SiFormlyComponent],
-  providers: [
-    {
-      provide: FORMLY_CONFIG,
-      multi: true,
-      useFactory: dynamicUiConfig
-    }
-  ],
-  exports: [SiFormlyComponent]
-})
-export class SiFormlyModule {
-  private config = inject(FormlyConfig);
-  private configs = inject(FORMLY_CONFIG, { optional: true });
-
-  static forRoot(formlyConfig: ConfigOption = {}): ModuleWithProviders<SiFormlyModule> {
-    return {
-      ngModule: SiFormlyModule,
-      providers: [
-        { provide: FORMLY_CONFIG, useValue: formlyConfig, multi: true },
-        FormlyConfig,
-        FormlyFormBuilder
-      ]
-    };
-  }
-
-  constructor() {
-    if (!this.configs) {
-      return;
-    }
-
-    this.configs.forEach(configuration => {
-      this.config.addConfig(configuration);
-    });
-  }
-}

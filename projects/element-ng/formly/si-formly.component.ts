@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -13,16 +14,29 @@ import {
   output,
   viewChild
 } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
-import { FormlyFieldConfig, FormlyForm, FormlyFormOptions } from '@ngx-formly/core';
+import { AbstractControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { withFormlyBootstrap } from '@ngx-formly/bootstrap';
+import {
+  FORMLY_CONFIG,
+  FormlyFieldConfig,
+  FormlyForm,
+  FormlyFormOptions,
+  provideFormlyConfig
+} from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
+import { SiFormContainerComponent } from '@siemens/element-ng/form';
 import { JSONSchema7 } from 'json-schema';
+
+import { dynamicUiConfig } from './dynamic-ui-config';
 
 @Component({
   selector: 'si-formly',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false,
+  imports: [ReactiveFormsModule, FormlyForm, SiFormContainerComponent, NgTemplateOutlet],
   templateUrl: './si-formly.component.html',
+  providers: [
+    provideFormlyConfig(withFormlyBootstrap()),
+    { provide: FORMLY_CONFIG, multi: true, useFactory: dynamicUiConfig }
+  ],
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlyComponent<

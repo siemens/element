@@ -5,63 +5,58 @@
 ```ts
 
 import { AbstractControl } from '@angular/forms';
-import { AfterContentChecked } from '@angular/core';
-import { AfterContentInit } from '@angular/core';
-import { AfterViewInit } from '@angular/core';
+import * as _angular_core from '@angular/core';
 import { ConfigOption } from '@ngx-formly/core';
-import { DoCheck } from '@angular/core';
-import { ElementRef } from '@angular/core';
-import { FieldArrayType } from '@ngx-formly/core';
-import { FieldType } from '@ngx-formly/core';
-import { FieldTypeConfig } from '@ngx-formly/core';
-import { FieldWrapper } from '@ngx-formly/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyForm } from '@ngx-formly/core';
 import { FormlyFormOptions } from '@ngx-formly/core';
-import * as i0 from '@angular/core';
-import * as i2 from '@angular/common';
-import * as i3 from '@ngx-formly/bootstrap';
-import * as i5 from '@angular/forms';
-import { InjectionToken } from '@angular/core';
 import { JSONSchema7 } from 'json-schema';
-import { ModuleWithProviders } from '@angular/core';
-import { NgControl } from '@angular/forms';
 import * as _ngx_formly_core from '@ngx-formly/core';
-import { OnChanges } from '@angular/core';
-import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { Provider } from '@angular/core';
-import { RequiredValidator } from '@angular/forms';
-import { Signal } from '@angular/core';
-import { SimpleChanges } from '@angular/core';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { PipeTransform } from '@angular/core';
+
+// @public (undocumented)
+export const dynamicUiConfig: () => ConfigOption;
+
+// @public (undocumented)
+export const getFieldValue: (model: any, path: string[]) => any;
+
+// @public (undocumented)
+export const getKeyPath: (key?: any) => string[];
 
 // @public (undocumented)
 export class SiFormlyComponent<TControl extends {
     [K in keyof TControl]: AbstractControl;
 }> implements OnInit {
-    readonly fields: i0.InputSignal<FormlyFieldConfig<_ngx_formly_core.FormlyFieldProps & {
+    readonly fields: _angular_core.InputSignal<FormlyFieldConfig<_ngx_formly_core.FormlyFieldProps & {
         [additionalProperties: string]: any;
     }>[]>;
     // (undocumented)
-    readonly fieldsChange: i0.OutputEmitterRef<FormlyFieldConfig<_ngx_formly_core.FormlyFieldProps & {
+    readonly fieldsChange: _angular_core.OutputEmitterRef<FormlyFieldConfig<_ngx_formly_core.FormlyFieldProps & {
         [additionalProperties: string]: any;
     }>[]>;
     // (undocumented)
-    readonly form: i0.ModelSignal<FormGroup<TControl> | undefined>;
-    readonly formlyForm: i0.Signal<FormlyForm | undefined>;
-    readonly labelWidth: i0.InputSignal<number | undefined>;
-    readonly model: i0.ModelSignal<{}>;
-    readonly options: i0.InputSignal<FormlyFormOptions>;
-    readonly schema: i0.ModelSignal<JSONSchema7 | undefined>;
+    readonly form: _angular_core.ModelSignal<FormGroup<TControl> | undefined>;
+    readonly formlyForm: _angular_core.Signal<FormlyForm | undefined>;
+    readonly labelWidth: _angular_core.InputSignal<number | undefined>;
+    readonly model: _angular_core.ModelSignal<{}>;
+    readonly options: _angular_core.InputSignal<FormlyFormOptions>;
+    readonly schema: _angular_core.ModelSignal<JSONSchema7 | undefined>;
+}
+
+// @public
+export class SiFormlyTranslateExtension {
+    // (undocumented)
+    prePopulate(field: FormlyFieldConfig): void;
 }
 
 // @public (undocumented)
-export class SiFormlyModule {
-    constructor();
+export class SiValidationErrorIdPipe implements PipeTransform {
     // (undocumented)
-    static forRoot(formlyConfig?: ConfigOption): ModuleWithProviders<SiFormlyModule>;
+    transform(value: string, ...args: any[]): string;
+    // (undocumented)
+    static ɵpipe: _angular_core.ɵɵPipeDeclaration<SiValidationErrorIdPipe, "siValidationErrorId", true>;
 }
 
 // (No @packageDocumentation comment for this package)

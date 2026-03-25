@@ -1,0 +1,25 @@
+@let formlyForm = form();
+@let formlyFieldConfig = fieldConfig();
+@let formlyFormOptions = options();
+@if (formlyForm && formlyFieldConfig) {
+  @if (ownForm) {
+    <form [formGroup]="formlyForm">
+      <si-form-container [form]="formlyForm">
+        <div si-form-container-content>
+          <ng-container *ngTemplateOutlet="formlytmpl" />
+        </div>
+      </si-form-container>
+    </form>
+  } @else {
+    <ng-container *ngTemplateOutlet="formlytmpl" />
+  }
+
+  <ng-template #formlytmpl>
+    <formly-form
+      [fields]="formlyFieldConfig"
+      [options]="formlyFormOptions"
+      [form]="formlyForm"
+      [(model)]="model"
+    />
+  </ng-template>
+}
