@@ -1,3 +1,34 @@
+# [48.11.0](https://github.com/siemens/element/compare/v48.10.3...v48.11.0) (2026-03-25)
+
+
+### Features
+
+* **side-panel:** extract status actions into new component ([cf03426](https://github.com/siemens/element/commit/cf03426107cb7c7cdfa8d5c1b1e559bc5ada6d8c))
+
+
+### DEPRECATIONS
+
+* **side-panel:** The input `SiSidePanelContentComponent.statusActions` should no longer be used.
+  Use the new `<si-side-panel-actions>` instead:
+  
+  ```html
+  <si-side-panel-content>
+    <si-side-panel-actions>
+        <button
+          type="button"
+          si-side-panel-action
+          icon="element-alarm-background-filled"
+          iconColor="status-danger"
+          stackedIcon="element-alarm-tick"
+          stackedIconColor="text-body"
+          (click)="action()"
+        >
+          Action
+        </button>
+    </si-side-panel-actions>
+  </si-side-panel-content>
+  ```
+
 ## [48.10.3](https://github.com/siemens/element/compare/v48.10.2...v48.10.3) (2026-02-19)
 
 
