@@ -19,7 +19,14 @@ export interface MicrochartProgressSeries {
   selector: 'si-microchart-progress',
   templateUrl: './si-microchart-progress.component.html',
   styleUrl: './si-microchart-progress.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    role: 'progressbar',
+    '[attr.aria-valuenow]': 'series().valuePercent',
+    '[attr.aria-valuemin]': '0',
+    '[attr.aria-valuemax]': '100',
+    '[attr.aria-valuetext]': 'series().valuePercent + "%"'
+  }
 })
 export class SiMicrochartProgressComponent {
   /**

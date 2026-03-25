@@ -6,4 +6,7 @@
 - img
 - img
 - img
-- text: /Bar micro chart Progress micro chart \d+% \d+% Markers/
+- text: Bar micro chart Progress micro chart
+- progressbar
+- progressbar
+- text: Markers
