@@ -6,15 +6,21 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { withFormlyBootstrap } from '@ngx-formly/bootstrap';
+import {
+  FORMLY_CONFIG,
+  FormlyFieldConfig,
+  FormlyModule,
+  provideFormlyConfig
+} from '@ngx-formly/core';
 import { SiTranslateService } from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
 
-import { SiFormlyModule } from '../../si-formly.module';
+import { dynamicUiConfig } from '../../dynamic-ui-config';
 import { SiFormlyArrayComponent } from './si-formly-array.component';
 
 @Component({
-  imports: [SiFormlyModule, FormlyModule],
+  imports: [FormlyModule],
   template: `<formly-form [form]="form" [fields]="fields()" [model]="model()" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -41,6 +47,8 @@ describe('ElementFormComponent', () => {
         })
       ],
       providers: [
+        provideFormlyConfig(withFormlyBootstrap()),
+        { provide: FORMLY_CONFIG, multi: true, useFactory: dynamicUiConfig },
         {
           provide: SiTranslateService,
           useValue: {
