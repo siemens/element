@@ -218,7 +218,9 @@ describe('SiActionDialogService', () => {
     });
     clickDialogButton(1);
 
-    expect(document.querySelector('si-modal si-loading-button si-loading-spinner')).toBeTruthy();
+    expect(
+      document.querySelector('si-modal si-loading-button si-loading-spinner')
+    ).toBeInTheDocument();
     delaySubject.next('delete');
     delaySubject.complete();
     subscription.unsubscribe();

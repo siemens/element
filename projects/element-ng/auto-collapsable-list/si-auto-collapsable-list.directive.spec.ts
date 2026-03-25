@@ -124,13 +124,13 @@ describe('SiAutoCollapsableListDirective', () => {
     fixture.detectChanges();
     hostElement
       .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
-      .forEach(element => expect(element.style.visibility).toBe('hidden'));
+      .forEach(element => expect(element).toHaveStyle({ visibility: 'hidden' }));
 
     await tick();
     fixture.detectChanges();
     hostElement
       .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
-      .forEach(element => expect(element.style.visibility).toBe('visible'));
+      .forEach(element => expect(element).toHaveStyle({ visibility: 'visible' }));
     component.items().forEach(item => expect(item.canBeVisible()).toBe(true));
   });
 
@@ -141,8 +141,8 @@ describe('SiAutoCollapsableListDirective', () => {
       await detectSizeChange({ width: 300 });
       expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
       expect(
-        hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!.innerText
-      ).toBe('Overflown Items: 3');
+        hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
+      ).toHaveTextContent('Overflown Items: 3');
       await detectSizeChange({ width: 600 });
       expect(readVisibilityStates()).toEqual([
         'visible',
@@ -152,9 +152,8 @@ describe('SiAutoCollapsableListDirective', () => {
         'visible'
       ]);
       expect(
-        hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!.style
-          .visibility
-      ).toBe('hidden');
+        hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
+      ).toHaveStyle({ visibility: 'hidden' });
     }
   });
 
@@ -217,8 +216,8 @@ describe('SiAutoCollapsableListDirective', () => {
     await detectSizeChange({ width: 300 });
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     expect(
-      hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!.innerText
-    ).toBe('Overflown Items: 3');
+      hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
+    ).toHaveTextContent('Overflown Items: 3');
 
     component.renderItems = false;
     fixture.changeDetectorRef.markForCheck();
