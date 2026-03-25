@@ -178,7 +178,12 @@
               "functions": 85,
               "lines": 80
             },
-            "coverageExclude": ["**/index.ts", "**/*.module.ts", "**/testing/**/*.ts"],
+            "coverageExclude": [
+              "**/element-translate-ng/",
+              "**/index.ts",
+              "**/*.module.ts",
+              "**/testing/**/*.ts"
+            ],
             "coverageReporters": ["cobertura", "html"]
           }
         },
@@ -345,7 +350,14 @@
           "options": {
             "tsConfig": "projects/maps-ng/tsconfig.spec.json",
             "browsers": ["chromium"],
-            "coverageExclude": ["**/index.ts", "**/*.module.ts", "**/*.d.ts", "public-api.ts"],
+            "coverageExclude": [
+              "**/mocks/",
+              "**/element-translate-ng/",
+              "**/index.ts",
+              "**/*.module.ts",
+              "**/*.d.ts",
+              "public-api.ts"
+            ],
             "coverageReporters": ["cobertura", "html", "text"]
           }
         },
@@ -392,7 +404,14 @@
             "tsConfig": "projects/dashboards-ng/tsconfig.spec.json",
             "buildTarget": "dashboards-ng:test-target",
             "browsers": ["chromium"],
-            "coverageExclude": ["**/*.module.ts", "public-api.ts", "test-main.ts"],
+            "coverageExclude": [
+              "**/element-ng/",
+              "**/element-translate-ng/",
+              "**/test/",
+              "**/*.module.ts",
+              "public-api.ts",
+              "test-main.ts"
+            ],
             "coverageReporters": ["cobertura", "html", "text"]
           }
         },
