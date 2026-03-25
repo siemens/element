@@ -2,30 +2,41 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiEmptyStateComponent as TestComponent } from '.';
 
 describe('SiEmptyStateComponent', () => {
-  let componentRef: ComponentRef<TestComponent>;
   let fixture: ComponentFixture<TestComponent>;
   let element: HTMLElement;
+  let icon: WritableSignal<string>;
+  let heading: WritableSignal<TranslatableString>;
+  let content: WritableSignal<TranslatableString | undefined>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponent);
-    componentRef = fixture.componentRef;
+    icon = signal('element-icon');
+    heading = signal<TranslatableString>('No Devices');
+    content = signal<TranslatableString | undefined>('No devices were detected. Please retry!');
+
+    fixture = TestBed.createComponent(TestComponent, {
+      bindings: [
+        inputBinding('icon', icon),
+        inputBinding('heading', heading),
+        inputBinding('content', content)
+      ]
+    });
     element = fixture.nativeElement;
   });
 
-  it('should display the correct data', () => {
-    componentRef.setInput('heading', 'No Devices');
-    componentRef.setInput('content', 'No devices were detected. Please retry!');
-    componentRef.setInput('icon', 'element-icon');
-    fixture.detectChanges();
+  it('should display the correct data', async () => {
+    await fixture.whenStable();
 
-    expect(element.querySelector('h3')!.innerText).toBe('No Devices');
-    expect(element.querySelector('p')!.innerText).toBe('No devices were detected. Please retry!');
+    expect(element.querySelector('h3')!).toHaveTextContent('No Devices');
+    expect(element.querySelector('p')!).toHaveTextContent(
+      'No devices were detected. Please retry!'
+    );
     expect(element.querySelector('.element-icon')!.innerHTML).toBeDefined();
   });
 });
