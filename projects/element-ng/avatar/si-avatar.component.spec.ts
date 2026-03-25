@@ -41,112 +41,112 @@ describe('SiAvatarComponent', () => {
     element = fixture.nativeElement;
   });
 
-  it('should show image', () => {
+  it('should show image', async () => {
     imageUrl.set('testImageUrl');
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const img = element.querySelector('img');
-    expect(img).toBeTruthy();
+    expect(img).toBeInTheDocument();
     expect(img?.alt).toBe('Test');
   });
 
-  it('should show icon', () => {
+  it('should show icon', async () => {
     icon.set('element-user');
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const el = element.querySelector<HTMLElement>('si-icon');
-    expect(el).toBeTruthy();
+    expect(el).toBeInTheDocument();
     expect(el?.title).toBe('Test');
   });
 
-  it('should show initials', () => {
+  it('should show initials', async () => {
     initials.set('JD');
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const div = element.querySelector<HTMLElement>('.initials');
-    expect(div).toBeTruthy();
-    expect(div?.innerText).toBe('JD');
+    expect(div).toBeInTheDocument();
+    expect(div).toHaveTextContent('JD');
     expect(div?.title).toBe('Test');
   });
 
-  it('should show status icon', () => {
+  it('should show status icon', async () => {
     initials.set('JD');
     status.set('success');
-    fixture.detectChanges();
+    await fixture.whenStable();
 
-    expect(element.querySelector('.indicator')).toBeTruthy();
+    expect(element.querySelector('.indicator')).toBeInTheDocument();
   });
 
-  it('should show different color', () => {
+  it('should show different color', async () => {
     initials.set('JD');
     color.set(14);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(element.style.getPropertyValue('--background')).toBe('var(--element-data-14)');
   });
 
-  it('should wrap data colors', () => {
+  it('should wrap data colors', async () => {
     initials.set('JD');
     color.set(21);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(element.style.getPropertyValue('--background')).toBe('var(--element-data-4)');
   });
 
-  it('should set color automatically', () => {
+  it('should set color automatically', async () => {
     initials.set('JD');
     autoColor.set(true);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(element.style.getPropertyValue('--background')).toBe('var(--element-data-4)');
 
     initials.set('DJ');
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(element.style.getPropertyValue('--background')).toBe('var(--element-data-10)');
   });
 
   describe('auto-calculated initials', () => {
-    it('should support account with first and last name', () => {
+    it('should support account with first and last name', async () => {
       altText.set('Jane Smith');
-      fixture.detectChanges();
+      await fixture.whenStable();
 
-      expect(element.querySelector<HTMLElement>('.initials')?.textContent).toEqual('JS');
+      expect(element.querySelector<HTMLElement>('.initials')).toHaveTextContent('JS');
     });
 
-    it('should support account with first, middle and last name', () => {
+    it('should support account with first, middle and last name', async () => {
       altText.set('Jane Aubrey Smith (stuff here) (and more stuff)');
-      fixture.detectChanges();
+      await fixture.whenStable();
 
-      expect(element.querySelector<HTMLElement>('.initials')?.textContent).toEqual('JS');
+      expect(element.querySelector<HTMLElement>('.initials')).toHaveTextContent('JS');
     });
 
-    it('should support account with first, middle and last name', () => {
+    it('should support account with first, middle and last name', async () => {
       altText.set('Smith, Jane Aubrey (stuff here) (and more stuff)');
-      fixture.detectChanges();
+      await fixture.whenStable();
 
-      expect(element.querySelector<HTMLElement>('.initials')?.textContent).toEqual('JS');
+      expect(element.querySelector<HTMLElement>('.initials')).toHaveTextContent('JS');
     });
 
-    it('should support account with single name', () => {
+    it('should support account with single name', async () => {
       altText.set('Jane');
-      fixture.detectChanges();
+      await fixture.whenStable();
 
-      expect(element.querySelector<HTMLElement>('.initials')?.textContent).toEqual('J');
+      expect(element.querySelector<HTMLElement>('.initials')).toHaveTextContent('J');
     });
 
-    it('should support account with single name and space prefix', () => {
+    it('should support account with single name and space prefix', async () => {
       altText.set(' Jane');
-      fixture.detectChanges();
+      await fixture.whenStable();
 
-      expect(element.querySelector<HTMLElement>('.initials')?.textContent).toEqual('J');
+      expect(element.querySelector<HTMLElement>('.initials')).toHaveTextContent('J');
     });
 
-    it('should support account with single name and space postfix', () => {
+    it('should support account with single name and space postfix', async () => {
       altText.set('Jane ');
-      fixture.detectChanges();
+      await fixture.whenStable();
 
-      expect(element.querySelector<HTMLElement>('.initials')?.textContent).toEqual('J');
+      expect(element.querySelector<HTMLElement>('.initials')).toHaveTextContent('J');
     });
   });
 });

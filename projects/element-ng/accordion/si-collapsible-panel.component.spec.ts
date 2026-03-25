@@ -36,12 +36,6 @@ describe('SiCollapsiblePanel', () => {
     (e ?? element).querySelector<HTMLElement>('.collapsible-header')?.click();
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [SiCollapsiblePanelComponent, TestHostComponent]
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
@@ -57,7 +51,7 @@ describe('SiCollapsiblePanel', () => {
 
     const header = element.querySelector('.collapsible-header') as HTMLElement;
     expect(header).toBeTruthy();
-    expect(header.innerHTML).toContain('This is the heading');
+    expect(header).toHaveTextContent('This is the heading');
   });
 
   it('should collapse/expand on click', () => {
@@ -65,15 +59,15 @@ describe('SiCollapsiblePanel', () => {
     fixture.detectChanges();
 
     const header = element.querySelector<HTMLElement>('.collapsible-header') as HTMLElement;
-    expect(header.classList.contains('open')).toBe(false);
+    expect(header).not.toHaveClass('open');
 
     toggleCollapsePanel();
     fixture.detectChanges();
 
-    expect(header.classList.contains('open')).toBe(true);
+    expect(header).toHaveClass('open');
 
     const content = element.querySelector('.collapsible-content') as HTMLElement;
-    expect(content.innerHTML).toContain('This is the content');
+    expect(content).toHaveTextContent('This is the content');
   });
 
   it('should collapse/expand on #doToggle() API', () => {
@@ -81,25 +75,25 @@ describe('SiCollapsiblePanel', () => {
     fixture.detectChanges();
 
     const header = element.querySelector('.collapsible-header') as HTMLElement;
-    expect(header.classList.contains('open')).toBe(false);
+    expect(header).not.toHaveClass('open');
 
     toggleCollapsePanel();
     fixture.detectChanges();
 
-    expect(header.classList.contains('open')).toBe(true);
+    expect(header).toHaveClass('open');
 
     const content = element.querySelector('.collapsible-content') as HTMLElement;
-    expect(content.innerHTML).toContain('This is the content');
+    expect(content).toHaveTextContent('This is the content');
 
     toggleCollapsePanel();
     fixture.detectChanges();
 
-    expect(header.classList.contains('open')).toBe(false);
+    expect(header).not.toHaveClass('open');
   });
   it('should show show custom header selected by si-panel-heading directive', () => {
     component.heading = 'This is the highlighted heading';
     fixture.detectChanges();
     const highlighted = fixture.debugElement.query(By.css('mark'));
-    expect(highlighted.nativeElement.innerHTML).toContain('This is the highlighted heading');
+    expect(highlighted.nativeElement).toHaveTextContent('This is the highlighted heading');
   });
 });
