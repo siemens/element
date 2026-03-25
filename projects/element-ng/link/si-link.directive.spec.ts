@@ -2,10 +2,9 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
@@ -20,8 +19,8 @@ import { SI_LINK_DEFAULT_NAVIGATION_EXTRA, SiLinkDirective } from './si-link.dir
   imports: [SiLinkDirective],
   template: `<a
     activeClass="active"
-    [siLink]="link"
-    [actionParam]="param"
+    [siLink]="link()"
+    [actionParam]="param()"
     (activeChange)="activeChange($event)"
   >
     Testli
@@ -29,10 +28,9 @@ import { SI_LINK_DEFAULT_NAVIGATION_EXTRA, SiLinkDirective } from './si-link.dir
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
-  link?: Link = {};
-  param? = { some: 'thing' };
-  activeChange = (active: boolean): void => {};
-  cdRef = inject(ChangeDetectorRef);
+  readonly link = signal<Link | undefined>({});
+  readonly param = signal<any>({ some: 'thing' });
+  readonly activeChange = vi.fn();
 }
 
 @Component({
@@ -48,7 +46,6 @@ describe('SiLinkDirective', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiLinkDirective, TestHostComponent],
       providers: [
         SiLinkActionService,
         provideRouter([]),
@@ -60,147 +57,132 @@ describe('SiLinkDirective', () => {
         )
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
-  it('should create an instance with a href', () => {
-    component.link = { href: '/test' };
-    component.cdRef.markForCheck();
-    fixture.detectChanges();
+  it('should create an instance with a href', async () => {
+    component.link.set({ href: '/test' });
+    await fixture.whenStable();
 
     const anchor = element.querySelector('a')!;
-    expect(anchor.getAttribute('href')).toEqual('/test');
+    expect(anchor).toHaveAttribute('href', '/test');
   });
 
-  it('should not add an href attribute on undefined link input', () => {
-    component.link = undefined;
-    component.cdRef.markForCheck();
-    fixture.detectChanges();
+  it('should not add an href attribute on undefined link input', async () => {
+    component.link.set(undefined);
+    await fixture.whenStable();
 
-    const anchor = element.querySelector<HTMLElement>('a')!;
+    const anchor = element.querySelector<HTMLAnchorElement>('a')!;
     expect(anchor.getAttribute('href')).toBeNull();
   });
 
-  it('should set the title attribute from the tooltip', () => {
-    component.link = { tooltip: 'tooltip' };
-    component.cdRef.markForCheck();
-    fixture.detectChanges();
+  it('should set the title attribute from the tooltip', async () => {
+    component.link.set({ tooltip: 'tooltip' });
+    await fixture.whenStable();
 
     const anchor = element.querySelector<HTMLElement>('a')!;
-    expect(anchor.getAttribute('title')).toBe('translated=>tooltip-undefined');
+    expect(anchor).toHaveAttribute('title', 'translated=>tooltip-undefined');
   });
 
   describe('should create link with an action', () => {
-    it('and action parameter', () => {
+    it('and action parameter', async () => {
       let actionParam!: any;
-      component.link = { action: p => (actionParam = p) };
-      component.cdRef.markForCheck();
-      fixture.detectChanges();
+      component.link.set({ action: p => (actionParam = p) });
+      await fixture.whenStable();
 
       const anchor = element.querySelector('a')!;
-      expect(anchor.getAttribute('href')).toEqual('');
+      expect(anchor).toHaveAttribute('href', '');
 
       anchor.click();
 
       expect(actionParam).toEqual({ some: 'thing' });
     });
 
-    it('and without action parameter', () => {
+    it('and without action parameter', async () => {
       let actionParam!: any;
-      component.link = { action: p => (actionParam = p) };
-      component.param = undefined;
-      component.cdRef.markForCheck();
-      fixture.detectChanges();
+      component.link.set({ action: p => (actionParam = p) });
+      component.param.set(undefined);
+      await fixture.whenStable();
 
       const anchor = element.querySelector('a')!;
-      expect(anchor.getAttribute('href')).toEqual('');
+      expect(anchor).toHaveAttribute('href', '');
 
       anchor.click();
 
       expect(actionParam).toBeUndefined();
     });
 
-    it('that emits on the SiLinkActionService', () => {
+    it('that emits on the SiLinkActionService', async () => {
       let linkAction!: LinkAction;
       const service = TestBed.inject(SiLinkActionService);
       const sub = service.action$.subscribe(action => {
         linkAction = action;
       });
 
-      component.link = { action: 'test' };
-      component.cdRef.markForCheck();
-      fixture.detectChanges();
+      const link: Link = { action: 'test' };
+      component.link.set(link);
+      await fixture.whenStable();
 
       const anchor = element.querySelector('a')!;
       anchor.click();
 
-      expect(linkAction).toEqual({ link: component.link, param: { some: 'thing' } });
+      expect(linkAction).toEqual({ link, param: { some: 'thing' } });
 
       sub.unsubscribe();
     });
   });
 
   it('updates active class on isActive change', async () => {
-    const changeSpy = vi.spyOn(component, 'activeChange');
-    component.link = { action: () => {} };
-    component.cdRef.markForCheck();
-    fixture.detectChanges();
+    component.link.set({ action: () => {} });
     await fixture.whenStable();
 
     const anchor = element.querySelector('a')!;
-    expect(anchor.classList).not.toContain('active');
+    expect(anchor).not.toHaveClass('active');
 
     // flip to active
-    component.link.isActive = true;
-    component.cdRef.markForCheck();
-    fixture.detectChanges();
+    component.link.set({ action: () => {}, isActive: true });
     await fixture.whenStable();
 
-    expect(anchor.classList).toContain('active');
-    expect(changeSpy).toHaveBeenCalledWith(true);
+    expect(anchor).toHaveClass('active');
+    expect(component.activeChange).toHaveBeenCalledWith(true);
 
     // and back again
-    component.link.isActive = false;
-    component.cdRef.markForCheck();
-    fixture.detectChanges();
+    component.link.set({ action: () => {}, isActive: false });
     await fixture.whenStable();
 
-    expect(anchor.classList).not.toContain('active');
-    expect(changeSpy).toHaveBeenCalledWith(false);
+    expect(anchor).not.toHaveClass('active');
+    expect(component.activeChange).toHaveBeenCalledWith(false);
   });
 
   describe('router link', () => {
     it('should create an instance with a link', async () => {
-      component.link = { link: '/test' };
-      await runOnPushChangeDetection(fixture);
-      fixture.detectChanges();
+      component.link.set({ link: '/test' });
+      await fixture.whenStable();
 
       const anchor = element.querySelector('a')!;
-      expect(anchor.getAttribute('href')).toEqual('/test');
+      expect(anchor).toHaveAttribute('href', '/test');
     });
 
     it('merges query params by default', async () => {
       const router = TestBed.inject(Router);
       router.resetConfig([{ path: 'test', component: SiEmptyComponent }]);
-      component.link = {
+      component.link.set({
         link: '/test2',
         navigationExtras: {
           queryParams: { a: 'b' }
         }
-      };
-      await runOnPushChangeDetection(fixture);
+      });
+      await fixture.whenStable();
 
       await router.navigateByUrl('/test?q=123#fragment');
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       const anchor = element.querySelector('a')!;
-      expect(anchor.getAttribute('href')).toEqual('/test2?q=123&a=b#fragment');
+      expect(anchor).toHaveAttribute('href', '/test2?q=123&a=b#fragment');
 
       // change query params
       await router.navigate([], {
@@ -208,14 +190,14 @@ describe('SiLinkDirective', () => {
         queryParamsHandling: 'merge',
         queryParams: { q: 456 }
       });
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       // link needs to reflect the change
-      expect(anchor.getAttribute('href')).toEqual('/test2?q=456&a=b#fragment');
+      expect(anchor).toHaveAttribute('href', '/test2?q=456&a=b#fragment');
     });
 
     describe('with SI_LINK_DEFAULT_NAVIGATION_EXTRA', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         TestBed.resetTestingModule();
         TestBed.configureTestingModule({
           imports: [SiLinkDirective, TestHostComponent],
@@ -232,25 +214,25 @@ describe('SiLinkDirective', () => {
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
-        fixture.detectChanges();
+        await fixture.whenStable();
       });
 
       it('should allow default navigationExtras overwrites', async () => {
         const router = TestBed.inject(Router);
         router.resetConfig([{ path: 'test', component: SiEmptyComponent }]);
-        component.link = {
+        component.link.set({
           link: '/test2',
           navigationExtras: {
             queryParams: { a: 'b' }
           }
-        };
+        });
 
-        await runOnPushChangeDetection(fixture);
+        await fixture.whenStable();
         await router.navigateByUrl('/test?q=123#fragment');
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         const anchor = element.querySelector('a')!;
-        expect(anchor.getAttribute('href')).toEqual('/test2?a=b');
+        expect(anchor).toHaveAttribute('href', '/test2?a=b');
       });
     });
   });

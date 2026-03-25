@@ -53,8 +53,8 @@ describe('SiLoginBasicComponent', () => {
     await fixture.whenStable();
 
     const labels = fixture.nativeElement.querySelectorAll('label.form-label');
-    expect(labels[0].textContent.trim()).toBe('Test Username');
-    expect(labels[1].textContent.trim()).toBe('Test Password');
+    expect(labels[0]).toHaveTextContent('Test Username');
+    expect(labels[1]).toHaveTextContent('Test Password');
   });
 
   it('should render the login button with correct label', async () => {
@@ -63,7 +63,7 @@ describe('SiLoginBasicComponent', () => {
 
     const loginButton = fixture.nativeElement.querySelector('button[type="submit"]');
     expect(loginButton).toBeTruthy();
-    expect(loginButton.textContent.trim()).toBe('Test Login');
+    expect(loginButton).toHaveTextContent('Test Login');
   });
 
   it('should handle two-step flow: show next button and then activate second step on click', async () => {
@@ -76,7 +76,7 @@ describe('SiLoginBasicComponent', () => {
     // Initially, since twoStep is true and secondStep is false, next button should be visible and password block hidden.
     let nextButton = fixture.nativeElement.querySelector('.login-basic-next-button');
     expect(nextButton).toBeTruthy();
-    expect(nextButton.textContent.trim()).toBe('Test Next');
+    expect(nextButton).toHaveTextContent('Test Next');
 
     // Mock the usernameValidation output spy to simulate validation callback to activate second step.
     usernameValidationSpy.mockImplementation((payload: UsernameValidationPayload) => {

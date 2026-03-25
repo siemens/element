@@ -2,93 +2,110 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { inputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Link } from '@siemens/element-ng/link';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiLandingPageComponent as TestComponent } from '.';
+import { AlertConfig } from './alert-config.model';
 
 describe('SiLandingPageComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
-  let component: ComponentRef<TestComponent>;
+  let element: HTMLElement;
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentRef;
+  const heading = signal<TranslatableString>('');
+  const subtitle = signal<TranslatableString>('');
+  const links = signal<Link[]>([]);
+  const announcement = signal<AlertConfig | undefined>(undefined);
+
+  beforeEach(async () => {
+    fixture = TestBed.createComponent(TestComponent, {
+      bindings: [
+        inputBinding('heading', heading),
+        inputBinding('subtitle', subtitle),
+        inputBinding('links', links),
+        inputBinding('announcement', announcement)
+      ]
+    });
+    element = fixture.nativeElement;
+    await fixture.whenStable();
   });
 
-  it('displays the heading', () => {
-    component.setInput('heading', 'my heading');
-    component.setInput('subtitle', 'my subtitle');
-    fixture.detectChanges();
+  it('displays the heading', async () => {
+    heading.set('my heading');
+    subtitle.set('my subtitle');
+    await fixture.whenStable();
 
-    const heading = fixture.nativeElement.querySelector('.landing-page-main .si-h1-bold');
-    expect(heading.textContent).toEqual('my heading');
+    const headingEl = element.querySelector('.landing-page-main .si-h1-bold');
+    expect(headingEl).toHaveTextContent('my heading');
   });
 
-  it('displays the subtitle', () => {
-    component.setInput('heading', 'required heading');
-    component.setInput('subtitle', 'my subtitle');
-    fixture.detectChanges();
+  it('displays the subtitle', async () => {
+    heading.set('required heading');
+    subtitle.set('my subtitle');
+    await fixture.whenStable();
 
-    const subtitle = fixture.nativeElement.querySelector('.landing-page-main .si-h2');
-    expect(subtitle.textContent).toEqual('my subtitle');
+    const subtitleEl = element.querySelector('.landing-page-main .si-h2');
+    expect(subtitleEl).toHaveTextContent('my subtitle');
   });
 
-  it('displays the links', () => {
-    component.setInput('heading', 'required heading');
-    component.setInput('subtitle', 'my subtitle');
-    component.setInput('links', [
+  it('displays the links', async () => {
+    heading.set('required heading');
+    subtitle.set('my subtitle');
+    links.set([
       { title: 'Privacy Notice', href: 'https://privacy/' },
       { title: 'Terms of Use', href: 'https://terms/' }
     ]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
-    expect(fixture.nativeElement.querySelector('footer .flex-row').textContent.trim()).toBe(
-      'Privacy Notice  Terms of Use'
+    expect(element.querySelector('footer .flex-row')).toHaveTextContent(
+      'Privacy Notice Terms of Use'
     );
 
-    const links = fixture.nativeElement.querySelectorAll('footer a');
+    const linkEls = element.querySelectorAll('footer a');
 
-    expect(links.length).toBe(2);
-    expect(links[0].textContent.trim()).toBe('Privacy Notice');
-    expect(links[0].href).toBe('https://privacy/');
-    expect(links[1].textContent.trim()).toBe('Terms of Use');
-    expect(links[1].href).toBe('https://terms/');
+    expect(linkEls.length).toBe(2);
+    expect(linkEls[0]).toHaveTextContent('Privacy Notice');
+    expect((linkEls[0] as HTMLAnchorElement).href).toBe('https://privacy/');
+    expect(linkEls[1]).toHaveTextContent('Terms of Use');
+    expect((linkEls[1] as HTMLAnchorElement).href).toBe('https://terms/');
   });
 
-  it('executes the link action handler', () => {
-    component.setInput('heading', 'required heading');
-    component.setInput('subtitle', 'my subtitle');
+  it('executes the link action handler', async () => {
+    heading.set('required heading');
+    subtitle.set('my subtitle');
     const spy = vi.fn();
-    component.setInput('links', [{ title: 'Privacy Notice', action: spy }]);
-    fixture.detectChanges();
-    const links = fixture.nativeElement.querySelectorAll('footer a');
-    expect(links.length).toBe(1);
-    links[0].click();
+    links.set([{ title: 'Privacy Notice', action: spy }]);
+    await fixture.whenStable();
+
+    const linkEls = element.querySelectorAll('footer a');
+    expect(linkEls.length).toBe(1);
+    (linkEls[0] as HTMLElement).click();
     expect(spy).toHaveBeenCalled();
   });
 
-  it('displays the alert when alert config is passed', () => {
-    component.setInput('announcement', {
+  it('displays the alert when alert config is passed', async () => {
+    announcement.set({
       severity: 'warning',
       message: 'Test message',
       heading: ''
     });
-    component.setInput('heading', 'my heading');
-    component.setInput('subtitle', 'my subtitle');
-    fixture.detectChanges();
+    heading.set('my heading');
+    subtitle.set('my subtitle');
+    await fixture.whenStable();
 
-    const alert = fixture.nativeElement.querySelector('.alert-warning > div');
-    expect(alert.textContent).toEqual('Test message');
+    const alert = element.querySelector('.alert-warning > div');
+    expect(alert).toHaveTextContent('Test message');
   });
 
-  it('hides the alert when alert config is not passed', () => {
-    component.setInput('announcement', undefined);
-    component.setInput('heading', 'my heading');
-    component.setInput('subtitle', 'my subtitle');
-    fixture.detectChanges();
+  it('hides the alert when alert config is not passed', async () => {
+    announcement.set(undefined);
+    heading.set('my heading');
+    subtitle.set('my subtitle');
+    await fixture.whenStable();
 
-    const alert = fixture.nativeElement.querySelector('.alert-warning');
+    const alert = element.querySelector('.alert-warning');
     expect(alert).toBeFalsy();
   });
 });

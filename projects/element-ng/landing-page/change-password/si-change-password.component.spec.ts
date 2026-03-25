@@ -2,12 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { inputBinding, outputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PasswordPolicy } from '@siemens/element-ng/password-strength';
 
+import { ChangePassword } from '../si-landing-page.model';
 import { SiChangePasswordComponent as TestComponent } from './si-change-password.component';
 
-const passwordStrengthValue = {
+const passwordStrengthValue: PasswordPolicy = {
   minLength: 8,
   uppercase: true,
   lowercase: true,
@@ -17,7 +19,18 @@ const passwordStrengthValue = {
 
 describe('SiChangePasswordComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
-  let component: ComponentRef<TestComponent>;
+  let element: HTMLElement;
+
+  const passwordPolicyContent = signal<string>('Policy content');
+  const passwordStrength = signal<PasswordPolicy>(passwordStrengthValue);
+  const newPasswordLabel = signal('');
+  const confirmPasswordLabel = signal('');
+  const changeButtonLabel = signal('');
+  const backButtonLabel = signal('');
+  const disableChange = signal(false);
+  const passwordPolicyTitle = signal('');
+  const changePasswordRequested = vi.fn<(value: ChangePassword) => void>();
+  const back = vi.fn();
 
   const enterValue = (input: HTMLInputElement, value: string): void => {
     input.value = value;
@@ -25,103 +38,115 @@ describe('SiChangePasswordComponent', () => {
   };
 
   beforeEach(async () => {
-    fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentRef;
-    component.setInput('passwordPolicyContent', 'Policy content');
-    component.setInput('passwordStrength', passwordStrengthValue);
-    fixture.detectChanges();
+    fixture = TestBed.createComponent(TestComponent, {
+      bindings: [
+        inputBinding('passwordPolicyContent', passwordPolicyContent),
+        inputBinding('passwordStrength', passwordStrength),
+        inputBinding('newPasswordLabel', newPasswordLabel),
+        inputBinding('confirmPasswordLabel', confirmPasswordLabel),
+        inputBinding('changeButtonLabel', changeButtonLabel),
+        inputBinding('backButtonLabel', backButtonLabel),
+        inputBinding('disableChange', disableChange),
+        inputBinding('passwordPolicyTitle', passwordPolicyTitle),
+        outputBinding('changePasswordRequested', changePasswordRequested),
+        outputBinding('back', back)
+      ]
+    });
+    element = fixture.nativeElement;
     await fixture.whenStable();
   });
 
-  it('should render new password and confirm password labels', () => {
-    component.setInput('newPasswordLabel', 'Test New password');
-    component.setInput('confirmPasswordLabel', 'Test Confirm password');
-    fixture.detectChanges();
+  it('should render new password and confirm password labels', async () => {
+    newPasswordLabel.set('Test New password');
+    confirmPasswordLabel.set('Test Confirm password');
+    await fixture.whenStable();
 
-    const labels = fixture.nativeElement.querySelectorAll('label.form-label');
-    expect(labels[0].textContent.trim()).toBe('Test New password');
-    expect(labels[1].textContent.trim()).toBe('Test Confirm password');
+    const labels = element.querySelectorAll('label.form-label');
+    expect(labels[0]).toHaveTextContent('Test New password');
+    expect(labels[1]).toHaveTextContent('Test Confirm password');
   });
 
-  it('should render the change and back button with correct label', () => {
-    component.setInput('changeButtonLabel', 'Test Change');
-    component.setInput('backButtonLabel', 'Test Back');
-    fixture.detectChanges();
+  it('should render the change and back button with correct label', async () => {
+    changeButtonLabel.set('Test Change');
+    backButtonLabel.set('Test Back');
+    await fixture.whenStable();
 
-    const changeButton = fixture.nativeElement.querySelector('button[type="submit"].btn-primary');
-    const backButton = fixture.nativeElement.querySelector('button[type="button"].btn-secondary');
+    const changeButton = element.querySelector('button[type="submit"].btn-primary');
+    const backButton = element.querySelector('button[type="button"].btn-secondary');
 
     expect(changeButton).toBeTruthy();
     expect(backButton).toBeTruthy();
 
-    expect(changeButton.textContent.trim()).toBe('Test Change');
-    expect(backButton.textContent.trim()).toBe('Test Back');
+    expect(changeButton).toHaveTextContent('Test Change');
+    expect(backButton).toHaveTextContent('Test Back');
   });
 
-  it('should render password policy correctly', () => {
-    component.setInput('passwordPolicyTitle', 'Test password policy title');
-    component.setInput('passwordPolicyContent', 'Test password policy content');
-    fixture.detectChanges();
+  it('should render password policy correctly', async () => {
+    passwordPolicyTitle.set('Test password policy title');
+    passwordPolicyContent.set('Test password policy content');
+    await fixture.whenStable();
 
-    const policyTitle = fixture.nativeElement.querySelector('.text-secondary .si-h5');
-    const policyContent = fixture.nativeElement.querySelector('.text-secondary .my-4');
-    expect(policyTitle.textContent.trim()).toBe('Test password policy title');
-    expect(policyContent.textContent.trim()).toBe('Test password policy content');
+    const policyTitle = element.querySelector('.text-secondary .si-h5');
+    const policyContentEl = element.querySelector('.text-secondary .my-4');
+    expect(policyTitle).toHaveTextContent('Test password policy title');
+    expect(policyContentEl).toHaveTextContent('Test password policy content');
   });
 
-  it('should emit changePasswordRequested event on form submit with correct passwords', () => {
-    const newPassword: HTMLInputElement = fixture.nativeElement.querySelector(
+  it('should emit changePasswordRequested event on form submit with correct passwords', async () => {
+    const newPassword: HTMLInputElement = element.querySelector(
       'input[formControlName="newPassword"]'
-    );
-    const confirmPassword: HTMLInputElement = fixture.nativeElement.querySelector(
+    )!;
+    const confirmPassword: HTMLInputElement = element.querySelector(
       'input[formControlName="confirmPassword"]'
-    );
+    )!;
 
     enterValue(newPassword, 'NewSecret123!');
     enterValue(confirmPassword, 'NewSecret123!');
-    fixture.detectChanges();
+    await fixture.whenStable();
 
-    const spy = vi.spyOn(component.instance.changePasswordRequested, 'emit');
-    const changeButton = fixture.nativeElement.querySelector('button[type="submit"].btn-primary');
+    const changeButton: HTMLButtonElement = element.querySelector(
+      'button[type="submit"].btn-primary'
+    )!;
     changeButton.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
 
-    expect(spy).toHaveBeenCalledWith({
+    expect(changePasswordRequested).toHaveBeenCalledWith({
       newPassword: 'NewSecret123!',
       confirmPassword: 'NewSecret123!'
     });
   });
 
-  it('should disable the change button when disableChange is set to true', () => {
-    component.setInput('disableChange', true);
-    fixture.detectChanges();
+  it('should disable the change button when disableChange is set to true', async () => {
+    disableChange.set(true);
+    await fixture.whenStable();
 
-    const changeButton = fixture.nativeElement.querySelector('button[type="submit"].btn-primary');
-    expect(changeButton.disabled).toBe(true);
+    const changeButton = element.querySelector('button[type="submit"].btn-primary');
+    expect(changeButton).toBeDisabled();
   });
 
-  it('should emit back event on back button click and reset the form', () => {
-    const spy = vi.spyOn(component.instance.back, 'emit');
-    const backButton = fixture.nativeElement.querySelector('button[type="button"].btn-secondary');
-    const newPassword: HTMLInputElement = fixture.nativeElement.querySelector(
+  it('should emit back event on back button click and reset the form', async () => {
+    const backButton: HTMLButtonElement = element.querySelector(
+      'button[type="button"].btn-secondary'
+    )!;
+    const newPassword: HTMLInputElement = element.querySelector(
       'input[formControlName="newPassword"]'
-    );
-    const confirmPassword: HTMLInputElement = fixture.nativeElement.querySelector(
+    )!;
+    const confirmPassword: HTMLInputElement = element.querySelector(
       'input[formControlName="confirmPassword"]'
-    );
+    )!;
 
     enterValue(newPassword, 'NewSecret123!');
     enterValue(confirmPassword, 'NewSecret123!');
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(newPassword.value).toBe('NewSecret123!');
     expect(confirmPassword.value).toBe('NewSecret123!');
 
     expect(backButton).toBeTruthy();
     backButton.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
 
-    expect(spy).toHaveBeenCalled();
+    expect(back).toHaveBeenCalled();
     expect(newPassword.value).toBe('');
     expect(confirmPassword.value).toBe('');
   });

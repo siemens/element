@@ -2,38 +2,43 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { inputBinding, outputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiLoginSingleSignOnComponent as TestComponent } from './si-login-single-sign-on.component';
 
 describe('SiLoginSingleSignOnComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
-  let component: ComponentRef<TestComponent>;
+  let element: HTMLElement;
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentRef;
-    fixture.detectChanges();
+  const disableSso = signal(false);
+  const ssoEvent = vi.fn();
+
+  beforeEach(async () => {
+    fixture = TestBed.createComponent(TestComponent, {
+      bindings: [inputBinding('disableSso', disableSso), outputBinding('ssoEvent', ssoEvent)]
+    });
+    element = fixture.nativeElement;
+    await fixture.whenStable();
   });
 
   it('should render the SSO button', () => {
-    const button = fixture.nativeElement.querySelector('button');
+    const button = element.querySelector('button');
     expect(button).toBeTruthy();
-    expect(button.textContent.trim()).toBe('Login / Sign un');
+    expect(button).toHaveTextContent('Login / Sign un');
   });
 
   it('should emit ssoEvent on button click', () => {
-    vi.spyOn(component.instance.ssoEvent, 'emit');
-    const button = fixture.nativeElement.querySelector('button');
+    const button = element.querySelector('button')!;
     button.click();
-    expect(component.instance.ssoEvent.emit).toHaveBeenCalled();
+    expect(ssoEvent).toHaveBeenCalled();
   });
 
-  it('should disable the SSO button when disableSso is true', () => {
-    component.setInput('disableSso', true);
-    fixture.detectChanges();
-    const button = fixture.nativeElement.querySelector('button');
-    expect(button.disabled).toBe(true);
+  it('should disable the SSO button when disableSso is true', async () => {
+    disableSso.set(true);
+    await fixture.whenStable();
+
+    const button = element.querySelector('button');
+    expect(button).toBeDisabled();
   });
 });
