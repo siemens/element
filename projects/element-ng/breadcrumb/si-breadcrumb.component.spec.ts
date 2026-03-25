@@ -2,12 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, inputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { provideRouter, Router, Routes } from '@angular/router';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import {
   provideMissingTranslationHandlerForElement,
   provideNgxTranslateForElement
@@ -21,7 +19,7 @@ import {
 } from '../resize-observer/testing/resize-observer.mock';
 import { BreadcrumbItem } from './breadcrumb-item.model';
 
-const TEST_ITEMS = [
+const TEST_ITEMS: BreadcrumbItem[] = [
   { title: 'Root', link: '/' },
   { title: 'Level 1', link: ['/', 'level1'] },
   { title: 'Level 2 with a really long title', link: ['/', 'level1', 'level2'] },
@@ -40,25 +38,15 @@ const TEST_ITEMS = [
   { title: 'Level 9', link: '.' }
 ];
 
-@Component({
-  imports: [TestComponent],
-  template: `<si-breadcrumb [items]="items" [showRootAsText]="showRootAsText" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class WrapperComponent {
-  items: BreadcrumbItem[] = [];
-  showRootAsText = false;
-}
-
 @Component({ template: '' })
 class TestSubComponent {}
 
 describe('SiBreadcrumbComponent', () => {
-  let fixture: ComponentFixture<WrapperComponent>;
-  let wrapperComponent: WrapperComponent;
-  let wrapperElement: HTMLElement;
+  let fixture: ComponentFixture<TestComponent>;
   let element: HTMLElement;
   let router: Router;
+  const items = signal<BreadcrumbItem[]>([]);
+  const showRootAsText = signal(false);
 
   const routes: Routes = [
     {
@@ -84,18 +72,21 @@ describe('SiBreadcrumbComponent', () => {
       ]
     }).compileComponents();
 
+    items.set([]);
+    showRootAsText.set(false);
     mockResizeObserver();
-    fixture = TestBed.createComponent(WrapperComponent);
-    wrapperComponent = fixture.componentInstance;
-    wrapperElement = fixture.nativeElement;
-    element = fixture.debugElement.query(By.directive(TestComponent)).nativeElement;
+    fixture = TestBed.createComponent(TestComponent, {
+      bindings: [inputBinding('items', items), inputBinding('showRootAsText', showRootAsText)]
+    });
+    element = fixture.nativeElement;
     router = TestBed.inject(Router);
+    vi.useFakeTimers();
   });
 
-  beforeEach(() => vi.useFakeTimers());
-  afterEach(() => vi.useRealTimers());
-
-  afterEach(() => restoreResizeObserver());
+  afterEach(() => {
+    restoreResizeObserver();
+    vi.useRealTimers();
+  });
 
   const tick = async (ms = 100): Promise<void> => {
     vi.advanceTimersByTime(ms);
@@ -104,43 +95,43 @@ describe('SiBreadcrumbComponent', () => {
   };
 
   it('should contain items', () => {
-    wrapperComponent.items = [
+    items.set([
       { title: 'Root', link: '/' },
       { title: 'Level 1', link: '/pages/' },
       { title: 'Level 2' }
-    ];
+    ]);
 
     fixture.detectChanges();
 
     const breadcrumb = element.querySelector('.breadcrumb')!;
-    expect(breadcrumb.innerHTML).toContain('Level 1');
-    expect(breadcrumb.innerHTML).toContain('Level 2');
+    expect(breadcrumb).toHaveTextContent('Level 1');
+    expect(breadcrumb).toHaveTextContent('Level 2');
   });
 
   it('should contain items with correct active state', async () => {
     await router.navigateByUrl('/');
 
-    wrapperComponent.items = [
+    items.set([
       { title: 'Root', link: '/' },
       { title: 'Level 1', link: ['pages'] },
       { title: 'Level 2' }
-    ];
+    ]);
 
     fixture.detectChanges();
 
     let breadcrumb = element.querySelector('.breadcrumb')!;
-    expect(breadcrumb.querySelector('a')?.classList.contains('active')).toBe(true);
-    expect(breadcrumb.querySelectorAll('a')[1]?.classList.contains('active')).toBe(false);
-    expect(breadcrumb.querySelectorAll('a')[2]?.classList.contains('active')).toBe(false);
+    expect(breadcrumb.querySelector('a')).toHaveClass('active');
+    expect(breadcrumb.querySelectorAll('a')[1]).not.toHaveClass('active');
+    expect(breadcrumb.querySelectorAll('a')[2]).not.toHaveClass('active');
 
     await router.navigate(['pages']);
 
     fixture.detectChanges();
 
     breadcrumb = element.querySelector('.breadcrumb')!;
-    expect(breadcrumb.querySelector('a')?.classList.contains('active')).toBe(false);
-    expect(breadcrumb.querySelectorAll('a')[1]?.classList.contains('active')).toBe(true);
-    expect(breadcrumb.querySelectorAll('a')[2]?.classList.contains('active')).toBe(false);
+    expect(breadcrumb.querySelector('a')).not.toHaveClass('active');
+    expect(breadcrumb.querySelectorAll('a')[1]).toHaveClass('active');
+    expect(breadcrumb.querySelectorAll('a')[2]).not.toHaveClass('active');
   });
 
   it('should update items on translate', () => {
@@ -150,71 +141,71 @@ describe('SiBreadcrumbComponent', () => {
       'test title in english': 'test title in another language'
     });
 
-    wrapperComponent.items = [
+    items.set([
       { title: 'Root', link: '/' },
       { title: 'test title in english', link: '/pages/' }
-    ];
+    ]);
 
     fixture.detectChanges();
 
-    expect(element.querySelector('.breadcrumb')!.innerHTML).toContain('test title in english');
+    expect(element.querySelector('.breadcrumb')!).toHaveTextContent('test title in english');
 
     ngxTranslate.use('test');
     fixture.detectChanges();
 
-    expect(element.querySelector('.breadcrumb')!.innerHTML).toContain(
+    expect(element.querySelector('.breadcrumb')!).toHaveTextContent(
       'test title in another language'
     );
   });
 
   it('should use icon for first item', () => {
-    wrapperComponent.items = [
+    items.set([
       { title: 'Root', link: '/' },
       { title: 'Level 1', link: '/pages/' },
       { title: 'Level 2' }
-    ];
+    ]);
 
     fixture.detectChanges();
 
     const iconElement = element
       .querySelector('.breadcrumb')!
       .querySelector('.breadcrumb li:first-child si-icon[data-icon="elementBreadcrumbRoot"]');
-    expect(iconElement).toBeTruthy();
+    expect(iconElement).toBeInTheDocument();
   });
 
   it('should update items on change', () => {
-    wrapperComponent.items = [
+    items.set([
       { title: 'Root', link: '/' },
       { title: 'Level 1', link: '/pages/' },
       { title: 'Level 2' }
-    ];
+    ]);
 
     fixture.detectChanges();
 
     const breadcrumb = element.querySelector('.breadcrumb')!;
-    expect(breadcrumb.innerHTML).toContain('Level 1');
-    expect(breadcrumb.innerHTML).toContain('Level 2');
+    expect(breadcrumb).toHaveTextContent('Level 1');
+    expect(breadcrumb).toHaveTextContent('Level 2');
 
-    wrapperComponent.items = [
+    items.set([
       { title: 'Root', link: '/' },
       { title: 'Sub 1', link: '/pages/' },
       { title: 'Sub 2' }
-    ];
-    runOnPushChangeDetection(fixture);
+    ]);
+    fixture.detectChanges();
 
-    expect(breadcrumb.innerHTML).toContain('Sub 1');
-    expect(breadcrumb.innerHTML).toContain('Sub 2');
-    expect(breadcrumb.innerHTML).not.toContain('Level 1');
-    expect(breadcrumb.innerHTML).not.toContain('Level 2');
+    expect(breadcrumb).toHaveTextContent('Sub 1');
+    expect(breadcrumb).toHaveTextContent('Sub 2');
+    expect(breadcrumb).not.toHaveTextContent('Level 1');
+    expect(breadcrumb).not.toHaveTextContent('Level 2');
   });
 
   it('should dynamically resize', async () => {
     const testSizes = [500, 1000, 620, 380, 330, 150];
 
-    wrapperComponent.items = TEST_ITEMS;
+    items.set(TEST_ITEMS);
 
     for (const [i, size] of testSizes.entries()) {
-      wrapperElement.style.width = size + 'px';
+      element.style.width = size + 'px';
 
       await tick();
       if (i !== 0) {
@@ -241,17 +232,17 @@ describe('SiBreadcrumbComponent', () => {
   });
 
   it('should add a dropdown if it is too wide', () => {
-    wrapperElement.style.width = '500px';
-    wrapperComponent.items = TEST_ITEMS;
+    element.style.width = '500px';
+    items.set(TEST_ITEMS);
 
     fixture.detectChanges();
 
-    expect(element.querySelector('.breadcrumb .breadcrumb-ellipses-item')).not.toBeNull();
+    expect(element.querySelector('.breadcrumb .breadcrumb-ellipses-item')).toBeInTheDocument();
   });
 
   it('should move hidden items into a dropdown', () => {
-    wrapperElement.style.width = '500px';
-    wrapperComponent.items = TEST_ITEMS;
+    element.style.width = '500px';
+    items.set(TEST_ITEMS);
 
     fixture.detectChanges();
 
@@ -259,28 +250,28 @@ describe('SiBreadcrumbComponent', () => {
       '.breadcrumb .item:not(.breadcrumb-ellipses-item)'
     ).length;
 
-    expect(itemsShown).toBeLessThan(wrapperComponent.items.length);
+    expect(itemsShown).toBeLessThan(items().length);
 
     const dropdownItems = element.querySelectorAll(
       '.breadcrumb .breadcrumb-ellipses-item .dropdown-menu .dropdown-item'
     ).length;
-    expect(dropdownItems).toBe(wrapperComponent.items.length - itemsShown);
+    expect(dropdownItems).toBe(items().length - itemsShown);
   });
 
   it('should display a certain number of items at the end if possible', () => {
-    wrapperElement.style.width = '500px';
-    wrapperComponent.items = TEST_ITEMS;
+    element.style.width = '500px';
+    items.set(TEST_ITEMS);
 
     fixture.detectChanges();
 
-    const items = element.querySelectorAll('.breadcrumb .item:not(.breadcrumb-ellipses-item)');
-    expect(items.item(items.length - 2).innerHTML).toContain('Level 8');
-    expect(items.item(items.length - 1).innerHTML).toContain('Level 9');
+    const shownItems = element.querySelectorAll('.breadcrumb .item:not(.breadcrumb-ellipses-item)');
+    expect(shownItems.item(shownItems.length - 2)).toHaveTextContent('Level 8');
+    expect(shownItems.item(shownItems.length - 1)).toHaveTextContent('Level 9');
   });
 
   it('should only display the first item if too small', () => {
-    wrapperElement.style.width = '70px';
-    wrapperComponent.items = TEST_ITEMS;
+    element.style.width = '70px';
+    items.set(TEST_ITEMS);
 
     fixture.detectChanges();
 
@@ -291,8 +282,8 @@ describe('SiBreadcrumbComponent', () => {
   });
 
   it('should open and close a dropdown on click', () => {
-    wrapperElement.style.width = '500px';
-    wrapperComponent.items = TEST_ITEMS;
+    element.style.width = '500px';
+    items.set(TEST_ITEMS);
 
     fixture.detectChanges();
 
@@ -305,20 +296,20 @@ describe('SiBreadcrumbComponent', () => {
 
     expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
 
-    dropdownToggleElement?.click();
+    dropdownToggleElement.click();
     fixture.detectChanges();
 
     expect(dropdownElementComputedStyle.getPropertyValue('display')).not.toEqual('none');
 
-    dropdownToggleElement?.click();
+    dropdownToggleElement.click();
     fixture.detectChanges();
 
     expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
   });
 
   it('should close a dropdown on click anywhere else', () => {
-    wrapperElement.style.width = '500px';
-    wrapperComponent.items = TEST_ITEMS;
+    element.style.width = '500px';
+    items.set(TEST_ITEMS);
 
     fixture.detectChanges();
 
@@ -331,24 +322,21 @@ describe('SiBreadcrumbComponent', () => {
 
     expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
 
-    dropdownToggleElement?.click();
+    dropdownToggleElement.click();
     fixture.detectChanges();
 
     expect(dropdownElementComputedStyle.getPropertyValue('display')).not.toEqual('none');
 
-    if (dropdownToggleElement) {
-      wrapperElement.click();
-    }
-
+    element.click();
     fixture.detectChanges();
 
     expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
   });
 
   it('should shorten long items and add a dropdown', () => {
-    wrapperElement.style.width = '740px';
+    element.style.width = '740px';
 
-    wrapperComponent.items = TEST_ITEMS;
+    items.set(TEST_ITEMS);
 
     fixture.detectChanges();
 
@@ -358,16 +346,16 @@ describe('SiBreadcrumbComponent', () => {
     );
     const dropdownElement = shortenedElement.querySelector('.dropdown-menu');
 
-    expect(shortenedBreadcrumbItemElement?.innerHTML).toContain('Level 8');
+    expect(shortenedBreadcrumbItemElement).toHaveTextContent('Level 8');
     expect(shortenedBreadcrumbItemElement?.innerText).not.toContain(
       'Level 8 thisHasALongNonSeparableTitle'
     );
-    expect(dropdownElement?.innerHTML).toContain('Level 8 thisHasALongNonSeparableTitle');
+    expect(dropdownElement).toHaveTextContent('Level 8 thisHasALongNonSeparableTitle');
   });
 
   it('should close on dropdown on open of another one', () => {
-    wrapperElement.style.width = '500px';
-    wrapperComponent.items = TEST_ITEMS;
+    element.style.width = '500px';
+    items.set(TEST_ITEMS);
 
     fixture.detectChanges();
 
@@ -391,13 +379,13 @@ describe('SiBreadcrumbComponent', () => {
     expect(shortenedDropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
     expect(ellipsesDropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
 
-    shortenedDropdownToggleElement?.click();
+    shortenedDropdownToggleElement.click();
     fixture.detectChanges();
 
     expect(shortenedDropdownElementComputedStyle.getPropertyValue('display')).not.toEqual('none');
     expect(ellipsesDropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
 
-    ellipsesDropdownToggleElement?.click();
+    ellipsesDropdownToggleElement.click();
     fixture.detectChanges();
 
     expect(shortenedDropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
@@ -405,11 +393,11 @@ describe('SiBreadcrumbComponent', () => {
   });
 
   it('should display root as text when enabled', () => {
-    wrapperComponent.showRootAsText = true;
-    wrapperComponent.items = TEST_ITEMS;
+    showRootAsText.set(true);
+    items.set(TEST_ITEMS);
 
     fixture.detectChanges();
 
-    expect((element.querySelector('.breadcrumb .item') as HTMLElement).innerText).toBe('Root');
+    expect(element.querySelector('.breadcrumb .item') as HTMLElement).toHaveTextContent('Root');
   });
 });
