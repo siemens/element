@@ -6,13 +6,11 @@ import { Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router, RouterOutlet, Routes } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
-import { BreadcrumbItem } from '@siemens/element-ng/breadcrumb';
 import {
   provideMissingTranslationHandlerForElement,
   provideNgxTranslateForElement
 } from '@siemens/element-translate-ng/ngx-translate';
 
-import { runOnPushChangeDetection } from '../test-helpers';
 import {
   SI_BREADCRUMB_RESOLVER_SERVICE,
   SiBreadcrumbRouterComponent as TestComponent
@@ -28,7 +26,6 @@ import { SiBreadcrumbDefaultResolverService } from './si-breadcrumb-default-reso
 })
 class WrapperComponent {
   readonly breadcrumbResolver = viewChild.required(TestComponent, { read: ElementRef });
-  items?: BreadcrumbItem[];
 }
 
 @Component({ template: '' })
@@ -101,19 +98,19 @@ describe('SiBreadcrumbRouterComponent', () => {
   it('should display route items using breadcrumb resolver', async () => {
     router.navigateByUrl('/');
 
-    await runOnPushChangeDetection(fixture);
+    await fixture.whenStable();
 
     expect(
       (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector(
         '.icon-sm:not(.separator)'
       )
-    ).not.toBeNull();
+    ).toBeInTheDocument();
     expect(
       (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector(
         '.icon-sm:not(.separator)'
       )
-    ).toBeNull();
-    expect((element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).innerText).toBe(
+    ).not.toBeInTheDocument();
+    expect(element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).toHaveTextContent(
       routes[0].children![0].data?.title
     );
   });
@@ -121,45 +118,45 @@ describe('SiBreadcrumbRouterComponent', () => {
   it('should change on route change using breadcrumb resolver', async () => {
     router.navigateByUrl('/');
 
-    await runOnPushChangeDetection(fixture);
+    await fixture.whenStable();
 
     expect(
       (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector(
         '.icon-sm:not(.separator)'
       )
-    ).not.toBeNull();
+    ).toBeInTheDocument();
     expect(
       (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector(
         '.icon-sm:not(.separator)'
       )
-    ).toBeNull();
-    expect((element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).innerText).toBe(
+    ).not.toBeInTheDocument();
+    expect(element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).toHaveTextContent(
       routes[0].children![0].data?.title
     );
 
     router.navigate(['child']);
 
-    await runOnPushChangeDetection(fixture);
+    await fixture.whenStable();
 
     expect(
       (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector(
         '.icon-sm:not(.separator)'
       )
-    ).not.toBeNull();
+    ).toBeInTheDocument();
     expect(
       (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector(
         '.icon-sm:not(.separator)'
       )
-    ).toBeNull();
+    ).not.toBeInTheDocument();
     expect(
       (element.querySelectorAll('.breadcrumb .item')[2] as HTMLElement).querySelector(
         '.icon-sm:not(.separator)'
       )
-    ).toBeNull();
-    expect((element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).innerText).toBe(
+    ).not.toBeInTheDocument();
+    expect(element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).toHaveTextContent(
       routes[0].children![1].data?.title
     );
-    expect((element.querySelectorAll('.breadcrumb .item')[2] as HTMLElement).innerText).toBe(
+    expect(element.querySelectorAll('.breadcrumb .item')[2] as HTMLElement).toHaveTextContent(
       routes[0].children![1].children![0].data?.title
     );
   });
