@@ -11,7 +11,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
 
 @Component({
   imports: [SiNavbarVerticalItemComponent],
-  template: ` <a class="navbar-vertical-item" [si-navbar-vertical-item]="item()"> Test Item </a> `
+  template: `<a class="navbar-vertical-item" [si-navbar-vertical-item]="item()"> Test Item </a> `
 })
 class TestHostComponent {
   readonly item = signal<NavbarVerticalItemLink>({
@@ -23,7 +23,7 @@ class TestHostComponent {
 
 @Component({
   imports: [SiNavbarVerticalItemComponent],
-  template: ` <a class="navbar-vertical-item" [si-navbar-vertical-item]="item()"> Test Item </a> `
+  template: `<a class="navbar-vertical-item" [si-navbar-vertical-item]="item()"> Test Item </a> `
 })
 class TestHostWithBadgeVisibilityComponent {
   readonly item = signal<NavbarVerticalItemLink>({
@@ -104,7 +104,7 @@ describe('SiNavbarVerticalItemComponent', () => {
 
         const badgeElement = fixture.nativeElement.querySelector('.badge');
         expect(badgeElement).toBeTruthy();
-        expect(badgeElement.textContent.trim()).toBe(badge.toString());
+        expect(badgeElement).toHaveTextContent(badge.toString());
       });
     });
 
@@ -123,7 +123,7 @@ describe('SiNavbarVerticalItemComponent', () => {
 
         const badgeElement = fixture.nativeElement.querySelector('.badge');
         expect(badgeElement).toBeTruthy();
-        expect(badgeElement.textContent.trim()).toBe('+99');
+        expect(badgeElement).toHaveTextContent('+99');
       });
     });
 
@@ -161,7 +161,7 @@ describe('SiNavbarVerticalItemComponent', () => {
 
         const badgeElement = fixture.nativeElement.querySelector('.badge');
         expect(badgeElement).toBeTruthy();
-        expect(badgeElement.textContent.trim()).toBe(badge.trim());
+        expect(badgeElement).toHaveTextContent(badge.trim());
       });
     });
   });
@@ -183,8 +183,8 @@ describe('SiNavbarVerticalItemComponent', () => {
 
       const badgeElement = fixture.nativeElement.querySelector('.badge');
       expect(badgeElement).toBeTruthy();
-      expect(badgeElement.classList.contains('badge-collapsed')).toBe(true);
-      expect(badgeElement.textContent.trim()).toBe('+99');
+      expect(badgeElement).toHaveClass('badge-collapsed');
+      expect(badgeElement).toHaveTextContent('+99');
     });
 
     it('should not display badge when navbar is textOnly', () => {
@@ -219,7 +219,7 @@ describe('SiNavbarVerticalItemComponent', () => {
 
       const badgeElement = fixture.nativeElement.querySelector('.badge');
       expect(badgeElement).toBeTruthy();
-      expect(badgeElement.textContent.trim()).toBe('5');
+      expect(badgeElement).toHaveTextContent('5');
     });
 
     it('should format badge values consistently with main badge', () => {
@@ -246,7 +246,7 @@ describe('SiNavbarVerticalItemComponent', () => {
 
         const badgeElement = fixture.nativeElement.querySelector('.badge');
         expect(badgeElement).toBeTruthy();
-        expect(badgeElement.textContent.trim()).toBe(expected);
+        expect(badgeElement).toHaveTextContent(expected);
       });
     });
   });
@@ -258,7 +258,6 @@ describe('SiNavbarVerticalItemComponent', () => {
     beforeEach(async () => {
       TestBed.resetTestingModule();
       await TestBed.configureTestingModule({
-        imports: [TestHostWithBadgeVisibilityComponent],
         providers: [{ provide: SI_NAVBAR_VERTICAL, useValue: mockNavbar }]
       }).compileComponents();
 
@@ -279,7 +278,7 @@ describe('SiNavbarVerticalItemComponent', () => {
       badgeTestFixture.detectChanges();
 
       const linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
-      expect(linkElement.classList.contains('hide-badge-collapsed')).toBe(true);
+      expect(linkElement).toHaveClass('hide-badge-collapsed');
     });
 
     it('should not add class when false', () => {
@@ -294,7 +293,7 @@ describe('SiNavbarVerticalItemComponent', () => {
       badgeTestFixture.detectChanges();
 
       const linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
-      expect(linkElement.classList.contains('hide-badge-collapsed')).toBe(false);
+      expect(linkElement).not.toHaveClass('hide-badge-collapsed');
     });
 
     it('should default to false', () => {
@@ -308,7 +307,7 @@ describe('SiNavbarVerticalItemComponent', () => {
       badgeTestFixture.detectChanges();
 
       const linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
-      expect(linkElement.classList.contains('hide-badge-collapsed')).toBe(false);
+      expect(linkElement).not.toHaveClass('hide-badge-collapsed');
     });
 
     it('should toggle class when value changes', () => {
@@ -322,7 +321,7 @@ describe('SiNavbarVerticalItemComponent', () => {
       });
       badgeTestFixture.detectChanges();
       let linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
-      expect(linkElement.classList.contains('hide-badge-collapsed')).toBe(false);
+      expect(linkElement).not.toHaveClass('hide-badge-collapsed');
 
       badgeTestComponent.item.set({
         type: 'link',
@@ -334,7 +333,7 @@ describe('SiNavbarVerticalItemComponent', () => {
       });
       badgeTestFixture.detectChanges();
       linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
-      expect(linkElement.classList.contains('hide-badge-collapsed')).toBe(true);
+      expect(linkElement).toHaveClass('hide-badge-collapsed');
 
       badgeTestComponent.item.set({
         type: 'link',
@@ -346,7 +345,7 @@ describe('SiNavbarVerticalItemComponent', () => {
       });
       badgeTestFixture.detectChanges();
       linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
-      expect(linkElement.classList.contains('hide-badge-collapsed')).toBe(false);
+      expect(linkElement).not.toHaveClass('hide-badge-collapsed');
     });
   });
 });
