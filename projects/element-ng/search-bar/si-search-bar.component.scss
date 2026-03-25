@@ -44,9 +44,14 @@ input {
 
 .search-bar-icon {
   position: absolute;
-  inset-block-start: map.get(variables.$spacers, 3);
+  inset-block: 0;
   inset-inline-start: map.get(variables.$spacers, 3);
+  align-items: center;
   color: var(--search-bar-icon-color);
+}
+
+.icon-start {
+  padding-inline-start: calc(#{variables.$si-icon-font-size} + #{map.get(variables.$spacers, 5)});
 }
 
 .icon-end {
