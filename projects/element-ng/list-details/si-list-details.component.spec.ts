@@ -198,7 +198,7 @@ describe('ListDetailsComponent', () => {
     it('should add host .expanded class when crossing expandBreakpoint', async () => {
       await fixture.whenStable();
       const hostEl = htmlElement.querySelector('si-list-details')!;
-      expect(hostEl.classList).toContain('expanded');
+      expect(hostEl).toHaveClass('expanded');
     });
 
     describe('animation state', () => {
@@ -207,7 +207,7 @@ describe('ListDetailsComponent', () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         await fixture.whenStable();
 
-        expect(getListDetails().classList).toContain('collapsed');
+        expect(getListDetails()).toHaveClass('collapsed');
       });
 
       it('should be "expanded" when detailsActive & small', async () => {
@@ -215,14 +215,14 @@ describe('ListDetailsComponent', () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         await fixture.whenStable();
 
-        expect(getListDetails().classList).toContain('expanded');
+        expect(getListDetails()).toHaveClass('expanded');
       });
 
       it('should be "disabled" when in large mode regardless of detailsActive', async () => {
         component.detailsActive.set(true);
         await fixture.whenStable();
 
-        expect(getListDetails().classList).toContain('disabled');
+        expect(getListDetails()).toHaveClass('disabled');
       });
     });
 
@@ -263,13 +263,13 @@ describe('ListDetailsComponent', () => {
       it('should switch between split and static layouts as size & disableResizing change', async () => {
         component.disableResizing.set(false);
         await fixture.whenStable();
-        expect(getSiSplit()).toBeTruthy();
-        expect(getListDetails()).toBeFalsy();
+        expect(getSiSplit()).toBeInTheDocument();
+        expect(getListDetails()).not.toBeInTheDocument();
 
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         await fixture.whenStable();
-        expect(getSiSplit()).toBeFalsy();
-        expect(getListDetails()).toBeTruthy();
+        expect(getSiSplit()).not.toBeInTheDocument();
+        expect(getListDetails()).toBeInTheDocument();
 
         component.disableResizing.set(true);
         await fixture.whenStable();
@@ -353,7 +353,7 @@ describe('ListDetailsComponent', () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         component.hideBackButton.set(true);
         await fixture.whenStable();
-        expect(htmlElement.querySelector('button')).toBeFalsy();
+        expect(htmlElement.querySelector('button')).not.toBeInTheDocument();
       });
 
       it('should only have the details pane in view on small screens when details are active', async () => {
