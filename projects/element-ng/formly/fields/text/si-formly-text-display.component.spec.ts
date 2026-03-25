@@ -2,11 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
@@ -18,14 +18,13 @@ import { SiFormlyTextDisplayComponent } from './si-formly-text-display.component
 @Component({
   selector: 'si-formly-test',
   imports: [FormlyModule],
-  template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
+  template: `<formly-form [form]="form" [fields]="fields()" [model]="model()" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
-  form = new FormRecord({});
-  fields!: FormlyFieldConfig[];
-  model: any;
-  options!: FormlyFormOptions;
+  readonly form = new FormRecord({});
+  readonly fields = signal<FormlyFieldConfig[]>([]);
+  readonly model = signal<any>({});
 }
 
 describe('formly text-display-type', () => {
@@ -33,7 +32,7 @@ describe('formly text-display-type', () => {
   let translateSpy: Mock;
   let component: FormlyTestComponent;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     translateSpy = vi.fn().mockImplementation((value: any) => value);
     TestBed.overrideComponent(SiFormlyTextDisplayComponent, {
       add: {
@@ -44,7 +43,7 @@ describe('formly text-display-type', () => {
         ]
       }
     });
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [
         SiFormlyTextDisplayComponent,
         FormlyModule.forRoot({
@@ -54,24 +53,21 @@ describe('formly text-display-type', () => {
               component: SiFormlyTextDisplayComponent
             }
           ]
-        }),
-        FormlyTestComponent
+        })
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(FormlyTestComponent);
     component = fixture.componentInstance;
   });
 
   it('should have a hidden input', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'textdisplay'
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('input'));
@@ -79,15 +75,15 @@ describe('formly text-display-type', () => {
     expect(inputField.nativeNode.getAttribute('hidden')).toBeDefined();
   });
   it('should have a hidden input containing the model value', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'textdisplay'
       }
-    ];
-    component.model = {
+    ]);
+    component.model.set({
       name: 'foo'
-    };
+    });
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('input'));
@@ -95,24 +91,24 @@ describe('formly text-display-type', () => {
     expect(inputField.nativeNode.value).toEqual('foo');
   });
   it('should have a div containing the model value', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'textdisplay'
       }
-    ];
-    component.model = {
+    ]);
+    component.model.set({
       name: 'foo'
-    };
+    });
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('div'));
     expect(inputField).toBeDefined();
     expect(inputField.nativeElement.textContent).toBeDefined();
-    expect(inputField.nativeElement.textContent.trim()).toEqual('foo');
+    expect(inputField.nativeElement).toHaveTextContent('foo');
   });
   it('should render a prefix with value', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'textdisplay',
@@ -120,10 +116,10 @@ describe('formly text-display-type', () => {
           prefix: 'thisIsAPrefix'
         }
       }
-    ];
-    component.model = {
+    ]);
+    component.model.set({
       name: 'foo'
-    };
+    });
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('div'));
@@ -133,7 +129,7 @@ describe('formly text-display-type', () => {
     expect(translateSpy).toHaveBeenCalled();
   });
   it('should render a prefix without value', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'textdisplay',
@@ -141,17 +137,17 @@ describe('formly text-display-type', () => {
           prefix: 'thisIsAPrefix'
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('div'));
     expect(inputField).toBeDefined();
     expect(inputField.nativeElement.textContent).toBeDefined();
-    expect(inputField.nativeElement.textContent.trim()).toEqual('thisIsAPrefix');
+    expect(inputField.nativeElement).toHaveTextContent('thisIsAPrefix');
     expect(translateSpy).toHaveBeenCalled();
   });
   it('should render a suffix with value', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'textdisplay',
@@ -159,10 +155,10 @@ describe('formly text-display-type', () => {
           suffix: 'thisIsASuffix'
         }
       }
-    ];
-    component.model = {
+    ]);
+    component.model.set({
       name: 'foo'
-    };
+    });
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('div'));
@@ -171,7 +167,7 @@ describe('formly text-display-type', () => {
     expect(inputField.nativeElement.textContent.trim()).toMatch(/foo\s+thisIsASuffix/);
   });
   it('should render a suffix without value', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'textdisplay',
@@ -179,16 +175,16 @@ describe('formly text-display-type', () => {
           suffix: 'thisIsASuffix'
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('div'));
     expect(inputField).toBeDefined();
     expect(inputField.nativeElement.textContent).toBeDefined();
-    expect(inputField.nativeElement.textContent.trim()).toEqual('thisIsASuffix');
+    expect(inputField.nativeElement).toHaveTextContent('thisIsASuffix');
   });
   it('should render a suffix without value', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'textdisplay',
@@ -196,8 +192,8 @@ describe('formly text-display-type', () => {
           key: 'this.is.the.path'
         }
       }
-    ];
-    component.model = {
+    ]);
+    component.model.set({
       name: 'foo',
       this: {
         is: {
@@ -206,12 +202,12 @@ describe('formly text-display-type', () => {
           }
         }
       }
-    };
+    });
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('div'));
     expect(inputField).toBeDefined();
     expect(inputField.nativeElement.textContent).toBeDefined();
-    expect(inputField.nativeElement.textContent.trim()).toEqual('path');
+    expect(inputField.nativeElement).toHaveTextContent('path');
   });
 });

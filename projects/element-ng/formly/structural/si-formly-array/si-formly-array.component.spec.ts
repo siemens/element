@@ -2,30 +2,26 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { SiTranslateService } from '@siemens/element-ng/translate';
 import { of } from 'rxjs';
 
 import { SiFormlyModule } from '../../si-formly.module';
-import {
-  SiFormlyArrayComponent,
-  SiFormlyArrayComponent as TestComponent
-} from './si-formly-array.component';
+import { SiFormlyArrayComponent } from './si-formly-array.component';
 
 @Component({
   imports: [SiFormlyModule, FormlyModule],
-  template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
+  template: `<formly-form [form]="form" [fields]="fields()" [model]="model()" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
-  form = new FormRecord({});
-  fields!: FormlyFieldConfig[];
-  model: any;
-  options!: FormlyFormOptions;
+  readonly form = new FormRecord({});
+  readonly fields = signal<FormlyFieldConfig[]>([]);
+  readonly model = signal<any>({});
 }
 
 describe('ElementFormComponent', () => {
@@ -42,10 +38,7 @@ describe('ElementFormComponent', () => {
               component: SiFormlyArrayComponent
             }
           ]
-        }),
-        SiFormlyModule,
-        TestComponent,
-        WrapperComponent
+        })
       ],
       providers: [
         {
@@ -59,15 +52,13 @@ describe('ElementFormComponent', () => {
         }
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
   });
 
   it('should apply array input with property key', () => {
-    wrapperComponent.fields = [
+    wrapperComponent.fields.set([
       {
         key: 'inputArray',
         type: 'array',
@@ -83,16 +74,16 @@ describe('ElementFormComponent', () => {
           ]
         }
       }
-    ];
-    wrapperComponent.model = {
+    ]);
+    wrapperComponent.model.set({
       inputArray: [{ data: 'test set 1' }]
-    };
+    });
 
     fixture.detectChanges();
 
     const rows = fixture.debugElement.queryAll(By.css('.row'));
     expect(rows).toBeTruthy();
     expect(rows.length).toEqual(1);
-    expect(rows[0].nativeElement.innerText).toContain('test set 1');
+    expect(rows[0].nativeElement).toHaveTextContent('test set 1');
   });
 });

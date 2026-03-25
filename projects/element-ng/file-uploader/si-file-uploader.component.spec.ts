@@ -2,69 +2,39 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { HttpErrorResponse, HttpHeaders, provideHttpClient } from '@angular/common/http';
+import { HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
+import { inputBinding, outputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { runOnPushChangeDetection } from '../test-helpers/change-detection.helper';
-import { FileUploadResult, SiFileUploaderComponent, UploadFile } from './index';
-
-@Component({
-  imports: [SiFileUploaderComponent],
-  template: `
-    <si-file-uploader
-      [uploadConfig]="uploadConfig"
-      [maxFileSize]="maxFileSize"
-      [maxFiles]="maxFiles"
-      [maxConcurrentUploads]="maxConcurrentUploads"
-      [showHttpError]="showHttpError"
-      [autoUpload]="autoUpload"
-      [accept]="accept"
-      [uploadTextFileSelect]="uploadTextFileSelect"
-      [uploadDropText]="uploadDropText"
-      [clearButtonText]="clearButtonText"
-      [uploadButtonText]="uploadButtonText"
-      [errorTextFileType]="errorTextFileType"
-      [errorTextFileMaxSize]="errorTextFileMaxSize"
-      [maxFilesReachedText]="maxFilesReachedText"
-      [disableUpload]="disableUpload"
-      [retries]="retries"
-      [errorUploadFailed]="errorUploadFailed"
-      (uploadCompleted)="uploadCompleted()"
-      (uploadCanceled)="uploadCanceled($event)"
-    />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class TestHostComponent {
-  readonly fileUploader = viewChild.required(SiFileUploaderComponent);
-  uploadConfig!: any;
-  maxFileSize!: number;
-  maxFiles = 10;
-  maxConcurrentUploads = 3;
-  showHttpError!: boolean;
-  autoUpload!: boolean;
-  accept!: string;
-  uploadTextFileSelect = 'click to upload';
-  uploadDropText = 'Drop files here or';
-  clearButtonText = 'Clear';
-  uploadButtonText = 'Upload';
-  errorTextFileType = 'Incorrect file type selected';
-  errorTextFileMaxSize = 'File exceeds allowed maximum size';
-  maxFilesReachedText = 'Maximum number of files reached';
-  disableUpload = false;
-  retries = 0;
-  errorUploadFailed!: string;
-  uploadCompleted = (): void => {};
-  uploadCanceled = (event: UploadFile): void => {};
-}
+import { FileUploadConfig, FileUploadResult, SiFileUploaderComponent, UploadFile } from './index';
 
 describe('SiFileUploaderComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
+  let fixture: ComponentFixture<SiFileUploaderComponent>;
   let element: HTMLElement;
   let httpMock: HttpTestingController;
+
+  let uploadConfig: WritableSignal<FileUploadConfig>;
+  let maxFileSize: WritableSignal<number | undefined>;
+  let maxFiles: WritableSignal<number>;
+  let maxConcurrentUploads: WritableSignal<number>;
+  let showHttpError: WritableSignal<boolean>;
+  let autoUpload: WritableSignal<boolean>;
+  let accept: WritableSignal<string | undefined>;
+  let uploadTextFileSelect: WritableSignal<TranslatableString>;
+  let uploadDropText: WritableSignal<TranslatableString>;
+  let clearButtonText: WritableSignal<TranslatableString>;
+  let uploadButtonText: WritableSignal<TranslatableString>;
+  let errorTextFileType: WritableSignal<TranslatableString>;
+  let errorTextFileMaxSize: WritableSignal<TranslatableString>;
+  let maxFilesReachedText: WritableSignal<TranslatableString>;
+  let disableUpload: WritableSignal<boolean>;
+  let retries: WritableSignal<number>;
+  let errorUploadFailed: WritableSignal<TranslatableString>;
+  let uploadCompletedSpy: (event: FileUploadResult) => void;
+  let uploadCanceledSpy: (event: UploadFile) => void;
+  let filesChangesSpy: (event: UploadFile[]) => void;
 
   const getFiles = (): NodeListOf<HTMLElement> =>
     element.querySelectorAll<HTMLElement>('.file-list .file');
@@ -80,25 +50,62 @@ describe('SiFileUploaderComponent', () => {
     element.querySelector<HTMLElement>('[aria-label="Upload"]')!;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideHttpClient(), provideHttpClientTesting()]
-    });
-    httpMock = TestBed.inject(HttpTestingController);
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
-    element = fixture.nativeElement;
-
-    component.uploadConfig = {
+    uploadConfig = signal<FileUploadConfig>({
       method: 'POST',
       url: '/api/attachments',
       fieldName: 'file',
-
       headers: new HttpHeaders({ 'Accept': 'application/json' })
-    };
+    });
+    maxFileSize = signal<number | undefined>(undefined);
+    maxFiles = signal(10);
+    maxConcurrentUploads = signal(3);
+    showHttpError = signal(false);
+    autoUpload = signal(false);
+    accept = signal<string | undefined>(undefined);
+    uploadTextFileSelect = signal<TranslatableString>('click to upload');
+    uploadDropText = signal<TranslatableString>('Drop files here or');
+    clearButtonText = signal<TranslatableString>('Clear');
+    uploadButtonText = signal<TranslatableString>('Upload');
+    errorTextFileType = signal<TranslatableString>('Incorrect file type selected');
+    errorTextFileMaxSize = signal<TranslatableString>('File exceeds allowed maximum size');
+    maxFilesReachedText = signal<TranslatableString>('Maximum number of files reached');
+    disableUpload = signal(false);
+    retries = signal(0);
+    errorUploadFailed = signal<TranslatableString>('Upload failed');
+    uploadCompletedSpy = vi.fn();
+    uploadCanceledSpy = vi.fn();
+    filesChangesSpy = vi.fn();
+
+    TestBed.configureTestingModule({
+      providers: [provideHttpClient(), provideHttpClientTesting()]
+    });
+    httpMock = TestBed.inject(HttpTestingController);
+
+    fixture = TestBed.createComponent(SiFileUploaderComponent, {
+      bindings: [
+        inputBinding('uploadConfig', uploadConfig),
+        inputBinding('maxFileSize', maxFileSize),
+        inputBinding('maxFiles', maxFiles),
+        inputBinding('maxConcurrentUploads', maxConcurrentUploads),
+        inputBinding('showHttpError', showHttpError),
+        inputBinding('autoUpload', autoUpload),
+        inputBinding('accept', accept),
+        inputBinding('uploadTextFileSelect', uploadTextFileSelect),
+        inputBinding('uploadDropText', uploadDropText),
+        inputBinding('clearButtonText', clearButtonText),
+        inputBinding('uploadButtonText', uploadButtonText),
+        inputBinding('errorTextFileType', errorTextFileType),
+        inputBinding('errorTextFileMaxSize', errorTextFileMaxSize),
+        inputBinding('maxFilesReachedText', maxFilesReachedText),
+        inputBinding('disableUpload', disableUpload),
+        inputBinding('retries', retries),
+        inputBinding('errorUploadFailed', errorUploadFailed),
+        outputBinding('uploadCompleted', uploadCompletedSpy),
+        outputBinding('uploadCanceled', uploadCanceledSpy),
+        outputBinding('filesChanges', filesChangesSpy)
+      ]
+    });
+    element = fixture.nativeElement;
   });
 
   const createFileList = (files: string[], type?: string[]): DataTransfer => {
@@ -113,233 +120,220 @@ describe('SiFileUploaderComponent', () => {
     return dt;
   };
 
-  const handleFiles = (dataTransfer: DataTransfer): void => {
-    fixture.detectChanges();
+  const handleFiles = async (dataTransfer: DataTransfer): Promise<void> => {
+    await fixture.whenStable();
     element.querySelector('.drag-and-drop')?.dispatchEvent(new DragEvent('drop', { dataTransfer }));
-    fixture.detectChanges();
+    await fixture.whenStable();
   };
 
   const triggerUpload = (): void =>
     element.querySelector<HTMLButtonElement>('.btn-primary')!.click();
 
-  it('should pass text messages to drop zone', () => {
-    component.uploadTextFileSelect = 'browse files';
-    component.uploadDropText = 'droppi droppi';
-    component.clearButtonText = 'Reset';
-    component.uploadButtonText = 'Do it';
-    fixture.detectChanges();
-    expect(element.querySelector('.select-file span')!.innerHTML).toContain('browse files');
-    expect(element.querySelector('.drag-and-drop-description')!.innerHTML).toContain(
-      'droppi droppi'
-    );
-    expect(getClearButton().innerHTML).toContain('Reset');
-    expect(getUploadButton().innerHTML).toContain('Do it');
+  it('should pass text messages to drop zone', async () => {
+    uploadTextFileSelect.set('browse files');
+    uploadDropText.set('droppi droppi');
+    clearButtonText.set('Reset');
+    uploadButtonText.set('Do it');
+    await fixture.whenStable();
+    expect(element.querySelector('.select-file span')!).toHaveTextContent('browse files');
+    expect(element.querySelector('.drag-and-drop-description')!).toHaveTextContent('droppi droppi');
+    expect(getClearButton()).toHaveTextContent('Reset');
+    expect(getUploadButton()).toHaveTextContent('Do it');
   });
 
-  it('should contain file name and size', () => {
-    component.accept = '.png';
-    handleFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.png']));
+  it('should contain file name and size', async () => {
+    accept.set('.png');
+    await handleFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.png']));
     const files = getFiles();
     expect(files.length).toBe(2);
-    expect(files[0].innerHTML).toContain('first.png');
-    expect(files[0].innerHTML).toContain('1.17KB');
-    expect(files[1].innerHTML).toContain('second.png');
-    expect(files[1].innerHTML).toContain('1.17KB');
+    expect(files[0]).toHaveTextContent('first.png');
+    expect(files[0]).toHaveTextContent('1.17KB');
+    expect(files[1]).toHaveTextContent('second.png');
+    expect(files[1]).toHaveTextContent('1.17KB');
   });
 
-  it('should filter duplicates', () => {
-    component.accept = '.png';
-    handleFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.png']));
-    handleFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.png']));
+  it('should filter duplicates', async () => {
+    accept.set('.png');
+    await handleFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.png']));
+    await handleFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.png']));
     const files = getFiles();
     expect(files.length).toBe(2);
   });
 
   it('should provide option to remove selected file', async () => {
-    component.accept = '.png';
-    handleFiles(createFileList(['first.png', 'second.png']));
+    accept.set('.png');
+    await handleFiles(createFileList(['first.png', 'second.png']));
 
     expect(getFiles().length).toBe(2);
     deleteButton().click();
     await fixture.whenStable();
-    fixture.detectChanges();
 
     expect(getFiles().length).toBe(1);
   });
 
-  it('should allow one to define accepted mime types', () => {
-    component.accept = 'image/*';
-    fixture.detectChanges();
-    expect(element.querySelector('.select-file input')!.getAttribute('accept')).toContain(
-      'image/*'
+  it('should allow one to define accepted mime types', async () => {
+    accept.set('image/*');
+    await fixture.whenStable();
+    expect(element.querySelector('.select-file input')!).toHaveAttribute(
+      'accept',
+      expect.stringContaining('image/*')
     );
   });
 
-  it('should reject files that do not match the "accept" parameter', () => {
-    component.accept = 'fmwz';
-    component.errorTextFileType = 'Incorrect type';
-    handleFiles(createFileList(['notMatching.fmwr']));
-    expect(getError()!.innerHTML).toContain('Incorrect type');
+  it('should reject files that do not match the "accept" parameter', async () => {
+    accept.set('fmwz');
+    errorTextFileType.set('Incorrect type');
+    await handleFiles(createFileList(['notMatching.fmwr']));
+    expect(getError()!).toHaveTextContent('Incorrect type');
   });
 
-  it('should allow files that match a file extension', () => {
-    component.accept = '.fmwr';
-    component.errorTextFileType = 'Incorrect type';
-    handleFiles(createFileList(['matching.fmwr']));
-    expect(element.querySelector('.file')!.innerHTML).toContain('matching.fmwr');
-    expect(getUploadButton().disabled).toBeFalsy();
+  it('should allow files that match a file extension', async () => {
+    accept.set('.fmwr');
+    errorTextFileType.set('Incorrect type');
+    await handleFiles(createFileList(['matching.fmwr']));
+    expect(element.querySelector('.file')!).toHaveTextContent('matching.fmwr');
+    expect(getUploadButton()).toBeEnabled();
   });
 
-  it('should reject files that do not match a file extension', () => {
-    component.accept = '.blub';
-    component.errorTextFileType = 'Incorrect type';
-    handleFiles(createFileList(['wrong.fmwr']));
-    expect(element.querySelector('.file')!.innerHTML).toContain('wrong.fmwr');
-    expect(getUploadButton().disabled).toBeTruthy();
+  it('should reject files that do not match a file extension', async () => {
+    accept.set('.blub');
+    errorTextFileType.set('Incorrect type');
+    await handleFiles(createFileList(['wrong.fmwr']));
+    expect(element.querySelector('.file')!).toHaveTextContent('wrong.fmwr');
+    expect(getUploadButton()).toBeDisabled();
   });
 
-  it('should allow files that match one of the multiple "accept" values', () => {
-    component.accept = 'image/*,.fmwr';
-    component.errorTextFileType = 'Incorrect type';
-    handleFiles(createFileList(['matching.png', 'bla.fmwr'], ['image/png']));
+  it('should allow files that match one of the multiple "accept" values', async () => {
+    accept.set('image/*,.fmwr');
+    errorTextFileType.set('Incorrect type');
+    await handleFiles(createFileList(['matching.png', 'bla.fmwr'], ['image/png']));
     const files = element.querySelectorAll<HTMLElement>('.file');
-    expect(files[0]!.innerHTML).toContain('bla.fmwr');
-    expect(files[1]!.innerHTML).toContain('matching.png');
-    expect(getError()).toBeFalsy();
+    expect(files[0]!).toHaveTextContent('bla.fmwr');
+    expect(files[1]!).toHaveTextContent('matching.png');
+    expect(getError()).not.toBeInTheDocument();
   });
 
-  it('should allow files that match extension only', () => {
-    component.accept = '.blub';
-    component.errorTextFileType = 'Incorrect type';
-    handleFiles(createFileList(['matching.blub']));
-    expect(element.querySelector('.file')!.innerHTML).toContain('matching.blub');
-    expect(getError()).toBeFalsy();
+  it('should allow files that match extension only', async () => {
+    accept.set('.blub');
+    errorTextFileType.set('Incorrect type');
+    await handleFiles(createFileList(['matching.blub']));
+    expect(element.querySelector('.file')!).toHaveTextContent('matching.blub');
+    expect(getError()).not.toBeInTheDocument();
   });
 
-  it("should reject files that don't match extension only", () => {
-    component.accept = '.blub';
-    component.errorTextFileType = 'Incorrect type';
-    handleFiles(createFileList(['matching.bla']));
+  it("should reject files that don't match extension only", async () => {
+    accept.set('.blub');
+    errorTextFileType.set('Incorrect type');
+    await handleFiles(createFileList(['matching.bla']));
     expect(getError()).toBeTruthy();
   });
 
-  it('should reject files that match none of the multiple "accept" values', () => {
-    component.accept = 'image/*,fmwz';
-    component.errorTextFileType = 'Incorrect type';
-    handleFiles(createFileList(['.notMatching']));
+  it('should reject files that match none of the multiple "accept" values', async () => {
+    accept.set('image/*,fmwz');
+    errorTextFileType.set('Incorrect type');
+    await handleFiles(createFileList(['.notMatching']));
     expect(getError()).toBeTruthy();
   });
 
-  it('should reject files that exceeds "maxFileSize" parameter', () => {
-    component.maxFileSize = 1000;
-    component.errorTextFileMaxSize = 'File exceeds allowed maximum size';
-    handleFiles(createFileListWithFileSizeOf1200Bytes(['notMatching.fmwr']));
-    expect(getError()!.innerHTML).toContain('File exceeds allowed maximum size');
+  it('should reject files that exceeds "maxFileSize" parameter', async () => {
+    maxFileSize.set(1000);
+    errorTextFileMaxSize.set('File exceeds allowed maximum size');
+    await handleFiles(createFileListWithFileSizeOf1200Bytes(['notMatching.fmwr']));
+    expect(getError()!).toHaveTextContent('File exceeds allowed maximum size');
   });
 
-  it('should accept files that less than or equal to "maxFileSize" parameter', () => {
-    component.maxFileSize = 50000;
-    component.errorTextFileMaxSize = 'File exceeds allowed maximum size';
-    handleFiles(createFileListWithFileSizeOf1200Bytes(['matching.fmwr']));
-    expect(element.querySelector('.file')!.innerHTML).toContain('matching.fmwr');
-    expect(getError()).toBeFalsy();
+  it('should accept files that less than or equal to "maxFileSize" parameter', async () => {
+    maxFileSize.set(50000);
+    errorTextFileMaxSize.set('File exceeds allowed maximum size');
+    await handleFiles(createFileListWithFileSizeOf1200Bytes(['matching.fmwr']));
+    expect(element.querySelector('.file')!).toHaveTextContent('matching.fmwr');
+    expect(getError()).not.toBeInTheDocument();
   });
 
-  it('should not show max files when not over the limit', () => {
-    component.maxFiles = 2;
-    component.maxFilesReachedText = 'Max number of files reached';
-    handleFiles(createFileList(['file1.png', 'file2.png']));
+  it('should not show max files when not over the limit', async () => {
+    maxFiles.set(2);
+    maxFilesReachedText.set('Max number of files reached');
+    await handleFiles(createFileList(['file1.png', 'file2.png']));
     const files = getFiles();
     expect(files.length).toBe(2);
-    expect(files[0]!.innerHTML).toContain('file1.png');
-    expect(files[1]!.innerHTML).toContain('file2.png');
-    expect(element.querySelector('si-inline-notification')).toBeFalsy();
-    expect(getError()).toBeFalsy();
+    expect(files[0]!).toHaveTextContent('file1.png');
+    expect(files[1]!).toHaveTextContent('file2.png');
+    expect(element.querySelector('si-inline-notification')).not.toBeInTheDocument();
+    expect(getError()).not.toBeInTheDocument();
   });
 
-  it('should accept no more than maxFiles files', () => {
-    component.maxFiles = 2;
-    component.maxFilesReachedText = 'Max number of files reached';
-    handleFiles(createFileList(['file1.png', 'file2.png', 'file3.png']));
+  it('should accept no more than maxFiles files', async () => {
+    maxFiles.set(2);
+    maxFilesReachedText.set('Max number of files reached');
+    await handleFiles(createFileList(['file1.png', 'file2.png', 'file3.png']));
     const files = getFiles();
     expect(files.length).toBe(2);
-    expect(files[0]!.innerHTML).toContain('file1.png');
-    expect(files[1]!.innerHTML).toContain('file2.png');
-    expect(element.querySelector('si-inline-notification')!.innerHTML).toContain(
-      component.maxFilesReachedText
+    expect(files[0]!).toHaveTextContent('file1.png');
+    expect(files[1]!).toHaveTextContent('file2.png');
+    expect(element.querySelector('si-inline-notification')!).toHaveTextContent(
+      'Max number of files reached'
     );
-    expect(getError()).toBeFalsy();
+    expect(getError()).not.toBeInTheDocument();
   });
 
-  it('should clear all files with clear button', () => {
-    handleFiles(createFileList(['file1.png', 'file2.png', 'file3.png']));
+  it('should clear all files with clear button', async () => {
+    await handleFiles(createFileList(['file1.png', 'file2.png', 'file3.png']));
     expect(element.querySelectorAll<HTMLElement>('.file').length).toBe(3);
 
     element.querySelector<HTMLButtonElement>('.btn-secondary')!.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(getFiles().length).toBe(0);
-    expect(getError()).toBeFalsy();
-    expect(getClearButton().disabled).toBeTruthy();
-    expect(getUploadButton().disabled).toBeTruthy();
+    expect(getError()).not.toBeInTheDocument();
+    expect(getClearButton()).toBeDisabled();
+    expect(getUploadButton()).toBeDisabled();
   });
 
   it('should emit filesChanges when files are added or removed', async () => {
-    component.accept = '.png';
+    accept.set('.png');
 
-    const fileUploader = component.fileUploader();
-    vi.spyOn(fileUploader.filesChanges, 'emit');
+    await handleFiles(createFileList(['first.png', 'second.png']));
 
-    handleFiles(createFileList(['first.png', 'second.png']));
-
-    expect(fileUploader.filesChanges.emit).toHaveBeenCalledWith([
+    expect(filesChangesSpy).toHaveBeenCalledWith([
       expect.objectContaining({ fileName: 'first.png' }),
       expect.objectContaining({ fileName: 'second.png' })
     ]);
 
     deleteButton().click();
-
     await fixture.whenStable();
-    fixture.detectChanges();
 
-    expect(fileUploader.filesChanges.emit).toHaveBeenCalledWith([
+    expect(filesChangesSpy).toHaveBeenCalledWith([
       expect.objectContaining({ fileName: 'second.png' })
     ]);
 
     deleteButton().click();
-
     await fixture.whenStable();
-    fixture.detectChanges();
 
-    expect(fileUploader.filesChanges.emit).toHaveBeenCalledWith([]);
+    expect(filesChangesSpy).toHaveBeenCalledWith([]);
   });
 
-  it('should disabled upload button and not upload when disabled', () => {
-    component.disableUpload = true;
+  it('should disabled upload button and not upload when disabled', async () => {
+    disableUpload.set(true);
+    await fixture.whenStable();
 
-    fixture.detectChanges();
+    expect(getUploadButton()).toBeDisabled();
 
-    expect(getUploadButton().disabled).toBeTruthy();
-
-    handleFiles(createFileList(['matching.fmwr']));
+    await handleFiles(createFileList(['matching.fmwr']));
     triggerUpload();
 
     // mock no request
     httpMock.expectNone('/api/attachments');
     httpMock.verify();
 
-    handleFiles(createFileList(['matching.fmwr']));
+    await handleFiles(createFileList(['matching.fmwr']));
     triggerUpload();
 
-    component.disableUpload = false;
+    disableUpload.set(false);
+    await fixture.whenStable();
 
-    component.fileUploader().ngOnChanges({ disableUpload: new SimpleChange(true, false, false) });
+    expect(getUploadButton()).toBeEnabled();
 
-    runOnPushChangeDetection(fixture);
-
-    expect(getUploadButton().disabled).toBeFalsy();
-
-    handleFiles(createFileList(['matching.fmwr']));
+    await handleFiles(createFileList(['matching.fmwr']));
     triggerUpload();
 
     // mock request
@@ -350,33 +344,31 @@ describe('SiFileUploaderComponent', () => {
   });
 
   it('should emit success response', async () => {
-    const uploadResult = new Promise<void>(resolve => {
-      component.fileUploader().uploadCompleted.subscribe(result => {
-        expect(result).toBeDefined();
-        expect(result.response).toBeDefined();
-        expect(result.error).toBeUndefined();
-        expect(result.response?.status).toBe(200);
-        resolve();
-      });
-    });
-
-    handleFiles(createFileList(['matching.fmwr']));
+    await handleFiles(createFileList(['matching.fmwr']));
     triggerUpload();
 
-    fixture.detectChanges();
+    await fixture.whenStable();
     // mock request
     const attachment = { id: 201, fileName: 'matching.fmwr' };
     const req = httpMock.expectOne('/api/attachments');
     req.flush(attachment);
 
-    await uploadResult;
+    await fixture.whenStable();
+
+    expect(uploadCompletedSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        response: expect.objectContaining({ status: 200 })
+      })
+    );
+    expect(vi.mocked(uploadCompletedSpy).mock.calls[0][0].error).toBeUndefined();
     httpMock.verify();
   });
 
-  it('should upload file with correct field name', () => {
-    component.uploadConfig.fieldName = 'test-file';
+  it('should upload file with correct field name', async () => {
+    uploadConfig.update(config => ({ ...config, fieldName: 'test-file' }));
+    await fixture.whenStable();
 
-    handleFiles(createFileList(['matching.fmwr']));
+    await handleFiles(createFileList(['matching.fmwr']));
     triggerUpload();
 
     // mock request
@@ -385,13 +377,14 @@ describe('SiFileUploaderComponent', () => {
     req.flush(attachment);
     httpMock.verify();
 
-    expect(req.request.body.has(component.uploadConfig.fieldName)).toBe(true);
+    expect(req.request.body.has('test-file')).toBe(true);
   });
 
-  it('should upload file as binary', () => {
-    component.uploadConfig.sendBinary = true;
+  it('should upload file as binary', async () => {
+    uploadConfig.update(config => ({ ...config, sendBinary: true }));
+    await fixture.whenStable();
 
-    handleFiles(createFileList(['matching.fmwr']));
+    await handleFiles(createFileList(['matching.fmwr']));
     triggerUpload();
 
     // mock request
@@ -403,13 +396,17 @@ describe('SiFileUploaderComponent', () => {
     expect(req.request.body instanceof Blob).toBe(true);
   });
 
-  it('should upload file with additional fields', () => {
-    component.uploadConfig.additionalFields = {
-      'test': 'test value',
-      'test2': 'another test value'
-    };
+  it('should upload file with additional fields', async () => {
+    uploadConfig.update(config => ({
+      ...config,
+      additionalFields: {
+        'test': 'test value',
+        'test2': 'another test value'
+      }
+    }));
+    await fixture.whenStable();
 
-    handleFiles(createFileList(['matching.fmwr']));
+    await handleFiles(createFileList(['matching.fmwr']));
     triggerUpload();
 
     // mock request
@@ -424,13 +421,14 @@ describe('SiFileUploaderComponent', () => {
 
   it('should auto-upload', () => {
     vi.useFakeTimers();
-    let result: FileUploadResult | undefined;
-    component.autoUpload = true;
-    fixture.changeDetectorRef.markForCheck();
+    autoUpload.set(true);
     fixture.detectChanges();
-    component.fileUploader().uploadCompleted.subscribe(res => (result = res));
 
-    handleFiles(createFileList(['matching.fmwr']));
+    fixture.detectChanges();
+    element
+      .querySelector('.drag-and-drop')
+      ?.dispatchEvent(new DragEvent('drop', { dataTransfer: createFileList(['matching.fmwr']) }));
+    fixture.detectChanges();
 
     // mock request
     const attachment = { id: 201, fileName: 'matching.fmwr' };
@@ -442,17 +440,19 @@ describe('SiFileUploaderComponent', () => {
     vi.advanceTimersByTime(4500);
     fixture.detectChanges();
 
-    expect(result).toBeDefined();
-    expect(result!.response).toBeDefined();
-    expect(result!.error).toBeUndefined();
-    expect(result!.response?.status).toBe(200);
+    expect(uploadCompletedSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        response: expect.objectContaining({ status: 200 })
+      })
+    );
+    expect(vi.mocked(uploadCompletedSpy).mock.calls[0][0].error).toBeUndefined();
 
     expect(getFiles().length).toBe(0);
     vi.useRealTimers();
   });
 
   it('should allow re-uploading file', async () => {
-    handleFiles(createFileList(['matching.fmwr']));
+    await handleFiles(createFileList(['matching.fmwr']));
     triggerUpload();
 
     // mock request
@@ -461,33 +461,19 @@ describe('SiFileUploaderComponent', () => {
     req.flush(attachment);
     httpMock.verify();
 
-    await fixture.whenStable();
     fixture.detectChanges();
 
-    expect(getUploadButton().disabled).toBeTruthy();
+    expect(getUploadButton()).toBeDisabled();
 
-    handleFiles(createFileList(['matching.fmwr']));
-    await fixture.whenStable();
-    fixture.detectChanges();
+    await handleFiles(createFileList(['matching.fmwr']));
 
     expect(getFiles().length).toBe(1);
-    expect(getUploadButton().disabled).toBeFalsy();
+    expect(getUploadButton()).toBeEnabled();
   });
 
   it('should retry and emit error response', async () => {
-    const uploadResult = new Promise<void>(resolve => {
-      component.fileUploader().uploadCompleted.subscribe(result => {
-        expect(result).toBeDefined();
-        expect(result.response).toBeUndefined();
-        expect(result.error).toBeDefined();
-        const errorResponse = result.error as HttpErrorResponse;
-        expect(errorResponse.status).toBe(400);
-        resolve();
-      });
-    });
-
-    component.retries = 3;
-    handleFiles(createFileList(['matching.fmwr']));
+    retries.set(3);
+    await handleFiles(createFileList(['matching.fmwr']));
     triggerUpload();
 
     for (let i = 0; i < 4; i++) {
@@ -495,14 +481,19 @@ describe('SiFileUploaderComponent', () => {
       req.flush({}, { status: 400, statusText: 'FAILED' });
     }
 
-    await uploadResult;
+    fixture.detectChanges();
+
+    expect(uploadCompletedSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        error: expect.objectContaining({ status: 400 })
+      })
+    );
+    expect(vi.mocked(uploadCompletedSpy).mock.calls[0][0].response).toBeUndefined();
     httpMock.verify();
   });
 
-  it('should be possible to cancel an upload', () => {
-    const canceledSpy = vi.spyOn(component, 'uploadCanceled');
-
-    handleFiles(createFileList(['matching.fmwr']));
+  it('should be possible to cancel an upload', async () => {
+    await handleFiles(createFileList(['matching.fmwr']));
 
     triggerUpload();
     fixture.detectChanges();
@@ -512,18 +503,22 @@ describe('SiFileUploaderComponent', () => {
 
     const req = httpMock.expectOne('/api/attachments');
     expect(req.cancelled).toBe(true);
-    expect(canceledSpy).toHaveBeenCalledWith(
+    expect(uploadCanceledSpy).toHaveBeenCalledWith(
       expect.objectContaining({ fileName: 'matching.fmwr', size: '4B', status: 'added' })
     );
 
     // upload button enabled again for re-upload
-    expect(getUploadButton().disabled).toBeFalsy();
+    expect(getUploadButton()).toBeEnabled();
   });
 
   it('should be possible to retry a failed upload', () => {
     vi.useFakeTimers();
-    component.errorUploadFailed = 'failed';
-    handleFiles(createFileList(['matching.fmwr']));
+    errorUploadFailed.set('failed');
+    fixture.detectChanges();
+    element
+      .querySelector('.drag-and-drop')
+      ?.dispatchEvent(new DragEvent('drop', { dataTransfer: createFileList(['matching.fmwr']) }));
+    fixture.detectChanges();
 
     triggerUpload();
     fixture.detectChanges();
@@ -535,7 +530,7 @@ describe('SiFileUploaderComponent', () => {
 
     fixture.detectChanges();
 
-    expect(element.querySelector('.error.text-danger')!.innerHTML).toContain('failed');
+    expect(element.querySelector('.error.text-danger')!).toHaveTextContent('failed');
     retryButton().click();
 
     const reqOk = httpMock.expectOne('/api/attachments');

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -16,16 +16,16 @@ import { SiFormlyModule } from '@siemens/element-ng/formly';
     <si-formly
       class="si-layout-fixed-height"
       [labelWidth]="250"
-      [fields]="fields"
-      [model]="model"
+      [fields]="fields()"
+      [model]="model()"
       [form]="form"
     />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
-  form = new FormRecord({});
-  fields: FormlyFieldConfig[] = [
+  readonly form = new FormRecord({});
+  readonly fields = signal<FormlyFieldConfig[]>([
     {
       type: 'accordion',
       fieldGroup: [
@@ -80,24 +80,18 @@ class FormlyTestComponent {
         }
       ]
     }
-  ];
-  model = {
+  ]);
+  readonly model = signal({
     firstname: 'John doe',
     lastname: 'Smith',
     email: 'john.doe@example.org',
     businessAddr: 'Sample address of John Doe',
     privateAddr: 'Sample private address of John Doe'
-  };
+  });
 }
 
 describe('formly accordion type', () => {
   let fixture: ComponentFixture<FormlyTestComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [SiFormlyModule, FormlyTestComponent]
-    }).compileComponents();
-  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FormlyTestComponent);
@@ -121,7 +115,7 @@ describe('formly accordion type', () => {
   it('should update props based on state of panel', () => {
     fixture.detectChanges();
 
-    const fieldGroups = fixture.componentInstance.fields[0].fieldGroup;
+    const fieldGroups = fixture.componentInstance.fields()[0].fieldGroup;
 
     // check if default is open
     if (fieldGroups) {

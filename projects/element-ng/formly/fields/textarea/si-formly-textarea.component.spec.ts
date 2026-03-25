@@ -2,35 +2,32 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormRecord, ReactiveFormsModule } from '@angular/forms';
+import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 
 import { SiFormlyTextareaComponent } from './si-formly-textarea.component';
 
 @Component({
   selector: 'si-formly-test',
-  imports: [ReactiveFormsModule, FormlyModule],
-  template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
+  imports: [FormlyModule],
+  template: `<formly-form [form]="form" [fields]="fields()" [model]="model()" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
-  form = new FormRecord({});
-  fields!: FormlyFieldConfig[];
-  model: any;
-  options!: FormlyFormOptions;
+  readonly form = new FormRecord({});
+  readonly fields = signal<FormlyFieldConfig[]>([]);
+  readonly model = signal<any>({});
 }
 
 describe('formly autogrowing textarea type', () => {
   let fixture: ComponentFixture<FormlyTestComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
-        SiFormlyTextareaComponent,
         FormlyModule.forRoot({
           types: [
             {
@@ -38,24 +35,21 @@ describe('formly autogrowing textarea type', () => {
               component: SiFormlyTextareaComponent
             }
           ]
-        }),
-        FormlyTestComponent
+        })
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(FormlyTestComponent);
   });
 
   it('should have a textarea', () => {
     const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    componentInstance.fields.set([
       {
         key: 'text',
         type: 'textarea'
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('textarea'));
@@ -63,7 +57,7 @@ describe('formly autogrowing textarea type', () => {
   });
   it('should apply the rows config', () => {
     const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    componentInstance.fields.set([
       {
         key: 'text',
         type: 'textarea',
@@ -71,16 +65,16 @@ describe('formly autogrowing textarea type', () => {
           rows: 10
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('textarea'));
-    expect(inputField.nativeNode.getAttribute('rows')).toEqual('10');
+    expect(inputField.nativeNode).toHaveAttribute('rows', '10');
   });
 
   it('should apply model value', () => {
     const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    componentInstance.fields.set([
       {
         key: 'text',
         type: 'textarea',
@@ -88,11 +82,11 @@ describe('formly autogrowing textarea type', () => {
           rows: 10
         }
       }
-    ];
+    ]);
     const val = 'lorem\nipsum\ndolor\nfoo';
-    componentInstance.model = {
+    componentInstance.model.set({
       text: val
-    };
+    });
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('textarea'));
@@ -101,7 +95,7 @@ describe('formly autogrowing textarea type', () => {
 
   it('should apply model value to its wrapper', () => {
     const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    componentInstance.fields.set([
       {
         key: 'text',
         type: 'textarea',
@@ -109,21 +103,21 @@ describe('formly autogrowing textarea type', () => {
           rows: 10
         }
       }
-    ];
+    ]);
     const val = 'lorem\nipsum\ndolor\nfoo';
-    componentInstance.model = {
+    componentInstance.model.set({
       text: val
-    };
+    });
     fixture.detectChanges();
 
     const wrapper = fixture.debugElement.query(By.css('div'));
     expect(wrapper).toBeDefined();
-    expect(wrapper.nativeNode.getAttribute('data-replicated-value')).toEqual(val);
+    expect(wrapper.nativeNode).toHaveAttribute('data-replicated-value', val);
   });
 
   it('should apply changes to model value and its wrapper', async () => {
     const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    componentInstance.fields.set([
       {
         key: 'text',
         type: 'textarea',
@@ -131,11 +125,11 @@ describe('formly autogrowing textarea type', () => {
           rows: 10
         }
       }
-    ];
+    ]);
     const val = 'lorem\nipsum\ndolor\nfoo';
-    componentInstance.model = {
+    componentInstance.model.set({
       text: ''
-    };
+    });
     fixture.detectChanges();
     const inputField = fixture.debugElement.query(By.css('textarea'));
     const wrapper = fixture.debugElement.query(By.css('div'));
@@ -146,7 +140,7 @@ describe('formly autogrowing textarea type', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(componentInstance.model.text).toEqual(val);
-    expect(wrapper.nativeNode.getAttribute('data-replicated-value')).toEqual(val);
+    expect(componentInstance.model().text).toEqual(val);
+    expect(wrapper.nativeNode).toHaveAttribute('data-replicated-value', val);
   });
 });

@@ -2,9 +2,9 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormRecord, ReactiveFormsModule } from '@angular/forms';
+import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 
@@ -12,25 +12,28 @@ import { SiFormlyObjectTabsetComponent } from './si-formly-object-tabset.compone
 
 @Component({
   selector: 'si-formly-test',
-  imports: [ReactiveFormsModule, FormlyModule],
-  template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
+  imports: [FormlyModule],
+  template: `<formly-form
+    [form]="form"
+    [fields]="fields()"
+    [model]="model()"
+    [options]="options()"
+  /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
-  form = new FormRecord({});
-  fields!: FormlyFieldConfig[];
-  model: any;
-  options!: FormlyFormOptions;
+  readonly form = new FormRecord({});
+  readonly fields = signal<FormlyFieldConfig[]>([]);
+  readonly model = signal<any>({});
+  readonly options = signal<FormlyFormOptions>({});
 }
 
 describe('formly tabset type', () => {
   let fixture: ComponentFixture<FormlyTestComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
-
         FormlyModule.forRoot({
           types: [
             {
@@ -38,24 +41,21 @@ describe('formly tabset type', () => {
               component: SiFormlyObjectTabsetComponent
             }
           ]
-        }),
-        FormlyTestComponent
+        })
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(FormlyTestComponent);
   });
 
   it('should have created tabset', () => {
     const componentInstance = fixture.componentInstance;
-    componentInstance.options = {
+    componentInstance.options.set({
       formState: {
         selectedTabIndex: 1
       }
-    };
-    componentInstance.fields = [
+    });
+    componentInstance.fields.set([
       {
         key: 'tabset',
         type: 'tabset',
@@ -80,7 +80,7 @@ describe('formly tabset type', () => {
           }
         ]
       }
-    ];
+    ]);
     fixture.detectChanges();
     const tabsContainer = fixture.debugElement.query(By.css('si-tabset'));
     expect(tabsContainer).toBeTruthy();
@@ -90,6 +90,6 @@ describe('formly tabset type', () => {
 
     const activeTabContent = tabsContainer.query(By.css('.tab-content'));
     expect(activeTabContent).toBeTruthy();
-    expect(activeTabContent.nativeElement.textContent).toContain('t1');
+    expect(activeTabContent.nativeElement).toHaveTextContent('t1');
   });
 });

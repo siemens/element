@@ -2,96 +2,84 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Link } from '@siemens/element-ng/link';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 
 import { SiFooterComponent } from './index';
 
-@Component({
-  imports: [SiFooterComponent],
-  template: `<si-footer copyright="copyright" [links]="links" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class TestHostComponent {
-  readonly component = viewChild.required(SiFooterComponent);
-  copyright = 'test copyright';
-  links: Link[] = [
-    {
-      title: 'About',
-      link: '/main/components/si-about'
-    },
-    {
-      title: 'Corporate Information',
-      href: 'http://www.siemens.com/corporate-information'
-    }
-  ];
-}
 describe('SiFooterComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
+  let fixture: ComponentFixture<SiFooterComponent>;
   let element: HTMLElement;
 
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideRouter([])]
-    })
-  );
+  let copyright: WritableSignal<string>;
+  let links: WritableSignal<Link[] | undefined>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
+    copyright = signal('test copyright');
+    links = signal<Link[] | undefined>([
+      {
+        title: 'About',
+        link: '/main/components/si-about'
+      },
+      {
+        title: 'Corporate Information',
+        href: 'http://www.siemens.com/corporate-information'
+      }
+    ]);
+
+    TestBed.configureTestingModule({
+      providers: [provideRouter([])]
+    });
+
+    fixture = TestBed.createComponent(SiFooterComponent, {
+      bindings: [inputBinding('copyright', copyright), inputBinding('links', links)]
+    });
     element = fixture.nativeElement;
   });
 
-  it('should contain set properties', () => {
-    component.copyright = 'copyright';
-    component.links = [
+  it('should contain set properties', async () => {
+    copyright.set('copyright');
+    links.set([
       {
         title: 'link',
         href: 'http://google.com'
       }
-    ];
+    ]);
+    await fixture.whenStable();
 
-    fixture.detectChanges();
-
-    const copyright = element.querySelector('.col-sm-4')!.innerHTML;
-    const linkTitle = element.querySelector('a')!.innerHTML;
-    expect(copyright).toContain('© copyright');
-    expect(linkTitle).toContain('link');
+    const copyrightEl = element.querySelector('.col-sm-4')!;
+    const linkTitle = element.querySelector('a')!;
+    expect(copyrightEl).toHaveTextContent('© copyright');
+    expect(linkTitle).toHaveTextContent('link');
   });
 
-  it('should contain external link', () => {
-    component.copyright = 'copyright';
-    component.links = [
+  it('should contain external link', async () => {
+    copyright.set('copyright');
+    links.set([
       {
         title: 'link',
         href: 'http://google.com'
       }
-    ];
+    ]);
+    await fixture.whenStable();
 
-    fixture.detectChanges();
-
-    const linkHref = element.querySelector('a')!.getAttribute('href');
-    expect(linkHref).toContain('http://google.com');
+    const linkHref = element.querySelector('a')!;
+    expect(linkHref).toHaveAttribute('href', expect.stringContaining('http://google.com'));
   });
 
   it('should contain internal router links', async () => {
-    component.copyright = 'copyright';
-    component.links = [
+    copyright.set('copyright');
+    links.set([
       {
         title: 'link',
         link: '/main/documentation'
       }
-    ];
+    ]);
+    await fixture.whenStable();
 
-    await runOnPushChangeDetection(fixture);
-    fixture.detectChanges();
-
-    const linkHref = element.querySelector('a')!.getAttribute('href');
-    expect(linkHref).toContain('/main/documentation');
+    const linkHref = element.querySelector('a')!;
+    expect(linkHref).toHaveAttribute('href', expect.stringContaining('/main/documentation'));
   });
 });

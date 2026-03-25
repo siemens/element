@@ -2,55 +2,51 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { inputBinding, outputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import type { Mock } from 'vitest';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiFileDropzoneComponent, UploadFile } from './index';
 
-@Component({
-  imports: [SiFileDropzoneComponent],
-  template: `
-    <si-file-dropzone
-      [maxFileSize]="maxFileSize()"
-      [accept]="accept"
-      [uploadTextFileSelect]="uploadTextFileSelect"
-      [uploadDropText]="uploadDropText"
-      [errorTextFileType]="errorTextFileType"
-      [errorTextFileMaxSize]="errorTextFileMaxSize"
-      [directoryUpload]="directoryUpload"
-      (filesAdded)="filesAdded()"
-    />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class TestHostComponent {
-  readonly fileDropzone = viewChild.required(SiFileDropzoneComponent);
-  readonly maxFileSize = signal<number | undefined>(undefined);
-  accept!: string;
-  uploadTextFileSelect!: string;
-  uploadDropText!: string;
-  errorTextFileType!: string;
-  errorTextFileMaxSize!: string;
-  directoryUpload = false;
-
-  filesAdded = (): void => {};
-}
 describe('SiFileDropzoneComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
+  let fixture: ComponentFixture<SiFileDropzoneComponent>;
   let element: HTMLElement;
-  let eventSpy: Mock;
+  let maxFileSize: WritableSignal<number | undefined>;
+  let accept: WritableSignal<string | undefined>;
+  let uploadTextFileSelect: WritableSignal<TranslatableString>;
+  let uploadDropText: WritableSignal<TranslatableString>;
+  let errorTextFileType: WritableSignal<TranslatableString>;
+  let errorTextFileMaxSize: WritableSignal<TranslatableString>;
+  let directoryUpload: WritableSignal<boolean>;
+  let filesAddedSpy: (event: UploadFile[]) => void;
 
   const dropFiles = (dataTransfer: DataTransfer): void => {
     element.querySelector('.drag-and-drop')?.dispatchEvent(new DragEvent('drop', { dataTransfer }));
   };
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
+    maxFileSize = signal<number | undefined>(undefined);
+    accept = signal<string | undefined>(undefined);
+    uploadTextFileSelect = signal<TranslatableString>('click to upload');
+    uploadDropText = signal<TranslatableString>('Drop files here or');
+    errorTextFileType = signal<TranslatableString>('Incorrect file type selected');
+    errorTextFileMaxSize = signal<TranslatableString>('File exceeds allowed maximum size');
+    directoryUpload = signal(false);
+    filesAddedSpy = vi.fn();
+
+    fixture = TestBed.createComponent(SiFileDropzoneComponent, {
+      bindings: [
+        inputBinding('maxFileSize', maxFileSize),
+        inputBinding('accept', accept),
+        inputBinding('uploadTextFileSelect', uploadTextFileSelect),
+        inputBinding('uploadDropText', uploadDropText),
+        inputBinding('errorTextFileType', errorTextFileType),
+        inputBinding('errorTextFileMaxSize', errorTextFileMaxSize),
+        inputBinding('directoryUpload', directoryUpload),
+        outputBinding('filesAdded', filesAddedSpy)
+      ]
+    });
     element = fixture.nativeElement;
-    eventSpy = vi.spyOn(component.fileDropzone().filesAdded, 'emit');
   });
 
   const createFileList = (files: string[], type?: string[]): DataTransfer => {
@@ -65,7 +61,7 @@ describe('SiFileDropzoneComponent', () => {
     return dt;
   };
 
-  const getFiles = (): UploadFile[] => vi.mocked(eventSpy).mock.calls[0][0]!;
+  const getFiles = (): UploadFile[] => vi.mocked(filesAddedSpy).mock.calls[0][0]!;
 
   const createDirectoryItemsWithFiles = (): Partial<DataTransferItemList> => {
     return {
@@ -126,35 +122,33 @@ describe('SiFileDropzoneComponent', () => {
     };
   };
 
-  it('should contain set upload text to file selecting', () => {
-    component.uploadTextFileSelect = 'browse files';
-    component.uploadDropText = 'droppi droppi';
-    fixture.detectChanges();
-    expect(element.querySelector('.select-file span')!.innerHTML).toContain('browse files');
-    expect(element.querySelector('.drag-and-drop-description')!.innerHTML).toContain(
-      'droppi droppi'
-    );
+  it('should contain set upload text to file selecting', async () => {
+    uploadTextFileSelect.set('browse files');
+    uploadDropText.set('droppi droppi');
+    await fixture.whenStable();
+    expect(element.querySelector('.select-file span')!).toHaveTextContent('browse files');
+    expect(element.querySelector('.drag-and-drop-description')!).toHaveTextContent('droppi droppi');
   });
 
-  it('should highlight the drop area when dragging something over it', () => {
-    fixture.detectChanges();
+  it('should highlight the drop area when dragging something over it', async () => {
+    await fixture.whenStable();
 
     const dndElement = element.querySelector<HTMLElement>('.drag-and-drop')!;
-    expect(dndElement.classList).not.toContain('drag-over');
+    expect(dndElement).not.toHaveClass('drag-over');
 
     dndElement.dispatchEvent(new DragEvent('dragover'));
-    fixture.detectChanges();
-    expect(dndElement.classList).toContain('drag-over');
+    await fixture.whenStable();
+    expect(dndElement).toHaveClass('drag-over');
 
     dndElement.dispatchEvent(new DragEvent('dragleave'));
-    fixture.detectChanges();
-    expect(dndElement.classList).not.toContain('drag-over');
+    await fixture.whenStable();
+    expect(dndElement).not.toHaveClass('drag-over');
   });
 
-  it('should contain file name and size', () => {
-    component.accept = '.png';
+  it('should contain file name and size', async () => {
+    accept.set('.png');
     dropFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.PNG']));
-    fixture.detectChanges();
+    await fixture.whenStable();
     const files = getFiles();
     expect(files.length).toBe(2);
     expect(files[0].fileName).toBe('first.png');
@@ -165,12 +159,12 @@ describe('SiFileDropzoneComponent', () => {
     expect(files[1].status).toBe('added');
   });
 
-  it('should drop files', () => {
-    component.accept = '.png';
-    fixture.detectChanges();
+  it('should drop files', async () => {
+    accept.set('.png');
+    await fixture.whenStable();
 
     dropFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.PNG']));
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const files = getFiles();
     expect(files.length).toBe(2);
@@ -180,50 +174,51 @@ describe('SiFileDropzoneComponent', () => {
     expect(files[1].status).toBe('added');
   });
 
-  it('should allow one to define accepted mime types', () => {
-    component.accept = 'image/*';
-    fixture.detectChanges();
-    expect(element.querySelector('.select-file input')!.getAttribute('accept')).toContain(
-      'image/*'
+  it('should allow one to define accepted mime types', async () => {
+    accept.set('image/*');
+    await fixture.whenStable();
+    expect(element.querySelector('.select-file input')!).toHaveAttribute(
+      'accept',
+      expect.stringContaining('image/*')
     );
   });
 
-  it('should reject files that do not match the "accept" parameter', () => {
-    component.accept = 'fmwz';
-    component.errorTextFileType = 'Incorrect type';
-    fixture.detectChanges();
+  it('should reject files that do not match the "accept" parameter', async () => {
+    accept.set('fmwz');
+    errorTextFileType.set('Incorrect type');
+    await fixture.whenStable();
     dropFiles(createFileList(['notMatching.fmwr']));
-    fixture.detectChanges();
+    await fixture.whenStable();
     const files = getFiles();
     expect(files[0].status).toBe('invalid');
     expect(files[0].errorText).toContain('Incorrect type');
   });
 
-  it('should allow files that match a file extension', () => {
-    component.accept = '.fmwr';
-    component.errorTextFileType = 'Incorrect type';
+  it('should allow files that match a file extension', async () => {
+    accept.set('.fmwr');
+    errorTextFileType.set('Incorrect type');
     dropFiles(createFileList(['matching.fmwr']));
-    fixture.detectChanges();
+    await fixture.whenStable();
     const files = getFiles();
     expect(files[0].status).toBe('added');
   });
 
-  it('should reject files that do not match a file extension', () => {
-    component.accept = '.blub';
-    component.errorTextFileType = 'Incorrect type';
-    fixture.detectChanges();
+  it('should reject files that do not match a file extension', async () => {
+    accept.set('.blub');
+    errorTextFileType.set('Incorrect type');
+    await fixture.whenStable();
     dropFiles(createFileList(['wrong.fmwr']));
-    fixture.detectChanges();
+    await fixture.whenStable();
     const files = getFiles();
     expect(files[0].status).toBe('invalid');
     expect(files[0].errorText).toContain('Incorrect type');
   });
 
-  it('should allow files that match one of the multiple "accept" values', () => {
-    component.accept = 'image/*,.fmwr';
-    component.errorTextFileType = 'Incorrect type';
+  it('should allow files that match one of the multiple "accept" values', async () => {
+    accept.set('image/*,.fmwr');
+    errorTextFileType.set('Incorrect type');
     dropFiles(createFileList(['matching.png', 'bla.fmwr'], ['image/png']));
-    fixture.detectChanges();
+    await fixture.whenStable();
     const files = getFiles();
     expect(files[0].fileName).toBe('bla.fmwr');
     expect(files[0].status).toBe('added');
@@ -231,81 +226,81 @@ describe('SiFileDropzoneComponent', () => {
     expect(files[1].status).toBe('added');
   });
 
-  it('should allow files that match extension only', () => {
-    component.accept = '.blub';
-    component.errorTextFileType = 'Incorrect type';
+  it('should allow files that match extension only', async () => {
+    accept.set('.blub');
+    errorTextFileType.set('Incorrect type');
     dropFiles(createFileList(['matching.blub']));
-    fixture.detectChanges();
+    await fixture.whenStable();
     const files = getFiles();
     expect(files[0].fileName).toBe('matching.blub');
     expect(files[0].status).toBe('added');
   });
 
-  it("should reject files that don't match extension only", () => {
-    component.accept = '.blub';
-    component.errorTextFileType = 'Incorrect type';
-    fixture.detectChanges();
+  it("should reject files that don't match extension only", async () => {
+    accept.set('.blub');
+    errorTextFileType.set('Incorrect type');
+    await fixture.whenStable();
     dropFiles(createFileList(['matching.bla']));
-    fixture.detectChanges();
+    await fixture.whenStable();
     const files = getFiles();
     expect(files[0].status).toBe('invalid');
     expect(files[0].errorText).toBe('Incorrect type');
   });
 
-  it('should reject files that match none of the multiple "accept" values', () => {
-    component.accept = 'image/*,fmwz';
-    component.errorTextFileType = 'Incorrect type';
-    fixture.detectChanges();
+  it('should reject files that match none of the multiple "accept" values', async () => {
+    accept.set('image/*,fmwz');
+    errorTextFileType.set('Incorrect type');
+    await fixture.whenStable();
     dropFiles(createFileList(['.notMatching']));
-    fixture.detectChanges();
+    await fixture.whenStable();
     const files = getFiles();
     expect(files[0].status).toBe('invalid');
     expect(files[0].errorText).toBe('Incorrect type');
   });
 
-  it('should reject files that exceeds "maxFileSize" parameter', () => {
-    component.maxFileSize.set(1000);
-    component.errorTextFileMaxSize = 'File exceeds allowed maximum size';
-    fixture.detectChanges();
+  it('should reject files that exceeds "maxFileSize" parameter', async () => {
+    maxFileSize.set(1000);
+    errorTextFileMaxSize.set('File exceeds allowed maximum size');
+    await fixture.whenStable();
     dropFiles(createFileListWithFileSizeOf1200Bytes(['notMatching.fmwr']));
-    fixture.detectChanges();
+    await fixture.whenStable();
     const files = getFiles();
     expect(files[0].status).toBe('invalid');
     expect(files[0].errorText).toBe('File exceeds allowed maximum size');
   });
 
-  it('should accept files that less than or equal to "maxFileSize" parameter', () => {
-    component.maxFileSize.set(50000);
-    component.errorTextFileMaxSize = 'File exceeds allowed maximum size';
+  it('should accept files that less than or equal to "maxFileSize" parameter', async () => {
+    maxFileSize.set(50000);
+    errorTextFileMaxSize.set('File exceeds allowed maximum size');
     dropFiles(createFileListWithFileSizeOf1200Bytes(['matching.fmwr']));
-    fixture.detectChanges();
+    await fixture.whenStable();
     const files = getFiles();
     expect(files[0].status).toBe('added');
   });
 
-  it('should display max allowed file size with abbreviation', () => {
-    component.maxFileSize.set(1_572_864); // 1.5mb
-    fixture.detectChanges();
-    expect(element.querySelector('.allowed')!.innerHTML).toContain('1.5MB');
+  it('should display max allowed file size with abbreviation', async () => {
+    maxFileSize.set(1_572_864); // 1.5mb
+    await fixture.whenStable();
+    expect(element.querySelector('.allowed')!).toHaveTextContent('1.5MB');
 
-    component.maxFileSize.set(1_572_864 * 1024); // 1.5gb
-    fixture.detectChanges();
+    maxFileSize.set(1_572_864 * 1024); // 1.5gb
+    await fixture.whenStable();
 
-    expect(element.querySelector('.allowed')!.innerHTML).toContain('1.5GB');
+    expect(element.querySelector('.allowed')!).toHaveTextContent('1.5GB');
   });
 
-  it('should allow directory upload when using drag and drop', () => {
-    component.directoryUpload = true;
-    fixture.detectChanges();
+  it('should allow directory upload when using drag and drop', async () => {
+    directoryUpload.set(true);
+    await fixture.whenStable();
 
     const dataTransfer = new DataTransfer();
-    // cannot assign directly to DataTransfer intereface since some are readonly properties
+    // cannot assign directly to DataTransfer interface since some are readonly properties
     Object.defineProperty(dataTransfer, 'items', { value: createDirectoryItemsWithFiles() });
 
     element.querySelector('.drag-and-drop')?.dispatchEvent(new DragEvent('drop', { dataTransfer }));
-    fixture.detectChanges();
+    await fixture.whenStable();
 
-    expect(eventSpy).toHaveBeenCalled();
+    expect(filesAddedSpy).toHaveBeenCalled();
     const files = getFiles();
     expect(files.length).toBe(2);
     expect(files[0].fileName).toBe('file.txt');
