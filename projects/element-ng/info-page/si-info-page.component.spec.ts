@@ -2,46 +2,60 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { inputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router, RouterModule } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
+import { Link } from '@siemens/element-ng/link';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiInfoPageComponent as TestComponent } from '.';
 
 describe('SiInfoPageComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
-  let component: ComponentRef<TestComponent>;
   let element: HTMLElement;
+
+  const icon = signal<string>('element-warning-filled');
+  const titleText = signal<TranslatableString>('');
+  const copyText = signal<TranslatableString | undefined>(undefined);
+  const instructions = signal<TranslatableString | undefined>(undefined);
+  const link = signal<Link | undefined>(undefined);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TestComponent, RouterModule]
+      providers: [provideRouter([])]
     });
-    fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentRef;
+    fixture = TestBed.createComponent(TestComponent, {
+      bindings: [
+        inputBinding('icon', icon),
+        inputBinding('titleText', titleText),
+        inputBinding('copyText', copyText),
+        inputBinding('instructions', instructions),
+        inputBinding('link', link)
+      ]
+    });
     element = fixture.nativeElement;
   });
 
-  it('should contain all passed strings', () => {
-    component.setInput('icon', 'element-sun');
-    component.setInput('titleText', 'Title');
-    component.setInput('copyText', 'Subtitle');
-    component.setInput('instructions', 'Some Description');
-    fixture.detectChanges();
+  it('should contain all passed strings', async () => {
+    icon.set('element-sun');
+    titleText.set('Title');
+    copyText.set('Subtitle');
+    instructions.set('Some Description');
+    await fixture.whenStable();
 
-    const icon = element.querySelector('si-icon > div');
-    expect(icon!.classList).toContain('element-sun');
-    expect(element.querySelector('h1')!.textContent).toContain('Title');
-    expect(element.querySelector('h2')!.textContent).toContain('Subtitle');
-    expect(element.querySelector('p')!.textContent).toContain('Some Description');
+    const iconEl = element.querySelector('si-icon > div');
+    expect(iconEl!).toHaveClass('element-sun');
+    expect(element.querySelector('h1')!).toHaveTextContent('Title');
+    expect(element.querySelector('h2')!).toHaveTextContent('Subtitle');
+    expect(element.querySelector('p')!).toHaveTextContent('Some Description');
   });
 
-  it('should invoke navigation on button press', () => {
+  it('should invoke navigation on button press', async () => {
     const router = TestBed.inject(Router);
     vi.spyOn(router, 'navigateByUrl');
-    component.setInput('titleText', 'Title');
-    component.setInput('link', { title: 'Go home', link: '/home' });
-    fixture.detectChanges();
+    titleText.set('Title');
+    link.set({ title: 'Go home', link: '/home' });
+    await fixture.whenStable();
 
     element.querySelector<HTMLElement>('a.btn-primary')!.click();
 
