@@ -4,7 +4,6 @@
  */
 import { inputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
 
@@ -25,12 +24,6 @@ describe('SiCardComponent', () => {
     undefined
   );
   const imgObjectPosition = signal<string | undefined>(undefined);
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [RouterModule]
-    })
-  );
 
   beforeEach(() => {
     heading.set('');
@@ -60,97 +53,97 @@ describe('SiCardComponent', () => {
     element = fixture.nativeElement;
   });
 
-  it('should have a heading', () => {
+  it('should have a heading', async () => {
     heading.set('TITLE_KEY');
-    fixture.detectChanges();
-    expect(element.querySelector('.card-header')!.innerHTML).toContain('TITLE_KEY');
+    await fixture.whenStable();
+    expect(element.querySelector('.card-header')!).toHaveTextContent('TITLE_KEY');
   });
 
   describe('content action bar', () => {
-    it('should not be available without actions', () => {
-      fixture.detectChanges();
+    it('should not be available without actions', async () => {
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be unavailable with no actions and disabled expand interaction', () => {
-      fixture.detectChanges();
+    it('should be unavailable with no actions and disabled expand interaction', async () => {
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be unavailable with undefined primary actions and no secondary actions and disabled expand interaction', () => {
+    it('should be unavailable with undefined primary actions and no secondary actions and disabled expand interaction', async () => {
       primaryActions.set(undefined as any);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be available with one primary action and not secondary action and disabled expand interaction', () => {
+    it('should be available with one primary action and not secondary action and disabled expand interaction', async () => {
       primaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
-    it('should be available with one primary action added later and not secondary action', () => {
-      fixture.detectChanges();
+    it('should be available with one primary action added later and not secondary action', async () => {
+      await fixture.whenStable();
       let contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
       primaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
-    it('should be available with no primary action and one secondary action and disabled expand interaction', () => {
+    it('should be available with no primary action and one secondary action and disabled expand interaction', async () => {
       secondaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
-    it('should be available with no primary action and one secondary action', () => {
+    it('should be available with no primary action and one secondary action', async () => {
       secondaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
-    it('should be available with one secondary action', () => {
-      fixture.detectChanges();
+    it('should be available with one secondary action', async () => {
+      await fixture.whenStable();
       let contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
       secondaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
   });
 
   describe('expand restore button', () => {
-    it('should not be available without actions', () => {
-      fixture.detectChanges();
+    it('should not be available without actions', async () => {
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('.element-zoom');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be unavailable without actions and disabled expand interaction', () => {
-      fixture.detectChanges();
+    it('should be unavailable without actions and disabled expand interaction', async () => {
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('.element-zoom');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be unavailable with one primary action and no secondary action', () => {
+    it('should be unavailable with one primary action and no secondary action', async () => {
       primaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('.element-zoom');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be unavailable with no primary action and one secondary action', () => {
+    it('should be unavailable with no primary action and one secondary action', async () => {
       secondaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('.element-zoom');
       expect(contentActionBar).toBeNull();
     });
@@ -169,8 +162,8 @@ describe('SiCardComponent', () => {
       fixture.detectChanges();
       img = element.querySelector('img');
       expect(img).not.toBeNull();
-      expect(img?.classList.contains('card-img-top')).toBe(true);
-      expect(img?.classList.contains('card-img-start')).toBe(false);
+      expect(img).toHaveClass('card-img-top');
+      expect(img).not.toHaveClass('card-img-start');
     });
 
     it('direction should be changed to horizontal', () => {
@@ -180,8 +173,8 @@ describe('SiCardComponent', () => {
 
       const img = element.querySelector('img');
       expect(img).not.toBeNull();
-      expect(img?.classList.contains('card-img-top')).toBe(false);
-      expect(img?.classList.contains('card-img-start')).toBe(true);
+      expect(img).not.toHaveClass('card-img-top');
+      expect(img).toHaveClass('card-img-start');
     });
 
     it('alt text should be set', () => {
