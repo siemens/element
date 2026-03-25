@@ -63,13 +63,13 @@ describe('SiInlineNotificationComponent', () => {
     translationParams.set({ param: 'something' });
     fixture.detectChanges();
 
-    expect(element.querySelector<HTMLElement>('.alert strong')!.innerText).toBe(
+    expect(element.querySelector<HTMLElement>('.alert strong')!).toHaveTextContent(
       'translated=>MSG.HEADING-{"param":"something"}'
     );
-    expect(element.querySelector<HTMLElement>('div > span:not(.icon)')!.innerText).toBe(
+    expect(element.querySelector<HTMLElement>('div > span:not(.icon)')!).toHaveTextContent(
       'translated=>MSG.MESSAGE-{"param":"something"}'
     );
-    expect(element.querySelector<HTMLElement>('a')!.innerText).toBe(
+    expect(element.querySelector<HTMLElement>('a')!).toHaveTextContent(
       'translated=>MSG.ACTION-{"param":"something"}'
     );
     expect(element.querySelector('.alert.alert-danger')!.innerHTML).toBeDefined();
@@ -79,6 +79,6 @@ describe('SiInlineNotificationComponent', () => {
     severity.set('info');
     message.set('There is no Title');
     fixture.detectChanges();
-    expect(element.querySelector('.alert strong')!).toBeNull();
+    expect(element.querySelector('.alert strong')).not.toBeInTheDocument();
   });
 });
