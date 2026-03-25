@@ -7,7 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiIconLegacyComponent as TestComponent } from './si-icon-legacy.component';
 
-describe('SiIconComponent', () => {
+describe('SiIconLegacyComponent', () => {
   let component: ComponentRef<TestComponent>;
   let fixture: ComponentFixture<TestComponent>;
 
@@ -20,9 +20,8 @@ describe('SiIconComponent', () => {
     component.setInput('icon', 'element-person');
     fixture.detectChanges();
     const icon = fixture.nativeElement.querySelector('.element-person');
-    const aria = fixture.nativeElement.querySelector('span').getAttribute('aria-label');
-    expect(icon.classList).toContain('element-person');
-    expect(aria).toBe('person');
+    expect(icon).toHaveClass('element-person');
+    expect(fixture.nativeElement.querySelector('span')).toHaveAttribute('aria-label', 'person');
   });
 
   it('should set color class', () => {
@@ -30,14 +29,16 @@ describe('SiIconComponent', () => {
     component.setInput('color', 'element-text-active');
     fixture.detectChanges();
     const icon = fixture.nativeElement.querySelector('.element-alarm');
-    expect(icon.classList).toContain('element-text-active');
+    expect(icon).toHaveClass('element-text-active');
   });
 
   it('should set alt text', () => {
     component.setInput('alt', 'alternative text');
     fixture.detectChanges();
-    const aria = fixture.nativeElement.querySelector('span').getAttribute('aria-label');
-    expect(aria).toContain('alternative text');
+    expect(fixture.nativeElement.querySelector('span')).toHaveAttribute(
+      'aria-label',
+      expect.stringContaining('alternative text')
+    );
   });
 
   it('should set size', () => {
@@ -45,7 +46,7 @@ describe('SiIconComponent', () => {
     component.setInput('size', 'display-xl');
     fixture.detectChanges();
     const icon = fixture.nativeElement.querySelector('.display-xl');
-    expect(icon.classList).toContain('display-xl');
+    expect(icon).toHaveClass('display-xl');
   });
 
   it('should set stackedIcon and stackedColor', () => {
@@ -53,8 +54,8 @@ describe('SiIconComponent', () => {
     component.setInput('stackedColor', 'text-secondary');
     fixture.detectChanges();
     const stackIcon = fixture.nativeElement.querySelector('i:first-child');
-    expect(stackIcon.classList).toContain('element-alarm-tick');
-    expect(stackIcon.classList).toContain('text-secondary');
+    expect(stackIcon).toHaveClass('element-alarm-tick');
+    expect(stackIcon).toHaveClass('text-secondary');
   });
 
   it('should create composite icon', () => {
@@ -64,12 +65,15 @@ describe('SiIconComponent', () => {
     component.setInput('stackedColor', 'text-secondary');
     fixture.detectChanges();
     const icon = fixture.nativeElement.querySelector('span');
-    expect(icon.classList).toContain('element-alarm-background-filled');
-    expect(icon.classList).toContain('status-danger');
+    expect(icon).toHaveClass('element-alarm-background-filled');
+    expect(icon).toHaveClass('status-danger');
     const stackIcon = fixture.nativeElement.querySelector('i');
-    expect(stackIcon.classList).toContain('element-alarm-tick');
-    expect(stackIcon.classList).toContain('text-secondary');
+    expect(stackIcon).toHaveClass('element-alarm-tick');
+    expect(stackIcon).toHaveClass('text-secondary');
     const wrapper = fixture.nativeElement.querySelector('span');
-    expect(wrapper.getAttribute('aria-label')).toContain('alarm background filled');
+    expect(wrapper).toHaveAttribute(
+      'aria-label',
+      expect.stringContaining('alarm background filled')
+    );
   });
 });
