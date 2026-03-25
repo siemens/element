@@ -6,11 +6,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormRecord } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { SiFormModule } from '@siemens/element-ng/form';
-import { SiFormlyModule } from '@siemens/element-ng/formly';
+import { SiFormlyComponent } from '@siemens/element-ng/formly';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiFormModule, SiFormlyModule],
+  imports: [SiFormModule, SiFormlyComponent],
   templateUrl: './si-dynamic-form-grid.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
