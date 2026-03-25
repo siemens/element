@@ -34,8 +34,9 @@ input {
 
 .cancel-button {
   position: absolute;
-  inset-block-start: map.get(variables.$spacers, 2);
+  inset-block: 0;
   inset-inline-end: map.get(variables.$spacers, 2);
+  margin-block: auto;
 }
 
 .is-invalid ~ .cancel-button {
