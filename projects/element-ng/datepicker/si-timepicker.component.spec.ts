@@ -206,7 +206,7 @@ describe('SiTimepickerComponent', () => {
       enterValue(getHours(), '24');
       fixture.detectChanges();
       expect(component.time.errors).toEqual({ hours: { max: 12 } });
-      expect(getHours().classList).toContain('ng-invalid');
+      expect(getHours()).toHaveClass('ng-invalid');
     });
 
     it('should validate minutes range', async () => {
@@ -215,7 +215,7 @@ describe('SiTimepickerComponent', () => {
       fixture.detectChanges();
 
       expect(component.time.errors).toEqual({ minutes: { max: 59 } });
-      expect(getMinutes().classList).toContain('ng-invalid');
+      expect(getMinutes()).toHaveClass('ng-invalid');
     });
 
     it('should validate seconds range', async () => {
@@ -225,7 +225,7 @@ describe('SiTimepickerComponent', () => {
       fixture.detectChanges();
 
       expect(component.time.errors).toEqual({ seconds: { max: 59 } });
-      expect(getSeconds().classList).toContain('ng-invalid');
+      expect(getSeconds()).toHaveClass('ng-invalid');
     });
 
     it('should validate max with hours', async () => {
@@ -282,8 +282,8 @@ describe('SiTimepickerComponent', () => {
       component.time.setValue('2021-01-12 18:23:58.435');
       component.time.disable();
       fixture.detectChanges();
-      expect(getHours().disabled).toBeTruthy();
-      expect(getMinutes().disabled).toBeTruthy();
+      expect(getHours()).toBeDisabled();
+      expect(getMinutes()).toBeDisabled();
     });
 
     it('should toggle meridian', () => {
@@ -323,7 +323,7 @@ describe('SiTimepickerComponent', () => {
       component.showMeridian.set(false);
       fixture.detectChanges();
 
-      expect(element.querySelector<HTMLSelectElement>('select')).toBeFalsy();
+      expect(element.querySelector<HTMLSelectElement>('select')).not.toBeInTheDocument();
     });
 
     it('should update time using up and down keys', () => {

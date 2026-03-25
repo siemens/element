@@ -72,7 +72,7 @@ describe('SiDatepickerOverlayDirective', () => {
     component.close();
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(document.querySelector('si-datepicker')).toBeFalsy();
+    expect(document.querySelector('si-datepicker')).not.toBeInTheDocument();
   };
 
   const backdropClick = async (): Promise<void> => {
@@ -115,7 +115,7 @@ describe('SiDatepickerOverlayDirective', () => {
       expect(component.datepickerOverlay.isShown()).toBeTruthy();
       await backdropClick();
       expect(component.closeCause).toBe(CloseCause.Backdrop);
-      expect(document.querySelector('si-datepicker')).toBeFalsy();
+      expect(document.querySelector('si-datepicker')).not.toBeInTheDocument();
     });
   });
 
@@ -129,7 +129,7 @@ describe('SiDatepickerOverlayDirective', () => {
       picker?.dispatchEvent(generateKeyEvent('Escape'));
 
       expect(component.closeCause).toBe(CloseCause.Escape);
-      expect(document.querySelector('si-datepicker')).toBeFalsy();
+      expect(document.querySelector('si-datepicker')).not.toBeInTheDocument();
       expect(component.escape).not.toHaveBeenCalled();
     });
   });
@@ -139,7 +139,7 @@ describe('SiDatepickerOverlayDirective', () => {
       await show();
       await close();
       expect(component.closeCause).toBe(CloseCause.Detach);
-      expect(document.querySelector('si-datepicker')).toBeFalsy();
+      expect(document.querySelector('si-datepicker')).not.toBeInTheDocument();
     });
   });
 });
