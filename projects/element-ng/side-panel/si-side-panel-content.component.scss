@@ -121,7 +121,9 @@
     // Fill space of button that is not there yet
     &:not(.collapsed):not(.expanded) si-content-action-bar {
       // Keep in sync with $btn-icon-size-sm
-      margin-inline-end: buttons.$btn-icon-size-sm + 2 * map.get(all-variables.$spacers, 4);
+      margin-inline-end: calc(
+        #{buttons.$btn-icon-size-sm} + 2 * #{map.get(all-variables.$spacers, 4)}
+      );
     }
 
     &:not(.expanded) .collapse-toggle {
