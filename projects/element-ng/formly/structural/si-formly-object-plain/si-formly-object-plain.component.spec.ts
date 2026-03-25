@@ -2,11 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
@@ -18,14 +18,13 @@ import { SiFormlyObjectPlainComponent as TestComponent } from './si-formly-objec
 
 @Component({
   imports: [SiFormlyModule, FormlyModule],
-  template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
+  template: `<formly-form [form]="form" [fields]="fields()" [model]="model()" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
-  form = new FormRecord({});
-  fields!: FormlyFieldConfig[];
-  model: any;
-  options!: FormlyFormOptions;
+  readonly form = new FormRecord({});
+  readonly fields = signal<FormlyFieldConfig[]>([]);
+  readonly model = signal<any>({});
 }
 
 describe('ElementFormComponent', () => {
@@ -42,9 +41,7 @@ describe('ElementFormComponent', () => {
               component: TestComponent
             }
           ]
-        }),
-        SiFormlyModule,
-        WrapperComponent
+        })
       ],
       providers: [
         provideMockTranslateServiceBuilder(
@@ -58,15 +55,13 @@ describe('ElementFormComponent', () => {
         )
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
   });
 
   it('should apply show description', () => {
-    wrapperComponent.fields = [
+    wrapperComponent.fields.set([
       {
         key: 'struct',
         type: 'object-plain',
@@ -75,17 +70,17 @@ describe('ElementFormComponent', () => {
         },
         fieldGroup: []
       }
-    ];
+    ]);
 
     fixture.detectChanges();
 
     const field = fixture.debugElement.query(By.css('si-formly-object-plain'));
     expect(field).toBeTruthy();
-    expect(field.nativeElement.innerText).toContain('Object Plain Example');
+    expect(field.nativeElement).toHaveTextContent('Object Plain Example');
   });
 
   it('should apply object-plain with property key', () => {
-    wrapperComponent.fields = [
+    wrapperComponent.fields.set([
       {
         key: 'struct',
         type: 'object-plain',
@@ -111,10 +106,10 @@ describe('ElementFormComponent', () => {
           }
         ]
       }
-    ];
-    wrapperComponent.model = {
+    ]);
+    wrapperComponent.model.set({
       struct: [{ property1: 'test set 1', property2: 'test set 2' }]
-    };
+    });
 
     fixture.detectChanges();
 

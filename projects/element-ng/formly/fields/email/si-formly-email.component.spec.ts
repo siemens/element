@@ -2,34 +2,32 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormRecord, ReactiveFormsModule } from '@angular/forms';
+import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 
 import { SiFormlyEmailComponent } from './si-formly-email.component';
 
 @Component({
   selector: 'si-formly-test',
-  imports: [ReactiveFormsModule, FormlyModule],
-  template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
+  imports: [FormlyModule],
+  template: `<formly-form [form]="form" [fields]="fields()" [model]="model()" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
-  form = new FormRecord({});
-  fields!: FormlyFieldConfig[];
-  model: any;
-  options!: FormlyFormOptions;
+  readonly form = new FormRecord({});
+  readonly fields = signal<FormlyFieldConfig[]>([]);
+  readonly model = signal<any>({});
 }
 
 describe('formly email type', () => {
   let fixture: ComponentFixture<FormlyTestComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
         FormlyModule.forRoot({
           types: [
             {
@@ -37,35 +35,31 @@ describe('formly email type', () => {
               component: SiFormlyEmailComponent
             }
           ]
-        }),
-        SiFormlyEmailComponent,
-        FormlyTestComponent
+        })
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(FormlyTestComponent);
   });
 
   it('should have a input of type email', () => {
     const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    componentInstance.fields.set([
       {
         key: 'mail',
         type: 'email'
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('input'));
     expect(inputField).toBeDefined();
-    expect(inputField.nativeNode.getAttribute('type')).toEqual('email');
+    expect(inputField.nativeNode).toHaveAttribute('type', 'email');
   });
 
   it('should display a model value', () => {
     const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    componentInstance.fields.set([
       {
         key: 'mail',
         type: 'email',
@@ -73,10 +67,10 @@ describe('formly email type', () => {
           required: true
         }
       }
-    ];
-    componentInstance.model = {
+    ]);
+    componentInstance.model.set({
       mail: 'foo@example.org'
-    };
+    });
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('input'));

@@ -2,24 +2,24 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormRecord, ReactiveFormsModule } from '@angular/forms';
+import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 
 import { SiFormlyWrapperComponent } from '../../wrapper/si-formly-wrapper.component';
 import { SiFormlyNumberComponent } from './si-formly-number.component';
 
 @Component({
   selector: 'si-formly-test',
-  imports: [ReactiveFormsModule, FormlyModule],
-  template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
+  imports: [FormlyModule],
+  template: `<formly-form [form]="form" [fields]="fields()" [model]="model()" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
-  form = new FormRecord({});
-  fields: FormlyFieldConfig[] = [
+  readonly form = new FormRecord({});
+  readonly fields = signal<FormlyFieldConfig[]>([
     {
       key: 'cost',
       type: 'number',
@@ -31,16 +31,15 @@ class FormlyTestComponent {
         max: 30000
       }
     }
-  ];
-  model: any;
-  options!: FormlyFormOptions;
+  ]);
+  readonly model = signal<any>({});
 }
 
 describe('formly number type', () => {
   let fixture: ComponentFixture<FormlyTestComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
         FormlyModule.forRoot({
           types: [
@@ -54,9 +53,7 @@ describe('formly number type', () => {
         })
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(FormlyTestComponent);
   });
 
@@ -64,21 +61,21 @@ describe('formly number type', () => {
     vi.useFakeTimers();
     const componentInstance = fixture.componentInstance;
 
-    componentInstance.model = {
+    componentInstance.model.set({
       cost: 19250
-    };
+    });
     fixture.detectChanges();
 
     const inputField = fixture.debugElement.query(By.css('input'));
     expect(inputField.nativeNode.valueAsNumber).toEqual(19250);
 
     // Asserting if props is carried over from form fields to the component
-    expect(inputField.nativeNode.getAttribute('step')).toEqual('10');
-    expect(inputField.nativeNode.getAttribute('min')).toEqual('500');
-    expect(inputField.nativeNode.getAttribute('max')).toEqual('30000');
+    expect(inputField.nativeNode).toHaveAttribute('step', '10');
+    expect(inputField.nativeNode).toHaveAttribute('min', '500');
+    expect(inputField.nativeNode).toHaveAttribute('max', '30000');
 
     const labelEl = fixture.nativeElement.querySelector('label');
-    expect(labelEl.innerText).toBe('Cost of Something');
+    expect(labelEl).toHaveTextContent('Cost of Something');
 
     inputField.nativeElement.value = 2000;
     inputField.nativeElement.dispatchEvent(new Event('input'));
@@ -86,7 +83,7 @@ describe('formly number type', () => {
     vi.advanceTimersByTime(200);
     await fixture.whenStable();
     // Assert if input change reflects the model
-    expect(componentInstance.model.cost).toBe(2000);
+    expect(componentInstance.model().cost).toBe(2000);
     vi.useRealTimers();
   });
 });

@@ -2,56 +2,47 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { inputBinding, signal, twoWayBinding, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { Filter, SiFilterBarComponent } from './index';
 
-@Component({
-  imports: [SiFilterBarComponent],
-  template: `
-    <si-filter-bar
-      class="d-block"
-      [style.width.px]="width"
-      [filters]="filters()"
-      [allowReset]="allowReset"
-      [resetText]="resetText"
-      [disabled]="disabled"
-      (filtersChange)="filtersChange($event)"
-    />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class TestHostComponent {
-  readonly filterBar = viewChild.required(SiFilterBarComponent);
-  readonly filters = signal<Filter[]>([]);
-  allowReset = false;
-  resetText = '';
-  disabled = false;
-  width = 600;
-  filtersChange(event: Filter[]): void {
-    this.filters.set(event);
-  }
-}
-
 describe('SiFilterBarComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
+  let fixture: ComponentFixture<SiFilterBarComponent>;
   let element: HTMLElement;
   const timeout = async (ms?: number): Promise<void> =>
     new Promise(resolve => setTimeout(resolve, ms));
+
+  let filters: WritableSignal<Filter[]>;
+  let allowReset: WritableSignal<boolean>;
+  let resetText: WritableSignal<TranslatableString>;
+  let disabled: WritableSignal<boolean>;
 
   const removeButtons = (): HTMLElement[] =>
     Array.from(element.querySelectorAll<HTMLElement>('[aria-label="Remove"]'));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
+    filters = signal<Filter[]>([]);
+    allowReset = signal(false);
+    resetText = signal<TranslatableString>('');
+    disabled = signal(false);
+
+    fixture = TestBed.createComponent(SiFilterBarComponent, {
+      bindings: [
+        twoWayBinding('filters', filters),
+        inputBinding('allowReset', allowReset),
+        inputBinding('resetText', resetText),
+        inputBinding('disabled', disabled)
+      ]
+    });
     element = fixture.nativeElement;
+    element.classList.add('d-block');
+    element.style.width = '600px';
   });
 
-  it('should not show empty indicator when filters are active', () => {
-    component.filters.set([
+  it('should not show empty indicator when filters are active', async () => {
+    filters.set([
       {
         filterName: 'city',
         title: 'City',
@@ -59,12 +50,12 @@ describe('SiFilterBarComponent', () => {
         status: 'info'
       }
     ]);
-    fixture.detectChanges();
-    expect(!component.filterBar().filters().length).toBeFalsy();
+    await fixture.whenStable();
+    expect(filters().length).toBeTruthy();
   });
 
-  it('should not display reset button when responsive is set and allow reset is false', () => {
-    component.filters.set([
+  it('should not display reset button when responsive is set and allow reset is false', async () => {
+    filters.set([
       {
         filterName: 'city',
         title: 'City',
@@ -72,13 +63,13 @@ describe('SiFilterBarComponent', () => {
         status: 'info'
       }
     ]);
-    component.allowReset = false;
-    fixture.detectChanges();
-    expect(element.querySelector('button.text-nowrap')).toBeNull();
+    allowReset.set(false);
+    await fixture.whenStable();
+    expect(element.querySelector('button.text-nowrap')).not.toBeInTheDocument();
   });
 
-  it('should not display reset button when allow reset is set', () => {
-    component.filters.set([
+  it('should not display reset button when allow reset is set', async () => {
+    filters.set([
       {
         filterName: 'city',
         title: 'City',
@@ -86,14 +77,14 @@ describe('SiFilterBarComponent', () => {
         status: 'info'
       }
     ]);
-    component.allowReset = false;
-    fixture.detectChanges();
+    allowReset.set(false);
+    await fixture.whenStable();
 
-    expect(element.querySelector('button.text-nowrap')).toBeNull();
+    expect(element.querySelector('button.text-nowrap')).not.toBeInTheDocument();
   });
 
-  it('should correctly display reset button when responsive and allowReset is set', () => {
-    component.filters.set([
+  it('should correctly display reset button when responsive and allowReset is set', async () => {
+    filters.set([
       {
         filterName: 'city',
         title: 'City',
@@ -101,18 +92,18 @@ describe('SiFilterBarComponent', () => {
         status: 'info'
       }
     ]);
-    component.allowReset = true;
-    component.resetText = 'reset test';
-    fixture.detectChanges();
+    allowReset.set(true);
+    resetText.set('reset test');
+    await fixture.whenStable();
 
     const resetButton = element.querySelector('button.text-nowrap') as HTMLButtonElement;
 
-    expect(resetButton).not.toBeNull();
-    expect(resetButton?.innerText).toBe(component.resetText);
+    expect(resetButton).toBeInTheDocument();
+    expect(resetButton).toHaveTextContent('reset test');
   });
 
-  it('should disable reset button when disabled and responsive and allowReset is set', () => {
-    component.filters.set([
+  it('should disable reset button when disabled and responsive and allowReset is set', async () => {
+    filters.set([
       {
         filterName: 'city',
         title: 'City',
@@ -120,24 +111,23 @@ describe('SiFilterBarComponent', () => {
         status: 'info'
       }
     ]);
-    component.allowReset = true;
-    component.disabled = true;
-    fixture.detectChanges();
+    allowReset.set(true);
+    disabled.set(true);
+    await fixture.whenStable();
 
     const resetButton = element.querySelector('button') as HTMLButtonElement;
 
-    expect(resetButton?.disabled).toBe(true);
+    expect(resetButton).toBeDisabled();
   });
 
-  it('should show empty indicator when no filters are active', () => {
-    component.filters.set([]);
-    fixture.detectChanges();
-    expect(!component.filterBar().filters().length).toBeTruthy();
+  it('should show empty indicator when no filters are active', async () => {
+    filters.set([]);
+    await fixture.whenStable();
+    expect(filters().length).toBeFalsy();
   });
 
-  it('should emit a change event when modified', () => {
-    vi.spyOn(component, 'filtersChange');
-    component.filters.set([
+  it('should emit a change event when modified', async () => {
+    filters.set([
       {
         filterName: 'city',
         title: 'City',
@@ -151,18 +141,10 @@ describe('SiFilterBarComponent', () => {
         status: 'info'
       }
     ]);
-    fixture.detectChanges();
+    await fixture.whenStable();
     element.querySelector<HTMLElement>('[aria-label="Remove"]')!.click();
 
-    expect(component.filtersChange).toHaveBeenCalledWith([
-      {
-        filterName: 'country',
-        title: 'Country',
-        description: 'USA',
-        status: 'info'
-      }
-    ]);
-    expect(component.filters()).toEqual([
+    expect(filters()).toEqual([
       {
         filterName: 'country',
         title: 'Country',
@@ -172,8 +154,8 @@ describe('SiFilterBarComponent', () => {
     ]);
   });
 
-  it('should clear the applied filters on reset', () => {
-    component.filters.set([
+  it('should clear the applied filters on reset', async () => {
+    filters.set([
       {
         filterName: 'city',
         title: 'City',
@@ -181,16 +163,15 @@ describe('SiFilterBarComponent', () => {
         status: 'info'
       }
     ]);
-    component.allowReset = true;
-    fixture.detectChanges();
+    allowReset.set(true);
+    await fixture.whenStable();
     element.querySelector<HTMLElement>('button.text-nowrap')!.click();
-    fixture.detectChanges();
-    expect(element.querySelector('button.text-nowrap')).toBeFalsy();
+    await fixture.whenStable();
+    expect(element.querySelector('button.text-nowrap')).not.toBeInTheDocument();
   });
 
-  it('should emit a change event when modified from inside', () => {
-    vi.spyOn(component, 'filtersChange');
-    component.filters.set([
+  it('should emit a change event when modified from inside', async () => {
+    filters.set([
       {
         filterName: 'city',
         title: 'City',
@@ -204,11 +185,10 @@ describe('SiFilterBarComponent', () => {
         status: 'info'
       }
     ]);
-    fixture.detectChanges();
+    await fixture.whenStable();
     removeButtons().at(1)!.click();
 
-    expect(component.filtersChange).toHaveBeenCalled();
-    expect(component.filters()).toEqual([
+    expect(filters()).toEqual([
       {
         filterName: 'city',
         title: 'City',
@@ -219,9 +199,8 @@ describe('SiFilterBarComponent', () => {
   });
 
   it('should emit a change event when modified from filter group while using responsive', async () => {
-    vi.spyOn(component, 'filtersChange');
-    component.width = 650;
-    component.filters.set([
+    element.style.width = '650px';
+    filters.set([
       {
         filterName: 'city',
         title: 'City',
@@ -256,16 +235,15 @@ describe('SiFilterBarComponent', () => {
     fixture.detectChanges();
     await timeout(200);
     fixture.detectChanges();
-    expect(component.filters().length).toEqual(5);
+    expect(filters().length).toEqual(5);
     removeButtons().at(-1)!.click();
 
-    expect(component.filtersChange).toHaveBeenCalled();
-    expect(component.filters().length).toEqual(3);
+    expect(filters().length).toEqual(3);
   });
 
   it('should not display too many filters when responsive is enabled', async () => {
-    component.width = 650;
-    component.filters.set([
+    element.style.width = '650px';
+    filters.set([
       {
         filterName: 'city',
         title: 'City',
@@ -301,12 +279,12 @@ describe('SiFilterBarComponent', () => {
     await timeout(200);
     fixture.detectChanges();
     const values = element.querySelectorAll<HTMLElement>('si-filter-pill .value');
-    expect(values[values.length - 1].innerHTML).toContain('+ 1 filters');
+    expect(values[values.length - 1]).toHaveTextContent('+ 1 filters');
   });
 
   it('should not display too many filters when responsive is enabled and allow reset disabled', async () => {
-    component.width = 600;
-    component.filters.set([
+    element.style.width = '600px';
+    filters.set([
       {
         filterName: 'city',
         title: 'City',
@@ -338,11 +316,11 @@ describe('SiFilterBarComponent', () => {
         status: 'info'
       }
     ]);
-    component.allowReset = false;
+    allowReset.set(false);
     fixture.detectChanges();
     await timeout(200);
     fixture.detectChanges();
     const values = element.querySelectorAll<HTMLElement>('si-filter-pill .value');
-    expect(values[values.length - 1].innerHTML).toBe('+ 2 filters');
+    expect(values[values.length - 1]).toHaveTextContent('+ 2 filters');
   });
 });

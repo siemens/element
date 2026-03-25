@@ -2,37 +2,32 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormRecord, ReactiveFormsModule } from '@angular/forms';
+import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { SiFormModule } from '@siemens/element-ng/form';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 
 import { SiFormlyObjectGridComponent } from './si-formly-object-grid.component';
 
 @Component({
   selector: 'si-formly-test',
-  imports: [ReactiveFormsModule, SiFormModule, FormlyModule],
-  template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
+  imports: [FormlyModule],
+  template: `<formly-form [form]="form" [fields]="fields()" [model]="model()" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
-  form = new FormRecord({});
-  fields!: FormlyFieldConfig[];
-  model: any;
-  options!: FormlyFormOptions;
+  readonly form = new FormRecord({});
+  readonly fields = signal<FormlyFieldConfig[]>([]);
+  readonly model = signal<any>({});
 }
 
 describe('formly grid  type', () => {
   let fixture: ComponentFixture<FormlyTestComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
-        SiFormModule,
-        SiFormlyObjectGridComponent,
         FormlyModule.forRoot({
           types: [
             {
@@ -40,19 +35,16 @@ describe('formly grid  type', () => {
               component: SiFormlyObjectGridComponent
             }
           ]
-        }),
-        FormlyTestComponent
+        })
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(FormlyTestComponent);
   });
 
   it('should have create a grid', () => {
     const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    componentInstance.fields.set([
       {
         key: 'grid',
         type: 'grid',
@@ -75,7 +67,7 @@ describe('formly grid  type', () => {
           { template: '<h1>r2c1c</h1>' }
         ]
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     /*
@@ -106,15 +98,15 @@ describe('formly grid  type', () => {
     expect(fields).toBeTruthy();
     expect(fields.length).toEqual(2);
     let f: HTMLElement = fields[0].query(By.css('h1')).nativeElement;
-    expect(f.innerHTML).toEqual('r1c1a');
+    expect(f).toHaveTextContent('r1c1a');
     f = fields[1].query(By.css('h1')).nativeElement;
-    expect(f.innerHTML).toEqual('r1c1b');
+    expect(f).toHaveTextContent('r1c1b');
 
     fields = cols[1].queryAll(By.css('formly-field'));
     expect(fields).toBeTruthy();
     expect(fields.length).toEqual(1);
     f = fields[0].query(By.css('h1')).nativeElement;
-    expect(f.innerHTML).toEqual('r1c2');
+    expect(f).toHaveTextContent('r1c2');
 
     row = rows[1];
     cols = row.queryAll(By.css('.col'));
@@ -123,14 +115,14 @@ describe('formly grid  type', () => {
     fields = cols[0].queryAll(By.css('formly-field'));
     expect(fields).toBeTruthy();
     expect(fields.length).toEqual(3);
-    expect(fields[0].query(By.css('h1')).nativeElement.innerHTML).toEqual('r2c1a');
-    expect(fields[1].query(By.css('h1')).nativeElement.innerHTML).toEqual('r2c1b');
-    expect(fields[2].query(By.css('h1')).nativeElement.innerHTML).toEqual('r2c1c');
+    expect(fields[0].query(By.css('h1')).nativeElement).toHaveTextContent('r2c1a');
+    expect(fields[1].query(By.css('h1')).nativeElement).toHaveTextContent('r2c1b');
+    expect(fields[2].query(By.css('h1')).nativeElement).toHaveTextContent('r2c1c');
   });
 
   it('should have create a grid using custom classes', () => {
     const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    componentInstance.fields.set([
       {
         key: 'grid',
         type: 'grid',
@@ -159,7 +151,7 @@ describe('formly grid  type', () => {
           { template: '<h1>r2c1c</h1>' }
         ]
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     /*
@@ -190,15 +182,15 @@ describe('formly grid  type', () => {
     expect(fields).toBeTruthy();
     expect(fields.length).toEqual(2);
     let f: HTMLElement = fields[0].query(By.css('h1')).nativeElement;
-    expect(f.innerHTML).toEqual('r1c1a');
+    expect(f).toHaveTextContent('r1c1a');
     f = fields[1].query(By.css('h1')).nativeElement;
-    expect(f.innerHTML).toEqual('r1c1b');
+    expect(f).toHaveTextContent('r1c1b');
 
     fields = cols[1].queryAll(By.css('formly-field'));
     expect(fields).toBeTruthy();
     expect(fields.length).toEqual(1);
     f = fields[0].query(By.css('h1')).nativeElement;
-    expect(f.innerHTML).toEqual('r1c2');
+    expect(f).toHaveTextContent('r1c2');
 
     row = rows[1];
     cols = row.queryAll(By.css('.col'));
@@ -207,8 +199,8 @@ describe('formly grid  type', () => {
     fields = cols[0].queryAll(By.css('formly-field'));
     expect(fields).toBeTruthy();
     expect(fields.length).toEqual(3);
-    expect(fields[0].query(By.css('h1')).nativeElement.innerHTML).toEqual('r2c1a');
-    expect(fields[1].query(By.css('h1')).nativeElement.innerHTML).toEqual('r2c1b');
-    expect(fields[2].query(By.css('h1')).nativeElement.innerHTML).toEqual('r2c1c');
+    expect(fields[0].query(By.css('h1')).nativeElement).toHaveTextContent('r2c1a');
+    expect(fields[1].query(By.css('h1')).nativeElement).toHaveTextContent('r2c1b');
+    expect(fields[2].query(By.css('h1')).nativeElement).toHaveTextContent('r2c1c');
   });
 });

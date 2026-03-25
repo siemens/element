@@ -2,9 +2,9 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormRecord, ReactiveFormsModule } from '@angular/forms';
+import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { SiTranslateService } from '@siemens/element-ng/translate';
@@ -18,19 +18,22 @@ import { SiFormlyButtonComponent } from './si-formly-button.component';
 
 @Component({
   selector: 'si-formly-test',
-  imports: [ReactiveFormsModule, FormlyModule],
-  template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
+  imports: [FormlyModule],
+  template: `<formly-form
+    [form]="form"
+    [fields]="fields()"
+    [model]="model()"
+    [options]="options()"
+  /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
-  form = new FormRecord({});
-  fields: FormlyFieldConfig[] = [];
-  model: any;
-  options: FormlyFormOptions = {};
+  readonly form = new FormRecord({});
+  readonly fields = signal<FormlyFieldConfig[]>([]);
+  readonly model = signal<any>({});
+  readonly options = signal<FormlyFormOptions>({});
 
   readonly translate = injectSiTranslateService();
-
-  click(f: string, s: number): void {}
 }
 
 describe('formly button type', () => {
@@ -51,7 +54,6 @@ describe('formly button type', () => {
     });
     await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
         FormlyModule.forRoot({
           types: [
             {
@@ -59,34 +61,30 @@ describe('formly button type', () => {
               component: SiFormlyButtonComponent
             }
           ]
-        }),
-        SiFormlyButtonComponent,
-        FormlyTestComponent
+        })
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(FormlyTestComponent);
     component = fixture.componentInstance;
   });
 
   it('should have a button of type button', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'btn',
         type: 'btn'
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const btn = fixture.debugElement.query(By.css('button'));
     expect(btn).toBeDefined();
-    expect(btn.nativeNode.getAttribute('type')).toEqual('button');
+    expect(btn.nativeNode).toHaveAttribute('type', 'button');
   });
 
   it('should show a label', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'btn',
         type: 'btn',
@@ -94,18 +92,18 @@ describe('formly button type', () => {
           label: 'iam a teapot'
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const btn = fixture.debugElement.query(By.css('button'));
     expect(btn).toBeDefined();
     const elem = btn.nativeElement as HTMLElement;
-    expect(elem.innerHTML).toEqual('iam a teapot');
+    expect(elem).toHaveTextContent('iam a teapot');
   });
 
   it('should show a translated label', () => {
     translateSpy.mockReturnValue('iam a teapot');
-    component.fields = [
+    component.fields.set([
       {
         key: 'btn',
         type: 'btn',
@@ -113,32 +111,32 @@ describe('formly button type', () => {
           label: 'foo.bar'
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const btn = fixture.debugElement.query(By.css('button'));
     expect(btn).toBeDefined();
     const elem = btn.nativeElement as HTMLElement;
-    expect(elem.innerHTML).toEqual('iam a teapot');
+    expect(elem).toHaveTextContent('iam a teapot');
   });
 
   it('should handle button btn type default', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'btn',
         type: 'btn',
         props: {}
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const btn = fixture.debugElement.query(By.css('button')).nativeNode;
-    expect(btn.classList).toContain('btn');
-    expect(btn.classList).toContain('btn-secondary');
+    expect(btn).toHaveClass('btn');
+    expect(btn).toHaveClass('btn-secondary');
   });
 
   it('should handle button btn type secondary', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'btn',
         type: 'btn',
@@ -146,16 +144,16 @@ describe('formly button type', () => {
           btnType: 'secondary'
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const btn = fixture.debugElement.query(By.css('button')).nativeNode;
-    expect(btn.classList).toContain('btn');
-    expect(btn.classList).toContain('btn-secondary');
+    expect(btn).toHaveClass('btn');
+    expect(btn).toHaveClass('btn-secondary');
   });
 
   it('should handle button btn type primary', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'btn',
         type: 'btn',
@@ -163,16 +161,16 @@ describe('formly button type', () => {
           btnType: 'primary'
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const btn = fixture.debugElement.query(By.css('button')).nativeNode;
-    expect(btn.classList).toContain('btn');
-    expect(btn.classList).toContain('btn-primary');
+    expect(btn).toHaveClass('btn');
+    expect(btn).toHaveClass('btn-primary');
   });
 
   it('should handle button btn type tertiary', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'btn',
         type: 'btn',
@@ -180,16 +178,16 @@ describe('formly button type', () => {
           btnType: 'tertiary'
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const btn = fixture.debugElement.query(By.css('button')).nativeElement;
-    expect(btn.classList).toContain('btn');
-    expect(btn.classList).toContain('btn-tertiary');
+    expect(btn).toHaveClass('btn');
+    expect(btn).toHaveClass('btn-tertiary');
   });
 
   it('should handle button btn type warning', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'btn',
         type: 'btn',
@@ -197,16 +195,16 @@ describe('formly button type', () => {
           btnType: 'warning'
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const btn = fixture.debugElement.query(By.css('button')).nativeElement;
-    expect(btn.classList).toContain('btn');
-    expect(btn.classList).toContain('btn-warning');
+    expect(btn).toHaveClass('btn');
+    expect(btn).toHaveClass('btn-warning');
   });
 
   it('should handle button btn type danger', () => {
-    component.fields = [
+    component.fields.set([
       {
         key: 'btn',
         type: 'btn',
@@ -214,12 +212,12 @@ describe('formly button type', () => {
           btnType: 'danger'
         }
       }
-    ];
+    ]);
     fixture.detectChanges();
 
     const btn = fixture.debugElement.query(By.css('button')).nativeElement;
-    expect(btn.classList).toContain('btn');
-    expect(btn.classList).toContain('btn-danger');
+    expect(btn).toHaveClass('btn');
+    expect(btn).toHaveClass('btn-danger');
   });
 
   describe('with button click', () => {
@@ -229,7 +227,7 @@ describe('formly button type', () => {
     });
 
     it('should trigger the clickListener function', () => {
-      component.fields = [
+      component.fields.set([
         {
           key: 'btn',
           type: 'btn',
@@ -237,7 +235,7 @@ describe('formly button type', () => {
             clickListener: () => spy()
           }
         }
-      ];
+      ]);
       fixture.detectChanges();
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
@@ -245,7 +243,7 @@ describe('formly button type', () => {
     });
 
     it('should trigger the clickListener function with custom params', () => {
-      component.fields = [
+      component.fields.set([
         {
           key: 'btn',
           type: 'btn',
@@ -254,7 +252,7 @@ describe('formly button type', () => {
             clickArgs: ['foo', 42]
           }
         }
-      ];
+      ]);
       fixture.detectChanges();
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
@@ -262,12 +260,12 @@ describe('formly button type', () => {
     });
 
     it('should trigger the clickListener function by expression', () => {
-      component.options = {
+      component.options.set({
         formState: {
           click: () => spy()
         }
-      };
-      component.fields = [
+      });
+      component.fields.set([
         {
           key: 'btn',
           type: 'btn',
@@ -275,7 +273,7 @@ describe('formly button type', () => {
             clickListener: 'formState.click'
           }
         }
-      ];
+      ]);
       fixture.detectChanges();
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
@@ -283,12 +281,12 @@ describe('formly button type', () => {
     });
 
     it('should trigger the clickListener function with custom params', () => {
-      component.options = {
+      component.options.set({
         formState: {
           click: (f: string, s: number) => spy(f, s)
         }
-      };
-      component.fields = [
+      });
+      component.fields.set([
         {
           key: 'btn',
           type: 'btn',
@@ -297,7 +295,7 @@ describe('formly button type', () => {
             clickArgs: ['foo', 42]
           }
         }
-      ];
+      ]);
       fixture.detectChanges();
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
@@ -305,12 +303,12 @@ describe('formly button type', () => {
     });
 
     it('should trigger the clickListener function with string param', () => {
-      component.options = {
+      component.options.set({
         formState: {
           click: (f: string) => spy(f)
         }
-      };
-      component.fields = [
+      });
+      component.fields.set([
         {
           key: 'btn',
           type: 'btn',
@@ -319,7 +317,7 @@ describe('formly button type', () => {
             clickArgs: 'foo'
           }
         }
-      ];
+      ]);
       fixture.detectChanges();
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
@@ -331,7 +329,7 @@ describe('formly button type', () => {
       spy.mockImplementation(() => {
         throw new Error('error');
       });
-      component.fields = [
+      component.fields.set([
         {
           key: 'btn',
           type: 'btn',
@@ -339,7 +337,7 @@ describe('formly button type', () => {
             clickListener: () => spy()
           }
         }
-      ];
+      ]);
       fixture.detectChanges();
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
@@ -355,12 +353,12 @@ describe('formly button type', () => {
       spy.mockImplementation(() => {
         throw new Error('error');
       });
-      component.options = {
+      component.options.set({
         formState: {
           click: () => spy()
         }
-      };
-      component.fields = [
+      });
+      component.fields.set([
         {
           key: 'btn',
           type: 'btn',
@@ -368,7 +366,7 @@ describe('formly button type', () => {
             clickListener: 'formState.click'
           }
         }
-      ];
+      ]);
       fixture.detectChanges();
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
@@ -384,12 +382,12 @@ describe('formly button type', () => {
       spy.mockImplementation(() => {
         throw new Error('error');
       });
-      component.options = {
+      component.options.set({
         formState: {
           click: 'invalid'
         }
-      };
-      component.fields = [
+      });
+      component.fields.set([
         {
           key: 'btn',
           type: 'btn',
@@ -397,7 +395,7 @@ describe('formly button type', () => {
             clickListener: 'formState.click'
           }
         }
-      ];
+      ]);
       fixture.detectChanges();
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
