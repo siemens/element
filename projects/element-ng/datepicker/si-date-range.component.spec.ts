@@ -72,7 +72,7 @@ describe('SiDateRangeComponent', () => {
     openCalendarButton().click();
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(document.querySelector('si-datepicker-overlay')).toBeTruthy();
+    expect(document.querySelector('si-datepicker-overlay')).toBeInTheDocument();
   });
 
   it('should mark input touched when on datepicker backdrop click', async () => {
@@ -112,7 +112,7 @@ describe('SiDateRangeComponent', () => {
       helper.getEnabledCellWithText('3')!.click();
       fixture.detectChanges();
       await fixture.whenStable();
-      expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
+      expect(document.querySelector('si-datepicker-overlay')).not.toBeInTheDocument();
     });
   });
 
@@ -193,7 +193,7 @@ describe('SiDateRangeComponent', () => {
     secondCalendar.getPreviousButton()!.click();
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(firstCalendar.getOpenYearViewLink().textContent).toContain('2022');
+    expect(firstCalendar.getOpenYearViewLink()).toHaveTextContent('2022');
   });
 
   it('should output correct month range on keyboard input', async () => {
@@ -226,7 +226,7 @@ describe('SiDateRangeComponent', () => {
     await fixture.whenStable();
     const helper = new CalendarTestHelper(document.querySelector('si-datepicker-overlay')!);
     const meridianInput = helper.getMeridian();
-    expect(meridianInput).toBeTruthy();
+    expect(meridianInput).toBeInTheDocument();
   });
 });
 
@@ -292,7 +292,7 @@ describe('SiDateRangeComponent within form', () => {
     await fixture.whenStable();
 
     helper.getEnabledCellWithText('20')?.dispatchEvent(new Event('mouseover'));
-    expect(helper.getEnabledCellWithText('20')?.classList).not.toContain('range-hover');
+    expect(helper.getEnabledCellWithText('20')).not.toHaveClass('range-hover');
   });
 
   describe('with input validation', () => {

@@ -138,7 +138,7 @@ describe('SiDatepickerDirective', () => {
       getInput().blur();
       await fixture.whenStable();
 
-      expect(document.querySelector('si-datepicker-overlay')).toBeNull();
+      expect(document.querySelector('si-datepicker-overlay')).not.toBeInTheDocument();
     });
 
     it('should handle date change', async () => {
@@ -170,17 +170,17 @@ describe('SiDatepickerDirective', () => {
     it('should close overlay on click', async () => {
       fixture.detectChanges();
       await backdropClick(fixture);
-      expect(document.querySelector('si-datepicker-overlay')).toBeNull();
+      expect(document.querySelector('si-datepicker-overlay')).not.toBeInTheDocument();
     });
 
     it('should toggle close and open overlay on two click', async () => {
       fixture.detectChanges();
       await backdropClick(fixture);
-      expect(document.querySelector('si-datepicker-overlay')).toBeNull();
+      expect(document.querySelector('si-datepicker-overlay')).not.toBeInTheDocument();
       await fixture.whenStable();
       getInput().click();
       await fixture.whenStable();
-      expect(document.querySelector('si-datepicker-overlay')).toBeTruthy();
+      expect(document.querySelector('si-datepicker-overlay')).toBeInTheDocument();
     });
 
     it('should hide datepicker when on press Escape', async () => {
@@ -189,7 +189,7 @@ describe('SiDatepickerDirective', () => {
 
       await closeOverlayWithEscape();
 
-      expect(document.querySelector('si-datepicker-overlay')).toBeNull();
+      expect(document.querySelector('si-datepicker-overlay')).not.toBeInTheDocument();
     });
 
     it('should allow to type a date in input while datepicker is open', async () => {
@@ -224,9 +224,9 @@ describe('SiDatepickerDirective', () => {
       considerTime!.dispatchEvent(new Event('change'));
       await fixture.whenStable();
 
-      expect(helper.getTimeInputHours().disabled).toBe(true);
-      expect(helper.getTimeInputMinutes().disabled).toBe(true);
-      expect(helper.getTimeInputSeconds().disabled).toBe(true);
+      expect(helper.getTimeInputHours()).toBeDisabled();
+      expect(helper.getTimeInputMinutes()).toBeDisabled();
+      expect(helper.getTimeInputSeconds()).toBeDisabled();
       expect(disabledTime$).toHaveBeenCalledWith(true);
     });
   });
@@ -247,7 +247,7 @@ describe('SiDatepickerDirective', () => {
       await picker.selectCell({ text: '1' });
       await fixture.whenStable();
 
-      expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
+      expect(document.querySelector('si-datepicker-overlay')).not.toBeInTheDocument();
     });
 
     it('should close when switch of Consider Time', async () => {
@@ -260,7 +260,7 @@ describe('SiDatepickerDirective', () => {
       const picker = await rootLoader.getHarness(SiDatepickerComponentHarness);
       await (await picker.considerTimeSwitch()).toggle();
       await fixture.whenStable();
-      expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
+      expect(document.querySelector('si-datepicker-overlay')).not.toBeInTheDocument();
     });
   });
 });

@@ -55,7 +55,7 @@ describe('SiCalendarButtonComponent', () => {
   it('should show datepicker overlay', async () => {
     calendarToggleButton().click();
     fixture.detectChanges();
-    expect(document.querySelector('si-datepicker-overlay')).toBeTruthy();
+    expect(document.querySelector('si-datepicker-overlay')).toBeInTheDocument();
   });
 
   it('should focus button when closing overlay with Escape', async () => {
@@ -64,7 +64,7 @@ describe('SiCalendarButtonComponent', () => {
     button.click();
     fixture.detectChanges();
     const overlay = document.querySelector('si-datepicker-overlay');
-    expect(overlay).toBeTruthy();
+    expect(overlay).toBeInTheDocument();
 
     const spy = vi.spyOn(button, 'focus');
     overlay?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
@@ -81,7 +81,7 @@ describe('SiCalendarButtonComponent', () => {
   });
 
   it('should use default aria label', () => {
-    expect(calendarToggleButton().getAttribute('aria-label')).toBe('Open calendar');
+    expect(calendarToggleButton()).toHaveAttribute('aria-label', 'Open calendar');
   });
 
   it('should disable button when datepicker directive is disabled', async () => {
@@ -89,11 +89,11 @@ describe('SiCalendarButtonComponent', () => {
     fixture.detectChanges();
 
     const button = calendarToggleButton();
-    expect(button.disabled).toBe(true);
+    expect(button).toBeDisabled();
 
     button.click();
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('si-datepicker-overlay')).toBeFalsy();
+    expect(fixture.nativeElement.querySelector('si-datepicker-overlay')).not.toBeInTheDocument();
   });
 
   it('should disable button when datepicker directive is readonly', async () => {
@@ -101,11 +101,11 @@ describe('SiCalendarButtonComponent', () => {
     fixture.detectChanges();
 
     const button = calendarToggleButton();
-    expect(button.disabled).toBe(true);
+    expect(button).toBeDisabled();
 
     button.click();
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('si-datepicker-overlay')).toBeFalsy();
+    expect(fixture.nativeElement.querySelector('si-datepicker-overlay')).not.toBeInTheDocument();
   });
 
   it('should update time to 12:30 AM', async () => {

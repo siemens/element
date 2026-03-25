@@ -2,54 +2,57 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { A11yModule } from '@angular/cdk/a11y';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { inputBinding, outputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SiDatepickerModule } from '../si-datepicker.module';
 import { CalendarTestHelper, generateKeyEvent } from '../testing/test-helper';
 import { SiYearSelectionComponent as TestComponent } from './si-year-selection.component';
 
-@Component({
-  imports: [SiDatepickerModule, A11yModule, TestComponent],
-  template: `<si-year-selection
-    previousLabel="Previous Year Range"
-    nextLabel="Next Year Range"
-    [focusedDate]="focusedDate()"
-    [startDate]="selectedDate()"
-    [minDate]="minDate()"
-    [maxDate]="maxDate()"
-    (selectedValueChange)="selectionChange($event)"
-    (yearRangeChange)="yearRangeChange($event)"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class WrapperComponent {
-  readonly focusedDate = signal(new Date(2022, 2, 26));
-  readonly selectedDate = signal(new Date(2022, 2, 25));
-  readonly minDate = signal<Date | undefined>(undefined);
-  readonly maxDate = signal<Date | undefined>(undefined);
-  cancelled = false;
-  selectionChange(selection: Date | null): void {
-    if (selection) {
-      this.focusedDate.set(selection);
-      this.selectedDate.set(selection);
-    } else {
-      this.cancelled = true;
-    }
-  }
-  yearRangeChange(current: Date[]): void {}
-}
-
 describe('SiYearSelectionComponent', () => {
   let element: HTMLElement;
-  let fixture: ComponentFixture<WrapperComponent>;
-  let wrapperComponent: WrapperComponent;
+  let fixture: ComponentFixture<TestComponent>;
   let helper: CalendarTestHelper;
 
+  let focusedDate: WritableSignal<Date>;
+  let selectedDate: WritableSignal<Date>;
+  let minDate: WritableSignal<Date | undefined>;
+  let maxDate: WritableSignal<Date | undefined>;
+  let selectionChangeSpy = vi.fn();
+  let yearRangeChangeSpy = vi.fn();
+  let cancelled: boolean;
+
   beforeEach(() => {
-    fixture = TestBed.createComponent(WrapperComponent);
-    wrapperComponent = fixture.componentInstance;
+    focusedDate = signal(new Date(2022, 2, 26));
+    selectedDate = signal(new Date(2022, 2, 25));
+    minDate = signal<Date | undefined>(undefined);
+    maxDate = signal<Date | undefined>(undefined);
+    cancelled = false;
+    selectionChangeSpy = vi.fn((selection: Date | null) => {
+      if (selection) {
+        focusedDate.set(selection);
+        selectedDate.set(selection);
+      } else {
+        cancelled = true;
+      }
+    });
+    yearRangeChangeSpy = vi.fn();
+
+    const previousLabel = signal('Previous Year Range');
+    const nextLabel = signal('Next Year Range');
+
+    fixture = TestBed.createComponent(TestComponent, {
+      bindings: [
+        inputBinding('previousLabel', previousLabel),
+        inputBinding('nextLabel', nextLabel),
+        inputBinding('focusedDate', focusedDate),
+        inputBinding('startDate', selectedDate),
+        inputBinding('minDate', minDate),
+        inputBinding('maxDate', maxDate),
+        outputBinding<Date>('focusedDateChange', (date: Date) => focusedDate.set(date)),
+        outputBinding<Date | null>('selectedValueChange', selectionChangeSpy),
+        outputBinding<Date[]>('yearRangeChange', yearRangeChangeSpy)
+      ]
+    });
     element = fixture.nativeElement;
     helper = new CalendarTestHelper(element);
     fixture.detectChanges();
@@ -68,7 +71,7 @@ describe('SiYearSelectionComponent', () => {
 
   it('shows selected year', () => {
     const selectedElement = element.querySelector('.selected')!;
-    expect(selectedElement.innerHTML.trim()).toBe('2022');
+    expect(selectedElement).toHaveTextContent('2022');
   });
 
   it('should mark active date', () => {
@@ -83,11 +86,11 @@ describe('SiYearSelectionComponent', () => {
       getButton().click();
       fixture.detectChanges();
 
-      expect(element.querySelector('.year-range-label')?.innerHTML.trim()).toBe('1995 - 2012');
+      expect(element.querySelector('.year-range-label')).toHaveTextContent('1995 - 2012');
     });
 
     it('should be disabled when minDate same year', () => {
-      wrapperComponent.minDate.set(new Date(2022, 0, 1));
+      minDate.set(new Date(2022, 0, 1));
       fixture.detectChanges();
 
       const btn = getButton();
@@ -96,7 +99,7 @@ describe('SiYearSelectionComponent', () => {
     });
 
     it('should be disabled when minDate after focusedDate', () => {
-      wrapperComponent.minDate.set(new Date(2013, 0, 1));
+      minDate.set(new Date(2013, 0, 1));
       fixture.detectChanges();
 
       const btn = getButton();
@@ -107,7 +110,7 @@ describe('SiYearSelectionComponent', () => {
     it('should have aria-label', () => {
       const btn = getButton();
       expect(btn?.getAttributeNames()).toContain('aria-label');
-      expect(btn?.getAttribute('aria-label')).toBe('Previous Year Range');
+      expect(btn).toHaveAttribute('aria-label', 'Previous Year Range');
     });
   });
 
@@ -118,11 +121,11 @@ describe('SiYearSelectionComponent', () => {
       getButton().click();
       fixture.detectChanges();
 
-      expect(element.querySelector('.year-range-label')?.innerHTML.trim()).toBe('2031 - 2048');
+      expect(element.querySelector('.year-range-label')).toHaveTextContent('2031 - 2048');
     });
 
     it('should be disabled when maxDate same year', () => {
-      wrapperComponent.maxDate.set(new Date(2022, 11, 1));
+      maxDate.set(new Date(2022, 11, 1));
       fixture.detectChanges();
 
       const btn = getButton();
@@ -131,7 +134,7 @@ describe('SiYearSelectionComponent', () => {
     });
 
     it('should be disabled when maxDate before focusedDate', () => {
-      wrapperComponent.maxDate.set(new Date(2030, 0, 1));
+      maxDate.set(new Date(2030, 0, 1));
       fixture.detectChanges();
 
       const btn = getButton();
@@ -142,7 +145,7 @@ describe('SiYearSelectionComponent', () => {
     it('should be enabled when the user navigate to the previous page', () => {
       // When the maxDate is inside the current year range the next button should be disabled.
       // When the user navigate to the previous page the next button should be enabled.
-      wrapperComponent.maxDate.set(new Date(2024, 0, 1));
+      maxDate.set(new Date(2024, 0, 1));
       fixture.detectChanges();
       expect(getButton().getAttributeNames()).toContain('disabled');
 
@@ -154,7 +157,7 @@ describe('SiYearSelectionComponent', () => {
     it('should have aria-label', () => {
       const btn = getButton();
       expect(btn?.getAttributeNames()).toContain('aria-label');
-      expect(btn?.getAttribute('aria-label')).toBe('Next Year Range');
+      expect(btn).toHaveAttribute('aria-label', 'Next Year Range');
     });
   });
 
@@ -170,7 +173,7 @@ describe('SiYearSelectionComponent', () => {
       calendarBodyElement.dispatchEvent(generateKeyEvent('Escape'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.cancelled).toBe(true);
+      expect(cancelled).toBe(true);
     });
 
     it('should decrement year on left arrow press', () => {
@@ -178,7 +181,7 @@ describe('SiYearSelectionComponent', () => {
       fixture.detectChanges();
 
       const activeCell = helper.getActiveCell();
-      expect(activeCell?.innerHTML.trim()).toBe('2021');
+      expect(activeCell).toHaveTextContent('2021');
     });
 
     it('should increment year on right arrow press', () => {
@@ -186,7 +189,7 @@ describe('SiYearSelectionComponent', () => {
       fixture.detectChanges();
 
       const activeCell = helper.getActiveCell();
-      expect(activeCell?.innerHTML.trim()).toBe('2023');
+      expect(activeCell).toHaveTextContent('2023');
     });
 
     it('should go up a row on up arrow press', () => {
@@ -194,7 +197,7 @@ describe('SiYearSelectionComponent', () => {
       fixture.detectChanges();
 
       const activeCell = helper.getActiveCell();
-      expect(activeCell?.innerHTML.trim()).toBe('2019');
+      expect(activeCell).toHaveTextContent('2019');
     });
 
     it('should go down a row on down arrow press', () => {
@@ -202,7 +205,7 @@ describe('SiYearSelectionComponent', () => {
       fixture.detectChanges();
 
       const activeCell = helper.getActiveCell();
-      expect(activeCell?.innerHTML.trim()).toBe('2025');
+      expect(activeCell).toHaveTextContent('2025');
     });
 
     it('should go to first year in range on page up press', () => {
@@ -228,15 +231,15 @@ describe('SiYearSelectionComponent', () => {
       fixture.detectChanges();
 
       const activeCell = helper.getActiveCell();
-      expect(activeCell?.innerHTML.trim()).toBe('2019');
+      expect(activeCell).toHaveTextContent('2019');
 
       activeCell!.click();
-      expect(wrapperComponent.selectedDate()).toEqual(new Date(2019, 0, 1));
+      expect(selectedDate()).toEqual(new Date(2019, 0, 1));
 
       fixture.detectChanges();
       const selectedCell = element.querySelector('.selected');
-      expect(selectedCell).toBeTruthy();
-      expect(selectedCell?.innerHTML.trim()).toBe('2019');
+      expect(selectedCell).toBeInTheDocument();
+      expect(selectedCell).toHaveTextContent('2019');
     });
   });
 
@@ -244,8 +247,8 @@ describe('SiYearSelectionComponent', () => {
     let calendarBodyElement: HTMLElement;
 
     beforeEach(async () => {
-      wrapperComponent.minDate.set(new Date(2022, 11, 1));
-      wrapperComponent.focusedDate.set(new Date(1810, 1, 1));
+      minDate.set(new Date(2022, 11, 1));
+      focusedDate.set(new Date(1810, 1, 1));
       fixture.detectChanges();
       await fixture.whenStable();
       calendarBodyElement = helper.getCalendarBody();
@@ -269,8 +272,8 @@ describe('SiYearSelectionComponent', () => {
     let calendarBodyElement: HTMLElement;
 
     beforeEach(async () => {
-      wrapperComponent.maxDate.set(new Date(2022, 11, 1));
-      wrapperComponent.focusedDate.set(new Date(2051, 1, 1));
+      maxDate.set(new Date(2022, 11, 1));
+      focusedDate.set(new Date(2051, 1, 1));
       fixture.detectChanges();
       await fixture.whenStable();
       calendarBodyElement = helper.getCalendarBody();
