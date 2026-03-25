@@ -44,7 +44,7 @@ describe('SiFormItemComponent', () => {
   it('should display the bound label value', () => {
     component.label.set('Testlabel');
     fixture.detectChanges();
-    expect(getLabel()?.textContent).toContain(component.formItem().label());
+    expect(getLabel()!).toHaveTextContent(component.formItem().label() as string);
   });
 
   it('should not display label colon with no label set', () => {
