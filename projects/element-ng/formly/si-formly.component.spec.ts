@@ -5,15 +5,13 @@
 import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, FormRecord, ReactiveFormsModule } from '@angular/forms';
-import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFieldConfig, provideFormlyCore } from '@ngx-formly/core';
 import { SiTranslateService } from '@siemens/element-ng/translate';
 import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 import { JSONSchema7 } from 'json-schema';
 import { of } from 'rxjs';
 
 import { SiFormlyComponent } from './si-formly.component';
-import { SiFormlyModule } from './si-formly.module';
 
 describe('ElementFormComponent', () => {
   let schemaInput: WritableSignal<JSONSchema7 | undefined>;
@@ -27,8 +25,9 @@ describe('ElementFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FormlyBootstrapModule, SiFormlyModule],
+      imports: [ReactiveFormsModule, SiFormlyComponent],
       providers: [
+        provideFormlyCore(),
         provideMockTranslateServiceBuilder(
           () =>
             ({
