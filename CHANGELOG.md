@@ -1,3 +1,45 @@
+# [49.3.0](https://github.com/siemens/element/compare/v49.2.0...v49.3.0) (2026-03-25)
+
+
+### Features
+
+* **card:** add support for `card-outline` ([2ef16f9](https://github.com/siemens/element/commit/2ef16f99a64830600eff3ba81a76abddd7e3f1e8))
+* **dashboards-ng:** extend module-federation version range to include v21 ([e669f31](https://github.com/siemens/element/commit/e669f31c3883b51a2683d8ca3d39ce6bae99981c))
+* **navbar-vertical:** allow to customize search debounce time ([fe05c29](https://github.com/siemens/element/commit/fe05c290bfe39ee5f4ff4cb2d862219044d79f21))
+* **side-panel:** extract status actions into new component ([f796850](https://github.com/siemens/element/commit/f79685097c48b66465df8d0fd81fd74426117d99))
+
+
+### Bug Fixes
+
+* **form:** align `col-form-label` with `form-control` and `form-check` ([bd1e763](https://github.com/siemens/element/commit/bd1e763e92096b680afb8380d3ee8ce3934432b7))
+* **form:** prevent feedback icon from disappearing on hover in readonly inputs ([52a3441](https://github.com/siemens/element/commit/52a3441e02163f31317700e42333ba6d066144d7))
+* **header-dropdown:** use correct icon size for checked item ([047ded0](https://github.com/siemens/element/commit/047ded01c82f22d00a3ef924d304387d9ed58e2a))
+* **side-panel:** use correct spacing in collapse mode ([5c1fd2b](https://github.com/siemens/element/commit/5c1fd2b4595b604b3990917b0eb5a177dabacdf9))
+
+
+### DEPRECATIONS
+
+* **side-panel:** The input `SiSidePanelContentComponent.statusActions` should no longer be used.
+  Use the new `<si-side-panel-actions>` instead:
+  
+  ```html
+  <si-side-panel-content>
+    <si-side-panel-actions>
+        <button
+          type="button"
+          si-side-panel-action
+          icon="element-alarm-background-filled"
+          iconColor="status-danger"
+          stackedIcon="element-alarm-tick"
+          stackedIconColor="text-body"
+          (click)="action()"
+        >
+          Action
+        </button>
+    </si-side-panel-actions>
+  </si-side-panel-content>
+  ```
+
 # [49.2.0](https://github.com/siemens/element/compare/v49.1.0...v49.2.0) (2026-03-18)
 
 
