@@ -16,11 +16,11 @@ import {
   provideAppInitializer,
   ɵLocaleDataIndex
 } from '@angular/core';
+import { provideFormlyCore } from '@ngx-formly/core';
 import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { provideSiAgGridConfig } from '@siemens/element-ng/ag-grid';
 import { provideSiUiState } from '@siemens/element-ng/common';
 import { provideSiDatatableConfig } from '@siemens/element-ng/datatable';
-import { SiFormlyModule } from '@siemens/element-ng/formly';
 import {
   SI_LOCALE_CONFIG,
   SiLocaleConfig,
@@ -115,19 +115,7 @@ export const APP_CONFIG: ApplicationConfig = {
       // App internal
       SiLivePreviewModule.forRoot(
         {
-          modules: [
-            SiFormlyModule.forRoot({
-              wrappers: [
-                {
-                  name: 'custom-wrapper',
-                  component: CustomWrapperComponent
-                }
-              ],
-              extras: {
-                resetFieldOnHide: false
-              }
-            })
-          ],
+          modules: [],
           componentLoader,
           examplesBaseUrl: 'app/examples/',
           ticketBaseUrl: 'https://github.com/siemens/element/issues/new',
@@ -162,6 +150,17 @@ export const APP_CONFIG: ApplicationConfig = {
     provideSiDatatableConfig(),
     provideSiUiState(),
     provideSiAgGridConfig(),
-    provideStackblitzConfig()
+    provideStackblitzConfig(),
+    provideFormlyCore({
+      wrappers: [
+        {
+          name: 'custom-wrapper',
+          component: CustomWrapperComponent
+        }
+      ],
+      extras: {
+        resetFieldOnHide: false
+      }
+    })
   ]
 };

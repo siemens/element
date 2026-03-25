@@ -41,7 +41,7 @@ import { SiFormlyHorizontalWrapperComponent } from './wrapper/si-formly-horizont
 import { SiFormlyIconWrapperComponent } from './wrapper/si-formly-icon-wrapper.component';
 import { SiFormlyWrapperComponent } from './wrapper/si-formly-wrapper.component';
 
-const dynamicUiConfig = (): ConfigOption => {
+export const dynamicUiConfig = (): ConfigOption => {
   return {
     types: [
       { name: 'string', extends: 'input' },
