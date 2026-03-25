@@ -38,172 +38,175 @@ describe('SiDashboardCardComponent', () => {
     element = fixture.nativeElement;
   });
 
-  it('should have a heading', () => {
+  it('should have a heading', async () => {
     heading.set('TITLE_KEY');
-    fixture.detectChanges();
-    expect(element.querySelector('.card-header')!.innerHTML).toContain('TITLE_KEY');
+    await fixture.whenStable();
+    expect(element.querySelector('.card-header')!).toHaveTextContent('TITLE_KEY');
   });
 
   describe('content action bar', () => {
-    it('should not be available without actions', () => {
-      fixture.detectChanges();
+    it('should not be available without actions', async () => {
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be unavailable with no actions and disabled expand interaction', () => {
+    it('should be unavailable with no actions and disabled expand interaction', async () => {
       fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be unavailable with undefined primary actions and no secondary actions and disabled expand interaction', () => {
+    it('should be unavailable with undefined primary actions and no secondary actions and disabled expand interaction', async () => {
       primaryActions.set(undefined as any);
       fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be available with one primary action and not secondary action and disabled expand interaction', () => {
+    it('should be available with one primary action and not secondary action and disabled expand interaction', async () => {
       primaryActions.set([{ title: 'Action' }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
-    it('should be available with one primary action added later and not secondary action and disabled expand interaction', () => {
+    it('should be available with one primary action added later and not secondary action and disabled expand interaction', async () => {
       let contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
       primaryActions.set([{ title: 'Action' }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
-    it('should be available with no primary action and one secondary action and disabled expand interaction', () => {
+    it('should be available with no primary action and one secondary action and disabled expand interaction', async () => {
       secondaryActions.set([{ title: 'Action' }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
-    it('should be available with no primary action and one secondary action and enabled expand interaction', () => {
+    it('should be available with no primary action and one secondary action and enabled expand interaction', async () => {
       secondaryActions.set([{ title: 'Action' }]);
       enableExpandInteraction.set(true);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
-    it('should be available with one secondary action added later and not primary action and disabled expand interaction', () => {
+    it('should be available with one secondary action added later and not primary action and disabled expand interaction', async () => {
       let contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
       secondaryActions.set([{ title: 'Action' }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
-    it('should be unavailable with no actions and disabled expand interaction after expanding by api', () => {
+    it('should be unavailable with no actions and disabled expand interaction after expanding by api', async () => {
       fixture.detectChanges();
       fixture.componentInstance.expand();
-      fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
   });
 
   describe('expand restore button', () => {
-    it('should not be available without actions', () => {
+    it('should not be available without actions', async () => {
       fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('[aria-label="Expand"]');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be unavailable without actions and disabled expand interaction', () => {
-      fixture.detectChanges();
+    it('should be unavailable without actions and disabled expand interaction', async () => {
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('[aria-label="Expand"]');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be unavailable with one primary action and no secondary action', () => {
+    it('should be unavailable with one primary action and no secondary action', async () => {
       primaryActions.set([{ title: 'Action' }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('[aria-label="Expand"]');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be unavailable with no primary action and one secondary action', () => {
+    it('should be unavailable with no primary action and one secondary action', async () => {
       secondaryActions.set([{ title: 'Action' }]);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const contentActionBar = element.querySelector('[aria-label="Expand"]');
       expect(contentActionBar).toBeNull();
     });
 
-    it('should be added when switching enableExpandInteraction to true', () => {
+    it('should be added when switching enableExpandInteraction to true', async () => {
       let contentActionBar = element.querySelector('button');
       expect(contentActionBar).toBeNull();
       enableExpandInteraction.set(true);
-      fixture.detectChanges();
+      await fixture.whenStable();
       contentActionBar = element.querySelector('[aria-label="Expand"]');
       expect(contentActionBar).not.toBeNull();
     });
   });
 
-  it('expand and restore on by expand() and restore() api', () => {
+  it('expand and restore on by expand() and restore() api', async () => {
     fixture.componentInstance.expand();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.isExpanded()).toBe(true);
     fixture.componentInstance.restore();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.isExpanded()).toBe(false);
   });
 
-  it('expand and restore on click', () => {
+  it('expand and restore on click', async () => {
     enableExpandInteraction.set(true);
-    fixture.detectChanges();
+    await fixture.whenStable();
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Expand"]')!
       .click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.isExpanded()).toBe(true);
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Restore"]')!
       .click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.isExpanded()).toBe(false);
   });
 
-  it('expand and restore on click with one primary action', () => {
+  it('expand and restore on click with one primary action', async () => {
     enableExpandInteraction.set(true);
     primaryActions.set([{ title: 'Action' }]);
-    fixture.detectChanges();
+    await fixture.whenStable();
     // Second element in content action bar is our expand actions
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Expand"]')!
       .click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.isExpanded()).toBe(true);
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Restore"]')!
       .click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.isExpanded()).toBe(false);
   });
 
-  it('expand and restore on click with one secondary action', () => {
+  it('expand and restore on click with one secondary action', async () => {
     enableExpandInteraction.set(true);
     secondaryActions.set([{ title: 'Action' }]);
-    fixture.detectChanges();
+    await fixture.whenStable();
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Expand"]')!
       .click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.isExpanded()).toBe(true);
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Restore"]')!
       .click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(fixture.componentInstance.isExpanded()).toBe(false);
   });
 });

@@ -188,7 +188,7 @@ describe('SiDatepickerComponent', () => {
     it('should show day view', () => {
       helper.getActiveCell()?.click();
       fixture.detectChanges();
-      expect(element.querySelector('si-day-selection')).toBeTruthy();
+      expect(element.querySelector('si-day-selection')).toBeInTheDocument();
     });
 
     it('should focus 28.February in day view', async () => {
