@@ -38,16 +38,16 @@ describe('SiCopyrightNoticeComponent', () => {
   it('should fetch from injector and assign default company', () => {
     fixture.detectChanges();
 
-    expect(element.innerText).toContain('Sample Company');
-    expect(element.innerText).toContain('2012');
-    expect(element.innerText).toContain('-');
+    expect(element).toHaveTextContent('Sample Company');
+    expect(element).toHaveTextContent('2012');
+    expect(element).toHaveTextContent('-');
   });
 
   it('should print the correct last updated year when globally injected', () => {
     fixture.detectChanges();
 
-    expect(element.innerText).toContain('-');
-    expect(element.innerText).toContain('2019');
+    expect(element).toHaveTextContent('-');
+    expect(element).toHaveTextContent('2019');
   });
 });
 
@@ -76,16 +76,16 @@ describe('SiCopyrightNoticeComponentWithInput', () => {
   it('should reflect input changes', () => {
     fixture.detectChanges();
 
-    expect(element.innerText).toContain('My Company');
-    expect(element.innerText).toContain('2020');
-    expect(element.innerText).toContain('-');
+    expect(element).toHaveTextContent('My Company');
+    expect(element).toHaveTextContent('2020');
+    expect(element).toHaveTextContent('-');
   });
 
   it('should print the correct last updated year', () => {
     fixture.detectChanges();
 
-    expect(element.innerText).toContain('-');
-    expect(element.innerText).toContain('2021');
+    expect(element).toHaveTextContent('-');
+    expect(element).toHaveTextContent('2021');
   });
 
   it('should print default copyright notice when no input is given', () => {
@@ -95,8 +95,8 @@ describe('SiCopyrightNoticeComponentWithInput', () => {
     expect(window.getComputedStyle(element.querySelector('.company')!, ':after').content).toContain(
       'ExampleOrg'
     );
-    expect(element.innerText).toContain('©');
-    expect(element.innerText).toContain(new Date().getFullYear() + '');
-    expect(element.innerText).not.toContain('-');
+    expect(element).toHaveTextContent('©');
+    expect(element).toHaveTextContent(new Date().getFullYear() + '');
+    expect(element).not.toHaveTextContent('-');
   });
 });
