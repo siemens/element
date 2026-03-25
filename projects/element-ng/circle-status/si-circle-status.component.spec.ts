@@ -2,93 +2,99 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, ComponentRef, SimpleChange } from '@angular/core';
+import { SimpleChange, inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { EntityStatusType } from '@siemens/element-ng/common';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { SiCircleStatusComponent, SiCircleStatusComponent as TestComponent } from './index';
+import { SiCircleStatusComponent as TestComponent } from './index';
 
 describe('SiCircleStatusComponent', () => {
-  let component: TestComponent;
-  let componentRef: ComponentRef<TestComponent>;
   let fixture: ComponentFixture<TestComponent>;
   let element: HTMLElement;
+  let icon: WritableSignal<string | undefined>;
+  let status: WritableSignal<EntityStatusType | undefined>;
+  let ariaLabel: WritableSignal<TranslatableString | undefined>;
+  let blink: WritableSignal<boolean>;
+  let eventOut: WritableSignal<boolean>;
 
   const checkAriaLabel = (label: string): void =>
     expect(element.querySelector('.status-indication')?.getAttribute('aria-label')).toBe(label);
 
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestComponent]
-    })
-      // because of https://github.com/angular/angular/issues/12313
-      .overrideComponent(SiCircleStatusComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
-      })
-      .compileComponents()
-  );
-
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentInstance;
-    componentRef = fixture.componentRef;
-    fixture.detectChanges();
+    icon = signal<string | undefined>(undefined);
+    status = signal<EntityStatusType | undefined>(undefined);
+    ariaLabel = signal<TranslatableString | undefined>(undefined);
+    blink = signal(false);
+    eventOut = signal(false);
+
+    fixture = TestBed.createComponent(TestComponent, {
+      bindings: [
+        inputBinding('icon', icon),
+        inputBinding('status', status),
+        inputBinding('ariaLabel', ariaLabel),
+        inputBinding('blink', blink),
+        inputBinding('eventOut', eventOut)
+      ]
+    });
     element = fixture.nativeElement;
   });
 
-  it('should not set icon class, if no icon is configured', () => {
-    componentRef.setInput('icon', undefined);
-    componentRef.setInput('status', component.status());
-    fixture.detectChanges();
-    expect(element.querySelector('.status-indication-icon')).not.toBeTruthy();
+  it('should not set icon class, if no icon is configured', async () => {
+    icon.set(undefined);
+    await fixture.whenStable();
+
+    expect(element.querySelector('.status-indication-icon')).not.toBeInTheDocument();
     checkAriaLabel('status none');
   });
 
-  it('should set configured icon class', () => {
-    const iconClass = 'element-door';
-    componentRef.setInput('icon', iconClass);
-    componentRef.setInput('status', 'info');
-    fixture.detectChanges();
+  it('should set configured icon class', async () => {
+    icon.set('element-door');
+    status.set('info');
+    await fixture.whenStable();
+
     expect(element.querySelector('.element-door')).toBeDefined();
     checkAriaLabel('door in status info');
   });
 
-  it('set aria-label according to status and icon', () => {
-    const iconClass = 'element-door';
-    componentRef.setInput('icon', iconClass);
-    componentRef.setInput('status', 'info');
-    fixture.detectChanges();
+  it('set aria-label according to status and icon', async () => {
+    icon.set('element-door');
+    status.set('info');
+    await fixture.whenStable();
+
     checkAriaLabel('door in status info');
   });
 
-  it('set passed aria-label', () => {
-    componentRef.setInput('ariaLabel', 'icon description');
-    componentRef.setInput('status', component.status());
-    fixture.detectChanges();
+  it('set passed aria-label', async () => {
+    ariaLabel.set('icon description');
+    await fixture.whenStable();
+
     checkAriaLabel('icon description');
   });
 
-  it('set blink to true', () => {
+  it('set blink to true', async () => {
     vi.useFakeTimers();
-    componentRef.setInput('blink', true);
-    componentRef.setInput('status', 'info');
-    component.ngOnChanges({
+    blink.set(true);
+    status.set('info');
+    fixture.componentInstance.ngOnChanges({
       blink: new SimpleChange(false, true, true),
-      status: new SimpleChange(undefined, component.status(), false)
+      status: new SimpleChange(undefined, 'info', false)
     });
-    fixture.detectChanges();
+    await fixture.whenStable();
+
     const statusIndication = element.querySelector('.status-indication .bg') as HTMLElement;
-    expect(statusIndication.classList.contains('pulse')).toBe(false);
+    expect(statusIndication).not.toHaveClass('pulse');
     vi.advanceTimersByTime(4 * 1400);
 
-    fixture.detectChanges();
-    expect(statusIndication.classList.contains('pulse')).toBe(true);
-    component.ngOnDestroy();
+    await fixture.whenStable();
+    expect(statusIndication).toHaveClass('pulse');
+    fixture.componentInstance.ngOnDestroy();
     vi.useRealTimers();
   });
 
-  it('should show event out indication', () => {
-    componentRef.setInput('eventOut', true);
-    fixture.detectChanges();
+  it('should show event out indication', async () => {
+    eventOut.set(true);
+    await fixture.whenStable();
 
     const outElement = element.querySelector('.event-out');
     expect(outElement).toBeTruthy();

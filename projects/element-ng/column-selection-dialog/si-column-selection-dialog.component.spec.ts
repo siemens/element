@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, ComponentRef } from '@angular/core';
+import { inputBinding, signal, twoWayBinding, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalRef } from '@siemens/element-ng/modal';
 
@@ -10,11 +10,12 @@ import { SiColumnSelectionDialogComponent } from './si-column-selection-dialog.c
 import { Column } from './si-column-selection-dialog.types';
 
 describe('ColumnDialogComponent', () => {
-  let component: SiColumnSelectionDialogComponent;
-  let componentRef: ComponentRef<SiColumnSelectionDialogComponent>;
-  let element: HTMLElement;
   let fixture: ComponentFixture<SiColumnSelectionDialogComponent>;
+  let element: HTMLElement;
   let modalRef: ModalRef<any, any>;
+  let columns: WritableSignal<Column[]>;
+  let restoreEnabled: WritableSignal<boolean>;
+
   const headerData: Column[] = [
     {
       id: 'firstRow',
@@ -73,58 +74,53 @@ describe('ColumnDialogComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ModalRef]
-    })
-      .overrideComponent(SiColumnSelectionDialogComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
-      })
-      .compileComponents();
+    }).compileComponents();
     modalRef = TestBed.inject(ModalRef);
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SiColumnSelectionDialogComponent);
-    component = fixture.componentInstance;
-    componentRef = fixture.componentRef;
+    columns = signal<Column[]>([]);
+    restoreEnabled = signal(false);
+
+    fixture = TestBed.createComponent(SiColumnSelectionDialogComponent, {
+      bindings: [twoWayBinding('columns', columns), inputBinding('restoreEnabled', restoreEnabled)]
+    });
     element = fixture.nativeElement;
   });
 
-  it('should create', () => {
-    component.columns.set(cloneData());
-    fixture.detectChanges();
+  it('should create', async () => {
+    columns.set(cloneData());
+    await fixture.whenStable();
 
-    expect(component).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should create backup data', () => {
-    component.columns.set(cloneData());
-
-    const backupSpy = vi.spyOn(component as any, 'setupColumnData');
-
-    fixture.detectChanges();
+  it('should create backup data', async () => {
+    const backupSpy = vi.spyOn(fixture.componentInstance as any, 'setupColumnData');
+    columns.set(cloneData());
+    await fixture.whenStable();
 
     expect(backupSpy).toHaveBeenCalled();
   });
 
-  it('should emit result on submit', () => {
+  it('should emit result on submit', async () => {
     vi.spyOn(modalRef, 'hide');
-    component.columns.set(cloneData());
-    fixture.detectChanges();
+    columns.set(cloneData());
+    await fixture.whenStable();
 
-    component.columns()[0].visible = !component.columns()[0].visible;
+    columns()[0].visible = !columns()[0].visible;
     element.querySelector<HTMLButtonElement>('.btn-primary')!.click();
 
     expect(modalRef.hide).toHaveBeenCalledWith({
       type: 'ok',
-      columns: component.columns()
+      columns: columns()
     });
   });
 
-  it('should emit result on cancel', () => {
+  it('should emit result on cancel', async () => {
     vi.spyOn(modalRef, 'hide');
-    component.columns.set(headerData.map(i => ({ ...i })));
-    fixture.detectChanges();
+    columns.set(headerData.map(i => ({ ...i })));
+    await fixture.whenStable();
 
-    component.columns()[0].visible = !component.columns()[0].visible;
+    columns()[0].visible = !columns()[0].visible;
     element.querySelector<HTMLButtonElement>('.btn-secondary')!.click();
 
     expect(modalRef.hide).toHaveBeenCalledWith({
@@ -133,37 +129,40 @@ describe('ColumnDialogComponent', () => {
     });
   });
 
-  it('should emit result on restore default', () => {
+  it('should emit result on restore default', async () => {
     const spy = vi.spyOn(modalRef.hidden, 'next');
-    component.columns.set(headerData);
-    componentRef.setInput('restoreEnabled', true);
-    fixture.detectChanges();
+    columns.set(headerData);
+    restoreEnabled.set(true);
+    await fixture.whenStable();
 
-    component.columns()[0].visible = !component.columns()[0].visible;
+    columns()[0].visible = !columns()[0].visible;
     element.querySelector<HTMLButtonElement>('.btn.btn-tertiary.me-auto')!.click();
 
     expect(modalRef.hidden.next).toHaveBeenCalledWith({
       type: 'restoreDefault',
-      columns: component.columns(),
+      columns: columns(),
       updateColumns: expect.any(Function)
     });
 
     vi.mocked(spy).mock.lastCall![0]!.updateColumns!([]);
-    expect(component.columns()).toEqual([]);
-    expect((component as any).visibleIds).toEqual([]);
+    expect(columns()).toEqual([]);
+    expect((fixture.componentInstance as any).visibleIds).toEqual([]);
   });
 
-  it('should not have restore default button', () => {
-    component.columns.set(headerData);
-    componentRef.setInput('restoreEnabled', false);
-    fixture.detectChanges();
-    expect(element.querySelector<HTMLButtonElement>('.btn.btn-tertiary.me-auto')).toBeNull();
+  it('should not have restore default button', async () => {
+    columns.set(headerData);
+    restoreEnabled.set(false);
+    await fixture.whenStable();
+
+    expect(
+      element.querySelector<HTMLButtonElement>('.btn.btn-tertiary.me-auto')
+    ).not.toBeInTheDocument();
   });
 
-  it('should emit result on visibility change', () => {
+  it('should emit result on visibility change', async () => {
     vi.spyOn(modalRef.hidden, 'next');
-    component.columns.set(cloneData());
-    fixture.detectChanges();
+    columns.set(cloneData());
+    await fixture.whenStable();
 
     toggleItem(1);
 
@@ -179,9 +178,9 @@ describe('ColumnDialogComponent', () => {
     });
   });
 
-  it('should not force columns to be draggable if first and last are', () => {
-    component.columns.set(headerData);
-    fixture.detectChanges();
+  it('should not force columns to be draggable if first and last are', async () => {
+    columns.set(headerData);
+    await fixture.whenStable();
 
     const dragItems = element.querySelectorAll('.cdk-drag');
 
@@ -190,15 +189,15 @@ describe('ColumnDialogComponent', () => {
     ).toBe(false);
   });
 
-  it('should not force columns to be draggable if previous/next are', () => {
+  it('should not force columns to be draggable if previous/next are', async () => {
     const otherHeaderData = [...headerData];
     otherHeaderData[0] = { ...otherHeaderData[0], draggable: false };
     otherHeaderData[otherHeaderData.length - 1] = {
       ...otherHeaderData[otherHeaderData.length - 1],
       draggable: false
     };
-    component.columns.set(otherHeaderData);
-    fixture.detectChanges();
+    columns.set(otherHeaderData);
+    await fixture.whenStable();
 
     const dragItems = Array.from(element.querySelectorAll('.cdk-drag'));
 
@@ -209,9 +208,9 @@ describe('ColumnDialogComponent', () => {
     ).toBe(false);
   });
 
-  it('should move items on drop', () => {
-    component.columns.set(cloneData());
-    fixture.detectChanges();
+  it('should move items on drop', async () => {
+    columns.set(cloneData());
+    await fixture.whenStable();
 
     expect(textOfItem(1)).toBe('second row');
     expect(textOfItem(2)).toBe('third row');
@@ -219,7 +218,7 @@ describe('ColumnDialogComponent', () => {
     Object.defineProperty(event, 'currentIndex', { get: () => 1 });
     Object.defineProperty(event, 'previousIndex', { get: () => 2 });
     element.querySelector('.modal-body div')?.dispatchEvent(event);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(textOfItem(1)).toBe('third row');
     expect(textOfItem(2)).toBe('second row');
@@ -227,8 +226,9 @@ describe('ColumnDialogComponent', () => {
 
   it('should rename a column', async () => {
     const spy = vi.spyOn(modalRef.hidden, 'next');
-    component.columns.set(cloneData());
-    fixture.detectChanges();
+    columns.set(cloneData());
+    await fixture.whenStable();
+
     document
       .querySelector<HTMLSpanElement>('si-column-selection-editor span.form-control')!
       .click();
@@ -252,12 +252,12 @@ describe('ColumnDialogComponent', () => {
     inputField.dispatchEvent(new Event('blur'));
     expect(
       document.querySelector<HTMLSpanElement>('si-column-selection-editor span.form-control')
-    ).toBeTruthy();
+    ).toBeInTheDocument();
   });
 
   it('should toggle edit mode with keyboard', async () => {
     const spy = vi.spyOn(modalRef.hidden, 'next');
-    component.columns.set(cloneData());
+    columns.set(cloneData());
     fixture.autoDetectChanges();
     document
       .querySelector<HTMLSpanElement>('si-column-selection-editor')!
@@ -267,46 +267,46 @@ describe('ColumnDialogComponent', () => {
     const inputField = document.querySelector<HTMLInputElement>(
       'si-column-selection-editor input.form-control'
     )!;
-    expect(inputField).toBeTruthy();
+    expect(inputField).toBeInTheDocument();
     // Wait for setTimeout in startEdit() to complete
     await new Promise(resolve => setTimeout(resolve, 100));
     inputField.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     await fixture.whenStable();
     expect(
       document.querySelector<HTMLInputElement>('si-column-selection-editor input.form-control')
-    ).toBeFalsy();
+    ).not.toBeInTheDocument();
     expect(document.activeElement).toBe(
       document.querySelector<HTMLSpanElement>('si-column-selection-editor')
     );
   });
 
   describe('using a keyboard', () => {
-    beforeEach(() => {
-      component.columns.set(cloneData());
-      fixture.detectChanges();
+    beforeEach(async () => {
+      columns.set(cloneData());
+      await fixture.whenStable();
     });
 
-    it('should move an item up', () => {
+    it('should move an item up', async () => {
       moveItem(2, 'Up');
-      fixture.detectChanges();
+      await fixture.whenStable();
       expect(textOfItem(1)).toBe('third row');
     });
 
-    it('should move an item down', () => {
+    it('should move an item down', async () => {
       moveItem(1, 'Down');
-      fixture.detectChanges();
+      await fixture.whenStable();
       expect(textOfItem(1)).toBe('third row');
     });
 
-    it('should skip non-draggable items in between', () => {
+    it('should skip non-draggable items in between', async () => {
       moveItem(4, 'Up');
-      fixture.detectChanges();
+      await fixture.whenStable();
       expect(textOfItem(2)).toBe('fifth row');
     });
 
-    it('should not move an item if no next draggable item is found', () => {
+    it('should not move an item if no next draggable item is found', async () => {
       moveItem(1, 'Up');
-      fixture.detectChanges();
+      await fixture.whenStable();
       expect(textOfItem(1)).toBe('second row');
     });
   });

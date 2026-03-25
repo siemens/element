@@ -2,10 +2,19 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement } from '@angular/core';
+import {
+  DebugElement,
+  inputBinding,
+  outputBinding,
+  signal,
+  twoWayBinding,
+  WritableSignal
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
+import { MenuItem } from '@siemens/element-ng/menu';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
 import {
@@ -17,9 +26,64 @@ describe('SiChatInputComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let debugElement: DebugElement;
   let component: TestComponent;
+  let value: WritableSignal<string>;
+  let attachments: WritableSignal<ChatInputAttachment[]>;
+  let placeholder: WritableSignal<TranslatableString>;
+  let disabled: WritableSignal<boolean>;
+  let sending: WritableSignal<boolean>;
+  let interruptible: WritableSignal<boolean>;
+  let maxLength: WritableSignal<number | undefined>;
+  let disclaimer: WritableSignal<TranslatableString | undefined>;
+  let actions: WritableSignal<MessageAction[]>;
+  let secondaryActions: WritableSignal<MenuItem[]>;
+  let allowAttachments: WritableSignal<boolean>;
+  let maxFileSize: WritableSignal<number>;
+  let sendButtonLabel: WritableSignal<TranslatableString>;
+  let sendButtonIcon: WritableSignal<string>;
+  let sendSpy = vi.fn();
+  let interruptSpy = vi.fn();
+  let fileErrorSpy = vi.fn();
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponent);
+    value = signal('');
+    attachments = signal<ChatInputAttachment[]>([]);
+    placeholder = signal<TranslatableString>('Enter a message…');
+    disabled = signal(false);
+    sending = signal(false);
+    interruptible = signal(false);
+    maxLength = signal<number | undefined>(undefined);
+    disclaimer = signal<TranslatableString | undefined>(undefined);
+    actions = signal<MessageAction[]>([]);
+    secondaryActions = signal<MenuItem[]>([]);
+    allowAttachments = signal(false);
+    maxFileSize = signal(10485760);
+    sendButtonLabel = signal<TranslatableString>('Send');
+    sendButtonIcon = signal('elementSendFilled');
+    sendSpy = vi.fn();
+    interruptSpy = vi.fn();
+    fileErrorSpy = vi.fn();
+
+    fixture = TestBed.createComponent(TestComponent, {
+      bindings: [
+        twoWayBinding('value', value),
+        twoWayBinding('attachments', attachments),
+        inputBinding('placeholder', placeholder),
+        inputBinding('disabled', disabled),
+        inputBinding('sending', sending),
+        inputBinding('interruptible', interruptible),
+        inputBinding('maxLength', maxLength),
+        inputBinding('disclaimer', disclaimer),
+        inputBinding('actions', actions),
+        inputBinding('secondaryActions', secondaryActions),
+        inputBinding('allowAttachments', allowAttachments),
+        inputBinding('maxFileSize', maxFileSize),
+        inputBinding('sendButtonLabel', sendButtonLabel),
+        inputBinding('sendButtonIcon', sendButtonIcon),
+        outputBinding('send', sendSpy),
+        outputBinding('interrupt', interruptSpy),
+        outputBinding('fileError', fileErrorSpy)
+      ]
+    });
     debugElement = fixture.debugElement;
     component = fixture.componentInstance;
   });
@@ -28,238 +92,211 @@ describe('SiChatInputComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have default empty value', () => {
-    fixture.detectChanges();
-    expect(component.value()).toBe('');
+  it('should have default empty value', async () => {
+    await fixture.whenStable();
+    expect(value()).toBe('');
   });
 
-  it('should have default disabled state of false', () => {
-    fixture.detectChanges();
-    expect(component.disabled()).toBe(false);
+  it('should have default disabled state of false', async () => {
+    await fixture.whenStable();
+    expect(disabled()).toBe(false);
   });
 
-  it('should have default sending state of false', () => {
-    fixture.detectChanges();
-    expect(component.sending()).toBe(false);
+  it('should have default sending state of false', async () => {
+    await fixture.whenStable();
+    expect(sending()).toBe(false);
   });
 
-  it('should have default empty actions array', () => {
-    fixture.detectChanges();
-    expect(component.actions()).toEqual([]);
+  it('should have default empty actions array', async () => {
+    await fixture.whenStable();
+    expect(actions()).toEqual([]);
   });
 
-  it('should have default empty secondary actions array', () => {
-    fixture.detectChanges();
-    expect(component.secondaryActions()).toEqual([]);
+  it('should have default empty secondary actions array', async () => {
+    await fixture.whenStable();
+    expect(secondaryActions()).toEqual([]);
   });
 
-  it('should have default empty attachments array', () => {
-    fixture.detectChanges();
-    expect(component.attachments()).toEqual([]);
+  it('should have default empty attachments array', async () => {
+    await fixture.whenStable();
+    expect(attachments()).toEqual([]);
   });
 
-  it('should have default allowAttachments of false', () => {
-    fixture.detectChanges();
-    expect(component.allowAttachments()).toBe(false);
+  it('should have default allowAttachments of false', async () => {
+    await fixture.whenStable();
+    expect(allowAttachments()).toBe(false);
   });
 
-  it('should have default interruptible state of false', () => {
-    fixture.detectChanges();
-    expect(component.interruptible()).toBe(false);
+  it('should have default interruptible state of false', async () => {
+    await fixture.whenStable();
+    expect(interruptible()).toBe(false);
   });
 
-  it('should have default maxFileSize of 10MB', () => {
-    fixture.detectChanges();
-    expect(component.maxFileSize()).toBe(10485760);
+  it('should have default maxFileSize of 10MB', async () => {
+    await fixture.whenStable();
+    expect(maxFileSize()).toBe(10485760);
   });
 
-  it('should render textarea input', () => {
-    fixture.detectChanges();
+  it('should render textarea input', async () => {
+    await fixture.whenStable();
 
     const textarea = debugElement.query(By.css('textarea'));
     expect(textarea).toBeTruthy();
   });
 
-  it('should render send button', () => {
-    fixture.detectChanges();
+  it('should render send button', async () => {
+    await fixture.whenStable();
 
     const sendButton = debugElement.query(By.css('button'));
     expect(sendButton).toBeTruthy();
   });
 
-  it('should disable send button when no content and no attachments', () => {
-    fixture.componentRef.setInput('value', '');
-    fixture.componentRef.setInput('attachments', []);
-    fixture.detectChanges();
+  it('should disable send button when no content and no attachments', async () => {
+    value.set('');
+    attachments.set([]);
+    await fixture.whenStable();
 
     expect((component as any).canSend()).toBe(false);
   });
 
-  it('should enable send button when there is content', () => {
-    component.value.set('Hello');
-    fixture.detectChanges();
+  it('should enable send button when there is content', async () => {
+    value.set('Hello');
+    await fixture.whenStable();
 
     expect((component as any).canSend()).toBe(true);
   });
 
-  it('should enable send button when there are attachments', () => {
-    const attachments: ChatInputAttachment[] = [
+  it('should enable send button when there are attachments', async () => {
+    attachments.set([
       {
         name: 'file.txt',
         file: new File(['content'], 'file.txt'),
         size: 100,
         type: 'text/plain'
       }
-    ];
-    component.attachments.set(attachments);
-    fixture.detectChanges();
+    ]);
+    await fixture.whenStable();
 
     expect((component as any).canSend()).toBe(true);
   });
 
-  it('should disable send button when disabled is true', () => {
-    component.value.set('Hello');
-    fixture.componentRef.setInput('disabled', true);
-    fixture.detectChanges();
+  it('should disable send button when disabled is true', async () => {
+    value.set('Hello');
+    disabled.set(true);
+    await fixture.whenStable();
 
     expect((component as any).canSend()).toBe(false);
   });
 
-  it('should disable send button when sending is true', () => {
-    component.value.set('Hello');
-    fixture.componentRef.setInput('sending', true);
-    fixture.detectChanges();
+  it('should disable send button when sending is true', async () => {
+    value.set('Hello');
+    sending.set(true);
+    await fixture.whenStable();
 
     expect((component as any).canSend()).toBe(false);
   });
 
-  it('should emit send event when send button is clicked', () => {
-    let emittedData: any;
-    component.send.subscribe((data: any) => {
-      emittedData = data;
-    });
-
-    component.value.set('Test message');
-    fixture.detectChanges();
+  it('should emit send event when send button is clicked', async () => {
+    value.set('Test message');
+    await fixture.whenStable();
 
     const sendButton = debugElement.query(By.css('button'));
     sendButton.nativeElement.click();
 
-    expect(emittedData).toEqual({
+    expect(sendSpy).toHaveBeenCalledWith({
       content: 'Test message',
       attachments: []
     });
   });
 
-  it('should clear input after sending', () => {
-    component.value.set('Test message');
-    fixture.detectChanges();
+  it('should clear input after sending', async () => {
+    value.set('Test message');
+    await fixture.whenStable();
 
     (component as any).onSend();
 
-    expect(component.value()).toBe('');
+    expect(value()).toBe('');
   });
 
-  it('should clear attachments after sending', () => {
-    const attachments: ChatInputAttachment[] = [
+  it('should clear attachments after sending', async () => {
+    attachments.set([
       {
         name: 'file.txt',
         file: new File(['content'], 'file.txt'),
         size: 100,
         type: 'text/plain'
       }
-    ];
-    component.attachments.set(attachments);
-    fixture.detectChanges();
+    ]);
+    await fixture.whenStable();
 
     (component as any).onSend();
 
-    expect(component.attachments()).toEqual([]);
+    expect(attachments()).toEqual([]);
   });
 
-  it('should send on Enter key press', () => {
-    let emittedData: any;
-    component.send.subscribe((data: any) => {
-      emittedData = data;
-    });
-
-    component.value.set('Test message');
-    fixture.detectChanges();
+  it('should send on Enter key press', async () => {
+    value.set('Test message');
+    await fixture.whenStable();
 
     const textarea = debugElement.query(By.css('textarea'));
     const event = new KeyboardEvent('keydown', { key: 'Enter', shiftKey: false });
     textarea.nativeElement.dispatchEvent(event);
 
-    expect(emittedData).toBeDefined();
+    expect(sendSpy).toHaveBeenCalled();
   });
 
-  it('should not send on Shift+Enter key press', () => {
-    let emittedCount = 0;
-    component.send.subscribe(() => {
-      emittedCount++;
-    });
-
-    component.value.set('Test message');
-    fixture.detectChanges();
+  it('should not send on Shift+Enter key press', async () => {
+    value.set('Test message');
+    await fixture.whenStable();
 
     const textarea = debugElement.query(By.css('textarea'));
     const event = new KeyboardEvent('keydown', { key: 'Enter', shiftKey: true });
     vi.spyOn(event, 'preventDefault');
     textarea.nativeElement.dispatchEvent(event);
 
-    expect(emittedCount).toBe(0);
+    expect(sendSpy).not.toHaveBeenCalled();
   });
 
-  it('should interrupt and send on Enter when interruptible is true', () => {
-    let emittedCount = 0;
-    let interruptCount = 0;
-    component.send.subscribe(() => {
-      emittedCount++;
-    });
-    component.interrupt.subscribe(() => {
-      interruptCount++;
-    });
-
-    component.value.set('Test message');
-    fixture.componentRef.setInput('interruptible', true);
-    fixture.detectChanges();
+  it('should interrupt and send on Enter when interruptible is true', async () => {
+    value.set('Test message');
+    interruptible.set(true);
+    await fixture.whenStable();
 
     const textarea = debugElement.query(By.css('textarea'));
     const event = new KeyboardEvent('keydown', { key: 'Enter', shiftKey: false });
     vi.spyOn(event, 'preventDefault');
     textarea.nativeElement.dispatchEvent(event);
 
-    expect(emittedCount).toBe(1);
-    expect(interruptCount).toBe(1);
+    expect(sendSpy).toHaveBeenCalledTimes(1);
+    expect(interruptSpy).toHaveBeenCalledTimes(1);
     expect(event.preventDefault).toHaveBeenCalled();
   });
 
-  it('should not render attachment list when no attachments', () => {
-    fixture.componentRef.setInput('attachments', []);
-    fixture.detectChanges();
+  it('should not render attachment list when no attachments', async () => {
+    attachments.set([]);
+    await fixture.whenStable();
 
     const attachmentList = debugElement.query(By.css('si-attachment-list'));
     expect(attachmentList).toBeFalsy();
   });
 
-  it('should render attachment list when attachments exist', () => {
-    const attachments: ChatInputAttachment[] = [
+  it('should render attachment list when attachments exist', async () => {
+    attachments.set([
       {
         name: 'file.txt',
         file: new File(['content'], 'file.txt'),
         size: 100,
         type: 'text/plain'
       }
-    ];
-    component.attachments.set(attachments);
-    fixture.detectChanges();
+    ]);
+    await fixture.whenStable();
 
     const attachmentList = debugElement.query(By.css('si-attachment-list'));
     expect(attachmentList).toBeTruthy();
   });
 
-  it('should remove attachment when remove is triggered', () => {
-    const attachments: ChatInputAttachment[] = [
+  it('should remove attachment when remove is triggered', async () => {
+    const testAttachments: ChatInputAttachment[] = [
       {
         name: 'file1.txt',
         file: new File(['content1'], 'file1.txt'),
@@ -273,13 +310,13 @@ describe('SiChatInputComponent', () => {
         type: 'text/plain'
       }
     ];
-    component.attachments.set(attachments);
-    fixture.detectChanges();
+    attachments.set(testAttachments);
+    await fixture.whenStable();
 
-    (component as any).removeAttachment(attachments[0]);
+    (component as any).removeAttachment(testAttachments[0]);
 
-    expect(component.attachments().length).toBe(1);
-    expect(component.attachments()[0].name).toBe('file2.txt');
+    expect(attachments().length).toBe(1);
+    expect(attachments()[0].name).toBe('file2.txt');
   });
 
   it('should add files on file upload', () => {
@@ -294,9 +331,9 @@ describe('SiChatInputComponent', () => {
 
     (component as any).onFilesAdded(uploadFiles);
 
-    expect(component.attachments().length).toBe(1);
-    expect(component.attachments()[0].name).toBe('test.txt');
-    expect(component.attachments()[0].file).toBe(mockFile);
+    expect(attachments().length).toBe(1);
+    expect(attachments()[0].name).toBe('test.txt');
+    expect(attachments()[0].file).toBe(mockFile);
   });
 
   it('should filter out non-added files', () => {
@@ -315,104 +352,97 @@ describe('SiChatInputComponent', () => {
 
     (component as any).onFilesAdded(uploadFiles);
 
-    expect(component.attachments().length).toBe(1);
-    expect(component.attachments()[0].name).toBe('test1.txt');
+    expect(attachments().length).toBe(1);
+    expect(attachments()[0].name).toBe('test1.txt');
   });
 
   it('should emit file error event', () => {
-    let emittedError: FileUploadError | undefined;
-    component.fileError.subscribe((error: FileUploadError) => {
-      emittedError = error;
-    });
-
     const mockError = {
       fileName: 'large.txt'
     } as FileUploadError;
 
     (component as any).onFileError(mockError);
 
-    expect(emittedError).toEqual(mockError);
+    expect(fileErrorSpy).toHaveBeenCalledWith(mockError);
   });
 
-  it('should use custom placeholder', () => {
-    const customPlaceholder = 'Type your message here...';
-    fixture.componentRef.setInput('placeholder', customPlaceholder);
-    fixture.detectChanges();
+  it('should use custom placeholder', async () => {
+    placeholder.set('Type your message here...');
+    await fixture.whenStable();
 
     const textarea = debugElement.query(By.css('textarea'));
-    expect(textarea.nativeElement.placeholder).toBe(customPlaceholder);
+    expect(textarea.nativeElement.placeholder).toBe('Type your message here...');
   });
 
-  it('should use custom send button label', () => {
-    const customLabel = 'Submit';
-    fixture.componentRef.setInput('sendButtonLabel', customLabel);
-    fixture.detectChanges();
+  it('should use custom send button label', async () => {
+    sendButtonLabel.set('Submit');
+    await fixture.whenStable();
 
     const sendButton = debugElement.query(By.css('button'));
-    expect(sendButton.nativeElement.getAttribute('aria-label')).toContain(customLabel);
+    expect(sendButton.nativeElement).toHaveAttribute(
+      'aria-label',
+      expect.stringContaining('Submit')
+    );
   });
 
-  it('should use custom send button icon', () => {
-    const customIcon = 'element-check';
-    fixture.componentRef.setInput('sendButtonIcon', customIcon);
-    fixture.detectChanges();
+  it('should use custom send button icon', async () => {
+    sendButtonIcon.set('element-check');
+    await fixture.whenStable();
 
     const icon = debugElement.query(By.css('button si-icon'));
-    expect(icon.componentInstance.icon()).toBe(customIcon);
+    expect(icon.componentInstance.icon()).toBe('element-check');
   });
 
-  it('should show stop icon when interruptible is true', () => {
-    fixture.componentRef.setInput('interruptible', true);
-    fixture.detectChanges();
+  it('should show stop icon when interruptible is true', async () => {
+    interruptible.set(true);
+    await fixture.whenStable();
 
     expect(
       debugElement.query(By.css('button[aria-label="Interrupt"] [data-icon="elementStopFilled"]'))
     ).toBeTruthy();
   });
 
-  it('should use interrupt button label when interruptible is true', () => {
-    fixture.componentRef.setInput('interruptible', true);
-    fixture.detectChanges();
+  it('should use interrupt button label when interruptible is true', async () => {
+    interruptible.set(true);
+    await fixture.whenStable();
 
     const button = debugElement.query(By.css('button'));
-    expect(button.nativeElement.getAttribute('aria-label')).toContain('Interrupt');
+    expect(button.nativeElement).toHaveAttribute(
+      'aria-label',
+      expect.stringContaining('Interrupt')
+    );
   });
 
-  it('should emit interrupt event when interrupt button is clicked', () => {
-    let interruptEmitted = false;
-    component.interrupt.subscribe(() => {
-      interruptEmitted = true;
-    });
-
-    fixture.componentRef.setInput('interruptible', true);
-    fixture.detectChanges();
+  it('should emit interrupt event when interrupt button is clicked', async () => {
+    interruptible.set(true);
+    await fixture.whenStable();
 
     const button = debugElement.query(By.css('button'));
     button.nativeElement.click();
 
-    expect(interruptEmitted).toBe(true);
+    expect(interruptSpy).toHaveBeenCalled();
   });
 
-  it('should disable interrupt button when sending is true', () => {
-    fixture.componentRef.setInput('interruptible', true);
-    fixture.componentRef.setInput('sending', true);
-    fixture.detectChanges();
+  it('should disable interrupt button when sending is true', async () => {
+    interruptible.set(true);
+    sending.set(true);
+    await fixture.whenStable();
 
     const button = debugElement.query(By.css('button'));
-    expect(button.nativeElement.disabled).toBe(true);
+    expect(button.nativeElement).toBeDisabled();
   });
 
-  it('should disable interrupt button when disabled is true', () => {
-    fixture.componentRef.setInput('interruptible', true);
-    fixture.componentRef.setInput('disabled', true);
-    fixture.detectChanges();
+  it('should disable interrupt button when disabled is true', async () => {
+    interruptible.set(true);
+    disabled.set(true);
+    await fixture.whenStable();
 
     const button = debugElement.query(By.css('button'));
-    expect(button.nativeElement.disabled).toBe(true);
+    expect(button.nativeElement).toBeDisabled();
   });
 
-  it('should not clear input and attachments when interrupt is triggered', () => {
-    const attachments: ChatInputAttachment[] = [
+  it('should not clear input and attachments when interrupt is triggered', async () => {
+    const testAttachments: ChatInputAttachment[] = [
       {
         name: 'file.txt',
         file: new File(['content'], 'file.txt'),
@@ -421,61 +451,58 @@ describe('SiChatInputComponent', () => {
       }
     ];
 
-    component.value.set('Test message');
-    component.attachments.set(attachments);
-    fixture.componentRef.setInput('interruptible', true);
-    fixture.detectChanges();
+    value.set('Test message');
+    attachments.set(testAttachments);
+    interruptible.set(true);
+    await fixture.whenStable();
 
     (component as any).onButtonClick();
 
-    expect(component.value()).toBe('Test message');
-    expect(component.attachments()).toEqual(attachments);
+    expect(value()).toBe('Test message');
+    expect(attachments()).toEqual(testAttachments);
   });
 
-  it('should respect maxLength', () => {
-    fixture.componentRef.setInput('maxLength', 10);
-    fixture.detectChanges();
+  it('should respect maxLength', async () => {
+    maxLength.set(10);
+    await fixture.whenStable();
 
     const textarea = debugElement.query(By.css('textarea'));
     expect(textarea.nativeElement.maxLength).toBe(10);
   });
 
-  it('should show disclaimer when provided', () => {
-    const disclaimer = 'This is a disclaimer';
-    fixture.componentRef.setInput('disclaimer', disclaimer);
-    fixture.detectChanges();
+  it('should show disclaimer when provided', async () => {
+    disclaimer.set('This is a disclaimer');
+    await fixture.whenStable();
 
     const disclaimerElement = debugElement.query(By.css('.si-caption'));
     expect(disclaimerElement).toBeTruthy();
-    expect(disclaimerElement.nativeElement.textContent).toContain(disclaimer);
+    expect(disclaimerElement.nativeElement).toHaveTextContent('This is a disclaimer');
   });
 
-  it('should render action buttons when actions are provided', () => {
-    const actions: MessageAction[] = [
+  it('should render action buttons when actions are provided', async () => {
+    actions.set([
       {
         label: 'Attach',
         icon: 'element-attachment',
         action: () => {}
       }
-    ];
-
-    fixture.componentRef.setInput('actions', actions);
-    fixture.detectChanges();
+    ]);
+    await fixture.whenStable();
 
     const actionButtons = fixture.nativeElement.querySelectorAll('[siChatMessageAction] button');
     expect(actionButtons.length).toBe(1);
-    expect(actionButtons[0].getAttribute('aria-label')).toBe('Attach');
+    expect(actionButtons[0]).toHaveAttribute('aria-label', 'Attach');
   });
 
-  it('should have focus method', () => {
-    fixture.detectChanges();
+  it('should have focus method', async () => {
+    await fixture.whenStable();
     expect(typeof component.focus).toBe('function');
   });
 
-  it('should use send mode when interruptible is false', () => {
-    component.value.set('Test message');
-    fixture.componentRef.setInput('interruptible', false);
-    fixture.detectChanges();
+  it('should use send mode when interruptible is false', async () => {
+    value.set('Test message');
+    interruptible.set(false);
+    await fixture.whenStable();
 
     expect((component as any).showInterruptButton()).toBe(false);
     const sendButton = debugElement.query(By.css('button[aria-label="Send"]'));
@@ -483,9 +510,9 @@ describe('SiChatInputComponent', () => {
     expect(sendButton.query(By.css('[data-icon="elementSendFilled"]'))).toBeTruthy();
   });
 
-  it('should use interrupt mode when interruptible is true', () => {
-    fixture.componentRef.setInput('interruptible', true);
-    fixture.detectChanges();
+  it('should use interrupt mode when interruptible is true', async () => {
+    interruptible.set(true);
+    await fixture.whenStable();
 
     expect((component as any).showInterruptButton()).toBe(true);
     const interruptButton = debugElement.query(By.css('button[aria-label="Interrupt"]'));

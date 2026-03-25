@@ -2,7 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement, TemplateRef } from '@angular/core';
+import {
+  DebugElement,
+  inputBinding,
+  outputBinding,
+  signal,
+  TemplateRef,
+  WritableSignal
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiModalService } from '@siemens/element-ng/modal';
@@ -15,6 +22,10 @@ import {
 describe('SiAttachmentListComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let debugElement: DebugElement;
+  let attachments: WritableSignal<Attachment[]>;
+  let alignment: WritableSignal<'start' | 'end'>;
+  let removable: WritableSignal<boolean>;
+  let removeSpy = vi.fn();
 
   beforeEach(async () => {
     const modalServiceSpy = {
@@ -22,120 +33,107 @@ describe('SiAttachmentListComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [TestComponent],
       providers: [{ provide: SiModalService, useValue: modalServiceSpy }]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TestComponent);
+    attachments = signal<Attachment[]>([]);
+    alignment = signal<'start' | 'end'>('start');
+    removable = signal(false);
+    removeSpy = vi.fn();
+
+    fixture = TestBed.createComponent(TestComponent, {
+      bindings: [
+        inputBinding('attachments', attachments),
+        inputBinding('alignment', alignment),
+        inputBinding('removable', removable),
+        outputBinding<Attachment>('remove', removeSpy)
+      ]
+    });
     debugElement = fixture.debugElement;
   });
 
-  it('should render empty list when no attachments provided', () => {
-    fixture.componentRef.setInput('attachments', []);
-    fixture.detectChanges();
+  it('should render empty list when no attachments provided', async () => {
+    await fixture.whenStable();
 
     const attachmentElements = debugElement.queryAll(By.css('.attachment-item'));
     expect(attachmentElements.length).toBe(0);
   });
 
-  it('should render attachment items', () => {
-    const attachments: Attachment[] = [{ name: 'file1.txt' }, { name: 'file2.pdf' }];
-
-    fixture.componentRef.setInput('attachments', attachments);
-    fixture.detectChanges();
+  it('should render attachment items', async () => {
+    attachments.set([{ name: 'file1.txt' }, { name: 'file2.pdf' }]);
+    await fixture.whenStable();
 
     const attachmentElements = debugElement.queryAll(By.css('.attachment-item'));
     expect(attachmentElements.length).toBe(2);
   });
 
-  it('should display attachment names', () => {
-    const attachments: Attachment[] = [{ name: 'document.pdf' }, { name: 'image.png' }];
-
-    fixture.componentRef.setInput('attachments', attachments);
-    fixture.detectChanges();
+  it('should display attachment names', async () => {
+    attachments.set([{ name: 'document.pdf' }, { name: 'image.png' }]);
+    await fixture.whenStable();
 
     const attachmentElements = debugElement.queryAll(By.css('.attachment-item'));
-    expect(attachmentElements[0].nativeElement.textContent).toContain('document.pdf');
-    expect(attachmentElements[1].nativeElement.textContent).toContain('image.png');
+    expect(attachmentElements[0].nativeElement).toHaveTextContent('document.pdf');
+    expect(attachmentElements[1].nativeElement).toHaveTextContent('image.png');
   });
 
-  it('should align attachments to start by default', () => {
-    const attachments: Attachment[] = [{ name: 'file.txt' }];
-
-    fixture.componentRef.setInput('attachments', attachments);
-    fixture.detectChanges();
+  it('should align attachments to start by default', async () => {
+    attachments.set([{ name: 'file.txt' }]);
+    await fixture.whenStable();
 
     const container = debugElement.query(By.css('.d-flex'));
-    expect(container.nativeElement.classList.contains('justify-content-end')).toBe(false);
+    expect(container.nativeElement).not.toHaveClass('justify-content-end');
   });
 
-  it('should align attachments to end when specified', () => {
-    const attachments: Attachment[] = [{ name: 'file.txt' }];
-
-    fixture.componentRef.setInput('attachments', attachments);
-    fixture.componentRef.setInput('alignment', 'end');
-    fixture.detectChanges();
+  it('should align attachments to end when specified', async () => {
+    attachments.set([{ name: 'file.txt' }]);
+    alignment.set('end');
+    await fixture.whenStable();
 
     const container = debugElement.query(By.css('.d-flex'));
-    expect(container.nativeElement.classList.contains('justify-content-end')).toBe(true);
+    expect(container.nativeElement).toHaveClass('justify-content-end');
   });
 
-  it('should not show remove buttons by default', () => {
-    const attachments: Attachment[] = [{ name: 'file.txt' }];
-
-    fixture.componentRef.setInput('attachments', attachments);
-    fixture.detectChanges();
+  it('should not show remove buttons by default', async () => {
+    attachments.set([{ name: 'file.txt' }]);
+    await fixture.whenStable();
 
     const removeButtons = debugElement.queryAll(By.css('.btn-icon'));
     expect(removeButtons.length).toBe(0);
   });
 
-  it('should show remove buttons when removable is true', () => {
-    const attachments: Attachment[] = [{ name: 'file1.txt' }, { name: 'file2.txt' }];
-
-    fixture.componentRef.setInput('attachments', attachments);
-    fixture.componentRef.setInput('removable', true);
-    fixture.detectChanges();
+  it('should show remove buttons when removable is true', async () => {
+    attachments.set([{ name: 'file1.txt' }, { name: 'file2.txt' }]);
+    removable.set(true);
+    await fixture.whenStable();
 
     const removeButtons = debugElement.queryAll(By.css('.btn-icon'));
     expect(removeButtons.length).toBe(2);
   });
 
-  it('should emit remove event when remove button is clicked', () => {
-    const attachments: Attachment[] = [{ name: 'file.txt' }];
-
-    let emittedName: string | undefined;
-    fixture.componentInstance.remove.subscribe(attachment => {
-      emittedName = attachment.name;
-    });
-
-    fixture.componentRef.setInput('attachments', attachments);
-    fixture.componentRef.setInput('removable', true);
-    fixture.detectChanges();
+  it('should emit remove event when remove button is clicked', async () => {
+    attachments.set([{ name: 'file.txt' }]);
+    removable.set(true);
+    await fixture.whenStable();
 
     const removeButton = debugElement.query(By.css('.btn-icon'));
     removeButton.nativeElement.click();
 
-    expect(emittedName).toBe('file.txt');
+    expect(removeSpy).toHaveBeenCalledWith({ name: 'file.txt' });
   });
 
-  it('should handle attachments with preview templates', () => {
+  it('should handle attachments with preview templates', async () => {
     const mockTemplate = {} as TemplateRef<any>;
-    const attachments: Attachment[] = [{ name: 'file.txt', previewTemplate: mockTemplate }];
-
-    fixture.componentRef.setInput('attachments', attachments);
-    fixture.detectChanges();
+    attachments.set([{ name: 'file.txt', previewTemplate: mockTemplate }]);
+    await fixture.whenStable();
 
     const attachmentButton = debugElement.query(By.css('.attachment-item'));
     expect(attachmentButton).toBeTruthy();
   });
 
-  it('should handle attachments with preview template functions', () => {
+  it('should handle attachments with preview template functions', async () => {
     const mockTemplate = {} as TemplateRef<any>;
-    const attachments: Attachment[] = [{ name: 'file.txt', previewTemplate: () => mockTemplate }];
-
-    fixture.componentRef.setInput('attachments', attachments);
-    fixture.detectChanges();
+    attachments.set([{ name: 'file.txt', previewTemplate: () => mockTemplate }]);
+    await fixture.whenStable();
 
     const attachmentButton = debugElement.query(By.css('.attachment-item'));
     expect(attachmentButton).toBeTruthy();
