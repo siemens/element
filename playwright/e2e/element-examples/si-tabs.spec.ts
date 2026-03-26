@@ -82,7 +82,9 @@ test.describe('si-tabs', () => {
     await page.keyboard.press('ArrowRight');
     await expect(page.getByRole('menuitem', { name: 'Settings' })).toBeFocused();
     // Make sure the tooltip is also there. It may appear delayed.
-    await expect(page.getByRole('tooltip', { name: 'Settings' })).toBeVisible();
+    const tooltip = page.getByRole('tooltip', { name: 'Settings' });
+    await expect(tooltip).toBeVisible();
+    await expect(tooltip).toHaveText('Settings');
     await si.runVisualAndA11yTests('tabs-toolbar-focused');
   });
 });
