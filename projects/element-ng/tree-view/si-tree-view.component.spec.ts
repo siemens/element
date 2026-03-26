@@ -6,8 +6,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DebugElement,
   inject,
+  signal,
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -15,7 +15,6 @@ import { By } from '@angular/platform-browser';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { BehaviorSubject } from 'rxjs';
 
-import { runOnPushChangeDetection } from '../test-helpers';
 import { SiTreeViewItemHeightService } from './si-tree-view-item-height.service';
 import { SiTreeViewComponent } from './si-tree-view.component';
 import { LoadChildrenEventArgs, MenuItemsProvider, TreeItem } from './si-tree-view.model';
@@ -24,39 +23,39 @@ import { LoadChildrenEventArgs, MenuItemsProvider, TreeItem } from './si-tree-vi
   imports: [SiTreeViewComponent],
   template: `<si-tree-view
     class="vh-100"
-    [style]="style"
-    [class.tree-xs]="smallSize"
-    [items]="items"
-    [enableSelection]="enableSelection"
-    [enableIcon]="enableIcon"
-    [singleSelectMode]="singleSelectMode"
-    [folderStateStart]="folderStateStart"
-    [selectedItem]="selectedItem"
-    [groupedList]="groupedList"
-    [flatTree]="flatTree"
-    [enableDataField1]="enableDataField1"
-    [enableDataField2]="enableDataField2"
-    [enableContextMenuButton]="enableContextMenuButton"
-    [expandOnClick]="expandOnClick"
-    [compactMode]="compactMode"
-    [contextMenuItems]="contextMenuItems"
-    [enableStateIndicator]="enableStateIndicator"
-    [isVirtualized]="isVirtualized"
-    [enableCheckbox]="enableCheckbox"
-    [inheritChecked]="inheritChecked"
-    [enableOptionbox]="enableOptionbox"
-    [pageSize]="pageSize"
-    [pagesVirtualized]="pagesVirtualized"
-    [horizontalScrolling]="horizontalScrolling"
-    [deleteChildrenOnCollapse]="deleteChildrenOnCollapse"
-    [expandCollapseAll]="expandCollapseAll"
+    [style]="style()"
+    [class.tree-xs]="smallSize()"
+    [items]="items()"
+    [enableSelection]="enableSelection()"
+    [enableIcon]="enableIcon()"
+    [singleSelectMode]="singleSelectMode()"
+    [folderStateStart]="folderStateStart()"
+    [selectedItem]="selectedItem()"
+    [groupedList]="groupedList()"
+    [flatTree]="flatTree()"
+    [enableDataField1]="enableDataField1()"
+    [enableDataField2]="enableDataField2()"
+    [enableContextMenuButton]="enableContextMenuButton()"
+    [expandOnClick]="expandOnClick()"
+    [compactMode]="compactMode()"
+    [contextMenuItems]="contextMenuItems()"
+    [enableStateIndicator]="enableStateIndicator()"
+    [isVirtualized]="isVirtualized()"
+    [enableCheckbox]="enableCheckbox()"
+    [inheritChecked]="inheritChecked()"
+    [enableOptionbox]="enableOptionbox()"
+    [pageSize]="pageSize()"
+    [pagesVirtualized]="pagesVirtualized()"
+    [horizontalScrolling]="horizontalScrolling()"
+    [deleteChildrenOnCollapse]="deleteChildrenOnCollapse()"
+    [expandCollapseAll]="expandCollapseAll()"
     (loadChildren)="loadChildren($event)"
   />`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   readonly treeViewComponent = viewChild.required(SiTreeViewComponent);
-  items: TreeItem[] = [
+  readonly items = signal<TreeItem[]>([
     {
       label: 'Company1',
       dataField1: 'Root1DataField1',
@@ -75,45 +74,45 @@ class WrapperComponent {
         }
       ]
     }
-  ];
+  ]);
   loadChildren = (e: LoadChildrenEventArgs): void => {};
-  style = '';
-  smallSize = false;
-  selectedItem?: TreeItem | TreeItem[] = this.items[0];
-  enableSelection = true;
-  enableIcon = true;
-  singleSelectMode = true;
-  folderStateStart = true;
-  groupedList = false;
-  flatTree = false;
-  enableDataField1 = true;
-  enableDataField2 = false;
-  enableContextMenuButton = true;
-  compactMode = false;
-  contextMenuItems: MenuItem[] | MenuItemsProvider = [
+  readonly style = signal('');
+  readonly smallSize = signal(false);
+  readonly selectedItem = signal<TreeItem | TreeItem[] | undefined>(this.items()[0]);
+  readonly enableSelection = signal(true);
+  readonly enableIcon = signal(true);
+  readonly singleSelectMode = signal(true);
+  readonly folderStateStart = signal(true);
+  readonly groupedList = signal(false);
+  readonly flatTree = signal(false);
+  readonly enableDataField1 = signal(true);
+  readonly enableDataField2 = signal(false);
+  readonly enableContextMenuButton = signal(true);
+  readonly compactMode = signal(false);
+  readonly contextMenuItems = signal<MenuItem[] | MenuItemsProvider>([
     { label: 'Item One', type: 'action', action: () => alert('action one') }
-  ];
-  enableStateIndicator = true;
-  isVirtualized = true;
-  enableCheckbox = false;
-  inheritChecked = true;
-  enableOptionbox = false;
-  expandOnClick = false;
-  pageSize = 10;
-  pagesVirtualized = 6;
-  horizontalScrolling = false;
-  deleteChildrenOnCollapse = false;
-  expandCollapseAll = false;
-  cdRef = inject(ChangeDetectorRef);
-  updateItems = (items: TreeItem[]): void => {
-    this.items = items;
+  ]);
+  readonly enableStateIndicator = signal(true);
+  readonly isVirtualized = signal(true);
+  readonly enableCheckbox = signal(false);
+  readonly inheritChecked = signal(true);
+  readonly enableOptionbox = signal(false);
+  readonly expandOnClick = signal(false);
+  readonly pageSize = signal(10);
+  readonly pagesVirtualized = signal(6);
+  readonly horizontalScrolling = signal(false);
+  readonly deleteChildrenOnCollapse = signal(false);
+  readonly expandCollapseAll = signal(false);
+  readonly cdRef = inject(ChangeDetectorRef);
+  readonly updateItems = (items: TreeItem[]): void => {
+    this.items.set(items);
     this.cdRef.markForCheck();
   };
 }
 describe('SiTreeViewComponent', () => {
   let fixture: ComponentFixture<WrapperComponent>;
   let component: WrapperComponent;
-  let debugElement: DebugElement;
+  let debugElement: ComponentFixture<WrapperComponent>['debugElement'];
   let element: HTMLElement;
   let originalRequestAnimationFrame: any;
 
@@ -158,258 +157,251 @@ describe('SiTreeViewComponent', () => {
 
   it('should contain set items', () => {
     fixture.detectChanges();
-    const icon = debugElement.query(By.css('.si-tree-view-item-icon'));
-    expect(icon.attributes['data-icon']).toBe('element-project');
+    const icon = element.querySelector('.si-tree-view-item-icon');
+    expect(icon?.getAttribute('data-icon')).toBe('element-project');
   });
 
   it('should contain folder state start', () => {
-    component.folderStateStart = true;
+    component.folderStateStart.set(true);
     fixture.detectChanges();
     expect(component.treeViewComponent().folderStateStart()).toBe(true);
     expect(
-      debugElement.query(By.css('.si-tree-view-root-ul .si-tree-view-li-item a .element-down-2'))
+      element.querySelector('.si-tree-view-root-ul .si-tree-view-li-item a .element-down-2')
     ).toBeFalsy();
     expect(
-      debugElement.query(By.css('.si-tree-view-root-ul .si-tree-view-li-item a .element-right-2'))
+      element.querySelector('.si-tree-view-root-ul .si-tree-view-li-item a .element-right-2')
     ).toBeTruthy();
   });
 
   it('should contain folder state right', () => {
-    component.folderStateStart = false;
+    component.folderStateStart.set(false);
     fixture.detectChanges();
     expect(
-      debugElement.query(By.css('.si-tree-view-root-ul .si-tree-view-li-item a .element-down-2'))
+      element.querySelector('.si-tree-view-root-ul .si-tree-view-li-item a .element-down-2')
     ).toBeTruthy();
     expect(
-      debugElement.query(By.css('.si-tree-view-root-ul .si-tree-view-li-item a .element-right-2'))
+      element.querySelector('.si-tree-view-root-ul .si-tree-view-li-item a .element-right-2')
     ).toBeFalsy();
   });
 
   it('should enable groupedList and folder state right', () => {
-    component.folderStateStart = false;
-    component.groupedList = true;
+    component.folderStateStart.set(false);
+    component.groupedList.set(true);
     fixture.detectChanges();
     expect(
-      debugElement.query(By.css('.si-tree-view-root-ul .si-tree-view-item-group a .element-down-2'))
+      element.querySelector('.si-tree-view-root-ul .si-tree-view-item-group a .element-down-2')
     ).toBeTruthy();
     expect(
-      debugElement.query(
-        By.css('.si-tree-view-root-ul .si-tree-view-item-group a .element-right-2')
-      )
+      element.querySelector('.si-tree-view-root-ul .si-tree-view-item-group a .element-right-2')
     ).toBeFalsy();
   });
 
   it('should enable groupedList and folder state start', () => {
-    component.folderStateStart = true;
-    component.groupedList = true;
+    component.folderStateStart.set(true);
+    component.groupedList.set(true);
     fixture.detectChanges();
     expect(
-      debugElement.query(By.css('.si-tree-view-root-ul .si-tree-view-item-group a .element-down-2'))
+      element.querySelector('.si-tree-view-root-ul .si-tree-view-item-group a .element-down-2')
     ).toBeFalsy();
     expect(
-      debugElement.query(
-        By.css('.si-tree-view-root-ul .si-tree-view-item-group a .element-right-2')
-      )
+      element.querySelector('.si-tree-view-root-ul .si-tree-view-item-group a .element-right-2')
     ).toBeTruthy();
   });
 
-  it('should be a flat tree', () => {
-    component.flatTree = true;
-    fixture.detectChanges();
-    expect(debugElement.query(By.css('.si-tree-view-header'))).toBeTruthy();
+  it('should be a flat tree', async () => {
+    component.flatTree.set(true);
+    await fixture.whenStable();
+    expect(element.querySelector('.si-tree-view-header')).toBeTruthy();
   });
 
   describe('when switching to a flat tree', () => {
     beforeEach(() => {
-      component.selectedItem = undefined;
+      component.selectedItem.set(undefined);
       fixture.detectChanges();
     });
 
     const clickItem = (index: number, multiple = false): void => {
-      return debugElement
-        .query(By.css('si-tree-view-item:nth-child(' + index + ') .si-tree-view-item-main'))
-        .nativeElement.dispatchEvent(
+      element
+        .querySelector<HTMLElement>(
+          'si-tree-view-item:nth-child(' + index + ') .si-tree-view-item-main'
+        )!
+        .dispatchEvent(
           new MouseEvent('click', { bubbles: true, metaKey: multiple, ctrlKey: multiple })
         );
     };
 
     const openFirstItem = (): void => {
-      debugElement.query(By.css('a.si-tree-view-item-toggle')).nativeElement.click();
+      element.querySelector<HTMLElement>('a.si-tree-view-item-toggle')!.click();
     };
 
-    const getHeaderContent = (): void => {
-      return debugElement.query(By.css('.si-tree-view-header')).nativeElement.textContent;
+    const getHeaderContent = (): string => {
+      return element.querySelector('.si-tree-view-header')!.textContent!;
     };
 
-    const getItemsContent = (): void => {
-      return debugElement.query(By.css('.si-tree-view')).nativeElement.textContent;
+    const getItemsContent = (): string => {
+      return element.querySelector('.si-tree-view')!.textContent!;
     };
 
-    it('should display top level', () => {
-      component.flatTree = true;
-      runOnPushChangeDetection(fixture);
-      const rootItem = component.items[0];
+    it('should display top level', async () => {
+      component.flatTree.set(true);
+      fixture.detectChanges();
+      const rootItem = component.items()[0];
       expect(getHeaderContent()).not.toContain(rootItem.label);
       expect(getItemsContent()).toContain(rootItem?.label);
     });
 
     it('should display children of last opened item', () => {
       openFirstItem();
-      const rootItem = component.items[0];
+      const rootItem = component.items()[0];
       const item = rootItem.children![1];
-      runOnPushChangeDetection(fixture);
-      component.flatTree = true;
-      runOnPushChangeDetection(fixture);
+      fixture.detectChanges();
+      component.flatTree.set(true);
+      fixture.detectChanges();
       expect(getHeaderContent()).toContain(rootItem.label);
       expect(getItemsContent()).toContain(item?.label);
     });
 
     it('should keep single selected item visible', () => {
       openFirstItem();
-      runOnPushChangeDetection(fixture);
-      const rootItem = component.items[0];
+      fixture.detectChanges();
+      const rootItem = component.items()[0];
       const item = rootItem.children![1];
       clickItem(3);
-      runOnPushChangeDetection(fixture);
-      component.flatTree = true;
-      runOnPushChangeDetection(fixture);
+      fixture.detectChanges();
+      component.flatTree.set(true);
+      fixture.detectChanges();
       expect(getHeaderContent()).toContain(rootItem.label);
       expect(getItemsContent()).toContain(item?.label);
     });
 
     it('should keep multiple selected items visible', () => {
-      component.singleSelectMode = false;
+      component.singleSelectMode.set(false);
       openFirstItem();
-      runOnPushChangeDetection(fixture);
-      const rootItem = component.items[0];
+      fixture.detectChanges();
+      const rootItem = component.items()[0];
       const item1 = rootItem.children![0];
       const item2 = rootItem.children![1];
       clickItem(2, true);
       clickItem(3, true);
-      runOnPushChangeDetection(fixture);
-      component.flatTree = true;
-      runOnPushChangeDetection(fixture);
+      fixture.detectChanges();
+      component.flatTree.set(true);
+      fixture.detectChanges();
       expect(getHeaderContent()).toContain(rootItem.label);
       expect(getItemsContent()).toContain(item1?.label);
       expect(getItemsContent()).toContain(item2?.label);
     });
 
     it('should keep multiple selected items visible, even if at different levels', () => {
-      component.singleSelectMode = false;
+      component.singleSelectMode.set(false);
       openFirstItem();
-      runOnPushChangeDetection(fixture);
-      const rootItem = component.items[0];
+      fixture.detectChanges();
+      const rootItem = component.items()[0];
       clickItem(1, true);
       clickItem(3, true);
-      runOnPushChangeDetection(fixture);
-      component.flatTree = true;
-      runOnPushChangeDetection(fixture);
+      fixture.detectChanges();
+      component.flatTree.set(true);
+      fixture.detectChanges();
       expect(getHeaderContent()).not.toContain(rootItem.label);
       expect(getItemsContent()).toContain(rootItem?.label);
     });
 
     it('should start at root level if selection is at root', () => {
-      const rootItem = component.items[0];
+      const rootItem = component.items()[0];
       clickItem(1);
-      runOnPushChangeDetection(fixture);
-      component.flatTree = true;
-      runOnPushChangeDetection(fixture);
+      fixture.detectChanges();
+      component.flatTree.set(true);
+      fixture.detectChanges();
       expect(getHeaderContent()).not.toContain(rootItem.label);
       expect(getItemsContent()).toContain(rootItem?.label);
     });
   });
 
   it('should be no flat tree (default)', () => {
-    expect(debugElement.query(By.css('.si-tree-view-header'))).toBeFalsy();
+    expect(element.querySelector('.si-tree-view-header')).toBeFalsy();
   });
 
   it('should be a grouped List', () => {
-    component.groupedList = true;
+    component.groupedList.set(true);
     fixture.detectChanges();
-    expect(debugElement.query(By.css('.si-tree-view .si-tree-view-item-group'))).toBeTruthy();
-    expect(debugElement.query(By.css('.si-tree-view-li-item'))).toBeFalsy();
+    expect(element.querySelector('.si-tree-view .si-tree-view-item-group')).toBeTruthy();
+    expect(element.querySelector('.si-tree-view-li-item')).toBeFalsy();
   });
 
   it('should be no grouped List (default)', () => {
     fixture.detectChanges();
-    expect(debugElement.query(By.css('.si-tree-view .si-tree-view-item-group'))).toBeFalsy();
-    expect(debugElement.query(By.css('.si-tree-view-li-item'))).toBeTruthy();
+    expect(element.querySelector('.si-tree-view .si-tree-view-item-group')).toBeFalsy();
+    expect(element.querySelector('.si-tree-view-li-item')).toBeTruthy();
   });
 
   it('should show no dataFields (default)', () => {
-    expect(debugElement.query(By.css('.si-tree-view-item-object-data #data-field-1'))).toBeFalsy();
-    expect(debugElement.query(By.css('.si-tree-view-item-object-data #data-field-2'))).toBeFalsy();
+    expect(element.querySelector('.si-tree-view-item-object-data #data-field-1')).toBeFalsy();
+    expect(element.querySelector('.si-tree-view-item-object-data #data-field-2')).toBeFalsy();
   });
 
   it('should show dataField1', () => {
-    component.enableDataField1 = true;
+    component.enableDataField1.set(true);
     fixture.detectChanges();
     expect(component.treeViewComponent().enableDataField1()).toBe(true);
-    expect(debugElement.query(By.css('.si-tree-view-item-object-data-field-1'))).toBeTruthy();
-    expect(element.querySelector('.si-tree-view-item-object-data-field-1')!.innerHTML).toContain(
+    expect(element.querySelector('.si-tree-view-item-object-data-field-1')).toBeTruthy();
+    expect(element.querySelector('.si-tree-view-item-object-data-field-1')).toHaveTextContent(
       'Root1DataField1'
     );
   });
 
   it('should show dataField2', () => {
-    component.enableDataField2 = true;
+    component.enableDataField2.set(true);
     fixture.detectChanges();
     expect(component.treeViewComponent().enableDataField2()).toBe(true);
-    expect(debugElement.query(By.css('.si-tree-view-item-object-data-field-2'))).toBeTruthy();
-    expect(element.querySelector('.si-tree-view-item-object-data-field-2')!.innerHTML).toContain(
+    expect(element.querySelector('.si-tree-view-item-object-data-field-2')).toBeTruthy();
+    expect(element.querySelector('.si-tree-view-item-object-data-field-2')).toHaveTextContent(
       'Root1DataField2'
     );
   });
 
   it('should hide menu button', () => {
-    component.enableContextMenuButton = false;
+    component.enableContextMenuButton.set(false);
     fixture.detectChanges();
     expect(component.treeViewComponent().enableContextMenuButton()).toBe(false);
-    expect(
-      debugElement.query(By.css('.si-tree-view-menu-btn.element-options-vertical'))
-    ).toBeFalsy();
+    expect(element.querySelector('.si-tree-view-menu-btn.element-options-vertical')).toBeFalsy();
   });
 
   it('should show menu button', () => {
-    component.contextMenuItems = [{ label: 'Title', type: 'action', action: () => {} }];
-    component.enableContextMenuButton = true;
+    component.contextMenuItems.set([{ label: 'Title', type: 'action', action: () => {} }]);
+    component.enableContextMenuButton.set(true);
     fixture.detectChanges();
     expect(component.treeViewComponent().enableContextMenuButton()).toBe(true);
-    expect(
-      debugElement.query(By.css('.si-tree-view-menu-btn.element-options-vertical'))
-    ).toBeTruthy();
+    expect(element.querySelector('.si-tree-view-menu-btn.element-options-vertical')).toBeTruthy();
   });
 
   it('should hide state pipe', () => {
-    component.enableStateIndicator = false;
-    fixture.changeDetectorRef.markForCheck();
+    component.enableStateIndicator.set(false);
     fixture.detectChanges();
     expect(component.treeViewComponent().enableStateIndicator()).toBe(false);
-    expect(debugElement.query(By.css('.si-tree-view-state-indicator'))).toBeFalsy();
+    expect(element.querySelector('.si-tree-view-state-indicator')).toBeFalsy();
   });
 
   it('should show state pipe', () => {
-    component.enableStateIndicator = true;
+    component.enableStateIndicator.set(true);
     fixture.detectChanges();
     expect(component.treeViewComponent().enableStateIndicator()).toBe(true);
-    expect(debugElement.query(By.css('.si-tree-view-state-indicator'))).toBeTruthy();
+    expect(element.querySelector('.si-tree-view-state-indicator')).toBeTruthy();
     expect(
       debugElement.query(By.css('.si-tree-view-state-indicator')).styles['background-color']
     ).toBe('red');
   });
 
   it('should be not virtualized', () => {
-    component.isVirtualized = false;
+    component.isVirtualized.set(false);
     fixture.detectChanges();
-    expect(debugElement.query(By.css('.si-tree-view > div + div + div'))).toBeFalsy();
+    expect(element.querySelector('.si-tree-view > div + div + div')).toBeFalsy();
   });
 
   it('should render all items in DOM on expand with virtualization off', () => {
-    component.isVirtualized = false;
-    component.expandCollapseAll = true;
+    component.isVirtualized.set(false);
+    component.expandCollapseAll.set(true);
     const root = createTreeItems(1);
     root[0].children = createTreeItems(99);
-    component.items = root;
+    component.items.set(root);
     fixture.detectChanges();
     expect(element.querySelectorAll('.si-tree-view-item').length).toBe(1);
 
@@ -423,19 +415,19 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should be virtualized', () => {
-    component.isVirtualized = true;
+    component.isVirtualized.set(true);
     fixture.detectChanges();
-    expect(debugElement.query(By.css('.si-tree-view > div + div + div'))).toBeTruthy();
+    expect(element.querySelector('.si-tree-view > div + div + div')).toBeTruthy();
   });
 
   it('should not show checkbox or option box', () => {
-    expect(debugElement.query(By.css('.form-check-input'))).toBeFalsy();
+    expect(element.querySelector('.form-check-input')).toBeFalsy();
   });
 
   it('should show checkbox and check click', async () => {
-    component.enableCheckbox = true;
+    component.enableCheckbox.set(true);
     fixture.detectChanges();
-    const input = debugElement.query(By.css('.form-check-input')).nativeElement;
+    const input = element.querySelector<HTMLInputElement>('.form-check-input')!;
     expect(component.treeViewComponent().enableCheckbox()).toBe(true);
     expect(input.checked).toBeFalsy();
 
@@ -447,11 +439,11 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should show checkbox and check click', async () => {
-    component.enableCheckbox = true;
-    component.inheritChecked = true;
-    component.folderStateStart = false;
+    component.enableCheckbox.set(true);
+    component.inheritChecked.set(true);
+    component.folderStateStart.set(false);
     fixture.detectChanges();
-    const input = debugElement.query(By.css('.form-check-input')).nativeElement;
+    const input = element.querySelector<HTMLInputElement>('.form-check-input')!;
     expect(input.checked).toBeFalsy();
     expect(component.treeViewComponent().inheritChecked()).toBe(true);
     input.click();
@@ -468,17 +460,17 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should show option box', () => {
-    component.enableOptionbox = true;
+    component.enableOptionbox.set(true);
     fixture.detectChanges();
-    const input = fixture.debugElement.query(By.css('.form-check-input')).nativeElement;
+    const input = element.querySelector<HTMLInputElement>('.form-check-input')!;
     expect(component.treeViewComponent().enableOptionbox()).toBe(true);
     expect(input.checked).toBeFalsy();
     expect(input.type).toBe('radio');
   });
 
   it('should show option box and check click', async () => {
-    component.enableOptionbox = true;
-    component.folderStateStart = false;
+    component.enableOptionbox.set(true);
+    component.folderStateStart.set(false);
     fixture.detectChanges();
 
     // Option boxes don't work on the first level. So expand the tree first
@@ -487,7 +479,7 @@ describe('SiTreeViewComponent', () => {
       .triggerEventHandler('click', null);
     vi.advanceTimersByTime(0);
     await fixture.whenStable();
-    const input = fixture.debugElement.query(By.css('.form-check-input')).nativeElement;
+    const input = element.querySelector<HTMLInputElement>('.form-check-input')!;
     // Click on the now expanded optionbox. (Second item in the list)
     input.click();
     vi.advanceTimersByTime(0);
@@ -497,35 +489,33 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('item should toggle by click on collapse button', async () => {
-    component.folderStateStart = false;
+    component.folderStateStart.set(false);
     fixture.detectChanges();
     debugElement
       .query(By.css('.si-tree-view-root-ul .si-tree-view-li-item .si-tree-view-item-toggle'))
       .triggerEventHandler('click', null);
     fixture.detectChanges();
     const item = element.querySelectorAll('.si-tree-view-item')[1];
-    expect(item.querySelector('.si-tree-view-item-object-data div')?.innerHTML).toContain('Milano');
+    expect(item.querySelector('.si-tree-view-item-object-data div')).toHaveTextContent('Milano');
   });
 
   it('item should be selected', () => {
-    component.enableSelection = true;
+    component.enableSelection.set(true);
     fixture.detectChanges();
 
-    expect(
-      debugElement.query(By.css('.si-tree-view-li-item.si-tree-view-item-selected'))
-    ).toBeTruthy();
+    expect(element.querySelector('.si-tree-view-li-item.si-tree-view-item-selected')).toBeTruthy();
   });
 
   it('should return folderStateStart true as default', () => {
-    expect(component.folderStateStart).toBe(true);
+    expect(component.folderStateStart()).toBe(true);
   });
 
   it('should call onFlatTreeNavigateUp', () => {
-    component.flatTree = true;
+    component.flatTree.set(true);
     // Use of <any> due to accessing protected member
     const spy = vi.spyOn(component.treeViewComponent() as any, 'onFlatTreeNavigateUp');
     fixture.detectChanges();
-    expect(debugElement.queryAll(By.css('.si-tree-view-item-toggle')).length).toBeGreaterThan(0);
+    expect(element.querySelectorAll('.si-tree-view-item-toggle').length).toBeGreaterThan(0);
     debugElement
       .queryAll(By.css('.si-tree-view-item-toggle'))[0]
       .triggerEventHandler('click', null);
@@ -542,7 +532,7 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should call onFlatTreeNavigateHome', async () => {
-    component.flatTree = true;
+    component.flatTree.set(true);
     // Use of <any> due to accessing protected member
     const spy = vi.spyOn(component.treeViewComponent() as any, 'onFlatTreeNavigateHome');
     fixture.detectChanges();
@@ -554,7 +544,7 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should expand and collapse all items', async () => {
-    component.expandCollapseAll = true;
+    component.expandCollapseAll.set(true);
     vi.spyOn(component.treeViewComponent(), 'expandAll');
     vi.spyOn(component.treeViewComponent(), 'collapseAll');
 
@@ -590,34 +580,36 @@ describe('SiTreeViewComponent', () => {
       { label: 'Item One', type: 'action', action: () => alert('action one') },
       { label: 'Item Two', type: 'action', action: () => alert('action two') }
     );
-    component.contextMenuItems = menuItems;
+    component.contextMenuItems.set(menuItems);
     vi.advanceTimersByTime(0);
     await fixture.whenStable();
     element.querySelectorAll('.si-tree-context-menu-btn div')[0].dispatchEvent(new Event('click'));
     vi.advanceTimersByTime(0);
     await fixture.whenStable();
-    expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe('Item One');
+    expect(document.querySelector<HTMLElement>('si-menu si-menu-item')).toHaveTextContent(
+      'Item One'
+    );
   });
 
   it('should allow returning menu items as observable with menu provider', () => {
-    component.enableContextMenuButton = true;
+    component.enableContextMenuButton.set(true);
 
     const menuItems = new BehaviorSubject<MenuItem[]>([
       { label: 'Item One', type: 'action', action: () => alert('action one') }
     ]);
 
-    component.contextMenuItems = () => {
+    component.contextMenuItems.set(() => {
       return menuItems;
-    };
+    });
     fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
     element.querySelectorAll('.si-tree-context-menu-btn div')[0].dispatchEvent(new Event('click'));
     fixture.detectChanges();
-    expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe('Item One');
+    expect(document.querySelector<HTMLElement>('si-menu si-menu-item')).toHaveTextContent(
+      'Item One'
+    );
     menuItems.next([{ label: 'Item Updated', type: 'action', action: () => alert('action one') }]);
     fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
-    expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe(
+    expect(document.querySelector<HTMLElement>('si-menu si-menu-item')).toHaveTextContent(
       'Item Updated'
     );
   });
@@ -633,8 +625,7 @@ describe('SiTreeViewComponent', () => {
           action: () => alert('action two')
         }
       );
-      component.contextMenuItems = menuItems;
-      fixture.changeDetectorRef.markForCheck();
+      component.contextMenuItems.set(menuItems);
       fixture.detectChanges();
     });
 
@@ -650,7 +641,7 @@ describe('SiTreeViewComponent', () => {
       await fixture.whenStable();
       fixture.detectChanges();
       await fixture.whenStable();
-      expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe(
+      expect(document.querySelector<HTMLElement>('si-menu si-menu-item')).toHaveTextContent(
         'Item One'
       );
     });
@@ -667,7 +658,7 @@ describe('SiTreeViewComponent', () => {
       fixture.detectChanges();
       await fixture.whenStable();
       fixture.detectChanges();
-      expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe(
+      expect(document.querySelector<HTMLElement>('si-menu si-menu-item')).toHaveTextContent(
         'Item One'
       );
     });
@@ -678,14 +669,14 @@ describe('SiTreeViewComponent', () => {
       vi.advanceTimersByTime(0);
       fixture.detectChanges();
       await fixture.whenStable();
-      expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe(
+      expect(document.querySelector<HTMLElement>('si-menu si-menu-item')).toHaveTextContent(
         'Item One'
       );
     });
 
     it('should have only one context menu open at a time', async () => {
       // Open context menu of tree different items left one menu open
-      component.items = createTreeItems(3);
+      component.items.set(createTreeItems(3));
       fixture.detectChanges();
       const items = element.querySelectorAll('si-tree-view-item');
 
@@ -699,19 +690,18 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should handle page size and pages virtualized', () => {
-    component.pageSize = 5;
-    component.pagesVirtualized = 10;
-    component.isVirtualized = true;
-    component.items = createTreeItems(100);
+    component.pageSize.set(5);
+    component.pagesVirtualized.set(10);
+    component.isVirtualized.set(true);
+    component.items.set(createTreeItems(100));
     fixture.detectChanges();
     expect(element.querySelectorAll('si-tree-view-item').length).toBe(50);
   });
 
   it('should delete children on collapse', () => {
     fixture.detectChanges();
-    component.deleteChildrenOnCollapse = true;
-    component.expandCollapseAll = true;
-    component.cdRef.markForCheck();
+    component.deleteChildrenOnCollapse.set(true);
+    component.expandCollapseAll.set(true);
     fixture.detectChanges();
     expect(component.treeViewComponent().deleteChildrenOnCollapse()).toBe(true);
     element.querySelectorAll('.si-tree-view-item-toggle')[0].dispatchEvent(new Event('click'));
@@ -720,44 +710,44 @@ describe('SiTreeViewComponent', () => {
     element.querySelectorAll('.si-tree-view-item-toggle')[0].dispatchEvent(new Event('click'));
 
     fixture.detectChanges();
-    expect(component.items[0].children?.length).toBe(0);
+    expect(component.items()[0].children?.length).toBe(0);
   });
 
   it('should handle method treeItemsSelected', () => {
     const treeViewComponent = component.treeViewComponent();
     vi.spyOn(treeViewComponent.treeItemsSelected, 'emit');
-    component.enableSelection = true;
+    component.enableSelection.set(true);
     fixture.detectChanges();
     element.querySelectorAll('.si-tree-view-item-main')[0].dispatchEvent(new Event('click'));
     fixture.detectChanges();
-    expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items[0]]);
+    expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items()[0]]);
   });
 
   it('should handle refresh API', () => {
     fixture.detectChanges();
-    component.flatTree = true;
+    component.flatTree.set(true);
     expect(element.querySelectorAll('si-tree-view-item').length).toBe(1);
 
-    component.items = createTreeItems(2);
+    component.items.set(createTreeItems(2));
     component.treeViewComponent().refresh();
-    runOnPushChangeDetection(fixture);
+    fixture.detectChanges();
     expect(element.querySelectorAll('si-tree-view-item').length).toBe(2);
 
-    component.flatTree = false;
-    component.items = createTreeItems(3);
+    component.flatTree.set(false);
+    component.items.set(createTreeItems(3));
     component.treeViewComponent().refresh();
-    runOnPushChangeDetection(fixture);
+    fixture.detectChanges();
     expect(element.querySelectorAll('si-tree-view-item').length).toBe(3);
   });
 
   it('should handle method scrollIntoView', () => {
-    component.items = createTreeItems(100);
-    component.pageSize = 10;
-    component.pagesVirtualized = 6;
-    component.isVirtualized = true;
+    component.items.set(createTreeItems(100));
+    component.pageSize.set(10);
+    component.pagesVirtualized.set(6);
+    component.isVirtualized.set(true);
     fixture.detectChanges();
     expect(element.querySelector('.si-tree-view-root-ul')?.childElementCount).toBe(60);
-    component.treeViewComponent().scrollItemIntoView(component.items[99]);
+    component.treeViewComponent().scrollItemIntoView(component.items()[99]);
     fixture.detectChanges();
     expect(
       element.querySelector(`.si-tree-view-root-ul
@@ -766,12 +756,12 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should handle loadChildren', () => {
-    component.items = [
+    component.items.set([
       {
         label: 'Company1',
         children: []
       }
-    ];
+    ]);
     vi.spyOn(component, 'loadChildren');
     fixture.detectChanges();
     element.querySelector('.si-tree-view-item-toggle')?.dispatchEvent(new Event('click'));
@@ -780,12 +770,12 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should append nodes from dynamic loadChildren', () => {
-    component.items = [
+    component.items.set([
       {
         label: 'Company1',
         children: []
       }
-    ];
+    ]);
     vi.spyOn(component, 'loadChildren').mockImplementation((e: LoadChildrenEventArgs) =>
       e.callback(e.treeItem, [{ label: 'loaded child' }])
     );
@@ -798,27 +788,28 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should handle showTreeItem', () => {
-    component.items = createTreeItems(1);
-    component.items[0].children = createTreeItems(1);
-    component.items[0].children[0].children = [{ parent: component.items[0].children[0] }];
-    component.items[0].children[0].children[0].children = [
-      { parent: component.items[0].children[0].children[0] }
-    ];
+    component.items.set(createTreeItems(1));
+    component.items.update(items => {
+      items[0].children = createTreeItems(1);
+      items[0].children[0].children = [{ parent: items[0].children[0] }];
+      items[0].children[0].children[0].children = [{ parent: items[0].children[0].children[0] }];
+      return [...items];
+    });
 
     const treeViewComponent = component.treeViewComponent();
     vi.spyOn(treeViewComponent, 'expandTreeItem');
     fixture.detectChanges();
 
-    treeViewComponent.showTreeItem(component.items[0].children[0].children[0].children[0]);
+    treeViewComponent.showTreeItem(component.items()[0].children![0].children![0].children![0]);
     fixture.detectChanges();
 
     expect(treeViewComponent.expandTreeItem).toHaveBeenCalledWith(
-      component.items[0].children[0].children[0]
+      component.items()[0].children![0].children![0]
     );
   });
 
   it('should handle scroll', () => {
-    component.items = createTreeItems(100);
+    component.items.set(createTreeItems(100));
     fixture.detectChanges();
     expect(element.querySelectorAll('si-tree-view-item').length).toBe(60);
 
@@ -833,15 +824,15 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should handle scroll with grouped list', () => {
-    component.items = createTreeItems(1000);
+    component.items.set(createTreeItems(1000));
     fixture.detectChanges();
 
-    component.isVirtualized = true;
-    component.groupedList = true;
+    component.isVirtualized.set(true);
+    component.groupedList.set(true);
     fixture.detectChanges();
     element.querySelector('.si-tree-view')?.scroll(0, 5000);
     element.querySelector('.si-tree-view')?.dispatchEvent(new Event('scroll'));
-    runOnPushChangeDetection(fixture);
+    fixture.detectChanges();
     expect(component.treeViewComponent().groupedList()).toBe(true);
     expect(element.querySelectorAll('si-tree-view-item').length).toBe(60);
 
@@ -852,10 +843,9 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should auto scroll if children not visible when node is expanded', async () => {
-    component.items = createTreeItems(100);
-    component.folderStateStart = false;
+    component.items.set(createTreeItems(100));
+    component.folderStateStart.set(false);
     element.style.height = '100%';
-    component.cdRef.markForCheck();
     await fixture.whenStable();
     const itemHeight =
       (element.querySelector('si-tree-view-item')?.getBoundingClientRect().height ?? 40) + 8;
@@ -863,18 +853,19 @@ describe('SiTreeViewComponent', () => {
       Math.floor(
         (element.getBoundingClientRect().height - element.getBoundingClientRect().top) / itemHeight
       ) - 1;
-    component.items[lastVisibleNode] = {
-      ...component.items[lastVisibleNode],
-      children: createTreeItems(10),
-      state: 'collapsed'
-    };
-    component.items[lastVisibleNode + 1] = {
-      ...component.items[lastVisibleNode + 1],
-      children: createTreeItems(10),
-      state: 'collapsed'
-    };
-    component.items = [...component.items];
-    fixture.changeDetectorRef.markForCheck();
+    component.items.update(items => {
+      items[lastVisibleNode] = {
+        ...items[lastVisibleNode],
+        children: createTreeItems(10),
+        state: 'collapsed'
+      };
+      items[lastVisibleNode + 1] = {
+        ...items[lastVisibleNode + 1],
+        children: createTreeItems(10),
+        state: 'collapsed'
+      };
+      return [...items];
+    });
     vi.advanceTimersByTime(0);
     await fixture.whenStable();
     Object.defineProperty(window, 'requestAnimationFrame', {
@@ -902,22 +893,20 @@ describe('SiTreeViewComponent', () => {
     fixture.detectChanges();
 
     expect(component.treeViewComponent().compactMode()).toBeFalsy();
-    component.compactMode = true;
+    component.compactMode.set(true);
     const spy = vi.spyOn(getHeightService(), 'updateItemHeight');
-    component.cdRef.markForCheck();
     fixture.detectChanges();
     expect(spy).toHaveBeenCalled();
   });
 
   it('should update tree height on class changes', async () => {
-    component.enableDataField1 = false;
+    component.enableDataField1.set(false);
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     // Ensure we are in the right state and the tree is already rendered
     expect(getHeightService().itemHeight).toBeGreaterThan(24);
 
-    component.smallSize = true;
-    component.cdRef.markForCheck();
+    component.smallSize.set(true);
     fixture.detectChanges();
     vi.useRealTimers();
     // cannot use mock timer here
@@ -938,47 +927,50 @@ describe('SiTreeViewComponent', () => {
 
   describe('with multi selection enabled', () => {
     beforeEach(() => {
-      component.singleSelectMode = false;
-      component.enableSelection = true;
-      component.items = createTreeItems(10);
+      component.singleSelectMode.set(false);
+      component.enableSelection.set(true);
+      component.items.set(createTreeItems(10));
       fixture.detectChanges();
     });
 
     it('should select multiple items', async () => {
-      component.selectedItem = [component.items[0], component.items[1], component.items[2]];
-      component.cdRef.markForCheck();
+      component.selectedItem.set([
+        component.items()[0],
+        component.items()[1],
+        component.items()[2]
+      ]);
       vi.advanceTimersByTime(100);
       fixture.detectChanges();
       await fixture.whenStable();
       expect(
-        debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
+        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected').length
       ).toBe(3);
     });
 
     it('should handle selectedItem changes', async () => {
-      component.selectedItem = [component.items[0], component.items[1], component.items[2]];
-      component.cdRef.markForCheck();
+      component.selectedItem.set([
+        component.items()[0],
+        component.items()[1],
+        component.items()[2]
+      ]);
       vi.advanceTimersByTime(100);
       fixture.detectChanges();
       await fixture.whenStable();
       expect(
-        debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
+        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected').length
       ).toBe(3);
 
-      component.selectedItem = undefined;
-      component.cdRef.markForCheck();
+      component.selectedItem.set(undefined);
       fixture.detectChanges();
 
       expect(
-        debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
+        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected').length
       ).toBe(0);
     });
 
     it('should select all items on click', () => {
-      component.selectedItem = [component.items[0]];
-      component.cdRef.markForCheck();
+      component.selectedItem.set([component.items()[0]]);
       fixture.detectChanges();
-      runOnPushChangeDetection(fixture);
 
       const lastItem = Array.from(
         element.querySelectorAll<HTMLElement>('.si-tree-view-item-main')
@@ -989,8 +981,8 @@ describe('SiTreeViewComponent', () => {
       fixture.detectChanges();
 
       expect(
-        debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
-      ).toBe(component.items.length);
+        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected').length
+      ).toBe(component.items().length);
     });
 
     it('should emit selection on keyup shift', () => {
@@ -1014,14 +1006,12 @@ describe('SiTreeViewComponent', () => {
       );
       fixture.detectChanges();
 
-      expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items[0]]);
+      expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items()[0]]);
     });
 
     it('should append to selected items on click', () => {
-      component.selectedItem = [component.items[0]];
-      component.cdRef.markForCheck();
+      component.selectedItem.set([component.items()[0]]);
       fixture.detectChanges();
-      runOnPushChangeDetection(fixture);
 
       const lastItem = Array.from(
         element.querySelectorAll<HTMLElement>('.si-tree-view-item-main')
@@ -1036,15 +1026,13 @@ describe('SiTreeViewComponent', () => {
       fixture.detectChanges();
 
       expect(
-        debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
+        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected').length
       ).toBe(2);
     });
 
     it('should deselect item on click', () => {
-      component.selectedItem = [component.items[0], component.items[1]];
-      component.cdRef.markForCheck();
+      component.selectedItem.set([component.items()[0], component.items()[1]]);
       fixture.detectChanges();
-      runOnPushChangeDetection(fixture);
 
       const firstItem = Array.from(
         element.querySelectorAll<HTMLElement>('.si-tree-view-item-main')
@@ -1059,7 +1047,7 @@ describe('SiTreeViewComponent', () => {
       fixture.detectChanges();
 
       expect(
-        debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
+        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected').length
       ).toBe(1);
     });
 
@@ -1083,7 +1071,7 @@ describe('SiTreeViewComponent', () => {
       );
       fixture.detectChanges();
 
-      expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items[0]]);
+      expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items()[0]]);
     });
   });
 
@@ -1093,22 +1081,21 @@ describe('SiTreeViewComponent', () => {
 
   describe('with icons', () => {
     beforeEach(() => {
-      component.items = createTreeItems(10, { icon: 'sample-icon', selected: true });
+      component.items.set(createTreeItems(10, { icon: 'sample-icon', selected: true }));
       fixture.detectChanges();
     });
 
     it('should display icons', () => {
       expect(
-        debugElement.queryAll(By.css('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)')).length
+        element.querySelectorAll('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)').length
       ).toBe(10);
     });
 
     it('should hide icons', () => {
-      component.enableIcon = false;
-      component.cdRef.markForCheck();
+      component.enableIcon.set(false);
       fixture.detectChanges();
       expect(
-        debugElement.queryAll(By.css('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)')).length
+        element.querySelectorAll('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)').length
       ).toBe(0);
     });
   });
@@ -1118,7 +1105,7 @@ describe('SiTreeViewComponent', () => {
       const tree = createTreeItems(5, { state: 'collapsed' });
       tree.forEach(i => (i.children = [{ label: `child ${i.label}`, parent: i }]));
       tree[2].state = 'expanded';
-      component.items = tree;
+      component.items.set(tree);
       fixture.detectChanges();
     });
 
@@ -1139,7 +1126,7 @@ describe('SiTreeViewComponent', () => {
       fixture.detectChanges();
 
       expect(treeViewComponent.treeItemClicked.emit).toHaveBeenCalled();
-      expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items[1]]);
+      expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items()[1]]);
     });
 
     it('should expand node on keydown ArrowRight', () => {
@@ -1160,7 +1147,7 @@ describe('SiTreeViewComponent', () => {
 
       expect(treeViewComponent.treeItemFolderClicked.emit).toHaveBeenCalled();
       expect(treeViewComponent.treeItemFolderStateChanged.emit).toHaveBeenCalled();
-      expect(component.items[1].state).toBe('expanded');
+      expect(component.items()[1].state).toBe('expanded');
     });
 
     it('should jump into expanded node on keydown ArrowRight', () => {
@@ -1194,7 +1181,7 @@ describe('SiTreeViewComponent', () => {
       fixture.detectChanges();
 
       expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([
-        component.items[0].children![0]
+        component.items()[0].children![0]
       ]);
     });
 
@@ -1216,7 +1203,7 @@ describe('SiTreeViewComponent', () => {
 
       expect(treeViewComponent.treeItemFolderClicked.emit).toHaveBeenCalled();
       expect(treeViewComponent.treeItemFolderStateChanged.emit).toHaveBeenCalled();
-      expect(component.items[1].state).toBe('collapsed');
+      expect(component.items()[1].state).toBe('collapsed');
     });
 
     it('should jump out of node on keydown ArrowLeft', async () => {
@@ -1256,13 +1243,12 @@ describe('SiTreeViewComponent', () => {
       vi.advanceTimersByTime(0);
       fixture.detectChanges();
 
-      expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items[0]]);
+      expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items()[0]]);
     });
 
     describe('with checkbox', () => {
       beforeEach(() => {
-        component.enableCheckbox = true;
-        component.cdRef.markForCheck();
+        component.enableCheckbox.set(true);
         fixture.detectChanges();
       });
 
@@ -1318,8 +1304,7 @@ describe('SiTreeViewComponent', () => {
 
     describe('with option box', () => {
       beforeEach(() => {
-        component.enableOptionbox = true;
-        component.cdRef.markForCheck();
+        component.enableOptionbox.set(true);
         fixture.detectChanges();
       });
 
@@ -1344,8 +1329,7 @@ describe('SiTreeViewComponent', () => {
 
     describe('with flat tree', () => {
       beforeEach(() => {
-        component.flatTree = true;
-        component.cdRef.markForCheck();
+        component.flatTree.set(true);
         fixture.detectChanges();
       });
 
@@ -1376,7 +1360,7 @@ describe('SiTreeViewComponent', () => {
         await fixture.whenStable();
 
         expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([
-          component.items[0].children![0]
+          component.items()[0].children![0]
         ]);
       });
 
@@ -1415,15 +1399,19 @@ describe('SiTreeViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items[0]]);
+        expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([
+          component.items()[0]
+        ]);
       });
     });
   });
 
   describe('with addChildItems', () => {
     beforeEach(() => {
-      component.items[0].state = 'expanded';
-      component.cdRef.markForCheck();
+      component.items.update(items => {
+        items[0].state = 'expanded';
+        return [...items];
+      });
       fixture.detectChanges();
     });
 
@@ -1468,7 +1456,7 @@ describe('SiTreeViewComponent', () => {
             children
           }
         ],
-        component.items[0]
+        component.items()[0]
       );
       fixture.detectChanges();
 
@@ -1482,13 +1470,12 @@ describe('SiTreeViewComponent', () => {
 
   describe('with expandOnClick', () => {
     beforeEach(() => {
-      component.expandOnClick = true;
+      component.expandOnClick.set(true);
       const tree = createTreeItems(3, { state: 'collapsed' });
       tree.forEach(i => (i.children = [{ label: `child ${i.label}`, parent: i }]));
       tree[1].state = 'expanded';
       tree[2].selectable = false;
-      component.items = tree;
-      component.cdRef.markForCheck();
+      component.items.set(tree);
       fixture.detectChanges();
     });
 
@@ -1502,7 +1489,7 @@ describe('SiTreeViewComponent', () => {
       collapsedItem.click();
       fixture.detectChanges();
 
-      expect(component.items[0].state).toBe('expanded');
+      expect(component.items()[0].state).toBe('expanded');
       expect(treeViewComponent.treeItemFolderStateChanged.emit).toHaveBeenCalled();
     });
 
@@ -1520,7 +1507,7 @@ describe('SiTreeViewComponent', () => {
       expandedItem.click();
       fixture.detectChanges();
 
-      expect(component.items[0].state).toBe('collapsed');
+      expect(component.items()[0].state).toBe('collapsed');
       expect(treeViewComponent.treeItemFolderStateChanged.emit).toHaveBeenCalled();
     });
 
@@ -1536,13 +1523,12 @@ describe('SiTreeViewComponent', () => {
       collapsedNotSelectableItem.click();
       fixture.detectChanges();
 
-      expect(component.items[0].state).toBe('collapsed');
+      expect(component.items()[0].state).toBe('collapsed');
       expect(treeViewComponent.treeItemFolderStateChanged.emit).not.toHaveBeenCalled();
     });
 
     it('should not toggle state on flatTree', () => {
-      component.flatTree = true;
-      component.cdRef.markForCheck();
+      component.flatTree.set(true);
       fixture.detectChanges();
       const treeViewComponent = component.treeViewComponent();
       vi.spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
@@ -1553,14 +1539,14 @@ describe('SiTreeViewComponent', () => {
       collapsedItem.click();
       fixture.detectChanges();
 
-      expect(component.items[0].state).toBe('collapsed');
+      expect(component.items()[0].state).toBe('collapsed');
       expect(treeViewComponent.treeItemFolderStateChanged.emit).not.toHaveBeenCalled();
     });
   });
 
   describe('with display none', () => {
     beforeEach(() => {
-      component.style = 'display: none';
+      component.style.set('display: none');
     });
 
     it('should not update pageSize when item height is 0', () => {
