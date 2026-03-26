@@ -1,3 +1,15 @@
+# [49.4.0](https://github.com/siemens/element/compare/v49.3.0...v49.4.0) (2026-03-26)
+
+
+### Features
+
+* **threshold:** add useAliasForStepValues input to display alias labels ([1dadebc](https://github.com/siemens/element/commit/1dadebc2b5323f227a8ed4e4c01a64d0e3643f5a))
+
+
+### Bug Fixes
+
+* **application-header:** highlight active route on mobile ([4d25237](https://github.com/siemens/element/commit/4d252373f7cbea10c7097cab216155ccb184c658))
+
 # [49.3.0](https://github.com/siemens/element/compare/v49.2.0...v49.3.0) (2026-03-25)
 
 
