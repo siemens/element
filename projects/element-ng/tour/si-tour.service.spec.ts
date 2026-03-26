@@ -11,7 +11,7 @@ import { SiTourService } from './si-tour.service';
   template: `<div class="h-10">Test</div>`
 })
 class TestHostComponent {
-  tourService = inject(SiTourService);
+  readonly tourService = inject(SiTourService);
 }
 
 describe('SiTourService', () => {
@@ -53,11 +53,11 @@ describe('SiTourService', () => {
     expect(tour).not.toBeNull();
 
     const title = tour?.querySelector<HTMLDivElement>('div.si-h4');
-    expect(title?.innerText).toBe('Div element');
+    expect(title).toHaveTextContent('Div element');
     const next = tour?.querySelector<HTMLButtonElement>('button.btn-primary');
-    expect(next?.innerText).toBe('Next');
+    expect(next).toHaveTextContent('Next');
     const skip = tour?.querySelector<HTMLButtonElement>('button.btn-tertiary');
-    expect(skip?.innerText).toBe('Skip tour');
+    expect(skip).toHaveTextContent('Skip tour');
 
     component.tourService.complete();
   });

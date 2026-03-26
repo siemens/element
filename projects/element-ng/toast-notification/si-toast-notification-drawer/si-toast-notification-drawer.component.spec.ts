@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, Subject } from 'rxjs';
 
@@ -11,11 +11,11 @@ import { SiToastNotificationDrawerComponent } from './si-toast-notification-draw
 
 @Component({
   imports: [SiToastNotificationDrawerComponent],
-  template: `<si-toast-notification-drawer [toasts]="toasts" /> `,
+  template: `<si-toast-notification-drawer [toasts]="toasts()" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
-  toasts: Observable<SiToast[]> = new Subject<SiToast[]>();
+  readonly toasts = signal<Observable<SiToast[]>>(new Subject<SiToast[]>());
 }
 describe('SiToastNotificationDrawerComponent', () => {
   let component: TestHostComponent;
@@ -28,14 +28,14 @@ describe('SiToastNotificationDrawerComponent', () => {
     element = fixture.nativeElement;
   });
 
-  it('should create', () => {
-    fixture.detectChanges();
+  it('should create', async () => {
+    await fixture.whenStable();
     expect(component).toBeTruthy();
   });
 
-  it('renders toasts', () => {
+  it('renders toasts', async () => {
     const toastSubject = new Subject<SiToast[]>();
-    component.toasts = toastSubject;
+    component.toasts.set(toastSubject);
     fixture.detectChanges();
 
     toastSubject.next([
@@ -43,11 +43,11 @@ describe('SiToastNotificationDrawerComponent', () => {
       { state: 'info', title: 'info toast', message: 'info message', hidden: new Subject() }
     ]);
 
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const toasts = element.querySelectorAll('si-toast-notification');
     expect(toasts.length).toBe(2);
-    expect(toasts[0].innerHTML).toContain('danger message');
-    expect(toasts[1].innerHTML).toContain('info message');
+    expect(toasts[0]).toHaveTextContent('danger message');
+    expect(toasts[1]).toHaveTextContent('info message');
   });
 });

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiTooltipModule } from './si-tooltip.module';
@@ -15,20 +15,14 @@ describe('SiTooltipDirective', () => {
 
     @Component({
       imports: [SiTooltipModule],
-      template: `<button type="button" [siTooltip]="tooltipText" [isDisabled]="isDisabled">
+      template: `<button type="button" [siTooltip]="tooltipText()" [isDisabled]="isDisabled()">
         Test
       </button>`
     })
     class TestHostComponent {
-      isDisabled = false;
-      tooltipText = 'test tooltip';
+      readonly isDisabled = signal(false);
+      readonly tooltipText = signal('test tooltip');
     }
-
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [SiTooltipModule, TestHostComponent]
-      }).compileComponents();
-    });
 
     beforeEach(() => {
       vi.useFakeTimers();
@@ -43,54 +37,52 @@ describe('SiTooltipDirective', () => {
       vi.useRealTimers();
     });
 
-    it('should open on focus', () => {
+    it('should open on focus', async () => {
       button.dispatchEvent(new Event('focus'));
       // Focus should be immediate (no delay) but still need to tick for setTimeout(0)
       vi.advanceTimersByTime(0);
-      fixture.detectChanges();
+      await fixture.whenStable();
 
-      expect(document.querySelector('.tooltip')).toBeTruthy();
-      expect(document.querySelector('.tooltip')?.innerHTML).toContain('test tooltip');
+      expect(document.querySelector('.tooltip')).toBeInTheDocument();
+      expect(document.querySelector('.tooltip')).toHaveTextContent('test tooltip');
 
       button.dispatchEvent(new Event('focusout'));
       vi.advanceTimersByTime(500);
 
-      expect(document.querySelector('.tooltip')).toBeFalsy();
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
 
     it('should not show tooltip when disabled', () => {
-      component.isDisabled = true;
-      fixture.changeDetectorRef.markForCheck();
+      component.isDisabled.set(true);
       fixture.detectChanges();
 
       button.dispatchEvent(new Event('focus'));
-      expect(document.querySelector('.tooltip')).toBeFalsy();
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
 
-    it('should show tooltip on mouse over', () => {
+    it('should show tooltip on mouse over', async () => {
       button.dispatchEvent(new MouseEvent('mouseenter'));
       // hover should have 500ms delay
-      expect(document.querySelector('.tooltip')).toBeFalsy();
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
 
       vi.advanceTimersByTime(500);
-      fixture.detectChanges();
-      expect(document.querySelector('.tooltip')).toBeTruthy();
+      await fixture.whenStable();
+      expect(document.querySelector('.tooltip')).toBeInTheDocument();
 
       button.dispatchEvent(new MouseEvent('mouseleave'));
-      expect(document.querySelector('.tooltip')).toBeFalsy();
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
 
-    it('should update tooltip content while open', () => {
+    it('should update tooltip content while open', async () => {
       button.dispatchEvent(new Event('focus'));
       vi.advanceTimersByTime(0);
-      fixture.detectChanges();
-      expect(document.querySelector('.tooltip')?.innerHTML).toContain('test tooltip');
+      await fixture.whenStable();
+      expect(document.querySelector('.tooltip')).toHaveTextContent('test tooltip');
 
-      component.tooltipText = 'updated tooltip';
-      fixture.changeDetectorRef.markForCheck();
+      component.tooltipText.set('updated tooltip');
       fixture.detectChanges();
 
-      expect(document.querySelector('.tooltip')?.innerHTML).toContain('updated tooltip');
+      expect(document.querySelector('.tooltip')).toHaveTextContent('updated tooltip');
     });
   });
 
@@ -100,13 +92,13 @@ describe('SiTooltipDirective', () => {
 
     @Component({
       imports: [SiTooltipModule],
-      template: ` <button type="button" [siTooltip]="template" [tooltipContext]="tooltipContext"
-          >Test</button
-        >
+      template: `<button type="button" [siTooltip]="template" [tooltipContext]="tooltipContext()">
+          Test
+        </button>
         <ng-template #template let-tooltip="tooltip">Template content {{ tooltip }}</ng-template>`
     })
     class TestHostComponent {
-      tooltipContext = {};
+      readonly tooltipContext = signal<Record<string, unknown>>({});
     }
 
     beforeEach(() => {
@@ -125,25 +117,24 @@ describe('SiTooltipDirective', () => {
       button.dispatchEvent(new Event('focus'));
       vi.advanceTimersByTime(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')?.innerHTML).toContain('Template content');
+      expect(document.querySelector('.tooltip')).toHaveTextContent('Template content');
       button.dispatchEvent(new Event('focusout'));
       vi.advanceTimersByTime(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).toBeFalsy();
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
 
     it('should render the template with context', async () => {
-      fixture.componentInstance.tooltipContext = { tooltip: 'test' };
-      fixture.changeDetectorRef.markForCheck();
+      fixture.componentInstance.tooltipContext.set({ tooltip: 'test' });
       fixture.detectChanges();
       button.dispatchEvent(new Event('focus'));
       vi.advanceTimersByTime(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')?.innerHTML).toContain('Template content test');
+      expect(document.querySelector('.tooltip')).toHaveTextContent('Template content test');
       button.dispatchEvent(new Event('focusout'));
       vi.advanceTimersByTime(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).toBeFalsy();
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
   });
 });
