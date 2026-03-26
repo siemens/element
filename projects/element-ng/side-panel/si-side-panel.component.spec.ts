@@ -18,7 +18,7 @@ import { SidePanelMode } from './side-panel.model';
   template: `<si-side-panel
       [collapsible]="collapsible()"
       [collapsed]="collapsed()"
-      [mode]="mode"
+      [mode]="mode()"
       (contentResize)="contentResize($event)"
     >
       <span>content</span>
@@ -33,7 +33,7 @@ import { SidePanelMode } from './side-panel.model';
 class TestHostComponent {
   readonly sidePanel = viewChild.required(SiSidePanelComponent);
   readonly content = viewChild<CdkPortal, CdkPortal>('dynamicContent', { read: CdkPortal });
-  mode: SidePanelMode = 'over';
+  readonly mode = signal<SidePanelMode>('over');
   readonly collapsible = signal(false);
   readonly collapsed = signal<boolean | undefined>(undefined);
   contentResize(e: ElementDimensions): void {}
@@ -53,7 +53,6 @@ describe('SiSidePanelComponent', () => {
       })
     };
     await TestBed.configureTestingModule({
-      imports: [SiSidePanelModule, PortalModule, TestHostComponent],
       providers: [
         {
           provide: ResizeObserverService,
@@ -61,12 +60,10 @@ describe('SiSidePanelComponent', () => {
         }
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
     element = fixture.nativeElement;
     service = TestBed.inject(SiSidePanelService);
   });
@@ -75,13 +72,12 @@ describe('SiSidePanelComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should collapse', () => {
-    vi.useFakeTimers();
-    component.mode = 'scroll';
-    fixture.detectChanges();
+  it('should collapse', async () => {
+    component.mode.set('scroll');
+    await fixture.whenStable();
 
     service.open();
-
+    vi.useFakeTimers();
     vi.advanceTimersByTime(0);
     fixture.detectChanges();
 
@@ -97,28 +93,28 @@ describe('SiSidePanelComponent', () => {
     vi.useRealTimers();
   });
 
-  it('resize should not trigger contentResize output', () => {
+  it('resize should not trigger contentResize output', async () => {
     const spy = vi.spyOn(component, 'contentResize');
     component.collapsed.set(false);
-    fixture.detectChanges();
+    await fixture.whenStable();
     resizeObserver.next({ width: 104, height: 104 });
 
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('resize should trigger contentResize output', () => {
+  it('resize should trigger contentResize output', async () => {
     const spy = vi.spyOn(component, 'contentResize');
     component.collapsed.set(true);
-    fixture.detectChanges();
+    await fixture.whenStable();
     resizeObserver.next({ width: 104, height: 104 });
 
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should call service close on collapsed', () => {
+  it('should call service close on collapsed', async () => {
     const spy = vi.spyOn(service, 'close');
     component.collapsed.set(true);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(spy).toHaveBeenCalled();
   });
@@ -134,9 +130,9 @@ describe('SiSidePanelComponent', () => {
   });
 
   describe('with toggleSidePanel', () => {
-    it('should call service toggle when collapsible', () => {
+    it('should call service toggle when collapsible', async () => {
       component.collapsible.set(true);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const spy = vi.spyOn(service, 'toggle');
 
       component.sidePanel().toggleSidePanel();
@@ -153,23 +149,23 @@ describe('SiSidePanelComponent', () => {
   });
 
   describe('with flexible content', () => {
-    it('should show dynamic side panel content', () => {
+    it('should show dynamic side panel content', async () => {
       const template = component.content();
       service.setSidePanelContent(template);
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       const title = element.querySelector<HTMLDivElement>('p.si-h5');
-      expect(title!.innerText).toBe('side-panel');
+      expect(title).toHaveTextContent('side-panel');
       const content = element.querySelector<HTMLDivElement>('div.dynamic-content');
       expect(content).toBeTruthy();
     });
 
     it('should show temp content', async () => {
       service.showTemporaryContent(component.content());
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       const title = element.querySelector<HTMLDivElement>('p.si-h5');
-      expect(title!.innerText).toBe('side-panel');
+      expect(title).toHaveTextContent('side-panel');
       const innerElements = Array.from(element.querySelectorAll<HTMLDivElement>('div.inner'));
       expect(innerElements).toHaveLength(2);
       // Ensure temp content is visible
@@ -178,11 +174,11 @@ describe('SiSidePanelComponent', () => {
       expect(content).toBeTruthy();
     });
 
-    it('should hide temp content', () => {
+    it('should hide temp content', async () => {
       service.showTemporaryContent(component.content());
-      fixture.detectChanges();
+      await fixture.whenStable();
       service.hideTemporaryContent();
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       const innerElements = Array.from(element.querySelectorAll<HTMLDivElement>('div.inner'));
       expect(innerElements).toHaveLength(2);

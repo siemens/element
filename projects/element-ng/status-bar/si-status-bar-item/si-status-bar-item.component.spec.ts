@@ -2,61 +2,46 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ExtendedStatusType } from '@siemens/element-ng/common';
-import { SiIconModule } from '@siemens/element-ng/icon';
 
 import { SiStatusBarItemComponent } from './si-status-bar-item.component';
 
-@Component({
-  imports: [SiIconModule, SiStatusBarItemComponent],
-  template: `
-    <si-status-bar-item
-      #item
-      [status]="status"
-      [value]="value"
-      [heading]="heading"
-      [blink]="blink"
-    />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class TestHostComponent {
-  status?: ExtendedStatusType;
-  value!: string | number;
-  heading!: string;
-  color?: string;
-  blink = false;
-}
-
 describe('SiStatusBarItemComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
+  let fixture: ComponentFixture<SiStatusBarItemComponent>;
   let element: HTMLElement;
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [SiIconModule, SiStatusBarItemComponent, TestHostComponent]
-    }).compileComponents()
-  );
+  let status: WritableSignal<ExtendedStatusType | undefined>;
+  let value: WritableSignal<string | number>;
+  let heading: WritableSignal<string>;
+  let blink: WritableSignal<boolean>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
+    status = signal(undefined);
+    value = signal<string | number>('');
+    heading = signal('');
+    blink = signal(false);
+    fixture = TestBed.createComponent(SiStatusBarItemComponent, {
+      bindings: [
+        inputBinding('status', status),
+        inputBinding('value', value),
+        inputBinding('heading', heading),
+        inputBinding('blink', blink)
+      ]
+    });
     element = fixture.nativeElement;
   });
 
-  it('should contain set properties', () => {
-    component.heading = 'heading';
-    component.status = 'danger';
-    component.value = 'value';
-    component.blink = true;
+  it('should contain set properties', async () => {
+    heading.set('heading');
+    status.set('danger');
+    value.set('value');
+    blink.set(true);
 
-    fixture.detectChanges();
+    await fixture.whenStable();
 
-    expect((element.querySelector('.item-title') as HTMLElement).innerText).toContain('heading');
-    expect(element.querySelector('.status-item .bg')!.classList).toContain('bg-base-danger');
-    expect(element.querySelector('.item-value')!.innerHTML).toContain('value');
+    expect(element.querySelector('.item-title')).toHaveTextContent('heading');
+    expect(element.querySelector('.status-item .bg')).toHaveClass('bg-base-danger');
+    expect(element.querySelector('.item-value')).toHaveTextContent('value');
   });
 });

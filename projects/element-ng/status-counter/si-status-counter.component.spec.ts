@@ -2,69 +2,74 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SiIconModule } from '@siemens/element-ng/icon';
 
-import { SiStatusCounterComponent as TestComponent } from './si-status-counter.component';
+import { SiStatusCounterComponent } from './si-status-counter.component';
 
 describe('SiStatusCounterComponent', () => {
-  let component: ComponentRef<TestComponent>;
-  let fixture: ComponentFixture<TestComponent>;
+  let fixture: ComponentFixture<SiStatusCounterComponent>;
   let element: HTMLElement;
+  let icon: WritableSignal<string>;
+  let count: WritableSignal<number>;
+  let disabled: WritableSignal<boolean>;
 
   const checkCount = (c: number): void => {
-    const count = parseInt(element.querySelector('span:not(.icon-stack)')?.innerHTML ?? '-1', 10);
-    expect(count).toEqual(c);
+    const countValue = parseInt(
+      element.querySelector('span:not(.icon-stack)')?.innerHTML ?? '-1',
+      10
+    );
+    expect(countValue).toEqual(c);
   };
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [SiIconModule, TestComponent]
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentRef;
+    icon = signal('');
+    count = signal(0);
+    disabled = signal(false);
+    fixture = TestBed.createComponent(SiStatusCounterComponent, {
+      bindings: [
+        inputBinding('icon', icon),
+        inputBinding('count', count),
+        inputBinding('disabled', disabled)
+      ]
+    });
     element = fixture.nativeElement;
-    component.setInput('icon', '');
   });
 
-  it('should create the component', () => {
-    component.setInput('count', 1);
-    fixture.detectChanges();
-    expect(component).toBeTruthy();
+  it('should create the component', async () => {
+    count.set(1);
+    await fixture.whenStable();
+    expect(fixture.componentInstance).toBeTruthy();
     checkCount(1);
   });
 
-  it('should hide the count when the element is disabled', () => {
-    component.setInput('disabled', true);
-    fixture.detectChanges();
+  it('should hide the count when the element is disabled', async () => {
+    disabled.set(true);
+    await fixture.whenStable();
     checkCount(-1);
   });
 
-  it('should set the count to 0 if nothing has been set', () => {
-    fixture.detectChanges();
+  it('should set the count to 0 if nothing has been set', async () => {
+    await fixture.whenStable();
     checkCount(0);
   });
 
-  it('should apply inactive if the count is 0', () => {
-    component.setInput('count', 0);
-    fixture.detectChanges();
-    expect(element.querySelector('si-icon')?.classList).toContain('inactive');
+  it('should apply inactive if the count is 0', async () => {
+    count.set(0);
+    await fixture.whenStable();
+    expect(element.querySelector('si-icon')).toHaveClass('inactive');
   });
 
-  it('should NOT apply inactive if the count > 0', () => {
-    component.setInput('count', 1);
-    fixture.detectChanges();
-    expect(element.querySelector('si-icon')?.classList).not.toContain('inactive');
+  it('should NOT apply inactive if the count > 0', async () => {
+    count.set(1);
+    await fixture.whenStable();
+    expect(element.querySelector('si-icon')).not.toHaveClass('inactive');
     checkCount(1);
   });
 
-  it('should apply inactive if element is disabled', () => {
-    component.setInput('disabled', true);
-    fixture.detectChanges();
-    expect(element.querySelector('si-icon')?.classList).toContain('inactive');
+  it('should apply inactive if element is disabled', async () => {
+    disabled.set(true);
+    await fixture.whenStable();
+    expect(element.querySelector('si-icon')).toHaveClass('inactive');
   });
 });
