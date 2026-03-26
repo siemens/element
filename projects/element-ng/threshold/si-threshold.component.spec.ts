@@ -4,56 +4,55 @@
  */
 import { HarnessLoader, parallel } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { SelectOption } from '@siemens/element-ng/select';
 import { SiSelectHarness } from '@siemens/element-ng/select/testing';
+import { userEvent } from 'vitest/browser';
 
-import { runOnPushChangeDetection } from '../test-helpers/change-detection.helper';
 import { SiThresholdComponent, ThresholdStep } from './index';
 
 @Component({
   imports: [SiThresholdComponent],
   template: `
     <si-threshold
-      [options]="options"
-      [unit]="unit"
-      [canAddRemoveSteps]="canAddRemoveSteps"
-      [horizontalLayout]="horizontalLayout"
-      [maxSteps]="maxSteps"
-      [readonly]="readonly"
-      [readonlyConditions]="readonlyConditions"
-      [minValue]="minValue"
-      [maxValue]="maxValue"
-      [stepSize]="stepSize"
-      [showDecIncButtons]="showDecIncButtons"
-      [validation]="validation"
-      [useAliasForStepValues]="useAliasForStepValues"
+      [options]="options()"
+      [unit]="unit()"
+      [canAddRemoveSteps]="canAddRemoveSteps()"
+      [horizontalLayout]="horizontalLayout()"
+      [maxSteps]="maxSteps()"
+      [readonly]="readonly()"
+      [readonlyConditions]="readonlyConditions()"
+      [minValue]="minValue()"
+      [maxValue]="maxValue()"
+      [stepSize]="stepSize()"
+      [showDecIncButtons]="showDecIncButtons()"
+      [validation]="validation()"
+      [useAliasForStepValues]="useAliasForStepValues()"
       [(thresholdSteps)]="thresholdSteps"
-      (validChange)="valid = $event"
+      (validChange)="valid.set($event)"
       (thresholdStepsChange)="thresholdStepsChange($event)"
     />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
-  options!: SelectOption<string>[];
-  thresholdSteps!: ThresholdStep[];
-  canAddRemoveSteps = true;
-  maxSteps!: number;
-  horizontalLayout!: boolean;
-  readonly = false;
-  readonlyConditions = false;
-  minValue!: number;
-  maxValue!: number;
-  stepSize!: number;
-  unit!: string;
-  showDecIncButtons!: boolean;
-  validation!: boolean;
-  valid = true;
-  wrap = false;
-  useAliasForStepValues = false;
+  readonly options = signal<SelectOption<string>[]>(undefined!);
+  readonly thresholdSteps = signal<ThresholdStep[]>(undefined!);
+  readonly canAddRemoveSteps = signal(true);
+  readonly maxSteps = signal<number>(undefined!);
+  readonly horizontalLayout = signal<boolean>(undefined!);
+  readonly readonly = signal(false);
+  readonly readonlyConditions = signal(false);
+  readonly minValue = signal<number>(undefined!);
+  readonly maxValue = signal<number>(undefined!);
+  readonly stepSize = signal<number>(undefined!);
+  readonly unit = signal<string>(undefined!);
+  readonly showDecIncButtons = signal<boolean>(undefined!);
+  readonly validation = signal<boolean>(undefined!);
+  readonly valid = signal(true);
+  readonly wrap = signal(false);
+  readonly useAliasForStepValues = signal(false);
 
   thresholdStepsChange(steps: ThresholdStep[]): void {}
 }
@@ -88,7 +87,7 @@ describe('SiThresholdComponent', () => {
   let element: HTMLInputElement;
   let loader: HarnessLoader;
 
-  const getThreshodColors = (): string[] => {
+  const getThresholdColors = (): string[] => {
     const calculatedColors: string[] = [];
     element.querySelectorAll('.ths-option .line').forEach(item => {
       calculatedColors.push(item.classList.value.replace('line', '').trim());
@@ -96,21 +95,21 @@ describe('SiThresholdComponent', () => {
     return calculatedColors;
   };
 
-  beforeEach(() => {
+  beforeEach(async () => {
     fixture = TestBed.createComponent(TestHostComponent);
     loader = TestbedHarnessEnvironment.loader(fixture);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
 
-    component.options = optionsList;
-    component.thresholdSteps = [
+    component.options.set(optionsList);
+    component.thresholdSteps.set([
       { value: undefined, optionValue: 'poor' },
       { value: 15, optionValue: 'average' },
       { value: 20, optionValue: 'good' },
       { value: 26, optionValue: 'average' },
       { value: 30, optionValue: 'poor' }
-    ];
-    fixture.detectChanges();
+    ]);
+    await fixture.whenStable();
   });
 
   it('should create component', () => {
@@ -120,8 +119,8 @@ describe('SiThresholdComponent', () => {
   it('should display steps', async () => {
     const steps = element.querySelectorAll<HTMLElement>('.ths-step');
     expect(steps.length).toBe(5);
-    expect(steps[0].querySelector('.ths-value')).toBeFalsy();
-    expect(steps[1].querySelector('.ths-value')).toBeTruthy();
+    expect(steps[0].querySelector('.ths-value')).not.toBeInTheDocument();
+    expect(steps[1].querySelector('.ths-value')).toBeInTheDocument();
 
     const childloader = await loader.getAllChildLoaders('.ths-step');
 
@@ -134,51 +133,51 @@ describe('SiThresholdComponent', () => {
     expect(items.flat()).toEqual(['Poor', 'Average', 'Good', 'Average', 'Poor']);
   });
 
-  it('should allow to add steps when enabled', () => {
+  it('should allow to add steps when enabled', async () => {
     vi.spyOn(component, 'thresholdStepsChange');
-    fixture.detectChanges();
+    await fixture.whenStable();
     const add2 = element.querySelectorAll<HTMLElement>('[aria-label="Add step"]')[1];
-    add2.click();
-    fixture.detectChanges();
+    await userEvent.click(add2);
+    await fixture.whenStable();
 
     expect(component.thresholdStepsChange).toHaveBeenCalled();
-    expect(component.thresholdSteps.length).toBe(6);
-    expect(component.thresholdSteps[2].value).toBeUndefined();
+    expect(component.thresholdSteps().length).toBe(6);
+    expect(component.thresholdSteps()[2].value).toBeUndefined();
     expect(element.querySelectorAll<HTMLElement>('.ths-step').length).toBe(6);
   });
 
-  it('should allow to remove steps when enabled', () => {
+  it('should allow to remove steps when enabled', async () => {
     vi.spyOn(component, 'thresholdStepsChange');
 
-    fixture.detectChanges();
+    await fixture.whenStable();
     const remove2 = element.querySelectorAll<HTMLElement>('[aria-label="Delete step"]')[1];
-    remove2.click();
-    fixture.detectChanges();
+    await userEvent.click(remove2);
+    await fixture.whenStable();
 
     expect(component.thresholdStepsChange).toHaveBeenCalled();
-    expect(component.thresholdSteps.length).toBe(4);
-    expect(component.thresholdSteps[2].value).toBe(26);
+    expect(component.thresholdSteps().length).toBe(4);
+    expect(component.thresholdSteps()[2].value).toBe(26);
     expect(element.querySelectorAll<HTMLElement>('.ths-step').length).toBe(4);
   });
 
   it('should prevent to add/remove steps when disabled', async () => {
-    component.canAddRemoveSteps = false;
-    await runOnPushChangeDetection(fixture);
+    component.canAddRemoveSteps.set(false);
+    await fixture.whenStable();
 
     expect(element.querySelectorAll<HTMLElement>('[aria-label="Add step"]').length).toBe(0);
     expect(element.querySelectorAll<HTMLElement>('[aria-label="Delete step"]').length).toBe(0);
   });
 
   it('should limit max. number of steps', async () => {
-    component.maxSteps = 5;
-    await runOnPushChangeDetection(fixture);
+    component.maxSteps.set(5);
+    await fixture.whenStable();
     const add2 = element.querySelectorAll<HTMLButtonElement>('[aria-label="Add step"]')[1];
-    expect(add2.disabled).toBeTruthy();
+    expect(add2).toBeDisabled();
   });
 
-  it('should calculate color of steps', () => {
-    fixture.detectChanges();
-    const calculatedColors: string[] = getThreshodColors();
+  it('should calculate color of steps', async () => {
+    await fixture.whenStable();
+    const calculatedColors: string[] = getThresholdColors();
     expect(calculatedColors).toEqual([
       'status-danger',
       'status-warning',
@@ -189,14 +188,14 @@ describe('SiThresholdComponent', () => {
   });
 
   it('should re-calculate color of steps when changing option', async () => {
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const selectHarness = await (
       await loader.getChildLoader('.ths-step:nth-child(2)')
     ).getHarness(SiSelectHarness);
     await selectHarness.clickItemsByText('Good');
 
-    const calculatedColors: string[] = getThreshodColors();
+    const calculatedColors: string[] = getThresholdColors();
     expect(calculatedColors).toEqual([
       'status-danger',
       'status-success',
@@ -207,45 +206,43 @@ describe('SiThresholdComponent', () => {
   });
 
   it('should change threshold options to readonly', async () => {
-    component.readonlyConditions = true;
-    await runOnPushChangeDetection(fixture);
-    const readonlyOptions = fixture.debugElement.queryAll(By.css('si-readonly-threshold-option'));
-    expect(readonlyOptions).toHaveLength(component.thresholdSteps.length);
-    component.thresholdSteps.forEach((step, index) => {
-      const o = (component.options as SelectOption<unknown>[]).find(
+    component.readonlyConditions.set(true);
+    await fixture.whenStable();
+    const readonlyOptions = element.querySelectorAll<HTMLElement>('si-readonly-threshold-option');
+    expect(readonlyOptions).toHaveLength(component.thresholdSteps().length);
+    component.thresholdSteps().forEach((step, index) => {
+      const o = (component.options() as SelectOption<unknown>[]).find(
         option => option.value === step.optionValue
-      );
-      expect(readonlyOptions.at(index)?.query(By.css('span')).nativeElement.innerText).toBe(
-        o?.label
-      );
+      )!;
+      expect(readonlyOptions[index].querySelector('span')!).toHaveTextContent(o.label!);
     });
   });
 
   it('should display readonly options correctly', async () => {
-    component.options = [
+    component.options.set([
       { type: 'option', value: 'good', label: 'Good' },
       { type: 'option', value: 'average', label: 'Average' },
       { type: 'option', value: 'poor', label: 'Poor' }
-    ];
-    component.readonly = true;
-    await runOnPushChangeDetection(fixture);
-    const readonlyOptions = fixture.debugElement
-      .queryAll(By.css('si-readonly-threshold-option span'))
-      .map(option => option.nativeElement.innerText);
+    ]);
+    component.readonly.set(true);
+    await fixture.whenStable();
+    const readonlyOptions = Array.from(
+      element.querySelectorAll<HTMLElement>('si-readonly-threshold-option span')
+    ).map(option => option.innerText);
 
     expect(readonlyOptions).toEqual(['Poor', 'Average', 'Good', 'Average', 'Poor']);
   });
 
   describe('useAliasForStepValues', () => {
     beforeEach(async () => {
-      component.useAliasForStepValues = true;
-      component.thresholdSteps = [
+      component.useAliasForStepValues.set(true);
+      component.thresholdSteps.set([
         { value: undefined, optionValue: 'poor' },
         { value: 15, optionValue: 'average', aliasLabel: 'Low' },
         { value: 20, optionValue: 'good', aliasLabel: 'Medium' },
         { value: 30, optionValue: 'poor', aliasLabel: 'High' }
-      ];
-      await runOnPushChangeDetection(fixture);
+      ]);
+      await fixture.whenStable();
     });
 
     it('should hide add and delete buttons', () => {
@@ -269,11 +266,11 @@ describe('SiThresholdComponent', () => {
     });
 
     it('should display empty value when aliasLabel is not set', async () => {
-      component.thresholdSteps = [
+      component.thresholdSteps.set([
         { value: undefined, optionValue: 'poor' },
         { value: 15, optionValue: 'average' }
-      ];
-      await runOnPushChangeDetection(fixture);
+      ]);
+      await fixture.whenStable();
 
       const textInputs = element.querySelectorAll<HTMLInputElement>('.ths-value input[readonly]');
       expect(textInputs.length).toBe(1);

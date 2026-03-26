@@ -5,7 +5,7 @@
 import { DOWN_ARROW, ENTER } from '@angular/cdk/keycodes';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, TemplateRef, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, of, Subject, throwError } from 'rxjs';
@@ -31,22 +31,22 @@ const testItems = ['test', 'item'];
     <input
       ngModel
       type="text"
-      [siTypeahead]="items"
-      [typeaheadProcess]="process"
-      [typeaheadScrollable]="scrollable"
-      [typeaheadOptionsInScrollableView]="optionsInScrollableView"
-      [typeaheadScrollableAdditionalHeight]="scrollableAdditionalHeight"
-      [typeaheadAutoSelectIndex]="autoSelectIndex"
-      [typeaheadCloseOnEsc]="closeOnEsc"
-      [typeaheadWaitMs]="waitMs"
-      [typeaheadMinLength]="minLength"
-      [typeaheadOptionField]="optionField"
-      [typeaheadTokenize]="tokenize"
-      [typeaheadMatchAllTokens]="matchAllTokens"
-      [typeaheadItemTemplate]="itemTemplate"
-      [typeaheadSkipSortingMatches]="typeaheadSkipSortingMatches"
-      [typeaheadClearValueOnSelect]="typeaheadClearValueOnSelect"
-      [typeaheadCreateOption]="createOption"
+      [siTypeahead]="items()"
+      [typeaheadProcess]="process()"
+      [typeaheadScrollable]="scrollable()"
+      [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
+      [typeaheadScrollableAdditionalHeight]="scrollableAdditionalHeight()"
+      [typeaheadAutoSelectIndex]="autoSelectIndex()"
+      [typeaheadCloseOnEsc]="closeOnEsc()"
+      [typeaheadWaitMs]="waitMs()"
+      [typeaheadMinLength]="minLength()"
+      [typeaheadOptionField]="optionField()"
+      [typeaheadTokenize]="tokenize()"
+      [typeaheadMatchAllTokens]="matchAllTokens()"
+      [typeaheadItemTemplate]="itemTemplate()"
+      [typeaheadSkipSortingMatches]="typeaheadSkipSortingMatches()"
+      [typeaheadClearValueOnSelect]="typeaheadClearValueOnSelect()"
+      [typeaheadCreateOption]="createOption()"
       (typeaheadOnFullMatch)="onFullMatch($event)"
       (typeaheadOnSelect)="onSelect($event)"
       (ngModelChange)="onModelChange($event)"
@@ -56,22 +56,22 @@ const testItems = ['test', 'item'];
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
-  items: Typeahead = testItems;
-  process = true;
-  scrollable = false;
-  autoSelectIndex = 0;
-  closeOnEsc = true;
-  optionsInScrollableView = 5;
-  scrollableAdditionalHeight = 13;
-  waitMs = 0;
-  minLength = 1;
-  optionField = 'name';
-  tokenize = true;
-  matchAllTokens: 'no' | 'once' | 'separately' | 'independently' = 'separately';
-  itemTemplate!: TemplateRef<TypeaheadOptionItemContext>;
-  typeaheadSkipSortingMatches = false;
-  typeaheadClearValueOnSelect = false;
-  createOption: string | undefined = undefined;
+  readonly items = signal<Typeahead>(testItems);
+  readonly process = signal(true);
+  readonly scrollable = signal(false);
+  readonly autoSelectIndex = signal(0);
+  readonly closeOnEsc = signal(true);
+  readonly optionsInScrollableView = signal(5);
+  readonly scrollableAdditionalHeight = signal(13);
+  readonly waitMs = signal(0);
+  readonly minLength = signal(1);
+  readonly optionField = signal('name');
+  readonly tokenize = signal(true);
+  readonly matchAllTokens = signal<'no' | 'once' | 'separately' | 'independently'>('separately');
+  readonly itemTemplate = signal<TemplateRef<TypeaheadOptionItemContext>>(undefined!);
+  readonly typeaheadSkipSortingMatches = signal(false);
+  readonly typeaheadClearValueOnSelect = signal(false);
+  readonly createOption = signal<string | undefined>(undefined);
 
   readonly template = viewChild.required('testTemplate', {
     read: TemplateRef<TypeaheadOptionItemContext>
@@ -119,7 +119,7 @@ describe('SiTypeaheadDirective', () => {
   };
 
   it('should create typeahead list on focus', async () => {
-    wrapperComponent.minLength = 0;
+    wrapperComponent.minLength.set(0);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -135,7 +135,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should contain items from array', async () => {
-    wrapperComponent.minLength = 0;
+    wrapperComponent.minLength.set(0);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -145,7 +145,7 @@ describe('SiTypeaheadDirective', () => {
 
   describe('with tokenization disabled', () => {
     it('should contain items from array matching simple search', async () => {
-      wrapperComponent.tokenize = false;
+      wrapperComponent.tokenize.set(false);
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tes');
@@ -154,7 +154,7 @@ describe('SiTypeaheadDirective', () => {
     });
 
     it('should contain no items from array not matching simple search', async () => {
-      wrapperComponent.tokenize = false;
+      wrapperComponent.tokenize.set(false);
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tests');
@@ -193,7 +193,7 @@ describe('SiTypeaheadDirective', () => {
     });
 
     it('should contain items from array matching tokenized search and match all tokens set to independently', async () => {
-      wrapperComponent.matchAllTokens = 'independently';
+      wrapperComponent.matchAllTokens.set('independently');
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('te t');
@@ -202,7 +202,7 @@ describe('SiTypeaheadDirective', () => {
     });
 
     it('should contain no items from array not matching tokenized search and match all tokens set to independently', async () => {
-      wrapperComponent.matchAllTokens = 'independently';
+      wrapperComponent.matchAllTokens.set('independently');
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tes t');
@@ -211,7 +211,7 @@ describe('SiTypeaheadDirective', () => {
     });
 
     it('should contain items from array matching tokenized search and match all tokens set to once', async () => {
-      wrapperComponent.matchAllTokens = 'once';
+      wrapperComponent.matchAllTokens.set('once');
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('test t');
@@ -220,7 +220,7 @@ describe('SiTypeaheadDirective', () => {
     });
 
     it('should contain no items from array not matching tokenized search and match all tokens set to once', async () => {
-      wrapperComponent.matchAllTokens = 'once';
+      wrapperComponent.matchAllTokens.set('once');
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('test q');
@@ -229,7 +229,7 @@ describe('SiTypeaheadDirective', () => {
     });
 
     it('should contain items from array matching tokenized search and match all tokens set to no', async () => {
-      wrapperComponent.matchAllTokens = 'no';
+      wrapperComponent.matchAllTokens.set('no');
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('test q');
@@ -238,7 +238,7 @@ describe('SiTypeaheadDirective', () => {
     });
 
     it('should contain no items from array not matching tokenized search and match all tokens set to no', async () => {
-      wrapperComponent.matchAllTokens = 'no';
+      wrapperComponent.matchAllTokens.set('no');
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('q');
@@ -248,8 +248,8 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should contain matching items from objects', async () => {
-    wrapperComponent.items = testObjects;
-    wrapperComponent.optionField = 'test';
+    wrapperComponent.items.set(testObjects);
+    wrapperComponent.optionField.set('test');
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('f');
@@ -258,9 +258,9 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should contain items from observable with process disabled', async () => {
-    wrapperComponent.items = of(testObjects);
-    wrapperComponent.process = false;
-    wrapperComponent.optionField = 'test';
+    wrapperComponent.items.set(of(testObjects));
+    wrapperComponent.process.set(false);
+    wrapperComponent.optionField.set('test');
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('f');
@@ -269,7 +269,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should contain matching items from observable', async () => {
-    wrapperComponent.items = of(testItems);
+    wrapperComponent.items.set(of(testItems));
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('tes');
@@ -284,7 +284,7 @@ describe('SiTypeaheadDirective', () => {
     beforeEach(() => {
       optionsSubject = new Subject<string[]>();
       source = vi.fn().mockReturnValue(optionsSubject);
-      wrapperComponent.items = source;
+      wrapperComponent.items.set(source);
     });
 
     it('should show empty loading state until options arrive', async () => {
@@ -317,7 +317,7 @@ describe('SiTypeaheadDirective', () => {
 
     it('should stop loading when source errors', async () => {
       const errorSource = vi.fn().mockReturnValue(throwError(() => new Error('source error')));
-      wrapperComponent.items = errorSource;
+      wrapperComponent.items.set(errorSource);
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
@@ -332,7 +332,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('s on top', async () => {
-    wrapperComponent.items = of(testItemsOrdering);
+    wrapperComponent.items.set(of(testItemsOrdering));
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('a');
@@ -341,8 +341,8 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should list options in original order', async () => {
-    wrapperComponent.items = of(testItemsOrdering);
-    wrapperComponent.typeaheadSkipSortingMatches = true;
+    wrapperComponent.items.set(of(testItemsOrdering));
+    wrapperComponent.typeaheadSkipSortingMatches.set(true);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('a');
@@ -351,7 +351,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should list options where search value is at the beginning of an option on top', async () => {
-    wrapperComponent.items = of(['DMark', 'Deutsche Mark', 'Mark']);
+    wrapperComponent.items.set(of(['DMark', 'Deutsche Mark', 'Mark']));
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('mar');
@@ -360,7 +360,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should list options with multiple matches and there position is closer to start on top', async () => {
-    wrapperComponent.items = of(['DMark', 'ZMarkmar', 'Markmar', 'AA Markmar']);
+    wrapperComponent.items.set(of(['DMark', 'ZMarkmar', 'Markmar', 'AA Markmar']));
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('mar');
@@ -369,7 +369,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should list options with more matches on top', async () => {
-    wrapperComponent.items = of(['DMark', 'Deutsche Mark', 'Mark', 'Markmar', 'Markmar mar']);
+    wrapperComponent.items.set(of(['DMark', 'Deutsche Mark', 'Mark', 'Markmar', 'Markmar mar']));
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('mar');
@@ -384,7 +384,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should narrow down search on second input', async () => {
-    wrapperComponent.items = testList;
+    wrapperComponent.items.set(testList);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('a');
@@ -397,8 +397,8 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should use item template if set', async () => {
-    wrapperComponent.minLength = 0;
-    wrapperComponent.itemTemplate = wrapperComponent.template();
+    wrapperComponent.minLength.set(0);
+    wrapperComponent.itemTemplate.set(wrapperComponent.template());
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -408,7 +408,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should use emit on full match', async () => {
-    wrapperComponent.items = testList;
+    wrapperComponent.items.set(testList);
     wrapperComponent.onFullMatch = vi.fn();
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).typeText('so');
@@ -417,7 +417,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should not use emit on partial match', async () => {
-    wrapperComponent.items = testList;
+    wrapperComponent.items.set(testList);
     wrapperComponent.onFullMatch = vi.fn();
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).typeText('s');
@@ -426,7 +426,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should use emit on select', async () => {
-    wrapperComponent.minLength = 0;
+    wrapperComponent.minLength.set(0);
     wrapperComponent.onSelect = vi.fn();
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
@@ -437,20 +437,20 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should wait specified number of milliseconds', async () => {
-    wrapperComponent.minLength = 0;
-    wrapperComponent.waitMs = 333;
+    wrapperComponent.minLength.set(0);
+    wrapperComponent.waitMs.set(333);
 
     vi.spyOn(window, 'setTimeout');
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).focus();
 
-    await tick(wrapperComponent.waitMs);
+    await tick(wrapperComponent.waitMs());
 
     expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 333);
   });
 
   it('should properly select item on click', async () => {
-    wrapperComponent.minLength = 0;
+    wrapperComponent.minLength.set(0);
     wrapperComponent.onModelChange = vi.fn();
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
@@ -462,7 +462,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should not clear value on select if `typeaheadClearValueOnSelect` is false', async () => {
-    wrapperComponent.typeaheadClearValueOnSelect = false;
+    wrapperComponent.typeaheadClearValueOnSelect.set(false);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('item');
@@ -474,7 +474,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should clear value on select if `typeaheadClearValueOnSelect` is true', async () => {
-    wrapperComponent.typeaheadClearValueOnSelect = true;
+    wrapperComponent.typeaheadClearValueOnSelect.set(true);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('item');
@@ -487,8 +487,8 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should properly select item with arrow down and enter', async () => {
-    wrapperComponent.items = testList;
-    wrapperComponent.minLength = 0;
+    wrapperComponent.items.set(testList);
+    wrapperComponent.minLength.set(0);
     wrapperComponent.onModelChange = vi.fn();
 
     fixture.detectChanges();
@@ -515,7 +515,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should not select any item when selecting the first item is disabled', async () => {
-    wrapperComponent.minLength = 0;
+    wrapperComponent.minLength.set(0);
     wrapperComponent.onModelChange = vi.fn();
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
@@ -528,7 +528,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should remove on escape if enabled', async () => {
-    wrapperComponent.minLength = 0;
+    wrapperComponent.minLength.set(0);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -540,8 +540,8 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should not remove on escape if disabled', async () => {
-    wrapperComponent.closeOnEsc = false;
-    wrapperComponent.minLength = 0;
+    wrapperComponent.closeOnEsc.set(false);
+    wrapperComponent.minLength.set(0);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -553,9 +553,9 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should reduce typeahead height when less items are displayed and typeaheadScrollable = true', async () => {
-    wrapperComponent.items = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
-    wrapperComponent.scrollable = true;
-    wrapperComponent.minLength = 0;
+    wrapperComponent.items.set(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']);
+    wrapperComponent.scrollable.set(true);
+    wrapperComponent.minLength.set(0);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -570,11 +570,11 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should make list scrollable and display specified number of items with additional height', async () => {
-    wrapperComponent.items = testList;
-    wrapperComponent.minLength = 0;
-    wrapperComponent.scrollable = true;
-    wrapperComponent.optionsInScrollableView = 3;
-    wrapperComponent.scrollableAdditionalHeight = 11;
+    wrapperComponent.items.set(testList);
+    wrapperComponent.minLength.set(0);
+    wrapperComponent.scrollable.set(true);
+    wrapperComponent.optionsInScrollableView.set(3);
+    wrapperComponent.scrollableAdditionalHeight.set(11);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -593,22 +593,22 @@ describe('SiTypeaheadDirective', () => {
     );
     const marginTop = parseFloat(computedStyle.marginTop ? computedStyle.marginTop : '0');
     const marginBottom = parseFloat(computedStyle.marginBottom ? computedStyle.marginBottom : '0');
-    const height = wrapperComponent.optionsInScrollableView * matchHeight;
+    const height = wrapperComponent.optionsInScrollableView() * matchHeight;
     const expectedHeight =
       height +
       paddingTop +
       paddingBottom +
       marginTop +
       marginBottom +
-      wrapperComponent.scrollableAdditionalHeight;
+      wrapperComponent.scrollableAdditionalHeight();
     expect((await input.getTypeaheadDimensions())?.height).toBeCloseTo(expectedHeight, 1);
   });
 
   it('should scroll down to selected item when scrollable', async () => {
-    wrapperComponent.items = testList;
-    wrapperComponent.minLength = 0;
-    wrapperComponent.scrollable = true;
-    wrapperComponent.optionsInScrollableView = 3;
+    wrapperComponent.items.set(testList);
+    wrapperComponent.minLength.set(0);
+    wrapperComponent.scrollable.set(true);
+    wrapperComponent.optionsInScrollableView.set(3);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -631,10 +631,10 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should scroll up to selected item when scrollable', async () => {
-    wrapperComponent.items = testList;
-    wrapperComponent.minLength = 0;
-    wrapperComponent.scrollable = true;
-    wrapperComponent.optionsInScrollableView = 3;
+    wrapperComponent.items.set(testList);
+    wrapperComponent.minLength.set(0);
+    wrapperComponent.scrollable.set(true);
+    wrapperComponent.optionsInScrollableView.set(3);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -666,9 +666,9 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should remove when focus is lost', async () => {
-    wrapperComponent.minLength = 0;
+    wrapperComponent.minLength.set(0);
     const items = new BehaviorSubject(testList);
-    wrapperComponent.items = items;
+    wrapperComponent.items.set(items);
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -683,7 +683,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should trigger the create option', async () => {
-    wrapperComponent.createOption = 'Create {{query}}';
+    wrapperComponent.createOption.set('Create {{query}}');
     const createSpy = vi.spyOn(wrapperComponent, 'onCreateOption');
     const selectSpy = vi.spyOn(wrapperComponent, 'onSelect');
 
