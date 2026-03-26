@@ -13,7 +13,7 @@ import { SI_STACKBLITZ_CONFIG } from './stackblitz.provider';
   host: {
     'title': 'Open Stackblitz',
     'attr.aria-label': 'Open in Stackblitz',
-    '[class.d-none]': '!config',
+    '[style.display]': '!config ? "none" : null',
     '[disabled]': 'disabled()',
     '(click)': 'openStackblitz()'
   }
