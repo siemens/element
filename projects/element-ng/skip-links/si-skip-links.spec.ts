@@ -28,6 +28,6 @@ describe('SkipLinksComponent', () => {
     document
       .querySelector<HTMLButtonElement>('si-skip-links .skip-link-wrapper:nth-child(2) button')!
       .click();
-    expect((document.activeElement as HTMLButtonElement).innerText).toEqual('Target 2');
+    expect(document.activeElement).toHaveTextContent('Target 2');
   });
 });

@@ -4,10 +4,9 @@
  */
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { CommonModule } from '@angular/common';
-import { Component, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { SiSelectHarness } from '@siemens/element-ng/select/testing';
 
@@ -27,10 +26,10 @@ const OPTIONS_LIST_NEXT: SelectOption<number>[] = [
 ];
 
 @Component({
-  imports: [FormsModule, ReactiveFormsModule, SiSelectModule],
+  imports: [ReactiveFormsModule, SiSelectModule],
   template: `
     <form [formGroup]="form">
-      <si-select #select formControlName="input" [options]="options" [readonly]="readonly" />
+      <si-select #select formControlName="input" [options]="options" />
     </form>
   `
 })
@@ -40,8 +39,7 @@ class FormHostComponent {
   });
   readonly select = viewChild.required<SiSelectComponent<string>>('select');
   readonly valueDirective = viewChild.required(SiSelectSelectionStrategy);
-  options: SelectOption<string>[] = OPTIONS_LIST;
-  readonly = false;
+  readonly options: SelectOption<string>[] = OPTIONS_LIST;
 }
 
 @Component({
@@ -49,10 +47,10 @@ class FormHostComponent {
   template: `
     <si-select
       inputId="test-select"
-      [options]="options"
-      [disabled]="disabled"
-      [readonly]="readonly"
-      [hasFilter]="hasFilter"
+      [options]="options()"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [hasFilter]="hasFilter()"
       [(value)]="value"
     />
   `
@@ -61,11 +59,11 @@ class TestHostComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
   readonly selectionStrategy = viewChild.required(SiSelectSelectionStrategy);
 
-  value?: string;
-  options?: SelectOption<string>[] = OPTIONS_LIST;
-  disabled = false;
-  readonly = false;
-  hasFilter = false;
+  readonly value = signal<string | undefined>(undefined);
+  readonly options = signal<SelectOption<string>[] | undefined>(OPTIONS_LIST);
+  readonly disabled = signal(false);
+  readonly readonly = signal(false);
+  readonly hasFilter = signal(false);
 }
 
 @Component({
@@ -73,10 +71,10 @@ class TestHostComponent {
   template: `
     <si-select
       inputId="test-select"
-      [options]="options"
-      [disabled]="disabled"
-      [readonly]="readonly"
-      [hasFilter]="hasFilter"
+      [options]="options()"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [hasFilter]="hasFilter()"
       [(value)]="value"
     />
   `
@@ -85,11 +83,11 @@ class TestHostNumberComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
   readonly selectionStrategy = viewChild.required(SiSelectSelectionStrategy);
 
-  value?: number;
-  options?: SelectOption<number>[] = OPTIONS_LIST_NEXT;
-  disabled = false;
-  readonly = false;
-  hasFilter = false;
+  readonly value = signal<number | undefined>(undefined);
+  readonly options = signal<SelectOption<number>[] | undefined>(OPTIONS_LIST_NEXT);
+  readonly disabled = signal(false);
+  readonly readonly = signal(false);
+  readonly hasFilter = signal(false);
 }
 
 @Component({
@@ -99,11 +97,11 @@ class TestHostNumberComponent {
       multi
       inputId="test-select"
       placeholder="Select an option"
-      [options]="options"
+      [options]="options()"
       [optionEqualCheckFn]="optionEqualCheckFn"
-      [disabled]="disabled"
-      [readonly]="readonly"
-      [hasFilter]="hasFilter"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [hasFilter]="hasFilter()"
       [(value)]="values"
       (valueChange)="selectionChanged($event)"
     />
@@ -112,15 +110,15 @@ class TestHostNumberComponent {
 class TestHostMultiComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
 
-  values?: string[];
-  options?: SelectItem<string>[] = [
+  readonly values = signal<string[] | undefined>(undefined);
+  readonly options = signal<SelectItem<string>[] | undefined>([
     { type: 'option', value: 'good', label: 'Good' },
     { type: 'option', value: 'average', label: 'Average' },
     { type: 'option', value: 'poor', label: 'Poor' }
-  ];
-  disabled = false;
-  readonly = false;
-  hasFilter = false;
+  ]);
+  readonly disabled = signal(false);
+  readonly readonly = signal(false);
+  readonly hasFilter = signal(false);
 
   selectionChanged: ($event: any[]) => void = () => {};
   optionEqualCheckFn = (a: string, b: string): boolean => a.toLowerCase() === b.toLowerCase();
@@ -129,7 +127,7 @@ class TestHostMultiComponent {
 @Component({
   imports: [SiSelectModule],
   template: `
-    <si-select inputId="test-select" [options]="options">
+    <si-select inputId="test-select" [options]="options()">
       <ng-template siSelectActions>
         <button siSelectAction type="button" class="btn btn-link" (click)="actionClick()">
           nothing
@@ -148,7 +146,7 @@ class TestHostMultiComponent {
   `
 })
 class TestHostCustomActionComponent {
-  options?: SelectOption<string>[] = OPTIONS_LIST;
+  readonly options = signal<SelectOption<string>[] | undefined>(OPTIONS_LIST);
   actionClick(): void {}
 }
 
@@ -161,16 +159,12 @@ describe('SiSelectComponent', () => {
     let hostComponent: TestHostComponent;
 
     beforeEach(async () => {
-      TestBed.configureTestingModule({
-        imports: [SiSelectModule, TestHostComponent]
-      });
-
       const typedFixture = TestBed.createComponent(TestHostComponent);
       fixture = typedFixture;
       hostComponent = typedFixture.componentInstance;
-      hostComponent.value = 'average';
+      hostComponent.value.set('average');
       loader = TestbedHarnessEnvironment.loader(fixture);
-      fixture.detectChanges();
+      await fixture.whenStable();
       selectHarness = await loader.getHarness(SiSelectHarness);
     });
 
@@ -192,35 +186,31 @@ describe('SiSelectComponent', () => {
     });
 
     it('should not open dropdown on enter when disabled', async () => {
-      hostComponent.disabled = true;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      hostComponent.disabled.set(true);
+      await fixture.whenStable();
 
       await selectHarness.open('enter');
       expect(await selectHarness.getList()).toBeNull();
     });
 
     it('should not open dropdown on click (while disabled)', async () => {
-      hostComponent.disabled = true;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      hostComponent.disabled.set(true);
+      await fixture.whenStable();
 
       await selectHarness.open('enter');
       expect(await selectHarness.getList()).toBeNull();
     });
 
     it('should not allow focus (while disabled)', async () => {
-      hostComponent.disabled = true;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      hostComponent.disabled.set(true);
+      await fixture.whenStable();
 
       expect(await selectHarness.getTabindex()).toBe('-1');
     });
 
     it('should not open dropdown on enter when readonly', async () => {
-      hostComponent.readonly = true;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      hostComponent.readonly.set(true);
+      await fixture.whenStable();
       expect(await selectHarness.getTabindex()).toBe('0');
 
       await selectHarness.open('enter');
@@ -228,17 +218,15 @@ describe('SiSelectComponent', () => {
     });
 
     it('should not open dropdown on click (while readonly)', async () => {
-      hostComponent.readonly = true;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      hostComponent.readonly.set(true);
+      await fixture.whenStable();
       await selectHarness.open('click');
       expect(await selectHarness.getList()).toBeNull();
     });
 
     it('should not open dropdown on space (while readonly)', async () => {
-      hostComponent.readonly = true;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      hostComponent.readonly.set(true);
+      await fixture.whenStable();
 
       await selectHarness.open('space');
       expect(await selectHarness.getList()).toBeNull();
@@ -257,7 +245,7 @@ describe('SiSelectComponent', () => {
       await selectHarness.clickItemsByText('Poor');
 
       expect(await selectHarness.getSelectedTexts()).toEqual(['Poor']);
-      expect(hostComponent.value).toBe('poor');
+      expect(hostComponent.value()).toBe('poor');
       // Ensure placeholder text is not visible when items are selected
       expect(await selectHarness.getPlaceholder()).toBeUndefined();
     });
@@ -266,7 +254,7 @@ describe('SiSelectComponent', () => {
       await selectHarness.clickItemsByText('Average');
 
       expect(await selectHarness.getList()).toBeFalsy();
-      expect(hostComponent.value).toBe('average');
+      expect(hostComponent.value()).toBe('average');
     });
 
     it('should allow focus', async () => {
@@ -295,20 +283,17 @@ describe('SiSelectComponent', () => {
 
     it('should keep selected label visible in narrow container', async () => {
       fixture.debugElement.query(By.css('si-select')).nativeElement.style.width = '80px';
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
       await fixture.whenStable();
 
       const selectedOption = fixture.debugElement.query(By.css('si-select-option'));
       expect(selectedOption).toBeTruthy();
-      expect(selectedOption.nativeElement.style.visibility).not.toBe('hidden');
+      expect(selectedOption.nativeElement).not.toHaveStyle({ visibility: 'hidden' });
       expect(await selectHarness.getSelectedTexts()).toEqual(['Average']);
     });
 
     it('should allow undefined options', async () => {
-      hostComponent.options = undefined;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      hostComponent.options.set(undefined);
+      await fixture.whenStable();
       await selectHarness.open();
       const list = await selectHarness.getList()!;
       expect(list).toBeTruthy();
@@ -318,16 +303,15 @@ describe('SiSelectComponent', () => {
 
     describe('with filter', () => {
       beforeEach(async () => {
-        hostComponent.hasFilter = true;
-        hostComponent.options = [
+        hostComponent.hasFilter.set(true);
+        hostComponent.options.set([
           { type: 'option', value: 'a', label: 'a' },
           { type: 'option', value: 'b', label: 'b' },
           { type: 'option', value: 'c', label: 'c' },
           { type: 'option', value: 'ab', label: 'ab' }
-        ];
-        hostComponent.value = 'a';
-        fixture.changeDetectorRef.markForCheck();
-        fixture.detectChanges();
+        ]);
+        hostComponent.value.set('a');
+        await fixture.whenStable();
         selectHarness = await TestbedHarnessEnvironment.loader(fixture).getHarness(SiSelectHarness);
       });
 
@@ -338,7 +322,7 @@ describe('SiSelectComponent', () => {
           .getList()
           .then(list => list!.sendKeys('b', TestKey.DOWN_ARROW, TestKey.ENTER));
         expect(await selectHarness.getSelectedTexts()).toEqual(['b']);
-        expect(hostComponent.value).toBe('b');
+        expect(hostComponent.value()).toBe('b');
       });
 
       it('should select by click', async () => {
@@ -350,13 +334,12 @@ describe('SiSelectComponent', () => {
           .then(list => list!.getItem(1))
           .then(item => item.click());
         expect(await selectHarness.getSelectedTexts()).toEqual(['ab']);
-        expect(hostComponent.value).toBe('ab');
+        expect(hostComponent.value()).toBe('ab');
       });
 
       it('should focus first selected element', async () => {
-        hostComponent.value = 'c';
-        fixture.changeDetectorRef.markForCheck();
-        fixture.detectChanges();
+        hostComponent.value.set('c');
+        await fixture.whenStable();
         await selectHarness.open();
         const item = await selectHarness.getList().then(list => list!.getItemByText('c'));
         expect(await item.isActive()).toBe(true);
@@ -365,12 +348,11 @@ describe('SiSelectComponent', () => {
       it('should apply current filter when options are applied', async () => {
         await selectHarness.open();
         await selectHarness.getList().then(list => list!.sendKeys('c'));
-        hostComponent.options = [
-          ...hostComponent.options!,
+        hostComponent.options.update(opts => [
+          ...opts!,
           { type: 'option', value: 'aaa', label: 'aaa' }
-        ];
-        fixture.changeDetectorRef.markForCheck();
-        fixture.detectChanges();
+        ]);
+        await fixture.whenStable();
         const items = await selectHarness.getList().then(list => list!.getAllItemTexts());
         expect(items).not.toContain('a');
         expect(items).not.toContain('b');
@@ -392,14 +374,13 @@ describe('SiSelectComponent', () => {
       const typedFixture = TestBed.createComponent(TestHostNumberComponent);
       fixture = typedFixture;
       hostComponent = typedFixture.componentInstance;
-      hostComponent.value = 0;
+      hostComponent.value.set(0);
       loader = TestbedHarnessEnvironment.loader(fixture);
-      fixture.detectChanges();
+      await fixture.whenStable();
       selectHarness = await loader.getHarness(SiSelectHarness);
     });
 
     it('should display active selection', async () => {
-      hostComponent.value = 0;
       const [item] = await selectHarness.getSelectedItems();
 
       expect(await item.getIcon()).toBe('element-face-happy');
@@ -429,7 +410,7 @@ describe('SiSelectComponent', () => {
       await selectHarness.clickItemsByText('Poor');
 
       expect(await selectHarness.getSelectedTexts()).toEqual(['Poor']);
-      expect(hostComponent.value).toBe(2);
+      expect(hostComponent.value()).toBe(2);
       // Ensure placeholder text is not visible when items are selected
       expect(await selectHarness.getPlaceholder()).toBeUndefined();
     });
@@ -439,10 +420,6 @@ describe('SiSelectComponent', () => {
     let component: FormHostComponent;
 
     beforeEach(async () => {
-      TestBed.configureTestingModule({
-        imports: [CommonModule, FormsModule, ReactiveFormsModule, SiSelectModule, FormHostComponent]
-      });
-
       const typedFixture = TestBed.createComponent(FormHostComponent);
       fixture = typedFixture;
       loader = TestbedHarnessEnvironment.loader(fixture);
@@ -486,8 +463,8 @@ describe('SiSelectComponent', () => {
       const typedFixture = TestBed.createComponent(TestHostMultiComponent);
       fixture = typedFixture;
       hostComponent = typedFixture.componentInstance;
-      hostComponent.values = ['average'];
-      fixture.detectChanges();
+      hostComponent.values.set(['average']);
+      await fixture.whenStable();
       loader = TestbedHarnessEnvironment.loader(fixture);
       selectHarness = await loader.getHarness(SiSelectHarness);
     });
@@ -497,27 +474,24 @@ describe('SiSelectComponent', () => {
       await selectHarness.blur();
 
       expect(await selectHarness.getSelectedTexts()).toEqual(['Average', 'Poor']);
-      expect(hostComponent.values).toEqual(['average', 'poor']);
+      expect(hostComponent.values()).toEqual(['average', 'poor']);
       // Ensure placeholder text is not visible when items are selected
       expect(await selectHarness.getPlaceholder()).toBeUndefined();
     });
 
     it('should keep single selected label visible in narrow container', async () => {
       fixture.debugElement.query(By.css('si-select')).nativeElement.style.width = '80px';
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
       await fixture.whenStable();
 
       const selectedOption = fixture.debugElement.query(By.css('si-select-option'));
       expect(selectedOption).toBeTruthy();
-      expect(selectedOption.nativeElement.style.visibility).not.toBe('hidden');
+      expect(selectedOption.nativeElement).not.toHaveStyle({ visibility: 'hidden' });
       expect(await selectHarness.getSelectedTexts()).toEqual(['Average']);
     });
 
     it('should display placeholder text when no options are selected/provided', async () => {
-      hostComponent.options = undefined;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      hostComponent.options.set(undefined);
+      await fixture.whenStable();
       await selectHarness.open();
       const list = await selectHarness.getList()!;
       expect(list).toBeTruthy();
@@ -528,12 +502,10 @@ describe('SiSelectComponent', () => {
 
     it('should show overflow item list', async () => {
       (fixture.debugElement.nativeElement as HTMLElement).style.width = '200px';
-      const initialSelection = Object.assign([], hostComponent.values);
+      const initialSelection = Object.assign([], hostComponent.values());
       await selectHarness.clickItemsByText(
         OPTIONS_LIST.filter(i => !initialSelection?.includes(i.value)).map(i => i.label ?? '')
       );
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
       await fixture.whenStable();
 
       // cannot use jasmine.clock here
@@ -543,8 +515,8 @@ describe('SiSelectComponent', () => {
     });
 
     it('should filter in grouped options', async () => {
-      hostComponent.hasFilter = true;
-      hostComponent.options = [
+      hostComponent.hasFilter.set(true);
+      hostComponent.options.set([
         {
           type: 'group',
           key: 'x',
@@ -565,11 +537,9 @@ describe('SiSelectComponent', () => {
             { type: 'option', value: 'ab', label: 'Ab' }
           ]
         }
-      ];
-      hostComponent.values = ['a', 'ab'];
-
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      ]);
+      hostComponent.values.set(['a', 'ab']);
+      await fixture.whenStable();
 
       await selectHarness.open('click');
       await selectHarness.getList().then(list => list!.sendKeys('y'));
@@ -583,9 +553,8 @@ describe('SiSelectComponent', () => {
     });
 
     it('should allow undefined options', async () => {
-      hostComponent.options = undefined;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      hostComponent.options.set(undefined);
+      await fixture.whenStable();
       await selectHarness.open();
       const list = await selectHarness.getList()!;
       expect(list).toBeTruthy();
@@ -597,18 +566,17 @@ describe('SiSelectComponent', () => {
       await selectHarness.open();
       await selectHarness.clickItemsByText('Good');
       expect(await selectHarness.getSelectedTexts()).toEqual(['Good', 'Average']);
-      hostComponent.options = [
+      hostComponent.options.set([
         { type: 'option', value: 'GOOD', label: 'GOOD' },
         { type: 'option', value: 'aveRAGE', label: 'AveRAGE' },
         { type: 'option', value: 'poor', label: 'poor' }
-      ];
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      ]);
+      await fixture.whenStable();
 
       expect(await selectHarness.getSelectedTexts()).toEqual(['GOOD', 'AveRAGE']);
       // Options were changed after the selection, so si-select does not emit any changes.
       // It should only emit if the user changes something.
-      expect(hostComponent.values).toEqual(['good', 'average']);
+      expect(hostComponent.values()).toEqual(['good', 'average']);
     });
   });
 

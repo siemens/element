@@ -54,8 +54,8 @@ describe('SiSortBarComponent', () => {
   it('should correctly identify the default sort criteria', () => {
     fixture.detectChanges();
 
-    expect(getNameByIndex(1)?.textContent).toBe('Street');
-    expect(getIconByIndex(1)?.getAttribute('data-icon')).toBe('elementSortUp');
+    expect(getNameByIndex(1)).toHaveTextContent('Street');
+    expect(getIconByIndex(1)).toHaveAttribute('data-icon', 'elementSortUp');
   });
 
   it('should correctly change the active sort criteria', () => {
@@ -63,18 +63,18 @@ describe('SiSortBarComponent', () => {
     getCriteriaByKey('country')?.click();
     fixture.detectChanges();
 
-    expect(getNameByIndex(2)?.textContent).toBe('Country');
-    expect(getIconByIndex(2)?.getAttribute('data-icon')).toBe('elementSortUp');
+    expect(getNameByIndex(2)).toHaveTextContent('Country');
+    expect(getIconByIndex(2)).toHaveAttribute('data-icon', 'elementSortUp');
   });
 
   it('should correctly toggle the sort criteria', () => {
     fixture.detectChanges();
 
-    expect(getNameByIndex(1)?.textContent).toBe('Street');
-    expect(getIconByIndex(1)?.getAttribute('data-icon')).toBe('elementSortUp');
+    expect(getNameByIndex(1)).toHaveTextContent('Street');
+    expect(getIconByIndex(1)).toHaveAttribute('data-icon', 'elementSortUp');
     getCriteriaByKey('street')?.click();
     fixture.detectChanges();
-    expect(getIconByIndex(1)?.getAttribute('data-icon')).toBe('elementSortDown');
+    expect(getIconByIndex(1)).toHaveAttribute('data-icon', 'elementSortDown');
   });
 
   it('should successfully trigger the sort-change event', async () => {
