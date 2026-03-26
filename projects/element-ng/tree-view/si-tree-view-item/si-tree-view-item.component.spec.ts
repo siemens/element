@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, DebugElement, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 
 import { removeItemFromTree, reorderTreeItem, transferTreeItem } from '../drag-drop.util';
 import { SiTreeViewComponent } from '../si-tree-view.component';
@@ -21,7 +20,7 @@ import { SiTreeViewItemDirective } from './si-tree-view-item.directive';
       #treeOne
       class="tree-one h-100"
       cdkDropList
-      [items]="items"
+      [items]="items()"
       [cdkDropListData]="treeOneComponent().dropListItems"
       (cdkDropListDropped)="itemDropped($event)"
     >
@@ -33,7 +32,7 @@ import { SiTreeViewItemDirective } from './si-tree-view-item.directive';
       #treeTwo
       class="h-100"
       cdkDropList
-      [items]="treeTwoItems"
+      [items]="treeTwoItems()"
       [cdkDropListData]="treeTwoComponent().dropListItems"
       (cdkDropListDropped)="itemDropped($event)"
     >
@@ -51,7 +50,7 @@ class WrapperComponent {
   readonly treeOneComponent = viewChild.required('treeOne', { read: SiTreeViewComponent });
   readonly treeTwoComponent = viewChild.required('treeTwo', { read: SiTreeViewComponent });
 
-  items: TreeItem[] = [
+  readonly items = signal<TreeItem[]>([
     {
       label: 'Company1',
       dataField1: 'Root1DataField1',
@@ -84,9 +83,9 @@ class WrapperComponent {
       stateIndicatorColor: 'red',
       icon: 'element-project'
     }
-  ];
+  ]);
 
-  treeTwoItems: TreeItem[] = [
+  readonly treeTwoItems = signal<TreeItem[]>([
     {
       label: 'Tree Two Item 1'
     },
@@ -99,16 +98,16 @@ class WrapperComponent {
         }
       ]
     }
-  ];
+  ]);
 
   itemDropped(event: CdkDragDrop<any>): void {
     if (event.container === event.previousContainer) {
-      const updatedTree = [...reorderTreeItem(this.items, event)];
-      this.items = updatedTree;
+      const updatedTree = [...reorderTreeItem(this.items(), event)];
+      this.items.set(updatedTree);
     } else {
-      const updatedTrees = transferTreeItem(this.items, this.treeTwoItems, event, true);
-      this.items = [...updatedTrees.sourceTree];
-      this.treeTwoItems = [...updatedTrees.targetTree];
+      const updatedTrees = transferTreeItem(this.items(), this.treeTwoItems(), event, true);
+      this.items.set([...updatedTrees.sourceTree]);
+      this.treeTwoItems.set([...updatedTrees.targetTree]);
     }
   }
 }
@@ -122,86 +121,90 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     debugElement = fixture.debugElement;
   });
 
-  it('renders the updated tree when item label is modified', () => {
-    fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
+  it('renders the updated tree when item label is modified', async () => {
+    await fixture.whenStable();
     expect(
       debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
         .nativeElement.textContent
     ).toBe('Company1');
 
-    fixture.componentInstance.items[0].label = 'Company4';
+    fixture.componentInstance.items.update(items => {
+      items[0].label = 'Company4';
+      return [...items];
+    });
     fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
+    await fixture.whenStable();
     expect(
       debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
         .nativeElement.textContent
     ).toBe('Company4');
   });
   it('moves tree items within tree', async () => {
-    fixture.detectChanges();
-    await runOnPushChangeDetection(fixture);
-    expect(fixture.componentInstance.items[0].label).toBe('Company1');
+    await fixture.whenStable();
+    expect(fixture.componentInstance.items()[0].label).toBe('Company1');
     debugElement.query(By.css('si-tree-view')).triggerEventHandler('cdkDropListDropped', {
       currentIndex: 1,
       previousIndex: 0,
       previousContainer: fixture.componentInstance.treeOneList(),
       container: fixture.componentInstance.treeOneList()
     });
-    fixture.detectChanges();
-    expect(fixture.componentInstance.items[0].label).toBe('Company2');
+    await fixture.whenStable();
+    expect(fixture.componentInstance.items()[0].label).toBe('Company2');
   });
 
   it('does not move tree item if current and previous index are same', async () => {
-    fixture.detectChanges();
-    await runOnPushChangeDetection(fixture);
-    expect(fixture.componentInstance.items[0].label).toBe('Company1');
+    await fixture.whenStable();
+    expect(fixture.componentInstance.items()[0].label).toBe('Company1');
     debugElement.query(By.css('si-tree-view')).triggerEventHandler('cdkDropListDropped', {
       currentIndex: 0,
       previousIndex: 0,
       previousContainer: fixture.componentInstance.treeOneList(),
       container: fixture.componentInstance.treeOneList()
     });
-    fixture.detectChanges();
-    expect(fixture.componentInstance.items[0].label).toBe('Company1');
+    await fixture.whenStable();
+    expect(fixture.componentInstance.items()[0].label).toBe('Company1');
   });
 
   it('moves tree item from one tree to another and removes from source tree', async () => {
-    fixture.detectChanges();
-    await runOnPushChangeDetection(fixture);
-    expect(fixture.componentInstance.items[0].label).toBe('Company1');
+    await fixture.whenStable();
+    expect(fixture.componentInstance.items()[0].label).toBe('Company1');
     debugElement.query(By.css('si-tree-view')).triggerEventHandler('cdkDropListDropped', {
       currentIndex: 2,
       previousIndex: 0,
       previousContainer: fixture.componentInstance.treeOneList(),
       container: fixture.componentInstance.treeTwoList()
     });
-    fixture.detectChanges();
-    expect(fixture.componentInstance.items[0].label).toBe('Company2');
+    await fixture.whenStable();
+    expect(fixture.componentInstance.items()[0].label).toBe('Company2');
   });
 
-  it('renders the updated tree when item is modified', () => {
-    fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
+  it('renders the updated tree when item is modified', async () => {
+    await fixture.whenStable();
     expect(
       debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
         .nativeElement.textContent
     ).toBe('Company1');
 
-    fixture.componentInstance.items[0].label = 'Company4';
+    fixture.componentInstance.items.update(items => {
+      items[0].label = 'Company4';
+      return [...items];
+    });
     fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
+    await fixture.whenStable();
     expect(
       debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
         .nativeElement.textContent
     ).toBe('Company4');
   });
 
-  it('shall not move item into its own child', () => {
+  it('shall not move item into its own child', async () => {
     vi.spyOn(console, 'error');
-    fixture.componentInstance.items[0].state = 'expanded';
+    fixture.componentInstance.items.update(items => {
+      items[0].state = 'expanded';
+      return [...items];
+    });
     fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
+    await fixture.whenStable();
     debugElement.query(By.css('si-tree-view')).triggerEventHandler('cdkDropListDropped', {
       currentIndex: 1,
       previousIndex: 0,
@@ -211,32 +214,28 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     expect(console.error).toHaveBeenCalledWith('Cannot move parent into its own child');
   });
 
-  it('removes item from tree if node is found', () => {
-    fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
+  it('removes item from tree if node is found', async () => {
+    await fixture.whenStable();
     expect(debugElement.queryAll(By.css('.tree-one si-tree-view-item')).length).toBe(3);
 
-    const treeNode = fixture.componentInstance.items[1];
-    const treeItems = removeItemFromTree(fixture.componentInstance.items, treeNode);
-    fixture.componentInstance.items = structuredClone(treeItems);
-    fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
+    const treeNode = fixture.componentInstance.items()[1];
+    const treeItems = removeItemFromTree(fixture.componentInstance.items(), treeNode);
+    fixture.componentInstance.items.set(structuredClone(treeItems));
+    await fixture.whenStable();
 
     expect(debugElement.queryAll(By.css('.tree-one si-tree-view-item')).length).toBe(2);
   });
 
-  it('returns same tree if node to be removed not found', () => {
-    fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
-    const treeItems = removeItemFromTree(fixture.componentInstance.items, {
+  it('returns same tree if node to be removed not found', async () => {
+    await fixture.whenStable();
+    const treeItems = removeItemFromTree(fixture.componentInstance.items(), {
       label: 'Different node'
     });
-    expect(fixture.componentInstance.items).toEqual(treeItems);
+    expect(fixture.componentInstance.items()).toEqual(treeItems);
   });
 
   it('should update index of tree items when item is moved', async () => {
     await fixture.whenStable();
-    fixture.detectChanges();
     expect(
       debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
         .nativeElement.textContent
@@ -249,7 +248,7 @@ describe('SiTreeViewComponentWithDragDrop', () => {
       previousContainer: fixture.componentInstance.treeOneList(),
       container: fixture.componentInstance.treeOneList()
     });
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(
       debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
         .nativeElement.textContent
