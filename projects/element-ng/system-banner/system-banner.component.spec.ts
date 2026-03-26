@@ -2,37 +2,50 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ExtendedStatusType } from '@siemens/element-ng/common';
 
 import { SiSystemBannerComponent } from './system-banner.component';
 
 describe('SiSystemBannerComponent', () => {
-  let component: SiSystemBannerComponent;
   let fixture: ComponentFixture<SiSystemBannerComponent>;
+  let element: HTMLElement;
+  let message: WritableSignal<string>;
+  let status: WritableSignal<ExtendedStatusType>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SiSystemBannerComponent);
-    fixture.componentRef.setInput('message', 'Test');
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    message = signal('Test');
+    status = signal<ExtendedStatusType>('info');
+
+    fixture = TestBed.createComponent(SiSystemBannerComponent, {
+      bindings: [inputBinding('message', message), inputBinding('status', status)]
+    });
+    element = fixture.nativeElement;
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should display meesage', () => {
-    expect(fixture.nativeElement.textContent.trim()).toBe('Test');
+  it('should display message', async () => {
+    await fixture.whenStable();
+
+    expect(element).toHaveTextContent('Test');
   });
 
   it('should have default banner type', () => {
-    expect(component.status()).toBe('info');
+    expect(status()).toBe('info');
   });
 
-  it('should have class based on banner type', () => {
-    expect(fixture.nativeElement.classList).toContain('banner-info');
-    fixture.componentRef.setInput('status', 'success');
-    fixture.detectChanges();
-    expect(fixture.nativeElement.classList).toContain('banner-success');
+  it('should have class based on banner type', async () => {
+    await fixture.whenStable();
+
+    expect(element).toHaveClass('banner-info');
+
+    status.set('success');
+    await fixture.whenStable();
+
+    expect(element).toHaveClass('banner-success');
   });
 });

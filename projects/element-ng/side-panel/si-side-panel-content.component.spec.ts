@@ -60,20 +60,20 @@ describe('SiSidePanelContentComponent', () => {
     const getNavigateLink = (): HTMLAnchorElement | null =>
       element.querySelector<HTMLAnchorElement>('a[href="/details"]');
 
-    expect(element.querySelector('.fullscreen-button')).toBeNull();
-    expect(getNavigateLink()).toBeNull();
+    expect(element.querySelector('.fullscreen-button')).not.toBeInTheDocument();
+    expect(getNavigateLink()).not.toBeInTheDocument();
 
     component.displayMode.set('overlay');
     fixture.detectChanges();
 
-    expect(element.querySelector('.fullscreen-button')).toBeTruthy();
-    expect(getNavigateLink()).toBeNull();
+    expect(element.querySelector('.fullscreen-button')).toBeInTheDocument();
+    expect(getNavigateLink()).not.toBeInTheDocument();
 
     component.displayMode.set('navigate');
     fixture.detectChanges();
 
-    expect(element.querySelector('.fullscreen-button')).toBeNull();
-    expect(getNavigateLink()).toBeTruthy();
+    expect(element.querySelector('.fullscreen-button')).not.toBeInTheDocument();
+    expect(getNavigateLink()).toBeInTheDocument();
   });
 
   it('should hide fullscreen button on css breakpoints that force fullscreen mode', () => {
