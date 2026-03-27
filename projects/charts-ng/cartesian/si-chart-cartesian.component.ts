@@ -31,7 +31,8 @@ import {
   MarkAreaComponent,
   MarkLineComponent,
   MarkPointComponent,
-  AxisPointerComponent
+  AxisPointerComponent,
+  DatasetComponent
 } from 'echarts/components';
 import { LegacyGridContainLabel } from 'echarts/features';
 
@@ -47,6 +48,7 @@ echarts.use([
   ScatterChart,
   CandlestickChart,
   HeatmapChart,
+  DatasetComponent,
   LegendComponent,
   GridComponent,
   DataZoomComponent,

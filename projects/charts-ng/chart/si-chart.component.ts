@@ -27,7 +27,8 @@ import {
   MarkAreaComponent,
   MarkLineComponent,
   MarkPointComponent,
-  AxisPointerComponent
+  AxisPointerComponent,
+  DatasetComponent
 } from 'echarts/components';
 import { LegacyGridContainLabel } from 'echarts/features';
 
@@ -41,6 +42,7 @@ echarts.use([
   GaugeChart,
   SankeyChart,
   SunburstChart,
+  DatasetComponent,
   LegendComponent,
   GridComponent,
   DataZoomComponent,
