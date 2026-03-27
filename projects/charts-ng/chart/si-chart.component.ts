@@ -15,7 +15,8 @@ import {
   PieChart,
   GaugeChart,
   SankeyChart,
-  SunburstChart
+  SunburstChart,
+  CustomChart
 } from 'echarts/charts';
 import {
   LegendComponent,
@@ -28,7 +29,9 @@ import {
   MarkLineComponent,
   MarkPointComponent,
   AxisPointerComponent,
-  DatasetComponent
+  DatasetComponent,
+  PolarComponent,
+  SingleAxisComponent
 } from 'echarts/components';
 import { LegacyGridContainLabel } from 'echarts/features';
 
@@ -43,6 +46,7 @@ echarts.use([
   SankeyChart,
   SunburstChart,
   DatasetComponent,
+  CustomChart,
   LegendComponent,
   GridComponent,
   DataZoomComponent,
@@ -53,6 +57,8 @@ echarts.use([
   MarkLineComponent,
   MarkPointComponent,
   AxisPointerComponent,
+  PolarComponent,
+  SingleAxisComponent,
   LegacyGridContainLabel
 ]);
 
