@@ -56,14 +56,14 @@ describe('SiModalService', () => {
 
       const modal = document.querySelector('si-modal');
       expect(modal).toBeTruthy();
-      expect(modal?.innerHTML).toContain('test template');
+      expect(modal).toHaveTextContent('test template');
       expect(bodyStyle.overflow).toBe('hidden');
 
       modalRef.hide();
       vi.advanceTimersByTime(500);
       appRef.tick();
 
-      expect(document.querySelector('si-modal')).toBeFalsy();
+      expect(document.querySelector('si-modal')).not.toBeInTheDocument();
       expect(bodyStyle.overflow).not.toBe('hidden');
     });
   });
@@ -76,13 +76,13 @@ describe('SiModalService', () => {
 
       const modal = document.querySelector('si-modal');
       expect(modal).toBeTruthy();
-      expect(modal?.innerHTML).toContain('test component');
+      expect(modal).toHaveTextContent('test component');
 
       modalRef.hide();
       vi.advanceTimersByTime(500);
       appRef.tick();
 
-      expect(document.querySelector('si-modal')).toBeFalsy();
+      expect(document.querySelector('si-modal')).not.toBeInTheDocument();
     });
 
     it('set input using setInputs', () => {
@@ -92,10 +92,10 @@ describe('SiModalService', () => {
 
       const modal = document.querySelector('si-modal');
       expect(modal).toBeTruthy();
-      expect(modal?.innerHTML).toContain('input value');
+      expect(modal).toHaveTextContent('input value');
       modalRef.setInput('inputProp', 'new input value');
       appRef.tick();
-      expect(modal?.innerHTML).toContain('new input value');
+      expect(modal).toHaveTextContent('new input value');
       modalRef.hide();
       vi.advanceTimersByTime(500);
       appRef.tick();
