@@ -52,8 +52,7 @@ export class AppComponent {}
 
 ### Running unit tests
 
-Run `npm run charts:test` to perform the unit tests via [Karma](https://karma-runner.github.io).
-You can set a seed for running the tests in a specific using an environment variable: `SEED=71384 yarn lib:test`
+Run `npm run charts:test` to perform the unit tests via [Vitest](https://main.vitest.dev/).
 
 ## License
 
