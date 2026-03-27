@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiMarkdownRendererComponent as TestComponent } from './si-markdown-renderer.component';
@@ -9,69 +10,73 @@ import { SiMarkdownRendererComponent as TestComponent } from './si-markdown-rend
 describe('SiMarkdownRendererComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let hostElement: HTMLElement;
+  let text: WritableSignal<string | null>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponent);
+    text = signal('');
+    fixture = TestBed.createComponent(TestComponent, {
+      bindings: [inputBinding('text', text)]
+    });
     hostElement = fixture.nativeElement;
   });
 
-  it('should render empty content for null/undefined input', () => {
-    fixture.componentRef.setInput('text', null);
-    fixture.detectChanges();
+  it('should render empty content for null/undefined input', async () => {
+    text.set(null);
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     expect(markdownDiv.innerHTML).toBe('');
   });
 
-  it('should render plain text without transformation', () => {
+  it('should render plain text without transformation', async () => {
     const plainText = 'This is plain text';
-    fixture.componentRef.setInput('text', plainText);
-    fixture.detectChanges();
+    text.set(plainText);
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
-    expect(markdownDiv.textContent).toContain(plainText);
+    expect(markdownDiv).toHaveTextContent(plainText);
   });
 
-  it('should transform bold markdown **text**', () => {
-    fixture.componentRef.setInput('text', 'This is **bold** text');
-    fixture.detectChanges();
+  it('should transform bold markdown **text**', async () => {
+    text.set('This is **bold** text');
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const strongElement = markdownDiv.querySelector('strong')!;
-    expect(strongElement.textContent).toBe('bold');
+    expect(strongElement).toHaveTextContent('bold');
   });
 
-  it('should transform italic markdown *text*', () => {
-    fixture.componentRef.setInput('text', 'This is *italic* text');
-    fixture.detectChanges();
+  it('should transform italic markdown *text*', async () => {
+    text.set('This is *italic* text');
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const emElement = markdownDiv.querySelector('em')!;
-    expect(emElement.textContent).toBe('italic');
+    expect(emElement).toHaveTextContent('italic');
   });
 
-  it('should transform inline code `text`', () => {
-    fixture.componentRef.setInput('text', 'This is `code_` text');
-    fixture.detectChanges();
+  it('should transform inline code `text`', async () => {
+    text.set('This is `code_` text');
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const codeElement = markdownDiv.querySelector('code')!;
-    expect(codeElement.textContent).toBe('code_');
+    expect(codeElement).toHaveTextContent('code_');
   });
 
-  it('should transform code blocks ```code```', () => {
-    fixture.componentRef.setInput('text', '```\nconst x = 1;\n```');
-    fixture.detectChanges();
+  it('should transform code blocks ```code```', async () => {
+    text.set('```\nconst x = 1;\n```');
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const preElement = markdownDiv.querySelector('pre')!;
     const codeElement = preElement.querySelector('code')!;
-    expect(codeElement.textContent).toContain('const x = 1;');
+    expect(codeElement).toHaveTextContent('const x = 1;');
   });
 
-  it('should transform bullet points to lists (• character)', () => {
-    fixture.componentRef.setInput('text', '• First item\n• Second item');
-    fixture.detectChanges();
+  it('should transform bullet points to lists (• character)', async () => {
+    text.set('• First item\n• Second item');
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const innerHTML = markdownDiv.innerHTML;
@@ -81,9 +86,9 @@ describe('SiMarkdownRendererComponent', () => {
     expect(innerHTML).toContain('<ul>');
   });
 
-  it('should transform bullet points to lists (- character)', () => {
-    fixture.componentRef.setInput('text', '- First item\n- Second item');
-    fixture.detectChanges();
+  it('should transform bullet points to lists (- character)', async () => {
+    text.set('- First item\n- Second item');
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const innerHTML = markdownDiv.innerHTML;
@@ -93,16 +98,16 @@ describe('SiMarkdownRendererComponent', () => {
     expect(innerHTML).toContain('<ul>');
   });
 
-  it('should convert newlines to line breaks', () => {
-    fixture.componentRef.setInput('text', 'Line 1\nLine 2');
-    fixture.detectChanges();
+  it('should convert newlines to line breaks', async () => {
+    text.set('Line 1\nLine 2');
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const brElements = markdownDiv.querySelectorAll('br');
     expect(brElements.length).toBe(1);
   });
 
-  it('should handle complex markdown with multiple elements', () => {
+  it('should handle complex markdown with multiple elements', async () => {
     const complexMarkdown = `This is **bold** text with _italic_, escaped \\_ and \\* and \`code\`.
 
 • First item
@@ -112,8 +117,8 @@ describe('SiMarkdownRendererComponent', () => {
 const example = "code block";
 \`\`\``;
 
-    fixture.componentRef.setInput('text', complexMarkdown);
-    fixture.detectChanges();
+    text.set(complexMarkdown);
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const innerHTML = markdownDiv.innerHTML;
@@ -126,9 +131,9 @@ const example = "code block";
     expect(innerHTML).toContain('<li>First item</li>');
   });
 
-  it('should sanitize potentially dangerous HTML', () => {
-    fixture.componentRef.setInput('text', '<script>alert("xss")</script>Safe text');
-    fixture.detectChanges();
+  it('should sanitize potentially dangerous HTML', async () => {
+    text.set('<script>alert("xss")</script>Safe text');
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const innerHTML = markdownDiv.innerHTML;
@@ -136,14 +141,14 @@ const example = "code block";
     // Script tags should be completely removed by Angular's sanitizer
     expect(innerHTML).not.toContain('<script>');
     expect(innerHTML).not.toContain('alert("xss")');
-    expect(markdownDiv.textContent?.trim()).toBe('Safe text');
+    expect(markdownDiv).toHaveTextContent('Safe text');
   });
 
-  it('should sanitize other dangerous HTML elements', () => {
+  it('should sanitize other dangerous HTML elements', async () => {
     const dangerousContent =
       '<img src="x" onerror="alert(1)">Text<iframe src="javascript:alert(1)"></iframe>';
-    fixture.componentRef.setInput('text', dangerousContent);
-    fixture.detectChanges();
+    text.set(dangerousContent);
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const innerHTML = markdownDiv.innerHTML;
@@ -152,12 +157,12 @@ const example = "code block";
     expect(innerHTML).not.toContain('onerror=');
     expect(innerHTML).not.toContain('javascript:');
     expect(innerHTML).not.toContain('<iframe');
-    expect(markdownDiv.textContent?.trim()).toBe('Text');
+    expect(markdownDiv).toHaveTextContent('Text');
   });
 
-  it('should preserve safe HTML elements while sanitizing dangerous attributes', () => {
-    fixture.componentRef.setInput('text', '<div onclick="alert(1)">Safe div</div>');
-    fixture.detectChanges();
+  it('should preserve safe HTML elements while sanitizing dangerous attributes', async () => {
+    text.set('<div onclick="alert(1)">Safe div</div>');
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const innerHTML = markdownDiv.innerHTML;
@@ -167,14 +172,14 @@ const example = "code block";
     expect(innerHTML).toContain('Safe div');
   });
 
-  it('should transform markdown tables', () => {
+  it('should transform markdown tables', async () => {
     const tableMarkdown = `| Name | Role |
 |------|------|
 | Alice | Developer |
 | Bob | Designer |`;
 
-    fixture.componentRef.setInput('text', tableMarkdown);
-    fixture.detectChanges();
+    text.set(tableMarkdown);
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const tableElement = markdownDiv.querySelector('table')!;
@@ -182,23 +187,23 @@ const example = "code block";
     const tdElements = markdownDiv.querySelectorAll('td');
 
     expect(tableElement).toBeTruthy();
-    expect(tableElement.classList).toContain('table');
-    expect(tableElement.classList).toContain('table-hover');
+    expect(tableElement).toHaveClass('table');
+    expect(tableElement).toHaveClass('table-hover');
     expect(trElements.length).toBe(3); // Header + 2 data rows
     expect(tdElements.length).toBe(6); // 2 columns × 3 rows
-    expect(tdElements[0].textContent?.trim()).toBe('Name');
-    expect(tdElements[1].textContent?.trim()).toBe('Role');
-    expect(tdElements[2].textContent?.trim()).toBe('Alice');
-    expect(tdElements[3].textContent?.trim()).toBe('Developer');
+    expect(tdElements[0]).toHaveTextContent('Name');
+    expect(tdElements[1]).toHaveTextContent('Role');
+    expect(tdElements[2]).toHaveTextContent('Alice');
+    expect(tdElements[3]).toHaveTextContent('Developer');
   });
 
-  it('should escape HTML in table cells', () => {
+  it('should escape HTML in table cells', async () => {
     const tableMarkdown = `| Name | Code |
 |------|------|
 | <script>alert('xss')</script> | <b>Bold</b> |`;
 
-    fixture.componentRef.setInput('text', tableMarkdown);
-    fixture.detectChanges();
+    text.set(tableMarkdown);
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const tdElements = markdownDiv.querySelectorAll('td');
@@ -208,14 +213,14 @@ const example = "code block";
     expect(tdElements[3].innerHTML).toContain('<b>Bold</b>');
   });
 
-  it('should handle tables with markdown formatting inside cells', () => {
+  it('should handle tables with markdown formatting inside cells', async () => {
     const tableMarkdown = `| Feature | Status |
 |---------|--------|
 | **Bold** | *Italic* |
 | \`Code\` | Normal |`;
 
-    fixture.componentRef.setInput('text', tableMarkdown);
-    fixture.detectChanges();
+    text.set(tableMarkdown);
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const innerHTML = markdownDiv.innerHTML;
@@ -225,32 +230,32 @@ const example = "code block";
     expect(innerHTML).toContain('<code>Code</code>');
   });
 
-  it('should handle escaped pipe characters in tables', () => {
+  it('should handle escaped pipe characters in tables', async () => {
     const tableMarkdown = `| Command | Description |
 |---------|-------------|
 | grep "text\\|pattern" | Search for text OR pattern |
 | awk '{print $1\\|$2}' | Print fields separated by pipe |`;
 
-    fixture.componentRef.setInput('text', tableMarkdown);
-    fixture.detectChanges();
+    text.set(tableMarkdown);
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const tdElements = markdownDiv.querySelectorAll('td');
 
-    expect(tdElements[2].textContent?.trim()).toBe('grep "text|pattern"');
-    expect(tdElements[3].textContent?.trim()).toBe('Search for text OR pattern');
-    expect(tdElements[4].textContent?.trim()).toBe("awk '{print $1|$2}'");
-    expect(tdElements[5].textContent?.trim()).toBe('Print fields separated by pipe');
+    expect(tdElements[2]).toHaveTextContent('grep "text|pattern"');
+    expect(tdElements[3]).toHaveTextContent('Search for text OR pattern');
+    expect(tdElements[4]).toHaveTextContent("awk '{print $1|$2}'");
+    expect(tdElements[5]).toHaveTextContent('Print fields separated by pipe');
   });
 
-  it('should handle lists and line breaks inside table cells', () => {
+  it('should handle lists and line breaks inside table cells', async () => {
     const tableMarkdown = `| Feature | Examples |
 |---------|----------|
 | **Lists** | - First item<br>- Second item<br>- Third item |
 | *Line breaks* | Line 1<br>Line 2<br>Line 3 |`;
 
-    fixture.componentRef.setInput('text', tableMarkdown);
-    fixture.detectChanges();
+    text.set(tableMarkdown);
+    await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
     const innerHTML = markdownDiv.innerHTML;
@@ -268,21 +273,21 @@ const example = "code block";
 
     // Check that line breaks work in cells - <br> tags remain as <br> in innerHTML, don't convert to \n in textContent
     expect(tdElements[5].innerHTML).toContain('<br>');
-    expect(tdElements[5].textContent).toBe('Line 1Line 2Line 3');
+    expect(tdElements[5]).toHaveTextContent('Line 1Line 2Line 3');
   });
 
-  it('should update content when input changes', () => {
-    fixture.componentRef.setInput('text', 'First content');
-    fixture.detectChanges();
+  it('should update content when input changes', async () => {
+    text.set('First content');
+    await fixture.whenStable();
 
     let markdownDiv = hostElement.firstElementChild!;
-    expect(markdownDiv.textContent).toContain('First content');
+    expect(markdownDiv).toHaveTextContent('First content');
 
-    fixture.componentRef.setInput('text', 'Updated **content**');
-    fixture.detectChanges();
+    text.set('Updated **content**');
+    await fixture.whenStable();
 
     markdownDiv = hostElement.firstElementChild!;
-    expect(markdownDiv.textContent).toContain('Updated content');
-    expect(markdownDiv.querySelector('strong')).toBeTruthy();
+    expect(markdownDiv).toHaveTextContent('Updated content');
+    expect(markdownDiv.querySelector('strong')).toBeInTheDocument();
   });
 });
