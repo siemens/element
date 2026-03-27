@@ -24,7 +24,7 @@ export class SiMarkdownRendererComponent {
    * The markdown text to transform and display
    * @defaultValue ''
    */
-  readonly text = input<string>('');
+  readonly text = input<string | undefined>();
 
   constructor() {
     effect(() => {
@@ -32,7 +32,7 @@ export class SiMarkdownRendererComponent {
       const containerEl = this.hostElement.nativeElement;
 
       if (containerEl) {
-        const formattedNode = this.markdownRenderer(contentValue);
+        const formattedNode = this.markdownRenderer(contentValue ?? '');
         containerEl.innerHTML = '';
         containerEl.appendChild(formattedNode);
       }

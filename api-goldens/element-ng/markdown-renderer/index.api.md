@@ -13,7 +13,7 @@ export const getMarkdownRenderer: (sanitizer: DomSanitizer) => ((text: string) =
 // @public
 export class SiMarkdownRendererComponent {
     constructor();
-    readonly text: i0.InputSignal<string>;
+    readonly text: i0.InputSignal<string | undefined>;
 }
 
 // (No @packageDocumentation comment for this package)
