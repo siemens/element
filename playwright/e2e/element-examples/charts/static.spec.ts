@@ -18,6 +18,7 @@ test('si-charts/cartesian/line-basic', ({ si }) => si.static(options));
 test('si-charts/cartesian/line-live', ({ si }) => si.static(options));
 test('si-charts/cartesian/scatter-basic', ({ si }) => si.static(options));
 test('si-charts/cartesian/scatter-line-combined', ({ si }) => si.static(options));
+test('si-charts/cartesian/scatter-dataset', ({ si }) => si.static(options));
 test('si-charts/cartesian/scatter-live', ({ si }) => si.static(options));
 test('si-charts/circle/donut', ({ si }) => si.static(options));
 test('si-charts/circle/pie-basic', ({ si }) => si.static(options));
