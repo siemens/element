@@ -2,15 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DebugElement,
-  inject,
-  signal,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
@@ -58,7 +50,7 @@ class WrapperComponent {
   readonly resizableParts = signal(false);
   largeLayoutBreakpoint = BOOTSTRAP_BREAKPOINTS.mdMinimum;
   readonly detailsActive = signal(false);
-  cdRef = inject(ChangeDetectorRef);
+
   hasLargeSizeChanged(e: boolean): void {}
   mainContainerWidthChanged(w: number | 'default'): void {}
 }
@@ -125,14 +117,14 @@ describe('MainDetailContainerComponent', () => {
   });
 
   it('should not contain si-split when #resizableParts is false', () => {
-    expect(htmlElement.querySelector('si-split')).toBeFalsy();
+    expect(htmlElement.querySelector('si-split')).not.toBeInTheDocument();
   });
 
   it('should contain si-split when #resizableParts is true', async () => {
     component.resizableParts.set(true);
     await fixture.whenStable();
 
-    expect(htmlElement.querySelector('si-split')).toBeTruthy();
+    expect(htmlElement.querySelector('si-split')).toBeInTheDocument();
     expect(htmlElement.querySelectorAll('si-split-part')).toHaveLength(2);
   });
 
@@ -140,21 +132,21 @@ describe('MainDetailContainerComponent', () => {
     component.heading.set('');
     await fixture.whenStable();
 
-    expect(htmlElement.querySelector('.si-layout-header')).toBeFalsy();
+    expect(htmlElement.querySelector('.si-layout-header')).not.toBeInTheDocument();
   });
 
   it('should add text-truncate class to header when setting #truncateHeading', async () => {
     component.truncateHeading.set(true);
     await fixture.whenStable();
 
-    expect(htmlElement.querySelector('.si-layout-title')?.classList).toContain('text-truncate');
+    expect(htmlElement.querySelector('.si-layout-title')).toHaveClass('text-truncate');
   });
 
   it('should remove details heading component when #detailsHeading is empty', async () => {
     component.detailsHeading.set('');
     await fixture.whenStable();
 
-    expect(htmlElement.querySelector('.detail-heading')).toBeFalsy();
+    expect(htmlElement.querySelector('.detail-heading')).not.toBeInTheDocument();
   });
 
   describe('toggling the detailsActive state', () => {
@@ -170,7 +162,7 @@ describe('MainDetailContainerComponent', () => {
       fixture.detectChanges();
       // expect
       expect(doAnimationSpy).toHaveBeenCalledWith(true);
-      expect(htmlElement.querySelector('si-main-detail-container')?.classList).toContain('animate');
+      expect(htmlElement.querySelector('si-main-detail-container')).toHaveClass('animate');
     });
 
     it('should remove a class indicating to animate the view change after a timeout', () => {
@@ -185,10 +177,8 @@ describe('MainDetailContainerComponent', () => {
       fixture.detectChanges();
       // expect
       expect(doAnimationSpy).toHaveBeenCalledWith(true);
-      expect(htmlElement.querySelector('si-main-detail-container')?.classList).not.toContain(
-        'animate'
-      );
-      expect(htmlElement.classList.contains('animate')).toBe(false);
+      expect(htmlElement.querySelector('si-main-detail-container')).not.toHaveClass('animate');
+      expect(htmlElement).not.toHaveClass('animate');
     });
   });
 
@@ -296,7 +286,7 @@ describe('MainDetailContainerComponent', () => {
       component.hideBackButton.set(true);
       await fixture.whenStable();
 
-      expect(htmlElement.querySelector('button')).toBeFalsy();
+      expect(htmlElement.querySelector('button')).not.toBeInTheDocument();
     });
 
     it('should only have the detail pane in view on small screens when details are active', () => {
