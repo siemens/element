@@ -30,7 +30,9 @@ jobs:
         with:
           name: coverage-reports
           path: coverage-reports
-      - run: cp coverage-reports/coverage-summary.json dist/design/coverage-summary.json
+      - run: |
+          cp coverage-reports/coverage-summary.json dist/design/coverage-summary.json
+          cp -r coverage-reports dist/design/coverage
       - uses: actions/upload-pages-artifact@v4
         with:
           path: 'dist/design'
