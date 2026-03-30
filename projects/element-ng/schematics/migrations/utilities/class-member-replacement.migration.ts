@@ -67,7 +67,7 @@ const classMemberReplacements = ({
 
   const replacementsToMake: Replacement[] = [];
 
-  // Visit all nodes to find property access expressions
+  // Visit all nodes to find property access expressions and property assignments
   const visit = (node: ts.Node): void => {
     if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.name)) {
       try {
@@ -93,6 +93,41 @@ const classMemberReplacements = ({
               end: node.getEnd(),
               text: replacementText
             });
+          }
+        }
+      } catch {
+        // Ignore type checking errors
+      }
+    }
+
+    // Handle property assignments in object literals (e.g. { initialState: value })
+    if (
+      ts.isPropertyAssignment(node) &&
+      ts.isIdentifier(node.name) &&
+      ts.isObjectLiteralExpression(node.parent)
+    ) {
+      try {
+        const contextualType = typeChecker.getContextualType(node.parent);
+        const typeName = contextualType?.symbol?.name;
+
+        if (typeName && instruction.typeNames.includes(typeName)) {
+          const propertyName = node.name.text;
+
+          const replacement = instruction.propertyReplacements.find(
+            r => r.property === propertyName
+          );
+
+          if (replacement) {
+            // Extract the new property name from the replacement template.
+            // Only apply for simple renames (e.g. '${expression}.inputValues' -> 'inputValues').
+            const match = replacement.replacement.match(/^\$\{expression\}\.(\w+)$/);
+            if (match) {
+              replacementsToMake.push({
+                start: node.name.getStart(sourceFile),
+                end: node.name.getEnd(),
+                text: match[1]
+              });
+            }
           }
         }
       } catch {
