@@ -1,23 +1,23 @@
-<div class="row justify-content-center mx-0">
+<div class="row justify-content-center">
   <div class="col-xs-3 col-2 col-md-2 my-6">
     <si-form-item label="Date range">
       <si-date-range [formControl]="dateRange" />
     </si-form-item>
   </div>
-  <h4>Date range value</h4>
-  @if (dateRange.value?.start || dateRange.value?.end) {
-    <pre>
-      <div>{{dateRange.value | json}}</div>
-    </pre>
-  }
-  <h4>Validation:</h4>
-  @if (dateRange.valid) {
-    <div>Date range is VALID</div>
-  }
-  @if (dateRange.errors?.invalidStartDateFormat) {
-    <div>Start date is INVALID</div>
-  }
-  @if (dateRange.errors?.invalidEndDateFormat) {
-    <div>End date is INVALID</div>
-  }
+  <div class="col-12">
+    <h4>Date range value</h4>
+    @if (dateRange.value?.start || dateRange.value?.end) {
+      <pre>{{ dateRange.value | json }}</pre>
+    }
+    <h4>Validation:</h4>
+    @if (dateRange.valid) {
+      <div>Date range is VALID</div>
+    }
+    @if (dateRange.errors?.invalidStartDateFormat) {
+      <div>Start date is INVALID</div>
+    }
+    @if (dateRange.errors?.invalidEndDateFormat) {
+      <div>End date is INVALID</div>
+    }
+  </div>
 </div>

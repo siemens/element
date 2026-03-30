@@ -645,13 +645,24 @@ $breadcrumb-border-radius: 0 !default;
 
 // Code
 
-$code-font-size: 87.5% !default;
-$code-color: semantic-tokens.$element-data-11 !default;
+$code-font-size: typography.$si-font-size-body !default;
+$code-line-height: typography.$si-line-height-body !default;
+$code-color: semantic-tokens.$element-text-primary !default;
+$code-background: semantic-tokens.$element-ui-4 !default;
+$code-padding-y: map.get(spacers.$spacers, 1) !default;
+$code-padding-x: map.get(spacers.$spacers, 2) !default;
+$code-border-radius: semantic-tokens.$element-radius-1 !default;
 
 $kbd-padding-y: 0.2rem !default;
 $kbd-padding-x: 0.4rem !default;
-$kbd-font-size: $code-font-size !default;
-$kbd-color: semantic-tokens.$element-base-1 !default;
+$kbd-color: semantic-tokens.$element-text-primary !default;
 $kbd-bg: semantic-tokens.$element-ui-1 !default;
+// variable is unused. TODO: remove it.
+$kbd-font-size: $code-font-size !default;
 
 $pre-color: semantic-tokens.$element-text-primary !default;
+$pre-padding-y: map.get(spacers.$spacers, 4) !default;
+$pre-padding-x: map.get(spacers.$spacers, 4) !default;
+$pre-border-color: semantic-tokens.$element-ui-4 !default;
+$pre-border-width: $border-width !default;
+$pre-border-radius: semantic-tokens.$element-radius-1 !default;

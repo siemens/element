@@ -269,21 +269,20 @@ code,
 kbd,
 samp {
   font-family: variables.$font-family-code;
-  font-size: 1em; // Correct the odd `em` font sizing in all browsers.
+  font-size: variables.$code-font-size;
+  line-height: variables.$code-line-height;
   direction: ltr;
   unicode-bidi: bidi-override;
 }
 
-// 1. Remove browser default top margin
-// 2. Reset browser default of `1em` to use `rem`s
-// 3. Don't allow content to break outside
-
 pre {
   display: block;
-  margin-block: 0 1rem; // 1 // 2
-  overflow: auto; // 3
-  font-size: variables.$code-font-size;
+  padding-block: variables.$pre-padding-y;
+  padding-inline: variables.$pre-padding-x;
+  border-radius: variables.$pre-border-radius;
+  overflow: auto;
   color: variables.$pre-color;
+  border: variables.$pre-border-color variables.$pre-border-width solid;
 
   // Account for some code outputs that place code tags in pre tags
   code {
@@ -294,9 +293,12 @@ pre {
 }
 
 code {
-  font-size: variables.$code-font-size;
+  background: variables.$code-background;
   color: variables.$code-color;
   word-wrap: break-word;
+  padding-block: variables.$code-padding-y;
+  padding-inline: variables.$code-padding-x;
+  border-radius: variables.$code-border-radius;
 
   // Streamline the style when inside anchors to avoid broken underline and more
   a > & {
@@ -307,14 +309,12 @@ code {
 kbd {
   padding-block: variables.$kbd-padding-y;
   padding-inline: variables.$kbd-padding-x;
-  font-size: variables.$kbd-font-size;
   color: variables.$kbd-color;
   background-color: variables.$kbd-bg;
   border-radius: variables.$border-radius-sm;
 
   kbd {
     padding: 0;
-    font-size: 1em;
     font-weight: variables.$nested-kbd-font-weight;
   }
 }
