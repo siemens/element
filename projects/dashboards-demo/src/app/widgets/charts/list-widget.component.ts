@@ -2,7 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  signal,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import {
@@ -17,7 +24,7 @@ import { Link, SiLinkDirective } from '@siemens/element-ng/link';
   selector: 'app-list-widget',
   imports: [SiEmptyStateComponent, SiListWidgetBodyComponent, SiLinkDirective],
   template: `
-    <si-list-widget-body search [sort]="sort" [value]="listWidgetValue">
+    <si-list-widget-body search [sort]="sort()" [value]="listWidgetValue">
       <si-empty-state
         empty-state
         icon="element-info"
@@ -88,17 +95,17 @@ export class ListWidgetComponent implements WidgetInstance {
   primaryActions!: ContentActionBarMainItem[];
   protected link?: Link = { href: 'https://github.com/siemens/element/issues' };
 
-  sort?: SortOrder;
+  protected readonly sort = signal<SortOrder | undefined>(undefined);
 
   constructor() {
     this.setupSortAction();
   }
 
   private doSort(): void {
-    if (this.sort === 'ASC') {
-      this.sort = 'DSC';
+    if (this.sort() === 'ASC') {
+      this.sort.set('DSC');
     } else {
-      this.sort = 'ASC';
+      this.sort.set('ASC');
     }
     this.setupSortAction();
   }
@@ -115,7 +122,7 @@ export class ListWidgetComponent implements WidgetInstance {
         }
       ];
     }
-    if (this.sort === 'ASC') {
+    if (this.sort() === 'ASC') {
       this.primaryActions[0].label = 'Sort ascending';
       this.primaryActions[0].icon = 'element-sort-up';
     } else {
