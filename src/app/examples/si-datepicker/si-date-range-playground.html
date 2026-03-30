@@ -133,7 +133,7 @@
     </div>
   </div>
 
-  <div class="row justify-content-center mx-0 mt-6">
+  <div class="mt-6">
     <h4>Date range value</h4>
     <span class="d-inline">
       From <b>{{ dateRange.value?.start?.toDateString() }}</b>
@@ -144,9 +144,7 @@
       {{ !disabledTime ? dateRange.value?.end?.toTimeString() : '' }}
     </span>
     @if (dateRange.value?.start || dateRange.value?.end) {
-      <pre>
-          <div>{{ stringify(dateRange.value) }}</div>
-        </pre>
+      <pre class="mt-2">{{ stringify(dateRange.value) }}</pre>
     }
 
     <h4 class="mt-6">Validation:</h4>
