@@ -124,10 +124,12 @@ describe('SiFileDropzoneComponent', () => {
 
   it('should contain set upload text to file selecting', async () => {
     uploadTextFileSelect.set('browse files');
-    uploadDropText.set('droppi droppi');
+    uploadDropText.set('droppi droppi {{uploadTextFileSelect}}');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file span')!).toHaveTextContent('browse files');
-    expect(element.querySelector('.drag-and-drop-description')!).toHaveTextContent('droppi droppi');
+    expect(element.querySelector('.select-file')!).toHaveTextContent('browse files');
+    expect(element.querySelector('.drag-and-drop-description')!).toHaveTextContent(
+      'droppi droppi '
+    );
   });
 
   it('should highlight the drop area when dragging something over it', async () => {
@@ -177,7 +179,7 @@ describe('SiFileDropzoneComponent', () => {
   it('should allow one to define accepted mime types', async () => {
     accept.set('image/*');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file input')!).toHaveAttribute(
+    expect(element.querySelector('input[name="file-upload"]')!).toHaveAttribute(
       'accept',
       expect.stringContaining('image/*')
     );

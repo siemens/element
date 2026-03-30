@@ -13,14 +13,25 @@ import {
 } from '@angular/core';
 import { elementUpload } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import {
+  SiTranslatePlaceholderDirective,
+  SiTranslatePipe,
+  SiTranslateTemplateComponent,
+  t
+} from '@siemens/element-translate-ng/translate';
 
 import { SiFileUploadDirective, FileUploadError } from './si-file-upload.directive';
 import { UploadFile } from './si-file-uploader.model';
 
 @Component({
   selector: 'si-file-dropzone',
-  imports: [SiIconComponent, SiTranslatePipe, SiFileUploadDirective],
+  imports: [
+    SiIconComponent,
+    SiTranslatePipe,
+    SiTranslateTemplateComponent,
+    SiTranslatePlaceholderDirective,
+    SiFileUploadDirective
+  ],
   templateUrl: './si-file-dropzone.component.html',
   styleUrl: './si-file-dropzone.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -42,10 +53,12 @@ export class SiFileDropzoneComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or {{uploadTextFileSelect}}`)
    * ```
    */
-  readonly uploadDropText = input(t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`));
+  readonly uploadDropText = input(
+    t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or {{uploadTextFileSelect}}`)
+  );
   /**
    * Text or translation key for max file size.
    *

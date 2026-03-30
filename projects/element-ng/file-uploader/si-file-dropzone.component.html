@@ -7,29 +7,30 @@
 >
   <si-icon class="mb-6 si-display-bold" [icon]="icons.elementUpload" />
   <span class="drag-and-drop-description si-h5 d-flex">
-    <span>{{ uploadDropText() | translate }}</span>
-    &nbsp;
-    <label class="select-file si-h5 mb-0">
-      <span tabindex="0" (keydown.enter)="inputEnterHandler()">{{
-        uploadTextFileSelect() | translate
-      }}</span>
-      <input
-        #fileInput
-        type="file"
-        tabindex="-1"
-        class="d-none"
-        siFileUpload
-        [accept]="accept()"
-        [maxFileSize]="maxFileSize()"
-        [multiple]="multiple()"
-        [directoryUpload]="directoryUpload()"
-        [errorTextFileType]="errorTextFileType()"
-        [errorTextFileMaxSize]="errorTextFileMaxSize()"
-        (filesAdded)="onFilesAdded($event)"
-        (fileError)="onFileError($event)"
-        (cancel)="$event.stopPropagation()"
-      />
-    </label>
+    <span [siTranslateTemplate]="uploadDropText()">
+      <ng-template siTranslatePlaceholder="uploadTextFileSelect">
+        <a class="select-file text-decoration-underline" href="#" (click)="inputEnterHandler()">{{
+          uploadTextFileSelect() | translate
+        }}</a>
+      </ng-template>
+    </span>
+    <input
+      #fileInput
+      type="file"
+      tabindex="-1"
+      class="d-none"
+      siFileUpload
+      name="file-upload"
+      [accept]="accept()"
+      [maxFileSize]="maxFileSize()"
+      [multiple]="multiple()"
+      [directoryUpload]="directoryUpload()"
+      [errorTextFileType]="errorTextFileType()"
+      [errorTextFileMaxSize]="errorTextFileMaxSize()"
+      (filesAdded)="onFilesAdded($event)"
+      (fileError)="onFileError($event)"
+      (cancel)="$event.stopPropagation()"
+    />
   </span>
   @if (maxFileSize() || accept()) {
     <div class="allowed si-caption mt-6 text-center">
