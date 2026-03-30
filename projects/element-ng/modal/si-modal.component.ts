@@ -25,6 +25,7 @@ import { ModalRef } from './modalref';
   templateUrl: './si-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
+    '[style.--element-animations-enabled]': 'modalRef.data.animated === false ? 0 : null',
     '(mousedown)': 'clickStarted($event)',
     '(mouseup)': 'onClickStop($event)',
     '(window:keydown.esc)': 'onEsc($event)'
@@ -38,12 +39,11 @@ export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
   protected readonly titleId = this.modalRef.data?.ariaLabelledBy ?? '';
   protected init = false;
   protected readonly show = signal(false);
-  protected readonly showBackdropClass = signal<boolean | undefined>(undefined);
+  protected readonly showBackdropVisible = signal(false);
 
   private clickStartInDialog = false;
   private origBodyOverflow?: string;
   private showTimer: any;
-  private backdropTimer: any;
   private backdropGhostClickPrevention = true;
   private readonly document = inject(DOCUMENT);
 
@@ -86,23 +86,13 @@ export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** @internal */
   showBackdrop(): void {
-    if (this.modalRef?.data.animated !== false) {
-      this.showBackdropClass.set(false);
-      this.backdropTimer = setTimeout(() => {
-        this.showBackdropClass.set(true);
-      }, 16);
-    } else {
-      this.showBackdropClass.set(true);
-    }
+    this.showBackdropVisible.set(true);
     this.origBodyOverflow = this.document.body.style.overflow;
     this.document.body.style.overflow = 'hidden';
   }
 
   private hideBackdrop(): void {
-    clearTimeout(this.backdropTimer);
-    if (this.showBackdropClass() !== undefined) {
-      this.showBackdropClass.set(false);
-    }
+    this.showBackdropVisible.set(false);
     if (this.origBodyOverflow !== undefined) {
       this.document.body.style.overflow = this.origBodyOverflow;
       this.origBodyOverflow = undefined;

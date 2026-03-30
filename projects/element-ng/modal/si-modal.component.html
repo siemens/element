@@ -1,9 +1,5 @@
-@if (showBackdropClass() !== undefined) {
-  <div
-    class="modal-backdrop"
-    [class.fade]="modalRef.data.animated !== false"
-    [class.show]="showBackdropClass()"
-  ></div>
+@if (showBackdropVisible()) {
+  <div class="modal-backdrop" animate.leave="backdrop-leave"></div>
 }
 @if (init) {
   <div
