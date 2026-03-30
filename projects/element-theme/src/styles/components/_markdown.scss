@@ -13,16 +13,6 @@
     font-weight: variables.$si-font-weight-semibold;
   }
 
-  code {
-    color: variables.$element-text-primary;
-    background-color: variables.$element-ui-4;
-    padding-block: map.get(variables.$spacers, 1);
-    padding-inline: map.get(variables.$spacers, 2);
-    border-radius: variables.$element-radius-1;
-    font-family:
-      'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  }
-
   ul,
   ol {
     max-inline-size: 100%;
@@ -44,16 +34,6 @@
   }
 
   pre {
-    background-color: variables.$element-ui-4;
-    padding-block: map.get(variables.$spacers, 4);
-    padding-inline: map.get(variables.$spacers, 4);
-    border-radius: variables.$element-radius-1;
-    overflow-x: auto;
-    margin-inline: 0;
-    inline-size: max-content;
-    max-inline-size: 100%;
-    box-sizing: border-box;
-
     code {
       background-color: transparent;
       padding-block: 0;
