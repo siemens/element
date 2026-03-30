@@ -152,6 +152,10 @@ describe('to legacy migration', () => {
     await checkTemplateMigration(['function-rename.ts']);
   });
 
+  it('should rename modal initialState to inputValues', async () => {
+    await checkTemplateMigration(['modal-rename.ts']);
+  });
+
   it('should migrate element classes in inline template', async () => {
     await checkTemplateMigration(['element-class-inline-template.ts']);
   });
