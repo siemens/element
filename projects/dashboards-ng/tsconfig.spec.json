@@ -17,5 +17,5 @@
       ]
     }
   },
-  "include": ["**/*.spec.ts", "**/*.d.ts"]
+  "include": ["**/*.spec.ts", "**/*.d.ts", "**/test/**/*.ts"]
 }
