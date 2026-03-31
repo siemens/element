@@ -9,6 +9,6 @@
     "sourceMap": false,
     "types": ["node"]
   },
-  "include": ["schematics/**/*"],
+  "include": ["schematics/**/*.ts"],
   "exclude": ["schematics/**/files/", "**/*.spec.ts"]
 }

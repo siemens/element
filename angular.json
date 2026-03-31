@@ -122,6 +122,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "cache": true,
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"],
             "eslintConfig": "eslint.config.js"
           }
@@ -190,6 +191,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "cache": true,
             "lintFilePatterns": ["projects/element-ng/**/*.ts", "projects/element-ng/**/*.html"],
             "eslintConfig": "projects/element-ng/eslint.config.js"
           }
@@ -224,6 +226,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "cache": true,
             "lintFilePatterns": [
               "projects/element-translate-ng/**/*.ts",
               "projects/element-translate-ng/**/*.html"
@@ -249,6 +252,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "cache": true,
             "lintFilePatterns": [
               "projects/live-preview/**/*.ts",
               "projects/live-preview/**/*.html"
@@ -286,6 +290,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "cache": true,
             "lintFilePatterns": ["projects/charts-ng/**/*.ts", "projects/charts-ng/**/*.html"],
             "eslintConfig": "projects/charts-ng/eslint.config.js"
           }
@@ -320,6 +325,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "cache": true,
             "lintFilePatterns": [
               "projects/native-charts-ng/**/*.ts",
               "projects/native-charts-ng/**/*.html"
@@ -364,6 +370,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "cache": true,
             "lintFilePatterns": ["projects/maps-ng/**/*.ts", "projects/maps-ng/**/*.html"],
             "eslintConfig": "projects/maps-ng/eslint.config.js"
           }
@@ -418,6 +425,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "cache": true,
             "lintFilePatterns": [
               "projects/dashboards-ng/**/*.ts",
               "projects/dashboards-ng/**/*.html"
@@ -532,6 +540,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "cache": true,
             "lintFilePatterns": [
               "projects/dashboards-demo/src/**/*.ts",
               "projects/dashboards-demo/src/**/*.html"
@@ -728,6 +737,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "cache": true,
             "lintFilePatterns": [
               "projects/dashboards-demo/webcomponents/**/*.ts",
               "projects/dashboards-demo/webcomponents/**/*.html"
@@ -810,6 +820,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "cache": true,
             "lintFilePatterns": [
               "projects/dashboards-demo/mfe/**/*.ts",
               "projects/dashboards-demo/mfe/**/*.html"
@@ -968,6 +979,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
+            "cache": true,
             "lintFilePatterns": [
               "projects/icon-viewer/**/*.ts",
               "projects/icon-viewer/src/**/*.html"

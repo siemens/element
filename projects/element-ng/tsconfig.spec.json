@@ -11,5 +11,5 @@
     ]
   },
   "exclude": ["**/schematics/**"],
-  "include": ["**/*.spec.ts", "**/*.d.ts"]
+  "include": ["**/*.spec.ts", "**/*.d.ts", "**/testing/**/*.ts"]
 }
