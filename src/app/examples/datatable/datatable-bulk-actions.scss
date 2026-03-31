@@ -1,0 +1,21 @@
+::ng-deep {
+  .datatable-summary-row {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+  }
+
+  .datatable-summary-row .datatable-body-cell {
+    inline-size: 100% !important; // stylelint-disable-line declaration-no-important
+
+    &:not(.bulk-actions) {
+      display: none !important; // stylelint-disable-line declaration-no-important
+    }
+  }
+
+  .bulk-actions-mode {
+    .datatable-body-row:not(.datatable-summary-row *):hover {
+      background-color: revert !important; // stylelint-disable-line declaration-no-important
+    }
+  }
+}
