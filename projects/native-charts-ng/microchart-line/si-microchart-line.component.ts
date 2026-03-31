@@ -19,7 +19,10 @@ export interface MicrochartLineSeries {
 @Component({
   selector: 'si-microchart-line',
   templateUrl: './si-microchart-line.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    role: 'img'
+  }
 })
 export class SiMicrochartLineComponent {
   /**
