@@ -1,0 +1,78 @@
+<div class="p-5 clearfix si-layout-fixed-height h-100">
+  <ngx-datatable
+    class="table-element si-layout-fixed-height"
+    siDatatableInteraction
+    columnMode="force"
+    [class.bulk-actions-mode]="checked().size > 0"
+    [selectionType]="checked().size > 0 ? undefined : 'single'"
+    [summaryRow]="checked().size > 0"
+    [summaryHeight]="tableConfig.rowHeightSmall"
+    [rows]="rows()"
+    [columns]="columns"
+    [rowHeight]="tableConfig.rowHeightSmall"
+    [scrollbarV]="true"
+    [footerHeight]="0"
+  />
+</div>
+
+<ng-template #checkboxHeaderTmpl>
+  <input
+    type="checkbox"
+    class="form-check-input"
+    aria-label="Select all"
+    [checked]="allChecked()"
+    [indeterminate]="someChecked()"
+    (change)="toggleAll()"
+  />
+</ng-template>
+
+<ng-template #checkboxCellTmpl let-row="row">
+  <input
+    type="checkbox"
+    class="form-check-input"
+    [attr.aria-label]="'Select ' + row.name"
+    [checked]="checked().has(row.id)"
+    (click)="$event.stopPropagation()"
+    (change)="toggleRow(row)"
+  />
+</ng-template>
+
+<ng-template #bulkActionsTemplate>
+  <div class="d-flex align-items-center" (siResizeObserver)="onResize($event)">
+    <span class="text-body text-nowrap fw-normal">{{ checked().size }} selected</span>
+    <div class="d-flex gap-2 ms-auto">
+      @if (collapsed()) {
+        <button
+          type="button"
+          class="btn btn-icon btn-tertiary"
+          aria-label="Actions"
+          [cdkMenuTriggerFor]="allActionsMenu"
+        >
+          <si-icon [icon]="icons.elementOptionsVertical" />
+        </button>
+      } @else {
+        <button
+          type="button"
+          class="btn btn-tertiary dropdown-toggle"
+          [class.show]="statusMenuOpen()"
+          [cdkMenuTriggerFor]="statusMenu"
+          (cdkMenuOpened)="statusMenuOpen.set(true)"
+          (cdkMenuClosed)="statusMenuOpen.set(false)"
+        >
+          Change status
+          <i aria-hidden="true" class="dropdown-caret icon element-down-2"></i>
+        </button>
+        <button type="button" class="btn btn-tertiary" (click)="delete()"> Delete </button>
+        <button type="button" class="btn btn-tertiary" (click)="export()"> Export </button>
+      }
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #allActionsMenu>
+  <si-menu-factory [items]="allActions" />
+</ng-template>
+
+<ng-template #statusMenu>
+  <si-menu-factory [items]="statusMenuItems" />
+</ng-template>
