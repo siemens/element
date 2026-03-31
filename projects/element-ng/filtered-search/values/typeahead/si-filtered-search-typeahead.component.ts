@@ -14,7 +14,6 @@ import {
   untracked,
   viewChild
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { SiTypeaheadDirective, TypeaheadMatch } from '@siemens/element-ng/typeahead';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
@@ -25,7 +24,7 @@ import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
 
 @Component({
   selector: 'si-filtered-search-typeahead',
-  imports: [SiTypeaheadDirective, FormsModule, SiTranslatePipe],
+  imports: [SiTypeaheadDirective, SiTranslatePipe],
   templateUrl: './si-filtered-search-typeahead.component.html',
   styleUrl: './si-filtered-search-typeahead.component.scss',
   providers: [
@@ -76,7 +75,7 @@ export class SiFilteredSearchTypeaheadComponent
   }
 
   protected valueChange(newValue: string | string[]): void {
-    if (typeof newValue === 'string') {
+    if (typeof newValue === 'string' && this.criterionValue().value !== newValue) {
       const match = newValue.match(/(.+?);(.*)$/);
       let value: string;
       if (!this.disableSelectionByColonAndSemicolon() && match) {
@@ -94,13 +93,7 @@ export class SiFilteredSearchTypeaheadComponent
   protected valueTypeaheadFullMatch(match: TypeaheadMatch): void {
     const option = match.option as TypeaheadOptionCriterion;
     this.optionValue.set(option);
-    // Usually, we already emitted a change in onCriterionValueInputChange using the text entered by the user.
-    // In case of a fullMatch, we should check if the value is different from label.
-    // If it is different, we must emit another event using the value instead of the label.
-    // TODO: prevent the emit of the label matching the option. This is currently not possible due to the order events.
-    if (option.value !== option.translatedLabel) {
-      this.criterionValue.update(v => ({ ...v, value: option.value }));
-    }
+    this.criterionValue.update(v => ({ ...v, value: option.value }));
   }
 
   protected valueTypeaheadSelect(match: TypeaheadMatch): void {

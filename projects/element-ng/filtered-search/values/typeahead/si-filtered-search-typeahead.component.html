@@ -21,7 +21,7 @@
     typeaheadScrollable
     [type]="inputType()"
     [step]="step()"
-    [ngModel]="valueLabel()"
+    [value]="valueLabel()"
     [siTypeahead]="options() ?? []"
     [typeaheadProcess]="!onlySelectValue()"
     [typeaheadMinLength]="0"
@@ -33,7 +33,7 @@
     (keydown)="valueFilterKeys($event)"
     (keydown.backspace)="valueBackspace()"
     (keydown.enter)="valueEnter()"
-    (ngModelChange)="valueChange($event)"
+    (typeaheadOnInput)="valueChange($event)"
     (typeaheadOnFullMatch)="valueTypeaheadFullMatch($event)"
     (typeaheadOnSelect)="valueTypeaheadSelect($event)"
   />

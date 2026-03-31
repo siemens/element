@@ -521,10 +521,16 @@ describe('SiFilteredSearchComponent', () => {
       expect(component.lazyValueProvider).toHaveBeenCalledWith('foo', '');
 
       const spy = vi.spyOn(component, 'doSearch');
+      const changeSpy = vi.spyOn(component, 'searchCriteriaChange');
       await criteriaValue?.select({ text: 'Foo' });
       await tick();
 
       expect(spy).toHaveBeenCalledWith({
+        criteria: [{ name: 'foo', value: 'fO' }],
+        value: ''
+      });
+      expect(changeSpy).toHaveBeenCalledTimes(1);
+      expect(changeSpy).toHaveBeenCalledWith({
         criteria: [{ name: 'foo', value: 'fO' }],
         value: ''
       });
@@ -1598,17 +1604,25 @@ describe('SiFilteredSearchComponent', () => {
   it('should allow setting a custom value after an value option was selected', async () => {
     component.criteria.set([{ name: 'country', options: ['Germany'] }]);
     const spy = vi.spyOn(component, 'doSearch');
+    const changeSpy = vi.spyOn(component, 'searchCriteriaChange');
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeText = await filteredSearch.freeTextSearch();
     await freeText.focus();
     await tick();
     await freeText.select({ text: 'country' });
     await tick();
+    changeSpy.mockClear();
     const [criterion] = await filteredSearch.getCriteria();
     await criterion.clickLabel();
     await criterion.value().then(async value => {
       await value?.focus();
       await value?.select({ text: 'Germany' });
+    });
+    vi.advanceTimersToNextFrame();
+    expect(changeSpy).toHaveBeenCalledTimes(1);
+    expect(changeSpy).toHaveBeenCalledWith({
+      value: '',
+      criteria: [{ name: 'country', value: 'Germany' }]
     });
     await filteredSearch.clickSearchButton();
     expect(spy).toHaveBeenCalledWith({
@@ -1620,6 +1634,7 @@ describe('SiFilteredSearchComponent', () => {
       await value!.focus();
       await value!.sendKeys('-North');
     });
+    vi.advanceTimersToNextFrame();
     await filteredSearch.clickSearchButton();
     expect(spy).toHaveBeenCalledWith({
       value: '',
@@ -1708,8 +1723,9 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const criteria = await filteredSearch.getCriteria();
       const criteriaValue = await criteria[0].value();
-      await criteriaValue?.click();
-      await criteriaValue?.sendKeys(';');
+      await criteriaValue!.click();
+      await criteriaValue!.sendKeys(';');
+      vi.advanceTimersToNextFrame();
       expect(
         await filteredSearch.freeTextSearch().then(freeTextSearch => freeTextSearch.isFocused())
       ).toBe(true);
