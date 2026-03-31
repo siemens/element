@@ -175,7 +175,7 @@ directive to have it automatically select on keyboard navigation.
 
 ### Reordering rows using Angular CDK Drag and Drop
 
-<si-docs-component example="datatable/datatable-row-dragging" height="600">
+<si-docs-component example="datatable/datatable-row-dragging" height="400">
 </si-docs-component>
 
 ### Column management
@@ -216,14 +216,6 @@ directive. If you use `siResizeObserver` directive ensure that you have imported
 ```html
 <ngx-datatable (siResizeObserver)="resizeTable()" ...></ngx-datatable>
 ```
-
-### Bootstrap Table
-
-For simple HTML tables the general [Bootstrap Tables](https://getbootstrap.com/docs/5.1/content/tables/)
-documentation applies. Add the CSS class `table-hover` for row hover effect. The theme comes with the
-following styling for `table`:
-
-<si-docs-component example="datatable/bootstrap" height="600"></si-docs-component>
 
 <si-docs-api component="DatatableComponent" hideImplicitlyPublic="true"></si-docs-api>
 

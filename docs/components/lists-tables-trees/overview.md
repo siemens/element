@@ -3,7 +3,7 @@
 They are used to organize and display structured information in rows and columns,
 enabling users to scan, compare, and analyze data efficiently.
 
-When tables handle large datasets and include features such as sorting, filtering 
+When tables handle large datasets and include features such as sorting, filtering
 or lazy loading, they are considered **datatables**.
 
 ## Usage ---

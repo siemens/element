@@ -22,3 +22,9 @@ it comes with some inherent limitations.
 - When advanced interactions are not required.
 
 ## Code ---
+
+For simple HTML tables the general [Bootstrap Tables](https://getbootstrap.com/docs/5.1/content/tables/)
+documentation applies. Add the CSS class `table-hover` for row hover effect. The theme comes with the
+following styling for `table`:
+
+<si-docs-component example="datatable/bootstrap" height="500"></si-docs-component>
