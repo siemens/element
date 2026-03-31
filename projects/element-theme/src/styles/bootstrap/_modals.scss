@@ -2,6 +2,7 @@
 @use '../variables/typography';
 @use '../variables/zindex';
 @use '../variables/si-vars';
+@use '../variables/animations';
 @use './functions';
 @use './mixins/backdrop';
 @use './mixins/breakpoints';
@@ -25,6 +26,18 @@
   // We deliberately don't use `-webkit-overflow-scrolling: touch;` due to a
   // gnarly iOS Safari bug: https://bugs.webkit.org/show_bug.cgi?id=158342
   // See also https://github.com/twbs/bootstrap/issues/17695
+
+  transition: variables.$transition-fade;
+  opacity: 1;
+
+  @starting-style {
+    opacity: 0;
+  }
+
+  &.dialog-leave {
+    opacity: 0;
+    transition-duration: animations.element-transition-duration(0.3s);
+  }
 }
 
 .modal-dialog {
@@ -36,13 +49,15 @@
   // because of :focus-visible that shouldn't be visible
   box-shadow: none !important; // stylelint-disable-line declaration-no-important
 
-  .modal.fade & {
-    transition: variables.$modal-transition;
+  transition: variables.$modal-transition;
+  transform: variables.$modal-show-transform;
+
+  @starting-style {
     transform: variables.$modal-fade-transform;
   }
 
-  .modal.show & {
-    transform: variables.$modal-show-transform;
+  .modal.dialog-leave & {
+    transform: variables.$modal-fade-transform;
   }
 
   // When trying to close, animate focus to scale
