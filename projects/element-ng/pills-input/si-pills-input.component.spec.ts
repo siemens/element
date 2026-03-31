@@ -125,6 +125,10 @@ describe('SiPillsInputComponent', () => {
   });
 
   describe('with csv input handler', () => {
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
     it('should update on input with separator', async () => {
       csvInputElement.value = 'a';
       csvInputElement.dispatchEvent(new InputEvent('input'));

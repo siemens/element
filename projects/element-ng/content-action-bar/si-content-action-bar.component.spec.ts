@@ -116,9 +116,21 @@ describe('SiContentActionBarComponent', () => {
     // cannot use jasmine.clock here
     await new Promise(resolve => setTimeout(resolve, 50));
     expect(await harness.isPrimaryExpanded()).toBe(false);
-    await harness.togglePrimary();
-    await fixture.whenStable();
-    expect(await harness.isPrimaryExpanded()).toBe(true);
+
+    // Click the primary toggle button directly instead of going through harness.togglePrimary()
+    // to avoid CDK harness stability checks that can hang due to ResizeObserver + auditTime(0) feedback loop.
+    const toggleButton = fixture.nativeElement.querySelector(
+      'button[si-content-action-bar-toggle]:not(.cdk-menu-trigger)'
+    ) as HTMLElement;
+    toggleButton.click();
+    fixture.detectChanges();
+    // Wait for the setTimeout in expand() and ResizeObserver cycle to settle
+    await new Promise(resolve => setTimeout(resolve, 100));
+    fixture.detectChanges();
+    const listItem = fixture.nativeElement.querySelector(
+      '[siAutoCollapsableListItem]'
+    ) as HTMLElement;
+    expect(getComputedStyle(listItem).visibility).toBe('visible');
   });
 
   it('should disable menu item by disabled attribute', async () => {

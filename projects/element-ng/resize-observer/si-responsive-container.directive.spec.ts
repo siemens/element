@@ -41,7 +41,10 @@ describe('SiResponsiveContainerDirective', () => {
     element = fixture.nativeElement;
   });
 
-  afterEach(() => restoreResizeObserver());
+  afterEach(() => {
+    restoreResizeObserver();
+    vi.useRealTimers();
+  });
 
   const testSize = async (size: number, clazz: string): Promise<void> => {
     vi.useFakeTimers();
