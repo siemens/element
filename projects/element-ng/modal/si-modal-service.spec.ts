@@ -60,7 +60,6 @@ describe('SiModalService', () => {
       expect(bodyStyle.overflow).toBe('hidden');
 
       modalRef.hide();
-      vi.advanceTimersByTime(500);
       appRef.tick();
 
       expect(document.querySelector('si-modal')).not.toBeInTheDocument();
@@ -79,7 +78,6 @@ describe('SiModalService', () => {
       expect(modal).toHaveTextContent('test component');
 
       modalRef.hide();
-      vi.advanceTimersByTime(500);
       appRef.tick();
 
       expect(document.querySelector('si-modal')).not.toBeInTheDocument();
@@ -97,7 +95,6 @@ describe('SiModalService', () => {
       appRef.tick();
       expect(modal).toHaveTextContent('new input value');
       modalRef.hide();
-      vi.advanceTimersByTime(500);
       appRef.tick();
     });
   });

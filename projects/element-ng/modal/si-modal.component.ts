@@ -9,13 +9,11 @@ import {
   Component,
   ElementRef,
   inject,
-  OnDestroy,
   OnInit,
   signal,
   viewChild,
   DOCUMENT
 } from '@angular/core';
-import { areAnimationsDisabled } from '@siemens/element-ng/common';
 
 import { ModalRef } from './modalref';
 
@@ -31,57 +29,55 @@ import { ModalRef } from './modalref';
     '(window:keydown.esc)': 'onEsc($event)'
   }
 })
-export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SiModalComponent implements OnInit, AfterViewInit {
   protected readonly modalRef = inject(ModalRef<unknown, any>);
-  protected readonly isAnimated = !areAnimationsDisabled() && this.modalRef.data.animated !== false;
 
   protected readonly dialogClass = this.modalRef.dialogClass ?? '';
   protected readonly titleId = this.modalRef.data?.ariaLabelledBy ?? '';
-  protected init = false;
-  protected readonly show = signal(false);
+  protected readonly show = signal(true);
   protected readonly showBackdropVisible = signal(false);
 
   private clickStartInDialog = false;
   private origBodyOverflow?: string;
-  private showTimer: any;
   private backdropGhostClickPrevention = true;
+  private detachFn?: () => void;
   private readonly document = inject(DOCUMENT);
 
   private readonly modalContainerRef = viewChild.required<ElementRef>('modalContainer');
 
   ngOnInit(): void {
-    setTimeout(() => (this.backdropGhostClickPrevention = false), this.animationTime(300));
-    this.init = true;
-    this.showTimer = setTimeout(() => {
-      this.show.set(true);
-    }, this.animationTime(150));
+    setTimeout(() => (this.backdropGhostClickPrevention = false), 300);
   }
 
   ngAfterViewInit(): void {
     queueMicrotask(() => this.modalRef?.shown.next(this.modalContainerRef()));
   }
 
-  ngOnDestroy(): void {
-    this.hideBackdrop();
-  }
-
   /** @internal */
-  hideDialog(param?: any): void {
-    clearTimeout(this.showTimer);
+  hideDialog(param?: unknown): void {
+    if (!this.show()) {
+      return;
+    }
 
-    this.show.set(false);
-    // set `detach()` in modal ref to no-op so that the animation is unaffected if called
-    const detach = this.modalRef.detach;
+    // Capture `detach()` in modal ref to no-op so that the animation is unaffected if called
+    this.detachFn = this.modalRef.detach;
     this.modalRef.detach = () => {};
 
-    setTimeout(() => {
-      this.hideBackdrop();
-      setTimeout(() => detach(), this.animationTime(150));
-    }, this.animationTime(300));
+    // Check transition duration before toggling the DOM changes to avoid issues with zero-duration transitions where transitionend won't fire
+    const isAnimated =
+      parseFloat(getComputedStyle(this.modalContainerRef().nativeElement).transitionDuration) > 0;
 
+    // Toggle the @if condition to trigger animate.leave on the dialog
+    this.show.set(false);
+    this.hideBackdrop();
     this.modalRef?.hidden.next(param);
     this.modalRef?.hidden.complete();
     this.modalRef?.message.complete();
+
+    // For disabled animations or test environments, transitionend won't fire (0s duration)
+    if (!isAnimated) {
+      this.detachFn?.();
+    }
   }
 
   /** @internal */
@@ -96,6 +92,12 @@ export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.origBodyOverflow !== undefined) {
       this.document.body.style.overflow = this.origBodyOverflow;
       this.origBodyOverflow = undefined;
+    }
+  }
+
+  protected onLeaveEnd(event: TransitionEvent): void {
+    if (!this.show() && event.target === event.currentTarget) {
+      this.detachFn?.();
     }
   }
 
@@ -125,9 +127,5 @@ export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
       event.preventDefault();
       this.modalRef.messageOrHide(this.modalRef.closeValue);
     }
-  }
-
-  private animationTime(millis: number): number {
-    return this.isAnimated ? millis : 0;
   }
 }
