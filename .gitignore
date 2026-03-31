@@ -74,3 +74,6 @@ Thumbs.db
 # Here because these are generated at runtime by native federation builder
 /projects/dashboards-demo/tsconfig.federation.json
 /projects/dashboards-demo/mfe/tsconfig.federation.json
+
+# EsLint cache
+.eslintcache
