@@ -215,6 +215,7 @@ export class SiTreeViewComponent implements OnInit, OnChanges, OnDestroy, AfterV
 
 // @public (undocumented)
 export class SiTreeViewItemComponent implements OnInit, OnDestroy, AfterViewInit, FocusableOption, DoCheck {
+    constructor();
     focus(): void;
     getLabel(): string;
 }

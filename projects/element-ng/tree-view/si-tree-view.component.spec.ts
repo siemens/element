@@ -135,7 +135,7 @@ describe('SiTreeViewComponent', () => {
 
   beforeEach(() => {
     originalRequestAnimationFrame = window.requestAnimationFrame;
-    vi.useFakeTimers();
+    vi.useFakeTimers().setTimerTickMode('nextTimerAsync');
   });
 
   afterEach(() => {
@@ -591,9 +591,8 @@ describe('SiTreeViewComponent', () => {
     );
   });
 
-  it('should allow returning menu items as observable with menu provider', () => {
+  it('should allow returning menu items as observable with menu provider', async () => {
     component.enableContextMenuButton.set(true);
-
     const menuItems = new BehaviorSubject<MenuItem[]>([
       { label: 'Item One', type: 'action', action: () => alert('action one') }
     ]);
@@ -601,14 +600,14 @@ describe('SiTreeViewComponent', () => {
     component.contextMenuItems.set(() => {
       return menuItems;
     });
-    fixture.detectChanges();
+    await fixture.whenStable();
     element.querySelectorAll('.si-tree-context-menu-btn div')[0].dispatchEvent(new Event('click'));
     fixture.detectChanges();
     expect(document.querySelector<HTMLElement>('si-menu si-menu-item')).toHaveTextContent(
       'Item One'
     );
     menuItems.next([{ label: 'Item Updated', type: 'action', action: () => alert('action one') }]);
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(document.querySelector<HTMLElement>('si-menu si-menu-item')).toHaveTextContent(
       'Item Updated'
     );
