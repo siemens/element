@@ -104,9 +104,23 @@ button {
   --btn-color-active: #{semantic-tokens.$element-action-warning-text};
 }
 
+// FIXME: Before the ghost variants were introduced, the .btn-ghost styling matched the tertiary styling.
+// To avoid a breaking change, the class .btn-primary-ghost has been added which deviates from the usual button naming convention.
+// With the next major release, the .btn-primary-ghost class should be removed so that the ghost buttons match the button naming convention
+// and schematics should update .btn-ghost to .btn-tertiary-ghost.
+.btn-primary-ghost {
+  --btn-bg: #{semantic-tokens.$element-base-1};
+  --btn-bg-hover: #{semantic-tokens.$element-base-1-hover};
+  --btn-bg-active: #{semantic-tokens.$element-base-1-selected};
+  --btn-color: #{semantic-tokens.$element-text-primary};
+  --btn-color-hover: #{semantic-tokens.$element-text-primary};
+  --btn-color-active: #{semantic-tokens.$element-text-primary};
+}
+
 .btn-secondary,
 .btn-secondary-warning,
-.btn-secondary-danger {
+.btn-secondary-danger,
+.btn-secondary-ghost {
   --btn-bg: #{semantic-tokens.$element-action-secondary};
   --btn-bg-hover: #{semantic-tokens.$element-action-secondary-hover};
   --btn-bg-active: #{semantic-tokens.$element-action-secondary-active};
@@ -121,7 +135,9 @@ button {
 
 .btn-tertiary,
 .btn-tertiary-warning,
-.btn-tertiary-danger {
+.btn-tertiary-danger,
+.btn-tertiary-ghost,
+.btn-ghost {
   --btn-bg: transparent;
   --btn-bg-hover: #{semantic-tokens.$element-action-secondary-hover};
   --btn-bg-active: #{semantic-tokens.$element-action-secondary-active};
@@ -152,6 +168,19 @@ button {
   --btn-border-color: #{semantic-tokens.$element-action-secondary-danger};
   --btn-border-color-hover: #{semantic-tokens.$element-action-danger-hover};
   --btn-border-color-active: #{semantic-tokens.$element-action-danger-active};
+}
+
+.btn-secondary-ghost,
+.btn-tertiary-ghost,
+.btn-ghost {
+  --btn-bg-hover: #{semantic-tokens.$element-base-1-hover};
+  --btn-bg-active: #{semantic-tokens.$element-base-1-selected};
+  --btn-color: #{semantic-tokens.$element-text-primary};
+  --btn-color-hover: #{semantic-tokens.$element-text-primary};
+  --btn-color-active: #{semantic-tokens.$element-text-primary};
+  --btn-border-color: #{semantic-tokens.$element-ui-3};
+  --btn-border-color-hover: transparent;
+  --btn-border-color-active: transparent;
 }
 
 .btn-link {
@@ -213,12 +242,10 @@ button {
   }
 }
 
-.btn-circle.btn-ghost,
-.btn-icon.btn-ghost,
 .btn-close {
   --btn-bg: transparent;
-  --btn-bg-hover: #{variables.$element-base-1-hover};
-  --btn-bg-active: #{variables.$element-base-1-selected};
+  --btn-bg-hover: #{semantic-tokens.$element-base-1-hover};
+  --btn-bg-active: #{semantic-tokens.$element-base-1-selected};
   --btn-color: #{semantic-tokens.$element-ui-1};
   --btn-color-active: #{semantic-tokens.$element-ui-1};
 }
