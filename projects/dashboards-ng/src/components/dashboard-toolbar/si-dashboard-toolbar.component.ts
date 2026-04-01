@@ -7,7 +7,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-bar';
 import { SiLinkDirective } from '@siemens/element-ng/link';
-import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
+import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -26,13 +26,15 @@ import { SiGridComponent } from '../grid/si-grid.component';
   imports: [
     SiContentActionBarComponent,
     SiLinkDirective,
-    SiLoadingSpinnerComponent,
+    SiLoadingButtonComponent,
     RouterLink,
     SiResponsiveContainerDirective,
     SiTranslatePipe
   ],
   templateUrl: './si-dashboard-toolbar.component.html',
-  styleUrl: './si-dashboard-toolbar.component.scss'
+  host: {
+    class: 'd-flex flex-column flex-grow-1'
+  }
 })
 export class SiDashboardToolbarComponent {
   /**
