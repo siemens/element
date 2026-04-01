@@ -94,18 +94,15 @@
         >
           {{ labelCancel | translate }}
         </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          [disabled]="disableSaveButton() || disabled()"
+        <si-loading-button
+          class="align-top"
+          buttonClass="btn btn-primary"
+          [disabled]="disableSaveButton()"
+          [loading]="disabled()"
           (click)="onSave()"
         >
-          @if (disabled()) {
-            <si-loading-spinner />
-          } @else {
-            <span>{{ labelSave | translate }}</span>
-          }
-        </button>
+          {{ labelSave | translate }}
+        </si-loading-button>
       </div>
     }
   </div>
