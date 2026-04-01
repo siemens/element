@@ -11,6 +11,7 @@ import {
   Component,
   computed,
   DoCheck,
+  effect,
   ElementRef,
   HostBinding,
   inject,
@@ -139,6 +140,26 @@ export class SiTreeViewItemComponent
     return this.treeItem.state === 'expanded';
   }
 
+  constructor() {
+    effect(onCleanup => {
+      const contextMenuItems = this._contextMenuItems();
+
+      if (Array.isArray(contextMenuItems)) {
+        this.contextMenuItems.set(contextMenuItems);
+      } else {
+        const menuItems = contextMenuItems(this.treeItem);
+        if (Array.isArray(menuItems)) {
+          this.contextMenuItems.set(menuItems);
+        } else if (menuItems) {
+          const sub = menuItems.subscribe(items => {
+            this.contextMenuItems.set(items);
+          });
+          onCleanup(() => sub.unsubscribe());
+        }
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.subscriptions.push(
       this.scrollIntoView.subscribe(event => this.onScrollIntoViewByConsumer(event))
@@ -149,8 +170,6 @@ export class SiTreeViewItemComponent
     this.subscriptions.push(
       this.siTreeViewService.triggerMarkForCheck.subscribe(() => this.cdRef.markForCheck())
     );
-
-    this.updateContextMenuItem();
   }
 
   ngDoCheck(): void {
@@ -233,26 +252,6 @@ export class SiTreeViewItemComponent
 
   protected get showCheckOrOptionBox(): boolean {
     return !!this.treeItem.showCheckbox || !!this.treeItem.showOptionbox;
-  }
-
-  private updateContextMenuItem(): void {
-    const contextMenuItems = this._contextMenuItems();
-    if (contextMenuItems) {
-      if (Array.isArray(contextMenuItems)) {
-        this.contextMenuItems.set(contextMenuItems);
-      } else {
-        const menuItems = contextMenuItems(this.treeItem);
-        if (Array.isArray(menuItems)) {
-          this.contextMenuItems.set(menuItems);
-        } else if (menuItems) {
-          this.subscriptions.push(
-            menuItems.subscribe(items => {
-              this.contextMenuItems.set(items);
-            })
-          );
-        }
-      }
-    }
   }
 
   protected getItemFolderStateClass(): string {
