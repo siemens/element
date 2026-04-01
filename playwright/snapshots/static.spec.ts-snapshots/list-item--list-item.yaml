@@ -1,0 +1,29 @@
+- list:
+  - listitem:
+    - paragraph: /Today at \d+:\d+/
+    - heading "Conveyor belt inspection completed" [level=5]
+    - paragraph: /Routine inspection of conveyor belt CB-\d+ finished without issues\. All parameters within tolerance\./
+  - listitem:
+    - paragraph: /Today at \d+:\d+/
+    - heading "Sensor calibration report available" [level=5]
+    - paragraph: Calibration of temperature sensors on production line 2 has been completed and documented.
+    - text: Production line 2
+    - link "View report":
+      - /url: "#"
+  - listitem:
+    - paragraph: /Today at \d+:\d+/
+    - heading "Firmware update pending approval" [level=5]
+    - button "Options"
+    - paragraph: /SIMATIC S7-\d+ firmware v3\.1\.2 is ready for deployment\. Review and approve to proceed with installation\./
+    - group "Approval actions":
+      - button "Approve"
+      - button "Archive"
+      - button "Delete"
+  - listitem:
+    - paragraph: /Yesterday at \d+:\d+/
+    - heading "Motor drive fault detected" [level=5]
+    - button "Options"
+    - paragraph: /Drive unit DU-\d+ on packaging station reported overcurrent fault\. Manual reset required\./
+    - text: Fault log Critical
+    - button "Accept"
+    - button "Deny"

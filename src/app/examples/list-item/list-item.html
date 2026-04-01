@@ -1,0 +1,108 @@
+<ul>
+  <li class="list-item">
+    <p class="list-item-timestamp">Today at 14:20</p>
+    <h5 class="list-item-title">Conveyor belt inspection completed</h5>
+    <p class="list-item-description"
+      >Routine inspection of conveyor belt CB-04 finished without issues. All parameters within
+      tolerance.</p
+    >
+  </li>
+
+  <li class="list-item">
+    <p class="list-item-timestamp">Today at 11:45</p>
+    <h5 class="list-item-title">Sensor calibration report available</h5>
+    <p class="list-item-description"
+      >Calibration of temperature sensors on production line 2 has been completed and documented.</p
+    >
+    <div class="list-item-metadata">
+      <span>Production line 2</span>
+      <div class="list-item-metadata-divider"></div>
+      <a href="#">View report</a>
+    </div>
+  </li>
+
+  <li class="list-item">
+    <p class="list-item-timestamp">Today at 09:30</p>
+    <h5 class="list-item-title">Firmware update pending approval</h5>
+    <div class="list-item-primary-action">
+      <button
+        type="button"
+        class="btn btn-icon btn-ghost element-options-vertical"
+        aria-label="Options"
+        [cdkMenuTriggerFor]="contextMenu"
+      ></button>
+    </div>
+    <p class="list-item-description"
+      >SIMATIC S7-1500 firmware v3.1.2 is ready for deployment. Review and approve to proceed with
+      installation.</p
+    >
+    <div class="list-item-quick-actions">
+      <div class="btn-group" role="group" aria-label="Approval actions">
+        <button
+          type="button"
+          class="btn btn-icon btn-tertiary-ghost"
+          aria-label="Approve"
+          (click)="logEvent('Approve firmware update')"
+        >
+          <si-icon class="icon" [icon]="icons.elementCheckboxChecked" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-icon btn-tertiary-ghost"
+          aria-label="Archive"
+          (click)="logEvent('Archive firmware update')"
+        >
+          <si-icon class="icon" [icon]="icons.elementArchive" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-icon btn-tertiary-ghost"
+          aria-label="Delete"
+          (click)="logEvent('Delete firmware update')"
+        >
+          <si-icon class="icon" [icon]="icons.elementDelete" />
+        </button>
+      </div>
+    </div>
+  </li>
+
+  <li class="list-item">
+    <p class="list-item-timestamp">Yesterday at 16:05</p>
+    <h5 class="list-item-title">Motor drive fault detected</h5>
+    <div class="list-item-primary-action">
+      <button
+        type="button"
+        class="btn btn-icon btn-ghost element-options-vertical"
+        aria-label="Options"
+        [cdkMenuTriggerFor]="contextMenu"
+      ></button>
+    </div>
+    <p class="list-item-description"
+      >Drive unit DU-07 on packaging station reported overcurrent fault. Manual reset required.</p
+    >
+    <div class="list-item-metadata">
+      <div class="d-inline-flex align-items-center gap-1">
+        <si-icon class="icon-sm" [icon]="icons.elementDocument" />
+        <span>Fault log</span>
+      </div>
+      <div class="list-item-metadata-divider"></div>
+      <span class="badge bg-critical">Critical</span>
+    </div>
+    <div class="list-item-quick-actions">
+      <button
+        type="button"
+        class="btn btn-icon btn-primary element-ok"
+        aria-label="Accept"
+      ></button>
+      <button
+        type="button"
+        class="btn btn-icon btn-danger element-cancel"
+        aria-label="Deny"
+      ></button>
+    </div>
+  </li>
+</ul>
+
+<ng-template #contextMenu>
+  <si-menu-factory [items]="items" />
+</ng-template>
