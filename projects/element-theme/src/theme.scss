@@ -17,6 +17,7 @@ $_themes: () !default;
 @use 'styles/components/icons';
 @use 'styles/components/layout';
 @use 'styles/components/links';
+@use 'styles/components/list-item';
 @use 'styles/components/pills';
 @use 'styles/components/scrollbar';
 @use 'styles/components/skeleton';

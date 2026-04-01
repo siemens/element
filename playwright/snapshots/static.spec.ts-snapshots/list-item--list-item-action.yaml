@@ -1,0 +1,18 @@
+- list:
+  - listitem:
+    - button "Edited 2 hours ago Project Alpha Automation config for assembly line 3":
+      - time: Edited 2 hours ago
+      - heading "Project Alpha" [level=5]
+      - paragraph: Automation config for assembly line 3
+  - listitem:
+    - button "Edited 3 days ago Project Beta Drive parameter tuning for conveyor motors 3 contributors":
+      - time: Edited 3 days ago
+      - heading "Project Beta" [level=5]
+      - paragraph: Drive parameter tuning for conveyor motors
+      - text: ""
+  - listitem:
+    - button "Edited last week Project Gamma Safety interlock logic for press station Workspace B Private Review pending":
+      - time: Edited last week
+      - heading "Project Gamma" [level=5]
+      - paragraph: Safety interlock logic for press station
+      - text: ""
