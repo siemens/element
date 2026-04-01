@@ -52,9 +52,10 @@ describe('SiDashboardToolbarComponent', () => {
     fixture.detectChanges();
     const buttons = fixture.debugElement.queryAll(By.css('button'));
     expect(buttons.length).toBe(2);
+    const loadingButton = fixture.debugElement.query(By.css('si-loading-button'));
     expect(buttons[1].nativeElement.textContent).toContain('Save');
 
-    buttons[1].triggerEventHandler('click', null);
+    loadingButton.triggerEventHandler('click', null);
     await fixture.whenStable();
     fixture.detectChanges();
 
