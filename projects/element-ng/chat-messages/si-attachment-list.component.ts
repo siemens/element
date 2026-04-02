@@ -105,7 +105,8 @@ export class SiAttachmentListComponent {
     if (template) {
       event.preventDefault();
       this.modalService.show(template, {
-        inputValues: { 'attachment': attachment }
+        inputValues: { 'attachment': attachment },
+        ignoreBackdropClick: false
       });
     }
   }
