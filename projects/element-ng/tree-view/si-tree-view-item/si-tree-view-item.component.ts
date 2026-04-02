@@ -141,23 +141,7 @@ export class SiTreeViewItemComponent
   }
 
   constructor() {
-    effect(onCleanup => {
-      const contextMenuItems = this._contextMenuItems();
-
-      if (Array.isArray(contextMenuItems)) {
-        this.contextMenuItems.set(contextMenuItems);
-      } else {
-        const menuItems = contextMenuItems(this.treeItem);
-        if (Array.isArray(menuItems)) {
-          this.contextMenuItems.set(menuItems);
-        } else if (menuItems) {
-          const sub = menuItems.subscribe(items => {
-            this.contextMenuItems.set(items);
-          });
-          onCleanup(() => sub.unsubscribe());
-        }
-      }
-    });
+    this.updateContextMenuItem();
   }
 
   ngOnInit(): void {
@@ -252,6 +236,26 @@ export class SiTreeViewItemComponent
 
   protected get showCheckOrOptionBox(): boolean {
     return !!this.treeItem.showCheckbox || !!this.treeItem.showOptionbox;
+  }
+
+  private updateContextMenuItem(): void {
+    effect(onCleanup => {
+      const contextMenuItems = this._contextMenuItems();
+
+      if (Array.isArray(contextMenuItems)) {
+        this.contextMenuItems.set(contextMenuItems);
+      } else {
+        const menuItems = contextMenuItems(this.treeItem);
+        if (Array.isArray(menuItems)) {
+          this.contextMenuItems.set(menuItems);
+        } else if (menuItems) {
+          const sub = menuItems.subscribe(items => {
+            this.contextMenuItems.set(items);
+          });
+          onCleanup(() => sub.unsubscribe());
+        }
+      }
+    });
   }
 
   protected getItemFolderStateClass(): string {
