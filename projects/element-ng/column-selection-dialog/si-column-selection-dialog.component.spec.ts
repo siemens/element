@@ -5,6 +5,7 @@
 import { inputBinding, signal, twoWayBinding, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalRef } from '@siemens/element-ng/modal';
+import { afterEach } from 'vitest';
 
 import { SiColumnSelectionDialogComponent } from './si-column-selection-dialog.component';
 import { Column } from './si-column-selection-dialog.types';
@@ -85,6 +86,8 @@ describe('ColumnDialogComponent', () => {
     });
     element = fixture.nativeElement;
   });
+
+  afterEach(() => vi.useRealTimers());
 
   it('should create', async () => {
     columns.set(cloneData());
@@ -257,20 +260,21 @@ describe('ColumnDialogComponent', () => {
 
   it('should toggle edit mode with keyboard', async () => {
     const spy = vi.spyOn(modalRef.hidden, 'next');
+    vi.useFakeTimers();
     columns.set(cloneData());
-    fixture.autoDetectChanges();
+    await fixture.whenStable();
     document
       .querySelector<HTMLSpanElement>('si-column-selection-editor')!
       .dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    vi.advanceTimersToNextFrame();
     await fixture.whenStable();
     expect(spy).not.toHaveBeenCalled();
     const inputField = document.querySelector<HTMLInputElement>(
       'si-column-selection-editor input.form-control'
     )!;
     expect(inputField).toBeInTheDocument();
-    // Wait for setTimeout in startEdit() to complete
-    await new Promise(resolve => setTimeout(resolve, 100));
     inputField.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    vi.advanceTimersToNextFrame();
     await fixture.whenStable();
     expect(
       document.querySelector<HTMLInputElement>('si-column-selection-editor input.form-control')

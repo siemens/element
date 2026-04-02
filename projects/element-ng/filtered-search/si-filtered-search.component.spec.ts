@@ -597,14 +597,13 @@ describe('SiFilteredSearchComponent', () => {
       await criterionValue?.sendKeys(TestKey.BACKSPACE);
 
       vi.useRealTimers();
-      // needed to avoid flaky test
       await new Promise(resolve => setTimeout(resolve, 0));
-      vi.useFakeTimers();
 
       await filteredSearch.freeTextSearch().then(async freeTextSearch => {
         await freeTextSearch.focus();
       });
-      await tick();
+      await new Promise(resolve => setTimeout(resolve, 100));
+      await fixture.whenStable();
 
       expect(await criterionValue?.isEditable()).toBeFalsy();
     });
@@ -2484,12 +2483,11 @@ describe('SiFilteredSearchComponent - With translation', () => {
     await tick();
     await value!.sendKeys('broken-format');
     vi.useRealTimers();
-    // needed to avoid flaky test
     await new Promise(resolve => setTimeout(resolve, 0));
-    vi.useFakeTimers();
     await value!.blur();
     await filteredSearch.clickSearchButton();
-    await tick();
+    await new Promise(resolve => setTimeout(resolve, 100));
+    await fixture.whenStable();
     expect(await value!.text()).toBe('Invalid Date');
     expect(spy).toHaveBeenCalledWith({
       criteria: [

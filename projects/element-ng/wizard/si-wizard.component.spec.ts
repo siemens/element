@@ -353,6 +353,10 @@ describe('SiWizardComponent', () => {
   });
 
   describe('steps with lazy loading', () => {
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
     it('should render steps if they are loaded lazily', async () => {
       hostComponent.steps.set([]);
       await fixture.whenStable();
