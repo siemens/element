@@ -1,12 +1,13 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
-    "config:recommended",
+    "config:best-practices",
     "group:allNonMajor",
     ":semanticCommits",
     ":semanticCommitTypeAll(chore)",
     ":prHourlyLimitNone",
-    ":prConcurrentLimitNone"
+    ":prConcurrentLimitNone",
+    ":maintainLockFilesMonthly"
   ],
   addLabels: ["dep-bump"],
   schedule: ["before 7am on Wednesday"],
