@@ -1,0 +1,9 @@
+<div class="d-flex align-items-start">
+  <si-datepicker
+    class="d-inline-block"
+    [config]="{ enableDateRange: true }"
+    [dateRange]="range()"
+    (dateRangeChange)="onDateRangeChange($event)"
+  />
+</div>
+<div class="mt-6">Selected week: {{ range() | json }}</div>
