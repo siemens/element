@@ -354,6 +354,8 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_MARKDOWN_RENDERER.COPY_CODE'?: string;
     // (undocumented)
+    'SI_MARKDOWN_RENDERER.DOWNLOAD'?: string;
+    // (undocumented)
     'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;
     // (undocumented)
     'SI_NAVBAR.TOGGLE_NAVIGATION'?: string;
