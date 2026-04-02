@@ -518,6 +518,7 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
       });
     }
     this.applyOptions();
+    this.ensureAriaConfiguration();
     this.applyAdditionalOptions();
     this.applyDataZoom();
     this.applyStyles();
@@ -725,6 +726,17 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   protected themeChanged(): void {}
 
   protected applyOptions(): void {}
+
+  private ensureAriaConfiguration(): void {
+    if (!this.actualOptions.aria) {
+      this.actualOptions.aria = {
+        enabled: true,
+        label: {
+          enabled: true
+        }
+      };
+    }
+  }
 
   protected applyCustomLegendPosition(): void {
     if (this.showLegend() && this.showCustomLegend()) {
