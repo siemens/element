@@ -58,6 +58,23 @@ export class SiMarkdownRendererComponent {
   readonly copyButtonLabel = input(t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY_CODE:Copy code`));
 
   /**
+   * Do not display the download CSV button for tables.
+   * @defaultValue false
+   */
+  readonly disableDownloadButton = input<boolean>(false);
+
+  /**
+   * Label for the download CSV button.
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`)
+   * ```
+   */
+  readonly downloadButtonLabel = input(
+    t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`)
+  );
+
+  /**
    * Optional LaTeX renderer function for math expressions.
    * Receives LaTeX content and display mode boolean, returns an HTML content string or undefined to use default rendering.
    * The returned HTML is sanitized before insertion.
@@ -75,6 +92,7 @@ export class SiMarkdownRendererComponent {
     const options: MarkdownRendererOptions = {
       syntaxHighlighter: highlighterFn,
       copyCodeButton: !this.disableCopyButton() ? this.copyButtonLabel() : undefined,
+      downloadTableButton: !this.disableDownloadButton() ? this.downloadButtonLabel() : undefined,
       translateSync: this.translateService.translateSync.bind(this.translateService),
       latexRenderer: latexRendererFn
     };

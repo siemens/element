@@ -152,6 +152,18 @@
     overflow-x: auto;
   }
 
+  .download-table-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: variables.$element-radius-1;
+  }
+
+  .download-table-btn .icon {
+    margin-block: 0;
+  }
+
   table {
     inline-size: 100%;
     min-inline-size: 100%;
