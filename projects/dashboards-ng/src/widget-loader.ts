@@ -14,12 +14,16 @@ import { Observable, ReplaySubject, Subject, throwError } from 'rxjs';
 import { SiWebComponentEditorWrapperComponent } from './components/web-component-wrapper/si-web-component-editor-wrapper.component';
 import { SiWebComponentWrapperComponent } from './components/web-component-wrapper/si-web-component-wrapper.component';
 import {
+  FederatedBridgeModule,
+  FederatedModule,
   WebComponent,
   WidgetComponentFactory,
   WidgetComponentTypeFactory,
   WidgetInstance,
   WidgetInstanceEditor
 } from './model/widgets.model';
+
+type WidgetFactoryType = FederatedModule['factoryType'] | FederatedBridgeModule['factoryType'];
 
 export type SetupComponentFn = <T>(
   factory: WidgetComponentFactory,
@@ -29,18 +33,19 @@ export type SetupComponentFn = <T>(
   envInjector: EnvironmentInjector
 ) => Observable<ComponentRef<T>>;
 
+/** @internal */
 export const widgetFactoryRegistry = {
-  _factories: {} as { [key: string]: SetupComponentFn },
+  _factories: {} as { [key in WidgetFactoryType]?: SetupComponentFn },
 
-  register(name: string, factoryFn: SetupComponentFn) {
+  register(name: WidgetFactoryType, factoryFn: SetupComponentFn) {
     this._factories[name] = factoryFn;
   },
 
-  getFactoryFn(name: string) {
+  getFactoryFn(name: WidgetFactoryType) {
     return this._factories[name];
   },
 
-  hasFactoryFn(name: string) {
+  hasFactoryFn(name: WidgetFactoryType) {
     return this._factories[name] !== undefined;
   }
 };
