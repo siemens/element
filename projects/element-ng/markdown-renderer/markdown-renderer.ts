@@ -120,9 +120,15 @@ export const getMarkdownRenderer = (
       );
 
       // Match standard code blocks (3 backticks)
-      result = result.replace(
+      // Add temporary closing marker for incomplete code blocks during streaming
+      const tempResult = result + '\n```--TEMP-CLOSE--\n';
+      result = tempResult.replace(
         /(^|\n)([\s]*)(```)([^\n]*)\n?([\s\S]*?)(?:\n\s*```|```$)/gm,
         (match, prefix, indent, backticks, language, content) => {
+          // Skip the temp closing marker
+          if (content.includes('--TEMP-CLOSE--')) {
+            return match;
+          }
           const placeholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
           const cacheKey = createCodeBlockCacheKey(language.trim(), content);
           codeBlockPlaceholderMap.set(placeholder, cacheKey);
@@ -130,6 +136,8 @@ export const getMarkdownRenderer = (
           return prefix + indent + placeholder;
         }
       );
+      // Remove temp closing marker
+      result = result.replace(/\n```--TEMP-CLOSE--\n/g, '').replace(/--TEMP-CLOSE--/g, '');
 
       // Restore code block placeholders
       codeBlockMap.forEach((html, placeholder) => {
