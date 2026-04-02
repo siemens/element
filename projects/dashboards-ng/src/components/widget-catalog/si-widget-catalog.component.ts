@@ -231,7 +231,7 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
     if (this.view() === 'list') {
       this.setupWidgetInstanceEditor();
     } else {
-      if (this.isEditorWizdard(this.widgetInstanceEditor)) {
+      if (this.isEditorWizard(this.widgetInstanceEditor)) {
         this.widgetInstanceEditor.next();
         this.editorWizardState.set(this.widgetInstanceEditor.state);
       }
@@ -239,7 +239,7 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
   }
 
   protected onPrevious(): void {
-    if (this.isEditorWizdard(this.widgetInstanceEditor) && this.editorWizardState()?.hasPrevious) {
+    if (this.isEditorWizard(this.widgetInstanceEditor) && this.editorWizardState()?.hasPrevious) {
       this.widgetInstanceEditor.previous();
       this.editorWizardState.set(this.widgetInstanceEditor.state);
     } else if (!this.widgetConfigModified) {
@@ -310,7 +310,7 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
           );
         }
 
-        if (this.isEditorWizdard(this.widgetInstanceEditor)) {
+        if (this.isEditorWizard(this.widgetInstanceEditor)) {
           this.editorWizardState.set(this.widgetInstanceEditor.state);
 
           if (this.widgetInstanceEditor.stateChange) {
@@ -380,7 +380,7 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isEditorWizdard(
+  private isEditorWizard(
     editor?: WidgetInstanceEditor | WidgetInstanceEditorWizard
   ): editor is WidgetInstanceEditorWizard {
     return !!editor && 'state' in editor;
