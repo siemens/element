@@ -57,13 +57,26 @@ export class SiMarkdownRendererComponent {
    */
   readonly copyButtonLabel = input(t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY_CODE:Copy code`));
 
+  /**
+   * Optional LaTeX renderer function for math expressions.
+   * Receives LaTeX content and display mode boolean, returns an HTML content string or undefined to use default rendering.
+   * The returned HTML is sanitized before insertion.
+   * Make sure that the required styles/scripts for the LaTeX renderer (e.g., KaTeX) are included in your application.
+   * @defaultValue undefined
+   */
+  readonly latexRenderer = input<
+    ((latex: string, displayMode: boolean) => string | undefined) | undefined
+  >(undefined);
+
   private readonly markdownRenderer = computed(() => {
     const highlighterFn = this.syntaxHighlighter();
+    const latexRendererFn = this.latexRenderer();
 
     const options: MarkdownRendererOptions = {
       syntaxHighlighter: highlighterFn,
       copyCodeButton: !this.disableCopyButton() ? this.copyButtonLabel() : undefined,
-      translateSync: this.translateService.translateSync.bind(this.translateService)
+      translateSync: this.translateService.translateSync.bind(this.translateService),
+      latexRenderer: latexRendererFn
     };
 
     return getMarkdownRenderer(this.sanitizer, options, this.doc, this.isBrowser);

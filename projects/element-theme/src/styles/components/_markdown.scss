@@ -202,4 +202,27 @@
     display: block;
     margin-block: map.get(variables.$spacers, 4);
   }
+
+  .latex-display-wrapper {
+    display: flex;
+    text-align: center;
+    inline-size: max-content;
+    block-size: max-content;
+    overflow-y: visible;
+    overflow-x: visible; // TODO: Support formulas wider than the container (currently not possible because it will create horizontal scrollbars)
+    margin-block-end: map.get(variables.$spacers, 6);
+
+    .katex-display {
+      inline-size: max-content;
+      overflow: visible;
+      // stylelint-disable-next-line declaration-no-important
+      box-sizing: content-box !important;
+    }
+
+    .katex,
+    .katex * {
+      // stylelint-disable-next-line declaration-no-important
+      box-sizing: content-box !important;
+    }
+  }
 }
