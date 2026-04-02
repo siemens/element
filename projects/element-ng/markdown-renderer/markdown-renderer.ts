@@ -5,259 +5,621 @@
 import { SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { getCachedOrCreateElement } from './markdown-renderer-helpers';
+
+const CACHE_SIZE = 100;
+
+export type MarkdownRendererOptions = Record<string, never>;
+
+interface ProcessOptions {
+  allowCodeBlocks?: boolean;
+  allowBlockquotes?: boolean;
+  allowTables?: boolean;
+  allowInlineCode?: boolean;
+  allowLinks?: boolean;
+}
+
 /**
- * Returns a markdown renderer function which_
- * - Transforms markdown text into formatted HTML.
- * - Returns a DOM node containing the formatted content.
+ * Returns a function that transforms markdown text into a formatted HTML node.
  *
- * **Warning:** The returned Node is inserted without additional sanitization.
- * Input content is sanitized before processing.
+ * **Important for SSR**: When using this function in an SSR context, you must provide the `doc` and `isBrowser` parameters.
+ * Call this within an Angular injection context and pass `inject(DOCUMENT)` and `isPlatformBrowser(inject(PLATFORM_ID))`.
  *
  * @experimental
  * @param sanitizer - Angular DomSanitizer instance
+ * @param options - Optional configuration for the markdown renderer
+ * @param doc - Document instance (optional for browser-only apps, required for SSR - pass inject(DOCUMENT))
+ * @param isBrowser - Whether running in browser (optional for browser-only apps, required for SSR - pass isPlatformBrowser(inject(PLATFORM_ID)))
  * @returns A function taking the markdown text to transform and returning a DOM div element containing the formatted HTML
  */
-export const getMarkdownRenderer = (sanitizer: DomSanitizer): ((text: string) => Node) => {
-  return (text: string): Node => {
-    const div = document.createElement('div');
+export const getMarkdownRenderer = (
+  sanitizer: DomSanitizer,
+  options?: MarkdownRendererOptions,
+  doc?: Document,
+  isBrowser?: boolean
+): ((text: string) => Node) => {
+  // Use provided document or fall back to global document for backwards compatibility
+  const docRef = doc ?? document;
+  const isInBrowser = isBrowser ?? true;
+
+  // Persistent caches within this renderer instance
+  const codeBlockCache = new Map<string, HTMLElement>();
+  const tableCache = new Map<string, HTMLElement>();
+  const codeBlockCacheOrder: string[] = [];
+  const tableCacheOrder: string[] = [];
+
+  // Placeholder maps for cached elements
+  const codeBlockPlaceholderMap = new Map<string, string>();
+  const tablePlaceholderMap = new Map<string, string>();
+
+  // Placeholder maps for inline elements
+  const linkPlaceholderMap = new Map<string, { text: string; url: string }>();
+
+  /**
+   * Main recursive processing function
+   */
+  const processMarkdown = (
+    text: string,
+    processOpts: ProcessOptions = {
+      allowCodeBlocks: true,
+      allowBlockquotes: true,
+      allowTables: true,
+      allowInlineCode: true,
+      allowLinks: true
+    }
+  ): string => {
+    let result = text;
+
+    // Step 1: Extract and process code blocks (4+ backticks for nested markdown)
+    if (processOpts.allowCodeBlocks) {
+      const codeBlockMap = new Map<string, string>();
+
+      // Match code blocks with 4 or more backticks (for displaying nested code blocks)
+      result = result.replace(
+        /(^|\n)([\s]*)(````+)([^\n]*)\n?([\s\S]*?)\n?\s*\3/gm,
+        (match, prefix, indent, backticks, language, content) => {
+          const placeholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
+          const cacheKey = createCodeBlockCacheKey(language.trim(), content);
+          codeBlockPlaceholderMap.set(placeholder, cacheKey);
+          codeBlockMap.set(placeholder, `<!--CODE-BLOCK-PLACEHOLDER-${placeholder}-->`);
+          return prefix + indent + placeholder;
+        }
+      );
+
+      // Match standard code blocks (3 backticks)
+      result = result.replace(
+        /(^|\n)([\s]*)(```)([^\n]*)\n?([\s\S]*?)(?:\n\s*```|```$)/gm,
+        (match, prefix, indent, backticks, language, content) => {
+          const placeholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
+          const cacheKey = createCodeBlockCacheKey(language.trim(), content);
+          codeBlockPlaceholderMap.set(placeholder, cacheKey);
+          codeBlockMap.set(placeholder, `<!--CODE-BLOCK-PLACEHOLDER-${placeholder}-->`);
+          return prefix + indent + placeholder;
+        }
+      );
+
+      // Restore code block placeholders
+      codeBlockMap.forEach((html, placeholder) => {
+        result = result.replace(placeholder, html);
+      });
+    }
+
+    // Step 2: Extract and process blockquotes (can contain code blocks and inline elements)
+    if (processOpts.allowBlockquotes) {
+      const blockquoteMap = new Map<string, string>();
+      const lines = result.split('\n');
+      let i = 0;
+
+      while (i < lines.length) {
+        if (lines[i].match(/^\s*>/)) {
+          const blockquoteLines: string[] = [];
+          while (i < lines.length && lines[i].match(/^\s*>/)) {
+            blockquoteLines.push(lines[i].replace(/^\s*>\s?/, ''));
+            i++;
+          }
+
+          const blockquoteContent = blockquoteLines.join('\n');
+          const processedContent = processMarkdown(blockquoteContent, {
+            ...processOpts,
+            allowBlockquotes: false,
+            allowTables: false
+          });
+
+          const placeholder = `--BLOCKQUOTE-${Math.random().toString(36).substring(2, 15)}--`;
+          blockquoteMap.set(placeholder, `<blockquote>${processedContent}</blockquote>`);
+          lines.splice(i - blockquoteLines.length, blockquoteLines.length, placeholder);
+          i = i - blockquoteLines.length + 1;
+        } else {
+          i++;
+        }
+      }
+
+      result = lines.join('\n');
+
+      blockquoteMap.forEach((html, placeholder) => {
+        result = result.replace(placeholder, html);
+      });
+    }
+
+    // Step 3: Extract and process tables
+    if (processOpts.allowTables) {
+      result = processTables(result);
+    }
+
+    // Step 4: Extract and process inline code (must be before inline formatting)
+    if (processOpts.allowInlineCode) {
+      const inlineCodeMap = new Map<string, string>();
+
+      result = result.replace(/(?<!\\)(?:\\\\)*`([^`]+)`/g, (match, content) => {
+        const placeholder = `--INLINE-CODE-${Math.random().toString(36).substring(2, 15)}--`;
+        const escaped = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        inlineCodeMap.set(placeholder, `<code>${escaped}</code>`);
+        return placeholder;
+      });
+
+      inlineCodeMap.forEach((html, placeholder) => {
+        result = result.replace(placeholder, html);
+      });
+    }
+
+    // Step 5: Process links (both formats, can contain inline code)
+    if (processOpts.allowLinks) {
+      result = result.replace(/<(https?:\/\/[^\s>]+)>/g, (match, url) => {
+        const sanitizedUrl = sanitizeUrl(url, sanitizer);
+        return `<a href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>`;
+      });
+
+      // Images: ![alt](url)
+      result = result.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, url) => {
+        const sanitizedUrl = sanitizeUrl(url, sanitizer);
+        const escapedAlt = escapeHtml(alt);
+        return `<img src="${sanitizedUrl}" alt="${escapedAlt}">`;
+      });
+
+      // Links: [text](url) - keep as placeholder to protect from line breaks
+      result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, linkText, url) => {
+        const placeholder = `--LINK-${Math.random().toString(36).substring(2, 15)}--`;
+        linkPlaceholderMap.set(placeholder, { text: linkText, url });
+        return placeholder;
+      });
+
+      // Auto-detect URLs
+      result = result.replace(/(?<!["'=(])\b(https?:\/\/[^\s<]+[^\s<.,;!?"')\]])/g, match => {
+        const sanitizedUrl = sanitizeUrl(match, sanitizer);
+        return `<a class="link-text" href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(match)}</a>`;
+      });
+    }
+
+    // Step 6: Process inline formatting only on text segments, not on block elements
+    result = processTextSegments(result, sanitizer);
+
+    return result;
+  };
+
+  /**
+   * Create cache key for code block
+   */
+  const createCodeBlockCacheKey = (language: string, content: string): string => {
+    return `${language}|||${content}`;
+  };
+
+  /**
+   * Create a code block element (cached)
+   */
+  const createCodeBlockElement = (language: string, content: string): HTMLElement => {
+    const cacheKey = createCodeBlockCacheKey(language, content);
+
+    return getCachedOrCreateElement(
+      codeBlockCache,
+      codeBlockCacheOrder,
+      CACHE_SIZE,
+      cacheKey,
+      () => {
+        // Escape HTML for code blocks
+        const displayContent = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        // Sanitize the display content
+        const sanitized = sanitizer.sanitize(SecurityContext.HTML, displayContent) ?? '';
+
+        const languageLabel = language
+          ? `<span class="code-language">${escapeHtml(language)}</span>`
+          : '';
+        const headerContent = languageLabel
+          ? `<div class="code-header">${languageLabel}</div>`
+          : '';
+        const wrapperClass = headerContent ? 'code-wrapper has-header' : 'code-wrapper';
+        return `<div class="${wrapperClass}">${headerContent}<pre><code>${sanitized}</code></pre></div>`;
+      },
+      docRef
+    );
+  };
+
+  /**
+   * Process tables
+   */
+  const processTables = (input: string): string => {
+    const lines = input.split('\n');
+    const tableMap = new Map<string, string>();
+    let i = 0;
+
+    while (i < lines.length) {
+      if (lines[i].match(/^\|.+/)) {
+        const tableLines: string[] = [];
+        let hasSeparator = false;
+
+        while (i < lines.length && lines[i].match(/^\|.+/)) {
+          const line = lines[i];
+          if (line.match(/^\|\s*[-:]+/)) {
+            hasSeparator = true;
+          } else {
+            tableLines.push(line);
+          }
+          i++;
+        }
+
+        if (tableLines.length > 0) {
+          const placeholder = `--TABLE-${Math.random().toString(36).substring(2, 15)}--`;
+          tablePlaceholderMap.set(placeholder, JSON.stringify({ hasSeparator, tableLines }));
+          tableMap.set(placeholder, `<!--TABLE-PLACEHOLDER-${placeholder}-->`);
+
+          lines.splice(
+            i - tableLines.length - (hasSeparator ? 1 : 0),
+            tableLines.length + (hasSeparator ? 1 : 0),
+            placeholder
+          );
+          i = i - tableLines.length - (hasSeparator ? 1 : 0) + 1;
+        }
+      } else {
+        i++;
+      }
+    }
+
+    let result = lines.join('\n');
+
+    tableMap.forEach((html, placeholder) => {
+      result = result.replace(placeholder, html);
+    });
+
+    return result;
+  };
+
+  /**
+   * Create cache key for table
+   */
+  const createTableCacheKey = (tableLines: string[], hasSeparator: boolean): string => {
+    return `${tableLines.join('|||')}|||${hasSeparator}`;
+  };
+
+  /**
+   * Create table HTML element (cached)
+   */
+  const createTableElement = (tableLines: string[], hasSeparator: boolean): HTMLElement => {
+    const cacheKey = createTableCacheKey(tableLines, hasSeparator);
+
+    return getCachedOrCreateElement(
+      tableCache,
+      tableCacheOrder,
+      CACHE_SIZE,
+      cacheKey,
+      () => {
+        const rows: string[] = [];
+
+        tableLines.forEach((line, rowIndex) => {
+          if (!line.trim()) {
+            return;
+          }
+
+          const escapedPipePlaceholder = `___ESCAPED_PIPE___${Math.random().toString(36).substring(2, 15)}___`;
+          const contentWithPlaceholders = line.replace(/\\\|/g, escapedPipePlaceholder);
+          const parts = contentWithPlaceholders.split('|');
+          const cells = parts.slice(1, -1);
+
+          const processedCells = cells.map(cell => {
+            let originalCell = cell.replace(new RegExp(escapedPipePlaceholder, 'g'), '|').trim();
+
+            // Extract inline code to protect <br> tags within code
+            const inlineCodeMap = new Map<string, string>();
+            originalCell = originalCell.replace(
+              /(?<!\\)(?:\\\\)*`([^`]+)`/g,
+              (match, codeContent) => {
+                const inlinePlaceholder = `___INLINE_CODE_${Math.random().toString(36).substring(2, 15)}___`;
+                inlineCodeMap.set(inlinePlaceholder, match);
+                return inlinePlaceholder;
+              }
+            );
+
+            // Convert <br> tags to newlines for table cells (outside of code)
+            originalCell = originalCell.replace(/<br\s*\/?>/gi, '\n');
+
+            // Restore inline code
+            inlineCodeMap.forEach((code, inlinePlaceholder) => {
+              originalCell = originalCell.replace(inlinePlaceholder, code);
+            });
+
+            // Process cell content for inline elements
+            return processMarkdown(originalCell, {
+              allowCodeBlocks: false,
+              allowBlockquotes: false,
+              allowTables: false,
+              allowInlineCode: true,
+              allowLinks: true
+            });
+          });
+
+          const isHeader = hasSeparator && rowIndex === 0;
+          const tag = isHeader ? 'th' : 'td';
+          const rowHtml = `<tr>${processedCells.map(cell => `<${tag}>${cell}</${tag}>`).join('')}</tr>`;
+          rows.push(rowHtml);
+        });
+
+        // Filter out empty rows
+        const filteredRows = rows.filter(row => {
+          const tempTable = docRef.createElement('table');
+          tempTable.innerHTML = `<tbody>${row}</tbody>`;
+          const tableCells = tempTable.querySelectorAll('td, th');
+          return Array.from(tableCells).some(cell => {
+            const hasText = !!cell.textContent?.trim();
+            const hasHtml = !!cell.innerHTML?.trim();
+            return hasText || hasHtml;
+          });
+        });
+
+        if (filteredRows.length === 0) {
+          return '<div></div>';
+        }
+
+        let tableHtml = '<table class="table table-hover">';
+
+        if (hasSeparator && filteredRows.length > 0) {
+          tableHtml += '<thead>' + filteredRows[0] + '</thead>';
+          if (filteredRows.length > 1) {
+            tableHtml += '<tbody>' + filteredRows.slice(1).join('') + '</tbody>';
+          }
+        } else {
+          tableHtml += '<tbody>' + filteredRows.join('') + '</tbody>';
+        }
+
+        tableHtml += '</table>';
+
+        return `<div class="table-wrapper"><div class="table-scroll-container">${tableHtml}</div></div>`;
+      },
+      docRef
+    );
+  };
+
+  /**
+   * Process text segments separately from block elements
+   */
+  const processTextSegments = (input: string, domSanitizer: DomSanitizer): string => {
+    const blockElementRegex =
+      /(<(pre|blockquote|ul|ol|hr|h[1-6]|table)[^>]*>[\s\S]*?<\/\2>)|(<!--(?:CODE-BLOCK|TABLE|BLOCKQUOTE)-PLACEHOLDER-[^>]+-->)/g;
+
+    const parts: string[] = [];
+    let lastIndex = 0;
+    let blockMatch;
+
+    while ((blockMatch = blockElementRegex.exec(input)) !== null) {
+      if (blockMatch.index > lastIndex) {
+        parts.push(input.slice(lastIndex, blockMatch.index));
+      }
+      parts.push(blockMatch[0]);
+      lastIndex = blockMatch.index + blockMatch[0].length;
+    }
+    if (lastIndex < input.length) {
+      parts.push(input.slice(lastIndex));
+    }
+
+    const processedParts = parts.map(part => {
+      if (part.match(/^<(pre|blockquote|ul|ol|hr|h[1-6]|table)|^<!--/)) {
+        return part;
+      }
+      return processInlineFormatting(part, domSanitizer);
+    });
+
+    let result = processedParts.join('');
+
+    // Restore links
+    linkPlaceholderMap.forEach((linkData, placeholder) => {
+      const sanitizedUrl = sanitizeUrl(linkData.url, sanitizer);
+      let linkText = linkData.text;
+
+      // Process inline code in link text
+      linkText = linkText.replace(/(?<!\\)(?:\\\\)*`([^`]+)`/g, (match, content) => {
+        const escaped = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return `<code>${escaped}</code>`;
+      });
+
+      const sanitizedText = domSanitizer.sanitize(SecurityContext.HTML, linkText) ?? '';
+      const linkHtml = `<a class="link-text" href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${sanitizedText}</a>`;
+      result = result.replace(placeholder, linkHtml);
+    });
+
+    return result;
+  };
+
+  /**
+   * Process inline formatting (headings, bold, italic, lists, etc.) on plain text
+   */
+  const processInlineFormatting = (input: string, domSanitizer: DomSanitizer): string => {
+    let result = input;
+
+    // Preserve escaped characters
+    result = result.replace(/\\\*/g, '___ESCAPED_ASTERISK___');
+    result = result.replace(/\\_/g, '___ESCAPED_UNDERSCORE___');
+
+    // Headings
+    result = result.replace(/^###### (.+)$/gm, '<strong>$1</strong>');
+    result = result.replace(/^##### (.+)$/gm, '<h5>$1</h5>');
+    result = result.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
+    result = result.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+    result = result.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+    result = result.replace(/^# (.+)$/gm, '<h2><strong>$1</strong></h2>');
+
+    // Horizontal rule
+    result = result.replace(/^---+$/gm, '<hr>');
+
+    // Bold and italic
+    result = result.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    result = result.replace(/__(.+?)__/g, '<strong>$1</strong>');
+    result = result.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    result = result.replace(/_(.+?)_/g, '<em>$1</em>');
+
+    // Lists
+    result = result.replace(/^[•\-*] (.+)$/gm, '<li class="unordered">$1</li>');
+    result = result.replace(/^&#8226; (.+)$/gm, '<li class="unordered">$1</li>');
+    result = result.replace(/^\d+\. (.+)$/gm, '<li class="ordered">$1</li>');
+
+    // Wrap lists (remove whitespace between items)
+    result = result.replace(
+      /(<li class="ordered">.*?<\/li>)\s*\n\s*(?=<li class="ordered">)/gs,
+      '$1'
+    );
+    result = result.replace(
+      /(<li class="unordered">.*?<\/li>)\s*\n\s*(?=<li class="unordered">)/gs,
+      '$1'
+    );
+
+    result = result.replace(
+      /(<li class="ordered">.*?<\/li>(?:<li class="ordered">.*?<\/li>)*)/gs,
+      '<ol>$1</ol>'
+    );
+    result = result.replace(
+      /(<li class="unordered">.*?<\/li>(?:<li class="unordered">.*?<\/li>)*)/gs,
+      '<ul>$1</ul>'
+    );
+
+    result = result.replace(/ class="ordered"/g, '');
+    result = result.replace(/ class="unordered"/g, '');
+
+    // Paragraphs
+    const paragraphPlaceholder = '___PARAGRAPH_BREAK___';
+    const segments = result.split(/\n{2,}/g);
+
+    result = segments
+      .map(segment => {
+        const trimmed = segment.trim();
+        if (!trimmed) {
+          return '';
+        }
+        if (/^\s*<(h[1-6]|pre|blockquote|ul|ol|hr|div|code|li|p)/.test(trimmed)) {
+          return segment.replace(/\n/g, paragraphPlaceholder);
+        }
+
+        const withoutTags = trimmed.replace(/<[^>]*>/g, '').trim();
+        if (!withoutTags) {
+          return '';
+        }
+
+        return '<p>' + segment + '</p>';
+      })
+      .filter(segment => segment !== '')
+      .join(paragraphPlaceholder)
+      .replace(/\n/g, '<br>')
+      .replace(new RegExp(paragraphPlaceholder, 'g'), ' ');
+
+    // Restore escaped characters
+    result = result.replace(/___ESCAPED_ASTERISK___/g, '*');
+    result = result.replace(/___ESCAPED_UNDERSCORE___/g, '_');
+
+    const sanitized = domSanitizer.sanitize(SecurityContext.HTML, result);
+    return sanitized ?? '';
+  };
+
+  /**
+   * Main render function
+   */
+  return (text: string): HTMLElement => {
+    const div = docRef.createElement('div');
     div.className = 'markdown-content text-break';
 
-    if (!text) {
+    if (text === null || text === undefined) {
       return div;
     }
 
-    // Generate a random placeholder for newlines to preserve them during HTML sanitization
-    const newlinePlaceholder = `--NEWLINE-${Math.random().toString(36).substring(2, 15)}--`;
+    const processedHtml = processMarkdown(text);
+    div.innerHTML = processedHtml;
 
-    // Replace newlines with placeholder before sanitization
-    const valueWithPlaceholders = text.replace(/\n/g, newlinePlaceholder);
+    // Replace comment placeholders with cached elements
+    const commentsToReplace: { comment: Comment; element: HTMLElement }[] = [];
 
-    // Sanitize the input using Angular's HTML sanitizer
-    const sanitizedInput = sanitizer.sanitize(SecurityContext.HTML, valueWithPlaceholders) ?? '';
+    if (isInBrowser) {
+      const walker = docRef.createTreeWalker(div, NodeFilter.SHOW_COMMENT);
 
-    // Restore newlines from placeholder for markdown processing.
-    let html = sanitizedInput.replace(new RegExp(newlinePlaceholder, 'g'), '\n');
+      let currentNode = walker.nextNode();
+      while (currentNode) {
+        const comment = currentNode as Comment;
 
-    // Process tables first
-    html = html
-      // Remove table separator lines first
-      .replace(/^\|\s*[-:]+.*\|\s*$/gm, '')
-      // Process table rows
-      .replace(/^\|(.+)\|\s*$/gm, (_match, htmlContent) => {
-        // Handle escaped pipes by temporarily replacing them
-        const escapedPipePlaceholder = `--ESCAPED-PIPE-${Math.random().toString(36).substring(2, 15)}--`;
-        const contentWithPlaceholders = htmlContent.replace(/\\\|/g, escapedPipePlaceholder);
-        const cells = contentWithPlaceholders.split('|').map((cell: string) => {
-          const trimmedCell = cell.trim();
-          // Restore escaped pipes
-          const cellWithPipes = trimmedCell.replace(new RegExp(escapedPipePlaceholder, 'g'), '|');
-
-          return cellWithPipes;
-        });
-        // Make cell ready for markdown processing by replacing code blocks with inline code and <br> with newlines
-        const cellsWithNewlines = cells.map((cell: string) => {
-          // Replace multiline code blocks with single line code blocks
-          const cellWithoutMultilineCode = cell.replace(
-            /```([\s\S]*?)```/g,
-            (_innerMatch, inlineCodeContent) => {
-              return '`' + inlineCodeContent.replace(/`/g, '') + '`';
+        // Handle code block placeholders
+        const codeMatch = comment.textContent?.match(/CODE-BLOCK-PLACEHOLDER-(.*)/);
+        if (codeMatch) {
+          const placeholderId = codeMatch[1];
+          const cacheKey = codeBlockPlaceholderMap.get(placeholderId);
+          if (cacheKey) {
+            const keyParts = cacheKey.split('|||');
+            const language = keyParts[0];
+            const content = keyParts[1];
+            const cachedElement = createCodeBlockElement(language, content);
+            if (cachedElement) {
+              commentsToReplace.push({ comment, element: cachedElement });
             }
-          );
-          // Temporarily replace single line code blocks to avoid replacing <br> inside them
-          const tableInlineCodeBrPlaceholder = `--INLINE-CODE-BR--${Math.random().toString(36).substring(2, 15)}--`;
-          const cellWithPlaceholders = cellWithoutMultilineCode.replace(
-            /(`[^`]*`)/g,
-            inlineCodeMatch => {
-              return inlineCodeMatch.replace(/<br>/g, tableInlineCodeBrPlaceholder);
+          }
+        }
+
+        // Handle table placeholders
+        const tableMatch = comment.textContent?.match(/TABLE-PLACEHOLDER-(.*)/);
+        if (tableMatch) {
+          const placeholderId = tableMatch[1];
+          const tableDataJson = tablePlaceholderMap.get(placeholderId);
+          if (tableDataJson) {
+            try {
+              const { hasSeparator, tableLines } = JSON.parse(tableDataJson);
+              const cachedElement = createTableElement(tableLines, hasSeparator);
+              if (cachedElement) {
+                commentsToReplace.push({ comment, element: cachedElement });
+              }
+            } catch (e) {
+              console.warn('Failed to parse table placeholder data', e);
             }
-          );
-          // Replace <br> with newlines
-          const cellWithNewlines = cellWithPlaceholders.replace(/<br\s*\/?>/gi, '\n');
-          // Restore <br> in inline code placeholders
-          const preProcessedCell = cellWithNewlines.replace(
-            new RegExp(tableInlineCodeBrPlaceholder, 'g'),
-            '<br>'
-          );
-          return preProcessedCell;
-        });
+          }
+        }
 
-        // Recursively process cell content for markdown formatting
-        const processedCells = cellsWithNewlines.map((cell: string) => {
-          return transformMarkdownText(cell, false, sanitizer);
-        });
+        currentNode = walker.nextNode();
+      }
+    }
 
-        return `<tr>${processedCells.map((cell: string) => `<td>${cell}</td>`).join('')}</tr>`;
-      })
-      // Wrap table rows in table elements
-      .replace(/(<tr>.*?<\/tr>)/gs, '<table class="table table-hover">$1</table>')
-      // Remove duplicate table tags
-      .replace(/<\/table>\s*<table class="table table-hover">/g, '');
+    commentsToReplace.forEach(({ comment, element }) => {
+      if (comment.parentNode && element) {
+        comment.parentNode.replaceChild(element.cloneNode(true), comment);
+      }
+    });
 
-    html = transformMarkdownText(html, true, sanitizer);
-
-    div.innerHTML = html;
     return div;
   };
 };
 
-const transformMarkdownText = (
-  html: string,
-  keepAdditionalNewlines = true,
-  sanitizer: DomSanitizer
-): string => {
-  // Generate a random placeholder for inner code blocks to prevent markdown processing inside them
-  const innerCodeQuotePlaceholder = `--INNER-CODE-${Math.random().toString(36).substring(2, 15)}--`;
-  const codeSectionPlaceholderMap = new Map<string, string>();
-
-  const escapedAsteriskPlaceholder = `--ASTERISK-${Math.random().toString(36).substring(2, 15)}--`;
-  const escapedUnderscorePlaceholder = `--UNDERSCORE-${Math.random().toString(36).substring(2, 15)}--`;
-
-  // Apply markdown transformations to the sanitized content
-  html = html
-    // Multiline code blocks ```code``` with placeholder
-    .replace(/```[^\n]*\n?([\s\S]*?)\n?```/g, (match, content) => {
-      // Escape HTML special characters in code blocks (not for security, but for correct display) and preserve inner backticks
-      const code = `<pre><code>${content.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/`/g, innerCodeQuotePlaceholder)}</code></pre>`;
-      const codePlaceholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
-      codeSectionPlaceholderMap.set(codePlaceholder, code);
-      return codePlaceholder;
-    })
-
-    // Inline code `text`
-    .replace(/`(.*?)`/g, (match, content) => {
-      // Escape HTML special characters in inline code (not for security, but for correct display)
-      const code = `<code>${content.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>`;
-      const codePlaceholder = `--INLINE-CODE-${Math.random().toString(36).substring(2, 15)}--`;
-      codeSectionPlaceholderMap.set(codePlaceholder, code);
-      return codePlaceholder;
-    })
-
-    // Images ![alt](url)
-    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match, alt, url) => {
-      const sanitizedUrl = sanitizeUrl(url, sanitizer);
-      const escapedAlt = alt
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-      return `<img src="${sanitizedUrl}" alt="${escapedAlt}">`;
-    })
-
-    // Links [text](url)
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_match, text, url) => {
-      const sanitizedUrl = sanitizeUrl(url, sanitizer);
-      return `<a href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${text}</a>`;
-    })
-
-    // Auto-detect URLs and convert to links
-    .replace(/(?<!["'=(])\b(https?:\/\/[^\s<]+[^\s<.,;!?"')\]])/g, match => {
-      const sanitizedUrl = sanitizeUrl(match, sanitizer);
-      return `<a href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${match}</a>`;
-    })
-
-    .replace(/(?<!\\)\\\*/g, escapedAsteriskPlaceholder)
-    .replace(/(?<!\\)\\_/g, escapedUnderscorePlaceholder)
-
-    // Bold **text** or __text__
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/__(.*?)__/g, '<strong>$1</strong>')
-
-    // Italic *text* or _text_
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/_(.*?)_/g, '<em>$1</em>')
-
-    .replace(new RegExp(escapedAsteriskPlaceholder, 'g'), '*')
-    .replace(new RegExp(escapedUnderscorePlaceholder, 'g'), '_')
-
-    // Headings #, ##, ###, etc.
-    .replace(/^###### (.*$)/gm, '<strong>$1</strong>')
-    .replace(/^##### (.*$)/gm, '<h5>$1</h5>')
-    .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
-    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-    .replace(/^# (.*$)/gm, '<h2><strong>$1</strong></h2>');
-
-  html = html
-    // Bullet points - handle each type separately (• gets converted to &#8226; by sanitizer)
-    .replace(/^&#8226; (.*$)/gm, '<li class="unordered">$1</li>')
-    .replace(/^- (.*$)/gm, '<li class="unordered">$1</li>')
-    .replace(/^\* (.*$)/gm, '<li class="unordered">$1</li>')
-
-    // Ordered list items (1., 2., 3., etc.)
-    .replace(/^\d+\. (.*$)/gm, '<li class="ordered">$1</li>');
-
-  html = html.replace(/^\s*(?:>|&gt;)\s*(.*)$/gm, '<blockquote>$1</blockquote>');
-
-  // Generate a random placeholder for newlines to differentiate them from those used for paragraphs
-  const finalNewlinePlaceholder = `--NEWLINE-${Math.random().toString(36).substring(2, 15)}--`;
-
-  html = html
-    // Wrap ordered lists
-    .replace(/(<li class="ordered">.*?<\/li>)/gs, '<ol>$1</ol>')
-
-    // Wrap unordered lists
-    .replace(/(<li class="unordered">.*?<\/li>)/gs, '<ul>$1</ul>')
-
-    // Remove duplicate ol/ul tags
-    .replace(/<\/ol>\s*<ol>/g, '')
-    .replace(/<\/ul>\s*<ul>/g, '')
-
-    // Clean up class attributes
-    .replace(/ class="ordered"/g, '')
-    .replace(/ class="unordered"/g, '');
-
-  html = html
-    // Convert double newlines to paragraphs (before single line breaks)
-    .split(/\n{2}/g)
-    // Wrap non-block elements in <p> tags
-    .map(segment => {
-      // If the segment starts with a block element, return as is
-      if (!segment.trim() || /^\s*<(h[1-6]|pre|blockquote|ul|ol)/.test(segment.trim())) {
-        // Replace newlines inside blocks with the placeholder
-        return segment.replace(/\n/g, finalNewlinePlaceholder);
-      }
-      // Otherwise, wrap in <p> tags
-      return `<p>${segment}</p>`;
-    })
-    // Use newline placeholder again so as not to replace newlines between blocks
-    .join(finalNewlinePlaceholder)
-    // Convert remaining newlines to line breaks (do this LAST)
-    .replace(/\n/g, '<br>')
-    // Restore newline placeholders
-    .replace(new RegExp(finalNewlinePlaceholder, 'g'), keepAdditionalNewlines ? '\n' : ' ');
-
-  // Restore code placeholders
-  codeSectionPlaceholderMap.forEach((code, placeholder) => {
-    html = html.replace(new RegExp(placeholder, 'g'), code);
-  });
-
-  // Restore inner code block placeholders
-  html = html.replace(new RegExp(innerCodeQuotePlaceholder, 'g'), '`');
-
-  return html;
-};
-
 /**
- * Sanitizes a URL to prevent XSS attacks
- * @param url - The URL to sanitize
- * @param sanitizer - Angular DomSanitizer instance
- * @returns The sanitized URL or '#' if invalid
+ * Sanitize URL to prevent XSS attacks
  */
 const sanitizeUrl = (url: string, sanitizer: DomSanitizer): string => {
-  // Remove any whitespace
   url = url.trim();
-
-  // Allow only http, https, and mailto protocols
   const allowed = /^(https?:\/\/|mailto:|\/(?!\/)|\.{1,2}\/|#)/i;
 
-  // Sanitize the URL using Angular's sanitizer
   if (!allowed.test(url)) {
     return '#';
   }
 
-  // Sanitize the URL using Angular's sanitizer
   const sanitized = sanitizer.sanitize(SecurityContext.URL, url);
+  return sanitized ?? '#';
+};
 
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  return sanitized || '#';
+/**
+ * Escape HTML special characters
+ */
+const escapeHtml = (text: string): string => {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 };
