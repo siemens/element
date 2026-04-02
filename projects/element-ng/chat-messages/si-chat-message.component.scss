@@ -35,6 +35,7 @@
   margin-block-end: auto;
   background-color: var(--chat-message-bubble-bg);
   min-inline-size: 0;
+  max-inline-size: 100%;
   overflow-wrap: break-word;
   word-break: break-word;
 
@@ -50,6 +51,7 @@
 
 .message-wrapper {
   min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 .attachment-slot {
