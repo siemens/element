@@ -4,7 +4,15 @@
  */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { SiAutoCollapsableListDirective } from '@siemens/element-ng/auto-collapsable-list';
 
+import {
+  MockResizeObserver,
+  mockResizeObserver,
+  restoreResizeObserver
+} from '../../../../element-ng/resize-observer/testing/resize-observer.mock';
+import { DashboardToolbarItem } from '../../model/si-dashboard-toolbar.model';
 import { SiDashboardToolbarComponent } from './si-dashboard-toolbar.component';
 
 describe('SiDashboardToolbarComponent', () => {
@@ -72,5 +80,71 @@ describe('SiDashboardToolbarComponent', () => {
 
     editButton = fixture.debugElement.query(By.css('.element-edit'));
     expect(editButton).toBeNull();
+  });
+});
+
+describe('SiDashboardToolbarComponent responsive toolbar', () => {
+  let fixture: ComponentFixture<SiDashboardToolbarComponent>;
+
+  const actionItems: DashboardToolbarItem[] = [
+    { type: 'action', label: 'Action 1', action: () => {} },
+    { type: 'router-link', label: 'Router Link', routerLink: '/test' },
+    { type: 'link', label: 'Link', href: 'https://example.com', target: '_blank' }
+  ];
+
+  const tick = async (ms = 100): Promise<void> => {
+    vi.advanceTimersByTime(ms);
+    await fixture.whenStable();
+  };
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    mockResizeObserver();
+    TestBed.configureTestingModule({ providers: [provideRouter([])] });
+    fixture = TestBed.createComponent(SiDashboardToolbarComponent);
+    fixture.componentRef.setInput('editable', true);
+    fixture.componentRef.setInput('primaryEditActions', actionItems);
+  });
+
+  afterEach(() => {
+    restoreResizeObserver();
+    vi.useRealTimers();
+  });
+
+  const setContainerWidth = (width: number): void => {
+    const listContainer: HTMLElement = fixture.debugElement.query(
+      By.directive(SiAutoCollapsableListDirective)
+    ).nativeElement;
+    Object.defineProperty(listContainer, 'clientWidth', { value: width, configurable: true });
+  };
+
+  it('should show overflow button when there is not enough space for actions', async () => {
+    fixture.detectChanges();
+    await tick();
+
+    setContainerWidth(50);
+    MockResizeObserver.triggerResize({});
+    await tick();
+    fixture.detectChanges();
+
+    const overflowButton: HTMLElement = fixture.debugElement.query(
+      By.css('[aria-label="More actions"]')
+    ).nativeElement;
+    expect(overflowButton.style.visibility).toBe('visible');
+  });
+
+  it('should hide overflow button when there is enough space for actions', async () => {
+    fixture.detectChanges();
+    await tick();
+
+    setContainerWidth(5000);
+    MockResizeObserver.triggerResize({});
+    await tick();
+    fixture.detectChanges();
+
+    const overflowButton: HTMLElement = fixture.debugElement.query(
+      By.css('[aria-label="More actions"]')
+    ).nativeElement;
+    expect(overflowButton.style.visibility).toBe('hidden');
   });
 });
