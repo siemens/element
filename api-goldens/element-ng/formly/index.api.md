@@ -26,6 +26,9 @@ import * as _ngx_formly_core from '@ngx-formly/core';
 import { OnInit } from '@angular/core';
 
 // @public (undocumented)
+export const dynamicUiConfig: () => ConfigOption;
+
+// @public (undocumented)
 export class SiFormlyComponent<TControl extends {
     [K in keyof TControl]: AbstractControl;
 }> implements OnInit {

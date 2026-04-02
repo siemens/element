@@ -5,7 +5,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormRecord } from '@angular/forms';
 import { SiFormModule } from '@siemens/element-ng/form';
-import { SiFormlyModule } from '@siemens/element-ng/formly';
+import { SiFormlyNextComponent } from '@siemens/element-ng/formly-next';
 import { JSONSchema7 } from 'json-schema';
 
 export interface Person {
@@ -16,7 +16,7 @@ export interface Person {
 
 @Component({
   selector: 'app-sample',
-  imports: [SiFormModule, SiFormlyModule],
+  imports: [SiFormModule, SiFormlyNextComponent],
   templateUrl: './dynamic-form-schema.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
