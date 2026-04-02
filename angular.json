@@ -123,7 +123,8 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"],
-            "eslintConfig": "eslint.config.js"
+            "eslintConfig": "eslint.config.js",
+            "cache": true
           }
         }
       }
@@ -191,7 +192,8 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": ["projects/element-ng/**/*.ts", "projects/element-ng/**/*.html"],
-            "eslintConfig": "projects/element-ng/eslint.config.js"
+            "eslintConfig": "projects/element-ng/eslint.config.js",
+            "cache": true
           }
         }
       }
@@ -228,7 +230,8 @@
               "projects/element-translate-ng/**/*.ts",
               "projects/element-translate-ng/**/*.html"
             ],
-            "eslintConfig": "projects/element-translate-ng/eslint.config.js"
+            "eslintConfig": "projects/element-translate-ng/eslint.config.js",
+            "cache": true
           }
         }
       }
@@ -253,7 +256,8 @@
               "projects/live-preview/**/*.ts",
               "projects/live-preview/**/*.html"
             ],
-            "eslintConfig": "projects/live-preview/eslint.config.js"
+            "eslintConfig": "projects/live-preview/eslint.config.js",
+            "cache": true
           }
         }
       }
@@ -287,7 +291,8 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": ["projects/charts-ng/**/*.ts", "projects/charts-ng/**/*.html"],
-            "eslintConfig": "projects/charts-ng/eslint.config.js"
+            "eslintConfig": "projects/charts-ng/eslint.config.js",
+            "cache": true
           }
         }
       }
@@ -324,7 +329,8 @@
               "projects/native-charts-ng/**/*.ts",
               "projects/native-charts-ng/**/*.html"
             ],
-            "eslintConfig": "projects/native-charts-ng/eslint.config.js"
+            "eslintConfig": "projects/native-charts-ng/eslint.config.js",
+            "cache": true
           }
         }
       }
@@ -365,7 +371,8 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": ["projects/maps-ng/**/*.ts", "projects/maps-ng/**/*.html"],
-            "eslintConfig": "projects/maps-ng/eslint.config.js"
+            "eslintConfig": "projects/maps-ng/eslint.config.js",
+            "cache": true
           }
         }
       }
@@ -422,7 +429,8 @@
               "projects/dashboards-ng/**/*.ts",
               "projects/dashboards-ng/**/*.html"
             ],
-            "eslintConfig": "projects/dashboards-ng/eslint.config.js"
+            "eslintConfig": "projects/dashboards-ng/eslint.config.js",
+            "cache": true
           }
         }
       }
@@ -536,7 +544,8 @@
               "projects/dashboards-demo/src/**/*.ts",
               "projects/dashboards-demo/src/**/*.html"
             ],
-            "eslintConfig": "projects/dashboards-demo/eslint.config.mjs"
+            "eslintConfig": "projects/dashboards-demo/eslint.config.mjs",
+            "cache": true
           }
         },
         "esbuild": {
@@ -732,7 +741,8 @@
               "projects/dashboards-demo/webcomponents/**/*.ts",
               "projects/dashboards-demo/webcomponents/**/*.html"
             ],
-            "eslintConfig": "projects/dashboards-demo/webcomponents/eslint.config.mjs"
+            "eslintConfig": "projects/dashboards-demo/webcomponents/eslint.config.mjs",
+            "cache": true
           }
         }
       }
@@ -814,7 +824,8 @@
               "projects/dashboards-demo/mfe/**/*.ts",
               "projects/dashboards-demo/mfe/**/*.html"
             ],
-            "eslintConfig": "projects/dashboards-demo/mfe/eslint.config.mjs"
+            "eslintConfig": "projects/dashboards-demo/mfe/eslint.config.mjs",
+            "cache": true
           }
         },
         "esbuild": {
@@ -972,7 +983,8 @@
               "projects/icon-viewer/**/*.ts",
               "projects/icon-viewer/src/**/*.html"
             ],
-            "eslintConfig": "projects/icon-viewer/eslint.config.js"
+            "eslintConfig": "projects/icon-viewer/eslint.config.js",
+            "cache": true
           }
         }
       }
