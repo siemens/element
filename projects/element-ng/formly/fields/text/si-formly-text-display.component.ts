@@ -22,7 +22,7 @@ export class SiFormlyTextDisplayComponent extends FieldType<FieldTypeConfig> {
 
     let sourceModel = this.model;
     if (Array.isArray(this.model)) {
-      // The model is the arry itself when using this field as item into an array type...
+      // The model is the array itself when using this field as item into an array type...
       sourceModel = this.formControl.value;
     }
     if (this.props.key.indexOf('.') === -1) {

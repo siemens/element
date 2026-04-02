@@ -78,7 +78,7 @@ export class SampleComponent implements AfterViewInit, OnDestroy {
     {
       name: 'Operations',
       iconClass: 'element-plant',
-      href: './oprtations-app',
+      href: './operations-app',
       active: true
     },
     { name: 'App Portal', iconClass: 'element-security', href: './app-portal' },

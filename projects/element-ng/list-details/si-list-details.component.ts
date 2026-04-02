@@ -194,7 +194,7 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  // Transfer focus onto child panes if they would be inaccesible.
+  // Transfer focus onto child panes if they would be inaccessible.
 
   private transferFocus(): void {
     // Check if dimensions have even been evaluated.
