@@ -86,7 +86,7 @@ export const getDayStrings = (
 ): string[] => {
   const dateFormatter = new Intl.DateTimeFormat(locale, { weekday: format, timeZone: 'utc' });
   const days = [];
-  // Get local specific day strings from sunday (0) .. saturady (6)
+  // Get local specific day strings from sunday (0) .. saturday (6)
   for (let index = 1; index <= 7; index++) {
     const day = new Date(Date.UTC(2023, 0, index));
     days.push(dateFormatter.format(day));
