@@ -1,0 +1,119 @@
+/**
+ * Copyright (c) Siemens 2016 - 2026
+ * SPDX-License-Identifier: MIT
+ */
+import type { IsActiveMatchOptions, NavigationExtras } from '@angular/router';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+
+/**
+ * Common properties shared among navbar item types.
+ * @experimental
+ */
+export interface NavbarVerticalNextItemBase {
+  /** The ID is required if the navbar is used with UIState. */
+  id?: string;
+  /** Label that is shown to the user. */
+  label: TranslatableString;
+  /** Optional icon that will be rendered before the label. */
+  icon?: string;
+  /** Badge that is rendered after the label or as a red dot in the collapsed state. */
+  badge?: string | number;
+  /** Color of the badge.
+   * Use any color shown here {@link https://element.siemens.io/components/status-notifications/badges/#example}
+   * without `bg-` prefix.
+   */
+  badgeColor?: string;
+  /**
+   * Hide badge when navbar is collapsed.
+   * By default, badges are always visible (both expanded and collapsed).
+   */
+  hideBadgeWhenCollapsed?: boolean;
+}
+
+/**
+ * Use this type to create a group that can hold multiple items.
+ * @experimental
+ */
+export interface NavbarVerticalNextItemGroup extends NavbarVerticalNextItemBase {
+  type: 'group';
+  /** Submenu items for this menu item. */
+  children: NavbarVerticalNextSubItem[];
+  /** Set this property if the item should be expanded by default. */
+  expanded?: boolean;
+}
+
+/**
+ * Use this type to create a routerLink item.
+ * @experimental
+ */
+export interface NavbarVerticalNextItemRouterLink extends NavbarVerticalNextItemBase {
+  type: 'router-link';
+  /** Link for the angular router. Accepts the same values as {@link RouterLink}. */
+  routerLink: string | any[];
+  /** Navigation extras that are passed to the {@link RouterLink}. */
+  extras?: NavigationExtras;
+  /** Active match options for routerLinkActive */
+  activeMatchOptions?: { exact: boolean } | IsActiveMatchOptions;
+}
+
+/**
+ * Use this type to create an href link that will cause a real navigation.
+ * @experimental
+ */
+export interface NavbarVerticalNextItemLink extends NavbarVerticalNextItemBase {
+  type: 'link';
+  /** The href property of the anchor. */
+  href: string;
+  /** The target property of the anchor. */
+  target?: string;
+}
+
+/**
+ * AVOID USING THIS TYPE!
+ * Actions inside the navbar are an indication for a code smell.
+ *
+ * Use {@link NavbarVerticalNextItemRouterLink} instead whenever possible.
+ * @experimental
+ */
+export interface NavbarVerticalNextItemAction extends NavbarVerticalNextItemBase {
+  type: 'action';
+  /** Action that is called when the navbar item is triggered. */
+  action: (source: this) => void;
+  /**
+   * The active state of the item.
+   * Note: It must be set manually.
+   */
+  active?: boolean;
+}
+
+/** @experimental */
+export interface NavbarVerticalNextItemHeader {
+  type: 'header';
+  label: TranslatableString;
+}
+
+/** @experimental */
+export interface NavbarVerticalNextItemDivider {
+  type: 'divider';
+}
+
+/**
+ * Union type for all possible all items in the navbar.
+ * @experimental
+ */
+export type NavbarVerticalNextItem =
+  | NavbarVerticalNextItemGroup
+  | NavbarVerticalNextItemRouterLink
+  | NavbarVerticalNextItemLink
+  | NavbarVerticalNextItemAction
+  | NavbarVerticalNextItemHeader
+  | NavbarVerticalNextItemDivider;
+
+/**
+ * Union type for all items that can be wrapped in a group.
+ * @experimental
+ */
+export type NavbarVerticalNextSubItem =
+  | NavbarVerticalNextItemRouterLink
+  | NavbarVerticalNextItemLink
+  | NavbarVerticalNextItemAction;

@@ -1,0 +1,21 @@
+@let icon = item().icon;
+@if (icon) {
+  <si-icon class="icon-lg" [icon]="icon" />
+}
+<div class="item-title text-truncate si-h5">
+  <ng-content />
+</div>
+@if (!navbar.textOnly() && formattedBadge()) {
+  <span
+    [class]="[
+      'badge',
+      item().badgeColor ? `bg-${item().badgeColor}` : 'bg-default',
+      textOnlyBadge() ? 'badge-text-only' : '',
+      navbar.collapsed() ? 'badge-collapsed' : ''
+    ]"
+    >{{ formattedBadge() }}</span
+  >
+}
+@if (group) {
+  <si-icon aria-hidden="true" class="dropdown-caret me-0 text-body" [icon]="icons.elementDown2" />
+}
