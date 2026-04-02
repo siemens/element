@@ -106,7 +106,7 @@ export class SampleComponent {
       ],
       actions: [
         {
-          label: 'Copy message',
+          label: 'Export message',
           icon: 'element-export',
           action: (message: ChatMessage) =>
             this.logEvent(`Copy user message ${message.content.slice(0, 20)}...`)
@@ -120,14 +120,14 @@ export class SampleComponent {
   Let me examine the structure and provide guidance.`,
       actions: [
         {
-          label: 'Good response',
+          label: 'Add to list',
           icon: 'element-plus',
-          action: (_message: ChatMessage) => this.logEvent('Thumbs up for AI message')
+          action: (_message: ChatMessage) => this.logEvent('Add AI message to list')
         },
         {
-          label: 'Copy response',
+          label: 'Export response',
           icon: 'element-export',
-          action: (_message: ChatMessage) => this.logEvent('Copy AI message')
+          action: (_message: ChatMessage) => this.logEvent('Export AI message')
         },
         {
           label: 'Retry response',
@@ -147,7 +147,7 @@ export class SampleComponent {
         'Perfect! What should I focus on first\n\nI also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?',
       actions: [
         {
-          label: 'Copy message',
+          label: 'Export message',
           icon: 'element-export',
           action: (_message: ChatMessage) =>
             this.logEvent(`Copy user message ${_message.content.slice(0, 20)}...`)
@@ -178,7 +178,7 @@ export class SampleComponent {
 
   userActions: MessageAction[] = [
     {
-      label: 'Copy message',
+      label: 'Export message',
       icon: 'element-export',
       action: (_message: ChatMessage) =>
         this.logEvent(`Copy user message ${_message.content.slice(0, 20)}...`)
@@ -193,14 +193,14 @@ export class SampleComponent {
 
   aiActions: MessageAction[] = [
     {
-      label: 'Good response',
+      label: 'Add to list',
       icon: 'element-plus',
-      action: (_message: ChatMessage) => this.logEvent('Thumbs up for AI message')
+      action: (_message: ChatMessage) => this.logEvent('Add AI message to list')
     },
     {
-      label: 'Copy response',
+      label: 'Export response',
       icon: 'element-export',
-      action: (_message: ChatMessage) => this.logEvent('Copy AI message')
+      action: (_message: ChatMessage) => this.logEvent('Export AI message')
     }
   ];
 
@@ -272,9 +272,9 @@ export class SampleComponent {
         content: event.content,
         actions: [
           {
-            label: 'Copy message',
+            label: 'Export message',
             icon: 'element-export',
-            action: () => this.logEvent('Copy user message')
+            action: () => this.logEvent('Export user message')
           }
         ],
         attachments: event.attachments.map(att => ({
@@ -284,6 +284,10 @@ export class SampleComponent {
       }
     ]);
     this.simulateAiResponse(event.content);
+
+    setTimeout(() => {
+      this.chatContainer()?.scrollToBottom();
+    }, 0);
   }
 
   onInterrupt(): void {
@@ -314,14 +318,14 @@ export class SampleComponent {
             content: response,
             actions: [
               {
-                label: 'Good response',
+                label: 'Add to list',
                 icon: 'element-plus',
-                action: () => this.logEvent('Thumbs up for AI message')
+                action: () => this.logEvent('Add AI message to list')
               },
               {
-                label: 'Copy response',
+                label: 'Export response',
                 icon: 'element-export',
-                action: () => this.logEvent('Copy AI message')
+                action: () => this.logEvent('Export AI message')
               }
             ]
           }
