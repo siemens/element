@@ -35,6 +35,13 @@
     Tertiary
   </si-loading-button>
   <si-loading-button
+    buttonClass="btn btn-tertiary-ghost"
+    [loading]="loading"
+    (click)="handleClick('ghost')"
+  >
+    Ghost
+  </si-loading-button>
+  <si-loading-button
     buttonClass="btn btn-warning"
     [loading]="loading"
     (click)="handleClick('warning')"

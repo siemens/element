@@ -45,8 +45,8 @@ button.loading {
   --loading-spinner-color: #{variables.$element-action-warning-text};
 }
 
-.btn-ghost + .spinner-wrapper {
-  --loading-spinner-color: #{variables.$element-ui-2};
+:is(.btn-ghost, .btn-primary-ghost, .btn-secondary-ghost, .btn-tertiary-ghost) + .spinner-wrapper {
+  --loading-spinner-color: #{variables.$element-text-primary};
 }
 
 :is(.btn-secondary-warning, .btn-tertiary-warning) + .spinner-wrapper {
