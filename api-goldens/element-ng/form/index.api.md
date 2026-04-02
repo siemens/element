@@ -36,6 +36,7 @@ export const SI_FORM_ITEM_CONTROL: InjectionToken<SiFormItemControl>;
 export class SiFormContainerComponent<TControl extends {
     [K in keyof TControl]: AbstractControl;
 }> {
+    // @deprecated (undocumented)
     readonly contentContainerBreakpoints: _angular_core.InputSignal<Breakpoints | undefined>;
     readonly controlNameTranslateKeyMap: _angular_core.InputSignal<Map<string, string>>;
     readonly disableContainerBreakpoints: _angular_core.InputSignalWithTransform<boolean, unknown>;

@@ -1,17 +1,10 @@
 <div class="d-flex flex-column align-content-stretch flex-grow-1 flex-shrink-1">
-  @if (disableContainerBreakpoints() || hasParentContainer) {
-    <div class="flex-grow-1 flex-shrink-1">
-      <ng-container *ngTemplateOutlet="contentTemplate" />
-    </div>
-  } @else {
-    <div
-      class="flex-grow-1 flex-shrink-1"
-      siResponsiveContainer
-      [breakpoints]="contentContainerBreakpoints()"
-    >
-      <ng-container *ngTemplateOutlet="contentTemplate" />
-    </div>
-  }
+  <div
+    class="flex-grow-1 flex-shrink-1"
+    [class.responsive-container]="!disableContainerBreakpoints() && !hasParentContainer"
+  >
+    <ng-content select="[si-form-container-content]" />
+  </div>
 
   @if (!readonly()) {
     <div class="d-flex flex-row flex-nowrap flex-grow-0 flex-shrink-0 py-4">
@@ -29,7 +22,3 @@
     </div>
   }
 </div>
-
-<ng-template #contentTemplate>
-  <ng-content select="[si-form-container-content]" />
-</ng-template>
