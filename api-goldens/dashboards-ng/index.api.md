@@ -141,7 +141,7 @@ export const provideDashboardToolbarItems: (toolbarItems?: {
     secondary?: DashboardToolbarItem[];
 }) => Provider;
 
-// @public
+// @public (undocumented)
 export type SetupComponentFn = <T>(factory: WidgetComponentFactory, componentName: string, host: ViewContainerRef, injector: Injector, envInjector: EnvironmentInjector) => Observable<ComponentRef<T>>;
 
 // @public (undocumented)
@@ -337,16 +337,6 @@ export interface WidgetConfigStatus {
     invalid: boolean;
     modified: boolean;
 }
-
-// @public (undocumented)
-export const widgetFactoryRegistry: {
-    _factories: {
-        [key: string]: SetupComponentFn;
-    };
-    register(name: string, factoryFn: SetupComponentFn): void;
-    getFactoryFn(name: string): SetupComponentFn;
-    hasFactoryFn(name: string): boolean;
-};
 
 // @public
 export interface WidgetImage {
