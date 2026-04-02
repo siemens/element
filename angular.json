@@ -93,12 +93,6 @@
                   "with": "src/environments/environment.local-maps.ts"
                 }
               ]
-            },
-            "aot": {
-              "aot": true,
-              "sourceMap": false,
-              "tsConfig": "src/tsconfig.app.prod.json",
-              "outputPath": "dist/element-examples-aot"
             }
           }
         },
