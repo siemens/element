@@ -174,7 +174,7 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
           }) as Subscription
         );
       }
-      if (this.isEditorWizdard(this.widgetInstanceEditor)) {
+      if (this.isEditorWizard(this.widgetInstanceEditor)) {
         this.editorWizardState.set(this.widgetInstanceEditor.state);
 
         if (this.widgetInstanceEditor.stateChange) {
@@ -220,14 +220,14 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
   }
 
   protected onNext(): void {
-    if (this.isEditorWizdard(this.widgetInstanceEditor)) {
+    if (this.isEditorWizard(this.widgetInstanceEditor)) {
       this.widgetInstanceEditor.next();
       this.editorWizardState.set(this.widgetInstanceEditor.state);
     }
   }
 
   protected onPrevious(): void {
-    if (this.isEditorWizdard(this.widgetInstanceEditor) && this.editorWizardState()?.hasPrevious) {
+    if (this.isEditorWizard(this.widgetInstanceEditor) && this.editorWizardState()?.hasPrevious) {
       this.widgetInstanceEditor.previous();
       this.editorWizardState.set(this.widgetInstanceEditor.state);
     }
@@ -255,7 +255,7 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
     this.subscriptions = [];
   }
 
-  private isEditorWizdard(
+  private isEditorWizard(
     editor?: WidgetInstanceEditor | WidgetInstanceEditorWizard
   ): editor is WidgetInstanceEditorWizard {
     return !!editor && 'state' in editor;
