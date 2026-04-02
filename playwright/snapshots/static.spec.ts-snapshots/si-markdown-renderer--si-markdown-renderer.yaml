@@ -127,11 +127,11 @@
         - paragraph: ✓ Complete
       - cell "Bullet lists work properly":
         - paragraph: Bullet lists work properly
-    - 'row "Escaped pipes grep \"text|pattern\" awk ''{print $1|$2}'' ✓ Complete Use | for literal pipes"':
+    - 'row "Escaped pipes grep \"text|pattern\" awk ''{print 2}'' ✓ Complete Use | for literal pipes"':
       - cell "Escaped pipes":
         - paragraph: Escaped pipes
-      - 'cell "grep \"text|pattern\" awk ''{print $1|$2}''"':
-        - paragraph: "grep \"text|pattern\" awk '{print $1|$2}'"
+      - 'cell "grep \"text|pattern\" awk ''{print 2}''"':
+        - paragraph: "grep \"text|pattern\" awk '{print 2}'"
       - cell "✓ Complete":
         - paragraph: ✓ Complete
       - cell "Use | for literal pipes":
@@ -149,3 +149,10 @@
           - code: <br>
           - text: tags
 - paragraph: This paragraph appears after the tables to demonstrate proper spacing.
+- separator
+- heading "Math Expressions" [level=2]
+- paragraph: LaTeX math expressions are supported for mathematical notation.
+- paragraph: "Inline math can be written like this: or the quadratic formula ."
+- paragraph: "/You can escape dollar signs with a backslash to show literal prices: \\$\\d+, \\$\\d+, \\$\\d+\\./"
+- paragraph: "Display math uses double dollar signs for block equations:"
+- paragraph: UML is not supported in this markdown component.
