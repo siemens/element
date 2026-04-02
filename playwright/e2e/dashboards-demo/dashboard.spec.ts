@@ -218,6 +218,31 @@ test.describe('dashboard', () => {
     await si.runVisualAndA11yTests(stepName);
   });
 
+  test(example + ' web-component note widget', async ({ page, si }) => {
+    await si.visitExample(example, undefined);
+    await openWidgetCatalog(page);
+
+    const noteWidget = page.getByRole('option', {
+      name: 'Note (web-component)'
+    });
+    await expect(noteWidget).toBeVisible();
+    await noteWidget.click();
+
+    const next = page.getByText('Next', { exact: true });
+    await next.click();
+
+    const addBtn = page.getByText('Add', { exact: true });
+    await expect(addBtn).toBeVisible();
+    await expect(addBtn).not.toBeDisabled();
+    await addBtn.click();
+
+    const widgetHost = page.locator('si-widget-host', { hasText: 'Note (web-component)' });
+    await expect(widgetHost).toBeVisible();
+    await widgetHost.scrollIntoViewIfNeeded();
+
+    await si.runVisualAndA11yTests('web-component-note-widget');
+  });
+
   const openWidgetCatalog = async (page: Page): Promise<void> => {
     await expect(page.getByLabel('Edit')).toBeVisible();
     const editBtn = page.getByLabel('Edit');
