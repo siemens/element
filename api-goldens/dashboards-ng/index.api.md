@@ -29,6 +29,8 @@ import { OutputEmitterRef } from '@angular/core';
 import { Provider } from '@angular/core';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { SiEventBusBase } from '@siemens/dashboards-ng/event-bus';
+import { SiEventType } from '@siemens/dashboards-ng/event-bus';
 import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
@@ -185,6 +187,15 @@ export class SiDefaultWidgetStorage extends SiWidgetStorage {
     // (undocumented)
     protected update(widgetConfigs: WidgetConfig[], dashboardId?: string): void;
 }
+
+// @public
+export class SiEventBus<ET> extends SiEventBusBase<ET extends {
+    name: string;
+    data: unknown;
+} ? ET : SiEventType> {
+}
+
+export { SiEventType }
 
 // @public
 export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestroy {
