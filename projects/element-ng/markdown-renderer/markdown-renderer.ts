@@ -9,7 +9,13 @@ import { getCachedOrCreateElement } from './markdown-renderer-helpers';
 
 const CACHE_SIZE = 100;
 
-export type MarkdownRendererOptions = Record<string, never>;
+export interface MarkdownRendererOptions {
+  /**
+   * Optional syntax highlighter function for code blocks.
+   * Receives code content and optional language, returns highlighted HTML or undefined.
+   */
+  syntaxHighlighter?: (code: string, language?: string) => string | undefined;
+}
 
 interface ProcessOptions {
   allowCodeBlocks?: boolean;
@@ -216,7 +222,15 @@ export const getMarkdownRenderer = (
       cacheKey,
       () => {
         // Escape HTML for code blocks
-        const displayContent = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        let displayContent = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        // Apply syntax highlighting if available
+        if (options?.syntaxHighlighter && language) {
+          const highlighted = options.syntaxHighlighter(content, language);
+          if (highlighted) {
+            displayContent = highlighted;
+          }
+        }
 
         // Sanitize the display content
         const sanitized = sanitizer.sanitize(SecurityContext.HTML, displayContent) ?? '';
