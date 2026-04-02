@@ -28,7 +28,7 @@ button {
 
 :is(.btn, .btn-close) {
   line-height: bootstrap-variables.$btn-line-height;
-  font-weight: typography.$si-font-weight-h5;
+  font-weight: typography.$si-font-weight-semibold;
   padding-block: calc(bootstrap-variables.$btn-padding-y - var(--btn-border-width, 0px));
   padding-inline: calc(bootstrap-variables.$btn-padding-x - var(--btn-border-width, 0px));
   font-size: bootstrap-variables.$btn-font-size;
@@ -317,4 +317,12 @@ button {
   &:focus {
     --btn-border-color: #{semantic-tokens.$element-ui-1};
   }
+}
+
+.btn-font-body {
+  @include typography.si-font(
+    typography.$si-font-size-body,
+    typography.$si-line-height-body,
+    typography.$si-font-weight-body
+  );
 }
