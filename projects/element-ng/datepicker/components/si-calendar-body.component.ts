@@ -201,6 +201,40 @@ export class SiCalendarBodyComponent {
       : new SingleSelectionStrategy(this.compareAdapter())
   );
 
+  protected readonly cellRangeClasses = computed(() => {
+    const sel = this.selection();
+    const rows = this.rows();
+    const previewRange = this.previewRange();
+    // Only track hover if it's actually needed for the preview logic.
+    // This prevents unnecessary re-computations during mouse movement
+    // when range selection or preview is disabled.
+    const hover = previewRange && this.enableRangeSelection() ? this.activeHover() : undefined;
+    const start = this.startDate();
+    const end = this.endDate();
+
+    return rows.map(row =>
+      row.map(col => {
+        const classes: string[] = [];
+        if (previewRange && sel.previewRangeHover(col, hover, start)) {
+          classes.push('range-hover');
+        }
+        if (previewRange && sel.previewRangeHoverEnd(col, hover, start)) {
+          classes.push('range-hover-end');
+        }
+        if (sel.inRange(col, start, end)) {
+          classes.push('range');
+        }
+        if (sel.isRangeSelected(col, start)) {
+          classes.push('range-start');
+        }
+        if (sel.isRangeSelected(col, end)) {
+          classes.push('range-end');
+        }
+        return classes;
+      })
+    );
+  });
+
   /**
    * Focus calendar cell which is marked as active cell.
    */
