@@ -158,13 +158,11 @@ export class SampleComponent implements OnInit, OnDestroy {
 
   printDetails(event: DataZoomEvent | null): void {
     const data = this.data as any[];
-    if (!event || event.rangeStart === null) {
-      event = {
-        rangeType: 'time',
-        rangeStart: data[0][0],
-        rangeEnd: data[this.data.length - 1][0]
-      };
-    }
+    event ??= {
+      rangeType: 'time',
+      rangeStart: data[0][0],
+      rangeEnd: data[this.data.length - 1][0]
+    };
     this.rangeStart = formatDateTime(event.rangeStart);
     this.rangeEnd = formatDateTime(event.rangeEnd);
   }
