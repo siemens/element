@@ -93,7 +93,7 @@ describe('SiDefaultThemeStore', () => {
       expect(storage2.activeTheme).toBe('test');
     });
 
-    it('should deactive existing theme', async () => {
+    it('should deactivate existing theme', async () => {
       const storage: ThemeStorage = {
         activeTheme: 'test',
         themes: { 'test': { name: 'test', schemes: {} } }
