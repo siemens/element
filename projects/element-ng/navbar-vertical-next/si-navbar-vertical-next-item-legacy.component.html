@@ -1,0 +1,52 @@
+<!-- section header -->
+@if (!isLink() && !item().items) {
+  <si-navbar-vertical-next-header>
+    {{ item().title | translate }}
+  </si-navbar-vertical-next-header>
+} @else if (isLink() && !item().items) {
+  <a [si-navbar-vertical-next-item]="item()" [siLink]="item()">
+    {{ item().title | translate }}
+  </a>
+} @else if (isLink() && item().items) {
+  <div class="link-with-items">
+    <a
+      #mainLink
+      [si-navbar-vertical-next-item]="item()"
+      [siLink]="item()"
+      [activeOverride]="itemActive()"
+    >
+      {{ item().title | translate }}
+    </a>
+    <button
+      type="button"
+      class="mt-0"
+      [si-navbar-vertical-next-item]="item()"
+      [siNavbarVerticalNextGroupTriggerFor]="group"
+      [activeOverride]="mainLink.active"
+      [attr.aria-label]="toggleButtonLabel() + ' ' + item().title | translate"
+      [(expanded)]="expanded"
+    >
+      {{ item().title | translate }}
+    </button>
+  </div>
+} @else if (item().items) {
+  <button
+    type="button"
+    [si-navbar-vertical-next-item]="item()"
+    [siNavbarVerticalNextGroupTriggerFor]="group"
+    [activeOverride]="itemActive()"
+    [(expanded)]="expanded"
+  >
+    {{ item().title | translate }}
+  </button>
+}
+
+<ng-template #group>
+  <si-navbar-vertical-next-group>
+    @for (subitem of flyoutItems(); track $index) {
+      <a activeClass="active" [si-navbar-vertical-next-item]="subitem" [siLink]="subitem">
+        {{ subitem.title | translate }}
+      </a>
+    }
+  </si-navbar-vertical-next-group>
+</ng-template>

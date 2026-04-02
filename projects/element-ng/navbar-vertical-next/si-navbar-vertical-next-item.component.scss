@@ -1,0 +1,152 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/bootstrap/mixins/visually-hidden';
+
+:host(.navbar-vertical-item) {
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: variables.$element-text-primary;
+  background: none;
+  border: 0;
+  font-size: variables.$si-font-size-body;
+  padding-block: map.get(variables.$spacers, 4);
+  padding-inline: 0 map.get(variables.$spacers, 5);
+  min-inline-size: 0;
+  min-block-size: 40px;
+  inline-size: 100%;
+  border-radius: 0;
+
+  .item-title {
+    margin-inline-start: map.get(variables.$spacers, 5);
+  }
+
+  .icon-lg {
+    margin-inline-start: map.get(variables.$spacers, 5);
+  }
+
+  .icon-lg + .item-title {
+    margin-inline-start: map.get(variables.$spacers, 4);
+  }
+
+  &.show .badge:not(.badge-collapsed) {
+    display: none;
+  }
+
+  &:not(.show) .badge + .dropdown-caret {
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  &.active {
+    color: variables.$element-action-primary-hover;
+    background: variables.$element-base-1-selected;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 0;
+      inline-size: 4px;
+      background: variables.$element-action-primary-hover;
+    }
+  }
+
+  &:hover {
+    text-decoration: none;
+    background: variables.$element-base-1-hover;
+  }
+}
+
+// Don't merge with :is. Angular 19 fails to compile it in a correct way.
+:host-context(.nav-scroll > .navbar-vertical-item) + :host(.navbar-vertical-item),
+:host-context(.nav-scroll > si-navbar-vertical-next-group) + :host(.navbar-vertical-item),
+:host-context(.nav-scroll > si-navbar-flyout-anchor) + :host(.navbar-vertical-item) {
+  margin-block-start: map.get(variables.$spacers, 4);
+}
+
+:host-context(.nav-text-only si-navbar-vertical-next-group) .item-title {
+  margin-inline-start: 0;
+}
+
+:host-context(si-navbar-vertical-next-group) :host(.navbar-vertical-item) {
+  padding-inline-start: map.get(variables.$spacers, 9);
+
+  .item-title {
+    font-weight: normal;
+  }
+}
+
+:host(.dropdown-item) {
+  .item-title {
+    font-weight: normal;
+  }
+}
+
+:host-context(.nav-collapsed) {
+  .badge {
+    position: absolute;
+    inset-block-start: map.get(variables.$spacers, 2);
+    inset-inline-end: map.get(variables.$spacers, 3);
+    block-size: 14px;
+    min-inline-size: 14px;
+    border-radius: 7px;
+    font-size: variables.$si-font-size-caption;
+    line-height: 14px;
+    padding-block: 0;
+    padding-inline: map.get(variables.$spacers, 2);
+    font-weight: variables.$si-font-weight-semibold;
+
+    &.badge-text-only {
+      color: transparent;
+      font-size: 0;
+    }
+  }
+
+  :is(.item-title, .dropdown-caret) {
+    @include visually-hidden.visually-hidden();
+  }
+
+  &.hide-badge-collapsed .badge {
+    display: none;
+  }
+}
+
+:host-context(.link-with-items) > :host(button) {
+  padding-inline: map.get(variables.$spacers, 5);
+
+  .item-title,
+  .icon-lg {
+    display: none;
+  }
+
+  .dropdown-caret {
+    padding-inline: 0;
+  }
+
+  &::after {
+    display: none;
+  }
+}
+
+:host-context(.nav-collapsed .link-with-items) {
+  > :host(button) {
+    padding-inline: 0;
+
+    &::after {
+      display: block;
+    }
+
+    .icon-lg {
+      display: block;
+    }
+  }
+
+  > :host(a) {
+    display: none;
+  }
+}
+
+.badge {
+  margin-inline: auto 0;
+}
