@@ -5,6 +5,7 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Component, computed, effect, inject, input, ElementRef, PLATFORM_ID } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
 
 import { getMarkdownRenderer, type MarkdownRendererOptions } from './markdown-renderer';
 
@@ -19,6 +20,7 @@ import { getMarkdownRenderer, type MarkdownRendererOptions } from './markdown-re
 export class SiMarkdownRendererComponent {
   private sanitizer = inject(DomSanitizer);
   private hostElement = inject(ElementRef<HTMLElement>);
+  private translateService = injectSiTranslateService();
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
   private doc = inject(DOCUMENT);
@@ -40,11 +42,28 @@ export class SiMarkdownRendererComponent {
     ((code: string, language?: string) => string | undefined) | undefined
   >(undefined);
 
+  /**
+   * Do not display the copy code button.
+   * @defaultValue false
+   */
+  readonly disableCopyButton = input<boolean>(false);
+
+  /**
+   * Label for the copy button.
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY_CODE:Copy code`)
+   * ```
+   */
+  readonly copyButtonLabel = input(t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY_CODE:Copy code`));
+
   private readonly markdownRenderer = computed(() => {
     const highlighterFn = this.syntaxHighlighter();
 
     const options: MarkdownRendererOptions = {
-      syntaxHighlighter: highlighterFn
+      syntaxHighlighter: highlighterFn,
+      copyCodeButton: !this.disableCopyButton() ? this.copyButtonLabel() : undefined,
+      translateSync: this.translateService.translateSync.bind(this.translateService)
     };
 
     return getMarkdownRenderer(this.sanitizer, options, this.doc, this.isBrowser);

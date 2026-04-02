@@ -4,6 +4,8 @@
  */
 import { SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { type SiTranslateService } from '@siemens/element-translate-ng/translate';
+import { type TranslatableString } from '@siemens/element-translate-ng/translate-types';
 
 import { getCachedOrCreateElement } from './markdown-renderer-helpers';
 
@@ -15,6 +17,17 @@ export interface MarkdownRendererOptions {
    * Receives code content and optional language, returns highlighted HTML or undefined.
    */
   syntaxHighlighter?: (code: string, language?: string) => string | undefined;
+
+  /**
+   * Provide this to enable the copy code button functionality.
+   * Label for the copy code button (will be translated internally if translateSync is provided).
+   */
+  copyCodeButton?: TranslatableString;
+
+  /**
+   * Synchronous translation function for button labels.
+   */
+  translateSync?: SiTranslateService['translateSync'];
 }
 
 interface ProcessOptions {
@@ -205,7 +218,7 @@ export const getMarkdownRenderer = (
    * Create cache key for code block
    */
   const createCodeBlockCacheKey = (language: string, content: string): string => {
-    return `${language}|||${content}`;
+    return `${language}|||${content}|||${options?.copyCodeButton ?? ''}`;
   };
 
   /**
@@ -234,14 +247,27 @@ export const getMarkdownRenderer = (
         // Sanitize the display content
         const sanitized = sanitizer.sanitize(SecurityContext.HTML, displayContent) ?? '';
 
+        const codeId = `code-${Math.random().toString(36).substring(2, 15)}`;
+
+        // Create copy button if enabled
+        let copyButton = '';
+        if (options?.copyCodeButton) {
+          const translatedLabel = options.translateSync
+            ? options.translateSync(options.copyCodeButton)
+            : options.copyCodeButton;
+          const buttonLabel = escapeHtml(translatedLabel);
+          copyButton = `<button type="button" class="btn btn-tertiary btn-sm copy-code-btn" data-code-id="${codeId}" aria-label="${buttonLabel}"><i class="icon element-copy" aria-hidden="true"></i><span class="copy-code-label">${buttonLabel}</span></button>`;
+        }
+
         const languageLabel = language
           ? `<span class="code-language">${escapeHtml(language)}</span>`
           : '';
-        const headerContent = languageLabel
-          ? `<div class="code-header">${languageLabel}</div>`
-          : '';
+        const headerContent =
+          copyButton || languageLabel
+            ? `<div class="code-header">${languageLabel}${copyButton}</div>`
+            : '';
         const wrapperClass = headerContent ? 'code-wrapper has-header' : 'code-wrapper';
-        return `<div class="${wrapperClass}">${headerContent}<pre><code>${sanitized}</code></pre></div>`;
+        return `<div class="${wrapperClass}">${headerContent}<pre><code id="${codeId}">${sanitized}</code></pre></div>`;
       },
       docRef
     );
@@ -599,6 +625,25 @@ export const getMarkdownRenderer = (
         comment.parentNode.replaceChild(element.cloneNode(true), comment);
       }
     });
+
+    // Add event listeners for copy buttons (browser-only)
+    if (isInBrowser) {
+      div.querySelectorAll('.copy-code-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const button = e.target as HTMLButtonElement;
+          const codeId = button.getAttribute('data-code-id');
+          if (!codeId) return;
+
+          const codeElement = div.querySelector(`#${codeId}`);
+          if (!codeElement) return;
+
+          const code = codeElement.textContent ?? '';
+          navigator.clipboard.writeText(code).catch(() => {
+            console.warn('Failed to copy code to clipboard');
+          });
+        });
+      });
+    }
 
     return div;
   };
