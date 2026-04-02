@@ -69,7 +69,7 @@ button {
 
   .icon {
     margin-block: -#{map.get(spacers.$spacers, 2)};
-    margin-inline: -#{map.get(spacers.$spacers, 2)} #{map.get(spacers.$spacers, 2)};
+    margin-inline-end: #{map.get(spacers.$spacers, 2)};
   }
 }
 
