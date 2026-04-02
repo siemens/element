@@ -12,15 +12,7 @@
         class="si-calendar-cell"
         [attr.data-row]="rowIndex"
         [attr.data-col]="colIndex"
-        [class.range-hover]="
-          previewRange() && selection().previewRangeHover(col, activeHover(), startDate())
-        "
-        [class.range-hover-end]="
-          previewRange() && selection().previewRangeHoverEnd(col, activeHover(), startDate())
-        "
-        [class.range]="selection().inRange(col, startDate(), endDate())"
-        [class.range-start]="selection().isRangeSelected(col, startDate())"
-        [class.range-end]="selection().isRangeSelected(col, endDate())"
+        [class]="cellRangeClasses()[rowIndex][colIndex]"
       >
         <button
           siCalendarDateCell
