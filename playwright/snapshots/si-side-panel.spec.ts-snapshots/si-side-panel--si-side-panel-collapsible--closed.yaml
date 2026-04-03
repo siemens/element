@@ -1,5 +1,6 @@
 - button "Toggle"
 - button "Out of Service"
+- button "•" [disabled]
 - button "Event source active, ack"
 - button "Properties"
 - button "Documents"

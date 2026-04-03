@@ -1,4 +1,5 @@
 - text: Normal
+- button "Toggle"
 - paragraph: Regular card with standard styling.
 - button "Action":
   - text: ""
@@ -6,6 +7,7 @@
 - text: Accent
 - paragraph: Accent card with info marker.
 - text: Normal outline
+- button "Toggle"
 - paragraph: Regular card with outline styling.
 - button "Action outline":
   - text: ""

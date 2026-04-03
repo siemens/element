@@ -22,8 +22,8 @@
   font-size: variables.$input-font-size;
   font-weight: variables.$input-font-weight;
   line-height: variables.$input-line-height;
-  color: variables.$input-color;
-  background-color: variables.$input-bg;
+  color: semantic-tokens.$element-text-primary;
+  background-color: semantic-tokens.$element-base-1;
   background-clip: padding-box;
   border: variables.$input-border-width solid var(--border-color);
   border-radius: variables.$input-border-radius;
@@ -48,26 +48,33 @@
 
   &:is(:focus, :hover) {
     --border-color: #{semantic-tokens.$element-ui-1};
+    background-color: semantic-tokens.$element-base-input-experimental;
   }
 
   &:is(.readonly, [readonly]) {
     &,
     &:is(:hover, :focus) {
       --border-color: #{semantic-tokens.$element-ui-4};
-      background-color: variables.$input-bg;
+      background-color: transparent;
+      color: semantic-tokens.$element-text-primary;
     }
   }
 
   &:is(.disabled, :disabled) {
     &,
     &:is(:hover, :focus) {
-      --border-color: #{semantic-tokens.$element-ui-3};
+      --border-color: #{semantic-tokens.$element-ui-4};
+      background-color: transparent;
       color: semantic-tokens.$element-text-disabled;
     }
 
     &::placeholder {
       color: variables.$input-placeholder-disabled-color;
     }
+  }
+
+  &:not(:placeholder-shown):not(:focus):not(.readonly):not([readonly]) {
+    color: semantic-tokens.$element-text-secondary;
   }
 
   &:is(:disabled, [readonly]) {

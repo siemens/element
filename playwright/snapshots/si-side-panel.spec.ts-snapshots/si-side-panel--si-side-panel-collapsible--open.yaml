@@ -6,6 +6,7 @@
 - button "Enter fullscreen"
 - button "Toggle"
 - button "Out of Service"
+- button "•" [disabled]
 - button "Event source active, ack"
 - textbox "Search..."
 - button "Properties 5" [expanded]

@@ -42,19 +42,19 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
 %form-check-base {
   position: relative;
   appearance: none;
-  background-color: semantic-tokens.$element-ui-5;
+  background-color: semantic-tokens.$element-base-1;
   border: 1px solid semantic-tokens.$element-ui-1;
   flex-shrink: 0;
   float: inline-start;
 
   &:is(:hover, .hover) {
-    border-color: semantic-tokens.$element-action-secondary-border-hover;
-    background: semantic-tokens.$element-action-secondary-hover;
+    border-color: semantic-tokens.$element-ui-1;
+    background: semantic-tokens.$element-base-1-hover;
   }
 
   &:is(:active, .active) {
     border-color: semantic-tokens.$element-action-primary-active;
-    background: semantic-tokens.$element-action-secondary-active;
+    background: semantic-tokens.$element-action-primary-active;
   }
 
   &:is([disabled], .disabled) {
@@ -107,6 +107,7 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
   }
 
   &:indeterminate {
+    background-color: semantic-tokens.$element-base-1;
     border-color: semantic-tokens.$element-action-primary;
 
     &::after {
@@ -156,16 +157,18 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
 
   &:checked {
     border-color: semantic-tokens.$element-action-primary;
+    background-color: semantic-tokens.$element-action-primary;
 
     &::after {
-      background-color: semantic-tokens.$element-action-primary;
+      background-color: semantic-tokens.$element-action-primary-text;
     }
 
     &:hover {
+      background-color: semantic-tokens.$element-action-primary-hover;
       border-color: semantic-tokens.$element-action-primary-hover;
 
       &::after {
-        background-color: semantic-tokens.$element-action-primary-hover;
+        background-color: semantic-tokens.$element-action-primary-text;
       }
     }
 
@@ -173,7 +176,7 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
       border-color: semantic-tokens.$element-action-primary-active;
 
       &::after {
-        background-color: semantic-tokens.$element-action-primary-active;
+        background-color: semantic-tokens.$element-action-primary-text;
       }
     }
 
