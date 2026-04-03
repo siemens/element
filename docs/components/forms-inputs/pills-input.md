@@ -29,7 +29,7 @@ Existing pills can be deleted as needed.
 
 ![Pills input elements](images/pills-input-element.png)
 
-> 1. Label (optional), 2. Pills, 3. Container, 4. Message (optional)
+> 1. Label (optional), 2. Pills, 3. Container, 4. Feedback text (optional)
 
 ### Interaction states
 

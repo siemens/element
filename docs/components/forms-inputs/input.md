@@ -37,7 +37,7 @@ It supports different types of input formats like **text**, **number**, **passwo
 
 ![Input specification](images/input-usage-construction.png)
 
-> 1. Label (optional), 2. Content / Placeholder text, 3. Container, 4. Icons (optional), 5. Message (optional)
+> 1. Label (optional), 2. Content / Placeholder text, 3. Container, 4. Icons (optional), 5. Helper text (optional)
 
 ### Label (optional)
 
