@@ -22,7 +22,7 @@ use a [single-line field](../forms-inputs/input.md) instead.
 
 ![Text area elements](images/text-area-elements.png)
 
-> 1. Label (optional), 2. Content/Placeholder text, 3. Container, 4. Icon (optional), 5. Message (optional), 6. Resizer (optional)
+> 1\. Label (optional), 2. Content/Placeholder text, 3. Container, 4. Icon (optional), 5. Helper text (optional), 6. Resizer (optional)
 
 ### Interaction states
 
