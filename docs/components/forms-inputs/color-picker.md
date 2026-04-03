@@ -29,7 +29,7 @@ The specific colors and the number of swatches can be adjusted according to the 
 
 ![Color picker elements](images/color-picker-elements.png)
 
-> 1. Color input, 2. Container, 3. Color swatch
+> 1\. Color input, 2. Container, 3. Color swatch
 
 ### Interaction states
 

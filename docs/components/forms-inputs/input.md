@@ -37,7 +37,7 @@ It supports different types of input formats like **text**, **number**, **passwo
 
 ![Input specification](images/input-usage-construction.png)
 
-> 1. Label (optional), 2. Content / Placeholder text, 3. Container, 4. Icons (optional), 5. Message (optional)
+> 1. Label (optional), 2. Content / Placeholder text, 3. Container, 4. Icons (optional), 5. Helper text (optional)
 
 ### Label (optional)
 
@@ -83,7 +83,7 @@ It gives the user immediate feedback about the current password strength and ins
 
 ![Input password construction](images/input-password-construction.png)
 
-> 1. Instructions, 2. Strength indicator, 3. Show/Hide - control (Optional)
+> 1\. Instructions, 2. Strength indicator, 3. Show/Hide - control (Optional)
 
 Give the user clear **instructions** about how to meet the password requirements
 like:
