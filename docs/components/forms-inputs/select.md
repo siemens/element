@@ -37,7 +37,7 @@ mentioned capabilities are necessary.
 
 ![Select input](images/select-input-elements.png)
 
-> 1.Label (optional), 2. Content/placeholder text, 3. Container, 4. Arrow
+> 1\.Label (optional), 2. Content/placeholder text, 3. Container, 4. Arrow
 
 ### Advanced select
 
