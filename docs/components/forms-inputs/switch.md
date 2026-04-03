@@ -25,7 +25,7 @@ A switch consists of the following elements:
 
 ![Construction](images/switch-usage-construction.png)
 
-> 1. Background, 2. Switch element
+> 1\. Background, 2. Switch element
 
 ### Background
 

@@ -25,7 +25,7 @@ a text input field.
 
 ![Phone number input - Elements](images/phone-input-elements.png)
 
-> Label (optional) 2. Content/placeholder text, 3. Container, 4. Menu, 5. Country code with flag.
+> 1\. Label (optional) 2. Content/placeholder text, 3. Container, 4. Menu, 5. Country code with flag.
 
 #### Label (optional)
 
