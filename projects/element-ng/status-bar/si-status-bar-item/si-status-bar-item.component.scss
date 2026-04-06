@@ -45,6 +45,7 @@ $colorbar-width: map.get(variables.$spacers, 2);
 
 .status-item {
   position: relative;
+  isolation: isolate;
   padding-block: $item-padding;
   padding-inline: $item-padding-small $item-padding;
   min-inline-size: $item-min-width;
@@ -59,6 +60,7 @@ $colorbar-width: map.get(variables.$spacers, 2);
 .bg {
   position: absolute;
   inset: 0;
+  z-index: -1;
   border-radius: variables.$element-radius-2;
   pointer-events: none;
 }
