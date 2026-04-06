@@ -1,13 +1,6 @@
 @use '@siemens/element-theme/src/styles/variables';
 @use 'sass:map';
 
-:host-context(.disabled) {
-  input,
-  ::placeholder {
-    color: variables.$element-text-disabled;
-  }
-}
-
 .pill {
   background: var(--filter-pill-background-color);
 }
