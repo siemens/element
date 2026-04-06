@@ -28,12 +28,6 @@ input {
     opacity: 1;
   }
 
-  &:disabled {
-    &::placeholder {
-      color: all-variables.$input-placeholder-disabled-color;
-    }
-  }
-
   &,
   &:focus {
     &:not([readonly]):focus::placeholder {
