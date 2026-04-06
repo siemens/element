@@ -9,11 +9,6 @@ input {
     opacity: 1;
   }
 
-  &:disabled,
-  &:disabled ::placeholder {
-    color: variables.$element-text-disabled;
-  }
-
   :host-context(si-filtered-search-value + :host) &::placeholder {
     color: transparent;
   }
