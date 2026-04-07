@@ -128,6 +128,7 @@ const example = "code block";
     expect(innerHTML).toContain('<code>code</code>');
     const codeWrapper = markdownDiv.querySelector('.code-wrapper')!;
     expect(codeWrapper).toBeTruthy();
+    expect(codeWrapper.querySelector('button.copy-code-btn')).toBeTruthy();
     const preElement = codeWrapper.querySelector('pre')!;
     expect(preElement).toBeTruthy();
     expect(preElement.querySelector('code')).toBeTruthy();
