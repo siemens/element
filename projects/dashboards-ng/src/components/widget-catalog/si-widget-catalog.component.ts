@@ -105,7 +105,9 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
   protected filteredWidgetCatalog: Widget[] = [];
   protected readonly selected = signal<Widget | undefined>(undefined);
   private widgetConfig?: Omit<WidgetConfig, 'id'>;
-  private readonly hasEditor = signal<boolean>(false);
+  private readonly hasEditor = computed(
+    () => !!this.selected()?.componentFactory.editorComponentName
+  );
 
   protected labelCancel = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.CANCEL:Cancel`);
   protected labelPrevious = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.PREVIOUS:Previous`);
@@ -367,11 +369,6 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
 
   protected selectWidget(widget?: Widget): void {
     this.selected.set(widget);
-    if (widget?.componentFactory?.editorComponentName) {
-      this.hasEditor.set(true);
-    } else {
-      this.hasEditor.set(false);
-    }
     if (widget) {
       // need to keep this in setTimeout to avoid ExpressionChangedAfterItHasBeenCheckedError
       setTimeout(() => {
