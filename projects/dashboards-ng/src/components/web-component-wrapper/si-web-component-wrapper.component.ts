@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { AfterViewInit, Component, EventEmitter, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, OnDestroy } from '@angular/core';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -12,7 +12,8 @@ import { SiWebComponentWrapperBaseComponent } from './si-web-component-wrapper-b
 
 @Component({
   selector: 'si-web-component-wrapper',
-  templateUrl: './si-web-component-wrapper.component.html'
+  templateUrl: './si-web-component-wrapper.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiWebComponentWrapperComponent
   extends SiWebComponentWrapperBaseComponent<WidgetInstance>

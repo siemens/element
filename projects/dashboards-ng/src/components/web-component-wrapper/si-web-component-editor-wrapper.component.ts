@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import {
@@ -16,7 +16,8 @@ import { SiWebComponentWrapperBaseComponent } from './si-web-component-wrapper-b
 
 @Component({
   selector: 'si-web-component-editor-wrapper',
-  templateUrl: './si-web-component-wrapper.component.html'
+  templateUrl: './si-web-component-wrapper.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiWebComponentEditorWrapperComponent
   extends SiWebComponentWrapperBaseComponent<WidgetInstanceEditor>

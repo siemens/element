@@ -4,6 +4,7 @@
  */
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   ComponentRef,
   DestroyRef,
@@ -40,6 +41,7 @@ import { setupWidgetInstance } from '../../widget-loader';
   imports: [SiDashboardCardComponent, AsyncPipe, NgTemplateOutlet],
   templateUrl: './si-widget-host.component.html',
   styleUrl: './si-widget-host.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'grid-stack-item'
   }

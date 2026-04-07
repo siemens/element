@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ChangeDetectionStrategy,
   Component,
   ComponentRef,
   computed,
@@ -39,7 +40,8 @@ export interface GridWrapperEvent {
 @Component({
   selector: 'si-gridstack-wrapper',
   templateUrl: './si-gridstack-wrapper.component.html',
-  styleUrl: './si-gridstack-wrapper.component.scss'
+  styleUrl: './si-gridstack-wrapper.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiGridstackWrapperComponent implements OnInit, OnChanges {
   /**

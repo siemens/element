@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, inject, input, model, output, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, model, output, viewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-bar';
@@ -32,6 +32,7 @@ import { SiGridComponent } from '../grid/si-grid.component';
     SiTranslatePipe
   ],
   templateUrl: './si-dashboard-toolbar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'd-flex flex-column flex-grow-1'
   }
