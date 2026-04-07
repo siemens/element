@@ -2,52 +2,49 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable, Subject } from 'rxjs';
 
+import { SI_TOAST_TOKEN } from '../si-toast-token.model';
 import { SiToast } from '../si-toast.model';
 import { SiToastNotificationDrawerComponent } from './si-toast-notification-drawer.component';
 
-@Component({
-  imports: [SiToastNotificationDrawerComponent],
-  template: `<si-toast-notification-drawer [toasts]="toasts()" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class TestHostComponent {
-  readonly toasts = signal<Observable<SiToast[]>>(new Subject<SiToast[]>());
-}
 describe('SiToastNotificationDrawerComponent', () => {
-  let component: TestHostComponent;
-  let fixture: ComponentFixture<TestHostComponent>;
+  let toasts: WritableSignal<SiToast[]>;
+  let fixture: ComponentFixture<SiToastNotificationDrawerComponent>;
   let element: HTMLElement;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
+    toasts = signal([]);
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: SI_TOAST_TOKEN,
+          useValue: {
+            toasts,
+            pause: () => {},
+            resume: () => {}
+          }
+        }
+      ]
+    });
+    fixture = TestBed.createComponent(SiToastNotificationDrawerComponent);
     element = fixture.nativeElement;
   });
 
-  it('should create', async () => {
-    await fixture.whenStable();
-    expect(component).toBeTruthy();
-  });
-
   it('renders toasts', async () => {
-    const toastSubject = new Subject<SiToast[]>();
-    component.toasts.set(toastSubject);
     fixture.detectChanges();
 
-    toastSubject.next([
-      { state: 'danger', title: 'danger toast', message: 'danger message', hidden: new Subject() },
-      { state: 'info', title: 'info toast', message: 'info message', hidden: new Subject() }
+    toasts.set([
+      { state: 'danger', title: 'danger toast', message: 'danger message' },
+      { state: 'info', title: 'info toast', message: 'info message' }
     ]);
 
     await fixture.whenStable();
 
-    const toasts = element.querySelectorAll('si-toast-notification');
-    expect(toasts.length).toBe(2);
-    expect(toasts[0]).toHaveTextContent('danger message');
-    expect(toasts[1]).toHaveTextContent('info message');
+    const domToasts = element.querySelectorAll('si-toast-notification');
+    expect(domToasts.length).toBe(2);
+    expect(domToasts[0]).toHaveTextContent('danger message');
+    expect(domToasts[1]).toHaveTextContent('info message');
   });
 });
