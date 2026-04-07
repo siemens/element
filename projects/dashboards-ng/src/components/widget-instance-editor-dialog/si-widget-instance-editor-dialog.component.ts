@@ -155,23 +155,17 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
         this.widgetInstanceEditor.statusChangesHandler = this.handleStatusChanges.bind(this);
       }
 
-      let hasStatusChangesEmitter = false;
       if (this.widgetInstanceEditor.statusChanges) {
-        hasStatusChangesEmitter = true;
         this.subscriptions.push(
-          this.widgetInstanceEditor.statusChanges.subscribe(statusChanges => {
-            this.handleStatusChanges(statusChanges);
-          }) as Subscription
+          this.widgetInstanceEditor.statusChanges.subscribe(statusChanges =>
+            this.handleStatusChanges(statusChanges)
+          ) as Subscription
         );
-      }
-
-      if (this.widgetInstanceEditor.configChange) {
+      } else if (this.widgetInstanceEditor.configChange) {
         this.subscriptions.push(
-          this.widgetInstanceEditor.configChange.subscribe(config => {
-            if (!hasStatusChangesEmitter) {
-              this.widgetConfigModified.set(true);
-            }
-          }) as Subscription
+          this.widgetInstanceEditor.configChange.subscribe(() =>
+            this.widgetConfigModified.set(true)
+          ) as Subscription
         );
       }
       if (this.isEditorWizard(this.widgetInstanceEditor)) {
