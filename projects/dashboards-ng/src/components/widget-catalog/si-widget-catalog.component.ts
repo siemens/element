@@ -338,9 +338,7 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
   }
 
   private setupCatalog(): void {
-    if (this.editorHost().length > 0) {
-      this.editorHost().remove(0);
-    }
+    this.editorHost().clear();
     this.tearDownEditor();
     this.widgetConfig = undefined;
     this.view.set('list');
