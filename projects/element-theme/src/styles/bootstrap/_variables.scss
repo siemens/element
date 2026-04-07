@@ -519,9 +519,9 @@ $popover-arrow-outer-color: $popover-border-color !default;
 $badge-font-size: typography.$si-font-size-body;
 $badge-font-weight: typography.$si-font-weight-body;
 $badge-color: semantic-tokens.$element-text-inverse !default;
-$badge-padding-y: 0;
+$badge-padding-y: map.get(spacers.$spacers, 1);
 $badge-padding-x: map.get(spacers.$spacers, 4);
-$badge-border-radius: map.get(spacers.$spacers, 5);
+$badge-border-radius: 0.75rem;
 
 // Modals
 
