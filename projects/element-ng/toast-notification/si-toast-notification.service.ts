@@ -5,26 +5,39 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { isPlatformBrowser } from '@angular/common';
-import { ComponentRef, inject, Injectable, Injector, OnDestroy, PLATFORM_ID } from '@angular/core';
+import {
+  ComponentRef,
+  inject,
+  Injectable,
+  Injector,
+  OnDestroy,
+  PLATFORM_ID,
+  Provider,
+  signal
+} from '@angular/core';
 import { isRTL, StatusType } from '@siemens/element-ng/common';
 import { Link } from '@siemens/element-ng/link';
 import { SiNoTranslateService, SiTranslateService } from '@siemens/element-translate-ng/translate';
-import { ReplaySubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { SiToastNotificationDrawerComponent } from './si-toast-notification-drawer/si-toast-notification-drawer.component';
+import { SI_TOAST_TOKEN, ToastToken } from './si-toast-token.model';
 import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from './si-toast.model';
 
 @Injectable({ providedIn: 'root' })
 export class SiToastNotificationService implements OnDestroy {
-  /**
-   * List of currently active toasts to see details or close them.
-   *
-   * @defaultValue []
-   */
-  activeToasts: SiToast[] = [];
+  private readonly activeToastsSignal = signal<SiToast[]>([]);
 
-  private activeToastsSubject = new ReplaySubject<SiToast[]>(1);
-  private queuedToastSubject = new Subject<SiToast>();
+  /** List of currently active toasts to see details or close them.  */
+  get activeToasts(): SiToast[] {
+    return this.activeToastsSignal();
+  }
+
+  private token: ToastToken = {
+    toasts: this.activeToastsSignal,
+    pause: toast => this.pauseToastNotification(toast),
+    resume: toast => this.resumeToastNotification(toast)
+  };
   private readonly maxToasts = 3;
 
   private componentRef?: ComponentRef<SiToastNotificationDrawerComponent>;
@@ -39,26 +52,7 @@ export class SiToastNotificationService implements OnDestroy {
   >();
 
   constructor() {
-    const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-    this.queuedToastSubject.subscribe((toast: SiToast) => {
-      this.activeToasts.push(toast);
-      if (this.activeToasts.length > this.maxToasts) {
-        this.hideToastNotification(this.activeToasts[0]);
-      }
-      this.activeToastsSubject.next(this.activeToasts);
-      if (!toast.disableAutoClose && toast.timeout) {
-        this.toastTimerDefaults.set(toast, {
-          pendingTimeout: toast.timeout,
-          initializeTime: Date.now()
-        });
-        this.toastTimeoutMap.set(
-          toast,
-          setTimeout(() => this.hideToastNotification(toast), toast.timeout)
-        );
-      }
-    });
-
-    if (isBrowser) {
+    if (isPlatformBrowser(inject(PLATFORM_ID))) {
       this.addToastDrawer();
     }
   }
@@ -102,7 +96,23 @@ export class SiToastNotificationService implements OnDestroy {
     toast.timeout ??= SI_TOAST_AUTO_HIDE_DELAY;
     toast.hidden ??= new Subject();
     toast.close = () => this.hideToastNotification(toast);
-    this.queuedToastSubject.next(toast);
+
+    const toasts = this.activeToastsSignal().concat(toast);
+    this.activeToastsSignal.set(toasts);
+    if (toasts.length > this.maxToasts) {
+      this.hideToastNotification(toasts[0]);
+    }
+    if (!toast.disableAutoClose && toast.timeout) {
+      this.toastTimerDefaults.set(toast, {
+        pendingTimeout: toast.timeout,
+        initializeTime: Date.now()
+      });
+      this.toastTimeoutMap.set(
+        toast,
+        setTimeout(() => this.hideToastNotification(toast), toast.timeout)
+      );
+    }
+
     return toast;
   }
 
@@ -113,7 +123,7 @@ export class SiToastNotificationService implements OnDestroy {
   hideToastNotification(toast?: SiToast): void {
     const hiddenToasts: SiToast[] = [];
     const activeToasts: SiToast[] = [];
-    this.activeToasts.forEach(item => {
+    this.activeToastsSignal().forEach(item => {
       if (!toast || item === toast) {
         hiddenToasts.push(item);
       } else {
@@ -121,8 +131,7 @@ export class SiToastNotificationService implements OnDestroy {
       }
     });
 
-    this.activeToasts = activeToasts;
-    this.activeToastsSubject.next(this.activeToasts);
+    this.activeToastsSignal.set(activeToasts);
 
     hiddenToasts.forEach(item => {
       item.hidden?.next();
@@ -148,7 +157,7 @@ export class SiToastNotificationService implements OnDestroy {
       this.toastTimeoutMap.set(
         toast,
         setTimeout(() => {
-          this.hideToastNotification(this.activeToasts.find(t => t === toast));
+          this.hideToastNotification(toast);
         }, this.toastTimerDefaults.get(toast)!.pendingTimeout)
       );
     }
@@ -164,25 +173,15 @@ export class SiToastNotificationService implements OnDestroy {
       this.buildInjector()
     );
     this.componentRef = this.overlayRef.attach(portal);
-    this.componentRef.setInput('toasts', this.activeToastsSubject);
-    this.componentRef.instance.paused.subscribe(toast => {
-      this.pauseToastNotification(toast);
-    });
-    this.componentRef.instance.resumed.subscribe(toast => {
-      this.resumeToastNotification(toast);
-    });
   }
 
-  // TODO remove once translation must be defined at application start
-  // Notification service is provided in 'root'. If no translation is defined, SiNoTranslateService is not provided
   private buildInjector(): Injector {
-    let injector = this.injector;
-    if (!injector.get(SiTranslateService, null)) {
-      injector = Injector.create({
-        providers: [{ provide: SiTranslateService, useClass: SiNoTranslateService, deps: [] }],
-        parent: this.injector
-      });
+    const providers: Provider[] = [{ provide: SI_TOAST_TOKEN, useValue: this.token }];
+    if (!this.injector.get(SiTranslateService, null)) {
+      // TODO remove once translation must be defined at application start
+      // Notification service is provided in 'root'. If no translation is defined, SiNoTranslateService is not provided
+      providers.push({ provide: SiTranslateService, useClass: SiNoTranslateService, deps: [] });
     }
-    return injector;
+    return Injector.create({ providers, parent: this.injector });
   }
 }
