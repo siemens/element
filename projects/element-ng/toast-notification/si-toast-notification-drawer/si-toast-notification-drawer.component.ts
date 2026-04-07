@@ -2,17 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { areAnimationsDisabled } from '@siemens/element-ng/common';
-import { Observable } from 'rxjs';
 
 import { SiToastNotificationComponent } from '../si-toast-notification/si-toast-notification.component';
-import { SiToast } from '../si-toast.model';
+import { SI_TOAST_TOKEN } from '../si-toast-token.model';
 
 @Component({
   selector: 'si-toast-notification-drawer',
-  imports: [AsyncPipe, SiToastNotificationComponent],
+  imports: [SiToastNotificationComponent],
   templateUrl: './si-toast-notification-drawer.component.html',
   styleUrl: './si-toast-notification-drawer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,9 +20,6 @@ import { SiToast } from '../si-toast.model';
   }
 })
 export class SiToastNotificationDrawerComponent {
-  readonly toasts = input<Observable<SiToast[]>>();
-  readonly paused = output<SiToast>();
-  readonly resumed = output<SiToast>();
-
+  protected readonly token = inject(SI_TOAST_TOKEN);
   protected animationsDisabled = areAnimationsDisabled();
 }
