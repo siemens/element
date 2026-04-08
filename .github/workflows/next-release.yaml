@@ -7,7 +7,7 @@ jobs:
   update-next:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: next # IMPORTANT! We ignore the actual branch. Enforcing the next branch for next releases.
           fetch-depth: 0 # semantic-release needs this
@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Dispatch release workflow on updated next
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         with:
           # We must use the rest actions.
           # Otherwise, the workflow will not run on the updated ref.
