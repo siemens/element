@@ -22,7 +22,7 @@ import { SiTooltipService, TooltipRef } from './si-tooltip.service';
   selector: '[siTooltip]',
   providers: [SiTooltipService],
   host: {
-    '[attr.aria-describedby]': 'describedBy',
+    '[attr.aria-describedby]': 'isDisabled() ? null : describedBy',
     '(focus)': 'focusIn($event)',
     '(mouseenter)': 'show()',
     '(touchstart)': 'hide()',
