@@ -11,7 +11,8 @@
             showEditButtonLabelDesktop ? 'btn-secondary' : 'btn-icon btn-tertiary element-edit'
           "
           [attr.aria-label]="labelEdit | translate"
-          [attr.title]="!showEditButtonLabelDesktop ? (labelEdit | translate) : undefined"
+          [siTooltip]="labelEdit"
+          [isDisabled]="showEditButtonLabelDesktop"
           [disabled]="disabled()"
           (click)="onEdit()"
         >
