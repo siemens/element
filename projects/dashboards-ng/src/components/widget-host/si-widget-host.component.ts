@@ -30,6 +30,7 @@ import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-
 import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { t } from '@siemens/element-translate-ng/translate';
+import { tap } from 'rxjs';
 
 import { WidgetConfig, WidgetConfigEvent, WidgetInstance } from '../../model/widgets.model';
 import { SiGridService } from '../../services/si-grid.service';
@@ -86,7 +87,9 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   secondaryActions: (MenuItemLegacy | MenuItem)[] = [];
   /** @defaultValue 'expanded' */
   actionBarViewType: ViewType = 'expanded';
-  editable$ = this.gridService.editable$;
+  protected editable$ = this.gridService.editable$.pipe(
+    tap(editable => this.setupEditable(editable))
+  );
 
   /** @defaultValue [] */
   editablePrimaryActions: (MenuItemLegacy | ContentActionBarMainItem)[] = [];
@@ -152,9 +155,6 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.attachWidgetInstance();
-    this.editable$
-      .pipe<boolean>(takeUntilDestroyed(this.destroyRef))
-      .subscribe(editable => this.setupEditable(editable));
   }
 
   private attachWidgetInstance(): void {
@@ -176,7 +176,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
             this.widgetInstance.configChange
               .pipe(takeUntilDestroyed(this.destroyRef))
               .subscribe(event =>
-                setTimeout(() => this.setupEditable(this.editable$.value, event))
+                setTimeout(() => this.setupEditable(this.gridService.editable$.value, event))
               );
           }
           if (isSignal(this.widgetInstance.config)) {
