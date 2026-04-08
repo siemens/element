@@ -6,7 +6,8 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, ElementRef, inject, Injectable, Injector } from '@angular/core';
 import { getOverlay, getPositionStrategy, positions } from '@siemens/element-ng/common';
-import { Subscription } from 'rxjs';
+import { fromEvent, Subject, Subscription, timer } from 'rxjs';
+import { delayWhen, takeUntil } from 'rxjs/operators';
 
 import { TooltipComponent } from './si-tooltip.component';
 import { SI_TOOLTIP_CONFIG, SiTooltipContent } from './si-tooltip.model';
@@ -18,15 +19,64 @@ import { SI_TOOLTIP_CONFIG, SiTooltipContent } from './si-tooltip.model';
  * @internal
  */
 class TooltipRef {
+  private readonly destroy$ = new Subject<void>();
+  private isFocused = false;
+  private isHovered = false;
+
   constructor(
     private overlayRef: OverlayRef,
     private element: ElementRef,
     private injector?: Injector
-  ) {}
+  ) {
+    const nativeElement = this.element.nativeElement;
 
-  private subscription?: Subscription;
+    fromEvent(nativeElement, 'focus')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(event => this.onFocus(event));
 
-  show(): void {
+    fromEvent(nativeElement, 'mouseenter')
+      .pipe(
+        takeUntil(this.destroy$),
+        delayWhen(() => timer(500).pipe(takeUntil(fromEvent(nativeElement, 'mouseleave'))))
+      )
+      .subscribe(() => this.onMouseEnter());
+
+    fromEvent(nativeElement, 'focusout')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.onFocusOut());
+
+    fromEvent(nativeElement, 'mouseleave')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.onMouseLeave());
+  }
+
+  private positionSubscription?: Subscription;
+
+  private onFocus(event: unknown): void {
+    if (event instanceof FocusEvent && event.target instanceof Element) {
+      if ((event.target as Element).matches(':focus-visible')) {
+        this.isFocused = true;
+        this.show();
+      }
+    }
+  }
+
+  private onFocusOut(): void {
+    this.isFocused = false;
+    this.hide();
+  }
+
+  private onMouseEnter(): void {
+    this.isHovered = true;
+    this.show();
+  }
+
+  private onMouseLeave(): void {
+    this.isHovered = false;
+    this.hide();
+  }
+
+  private show(): void {
     if (this.overlayRef.hasAttached()) {
       return;
     }
@@ -35,20 +85,25 @@ class TooltipRef {
     const tooltipRef: ComponentRef<TooltipComponent> = this.overlayRef.attach(toolTipPortal);
 
     const positionStrategy = getPositionStrategy(this.overlayRef);
-    this.subscription?.unsubscribe();
-    this.subscription = positionStrategy?.positionChanges.subscribe(change =>
+    this.positionSubscription?.unsubscribe();
+    this.positionSubscription = positionStrategy?.positionChanges.subscribe(change =>
       tooltipRef.instance.updateTooltipPosition(change, this.element)
     );
   }
 
-  hide(): void {
+  private hide(): void {
+    if (this.isFocused || this.isHovered) {
+      return;
+    }
     this.overlayRef.detach();
-    this.subscription?.unsubscribe();
+    this.positionSubscription?.unsubscribe();
   }
 
   destroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
     this.overlayRef.dispose();
-    this.subscription?.unsubscribe();
+    this.positionSubscription?.unsubscribe();
   }
 }
 
