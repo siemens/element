@@ -63,7 +63,7 @@ describe('SiFileUploaderComponent', () => {
     autoUpload = signal(false);
     accept = signal<string | undefined>(undefined);
     uploadTextFileSelect = signal<TranslatableString>('click to upload');
-    uploadDropText = signal<TranslatableString>('Drop files here or');
+    uploadDropText = signal<TranslatableString>('Drop files here or {{uploadTextFileSelect}}');
     clearButtonText = signal<TranslatableString>('Clear');
     uploadButtonText = signal<TranslatableString>('Upload');
     errorTextFileType = signal<TranslatableString>('Incorrect file type selected');
@@ -131,12 +131,14 @@ describe('SiFileUploaderComponent', () => {
 
   it('should pass text messages to drop zone', async () => {
     uploadTextFileSelect.set('browse files');
-    uploadDropText.set('droppi droppi');
+    uploadDropText.set('droppi droppi {{uploadTextFileSelect}}');
     clearButtonText.set('Reset');
     uploadButtonText.set('Do it');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file span')!).toHaveTextContent('browse files');
-    expect(element.querySelector('.drag-and-drop-description')!).toHaveTextContent('droppi droppi');
+    expect(element.querySelector('.select-file')!).toHaveTextContent('browse files');
+    expect(element.querySelector('.drag-and-drop-description')!).toHaveTextContent(
+      'droppi droppi '
+    );
     expect(getClearButton()).toHaveTextContent('Reset');
     expect(getUploadButton()).toHaveTextContent('Do it');
   });
@@ -174,7 +176,7 @@ describe('SiFileUploaderComponent', () => {
   it('should allow one to define accepted mime types', async () => {
     accept.set('image/*');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file input')!).toHaveAttribute(
+    expect(element.querySelector('input[name="file-upload"]')!).toHaveAttribute(
       'accept',
       expect.stringContaining('image/*')
     );

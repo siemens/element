@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { PipeTransform } from '@angular/core';
 import { Provider } from '@angular/core';
+import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 
 // @public (undocumented)
