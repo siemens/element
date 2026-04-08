@@ -151,18 +151,18 @@ jobs:
 
       - name: Update VRTs
         run: |
-          if [ "${{ github.event.inputs.regenerate_all }}" = "true" ]; then
+          if [ "${{ inputs.regenerate_all }}" = "true" ]; then
             echo "Regenerate all flag is set - removing existing snapshots..."
             if [ -d "playwright/snapshots" ]; then
               rm -rf playwright/snapshots
             fi
             mkdir -p playwright/snapshots
             echo "Starting fresh snapshot generation..."
+            npx playwright test --update-snapshots=all
           else
             echo "Updating only changed snapshots..."
+            npx playwright test --update-snapshots=changed
           fi
-
-          npx playwright test --update-snapshots=all
 
           # Verify that snapshots were generated
           if [ ! -d "playwright/snapshots" ] || [ -z "$(ls -A playwright/snapshots 2>/dev/null)" ]; then
