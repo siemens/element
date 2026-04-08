@@ -9,6 +9,7 @@ import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { DashboardToolbarItem } from '../../model/si-dashboard-toolbar.model';
@@ -29,7 +30,8 @@ import { SiGridComponent } from '../grid/si-grid.component';
     SiLoadingButtonComponent,
     RouterLink,
     SiResponsiveContainerDirective,
-    SiTranslatePipe
+    SiTranslatePipe,
+    SiTooltipDirective
   ],
   templateUrl: './si-dashboard-toolbar.component.html',
   host: {
