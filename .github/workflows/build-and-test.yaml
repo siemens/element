@@ -257,7 +257,7 @@ jobs:
         with:
           name: coverage-reports
           path: coverage-reports
-      - uses: aws-actions/configure-aws-credentials@v6.0.0
+      - uses: aws-actions/configure-aws-credentials@ec61189d14ec14c8efccab744f656cffd0e33f37 # v6.1.0
         with:
           role-to-assume: arn:aws:iam::974483672234:role/simpl-element-preview
           role-session-name: element-preview
