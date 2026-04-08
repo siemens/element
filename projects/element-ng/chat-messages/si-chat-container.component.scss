@@ -36,13 +36,16 @@
 
   // Ensure the container can grow to fill available space
   min-block-size: 0;
-  overflow-y: hidden;
+  // Allow scroll on very small screens, but otherwise let the messages container handle it
+  overflow-y: auto;
   overflow-x: visible;
 }
 
 .messages-container {
   overflow-y: auto;
   overflow-x: visible;
+  // Ensure the messages can still be seen on very short screens
+  min-block-size: 5rem;
   gap: map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4);
 
   // Padding is included here, cancel out the gap on the messages container
