@@ -21,15 +21,15 @@ jobs:
       new_release: ${{ steps.check_release.outputs.new_release }}
       release_tag: ${{ steps.check_release.outputs.release_tag }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0 # semantic-release needs this
           token: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }} # Otherwise, branch protection rules are not bypassed.
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: lts/krypton
           cache: 'npm'
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: dist
           path: dist
@@ -81,10 +81,10 @@ jobs:
       VERSIONED_BUCKET_NAME: simpl-element-release
       CLOUDFRONT_DOMAIN: d2uqfzn4lxgtwv.cloudfront.net
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: pages
           path: pages
