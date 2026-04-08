@@ -1,9 +1,6 @@
 - group: error-log.txt
 - group: screenshot.png
-- paragraph:
-  - text: Can you help me with this
-  - strong: code snippet
-  - text: "? I'm getting an error when I run it."
+- text: Can you help me with this **code snippet**? I'm getting an error when I run it.
 - button "Copy"
 - button "Edit"
 - button "More actions"

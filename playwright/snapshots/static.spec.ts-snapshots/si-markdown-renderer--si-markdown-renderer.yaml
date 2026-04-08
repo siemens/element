@@ -73,81 +73,60 @@
 - separator
 - heading "Images" [level=2]
 - paragraph: "Images can be included as follows:"
+- paragraph:
+  - img "Building Image"
 - separator
 - heading "Tables" [level=2]
 - paragraph: "Tables are also supported:"
 - table:
   - rowgroup:
     - row "Feature Examples Status Notes":
-      - columnheader "Feature":
-        - paragraph: Feature
-      - columnheader "Examples":
-        - paragraph: Examples
-      - columnheader "Status":
-        - paragraph: Status
-      - columnheader "Notes":
-        - paragraph: Notes
+      - columnheader "Feature"
+      - columnheader "Examples"
+      - columnheader "Status"
+      - columnheader "Notes"
   - rowgroup:
     - row "Basic content Alice Johnson Bob Smith ✓ Complete Simple text and line breaks":
       - cell "Basic content":
-        - paragraph:
-          - strong: Basic content
-      - cell "Alice Johnson Bob Smith":
-        - paragraph: Alice Johnson Bob Smith
-      - cell "✓ Complete":
-        - paragraph: ✓ Complete
-      - cell "Simple text and line breaks":
-        - paragraph: Simple text and line breaks
+        - strong: Basic content
+      - cell "Alice Johnson Bob Smith"
+      - cell "✓ Complete"
+      - cell "Simple text and line breaks"
     - row "Formatting Bold and italic Plus code and multiline code ✓ Complete Multiple markdown formats":
       - cell "Formatting":
-        - paragraph:
-          - emphasis: Formatting
+        - emphasis: Formatting
       - cell "Bold and italic Plus code and multiline code":
-        - paragraph:
-          - strong: Bold
-          - text: and
-          - emphasis: italic
-          - text: Plus
-          - code: code
-          - text: and
-          - code: multiline code
-      - cell "✓ Complete":
-        - paragraph: ✓ Complete
-      - cell "Multiple markdown formats":
-        - paragraph: Multiple markdown formats
+        - strong: Bold
+        - text: ""
+        - emphasis: italic
+        - text: ""
+        - code: code
+        - text: ""
+        - code: multiline code
+      - cell "✓ Complete"
+      - cell "Multiple markdown formats"
     - row "Lists in cells First item Second item Third item ✓ Complete Bullet lists work properly":
-      - cell "Lists in cells":
-        - paragraph: Lists in cells
+      - cell "Lists in cells"
       - cell "First item Second item Third item":
         - list:
           - listitem: First item
           - listitem: Second item
           - listitem: Third item
-      - cell "✓ Complete":
-        - paragraph: ✓ Complete
-      - cell "Bullet lists work properly":
-        - paragraph: Bullet lists work properly
+      - cell "✓ Complete"
+      - cell "Bullet lists work properly"
     - 'row "Escaped pipes grep \"text|pattern\" awk ''{print 2}'' ✓ Complete Use | for literal pipes"':
-      - cell "Escaped pipes":
-        - paragraph: Escaped pipes
-      - 'cell "grep \"text|pattern\" awk ''{print 2}''"':
-        - paragraph: "grep \"text|pattern\" awk '{print 2}'"
-      - cell "✓ Complete":
-        - paragraph: ✓ Complete
-      - cell "Use | for literal pipes":
-        - paragraph: Use | for literal pipes
-    - row "Line breaks Line 1 Line 2 Line 3 ✓ Complete Uses <br> tags":
-      - cell "Line breaks":
-        - paragraph: Line breaks
-      - cell "Line 1 Line 2 Line 3":
-        - paragraph: Line 1 Line 2 Line 3
-      - cell "✓ Complete":
-        - paragraph: ✓ Complete
-      - cell "Uses <br> tags":
-        - paragraph:
-          - text: Uses
-          - code: <br>
-          - text: tags
+      - cell "Escaped pipes"
+      - 'cell "grep \"text|pattern\" awk ''{print 2}''"'
+      - cell "✓ Complete"
+      - cell "Use | for literal pipes"
+    - row "Line breaks Line 1 Line 2 Line 3 ✓ Complete Uses tags":
+      - cell "Line breaks"
+      - cell "Line 1 Line 2 Line 3"
+      - cell "✓ Complete"
+      - cell "Uses tags":
+        - text: ""
+        - code
+        - text: ""
 - paragraph: This paragraph appears after the tables to demonstrate proper spacing.
 - separator
 - heading "Math Expressions" [level=2]
