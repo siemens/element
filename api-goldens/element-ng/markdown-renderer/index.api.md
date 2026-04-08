@@ -5,32 +5,41 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { Extension } from 'micromark-util-types';
+import { HtmlExtension } from 'micromark-util-types';
+import { InjectionToken } from '@angular/core';
+import { Provider } from '@angular/core';
 import { SiTranslateService } from '@siemens/element-translate-ng/translate';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 
 // @public
-export const getMarkdownRenderer: (sanitizer: DomSanitizer, options?: MarkdownRendererOptions, doc?: Document, isBrowser?: boolean) => ((text: string) => Node);
+export const injectMarkdownRenderer: (options?: MarkdownRendererOptions) => MarkdownRenderer;
+
+// @public
+export type MarkdownRenderer = (text: string) => Node;
 
 // @public (undocumented)
 export interface MarkdownRendererOptions {
     copyCodeButton?: TranslatableString;
     downloadTableButton?: TranslatableString;
-    latexRenderer?: (latex: string, displayMode: boolean) => string | undefined;
+    mathExtensions?: {
+        syntax: Extension;
+        html: HtmlExtension;
+    };
     syntaxHighlighter?: (code: string, language?: string) => string | undefined;
     translateSync?: SiTranslateService['translateSync'];
 }
 
 // @public
+export const provideMarkdownRenderer: (options?: MarkdownRendererOptions) => Provider;
+
+// @public
+export const SI_MARKDOWN_RENDERER: InjectionToken<MarkdownRenderer>;
+
+// @public
 export class SiMarkdownRendererComponent {
     constructor();
-    readonly copyButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly disableCopyButton: _angular_core.InputSignal<boolean>;
-    readonly disableDownloadButton: _angular_core.InputSignal<boolean>;
-    readonly downloadButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly latexRenderer: _angular_core.InputSignal<((latex: string, displayMode: boolean) => string | undefined) | undefined>;
-    readonly syntaxHighlighter: _angular_core.InputSignal<((code: string, language?: string) => string | undefined) | undefined>;
+    readonly renderer: _angular_core.InputSignal<MarkdownRenderer | undefined>;
     readonly text: _angular_core.InputSignal<string | undefined>;
 }
 

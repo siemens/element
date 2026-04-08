@@ -2,11 +2,9 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, PLATFORM_ID } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MessageAction, SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
-import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
+import { injectMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { MenuItemAction } from '@siemens/element-ng/menu';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -18,16 +16,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
-  private sanitizer = inject(DomSanitizer);
-  private doc = inject(DOCUMENT);
-  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  protected markdownRenderer = getMarkdownRenderer(
-    this.sanitizer,
-    undefined,
-    this.doc,
-    this.isBrowser
-  );
+  protected markdownRenderer = injectMarkdownRenderer();
 
   content = `Here's a **simple response** with basic formatting.
 

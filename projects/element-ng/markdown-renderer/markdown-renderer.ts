@@ -2,18 +2,34 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { SecurityContext } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { inject, InjectionToken, PLATFORM_ID, Provider, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { type SiTranslateService } from '@siemens/element-translate-ng/translate';
-import { type TranslatableString } from '@siemens/element-translate-ng/translate-types';
-
 import {
-  getCachedOrCreateElement,
-  getCachedOrCreateString,
-  sanitizeHtmlWithStyles
-} from './markdown-renderer-helpers';
+  injectSiTranslateService,
+  t,
+  type SiTranslateService
+} from '@siemens/element-translate-ng/translate';
+import { type TranslatableString } from '@siemens/element-translate-ng/translate-types';
+import { micromark } from 'micromark';
+import {
+  gfmAutolinkLiteral,
+  gfmAutolinkLiteralHtml
+} from 'micromark-extension-gfm-autolink-literal';
+import { gfmStrikethrough, gfmStrikethroughHtml } from 'micromark-extension-gfm-strikethrough';
+import { gfmTable, gfmTableHtml } from 'micromark-extension-gfm-table';
+import type { CompileContext, Extension, HtmlExtension, Token } from 'micromark-util-types';
 
-const CACHE_SIZE = 100;
+// Augment CompileData with custom fields used by our HTML extension
+declare module 'micromark-util-types' {
+  interface CompileData {
+    codeLanguage?: string | undefined;
+    codeContent?: string | undefined;
+    currentTableId?: string | undefined;
+    currentTableIndex?: number | undefined;
+    inParagraph?: boolean | undefined;
+  }
+}
 
 export interface MarkdownRendererOptions {
   /**
@@ -40,684 +56,234 @@ export interface MarkdownRendererOptions {
   translateSync?: SiTranslateService['translateSync'];
 
   /**
-   * Optional LaTeX renderer function.
-   * Receives LaTeX content and display mode, returns rendered HTML or undefined.
+   * Micromark syntax and HTML extensions for math support.
+   * Pass the result of dynamically importing `micromark-extension-math` to enable LaTeX rendering.
+   *
+   * @example
+   * ```typescript
+   * const { math, mathHtml } = await import('micromark-extension-math');
+   * const options = {
+   *   mathExtensions: { syntax: math(), html: mathHtml() }
+   * };
+   * ```
    */
-  latexRenderer?: (latex: string, displayMode: boolean) => string | undefined;
-}
-
-interface ProcessOptions {
-  allowCodeBlocks?: boolean;
-  allowBlockquotes?: boolean;
-  allowTables?: boolean;
-  allowLatex?: boolean;
-  allowInlineCode?: boolean;
-  allowLinks?: boolean;
+  mathExtensions?: {
+    syntax: Extension;
+    html: HtmlExtension;
+  };
 }
 
 /**
  * Returns a function that transforms markdown text into a formatted HTML node.
  *
- * **Important for SSR**: When using this function in an SSR context, you must provide the `doc` and `isBrowser` parameters.
- * Call this within an Angular injection context and pass `inject(DOCUMENT)` and `isPlatformBrowser(inject(PLATFORM_ID))`.
+ * Uses [micromark](https://github.com/micromark/micromark) for CommonMark-compliant parsing
+ * with GFM extensions (tables, autolink literals, strikethrough).
  *
  * @experimental
- * @param sanitizer - Angular DomSanitizer instance
- * @param options - Optional configuration for the markdown renderer
- * @param doc - Document instance (optional for browser-only apps, required for SSR - pass inject(DOCUMENT))
- * @param isBrowser - Whether running in browser (optional for browser-only apps, required for SSR - pass isPlatformBrowser(inject(PLATFORM_ID)))
- * @returns A function taking the markdown text to transform and returning a DOM div element containing the formatted HTML
  */
-export const getMarkdownRenderer = (
+const createMarkdownRenderer = (
   sanitizer: DomSanitizer,
   options?: MarkdownRendererOptions,
   doc?: Document,
   isBrowser?: boolean
 ): ((text: string) => Node) => {
-  // Use provided document or fall back to global document for backwards compatibility
   const docRef = doc ?? document;
+  const isInBrowser = isBrowser ?? true;
 
-  // Persistent caches within this renderer instance
-  const codeBlockCache = new Map<string, HTMLElement>();
-  const tableCache = new Map<string, HTMLElement>();
-  const latexCache = new Map<string, string>();
-  const codeBlockCacheOrder: string[] = [];
-  const tableCacheOrder: string[] = [];
-  const latexCacheOrder: string[] = [];
+  // Build micromark extensions
+  const syntaxExtensions: Extension[] = [gfmTable(), gfmAutolinkLiteral(), gfmStrikethrough()];
+  const htmlExtensions: HtmlExtension[] = [
+    gfmTableHtml(),
+    gfmAutolinkLiteralHtml(),
+    gfmStrikethroughHtml()
+  ];
 
-  // Placeholder maps for cached elements
-  const codeBlockPlaceholderMap = new Map<string, string>();
-  const tablePlaceholderMap = new Map<string, string>();
+  if (options?.mathExtensions) {
+    syntaxExtensions.push(options.mathExtensions.syntax);
+    htmlExtensions.push(options.mathExtensions.html);
+  }
 
-  // Store table data for CSV export
-  const tableCellData = new Map<number, Map<number, Map<number, string>>>();
-  let tableCounter = 0;
+  // Custom HTML extension — placed last so it overrides defaults
+  htmlExtensions.push(createCustomHtmlExtension(options));
 
-  // Placeholder maps for inline elements
-  const inlineLatexPlaceholderMap = new Map<string, string>();
-  const linkPlaceholderMap = new Map<string, { text: string; url: string }>();
-
-  /**
-   * Main recursive processing function
-   */
-  const processMarkdown = (
-    text: string,
-    processOpts: ProcessOptions = {
-      allowCodeBlocks: true,
-      allowBlockquotes: true,
-      allowTables: true,
-      allowLatex: true,
-      allowInlineCode: true,
-      allowLinks: true
-    }
-  ): string => {
+  const preprocessText = (text: string): string => {
     let result = text;
+    result = result.replace(/^[•] /gm, '- ');
+    result = result.replace(/^&#8226; /gm, '- ');
+    result = result.replace(/^\* /gm, '- ');
 
-    // Step 1: Extract and process code blocks (4+ backticks for nested markdown)
-    if (processOpts.allowCodeBlocks) {
-      const codeBlockMap = new Map<string, string>();
-
-      // Match code blocks with 4 or more backticks (for displaying nested code blocks)
-      result = result.replace(
-        /(^|\n)([\s]*)(````+)([^\n]*)\n?([\s\S]*?)\n?\s*\3/gm,
-        (match, prefix, indent, backticks, language, content) => {
-          const placeholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
-          const cacheKey = createCodeBlockCacheKey(language.trim(), content);
-          codeBlockPlaceholderMap.set(placeholder, cacheKey);
-          codeBlockMap.set(placeholder, `<!--CODE-BLOCK-PLACEHOLDER-${placeholder}-->`);
-          return prefix + indent + placeholder;
-        }
-      );
-
-      // Match standard code blocks (3 backticks)
-      // Add temporary closing marker for incomplete code blocks during streaming
-      const tempResult = result + '\n```--TEMP-CLOSE--\n';
-      result = tempResult.replace(
-        /(^|\n)([\s]*)(```)([^\n]*)\n?([\s\S]*?)(?:\n\s*```|```$)/gm,
-        (match, prefix, indent, backticks, language, content) => {
-          // Skip the temp closing marker
-          if (content.includes('--TEMP-CLOSE--')) {
-            return match;
-          }
-          const placeholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
-          const cacheKey = createCodeBlockCacheKey(language.trim(), content);
-          codeBlockPlaceholderMap.set(placeholder, cacheKey);
-          codeBlockMap.set(placeholder, `<!--CODE-BLOCK-PLACEHOLDER-${placeholder}-->`);
-          return prefix + indent + placeholder;
-        }
-      );
-      // Remove temp closing marker
-      result = result.replace(/\n```--TEMP-CLOSE--\n/g, '').replace(/--TEMP-CLOSE--/g, '');
-
-      // Restore code block placeholders
-      codeBlockMap.forEach((html, placeholder) => {
-        result = result.replace(placeholder, html);
-      });
+    if (options?.mathExtensions) {
+      result = result.replace(/\$\$([^\n]+?)\$\$/g, '$$$$\n$1\n$$$$');
     }
-
-    // Step 2: Extract and process blockquotes (can contain code blocks and inline elements)
-    if (processOpts.allowBlockquotes) {
-      const blockquoteMap = new Map<string, string>();
-      const lines = result.split('\n');
-      let i = 0;
-
-      while (i < lines.length) {
-        if (lines[i].match(/^\s*>/)) {
-          const blockquoteLines: string[] = [];
-          while (i < lines.length && lines[i].match(/^\s*>/)) {
-            blockquoteLines.push(lines[i].replace(/^\s*>\s?/, ''));
-            i++;
-          }
-
-          const blockquoteContent = blockquoteLines.join('\n');
-          const processedContent = processMarkdown(blockquoteContent, {
-            ...processOpts,
-            allowBlockquotes: false,
-            allowTables: false
-          });
-
-          const placeholder = `--BLOCKQUOTE-${Math.random().toString(36).substring(2, 15)}--`;
-          blockquoteMap.set(placeholder, `<blockquote>${processedContent}</blockquote>`);
-          lines.splice(i - blockquoteLines.length, blockquoteLines.length, placeholder);
-          i = i - blockquoteLines.length + 1;
-        } else {
-          i++;
-        }
-      }
-
-      result = lines.join('\n');
-
-      blockquoteMap.forEach((html, placeholder) => {
-        result = result.replace(placeholder, html);
-      });
-    }
-
-    // Step 3: Extract and process tables
-    if (processOpts.allowTables) {
-      result = processTables(result);
-    }
-
-    // Step 4: Extract and process display LaTeX (multi-line formulas)
-    if (processOpts.allowLatex) {
-      const latexDisplayMap = new Map<string, string>();
-
-      result = result.replace(/\$\$([\s\S]*?)\$\$/g, (match, latex) => {
-        const placeholder = `--LATEX-DISPLAY-${Math.random().toString(36).substring(2, 15)}--`;
-        const rendered = renderLatex(latex.trim(), true);
-        latexDisplayMap.set(placeholder, rendered);
-        return placeholder;
-      });
-
-      // Restore display LaTeX
-      latexDisplayMap.forEach((html, placeholder) => {
-        result = result.replace(placeholder, html);
-      });
-    }
-
-    // Step 5: Extract and process inline code (must be before inline LaTeX)
-    if (processOpts.allowInlineCode) {
-      const inlineCodeMap = new Map<string, string>();
-
-      result = result.replace(/(?<!\\)(?:\\\\)*`([^`]+)`/g, (match, content) => {
-        const placeholder = `--INLINE-CODE-${Math.random().toString(36).substring(2, 15)}--`;
-        const escaped = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        inlineCodeMap.set(placeholder, `<code>${escaped}</code>`);
-        return placeholder;
-      });
-
-      inlineCodeMap.forEach((html, placeholder) => {
-        result = result.replace(placeholder, html);
-      });
-    }
-
-    // Step 6: Extract and process inline LaTeX (keep as placeholder to protect from line breaks)
-    if (processOpts.allowLatex) {
-      // Escape dollar signs (handle properly with even number of backslashes)
-      result = result.replace(/(?<!\\)(?:\\\\)*\\\$/g, '___ESCAPED_DOLLAR___');
-
-      result = result.replace(/\$([^$\n]+?)\$/g, (match, latex) => {
-        const placeholder = `--LATEX-INLINE-${Math.random().toString(36).substring(2, 15)}--`;
-        inlineLatexPlaceholderMap.set(placeholder, latex.trim());
-        return placeholder;
-      });
-
-      // Restore escaped dollar signs
-      result = result.replace(/___ESCAPED_DOLLAR___/g, '$');
-    }
-
-    // Step 7: Process links (both formats, can contain inline code)
-    if (processOpts.allowLinks) {
-      result = result.replace(/<(https?:\/\/[^\s>]+)>/g, (match, url) => {
-        const sanitizedUrl = sanitizeUrl(url, sanitizer);
-        return `<a href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>`;
-      });
-
-      // Images: ![alt](url)
-      result = result.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, url) => {
-        const sanitizedUrl = sanitizeUrl(url, sanitizer);
-        const escapedAlt = escapeHtml(alt);
-        return `<img src="${sanitizedUrl}" alt="${escapedAlt}">`;
-      });
-
-      // Links: [text](url) - keep as placeholder to protect from line breaks
-      result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, linkText, url) => {
-        const placeholder = `--LINK-${Math.random().toString(36).substring(2, 15)}--`;
-        linkPlaceholderMap.set(placeholder, { text: linkText, url });
-        return placeholder;
-      });
-
-      // Auto-detect URLs
-      result = result.replace(/(?<!["'=(])\b(https?:\/\/[^\s<]+[^\s<.,;!?"')\]])/g, match => {
-        const sanitizedUrl = sanitizeUrl(match, sanitizer);
-        return `<a class="link-text" href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(match)}</a>`;
-      });
-    }
-
-    // Step 8: Process inline formatting only on text segments, not on block elements
-    result = processTextSegments(result, sanitizer);
 
     return result;
   };
 
-  /**
-   * Create cache key for code block
-   */
-  const createCodeBlockCacheKey = (language: string, content: string): string => {
-    return `${language}|||${content}|||${options?.copyCodeButton ?? ''}`;
+  const attachEventListeners = (container: HTMLElement): void => {
+    if (!isInBrowser) {
+      return;
+    }
+
+    container.querySelectorAll('.copy-code-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const button = (e.target as HTMLElement).closest('.copy-code-btn') as HTMLButtonElement;
+        const codeId = button?.getAttribute('data-code-id');
+        if (!codeId) {
+          return;
+        }
+        const codeElement = container.querySelector(`#${codeId}`);
+        if (!codeElement) {
+          return;
+        }
+        navigator.clipboard.writeText(codeElement.textContent ?? '').catch(() => {
+          console.warn('Failed to copy code to clipboard');
+        });
+      });
+    });
+
+    container.querySelectorAll('.download-table-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const button = (e.target as HTMLElement).closest(
+          '.download-table-btn'
+        ) as HTMLButtonElement;
+        const tableId = button?.getAttribute('data-table-id');
+        if (!tableId) {
+          return;
+        }
+        const tableElement = container.querySelector(`#${tableId}`) as HTMLTableElement;
+        if (!tableElement) {
+          return;
+        }
+
+        const csv = Array.from(tableElement.querySelectorAll('tr'))
+          .filter(row =>
+            Array.from(row.querySelectorAll('td, th')).some(
+              cell => (cell.textContent ?? '').trim().length > 0
+            )
+          )
+          .map(row =>
+            Array.from(row.querySelectorAll('td, th'))
+              .map(cell => {
+                const text = cell.textContent ?? '';
+                return text.includes(',') || text.includes('"') || text.includes('\n')
+                  ? `"${text.replace(/"/g, '""')}"`
+                  : t;
+              })
+              .join(',')
+          )
+          .join('\n');
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = docRef.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'table.csv');
+        link.style.visibility = 'hidden';
+        docRef.body.appendChild(link);
+        link.click();
+        docRef.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      });
+    });
   };
 
   /**
-   * Create a code block element (cached)
+   * Post-process the DOM to apply code block wrappers.
+   * Code blocks require DOM manipulation because the wrapper must surround
+   * the <pre> element that micromark emits before we can intervene.
    */
-  const createCodeBlockElement = (language: string, content: string): HTMLElement => {
-    const cacheKey = createCodeBlockCacheKey(language, content);
+  const applyCodeBlockWrappers = (container: HTMLElement): void => {
+    container.querySelectorAll('pre').forEach(pre => {
+      const codeElement = pre.querySelector('code');
+      if (!codeElement) {
+        return;
+      }
 
-    return getCachedOrCreateElement(
-      codeBlockCache,
-      codeBlockCacheOrder,
-      CACHE_SIZE,
-      cacheKey,
-      () => {
-        // Escape HTML for code blocks
-        let displayContent = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const langClass = Array.from(codeElement.classList).find(c => c.startsWith('language-'));
+      const language = langClass?.replace('language-', '') ?? '';
+      const code = codeElement.textContent ?? '';
+      const codeId = `code-${Math.random().toString(36).substring(2, 15)}`;
 
-        // Apply syntax highlighting if available
-        if (options?.syntaxHighlighter && language) {
-          const highlighted = options.syntaxHighlighter(content, language);
-          if (highlighted) {
-            displayContent = highlighted;
-          }
+      codeElement.id = codeId;
+
+      // Apply syntax highlighting
+      if (options?.syntaxHighlighter && language) {
+        const highlighted = options.syntaxHighlighter(code, language);
+        if (highlighted) {
+          codeElement.innerHTML = sanitizer.sanitize(SecurityContext.HTML, highlighted) ?? '';
         }
+      }
 
-        // Sanitize the display content
-        const sanitized = sanitizer.sanitize(SecurityContext.HTML, displayContent) ?? '';
+      // Build copy button
+      let copyButton = '';
+      if (options?.copyCodeButton) {
+        const translatedLabel = options.translateSync
+          ? options.translateSync(options.copyCodeButton)
+          : options.copyCodeButton;
+        const buttonLabel = escapeHtml(translatedLabel);
+        copyButton = `<button type="button" class="btn btn-tertiary btn-sm copy-code-btn" data-code-id="${codeId}" aria-label="${buttonLabel}"><i class="icon element-copy" aria-hidden="true"></i><span class="copy-code-label">${buttonLabel}</span></button>`;
+      }
 
-        const codeId = `code-${Math.random().toString(36).substring(2, 15)}`;
-
-        // Create copy button if enabled
-        let copyButton = '';
-        if (options?.copyCodeButton) {
-          const translatedLabel = options.translateSync
-            ? options.translateSync(options.copyCodeButton)
-            : options.copyCodeButton;
-          const buttonLabel = escapeHtml(translatedLabel);
-          copyButton = `<button type="button" class="btn btn-tertiary btn-sm copy-code-btn" data-code-id="${codeId}" aria-label="${buttonLabel}"><i class="icon element-copy" aria-hidden="true"></i><span class="copy-code-label">${buttonLabel}</span></button>`;
-        }
-
-        const languageLabel = language
-          ? `<span class="code-language">${escapeHtml(language)}</span>`
+      const languageLabel = language
+        ? `<span class="code-language">${escapeHtml(language)}</span>`
+        : '';
+      const headerContent =
+        copyButton || languageLabel
+          ? `<div class="code-header">${languageLabel}${copyButton}</div>`
           : '';
-        const headerContent =
-          copyButton || languageLabel
-            ? `<div class="code-header">${languageLabel}${copyButton}</div>`
-            : '';
-        const wrapperClass = headerContent ? 'code-wrapper has-header' : 'code-wrapper';
-        return `<div class="${wrapperClass}">${headerContent}<pre><code id="${codeId}">${sanitized}</code></pre></div>`;
-      },
-      docRef
-    );
-  };
+      const wrapperClass = headerContent ? 'code-wrapper has-header' : 'code-wrapper';
 
-  /**
-   * Render LaTeX formula
-   */
-  const renderLatex = (latex: string, displayMode: boolean): string => {
-    const cacheKey = `${displayMode ? 'display' : 'inline'}|||${latex}`;
-
-    return getCachedOrCreateString(latexCache, latexCacheOrder, CACHE_SIZE, cacheKey, () => {
-      if (!options?.latexRenderer) {
-        return escapeHtml(displayMode ? `$$${latex}$$` : `$${latex}$`);
-      }
-
-      let rendered: string | undefined;
-      try {
-        rendered = options.latexRenderer(latex, displayMode);
-      } catch {
-        return escapeHtml(displayMode ? `$$${latex}$$` : `$${latex}$`);
-      }
-
-      if (!rendered) {
-        return escapeHtml(displayMode ? `$$${latex}$$` : `$${latex}$`);
-      }
-
-      // Preserve HTML entities through sanitization
-      const withPlaceholders = rendered
-        .replace(/&amp;/g, '<!--AMP-->')
-        .replace(/&lt;/g, '<!--LT-->')
-        .replace(/&gt;/g, '<!--GT-->')
-        .replace(/&quot;/g, '<!--QUOT-->');
-
-      const sanitized = sanitizeHtmlWithStyles(withPlaceholders, sanitizer);
-      if (!sanitized) {
-        return escapeHtml(displayMode ? `$$${latex}$$` : `$${latex}$`);
-      }
-
-      // Restore HTML entities
-      const restored = sanitized
-        .replace(/<!--AMP-->/g, '&amp;')
-        .replace(/<!--LT-->/g, '&lt;')
-        .replace(/<!--GT-->/g, '&gt;')
-        .replace(/<!--QUOT-->/g, '&quot;');
-
-      return displayMode ? `<div class="latex-display-wrapper">${restored}</div>` : restored;
+      // Wrap the <pre> element
+      const wrapper = docRef.createElement('div');
+      wrapper.className = wrapperClass;
+      wrapper.innerHTML = headerContent;
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
     });
   };
 
   /**
-   * Process tables
+   * Post-process table cells:
+   * - Restore &lt;br&gt; to actual <br> elements (escaped by micromark)
+   * - Convert list-like content (- item<br>- item) into proper <ul><li>
    */
-  const processTables = (input: string): string => {
-    const lines = input.split('\n');
-    const tableMap = new Map<string, string>();
-    let i = 0;
+  const processTableCells = (container: HTMLElement): void => {
+    container.querySelectorAll('td, th').forEach(cell => {
+      let html = cell.innerHTML;
 
-    while (i < lines.length) {
-      if (lines[i].match(/^\|.+/)) {
-        const tableLines: string[] = [];
-        let hasSeparator = false;
+      // Restore escaped <br> tags to real <br>
+      html = html.replace(/&lt;br\s*\/?&gt;/gi, '<br>');
+      cell.innerHTML = html;
 
-        while (i < lines.length && lines[i].match(/^\|.+/)) {
-          const line = lines[i];
-          if (line.match(/^\|\s*[-:]+/)) {
-            hasSeparator = true;
-          } else {
-            tableLines.push(line);
-          }
-          i++;
-        }
-
-        if (tableLines.length > 0) {
-          const currentTableIndex = tableCounter++;
-          const placeholder = `--TABLE-${Math.random().toString(36).substring(2, 15)}--`;
-          tablePlaceholderMap.set(
-            placeholder,
-            JSON.stringify({ tableIndex: currentTableIndex, hasSeparator, tableLines })
-          );
-          tableMap.set(placeholder, `<!--TABLE-PLACEHOLDER-${placeholder}-->`);
-
-          // Initialize table data map for CSV export
-          tableCellData.set(currentTableIndex, new Map());
-
-          lines.splice(
-            i - tableLines.length - (hasSeparator ? 1 : 0),
-            tableLines.length + (hasSeparator ? 1 : 0),
-            placeholder
-          );
-          i = i - tableLines.length - (hasSeparator ? 1 : 0) + 1;
-        }
-      } else {
-        i++;
+      // Convert list patterns (- item<br>- item) into <ul><li>
+      html = cell.innerHTML;
+      if (!/(?:^|\n|<br\s*\/?>)- /.test(html)) {
+        return;
       }
-    }
 
-    let result = lines.join('\n');
+      const parts = html.split(/<br\s*\/?>/i);
+      const listItems: string[] = [];
+      const nonListParts: string[] = [];
 
-    tableMap.forEach((html, placeholder) => {
-      result = result.replace(placeholder, html);
-    });
-
-    return result;
-  };
-
-  /**
-   * Create cache key for table
-   */
-  const createTableCacheKey = (
-    tableLines: string[],
-    hasSeparator: boolean,
-    tableIndex: number
-  ): string => {
-    return `${tableLines.join('|||')}|||${hasSeparator}|||${tableIndex}|||${options?.downloadTableButton ?? ''}`;
-  };
-
-  /**
-   * Create table HTML element (cached)
-   */
-  const createTableElement = (
-    tableLines: string[],
-    hasSeparator: boolean,
-    tableIndex: number
-  ): HTMLElement => {
-    const cacheKey = createTableCacheKey(tableLines, hasSeparator, tableIndex);
-
-    return getCachedOrCreateElement(
-      tableCache,
-      tableCacheOrder,
-      CACHE_SIZE,
-      cacheKey,
-      () => {
-        const rows: string[] = [];
-        const rowCellContents: string[][] = [];
-        const cellData = tableCellData.get(tableIndex);
-
-        tableLines.forEach((line, rowIndex) => {
-          if (!line.trim()) {
-            return;
-          }
-
-          const escapedPipePlaceholder = `___ESCAPED_PIPE___${Math.random().toString(36).substring(2, 15)}___`;
-          const contentWithPlaceholders = line.replace(/\\\|/g, escapedPipePlaceholder);
-          const parts = contentWithPlaceholders.split('|');
-          const cells = parts.slice(1, -1);
-
-          const processedCells = cells.map((cell, cellIndex) => {
-            let originalCell = cell.replace(new RegExp(escapedPipePlaceholder, 'g'), '|').trim();
-
-            // Extract inline code to protect <br> tags within code
-            const inlineCodeMap = new Map<string, string>();
-            originalCell = originalCell.replace(
-              /(?<!\\)(?:\\\\)*`([^`]+)`/g,
-              (match, codeContent) => {
-                const inlinePlaceholder = `___INLINE_CODE_${Math.random().toString(36).substring(2, 15)}___`;
-                inlineCodeMap.set(inlinePlaceholder, match);
-                return inlinePlaceholder;
-              }
-            );
-
-            // Convert <br> tags to newlines for table cells (outside of code)
-            originalCell = originalCell.replace(/<br\s*\/?>/gi, '\n');
-
-            // Restore inline code
-            inlineCodeMap.forEach((code, inlinePlaceholder) => {
-              originalCell = originalCell.replace(inlinePlaceholder, code);
-            });
-
-            // Store in cellData for CSV export
-            if (cellData) {
-              const rowData = cellData.get(rowIndex) ?? new Map<number, string>();
-              rowData.set(cellIndex, originalCell);
-              cellData.set(rowIndex, rowData);
-            }
-
-            // Process cell content for inline elements
-            return processMarkdown(originalCell, {
-              allowCodeBlocks: false,
-              allowBlockquotes: false,
-              allowTables: false,
-              allowLatex: true,
-              allowInlineCode: true,
-              allowLinks: true
-            });
-          });
-
-          const isHeader = hasSeparator && rowIndex === 0;
-          const tag = isHeader ? 'th' : 'td';
-          const rowHtml = `<tr>${processedCells.map(cell => `<${tag}>${cell}</${tag}>`).join('')}</tr>`;
-          rows.push(rowHtml);
-          rowCellContents.push(processedCells);
-        });
-
-        // Filter out empty rows using string content check
-        const filteredRows = rows.filter((_, index) => {
-          const cellContents = rowCellContents[index];
-          return cellContents.some(cell => cell.trim().length > 0);
-        });
-
-        if (filteredRows.length === 0) {
-          return '<div></div>';
-        }
-
-        let tableHtml =
-          '<table class="table table-hover" id="' +
-          `table-${Math.random().toString(36).substring(2, 15)}` +
-          '">';
-
-        if (hasSeparator && filteredRows.length > 0) {
-          tableHtml += '<thead>' + filteredRows[0] + '</thead>';
-          if (filteredRows.length > 1) {
-            tableHtml += '<tbody>' + filteredRows.slice(1).join('') + '</tbody>';
-          }
+      for (const part of parts) {
+        const trimmed = part.trim();
+        if (trimmed.startsWith('- ')) {
+          listItems.push(trimmed.slice(2));
+        } else if (listItems.length > 0) {
+          nonListParts.push('<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>');
+          listItems.length = 0;
+          nonListParts.push(trimmed);
         } else {
-          tableHtml += '<tbody>' + filteredRows.join('') + '</tbody>';
+          nonListParts.push(trimmed);
         }
-
-        tableHtml += '</table>';
-
-        // Add download button if enabled
-        let downloadButton = '';
-        if (options?.downloadTableButton) {
-          const tableId = tableHtml.match(/id="([^"]+)"/)?.[1] ?? '';
-          const translatedLabel = options.translateSync
-            ? options.translateSync(options.downloadTableButton)
-            : options.downloadTableButton;
-          const buttonLabel = escapeHtml(translatedLabel);
-          downloadButton = `<button type="button" class="btn btn-circle btn-sm btn-tertiary download-table-btn" data-table-id="${tableId}" data-table-index="${tableIndex}" aria-label="${buttonLabel}"><i class="icon element-download" aria-hidden="true"></i></button>`;
-        }
-
-        return `<div class="table-wrapper"><div class="table-scroll-container">${tableHtml}</div>${downloadButton}</div>`;
-      },
-      docRef
-    );
-  };
-
-  /**
-   * Process text segments separately from block elements
-   */
-  const processTextSegments = (input: string, domSanitizer: DomSanitizer): string => {
-    const blockElementRegex =
-      /(<(pre|blockquote|ul|ol|hr|h[1-6]|table)[^>]*>[\s\S]*?<\/\2>)|(<!--(?:CODE-BLOCK|TABLE|BLOCKQUOTE|LATEX-DISPLAY)-PLACEHOLDER-[^>]+-->)/g;
-
-    const parts: string[] = [];
-    let lastIndex = 0;
-    let blockMatch;
-
-    while ((blockMatch = blockElementRegex.exec(input)) !== null) {
-      if (blockMatch.index > lastIndex) {
-        parts.push(input.slice(lastIndex, blockMatch.index));
       }
-      parts.push(blockMatch[0]);
-      lastIndex = blockMatch.index + blockMatch[0].length;
-    }
-    if (lastIndex < input.length) {
-      parts.push(input.slice(lastIndex));
-    }
-
-    const processedParts = parts.map(part => {
-      if (part.match(/^<(pre|blockquote|ul|ol|hr|h[1-6]|table)|^<!--/)) {
-        return part;
+      if (listItems.length > 0) {
+        nonListParts.push('<ul>' + listItems.map(item => `<li>${item}</li>`).join('') + '</ul>');
       }
-      return processInlineFormatting(part, domSanitizer);
+      cell.innerHTML = nonListParts.join('<br>');
     });
-
-    // Now restore inline LaTeX and links after inline formatting
-    let result = processedParts.join('');
-
-    // Restore inline LaTeX
-    inlineLatexPlaceholderMap.forEach((latex, placeholder) => {
-      const rendered = renderLatex(latex, false);
-      result = result.replace(placeholder, rendered);
-    });
-
-    // Restore links
-    linkPlaceholderMap.forEach((linkData, placeholder) => {
-      const sanitizedUrl = sanitizeUrl(linkData.url, sanitizer);
-      let linkText = linkData.text;
-
-      // Process inline code in link text
-      linkText = linkText.replace(/(?<!\\)(?:\\\\)*`([^`]+)`/g, (match, content) => {
-        const escaped = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        return `<code>${escaped}</code>`;
-      });
-
-      const sanitizedText = domSanitizer.sanitize(SecurityContext.HTML, linkText) ?? '';
-      const linkHtml = `<a class="link-text" href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${sanitizedText}</a>`;
-      result = result.replace(placeholder, linkHtml);
-    });
-
-    return result;
   };
 
-  /**
-   * Process inline formatting (headings, bold, italic, lists, etc.) on plain text
-   */
-  const processInlineFormatting = (input: string, domSanitizer: DomSanitizer): string => {
-    let result = input;
-
-    // Preserve escaped characters
-    result = result.replace(/\\\*/g, '___ESCAPED_ASTERISK___');
-    result = result.replace(/\\_/g, '___ESCAPED_UNDERSCORE___');
-
-    // Headings
-    result = result.replace(/^###### (.+)$/gm, '<strong>$1</strong>');
-    result = result.replace(/^##### (.+)$/gm, '<h5>$1</h5>');
-    result = result.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
-    result = result.replace(/^### (.+)$/gm, '<h3>$1</h3>');
-    result = result.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-    result = result.replace(/^# (.+)$/gm, '<h2><strong>$1</strong></h2>');
-
-    // Horizontal rule
-    result = result.replace(/^---+$/gm, '<hr>');
-
-    // Bold and italic
-    result = result.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    result = result.replace(/__(.+?)__/g, '<strong>$1</strong>');
-    result = result.replace(/\*(.+?)\*/g, '<em>$1</em>');
-    result = result.replace(/_(.+?)_/g, '<em>$1</em>');
-
-    // Lists
-    result = result.replace(/^[•\-*] (.+)$/gm, '<li class="unordered">$1</li>');
-    result = result.replace(/^&#8226; (.+)$/gm, '<li class="unordered">$1</li>');
-    result = result.replace(/^\d+\. (.+)$/gm, '<li class="ordered">$1</li>');
-
-    // Wrap lists (remove whitespace between items)
-    result = result.replace(
-      /(<li class="ordered">.*?<\/li>)\s*\n\s*(?=<li class="ordered">)/gs,
-      '$1'
-    );
-    result = result.replace(
-      /(<li class="unordered">.*?<\/li>)\s*\n\s*(?=<li class="unordered">)/gs,
-      '$1'
-    );
-
-    result = result.replace(
-      /(<li class="ordered">.*?<\/li>(?:<li class="ordered">.*?<\/li>)*)/gs,
-      '<ol>$1</ol>'
-    );
-    result = result.replace(
-      /(<li class="unordered">.*?<\/li>(?:<li class="unordered">.*?<\/li>)*)/gs,
-      '<ul>$1</ul>'
-    );
-
-    result = result.replace(/ class="ordered"/g, '');
-    result = result.replace(/ class="unordered"/g, '');
-
-    // Paragraphs
-    const paragraphPlaceholder = '___PARAGRAPH_BREAK___';
-    const segments = result.split(/\n{2,}/g);
-
-    result = segments
-      .map(segment => {
-        const trimmed = segment.trim();
-        if (!trimmed) {
-          return '';
-        }
-        if (/^\s*<(h[1-6]|pre|blockquote|ul|ol|hr|div|code|li|p)/.test(trimmed)) {
-          return segment.replace(/\n/g, paragraphPlaceholder);
-        }
-
-        const withoutTags = trimmed.replace(/<[^>]*>/g, '').trim();
-        if (!withoutTags && !/<img\s/i.test(trimmed)) {
-          return '';
-        }
-
-        return '<p>' + segment + '</p>';
-      })
-      .filter(segment => segment !== '')
-      .join(paragraphPlaceholder)
-      .replace(/\n/g, '<br>')
-      .replace(new RegExp(paragraphPlaceholder, 'g'), ' ');
-
-    // Restore escaped characters
-    result = result.replace(/___ESCAPED_ASTERISK___/g, '*');
-    result = result.replace(/___ESCAPED_UNDERSCORE___/g, '_');
-
-    const sanitized = domSanitizer.sanitize(SecurityContext.HTML, result);
-    return sanitized ?? '';
-  };
-
-  /**
-   * Main render function
-   */
   return (text: string): HTMLElement => {
     const div = docRef.createElement('div');
     div.className = 'markdown-content text-break';
@@ -726,149 +292,262 @@ export const getMarkdownRenderer = (
       return div;
     }
 
-    const processedHtml = processMarkdown(text);
-    div.innerHTML = processedHtml;
-
-    // Replace comment placeholders with cached elements
-    const commentsToReplace: { comment: Comment; element: HTMLElement }[] = [];
-
-    const walker = docRef.createTreeWalker(div, 128 /* NodeFilter.SHOW_COMMENT */);
-
-    let currentNode = walker.nextNode();
-    while (currentNode) {
-      const comment = currentNode as Comment;
-
-      // Handle code block placeholders
-      const codeMatch = comment.textContent?.match(/CODE-BLOCK-PLACEHOLDER-(.*)/);
-      if (codeMatch) {
-        const placeholderId = codeMatch[1];
-        const cacheKey = codeBlockPlaceholderMap.get(placeholderId);
-        if (cacheKey) {
-          const keyParts = cacheKey.split('|||');
-          const language = keyParts[0];
-          const content = keyParts[1];
-          const cachedElement = createCodeBlockElement(language, content);
-          if (cachedElement) {
-            commentsToReplace.push({ comment, element: cachedElement });
-          }
-        }
-      }
-
-      // Handle table placeholders
-      const tableMatch = comment.textContent?.match(/TABLE-PLACEHOLDER-(.*)/);
-      if (tableMatch) {
-        const placeholderId = tableMatch[1];
-        const tableDataJson = tablePlaceholderMap.get(placeholderId);
-        if (tableDataJson) {
-          try {
-            const { tableIndex, hasSeparator, tableLines } = JSON.parse(tableDataJson);
-            const cachedElement = createTableElement(tableLines, hasSeparator, tableIndex);
-            if (cachedElement) {
-              commentsToReplace.push({ comment, element: cachedElement });
-            }
-          } catch (e) {
-            console.warn('Failed to parse table placeholder data', e);
-          }
-        }
-      }
-
-      currentNode = walker.nextNode();
-    }
-
-    commentsToReplace.forEach(({ comment, element }) => {
-      if (comment.parentNode && element) {
-        comment.parentNode.replaceChild(element.cloneNode(true), comment);
-      }
+    const html = micromark(preprocessText(text), {
+      allowDangerousHtml: true,
+      extensions: syntaxExtensions,
+      htmlExtensions
     });
 
-    // Add event listeners for copy buttons (browser-only)
-    if (isBrowser) {
-      div.querySelectorAll('.copy-code-btn').forEach(btn => {
-        btn.addEventListener('click', e => {
-          const button = e.target as HTMLButtonElement;
-          const codeId = button.getAttribute('data-code-id');
-          if (!codeId) return;
-
-          const codeElement = div.querySelector(`#${codeId}`);
-          if (!codeElement) return;
-
-          const code = codeElement.textContent ?? '';
-          navigator.clipboard.writeText(code).catch(() => {
-            console.warn('Failed to copy code to clipboard');
-          });
-        });
-      });
-
-      // Add event listeners for table download buttons (browser-only)
-      div.querySelectorAll('.download-table-btn').forEach(btn => {
-        btn.addEventListener('click', e => {
-          const button = e.target as HTMLButtonElement;
-          const tableId = button.getAttribute('data-table-id');
-          const tableIndexStr = button.getAttribute('data-table-index');
-          if (!tableId || tableIndexStr === null) return;
-
-          const tableElement = div.querySelector(`#${tableId}`) as HTMLTableElement;
-          if (!tableElement) return;
-
-          const tblIndex = parseInt(tableIndexStr, 10);
-          const tableData = tableCellData.get(tblIndex);
-
-          const tableRows = Array.from(tableElement.querySelectorAll('tr'));
-          const csv = tableRows
-            .filter(row => {
-              const rowCells = Array.from(row.querySelectorAll('td, th'));
-              return rowCells.some(cell => (cell.textContent ?? '').trim().length > 0);
-            })
-            .map((row, rowIndex) => {
-              const rowCells = Array.from(row.querySelectorAll('td, th'));
-              return rowCells
-                .map((cell, columnIndex) => {
-                  const cellText =
-                    tableData?.get(rowIndex)?.get(columnIndex) ?? cell.textContent ?? '';
-                  if (cellText.includes(',') || cellText.includes('"') || cellText.includes('\n')) {
-                    return `"${cellText.replace(/"/g, '""')}"`;
-                  }
-                  return cellText;
-                })
-                .join(',');
-            })
-            .join('\n');
-
-          const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-          const link = docRef.createElement('a');
-          const url = URL.createObjectURL(blob);
-          link.setAttribute('href', url);
-          link.setAttribute('download', 'table.csv');
-          link.style.visibility = 'hidden';
-          docRef.body.appendChild(link);
-          link.click();
-          docRef.body.removeChild(link);
-          URL.revokeObjectURL(url);
-        });
-      });
+    div.innerHTML = html;
+    sanitizeDom(div);
+    customizeLinks(div, sanitizer);
+    if (options?.mathExtensions) {
+      wrapDisplayMath(div, docRef);
     }
-
+    applyCodeBlockWrappers(div);
+    processTableCells(div);
+    attachEventListeners(div);
     return div;
   };
 };
 
 /**
- * Sanitize URL to prevent XSS attacks
+ * Custom micromark HTML extension that produces the correct output inline
+ * during compilation, avoiding regex-based post-processing.
+ *
+ * Overrides:
+ * - Headings: h1 → h2+strong, h6 → strong
+ * - Lists: always tight (no <p> wrapping in <li>)
+ * - Paragraphs: track inParagraph state for lineEnding handler
+ * - Tables: class="table table-hover", wrapped in .table-wrapper, download button
+ * - Line endings: soft breaks → <br /> inside paragraphs only
+ *
+ * Customizations done via DOM post-processing (not here):
+ * - Links: target="_blank", rel="noopener noreferrer", class="link-text"
+ * - Math display: wrapped in .latex-display-wrapper
+ * - HTML sanitization: dangerous elements/attributes removed
+ */
+const createCustomHtmlExtension = (options?: MarkdownRendererOptions): HtmlExtension => {
+  let tableCounter = 0;
+
+  const ext: HtmlExtension = {
+    enter: {
+      // Force all lists to be tight (replicate default handler logic after overriding _loose)
+      listOrdered(this: CompileContext, token: Token) {
+        token._loose = false;
+        const tightStack = this.getData('tightStack') as boolean[];
+        tightStack.push(true);
+        this.lineEndingIfNeeded();
+        this.tag('<ol');
+        this.setData('expectFirstItem', true);
+      },
+      listUnordered(this: CompileContext, token: Token) {
+        token._loose = false;
+        const tightStack = this.getData('tightStack') as boolean[];
+        tightStack.push(true);
+        this.lineEndingIfNeeded();
+        this.tag('<ul');
+        this.setData('expectFirstItem', true);
+      },
+
+      // Track paragraph state so lineEnding only emits <br /> inside paragraphs
+      paragraph(this: CompileContext) {
+        const tightStack = this.getData('tightStack') as boolean[];
+        if (!tightStack[tightStack.length - 1]) {
+          this.lineEndingIfNeeded();
+          this.tag('<p>');
+        }
+        this.setData('slurpAllLineEndings');
+        this.setData('inParagraph', true);
+      },
+
+      // Tables: wrapper + classes
+      table(this: CompileContext, token: Token) {
+        const tableId = `table-${Math.random().toString(36).substring(2, 15)}`;
+        this.setData('currentTableId', tableId);
+        this.setData('currentTableIndex', tableCounter++);
+        this.lineEndingIfNeeded();
+        this.raw('<div class="table-wrapper"><div class="table-scroll-container">');
+        this.tag(`<table class="table table-hover" id="${tableId}">`);
+        this.setData(
+          'tableAlign',
+          (token as unknown as Record<string, unknown>)._align as undefined
+        );
+      }
+    },
+    exit: {
+      // Headings: h1→h2+strong, h6→strong
+      atxHeadingSequence(this: CompileContext, token: Token) {
+        if (this.getData('headingRank')) {
+          return;
+        }
+        const rank = this.sliceSerialize(token).length;
+        this.setData('headingRank', rank);
+        this.lineEndingIfNeeded();
+        if (rank === 1) {
+          this.tag('<h2><strong>');
+        } else if (rank === 6) {
+          this.tag('<strong>');
+        } else {
+          this.tag(`<h${rank}>`);
+        }
+      },
+      atxHeading(this: CompileContext) {
+        const rank = this.getData('headingRank') as number;
+        if (rank === 1) {
+          this.tag('</strong></h2>');
+        } else if (rank === 6) {
+          this.tag('</strong>');
+        } else {
+          this.tag(`</h${rank}>`);
+        }
+        this.setData('headingRank');
+      },
+
+      // Tables: close wrappers, add download button
+      table(this: CompileContext) {
+        this.setData('tableAlign');
+        this.setData('slurpAllLineEndings');
+        this.lineEndingIfNeeded();
+        this.tag('</table>');
+        this.raw('</div>'); // close .table-scroll-container
+
+        if (options?.downloadTableButton) {
+          const translatedLabel = options.translateSync
+            ? options.translateSync(options.downloadTableButton)
+            : options.downloadTableButton;
+          const buttonLabel = escapeHtml(translatedLabel);
+          const tableId = this.getData('currentTableId') ?? '';
+          const tableIndex = this.getData('currentTableIndex') ?? 0;
+          this.raw(
+            `<button type="button" class="btn btn-circle btn-sm btn-tertiary download-table-btn" data-table-id="${tableId}" data-table-index="${tableIndex}" aria-label="${buttonLabel}"><i class="icon element-download" aria-hidden="true"></i></button>`
+          );
+        }
+
+        this.raw('</div>'); // close .table-wrapper
+      },
+
+      // Track paragraph exit + replicate default behavior
+      paragraph(this: CompileContext) {
+        this.setData('inParagraph');
+        const tightStack = this.getData('tightStack') as boolean[];
+        if (tightStack[tightStack.length - 1]) {
+          this.setData('slurpAllLineEndings', true);
+        } else {
+          this.tag('</p>');
+        }
+      },
+
+      // Soft line breaks → <br /> (only inside paragraphs)
+      lineEnding(this: CompileContext, token: Token) {
+        if (this.getData('slurpAllLineEndings')) {
+          return;
+        }
+        if (this.getData('slurpOneLineEnding')) {
+          this.setData('slurpOneLineEnding');
+          return;
+        }
+        if (this.getData('inCodeText')) {
+          this.raw(' ');
+          return;
+        }
+        if (this.getData('inParagraph')) {
+          this.tag('<br />');
+        }
+        this.raw(this.encode(this.sliceSerialize(token)));
+      }
+    }
+  };
+
+  return ext;
+};
+
+/**
+ * DOM-based link customization: adds class, target, and rel attributes
+ * to all anchor elements, and sanitizes URLs.
+ */
+const customizeLinks = (container: HTMLElement, sanitizer: DomSanitizer): void => {
+  Array.from(container.querySelectorAll('a')).forEach(a => {
+    const href = a.getAttribute('href') ?? '';
+    const sanitized = sanitizeUrl(href, sanitizer);
+    a.setAttribute('href', sanitized);
+    a.classList.add('link-text');
+    a.setAttribute('target', '_blank');
+    a.setAttribute('rel', 'noopener noreferrer');
+  });
+};
+
+/**
+ * DOM-based display math wrapping: wraps .math.math-display elements
+ * in a .latex-display-wrapper div for proper styling.
+ */
+const wrapDisplayMath = (container: HTMLElement, docRef: Document): void => {
+  Array.from(container.querySelectorAll('.math.math-display')).forEach(el => {
+    const wrapper = docRef.createElement('div');
+    wrapper.className = 'latex-display-wrapper';
+    el.parentNode?.insertBefore(wrapper, el);
+    wrapper.appendChild(el);
+  });
+};
+
+/**
+ * Dangerous HTML elements that should be completely removed from the DOM.
+ */
+const DANGEROUS_ELEMENTS = ['script', 'iframe', 'object', 'embed', 'form', 'meta', 'link', 'style'];
+
+/**
+ * Dangerous HTML attribute prefixes/patterns.
+ */
+const DANGEROUS_ATTR_PATTERN = /^on|^formaction$/i;
+
+/**
+ * DOM-based sanitization that removes dangerous elements and attributes.
+ * This runs after innerHTML is set, so it catches both actual HTML elements
+ * and entity-encoded HTML that the browser decoded.
+ */
+const sanitizeDom = (container: HTMLElement): void => {
+  // Remove dangerous elements
+  for (const tagName of DANGEROUS_ELEMENTS) {
+    const elements = Array.from(container.querySelectorAll(tagName));
+    for (let i = elements.length - 1; i >= 0; i--) {
+      elements[i].remove();
+    }
+  }
+
+  // Remove dangerous attributes from all remaining elements
+  const allElements = Array.from(container.querySelectorAll('*'));
+  for (const el of allElements) {
+    const attrsToRemove: string[] = [];
+    for (const attr of Array.from(el.attributes)) {
+      if (DANGEROUS_ATTR_PATTERN.test(attr.name)) {
+        attrsToRemove.push(attr.name);
+      }
+      if (attr.name === 'href' || attr.name === 'src' || attr.name === 'action') {
+        if (/^\s*javascript:/i.test(attr.value)) {
+          attrsToRemove.push(attr.name);
+        }
+      }
+    }
+    for (const name of attrsToRemove) {
+      el.removeAttribute(name);
+    }
+  }
+};
+
+/**
+ * Sanitize URL to prevent XSS attacks.
  */
 const sanitizeUrl = (url: string, sanitizer: DomSanitizer): string => {
   url = url.trim();
   const allowed = /^(https?:\/\/|mailto:|\/(?!\/)|\.{1,2}\/|#)/i;
-
   if (!allowed.test(url)) {
     return '#';
   }
-
-  const sanitized = sanitizer.sanitize(SecurityContext.URL, url);
-  return sanitized ?? '#';
+  return sanitizer.sanitize(SecurityContext.URL, url) ?? '#';
 };
 
 /**
- * Escape HTML special characters
+ * Escape HTML special characters.
  */
 const escapeHtml = (text: string): string => {
   return text
@@ -878,3 +557,71 @@ const escapeHtml = (text: string): string => {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 };
+
+/**
+ * Type alias for the markdown renderer function returned by {@link injectMarkdownRenderer}.
+ *
+ * @experimental
+ */
+export type MarkdownRenderer = (text: string) => Node;
+
+/**
+ * Creates a markdown renderer function within an Angular injection context.
+ *
+ * Must be called in an injection context (e.g. field initializer, constructor, or `runInInjectionContext`).
+ *
+ * @example
+ * ```typescript
+ * protected renderer = injectMarkdownRenderer({ syntaxHighlighter: myHighlighter });
+ * ```
+ *
+ * @experimental
+ * @param options - Optional configuration for the markdown renderer
+ * @returns A function taking the markdown text to transform and returning a DOM node containing the formatted HTML
+ */
+export const injectMarkdownRenderer = (options?: MarkdownRendererOptions): MarkdownRenderer => {
+  const sanitizer = inject(DomSanitizer);
+  const doc = inject(DOCUMENT);
+  const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  const translateService = injectSiTranslateService();
+
+  const resolvedOptions: MarkdownRendererOptions = {
+    copyCodeButton: t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY_CODE:Copy code`),
+    downloadTableButton: t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`),
+    translateSync: translateService.translateSync.bind(translateService),
+    ...options
+  };
+
+  return createMarkdownRenderer(sanitizer, resolvedOptions, doc, isBrowser);
+};
+
+/**
+ * Injection token for a markdown renderer function.
+ *
+ * Provide it via {@link provideMarkdownRenderer} and inject where needed
+ * to pass as an input (e.g. `contentFormatter`) to components:
+ *
+ * @example
+ * ```typescript
+ * // in app config
+ * providers: [provideMarkdownRenderer({ syntaxHighlighter: myHighlighter })]
+ *
+ * // in a component
+ * protected markdownRenderer = inject(SI_MARKDOWN_RENDERER);
+ * ```
+ *
+ * @experimental
+ */
+export const SI_MARKDOWN_RENDERER = new InjectionToken<MarkdownRenderer>('SI_MARKDOWN_RENDERER');
+
+/**
+ * Provider function to provide {@link SI_MARKDOWN_RENDERER} with custom options.
+ *
+ * @experimental
+ * @param options - Configuration for the markdown renderer
+ * @returns A provider for `SI_MARKDOWN_RENDERER`
+ */
+export const provideMarkdownRenderer = (options?: MarkdownRendererOptions): Provider => ({
+  provide: SI_MARKDOWN_RENDERER,
+  useFactory: () => injectMarkdownRenderer(options)
+});

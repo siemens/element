@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,10 +9,8 @@ import {
   inject,
   signal,
   TemplateRef,
-  viewChild,
-  PLATFORM_ID
+  viewChild
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import {
   SiChatContainerComponent,
   SiAiMessageComponent,
@@ -33,7 +30,7 @@ import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import {
-  getMarkdownRenderer,
+  injectMarkdownRenderer,
   SiMarkdownRendererComponent
 } from '@siemens/element-ng/markdown-renderer';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -68,18 +65,10 @@ interface ChatMessage {
 export class SampleComponent {
   private logEvent = inject(LOG_EVENT);
   private readonly modalTemplate = viewChild<TemplateRef<any>>('modalTemplate');
-  private sanitizer = inject(DomSanitizer);
   private readonly toastService = inject(SiToastNotificationService);
   private readonly chatContainer = viewChild<SiChatContainerComponent>(SiChatContainerComponent);
-  private doc = inject(DOCUMENT);
-  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  protected markdownRenderer = getMarkdownRenderer(
-    this.sanitizer,
-    undefined,
-    this.doc,
-    this.isBrowser
-  );
+  protected markdownRenderer = injectMarkdownRenderer();
 
   readonly preAttachedFiles: ChatInputAttachment[] = [
     {

@@ -110,7 +110,16 @@ test('typography/type-styles', ({ si }) => si.static());
 test('typography/display-styles', ({ si }) => si.static());
 test('typography/typography', ({ si }) => si.static());
 test('si-markdown-renderer/si-markdown-renderer', ({ si }) =>
-  si.static({ disabledA11yRules: ['link-in-text-block', 'color-contrast'] }));
+  si.static({
+    disabledA11yRules: ['link-in-text-block', 'color-contrast'],
+    waitCallback: async page => {
+      await page.waitForSelector('.katex', { timeout: 5000 });
+      await page.waitForTimeout(500);
+      const height = await page.evaluate(() => document.body.scrollHeight);
+      const width = await page.evaluate(() => document.body.scrollWidth);
+      await page.setViewportSize({ height, width });
+    }
+  }));
 test('si-chat-messages/si-ai-message', ({ si }) => si.static());
 test('si-chat-messages/si-user-message', ({ si }) => si.static());
 test('si-chat-messages/si-chat-message', ({ si }) => si.static());

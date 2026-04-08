@@ -52,6 +52,12 @@
     "ag-grid-community": "^34.3.1",
     "flag-icons": "^7.3.2",
     "google-libphonenumber": "^3.2.40",
+    "micromark": "4.0.2",
+    "micromark-extension-gfm-autolink-literal": "2.1.0",
+    "micromark-extension-gfm-strikethrough": "2.1.0",
+    "micromark-extension-gfm-table": "2.1.1",
+    "micromark-extension-math": "3.1.0",
+    "micromark-util-types": "2.0.2",
     "ngx-image-cropper": "^9.0.0"
   },
   "peerDependenciesMeta": {
@@ -74,6 +80,24 @@
       "optional": true
     },
     "ag-grid-community": {
+      "optional": true
+    },
+    "micromark": {
+      "optional": true
+    },
+    "micromark-extension-gfm-autolink-literal": {
+      "optional": true
+    },
+    "micromark-extension-gfm-strikethrough": {
+      "optional": true
+    },
+    "micromark-extension-gfm-table": {
+      "optional": true
+    },
+    "micromark-extension-math": {
+      "optional": true
+    },
+    "micromark-util-types": {
       "optional": true
     }
   }

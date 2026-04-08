@@ -2,15 +2,24 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Component, computed, effect, inject, input, ElementRef, PLATFORM_ID } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
+import { Component, effect, inject, input, ElementRef } from '@angular/core';
 
-import { getMarkdownRenderer, type MarkdownRendererOptions } from './markdown-renderer';
+import { type MarkdownRenderer } from './markdown-renderer';
 
 /**
- * Component to display markdown text, uses the {@link getMarkdownRenderer} function internally, relies on `markdown-content` theme class.
+ * Component to display markdown text using a provided {@link MarkdownRenderer}.
+ *
+ * Pass a renderer created via {@link injectMarkdownRenderer} or injected via {@link SI_MARKDOWN_RENDERER}
+ * through the `renderer` input. When no renderer is provided, falls back to displaying the raw unrendered text.
+ *
+ * @example
+ * ```typescript
+ * protected renderer = injectMarkdownRenderer();
+ * ```
+ * ```html
+ * <si-markdown-renderer [text]="markdownText()" [renderer]="renderer" />
+ * ```
+ *
  * @experimental
  */
 @Component({
@@ -18,98 +27,36 @@ import { getMarkdownRenderer, type MarkdownRendererOptions } from './markdown-re
   template: ``
 })
 export class SiMarkdownRendererComponent {
-  private sanitizer = inject(DomSanitizer);
   private hostElement = inject(ElementRef<HTMLElement>);
-  private translateService = injectSiTranslateService();
-  private platformId = inject(PLATFORM_ID);
-  private isBrowser = isPlatformBrowser(this.platformId);
-  private doc = inject(DOCUMENT);
 
   /**
-   * The markdown text to transform and display
-   * @defaultValue ''
+   * The markdown text to transform and display.
+   * @defaultValue undefined
    */
   readonly text = input<string | undefined>();
 
   /**
-   * Optional syntax highlighter function for code blocks.
-   * Receives code content and optional language, returns an HTML content string to display inside of the code block or undefined to use default rendering.
-   * The returned code is sanitized before insertion.
-   * Make sure that the required styles/scripts for the syntax highlighter are included in your application.
+   * The markdown renderer function to use for rendering.
+   * Create one via {@link injectMarkdownRenderer} or inject via {@link SI_MARKDOWN_RENDERER}.
+   * When not provided, the raw text is displayed without rendering.
    * @defaultValue undefined
    */
-  readonly syntaxHighlighter = input<
-    ((code: string, language?: string) => string | undefined) | undefined
-  >(undefined);
-
-  /**
-   * Do not display the copy code button.
-   * @defaultValue false
-   */
-  readonly disableCopyButton = input<boolean>(false);
-
-  /**
-   * Label for the copy button.
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY_CODE:Copy code`)
-   * ```
-   */
-  readonly copyButtonLabel = input(t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY_CODE:Copy code`));
-
-  /**
-   * Do not display the download CSV button for tables.
-   * @defaultValue false
-   */
-  readonly disableDownloadButton = input<boolean>(false);
-
-  /**
-   * Label for the download CSV button.
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`)
-   * ```
-   */
-  readonly downloadButtonLabel = input(
-    t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`)
-  );
-
-  /**
-   * Optional LaTeX renderer function for math expressions.
-   * Receives LaTeX content and display mode boolean, returns an HTML content string or undefined to use default rendering.
-   * The returned HTML is sanitized before insertion.
-   * Make sure that the required styles/scripts for the LaTeX renderer (e.g., KaTeX) are included in your application.
-   * @defaultValue undefined
-   */
-  readonly latexRenderer = input<
-    ((latex: string, displayMode: boolean) => string | undefined) | undefined
-  >(undefined);
-
-  private readonly markdownRenderer = computed(() => {
-    const highlighterFn = this.syntaxHighlighter();
-    const latexRendererFn = this.latexRenderer();
-
-    const options: MarkdownRendererOptions = {
-      syntaxHighlighter: highlighterFn,
-      copyCodeButton: !this.disableCopyButton() ? this.copyButtonLabel() : undefined,
-      downloadTableButton: !this.disableDownloadButton() ? this.downloadButtonLabel() : undefined,
-      translateSync: this.translateService.translateSync.bind(this.translateService),
-      latexRenderer: latexRendererFn
-    };
-
-    return getMarkdownRenderer(this.sanitizer, options, this.doc, this.isBrowser);
-  });
+  readonly renderer = input<MarkdownRenderer | undefined>(undefined);
 
   constructor() {
     effect(() => {
       const contentValue = this.text();
+      const renderer = this.renderer();
       const containerEl = this.hostElement.nativeElement;
-      const renderer = this.markdownRenderer();
 
       if (containerEl) {
-        const formattedNode = renderer(contentValue ?? '');
-        containerEl.innerHTML = '';
-        containerEl.appendChild(formattedNode);
+        if (renderer) {
+          const formattedNode = renderer(contentValue ?? '');
+          containerEl.innerHTML = '';
+          containerEl.appendChild(formattedNode);
+        } else {
+          containerEl.textContent = contentValue ?? '';
+        }
       }
     });
   }

@@ -11,9 +11,12 @@ import {
   OnInit,
   signal
 } from '@angular/core';
-import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-renderer';
+import {
+  injectMarkdownRenderer,
+  SiMarkdownRendererComponent
+} from '@siemens/element-ng/markdown-renderer';
 import hljs from 'highlight.js';
-import katex from 'katex';
+import { math, mathHtml } from 'micromark-extension-math';
 
 @Component({
   selector: 'app-sample',
@@ -23,37 +26,25 @@ import katex from 'katex';
 })
 export class SampleComponent implements OnInit {
   private readonly http = inject(HttpClient);
-  readonly markdownText = signal<string>('');
   private cdRef = inject(ChangeDetectorRef);
+  readonly markdownText = signal<string>('');
 
-  readonly syntaxHighlighter = (code: string, language?: string): string | undefined => {
-    if (language && hljs.getLanguage(language)) {
-      try {
-        return hljs.highlight(code, { language }).value;
-      } catch {
-        // fall back to no highlighting
+  protected renderer = injectMarkdownRenderer({
+    syntaxHighlighter: (code: string, language?: string): string | undefined => {
+      if (language && hljs.getLanguage(language)) {
+        try {
+          return hljs.highlight(code, { language }).value;
+        } catch {
+          // fall back to no highlighting
+        }
       }
-    }
-    return undefined;
-  };
-
-  // Optional: LaTeX rendering with KaTeX
-  // This function returns rendered HTML for LaTeX math expressions.
-  // The returned HTML is sanitized before insertion.
-  // Make sure to include KaTeX styles in your application.
-  // Add to styles in angular.json: "node_modules/katex/dist/katex.min.css"
-  readonly latexRenderer = (latex: string, displayMode: boolean): string | undefined => {
-    try {
-      return katex.renderToString(latex, {
-        displayMode,
-        throwOnError: false,
-        output: 'html'
-      });
-    } catch {
-      // If rendering fails, return undefined to use default rendering
       return undefined;
+    },
+    mathExtensions: {
+      syntax: math(),
+      html: mathHtml({ throwOnError: false, output: 'html' })
     }
-  };
+  });
 
   ngOnInit(): void {
     this.http.get('assets/sample-markdown.md', { responseType: 'text' }).subscribe(text => {
