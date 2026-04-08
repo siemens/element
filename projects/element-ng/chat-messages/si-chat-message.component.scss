@@ -35,6 +35,7 @@
   margin-block-end: auto;
   background-color: var(--chat-message-bubble-bg);
   min-inline-size: 0;
+  max-inline-size: 100%;
   overflow-wrap: break-word;
   word-break: break-word;
 
@@ -46,10 +47,6 @@
       margin-inline: 0 !important;
     }
   }
-}
-
-.message-wrapper {
-  min-inline-size: 0;
 }
 
 .attachment-slot {
@@ -90,6 +87,7 @@
 
 .message-wrapper {
   min-inline-size: 0;
+  max-inline-size: 100%;
   inline-size: auto;
 
   &.start {
