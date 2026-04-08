@@ -25,10 +25,10 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0 # We need this for commit-lint
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: lts/krypton
           cache: 'npm'
@@ -45,7 +45,7 @@ jobs:
       - run: npm run dashboards-demo:build-all -- --progress=false
       - run: npm run dashboards-demo:build-all:esm
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: dist
           path: dist
@@ -60,12 +60,12 @@ jobs:
     needs:
       - build
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: lts/krypton
           cache: 'npm'
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: dist
           path: dist
@@ -78,7 +78,7 @@ jobs:
       - run: npm run maps:test -- --watch=false --progress=false --coverage
       - run: npm run native-charts:test -- --watch=false --progress=false --coverage
       - name: Generate coverage summary
-        uses: irongut/CodeCoverageSummary@v1.3.0
+        uses: irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95 # v1.3.0
         with:
           filename: 'coverage/*/cobertura-coverage.xml'
           badge: true
@@ -98,7 +98,7 @@ jobs:
         run: |
           # Extract only the badge line and total coverage line
           head -n 2 code-coverage-results.md > coverage/coverage-badge.md
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: coverage-reports
           path: coverage
@@ -109,12 +109,12 @@ jobs:
     needs:
       - build
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: lts/krypton
           cache: 'npm'
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: dist
           path: dist
@@ -146,21 +146,21 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
           apt install git-lfs
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           lfs: true
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: lts/krypton
           cache: 'npm'
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: dist
           path: dist
       # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
       - run: npm ci --prefer-offline --no-audit --include=optional
       - run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         if: ${{ !cancelled() }}
         with:
           name: blob-report-${{ matrix.shardIndex }}
@@ -172,17 +172,17 @@ jobs:
     needs: [e2e]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: lts/krypton
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           path: all-blob-reports
           pattern: blob-report-*
           merge-multiple: true
       - run: npx playwright merge-reports --reporter html ./all-blob-reports
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: html-report--attempt-${{ github.run_attempt }}
           path: playwright-report
@@ -194,13 +194,13 @@ jobs:
     needs:
       - build
     steps:
-      - uses: actions/checkout@v6
-      - uses: astral-sh/setup-uv@v7
-      - uses: actions/download-artifact@v8
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: dist
           path: dist
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: lts/krypton
           cache: 'npm'
@@ -226,7 +226,7 @@ jobs:
       - run: mv dist/element-examples/ dist/design/
       - run: mv dist/dashboards-demo/ dist/design/
       - run: mv dist/dashboards-demo-esm/ dist/design/
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: pages
           path: dist/design
@@ -245,15 +245,15 @@ jobs:
       - documentation
       - test
     steps:
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: pages
           path: pages
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: html-report--attempt-${{ github.run_attempt }}
           path: playwright-report
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: coverage-reports
           path: coverage-reports
@@ -293,7 +293,7 @@ jobs:
           <!-- preview-links:end -->
           EOF
       - name: Update PR description block
-        uses: nefrob/pr-description@v1.2.0
+        uses: nefrob/pr-description@4dcc9f3ad5ec06b2a197c5f8f93db5e69d2fdca7 # v1.2.0
         with:
           token: ${{ github.token }}
           content: pr-preview-description.md
