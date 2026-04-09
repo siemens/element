@@ -365,6 +365,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
         if (!isValid(dateRange?.end)) {
           dateRange!.end = undefined;
         }
+        this.rangeType.set(dateRange.start && !dateRange.end ? 'END' : 'START');
       }
 
       // Only one calendar is used when no dateRangeRole is available.
