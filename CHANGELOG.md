@@ -1,3 +1,40 @@
+# [49.5.0](https://github.com/siemens/element/compare/v49.4.0...v49.5.0) (2026-04-09)
+
+
+### Features
+
+* **element-theme:** introduce btn ghost style ([63dcabb](https://github.com/siemens/element/commit/63dcabba9d0e4c540cd0566ebdb77fdc7cbe8d6d))
+* **microchart-progress:** improve accessibility ([f0de43a](https://github.com/siemens/element/commit/f0de43aff96d25f11c359b5ebd6aa7eb2b768126))
+* **modal:** migrate .modal-backdrop to use CSS starting-style instead of using timers ([abf3119](https://github.com/siemens/element/commit/abf31198c60ae4093e61ecff93a2be3f42f40e2b))
+* **navbar-vertical-next:** add navbar-vertical-next component ([5a378b6](https://github.com/siemens/element/commit/5a378b68d50f8da64646a47b2191aacbde695c77))
+
+
+### Bug Fixes
+
+* **buttons:** selection buttons hover state ([5bbba31](https://github.com/siemens/element/commit/5bbba3180e049e6ef14591da7e7c4479cc4227eb))
+* **charts:** import missing echarts imports ([fd1a5e0](https://github.com/siemens/element/commit/fd1a5e0dd2bd825ac88c3f47e2b2350c9a1c76f7))
+* **charts:** visualize datasets in si-chart-cartesian and si-chart ([233009b](https://github.com/siemens/element/commit/233009bb282a76a209e60b8989ec4d200be0481d)), closes [#1761](https://github.com/siemens/element/issues/1761)
+* **chat-messages:** improve chat container layout ([b9c27b4](https://github.com/siemens/element/commit/b9c27b4fd0caa061afaeab57d89de44fcb0d940d))
+* **dashbaords-ng:** use square icon style for edit button ([daf06ee](https://github.com/siemens/element/commit/daf06eee58269e3a2c7d95253914ac0af66d6bee))
+* **dashboards-ng:** use siTooltip over html native tooltip ([712e77b](https://github.com/siemens/element/commit/712e77bd1567c4a5745f2d66fe2a13d8aa973671))
+* **datatable:** use correct header-height ([4d96425](https://github.com/siemens/element/commit/4d964257b9c7d1d316b37b67bf83ad36ebc1421c))
+* **element-theme:** reduce button padding to align with design specs ([b98ef66](https://github.com/siemens/element/commit/b98ef663cf779f6647120cf4c9ffafe24f001625)), closes [#1801](https://github.com/siemens/element/issues/1801)
+* **file-uploader:** fix icon and text alignment ([0ebca28](https://github.com/siemens/element/commit/0ebca28d9209864d509fea7b497a1606b165c661))
+* **filtered-search:** only emit criteriaValueChange once after option selection ([cf8fbd8](https://github.com/siemens/element/commit/cf8fbd8c703f42262275337ac9bcc36845dd2812))
+* **live-preview:** hide StackBlitz button without element-theme dependency ([d885f54](https://github.com/siemens/element/commit/d885f54480ffb2a8e52ed2a77f7ecaa57eddde68))
+* **tooltip:** remove aria-describedby when tooltip is disabled ([d204337](https://github.com/siemens/element/commit/d20433796d7672c97eddacff3473090f7325dcc2))
+* **tree-view:** ensure contextMenuItems input changes are automatically applied ([1a0f1c4](https://github.com/siemens/element/commit/1a0f1c45f1553a390b0844db942c93add9775b0b))
+* **typography:** align `code` and `pre` tags with UX ([81de50b](https://github.com/siemens/element/commit/81de50b133ad3cc5fad447898af16c10f8beca8c))
+
+
+### NOTES
+
+* **element-theme:** The ghost button naming deviates from the usual button naming convention to avoid breaking changes.
+  The `.btn-primary-ghost` class has been added to represent the updated ghost button style,
+  while the `.btn-ghost` class continues to represent the tertiary ghost style buttons.
+  
+  With the next major release, the ghost button naming will be updated to match the button naming conventions.
+
 # [49.4.0](https://github.com/siemens/element/compare/v49.3.0...v49.4.0) (2026-03-26)
 
 
