@@ -8,23 +8,23 @@
 // there's too many differences between what BS5 does and what the design system expects
 @use 'sass:map';
 
-$form-check-size: map.get(spacers.$spacers, 6);
-$form-radio-size: map.get(spacers.$spacers, 6);
-$form-radio-inner-size: map.get(spacers.$spacers, 3);
-$form-radio-offset: ($form-radio-size - $form-radio-inner-size) * 0.5 - 1px;
+$form-check-size: 1rem;
+$form-radio-size: 1rem;
+$form-radio-inner-size: 0.375rem;
+$form-radio-offset: calc((#{$form-radio-size} - #{$form-radio-inner-size}) * 0.5 - 1px);
 $form-check-padding-x: map.get(spacers.$spacers, 2);
 
-$form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
+$form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
 
 %form-check-spacing {
   .form-check-input {
-    margin-inline-start: -1 * $form-check-label-start;
+    margin-inline-start: calc(-1 * $form-check-label-start);
   }
 }
 
 .form-check {
   padding-block: map.get(spacers.$spacers, 1);
-  padding-inline-start: map.get(spacers.$spacers, 8);
+  padding-inline-start: calc($form-check-size + map.get(spacers.$spacers, 4));
 
   @extend %form-check-spacing;
 
@@ -111,11 +111,11 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
     &::after {
       mask-image: none;
       background-color: semantic-tokens.$element-action-primary;
-      inline-size: 10px;
-      block-size: 2px;
+      inline-size: 0.625rem;
+      block-size: 0.125rem;
       opacity: 1;
-      inset-inline-start: 2px;
-      inset-block-start: 6px;
+      inset-inline-start: 0.125rem;
+      inset-block-start: 0.375rem;
     }
 
     &:hover {
@@ -245,7 +245,7 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
   .datatable-checkbox {
     inline-size: $form-check-size !important; // stylelint-disable-line declaration-no-important
     block-size: $form-check-size !important; // stylelint-disable-line declaration-no-important
-    inset-block-start: 1px !important; // stylelint-disable-line declaration-no-important
+    inset-block-start: 0.0625rem !important; // stylelint-disable-line declaration-no-important
 
     input[type='checkbox'] {
       @extend %form-check-base;
@@ -254,7 +254,7 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
   }
 
   .datatable-body .datatable-checkbox {
-    inset-block-start: 3px !important; // stylelint-disable-line declaration-no-important
+    inset-block-start: 0.1875rem !important; // stylelint-disable-line declaration-no-important
   }
 }
 
