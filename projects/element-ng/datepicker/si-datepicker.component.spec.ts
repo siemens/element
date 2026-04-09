@@ -6,9 +6,9 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { userEvent } from 'vitest/browser';
 
 import { SiDatepickerComponent, SiDatepickerModule } from '.';
-import { runOnPushChangeDetection } from '../test-helpers';
 import { today } from './date-time-helper';
 import { DatepickerConfig, DateRange } from './si-datepicker.model';
 import { SiCalendarCellHarness } from './testing/si-calendar-cell.harness';
@@ -47,7 +47,6 @@ describe('SiDatepickerComponent', () => {
   /** Update datepicker configuration */
   const updateConfig = async (c: DatepickerConfig): Promise<void> => {
     component.config.set(c);
-    fixture.detectChanges();
     await fixture.whenStable();
   };
 
@@ -350,7 +349,6 @@ describe('SiDatepickerComponent', () => {
       const spy = vi.spyOn(component, 'rangeChanged');
       // Select 18. of month
       await picker.selectCell({ text: '18' });
-      fixture.detectChanges();
 
       expect(spy).toHaveBeenCalledTimes(1);
       const dateRange = vi.mocked(spy).mock.lastCall![0]!;
@@ -366,13 +364,33 @@ describe('SiDatepickerComponent', () => {
         start: new Date(NaN),
         end: new Date(NaN)
       });
-      await runOnPushChangeDetection(fixture);
+      await fixture.whenStable();
 
       expect(
         await picker
           .getCells({ isDisabled: false, isPreview: false })
           .then(cells => cells[6].getText())
       ).toEqual('7');
+    });
+
+    it('should show range hover preview when dateRange input has start but no end', async () => {
+      component.dateRange.set({ start: new Date('2023-12-15'), end: undefined });
+      await fixture.whenStable();
+
+      await userEvent.hover(helper.getEnabledCellWithText('20')!);
+      await fixture.whenStable();
+
+      expect(helper.queryAsArray('.range-hover').length).toBeGreaterThan(0);
+    });
+
+    it('should not show range hover preview when dateRange input has start and end', async () => {
+      component.dateRange.set({ start: new Date('2023-12-15'), end: new Date('2023-12-20') });
+      await fixture.whenStable();
+
+      await userEvent.hover(helper.getEnabledCellWithText('25')!);
+      await fixture.whenStable();
+
+      expect(helper.queryAsArray('.range-hover')).toHaveLength(0);
     });
   });
 });
