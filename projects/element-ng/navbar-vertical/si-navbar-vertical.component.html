@@ -70,6 +70,7 @@
   class="si-layout-inner focus-none"
   tabindex="-1"
   [siSkipLinkTarget]="skipLinkMainContentLabel()"
+  [attr.inert]="smallScreen() && !collapsed() ? '' : null"
 >
   <ng-content />
 </main>
