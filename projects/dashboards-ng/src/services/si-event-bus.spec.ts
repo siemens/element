@@ -95,9 +95,9 @@ describe('SiEventBus', () => {
 
       const state = eventBus.snapshot();
       expect(state).toEqual(
-        jasmine.objectContaining({
+        expect.objectContaining({
           languageChange: 'de',
-          themeChange: jasmine.objectContaining({ name: 'dark' })
+          themeChange: expect.objectContaining({ name: 'dark' })
         })
       );
     });
