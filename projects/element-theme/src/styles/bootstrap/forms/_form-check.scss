@@ -67,7 +67,6 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
   inline-size: $form-check-size !important; // stylelint-disable-line declaration-no-important
   block-size: $form-check-size !important; // stylelint-disable-line declaration-no-important
   border-radius: semantic-tokens.$element-button-radius;
-  inset-inline-start: map.get(spacers.$spacers, 1);
 
   &::after {
     content: '';
