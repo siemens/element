@@ -58,7 +58,7 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
     max-inline-size: $wizard-vertical-max-inline-size;
 
     .step {
-      grid-template-columns: 24px 1fr;
+      grid-template-columns: 1.5rem 1fr;
       grid-template-rows: auto auto auto;
 
       align-items: center;
@@ -169,7 +169,7 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
     &:focus-visible {
       .step-icon {
         @include variables.make-outline-focus-inside();
-        border-radius: 12px;
+        border-radius: 0.75rem;
 
         &.number-step {
           outline: none;
@@ -270,8 +270,8 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
 }
 
 .wizard-btn-container {
-  max-inline-size: 50px;
-  min-inline-size: 40px;
+  min-inline-size: 8ch;
+  flex-shrink: 1;
   text-align: center;
   cursor: pointer;
 
@@ -289,9 +289,9 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
 }
 
 .circle {
-  min-inline-size: 18px;
-  min-block-size: 18px;
-  border-radius: 9px;
+  min-inline-size: 1.125rem;
+  min-block-size: 1.125rem;
+  border-radius: 0.75rem;
   border-width: 1px;
   border-style: solid;
   border-color: currentColor;
@@ -299,8 +299,9 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
 }
 
 .number-step {
-  min-inline-size: 24px;
-  min-block-size: 24px;
+  min-inline-size: 1.5rem;
+  min-block-size: 1.5rem;
+  text-align: center;
 }
 
 .wizard-footer {
@@ -318,7 +319,8 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
     margin-inline-start: auto;
   }
 }
-@container (max-width: 400px) {
+
+@container (max-width: 25em) {
   .wizard-footer-inner {
     flex-direction: column;
     align-items: stretch;

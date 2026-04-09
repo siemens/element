@@ -10,6 +10,7 @@ import {
   computed,
   contentChildren,
   ElementRef,
+  inject,
   input,
   linkedSignal,
   output,
@@ -17,6 +18,7 @@ import {
   untracked,
   viewChild
 } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import {
   elementCancel,
   elementChecked,
@@ -27,10 +29,15 @@ import {
   elementRight4,
   elementWarningFilled
 } from '@siemens/element-icons';
-import { WebComponentContentChildren } from '@siemens/element-ng/common';
+import { TextMeasureService, WebComponentContentChildren } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe,
+  t
+} from '@siemens/element-translate-ng/translate';
+import { switchMap } from 'rxjs';
 
 import { SiWizardStepComponent } from './si-wizard-step.component';
 
@@ -61,6 +68,16 @@ interface StepMetadata {
   }
 })
 export class SiWizardComponent {
+  /** em-based multipliers relative to the step title font-size. */
+  private static readonly minStepWidthEm = 6;
+  private static readonly maxStepWidthEm = 14;
+  private static readonly defaultStepWidthEm = 11;
+  private static readonly fallbackFontSize = 14;
+  /** Fixed horizontal padding of the step title (px-6 = 2 × 16px). */
+  private static readonly stepPadding = 32;
+  private readonly translateService = injectSiTranslateService();
+  private readonly textMeasureService = inject(TextMeasureService);
+
   protected readonly containerSteps = viewChild<ElementRef<HTMLDivElement>>('containerSteps');
 
   /**
@@ -219,7 +236,10 @@ export class SiWizardComponent {
   protected readonly showCompletionPage = signal(false);
   /** The list of visible steps. */
   protected readonly activeSteps = computed(() => this.computeVisibleSteps());
-
+  private readonly headingKeys = computed(() => this.steps().map(s => s.heading()));
+  private readonly maxStepWidth = signal(
+    SiWizardComponent.defaultStepWidthEm * SiWizardComponent.fallbackFontSize
+  );
   private readonly _index = linkedSignal(() => {
     const currentStep = this._currentStep();
     const currentStepIndex = currentStep ? this.steps().indexOf(currentStep) : 0;
@@ -287,6 +307,17 @@ export class SiWizardComponent {
       return { canActivate, stateClass, ariaDisabled, ariaCurrent, icon };
     });
   });
+
+  constructor() {
+    toObservable(this.headingKeys)
+      .pipe(
+        switchMap(keys => this.translateService.translateAsync(keys)),
+        takeUntilDestroyed()
+      )
+      .subscribe(translations =>
+        this.maxStepWidth.set(this.measureMaxTextWidth(Object.values(translations)))
+      );
+  }
 
   protected activateStep(event: Event, stepIndex: number): void {
     event.preventDefault();
@@ -374,6 +405,30 @@ export class SiWizardComponent {
     this._index.set(this.steps().indexOf(step));
   }
 
+  private measureMaxTextWidth(texts: string[]): number {
+    const titleEl =
+      this.containerSteps()?.nativeElement.querySelector<HTMLElement>('.title') ?? undefined;
+    const fontSize = titleEl
+      ? parseFloat(getComputedStyle(titleEl).fontSize)
+      : SiWizardComponent.fallbackFontSize;
+    const defaultWidth = SiWizardComponent.defaultStepWidthEm * fontSize;
+
+    if (texts.length === 0) {
+      return defaultWidth;
+    }
+
+    const minWidth = SiWizardComponent.minStepWidthEm * fontSize;
+    const maxWidth = SiWizardComponent.maxStepWidthEm * fontSize;
+
+    // Only take texts into account which aren't much shorter than the longest text.
+    const maxCharLength = Math.max(...texts.map(text => text.length));
+    const candidates = texts.filter(text => text.length >= maxCharLength * 0.8);
+    const maxTextWidth = Math.max(
+      ...candidates.map(text => this.textMeasureService.measureText(text, titleEl))
+    );
+    return Math.min(Math.max(maxTextWidth + SiWizardComponent.stepPadding, minWidth), maxWidth);
+  }
+
   protected updateVisibleSteps(): void {
     const newVisibleSteps = this.calculateVisibleStepCount();
     if (newVisibleSteps !== this.visibleSteps()) {
@@ -392,10 +447,12 @@ export class SiWizardComponent {
         containerSteps.nativeElement.clientHeight -
         parseInt(computedStyle.paddingBlockStart) -
         parseInt(computedStyle.paddingBlockEnd);
-      return Math.max(Math.floor(clientHeight / 48), 1);
+      const stepEl = containerSteps.nativeElement.querySelector('.step');
+      const stepHeight = stepEl?.getBoundingClientRect().height ?? 48;
+      return Math.max(Math.floor(clientHeight / stepHeight), 1);
     } else {
       const clientWidth = containerSteps.nativeElement.clientWidth;
-      return Math.max(Math.floor(clientWidth / 150), 1);
+      return Math.max(Math.floor(clientWidth / this.maxStepWidth()), 1);
     }
   }
 
