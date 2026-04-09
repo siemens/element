@@ -11,6 +11,7 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiWizardComponent {
+    constructor();
     back(delta?: number): void;
     readonly backText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly cancelText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
