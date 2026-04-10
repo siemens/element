@@ -23,7 +23,7 @@
     <button type="button" class="btn btn-secondary me-4" (click)="start()"> Start </button>
     <button type="button" class="btn btn-secondary" (click)="stop()"> Stop </button>
   </div>
-  <div class="form-check mt-4">
+  <div class="form-check mt-4 mb-2">
     <input
       type="checkbox"
       class="form-check-input"
@@ -32,15 +32,15 @@
       (click)="delay()"
     />
     <label class="form-check-label" for="enable-initial-delay">Enable initial delay</label>
-    <div class="form-check">
-      <input
-        type="checkbox"
-        class="form-check-input"
-        id="blocking-spinner"
-        checked
-        (click)="blocking()"
-      />
-      <label class="form-check-label" for="blocking-spinner">Blocking spinner</label>
-    </div>
+  </div>
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="blocking-spinner"
+      checked
+      (click)="blocking()"
+    />
+    <label class="form-check-label" for="blocking-spinner">Blocking spinner</label>
   </div>
 </div>
