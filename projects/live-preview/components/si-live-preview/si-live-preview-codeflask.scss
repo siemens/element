@@ -61,9 +61,14 @@ $lines-background: element-vars.$element-base-4;
       hyphens: none;
     }
 
+    code {
+      padding: 0;
+    }
+
     .codeflask__flatten,
     .codeflask__code {
       font-family: variables.$font-family-monospace;
+      line-height: 20px;
     }
 
     // this fixes rendering problem during scrolling
