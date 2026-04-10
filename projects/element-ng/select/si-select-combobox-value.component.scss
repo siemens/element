@@ -1,0 +1,11 @@
+:host {
+  display: inline-block;
+  max-inline-size: 100%;
+}
+
+// Opt-in: when the consumer adds the `comma-separated` class to each value,
+// a comma is rendered between adjacent values. Not applied by default so
+// consumers remain free to use chips, custom separators or none at all.
+:host(.comma-separated:not(:first-of-type))::before {
+  content: ',\00a0';
+}

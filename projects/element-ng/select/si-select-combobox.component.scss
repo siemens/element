@@ -1,0 +1,9 @@
+:host-context(.form-control.dropdown) .dropdown-caret {
+  margin-inline-end: calc(
+    (var(--si-feedback-icon-offset, 0px) + var(--si-action-icon-offset)) * -1
+  );
+}
+
+.dropdown-caret {
+  transform-origin: center;
+}

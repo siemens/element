@@ -99,7 +99,7 @@ export class SiSelectHarness extends ComponentHarness {
 
   async getOverflowCount(): Promise<number> {
     await new Promise<void>(resolve => setTimeout(() => resolve()));
-    return this.locatorForOptional('.overflow-item')()
+    return this.locatorForOptional('.pill')()
       .then(overflow => overflow?.text())
       .then(overflow => overflow?.replace('+', ''))
       .then(overflow => (overflow ? +overflow : 0));
