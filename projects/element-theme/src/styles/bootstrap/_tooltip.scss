@@ -35,7 +35,6 @@
 }
 
 .tooltip-inner {
-  min-inline-size: 100px;
   max-inline-size: variables.$tooltip-max-width;
   padding-block: variables.$tooltip-padding-y;
   padding-inline: variables.$tooltip-padding-x;
