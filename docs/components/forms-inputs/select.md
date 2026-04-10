@@ -343,8 +343,107 @@ The following demonstrates how to add a "Create" button within the dropdown acti
 
 <si-docs-component example="si-select/si-select" height="500"></si-docs-component>
 
+### Custom select (experimental)
+
+When the rigid `si-select` options API is not enough — for example to embed a
+tree, drive multi-stage selection with `Apply` / `Cancel` semantics, or render
+arbitrary UI inside the dropdown — applications can compose their own select
+from the following primitives:
+
+- `SiCustomSelectDirective` — host directive providing the combobox wiring:
+  `ControlValueAccessor` (`formControl`, `ngModel`, `[(value)]`), disabled /
+  readonly handling, `SiFormItemControl` integration, ARIA `combobox` role,
+  keyboard activation (Enter, Space, ArrowDown / ArrowUp), CDK overlay
+  lifecycle, and focus trapping inside the dropdown.
+- `SiSelectComboboxComponent` — the visual trigger that renders the projected
+  value and the dropdown caret. Pair it with `SiSelectComboboxValueComponent`
+  to mark individual selected entries.
+- `SiSelectDropdownDirective` — structural directive (`*si-select-dropdown` /
+  `<ng-template si-select-dropdown>`) that registers the dropdown content
+  template with the parent custom select. Requires a `contentType` input
+  whose value is forwarded to the `aria-haspopup` attribute of the combobox
+  host (`menu`, `listbox`, `tree`, `grid`, `dialog`, `true`, or `false`).
+
+The strategy is intentionally minimal: the host directive owns state, focus,
+keyboard handling and form integration, while applications retain full
+control over what is rendered in the trigger and in the dropdown. The same
+component can therefore be styled either as a `form-control` (inside an
+`si-form-item`, with validation) or as a button (`btn btn-primary-ghost`) by
+applying the corresponding class on the host element.
+
+A custom select component typically applies `SiCustomSelectDirective` as a
+host directive and exposes the inputs and outputs the application needs:
+
+```ts
+@Component({
+  selector: 'app-tree-select',
+  imports: [SiSelectComboboxComponent, SiSelectDropdownDirective, SiTreeViewComponent],
+  template: `
+    <si-select-combobox>
+      @if (select.value(); as val) {
+        {{ val }}
+      } @else {
+        <span class="text-secondary">Select a location...</span>
+      }
+    </si-select-combobox>
+
+    <ng-template si-select-dropdown contentType="tree">
+      <si-tree-view
+        ariaLabel="Locations"
+        [items]="items()"
+        [enableSelection]="true"
+        [singleSelectMode]="true"
+        (treeItemClicked)="selectItem($event)"
+      />
+    </ng-template>
+  `,
+  hostDirectives: [
+    {
+      directive: SiCustomSelectDirective,
+      inputs: ['disabled', 'readonly', 'value'],
+      outputs: ['valueChange']
+    }
+  ]
+})
+export class TreeSelectComponent {
+  protected readonly select = inject<SiCustomSelectDirective<string>>(SiCustomSelectDirective);
+
+  readonly items = input<TreeItem[]>([]);
+
+  selectItem(item: TreeItem): void {
+    if (item.label) {
+      this.select.updateValue(item.label as string);
+      this.select.close();
+    }
+  }
+}
+```
+
+Because `si-tree-view` (and similar components) mutate the model they render,
+inputs must be deep-cloned before they are passed in. A robust pattern is to
+keep a `pendingItems` signal that is repopulated from a fresh
+`JSON.parse(JSON.stringify(...))` clone whenever the dropdown opens, so each
+opening starts from a clean slate without leaking state back to the caller.
+
+<si-docs-component example="si-select/si-select-custom" height="450"></si-docs-component>
+
+The same primitives can drive a multi-select with `Apply` / `Cancel`. The
+host component buffers pending changes while the dropdown is open and only
+calls `select.updateValue(...)` once the user confirms — keeping the
+`ControlValueAccessor` value stable until the selection is applied.
+
+<si-docs-component example="si-select/si-select-multi-custom" height="450"></si-docs-component>
+
 <si-docs-api component="SiSelectComponent"></si-docs-api>
 
 <si-docs-api directive="SiSelectSimpleOptionsDirective" heading="Simple options (via SiSelectSimpleOptionsDirective)"></si-docs-api>
+
+<si-docs-api directive="SiCustomSelectDirective"></si-docs-api>
+
+<si-docs-api component="SiSelectComboboxComponent"></si-docs-api>
+
+<si-docs-api component="SiSelectComboboxValueComponent"></si-docs-api>
+
+<si-docs-api directive="SiSelectDropdownDirective"></si-docs-api>
 
 <si-docs-types></si-docs-types>

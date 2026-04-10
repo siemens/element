@@ -52,6 +52,22 @@ export interface SelectOptionSource<TValue> {
     valuesEqual?(optionA: TValue, optionB: TValue): boolean;
 }
 
+// @public
+export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormItemControl {
+    constructor();
+    close(): void;
+    readonly disabled: _angular_core.Signal<boolean>;
+    readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly errormessageId: _angular_core.InputSignal<string>;
+    readonly id: _angular_core.InputSignal<string>;
+    readonly isOpen: _angular_core.WritableSignal<boolean>;
+    open(event?: Event): void;
+    readonly openChange: _angular_core.OutputEmitterRef<boolean>;
+    readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    updateValue(value: T | undefined): void;
+    readonly value: _angular_core.ModelSignal<T | undefined>;
+}
+
 // @public (undocumented)
 export class SiSelectActionDirective {
     readonly selectActionAutoClose: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -59,6 +75,18 @@ export class SiSelectActionDirective {
 
 // @public (undocumented)
 export class SiSelectActionsDirective {
+}
+
+// @public
+export class SiSelectComboboxComponent {
+}
+
+// @public
+export class SiSelectComboboxValueComponent {
+    readonly icon: _angular_core.InputSignal<string | undefined>;
+    readonly iconColor: _angular_core.InputSignal<string | undefined>;
+    readonly stackedIcon: _angular_core.InputSignal<string | undefined>;
+    readonly stackedIconColor: _angular_core.InputSignal<string | undefined>;
 }
 
 // @public (undocumented)
@@ -75,6 +103,15 @@ export class SiSelectComponent<T> implements SiFormItemControl {
     readonly openChange: _angular_core.OutputEmitterRef<boolean>;
     readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
+}
+
+// @public
+export type SiSelectDropdownContentType = 'false' | 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
+
+// @public
+export class SiSelectDropdownDirective {
+    constructor();
+    readonly contentType: _angular_core.InputSignal<SiSelectDropdownContentType>;
 }
 
 // @public

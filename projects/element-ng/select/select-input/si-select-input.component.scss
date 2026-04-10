@@ -39,10 +39,3 @@
 si-select-option + si-select-option::before {
   content: ',\00a0 ';
 }
-
-.overflow-item {
-  border-radius: all-variables.$element-radius-3;
-  background: all-variables.$element-base-0;
-  margin-inline-start: map.get(all-variables.$spacers, 2);
-  padding-inline: map.get(all-variables.$spacers, 4);
-}
