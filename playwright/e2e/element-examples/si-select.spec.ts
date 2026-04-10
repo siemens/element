@@ -7,6 +7,8 @@ import { expect, test } from '../../support/test-helpers';
 test.describe('si-select', () => {
   const example = 'si-select/si-select';
   const lazyLoadExample = 'si-select/si-select-lazy-load';
+  const customExample = 'si-select/si-select-custom';
+  const multiCustomExample = 'si-select/si-select-multi-custom';
 
   test(example, async ({ page, si }) => {
     await si.visitExample(example);
@@ -102,5 +104,52 @@ test.describe('si-select', () => {
     await si.runVisualAndA11yTests();
     await page.getByText('Switzerland').click();
     await si.runVisualAndA11yTests('checked');
+  });
+
+  test(customExample, async ({ page, si }) => {
+    await si.visitExample(customExample);
+
+    const comboboxes = page.getByRole('combobox');
+    const buttonCombobox = comboboxes.first();
+    const formControlCombobox = comboboxes.last();
+
+    // Button variant: open, snapshot, select a value.
+    await buttonCombobox.click();
+    await expect(buttonCombobox).toHaveAttribute('aria-expanded', 'true');
+    await si.runVisualAndA11yTests('custom-button-opened');
+
+    await page.getByRole('treeitem', { name: 'Company1' }).focus();
+    await page.keyboard.press('ArrowRight');
+    await page.getByRole('treeitem', { name: 'Milano' }).click();
+    await expect(buttonCombobox).not.toHaveAttribute('aria-expanded', 'true');
+    await expect(buttonCombobox).toContainText('Milano');
+
+    // Form-control variant: open, then close and snapshot the closed (invalid) state.
+    await formControlCombobox.click();
+    await expect(formControlCombobox).toHaveAttribute('aria-expanded', 'true');
+
+    await page.keyboard.press('Escape');
+    await expect(formControlCombobox).not.toHaveAttribute('aria-expanded', 'true');
+    await si.runVisualAndA11yTests('custom-form-control-closed');
+  });
+
+  test(multiCustomExample, async ({ page, si }) => {
+    await si.visitExample(multiCustomExample);
+
+    const formControlCombobox = page.getByRole('combobox').last();
+
+    // Open form-control variant.
+    await formControlCombobox.click();
+    await expect(formControlCombobox).toHaveAttribute('aria-expanded', 'true');
+
+    // Check the first node (selects all of its children).
+    await page.getByRole('tree').getByRole('checkbox').first().check();
+    await si.runVisualAndA11yTests('multi-custom-first-selected');
+
+    // Apply.
+    await page.getByRole('button', { name: 'Apply' }).click();
+    await expect(formControlCombobox).not.toHaveAttribute('aria-expanded', 'true');
+    await expect(formControlCombobox).toContainText('Company1');
+    await si.runVisualAndA11yTests('multi-custom-applied');
   });
 });

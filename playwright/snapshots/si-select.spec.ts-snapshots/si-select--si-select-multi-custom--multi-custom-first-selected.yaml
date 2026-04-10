@@ -1,0 +1,22 @@
+- text: Button variant
+- combobox "Select locations..."
+- text: Form-control variant Locations (required)*
+- combobox "Select locations..." [expanded]
+- text: "Control panel Selected (ngModel): none Selected (formControl): none Locations valid: false"
+- checkbox "Readonly"
+- text: Readonly
+- checkbox "Disabled"
+- text: Disabled
+- dialog "Select locations":
+  - tree "Locations":
+    - treeitem "Company1 Company1" [checked] [level=1]:
+      - checkbox "Company1" [checked]
+      - text: ""
+    - treeitem "Company2 Company2" [level=1]:
+      - checkbox "Company2"
+      - text: ""
+    - treeitem "Company3 Company3" [level=1]:
+      - checkbox "Company3"
+      - text: ""
+  - button "Cancel"
+  - button "Apply"

@@ -1,0 +1,14 @@
+- text: Button variant
+- combobox: Milano
+- text: Form-control variant Location (required)*
+- combobox [expanded]: Select a location...
+- text: "Control panel Current value (ngModel): Milano Current value (formControl): none Location valid: false"
+- checkbox "Readonly"
+- text: Readonly
+- checkbox "Disabled"
+- text: Disabled
+- tree "Locations":
+  - treeitem "Company1" [level=1]
+  - treeitem "Company2" [level=1]
+  - treeitem "Company3" [level=1]
+- button "Clear selection" [disabled]
