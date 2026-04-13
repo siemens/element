@@ -8,30 +8,26 @@
 
 @use 'sass:map';
 
-$btn-icon-font-size-default: variables.$si-icon-font-size !default;
-$btn-icon-font-size-lg: variables.$si-icon-font-size-lg !default;
-$btn-icon-font-size-sm: variables.$si-icon-font-size !default;
-$btn-icon-size-default: 2rem !default;
-$btn-icon-size-lg: 2.5rem !default;
-$btn-icon-size-sm: 1.5rem !default;
+$btn-icon-font-size-default: variables.$si-icon-font-size;
+$btn-icon-font-size-lg: variables.$si-icon-font-size;
+$btn-icon-font-size-sm: variables.$si-icon-font-size;
 
 // there are some non .btn buttons used in element
 button {
   color: semantic-tokens.$element-text-primary;
 }
 
-@mixin button-icon-size($btn-size, $font-size) {
-  inline-size: $btn-size;
-  block-size: $btn-size;
-  font-size: $font-size;
-}
-
 :is(.btn, .btn-close) {
-  line-height: bootstrap-variables.$btn-line-height;
-  font-weight: typography.$si-font-weight-h5;
-  padding-block: calc(bootstrap-variables.$btn-padding-y - var(--btn-border-width, 0px));
+  --btn-icon-size: #{$btn-icon-font-size-default};
+  --btn-font-size: #{bootstrap-variables.$btn-font-size};
+  --btn-font-weight: #{typography.$si-font-weight-semibold};
+  --btn-line-height: #{bootstrap-variables.$btn-line-height};
+  --btn-padding-y: #{bootstrap-variables.$btn-padding-y};
+  line-height: var(--btn-line-height);
+  font-weight: var(--btn-font-weight);
+  padding-block: calc(var(--btn-padding-y) - var(--btn-border-width, 0px));
   padding-inline: calc(bootstrap-variables.$btn-padding-x - var(--btn-border-width, 0px));
-  font-size: bootstrap-variables.$btn-font-size;
+  font-size: var(--btn-font-size);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -68,7 +64,8 @@ button {
   }
 
   .icon {
-    margin-block: -#{map.get(spacers.$spacers, 2)};
+    font-size: var(--btn-icon-size);
+    margin-block: calc((var(--btn-icon-size) - var(--btn-font-size)) / -2);
     margin-inline-end: #{map.get(spacers.$spacers, 2)};
   }
 }
@@ -187,7 +184,7 @@ button {
   --btn-color: #{bootstrap-variables.$btn-link-color};
   --btn-color-hover: #{bootstrap-variables.$btn-link-hover-color};
   --btn-color-active: #{semantic-tokens.$element-action-primary-active};
-  font-weight: typography.$si-font-weight-body;
+  --btn-font-weight: #{typography.$si-font-weight-body};
   justify-content: flex-start;
   text-decoration: bootstrap-variables.$link-decoration;
   padding: 0;
@@ -208,33 +205,9 @@ button {
   display: inline-flex;
   padding: 0;
   flex-shrink: 0;
-
-  .icon {
-    margin-inline: 0;
-  }
-}
-
-.btn-icon {
-  border-radius: semantic-tokens.$element-button-radius;
-}
-
-.btn-circle {
-  border-radius: 50%;
-}
-
-.btn-circle,
-.btn-icon {
-  & {
-    @include button-icon-size($btn-icon-size-default, $btn-icon-font-size-default);
-  }
-
-  &.btn-lg {
-    @include button-icon-size($btn-icon-size-lg, $btn-icon-font-size-lg);
-  }
-
-  &.btn-sm {
-    @include button-icon-size($btn-icon-size-sm, $btn-icon-font-size-sm);
-  }
+  font-size: var(--btn-icon-size);
+  aspect-ratio: 1 / 1;
+  block-size: calc(var(--btn-font-size) * var(--btn-line-height) + 2 * var(--btn-padding-y));
 
   .icon {
     margin-block: 0;
@@ -242,37 +215,40 @@ button {
   }
 }
 
+.btn-circle {
+  border-radius: 50%;
+}
+
+.btn-lg {
+  --btn-icon-size: #{$btn-icon-font-size-lg};
+  --btn-font-size: #{bootstrap-variables.$btn-font-size-lg};
+  --btn-line-height: #{bootstrap-variables.$btn-line-height-lg};
+  --btn-padding-y: #{bootstrap-variables.$btn-padding-y-lg};
+}
+
+.btn-sm {
+  --btn-icon-size: #{$btn-icon-font-size-sm};
+  --btn-font-size: #{bootstrap-variables.$btn-font-size-sm};
+  --btn-line-height: #{bootstrap-variables.$btn-line-height-sm};
+  --btn-padding-y: #{bootstrap-variables.$btn-padding-y-sm};
+}
+
+// this is for compatibility so that old markup looks ok-ish
 .btn-close {
+  --btn-font-weight: #{typography.$si-font-weight-normal};
   --btn-bg: transparent;
   --btn-bg-hover: #{semantic-tokens.$element-base-1-hover};
   --btn-bg-active: #{semantic-tokens.$element-base-1-selected};
   --btn-color: #{semantic-tokens.$element-ui-1};
   --btn-color-active: #{semantic-tokens.$element-ui-1};
-}
 
-.btn-close.btn-tertiary {
-  --btn-bg-hover: #{semantic-tokens.$element-action-secondary-hover};
-  --btn-bg-active: #{semantic-tokens.$element-action-secondary-active};
-  --btn-color: #{semantic-tokens.$element-action-secondary-text};
-  --btn-color-hover: #{semantic-tokens.$element-action-secondary-text-hover};
-  --btn-color-active: #{semantic-tokens.$element-action-primary-active};
-}
-
-.btn-lg {
-  font-size: bootstrap-variables.$btn-font-size-lg;
-  line-height: 1.5;
-}
-
-.btn-sm {
-  font-size: bootstrap-variables.$btn-font-size-sm;
-  line-height: map.get(spacers.$spacers, 4);
-}
-
-// this is for compatibility so that old markup looks ok-ish
-.btn-close {
-  @include button-icon-size($btn-icon-size-default, $btn-icon-font-size-default);
-
-  font-weight: typography.$si-font-weight-normal;
+  &.btn-tertiary {
+    --btn-bg-hover: #{semantic-tokens.$element-action-secondary-hover};
+    --btn-bg-active: #{semantic-tokens.$element-action-secondary-active};
+    --btn-color: #{semantic-tokens.$element-action-secondary-text};
+    --btn-color-hover: #{semantic-tokens.$element-action-secondary-text-hover};
+    --btn-color-active: #{semantic-tokens.$element-action-primary-active};
+  }
 
   &::before {
     content: '\002715';
@@ -303,7 +279,7 @@ button {
     typography.$si-font-weight-body
   );
   padding-block: bootstrap-variables.$input-padding-y;
-  padding-inline: 7px;
+  padding-inline: bootstrap-variables.$btn-padding-x - bootstrap-variables.$input-border-width;
 
   border-radius: bootstrap-variables.$input-border-radius;
   justify-content: flex-start;
