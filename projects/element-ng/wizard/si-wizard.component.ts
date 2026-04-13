@@ -39,6 +39,14 @@ interface StepItem {
   step: SiWizardStepComponent;
 }
 
+interface StepMetadata {
+  canActivate: boolean;
+  stateClass: string;
+  ariaDisabled: 'true' | 'false';
+  ariaCurrent: 'step' | 'false';
+  icon: string;
+}
+
 @Component({
   selector: 'si-wizard',
   imports: [SiIconComponent, SiResizeObserverDirective, SiTranslatePipe, NgTemplateOutlet],
@@ -240,31 +248,49 @@ export class SiWizardComponent {
     elementWarningFilled
   });
 
-  protected canActivate(stepIndex: number): boolean {
-    if (stepIndex < 0) {
-      return false;
-    }
-    // Can always activate previous steps
-    if (stepIndex < this.index) {
-      return true;
-    }
-    // We are already in the step. Nothing to activate.
-    if (stepIndex === this.index) {
-      return false;
-    }
-    // Fast-forward: check all steps if they are valid
-    for (let i = this.index; i < stepIndex; i++) {
-      const theStep = this.steps()[i];
-      if (!theStep.isValid()) {
-        return false;
+  protected readonly stepsMetadata = computed((): StepMetadata[] => {
+    const index = this._index();
+    const steps = this.steps();
+
+    // O(N) pre-calculation: find the first invalid step from the current index
+    let firstInvalidIndex = steps.length;
+    for (let i = index; i < steps.length; i++) {
+      if (!steps[i].isValid()) {
+        firstInvalidIndex = i;
+        break;
       }
     }
-    return true;
-  }
+
+    return steps.map((step, stepIndex) => {
+      // canActivate: O(1) per step using pre-calculated firstInvalidIndex
+      let canActivate: boolean;
+      if (stepIndex < index) {
+        canActivate = true;
+      } else if (stepIndex === index) {
+        canActivate = false;
+      } else {
+        canActivate = firstInvalidIndex >= stepIndex;
+      }
+
+      // stateClass
+      const stateClass = this.getStateClass(stepIndex, canActivate);
+
+      // ariaDisabled
+      const ariaDisabled = !canActivate ? 'true' : 'false';
+
+      // ariaCurrent
+      const ariaCurrent = stepIndex === index ? 'step' : 'false';
+
+      // icon
+      const icon = this.getState(step, stepIndex);
+
+      return { canActivate, stateClass, ariaDisabled, ariaCurrent, icon };
+    });
+  });
 
   protected activateStep(event: Event, stepIndex: number): void {
     event.preventDefault();
-    if (this.canActivate(stepIndex)) {
+    if (this.stepsMetadata()[stepIndex].canActivate) {
       if (stepIndex > this.index) {
         this.next(stepIndex - this.index);
       }
@@ -274,11 +300,11 @@ export class SiWizardComponent {
     }
   }
 
-  protected getStateClass(stepIndex: number): string {
+  private getStateClass(stepIndex: number, canActivate: boolean): string {
     if (stepIndex === this.index) {
       return 'active';
     }
-    if (!this.canActivate(stepIndex)) {
+    if (!canActivate) {
       return 'disabled';
     }
     if (stepIndex < this.index) {
@@ -287,37 +313,28 @@ export class SiWizardComponent {
     return '';
   }
 
-  protected getAriaDisabled(stepIndex: number): string {
-    if (!this.canActivate(stepIndex)) {
-      return 'true';
-    }
-    return 'false';
-  }
-
-  protected getAriaCurrent(stepIndex: number): string {
-    if (stepIndex === this.index) {
-      return 'step';
-    }
-    return 'false';
-  }
-
   /**
    * Go to the next wizard step.
    * @param delta - optional number of steps to move forward.
    */
   next(delta: number = 1): void {
     const steps = this.steps();
-    if (this.index === steps.length - 1) {
-      return;
-    }
     const stepIndex = this.index + delta;
-    const nextStep = steps[stepIndex];
-    if (this.canActivate(stepIndex)) {
+    if (stepIndex < steps.length && this.stepsMetadata()[stepIndex].canActivate) {
+      const nextStep = steps[stepIndex];
       this.currentStep?.next.emit();
       if (this.currentStep?.isNextNavigable()) {
         this.activate(nextStep);
       }
     }
+  }
+
+  private getState(step: SiWizardStepComponent, stepIndex: number): string {
+    if (step.failed() === true) {
+      return this.stepFailedIcon();
+    }
+    const txtStyle = step.isActive() ? this.stepActiveIcon() : this.stepIcon();
+    return stepIndex >= this.index ? txtStyle : this.stepCompletedIcon();
   }
 
   /**
@@ -345,14 +362,6 @@ export class SiWizardComponent {
     } else {
       this.completionAction.emit();
     }
-  }
-
-  protected getState(step: SiWizardStepComponent, stepIndex: number): string {
-    if (step.failed() === true) {
-      return this.stepFailedIcon();
-    }
-    const txtStyle = step.isActive() ? this.stepActiveIcon() : this.stepIcon();
-    return stepIndex >= this.index ? txtStyle : this.stepCompletedIcon();
   }
 
   private activate(step: SiWizardStepComponent): void {
