@@ -75,10 +75,12 @@
 
       <button
         type="button"
-        class="btn btn-icon btn-primary-ghost element-rocket"
+        class="btn btn-icon btn-primary-ghost"
         aria-label="rocket"
         [disabled]="disabled"
-      ></button>
+      >
+        <i aria-hidden="true" class="icon element-rocket"></i>
+      </button>
 
       <button
         type="button"
@@ -266,6 +268,18 @@
       <button type="button" class="btn btn-secondary btn-lg" [disabled]="disabled">Large</button>
       <button type="button" class="btn btn-secondary" [disabled]="disabled">Default</button>
       <button type="button" class="btn btn-secondary btn-sm" [disabled]="disabled">Small</button>
+      <button type="button" class="btn btn-secondary btn-lg" [disabled]="disabled">
+        <i aria-hidden="true" class="icon element-rocket"></i>
+        Large
+      </button>
+      <button type="button" class="btn btn-secondary" [disabled]="disabled">
+        <i aria-hidden="true" class="icon element-rocket"></i>
+        Default
+      </button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="disabled">
+        <i aria-hidden="true" class="icon element-rocket"></i>
+        Small
+      </button>
     </div>
 
     <h4 class="mb-4">Icon button sizing</h4>

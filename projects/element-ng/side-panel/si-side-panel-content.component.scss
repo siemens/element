@@ -1,7 +1,6 @@
 @use 'sass:map';
 
 @use '@siemens/element-theme/src/styles/all-variables';
-@use '@siemens/element-theme/src/styles/bootstrap/buttons';
 
 :host {
   --si-accordion-radius: 0;
@@ -120,9 +119,10 @@
   :host.enable-mobile {
     // Fill space of button that is not there yet
     &:not(.collapsed):not(.expanded) si-content-action-bar {
-      // Keep in sync with $btn-icon-size-sm
+      // height of the expand button (== width since square) + padding of expand button
       margin-inline-end: calc(
-        #{buttons.$btn-icon-size-sm} + 2 * #{map.get(all-variables.$spacers, 4)}
+        (all-variables.$btn-font-size * all-variables.$btn-line-height) +
+          (2 * all-variables.$btn-padding-y) + (2 * map.get(all-variables.$spacers, 4))
       );
     }
 
