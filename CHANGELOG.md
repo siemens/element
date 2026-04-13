@@ -1,3 +1,19 @@
+# [49.6.0](https://github.com/siemens/element/compare/v49.5.0...v49.6.0) (2026-04-13)
+
+
+### Features
+
+* **schematics:** add migration schematic for modal options from `initialState` to `inputValues` ([37401de](https://github.com/siemens/element/commit/37401dee72299dad7ac9c754d1f7e91daa3b539c))
+
+
+### Bug Fixes
+
+* **datepicker:** set correct range preview on dateRange input changes ([d34bd15](https://github.com/siemens/element/commit/d34bd153499c2510c3ec31680207dbe81e85abc8))
+* **live-preview:** code editor cursor position misaligned ([25ce952](https://github.com/siemens/element/commit/25ce9526171a62ebe0cc551df6ab7dd4ab74ab61))
+* **theme:** align checkbox and radio inputs ([0332eb4](https://github.com/siemens/element/commit/0332eb4e56124d1dc038a5902512014549312be8))
+* **toast-notification:** fix missing toasts when called during bootstrap ([bfa89b8](https://github.com/siemens/element/commit/bfa89b826eb3fffb6cd1c34cc1dd2c2604ff3c98))
+* **tooltip:** remove min-width constraint from tooltip ([548b313](https://github.com/siemens/element/commit/548b313743d0f9052496276055d93ce41efc7c6f))
+
 # [49.5.0](https://github.com/siemens/element/compare/v49.4.0...v49.5.0) (2026-04-09)
 
 
