@@ -9,16 +9,7 @@
   margin-block-start: -1 * map.get(variables.$spacers, 2);
 }
 
-.widget-list {
-  background-color: variables.$element-base-1;
-  border: 1px solid variables.$element-ui-4;
-  border-radius: variables.$element-radius-2;
-  overflow-x: auto;
-}
-
 .list-group-item {
-  border-inline-color: transparent;
-  border-radius: 0;
   cursor: pointer;
 }
 
