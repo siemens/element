@@ -56,17 +56,18 @@
     (siResizeObserver)="updateVisibleSteps()"
   >
     @for (item of activeSteps(); track item.index) {
+      @let meta = stepsMetadata()[item.index];
       <div class="step">
         <div
-          [class]="['line', 'previous', getStateClass(item.index)]"
+          [class]="['line', 'previous', meta.stateClass]"
           [class.dashed]="$first && item.index > 0"
           [class.vertical]="verticalLayout()"
           [class.spacer]="$first && item.index === 0"
         ></div>
         <a
-          [class]="['focus-none', getStateClass(item.index)]"
-          [attr.aria-current]="getAriaCurrent(item.index)"
-          [attr.href]="!canActivate(item.index) || !currentStep?.isNextNavigable() ? null : '#'"
+          [class]="['focus-none', meta.stateClass]"
+          [attr.aria-current]="meta.ariaCurrent"
+          [attr.href]="!meta.canActivate || !currentStep?.isNextNavigable() ? null : '#'"
           (click)="activateStep($event, item.index)"
         >
           @if (showStepNumbers() && !item.step.failed()) {
@@ -83,20 +84,20 @@
             <si-icon
               class="icon-lg step-icon"
               [class.status-warning]="item.step.failed()"
-              [icon]="getState(item.step!, item.index)"
+              [icon]="meta.icon"
             />
           }
           <div
             class="title si-h5"
             [class.text-center]="!verticalLayout()"
             [class.px-6]="!verticalLayout()"
-            [attr.aria-disabled]="getAriaDisabled(item.index)"
+            [attr.aria-disabled]="meta.ariaDisabled"
             >{{ item.step.heading() | translate }}</div
           >
         </a>
         @if (item.index + 1 < stepCount) {
           <div
-            [class]="['line', getStateClass(item.index + 1)]"
+            [class]="['line', stepsMetadata()[item.index + 1].stateClass]"
             [class.vertical]="verticalLayout()"
             [class.dashed]="$last"
           ></div>
