@@ -11,15 +11,13 @@
           (searchChange)="onSearch($event)"
         />
       </div>
-      <div
-        class="si-layout-fixed-height text-pre-wrap text-break overflow-y-auto widget-list mt-6 bg-base-1"
-      >
+      <div class="si-layout-fixed-height text-pre-wrap text-break mt-6 bg-base-1 rounded-2">
         @if (filteredWidgetCatalog.length > 0) {
           <span id="widget-catalog-list-description" class="visually-hidden">
             {{ labelWidgetCatalogList | translate }}
           </span>
           <ul
-            class="si-layout-fixed-height list-group"
+            class="si-layout-fixed-height list-group overflow-auto mb-0"
             aria-labelledby="widget-catalog-list-description"
             cdkListbox
             [cdkListboxValue]="[]"
@@ -32,7 +30,7 @@
                 [class.active]="selected() === widget"
               >
                 <si-circle-status class="my-n4 me-5" [icon]="widget.iconClass" />
-                <div class="d-flex flex-column align-items-start">
+                <div class="d-flex flex-column align-items-start align-self-center">
                   <span class="si-h5">{{ widget.name }}</span>
                   <span class="si-body">{{ widget.description?.trim() }}</span>
                 </div>
