@@ -1,5 +1,7 @@
 name: VRT Update
 
+permissions: read-all
+
 on:
   workflow_dispatch:
     inputs:
@@ -30,6 +32,9 @@ on:
 jobs:
   vrt-update:
     runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      pull-requests: write
     container: mcr.microsoft.com/playwright:v1.59.1-noble
     # PR from non-collaborators requires a manual re-run from collaborators which
     # makes run_attempt > 1 on first attempt causing the workflow to run.
@@ -231,7 +236,7 @@ jobs:
 
       - name: Comment on PR with download link
         if: success() && github.event_name == 'pull_request'
-        uses: marocchino/sticky-pull-request-comment@v3
+        uses: marocchino/sticky-pull-request-comment@d4d6b0936434b21bc8345ad45a440c5f7d2c40ff # v3
         with:
           message: |
             [⬇️ Download VRTs](${{ steps.artifact.outputs.download_url }})

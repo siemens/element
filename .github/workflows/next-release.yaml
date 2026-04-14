@@ -2,6 +2,8 @@ name: Next Release
 on:
   workflow_dispatch:
 
+permissions: read-all
+
 jobs:
   # This ensures that the next branch is update to date with main.
   update-next:
