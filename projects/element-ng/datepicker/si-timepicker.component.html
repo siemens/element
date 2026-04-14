@@ -7,7 +7,7 @@
     @if (!$first) {
       <ng-container *ngTemplateOutlet="separator; context: { separator: config.separator }" />
     }
-    <label class="min-width">
+    <label>
       @if (!hideLabels()) {
         <span class="form-label">{{ (config.label | translate) || '&nbsp;' }}</span>
       }
