@@ -7,7 +7,7 @@
   inline-size: 100%;
 
   .banner {
-    padding-block: map.get(variables.$spacers, 1);
+    padding-block: variables.$si-system-banner-padding-y;
     padding-inline: map.get(variables.$spacers, 5);
   }
 

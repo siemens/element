@@ -1,3 +1,5 @@
+@use 'sass:map';
+@use './spacers';
 @use './animations';
 
 // Custom variables
@@ -12,7 +14,8 @@ $btn-width-normal: 80px;
 $si-application-header-height: 48px;
 
 $si-titlebar-height: 36px;
-$si-system-banner-height: 20px;
+$si-system-banner-padding-y: map.get(spacers.$spacers, 1);
+$si-system-banner-height: calc(1rem + 2 * $si-system-banner-padding-y);
 
 // allows adding a custom titlebar on top
 // stylelint-disable-next-line length-zero-no-unit
