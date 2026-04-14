@@ -1,11 +1,11 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 :host {
-  --avatar-size: 40px;
+  --avatar-size: 2.5rem;
   --indicator-size: #{variables.$si-icon-font-size};
   --background: #{variables.$element-base-0};
-  --indicator-offset-x: -10px;
-  --indicator-offset-y: -6px;
+  --indicator-offset-x: -0.625rem;
+  --indicator-offset-y: -0.375rem;
 
   flex: 0 0 auto;
   display: inline-flex;
@@ -23,29 +23,29 @@
   &.xsmall,
   &.small {
     --initials-size: #{variables.$si-font-size-h5};
-    --indicator-size: 16px;
-    --indicator-offset-x: -8px;
-    --indicator-offset-y: -4px;
+    --indicator-size: 1rem;
+    --indicator-offset-x: -0.5rem;
+    --indicator-offset-y: -0.25rem;
   }
 
   &.tiny {
-    --avatar-size: 24px;
+    --avatar-size: 1.5rem;
   }
 
   &.xsmall {
-    --avatar-size: 28px;
+    --avatar-size: 1.75rem;
   }
 
   &.small {
-    --avatar-size: 32px;
+    --avatar-size: 2rem;
   }
 
   &.large {
-    --avatar-size: 56px;
+    --avatar-size: 3.5rem;
   }
 
   &.xlarge {
-    --avatar-size: 80px;
+    --avatar-size: 5rem;
   }
 }
 
