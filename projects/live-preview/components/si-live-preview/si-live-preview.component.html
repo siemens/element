@@ -9,6 +9,7 @@
       [isFullscreen]="isFullscreen"
       [theme]="theme"
       [locale]="locale"
+      [rootFontSize]="rootFontSize"
       [isRTL]="isRTL"
       [loadReact]="loadReact"
       [loadVue]="loadVue"
@@ -104,7 +105,7 @@
     <div class="buttons">
       @if (webcomponents && showEditor && frameworks.size > 1) {
         <select
-          aria-label="select framework"
+          aria-label="Select framework"
           class="btn-command locale-selection"
           [(ngModel)]="selectedFramework"
           (ngModelChange)="changeFramework($event)"
@@ -116,9 +117,27 @@
           }
         </select>
       }
+      @if (rootFontSizes.length) {
+        <select
+          name="selectRfs"
+          aria-label="Root font size"
+          title="Root font size"
+          class="btn-command rfs-selection"
+          [ngModel]="rootFontSize"
+          (ngModelChange)="rfsSelectionChanges($event)"
+        >
+          <option value="0">none</option>
+          <option value="initial">initial</option>
+          @for (rfs of rootFontSizes; track rfs) {
+            <option [value]="rfs">{{ rfs }}px</option>
+          }
+        </select>
+      }
       @if (!!localeApi && showEditor) {
         <select
-          aria-label="select locale"
+          name="selectLocale"
+          aria-label="Select locale"
+          title="Locale"
           class="btn-command locale-selection"
           (change)="localeSelectionChanged($event.target)"
         >
