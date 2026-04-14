@@ -43,13 +43,17 @@ jobs:
     steps:
       - name: Check execution conditions and set target ref
         id: check
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_REF: ${{ inputs.ref }}
+          HEAD_REF: ${{ github.head_ref }}
         run: |
           echo "should-run=true" >> $GITHUB_OUTPUT
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "target-ref=${{ inputs.ref }}" >> $GITHUB_OUTPUT
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "target-ref=$INPUT_REF" >> $GITHUB_OUTPUT
           else
             # For PR re-runs, use the head ref
-            echo "target-ref=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+            echo "target-ref=$HEAD_REF" >> $GITHUB_OUTPUT
           fi
 
       # As we are in another container, we need to install LFS manually.
@@ -184,10 +188,11 @@ jobs:
           PLAYWRIGHT_WEB_SERVER_TIMEOUT: 120000
 
       - name: Create snapshots archive
+        env:
+          BRANCH_NAME: ${{ inputs.ref || github.ref_name }}
         run: |
           # Create a timestamped archive of the updated snapshots
           TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
-          BRANCH_NAME="${{ inputs.ref || github.ref_name }}"
 
           # Sanitize branch name by replacing invalid characters for artifact names
           # Replace forward slashes, colons, and other invalid characters with hyphens
