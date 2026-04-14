@@ -50,8 +50,9 @@ jobs:
           GIT_COMMITTER_EMAIL: 'simpl.si@siemens.com'
           GITHUB_TOKEN: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }}
       - id: check_release
+        env:
+          BEFORE_TAG: ${{ steps.before_release.outputs.before_tag }}
         run: |
-          BEFORE_TAG="${{ steps.before_release.outputs.before_tag }}"
           AFTER_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
 
           if [[ -n "$AFTER_TAG" && "$AFTER_TAG" != "$BEFORE_TAG" ]]; then
