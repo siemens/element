@@ -1,5 +1,7 @@
 name: VRT Update All
 
+permissions: read-all
+
 on:
   workflow_dispatch:
     inputs:
