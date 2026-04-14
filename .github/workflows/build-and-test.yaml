@@ -11,6 +11,8 @@ on:
   pull_request:
   merge_group:
 
+permissions: read-all
+
 # Stops the workflow run if the PR is updated
 # https://stackoverflow.com/a/72408109
 concurrency:
