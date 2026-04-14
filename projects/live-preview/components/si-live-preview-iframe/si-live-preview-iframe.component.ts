@@ -47,6 +47,7 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
   @Input() iFrameWidth?: string;
   @Input() theme = 'light';
   @Input() locale?: string;
+  @Input() rootFontSize: number | 'initial' = 0;
   @Input() isRTL?: boolean;
   @Input() loadReact?: boolean;
   @Input() loadVue?: boolean;
@@ -214,6 +215,9 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
     if (this.locale) {
       url += '&locale=' + this.locale;
     }
+    if (this.rootFontSize) {
+      url += '&rfs=' + this.rootFontSize;
+    }
     if (this.templateModified && !skipTemplate) {
       url += '&t=' + this.encode(this.template);
     }
@@ -240,6 +244,7 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
         reactVueTemplate: this.reactVueTemplate,
         theme: this.theme,
         locale: this.locale,
+        rootFontSize: this.rootFontSize,
         isRTL: this.isRTL,
         mode: this.mode,
         safeAreaTop: this.landscape

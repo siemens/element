@@ -18,6 +18,15 @@ export const setDirectionRtl = (rtl: boolean): void => {
   document.documentElement.setAttribute('dir', rtl ? 'rtl' : 'ltr');
 };
 
+export const setRootFontSize = (rfs: number | 'initial'): void => {
+  const htmlTag = document.documentElement;
+  if (!rfs) {
+    htmlTag.style.removeProperty('font-size');
+  } else {
+    htmlTag.style.setProperty('font-size', rfs === 'initial' ? rfs : rfs + 'px');
+  }
+};
+
 export const provideExampleRoutes = (routes: Route[]): Provider => {
   return {
     provide: SI_LIVE_PREVIEW_EXAMPLE_ROUTES,

@@ -19,6 +19,7 @@ export interface SiLivePreviewConfig {
   rtlSwitcher?: boolean;
   landscapeToggle?: boolean;
   webcomponents?: boolean;
+  rootFontSizes?: number[];
 }
 
 export interface SiLivePreviewInternals {
