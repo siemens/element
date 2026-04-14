@@ -5,7 +5,7 @@
 import { Component, HostBinding, inject, viewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { setDeviceMode, setDirectionRtl } from '../../helpers/utils';
+import { setDeviceMode, setDirectionRtl, setRootFontSize } from '../../helpers/utils';
 import {
   SI_LIVE_PREVIEW_CONFIG,
   SI_LIVE_PREVIEW_INTERNALS
@@ -111,6 +111,9 @@ export class SiExampleViewerComponent {
     if (params.locale) {
       this.setLocale(params.locale);
       handled = true;
+    }
+    if (params.rfs) {
+      setRootFontSize(parseInt(params.rfs, 10));
     }
     if (params.isRTL) {
       this.setRTL(params.isRTL);

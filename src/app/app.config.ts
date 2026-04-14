@@ -133,7 +133,8 @@ export const APP_CONFIG: ApplicationConfig = {
           ticketBaseUrl: 'https://github.com/siemens/element/issues/new',
           themeSwitcher: true,
           rtlSwitcher: true,
-          webcomponents: true
+          webcomponents: true,
+          rootFontSizes: [] // enable: [16, 24, 32]
         },
         false
       )

@@ -80,6 +80,8 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   loadJs = false;
   switcherEnabled = this.config.themeSwitcher;
   rtlSwitcher = this.config.rtlSwitcher;
+  rootFontSizes = this.config.rootFontSizes ?? [];
+  rootFontSize: number | 'initial' = 0;
   webcomponents = this.config.webcomponents;
   frameworks = new Map([['Angular', 'angular']]);
   selectedFramework = localStorage.getItem('si-live-preview-framework') ?? 'angular';
@@ -157,6 +159,8 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   ngOnInit(): void {
     this.availableLocales = this.localeApi?.availableLocales() ?? [];
     this.theme = localStorage.getItem('si-live-preview-theme') ?? 'light';
+    const rfs = localStorage.getItem('si-live-preview-rfs') ?? '';
+    this.rootFontSize = rfs === 'initial' ? rfs : rfs ? parseInt(rfs, 10) : 0;
   }
 
   ngAfterViewInit(): void {
@@ -567,6 +571,11 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     this.changeLocale(locale);
   }
 
+  rfsSelectionChanges(value: string): void {
+    this.rootFontSize = value === 'initial' ? value : parseInt(value, 10);
+    localStorage.setItem('si-live-preview-rfs', this.rootFontSize.toString());
+  }
+
   changeLocale(locale: string): void {
     this.locale = locale;
   }
@@ -612,6 +621,9 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     }
     if (this.locale) {
       url += '&locale=' + this.locale;
+    }
+    if (this.rootFontSize) {
+      url += '&rfs=' + this.rootFontSize;
     }
     if (this.activeTab === 'react') {
       url += '&t=' + encodeURIComponent(this.templateReact) + '&framework=react';

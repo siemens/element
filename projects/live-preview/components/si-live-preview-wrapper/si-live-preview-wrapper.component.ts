@@ -14,7 +14,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent } from 'rxjs';
 
-import { setDeviceMode, setDirectionRtl } from '../../helpers/utils';
+import { setDeviceMode, setDirectionRtl, setRootFontSize } from '../../helpers/utils';
 import {
   SI_LIVE_PREVIEW_CONFIG,
   SI_LIVE_PREVIEW_INTERNALS
@@ -50,6 +50,7 @@ export class SiLivePreviewWrapperComponent {
   private isRTL = false;
   private mode!: string;
   private locale?: string;
+  private rootFontSize?: number | 'initial';
   private initialUrl: string;
 
   private config = inject(SI_LIVE_PREVIEW_CONFIG);
@@ -115,6 +116,10 @@ export class SiLivePreviewWrapperComponent {
 
     if (this.locale !== event.data.locale) {
       this.setLocale(event.data.locale);
+    }
+    if (this.rootFontSize !== event.data.rootFontSize) {
+      this.rootFontSize = event.data.rootFontSize;
+      setRootFontSize(event.data.rootFontSize);
     }
 
     if (this.isRTL !== event.data.isRTL) {

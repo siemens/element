@@ -195,6 +195,12 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     // (undocumented)
     renderingError: any;
     // (undocumented)
+    rfsSelectionChanges(value: string): void;
+    // (undocumented)
+    rootFontSize: number | 'initial';
+    // (undocumented)
+    rootFontSizes: number[];
+    // (undocumented)
     rtlSwitcher: boolean | undefined;
     // (undocumented)
     selectedFramework: string;
@@ -259,6 +265,8 @@ export interface SiLivePreviewConfig {
     // (undocumented)
     modules: any[];
     // (undocumented)
+    rootFontSizes?: number[];
+    // (undocumented)
     rtlSwitcher?: boolean;
     // (undocumented)
     themeSwitcher?: boolean;
@@ -308,6 +316,8 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
     readonly previewIframe: i0.Signal<ElementRef<any> | undefined>;
     // (undocumented)
     reactVueTemplate?: string;
+    // (undocumented)
+    rootFontSize: number | 'initial';
     // (undocumented)
     template: string;
     // (undocumented)
