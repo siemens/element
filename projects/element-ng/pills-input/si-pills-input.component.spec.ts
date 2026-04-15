@@ -75,7 +75,6 @@ describe('SiPillsInputComponent', () => {
     it('should update on tag delete', async () => {
       component.value.set(['item-1', 'item-2']);
       await fixture.whenStable();
-
       componentElement.querySelectorAll<HTMLElement>('.btn-tertiary-ghost')![1].click();
       expect(component.value()).toEqual(['item-1']);
       await fixture.whenStable();

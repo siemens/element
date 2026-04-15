@@ -36,7 +36,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
     '[class.active]': 'showActive()',
     '[class.is-chip]': 'isChip()',
     '[class.btn]': 'isChip()',
-    '[class.btn-primary-ghost]': 'isChip()',
+    '[class.btn-ghost]': 'isChip()',
     '[class.hide-badge-collapsed]': 'hideBadgeWhenCollapsed()',
     '(click)': 'triggered()'
   }
