@@ -95,7 +95,11 @@ export class SiToastNotificationService implements OnDestroy {
     this.overlayRef?.setDirection(isRTL() ? 'rtl' : 'ltr');
     toast.timeout ??= SI_TOAST_AUTO_HIDE_DELAY;
     toast.hidden ??= new Subject();
-    toast.close = () => this.hideToastNotification(toast);
+    const customClose = toast.close;
+    toast.close = () => {
+      this.hideToastNotification(toast);
+      customClose?.();
+    };
 
     const toasts = this.activeToastsSignal().concat(toast);
     this.activeToastsSignal.set(toasts);
