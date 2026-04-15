@@ -445,6 +445,7 @@ $dropdown-padding-x: 0 !default;
 $dropdown-padding-y: map.get(spacers.$spacers, 4) !default;
 $dropdown-spacer: 0.125rem !default;
 $dropdown-font-size: $font-size-base !default;
+$dropdown-line-height: $line-height-base;
 $dropdown-color: $body-color !default;
 $dropdown-bg: semantic-tokens.$element-base-1 !default;
 $dropdown-border-radius: semantic-tokens.$element-radius-2 !default;
@@ -453,7 +454,7 @@ $dropdown-divider-margin-y: 4px !default;
 $dropdown-box-shadow: elevation.$element-elevation-2 !default;
 $dropdown-link-color: semantic-tokens.$element-text-primary !default;
 $dropdown-link-disabled-color: semantic-tokens.$element-text-disabled !default;
-$dropdown-item-padding-y: 6px !default;
+$dropdown-item-padding-y: map.get(spacers.$spacers, 4);
 $dropdown-item-padding-x: map.get(spacers.$spacers, 5);
 $dropdown-header-color: semantic-tokens.$element-text-primary !default;
 
