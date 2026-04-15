@@ -79,6 +79,8 @@
         type="button"
         class="side-panel-collapse-toggle btn btn-icon btn-ghost mx-4"
         [attr.aria-label]="toggleItemLabel() | translate"
+        [attr.aria-expanded]="!isCollapsed() || service.isTemporaryOpen()"
+        [attr.aria-controls]="panelContentId"
         (click)="toggleSidePanel($event)"
       >
         <si-icon
