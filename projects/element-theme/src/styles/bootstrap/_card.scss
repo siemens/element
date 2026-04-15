@@ -117,9 +117,7 @@ button.card {
 }
 
 .card-header {
-  font-size: typography.$si-font-size-h5;
-  font-weight: typography.$si-font-weight-h5;
-  min-block-size: map.get(spacers.$spacers, 9) + map.get(spacers.$spacers, 4);
+  min-block-size: calc(1lh + 2 * variables.$card-cap-padding-y);
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -127,7 +125,12 @@ button.card {
   padding-inline: variables.$card-cap-padding-x;
   margin-block-end: 0; // Removes the default margin-bottom of <hN>
   color: variables.$card-cap-color;
-  line-height: typography.$si-font-size-h5;
+
+  @include typography.si-font(
+    typography.$si-font-size-h5,
+    typography.$si-line-height-h5,
+    typography.$si-font-weight-h5
+  );
 
   + * .card-body, // for action cards, where we wrap the content
   + .card-body {
