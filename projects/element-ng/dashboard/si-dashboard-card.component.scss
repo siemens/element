@@ -16,12 +16,12 @@
   }
 }
 
-.card-header {
-  block-size: map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4); // need to reduce height due to content action button
-}
-
 .text-truncate {
   flex: 0 1 auto;
+}
+
+.heading {
+  overflow: hidden;
 }
 
 .cab {

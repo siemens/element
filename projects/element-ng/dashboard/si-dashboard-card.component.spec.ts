@@ -12,6 +12,7 @@ describe('SiDashboardCardComponent', () => {
   let fixture: ComponentFixture<SiDashboardCardComponent>;
   let element: HTMLElement;
   let heading: WritableSignal<string>;
+  let subHeading: WritableSignal<string>;
   let primaryActions: WritableSignal<any>;
   let secondaryActions: WritableSignal<any>;
   let enableExpandInteraction: WritableSignal<boolean>;
@@ -24,12 +25,14 @@ describe('SiDashboardCardComponent', () => {
 
   beforeEach(() => {
     heading = signal('');
+    subHeading = signal('');
     primaryActions = signal([]);
     secondaryActions = signal([]);
     enableExpandInteraction = signal(false);
     fixture = TestBed.createComponent(SiDashboardCardComponent, {
       bindings: [
         inputBinding('heading', heading),
+        inputBinding('subHeading', subHeading),
         inputBinding('primaryActions', primaryActions),
         inputBinding('secondaryActions', secondaryActions),
         inputBinding('enableExpandInteraction', enableExpandInteraction)
@@ -42,6 +45,20 @@ describe('SiDashboardCardComponent', () => {
     heading.set('TITLE_KEY');
     await fixture.whenStable();
     expect(element.querySelector('.card-header')!).toHaveTextContent('TITLE_KEY');
+  });
+
+  it('should have a subHeading', async () => {
+    heading.set('TITLE_KEY');
+    subHeading.set('SUB_TITLE_KEY');
+    await fixture.whenStable();
+    expect(element.querySelector('.card-header .heading')!).toHaveTextContent('SUB_TITLE_KEY');
+  });
+
+  it('should not render subHeading when not set', async () => {
+    heading.set('TITLE_KEY');
+    await fixture.whenStable();
+    const subHeadingEl = element.querySelector('.card-header .si-body.text-secondary');
+    expect(subHeadingEl).toBeNull();
   });
 
   describe('content action bar', () => {
