@@ -83,7 +83,7 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  block-size: 32px;
+  min-block-size: 32px;
   inline-size: 100%;
   padding-block: bootstrap-variables.$dropdown-item-padding-y;
   padding-inline: bootstrap-variables.$dropdown-item-padding-x;
