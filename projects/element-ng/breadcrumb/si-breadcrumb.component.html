@@ -1,4 +1,4 @@
-<nav role="navigation" class="py-2" [attr.aria-label]="ariaLabel() | translate">
+<nav class="py-2" [attr.aria-label]="ariaLabel() | translate">
   <ol #breadcrumb class="breadcrumb" (siResizeObserver)="resetBreadcrumb()">
     @for (item of itemsShown; track $index; let isFirst = $first) {
       @if (!breadcrumbShortened || item.level !== ellipsesLevel) {
