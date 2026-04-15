@@ -173,8 +173,8 @@ describe('SiGridstackWrapperComponent', () => {
     });
   });
 
-  describe('#getLayout()', () => {
-    it('should return layout of grid items', async () => {
+  describe('#getWidgetLayout()', () => {
+    it('should return layout for a given widget id', async () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
       gridService.widgetCatalog.set([TEST_WIDGET]);
@@ -182,26 +182,25 @@ describe('SiGridstackWrapperComponent', () => {
       fixture.detectChanges();
       // to avoid injector destroyed error
       await new Promise(resolve => setTimeout(resolve, 0));
-      const layout = host.gridStackWrapper()!.getLayout();
-      expect(layout).toBeDefined();
-      expect(layout.length).toBe(TEST_WIDGET_CONFIGS.length);
-      layout.forEach(position => {
-        const wg = TEST_WIDGET_CONFIGS.find(wc => wc.id === position.id)!;
-        expect(position.x).toBe(wg.x);
-        expect(position.y).toBe(wg.y);
-        expect(position.width).toBe(wg.width);
-        expect(position.height).toBe(wg.height);
+      TEST_WIDGET_CONFIGS.forEach(wg => {
+        const position = host.gridStackWrapper()!.getWidgetLayout(wg.id);
+        expect(position).toBeDefined();
+        expect(position!.id).toBe(wg.id);
+        expect(position!.x).toBe(wg.x);
+        expect(position!.y).toBe(wg.y);
+        expect(position!.width).toBe(wg.width);
+        expect(position!.height).toBe(wg.height);
       });
     });
 
-    it('should return empty array without widgets', () => {
+    it('should return undefined for unknown widget id', () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
       gridService.widgetCatalog.set([TEST_WIDGET]);
       host.widgets = [];
       fixture.detectChanges();
-      const layout = host.gridStackWrapper()!.getLayout();
-      expect(layout).toEqual([]);
+      const position = host.gridStackWrapper()!.getWidgetLayout('non-existent-id');
+      expect(position).toBeUndefined();
     });
   });
 

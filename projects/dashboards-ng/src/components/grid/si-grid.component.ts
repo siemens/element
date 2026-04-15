@@ -416,9 +416,9 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private updateWidgetPositions(widgetConfigs: WidgetConfig[]): WidgetConfig[] {
-    const layout = this.gridStackWrapper().getLayout();
+    const wrapper = this.gridStackWrapper();
     const widgets = widgetConfigs.map(widget => {
-      const position = layout.find(p => p.id === widget.id);
+      const position = wrapper.getWidgetLayout(widget.id);
       if (
         position &&
         (widget.x !== position.x ||

@@ -160,21 +160,23 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
     }
   }
 
-  getLayout(): WidgetPositionConfig[] {
-    const gridItems = this.grid?.getGridItems();
-    if (gridItems.length > 0) {
-      const positions = gridItems.map(gridItemHTMLElement => {
-        const id = gridItemHTMLElement.getAttribute('item-id')!;
-        const x = Number(gridItemHTMLElement.getAttribute('gs-x')) || 0;
-        const y = Number(gridItemHTMLElement.getAttribute('gs-y')) || 0;
-        const width = Number(gridItemHTMLElement.getAttribute('gs-w')) || 0;
-        const height = Number(gridItemHTMLElement.getAttribute('gs-h')) || 0;
-        return { id, x, y, width, height };
-      });
-      return positions;
-    } else {
-      return [];
+  /**
+   *
+   * Returns the position of a specific widget in the grid.
+   */
+  getWidgetLayout(widgetId: string): WidgetPositionConfig | undefined {
+    const gridItem = this.gridItemsMap().get(widgetId);
+    if (!gridItem) {
+      return undefined;
     }
+    const element = gridItem.component.location.nativeElement as HTMLElement;
+    return {
+      id: widgetId,
+      x: Number(element.getAttribute('gs-x')) || 0,
+      y: Number(element.getAttribute('gs-y')) || 0,
+      width: Number(element.getAttribute('gs-w')) || 0,
+      height: Number(element.getAttribute('gs-h')) || 0
+    };
   }
 
   private updateLayout(widgets: WidgetConfig[]): void {
