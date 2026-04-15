@@ -147,7 +147,7 @@ test.describe('dashboard', () => {
     await expect(page.getByLabel('Edit')).toBeVisible();
     const editBtn = page.getByLabel('Edit');
     await editBtn.click();
-    const pieChart = page.getByText('Pie Chart', { exact: true }).locator('..');
+    const pieChart = page.locator('si-dashboard-card').filter({ hasText: 'Pie Chart' });
     await pieChart.getByLabel('Remove').click();
     await page.waitForTimeout(100);
     await expect(page.locator('si-delete-confirmation-dialog')).toBeVisible();
