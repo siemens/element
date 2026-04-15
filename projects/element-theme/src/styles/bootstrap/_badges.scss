@@ -1,6 +1,7 @@
 @use '../variables/semantic-tokens';
 @use '../variables/spacers';
 @use '../variables/typography';
+@use './mixins/badge-text';
 @use './variables';
 
 @use 'sass:map';
@@ -139,9 +140,9 @@
 
   &::after {
     content: '';
-    inline-size: 10px;
-    block-size: 10px;
-    border-radius: 5px;
+    inline-size: 0.625rem;
+    block-size: 0.625rem;
+    border-radius: 50%;
     position: absolute;
     inset-block-start: 0;
     inset-inline-end: 0;
@@ -150,22 +151,14 @@
 }
 
 .badge-text {
-  block-size: 14px;
-  min-inline-size: 14px;
-  border-radius: 7px;
-  position: relative;
+  @include badge-text.badge-text();
   background-color: semantic-tokens.$element-action-danger;
   color: semantic-tokens.$element-action-danger-text;
-  font-size: typography.$si-font-size-caption;
-  line-height: 13px;
-  padding-block: 0;
-  padding-inline: map.get(spacers.$spacers, 2);
-  font-family: variables.$font-family-sans-serif;
-  font-weight: typography.$si-font-weight-semibold;
+  position: relative;
 }
 
 :is(.icon, .icon-sm, .icon-lg) + .badge-text {
-  inset-block-start: -8px;
-  inset-inline-start: -12px;
-  margin-inline-end: -12px;
+  inset-block-start: -0.5rem;
+  inset-inline-start: -0.75rem;
+  margin-inline-end: -0.75rem;
 }

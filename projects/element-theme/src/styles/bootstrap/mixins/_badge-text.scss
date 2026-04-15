@@ -1,0 +1,16 @@
+@use 'sass:map';
+
+@use '../../variables/spacers';
+@use '../../variables/typography';
+@use '.././variables';
+
+@mixin badge-text {
+  min-inline-size: 0.875rem;
+  border-radius: 0.4375rem;
+  font-size: typography.$si-font-size-caption;
+  line-height: 0.875rem;
+  padding-block: 0;
+  padding-inline: map.get(spacers.$spacers, 2);
+  font-family: variables.$font-family-sans-serif;
+  font-weight: typography.$si-font-weight-semibold;
+}
