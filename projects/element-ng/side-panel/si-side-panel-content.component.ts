@@ -88,10 +88,13 @@ export interface StatusItem extends MenuItemLegacy {
     '[class.collapsed]': 'isCollapsed()',
     '[class.expanded]': 'isExpanded()',
     '[class.enable-mobile]': 'enableMobile()',
-    '[class.rpanel-fullscreen-overlay]': 'isFullscreen()'
+    '[class.rpanel-fullscreen-overlay]': 'isFullscreen()',
+    '[id]': 'panelContentId'
   }
 })
 export class SiSidePanelContentComponent implements OnInit {
+  private static idCounter = 0;
+  protected readonly panelContentId = `__si-side-panel-content-${SiSidePanelContentComponent.idCounter++}`;
   /**
    * @deprecated This input is no longer used. The collapsible state is managed by the SiSidePanelService.
    * This input will be removed in a future major version.
