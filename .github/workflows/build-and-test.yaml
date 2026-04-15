@@ -47,7 +47,7 @@ jobs:
       - run: npm run dashboards-demo:build-all -- --progress=false
       - run: npm run dashboards-demo:build-all:esm
 
-      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: dist
           path: dist
@@ -100,7 +100,7 @@ jobs:
         run: |
           # Extract only the badge line and total coverage line
           head -n 2 code-coverage-results.md > coverage/coverage-badge.md
-      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: coverage-reports
           path: coverage
@@ -162,7 +162,7 @@ jobs:
       # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
       - run: npm ci --prefer-offline --no-audit --include=optional
       - run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: ${{ !cancelled() }}
         with:
           name: blob-report-${{ matrix.shardIndex }}
@@ -184,7 +184,7 @@ jobs:
           pattern: blob-report-*
           merge-multiple: true
       - run: npx playwright merge-reports --reporter html ./all-blob-reports
-      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: html-report--attempt-${{ github.run_attempt }}
           path: playwright-report
@@ -228,7 +228,7 @@ jobs:
       - run: mv dist/element-examples/ dist/design/
       - run: mv dist/dashboards-demo/ dist/design/
       - run: mv dist/dashboards-demo-esm/ dist/design/
-      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: pages
           path: dist/design
