@@ -294,6 +294,17 @@ export class SiDateRangeFilterComponent implements OnChanges {
    * ```
    */
   readonly applyLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.APPLY:Apply`));
+  /**
+   * label for the "select end date" in preview
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.SELECT_RANGE_END:Select end date`)
+   * ```
+   */
+  readonly rangeEndDateMissingLabel = input(
+    t(() => $localize`:@@SI_DATE_RANGE_FILTER.SELECT_RANGE_END:Select end date`)
+  );
 
   /** Event fired when the apply button has been clicked */
   readonly applyClicked = output<void>();
@@ -477,7 +488,11 @@ export class SiDateRangeFilterComponent implements OnChanges {
     this.point2date.set(endDate);
     this.point2Mode.set('date');
     this.point2offset.set(0);
-    this.updateRange();
+
+    // only emit if range start and end are selected
+    if (range.start && range.end) {
+      this.updateRange();
+    }
   }
 
   protected point1Changed(): void {
