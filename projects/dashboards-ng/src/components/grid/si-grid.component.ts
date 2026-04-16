@@ -66,14 +66,6 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
    * @defaultValue false
    */
   readonly editable = model(false);
-  /**
-   * This is the internal owner of the current editable state and is used to track if
-   * editable or not. Not editable can be changed by either calling the `edit()` api
-   * method or by setting the `editable` input. When setting the input, the `ngOnChanges(...)`
-   * hook is used to call the `edit()` method. Similar, to get from editable to not editable,
-   * `cancel()` or `save()` is used and can be triggered from `ngOnChanges(...)`.
-   */
-  private editableInternal = false;
 
   /**
    * An optional, but recommended dashboard id that is used in persistence and passed
@@ -193,9 +185,9 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
 
     if (changes.editable) {
       if (changes.editable.currentValue) {
-        this.edit();
+        this.resetEditState();
       } else {
-        this.cancel();
+        this.restoreSavedState();
       }
     }
 
@@ -218,13 +210,9 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
    * Set dashboard grid in editable mode to modify widget instances.
    */
   edit(): void {
-    if (!this.editableInternal) {
-      this.transientWidgetInstances = [];
-      this.markedForRemoval = [];
-      this.setModified(false);
-      this.editableInternal = true;
+    if (!this.editable()) {
       this.editable.set(true);
-      this.gridService.editable$.next(this.editableInternal);
+      this.resetEditState();
     }
   }
 
@@ -233,7 +221,7 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
    * changes the editable and isModified modes.
    */
   save(): void {
-    if (!this.editableInternal) {
+    if (!this.editable()) {
       return;
     }
 
@@ -250,9 +238,7 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe({
         next: (value: WidgetConfig[]) => {
           this.setModified(false);
-          this.editableInternal = false;
           this.editable.set(false);
-          this.gridService.editable$.next(this.editableInternal);
           this.isLoading.next(false);
         },
         error: (err: any) => {
@@ -266,19 +252,10 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
    * Cancel current changes and restore last saved state.
    */
   cancel(): void {
-    if (!this.editableInternal) {
-      return;
-    }
-
-    if (this.modified) {
-      this.visibleWidgetInstances$.next([...this.persistedWidgetInstances]);
-      this.setModified(false);
-    }
-    this.editableInternal = false;
     if (this.editable()) {
       this.editable.set(false);
+      this.restoreSavedState();
     }
-    this.gridService.editable$.next(this.editableInternal);
   }
 
   /**
@@ -383,7 +360,7 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
     // instead of re-triggering auto-positioning which may produce a different result.
     if (
       event.event.type === 'added' &&
-      !this.editableInternal &&
+      !this.editable() &&
       this.persistedWidgetInstances.some(w => w.x === undefined || w.y === undefined)
     ) {
       this.persistedWidgetInstances = this.updateWidgetPositions(this.persistedWidgetInstances);
@@ -448,6 +425,19 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
       }
     });
     return widgets || [];
+  }
+
+  private resetEditState(): void {
+    this.transientWidgetInstances = [];
+    this.markedForRemoval = [];
+    this.setModified(false);
+  }
+
+  private restoreSavedState(): void {
+    if (this.modified) {
+      this.visibleWidgetInstances$.next([...this.persistedWidgetInstances]);
+      this.setModified(false);
+    }
   }
 
   private setModified(modified: boolean): void {

@@ -201,6 +201,7 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
     const componentRef = this.gridstackContainer()!.createComponent(SiWidgetHostComponent, {
       bindings: [
         inputBinding('widgetConfig', configSignal),
+        inputBinding('editable', this.editable),
         outputBinding<string>('remove', widgetId => {
           this.widgetInstanceRemove.emit(widgetId);
         }),
