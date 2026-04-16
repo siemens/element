@@ -10,6 +10,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
   selector: 'si-input-pill',
   imports: [SiIconComponent],
   templateUrl: './si-input-pill.component.html',
+  styles: '.btn { cursor: pointer; }',
   host: {
     class: 'pill pe-0',
     '[class.pe-4]': 'hideClose()'
