@@ -3,12 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { MediaMatcher } from '@angular/cdk/layout';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { formatDate } from '@angular/common';
 import { inputBinding, signal, twoWayBinding, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TestScheduler } from 'rxjs/testing';
 
+import { SiCalendarCellHarness } from '../datepicker/testing/si-calendar-cell.harness';
 import { DateRangeFilter, DateRangePreset, SiDateRangeFilterComponent } from './index';
 
 const ONE_MINUTE = 60 * 1000;
@@ -41,12 +44,14 @@ describe('SiDateRangeFilterComponent', () => {
   let presetList: WritableSignal<DateRangePreset[] | undefined>;
   let enableTimeSelection: WritableSignal<boolean>;
   let basicMode: WritableSignal<'input' | 'calendar'>;
+  let loader: HarnessLoader;
 
   const rangeInputValue = (): number | undefined =>
     element.querySelector<HTMLInputElement>('si-relative-date input')?.valueAsNumber;
   const rangeSelectContent = (): string | undefined | null =>
     element.querySelector('si-select div')?.textContent;
-  const preview = (): string | undefined => element.querySelector('.preview')?.textContent?.trim();
+  const preview = (): string | undefined =>
+    element.querySelector('.preview')?.textContent?.trim().replaceAll('  ', ' ');
   const date2string = (date: Date, time = false): string =>
     formatDate(date, time ? 'short' : 'shortDate', 'en');
   const rangeText = (from: Date, to: Date, time = false): string =>
@@ -90,7 +95,7 @@ describe('SiDateRangeFilterComponent', () => {
     })
   );
 
-  beforeEach(() => {
+  beforeEach(async () => {
     range = signal<DateRangeFilter>({ point1: 'now', point2: 2 * ONE_DAY, range: 'before' });
     presetList = signal<DateRangePreset[] | undefined>([...defaultPresetList]);
     enableTimeSelection = signal(false);
@@ -104,6 +109,7 @@ describe('SiDateRangeFilterComponent', () => {
         inputBinding('basicMode', basicMode)
       ]
     });
+    loader = TestbedHarnessEnvironment.loader(fixture);
     element = fixture.nativeElement;
   });
 
@@ -203,6 +209,21 @@ describe('SiDateRangeFilterComponent', () => {
     expect(date2string(range().point1 as Date)).toEqual(date2string(from));
     expect(date2string(range().point2 as Date)).toEqual(date2string(to));
     expect(range().range).toBeUndefined();
+  });
+
+  it('shows text when range end is not yet set', async () => {
+    const from = new Date('2023-05-13');
+    const to = new Date('2023-08-14');
+
+    range.set({ point1: from, point2: to });
+
+    await fixture.whenStable();
+    expect(preview()).toEqual(rangeText(from, to));
+
+    const cells = await loader.getAllHarnesses(SiCalendarCellHarness.with({ isDisabled: false }));
+    await cells[13].select();
+
+    expect(preview()).toEqual(date2string(from) + ' - Select end date');
   });
 
   it('allows selecting presets', async () => {
