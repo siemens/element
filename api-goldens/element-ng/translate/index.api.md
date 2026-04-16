@@ -114,6 +114,8 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_DATE_RANGE_FILTER.SEARCH'?: string;
     // (undocumented)
+    'SI_DATE_RANGE_FILTER.SELECT_RANGE_END'?: string;
+    // (undocumented)
     'SI_DATE_RANGE_FILTER.TO'?: string;
     // (undocumented)
     'SI_DATE_RANGE_FILTER.TODAY'?: string;
