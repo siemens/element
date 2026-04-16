@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   ComponentRef,
@@ -37,7 +37,7 @@ import { setupWidgetInstance } from '../../widget-loader';
 
 @Component({
   selector: 'si-widget-host',
-  imports: [SiDashboardCardComponent, AsyncPipe, NgTemplateOutlet],
+  imports: [SiDashboardCardComponent, NgTemplateOutlet],
   templateUrl: './si-widget-host.component.html',
   styleUrl: './si-widget-host.component.scss',
   host: {
@@ -52,6 +52,13 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly widgetConfig = input.required<WidgetConfig>();
+
+  /**
+   * Sets the widget host into editable mode.
+   *
+   * @defaultValue false
+   */
+  readonly editable = input(false);
 
   readonly remove = output<string>();
   readonly edit = output<WidgetConfig>();
@@ -86,8 +93,6 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   secondaryActions: (MenuItemLegacy | MenuItem)[] = [];
   /** @defaultValue 'expanded' */
   actionBarViewType: ViewType = 'expanded';
-  editable$ = this.gridService.editable$;
-
   /** @defaultValue [] */
   editablePrimaryActions: (MenuItemLegacy | ContentActionBarMainItem)[] = [];
   /** @defaultValue [] */
@@ -148,13 +153,14 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
         }
       }
     }
+
+    if (changes.editable && !changes.editable.firstChange) {
+      this.setupEditable(this.editable());
+    }
   }
 
   ngOnInit(): void {
     this.attachWidgetInstance();
-    this.editable$
-      .pipe<boolean>(takeUntilDestroyed(this.destroyRef))
-      .subscribe(editable => this.setupEditable(editable));
   }
 
   private attachWidgetInstance(): void {
@@ -175,9 +181,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
             // to the DOM.
             this.widgetInstance.configChange
               .pipe(takeUntilDestroyed(this.destroyRef))
-              .subscribe(event =>
-                setTimeout(() => this.setupEditable(this.editable$.value, event))
-              );
+              .subscribe(event => setTimeout(() => this.setupEditable(this.editable(), event)));
           }
           if (isSignal(this.widgetInstance.config)) {
             this.widgetRef.setInput('config', this.widgetConfig());
@@ -185,7 +189,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
             this.widgetInstance.config = this.widgetConfig();
           }
           this.widgetInstanceFooter = this.widgetInstance.footer;
-          this.setupEditable(this.gridService.editable$.value);
+          this.setupEditable(this.editable());
         },
         error: error => console.error('Error: ', error)
       });

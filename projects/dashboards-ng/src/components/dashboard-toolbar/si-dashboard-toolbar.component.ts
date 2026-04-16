@@ -97,12 +97,6 @@ export class SiDashboardToolbarComponent {
    */
   readonly save = output<void>();
 
-  /**
-   * Emits on cancel button click.
-   */
-  // eslint-disable-next-line @angular-eslint/no-output-native
-  readonly cancel = output<void>();
-
   protected labelEdit = t(() => $localize`:@@DASHBOARD.EDIT:Edit`);
   protected labelCancel = t(() => $localize`:@@DASHBOARD.CANCEL:Cancel`);
   protected labelSave = t(() => $localize`:@@DASHBOARD.SAVE:Save`);
@@ -140,7 +134,7 @@ export class SiDashboardToolbarComponent {
 
   protected onCancel(): void {
     if (this.editable()) {
-      this.cancel.emit();
+      this.editable.set(false);
     }
   }
 
