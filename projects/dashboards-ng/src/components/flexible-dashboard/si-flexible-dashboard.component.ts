@@ -238,7 +238,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
         dashboard.restore();
       }
       if (this.editable()) {
-        this.grid().cancel();
+        this.editable.set(false);
         this.viewState.set('dashboard');
         this.catalogHost().clear();
       }
@@ -246,13 +246,6 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
       this.setupMenuItems();
     }
 
-    if (changes.editable) {
-      if (changes.editable.currentValue) {
-        this.grid().edit();
-      } else {
-        this.grid().cancel();
-      }
-    }
     if (changes.hideAddWidgetInstanceButton) {
       this.hideAddWidgetInstanceButton$.next(changes.hideAddWidgetInstanceButton.currentValue);
     }
@@ -276,7 +269,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
       dashboard.restore();
     }
     if (!this.editable()) {
-      this.grid().edit();
+      this.editable.set(true);
     }
     this.viewState.set('catalog');
     const componentType = this.widgetCatalogComponent() ?? SiWidgetCatalogComponent;

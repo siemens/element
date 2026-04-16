@@ -100,26 +100,68 @@ describe('SiGridComponent', () => {
     });
   });
 
-  it('should call edit() on setting editable to true', () => {
-    const spy = vi.spyOn(component, 'edit');
+  it('should resetEditState on setting editable to true', () => {
+    component.transientWidgetInstances = [{ id: '1', widgetId: 'w1' }];
+    component.markedForRemoval = [{ id: '2', widgetId: 'w2' }];
     expect(component.editable()).toBe(false);
 
     fixture.componentRef.setInput('editable', true);
     fixture.detectChanges();
-    expect(spy).toHaveBeenCalled();
     expect(component.editable()).toBe(true);
+    expect(component.transientWidgetInstances).toEqual([]);
+    expect(component.markedForRemoval).toEqual([]);
   });
 
-  it('should call cancel() on setting editable to false', () => {
-    const spy = vi.spyOn(component, 'cancel');
-    fixture.componentRef.setInput('editable', true);
+  it('should resetEditState on calling edit()', () => {
+    component.transientWidgetInstances = [{ id: '1', widgetId: 'w1' }];
+    component.markedForRemoval = [{ id: '2', widgetId: 'w2' }];
+    expect(component.editable()).toBe(false);
+
+    component.edit();
+    fixture.detectChanges();
     expect(component.editable()).toBe(true);
-    expect(spy).not.toHaveBeenCalled();
+    expect(component.transientWidgetInstances).toEqual([]);
+    expect(component.markedForRemoval).toEqual([]);
+  });
+
+  it('should restoreSavedState on setting editable to false', () => {
+    vi.useFakeTimers();
+    fixture.componentRef.setInput('editable', true);
+
+    const savedWidgets = [...component.persistedWidgetInstances];
+    component.addWidgetInstance({ widgetId: 'id' });
+    expect(component.visibleWidgetInstances$.value.length).toBe(savedWidgets.length + 1);
+
+    // Simulate grid modification so restoreSavedState actually restores
+    fixture.debugElement
+      .query(By.css('si-gridstack-wrapper'))
+      .triggerEventHandler('gridEvent', { event: { type: 'added' } });
+    vi.advanceTimersByTime(0);
 
     fixture.componentRef.setInput('editable', false);
     fixture.detectChanges();
-    expect(spy).toHaveBeenCalled();
-    expect(component.editable()).toBe(false);
+    expect(component.visibleWidgetInstances$.value).toEqual(savedWidgets);
+    vi.useRealTimers();
+  });
+
+  it('should restoreSavedState on calling cancel()', () => {
+    vi.useFakeTimers();
+    component.edit();
+
+    const savedWidgets = [...component.persistedWidgetInstances];
+    component.addWidgetInstance({ widgetId: 'id' });
+    expect(component.visibleWidgetInstances$.value.length).toBe(savedWidgets.length + 1);
+
+    // Simulate grid modification so restoreSavedState actually restores
+    fixture.debugElement
+      .query(By.css('si-gridstack-wrapper'))
+      .triggerEventHandler('gridEvent', { event: { type: 'added' } });
+    vi.advanceTimersByTime(0);
+
+    component.cancel();
+    fixture.detectChanges();
+    expect(component.visibleWidgetInstances$.value).toEqual(savedWidgets);
+    vi.useRealTimers();
   });
 
   it('#addWidget() shall add a new WidgetConfig to the visible widgets of the grid and assign unique ids', () => {

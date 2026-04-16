@@ -194,25 +194,6 @@ describe('SiFlexibleDashboardComponent', () => {
       expect(restoreSpy).toHaveBeenCalled();
     });
 
-    it('should call #grid.edit() on changing editable input to true', () => {
-      const spy = vi.spyOn(grid, 'edit');
-      expect(component.editable()).toBe(false);
-      fixture.componentRef.setInput('editable', true);
-      fixture.detectChanges();
-      expect(spy).toHaveBeenCalled();
-    });
-
-    it('should call #grid.cancel() on changing editable input to false', () => {
-      expect(component.editable()).toBe(false);
-      grid.editable.set(true);
-      expect(component.editable()).toBe(true);
-      const spy = vi.spyOn(grid, 'cancel');
-
-      fixture.componentRef.setInput('editable', false);
-      fixture.detectChanges();
-      expect(spy).toHaveBeenCalled();
-    });
-
     it('should emit editableChange events on changing grid editable state', () => {
       grid.editable.set(true);
       expect(component.editable()).toBe(true);
@@ -240,12 +221,11 @@ describe('SiFlexibleDashboardComponent', () => {
     });
 
     it('should cancel edit state on dashboardId changes', () => {
-      const spy = vi.spyOn(component.grid(), 'cancel');
       fixture.componentRef.setInput('editable', true);
 
       fixture.componentRef.setInput('dashboardId', '1');
       fixture.detectChanges();
-      expect(spy).toHaveBeenCalledTimes(1);
+      expect(component.editable()).toBe(false);
     });
   });
 
