@@ -490,8 +490,11 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
       let hours = time.getHours();
       if (this.use12HourClock()) {
         // 12:00 am is midnight while 12:00 pm is noon when users enter a value greater than 12 we can assume it's pm
-        this.meridian.set(hours > 12 ? 'pm' : 'am');
-        this.meridianChange.emit(this.meridian());
+        const meridian = hours >= 12 ? 'pm' : 'am';
+        if (this.meridian() !== meridian) {
+          this.meridian.set(meridian);
+          this.meridianChange.emit(this.meridian());
+        }
         hours = hours % 12;
         if (hours === 0) {
           hours = 12;
