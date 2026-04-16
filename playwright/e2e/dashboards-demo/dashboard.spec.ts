@@ -218,6 +218,69 @@ test.describe('dashboard', () => {
     await si.runVisualAndA11yTests(stepName);
   });
 
+  test(example + ' cancel restores auto-positioned layout', async ({ page, si }) => {
+    await si.visitExample(example, undefined);
+    await expect(page.getByRole('heading', { name: 'Sample Dashboard' })).toBeVisible();
+
+    // Record original bounding boxes of all widgets keyed by item-id
+    const widgets = page.locator('si-widget-host');
+    const count = await widgets.count();
+    const originalBoxes: Record<string, { x: number; y: number }> = {};
+    for (let i = 0; i < count; i++) {
+      const widget = widgets.nth(i);
+      const itemId = await widget.getAttribute('item-id');
+      expect(itemId).toBeTruthy();
+      const box = await widget.boundingBox();
+      expect(box).toBeTruthy();
+      originalBoxes[itemId!] = { x: Math.round(box!.x), y: Math.round(box!.y) };
+    }
+
+    // Enter edit mode
+    const editBtn = page.getByLabel('Edit');
+    await editBtn.click();
+    await expect(page.getByText('Cancel')).toBeVisible();
+
+    // Resize the Pie Chart widget by dragging the bottom-right resize handle to the left
+    const pieChart = page.locator('si-widget-host', { hasText: 'Pie Chart' });
+    await pieChart.hover();
+    const resizeHandle = pieChart.locator('.ui-resizable-se');
+    const handleBox = await resizeHandle.boundingBox();
+    expect(handleBox).toBeTruthy();
+    const startX = handleBox!.x + handleBox!.width / 2;
+    const startY = handleBox!.y + handleBox!.height / 2;
+    await page.mouse.move(startX, startY);
+    await page.mouse.down();
+    await page.mouse.move(startX - 100, startY);
+    await page.mouse.up();
+
+    // Move the Full Speed widget towards Pie Chart by dragging its overlay to the left
+    const fullSpeed = page.locator('si-widget-host', { hasText: 'Full Speed' });
+    await fullSpeed.scrollIntoViewIfNeeded();
+    const fullSpeedDraggable = fullSpeed.locator('.draggable-overlay');
+    const dragBox = await fullSpeedDraggable.boundingBox();
+    expect(dragBox).toBeTruthy();
+    const dragStartX = dragBox!.x + dragBox!.width / 2;
+    const dragStartY = dragBox!.y + dragBox!.height / 2;
+    await page.mouse.move(dragStartX, dragStartY);
+    await page.mouse.down();
+    await page.mouse.move(dragStartX - 150, dragStartY, { steps: 10 });
+    await page.mouse.up();
+
+    // Cancel the edit
+    await page.getByText('Cancel', { exact: true }).click();
+    await expect(page.getByLabel('Edit')).toBeVisible();
+
+    // Scroll the widgets container to top before verifying positions
+    await page.locator('.si-dashboard-content').evaluate(el => el.scrollTo(0, 0));
+
+    // Verify all widgets returned to their original positions
+    for (const [itemId, expectedBox] of Object.entries(originalBoxes)) {
+      await expect(page.locator(`si-widget-host[item-id="${itemId}"]`)).toHaveBoundingBox(
+        expectedBox
+      );
+    }
+  });
+
   const openWidgetCatalog = async (page: Page): Promise<void> => {
     await expect(page.getByLabel('Edit')).toBeVisible();
     const editBtn = page.getByLabel('Edit');

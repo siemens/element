@@ -378,6 +378,16 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
 
   protected handleGridEvent(event: GridWrapperEvent): void {
     const relevantEventTypes = ['added', 'removed', 'dragstop', 'resizestop'];
+    // When widgets without explicit x/y are first added, GridStack auto-positions them.
+    // Capture these resolved positions so cancel() can restore the exact layout
+    // instead of re-triggering auto-positioning which may produce a different result.
+    if (
+      event.event.type === 'added' &&
+      !this.editableInternal &&
+      this.persistedWidgetInstances.some(w => w.x === undefined || w.y === undefined)
+    ) {
+      this.persistedWidgetInstances = this.updateWidgetPositions(this.persistedWidgetInstances);
+    }
     if (this.editable() && relevantEventTypes.includes(event.event.type)) {
       // Make sure the widget config always holds the latest position information
       const widgets = this.updateWidgetPositions(this.visibleWidgetInstances$.value);
