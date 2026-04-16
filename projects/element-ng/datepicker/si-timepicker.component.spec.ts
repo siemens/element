@@ -189,6 +189,19 @@ describe('SiTimepickerComponent', () => {
       expect(component.picker().isPM()).toBe(false);
     });
 
+    it('should show PM meridian for noon (12:xx in 24h)', () => {
+      component.time.setValue('2022-01-12 11:59:59.000');
+      fixture.detectChanges();
+      expect(component.picker().isPM()).toBe(false);
+
+      component.time.setValue('2022-01-12 12:30:00.000');
+      fixture.detectChanges();
+
+      expect(component.picker().isPM()).toBe(true);
+      const select = element.querySelector<HTMLSelectElement>('select');
+      expect(select?.value).toBe('pm');
+    });
+
     it('should falsify isPM when meridian is hidden', () => {
       fixture.detectChanges();
       component.time.setValue('2022-01-12 16:23:59.435');
