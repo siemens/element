@@ -5,14 +5,12 @@
     [class.d-none]="!isDashboardVisible()"
     [primaryEditActions]="(primaryEditActions$ | async) ?? []"
     [secondaryEditActions]="(secondaryEditActions$ | async) ?? []"
-    [editable]="editable()"
     [disabled]="(grid.isLoading | async) ?? false"
     [hideEditButton]="hideEditButton()"
     [showEditButtonLabel]="showEditButtonLabel()"
     [grid]="grid"
-    (editableChange)="grid.edit()"
+    [(editable)]="editable"
     (save)="grid.save()"
-    (cancel)="grid.cancel()"
   >
     <ng-content select="[filters-slot]" filters-slot />
   </si-dashboard-toolbar>
