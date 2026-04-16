@@ -85,11 +85,22 @@
   <div class="mt-4 mb-6 ms-6">
     {{ previewLabel() | translate }}:
     <span class="preview">
-      @if (calculatedRange().valid) {
-        {{ calculatedRange().start | date: pipeFormat() }} -
-        {{ calculatedRange().end | date: pipeFormat() }}
+      @if (advancedMode()) {
+        @let calculated = calculatedRange();
+        @if (calculated.valid) {
+          {{ calculated.start | date: pipeFormat() }} -
+          {{ calculated.end | date: pipeFormat() }}
+        } @else {
+          ?
+        }
       } @else {
-        ?
+        @let range = dateRange();
+        {{ range.start | date: pipeFormat() }} -
+        @if (range.end) {
+          {{ range.end | date: pipeFormat() }}
+        } @else {
+          {{ rangeEndDateMissingLabel() | translate }}
+        }
       }
     </span>
   </div>
