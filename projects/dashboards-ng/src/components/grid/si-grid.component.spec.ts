@@ -200,6 +200,26 @@ describe('SiGridComponent', () => {
       .triggerEventHandler('gridEvent', { event: { type: 'added' } });
   });
 
+  it('#handleGridEvent() should capture auto-positioned layout so cancel restores it', () => {
+    // Simulate persisted widgets without explicit x/y (auto-positioned by GridStack)
+    const widgetConfig: WidgetConfig = { id: 'w1', widgetId: 'id', x: undefined, y: undefined };
+    component.persistedWidgetInstances = [widgetConfig];
+    component.visibleWidgetInstances$.next([widgetConfig]);
+
+    const spy = vi
+      .spyOn(component.gridStackWrapper(), 'getWidgetLayout')
+      .mockReturnValue({ x: 0, y: 0, width: 4, height: 2, id: 'w1' });
+
+    // Trigger an 'added' event while NOT in edit mode
+    fixture.debugElement
+      .query(By.css('si-gridstack-wrapper'))
+      .triggerEventHandler('gridEvent', { event: { type: 'added' } });
+
+    expect(spy).toHaveBeenCalled();
+    expect(component.persistedWidgetInstances[0].x).toBe(0);
+    expect(component.persistedWidgetInstances[0].y).toBe(0);
+  });
+
   it('should load widgets when dashboardId changes', async () => {
     const widgetConfig: WidgetConfig = { id: 'myId', widgetId: 'myWidgetId' };
     const myDashboardId = 'myDashboardId';
