@@ -31,8 +31,8 @@
               >
                 <si-circle-status class="my-n4 me-5" [icon]="widget.iconClass" />
                 <div class="d-flex flex-column align-items-start align-self-center">
-                  <span class="si-h5">{{ widget.name }}</span>
-                  <span class="si-body">{{ widget.description?.trim() }}</span>
+                  <span class="si-h5">{{ widget.name | translate }}</span>
+                  <span class="si-body">{{ widget.description?.trim() | translate }}</span>
                 </div>
               </li>
             }
