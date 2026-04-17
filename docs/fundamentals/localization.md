@@ -46,6 +46,8 @@ This page gives recommendations on how UX writers can support localization teams
 ### Consider translation
 
 Translation-friendly texts should be created by UX writers thinking like a translator and asking the question: “Is the text understandable without the visual context?”.
+In the example below, UX writers should ask themselves whether a tool instance is being deleted or whether something is being named.
+It is also unclear whether “complete” is an adjective or a verb.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
@@ -55,7 +57,7 @@ Translation-friendly texts should be created by UX writers thinking like a trans
 </div>
 <div class="donts" markdown>
 
-- `Delete complete tool instance ID naming`Deleting a tool instance?<br>Naming something?<br>Is "complete" an adjective or a verb?
+- `Delete complete tool instance ID naming`
 
 </div>
 </div>
@@ -63,10 +65,8 @@ Translation-friendly texts should be created by UX writers thinking like a trans
 User interface texts are stand-alone, short, and to the point, but they provide little to no context on their own. Thus, translators and AI can only produce a reliable translation if the terms are
 
 - [Predominant](#terms-in-various-uses)
-- [Precise](#domain-terminology)
+- [Precise](#use-domain-terminology)
 - [Unambiguous](#avoid-misunderstandings)
-
-UX writing combines terminology, style and form to ensure a consistent UI for specific use cases of a target audience.
 
 <!-- markdownlint-disable MD051 -->
 
@@ -89,7 +89,7 @@ Common language serves multiple purposes:
 - Openness to third parties, breaking up of silos
 - Foundation for artificial intelligence
 
-#### Terms in various uses
+#### Consider that terms are used in different ways
 
 Many terms have various meanings related to a specific context or domain.
 Use the terminology database of domain to maintain a common language.
@@ -228,15 +228,13 @@ Consider German, Finnish, Greek, and some Slavic languages, which are known for 
 #### Limit space if required
 
 Identify UI elements which truly offer limited space, even if a flexible design is the preferred choice.
-The following UI elements may require text length restrictions:
+The following UI elements may require text length restrictions, measured in either character count or pixel width:
 
 - Buttons
 - Tab labels
 - Navigation menu items
 - Table headers
 - Input field labels
-
-Texts can be limited by the translation management tool in terms of character count or pixel width.
 
 ### Reuse texts
 
@@ -258,15 +256,18 @@ Before writing a new text, check whether one with the exact same meaning already
 
 Reusing the same instance of text has the following advantages:
 
-- …reduces the volume sent to translators and lowers cost.
-- …increases the efficiency of product development and maintenance.
-- …keeps translation unique in every supported language.
-- …helps identifying duplicated functionality.
+- reduces the volume sent to translators and lowers cost.
+- increases the efficiency of product development and maintenance.
+- keeps translation unique in every supported language.
+- helps identifying duplicated functionality.
 
 However, be careful when changing approved, reused texts to ensure that their meaning is preserved.
 
+### Consider different contexts
+
 An English text may require different translations in different contexts.
 In such cases, a separate text must be created.
+If in doubt, create a separate text for each use, even if the English text appears to be identical.
 
 <!-- markdownlint-disable MD038 -->
 
@@ -288,8 +289,6 @@ In such cases, a separate text must be created.
 </div>
 
 <!-- markdownlint-enable MD038 -->
-
-If in doubt, create a separate text for each use, even if the English text appears to be identical.
 
 ### Use translation libraries
 
