@@ -8,7 +8,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ModalRef } from '@siemens/element-ng/modal';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { firstValueFrom } from 'rxjs';
+import {
+  provideMockTranslateServiceBuilder,
+  SiTranslateService
+} from '@siemens/element-translate-ng/translate';
+import { firstValueFrom, NEVER } from 'rxjs';
 
 import { TEST_WIDGET } from '../../../test/test-widget/test-widget';
 import { createTestingWidget, TestingModule } from '../../../test/testing.module';
@@ -282,5 +286,75 @@ describe('SiWidgetCatalogComponent', () => {
       fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
         .tagName
     ).not.toBe('SI-TEST-WIDGET-EDITOR');
+  });
+
+  describe('Widget name and description translation', () => {
+    const translations: Record<string, string> = {
+      'WIDGET.NAME_KEY': 'Translated Widget Name',
+      'WIDGET.DESCRIPTION_KEY': 'Translated Widget Description'
+    };
+
+    beforeEach(() => {
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        imports: [TestingModule, SiWidgetCatalogComponent],
+        providers: [
+          { provide: ModalRef, useValue: new ModalRef() },
+          provideMockTranslateServiceBuilder(
+            () =>
+              ({
+                translate: (key: string) => translations[key] ?? key,
+                translateSync: (key: string) => translations[key] ?? key,
+                translationChange: NEVER
+              }) as unknown as SiTranslateService
+          )
+        ]
+      });
+
+      fixture = TestBed.createComponent(SiWidgetCatalogComponent);
+      component = fixture.componentInstance;
+    });
+
+    it('should display translated widget name and description', () => {
+      component.widgetCatalog = [
+        {
+          ...createTestingWidget('WIDGET.NAME_KEY', 'translatable-1'),
+          description: 'WIDGET.DESCRIPTION_KEY'
+        }
+      ];
+      fixture.detectChanges();
+
+      const listItems = fixture.debugElement.queryAll(By.css('.list-group-item'));
+      expect(listItems).toHaveLength(1);
+      expect(listItems[0].query(By.css('.si-h5')).nativeElement).toHaveTextContent(
+        'Translated Widget Name'
+      );
+      expect(listItems[0].query(By.css('.si-body')).nativeElement).toHaveTextContent(
+        'Translated Widget Description'
+      );
+    });
+
+    it('should filter widgets by translated name', () => {
+      component.widgetCatalog = [
+        {
+          ...createTestingWidget('WIDGET.NAME_KEY', 'translatable-1'),
+          description: 'WIDGET.DESCRIPTION_KEY'
+        },
+        createTestingWidget('Other Widget', 'other-1')
+      ];
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(2);
+
+      fixture.debugElement
+        .query(By.css('si-search-bar'))
+        .triggerEventHandler('searchChange', 'Translated');
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
+      expect(
+        fixture.debugElement.query(By.css('.list-group-item .si-h5')).nativeElement
+      ).toHaveTextContent('Translated Widget Name');
+    });
   });
 });

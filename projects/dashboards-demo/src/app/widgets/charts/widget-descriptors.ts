@@ -21,11 +21,9 @@ const loaderFunction = async (name: string): Promise<any> => {
 };
 
 export const LINE_CHART_DESC: Widget = {
-  name: 'Line Chart',
+  name: 'WIDGET.LINE_CHART',
   id: '@siemens/dashboards-demo/line-chart',
-  description: `A line chart is a type of chart used to show information that changes over time.\
-  Line charts are created by plotting a series of several points and connecting them with a straight line.\
-  Line charts are used to track changes over short and long periods.`,
+  description: 'WIDGET.LINE_CHART_DESC',
   iconClass: 'element-trend',
   componentFactory: {
     componentName: 'CartesianComponent',
