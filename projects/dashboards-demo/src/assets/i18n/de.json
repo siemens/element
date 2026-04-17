@@ -10,7 +10,8 @@
   "WIDGET": {
     "LINE_CHART": "Liniendiagramm",
     "BAR_CHART": "Balkendiagramm",
-    "CIRCLE_CHART": "Kuchendiagramm"
+    "CIRCLE_CHART": "Kuchendiagramm",
+    "LINE_CHART_DESC": "Ein Liniendiagramm ist eine Diagrammart, die verwendet wird, um Informationen darzustellen, die sich im Laufe der Zeit ändern. Liniendiagramme werden erstellt, indem mehrere Punkte eingezeichnet und mit einer geraden Linie verbunden werden. Liniendiagramme werden verwendet, um Veränderungen über kurze und lange Zeiträume zu verfolgen."
   },
   "TOOLBAR": {
     "SAVE_AS_DEFAULTS": "Als Standard speichern",
