@@ -47,24 +47,24 @@ export const buildDefaults = (): SiFormValidationErrorMapper => ({
     () => $localize`:@@SI_FORM_CONTAINER.ERROR.DATE_FORMAT_START:Invalid start date`
   ),
   maxDate: t(
-    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_DATE:Date prior to {{maxString}} required`
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_DATE:Date on or before {{maxString}} required`
   ),
   minDate: t(
-    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_DATE:Date after {{minString}} required`
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_DATE:Date on or after {{minString}} required`
   ),
   maxTime: t(
-    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_TIME:Time prior to {{maxString}} required`
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_TIME:Time on or before {{maxString}} required`
   ),
   minTime: t(
-    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_TIME:Time after {{minString}} required`
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_TIME:Time on or after {{minString}} required`
   ),
   rangeAfterMaxDate: t(
     () =>
-      $localize`:@@SI_FORM_CONTAINER.ERROR.RANGE_AFTER_MAX_DATE:Period prior to {{maxString}} required`
+      $localize`:@@SI_FORM_CONTAINER.ERROR.RANGE_AFTER_MAX_DATE:Period on or before {{maxString}} required`
   ),
   rangeBeforeMinDate: t(
     () =>
-      $localize`:@@SI_FORM_CONTAINER.ERROR.RANGE_BEFORE_MIN_DATE:Period after {{minString}} required`
+      $localize`:@@SI_FORM_CONTAINER.ERROR.RANGE_BEFORE_MIN_DATE:Period on or after {{minString}} required`
   ),
   // Time units
   hours: t(
