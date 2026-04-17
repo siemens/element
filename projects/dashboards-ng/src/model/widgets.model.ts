@@ -6,6 +6,7 @@ import { EventEmitter, InputSignal, OutputEmitterRef, TemplateRef, Type } from '
 import { AccentLineType, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 
 /**
@@ -19,9 +20,9 @@ export interface Widget {
   /** An optional version string. */
   version?: string;
   /** The name of the widget that is presented in the widget catalog. */
-  name: string;
+  name: TranslatableString;
   /** An optional description that is visible in the widget catalog. */
-  description?: string;
+  description?: TranslatableString;
   /** A CSS icon class that specifies the widget icon, displayed in the catalog. */
   iconClass?: string;
   /** The factory to instantiate a widget instance component that is added to the dashboard. */
@@ -183,7 +184,7 @@ export interface WidgetConfig {
   /**
    * grid item header text.
    */
-  heading?: string;
+  heading?: TranslatableString;
   /** Defines whether the widget instance component can be expanded and enlarged over the dashboard. */
   expandable?: boolean;
   /** A widget specific payload object. Placeholder to pass in additional configuration. */

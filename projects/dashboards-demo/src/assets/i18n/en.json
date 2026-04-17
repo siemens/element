@@ -10,7 +10,8 @@
   "WIDGET": {
     "LINE_CHART": "Line Chart",
     "BAR_CHART": "Bar Chart",
-    "CIRCLE_CHART": "Circle Chart"
+    "CIRCLE_CHART": "Circle Chart",
+    "LINE_CHART_DESC": "A line chart is a type of chart used to show information that changes over time.  Line charts are created by plotting a series of several points and connecting them with a straight line.  Line charts are used to track changes over short and long periods."
   },
   "TOOLBAR": {
     "SAVE_AS_DEFAULTS": "Save as defaults",

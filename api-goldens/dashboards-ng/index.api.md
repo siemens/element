@@ -288,10 +288,10 @@ export type WebComponent = CommonFactoryFields & {
 export interface Widget {
     componentFactory: WidgetComponentFactory;
     defaults?: Pick<WidgetConfig, 'width' | 'height' | 'minWidth' | 'minHeight' | 'heading' | 'expandable' | 'immutable' | 'image' | 'accentLine'>;
-    description?: string;
+    description?: TranslatableString;
     iconClass?: string;
     id: string;
-    name: string;
+    name: TranslatableString;
     payload?: any;
     version?: string;
 }
@@ -308,7 +308,7 @@ export interface WidgetConfig {
     // (undocumented)
     actionBarViewType?: ViewType;
     expandable?: boolean;
-    heading?: string;
+    heading?: TranslatableString;
     height?: number;
     id: string;
     image?: WidgetImage;
