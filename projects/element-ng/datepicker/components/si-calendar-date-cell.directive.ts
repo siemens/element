@@ -10,7 +10,7 @@ import { CompareAdapter } from './si-compare-adapter';
 @Directive({
   selector: '[siCalendarDateCell]',
   host: {
-    class: 'si-calendar-date-cell',
+    class: 'si-calendar-date-cell focus-inside',
     '[attr.aria-disabled]': 'cell().disabled',
     '[class.disabled]': 'cell().disabled',
     '[attr.aria-label]': 'cell().ariaLabel',

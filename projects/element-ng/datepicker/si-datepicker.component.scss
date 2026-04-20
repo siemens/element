@@ -1,6 +1,7 @@
 @use 'sass:map';
 
 @use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/bootstrap/variables' as bootstrap-variables;
 
 %selection-hover {
   background: variables.$element-base-1-hover;
@@ -8,18 +9,18 @@
 }
 
 %table-cell-height-32 {
-  block-size: 32px;
-  line-height: 32px;
-  inline-size: 100%;
+  block-size: 2rem;
+  line-height: 2rem;
 }
 
 // Enforce square for date cells
 %square {
   @extend %table-cell-height-32;
-  inline-size: 32px;
+  inline-size: 2rem;
 }
 
 %table-cell-base {
+  display: block;
   margin-inline: auto;
   position: relative;
   border: unset;
@@ -34,7 +35,6 @@
   border-radius: variables.$element-radius-2;
   display: flex;
   flex-direction: column;
-  inline-size: 348px;
 }
 
 // FIXME: this is a hack to avoid style leaking. File needs to be split to the components
@@ -43,11 +43,12 @@
   .footer {
     display: flex;
     align-items: center;
+    // Ensure empty footer have the same height as the header with the button, so that the calendar doesn't jump when the today button appears.
+    min-block-size: calc(1rem + 2 * bootstrap-variables.$btn-padding-y);
   }
 
   .header {
-    padding-block-start: map.get(variables.$spacers, 5);
-    padding-block-end: map.get(variables.$spacers, 6);
+    padding-block: map.get(variables.$spacers, 5);
     padding-inline: map.get(variables.$spacers, 9);
     border-block-end: 1px solid variables.$element-ui-4;
 
@@ -59,11 +60,16 @@
 
   .footer {
     margin-block-start: map.get(variables.$spacers, 2);
-    text-align: center;
+  }
+
+  .calendar-table {
+    // Ensures all views (day/month/year) have the same block-size so the calendar doesn't jump
+    // when switching views. Equals the natural height of a 7-row day table:
+    // 7 rows × 2rem + 8 border-spacing gaps × 3px (6 between rows + 1 before + 1 after).
+    min-block-size: calc(7 * 2rem + 8 * 3px);
   }
 
   table {
-    inline-size: 100%;
     border-collapse: separate;
     border-spacing: 0 3px;
     table-layout: fixed;
@@ -90,6 +96,8 @@
     @extend %table-cell-height-32;
     @extend %table-cell-base;
 
+    inline-size: calc(4 * 2rem);
+
     &.selected {
       background: variables.$element-ui-0;
       color: variables.$element-base-1;
@@ -100,11 +108,13 @@
     }
   }
 
-  // month cell class
+  // year cell class
   .year {
     @extend %table-cell-height-32;
     @extend %table-cell-base;
 
+    inline-size: calc((8 / 3) * 2rem);
+
     &.selected {
       background: variables.$element-ui-0;
       color: variables.$element-base-1;
@@ -115,21 +125,18 @@
     }
   }
 
-  td[role='gridcell'] {
-    text-align: center;
-  }
-
+  td,
   th {
+    @extend %square;
+    padding: 0;
     font-weight: variables.$si-font-weight-caption;
-    text-align: center;
-    block-size: 32px;
   }
 
   .week-num,
   th {
     font-size: variables.$si-font-size-caption;
     color: variables.$element-text-secondary;
-    inline-size: 32px;
+    inline-size: 2rem;
     cursor: default;
   }
 
@@ -145,27 +152,6 @@
       border: 1px solid variables.$element-ui-1;
       border-radius: variables.$element-radius-2;
       display: inline-block;
-    }
-  }
-
-  .selection {
-    .month,
-    .year {
-      block-size: 30px;
-      line-height: 30px;
-      cursor: pointer;
-
-      &:not(.disabled):hover {
-        @extend %selection-hover;
-      }
-    }
-
-    .month {
-      inline-size: 50%;
-    }
-
-    .year {
-      inline-size: 33.3%;
     }
   }
 
@@ -229,10 +215,6 @@
     line-height: variables.$si-line-height-h5;
     color: variables.$element-text-active;
     min-inline-size: 0 !important; // stylelint-disable-line declaration-no-important
-  }
-
-  .calendar {
-    block-size: 28em;
   }
 
   .timepicker-container {
