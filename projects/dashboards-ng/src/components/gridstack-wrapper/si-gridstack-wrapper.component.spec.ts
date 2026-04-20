@@ -67,13 +67,10 @@ describe('SiGridstackWrapperComponent', () => {
     });
 
     it('should mount the grid items', async () => {
-      const mountSpy = vi
-        .spyOn(SiGridstackWrapperComponent.prototype, 'mount')
-        .mockImplementation(() => {});
-
       await createComponent(TEST_WIDGET_CONFIGS, new Map([[TEST_WIDGET.id, TEST_WIDGET]]));
 
-      expect(mountSpy).toHaveBeenCalledWith(TEST_WIDGET_CONFIGS);
+      const widgetHosts = fixture.debugElement.queryAll(By.css('si-widget-host'));
+      expect(widgetHosts).toHaveLength(TEST_WIDGET_CONFIGS.length);
     });
 
     it('should render grid items', async () => {
@@ -95,29 +92,23 @@ describe('SiGridstackWrapperComponent', () => {
     });
 
     it('should mount newly added grid items', async () => {
-      const mountSpy = vi.spyOn(component, 'mount');
-
-      widgets.update(current => [...current, TEST_WIDGET_CONFIG_2]);
+      widgets.set([...widgets(), TEST_WIDGET_CONFIG_2]);
       await fixture.whenStable();
 
-      expect(mountSpy).toHaveBeenCalled();
-      expect(mountSpy).toHaveBeenCalledWith([TEST_WIDGET_CONFIG_2]);
+      const widgetHosts = fixture.debugElement.queryAll(By.css('si-widget-host'));
+      expect(widgetHosts).toHaveLength(3);
     });
 
     it('should unmount removed grid items', async () => {
-      const unmountSpy = vi.spyOn(component, 'unmount');
-
       widgets.set([TEST_WIDGET_CONFIG_1]);
       await fixture.whenStable();
 
-      expect(unmountSpy).toHaveBeenCalled();
-      expect(unmountSpy).toHaveBeenCalledWith([TEST_WIDGET_CONFIG_0]);
+      expect(fixture.debugElement.queryAll(By.css('si-widget-host'))).toHaveLength(1);
 
       widgets.set([]);
       await fixture.whenStable();
 
-      expect(unmountSpy).toHaveBeenCalled();
-      expect(unmountSpy).toHaveBeenCalledWith([TEST_WIDGET_CONFIG_1]);
+      expect(fixture.debugElement.queryAll(By.css('si-widget-host'))).toHaveLength(0);
     });
 
     it('should not trigger ngOnChanges on SiWidgetHostComponent when widget config reference is unchanged', async () => {
@@ -153,7 +144,7 @@ describe('SiGridstackWrapperComponent', () => {
   });
 
   describe('#getWidgetLayout()', () => {
-    it.skip('should return layout for a given widget id', async () => {
+    it('should return layout for a given widget id', async () => {
       await createComponent(TEST_WIDGET_CONFIGS, new Map([[TEST_WIDGET.id, TEST_WIDGET]]));
 
       TEST_WIDGET_CONFIGS.forEach(wg => {

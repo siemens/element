@@ -4,11 +4,10 @@
  */
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
-import { NO_ERRORS_SCHEMA, WritableSignal, inputBinding, signal } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
-import { WidgetComponentFactory } from '@siemens/dashboards-ng';
 import {
   DeleteConfirmationDialogResult,
   SiActionDialogService
@@ -43,7 +42,6 @@ describe('SiWidgetHostComponent', () => {
       let component: SiWidgetHostComponent;
       let fixture: ComponentFixture<SiWidgetHostComponent>;
       let actionDialogService: SiActionDialogMockService;
-      let componentFactory: WritableSignal<WidgetComponentFactory | undefined>;
 
       beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -52,17 +50,17 @@ describe('SiWidgetHostComponent', () => {
           schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
 
-        componentFactory = signal(widget.componentFactory);
-        fixture = TestBed.createComponent(SiWidgetHostComponent, {
-          bindings: [
-            inputBinding('componentFactory', componentFactory),
-            inputBinding('widgetConfig', () => TEST_WIDGET_CONFIG_0)
-          ]
-        });
+        fixture = TestBed.createComponent(SiWidgetHostComponent);
         component = fixture.componentInstance;
         actionDialogService = TestBed.inject(
           SiActionDialogService
         ) as unknown as SiActionDialogMockService;
+        fixture.componentRef.setInput('componentFactory', widget.componentFactory);
+        fixture.componentRef.setInput('widgetConfig', TEST_WIDGET_CONFIG_0);
+        fixture.componentRef.setInput('grid', {
+          update: vi.fn(),
+          makeWidget: vi.fn()
+        });
       });
 
       it('should create', () => {
@@ -79,7 +77,7 @@ describe('SiWidgetHostComponent', () => {
       });
 
       it('should not create widget instance without widget', async () => {
-        componentFactory.set(undefined);
+        fixture.componentRef.setInput('componentFactory', undefined);
         vi.useFakeTimers();
         vi.advanceTimersByTime(0);
         await fixture.whenStable();
