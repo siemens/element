@@ -101,11 +101,11 @@
 }
 
 .list-group-lg .list-group-item {
-  min-block-size: 64px;
+  min-block-size: calc(3rem + 2 * variables.$list-group-item-padding-y);
 }
 
 .list-group-md .list-group-item {
-  min-block-size: 48px;
+  min-block-size: calc(2rem + 2 * variables.$list-group-item-padding-y);
 }
 
 .list-header {
