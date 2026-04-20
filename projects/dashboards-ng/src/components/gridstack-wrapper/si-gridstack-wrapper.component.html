@@ -1,3 +1,11 @@
 <div class="grid-stack">
-  <ng-container #gridstackContainer />
+  @for (item of widgetConfigs(); track item.id) {
+    <si-widget-host
+      [grid]="grid"
+      [attr.item-id]="item.id"
+      [widgetConfig]="item"
+      (remove)="widgetInstanceRemove.emit(item.id)"
+      (edit)="widgetInstanceEdit.emit(item)"
+    />
+  }
 </div>
