@@ -1,3 +1,10 @@
+## [48.11.1](https://github.com/siemens/element/compare/v48.11.0...v48.11.1) (2026-04-20)
+
+
+### Bug Fixes
+
+* **datepicker:** correctly classify noon as PM in si-timepicker meridian detection ([8044beb](https://github.com/siemens/element/commit/8044bebd7b8dd14b85a26955184bb9401b8f9485)), closes [#1886](https://github.com/siemens/element/issues/1886)
+
 # [48.11.0](https://github.com/siemens/element/compare/v48.10.3...v48.11.0) (2026-03-25)
 
 
