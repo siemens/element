@@ -40,10 +40,16 @@
 
 .dropdown-menu-scroller {
   overflow: auto;
-  // 266px is based on figma and gives 6-8 items. Depending on the number of headings
+  // ~266px with rfs 16px, based on Figma and gives 6-8 items. Depending on the number of headings
   max-block-size: min(
     100vb,
-    calc((1lh + 2 * #{bootstrap-variables.$dropdown-item-padding-y}) * 8.3125) // = 266px with rfs 16px
+    calc(
+      (
+          bootstrap-variables.$dropdown-line-height + #{2 *
+            bootstrap-variables.$dropdown-item-padding-y}
+        ) *
+        8.3125
+    )
   );
 }
 
@@ -90,7 +96,7 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  block-size: calc(1lh + 2 * bootstrap-variables.$dropdown-item-padding-y);
+  min-block-size: calc(1lh + 2 * bootstrap-variables.$dropdown-item-padding-y);
   inline-size: 100%;
   padding-block: bootstrap-variables.$dropdown-item-padding-y;
   padding-inline: bootstrap-variables.$dropdown-item-padding-x;
@@ -169,6 +175,7 @@
   white-space: nowrap; // as with > li > a
   font-size: typography.$si-font-size-h5;
   font-weight: typography.$si-font-weight-h5;
+  line-height: bootstrap-variables.$dropdown-line-height;
 }
 
 .dropdown-divider {
