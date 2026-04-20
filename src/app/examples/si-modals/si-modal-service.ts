@@ -72,7 +72,8 @@ export class SampleComponent implements OnDestroy {
   }
 
   openModalWithComponent(): void {
-    this.modalService.show(AppTableComponent, {
+    this.ref?.hide();
+    this.ref = this.modalService.show(AppTableComponent, {
       ignoreBackdropClick: false,
       keyboard: true,
       animated: true,
