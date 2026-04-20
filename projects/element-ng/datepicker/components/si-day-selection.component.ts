@@ -48,7 +48,10 @@ import { SiInitialFocusComponent } from './si-initial-focus.component';
   selector: 'si-day-selection',
   imports: [DatePipe, SiCalendarBodyComponent, SiCalendarDirectionButtonComponent, SiTranslatePipe],
   templateUrl: './si-day-selection.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'd-flex flex-column gap-6'
+  }
 })
 export class SiDaySelectionComponent extends SiInitialFocusComponent {
   private readonly todayDefaultText = t(() => $localize`:@@SI_DATEPICKER.TODAY:Today`);

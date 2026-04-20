@@ -2,6 +2,7 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 :host {
+  background: variables.$element-base-1;
   max-block-size: max-content;
   // Shrink the container when the two month layout wraps the content
   // so that the scrollbar is positioned directly at the end of the content.
@@ -25,7 +26,7 @@
   // and making the screen larger has no effect on expanding to two
   // pickers again. Seems to be acceptable as size is adjusted after
   // closing and reopening again.
-  max-inline-size: 348px;
+  max-inline-size: 43.5ch;
 }
 
 .first-datepicker {
