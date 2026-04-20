@@ -437,6 +437,16 @@ $nav-tabs-link-hover-border-color: transparent transparent $nav-tabs-border-colo
 $nav-tabs-link-active-color: semantic-tokens.$element-action-secondary-text-hover !default;
 $nav-tabs-link-active-bg: transparent !default;
 
+// Badges
+$badge-font-size: typography.$si-font-size-body;
+$badge-line-height: 1.25rem;
+$badge-font-weight: typography.$si-font-weight-body;
+$badge-color: semantic-tokens.$element-text-inverse !default;
+$badge-padding-y: map.get(spacers.$spacers, 1);
+$badge-padding-x: map.get(spacers.$spacers, 4);
+$badge-border-radius: 0.75rem;
+$badge-height: calc($badge-line-height + 2 * $badge-padding-y);
+
 // Dropdowns
 //
 // Dropdown menu container and contents.
@@ -445,7 +455,8 @@ $dropdown-padding-x: 0 !default;
 $dropdown-padding-y: map.get(spacers.$spacers, 4) !default;
 $dropdown-spacer: 0.125rem !default;
 $dropdown-font-size: $font-size-base !default;
-$dropdown-line-height: $line-height-base;
+// this is to have room for icon and badges
+$dropdown-line-height: $badge-height;
 $dropdown-color: $body-color !default;
 $dropdown-bg: semantic-tokens.$element-base-1 !default;
 $dropdown-border-radius: semantic-tokens.$element-radius-2 !default;
@@ -454,7 +465,7 @@ $dropdown-divider-margin-y: 4px !default;
 $dropdown-box-shadow: elevation.$element-elevation-2 !default;
 $dropdown-link-color: semantic-tokens.$element-text-primary !default;
 $dropdown-link-disabled-color: semantic-tokens.$element-text-disabled !default;
-$dropdown-item-padding-y: map.get(spacers.$spacers, 4);
+$dropdown-item-padding-y: map.get(spacers.$spacers, 2);
 $dropdown-item-padding-x: map.get(spacers.$spacers, 5);
 $dropdown-header-color: semantic-tokens.$element-text-primary !default;
 
@@ -519,14 +530,6 @@ $popover-arrow-height: 6px;
 $popover-arrow-color: $popover-bg !default;
 
 $popover-arrow-outer-color: $popover-border-color !default;
-
-// Badges
-$badge-font-size: typography.$si-font-size-body;
-$badge-font-weight: typography.$si-font-weight-body;
-$badge-color: semantic-tokens.$element-text-inverse !default;
-$badge-padding-y: map.get(spacers.$spacers, 1);
-$badge-padding-x: map.get(spacers.$spacers, 4);
-$badge-border-radius: 0.75rem;
 
 // Modals
 

@@ -81,7 +81,7 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  block-size: calc(1lh + 2 * bootstrap-variables.$dropdown-item-padding-y);
+  min-block-size: calc(1lh + 2 * bootstrap-variables.$dropdown-item-padding-y);
   inline-size: 100%;
   padding-block: bootstrap-variables.$dropdown-item-padding-y;
   padding-inline: bootstrap-variables.$dropdown-item-padding-x;
@@ -160,6 +160,7 @@
   white-space: nowrap; // as with > li > a
   font-size: typography.$si-font-size-h5;
   font-weight: typography.$si-font-weight-h5;
+  line-height: bootstrap-variables.$dropdown-line-height;
 }
 
 .dropdown-divider {
