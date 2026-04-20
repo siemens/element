@@ -39,18 +39,6 @@ nav {
   }
 }
 
-.nav-scroll {
-  overflow-x: hidden;
-  min-block-size: 0;
-  flex: 1 0 0;
-  overflow-y: auto;
-  margin-block-start: map.get(all-variables.$spacers, 4);
-
-  :host(.nav-collapsed) & {
-    display: none;
-  }
-}
-
 .mobile-drawer {
   display: block;
   text-align: end;
@@ -138,10 +126,6 @@ si-search-bar {
     }
 
     &.nav-collapsed {
-      .nav-scroll {
-        display: block;
-      }
-
       .nav-search {
         display: flex;
       }
