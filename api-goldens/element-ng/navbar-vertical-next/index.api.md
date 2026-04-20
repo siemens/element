@@ -4,81 +4,17 @@
 
 ```ts
 
-import { ActivatedRoute } from '@angular/router';
 import * as _angular_core from '@angular/core';
-import { IsActiveMatchOptions } from '@angular/router';
-import { MenuItem } from '@siemens/element-ng/common';
-import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
 import { OnInit } from '@angular/core';
+import * as _siemens_element_ng_navbar_vertical_next from '@siemens/element-ng/navbar-vertical-next';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TemplateRef } from '@angular/core';
 
 // @public
-export type NavbarVerticalNextItem = NavbarVerticalNextItemGroup | NavbarVerticalNextItemRouterLink | NavbarVerticalNextItemLink | NavbarVerticalNextItemAction | NavbarVerticalNextItemHeader | NavbarVerticalNextItemDivider;
-
-// @public
-export interface NavbarVerticalNextItemAction extends NavbarVerticalNextItemBase {
-    action: (source: this) => void;
-    active?: boolean;
-    // (undocumented)
-    type: 'action';
+export class SiNavbarVerticalItemsNextComponent {
 }
-
-// @public
-export interface NavbarVerticalNextItemBase {
-    badge?: string | number;
-    badgeColor?: string;
-    hideBadgeWhenCollapsed?: boolean;
-    icon?: string;
-    id?: string;
-    label: TranslatableString;
-}
-
-// @public (undocumented)
-export interface NavbarVerticalNextItemDivider {
-    // (undocumented)
-    type: 'divider';
-}
-
-// @public
-export interface NavbarVerticalNextItemGroup extends NavbarVerticalNextItemBase {
-    children: NavbarVerticalNextSubItem[];
-    expanded?: boolean;
-    // (undocumented)
-    type: 'group';
-}
-
-// @public (undocumented)
-export interface NavbarVerticalNextItemHeader {
-    // (undocumented)
-    label: TranslatableString;
-    // (undocumented)
-    type: 'header';
-}
-
-// @public
-export interface NavbarVerticalNextItemLink extends NavbarVerticalNextItemBase {
-    href: string;
-    target?: string;
-    // (undocumented)
-    type: 'link';
-}
-
-// @public
-export interface NavbarVerticalNextItemRouterLink extends NavbarVerticalNextItemBase {
-    activeMatchOptions?: {
-        exact: boolean;
-    } | IsActiveMatchOptions;
-    extras?: NavigationExtras;
-    routerLink: string | any[];
-    // (undocumented)
-    type: 'router-link';
-}
-
-// @public
-export type NavbarVerticalNextSubItem = NavbarVerticalNextItemRouterLink | NavbarVerticalNextItemLink | NavbarVerticalNextItemAction;
 
 // @public (undocumented)
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
@@ -86,7 +22,6 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     collapse(): void;
     readonly collapsed: _angular_core.ModelSignal<boolean>;
     expand(): void;
-    readonly items: _angular_core.ModelSignal<(MenuItem | NavbarVerticalNextItem)[]>;
     readonly navbarCollapseButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly navbarExpandButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly searchable: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -97,16 +32,49 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     readonly skipLinkNavigationLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
     readonly textOnly: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // (undocumented)
+    readonly uiStateExpandedItems: _angular_core.WritableSignal<Record<string, boolean>>;
+    // @deprecated
     readonly visible: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
 // @public
-export class SiNavbarVerticalNextItemGuardDirective {
+export class SiNavbarVerticalNextDividerComponent {
+}
+
+// @public (undocumented)
+export class SiNavbarVerticalNextGroupComponent {
+    constructor();
+}
+
+// @public (undocumented)
+export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
+    constructor();
     // (undocumented)
-    static ngTemplateContextGuard(dir: SiNavbarVerticalNextItemGuardDirective, ctx: any): ctx is {
-        item: NavbarVerticalNextItem;
-        group: NavbarVerticalNextItemGroup;
-    };
+    readonly expanded: _angular_core.WritableSignal<boolean>;
+    // (undocumented)
+    readonly groupTemplate: _angular_core.InputSignal<TemplateRef<unknown>>;
+    // (undocumented)
+    readonly id: string;
+    // (undocumented)
+    readonly stateId: _angular_core.InputSignal<string | undefined>;
+}
+
+// @public (undocumented)
+export class SiNavbarVerticalNextHeaderComponent {
+}
+
+// @public (undocumented)
+export class SiNavbarVerticalNextItemComponent implements OnInit {
+    // (undocumented)
+    get active(): boolean;
+    readonly activeOverride: _angular_core.InputSignal<boolean | undefined>;
+    readonly badge: _angular_core.InputSignal<string | number | undefined>;
+    readonly badgeColor: _angular_core.InputSignal<string | undefined>;
+    // (undocumented)
+    readonly group: SiNavbarVerticalNextGroupTriggerDirective | null;
+    readonly hideBadgeWhenCollapsed: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly icon: _angular_core.InputSignal<string | undefined>;
 }
 
 // @public (undocumented)

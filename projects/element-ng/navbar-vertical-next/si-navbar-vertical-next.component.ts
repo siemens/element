@@ -3,13 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
-  computed,
-  Directive,
-  HostBinding,
   inject,
   input,
   model,
@@ -18,30 +15,17 @@ import {
   output,
   signal,
   SimpleChanges,
-  viewChild,
-  viewChildren
+  viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { elementDoubleLeft, elementDoubleRight, elementSearch } from '@siemens/element-icons';
-import { MenuItem, SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
+import { SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
-import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
-import { SiNavbarVerticalNextDividerComponent } from './si-navbar-vertical-next-divider.component';
-import { SiNavbarVerticalNextGroupTriggerDirective } from './si-navbar-vertical-next-group-trigger.directive';
-import { SiNavbarVerticalNextGroupComponent } from './si-navbar-vertical-next-group.component';
-import { SiNavbarVerticalNextHeaderComponent } from './si-navbar-vertical-next-header.component';
-import { SiNavbarVerticalNextItemLegacyComponent } from './si-navbar-vertical-next-item-legacy.component';
-import { SiNavbarVerticalNextItemComponent } from './si-navbar-vertical-next-item.component';
-import {
-  NavbarVerticalNextItem,
-  NavbarVerticalNextItemGroup
-} from './si-navbar-vertical-next.model';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
 /** @experimental */
@@ -50,45 +34,16 @@ interface UIState {
   expandedItems: Record<string, boolean>;
 }
 
-/**
- * Required to have compiler checks on the factory template
- * @experimental
- */
-@Directive({ selector: '[siNavbarVerticalNextItemGuard]' })
-export class SiNavbarVerticalNextItemGuardDirective {
-  static ngTemplateContextGuard(
-    dir: SiNavbarVerticalNextItemGuardDirective,
-    ctx: any
-  ): ctx is { item: NavbarVerticalNextItem; group: NavbarVerticalNextItemGroup } {
-    return true;
-  }
-}
-
 /** @experimental */
 @Component({
   selector: 'si-navbar-vertical-next',
-  imports: [
-    NgTemplateOutlet,
-    RouterLink,
-    RouterLinkActive,
-    SiIconComponent,
-    SiNavbarVerticalNextDividerComponent,
-    SiNavbarVerticalNextGroupComponent,
-    SiNavbarVerticalNextGroupTriggerDirective,
-    SiNavbarVerticalNextHeaderComponent,
-    SiNavbarVerticalNextItemComponent,
-    SiNavbarVerticalNextItemGuardDirective,
-    SiNavbarVerticalNextItemLegacyComponent,
-    SiSearchBarComponent,
-    SiSkipLinkTargetDirective,
-    SiTranslatePipe,
-    SiTooltipDirective
-  ],
+  imports: [SiIconComponent, SiSearchBarComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
   templateUrl: './si-navbar-vertical-next.component.html',
   styleUrl: './si-navbar-vertical-next.component.scss',
   providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useExisting: SiNavbarVerticalNextComponent }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'si-layout-inner',
+    class: 'si-layout-inner ready',
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
     '[class.visible]': 'visible()'
@@ -123,18 +78,6 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   );
 
   /**
-   * List of vertical navigation items
-   *
-   * @defaultValue []
-   */
-  readonly items = model<(MenuItem | NavbarVerticalNextItem)[]>([]);
-
-  /**
-   * Set to `true` if there are no icons
-   *
-   * @defaultValue false
-   */
-  /**
    * Set to `true` if there are no icons
    *
    * @defaultValue false
@@ -142,12 +85,10 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   readonly textOnly = input(false, { transform: booleanAttribute });
 
   /**
-   * Set to false to hide the vertical navbar
+   * List of vertical navigation items
    *
-   * @defaultValue true
-   */
-  /**
-   * Set to false to hide the vertical navbar
+   * @deprecated Use the template-based declarative API with content projection instead. Use `<si-navbar-vertical-items-next>` and
+   * `<a si-navbar-vertical-next-item>` / `<button si-navbar-vertical-next-item>` instead.
    *
    * @defaultValue true
    */
@@ -215,26 +156,19 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   readonly searchEvent = output<string>();
 
   private readonly searchBar = viewChild.required(SiSearchBarComponent);
-  protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
-  // Is required to prevent the navbar from running the padding animation on creation.
-  @HostBinding('class.ready') protected readonly ready = true;
 
   private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
   private breakpointObserver = inject(BreakpointObserver);
-  private readonly navbarItems = viewChildren(SiNavbarVerticalNextItemComponent);
-  private readonly navbarItemsLegacy = viewChildren(SiNavbarVerticalNextItemLegacyComponent);
-  private readonly itemsToComponents = computed(
-    () =>
-      new Map(
-        [...this.navbarItems(), ...this.navbarItemsLegacy()].map(component => [
-          component.item() as NavbarVerticalNextItem | MenuItem, // to have a broader key type allowed
-          component
-        ])
-      )
-  );
 
   protected readonly smallScreen = signal(false);
-  protected readonly uiStateExpandedItems = signal<Record<string, boolean>>({});
+
+  /**
+   * @defaultValue
+   * ```
+   * {}
+   * ```
+   */
+  readonly uiStateExpandedItems = signal<Record<string, boolean>>({});
 
   // Indicates if the user prefers a collapsed navbar. Relevant for resizing.
   private preferCollapse = false;
@@ -262,7 +196,9 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
         if (uiState) {
           this.preferCollapse = uiState.preferCollapse;
           this.collapsed.set(this.smallScreen() ? this.collapsed() : this.preferCollapse);
-          this.uiStateExpandedItems.set(uiState.expandedItems);
+          if (uiState.expandedItems) {
+            this.uiStateExpandedItems.set(uiState.expandedItems);
+          }
         }
       });
     }
@@ -291,7 +227,6 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     if (!this.smallScreen()) {
       this.preferCollapse = this.collapsed();
     }
-
     this.saveUIState();
   }
 
@@ -305,34 +240,11 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   }
 
   /** @internal */
-  groupTriggered(): void {
+  groupStateChanged(stateId: string | undefined, expanded: boolean): void {
+    if (stateId) {
+      this.uiStateExpandedItems.update(items => ({ ...items, [stateId]: expanded }));
+    }
     this.saveUIState();
-    const itemToComponentMap = this.itemsToComponents();
-    this.items.set(
-      this.items().map(item => {
-        const component = itemToComponentMap.get(item);
-        if (!component) {
-          return item;
-        }
-
-        if (component instanceof SiNavbarVerticalNextItemLegacyComponent) {
-          return {
-            ...item,
-            expanded: component.expanded()
-          };
-        }
-
-        if (component.group) {
-          return {
-            ...item,
-            expanded: component.group.expanded()
-          };
-        }
-
-        return item;
-      })
-    );
-    this.collapsed.set(false);
   }
 
   protected saveUIState(): void {
@@ -341,17 +253,9 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
       return;
     }
 
-    const expandedGroups = this.navbarItems()
-      .filter(item => item.item().id && item.group?.expanded())
-      .map(item => [item.item().id, true]);
-
-    const expandedGroupsLegacy = this.navbarItemsLegacy()
-      .filter(item => item.item().id && item.expanded())
-      .map(item => [item.item().id, true]);
-
     this.uiStateService.save<UIState>(stateId, {
       preferCollapse: this.preferCollapse,
-      expandedItems: Object.fromEntries([...expandedGroups, ...expandedGroupsLegacy])
+      expandedItems: this.uiStateExpandedItems()
     });
   }
 
@@ -360,9 +264,5 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     if (this.smallScreen()) {
       this.collapsed.set(true);
     }
-  }
-
-  protected isLegacyStyle(item: MenuItem | NavbarVerticalNextItem): item is MenuItem {
-    return !('type' in item && item.type !== 'check' && item.type !== 'radio');
   }
 }

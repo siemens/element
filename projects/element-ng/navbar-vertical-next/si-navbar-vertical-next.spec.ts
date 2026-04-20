@@ -7,9 +7,8 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, Injectable, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter, Router } from '@angular/router';
+import { provideRouter, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import {
-  MenuItem,
   provideSiUiState,
   SI_UI_STATE_SERVICE,
   SiUIStateService,
@@ -18,7 +17,13 @@ import {
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { NavbarVerticalNextItem, SiNavbarVerticalNextComponent } from './index';
+import {
+  SiNavbarVerticalItemsNextComponent,
+  SiNavbarVerticalNextComponent,
+  SiNavbarVerticalNextGroupComponent,
+  SiNavbarVerticalNextGroupTriggerDirective,
+  SiNavbarVerticalNextItemComponent
+} from './index';
 import { SiNavbarVerticalNextHarness } from './testing/si-navbar-vertical-next.harness';
 
 @Injectable()
@@ -46,36 +51,118 @@ class BreakpointObserverMock implements Partial<BreakpointObserver> {
 class EmptyComponent {}
 
 @Component({
-  imports: [SiNavbarVerticalNextComponent],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    SiNavbarVerticalItemsNextComponent,
+    SiNavbarVerticalNextComponent,
+    SiNavbarVerticalNextGroupComponent,
+    SiNavbarVerticalNextGroupTriggerDirective,
+    SiNavbarVerticalNextItemComponent
+  ],
   template: `<si-navbar-vertical-next
-    [items]="items()"
-    [searchable]="true"
-    [textOnly]="textOnly()"
-    [stateId]="stateId"
-    [collapsed]="collapsed()"
-    [searchDebounceTime]="0"
-    (searchEvent)="searchEvent($event)"
-    (itemsChange)="itemsChange($event)"
-  />`
+      [searchable]="true"
+      [textOnly]="textOnly()"
+      [stateId]="stateId"
+      [collapsed]="collapsed()"
+      [searchDebounceTime]="0"
+      (searchEvent)="searchEvent($event)"
+    >
+      @if (showDeclarativeFlyoutGroup()) {
+        <si-navbar-vertical-items-next>
+          <button
+            type="button"
+            si-navbar-vertical-next-item
+            [siNavbarVerticalNextGroupTriggerFor]="flyoutGroup"
+          >
+            item-1
+          </button>
+        </si-navbar-vertical-items-next>
+      }
+
+      @if (showDeclarativeNavigationGroup()) {
+        <si-navbar-vertical-items-next>
+          <button
+            type="button"
+            si-navbar-vertical-next-item
+            [siNavbarVerticalNextGroupTriggerFor]="navigationGroup"
+          >
+            item1
+          </button>
+        </si-navbar-vertical-items-next>
+      }
+
+      @if (showDeclarativeStateGroups()) {
+        <si-navbar-vertical-items-next>
+          <button
+            type="button"
+            si-navbar-vertical-next-item
+            stateId="item1"
+            [siNavbarVerticalNextGroupTriggerFor]="stateGroupOne"
+          >
+            item1
+          </button>
+          <button
+            type="button"
+            si-navbar-vertical-next-item
+            stateId="item2"
+            [siNavbarVerticalNextGroupTriggerFor]="stateGroupTwo"
+          >
+            item2
+          </button>
+        </si-navbar-vertical-items-next>
+      }
+    </si-navbar-vertical-next>
+
+    <ng-template #flyoutGroup>
+      <si-navbar-vertical-next-group>
+        <a si-navbar-vertical-next-item routerLink="item-1/sub-item-1" routerLinkActive>
+          sub-item1
+        </a>
+      </si-navbar-vertical-next-group>
+    </ng-template>
+
+    <ng-template #navigationGroup>
+      <si-navbar-vertical-next-group routerLinkActive>
+        <a
+          si-navbar-vertical-next-item
+          routerLink="item-1/sub-item-1"
+          routerLinkActive
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          sub-item1
+        </a>
+        <a si-navbar-vertical-next-item routerLink="item-1/sub-item-2" routerLinkActive>
+          sub-item2
+        </a>
+      </si-navbar-vertical-next-group>
+    </ng-template>
+
+    <ng-template #stateGroupOne>
+      <si-navbar-vertical-next-group>
+        <a si-navbar-vertical-next-item routerLink="item-1/sub-item-1" routerLinkActive>
+          sub-item1
+        </a>
+      </si-navbar-vertical-next-group>
+    </ng-template>
+
+    <ng-template #stateGroupTwo>
+      <si-navbar-vertical-next-group>
+        <a si-navbar-vertical-next-item routerLink="item-1/sub-item-2" routerLinkActive>
+          sub-item2
+        </a>
+      </si-navbar-vertical-next-group>
+    </ng-template>`
 })
 class TestHostComponent {
-  readonly items = signal<(MenuItem | NavbarVerticalNextItem)[]>([
-    {
-      title: 'item-1',
-      link: './item-1'
-    },
-    {
-      title: 'item-2',
-      link: './item-2'
-    }
-  ]);
   readonly textOnly = signal(true);
   stateId?: string;
   readonly collapsed = signal(false);
+  readonly showDeclarativeFlyoutGroup = signal(false);
+  readonly showDeclarativeNavigationGroup = signal(false);
+  readonly showDeclarativeStateGroups = signal(false);
 
   searchEvent(event: string): void {}
-
-  itemsChange(event: (MenuItem | NavbarVerticalNextItem)[]): void {}
 }
 
 describe('SiNavbarVerticalNext', () => {
@@ -163,7 +250,9 @@ describe('SiNavbarVerticalNext', () => {
 
     it('should open flyout menu', async () => {
       component.collapsed.set(true);
-      component.items.set([{ 'type': 'group', 'children': [], 'label': 'item-1' }]);
+      component.showDeclarativeFlyoutGroup.set(true);
+      fixture.detectChanges();
+      await fixture.whenStable();
 
       const item = await harness.findItemByLabel('item-1');
       await item.click();
@@ -185,21 +274,8 @@ describe('SiNavbarVerticalNext', () => {
     });
 
     it('should support navigation', async () => {
-      component.items.set([
-        {
-          type: 'group',
-          children: [
-            {
-              type: 'router-link',
-              label: 'sub-item1',
-              routerLink: 'item-1/sub-item-1',
-              activeMatchOptions: { exact: true }
-            },
-            { type: 'router-link', label: 'sub-item2', routerLink: 'item-1/sub-item-2' }
-          ],
-          label: 'item1'
-        }
-      ]);
+      component.showDeclarativeNavigationGroup.set(true);
+      fixture.detectChanges();
       await fixture.whenStable();
 
       const item = await harness.findItemByLabel('item1');
@@ -222,39 +298,6 @@ describe('SiNavbarVerticalNext', () => {
       expect(await subItem1.isActive()).toBe(false);
       expect(await subItem2.isActive()).toBe(true);
     });
-
-    it('should support navigation legacy item', async () => {
-      component.items.set([
-        {
-          items: [
-            { title: 'sub-item1', link: 'item-1/sub-item-1' },
-            { title: 'sub-item2', link: 'item-1/sub-item-2' }
-          ],
-          link: 'somewhere-else',
-          title: 'item1'
-        }
-      ]);
-
-      const [link, toggle] = await harness.findItems();
-      await link.click();
-      expect(await toggle.isActive()).toBe(true);
-      expect(await link.isActive()).toBe(true);
-
-      await toggle.click();
-      let [subItem1, subItem2] = await toggle.getChildren();
-      expect(await subItem1.isActive()).toBe(false);
-      expect(await subItem2.isActive()).toBe(false);
-      await subItem1.click();
-      [subItem1, subItem2] = await toggle.getChildren();
-      expect(await subItem1.isActive()).toBe(true);
-      expect(await subItem2.isActive()).toBe(false);
-
-      await TestBed.inject(Router).navigate(['/item-1/sub-item-2/sub-path']);
-      fixture.detectChanges();
-      [subItem1, subItem2] = await toggle.getChildren();
-      expect(await subItem1.isActive()).toBe(false);
-      expect(await subItem2.isActive()).toBe(true);
-    });
   });
 
   describe('with SiUIStateService', () => {
@@ -269,35 +312,10 @@ describe('SiNavbarVerticalNext', () => {
       });
     });
 
-    it('should load ui-state', async () => {
-      component.items.set([
-        { title: 'item1', id: 'item1', items: [{ title: 'subItem1' }, { title: 'subItem2' }] },
-        { title: 'item2', id: 'item2', items: [{ title: 'subItem1' }, { title: 'subItem2' }] }
-      ]);
-      const harness = await harnessLoader.getHarness(SiNavbarVerticalNextHarness);
-      const [item1, item2] = await harness.findItems();
-      expect(await item1.getLabel()).toEqual('item1');
-      expect(await item1.isExpanded()).toBe(true);
-      expect(await item2.getLabel()).toEqual('item2');
-      expect(await item2.isExpanded()).toBe(false);
-    });
-
-    it('should save ui-state', async () => {
-      component.items.set([
-        { title: 'item1', id: 'item1', items: [{ title: 'subItem1' }, { title: 'subItem2' }] },
-        { title: 'item2', id: 'item2', items: [{ title: 'subItem1' }, { title: 'subItem2' }] }
-      ]);
-      const harness = await harnessLoader.getHarness(SiNavbarVerticalNextHarness);
-      await harness.findItemByLabel('item2').then(item => item.click());
-      const state = await uiStateService.load<any>(component.stateId!);
-      expect(state!.expandedItems.item2).toBe(true);
-    });
-
     it('should load/save UI State for new items style', async () => {
-      component.items.set([
-        { type: 'group', children: [], label: 'item1', id: 'item1' },
-        { type: 'group', children: [], label: 'item2', id: 'item2', expanded: true }
-      ]);
+      component.showDeclarativeStateGroups.set(true);
+      fixture.detectChanges();
+      await fixture.whenStable();
 
       const harness = await harnessLoader.getHarness(SiNavbarVerticalNextHarness);
       const [item1, item2] = await harness.findItems();
@@ -307,7 +325,8 @@ describe('SiNavbarVerticalNext', () => {
       await item2.click();
       await item1.click();
       const state = await uiStateService.load<any>(component.stateId!);
-      expect(state).toEqual({ expandedItems: { item2: true } });
+      expect(state.expandedItems.item1).toBe(false);
+      expect(state.expandedItems.item2).toBe(true);
     });
 
     it('should restore collapsed state', async () => {

@@ -1,4 +1,4 @@
-@let icon = item().icon;
+@let icon = this.icon();
 @if (icon) {
   <si-icon class="icon-lg" [icon]="icon" />
 }
@@ -6,10 +6,11 @@
   <ng-content />
 </div>
 @if (!navbar.textOnly() && formattedBadge()) {
+  @let badgeColor = this.badgeColor();
   <span
     [class]="[
       'badge',
-      item().badgeColor ? `bg-${item().badgeColor}` : 'bg-default',
+      badgeColor ? `bg-${badgeColor}` : 'bg-default',
       textOnlyBadge() ? 'badge-text-only' : '',
       navbar.collapsed() ? 'badge-collapsed' : ''
     ]"

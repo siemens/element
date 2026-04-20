@@ -7,13 +7,35 @@
   </si-application-header>
 
   <si-navbar-vertical-next
-    stateId="navbar-vertical-next-with-icons"
+    stateId="navbar-vertical-next-routing"
     navbarCollapseButtonText="collapse"
     navbarExpandButtonText="expand"
     searchPlaceholder="Search..."
-    [items]="menuItems"
     [searchable]="true"
   >
+    <si-navbar-vertical-items-next>
+      <a si-navbar-vertical-next-item routerLink="home" routerLinkActive icon="element-home">
+        Home
+      </a>
+      <a
+        si-navbar-vertical-next-item
+        routerLink="coverage"
+        routerLinkActive
+        icon="element-diagnostic"
+        badge="Text"
+        badgeColor="danger-emphasis"
+      >
+        Test coverage
+      </a>
+      <si-navbar-vertical-next-header>Modules</si-navbar-vertical-next-header>
+      <a si-navbar-vertical-next-item routerLink="menu-item" routerLinkActive icon="element-fire">
+        Emergencies
+      </a>
+      <a si-navbar-vertical-next-item routerLink="energy" routerLinkActive icon="element-trend">
+        Energy &amp; sustainability
+      </a>
+    </si-navbar-vertical-items-next>
+
     <div class="si-layout-main-padding">
       <si-breadcrumb-router />
       <div class="si-layout-header">

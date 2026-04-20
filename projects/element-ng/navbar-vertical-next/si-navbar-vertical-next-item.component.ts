@@ -3,34 +3,21 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
-  HostListener,
   inject,
   input,
   OnInit
 } from '@angular/core';
 import { RouterLinkActive } from '@angular/router';
 import { elementDown2 } from '@siemens/element-icons';
-import { MenuItem } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 
 import { SiNavbarVerticalNextGroupTriggerDirective } from './si-navbar-vertical-next-group-trigger.directive';
-import {
-  NavbarVerticalNextItemAction,
-  NavbarVerticalNextItemGroup,
-  NavbarVerticalNextItemLink,
-  NavbarVerticalNextItemRouterLink
-} from './si-navbar-vertical-next.model';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
-
-type NavbarVerticalNextItemInteractive =
-  | NavbarVerticalNextItemGroup
-  | NavbarVerticalNextItemRouterLink
-  | NavbarVerticalNextItemLink
-  | NavbarVerticalNextItemAction;
 
 /** @experimental */
 @Component({
@@ -45,14 +32,30 @@ type NavbarVerticalNextItemInteractive =
     '[class.dropdown-item]': 'this.parent?.group?.flyout()',
     '[class.navbar-vertical-item]': '!this.parent?.group?.flyout()',
     '[class.active]': 'active',
-    '[class.hide-badge-collapsed]': 'hideBadgeCollapsed()'
+    '[class.hide-badge-collapsed]': 'hideBadgeWhenCollapsed()',
+    '(click)': 'triggered()'
   }
 })
 export class SiNavbarVerticalNextItemComponent implements OnInit {
   protected readonly icons = addIcons({ elementDown2 });
-  readonly item = input.required<NavbarVerticalNextItemInteractive | MenuItem>({
-    alias: 'si-navbar-vertical-next-item'
-  });
+
+  /** Optional icon to render before the label. */
+  readonly icon = input<string>();
+
+  /** Badge value to display. */
+  readonly badge = input<string | number>();
+
+  /** Color of the badge. */
+  readonly badgeColor = input<string>();
+
+  /**
+   * Hide the badge when the navbar is collapsed.
+   *
+   * @defaultValue false
+   */
+  readonly hideBadgeWhenCollapsed = input(false, { transform: booleanAttribute });
+
+  /** Override the active state. Useful for action items. */
   readonly activeOverride = input<boolean>();
 
   protected readonly navbar = inject(SI_NAVBAR_VERTICAL_NEXT);
@@ -68,26 +71,19 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
   private readonly siLink = inject(SiLinkDirective, { optional: true });
 
   /**
-   * Hides the badge in collapsed state
-   */
-  protected readonly hideBadgeCollapsed = computed(
-    () => !!(this.item() as NavbarVerticalNextItemInteractive).hideBadgeWhenCollapsed
-  );
-
-  /**
    * Determines if the badge contains text-only content (not numeric)
    */
   protected readonly textOnlyBadge = computed(() => {
-    const badge = this.item().badge;
-    return badge ? typeof badge !== 'number' : false;
+    const badge = this.badge();
+    return badge != null && badge !== '' ? typeof badge !== 'number' : false;
   });
 
   /**
    * Formats badge value to limit display to "+99" for numbers greater than 99
    */
   protected readonly formattedBadge = computed(() => {
-    const badge = this.item().badge;
-    if (!badge) {
+    const badge = this.badge();
+    if (badge == null || badge === '') {
       return '';
     }
     if (typeof badge === 'number') {
@@ -102,12 +98,7 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     }
   }
 
-  @HostListener('click') protected triggered(): void {
-    const item = this.item();
-    if (item.type === 'action') {
-      item.action(item);
-      return;
-    }
+  protected triggered(): void {
     this.parent?.group?.hideFlyout();
     if (!this.group) {
       this.navbar.itemTriggered();
@@ -122,6 +113,5 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
       ((!this.group?.expanded() || this.navbar.collapsed()) && this.group?.active()) ||
       false
     );
-    /* eslint-disable-enable @typescript-eslint/prefer-nullish-coalescing */
   }
 }

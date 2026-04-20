@@ -3,7 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router, RouterLink, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Route,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet
+} from '@angular/router';
 import {
   SiApplicationHeaderComponent,
   SiHeaderBrandDirective,
@@ -12,8 +19,10 @@ import {
 import { SiBreadcrumbRouterComponent } from '@siemens/element-ng/breadcrumb-router';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import {
-  NavbarVerticalNextItem,
-  SiNavbarVerticalNextComponent
+  SiNavbarVerticalItemsNextComponent,
+  SiNavbarVerticalNextComponent,
+  SiNavbarVerticalNextHeaderComponent,
+  SiNavbarVerticalNextItemComponent
 } from '@siemens/element-ng/navbar-vertical-next';
 import { provideExampleRoutes } from '@siemens/live-preview';
 
@@ -93,10 +102,14 @@ export const ROUTES: Route[] = [
   selector: 'app-sample',
   imports: [
     SiNavbarVerticalNextComponent,
+    SiNavbarVerticalItemsNextComponent,
+    SiNavbarVerticalNextItemComponent,
+    SiNavbarVerticalNextHeaderComponent,
     SiApplicationHeaderComponent,
     SiHeaderBrandDirective,
-    RouterLink,
     SiHeaderLogoDirective,
+    RouterLink,
+    RouterLinkActive,
     RouterOutlet,
     SiBreadcrumbRouterComponent
   ],
@@ -105,38 +118,6 @@ export const ROUTES: Route[] = [
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
-  menuItems: NavbarVerticalNextItem[] = [
-    {
-      type: 'router-link',
-      label: 'Home',
-      id: 'home',
-      icon: 'element-home',
-      routerLink: 'home'
-    },
-    {
-      type: 'router-link',
-      label: 'Test coverage',
-      icon: 'element-diagnostic',
-      routerLink: 'coverage',
-      badge: 'Text',
-      badgeColor: 'danger-emphasis'
-    },
-    { type: 'header', label: 'Modules' },
-    {
-      type: 'router-link',
-      label: 'Emergencies',
-      id: 'menu-item',
-      icon: 'element-fire',
-      routerLink: 'menu-item'
-    },
-    {
-      type: 'router-link',
-      label: 'Energy & sustainability',
-      icon: 'element-trend',
-      routerLink: 'energy'
-    }
-  ];
-
   private activeRoute = inject(ActivatedRoute);
   private router = inject(Router);
 

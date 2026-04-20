@@ -42,8 +42,7 @@ export class SiNavbarVerticalNextHarness extends ComponentHarness {
     return this.locatorForAll(
       SiNavbarVerticalNextItemHarness.with({
         ...filter,
-        selector:
-          '.nav-scroll > .navbar-vertical-item, si-navbar-vertical-next-item-legacy > .navbar-vertical-item, si-navbar-vertical-next-item-legacy > .link-with-items > .navbar-vertical-item'
+        selector: 'si-navbar-vertical-items-next > .navbar-vertical-item'
       })
     )();
   }
