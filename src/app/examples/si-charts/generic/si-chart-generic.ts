@@ -17,6 +17,12 @@ import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 export class SampleComponent {
   public genericChartOptions: EChartOption = {
     color: ['#66CAEC', '#006486', '#FA848C'],
+    grid: {
+      top: 100,
+      bottom: 40,
+      left: 70,
+      right: 70
+    },
     tooltip: {
       trigger: 'axis',
       axisPointer: {
