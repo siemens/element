@@ -117,7 +117,7 @@ class SiTestHelpers {
     }
   }
 
-  public async visitExample(name: string, autoScaleViewport = true): Promise<void> {
+  public async visitExample(name: string, autoScaleViewport = false): Promise<void> {
     await test.step(
       'visitExample: ' + name,
       async () => {
@@ -173,6 +173,7 @@ class SiTestHelpers {
       skipAriaSnapshot?: boolean;
       maxDiffPixels?: number;
       snapshotDelay?: number;
+      fullPage?: boolean;
     }
   ): Promise<void> {
     const example = this.getExampleName() ?? this.testInfo.title;
@@ -235,7 +236,8 @@ class SiTestHelpers {
           try {
             await this.showHideIgnores(this.page, false, options?.snapshotDelay);
             await expect(this.page).toHaveScreenshot(testName + '.png', {
-              maxDiffPixels: options?.maxDiffPixels
+              maxDiffPixels: options?.maxDiffPixels,
+              fullPage: options?.fullPage ?? true
             });
           } finally {
             await this.showHideIgnores(this.page, true);
