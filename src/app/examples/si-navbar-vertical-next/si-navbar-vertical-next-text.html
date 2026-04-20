@@ -29,9 +29,31 @@
     stateId="navbar-vertical-next-without-icons"
     navbarCollapseButtonText="collapse"
     navbarExpandButtonText="expand"
-    [items]="menuItems"
     [textOnly]="true"
   >
+    <si-navbar-vertical-items-next>
+      <button
+        type="button"
+        si-navbar-vertical-next-item
+        stateId="home"
+        [siNavbarVerticalNextGroupTriggerFor]="home"
+      >
+        Home
+      </button>
+      <button
+        type="button"
+        si-navbar-vertical-next-item
+        stateId="documentation"
+        [siNavbarVerticalNextGroupTriggerFor]="documentation"
+      >
+        Documentation
+      </button>
+      <si-navbar-vertical-next-header>All the rest</si-navbar-vertical-next-header>
+      <a si-navbar-vertical-next-item routerLink="energy" routerLinkActive>
+        Energy &amp; Operations
+      </a>
+      <a si-navbar-vertical-next-item routerLink="coverage" routerLinkActive> Test Coverage </a>
+    </si-navbar-vertical-items-next>
     <div class="si-layout-main-padding">
       <div class="si-layout-header">
         <h2 class="si-layout-title si-layout-top-element">Here is a title</h2>
@@ -40,3 +62,19 @@
     </div>
   </si-navbar-vertical-next>
 </div>
+
+<ng-template #home>
+  <si-navbar-vertical-next-group>
+    <a si-navbar-vertical-next-item routerLink="subItem" routerLinkActive> Sub Item </a>
+    <a si-navbar-vertical-next-item routerLink="subItem2" routerLinkActive> Sub Item 2 </a>
+    <a si-navbar-vertical-next-item routerLink="subItem3" routerLinkActive> Sub Item 3 </a>
+  </si-navbar-vertical-next-group>
+</ng-template>
+
+<ng-template #documentation>
+  <si-navbar-vertical-next-group>
+    <a si-navbar-vertical-next-item routerLink="subItem4" routerLinkActive> Sub Item 4 </a>
+    <a si-navbar-vertical-next-item routerLink="subItem5" routerLinkActive> Sub Item 5 </a>
+    <a si-navbar-vertical-next-item routerLink="subItem6" routerLinkActive> Sub Item 6 </a>
+  </si-navbar-vertical-next-group>
+</ng-template>

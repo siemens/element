@@ -11,9 +11,72 @@
     navbarCollapseButtonText="collapse"
     navbarExpandButtonText="expand"
     searchPlaceholder="Search..."
-    [items]="menuItems"
     [searchable]="true"
   >
+    <si-navbar-vertical-items-next>
+      <a
+        si-navbar-vertical-next-item
+        routerLink="home"
+        routerLinkActive
+        icon="element-home"
+        badge="Text"
+        [hideBadgeWhenCollapsed]="true"
+      >
+        Home
+      </a>
+      <si-navbar-vertical-next-header>Badge Examples</si-navbar-vertical-next-header>
+      <a
+        si-navbar-vertical-next-item
+        routerLink="text-badge"
+        routerLinkActive
+        icon="element-info"
+        badge="Info"
+        badgeColor="info-emphasis"
+      >
+        Text badge
+      </a>
+      <button
+        type="button"
+        si-navbar-vertical-next-item
+        icon="element-user-group"
+        badgeColor="critical-emphasis"
+        stateId="group-with-badges"
+        [badge]="6"
+        [siNavbarVerticalNextGroupTriggerFor]="groupWithBadges"
+      >
+        Group with badges
+      </button>
+      <button
+        type="button"
+        si-navbar-vertical-next-item
+        icon="element-special-object"
+        [siNavbarVerticalNextGroupTriggerFor]="groupItem"
+      >
+        Group item
+      </button>
+      <si-navbar-vertical-next-divider />
+      <a
+        si-navbar-vertical-next-item
+        routerLink="success"
+        routerLinkActive
+        icon="element-checked"
+        badgeColor="success"
+        [badge]="5"
+      >
+        Subtle badge
+      </a>
+      <a
+        si-navbar-vertical-next-item
+        routerLink="danger"
+        routerLinkActive
+        icon="element-warning"
+        badgeColor="danger-emphasis"
+        [badge]="100"
+      >
+        Danger emphasis badge
+      </a>
+    </si-navbar-vertical-items-next>
+
     <div class="si-layout-main-padding">
       <div class="si-layout-header">
         <h2 class="si-layout-title si-layout-top-element">Badge Examples</h2>
@@ -22,3 +85,43 @@
     </div>
   </si-navbar-vertical-next>
 </div>
+
+<ng-template #groupWithBadges>
+  <si-navbar-vertical-next-group routerLinkActive>
+    <a
+      si-navbar-vertical-next-item
+      routerLink="sub-badge-1"
+      routerLinkActive
+      badgeColor="critical-emphasis"
+      [badge]="1"
+    >
+      Sub item critical
+    </a>
+    <a
+      si-navbar-vertical-next-item
+      routerLink="sub-badge-2"
+      routerLinkActive
+      badgeColor="info"
+      [badge]="2"
+    >
+      Sub item info
+    </a>
+    <a
+      si-navbar-vertical-next-item
+      routerLink="sub-badge-3"
+      routerLinkActive
+      badgeColor="warning"
+      [badge]="3"
+    >
+      Sub item warning
+    </a>
+  </si-navbar-vertical-next-group>
+</ng-template>
+
+<ng-template #groupItem>
+  <si-navbar-vertical-next-group>
+    <a si-navbar-vertical-next-item routerLink="sub-badge-4" routerLinkActive> Sub item </a>
+    <a si-navbar-vertical-next-item routerLink="sub-badge-5" routerLinkActive> Sub item </a>
+    <a si-navbar-vertical-next-item routerLink="sub-badge-6" routerLinkActive> Sub item </a>
+  </si-navbar-vertical-next-group>
+</ng-template>
