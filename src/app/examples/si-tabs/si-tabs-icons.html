@@ -1,6 +1,9 @@
 <si-tabset>
   @for (tab of tabs; track tab) {
     <si-tab
+      [siTooltip]="tab.heading"
+      [isDisabled]="!tab.heading || tab.disabled"
+      [disabled]="tab.disabled"
       [active]="tab.active ?? false"
       [badgeColor]="tab.badgeColor"
       [badgeContent]="tab.badgeContent"

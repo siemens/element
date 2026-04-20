@@ -4,6 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 interface TabModel {
@@ -18,7 +19,7 @@ interface TabModel {
 
 @Component({
   selector: 'app-sample',
-  imports: [SiTabsetComponent, SiTabComponent],
+  imports: [SiTabsetComponent, SiTabComponent, SiTooltipDirective],
   templateUrl: './si-tabs-icons.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
