@@ -21,10 +21,8 @@
   <button
     type="button"
     class="btn-remove btn btn-circle btn-ghost focus-inside ms-0 btn-sm"
-    role="button"
     aria-label="Remove"
     [disabled]="disabled()"
-    (keydown.enter)="deleteClicked()"
     (click)="deleteClicked()"
   >
     <si-icon [icon]="icons.elementCancel" />
