@@ -101,11 +101,7 @@ button {
   --btn-color-active: #{semantic-tokens.$element-action-warning-text};
 }
 
-// FIXME: Before the ghost variants were introduced, the .btn-ghost styling matched the tertiary styling.
-// To avoid a breaking change, the class .btn-primary-ghost has been added which deviates from the usual button naming convention.
-// With the next major release, the .btn-primary-ghost class should be removed so that the ghost buttons match the button naming convention
-// and schematics should update .btn-ghost to .btn-tertiary-ghost.
-.btn-primary-ghost {
+.btn-ghost {
   --btn-bg: #{semantic-tokens.$element-base-1};
   --btn-bg-hover: #{semantic-tokens.$element-base-1-hover};
   --btn-bg-active: #{semantic-tokens.$element-base-1-selected};
@@ -133,8 +129,7 @@ button {
 .btn-tertiary,
 .btn-tertiary-warning,
 .btn-tertiary-danger,
-.btn-tertiary-ghost,
-.btn-ghost {
+.btn-tertiary-ghost {
   --btn-bg: transparent;
   --btn-bg-hover: #{semantic-tokens.$element-action-secondary-hover};
   --btn-bg-active: #{semantic-tokens.$element-action-secondary-active};
@@ -168,8 +163,7 @@ button {
 }
 
 .btn-secondary-ghost,
-.btn-tertiary-ghost,
-.btn-ghost {
+.btn-tertiary-ghost {
   --btn-bg-hover: #{semantic-tokens.$element-base-1-hover};
   --btn-bg-active: #{semantic-tokens.$element-base-1-selected};
   --btn-color: #{semantic-tokens.$element-text-primary};

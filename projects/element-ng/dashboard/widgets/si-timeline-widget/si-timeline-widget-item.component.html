@@ -40,7 +40,7 @@
           </button>
         } @else if (action.type === 'router-link') {
           <a
-            class="d-flex btn btn-ghost"
+            class="d-flex btn btn-tertiary-ghost"
             [routerLink]="action.routerLink"
             [queryParams]="action.extras?.queryParams"
             [queryParamsHandling]="action.extras?.queryParamsHandling"
@@ -62,7 +62,7 @@
           >
         } @else if (action.type === 'link') {
           <a
-            class="d-flex btn btn-ghost"
+            class="d-flex btn btn-tertiary-ghost"
             [href]="action.href"
             [target]="action.target"
             [attr.aria-label]="action.label | translate"
