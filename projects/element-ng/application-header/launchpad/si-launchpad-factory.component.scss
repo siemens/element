@@ -5,8 +5,8 @@
 .app-switcher {
   position: fixed;
   inset-block-start: calc(
-    variables.$si-application-header-height + 1px /* header border compensation */ +
-      variables.$si-titlebar-spacing + variables.$si-system-banner-spacing
+    variables.$si-application-header-height + variables.$si-titlebar-spacing +
+      variables.$si-system-banner-spacing
   );
   inset-inline: 0;
   min-block-size: 200px;

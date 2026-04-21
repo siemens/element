@@ -11,8 +11,8 @@ $si-icon-font-size-lg: 1.5rem;
 $btn-width-normal: 80px;
 
 // Component styling
-$si-application-header-height: 48px;
 
+$si-application-header-height: calc(1.5rem + (2 * map.get(spacers.$spacers, 5) + 1px));
 $si-titlebar-padding-y: map.get(spacers.$spacers, 3);
 $si-titlebar-height: calc(1.5rem + 2 * $si-titlebar-padding-y);
 $si-system-banner-padding-y: map.get(spacers.$spacers, 1);
