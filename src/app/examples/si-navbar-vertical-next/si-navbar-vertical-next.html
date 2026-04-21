@@ -11,9 +11,52 @@
     navbarCollapseButtonText="collapse"
     navbarExpandButtonText="expand"
     searchPlaceholder="Search..."
-    [items]="menuItems"
     [searchable]="true"
   >
+    <si-navbar-vertical-items-next>
+      <a si-navbar-vertical-next-item routerLink="home" routerLinkActive icon="element-home">
+        Home
+      </a>
+      <si-navbar-vertical-next-header>Modules</si-navbar-vertical-next-header>
+      <a si-navbar-vertical-next-item routerLink="energy" routerLinkActive icon="element-trend">
+        Energy &amp; sustainability
+      </a>
+      <button
+        type="button"
+        si-navbar-vertical-next-item
+        icon="element-user-group"
+        [siNavbarVerticalNextGroupTriggerFor]="userManagement"
+      >
+        User management
+      </button>
+      <a
+        si-navbar-vertical-next-item
+        routerLink="coverage"
+        routerLinkActive
+        icon="element-diagnostic"
+      >
+        Test coverage
+      </a>
+      <si-navbar-vertical-next-divider />
+      <button
+        type="button"
+        si-navbar-vertical-next-item
+        icon="element-document"
+        stateId="documentation"
+        [siNavbarVerticalNextGroupTriggerFor]="documentation"
+      >
+        Documentation
+      </button>
+      <button
+        type="button"
+        si-navbar-vertical-next-item
+        icon="element-warning"
+        (click)="logEvent('Callback for action called')"
+      >
+        Action
+      </button>
+    </si-navbar-vertical-items-next>
+
     <div class="si-layout-main-padding">
       <div class="si-layout-header">
         <h2 class="si-layout-title si-layout-top-element">Here is a title</h2>
@@ -22,3 +65,19 @@
     </div>
   </si-navbar-vertical-next>
 </div>
+
+<ng-template #userManagement>
+  <si-navbar-vertical-next-group routerLinkActive>
+    <a si-navbar-vertical-next-item routerLink="subItem" routerLinkActive> Sub item </a>
+    <a si-navbar-vertical-next-item routerLink="subItem2" routerLinkActive> Sub item 2 </a>
+    <a si-navbar-vertical-next-item routerLink="subItem3" routerLinkActive> Sub item 3 </a>
+  </si-navbar-vertical-next-group>
+</ng-template>
+
+<ng-template #documentation>
+  <si-navbar-vertical-next-group routerLinkActive>
+    <a si-navbar-vertical-next-item routerLink="subItem4" routerLinkActive> Sub item 4 </a>
+    <a si-navbar-vertical-next-item routerLink="subItem5" routerLinkActive> Sub item 5 </a>
+    <a si-navbar-vertical-next-item routerLink="subItem6" routerLinkActive> Sub item 6 </a>
+  </si-navbar-vertical-next-group>
+</ng-template>

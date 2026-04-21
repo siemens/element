@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkTrapFocus } from '@angular/cdk/a11y';
-import { Component, computed, HostListener, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLinkActive } from '@angular/router';
 
@@ -32,7 +32,8 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
     role: 'group',
     '[id]': 'groupTrigger.groupId',
     '[attr.aria-labelledby]': 'groupTrigger.id',
-    'animate.enter': 'component-enter'
+    'animate.enter': 'component-enter',
+    '(keydown.escape)': 'close()'
   }
 })
 export class SiNavbarVerticalNextGroupComponent {
@@ -53,7 +54,7 @@ export class SiNavbarVerticalNextGroupComponent {
       .subscribe(active => this.groupTrigger.active.set(active));
   }
 
-  @HostListener('keydown.escape') protected close(): void {
+  protected close(): void {
     this.groupTrigger.hideFlyout();
   }
 }

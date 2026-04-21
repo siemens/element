@@ -9,23 +9,20 @@ import {
   ComponentRef,
   computed,
   Directive,
+  effect,
   EmbeddedViewRef,
-  HostListener,
   inject,
   Injector,
   input,
-  model,
+  linkedSignal,
   OnInit,
   signal,
   TemplateRef,
+  untracked,
   ViewContainerRef
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import {
-  NavbarVerticalNextItem,
-  NavbarVerticalNextItemGroup
-} from './si-navbar-vertical-next.model';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
 /**
@@ -33,8 +30,8 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
  * Otherwise, without aria-owns, screen reader will announce the leaving of the navbar when moving to the flyout.
  * Aria-owns cannot be put directly on the trigger
  * as chrome will include the flyout children in the a11y label of the trigger.
+ * @experimental
  */
-/** @experimental */
 @Component({
   selector: 'si-navbar-flyout-anchor',
   template: '',
@@ -52,7 +49,8 @@ class SiNavbarFlyoutAnchorComponent {
     '[id]': 'id',
     '[class.show]': 'expanded()',
     '[attr.aria-controls]': 'groupId',
-    '[attr.aria-expanded]': 'expanded()'
+    '[attr.aria-expanded]': 'expanded()',
+    '(click)': 'triggered()'
   }
 })
 export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
@@ -66,14 +64,19 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
     alias: 'siNavbarVerticalNextGroupTriggerFor'
   });
 
-  readonly groupData = input<{
-    item?: NavbarVerticalNextItem;
-    group: NavbarVerticalNextItemGroup;
-  }>();
-
   readonly stateId = input<string>();
 
-  readonly expanded = model.required<boolean>();
+  /** @defaultValue false */
+  readonly expanded = linkedSignal({
+    source: () => {
+      const stateId = this.stateId();
+      if (!stateId) {
+        return undefined;
+      }
+      return this.navbar.uiStateExpandedItems()[stateId];
+    },
+    computation: source => source ?? false
+  });
 
   /** @internal */
   readonly flyout = signal(false);
@@ -99,9 +102,20 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
   private groupView!: EmbeddedViewRef<unknown>;
   private flyoutAnchorComponentRef?: ComponentRef<SiNavbarFlyoutAnchorComponent>;
   private readonly templatePortal = computed(
-    () =>
-      new TemplatePortal(this.groupTemplate(), this.viewContainer, this.groupData(), this.injector)
+    () => new TemplatePortal(this.groupTemplate(), this.viewContainer, undefined, this.injector)
   );
+
+  constructor() {
+    // Sync expanded state from navbar UIState when it loads
+    effect(() => {
+      const stateId = this.stateId();
+      if (!stateId) return;
+      const state = this.navbar.uiStateExpandedItems()[stateId];
+      if (state !== undefined) {
+        untracked(() => this.expanded.set(state));
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.attachInline();
@@ -119,12 +133,12 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
     }
   }
 
-  @HostListener('click') protected triggered(): void {
+  protected triggered(): void {
     if (this.navbar.collapsed()) {
       this.toggleFlyout();
     } else {
       this.expanded.set(!this.expanded());
-      this.navbar.groupTriggered();
+      this.navbar.groupStateChanged(this.stateId(), this.expanded());
     }
   }
 
@@ -136,10 +150,11 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
       this.attachFlyout();
     }
   }
+
   private attachInline(): void {
     this.overlayRef.detach();
     this.groupView?.destroy(); // we need ?. for first attachment
-    this.groupView = this.viewContainer.createEmbeddedView(this.groupTemplate(), this.groupData(), {
+    this.groupView = this.viewContainer.createEmbeddedView(this.groupTemplate(), undefined, {
       injector: this.injector
     });
   }

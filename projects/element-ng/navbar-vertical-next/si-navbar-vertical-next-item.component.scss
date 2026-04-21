@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/bootstrap/mixins/badge-text';
 @use '@siemens/element-theme/src/styles/bootstrap/mixins/visually-hidden';
 
 :host(.navbar-vertical-item) {
@@ -59,9 +60,11 @@
 }
 
 // Don't merge with :is. Angular 19 fails to compile it in a correct way.
-:host-context(.nav-scroll > .navbar-vertical-item) + :host(.navbar-vertical-item),
-:host-context(.nav-scroll > si-navbar-vertical-next-group) + :host(.navbar-vertical-item),
-:host-context(.nav-scroll > si-navbar-flyout-anchor) + :host(.navbar-vertical-item) {
+:host-context(si-navbar-vertical-items-next > .navbar-vertical-item) + :host(.navbar-vertical-item),
+:host-context(si-navbar-vertical-items-next > si-navbar-vertical-next-group)
+  + :host(.navbar-vertical-item),
+:host-context(si-navbar-vertical-items-next > si-navbar-flyout-anchor)
+  + :host(.navbar-vertical-item) {
   margin-block-start: map.get(variables.$spacers, 4);
 }
 
@@ -88,14 +91,7 @@
     position: absolute;
     inset-block-start: map.get(variables.$spacers, 2);
     inset-inline-end: map.get(variables.$spacers, 3);
-    block-size: 14px;
-    min-inline-size: 14px;
-    border-radius: 7px;
-    font-size: variables.$si-font-size-caption;
-    line-height: 14px;
-    padding-block: 0;
-    padding-inline: map.get(variables.$spacers, 2);
-    font-weight: variables.$si-font-weight-semibold;
+    @include badge-text.badge-text();
 
     &.badge-text-only {
       color: transparent;
@@ -108,41 +104,6 @@
   }
 
   &.hide-badge-collapsed .badge {
-    display: none;
-  }
-}
-
-:host-context(.link-with-items) > :host(button) {
-  padding-inline: map.get(variables.$spacers, 5);
-
-  .item-title,
-  .icon-lg {
-    display: none;
-  }
-
-  .dropdown-caret {
-    padding-inline: 0;
-  }
-
-  &::after {
-    display: none;
-  }
-}
-
-:host-context(.nav-collapsed .link-with-items) {
-  > :host(button) {
-    padding-inline: 0;
-
-    &::after {
-      display: block;
-    }
-
-    .icon-lg {
-      display: block;
-    }
-  }
-
-  > :host(a) {
     display: none;
   }
 }
