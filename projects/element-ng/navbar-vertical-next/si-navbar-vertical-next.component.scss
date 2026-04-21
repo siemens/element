@@ -1,7 +1,8 @@
+@use 'sass:map';
 @use '@siemens/element-theme/src/styles/all-variables';
 
 $vertical-nav-width: 240px;
-$vertical-nav-collapsed-width: 48px;
+$vertical-nav-collapsed-width: calc(1.5rem + 2 * map.get(all-variables.$spacers, 5));
 $vertical-nav-transition-duration: all-variables.$element-default-transition-duration;
 
 :host {

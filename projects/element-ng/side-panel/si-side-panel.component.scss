@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '@siemens/element-theme/src/styles/all-variables';
 
 $rpanel-width-regular: 390px;
@@ -7,7 +8,7 @@ $rpanel-width-extended-xl: 640px;
 $rpanel-width-extended-xxl: 720px;
 $rpanel-width-extended-xxxl: 912px;
 $rpanel-transition-duration: all-variables.$element-default-transition-duration;
-$rpanel-collapsed-width: 48px;
+$rpanel-collapsed-width: calc(1.5rem + 2 * map.get(all-variables.$spacers, 5));
 $transition: opacity 0.15s linear;
 
 :host {
