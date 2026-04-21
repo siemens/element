@@ -19,6 +19,7 @@ import {
 import { SiBreadcrumbRouterComponent } from '@siemens/element-ng/breadcrumb-router';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import {
+  SiNavbarVerticalNextSearchComponent,
   SiNavbarVerticalItemsNextComponent,
   SiNavbarVerticalNextComponent,
   SiNavbarVerticalNextHeaderComponent,
@@ -102,6 +103,7 @@ export const ROUTES: Route[] = [
   selector: 'app-sample',
   imports: [
     SiNavbarVerticalNextComponent,
+    SiNavbarVerticalNextSearchComponent,
     SiNavbarVerticalItemsNextComponent,
     SiNavbarVerticalNextItemComponent,
     SiNavbarVerticalNextHeaderComponent,
