@@ -96,7 +96,9 @@
                   [heading]="file.name"
                   (panelToggle)="toggleLoadLicenseContent(file)"
                 >
-                  <pre class="license-api-file-content px-6 pt-6">{{ file.content }}</pre>
+                  <pre class="license-api-file-content px-6 py-6 my-0 border-0">{{
+                    file.content
+                  }}</pre>
                 </si-collapsible-panel>
               }
             </si-collapsible-panel>
