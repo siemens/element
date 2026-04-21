@@ -27,27 +27,7 @@
         </button>
       </div>
     </div>
-    @if (searchable()) {
-      <div class="nav-search">
-        <si-search-bar
-          class="mx-4"
-          colorVariant="base-0"
-          prohibitedCharacters="*?"
-          [placeholder]="searchPlaceholder() | translate"
-          [debounceTime]="searchDebounceTime()"
-          [showIcon]="true"
-          (searchChange)="doSearch($event)"
-        />
-        <button
-          type="button"
-          class="btn-search bg-base-0 p-3 mx-4 mobile navbar-vertical-no-collapse text-secondary"
-          [attr.aria-label]="searchPlaceholder() | translate"
-          (click)="expandForSearch()"
-        >
-          <si-icon class="icon" [icon]="icons.elementSearch" />
-        </button>
-      </div>
-    }
+    <ng-content select="si-navbar-vertical-next-search" />
     <ng-content select="si-navbar-vertical-items-next" />
   </nav>
 }

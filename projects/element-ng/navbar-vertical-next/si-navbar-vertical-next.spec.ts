@@ -22,7 +22,8 @@ import {
   SiNavbarVerticalNextComponent,
   SiNavbarVerticalNextGroupComponent,
   SiNavbarVerticalNextGroupTriggerDirective,
-  SiNavbarVerticalNextItemComponent
+  SiNavbarVerticalNextItemComponent,
+  SiNavbarVerticalNextSearchComponent
 } from './index';
 import { SiNavbarVerticalNextHarness } from './testing/si-navbar-vertical-next.harness';
 
@@ -55,19 +56,18 @@ class EmptyComponent {}
     RouterLink,
     RouterLinkActive,
     SiNavbarVerticalItemsNextComponent,
+    SiNavbarVerticalNextSearchComponent,
     SiNavbarVerticalNextComponent,
     SiNavbarVerticalNextGroupComponent,
     SiNavbarVerticalNextGroupTriggerDirective,
     SiNavbarVerticalNextItemComponent
   ],
   template: `<si-navbar-vertical-next
-      [searchable]="true"
       [textOnly]="textOnly()"
       [stateId]="stateId"
       [collapsed]="collapsed()"
-      [searchDebounceTime]="0"
-      (searchEvent)="searchEvent($event)"
     >
+      <si-navbar-vertical-next-search [debounceTime]="0" (searchChange)="searchEvent($event)" />
       @if (showDeclarativeFlyoutGroup()) {
         <si-navbar-vertical-items-next>
           <button
