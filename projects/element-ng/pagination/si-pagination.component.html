@@ -19,8 +19,8 @@
             type="button"
             class="page-item"
             [attr.aria-current]="page.page === currentPage() ? 'page' : ''"
+            [attr.aria-disabled]="page.page === currentPage() ? 'true' : null"
             [class.active]="page.page === currentPage()"
-            [disabled]="page.page === currentPage()"
             (click)="setPage($event, page.page)"
           >
             {{ page.page }}
