@@ -52,7 +52,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
           cache: 'npm'
 
       - name: Get latest workflow run
@@ -131,7 +131,7 @@ jobs:
           run-id: ${{ steps.get-workflow.outputs.workflow-run-id }}
           github-token: ${{ github.token }}
       # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
-      - run: npm ci --prefer-offline --no-audit --include=optional
+      - run: npm ci --no-audit --include=optional
 
       - name: Update VRTs
         run: |
