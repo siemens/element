@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0 # We need this for commit-lint
       - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
         env:
@@ -57,7 +57,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
@@ -106,7 +106,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
@@ -145,7 +145,7 @@ jobs:
           lfs: true
       - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
@@ -169,7 +169,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           path: all-blob-reports
@@ -195,7 +195,7 @@ jobs:
           path: dist
       - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
       - run: npm config set //code.siemens.com/api/v4/projects/516167/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
