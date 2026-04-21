@@ -431,7 +431,9 @@
       </div>
       <div #consoleContainer class="scroller">
         @if (renderingError) {
-          <pre class="alert-danger"><code>{{ renderingError.toString() }}</code></pre>
+          <pre
+            class="alert-danger"
+          ><code class="bg-none">{{ renderingError.toString() }}</code></pre>
         }
         @if (!renderingError && logMessages.length) {
           <ul>
