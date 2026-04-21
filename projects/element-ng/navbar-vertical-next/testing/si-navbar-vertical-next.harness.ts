@@ -13,8 +13,8 @@ export class SiNavbarVerticalNextHarness extends ComponentHarness {
   static hostSelector = 'si-navbar-vertical-next';
 
   private readonly collapseToggle = this.locatorFor('.collapse-toggle button');
-  private readonly searchButton = this.locatorFor('.btn-search');
-  private readonly searchInput = this.locatorFor('si-search-bar input');
+  private readonly searchButton = this.locatorFor('si-navbar-vertical-next-search .btn-search');
+  private readonly searchInput = this.locatorFor('si-navbar-vertical-next-search input');
 
   async toggleCollapse(): Promise<void> {
     return this.collapseToggle().then(toggle => toggle.click());

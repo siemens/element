@@ -1,0 +1,44 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/all-variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  block-size: 40px;
+  margin-block-start: map.get(all-variables.$spacers, 4);
+  overflow-x: hidden;
+}
+
+:host-context(.nav-collapsed) {
+  display: none;
+
+  si-search-bar {
+    display: none;
+  }
+}
+
+si-search-bar {
+  inline-size: 100%;
+}
+
+.btn-search {
+  display: none;
+  border: 0;
+  border-radius: all-variables.$element-radius-2;
+}
+
+@include all-variables.media-breakpoint-up(sm) {
+  :host-context(:not(.nav-text-only).nav-collapsed) {
+    display: flex;
+  }
+
+  .btn-search {
+    display: none;
+  }
+
+  :host-context(.nav-collapsed) {
+    .btn-search {
+      display: block;
+    }
+  }
+}

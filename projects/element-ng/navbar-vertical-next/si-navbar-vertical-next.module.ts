@@ -10,6 +10,7 @@ import { SiNavbarVerticalNextGroupTriggerDirective } from './si-navbar-vertical-
 import { SiNavbarVerticalNextGroupComponent } from './si-navbar-vertical-next-group.component';
 import { SiNavbarVerticalNextHeaderComponent } from './si-navbar-vertical-next-header.component';
 import { SiNavbarVerticalNextItemComponent } from './si-navbar-vertical-next-item.component';
+import { SiNavbarVerticalNextSearchComponent } from './si-navbar-vertical-next-search.component';
 import { SiNavbarVerticalNextComponent } from './si-navbar-vertical-next.component';
 
 /** @experimental */
@@ -21,7 +22,8 @@ import { SiNavbarVerticalNextComponent } from './si-navbar-vertical-next.compone
     SiNavbarVerticalNextGroupComponent,
     SiNavbarVerticalNextGroupTriggerDirective,
     SiNavbarVerticalNextHeaderComponent,
-    SiNavbarVerticalNextItemComponent
+    SiNavbarVerticalNextItemComponent,
+    SiNavbarVerticalNextSearchComponent
   ],
   exports: [
     SiNavbarVerticalItemsNextComponent,
@@ -30,7 +32,8 @@ import { SiNavbarVerticalNextComponent } from './si-navbar-vertical-next.compone
     SiNavbarVerticalNextGroupComponent,
     SiNavbarVerticalNextGroupTriggerDirective,
     SiNavbarVerticalNextHeaderComponent,
-    SiNavbarVerticalNextItemComponent
+    SiNavbarVerticalNextItemComponent,
+    SiNavbarVerticalNextSearchComponent
   ]
 })
 export class SiNavbarVerticalNextModule {}
