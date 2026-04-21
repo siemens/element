@@ -8,7 +8,7 @@
   <div class="flex-fill">
     <button
       type="button"
-      class="open-month-view flex-fill text-end px-2 btn btn-tertiary calendar-button"
+      class="open-month-view flex-fill text-end px-4 btn btn-tertiary calendar-button"
       tabindex="0"
       (click)="emitViewChange('month')"
     >
@@ -16,7 +16,7 @@
     </button>
     <button
       type="button"
-      class="open-year-view flex-fill text-start px-2 btn btn-tertiary calendar-button"
+      class="open-year-view flex-fill text-start px-4 btn btn-tertiary calendar-button"
       tabindex="0"
       (click)="emitViewChange('year')"
     >
@@ -30,7 +30,7 @@
     (clicked)="setMonthOffset(1)"
   />
 </div>
-<table class="px-9 mt-6" role="grid">
+<table class="px-9" role="grid">
   <thead class="si-calendar-table-header">
     <tr>
       @if (!hideWeekNumbers()) {
@@ -64,7 +64,7 @@
   >
   </tbody>
 </table>
-<div class="footer pt-2 ps-8 pe-8">
+<div class="footer ps-8 pe-8">
   <button
     type="button"
     class="today-button btn btn-tertiary flex-fill"

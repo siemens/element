@@ -1,6 +1,7 @@
 @use 'sass:map';
 
 @use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/bootstrap/variables' as bootstrap-variables;
 
 %selection-hover {
   background: variables.$element-base-1-hover;
@@ -8,15 +9,15 @@
 }
 
 %table-cell-height-32 {
-  block-size: 32px;
-  line-height: 32px;
+  block-size: 2rem;
+  line-height: 2rem;
   inline-size: 100%;
 }
 
 // Enforce square for date cells
 %square {
   @extend %table-cell-height-32;
-  inline-size: 32px;
+  inline-size: 2rem;
 }
 
 %table-cell-base {
@@ -34,7 +35,7 @@
   border-radius: variables.$element-radius-2;
   display: flex;
   flex-direction: column;
-  inline-size: 348px;
+  inline-size: 43.5ch;
 }
 
 // FIXME: this is a hack to avoid style leaking. File needs to be split to the components
@@ -43,11 +44,12 @@
   .footer {
     display: flex;
     align-items: center;
+    // Ensure empty footer have the same height as the header with the button, so that the calendar doesn't jump when the today button appears.
+    min-block-size: calc(1rem + 2 * bootstrap-variables.$btn-padding-y);
   }
 
   .header {
-    padding-block-start: map.get(variables.$spacers, 5);
-    padding-block-end: map.get(variables.$spacers, 6);
+    padding-block: map.get(variables.$spacers, 5);
     padding-inline: map.get(variables.$spacers, 9);
     border-block-end: 1px solid variables.$element-ui-4;
 
@@ -65,9 +67,11 @@
   table {
     inline-size: 100%;
     border-collapse: separate;
-    border-spacing: 0 3px;
+    border-spacing: 0 map.get(variables.$spacers, 2);
     table-layout: fixed;
     margin-block-end: -3px;
+    // Ensure the tables in the two month layout have the same height, so that the calendar doesn't jump when switching between one and two month layout.
+    min-block-size: calc(7 * calc(2rem + 2 * map.get(variables.$spacers, 2)));
   }
 
   // days cell class
@@ -100,7 +104,7 @@
     }
   }
 
-  // month cell class
+  // year cell class
   .year {
     @extend %table-cell-height-32;
     @extend %table-cell-base;
@@ -115,21 +119,23 @@
     }
   }
 
-  td[role='gridcell'] {
+  td,
+  th {
     text-align: center;
+    padding: 0;
   }
 
+  td,
   th {
+    @extend %square;
     font-weight: variables.$si-font-weight-caption;
-    text-align: center;
-    block-size: 32px;
   }
 
   .week-num,
   th {
     font-size: variables.$si-font-size-caption;
     color: variables.$element-text-secondary;
-    inline-size: 32px;
+    inline-size: 2rem;
     cursor: default;
   }
 
@@ -145,27 +151,6 @@
       border: 1px solid variables.$element-ui-1;
       border-radius: variables.$element-radius-2;
       display: inline-block;
-    }
-  }
-
-  .selection {
-    .month,
-    .year {
-      block-size: 30px;
-      line-height: 30px;
-      cursor: pointer;
-
-      &:not(.disabled):hover {
-        @extend %selection-hover;
-      }
-    }
-
-    .month {
-      inline-size: 50%;
-    }
-
-    .year {
-      inline-size: 33.3%;
     }
   }
 
@@ -229,10 +214,6 @@
     line-height: variables.$si-line-height-h5;
     color: variables.$element-text-active;
     min-inline-size: 0 !important; // stylelint-disable-line declaration-no-important
-  }
-
-  .calendar {
-    block-size: 28em;
   }
 
   .timepicker-container {
