@@ -14,9 +14,10 @@ import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.di
   selector: 'button[si-header-account-item]',
   imports: [SiAvatarComponent, SiIconComponent],
   templateUrl: './si-header-account-item.component.html',
+  styleUrl: './si-header-account-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'header-item focus-inside p-4',
+    class: 'header-item focus-inside px-4 py-0',
     '[class.dropdown-toggle]': '!!dropdownTrigger'
   }
 })
