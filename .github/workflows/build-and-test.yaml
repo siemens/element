@@ -8,16 +8,8 @@ on:
         required: true
       MAPTILER_KEY:
         required: true
-  pull_request:
-  merge_group:
 
 permissions: read-all
-
-# Stops the workflow run if the PR is updated
-# https://stackoverflow.com/a/72408109
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
 
 env:
   MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
@@ -191,7 +183,6 @@ jobs:
           retention-days: 2
 
   documentation:
-    if: ${{ github.event_name != 'merge_group' }}
     runs-on: ubuntu-24.04
     needs:
       - build
@@ -232,73 +223,3 @@ jobs:
         with:
           name: pages
           path: dist/design
-
-  preview:
-    if: ${{ !cancelled() && github.event_name == 'pull_request' }} # This must be skipped for releases, documentation builds, and merge queue runs
-    runs-on: ubuntu-24.04
-    permissions:
-      id-token: write
-      contents: read
-      pull-requests: write
-    env:
-      BUCKET_NAME: simpl-element-preview
-    needs:
-      - e2e-merge-reports
-      - documentation
-      - test
-    steps:
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
-        with:
-          name: pages
-          path: pages
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
-        with:
-          name: html-report--attempt-${{ github.run_attempt }}
-          path: playwright-report
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
-        with:
-          name: coverage-reports
-          path: coverage-reports
-      - uses: aws-actions/configure-aws-credentials@ec61189d14ec14c8efccab744f656cffd0e33f37 # v6.1.0
-        with:
-          role-to-assume: arn:aws:iam::974483672234:role/simpl-element-preview
-          role-session-name: element-preview
-          aws-region: eu-west-1
-      - run: |
-          aws s3 cp --quiet --no-progress --recursive ./pages s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/pages
-          aws s3 cp --quiet --no-progress --recursive ./playwright-report s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/playwright-report
-          aws s3 cp --quiet --no-progress --recursive ./coverage-reports s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/pages/coverage
-      - name: Build PR description block
-        run: |
-          cat > pr-preview-description.md <<'EOF'
-          <!-- preview-links:start -->
-
-          ---
-
-          [Documentation](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/).
-          [Examples](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/element-examples/).
-          [Dashboards Demo](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/dashboards-demo/).
-          [Playwright report](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/playwright-report/).
-
-          **Coverage Reports:**
-
-          EOF
-          cat coverage-reports/coverage-badge.md >> pr-preview-description.md
-          cat >> pr-preview-description.md <<'EOF'
-          - [charts-ng](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/coverage/charts-ng/)
-          - [dashboards-ng](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/coverage/dashboards-ng/)
-          - [element-ng](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/coverage/element-ng/)
-          - [element-translate-ng](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/coverage/element-translate-ng/)
-          - [maps-ng](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/coverage/maps-ng/)
-          - [native-charts-ng](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/coverage/native-charts-ng/)
-
-          <!-- preview-links:end -->
-          EOF
-      - name: Update PR description block
-        uses: nefrob/pr-description@4dcc9f3ad5ec06b2a197c5f8f93db5e69d2fdca7 # v1.2.0
-        with:
-          token: ${{ github.token }}
-          content: pr-preview-description.md
-          contentIsFilePath: true
-          regex: '<!-- preview-links:start -->.*?<!-- preview-links:end -->'
-          regexFlags: 'ims'
