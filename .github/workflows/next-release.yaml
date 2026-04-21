@@ -45,13 +45,13 @@ jobs:
           token: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }} # Otherwise, branch protection rules are not bypassed.
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - uses: actions/download-artifact@v7
         with:
           name: dist
           path: dist
-      - run: npm ci --prefer-offline --no-audit
+      - run: npm ci --no-audit
       - run: npx semantic-release
         env:
           SKIP_COMMIT: 'true' # Next releases should not have a commit

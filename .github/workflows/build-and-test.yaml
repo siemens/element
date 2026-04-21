@@ -29,12 +29,12 @@ jobs:
           fetch-depth: 0 # We need this for commit-lint
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: npm ci --prefer-offline --no-audit --include=optional
+      - run: npm ci --no-audit --include=optional
       - run: npm run lint:commit
       - run: npm run build:all
       - run: npm run prepare-brand
@@ -62,13 +62,13 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - uses: actions/download-artifact@v7
         with:
           name: dist
           path: dist
-      - run: npm ci --prefer-offline --no-audit
+      - run: npm ci --no-audit
       - run: npm run lint:format
       - run: npm run lint:scss
       - run: npm run lint:ng
@@ -144,7 +144,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - uses: actions/download-artifact@v7
         with:
@@ -153,7 +153,7 @@ jobs:
       - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: npm ci --prefer-offline --no-audit --include=optional
+      - run: npm ci --no-audit --include=optional
       - run: npm run prepare-brand
       - run: npm run build:examples:aot -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
       - run: npm run api-goldens:test
@@ -181,14 +181,14 @@ jobs:
           lfs: true
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - uses: actions/download-artifact@v7
         with:
           name: dist
           path: dist
       # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
-      - run: npm ci --prefer-offline --no-audit --include=optional
+      - run: npm ci --no-audit --include=optional
       - run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
       - uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
@@ -205,7 +205,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
       - uses: actions/download-artifact@v7
         with:
           path: all-blob-reports
@@ -241,12 +241,12 @@ jobs:
           path: dist/coverage
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/krypton
+          node-version-file: '.nvmrc'
           cache: 'npm'
       - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: npm ci --prefer-offline --no-audit --include=optional
+      - run: npm ci --no-audit --include=optional
       - run: cp dist/element-examples/favicon.png docs/_src/favicon.png
       - run: uv sync
         env:
