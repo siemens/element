@@ -5,7 +5,6 @@
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import {
   Component,
-  ComponentRef,
   computed,
   EnvironmentInjector,
   inject,
@@ -172,8 +171,6 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
   private readonly editorWizardState = signal<WidgetInstanceEditorWizardState | undefined>(
     undefined
   );
-  private widgetInstanceEditorRef?: ComponentRef<WidgetInstanceEditor>;
-
   private subscriptions: Subscription[] | OutputRefSubscription[] = [];
   private dialogService = inject(SiActionDialogService);
   private injector = inject(Injector);
@@ -280,10 +277,9 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
       this.envInjector
     ).subscribe({
       next: componentRef => {
-        this.widgetInstanceEditorRef = componentRef;
         this.widgetInstanceEditor = componentRef.instance;
         if (isSignal(this.widgetInstanceEditor.config)) {
-          this.widgetInstanceEditorRef.setInput('config', this.widgetConfig);
+          componentRef.setInput('config', this.widgetConfig);
         } else {
           this.widgetInstanceEditor.config = this.widgetConfig!;
         }
