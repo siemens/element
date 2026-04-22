@@ -17,3 +17,6 @@ docs/_custom_theme/partials/toc.html
 
 # Ignore test files in schematics
 **/schematics/**/files/**
+
+# Intentionally ignored files
+.agents
