@@ -27,7 +27,7 @@ import { SI_TABSET } from './si-tabs-tokens';
 @Directive({
   selector: '[siTabNextBase]',
   host: {
-    class: 'nav-link focus-inside px-5 si-h4',
+    class: 'nav-link focus-inside px-5',
     role: 'tab',
     '[class.disabled]': 'disabledTab()',
     '[class.icon-only]': '!!icon()',
