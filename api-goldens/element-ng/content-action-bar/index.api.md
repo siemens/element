@@ -6,6 +6,7 @@
 
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
+import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { MenuItem } from '@siemens/element-ng/common';
 import { MenuItem as MenuItem_2 } from '@siemens/element-ng/menu';
 import { MenuItemAction } from '@siemens/element-ng/menu';
@@ -24,6 +25,7 @@ export type ContentActionBarMainItem = (MenuItemAction | MenuItemCheckbox | Menu
 // @public (undocumented)
 export class SiContentActionBarComponent implements AfterViewInit {
     readonly actionParam: _angular_core.InputSignal<any>;
+    readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly preventIconsInDropdownMenus: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly primaryActions: _angular_core.InputSignal<readonly (MenuItem | ContentActionBarMainItem)[] | undefined>;

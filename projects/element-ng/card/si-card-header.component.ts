@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
+import { BackgroundColorVariant, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent,
@@ -42,6 +42,8 @@ export class SiCardHeaderComponent {
   readonly actionBarViewType = input<ViewType>('collapsible');
   /** @defaultValue '' */
   readonly actionBarTitle = input<TranslatableString>('');
+  /** @defaultValue 'base-1' */
+  readonly colorVariant = input<BackgroundColorVariant>('base-1');
 
   readonly displayContentActionBar = computed(
     () => this.primaryActions()?.length > 0 || this.secondaryActions()?.length > 0
