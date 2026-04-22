@@ -15,14 +15,15 @@
   "homepage": "https://github.com/siemens/element",
   "bugs": "https://github.com/siemens/element/issues/new",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "../../dist/@siemens/live-preview"
   },
   "dependencies": {
     "@stackblitz/sdk": "^1.11.0",
     "codeflask": "^1.4.1",
-    "qrcode-generator": "^2.0.0",
     "glob": "13.0.6",
-    "prismjs": "^1.30.0"
+    "prismjs": "^1.30.0",
+    "qrcode-generator": "^2.0.0"
   },
   "devDependencies": {
     "@types/babel__standalone": "7.1.9",
@@ -33,11 +34,11 @@
   "peerDependencies": {
     "@angular/common": "22",
     "@angular/core": "22",
+    "@babel/standalone": "8.0.3",
     "react": "18 || 19",
     "react-dom": "18 || 19",
     "vue": "3",
-    "vue3-sfc-loader": "0.9.5",
-    "@babel/standalone": "8.0.3"
+    "vue3-sfc-loader": "0.9.5"
   },
   "peerDependenciesMeta": {
     "react": {

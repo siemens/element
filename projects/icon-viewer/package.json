@@ -3,6 +3,7 @@
   "description": "Element Icon Viewer application.",
   "version": "48.9.0",
   "license": "MIT",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/siemens/element.git"

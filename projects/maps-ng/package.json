@@ -12,7 +12,8 @@
     "email": "info@siemens.com"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "../../dist/@siemens/maps-ng"
   },
   "homepage": "https://github.com/siemens/element",
   "bugs": "https://github.com/siemens/element/issues/new",
@@ -20,9 +21,9 @@
   "peerDependencies": {
     "@angular/common": "22",
     "@angular/core": "22",
-    "@siemens/element-translate-ng": "49.13.0",
-    "@siemens/element-theme": "49.13.0",
-    "@siemens/map-styles": "49.13.0",
+    "@siemens/element-theme": "workspace:*",
+    "@siemens/element-translate-ng": "workspace:*",
+    "@siemens/map-styles": "workspace:*",
     "ol": "~10.6.0 || ~10.7.0 || ~10.8.0 || ~10.9.0",
     "ol-ext": "^4.0.24",
     "ol-mapbox-style": "^13.1.0"

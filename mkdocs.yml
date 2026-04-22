@@ -257,7 +257,10 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.tasklist
   - pymdownx.tilde
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      base_path:
+        - '.'
+        - 'node_modules/@siemens-ux/design-tokens/docs'
   - pymdownx.superfences
   - admonition
   - md_in_html

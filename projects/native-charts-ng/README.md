@@ -38,7 +38,7 @@ export class DashboardComponent {}
 
 ### Running unit tests
 
-Run `npm run native-charts:test` to perform the unit tests via [Vitest](https://main.vitest.dev/).
+Run `pnpm run native-charts:test` to perform the unit tests via [Vitest](https://main.vitest.dev/).
 
 ## License
 

@@ -14,10 +14,8 @@
   "homepage": "https://github.com/siemens/element",
   "bugs": "https://github.com/siemens/element/issues/new",
   "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "postversion": "node ../../postversion.js"
+    "access": "public",
+    "directory": "../../dist/@siemens/element-ng"
   },
   "type": "module",
   "schematics": "./schematics/collection.json",
@@ -46,8 +44,8 @@
     "@ngx-formly/bootstrap": "^6.2.2 || ^7.0.1",
     "@ngx-formly/core": "^6.2.2 || ^7.0.1",
     "@siemens/element-icons": "1",
-    "@siemens/element-translate-ng": "49.13.0",
-    "@siemens/element-theme": "49.13.0",
+    "@siemens/element-theme": "workspace:*",
+    "@siemens/element-translate-ng": "workspace:*",
     "@siemens/ngx-datatable": "22 - 26",
     "ag-grid-community": "^34.3.1 || ^35.0.0 || ^36.0.0",
     "flag-icons": "^7.3.2",

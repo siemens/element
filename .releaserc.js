@@ -3,6 +3,30 @@ import { commitTypes, releaseRules } from './tools/semantic-release/config.js';
 
 const skipCommits = process.env.SKIP_COMMIT === 'true';
 
+const pnpmPackageRoots = [
+  undefined,
+  'projects/element-ng',
+  'dist/@siemens/element-ng',
+  'projects/element-translate-ng',
+  'dist/@siemens//element-translate-ng',
+  'projects/live-preview',
+  'dist/@siemens/live-preview',
+  'projects/charts-ng',
+  'dist/@siemens/charts-ng',
+  'projects/native-charts-ng',
+  'dist/@siemens/native-charts-ng',
+  'projects/dashboards-ng',
+  'dist/@siemens/dashboards-ng',
+  'projects/maps-ng',
+  'dist/@siemens/maps-ng',
+  'projects/map-styles',
+  'dist/@siemens/map-styles',
+  'projects/element-theme',
+  'projects/element-translate-cli',
+  'projects/dashboards-demo',
+  'projects/icon-viewer'
+];
+
 export default {
   branches: [
     {
@@ -42,137 +66,19 @@ export default {
       }
     ],
     ...(skipCommits ? [] : ['@semantic-release/changelog']),
-    // Packages to be pushed
-    [
+    // All package.json where the version needs to be updated
+    ...pnpmPackageRoots.map(pkgRoot => [
       '@semantic-release/npm',
       {
-        pkgRoot: 'dist/@siemens/element-ng'
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'dist/@siemens/element-translate-ng'
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'dist/@siemens/live-preview'
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'dist/@siemens/charts-ng'
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'dist/@siemens/native-charts-ng'
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'dist/@siemens/dashboards-ng'
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'dist/@siemens/maps-ng'
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'dist/@siemens/map-styles'
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'projects/element-theme'
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'projects/element-translate-cli'
-      }
-    ],
-    // Only update remaining package.json that are not directly published
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'projects/element-ng',
+        pkgRoot: pkgRoot,
         npmPublish: false
       }
-    ],
+    ]),
     [
-      '@semantic-release/npm',
+      '@semantic-release/exec',
       {
-        pkgRoot: 'projects/element-translate-ng',
-        npmPublish: false
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'projects/live-preview',
-        npmPublish: false
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'projects/charts-ng',
-        npmPublish: false
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'projects/native-charts-ng',
-        npmPublish: false
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'projects/dashboards-ng',
-        npmPublish: false
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'projects/maps-ng',
-        npmPublish: false
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'projects/map-styles',
-        npmPublish: false
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'projects/dashboards-demo',
-        npmPublish: false
-      }
-    ],
-    // Root package.json only needs version update
-    // This must be AFTER all other package updates as this will update the peer dependencies.
-    [
-      '@semantic-release/npm',
-      {
-        npmPublish: false
+        verifyConditionsCmd: 'pnpm publish --recursive --no-git-checks --dry-run',
+        publishCmd: 'pnpm publish --recursive --no-git-checks'
       }
     ],
     ...(skipCommits
@@ -181,12 +87,7 @@ export default {
           [
             '@semantic-release/git',
             {
-              assets: [
-                'CHANGELOG.md',
-                'package.json',
-                'package-lock.json',
-                'projects/*/package.json'
-              ],
+              assets: ['CHANGELOG.md', 'package.json', 'pnpm-lock.yaml', 'projects/*/package.json'],
               message: 'chore(release): ${nextRelease.version}'
             }
           ]
