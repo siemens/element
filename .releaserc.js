@@ -168,12 +168,7 @@ export default {
           [
             '@semantic-release/git',
             {
-              assets: [
-                'CHANGELOG.md',
-                'package.json',
-                'package-lock.json',
-                'projects/*/package.json'
-              ],
+              assets: ['CHANGELOG.md', 'package.json', 'pnpm-lock.yaml', 'projects/*/package.json'],
               message: 'chore(release): ${nextRelease.version}'
             }
           ]

@@ -5,6 +5,7 @@
 - [Git](https://git-scm.com/) to clone the repository
 - [Git LFS](https://git-lfs.github.com/) to fetch test assets
 - [NodeJS](https://nodejs.org/) version as specified in the [package.json](https://github.com/siemens/element/blob/main/package.json)
+- [pnpm](https://pnpm.io/) v11 or higher — enable via [corepack](https://nodejs.org/api/corepack.html) (`corepack enable`) or install with `npm install -g pnpm`
 
 To run the documentation, you will also need:
 
@@ -19,7 +20,7 @@ Setting up the development environment:
 git clone git@github.com:siemens/element.git
 cd element
 git lfs install
-npm install
+pnpm install
 ```
 
 ## Building
@@ -30,43 +31,43 @@ so building submodules is not necessary.
 
 **IMPORTANT**: Always build the translation layer. It is not consumed form the sources.
 
-To build modules use the available npm scripts:
+To build modules use the available pnpm scripts:
 
 ```shell
 # Build all modules
-npm run build:all
+pnpm run build:all
 
 # Build a specific module. See package.json for available modules.
-npm run <module-name>:build
+pnpm run <module-name>:build
 
 # E.g. build the translation layer
-npm run translate:build
+pnpm run translate:build
 ```
 
 ## Running the example application
 
 As for other builds, the translation layer must be built before running the application.
-Then you can run the example application with the corresponding npm script:
+Then you can run the example application with the corresponding pnpm script:
 
 ```shell
 # Run the example application
-npm run start
+pnpm run start
 ```
 
 ## Linting and formatting
 
 We use [ESLint](https://eslint.org/) and [Stylelint](https://stylelint.io/) for linting and [Prettier](https://prettier.io/) for formatting.
-Use the following npm scripts to lint and format the code:
+Use the following pnpm scripts to lint and format the code:
 
 ```shell
 # Format all modules
-npm run format
+pnpm run format
 
 # Lint all modules
-npm run lint:ng
+pnpm run lint:ng
 
 # Lint styles
-npm run lint:scss
+pnpm run lint:scss
 ```
 
 ## API Goldens
@@ -78,21 +79,21 @@ Whenever the public API is changed, the corresponding golden must be updated.
 
 ```shell
 # Build and updates the API goldens. This is the main command needed for local development.
-npm run api-goldens:build-accept
+pnpm run api-goldens:build-accept
 
 # Update the API goldens without building. !Important: APIs are generated based on the build output.
-npm run api-goldens:accept
+pnpm run api-goldens:accept
 
 # Check the API goldens without updating them. !Important: this requires a build first.
-npm run api-goldens:test
+pnpm run api-goldens:test
 ```
 
 ## Unit Tests
 
-Run the unit tests using the corresponding npm script:
+Run the unit tests using the corresponding pnpm script:
 
 ```shell
-npm run <module-name>:test
+pnpm run <module-name>:test
 ```
 
 ## E2E Tests
@@ -104,11 +105,11 @@ To run the E2E tests, use the following commands:
 
 ```shell
 # On linux the host parameter can be omitted
-npm run start -- --allowed-hosts true --host 0.0.0.0
+pnpm run start --allowed-hosts true --host 0.0.0.0
 # Build all dashboards artifacts and start the server
-npm run dashboards-demo:build-and-run-all
+pnpm run dashboards-demo:build-and-run-all
 # Build all ESM dashboards artifacts and start the server
-npm run dashboards-demo:build-and-run-all:esm
+pnpm run dashboards-demo:build-and-run-all:esm
 
 # Run the E2E tests on another terminal
 ./e2e-local.sh
@@ -183,7 +184,7 @@ To have visible example code, run the example application first.
 
 ```shell
 # Serve the documentation locally run
-npm run docs:serve
+pnpm run docs:serve
 ```
 
 ### General writing style guide

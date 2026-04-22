@@ -27,21 +27,22 @@ jobs:
         with:
           fetch-depth: 0 # semantic-release needs this
           token: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }} # Otherwise, branch protection rules are not bypassed.
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: lts/krypton
-          cache: 'npm'
+          cache: 'pnpm'
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: dist
           path: dist
-      - run: npm ci --prefer-offline --no-audit
+      - run: pnpm ci --prefer-offline=true
       - id: before_release
         run: |
           BEFORE_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           echo "before_tag=$BEFORE_TAG" >> $GITHUB_OUTPUT
-      - run: npm run release:copy-license
-      - run: npx semantic-release
+      - run: pnpm run release:copy-license
+      - run: pnpm exec semantic-release
         env:
           SKIP_COMMIT: ${{ github.ref_name == 'next' && 'true' || '' }}
           GIT_AUTHOR_NAME: 'Siemens Element Bot'
@@ -49,6 +50,8 @@ jobs:
           GIT_COMMITTER_NAME: 'Siemens Element Bot'
           GIT_COMMITTER_EMAIL: 'simpl.si@siemens.com'
           GITHUB_TOKEN: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }}
+          # Prevent npm (used by @semantic-release/npm for `npm version`) from creating package-lock.json
+          NPM_CONFIG_PACKAGE_LOCK: 'false'
       - id: check_release
         run: |
           BEFORE_TAG="${{ steps.before_release.outputs.before_tag }}"

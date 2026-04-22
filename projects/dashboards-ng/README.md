@@ -285,10 +285,10 @@ The [dashboard demo project](https://github.com/siemens/element/blob/main/projec
 
 ```sh
 # Module Federation mode (Webpack-based host and remotes)
-npm run dashboards-demo:run-all:local
+pnpm run dashboards-demo:run-all:local
 
 # Native Federation mode with Hybrid/Bridge support (ESM-based host with both Native and Module Federation remotes)
-npm run dashboards-demo:run-all:esm:local
+pnpm run dashboards-demo:run-all:esm:local
 ```
 
 ### Widget instance ID generation

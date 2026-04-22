@@ -16,9 +16,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {
-    "postversion": "node ../../postversion.js"
-  },
   "type": "module",
   "schematics": "./schematics/collection.json",
   "ng-add": {

@@ -57,7 +57,7 @@ The config file looks like this
 
 ## Testing
 
-Run `npm run translate:test` to perform the unit tests via [Vitest](https://vitest.dev/).
+Run `pnpm run translate:test` to perform the unit tests via [Vitest](https://vitest.dev/).
 
 ## License
 

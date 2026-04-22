@@ -7,10 +7,10 @@ import { provideLocationMocks } from '@angular/common/testing';
 import { ChangeDetectionStrategy, Component, HostBinding, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { SiApplicationHeaderHarness } from '@siemens/element-ng/application-header/testing/si-application-header.harness';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 
 import { SiNavbarPrimaryComponent, SiNavbarPrimaryComponent as TestComponent } from '.';
+import { SiApplicationHeaderHarness } from '../../application-header/testing/si-application-header.harness';
+import { runOnPushChangeDetection } from '../../test-helpers';
 import { AppItem, AppItemCategory } from './si-navbar-primary.model';
 
 const appItems: AppItem[] = [{ title: 'Account', icon: 'element-account', link: '/account' }];

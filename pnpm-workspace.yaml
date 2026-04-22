@@ -1,0 +1,72 @@
+packages:
+  - projects/element-ng
+  - projects/element-translate-cli
+  - projects/element-translate-ng
+  - projects/element-theme
+  - projects/live-preview
+  - projects/charts-ng
+  - projects/maps-ng
+  - projects/native-charts-ng
+  - projects/dashboards-ng
+  - projects/dashboards-demo
+  - projects/icon-viewer
+
+# Suppresses errors for unmet peer deps from third-party packages that have not
+# updated their ranges yet (e.g. @angular-architects/module-federation requiring
+# @angular/core@^21.2.0 while the workspace pins 21.0.8).
+strictPeerDependencies: false
+
+# Links workspace packages into the node_modules of all other packages in the
+# workspace, including for peer dependencies. Without "deep", pnpm only links
+# workspace packages at the root level, which means peer dependencies declared
+# with a plain version range (e.g. "@siemens/element-theme": "49.6.0") would
+# be resolved from the registry instead of the local source.
+linkWorkspacePackages: deep
+
+# When a workspace package satisfies a declared version range, prefer the local
+# source over the published registry copy. This ensures packages such as
+# @siemens/element-theme are always resolved from the monorepo source —
+# including any SCSS changes that have not been released yet.
+preferWorkspacePackages: true
+
+# Hoist these packages to the root node_modules so they are accessible to all
+# workspace packages without needing to be explicitly declared as dependencies.
+# This matches npm's flat hoisting behaviour for three specific scopes:
+#
+# @siemens/* — workspace-internal packages (element-theme, element-translate-ng,
+#   etc.) are used in SCSS @use imports and TypeScript `types` references by
+#   packages that only declare them as peerDependencies. Under pnpm's strict
+#   isolation those packages would be unreachable without hoisting.
+#
+# @module-federation/* — dashboards-ng imports @module-federation/runtime
+#   directly in TypeScript even though it is only a transitive dependency of the
+#   declared peer @module-federation/enhanced. Hoisting the whole scope avoids
+#   having to pin the transitive package version in every consumer.
+#
+# @types/* — TypeScript declaration packages are transitive deps of many tools
+#   (eslint, webpack, jest, etc.) and are consumed implicitly by the TypeScript
+#   compiler via the `types` field in tsconfig. Hoisting all @types packages to
+#   root node_modules/@types replicates npm's flat-hoisting behaviour for type
+#   declarations and is the standard pnpm recommendation for TypeScript monorepos.
+publicHoistPattern:
+  - '@siemens/*'
+  - '@simpl/*'
+  - '@module-federation/*'
+  - '@types/*'
+  # Hoist live-previewer dependencies to run `ng serve`
+  - '@stackblitz/sdk'
+  - codeflask
+  - prismjs
+  - qrcode-generator
+  - react
+  - react-dom
+  - vue
+  - vue3-sfc-loader
+
+overrides:
+  '@microsoft/api-extractor>typescript': $typescript
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  lmdb: true
+  msgpackr-extract: true
