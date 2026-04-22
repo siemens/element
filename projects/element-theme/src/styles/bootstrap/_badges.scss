@@ -140,8 +140,8 @@
 
   &::after {
     content: '';
-    inline-size: 0.625rem;
-    block-size: 0.625rem;
+    inline-size: variables.$badge-dot-size;
+    block-size: variables.$badge-dot-size;
     border-radius: 50%;
     position: absolute;
     inset-block-start: 0;

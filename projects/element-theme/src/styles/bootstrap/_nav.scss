@@ -4,7 +4,7 @@
 
 @use 'sass:map';
 
-$nav-tabs-height: 40px;
+$nav-tabs-height: calc(1lh + 2 * variables.$nav-link-padding-y);
 $nav-tabs-min-width: 100px;
 
 .nav {
@@ -29,6 +29,7 @@ $nav-tabs-min-width: 100px;
   padding-inline: variables.$nav-link-padding-x;
   font-size: variables.$nav-link-font-size;
   font-weight: variables.$nav-link-font-weight;
+  line-height: variables.$nav-link-line-height;
   color: variables.$nav-link-color;
 
   &:is(:hover, :focus) {
@@ -46,7 +47,6 @@ $nav-tabs-min-width: 100px;
 
 .nav-tabs {
   position: relative;
-  block-size: $nav-tabs-height;
   line-height: 1.125rem;
   border: 0;
   flex-wrap: nowrap;
@@ -71,7 +71,6 @@ $nav-tabs-min-width: 100px;
     justify-content: center;
     block-size: $nav-tabs-height;
     min-inline-size: $nav-tabs-min-width;
-    margin-block-end: -(variables.$nav-tabs-border-width);
     background: none;
     border-style: solid;
     border-color: transparent;
