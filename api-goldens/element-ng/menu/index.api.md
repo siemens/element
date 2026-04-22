@@ -4,6 +4,7 @@
 
 ```ts
 
+import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import * as i0 from '@angular/core';
 import * as i1 from '@angular/cdk/menu';
 import { MenuItem as MenuItem_2 } from '@siemens/element-ng/common';
@@ -97,6 +98,8 @@ export abstract class SiMenuActionService {
 
 // @public (undocumented)
 export class SiMenuBarDirective {
+    // (undocumented)
+    readonly colorVariant: i0.InputSignal<BackgroundColorVariant>;
     readonly disabled: i0.InputSignal<boolean | undefined>;
 }
 
