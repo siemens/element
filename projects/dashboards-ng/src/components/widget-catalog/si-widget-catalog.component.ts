@@ -288,23 +288,17 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
           this.widgetInstanceEditor.statusChangesHandler = this.handleStatusChanges.bind(this);
         }
 
-        let hasStatusChangesEmitter = false;
         if (this.widgetInstanceEditor.statusChanges) {
-          hasStatusChangesEmitter = true;
           this.subscriptions.push(
             this.widgetInstanceEditor.statusChanges.subscribe(statusChanges =>
               this.handleStatusChanges(statusChanges)
             )
           );
-        }
-
-        if (this.widgetInstanceEditor.configChange) {
+        } else if (this.widgetInstanceEditor.configChange) {
           this.subscriptions.push(
-            this.widgetInstanceEditor.configChange.subscribe(config => {
-              if (!hasStatusChangesEmitter) {
-                this.widgetConfigModified = true;
-              }
-            })
+            this.widgetInstanceEditor.configChange.subscribe(
+              () => (this.widgetConfigModified = true)
+            )
           );
         }
 
