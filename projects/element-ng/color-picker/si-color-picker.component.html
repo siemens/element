@@ -25,7 +25,7 @@
   (detach)="overlayDetach()"
 >
   <div #colorPaletteRef role="grid" class="colors elevation-1 rounded-2 bg-base-1 p-4 mt-1">
-    <div role="row" class="d-flex flex-wrap gap-4">
+    <div role="row" class="colors-row gap-4">
       @for (paint of colorPalette(); track $index) {
         <div role="gridcell" class="swatch">
           <input
