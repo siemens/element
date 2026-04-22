@@ -1,13 +1,16 @@
 @use '@siemens/element-theme/src/styles/variables/semantic-tokens';
-
-:host.mobile {
-  [siAutoCollapsableList] {
-    inline-size: 40px;
-  }
-}
+@use '@siemens/element-theme/src/styles/bootstrap/variables' as bootstrap-variables;
 
 div > [si-content-action-bar-toggle] {
-  inline-size: 40px;
+  // The siAutoCollapsableList directive reserves space for the overflow toggle by reading its
+  // clientWidth via ResizeObserver before deciding which items to show. When the overflow toggle
+  // is not yet visible it has `position: absolute`, which takes it out of normal flow, making its
+  // clientWidth dependent solely on intrinsic content size. Without an explicit inline-size the
+  // reported width is unstable (often 0), causing the algorithm to either over- or under-collapse
+  // items and preventing resize-triggered expand/collapse from reaching a stable state.
+  // The fixed inline-size guarantees a deterministic clientWidth at all times so the reserved
+  // space matches the toggle's actual footprint the moment it becomes visible.
+  inline-size: calc(1.25rem + 2 * bootstrap-variables.$dropdown-item-padding-y);
   justify-content: center;
   border-radius: semantic-tokens.$element-button-radius;
 }
