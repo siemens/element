@@ -60,10 +60,10 @@
 }
 
 // Don't merge with :is. Angular 19 fails to compile it in a correct way.
-:host-context(si-navbar-vertical-items-next > .navbar-vertical-item) + :host(.navbar-vertical-item),
-:host-context(si-navbar-vertical-items-next > si-navbar-vertical-next-group)
+:host-context(si-navbar-vertical-next-items > .navbar-vertical-item) + :host(.navbar-vertical-item),
+:host-context(si-navbar-vertical-next-items > si-navbar-vertical-next-group)
   + :host(.navbar-vertical-item),
-:host-context(si-navbar-vertical-items-next > si-navbar-flyout-anchor)
+:host-context(si-navbar-vertical-next-items > si-navbar-flyout-anchor)
   + :host(.navbar-vertical-item) {
   margin-block-start: map.get(variables.$spacers, 4);
 }

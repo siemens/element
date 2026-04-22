@@ -16,7 +16,7 @@ import {
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
 import {
-  SiNavbarVerticalItemsNextComponent,
+  SiNavbarVerticalNextItemsComponent,
   SiNavbarVerticalNextComponent,
   SiNavbarVerticalNextGroupComponent,
   SiNavbarVerticalNextGroupTriggerDirective,
@@ -34,7 +34,7 @@ import {
     SiHeaderDropdownTriggerDirective,
     SiHeaderBrandDirective,
     SiNavbarVerticalNextComponent,
-    SiNavbarVerticalItemsNextComponent,
+    SiNavbarVerticalNextItemsComponent,
     SiNavbarVerticalNextItemComponent,
     SiNavbarVerticalNextGroupComponent,
     SiNavbarVerticalNextGroupTriggerDirective,
