@@ -18,9 +18,15 @@
 }
 
 :host-context(si-menu-bar, si-content-action-bar) {
-  color: system-tokens.$si-sys-text-accent;
-  background: system-tokens.$si-sys-background-1;
-  padding-inline: map.get(variables.$spacers, 4);
+  :host {
+    --btn-bg: #{system-tokens.$si-sys-background-1};
+    --btn-font-weight: #{variables.$si-font-weight-body};
+    min-inline-size: auto !important; // stylelint-disable-line declaration-no-important
+  }
+
+  .btn + :host {
+    margin-inline-start: 1px !important; // stylelint-disable-line declaration-no-important
+  }
 
   .item-wrapper {
     justify-content: center;
@@ -28,6 +34,7 @@
 
   .icon {
     margin-inline: 0;
+    margin-block: map.get(variables.$spacers, 1) * -1;
   }
 
   .item-end {
@@ -52,7 +59,7 @@
     transform: rotate(90deg);
   }
 
-  &[aria-expanded='true'] {
+  &.active {
     .item-end .submenu {
       transform: rotate(270deg);
     }
@@ -70,34 +77,8 @@
       ) !important; // stylelint-disable-line declaration-no-important
     }
   }
-
-  &:focus,
-  &.focus {
-    color: system-tokens.$si-sys-text-accent;
-    background: system-tokens.$si-sys-background-1;
-  }
-
-  &:hover,
-  &.hover {
-    color: system-tokens.$si-sys-text-on-accent-secondary-hover;
-    background: system-tokens.$si-sys-background-accent-secondary-hover;
-  }
-
-  &:active,
-  &.active,
-  &[aria-expanded='true'] {
-    color: system-tokens.$si-sys-text-on-accent-secondary-active;
-    background: system-tokens.$si-sys-background-accent-secondary-active;
-  }
-
-  &:disabled,
-  &.disabled {
-    opacity: variables.$element-action-disabled-opacity;
-    color: system-tokens.$si-sys-text-accent;
-    background: system-tokens.$si-sys-background-1;
-  }
 }
 
 :host-context(.card-outline) {
-  background: transparent;
+  background-color: transparent;
 }

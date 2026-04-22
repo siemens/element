@@ -9,8 +9,7 @@ import { Directive, inject, input } from '@angular/core';
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'si-menu-bar',
   host: {
-    class: 'd-inline-flex',
-    style: 'gap: 1px',
+    class: 'd-inline-flex btn-group',
     '[tabindex]': 'tabIndex'
   },
   hostDirectives: [CdkMenuBar, CdkTargetMenuAim]

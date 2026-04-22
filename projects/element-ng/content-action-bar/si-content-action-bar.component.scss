@@ -15,15 +15,3 @@ div > [si-content-action-bar-toggle] {
   justify-content: center;
   border-radius: bootstrap-variables.$btn-border-radius;
 }
-
-si-menu-bar {
-  > *:first-child {
-    border-start-start-radius: bootstrap-variables.$btn-border-radius;
-    border-end-start-radius: bootstrap-variables.$btn-border-radius;
-  }
-
-  > *:last-child {
-    border-start-end-radius: bootstrap-variables.$btn-border-radius;
-    border-end-end-radius: bootstrap-variables.$btn-border-radius;
-  }
-}
