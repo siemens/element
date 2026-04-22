@@ -171,7 +171,7 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
   private readonly editorWizardState = signal<WidgetInstanceEditorWizardState | undefined>(
     undefined
   );
-  private subscriptions: Subscription[] | OutputRefSubscription[] = [];
+  private subscriptions: (Subscription | OutputRefSubscription)[] = [];
   private dialogService = inject(SiActionDialogService);
   private injector = inject(Injector);
   private envInjector = inject(EnvironmentInjector);
@@ -292,9 +292,9 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
         if (this.widgetInstanceEditor.statusChanges) {
           hasStatusChangesEmitter = true;
           this.subscriptions.push(
-            this.widgetInstanceEditor.statusChanges.subscribe(statusChanges => {
-              this.handleStatusChanges(statusChanges);
-            }) as Subscription
+            this.widgetInstanceEditor.statusChanges.subscribe(statusChanges =>
+              this.handleStatusChanges(statusChanges)
+            )
           );
         }
 
@@ -304,7 +304,7 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
               if (!hasStatusChangesEmitter) {
                 this.widgetConfigModified = true;
               }
-            }) as Subscription
+            })
           );
         }
 
@@ -313,9 +313,9 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
 
           if (this.widgetInstanceEditor.stateChange) {
             this.subscriptions.push(
-              this.widgetInstanceEditor.stateChange.subscribe(state => {
-                this.editorWizardState.set(state);
-              }) as Subscription
+              this.widgetInstanceEditor.stateChange.subscribe(state =>
+                this.editorWizardState.set(state)
+              )
             );
           }
         }
