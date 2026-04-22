@@ -421,6 +421,7 @@ $nav-link-padding-y: 10px;
 $nav-link-padding-x: map.get(spacers.$spacers, 8);
 $nav-link-font-size: typography.$si-font-size-h4;
 $nav-link-font-weight: typography.$si-font-weight-h4;
+$nav-link-line-height: typography.$si-line-height-h4;
 $nav-link-color: semantic-tokens.$element-text-primary !default;
 $nav-link-hover-color: $link-hover-color !default;
 $nav-link-transition: ();
@@ -523,6 +524,7 @@ $badge-color: semantic-tokens.$element-text-inverse !default;
 $badge-padding-y: map.get(spacers.$spacers, 1);
 $badge-padding-x: map.get(spacers.$spacers, 4);
 $badge-border-radius: 0.75rem;
+$badge-dot-size: 0.625rem;
 
 // Modals
 
