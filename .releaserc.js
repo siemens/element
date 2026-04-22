@@ -44,136 +44,134 @@ export default {
     ...(skipCommits ? [] : ['@semantic-release/changelog']),
     // Packages to be pushed
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'dist/@siemens/element-ng'
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'dist/@siemens/element-translate-ng'
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'dist/@siemens/live-preview'
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'dist/@siemens/charts-ng'
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'dist/@siemens/native-charts-ng'
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'dist/@siemens/dashboards-ng'
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'dist/@siemens/maps-ng'
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'projects/element-theme'
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'projects/element-translate-cli'
       }
     ],
     // Only update remaining package.json that are not directly published
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'projects/element-ng',
         npmPublish: false
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'projects/element-translate-ng',
         npmPublish: false
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'projects/live-preview',
         npmPublish: false
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'projects/charts-ng',
         npmPublish: false
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'projects/native-charts-ng',
         npmPublish: false
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'projects/dashboards-ng',
         npmPublish: false
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'projects/maps-ng',
         npmPublish: false
       }
     ],
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         pkgRoot: 'projects/dashboards-demo',
         npmPublish: false
       }
     ],
     // Root package.json only needs version update
-    // This must be AFTER all other package updates as this will update the peer dependencies.
     [
-      '@semantic-release/npm',
+      '@anolilab/semantic-release-pnpm',
       {
         npmPublish: false
       }
     ],
+    // Resolve workspace:* references in dist package.json files to the
+    // concrete release version so that pnpm publish succeeds.
+    // Must run after all version-bump prepare steps above.
+    './tools/semantic-release/resolve-workspace-deps.js',
     ...(skipCommits
       ? []
       : [
           [
             '@semantic-release/git',
             {
-              assets: [
-                'CHANGELOG.md',
-                'package.json',
-                'package-lock.json',
-                'projects/*/package.json'
-              ],
+              assets: ['CHANGELOG.md', 'package.json', 'pnpm-lock.yaml', 'projects/*/package.json'],
               message: 'chore(release): ${nextRelease.version}'
             }
           ]

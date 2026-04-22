@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { HarnessPredicate } from '@angular/cdk/testing';
-import { SiHeaderDropdownTriggerHarness } from '@siemens/element-ng/header-dropdown/testing/si-header-dropdown-trigger.harness';
+
+import { SiHeaderDropdownTriggerHarness } from '../../header-dropdown/testing/si-header-dropdown-trigger.harness';
 
 export class SiHeaderItemHarness extends SiHeaderDropdownTriggerHarness {
   static override readonly hostSelector = '[si-header-navigation-item], [si-header-action-item]';
