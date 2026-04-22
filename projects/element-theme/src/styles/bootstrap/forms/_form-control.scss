@@ -77,10 +77,6 @@
     }
   }
 
-  &:not(:placeholder-shown):not(:focus):not(.readonly):not([readonly]) {
-    color: semantic-tokens.$element-text-secondary;
-  }
-
   &:is(:disabled, [readonly]) {
     // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
     opacity: 1;
