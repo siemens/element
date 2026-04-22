@@ -132,7 +132,7 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
     undefined
   );
 
-  private subscriptions: Subscription[] | OutputRefSubscription[] = [];
+  private subscriptions: (Subscription | OutputRefSubscription)[] = [];
   private injector = inject(Injector);
   private envInjector = inject(EnvironmentInjector);
   private dialogService = inject(SiActionDialogService);
@@ -159,13 +159,13 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
         this.subscriptions.push(
           this.widgetInstanceEditor.statusChanges.subscribe(statusChanges =>
             this.handleStatusChanges(statusChanges)
-          ) as Subscription
+          )
         );
       } else if (this.widgetInstanceEditor.configChange) {
         this.subscriptions.push(
           this.widgetInstanceEditor.configChange.subscribe(() =>
             this.widgetConfigModified.set(true)
-          ) as Subscription
+          )
         );
       }
       if (this.isEditorWizard(this.widgetInstanceEditor)) {
@@ -173,9 +173,9 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
 
         if (this.widgetInstanceEditor.stateChange) {
           this.subscriptions.push(
-            this.widgetInstanceEditor.stateChange.subscribe(state => {
-              this.editorWizardState.set(state);
-            }) as Subscription
+            this.widgetInstanceEditor.stateChange.subscribe(state =>
+              this.editorWizardState.set(state)
+            )
           );
         }
       }
