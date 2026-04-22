@@ -65,7 +65,7 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   /**
    * List of vertical navigation items
    *
-   * @deprecated Use the template-based declarative API with content projection instead. Use `<si-navbar-vertical-items-next>` and
+   * @deprecated Use the template-based declarative API with content projection instead. Use `<si-navbar-vertical-next-items>` and
    * `<a si-navbar-vertical-next-item>` / `<button si-navbar-vertical-next-item>` instead.
    *
    * @defaultValue true
