@@ -1,10 +1,20 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
+$color-size: 1.5rem;
+
+.colors-row {
+  display: grid;
+  grid-template-columns: repeat(4, $color-size);
+}
+
 .color-box {
   position: relative;
-  block-size: map.get(variables.$spacers, 8);
-  inline-size: map.get(variables.$spacers, 8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: $color-size;
+  inline-size: $color-size;
 
   input:focus ~ & {
     @include variables.make-outline-focus();
@@ -14,8 +24,6 @@
 .input-color-box {
   cursor: pointer;
   position: relative;
-  block-size: map.get(variables.$spacers, 9);
-  inline-size: map.get(variables.$spacers, 9);
   padding: (map.get(variables.$spacers, 4) - 1px);
   border-radius: variables.$element-radius-1;
   border-width: 1px;
@@ -42,7 +50,7 @@
 }
 
 .swatch {
-  block-size: map.get(variables.$spacers, 8);
+  block-size: $color-size;
 }
 
 .swatch-label {
@@ -56,12 +64,10 @@
 }
 
 .inside-box {
-  block-size: map.get(variables.$spacers, 6);
-  inline-size: map.get(variables.$spacers, 6);
+  block-size: 1rem;
+  inline-size: 1rem;
 }
 
 .colors {
   cursor: pointer;
-  inline-size: 136px;
-  min-block-size: 40px;
 }
