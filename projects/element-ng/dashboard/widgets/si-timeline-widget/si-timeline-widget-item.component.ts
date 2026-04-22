@@ -113,6 +113,7 @@ export interface SiTimelineWidgetItem {
   selector: 'si-timeline-widget-item',
   imports: [SiIconComponent, SiTranslatePipe, A11yModule, RouterLink, SiMenuModule, CdkMenuTrigger],
   templateUrl: './si-timeline-widget-item.component.html',
+  styleUrl: './si-timeline-widget-item.component.scss',
   host: {
     role: 'listitem'
   }

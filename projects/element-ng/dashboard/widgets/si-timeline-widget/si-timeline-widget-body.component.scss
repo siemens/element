@@ -5,10 +5,6 @@
   background-color: variables.$element-base-1;
   flex: auto;
   overflow: hidden;
-
-  si-timeline-widget-item:last-child ::ng-deep .si-timeline-widget-item-lower-line {
-    display: none;
-  }
 }
 
 div {
