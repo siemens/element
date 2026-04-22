@@ -85,6 +85,8 @@ test.describe('si-tabs', () => {
     const tooltip = page.getByRole('tooltip', { name: 'Settings' });
     await expect(tooltip).toBeVisible();
     await expect(tooltip).toHaveText('Settings');
+    // Wait for the previous "Link" tooltip to fully leave the DOM after its leave animation.
+    await expect(page.getByRole('tooltip')).toHaveCount(1);
     await si.runVisualAndA11yTests('tabs-toolbar-focused');
   });
 });
