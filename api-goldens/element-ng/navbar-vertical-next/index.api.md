@@ -12,10 +12,6 @@ import * as _siemens_element_translate_ng_translate from '@siemens/element-trans
 import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';
 
-// @public
-export class SiNavbarVerticalItemsNextComponent {
-}
-
 // @public (undocumented)
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     constructor();
@@ -71,6 +67,10 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     readonly group: SiNavbarVerticalNextGroupTriggerDirective | null;
     readonly hideBadgeWhenCollapsed: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
+}
+
+// @public
+export class SiNavbarVerticalNextItemsComponent {
 }
 
 // @public (undocumented)
