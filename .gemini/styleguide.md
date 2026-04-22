@@ -23,7 +23,7 @@ conventions and best practices when reviewing code.
 - Use `input()` and `output()` functions instead of decorators
 - Use `computed()` for derived state
 - Use signal queries (`viewChild()`, `viewChildren()`, `contentChild()`, `contentChildren()`) instead of decorator queries (`@ViewChild`, `@ViewChildren`, `@ContentChild`, `@ContentChildren`)
-- Set `changeDetection: ChangeDetectionStrategy.OnPush` in `@Component` decorator
+- Set `changeDetection: ChangeDetectionStrategy.OnPush` in `@Component` decorator. Only flag this for **newly added** components in the PR. Do NOT flag existing components that are missing it — adding OnPush to existing components is out of scope for a PR review.
 - Prefer inline templates for small components
 - Prefer Reactive forms instead of Template-driven ones
 - Do NOT use `ngClass`, use `class` bindings instead
