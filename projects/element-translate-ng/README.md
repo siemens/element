@@ -25,7 +25,7 @@ for details on how to run it and how to configure it.
 
 ## Testing
 
-Run `npm run translate:test` to perform the unit tests via [Vitest](https://vitest.dev/).
+Run `pnpm run translate:test` to perform the unit tests via [Vitest](https://vitest.dev/).
 
 ## License
 

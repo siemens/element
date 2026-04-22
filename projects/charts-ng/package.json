@@ -14,7 +14,8 @@
   "homepage": "https://github.com/siemens/element",
   "bugs": "https://github.com/siemens/element/issues/new",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "../../dist/@siemens/charts-ng"
   },
   "type": "module",
   "peerDependencies": {

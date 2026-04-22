@@ -75,11 +75,11 @@ jobs:
           ref: ${{ steps.check.outputs.target-ref }}
           lfs: true
 
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: lts/krypton
-          cache: 'npm'
-
+          cache: 'pnpm'
       - name: Get latest workflow run
         id: get-workflow
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
@@ -156,7 +156,7 @@ jobs:
           run-id: ${{ steps.get-workflow.outputs.workflow-run-id }}
           github-token: ${{ github.token }}
       # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
-      - run: npm ci --prefer-offline --no-audit --include=optional
+      - run: pnpm install
 
       - name: Update VRTs
         run: |
@@ -167,10 +167,10 @@ jobs:
             fi
             mkdir -p playwright/snapshots
             echo "Starting fresh snapshot generation..."
-            npx playwright test --update-snapshots=all
+            pnpm exec playwright test --update-snapshots=all
           else
             echo "Updating only changed snapshots..."
-            npx playwright test --update-snapshots=changed
+            pnpm exec playwright test --update-snapshots=changed
           fi
 
           # Verify that snapshots were generated

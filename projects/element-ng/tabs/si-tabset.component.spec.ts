@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
 import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
-import { page } from '@vitest/browser/context';
+import { page } from 'vitest/browser';
 
 import {
   MockResizeObserver,

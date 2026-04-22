@@ -3,6 +3,7 @@
   "version": "49.13.0",
   "description": "Siemens Dashboards demo",
   "license": "SEE LICENSE IN LICENSE.md",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/siemens/element.git"
