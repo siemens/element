@@ -224,77 +224,77 @@ used as values for color tokens.
 
 <div markdown>
 ### Brand
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-brand-colors"
+--8<-- "si-ref.md:si-ref-color-data-brand-colors"
 </div>
 
 <div markdown>
 ### Deep-blue
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-deep-blue-colors"
+--8<-- "si-ref.md:si-ref-color-data-deep-blue-colors"
 </div>
 
 <div markdown>
 ### Turquoise
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-turquoise-colors"
+--8<-- "si-ref.md:si-ref-color-data-turquoise-colors"
 </div>
 
 <div markdown>
 ### Sand
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-sand-colors"
+--8<-- "si-ref.md:si-ref-color-data-sand-colors"
 </div>
 
 <div markdown>
 ### Royal-blue
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-royal-blue-colors"
+--8<-- "si-ref.md:si-ref-color-data-royal-blue-colors"
 </div>
 
 <div markdown>
 ### Blue
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-blue-colors"
+--8<-- "si-ref.md:si-ref-color-data-blue-colors"
 </div>
 
 <div markdown>
 ### Interactive-coral
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-interactive-coral-colors"
+--8<-- "si-ref.md:si-ref-color-data-interactive-coral-colors"
 </div>
 
 <div markdown>
 ### Plum
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-plum-colors"
+--8<-- "si-ref.md:si-ref-color-data-plum-colors"
 </div>
 
 <div markdown>
 ### Purple
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-purple-colors"
+--8<-- "si-ref.md:si-ref-color-data-purple-colors"
 </div>
 
 <div markdown>
 ### Orchid
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-orchid-colors"
+--8<-- "si-ref.md:si-ref-color-data-orchid-colors"
 </div>
 
 <div markdown>
 ### Orange
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-orange-colors"
+--8<-- "si-ref.md:si-ref-color-data-orange-colors"
 </div>
 
 <div markdown>
 ### Yellow
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-yellow-colors"
+--8<-- "si-ref.md:si-ref-color-data-yellow-colors"
 </div>
 
 <div markdown>
 ### Red
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-red-colors"
+--8<-- "si-ref.md:si-ref-color-data-red-colors"
 </div>
 
 <div markdown>
 ### Green
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-green-colors"
+--8<-- "si-ref.md:si-ref-color-data-green-colors"
 </div>
 
 <div markdown>
 ### Avocado
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-avocado-colors"
+--8<-- "si-ref.md:si-ref-color-data-avocado-colors"
 </div>
 
 </div>

@@ -16,9 +16,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {
-    "postversion": "node ../../postversion.js"
-  },
   "keywords": [
     "siemens",
     "theme",
