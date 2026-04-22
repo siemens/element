@@ -105,7 +105,7 @@ tile data provided by maptiler.
 
 ### Running Unit Tests
 
-Run `npm run maps:test` to perform the unit tests via [Vitest](https://main.vitest.dev/).
+Run `pnpm run maps:test` to perform the unit tests via [Vitest](https://main.vitest.dev/).
 
 ## License
 

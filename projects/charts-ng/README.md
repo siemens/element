@@ -52,7 +52,7 @@ export class AppComponent {}
 
 ### Running unit tests
 
-Run `npm run charts:test` to perform the unit tests via [Vitest](https://main.vitest.dev/).
+Run `pnpm run charts:test` to perform the unit tests via [Vitest](https://main.vitest.dev/).
 
 ## License
 
