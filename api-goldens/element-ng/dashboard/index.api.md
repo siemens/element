@@ -78,7 +78,7 @@ export class SiListWidgetBodyComponent extends SiWidgetBaseDirective<SiListWidge
     readonly link: _angular_core.InputSignal<Link | undefined>;
     readonly numberOfLinks: _angular_core.InputSignal<number>;
     readonly search: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly searchPlaceholderLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly searchPlaceholderLabel: _angular_core.InputSignal<TranslatableString>;
     readonly sort: _angular_core.InputSignal<SortOrder | undefined>;
 }
 
