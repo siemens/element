@@ -179,12 +179,13 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
       this.parent.openSubmenu = undefined;
     }
 
+    if (this.navbar?.dropdownClosed) {
+      this.navbar?.dropdownClosed(this);
+    }
+
     if (options?.all && this.parent) {
       this.parent.close(options);
     } else {
-      if (this.navbar?.dropdownClosed) {
-        this.navbar?.dropdownClosed(this);
-      }
       this.openChange.emit(false);
     }
   }
