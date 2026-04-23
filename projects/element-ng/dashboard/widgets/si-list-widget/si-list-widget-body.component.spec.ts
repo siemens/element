@@ -4,7 +4,13 @@
  */
 import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  provideMockTranslateServiceBuilder,
+  SiTranslateService
+} from '@siemens/element-translate-ng/translate';
+import { of } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
+import { userEvent } from 'vitest/browser';
 
 import { SiListWidgetBodyComponent, SortOrder } from './si-list-widget-body.component';
 import { SiListWidgetItem } from './si-list-widget-item.component';
@@ -190,5 +196,125 @@ describe('SiListWidgetBodyComponent', () => {
       items = element.querySelectorAll('si-list-widget-item');
       expect(items.length).toBe(6);
     });
+  });
+});
+
+describe('SiListWidgetBodyComponent with translations', () => {
+  const translations: Record<string, string> = {
+    KEY_APPLE: 'Apple',
+    KEY_BANANA: 'Banana',
+    KEY_CHERRY: 'Cherry'
+  };
+
+  let fixture: ComponentFixture<SiListWidgetBodyComponent>;
+  let element: HTMLElement;
+  let value: WritableSignal<SiListWidgetItem[] | undefined>;
+  let sort: WritableSignal<SortOrder | undefined>;
+  let search: WritableSignal<boolean>;
+  const searchInput = (): HTMLInputElement => element.querySelector('input')!;
+
+  beforeEach(() => {
+    value = signal(undefined);
+    sort = signal(undefined);
+    search = signal(false);
+
+    TestBed.configureTestingModule({
+      providers: [
+        provideMockTranslateServiceBuilder(
+          () =>
+            ({
+              translate: (keys: string | string[]) => {
+                if (typeof keys === 'string') {
+                  return translations[keys] ?? keys;
+                }
+                return Object.fromEntries(keys.map(k => [k, translations[k] ?? k]));
+              },
+              translateAsync: (keys: string | string[]) => {
+                if (typeof keys === 'string') {
+                  return of(translations[keys] ?? keys);
+                }
+                return of(Object.fromEntries(keys.map(k => [k, translations[k] ?? k])));
+              }
+            }) as unknown as SiTranslateService
+        )
+      ]
+    });
+
+    fixture = TestBed.createComponent(SiListWidgetBodyComponent, {
+      bindings: [
+        inputBinding('value', value),
+        inputBinding('sort', sort),
+        inputBinding('search', search)
+      ]
+    });
+    element = fixture.nativeElement;
+  });
+
+  it('should filter by translated label, not translation key', async () => {
+    value.set([
+      { label: 'KEY_APPLE' as any },
+      { label: 'KEY_BANANA' as any },
+      { label: 'KEY_CHERRY' as any }
+    ]);
+    search.set(true);
+    await fixture.whenStable();
+
+    vi.useFakeTimers();
+    // Searching by translated value should find the item
+    await userEvent.fill(searchInput(), 'Banana');
+    vi.advanceTimersByTime(400);
+    await fixture.whenStable();
+
+    let items = element.querySelectorAll('si-list-widget-item');
+    expect(items).toHaveLength(1);
+    expect(items.item(0).textContent).toContain('Banana');
+
+    // Searching by translation key should NOT find the item
+    await userEvent.fill(searchInput(), 'KEY_BANANA');
+    vi.advanceTimersByTime(400);
+    await fixture.whenStable();
+
+    items = element.querySelectorAll('si-list-widget-item');
+    expect(items).toHaveLength(0);
+    vi.useRealTimers();
+  });
+
+  it('should sort by translated label, not translation key', async () => {
+    // Keys in reverse alphabetical order, but translated values are: Apple, Banana, Cherry
+    value.set([
+      { label: 'KEY_CHERRY' as any },
+      { label: 'KEY_APPLE' as any },
+      { label: 'KEY_BANANA' as any }
+    ]);
+    sort.set('ASC');
+    await fixture.whenStable();
+
+    const items = element.querySelectorAll('si-list-widget-item');
+    expect(items).toHaveLength(3);
+    expect(Array.from(items).map(el => el.textContent)).toEqual([
+      expect.stringContaining('Apple'),
+      expect.stringContaining('Banana'),
+      expect.stringContaining('Cherry')
+    ]);
+  });
+
+  it('should filter by translated link title, not translation key', async () => {
+    value.set([
+      { label: { title: 'KEY_APPLE' as any } },
+      { label: { title: 'KEY_BANANA' as any } },
+      { label: { title: 'KEY_CHERRY' as any } }
+    ]);
+    search.set(true);
+    await fixture.whenStable();
+
+    vi.useFakeTimers();
+    await userEvent.fill(searchInput(), 'Cherry');
+    vi.advanceTimersByTime(400);
+    await fixture.whenStable();
+
+    const items = element.querySelectorAll('si-list-widget-item');
+    expect(items).toHaveLength(1);
+    expect(items.item(0).textContent).toContain('Cherry');
+    vi.useRealTimers();
   });
 });
