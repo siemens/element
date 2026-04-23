@@ -8,7 +8,7 @@
   block-size: 100%;
   color: variables.$element-text-primary;
   padding-block: map.get(variables.$spacers, 2);
-  padding-inline-end: calc(map.get(variables.$spacers, 5) + var(--si-feedback-icon-offset, 0px));
+  padding-inline-end: map.get(variables.$spacers, 5);
 
   &.disabled {
     color: variables.$element-text-disabled;
@@ -41,8 +41,4 @@ si-select-option + si-select-option::before {
   background: variables.$element-base-0;
   margin-inline-start: map.get(variables.$spacers, 2);
   padding-inline: map.get(variables.$spacers, 4);
-}
-
-.dropdown-caret {
-  transform: translateX(var(--si-feedback-icon-offset, 0));
 }

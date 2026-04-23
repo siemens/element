@@ -5,11 +5,6 @@
 :host {
   display: flex;
   align-items: center;
-  padding-inline-end: all-variables.$input-padding-x;
-
-  &.show-step-buttons {
-    --si-action-icon-offset: 48px;
-  }
 
   &:focus-within {
     @include all-variables.make-outline-focus();
@@ -34,6 +29,6 @@ input {
   }
 }
 
-.unit {
-  padding-inline-end: var(--si-feedback-icon-offset, 0);
+.form-control-actions {
+  margin-inline-end: -1px;
 }
