@@ -124,6 +124,21 @@ describe('SiApplicationHeaderComponent', () => {
       expect(await headerHarness.hasBackdrop()).toBe(false);
     });
 
+    it('should remove backdrop when leaf item of nested dropdown is clicked', async () => {
+      const actionItemHarness = await headerHarness.getActionItem('AItem 1');
+      await actionItemHarness.toggle();
+      expect(await headerHarness.hasBackdrop()).toBe(true);
+      const dropdown1 = await actionItemHarness.getDropdown();
+      const nestedTrigger = await dropdown1.getTrigger('DItem 1');
+      await nestedTrigger.toggle();
+      expect(await headerHarness.hasBackdrop()).toBe(true);
+      await nestedTrigger
+        .getDropdown()
+        .then(dropdown => dropdown.getItem('DItem 2'))
+        .then(item => item.click());
+      expect(await headerHarness.hasBackdrop()).toBe(false);
+    });
+
     it('should have backdrop for collapsible action-item opened', async () => {
       await headerHarness.openCollapsibleActions();
       expect(await headerHarness.hasBackdrop()).toBe(true);
