@@ -22,6 +22,7 @@ import {
   SiNavbarVerticalNextSearchComponent,
   SiNavbarVerticalNextItemsComponent,
   SiNavbarVerticalNextComponent,
+  SiNavbarVerticalNextFooterItemsComponent,
   SiNavbarVerticalNextHeaderComponent,
   SiNavbarVerticalNextItemComponent
 } from '@siemens/element-ng/navbar-vertical-next';
@@ -105,6 +106,7 @@ export const ROUTES: Route[] = [
     SiNavbarVerticalNextComponent,
     SiNavbarVerticalNextSearchComponent,
     SiNavbarVerticalNextItemsComponent,
+    SiNavbarVerticalNextFooterItemsComponent,
     SiNavbarVerticalNextItemComponent,
     SiNavbarVerticalNextHeaderComponent,
     SiApplicationHeaderComponent,

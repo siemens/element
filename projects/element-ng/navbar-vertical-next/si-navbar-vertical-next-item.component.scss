@@ -64,6 +64,12 @@
 :host-context(si-navbar-vertical-next-items > si-navbar-vertical-next-group)
   + :host(.navbar-vertical-item),
 :host-context(si-navbar-vertical-next-items > si-navbar-flyout-anchor)
+  + :host(.navbar-vertical-item),
+:host-context(si-navbar-vertical-next-footer-items > .navbar-vertical-item)
+  + :host(.navbar-vertical-item),
+:host-context(si-navbar-vertical-next-footer-items > si-navbar-vertical-next-group)
+  + :host(.navbar-vertical-item),
+:host-context(si-navbar-vertical-next-footer-items > si-navbar-flyout-anchor)
   + :host(.navbar-vertical-item) {
   margin-block-start: map.get(variables.$spacers, 4);
 }
