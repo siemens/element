@@ -1,4 +1,3 @@
-- text: Loading...
 - grid:
   - rowgroup:
     - row "Column with Header Selection ID Name Role Age Company":

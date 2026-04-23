@@ -1,4 +1,4 @@
-- text: /Loading\.\.\.\. 1 to \d+ of \d+\. Page 1 of 5/
+- text: /1 to \d+ of \d+\. Page 1 of 5/
 - grid:
   - rowgroup:
     - row "ID Name Role Company Age":
