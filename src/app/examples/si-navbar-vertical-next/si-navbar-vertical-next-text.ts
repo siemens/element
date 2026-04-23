@@ -18,6 +18,7 @@ import {
 import {
   SiNavbarVerticalNextItemsComponent,
   SiNavbarVerticalNextComponent,
+  SiNavbarVerticalNextFooterItemsComponent,
   SiNavbarVerticalNextGroupComponent,
   SiNavbarVerticalNextGroupTriggerDirective,
   SiNavbarVerticalNextHeaderComponent,
@@ -35,6 +36,7 @@ import {
     SiHeaderBrandDirective,
     SiNavbarVerticalNextComponent,
     SiNavbarVerticalNextItemsComponent,
+    SiNavbarVerticalNextFooterItemsComponent,
     SiNavbarVerticalNextItemComponent,
     SiNavbarVerticalNextGroupComponent,
     SiNavbarVerticalNextGroupTriggerDirective,

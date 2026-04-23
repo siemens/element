@@ -1,0 +1,19 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/all-variables';
+
+:host {
+  display: block;
+  overflow-x: hidden;
+  margin-block-start: auto;
+  padding-block-end: map.get(all-variables.$spacers, 4);
+}
+
+:host-context(.nav-collapsed) {
+  display: none;
+}
+
+@include all-variables.media-breakpoint-up(sm) {
+  :host-context(:not(.nav-text-only).nav-collapsed) {
+    display: block;
+  }
+}
