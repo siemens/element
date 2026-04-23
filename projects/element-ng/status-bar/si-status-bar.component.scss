@@ -4,7 +4,6 @@
 
 $status-bar-padding: map.get(variables.$spacers, 4);
 $status-bar-padding-small: map.get(variables.$spacers, 1);
-$mute-padding: 44px;
 
 $blink-transition-duration: variables.$element-default-transition-duration;
 
@@ -56,7 +55,9 @@ $blink-transition-duration: variables.$element-default-transition-duration;
 }
 
 .mute-padding {
-  padding-inline-end: 44px;
+  padding-inline-end: calc(
+    1lh + 2 * map.get(variables.$spacers, 5) + map.get(variables.$spacers, 3)
+  );
 }
 
 .mobile-mute {
@@ -71,8 +72,9 @@ $blink-transition-duration: variables.$element-default-transition-duration;
 .collapse-expand {
   background-color: variables.$element-base-1;
   border: 0;
-  border-radius: 0 0 20px 20px;
-  inline-size: 40px;
+  border-end-start-radius: 2rem;
+  border-end-end-radius: 2rem;
+  inline-size: calc(1.5rem + 2 * map.get(variables.$spacers, 4));
   color: variables.$element-ui-0;
   cursor: pointer;
 
@@ -98,16 +100,9 @@ $blink-transition-duration: variables.$element-default-transition-duration;
 
 .responsive {
   si-status-bar-item {
-    ::ng-deep .status-item {
-      max-inline-size: unset;
-      position: absolute;
-      inset-block: 0;
-      inset-inline: 0 map.get(variables.$spacers, 2);
-    }
-
-    &.mute-padding ::ng-deep .status-item {
-      inset-inline-end: $mute-padding;
-    }
+    --__si-status-bar-item-min-width: 0;
+    overflow: hidden;
+    flex-shrink: 1;
   }
 
   &.expanded {

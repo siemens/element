@@ -21,6 +21,8 @@
     @if (responsiveMode) {
       <div class="align-items-center overflow-hidden">
         <div class="d-flex flex-fill position-relative">
+          @let items = responsiveItems();
+          @let responsiveCols = items.length < responsiveMode ? items.length : responsiveMode;
           @for (item of responsiveItems(); track $index) {
             <si-status-bar-item
               class="bar-item compact"
@@ -31,7 +33,7 @@
               [blink]="item.blink !== false && blink() && !expanded()"
               [clickable]="!!item.action"
               [class.mute-padding]="item.mutePadding && muteButton() !== undefined"
-              [style.flex-basis.%]="responsiveMode ? 100 / responsiveMode : null"
+              [style.flex-basis.%]="100 / responsiveCols"
               [valueOnly]="item.isSpecial"
               (click)="onItemClicked(item)"
               (keydown.enter)="onItemClicked(item)"
@@ -106,7 +108,7 @@
 <ng-template #muteButtonTemplate>
   <button
     type="button"
-    class="bar-item mute-button btn btn-circle btn-tertiary ms-5"
+    class="bar-item mute-button btn btn-icon btn-tertiary ms-5"
     [attr.aria-label]="muteButtonText() | translate"
     (click)="muteToggle.emit()"
   >

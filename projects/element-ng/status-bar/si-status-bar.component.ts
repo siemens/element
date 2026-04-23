@@ -68,12 +68,16 @@ let idCounter = 1;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiStatusBarComponent implements OnDestroy, OnChanges {
-  private static readonly itemMinWidth = 100;
-  private static readonly itemMaxWidth = 152;
+  private static readonly minNumberOfItems = 2;
+  private static readonly itemMinWidthEm = 7.1429;
+  private static readonly itemMaxWidthEm = 10.8;
   private static readonly itemSpacing = 4;
-  private static readonly itemPaddingX = 44; // padding + icon size + icon margin
-  private static readonly itemPaddingXdeprecated = 20; // padding + color bar
-  private static readonly muteButtonWidth = 48;
+  private static readonly itemPadding = 12; // ps-2 + pe-4
+  private static readonly itemColorBarWidth = 4;
+  private static readonly itemColorBarMargin = 6;
+  private static readonly itemIconWidthEm = 20 / 14;
+  private static readonly itemIconMargin = 8;
+  private static readonly mainPadding = 12; // ps-4 + pe-2
 
   /**
    * Array of status bar items.
@@ -236,25 +240,45 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
   }
 
   protected resizeHandler(): void {
+    const style = getComputedStyle(this.element.nativeElement);
+    const fontSize = parseFloat(style.fontSize);
+    const lineHeight = parseFloat(style.lineHeight);
     const size = this.element.nativeElement.clientWidth;
-    const muteWidth = this.muteButton() !== undefined ? SiStatusBarComponent.muteButtonWidth : 0;
+    const muteWidth = this.getMuteButtonWidth(lineHeight);
     const customWidth = this.custom().nativeElement.scrollWidth ?? 0;
     const minWidth =
-      this.items().length * (SiStatusBarComponent.itemMinWidth + SiStatusBarComponent.itemSpacing) +
+      this.items().length *
+        (SiStatusBarComponent.itemMinWidthEm * fontSize + SiStatusBarComponent.itemSpacing) +
       SiStatusBarComponent.itemSpacing +
       muteWidth +
       customWidth;
     if (size < minWidth) {
-      this.setResponsiveMode(true);
+      this.setResponsiveMode(fontSize, true);
     } else if (this.items().length) {
-      this.calculateRequiredWidth(muteWidth, customWidth);
+      this.calculateRequiredWidth(fontSize, muteWidth, customWidth);
     }
   }
 
-  private setResponsiveMode(responsive: boolean): void {
+  private getMuteButtonWidth(lineHeight: number): number {
+    if (this.muteButton() === undefined) {
+      return 0;
+    }
+    // button size is line-height + px-4 + ms-5 + me-2
+    return lineHeight + 32;
+  }
+
+  private setResponsiveMode(fontSize: number, responsive: boolean): void {
     if (responsive) {
       const size = this.element.nativeElement.clientWidth;
-      this.responsiveMode = Math.max(Math.floor(size / SiStatusBarComponent.itemMaxWidth) - 1, 2);
+      const minSize =
+        SiStatusBarComponent.itemMinWidthEm * fontSize * SiStatusBarComponent.minNumberOfItems;
+      this.responsiveMode =
+        size < minSize
+          ? 1
+          : Math.max(
+              Math.floor(size / (SiStatusBarComponent.itemMaxWidthEm * fontSize)) - 1,
+              SiStatusBarComponent.minNumberOfItems
+            );
     } else {
       this.responsiveMode = 0;
     }
@@ -298,7 +322,7 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
     this.responsiveItems.set(activeItems);
   }
 
-  private calculateRequiredWidth(muteWidth: number, customWidth: number): void {
+  private calculateRequiredWidth(fontSize: number, muteWidth: number, customWidth: number): void {
     const keys: string[] = [];
     for (const item of this.items()) {
       keys.push(item.title, item.value.toString());
@@ -320,18 +344,25 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
             const textWidth = Math.max(titleWidth, valueWidth);
             const itemWidth =
               Math.max(
-                SiStatusBarComponent.itemMinWidth,
-                textWidth +
-                  (item.color
-                    ? SiStatusBarComponent.itemPaddingXdeprecated
-                    : SiStatusBarComponent.itemPaddingX)
+                SiStatusBarComponent.itemMinWidthEm * fontSize,
+                this.getItemWidth(fontSize, textWidth, item)
               ) + SiStatusBarComponent.itemSpacing;
             return acc + itemWidth;
           },
-          muteWidth + customWidth + SiStatusBarComponent.itemSpacing
+          muteWidth +
+            customWidth +
+            SiStatusBarComponent.itemSpacing +
+            SiStatusBarComponent.mainPadding
         );
 
-        this.setResponsiveMode(size < requiredWidth);
+        this.setResponsiveMode(fontSize, size < requiredWidth);
       });
+  }
+
+  private getItemWidth(fontSize: number, textWidth: number, item: StatusBarItem): number {
+    const indicatorWidth = item.color
+      ? SiStatusBarComponent.itemColorBarWidth + SiStatusBarComponent.itemColorBarMargin
+      : SiStatusBarComponent.itemIconWidthEm * fontSize + SiStatusBarComponent.itemIconMargin;
+    return textWidth + SiStatusBarComponent.itemPadding + indicatorWidth;
   }
 }
