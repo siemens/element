@@ -18,6 +18,8 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'DASHBOARD.EDIT'?: string;
     // (undocumented)
+    'DASHBOARD.MORE_ACTIONS'?: string;
+    // (undocumented)
     'DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.CANCEL'?: string;
     // (undocumented)
     'DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.HEADING'?: string;

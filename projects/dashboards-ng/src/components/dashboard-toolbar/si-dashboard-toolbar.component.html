@@ -23,20 +23,27 @@
       }
     } @else {
       @if (showContentActionBar()) {
-        <si-content-action-bar
-          toggleItemLabel="toggle"
-          viewType="expanded"
-          [disabled]="disabled()"
-          [primaryActions]="primaryEditActionsComputed()"
-          [secondaryActions]="secondaryEditActionsComputed()"
-        />
+        <div class="flex-grow-1 overflow-hidden">
+          <si-content-action-bar
+            toggleItemLabel="toggle"
+            viewType="expanded"
+            [disabled]="disabled()"
+            [primaryActions]="primaryEditActionsComputed()"
+            [secondaryActions]="secondaryEditActionsComputed()"
+          />
+        </div>
       } @else {
-        <div>
+        <div class="d-flex flex-grow-1 flex-nowrap gap-4" siAutoCollapsableList>
           @for (action of editActions(); track $index) {
             @if (isToolbarItem(action)) {
               @if (disabled()) {
                 <!-- Links do not support disabled, so we need to render a button instead in this case. -->
-                <button type="button" class="btn btn-secondary me-4" disabled>
+                <button
+                  type="button"
+                  class="btn btn-secondary text-nowrap flex-shrink-0"
+                  siAutoCollapsableListItem
+                  disabled
+                >
                   {{ action.label! | translate }}
                 </button>
               } @else {
@@ -44,7 +51,8 @@
                   @case ('action') {
                     <button
                       type="button"
-                      class="btn btn-secondary me-4"
+                      class="btn btn-secondary text-nowrap flex-shrink-0"
+                      siAutoCollapsableListItem
                       (click)="action.action(grid())"
                     >
                       {{ action.label! | translate }}
@@ -52,7 +60,8 @@
                   }
                   @case ('router-link') {
                     <a
-                      class="btn btn-secondary me-4"
+                      class="btn btn-secondary text-nowrap flex-shrink-0"
+                      siAutoCollapsableListItem
                       [routerLink]="action.routerLink"
                       [queryParams]="action.extras?.queryParams"
                       [queryParamsHandling]="action.extras?.queryParamsHandling"
@@ -67,7 +76,12 @@
                     </a>
                   }
                   @case ('link') {
-                    <a class="btn btn-secondary me-4" [href]="action.href" [target]="action.target">
+                    <a
+                      class="btn btn-secondary text-nowrap flex-shrink-0"
+                      siAutoCollapsableListItem
+                      [href]="action.href"
+                      [target]="action.target"
+                    >
                       {{ action.label! | translate }}
                     </a>
                   }
@@ -76,7 +90,8 @@
             } @else {
               <button
                 type="button"
-                class="btn btn-secondary me-4"
+                class="btn btn-secondary text-nowrap flex-shrink-0"
+                siAutoCollapsableListItem
                 [disabled]="disabled()"
                 [siLink]="action"
               >
@@ -84,12 +99,25 @@
               </button>
             }
           }
+          @if (editActions().length) {
+            <button
+              siAutoCollapsableListOverflowItem
+              type="button"
+              class="btn btn-icon btn-tertiary element-options-vertical"
+              [aria-label]="labelMoreActions | translate"
+              [cdkMenuTriggerFor]="overflowMenu"
+              [disabled]="disabled()"
+            ></button>
+          }
         </div>
+        <ng-template #overflowMenu>
+          <si-menu-factory [items]="overflowMenuItems()" />
+        </ng-template>
       }
-      <div>
+      <div class="d-flex gap-4">
         <button
           type="button"
-          class="btn btn-secondary me-4"
+          class="btn btn-secondary"
           [disabled]="disabled()"
           (click)="onCancel()"
         >

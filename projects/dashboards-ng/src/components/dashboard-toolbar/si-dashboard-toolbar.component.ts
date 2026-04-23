@@ -2,12 +2,19 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { Component, computed, inject, input, model, output, viewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import {
+  SiAutoCollapsableListDirective,
+  SiAutoCollapsableListItemDirective,
+  SiAutoCollapsableListOverflowItemDirective
+} from '@siemens/element-ng/auto-collapsable-list';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-bar';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
+import { SiMenuFactoryComponent, MenuItem as MenuMenuItem } from '@siemens/element-ng/menu';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
 import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -25,9 +32,14 @@ import { SiGridComponent } from '../grid/si-grid.component';
 @Component({
   selector: 'si-dashboard-toolbar',
   imports: [
+    CdkMenuTrigger,
+    SiAutoCollapsableListDirective,
+    SiAutoCollapsableListItemDirective,
+    SiAutoCollapsableListOverflowItemDirective,
     SiContentActionBarComponent,
     SiLinkDirective,
     SiLoadingButtonComponent,
+    SiMenuFactoryComponent,
     RouterLink,
     SiResponsiveContainerDirective,
     SiTranslatePipe,
@@ -106,10 +118,13 @@ export class SiDashboardToolbarComponent {
   protected labelEdit = t(() => $localize`:@@DASHBOARD.EDIT:Edit`);
   protected labelCancel = t(() => $localize`:@@DASHBOARD.CANCEL:Cancel`);
   protected labelSave = t(() => $localize`:@@DASHBOARD.SAVE:Save`);
+  protected labelMoreActions = t(() => $localize`:@@DASHBOARD.MORE_ACTIONS:More actions`);
 
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
 
   private readonly dashboardToolbarContainer = viewChild.required(SiResponsiveContainerDirective);
+
+  private readonly autoCollapsableList = viewChild(SiAutoCollapsableListDirective);
 
   protected readonly showContentActionBar = computed(
     () => this.primaryEditActions()?.length + this.secondaryEditActions()?.length > 3
@@ -147,6 +162,39 @@ export class SiDashboardToolbarComponent {
   protected isToolbarItem(item: MenuItem | DashboardToolbarItem): item is DashboardToolbarItem {
     return 'label' in item;
   }
+
+  protected readonly overflowMenuItems = computed<MenuMenuItem[]>(() => {
+    const listItems = this.autoCollapsableList()?.items() ?? [];
+    return this.editActions()
+      .filter((_, index) => !listItems[index]?.isVisible())
+      .map(item => {
+        if (this.isToolbarItem(item)) {
+          switch (item.type) {
+            case 'action':
+              return {
+                type: 'action' as const,
+                label: item.label,
+                action: () => item.action(this.grid())
+              };
+            case 'router-link':
+              return {
+                type: 'router-link' as const,
+                label: item.label,
+                routerLink: item.routerLink,
+                extras: item.extras
+              };
+            case 'link':
+              return {
+                type: 'link' as const,
+                label: item.label,
+                href: item.href,
+                target: item.target
+              };
+          }
+        }
+        return this.proxyMenuItemAction(item) as MenuMenuItem;
+      });
+  });
 
   protected readonly showEditButtonLabelDesktop = computed(() => {
     return this.showEditButtonLabel() && !this.dashboardToolbarContainer()?.xs();
