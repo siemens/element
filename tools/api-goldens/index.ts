@@ -29,10 +29,10 @@ const packages = [
       path.resolve(`api-goldens/${packageName}`),
       path.resolve(`dist/@siemens/${packageName}`),
       approveGolden,
-      /ɵ/,
+      /^ɵ|^SiTranslatableKeys$/,
       []
     );
-    outdatedGoldens.push(...outdated);
+    outdatedGoldens.push(...outdated.map(file => `${packageName}/${file}`));
   }
 
   if (outdatedGoldens.length) {
