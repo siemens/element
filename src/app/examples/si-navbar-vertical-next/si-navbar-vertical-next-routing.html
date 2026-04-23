@@ -10,10 +10,9 @@
     stateId="navbar-vertical-next-routing"
     navbarCollapseButtonText="collapse"
     navbarExpandButtonText="expand"
-    searchPlaceholder="Search..."
-    [searchable]="true"
   >
-    <si-navbar-vertical-items-next>
+    <si-navbar-vertical-next-search placeholder="Search..." />
+    <si-navbar-vertical-next-items>
       <a si-navbar-vertical-next-item routerLink="home" routerLinkActive icon="element-home">
         Home
       </a>
@@ -34,7 +33,7 @@
       <a si-navbar-vertical-next-item routerLink="energy" routerLinkActive icon="element-trend">
         Energy &amp; sustainability
       </a>
-    </si-navbar-vertical-items-next>
+    </si-navbar-vertical-next-items>
 
     <div class="si-layout-main-padding">
       <si-breadcrumb-router />

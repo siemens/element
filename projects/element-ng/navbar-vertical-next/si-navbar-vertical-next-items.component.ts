@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 /**
  * Content slot for navbar items inside `si-navbar-vertical-next`.
@@ -10,8 +10,9 @@ import { Component } from '@angular/core';
  * @experimental
  */
 @Component({
-  selector: 'si-navbar-vertical-items-next',
+  selector: 'si-navbar-vertical-next-items',
   template: '<ng-content />',
-  styleUrl: './si-navbar-vertical-items-next.component.scss'
+  styleUrl: './si-navbar-vertical-next-items.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SiNavbarVerticalItemsNextComponent {}
+export class SiNavbarVerticalNextItemsComponent {}

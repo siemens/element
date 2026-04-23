@@ -12,17 +12,14 @@ import {
   model,
   OnChanges,
   OnInit,
-  output,
   signal,
-  SimpleChanges,
-  viewChild
+  SimpleChanges
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { elementDoubleLeft, elementDoubleRight, elementSearch } from '@siemens/element-icons';
+import { elementDoubleLeft, elementDoubleRight } from '@siemens/element-icons';
 import { SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -37,7 +34,7 @@ interface UIState {
 /** @experimental */
 @Component({
   selector: 'si-navbar-vertical-next',
-  imports: [SiIconComponent, SiSearchBarComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
+  imports: [SiIconComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
   templateUrl: './si-navbar-vertical-next.component.html',
   styleUrl: './si-navbar-vertical-next.component.scss',
   providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useExisting: SiNavbarVerticalNextComponent }],
@@ -50,32 +47,13 @@ interface UIState {
   }
 })
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
-  protected readonly icons = addIcons({ elementDoubleLeft, elementDoubleRight, elementSearch });
+  protected readonly icons = addIcons({ elementDoubleLeft, elementDoubleRight });
   /**
    * Whether the navbar-vertical is collapsed.
    *
    * @defaultValue false
    */
   readonly collapsed = model(false);
-
-  /**
-   * Toggles search bar
-   *
-   * @defaultValue false
-   */
-  readonly searchable = input(false, { transform: booleanAttribute });
-
-  /**
-   * Placeholder text for search
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.SEARCH_PLACEHOLDER:Search ...`)
-   * ```
-   */
-  readonly searchPlaceholder = input(
-    t(() => $localize`:@@SI_NAVBAR_VERTICAL.SEARCH_PLACEHOLDER:Search ...`)
-  );
 
   /**
    * Set to `true` if there are no icons
@@ -87,7 +65,7 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   /**
    * List of vertical navigation items
    *
-   * @deprecated Use the template-based declarative API with content projection instead. Use `<si-navbar-vertical-items-next>` and
+   * @deprecated Use the template-based declarative API with content projection instead. Use `<si-navbar-vertical-next-items>` and
    * `<a si-navbar-vertical-next-item>` / `<button si-navbar-vertical-next-item>` instead.
    *
    * @defaultValue true
@@ -145,18 +123,6 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   readonly skipLinkMainContentLabel = input(
     t(() => $localize`:@@SI_NAVBAR_VERTICAL.SKIP_LINK.MAIN_LABEL:Main content`)
   );
-  /**
-   * Debounce time for the search input
-   * @defaultValue 400
-   */
-  readonly searchDebounceTime = input(400);
-  /**
-   * Output for search bar input
-   */
-  readonly searchEvent = output<string>();
-
-  private readonly searchBar = viewChild.required(SiSearchBarComponent);
-
   private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
   private breakpointObserver = inject(BreakpointObserver);
 
@@ -228,15 +194,6 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
       this.preferCollapse = this.collapsed();
     }
     this.saveUIState();
-  }
-
-  protected expandForSearch(): void {
-    this.expand();
-    setTimeout(() => this.searchBar().focus());
-  }
-
-  protected doSearch(event: string): void {
-    this.searchEvent.emit(event);
   }
 
   /** @internal */

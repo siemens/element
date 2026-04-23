@@ -1,20 +1,17 @@
-# Tables & datatables
+# Tables
 
 They are used to organize and display structured information in rows and columns,
 enabling users to scan, compare, and analyze data efficiently.
-
-When tables handle large datasets and include features such as sorting, filtering
-or lazy loading, they are considered **datatables**.
 
 ## Usage ---
 
 Element covers three different implementations, each suited to different levels of complexity and scale:
 
 - [HTML table](../lists-tables-trees/HTML-table.md): simple, static, HTML-based tables.
-- [NGX-datatable](../lists-tables-trees/NGX-datatable.md): datatable for medium to large datasets,
+- [NGX-datatable](../lists-tables-trees/NGX-datatable.md): data table for medium to large datasets
   with built-in features like sorting and filtering.
-- [AG Grid](../lists-tables-trees/ag-grid.md): advanced datatable for complex, enterprise scenarios,
-  with extensive functionality (paid license required).
+- [AG Grid](../lists-tables-trees/ag-grid.md): advanced data grid for complex, enterprise scenarios
+  with extensive functionality **(paid license required)**.
 
 ### When to use
 

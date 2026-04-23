@@ -2,7 +2,7 @@
 @use '@siemens/element-theme/src/styles/all-variables';
 
 $vertical-nav-width: 240px;
-$vertical-nav-collapsed-width: 48px;
+$vertical-nav-collapsed-width: calc(1.5rem + 2 * map.get(all-variables.$spacers, 5));
 $vertical-nav-transition-duration: all-variables.$element-default-transition-duration;
 
 :host {
@@ -61,28 +61,6 @@ nav {
   }
 }
 
-.nav-search {
-  display: flex;
-  align-items: center;
-  block-size: 40px;
-  margin-block-start: map.get(all-variables.$spacers, 4);
-  overflow-x: hidden;
-
-  :host(.nav-collapsed) & {
-    display: none;
-  }
-}
-
-si-search-bar {
-  inline-size: 100%;
-}
-
-.btn-search {
-  display: none;
-  border: 0;
-  border-radius: all-variables.$element-radius-2;
-}
-
 :host.nav-collapsed {
   .mobile-drawer {
     border: 0;
@@ -90,10 +68,6 @@ si-search-bar {
     background: all-variables.$element-base-1;
     text-align: end;
     box-shadow: all-variables.$element-elevation-1;
-  }
-
-  si-search-bar {
-    display: none;
   }
 }
 
@@ -123,24 +97,6 @@ si-search-bar {
     .mobile-drawer {
       background: transparent;
       box-shadow: none;
-    }
-
-    &.nav-collapsed {
-      .nav-search {
-        display: flex;
-      }
-    }
-  }
-
-  .btn-search {
-    display: none;
-  }
-
-  :host {
-    &.nav-collapsed {
-      .btn-search {
-        display: block;
-      }
     }
   }
 

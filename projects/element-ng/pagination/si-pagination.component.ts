@@ -122,6 +122,9 @@ export class SiPaginationComponent {
   }
 
   protected setPage(event: Event, page: number): void {
+    if (page === this.currentPage()) {
+      return;
+    }
     (event.currentTarget as HTMLElement).blur();
     this.currentPage.set(page);
   }

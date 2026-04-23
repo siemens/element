@@ -18,11 +18,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import {
-  SiNavbarVerticalItemsNextComponent,
+  SiNavbarVerticalNextItemsComponent,
   SiNavbarVerticalNextComponent,
   SiNavbarVerticalNextGroupComponent,
   SiNavbarVerticalNextGroupTriggerDirective,
-  SiNavbarVerticalNextItemComponent
+  SiNavbarVerticalNextItemComponent,
+  SiNavbarVerticalNextSearchComponent
 } from './index';
 import { SiNavbarVerticalNextHarness } from './testing/si-navbar-vertical-next.harness';
 
@@ -54,22 +55,21 @@ class EmptyComponent {}
   imports: [
     RouterLink,
     RouterLinkActive,
-    SiNavbarVerticalItemsNextComponent,
+    SiNavbarVerticalNextItemsComponent,
+    SiNavbarVerticalNextSearchComponent,
     SiNavbarVerticalNextComponent,
     SiNavbarVerticalNextGroupComponent,
     SiNavbarVerticalNextGroupTriggerDirective,
     SiNavbarVerticalNextItemComponent
   ],
   template: `<si-navbar-vertical-next
-      [searchable]="true"
       [textOnly]="textOnly()"
       [stateId]="stateId"
       [collapsed]="collapsed()"
-      [searchDebounceTime]="0"
-      (searchEvent)="searchEvent($event)"
     >
+      <si-navbar-vertical-next-search [debounceTime]="0" (searchChange)="searchEvent($event)" />
       @if (showDeclarativeFlyoutGroup()) {
-        <si-navbar-vertical-items-next>
+        <si-navbar-vertical-next-items>
           <button
             type="button"
             si-navbar-vertical-next-item
@@ -77,11 +77,11 @@ class EmptyComponent {}
           >
             item-1
           </button>
-        </si-navbar-vertical-items-next>
+        </si-navbar-vertical-next-items>
       }
 
       @if (showDeclarativeNavigationGroup()) {
-        <si-navbar-vertical-items-next>
+        <si-navbar-vertical-next-items>
           <button
             type="button"
             si-navbar-vertical-next-item
@@ -89,11 +89,11 @@ class EmptyComponent {}
           >
             item1
           </button>
-        </si-navbar-vertical-items-next>
+        </si-navbar-vertical-next-items>
       }
 
       @if (showDeclarativeStateGroups()) {
-        <si-navbar-vertical-items-next>
+        <si-navbar-vertical-next-items>
           <button
             type="button"
             si-navbar-vertical-next-item
@@ -110,7 +110,7 @@ class EmptyComponent {}
           >
             item2
           </button>
-        </si-navbar-vertical-items-next>
+        </si-navbar-vertical-next-items>
       }
     </si-navbar-vertical-next>
 

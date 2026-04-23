@@ -12,10 +12,6 @@ import * as _siemens_element_translate_ng_translate from '@siemens/element-trans
 import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';
 
-// @public
-export class SiNavbarVerticalItemsNextComponent {
-}
-
 // @public (undocumented)
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     constructor();
@@ -24,10 +20,6 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     expand(): void;
     readonly navbarCollapseButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly navbarExpandButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly searchable: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly searchDebounceTime: _angular_core.InputSignal<number>;
-    readonly searchEvent: _angular_core.OutputEmitterRef<string>;
-    readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly skipLinkMainContentLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly skipLinkNavigationLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
@@ -77,8 +69,19 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     readonly icon: _angular_core.InputSignal<string | undefined>;
 }
 
+// @public
+export class SiNavbarVerticalNextItemsComponent {
+}
+
 // @public (undocumented)
 export class SiNavbarVerticalNextModule {
+}
+
+// @public (undocumented)
+export class SiNavbarVerticalNextSearchComponent {
+    readonly debounceTime: _angular_core.InputSignal<number>;
+    readonly placeholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly searchChange: _angular_core.OutputEmitterRef<string>;
 }
 
 // (No @packageDocumentation comment for this package)

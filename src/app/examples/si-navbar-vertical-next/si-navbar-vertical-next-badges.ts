@@ -16,7 +16,8 @@ import {
   SiHeaderLogoDirective
 } from '@siemens/element-ng/application-header';
 import {
-  SiNavbarVerticalItemsNextComponent,
+  SiNavbarVerticalNextItemsComponent,
+  SiNavbarVerticalNextSearchComponent,
   SiNavbarVerticalNextComponent,
   SiNavbarVerticalNextDividerComponent,
   SiNavbarVerticalNextGroupComponent,
@@ -30,7 +31,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
   selector: 'app-sample',
   imports: [
     SiNavbarVerticalNextComponent,
-    SiNavbarVerticalItemsNextComponent,
+    SiNavbarVerticalNextSearchComponent,
+    SiNavbarVerticalNextItemsComponent,
     SiNavbarVerticalNextItemComponent,
     SiNavbarVerticalNextGroupComponent,
     SiNavbarVerticalNextGroupTriggerDirective,
