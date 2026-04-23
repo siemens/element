@@ -3,10 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 import { booleanAttribute, Component, computed, input, model, OnChanges } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Link } from '@siemens/element-ng/link';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe,
+  t,
+  TranslatableString
+} from '@siemens/element-translate-ng/translate';
+import { map, of, switchMap } from 'rxjs';
 
 import { SiWidgetBaseDirective } from '../si-widget-base.directive';
 import { SiListWidgetItem, SiListWidgetItemComponent } from './si-list-widget-item.component';
@@ -29,6 +36,8 @@ export class SiListWidgetBodyComponent
   extends SiWidgetBaseDirective<SiListWidgetItem[]>
   implements OnChanges
 {
+  private readonly translateService = injectSiTranslateService();
+
   /** Optional footer link for the list widget */
   readonly link = input<Link>();
 
@@ -126,9 +135,38 @@ export class SiListWidgetBodyComponent
   /** Used to display the defined number of ghost items */
   protected readonly ghosts = computed(() => new Array(this.numberOfLinks() ?? 6));
 
+  /** Replica of value with pre-translated labels, recomputed when value or language changes. */
+  private readonly translatedItems = toSignal(
+    toObservable(this.value).pipe(
+      switchMap(items => {
+        if (!items) {
+          return of(undefined);
+        }
+        const keys = items.map(item =>
+          typeof item.label === 'object' ? (item.label.title ?? '') : item.label
+        );
+        return this.translateService.translateAsync(keys).pipe(
+          map(translations =>
+            items.map(item => {
+              const key = typeof item.label === 'object' ? (item.label.title ?? '') : item.label;
+              const translatedLabel = (translations[key] ?? key) as TranslatableString;
+              return {
+                ...item,
+                label:
+                  typeof item.label === 'object'
+                    ? { ...item.label, title: translatedLabel }
+                    : translatedLabel
+              };
+            })
+          )
+        );
+      })
+    )
+  );
+
   /** Holds the list items that are displayed. May be filtered and sorted. */
   protected readonly filteredListWidgetItems = computed(() => {
-    const value = this.value();
+    const value = this.translatedItems();
     const sort = this.sort();
     const searchText = this.searchText();
     let filteredListWidgetItems: SiListWidgetItem[] | undefined;
