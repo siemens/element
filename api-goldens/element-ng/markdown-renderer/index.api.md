@@ -4,16 +4,43 @@
 
 ```ts
 
-import { DomSanitizer } from '@angular/platform-browser';
-import * as i0 from '@angular/core';
+import * as _angular_core from '@angular/core';
+import { Extension } from 'micromark-util-types';
+import { HtmlExtension } from 'micromark-util-types';
+import { InjectionToken } from '@angular/core';
+import { Provider } from '@angular/core';
+import { SiTranslateService } from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 
 // @public
-export const getMarkdownRenderer: (sanitizer: DomSanitizer) => ((text: string) => Node);
+export const injectMarkdownRenderer: (options?: MarkdownRendererOptions) => MarkdownRenderer;
+
+// @public
+export type MarkdownRenderer = (text: string) => Node;
+
+// @public (undocumented)
+export interface MarkdownRendererOptions {
+    copyCodeButton?: TranslatableString;
+    downloadTableButton?: TranslatableString;
+    mathExtensions?: {
+        syntax: Extension;
+        html: HtmlExtension;
+    };
+    syntaxHighlighter?: (code: string, language?: string) => string | undefined;
+    translateSync?: SiTranslateService['translateSync'];
+}
+
+// @public
+export const provideMarkdownRenderer: (options?: MarkdownRendererOptions) => Provider;
+
+// @public
+export const SI_MARKDOWN_RENDERER: InjectionToken<MarkdownRenderer>;
 
 // @public
 export class SiMarkdownRendererComponent {
     constructor();
-    readonly text: i0.InputSignal<string | undefined>;
+    readonly renderer: _angular_core.InputSignal<MarkdownRenderer | undefined>;
+    readonly text: _angular_core.InputSignal<string | undefined>;
 }
 
 // (No @packageDocumentation comment for this package)

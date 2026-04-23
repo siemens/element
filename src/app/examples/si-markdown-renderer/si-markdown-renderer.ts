@@ -11,7 +11,12 @@ import {
   OnInit,
   signal
 } from '@angular/core';
-import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-renderer';
+import {
+  injectMarkdownRenderer,
+  SiMarkdownRendererComponent
+} from '@siemens/element-ng/markdown-renderer';
+import hljs from 'highlight.js';
+import { math, mathHtml } from 'micromark-extension-math';
 
 @Component({
   selector: 'app-sample',
@@ -21,8 +26,25 @@ import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-render
 })
 export class SampleComponent implements OnInit {
   private readonly http = inject(HttpClient);
-  readonly markdownText = signal<string>('');
   private cdRef = inject(ChangeDetectorRef);
+  readonly markdownText = signal<string>('');
+
+  protected renderer = injectMarkdownRenderer({
+    syntaxHighlighter: (code: string, language?: string): string | undefined => {
+      if (language && hljs.getLanguage(language)) {
+        try {
+          return hljs.highlight(code, { language }).value;
+        } catch {
+          // fall back to no highlighting
+        }
+      }
+      return undefined;
+    },
+    mathExtensions: {
+      syntax: math(),
+      html: mathHtml({ throwOnError: false, output: 'html' })
+    }
+  });
 
   ngOnInit(): void {
     this.http.get('assets/sample-markdown.md', { responseType: 'text' }).subscribe(text => {

@@ -3,12 +3,23 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, effect, inject, input, ElementRef } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 
-import { getMarkdownRenderer } from './markdown-renderer';
+import { type MarkdownRenderer } from './markdown-renderer';
 
 /**
- * Component to display markdown text, uses the {@link getMarkdownRenderer} function internally, relies on `markdown-content` theme class.
+ * Component to display markdown text using a provided {@link MarkdownRenderer}.
+ *
+ * Pass a renderer created via {@link injectMarkdownRenderer} or injected via {@link SI_MARKDOWN_RENDERER}
+ * through the `renderer` input. When no renderer is provided, falls back to displaying the raw unrendered text.
+ *
+ * @example
+ * ```typescript
+ * protected renderer = injectMarkdownRenderer();
+ * ```
+ * ```html
+ * <si-markdown-renderer [text]="markdownText()" [renderer]="renderer" />
+ * ```
+ *
  * @experimental
  */
 @Component({
@@ -16,25 +27,36 @@ import { getMarkdownRenderer } from './markdown-renderer';
   template: ``
 })
 export class SiMarkdownRendererComponent {
-  private sanitizer = inject(DomSanitizer);
   private hostElement = inject(ElementRef<HTMLElement>);
-  private markdownRenderer = getMarkdownRenderer(this.sanitizer);
 
   /**
-   * The markdown text to transform and display
-   * @defaultValue ''
+   * The markdown text to transform and display.
+   * @defaultValue undefined
    */
   readonly text = input<string | undefined>();
+
+  /**
+   * The markdown renderer function to use for rendering.
+   * Create one via {@link injectMarkdownRenderer} or inject via {@link SI_MARKDOWN_RENDERER}.
+   * When not provided, the raw text is displayed without rendering.
+   * @defaultValue undefined
+   */
+  readonly renderer = input<MarkdownRenderer | undefined>(undefined);
 
   constructor() {
     effect(() => {
       const contentValue = this.text();
+      const renderer = this.renderer();
       const containerEl = this.hostElement.nativeElement;
 
       if (containerEl) {
-        const formattedNode = this.markdownRenderer(contentValue ?? '');
-        containerEl.innerHTML = '';
-        containerEl.appendChild(formattedNode);
+        if (renderer) {
+          const formattedNode = renderer(contentValue ?? '');
+          containerEl.innerHTML = '';
+          containerEl.appendChild(formattedNode);
+        } else {
+          containerEl.textContent = contentValue ?? '';
+        }
       }
     });
   }

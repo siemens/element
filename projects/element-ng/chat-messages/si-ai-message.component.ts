@@ -31,13 +31,13 @@ import { SiChatMessageComponent } from './si-chat-message.component';
  *
  * The component automatically handles:
  * - Styling for AI messages distinct from user or generic chat messages
- * - Option to render markdown content, provide via `contentFormatter` input with a markdown renderer function (e.g., from {@link getMarkdownRenderer})
+ * - Option to render markdown content, provide via `contentFormatter` input with a markdown renderer function (e.g., from {@link injectMarkdownRenderer})
  * - Showing loading states with skeleton UI during generation
  * - Displaying primary and secondary actions
  *
  * @see {@link SiChatMessageComponent} for the base message wrapper component
  * @see {@link SiUserMessageComponent} for the user message component
- * @see {@link getMarkdownRenderer} for markdown formatting support
+ * @see {@link injectMarkdownRenderer} for markdown formatting support
  * @see {@link SiChatContainerComponent} for the chat container to use this within
  *
  * @experimental
@@ -72,7 +72,7 @@ export class SiAiMessageComponent {
    *
    * **Note:** If using a markdown renderer, make sure to apply the `markdown-content` class
    * to the root element to ensure proper styling using the Element theme (e.g., `div.className = 'markdown-content'`).
-   * The function returned by {@link getMarkdownRenderer} does this automatically.
+   * The function returned by {@link injectMarkdownRenderer} does this automatically.
    *
    * **Warning:** When returning a Node, ensure the content is safe to prevent XSS attacks
    * @defaultValue undefined

@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { MessageAction, SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
-import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
+import { injectMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { MenuItemAction } from '@siemens/element-ng/menu';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -17,9 +16,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
-  private sanitizer = inject(DomSanitizer);
 
-  protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
+  protected markdownRenderer = injectMarkdownRenderer();
 
   content = `Here's a **simple response** with basic formatting.
 
