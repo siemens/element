@@ -1,0 +1,47 @@
+<div class="si-layout-fixed-height w-100 h-100">
+  <si-ai-chat-container
+    statusSeverity="info"
+    statusMessage="AI responses are for demonstration purposes."
+    colorVariant="base-0"
+    [messages]="messages()"
+    [sending]="sending()"
+    [loading]="loading()"
+    [disableInterrupt]="disableInterrupt()"
+    [interrupting]="interrupting()"
+    [syntaxHighlighter]="syntaxHighlighter"
+    [promptSuggestions]="promptSuggestionsByCategory"
+  >
+    <si-chat-input
+      class="w-100"
+      placeholder="Enter a command, question or topic…"
+      disclaimer="The content is AI generated. Always verify the information for accuracy."
+      accept="image/*,.pdf,.doc,.docx,.txt"
+      [disabled]="disabled()"
+      [allowAttachments]="true"
+      [actions]="inputActions"
+      [autoFocus]="true"
+      [attachments]="preAttachedFiles"
+      [maxFileSize]="5242880"
+      [value]="inputValue()"
+      (send)="onMessageSent($event)"
+      (interrupt)="onInterrupt()"
+      (fileError)="onFileError($event)"
+    />
+  </si-ai-chat-container>
+</div>
+
+<ng-template #modalTemplate let-modalRef="modalRef" let-attachment="attachment">
+  <div class="modal-header">
+    <h4 class="modal-title" id="sample-modal-title">{{ attachment.name }}</h4>
+    <button
+      type="button"
+      class="btn btn-circle btn-sm btn-ghost element-cancel"
+      aria-label="Close modal"
+      (click)="modalRef.hide('cancel')"
+    >
+    </button>
+  </div>
+  <div class="modal-body">
+    <span>This is a sample modal to demonstrate attachment preview functionality.</span>
+  </div>
+</ng-template>
