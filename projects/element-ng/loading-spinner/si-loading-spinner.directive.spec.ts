@@ -77,4 +77,19 @@ describe('SiLoadingSpinnerDirective', () => {
     await vi.advanceTimersByTimeAsync(0);
     expect(isLoading()).toBe(false);
   });
+
+  it('should propagate blocking change to si-loading-spinner component', async () => {
+    await vi.advanceTimersByTimeAsync(initialDelay);
+    await vi.advanceTimersByTimeAsync(initialDelay);
+    expect(isLoading()).toBe(true);
+    expect(fixture.nativeElement.querySelector('.blocking-spinner')).not.toBeInTheDocument();
+
+    component.blocking.set(true);
+    await vi.advanceTimersByTimeAsync(0);
+    expect(fixture.nativeElement.querySelector('.blocking-spinner')).toBeInTheDocument();
+
+    component.blocking.set(false);
+    await vi.advanceTimersByTimeAsync(0);
+    expect(fixture.nativeElement.querySelector('.blocking-spinner')).not.toBeInTheDocument();
+  });
 });
