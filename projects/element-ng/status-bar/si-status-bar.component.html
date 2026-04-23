@@ -70,6 +70,7 @@
             [blink]="item.blink !== false && blink()"
             [clickable]="!!item.action"
             [style.flex-basis.%]="responsiveMode ? 100 / responsiveMode : null"
+            (significanceChange)="significanceChanged()"
             (click)="onItemClicked(item)"
             (keydown.enter)="onItemClicked(item)"
           />

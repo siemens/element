@@ -8,7 +8,6 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
-  DoCheck,
   ElementRef,
   inject,
   input,
@@ -68,7 +67,7 @@ let idCounter = 1;
   styleUrl: './si-status-bar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
+export class SiStatusBarComponent implements OnDestroy, OnChanges {
   private static readonly itemMinWidth = 100;
   private static readonly itemMaxWidth = 152;
   private static readonly itemSpacing = 4;
@@ -156,6 +155,7 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
   protected statusId = `__si-status-bar-${idCounter++}`;
 
   private timer: any;
+  private significanceUpdateTimer: any = 0;
 
   private blinkSubs?: Subscription;
 
@@ -188,14 +188,18 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
     this.resizeHandler();
   }
 
-  ngDoCheck(): void {
-    if (this.responsiveMode) {
-      this.calcResponsiveItems();
-    }
-  }
-
   ngOnDestroy(): void {
     this.blinkSubs?.unsubscribe();
+    clearTimeout(this.significanceUpdateTimer);
+  }
+
+  protected significanceChanged(): void {
+    if (this.responsiveMode && !this.significanceUpdateTimer) {
+      this.significanceUpdateTimer = setTimeout(() => {
+        this.significanceUpdateTimer = 0;
+        this.calcResponsiveItems();
+      });
+    }
   }
 
   protected onItemClicked(item: StatusBarItem): void {
@@ -257,6 +261,7 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
 
     if (this.responsiveMode) {
       this.contentHeight.set(this.expanded() ? this.content().nativeElement.scrollHeight : 0);
+      this.significanceChanged();
     } else {
       this.expanded.set(0);
       this.placeholderHeight.set(0);
