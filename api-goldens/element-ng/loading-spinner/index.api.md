@@ -12,6 +12,7 @@ import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as rxjs from 'rxjs';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)

@@ -6,6 +6,7 @@ import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import {
   booleanAttribute,
   ChangeDetectorRef,
+  ComponentRef,
   computed,
   Directive,
   ElementRef,
@@ -15,6 +16,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChanges,
   ViewContainerRef
 } from '@angular/core';
 import { BehaviorSubject, combineLatest, merge, Subscription, timer } from 'rxjs';
@@ -62,19 +64,8 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
   private readonly initialWaitTime = computed(() => (this.initialDelay() ? 500 : 0));
   private minSpinTime = 500;
   private portalOutlet?: DomPortalOutlet;
-  private readonly compPortal = new ComponentPortal(
-    SiLoadingSpinnerComponent,
-    this.viewRef,
-    Injector.create({
-      providers: [
-        { provide: LOADING_SPINNER_BLOCKING, useFactory: () => this.blocking() },
-        {
-          provide: LOADING_SPINNER_OVERLAY,
-          useValue: true
-        }
-      ]
-    })
-  );
+  private readonly compPortal = new ComponentPortal(SiLoadingSpinnerComponent, this.viewRef);
+  private compPortalRef: ComponentRef<SiLoadingSpinnerComponent> | null = null;
 
   // this makes sure the spinner only displays with a delay of 500ms and stays for 500ms so
   // that it doesn't flicker
@@ -93,8 +84,9 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
   );
 
   private createPortal(): void {
+    this.compPortal.injector = this.createPortalInjector();
     this.portalOutlet ??= new DomPortalOutlet(this.el.nativeElement);
-    this.compPortal.attach(this.portalOutlet);
+    this.compPortalRef = this.compPortal.attach(this.portalOutlet);
   }
 
   ngOnInit(): void {
@@ -110,10 +102,13 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     const newState = !!this.siLoading();
     if (newState !== this.progressSubject.value) {
       this.progressSubject.next(newState);
+    }
+    if (changes.blocking && this.compPortalRef) {
+      this.compPortalRef.setInput('isBlockingSpinner', this.blocking());
     }
   }
 
@@ -123,5 +118,17 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
       this.compPortal.detach();
     }
     this.portalOutlet?.dispose();
+  }
+
+  private createPortalInjector(): Injector {
+    return Injector.create({
+      providers: [
+        { provide: LOADING_SPINNER_BLOCKING, useFactory: () => this.blocking() },
+        {
+          provide: LOADING_SPINNER_OVERLAY,
+          useValue: true
+        }
+      ]
+    });
   }
 }
