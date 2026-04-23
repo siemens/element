@@ -54,3 +54,36 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
+
+## Live-Preview Navigation (localhost:4200)
+
+The live-preview demo app runs on `http://localhost:4200/`.
+If not online, ask to start the server. Do not run it yourself.
+
+Load examples using this URL schema:
+
+```
+http://localhost:4200/#/viewer/preview?e=<relative-example-path>
+```
+
+`<relative-example-path>` is resolved against `examplesBaseUrl` (`app/examples/`, see `src/app/app.config.ts:132`) and omits the file extension.
+
+Example for si-form:
+
+```
+http://localhost:4200/#/viewer/preview?e=si-form/si-form
+```
+
+### Supported query params (see `projects/live-preview/components/si-example-viewer/si-example-viewer.component.ts`)
+
+Unless specifically requested, only use the example path.
+
+- `e` — example path
+- `base` — prefix prepended to each `e`
+- `theme` — `light` | `dark`
+- `locale` — e.g. `en`, `de`
+- `isRTL` — truthy for RTL
+- `mode` — device mode for mobile viewport
+- `rfs` — root font size in px
+- `t` — inline template override
+- `framework` — `react` | `vue` | `js`
