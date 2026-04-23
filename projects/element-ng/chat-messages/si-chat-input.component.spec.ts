@@ -16,7 +16,7 @@ import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { MessageAction } from './message-action.model';
+import { MessageAction } from './chat-message.model';
 import {
   ChatInputAttachment,
   SiChatInputComponent as TestComponent
