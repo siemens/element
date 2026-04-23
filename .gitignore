@@ -62,6 +62,7 @@ Thumbs.db
 # Playwright
 /playwright/results/
 /playwright/.cache/
+/.playwright-cli/
 
 # these are from LFS and are re-added automatically.
 # In this .gitignore because husky recreates its own .gitignore after `yarn install`
