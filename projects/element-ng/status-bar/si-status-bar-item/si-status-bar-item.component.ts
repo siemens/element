@@ -9,6 +9,9 @@ import {
   ElementRef,
   inject,
   input,
+  OnChanges,
+  output,
+  SimpleChanges,
   viewChild
 } from '@angular/core';
 import { ExtendedStatusType } from '@siemens/element-ng/common';
@@ -24,7 +27,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
     '[class.clickable]': 'clickable()'
   }
 })
-export class SiStatusBarItemComponent {
+export class SiStatusBarItemComponent implements OnChanges {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);
   readonly status = input<ExtendedStatusType>();
   readonly value = input.required<TranslatableString | number>();
@@ -36,6 +39,8 @@ export class SiStatusBarItemComponent {
   readonly valueOnly = input<boolean | undefined, unknown>(false, { transform: booleanAttribute });
   /** @defaultValue false */
   readonly clickable = input(false, { transform: booleanAttribute });
+
+  readonly significanceChange = output<void>();
 
   private readonly bg = viewChild.required<ElementRef>('bg');
 
@@ -49,6 +54,17 @@ export class SiStatusBarItemComponent {
   protected readonly background = computed(() =>
     this.blink() && this.status() !== 'success' ? (this.statusIcon()?.background ?? '') : ''
   );
+
+  ngOnChanges(changes: SimpleChanges<this>): void {
+    if (changes.value) {
+      if (
+        (changes.value.previousValue && !changes.value.currentValue) ||
+        (!changes.value.previousValue && changes.value.currentValue)
+      ) {
+        this.significanceChange.emit();
+      }
+    }
+  }
 
   private calculateContrastFix(): boolean {
     // see https://www.w3.org/TR/AERT/#color-contrast
