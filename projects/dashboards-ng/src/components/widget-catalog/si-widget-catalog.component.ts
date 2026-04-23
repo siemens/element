@@ -62,11 +62,11 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
+   * t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search…`)
    * ```
    */
   readonly searchPlaceholder = input(
-    t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
+    t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search…`)
   );
   /**
    * Emits when the catalog is `closed`, either by canceling or by adding or saving
@@ -109,27 +109,27 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
   );
 
   protected labelCancel = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.CANCEL:Cancel`);
-  protected labelPrevious = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.PREVIOUS:Previous`);
+  protected labelPrevious = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.PREVIOUS:Back`);
   protected labelNext = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.NEXT:Next`);
-  protected labelAdd = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.ADD:Add`);
-  protected labelEmpty = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.EMPTY:Empty`);
+  protected labelAdd = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.ADD:Create`);
+  protected labelEmpty = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.EMPTY:No widgets in library`);
 
   protected labelDialogHeading = t(
     () =>
-      $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.HEADING:Widget configuration changed`
+      $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.HEADING:Unsaved widget data`
   );
   protected labelDialogCancel = t(
     () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.CANCEL:Cancel`
   );
   protected labelDialogMessage = t(
     () =>
-      $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.MESSAGE:The widget configuration changed. Do you want to discard the changes?`
+      $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.MESSAGE:Discard changes?`
   );
   protected labelDialogDiscard = t(
     () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.DISCARD:Discard`
   );
   protected labelWidgetCatalogList = t(
-    () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.WIDGET_CATALOG_LIST:Widget catalog list`
+    () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.WIDGET_CATALOG_LIST:Widget catalog`
   );
 
   protected readonly showAddButton = computed(() =>

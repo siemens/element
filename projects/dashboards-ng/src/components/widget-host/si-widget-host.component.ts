@@ -61,18 +61,18 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   readonly widgetHost = viewChild.required('widgetHost', { read: ViewContainerRef });
 
   protected labelEdit = t(() => $localize`:@@DASHBOARD.WIDGET.EDIT:Edit`);
-  protected labelRemove = t(() => $localize`:@@DASHBOARD.WIDGET.REMOVE:Remove`);
+  protected labelRemove = t(() => $localize`:@@DASHBOARD.WIDGET.REMOVE:Delete`);
   protected labelExpand = t(() => $localize`:@@DASHBOARD.WIDGET.EXPAND:Expand`);
   protected labelRestore = t(() => $localize`:@@DASHBOARD.WIDGET.RESTORE:Restore`);
   protected labelDialogMessage = t(
     () =>
-      $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.MESSAGE:Do you really want to remove the widget?`
+      $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.MESSAGE:Delete widget?`
   );
   protected labelDialogHeading = t(
-    () => $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.HEADING:Remove widget`
+    () => $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.HEADING:Delete widget`
   );
   protected labelDialogRemove = t(
-    () => $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.REMOVE:Remove`
+    () => $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.REMOVE:Delete`
   );
   protected labelDialogCancel = t(
     () => $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.CANCEL:Cancel`

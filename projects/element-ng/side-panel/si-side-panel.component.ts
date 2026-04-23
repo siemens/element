@@ -103,10 +103,10 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`)
+   * t(() => $localize`:@@SI_SIDE_PANEL.TOGGLE:Show side pane`)
    * ```
    */
-  readonly toggleItemLabel = input(t(() => $localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`));
+  readonly toggleItemLabel = input(t(() => $localize`:@@SI_SIDE_PANEL.TOGGLE:Show side pane`));
 
   /**
    * Specifies custom breakpoints to automatically switch mode.

@@ -32,11 +32,11 @@ export class SiLoginSingleSignOnComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LOGIN_SINGLE-SIGN-ON.LOGIN_SIGN_UP:Login / Sign un`)
+   * t(() => $localize`:@@SI_LOGIN_SINGLE-SIGN-ON.LOGIN_SIGN_UP:Log in / Register`)
    * ```
    */
   readonly ssoButtonLabel = input(
-    t(() => $localize`:@@SI_LOGIN_SINGLE-SIGN-ON.LOGIN_SIGN_UP:Login / Sign un`)
+    t(() => $localize`:@@SI_LOGIN_SINGLE-SIGN-ON.LOGIN_SIGN_UP:Log in / Register`)
   );
   /**
    * Disables the sso button.

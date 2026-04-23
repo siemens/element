@@ -101,10 +101,10 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_SEARCH_BAR.CLEAR_BUTTON:clear`)
+   * t(() => $localize`:@@SI_SEARCH_BAR.CLEAR_BUTTON:Clear`)
    * ```
    */
-  readonly clearButtonAriaLabel = input(t(() => $localize`:@@SI_SEARCH_BAR.CLEAR_BUTTON:clear`));
+  readonly clearButtonAriaLabel = input(t(() => $localize`:@@SI_SEARCH_BAR.CLEAR_BUTTON:Clear`));
 
   /**
    * Output callback event will provide you with search term if search input changes.

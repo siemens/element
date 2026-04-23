@@ -54,10 +54,10 @@ export class SiFilterBarComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILTER_BAR.RESET_FILTERS:Reset filters`)
+   * t(() => $localize`:@@SI_FILTER_BAR.RESET_FILTERS:Clear filter`)
    * ```
    */
-  readonly resetText = input(t(() => $localize`:@@SI_FILTER_BAR.RESET_FILTERS:Reset filters`));
+  readonly resetText = input(t(() => $localize`:@@SI_FILTER_BAR.RESET_FILTERS:Clear filter`));
   /**
    * Set false to hide reset filters button
    *
@@ -82,11 +82,11 @@ export class SiFilterBarComponent {
    * Custom text for the collapsed filters.
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION:+ {{count}} filters`)
+   * t(() => $localize`:@@SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION:+ {{count}} criteria`)
    * ```
    */
   readonly collapsedFiltersDescription = input(
-    t(() => $localize`:@@SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION:+ {{count}} filters`)
+    t(() => $localize`:@@SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION:+ {{count}} criteria`)
   );
 
   /**

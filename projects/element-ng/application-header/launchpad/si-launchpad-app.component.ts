@@ -49,11 +49,11 @@ export class SiLaunchpadAppComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.EXTERNAL_LINK:External application`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.EXTERNAL_LINK:Open in new tab`)
    * ```
    */
   readonly externalLinkText = input<TranslatableString>(
-    t(() => $localize`:@@SI_LAUNCHPAD.EXTERNAL_LINK:External application`)
+    t(() => $localize`:@@SI_LAUNCHPAD.EXTERNAL_LINK:Open in new tab`)
   );
 
   protected readonly icons = addIcons({ elementExport, elementFavorites, elementFavoritesFilled });

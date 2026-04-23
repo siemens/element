@@ -124,47 +124,47 @@ export class SiColumnSelectionDialogComponent implements OnInit {
   /**
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.LIST_ARIA_LABEL:List of possible columns. Items can be moved using Alt+ArrowUp or Alt+ArrowDown. Press Enter to rename supported items.`)
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.LIST_ARIA_LABEL:List of possible elements. Elements can be moved using Alt + Up Arrow or Alt + Down Arrow. Press Enter to rename elements where allowed.`)
    * ```
    */
   readonly listAriaLabel = input(
     t(
       () =>
-        $localize`:@@SI_COLUMN_SELECTION_DIALOG.LIST_ARIA_LABEL:List of possible columns. Items can be moved using Alt+ArrowUp or Alt+ArrowDown. Press Enter to rename supported items.`
+        $localize`:@@SI_COLUMN_SELECTION_DIALOG.LIST_ARIA_LABEL:List of possible elements. Elements can be moved using Alt + Up Arrow or Alt + Down Arrow. Press Enter to rename elements where allowed.`
     )
   );
 
   /**
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename column`)
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename element`)
    * ```
    */
   readonly renameInputAriaLabel = input(
-    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename column`)
+    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename element`)
   );
 
   /**
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_MOVED:Item is now at position {{targetPosition}}`)
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_MOVED:Column moved to position {{targetPosition}}`)
    * ```
    */
   readonly a11yItemMovedMessage = input<TranslatableString>(
     t(
       () =>
-        $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_MOVED:Item is now at position {{targetPosition}}`
+        $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_MOVED:Column moved to position {{targetPosition}}`
     )
   );
   /**
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_NOT_MOVED:Item was not moved`)
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_NOT_MOVED:Failed to move column`)
    * ```
    */
 
   readonly a11yItemNotMovedMessage = input<TranslatableString>(
-    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_NOT_MOVED:Item was not moved`)
+    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_NOT_MOVED:Failed to move column`)
   );
   /** @defaultValue true */
   readonly columnVisibilityConfigurable = input(true, { transform: booleanAttribute });

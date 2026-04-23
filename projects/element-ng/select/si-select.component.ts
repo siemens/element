@@ -76,20 +76,20 @@ export class SiSelectComponent<T> implements SiFormItemControl {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search...`)
+   * t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search…`)
    * ```
    */
-  readonly filterPlaceholder = input(t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search...`));
+  readonly filterPlaceholder = input(t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search…`));
   /**
    * Label if no item can be found.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_SELECT.NO-RESULTS-FOUND:No results found`)
+   * t(() => $localize`:@@SI_SELECT.NO-RESULTS-FOUND:Nothing found`)
    * ```
    */
   readonly noResultsFoundLabel = input(
-    t(() => $localize`:@@SI_SELECT.NO-RESULTS-FOUND:No results found`)
+    t(() => $localize`:@@SI_SELECT.NO-RESULTS-FOUND:Nothing found`)
   );
   /** Placeholder text to display when no options are selected. */
   readonly placeholder = input<TranslatableString>();

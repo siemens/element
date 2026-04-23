@@ -22,11 +22,11 @@ export class SiMapTooltipComponent {
    *
    * @defaultValue
    * ```
-   * t(() =>$localize`:@@SI_MAPS.TOOLTIP_MORE_TEXT:and {{length}} more...`)
+   * t(() =>$localize`:@@SI_MAPS.TOOLTIP_MORE_TEXT:+ {{length}} locations`)
    * ```
    */
   readonly moreText = input(
-    t(() => $localize`:@@SI_MAPS.TOOLTIP_MORE_TEXT:and {{length}} more...`)
+    t(() => $localize`:@@SI_MAPS.TOOLTIP_MORE_TEXT:+ {{length}} locations`)
   );
 
   /**

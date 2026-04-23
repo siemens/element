@@ -65,10 +65,10 @@ export class SiLoginBasicComponent implements OnInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LOGIN_BASIC.USERNAME:Username`)
+   * t(() => $localize`:@@SI_LOGIN_BASIC.USERNAME:User name`)
    * ```
    */
-  readonly usernameLabel = input(t(() => $localize`:@@SI_LOGIN_BASIC.USERNAME:Username`));
+  readonly usernameLabel = input(t(() => $localize`:@@SI_LOGIN_BASIC.USERNAME:User name`));
   /**
    * Label for password input field.
    *
@@ -93,10 +93,10 @@ export class SiLoginBasicComponent implements OnInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LOGIN_BASIC.LOGIN:Login`)
+   * t(() => $localize`:@@SI_LOGIN_BASIC.LOGIN:Log in`)
    * ```
    */
-  readonly loginButtonLabel = input(t(() => $localize`:@@SI_LOGIN_BASIC.LOGIN:Login`));
+  readonly loginButtonLabel = input(t(() => $localize`:@@SI_LOGIN_BASIC.LOGIN:Log in`));
   /**
    * Disables the login button.
    *

@@ -125,22 +125,22 @@ export class SiDateRangeComponent
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_DATEPICKER.START_DATE_PLACEHOLDER:Start date`)
+   * t(() => $localize`:@@SI_DATEPICKER.START_DATE_PLACEHOLDER:Start`)
    * ```
    */
   readonly startDatePlaceholder = input<TranslatableString>(
-    t(() => $localize`:@@SI_DATEPICKER.START_DATE_PLACEHOLDER:Start date`)
+    t(() => $localize`:@@SI_DATEPICKER.START_DATE_PLACEHOLDER:Start`)
   );
   /**
    * Placeholder of the end date input.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_DATEPICKER.END_DATE_PLACEHOLDER:End date`)
+   * t(() => $localize`:@@SI_DATEPICKER.END_DATE_PLACEHOLDER:End`)
    * ```
    */
   readonly endDatePlaceholder = input<TranslatableString>(
-    t(() => $localize`:@@SI_DATEPICKER.END_DATE_PLACEHOLDER:End date`)
+    t(() => $localize`:@@SI_DATEPICKER.END_DATE_PLACEHOLDER:End`)
   );
   /**
    * Aria label of the date-range calendar toggle button.
@@ -158,22 +158,22 @@ export class SiDateRangeComponent
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_DATEPICKER.START_TIME_LABEL:from`)
+   * t(() => $localize`:@@SI_DATEPICKER.START_TIME_LABEL:From`)
    * ```
    */
   readonly startTimeLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_DATEPICKER.START_TIME_LABEL:from`)
+    t(() => $localize`:@@SI_DATEPICKER.START_TIME_LABEL:From`)
   );
   /**
    * Form label of the start timepicker.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_DATEPICKER.END_TIME_LABEL:to`)
+   * t(() => $localize`:@@SI_DATEPICKER.END_TIME_LABEL:To`)
    * ```
    */
   readonly endTimeLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_DATEPICKER.END_TIME_LABEL:to`)
+    t(() => $localize`:@@SI_DATEPICKER.END_TIME_LABEL:To`)
   );
   /**
    * Automatically close overlay on date selection.

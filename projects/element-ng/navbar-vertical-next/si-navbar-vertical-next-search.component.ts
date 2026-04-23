@@ -33,11 +33,11 @@ export class SiNavbarVerticalNextSearchComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.SEARCH_PLACEHOLDER:Search ...`)
+   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.SEARCH_PLACEHOLDER:Search…`)
    * ```
    */
   readonly placeholder = input(
-    t(() => $localize`:@@SI_NAVBAR_VERTICAL.SEARCH_PLACEHOLDER:Search ...`)
+    t(() => $localize`:@@SI_NAVBAR_VERTICAL.SEARCH_PLACEHOLDER:Search…`)
   );
 
   /**

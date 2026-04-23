@@ -97,31 +97,31 @@ export class SiFileUploaderComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:select files to upload`)
    * ```
    */
   readonly uploadTextFileSelect = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:select files to upload`)
   );
   /**
    * Text instructing a user to drop the files inside the dropzone.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drag files here or`)
    * ```
    */
-  readonly uploadDropText = input(t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`));
+  readonly uploadDropText = input(t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drag files here or`));
   /**
    * Text to describe the maximum file size.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Max. {{maxFileSize}} upload size.`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Upload max. {{maxFileSize}}`)
    * ```
    */
   readonly maxFileSizeText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Max. {{maxFileSize}} upload size.`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Upload max. {{maxFileSize}}`)
   );
   /**
    * Error message shown when the maximum number of files are reached.
@@ -139,11 +139,11 @@ export class SiFileUploaderComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types: {{accept}}.`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Supported file types: {{accept}}`)
    * ```
    */
   readonly acceptText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types: {{accept}}.`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Supported file types: {{accept}}`)
   );
   /**
    * Text used inside the upload button.
@@ -168,19 +168,19 @@ export class SiFileUploaderComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.UPLOADING:Uploading`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.UPLOADING:Uploading…`)
    * ```
    */
-  readonly uploadingText = input(t(() => $localize`:@@SI_FILE_UPLOADER.UPLOADING:Uploading`));
+  readonly uploadingText = input(t(() => $localize`:@@SI_FILE_UPLOADER.UPLOADING:Uploading…`));
   /**
    * Text shown to remove a file from the file list. Required for a11y.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.REMOVE:Remove`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.REMOVE:Delete`)
    * ```
    */
-  readonly removeButtonText = input(t(() => $localize`:@@SI_FILE_UPLOADER.REMOVE:Remove`));
+  readonly removeButtonText = input(t(() => $localize`:@@SI_FILE_UPLOADER.REMOVE:Delete`));
   /**
    * Text of cancel button. Shown during upload. Required for a11y.
    *
@@ -195,22 +195,22 @@ export class SiFileUploaderComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD_COMPLETED:Upload completed`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD_COMPLETED:Uploaded`)
    * ```
    */
   readonly successTextTitle = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD_COMPLETED:Upload completed`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD_COMPLETED:Uploaded`)
   );
   /**
    * Text shown if the upload failed.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD_FAILED:Upload failed`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD_FAILED:Failed to upload`)
    * ```
    */
   readonly errorUploadFailed = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD_FAILED:Upload failed`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD_FAILED:Failed to upload`)
   );
   /**
    * On failed upload, show the error received from the server.
@@ -223,24 +223,24 @@ export class SiFileUploaderComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Invalid file type`)
    * ```
    */
   readonly errorTextFileType = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Invalid file type`)
   );
   /**
    * Message or translation key if file exceeds the maximum file size limit.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds max. size`)
    * ```
    */
   readonly errorTextFileMaxSize = input(
     t(
       () =>
-        $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`
+        $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds max. size`
     )
   );
   /**

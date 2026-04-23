@@ -42,11 +42,11 @@ export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_APPLICATION_HEADER.TOGGLE_ACTIONS:Toggle actions`)
+   * t(() => $localize`:@@SI_APPLICATION_HEADER.TOGGLE_ACTIONS:Show actions`)
    * ```
    */
   readonly mobileToggleLabel = input(
-    t(() => $localize`:@@SI_APPLICATION_HEADER.TOGGLE_ACTIONS:Toggle actions`)
+    t(() => $localize`:@@SI_APPLICATION_HEADER.TOGGLE_ACTIONS:Show actions`)
   );
 
   /** @internal **/

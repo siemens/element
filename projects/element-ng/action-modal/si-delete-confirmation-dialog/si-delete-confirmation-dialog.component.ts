@@ -26,13 +26,13 @@ export class SiDeleteConfirmationDialogComponent {
   /**
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.MESSAGE:Do you really want to delete the selected elements?`)
+   * t(() => $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.MESSAGE:Delete selected elements?`)
    * ```
    */
   readonly message = input(
     t(
       () =>
-        $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.MESSAGE:Do you really want to delete the selected elements?`
+        $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.MESSAGE:Delete selected elements?`
     )
   );
   /**

@@ -136,11 +136,11 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
+   * t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search…`)
    * ```
    */
   readonly searchPlaceholder = input(
-    t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
+    t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search…`)
   );
 
   /**
@@ -177,9 +177,9 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
    */
   readonly isModified = output<boolean>();
 
-  protected labelAddWidget = t(() => $localize`:@@DASHBOARD.ADD_WIDGET:Add widget`);
+  protected labelAddWidget = t(() => $localize`:@@DASHBOARD.ADD_WIDGET:Create widget`);
   protected labelEditor = t(() => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.TITLE:Edit`);
-  protected labelCatalog = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.TITLE:Add widget`);
+  protected labelCatalog = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.TITLE:Create widget`);
 
   protected addWidgetInstanceAction: DashboardToolbarItem = {
     type: 'action',

@@ -118,20 +118,20 @@ export class SiPhoneNumberInputComponent
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_PLACEHOLDER:Search`)
+   * t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_PLACEHOLDER:Search…`)
    * ```
    */
   readonly placeholderForSearch = input(
-    t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_PLACEHOLDER:Search`)
+    t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_PLACEHOLDER:Search…`)
   );
   /**
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_NO-RESULTS_FOUND:No results found`)
+   * t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_NO-RESULTS_FOUND:Nothing found`)
    * ```
    */
   readonly searchNoResultsFoundLabel = input(
-    t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_NO-RESULTS_FOUND:No results found`)
+    t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_NO-RESULTS_FOUND:Nothing found`)
   );
   /**
    * Text for the country dropdown aria-label attribute.

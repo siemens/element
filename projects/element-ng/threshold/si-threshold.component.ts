@@ -146,10 +146,10 @@ export class SiThresholdComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_THRESHOLD.DELETE:Delete step`)
+   * t(() => $localize`:@@SI_THRESHOLD.DELETE:Remove step`)
    * ```
    */
-  readonly deleteAriaLabel = input(t(() => $localize`:@@SI_THRESHOLD.DELETE:Delete step`));
+  readonly deleteAriaLabel = input(t(() => $localize`:@@SI_THRESHOLD.DELETE:Remove step`));
   /**
    * The aria-label for add button
    *

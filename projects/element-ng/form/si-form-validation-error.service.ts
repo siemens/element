@@ -18,7 +18,7 @@ import { SiFormValidationErrorMapper } from './si-form-validation-error.model';
 export const buildDefaults = (): SiFormValidationErrorMapper => ({
   // Phone number specific
   notSupportedPhoneNumberCountry: t(
-    () => $localize`:@@SI_FORM_CONTAINER.ERROR.PHONE_COUNTRY:Unsupported country/region code`
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.PHONE_COUNTRY:Invalid country/region code`
   ),
   invalidPhoneNumberFormat: t(
     () => $localize`:@@SI_FORM_CONTAINER.ERROR.INVALID_PHONE:Invalid phone number`
@@ -80,7 +80,7 @@ export const buildDefaults = (): SiFormValidationErrorMapper => ({
   numberFormat: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.NUMBER_FORMAT:Number required`),
   pattern: t(
     () =>
-      $localize`:@@SI_FORM_CONTAINER.ERROR.PATTERN:The value does not match the predefined pattern.`
+      $localize`:@@SI_FORM_CONTAINER.ERROR.PATTERN:Required value format not fulfilled`
   ),
   required: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED:Required`),
   requiredTrue: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED_TRUE:Required`)

@@ -261,11 +261,11 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_MAPS.TOOLTIP_MORE_TEXT:and {{length}} more...`)
+   * t(() => $localize`:@@SI_MAPS.TOOLTIP_MORE_TEXT:+ {{length}} locations`)
    * ```
    */
   readonly moreText = input(
-    t(() => $localize`:@@SI_MAPS.TOOLTIP_MORE_TEXT:and {{length}} more...`)
+    t(() => $localize`:@@SI_MAPS.TOOLTIP_MORE_TEXT:+ {{length}} locations`)
   );
   /**
    * Show multiple worlds, including points that cross the 180th meridian.
@@ -328,11 +328,11 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
   features: Feature[] = [];
   selected?: Feature;
   targetFeature?: Feature;
-  protected attributionsLabel = t(() => $localize`:@@SI_MAPS.ATTRIBUTIONS_BUTTON:Attributions`);
+  protected attributionsLabel = t(() => $localize`:@@SI_MAPS.ATTRIBUTIONS_BUTTON:Show/Hide Copyright Notice of map`);
   protected zoomInLabel = t(() => $localize`:@@SI_MAPS.ZOOM_IN_BUTTON:Zoom in`);
   protected zoomOutLabel = t(() => $localize`:@@SI_MAPS.ZOOM_OUT_BUTTON:Zoom out`);
   protected zoomToDefaultLabel = t(
-    () => $localize`:@@SI_MAPS.ZOOM_TO_DEFAULT_BUTTON:Zoom to default view`
+    () => $localize`:@@SI_MAPS.ZOOM_TO_DEFAULT_BUTTON:Reset Zoom`
   );
   protected clusterInteraction?: SelectCluster;
   private selectedCluster?: Feature;

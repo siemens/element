@@ -95,19 +95,19 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_STATUS_BAR.MUTE:Mute/unmute`)
+   * t(() => $localize`:@@SI_STATUS_BAR.MUTE:Mute/Unmute`)
    * ```
    */
-  readonly muteButtonText = input(t(() => $localize`:@@SI_STATUS_BAR.MUTE:Mute/unmute`));
+  readonly muteButtonText = input(t(() => $localize`:@@SI_STATUS_BAR.MUTE:Mute/Unmute`));
   /**
    * Text/translation key for "All OK" status in mobile
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_STATUS_BAR.ALL_OK:All OK`)
+   * t(() => $localize`:@@SI_STATUS_BAR.ALL_OK:All ok`)
    * ```
    */
-  readonly allOkText = input(t(() => $localize`:@@SI_STATUS_BAR.ALL_OK:All OK`));
+  readonly allOkText = input(t(() => $localize`:@@SI_STATUS_BAR.ALL_OK:All ok`));
   /**
    * compact mode
    *

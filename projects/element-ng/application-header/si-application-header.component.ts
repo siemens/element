@@ -68,7 +68,7 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
   protected readonly launchpadOpen = signal(false);
   protected readonly id = `__si-application-header-${SiApplicationHeaderComponent.idCounter++}`;
   protected toggleNavigation = t(
-    () => $localize`:@@SI_APPLICATION_HEADER.TOGGLE_NAVIGATION:Toggle navigation`
+    () => $localize`:@@SI_APPLICATION_HEADER.TOGGLE_NAVIGATION:Show navigation`
   );
   protected injector = inject(Injector);
   protected readonly icons = addIcons({ elementThumbnails, elementMenu });
