@@ -1,4 +1,4 @@
-- text: /Loading\.\.\.\. 1 to \d+ of \d+\. Page 1 of 2/
+- text: /1 to \d+ of \d+\. Page 1 of 2/
 - grid:
   - rowgroup:
     - row "Name":
