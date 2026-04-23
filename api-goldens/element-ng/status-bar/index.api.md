@@ -5,7 +5,6 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { DoCheck } from '@angular/core';
 import { ExtendedStatusType } from '@siemens/element-ng/common';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
@@ -16,7 +15,7 @@ import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
-export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
+export class SiStatusBarComponent implements OnDestroy, OnChanges {
     constructor();
     readonly allOkText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly blink: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -31,7 +30,7 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
 }
 
 // @public (undocumented)
-export class SiStatusBarItemComponent {
+export class SiStatusBarItemComponent implements OnChanges {
     // (undocumented)
     readonly blink: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
@@ -40,6 +39,8 @@ export class SiStatusBarItemComponent {
     readonly color: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
     readonly heading: _angular_core.InputSignal<TranslatableString>;
+    // (undocumented)
+    readonly significanceChange: _angular_core.OutputEmitterRef<void>;
     // (undocumented)
     readonly status: _angular_core.InputSignal<ExtendedStatusType | undefined>;
     // (undocumented)
