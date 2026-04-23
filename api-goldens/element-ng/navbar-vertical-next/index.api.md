@@ -34,6 +34,10 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
 export class SiNavbarVerticalNextDividerComponent {
 }
 
+// @public
+export class SiNavbarVerticalNextFooterItemsComponent {
+}
+
 // @public (undocumented)
 export class SiNavbarVerticalNextGroupComponent {
     constructor();
