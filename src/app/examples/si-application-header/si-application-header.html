@@ -119,7 +119,16 @@
   <si-header-dropdown>
     <div class="dropdown-header">Selection has no effect!</div>
     <button si-header-dropdown-item type="button">German</button>
-    <button si-header-dropdown-item type="button">English</button>
+    <button si-header-dropdown-item type="button" [siHeaderDropdownTriggerFor]="englishVariants">
+      English
+    </button>
+  </si-header-dropdown>
+</ng-template>
+
+<ng-template #englishVariants>
+  <si-header-dropdown>
+    <button si-header-dropdown-item type="button">English (US)</button>
+    <button si-header-dropdown-item type="button">English (UK)</button>
   </si-header-dropdown>
 </ng-template>
 
