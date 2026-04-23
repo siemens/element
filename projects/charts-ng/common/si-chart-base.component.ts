@@ -87,6 +87,11 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   /** The subtitle of the chart. */
   readonly subTitle = input<string>();
   /**
+   * Aria description, when set, this text overrides the auto-generated description that ECharts
+   * produces from the chart data
+   */
+  readonly ariaDescription = input<string>();
+  /**
    * Show Echarts legend
    *
    * @defaultValue true
@@ -518,6 +523,7 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
       });
     }
     this.applyOptions();
+    this.ensureAriaConfiguration();
     this.applyAdditionalOptions();
     this.applyDataZoom();
     this.applyStyles();
@@ -725,6 +731,23 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   protected themeChanged(): void {}
 
   protected applyOptions(): void {}
+
+  private ensureAriaConfiguration(): void {
+    this.actualOptions.aria ??= {
+      enabled: true,
+      label: {
+        enabled: true,
+        data: {
+          maxCount: Number.MAX_VALUE
+        }
+      }
+    };
+    const description = this.ariaDescription();
+    if (description) {
+      this.actualOptions.aria.label ??= {};
+      this.actualOptions.aria.label.description = description;
+    }
+  }
 
   protected applyCustomLegendPosition(): void {
     if (this.showLegend() && this.showCustomLegend()) {
