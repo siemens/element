@@ -45,17 +45,19 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
   selector: 'si-calendar-button',
   imports: [SiIconComponent, SiTranslatePipe],
   template: `<ng-content />
-    <button
-      #calendarButton
-      name="open-calendar"
-      type="button"
-      class="btn btn-icon btn-tertiary btn-sm position-absolute end-0 top-0 me-2 mt-2"
-      [attr.aria-label]="ariaLabel() | translate"
-      [disabled]="disabled()"
-      (click)="show()"
-    >
-      <si-icon [icon]="icons.elementCalendar" />
-    </button>`,
+    <div class="form-control-actions">
+      <button
+        #calendarButton
+        name="open-calendar"
+        type="button"
+        class="btn btn-icon btn-tertiary btn-sm"
+        [attr.aria-label]="ariaLabel() | translate"
+        [disabled]="disabled()"
+        (click)="show()"
+      >
+        <si-icon [icon]="icons.elementCalendar" />
+      </button>
+    </div>`,
   styleUrl: './si-calendar-button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
