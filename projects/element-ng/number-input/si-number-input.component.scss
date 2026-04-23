@@ -5,13 +5,6 @@
 :host {
   display: flex;
   align-items: center;
-  padding-inline-end: all-variables.$input-padding-x;
-
-  &.show-step-buttons {
-    --si-action-icon-offset: calc(
-      #{map.get(all-variables.$spacers, 1) * 3} + #{all-variables.$si-icon-font-size * 2}
-    );
-  }
 
   &:focus-within {
     @include all-variables.make-outline-focus();
@@ -34,8 +27,4 @@ input {
     -webkit-appearance: none; // stylelint-disable-line
     margin: 0;
   }
-}
-
-.unit {
-  padding-inline-end: var(--si-feedback-icon-offset, 0);
 }

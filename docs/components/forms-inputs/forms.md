@@ -247,33 +247,33 @@ export class CustomControlComponent implements SiFormItemControl {
 ```
 
 For HTML Elements that are marked as `form-control` (--> input like appearance), icons are automatically included.
-If the form-control contains custom icons at the end, like the dropdown arrow for select, adjust the positioning of the
-feedback icon.
+If the form-control contains custom icons at the end, like the dropdown arrow for select, wrap them
+in a `form-control-actions` element.
 
-1. `--si-feedback-icon-offset` contains the size of the currently shown feedback icon.
-   Use this to shift the content within the `form-control` so that it does not overlap the icon.
-2. Set `--si-action-icon-offset` to move the feedback so that there is space for icons after it.
+The `form-control-actions` element handles layout (height, vertical centering, spacing) and
+renders the validation feedback icon on its leading edge. It can be used in two ways:
 
-The example below shows how to create a wrapped input with an action icon:
+1. **Inside a `form-control`**: The wrapper owns the trailing space; no further adjustments are needed.
 
-```html
-<div class="form-control">
-  <input class="my-inner-input" />
-  <i class="my-action-icon element-arrow-down icon"></i>
-</div>
-```
+   ```html
+   <div class="form-control">
+     <input />
+     <div class="form-control-actions">
+       <i class="my-action-icon element-arrow-down icon"></i>
+     </div>
+   </div>
+   ```
 
-```scss
-.form-control {
-  --si-action-icon-offset: 24px; // size of my-action-icon
-}
+2. **As a sibling of the input**: The `form-control-actions` element is pinned to the top-right
+   edge of the input. Set `--si-action-icon-offset` on the input to reserve space for the actions
+   so the input's content does not overlap them.
 
-.my-inner-input {
-  margin-inline-end: var(--si-feedback-icon-offset);
-}
-
-// other styling
-```
+   ```html
+   <input class="form-control" style="--si-action-icon-offset: 1.5rem;" />
+   <div class="form-control-actions">
+     <button type="button" class="my-action-button"></button>
+   </div>
+   ```
 
 ### Si-Form-Container
 

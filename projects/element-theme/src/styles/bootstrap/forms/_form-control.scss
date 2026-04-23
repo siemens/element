@@ -10,9 +10,13 @@
 :is(.form-control, .form-select) {
   --border-color: #{semantic-tokens.$element-ui-2};
   --si-textarea-mask: #{semantic-tokens.$element-base-1};
+  // Formula:
+  // (1.25rem / 0px) (feedback icon size)
+  // + (action-size / 0px) (action-offset includes a padding)
+  // + 3px (min padding between input and first action or validation icon)
   --si-input-padding-inline-end: calc(
-    var(--si-feedback-icon-offset, 0px) + var(--si-action-icon-offset, 0px) +
-      #{variables.$input-padding-x}
+    var(--si-feedback-icon-size, 0px) + var(--si-action-icon-offset, 0px) +
+      #{map.get(spacers.$spacers, 2) - variables.$input-border-width}
   );
   display: block;
   inline-size: 100%;
@@ -31,17 +35,33 @@
   appearance: none; // Fix appearance for date inputs in Safari
   background-image: var(--si-feedback-icon, none);
   background-repeat: no-repeat;
-  background-size: 1.25rem;
-  background-position: top 5px right
-    calc(#{variables.$input-padding-x} + var(--si-action-icon-offset, 0px));
+  background-size: variables.$form-feedback-icon-size;
+  background-position-y: top
+    calc((#{variables.$input-height-inner-half} - (#{variables.$form-feedback-icon-size} * 0.5)));
+  background-position-x: right
+    calc(
+      #{map.get(spacers.$spacers, 2) - variables.$input-border-width} +
+        var(--si-action-icon-offset, 0px)
+    );
 
   @include utilities.rtl {
-    background-position: top 5px left 6px;
+    background-position-x: left
+      calc(
+        map.get(spacers.$spacers, 1) + var(--si-action-icon-offset, variables.$input-border-width)
+      );
   }
 
   &.hide-feedback-icon {
     background-image: none;
     padding-inline-end: variables.$input-padding-x;
+  }
+
+  // When a `.form-control-actions` wrapper is inside the form-control, the
+  // wrapper itself reserves space for the validation icon, so the outer
+  // form-control must not add extra `padding-inline-end` for it.
+  &:has(.form-control-actions) {
+    background-image: none;
+    --si-input-padding-inline-end: #{map.get(spacers.$spacers, 2) - variables.$input-border-width};
   }
 
   &:autofill {
@@ -103,6 +123,37 @@
   --input-addon-inset-end: #{map.get(spacers.$spacers, 9)};
 }
 
+// Wrapper for trailing actions (buttons, icons, unit labels) inside
+// or alongside a `.form-control`. Sizes itself to match the form-control
+// height, provides consistent inline spacing between the input content,
+// its children and the trailing edge, and reserves room for the validation
+// icon.
+// Paint the validation feedback icon on whichever element owns the trailing
+// space for it: the `.form-control` itself by default, or a
+// `.form-control-actions` wrapper when one is placed inside the form-control.
+.form-control-actions {
+  display: inline-flex;
+  align-items: center;
+  block-size: variables.$input-height-inner;
+  padding-inline-start: map.get(spacers.$spacers, 1);
+}
+
+.form-control .form-control-actions::before {
+  box-sizing: content-box;
+  margin-block: auto;
+  inline-size: variables.$form-feedback-icon-size;
+  block-size: variables.$form-feedback-icon-size;
+  padding-inline-end: map.get(spacers.$spacers, 1);
+  content: var(--si-feedback-icon, none);
+}
+
+.form-control + .form-control-actions {
+  position: absolute;
+  inset-inline-end: map.get(spacers.$spacers, 2);
+  inset-block-start: variables.$input-border-width;
+  z-index: 2;
+}
+
 textarea.form-control {
   min-block-size: variables.$input-height;
   padding-block: calc(variables.$input-padding-y - 3px);
@@ -141,7 +192,7 @@ select:is(.form-control, .form-select):not([multiple]) {
       )
       center,
     right map.get(spacers.$spacers, 2) - variables.$input-border-width top 50%;
-  background-size: 1.25rem, 1.25rem;
+  background-size: si-vars.$si-icon-font-size, variables.$form-feedback-icon-size;
 
   @include utilities.rtl {
     background-position: left map.get(spacers.$spacers, 2) - variables.$input-border-width top 50%;

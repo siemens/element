@@ -1,7 +1,7 @@
 @use '../../variables/spacers';
 @use '../../variables/typography';
+@use '../../variables/si-vars';
 @use '../variables';
-
 @use 'sass:map';
 
 // Override/enhance the form validation state mixin to also account for class
@@ -43,7 +43,10 @@
 @mixin form-validation-styles($state, $color, $icon) {
   @if ($state and $icon) {
     --si-feedback-icon: #{$icon};
+    // TODO: remove with v50
+    // DEPRECATED: use --si-feedback-icon-size instead
     --si-feedback-icon-offset: 1.5rem;
+    --si-feedback-icon-size: #{si-vars.$si-icon-font-size};
   }
 
   @if $color {
