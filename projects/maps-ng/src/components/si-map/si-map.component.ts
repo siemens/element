@@ -332,7 +332,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
   protected zoomInLabel = t(() => $localize`:@@SI_MAPS.ZOOM_IN_BUTTON:Zoom in`);
   protected zoomOutLabel = t(() => $localize`:@@SI_MAPS.ZOOM_OUT_BUTTON:Zoom out`);
   protected zoomToDefaultLabel = t(
-    () => $localize`:@@SI_MAPS.ZOOM_TO_DEFAULT_BUTTON:Reset Zoom`
+    () => $localize`:@@SI_MAPS.ZOOM_TO_DEFAULT_BUTTON:Reset zoom`
   );
   protected clusterInteraction?: SelectCluster;
   private selectedCluster?: Feature;
