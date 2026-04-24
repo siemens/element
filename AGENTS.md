@@ -36,6 +36,13 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Keep each test focused on a single behavior with clear arrange / act / assert phases
 - Cover happy paths, boundary conditions, and regression-prone branches. Avoid broad snapshot-style assertions that do not explain the intended behavior
 
+## Async Test Stabilization
+
+- Prefer `await fixture.whenStable()` over repeated `fixture.detectChanges()` calls after interactions or async state changes
+- `whenStable()` waits for pending microtasks, timers, and zone activity to settle, producing more reliable tests than manually pumping change detection
+- Use `fixture.detectChanges()` deliberately for the initial render or when the change detection boundary itself is under test
+- Do NOT chain multiple `detectChanges()` calls hoping to flush async work — use `whenStable()` instead
+
 ## State Management
 
 - Use signals for local component state

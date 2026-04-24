@@ -37,6 +37,13 @@ conventions and best practices when reviewing code.
 - Do NOT use `mutate` on signals, use `update` or `set` instead
 - Do NOT use `effect()` for propagation of state changes — this leads to `ExpressionChangedAfterItHasBeenChecked` errors, infinite circular updates, or unnecessary change detection cycles. Use `computed()` instead to model state that depends on other state
 
+## Async Test Stabilization
+
+- Prefer `await fixture.whenStable()` over repeated `fixture.detectChanges()` calls after interactions or async state changes
+- `whenStable()` waits for pending microtasks, timers, and zone activity to settle, producing more reliable tests than manually pumping change detection
+- Use `fixture.detectChanges()` deliberately for the initial render or when the change detection boundary itself is under test
+- Do NOT chain multiple `detectChanges()` calls hoping to flush async work — use `whenStable()` instead
+
 ## Templates
 
 - Keep templates simple and avoid complex logic
