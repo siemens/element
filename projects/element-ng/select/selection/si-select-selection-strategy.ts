@@ -6,10 +6,10 @@ import {
   booleanAttribute,
   computed,
   Directive,
+  effect,
   inject,
   input,
-  Input,
-  output,
+  model,
   signal,
   Signal
 } from '@angular/core';
@@ -40,12 +40,7 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
   /**
    * The selected value(s).
    */
-  @Input() set value(value: IV | undefined) {
-    this.updateFromInput(this.toArrayValue(value));
-  }
-
-  /** Emitted when the selection is changed */
-  readonly valueChange = output<IV>();
+  readonly value = model<IV | undefined>();
 
   /**
    * Whether the select control allows to select multiple values.
@@ -57,9 +52,7 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
    * Provides the internal value always as an array
    * @internal
    */
-  readonly arrayValue: Signal<readonly T[]> = computed(() =>
-    this.selectOptions.selectedRows().map(option => option.value)
-  );
+  readonly arrayValue: Signal<readonly T[]> = computed(() => this.toArrayValue(this.value()));
 
   /**
    * Registered form callback which shall be called on blur.
@@ -71,6 +64,10 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
   protected onChange: (_: any) => void = () => {};
   private readonly disabledNgControl = signal(false);
   private readonly selectOptions = inject<SiSelectOptionsStrategy<T>>(SI_SELECT_OPTIONS_STRATEGY);
+
+  constructor() {
+    effect(() => this.selectOptions.onValueChange(this.arrayValue()));
+  }
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
@@ -87,8 +84,7 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
   updateFromUser(values: T[]): void {
     const parsedValue = this.fromArrayValue(values);
     this.onChange(parsedValue);
-    this.valueChange.emit(parsedValue);
-    this.selectOptions.onValueChange(values);
+    this.value.set(parsedValue);
   }
 
   setDisabledState(isDisabled: boolean): void {
@@ -96,14 +92,10 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
   }
 
   writeValue(obj: any): void {
-    this.updateFromInput(this.toArrayValue(obj));
+    this.value.set(obj);
   }
 
   protected abstract toArrayValue(value: IV | undefined): readonly T[];
 
   protected abstract fromArrayValue(value: readonly T[]): IV;
-
-  private updateFromInput(values: readonly T[]): void {
-    this.selectOptions.onValueChange(values);
-  }
 }

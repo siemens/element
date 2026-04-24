@@ -69,7 +69,7 @@ export class SampleComponent {
   disabled = false;
   value: string[] = ['DE'];
 
-  selectionChanged(value: string[]): void {
+  selectionChanged(value: string[] | undefined): void {
     this.logEvent('Selection:', this.value);
   }
 }

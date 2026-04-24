@@ -120,7 +120,7 @@ class TestHostMultiComponent {
   readonly readonly = signal(false);
   readonly hasFilter = signal(false);
 
-  selectionChanged: ($event: any[]) => void = () => {};
+  selectionChanged: ($event: any[] | undefined) => void = () => {};
   optionEqualCheckFn = (a: string, b: string): boolean => a.toLowerCase() === b.toLowerCase();
 }
 

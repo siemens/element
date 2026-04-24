@@ -38,7 +38,7 @@ class TestComponent {
 
   changedValue?: string[];
 
-  valueChange(valueChange: string[]): void {
+  valueChange(valueChange: string[] | undefined): void {
     this.changedValue = valueChange;
   }
 }

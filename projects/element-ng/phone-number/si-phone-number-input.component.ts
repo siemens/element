@@ -321,7 +321,7 @@ export class SiPhoneNumberInputComponent
     });
   }
 
-  protected countryInput(num: CountryInfo): void {
+  protected countryInput(num: CountryInfo | undefined): void {
     this.selectedCountry = num;
     this.updatePlaceholder();
     this.refreshValueAfterCountryChange();
