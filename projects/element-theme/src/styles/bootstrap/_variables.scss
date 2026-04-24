@@ -293,12 +293,8 @@ $btn-font-size: $font-size-base;
 $btn-line-height: $line-height-base;
 $btn-white-space: null !default; // Set to `nowrap` to prevent text wrapping
 
-$btn-font-size-sm: typography.$si-font-size-caption;
-$btn-line-height-sm: typography.$si-line-height-caption;
 $btn-padding-y-sm: map.get(spacers.$spacers, 2);
-$btn-font-size-lg: typography.$si-font-size-body-lg;
-$btn-line-height-lg: typography.$si-line-height-body-lg;
-$btn-padding-y-lg: map.get(spacers.$spacers, 4) + map.get(spacers.$spacers, 1);
+$btn-padding-y-lg: map.get(spacers.$spacers, 5);
 
 $btn-link-color: $link-color !default;
 $btn-link-hover-color: $link-hover-color !default;
