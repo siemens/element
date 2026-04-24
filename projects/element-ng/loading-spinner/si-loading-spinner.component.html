@@ -36,4 +36,7 @@
       />
     </g>
   </svg>
+  @if (loadingText()) {
+    <div class="loading-text">{{ loadingText() | translate }}</div>
+  }
 </div>
