@@ -5,7 +5,10 @@
 $list-header-filter-padding-horizontal: map.get(all-variables.$spacers, 5);
 $list-header-filter-padding-vertical: map.get(all-variables.$spacers, 3);
 $filter-bar-background-color: all-variables.$element-base-0;
-$filter-pill-gap: map.get(all-variables.$spacers, 4); // Keep in sync with si-filter-pill.
+
+:host {
+  --filter-pill-gap: #{map.get(all-variables.$spacers, 4)};
+}
 
 :host.reset .responsive .list-text {
   line-height: calc(all-variables.$btn-font-size-lg + all-variables.$btn-padding-y * 2);
@@ -24,7 +27,7 @@ $filter-pill-gap: map.get(all-variables.$spacers, 4); // Keep in sync with si-fi
   overflow: hidden;
   display: flex;
   align-items: center;
-  gap: $filter-pill-gap;
+  gap: var(--filter-pill-gap);
 
   .list-text {
     color: all-variables.$element-text-disabled;
