@@ -16,7 +16,8 @@
 
 input {
   padding-inline: 0;
-  padding-block: 3px;
+  // needs explicit height because of Firefox, see .form-control
+  block-size: calc(1lh + 2 * map.get(variables.$spacers, 2));
   margin-inline: map.get(variables.$spacers, 2);
   border: 0;
   flex: 1;
