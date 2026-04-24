@@ -1,17 +1,12 @@
 @use '@siemens/element-theme/src/styles/variables';
 @use 'sass:map';
 
-.pill {
-  background: var(--filter-pill-background-color);
-}
-
 .criteria {
-  display: flex;
   cursor: pointer;
   white-space: nowrap;
-  border-radius: 12px;
 
   &.invalid-criterion {
+    border-radius: 0.75rem;
     box-shadow: 0 0 0 1px variables.$element-status-danger;
   }
 
@@ -26,7 +21,6 @@
 }
 
 .operator-input {
-  background: var(--filter-pill-background-color);
   padding-inline: map.get(variables.$spacers, 2);
   inline-size: calc(1ch + #{2 * map.get(variables.$spacers, 2)});
 }
