@@ -8,9 +8,7 @@
 
 @use 'sass:map';
 
-$btn-icon-font-size-default: variables.$si-icon-font-size;
-$btn-icon-font-size-lg: variables.$si-icon-font-size;
-$btn-icon-font-size-sm: variables.$si-icon-font-size;
+$btn-icon-font-size: variables.$si-icon-font-size;
 
 // there are some non .btn buttons used in element
 button {
@@ -18,7 +16,7 @@ button {
 }
 
 :is(.btn, .btn-close) {
-  --btn-icon-size: #{$btn-icon-font-size-default};
+  --btn-icon-size: #{$btn-icon-font-size};
   --btn-font-size: #{bootstrap-variables.$btn-font-size};
   --btn-font-weight: #{typography.$si-font-weight-semibold};
   --btn-line-height: #{bootstrap-variables.$btn-line-height};
@@ -220,16 +218,10 @@ button {
 }
 
 .btn-lg {
-  --btn-icon-size: #{$btn-icon-font-size-lg};
-  --btn-font-size: #{bootstrap-variables.$btn-font-size-lg};
-  --btn-line-height: #{bootstrap-variables.$btn-line-height-lg};
   --btn-padding-y: #{bootstrap-variables.$btn-padding-y-lg};
 }
 
 .btn-sm {
-  --btn-icon-size: #{$btn-icon-font-size-sm};
-  --btn-font-size: #{bootstrap-variables.$btn-font-size-sm};
-  --btn-line-height: #{bootstrap-variables.$btn-line-height-sm};
   --btn-padding-y: #{bootstrap-variables.$btn-padding-y-sm};
 }
 
