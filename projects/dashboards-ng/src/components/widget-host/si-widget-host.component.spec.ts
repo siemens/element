@@ -63,6 +63,10 @@ describe('SiWidgetHostComponent', () => {
         gridService = TestBed.inject(SiGridService);
         gridService.widgetCatalog.set([TEST_WIDGET]);
         fixture.componentRef.setInput('widgetConfig', TEST_WIDGET_CONFIG_0);
+        fixture.componentRef.setInput('grid', {
+          update: vi.fn(),
+          makeWidget: vi.fn()
+        });
       });
 
       it('should create', () => {

@@ -7,6 +7,7 @@ import {
   Component,
   ComponentRef,
   DestroyRef,
+  ElementRef,
   EnvironmentInjector,
   inject,
   Injector,
@@ -30,6 +31,7 @@ import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-
 import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { t } from '@siemens/element-translate-ng/translate';
+import { GridStack } from 'gridstack';
 
 import { WidgetConfig, WidgetConfigEvent, WidgetInstance } from '../../model/widgets.model';
 import { SiGridService } from '../../services/si-grid.service';
@@ -50,8 +52,10 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   private readonly injector = inject(Injector);
   private readonly envInjector = inject(EnvironmentInjector);
   private readonly destroyRef = inject(DestroyRef);
+  readonly elementRef = inject(ElementRef);
 
   readonly widgetConfig = input.required<WidgetConfig>();
+  readonly grid = input.required<GridStack | undefined>();
 
   readonly remove = output<string>();
   readonly edit = output<WidgetConfig>();
@@ -140,6 +144,20 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.widgetConfig) {
+      const options = {
+        ...this.widgetConfig(),
+        w: this.widgetConfig().width,
+        h: this.widgetConfig().height,
+        x: this.widgetConfig().x,
+        y: this.widgetConfig().y,
+        minW: this.widgetConfig().minWidth,
+        minH: this.widgetConfig().minHeight
+      };
+      if (!changes.widgetConfig.firstChange) {
+        this.grid()?.update(this.elementRef.nativeElement, options);
+      } else {
+        this.grid()?.makeWidget(this.elementRef.nativeElement, options);
+      }
       if (this.widgetRef) {
         if (isSignal(this.widgetRef.instance.config)) {
           this.widgetRef.setInput('config', this.widgetConfig());

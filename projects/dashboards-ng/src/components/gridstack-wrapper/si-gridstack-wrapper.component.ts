@@ -2,26 +2,23 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { isPlatformBrowser } from '@angular/common';
 import {
+  afterNextRender,
   Component,
-  ComponentRef,
   computed,
   ElementRef,
   inject,
+  Injector,
   input,
-  inputBinding,
-  IterableDiffer,
-  IterableDiffers,
   NgZone,
   OnChanges,
+  OnDestroy,
   OnInit,
   output,
-  outputBinding,
-  signal,
+  PLATFORM_ID,
   SimpleChanges,
-  viewChild,
-  ViewContainerRef,
-  WritableSignal
+  viewChildren
 } from '@angular/core';
 import { GridItemHTMLElement, GridStack, GridStackNode, GridStackOptions } from 'gridstack';
 
@@ -38,10 +35,11 @@ export interface GridWrapperEvent {
 
 @Component({
   selector: 'si-gridstack-wrapper',
+  imports: [SiWidgetHostComponent],
   templateUrl: './si-gridstack-wrapper.component.html',
   styleUrl: './si-gridstack-wrapper.component.scss'
 })
-export class SiGridstackWrapperComponent implements OnInit, OnChanges {
+export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * Grid items to render inside the gridstack
    *
@@ -75,52 +73,42 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
    */
   readonly widgetInstanceEdit = output<WidgetConfig>();
 
-  readonly gridstackContainer = viewChild('gridstackContainer', { read: ViewContainerRef });
-
-  private grid!: GridStack;
-  private markedForRender: WidgetConfig[] = [];
-  private readonly gridItems = signal<
-    {
-      id: string;
-      component: ComponentRef<SiWidgetHostComponent>;
-    }[]
-  >([]);
-  private readonly gridItemsMap = computed(
-    () => new Map(this.gridItems().map(item => [item.id, item]))
+  private readonly widgetHosts = viewChildren(SiWidgetHostComponent);
+  private readonly widgetHostsMap = computed(
+    () => new Map(this.widgetHosts().map(host => [host.widgetConfig().id, host]))
   );
-  private readonly itemIdAttr = 'item-id';
 
-  private ngZone = inject(NgZone);
-  private elementRef = inject(ElementRef);
-  private iterableDiffers = inject(IterableDiffers);
-  private widgetConfigsDiffer?: IterableDiffer<WidgetConfig>;
-  private readonly widgetConfigSignals = new Map<string, WritableSignal<WidgetConfig>>();
+  protected grid?: GridStack;
+
+  private readonly ngZone = inject(NgZone);
+  private readonly elementRef = inject(ElementRef);
+  private readonly injector = inject(Injector);
+  private readonly platformId = inject(PLATFORM_ID);
 
   ngOnChanges(changes: SimpleChanges<this>): void {
-    if (changes.widgetConfigs) {
-      const { currentValue, firstChange } = changes.widgetConfigs;
+    if (changes.widgetConfigs && !changes.widgetConfigs.firstChange) {
+      const configs = changes.widgetConfigs.currentValue;
+      const newIds = new Set(configs.map(w => w.id));
+      const hostMap = this.widgetHostsMap();
 
-      this.grid?.batchUpdate(true);
-      if (firstChange) {
-        this.markedForRender = currentValue;
-        this.widgetConfigsDiffer = this.iterableDiffers
-          .find(currentValue)
-          .create((_, item: WidgetConfig) => item.id);
-      } else {
-        this.diffWidgetConfigs(currentValue);
+      const hasAdds = configs.some(w => !hostMap.has(w.id));
+
+      if (hasAdds) {
+        this.startBatch();
       }
 
-      this.updateLayout(currentValue);
-      this.grid?.batchUpdate(false);
+      if (isPlatformBrowser(this.platformId)) {
+        for (const [id, host] of hostMap) {
+          if (!newIds.has(id)) {
+            this.grid?.removeWidget(host.elementRef.nativeElement);
+          }
+        }
+      }
     }
 
-    if (changes.editable) {
-      const { currentValue, firstChange } = changes.editable;
-
-      if (!firstChange) {
-        this.grid.enableMove(currentValue);
-        this.grid.enableResize(currentValue);
-      }
+    if (changes.editable && !changes.editable.firstChange) {
+      this.grid?.enableMove(changes.editable.currentValue);
+      this.grid?.enableResize(changes.editable.currentValue);
     }
   }
 
@@ -137,27 +125,18 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
     };
 
     this.grid = GridStack.init(options, this.elementRef.nativeElement.firstChild as HTMLElement);
+    this.startBatch();
     this.hookEvents(this.grid);
-
-    this.mount(this.markedForRender);
-    // Run initial diff to prime the differ with the current state
-    this.widgetConfigsDiffer?.diff(this.markedForRender);
   }
 
-  mount(items: WidgetConfig[]): void {
-    if (items.length > 0) {
-      items.forEach(item => {
-        this.addToView(item);
-      });
-    }
+  ngOnDestroy(): void {
+    this.grid?.destroy();
   }
 
-  unmount(items: WidgetConfig[]): void {
-    if (items.length > 0) {
-      items.forEach(item => {
-        this.removeFromView(item.id);
-      });
-    }
+  private startBatch(): void {
+    this.grid?.batchUpdate(true);
+    // this ensures that si-widget-host components are rendered before turning off batch mode.
+    afterNextRender(() => this.grid?.batchUpdate(false), { injector: this.injector });
   }
 
   /**
@@ -165,11 +144,11 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
    * Returns the position of a specific widget in the grid.
    */
   getWidgetLayout(widgetId: string): WidgetPositionConfig | undefined {
-    const gridItem = this.gridItemsMap().get(widgetId);
+    const gridItem = this.widgetHostsMap().get(widgetId);
     if (!gridItem) {
       return undefined;
     }
-    const element = gridItem.component.location.nativeElement as HTMLElement;
+    const element = gridItem.elementRef.nativeElement as HTMLElement;
     return {
       id: widgetId,
       x: Number(element.getAttribute('gs-x')) || 0,
@@ -177,92 +156,6 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
       width: Number(element.getAttribute('gs-w')) || 0,
       height: Number(element.getAttribute('gs-h')) || 0
     };
-  }
-
-  private updateLayout(widgets: WidgetConfig[]): void {
-    const widgetConfigMap = new Map(widgets.map(w => [w.id, { ...w, w: w.width, h: w.height }]));
-
-    if (this.grid) {
-      const gridItems = this.grid.getGridItems();
-      gridItems.forEach(gridItem => {
-        const itemId = gridItem.getAttribute('item-id');
-        const config = widgetConfigMap.get(itemId!);
-        if (config) {
-          this.grid.update(gridItem, config);
-        }
-      });
-    }
-  }
-
-  private addToView(item: WidgetConfig): void {
-    const configSignal = signal(item);
-    this.widgetConfigSignals.set(item.id, configSignal);
-
-    const componentRef = this.gridstackContainer()!.createComponent(SiWidgetHostComponent, {
-      bindings: [
-        inputBinding('widgetConfig', configSignal),
-        outputBinding<string>('remove', widgetId => {
-          this.widgetInstanceRemove.emit(widgetId);
-        }),
-        outputBinding<WidgetConfig>('edit', widgetConfig => {
-          this.widgetInstanceEdit.emit(widgetConfig);
-        })
-      ]
-    });
-
-    const element = componentRef.location.nativeElement as HTMLElement;
-    element.setAttribute(this.itemIdAttr, item.id!);
-    this.gridItems.update(items => [...items, { id: item.id!, component: componentRef }]);
-    this.grid.makeWidget(element, {
-      w: item.width,
-      h: item.height,
-      x: item.x,
-      y: item.y,
-      minW: item.minWidth,
-      minH: item.minHeight
-    });
-  }
-
-  private removeFromView(widgetId: string): void {
-    const gridItemElements = this.grid.getGridItems();
-
-    const toRemove = gridItemElements.find(
-      (el: HTMLElement) => el.getAttribute(this.itemIdAttr) === widgetId
-    );
-
-    if (toRemove) {
-      this.grid.removeWidget(toRemove);
-      const gridItemToRemove = this.gridItemsMap().get(widgetId);
-      gridItemToRemove?.component.destroy();
-      this.widgetConfigSignals.delete(widgetId);
-      this.gridItemsMap().delete(widgetId);
-      this.gridItems.set(Array.from(this.gridItemsMap().values()));
-    }
-  }
-
-  /**
-   * Uses IterableDiffer to detect added, removed, and identity-changed items.
-   * Only widgets whose object reference changed get their signal updated.
-   */
-  private diffWidgetConfigs(configs: WidgetConfig[]): void {
-    const changes = this.widgetConfigsDiffer?.diff(configs);
-    if (changes) {
-      const toMount: WidgetConfig[] = [];
-      const toUnmount: WidgetConfig[] = [];
-
-      changes.forEachAddedItem(record => toMount.push(record.item));
-      changes.forEachRemovedItem(record => toUnmount.push(record.item));
-      changes.forEachIdentityChange(record =>
-        this.widgetConfigSignals.get(record.item.id)?.set(record.item)
-      );
-
-      if (toMount.length) {
-        this.mount(toMount);
-      }
-      if (toUnmount.length) {
-        this.unmount(toUnmount);
-      }
-    }
   }
 
   private hookEvents(grid: GridStack): void {

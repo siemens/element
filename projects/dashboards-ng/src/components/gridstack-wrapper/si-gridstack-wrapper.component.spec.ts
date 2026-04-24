@@ -60,17 +60,18 @@ describe('SiGridstackWrapperComponent', () => {
       expect(host.gridStackWrapper()?.grid).toBeDefined();
     });
 
-    it('should mount the grid items', () => {
+    it('should mount the grid items', async () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
       gridService.widgetCatalog.set([TEST_WIDGET]);
       host.widgets = TEST_WIDGET_CONFIGS;
-      const gridStackWrapper = host.gridStackWrapper();
-      vi.spyOn(gridStackWrapper!, 'mount');
       fixture.detectChanges();
 
-      expect(gridStackWrapper!.mount).toHaveBeenCalled();
-      expect(gridStackWrapper!.mount).toHaveBeenCalledWith(TEST_WIDGET_CONFIGS);
+      // to avoid injector destroyed error
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      const widgetHosts = fixture.debugElement.queryAll(By.css('si-widget-host'));
+      expect(widgetHosts.length).toBe(TEST_WIDGET_CONFIGS.length);
     });
 
     it('should render grid items', async () => {
@@ -98,27 +99,22 @@ describe('SiGridstackWrapperComponent', () => {
 
     it('should mount newly added grid items', async () => {
       host.widgets = [...host.widgets, TEST_WIDGET_CONFIG_2];
-
-      const gridStackWrapper = host.gridStackWrapper();
-      vi.spyOn(gridStackWrapper!, 'mount');
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       // to avoid injector destroyed error
       await new Promise(resolve => setTimeout(resolve, 0));
 
-      expect(gridStackWrapper!.mount).toHaveBeenCalled();
-      expect(gridStackWrapper!.mount).toHaveBeenCalledWith([TEST_WIDGET_CONFIG_2]);
+      const widgetHosts = fixture.debugElement.queryAll(By.css('si-widget-host'));
+      expect(widgetHosts.length).toBe(3);
     });
 
     it('should unmount removed grid items', async () => {
       host.widgets = [TEST_WIDGET_CONFIG_1];
-      vi.spyOn(host.gridStackWrapper()!, 'unmount');
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      expect(host.gridStackWrapper()!.unmount).toHaveBeenCalled();
-      expect(host.gridStackWrapper()!.unmount).toHaveBeenCalledWith([TEST_WIDGET_CONFIG_0]);
+      expect(fixture.debugElement.queryAll(By.css('si-widget-host')).length).toBe(1);
 
       host.widgets = [];
       fixture.changeDetectorRef.markForCheck();
@@ -127,8 +123,7 @@ describe('SiGridstackWrapperComponent', () => {
       // to avoid injector destroyed error
       await new Promise(resolve => setTimeout(resolve, 0));
 
-      expect(host.gridStackWrapper()!.unmount).toHaveBeenCalled();
-      expect(host.gridStackWrapper()!.unmount).toHaveBeenCalledWith([TEST_WIDGET_CONFIG_1]);
+      expect(fixture.debugElement.queryAll(By.css('si-widget-host')).length).toBe(0);
     });
 
     it('should not trigger ngOnChanges on SiWidgetHostComponent when widget config reference is unchanged', async () => {
