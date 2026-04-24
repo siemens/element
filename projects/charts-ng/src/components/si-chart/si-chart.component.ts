@@ -939,13 +939,15 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
 
   private modifyTopAlignment(key: string): void {
     const options = this.actualOptions;
-    if (options.grid) {
+    if (options.grid && !this.options()?.grid) {
       const gridOptions = this.getThemeCustomValue([key, 'grid'], {});
       echarts.util.merge(options.grid, gridOptions, true);
     }
 
-    const legendOptions = this.getThemeCustomValue([key, 'legend'], {});
-    options.legend?.forEach(legend => echarts.util.merge(legend, legendOptions, true));
+    if (!this.options()?.legend) {
+      const legendOptions = this.getThemeCustomValue([key, 'legend'], {});
+      options.legend?.forEach(legend => echarts.util.merge(legend, legendOptions, true));
+    }
   }
 
   protected afterChartInit(skipZoom?: boolean): void {
