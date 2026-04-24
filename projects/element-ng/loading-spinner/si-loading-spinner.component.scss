@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
 $loading-spinner-size: 64px;
@@ -32,6 +33,10 @@ $duration: variables.element-transition-duration(0.2s);
   text-align: center;
 }
 
+.loading-text {
+  margin-block-start: map.get(variables.$spacers-block, 4);
+}
+
 .blocking-spinner {
   background: var(--si-sys-color-effects-backdrop);
 }
@@ -43,6 +48,7 @@ $duration: variables.element-transition-duration(0.2s);
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 svg {
