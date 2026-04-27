@@ -3,14 +3,14 @@
   <div class="card-body">
     <si-nchart-gauge
       mode="single"
-      unit="%"
+      unit="ppm"
       style="block-size: 250px"
       [segments]="showSegments ? segments : []"
       [series]="series"
       [startAngle]="-90"
       [endAngle]="90"
-      [min]="0"
-      [max]="100"
+      [min]="300"
+      [max]="1500"
       [minNumberOfDecimals]="minDecimals"
       [maxNumberOfDecimals]="maxDecimals"
       [axisNumberOfDecimals]="axisDecimals"
@@ -87,9 +87,10 @@
       </si-form-item>
     </div>
     <div class="col-sm-12 d-flex mt-5 gap-4">
-      <button type="button" class="btn btn-secondary" (click)="setValues(15)"> Value 15 </button>
-      <button type="button" class="btn btn-secondary" (click)="setValues(50)"> Value 50 </button>
-      <button type="button" class="btn btn-secondary" (click)="setValues(80)"> Value 80 </button>
+      <button type="button" class="btn btn-secondary" (click)="setValues(350)">Value 350</button>
+      <button type="button" class="btn btn-secondary" (click)="setValues(700)">Value 700</button>
+      <button type="button" class="btn btn-secondary" (click)="setValues(1000)">Value 1000</button>
+      <button type="button" class="btn btn-secondary" (click)="setValues(1500)">Value 1500</button>
     </div>
   </div>
 </div>

@@ -21,9 +21,11 @@ import { GaugeSegment, GaugeSeries, SiNChartGaugeComponent } from '@siemens/nati
 export class SampleComponent {
   readonly logEvent = inject(LOG_EVENT);
   readonly segments: GaugeSegment[] = [
-    { colorToken: 'element-color-bad', endValue: 20 },
-    { colorToken: 'element-color-average', endValue: 70 },
-    { colorToken: 'element-color-excellent', endValue: 100 }
+    { colorToken: 'element-color-excellent', endValue: 400 },
+    { colorToken: 'element-color-good', endValue: 600 },
+    { colorToken: 'element-color-average', endValue: 900 },
+    { colorToken: 'element-color-bad', endValue: 1200 },
+    { colorToken: 'element-status-critical', endValue: 1500 }
   ];
   showTicks = true;
   minDecimals = 0;
@@ -32,7 +34,7 @@ export class SampleComponent {
   showRangeLabelsOutside = false;
   showSegments = true;
 
-  series: GaugeSeries[] = [{ name: 'Series 1', value: 50.456, colorToken: 'element-data-5' }];
+  series: GaugeSeries[] = [{ name: 'Series 1', value: 350, colorToken: 'element-data-5' }];
 
   setValues(val1: number): void {
     this.series[0].value = val1;

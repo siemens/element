@@ -77,6 +77,23 @@ export function makePolyline(points: Coordinate[]): string {
 }
 
 /**
+ * Calculates the relative angle for a given relative value
+ * @param minAngle - min/start angle in degrees
+ * @param maxAngle - max/end angle in degrees
+ * @param range - the value range
+ * @param value - the relative value
+ * @returns Relative (from minAngle) angle in degrees
+ */
+export function relativeValueToRelativeAngle(
+  minAngle: number,
+  maxAngle: number,
+  range: number,
+  value: number
+): number {
+  return range ? (value * (maxAngle - minAngle)) / range : 0;
+}
+
+/**
  * Calculates the relative angle for a given value
  * @param minAngle - min/start angle in degrees
  * @param maxAngle - max/end angle in degrees
@@ -93,5 +110,5 @@ export function valueToRelativeAngle(
   value: number
 ): number {
   value = Math.max(min, Math.min(max, value));
-  return (value * (maxAngle - minAngle)) / (max - min);
+  return relativeValueToRelativeAngle(minAngle, maxAngle, max - min, value - min);
 }
