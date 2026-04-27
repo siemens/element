@@ -77,7 +77,7 @@ import { DatepickerInputConfig, DateRange } from './si-datepicker.model';
     }
   ],
   host: {
-    class: 'form-control d-flex align-items-center pe-2',
+    class: 'form-control d-flex align-items-center',
     role: 'group',
     '[class.disabled]': 'disabled()',
     '[class.readonly]': 'readonly()',
