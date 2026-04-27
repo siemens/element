@@ -1,34 +1,37 @@
 @use 'sass:map';
-@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/all-variables';
 
 :host {
   cursor: pointer;
-  font-weight: variables.$si-font-weight-h5;
+  font-weight: all-variables.$si-font-weight-h5;
   min-inline-size: 72px;
   block-size: 100%;
-  color: variables.$element-text-primary;
-  padding-block: map.get(variables.$spacers, 2);
-  padding-inline-end: calc(map.get(variables.$spacers, 5) + var(--si-feedback-icon-offset, 0px));
+  color: all-variables.$element-text-primary;
+  padding-block: all-variables.$input-padding-y;
+  padding-inline-end: calc(
+    #{map.get(all-variables.$spacers, 2) - all-variables.$input-border-width} +
+      var(--si-feedback-icon-offset, 0px)
+  );
 
   &.disabled {
-    color: variables.$element-text-disabled;
+    color: all-variables.$element-text-disabled;
   }
 }
 
 :host-context(.form-control) {
   :host {
-    font-weight: variables.$si-font-weight-normal;
-    padding-block: map.get(variables.$spacers, 2) - 1px;
+    font-weight: all-variables.$si-font-weight-normal;
+    padding-block: map.get(all-variables.$spacers, 2) - 1px;
   }
 }
 
 :host-context(.dropdown:not(.form-control)) :host:not(.disabled) {
   &:hover {
-    background: variables.$element-base-1-hover;
+    background: all-variables.$element-base-1-hover;
   }
 
   &.active {
-    background: variables.$element-base-1-selected;
+    background: all-variables.$element-base-1-selected;
   }
 }
 
@@ -37,10 +40,10 @@ si-select-option + si-select-option::before {
 }
 
 .overflow-item {
-  border-radius: variables.$element-radius-3;
-  background: variables.$element-base-0;
-  margin-inline-start: map.get(variables.$spacers, 2);
-  padding-inline: map.get(variables.$spacers, 4);
+  border-radius: all-variables.$element-radius-3;
+  background: all-variables.$element-base-0;
+  margin-inline-start: map.get(all-variables.$spacers, 2);
+  padding-inline: map.get(all-variables.$spacers, 4);
 }
 
 .dropdown-caret {
