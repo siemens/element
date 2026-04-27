@@ -19,6 +19,7 @@ import {
   makeArc,
   makeLine,
   polarToCartesian,
+  relativeValueToRelativeAngle,
   valueToRelativeAngle
 } from '@siemens/native-charts-ng/utils';
 
@@ -281,7 +282,7 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
 
     const zeroValueAngle =
       this.startAngle() +
-      valueToRelativeAngle(this.startAngle(), this.endAngle(), this.min(), this.max(), -this.min());
+      valueToRelativeAngle(this.startAngle(), this.endAngle(), this.min(), this.max(), 0);
 
     this.addTick(this.startAngle(), this.min(), true);
     if (this.min() !== 0) {
@@ -293,9 +294,9 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
     let nextNegAngle = zeroValueAngle;
     for (const series of this.series()) {
       if (series.value >= 0) {
-        nextPosAngle = this.addInternalSeries(nextPosAngle, series);
+        nextPosAngle = this.addInternalSeries(nextPosAngle, series, true);
       } else if (series.value < 0) {
-        nextNegAngle = this.addInternalSeries(nextNegAngle, series, true);
+        nextNegAngle = this.addInternalSeries(nextNegAngle, series, true, true);
       }
     }
 
@@ -305,15 +306,15 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
   private calcSeriesSingle(): void {
     this.reset();
 
+    const range = this.max() - this.min();
     let angle = this.startAngle();
     let value = this.min();
     for (const segment of this.segments()) {
       const nextAngle =
-        valueToRelativeAngle(
+        relativeValueToRelativeAngle(
           this.startAngle(),
           this.endAngle(),
-          this.min(),
-          this.max(),
+          range,
           segment.endValue - value
         ) + angle;
 
@@ -343,7 +344,7 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
     const activeSegment = this.segments().find(
       (s, i) => series.value < s.endValue || i == this.segments().length - 1
     );
-    this.addInternalSeries(this.startAngle(), series, false, activeSegment?.colorToken);
+    this.addInternalSeries(this.startAngle(), series, false, false, activeSegment?.colorToken);
 
     this.totalSumString = this.formatValue(this.totalSum);
   }
@@ -386,16 +387,16 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
   private addInternalSeries(
     startAngle: number,
     series: GaugeSeries,
+    relative = false,
     reverse = false,
     color?: string
   ): number {
     let nextAngle =
-      valueToRelativeAngle(
+      relativeValueToRelativeAngle(
         this.startAngle(),
         this.endAngle(),
-        this.min(),
-        this.max(),
-        series.value
+        this.max() - this.min(),
+        series.value - (relative ? 0 : this.min())
       ) + startAngle;
     const returnNextAngle = nextAngle;
 

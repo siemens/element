@@ -1,5 +1,5 @@
 - text: Single value gauge with segments
-- img: /\d+ \d+ 0 \d+ \d+ %/
+- img: /\d+ \d+ \d+ \d+,\d+ \d+ \d+,\d+ \d+ ppm/
 - text: Min. decimals*
 - spinbutton "Min. decimals*"
 - text: Max. decimals*
@@ -12,6 +12,7 @@
 - text: Show range labels outside
 - checkbox "Show segments" [checked]
 - text: Show segments
+- button /Value \d+/
 - button /Value \d+/
 - button /Value \d+/
 - button /Value \d+/
