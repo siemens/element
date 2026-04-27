@@ -5,6 +5,7 @@
   display: block;
   min-inline-size: 237px;
   --si-action-icon-offset: 22px;
+  padding-inline-end: map.get(all-variables.$spacers, 2) - all-variables.$input-border-width;
 }
 
 :host(:focus-within) {
