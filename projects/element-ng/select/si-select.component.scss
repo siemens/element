@@ -1,10 +1,14 @@
+@use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/all-variables';
 
 :host {
   display: inline-block;
   padding: 0;
   block-size: 2rem;
-  --si-action-icon-offset: 20px;
+  --si-action-icon-offset: calc(
+    #{all-variables.$si-icon-font-size} - #{map.get(all-variables.$spacers, 1)}
+  );
 
   &:focus-within,
   &.open:not(.si-select-has-filter) {
