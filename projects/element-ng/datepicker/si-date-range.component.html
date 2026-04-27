@@ -27,13 +27,15 @@
   [readonly]="readonly()"
   (ngModelChange)="onInputChanged({ start: value()?.start, end: $event })"
 />
-<button
-  #button
-  type="button"
-  class="btn btn-icon btn-tertiary btn-sm"
-  [attr.aria-label]="ariaLabelCalendarButton() | translate"
-  [disabled]="disabled() || readonly()"
-  (click)="show()"
->
-  <si-icon [icon]="icons.elementCalendar" />
-</button>
+<div class="form-control-actions">
+  <button
+    #button
+    type="button"
+    class="btn btn-icon btn-tertiary btn-sm"
+    [attr.aria-label]="ariaLabelCalendarButton() | translate"
+    [disabled]="disabled() || readonly()"
+    (click)="show()"
+  >
+    <si-icon [icon]="icons.elementCalendar" />
+  </button>
+</div>

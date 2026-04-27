@@ -389,6 +389,13 @@ $form-feedback-invalid-color: semantic-tokens.$element-text-danger !default;
 $form-feedback-icon-valid: semantic-tokens.$element-feedback-icon-valid;
 $form-feedback-icon-invalid: semantic-tokens.$element-feedback-icon-invalid;
 $form-feedback-icon-warning: semantic-tokens.$element-feedback-icon-warning;
+$form-feedback-icon-size: 1.25rem;
+$form-feedback-icon-offset-block: calc(
+  (#{$input-height-inner-half} - ($form-feedback-icon-size * 0.5))
+);
+$form-feedback-icon-offset-inline: calc(
+  map.get(spacers.$spacers, 3) + var(--si-action-icon-offset, 0px)
+);
 
 $form-validation-states: (
   'valid': (

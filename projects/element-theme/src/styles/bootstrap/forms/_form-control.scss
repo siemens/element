@@ -29,18 +29,17 @@
   border: variables.$input-border-width solid var(--border-color);
   border-radius: variables.$input-border-radius;
   appearance: none; // Fix appearance for date inputs in Safari
-  background-image: var(--si-feedback-icon, none);
-  background-repeat: no-repeat;
-  background-size: 1.25rem;
-  background-position: top 5px right calc(6px + var(--si-action-icon-offset, 0px));
-
-  @include utilities.rtl {
-    background-position: top 5px left 6px;
-  }
 
   &.hide-feedback-icon {
     background-image: none;
     padding-inline-end: variables.$input-padding-x;
+  }
+
+  // When a `.form-control-actions` wrapper is inside the form-control, the
+  // wrapper itself reserves space for the validation icon, so the outer
+  // form-control must not add extra `padding-inline-end` for it.
+  &:has(.form-control-actions) {
+    --si-input-padding-inline-end: #{map.get(spacers.$spacers, 2)};
   }
 
   &:autofill {
@@ -100,6 +99,52 @@
 
 .addon-second-icon {
   --input-addon-inset-end: #{map.get(spacers.$spacers, 9)};
+}
+
+// Wrapper for trailing actions (buttons, icons, unit labels) inside
+// or alongside a `.form-control`. Sizes itself to match the form-control
+// height, provides consistent inline spacing between the input content,
+// its children and the trailing edge, and reserves room for the validation
+// icon.
+// Paint the validation feedback icon on whichever element owns the trailing
+// space for it: the `.form-control` itself by default, or a
+// `.form-control-actions` wrapper when one is placed inside the form-control.
+.form-control:not(:has(.form-control-actions)),
+.form-control .form-control-actions {
+  background-image: var(--si-feedback-icon, none);
+  background-repeat: no-repeat;
+  background-size: 1.25rem;
+  background-position-y: top variables.$form-feedback-icon-offset-block;
+  background-position-x: right variables.$form-feedback-icon-offset-inline;
+
+  @include utilities.rtl {
+    background-position-x: left variables.$form-feedback-icon-offset-inline;
+  }
+}
+
+.form-control-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: map.get(spacers.$spacers, 2);
+  block-size: variables.$input-height-inner;
+  padding-inline: map.get(spacers.$spacers, 2);
+}
+
+.form-control .form-control-actions {
+  padding-inline-start: calc(var(--si-feedback-icon-offset, 0px) + #{map.get(spacers.$spacers, 2)});
+  padding-inline-end: 0;
+  background-position-x: left variables.$form-feedback-icon-offset-inline;
+
+  @include utilities.rtl {
+    background-position-x: right variables.$form-feedback-icon-offset-inline;
+  }
+}
+
+.form-control + .form-control-actions {
+  position: absolute;
+  inset-inline-end: variables.$input-border-width;
+  inset-block-start: variables.$input-border-width;
+  z-index: 2;
 }
 
 textarea.form-control {

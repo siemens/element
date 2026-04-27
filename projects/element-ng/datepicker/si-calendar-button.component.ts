@@ -45,21 +45,23 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
   selector: 'si-calendar-button',
   imports: [SiIconComponent, SiTranslatePipe],
   template: `<ng-content />
-    <button
-      #calendarButton
-      name="open-calendar"
-      type="button"
-      class="btn btn-icon btn-tertiary btn-sm position-absolute end-0 top-0 me-2 mt-2"
-      [attr.aria-label]="ariaLabel() | translate"
-      [disabled]="disabled()"
-      (click)="show()"
-    >
-      <si-icon [icon]="icons.elementCalendar" />
-    </button>`,
-  styles: ':host {--si-action-icon-offset: 24px;}',
+    <div class="form-control-actions">
+      <button
+        #calendarButton
+        name="open-calendar"
+        type="button"
+        class="btn btn-icon btn-tertiary btn-sm"
+        [attr.aria-label]="ariaLabel() | translate"
+        [disabled]="disabled()"
+        (click)="show()"
+      >
+        <si-icon [icon]="icons.elementCalendar" />
+      </button>
+    </div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'd-inline-block position-relative form-control-wrapper'
+    class: 'd-inline-block position-relative form-control-wrapper',
+    '[style.--si-action-icon-offset.rem]': '1.5'
   }
 })
 export class SiCalendarButtonComponent implements OnInit, AfterContentInit {
