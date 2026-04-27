@@ -36,10 +36,10 @@ test.describe('ncharts-gauge', () => {
 
     await si.runVisualAndA11yTests('segments-1');
 
-    await page.getByText('Value 15').click();
+    await page.getByText('Value 700').click();
     await si.runVisualAndA11yTests('segments-2');
 
-    await page.getByText('Value 80').click();
+    await page.getByText('Value 100').click();
     await si.runVisualAndA11yTests('segments-3');
 
     await page.getByLabel('Show range labels outside').check();

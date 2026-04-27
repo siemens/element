@@ -25,6 +25,9 @@ export function makePolyline(points: Coordinate[]): string;
 export function polarToCartesian(center: Coordinate, radius: number, angleDeg: number): Coordinate;
 
 // @public
+export function relativeValueToRelativeAngle(minAngle: number, maxAngle: number, range: number, value: number): number;
+
+// @public
 export function valueToRelativeAngle(minAngle: number, maxAngle: number, min: number, max: number, value: number): number;
 
 // (No @packageDocumentation comment for this package)
