@@ -208,14 +208,6 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
     };
   }
 
-  private calcValue(value: number): number {
-    // workaround for bug in echarts
-    if (value === this.minValue()) {
-      return value + 0.0001;
-    }
-    return value;
-  }
-
   private readonly axisLabelFormatter = (value: any): string => {
     const formatted = this.axisNumberFormat().format(Number(value));
     return this.unitsOnSplit() ? `${formatted} ${this.unit()}` : formatted;
@@ -346,7 +338,7 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
           }
         }
       },
-      data: [{ value: this.calcValue(this.value()) }]
+      data: [{ value: this.value() }]
     };
 
     const series: GaugeSeriesOption[] = [indicator, shade, data];
@@ -397,7 +389,7 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
    */
   setValue(value: number): void {
     const optionSeries = this.actualOptions.series as GaugeChartSeries[];
-    optionSeries[2].data[0].value = this.calcValue(value);
+    optionSeries[2].data[0].value = value;
     this.refreshSeries();
   }
 }
