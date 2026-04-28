@@ -1,0 +1,129 @@
+name: Post CI Fix Prompt
+description: Collects failure logs for the current job and posts an AI fix prompt as a sticky PR comment
+
+inputs:
+  job-title:
+    description: Display name for the failed job in the comment header
+    required: true
+  comment-header:
+    description: Unique identifier for the sticky comment (used for dedup/update)
+    required: true
+  job-name-pattern:
+    description: Pattern to match the current job name in the GitHub API (useful for matrix jobs)
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Build AI fix prompt
+      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+      env:
+        JOB_TITLE: ${{ inputs.job-title }}
+        JOB_NAME_PATTERN: ${{ inputs.job-name-pattern }}
+      with:
+        script: |
+          const fs = require('fs');
+          const { owner, repo } = context.repo;
+          const jobTitle = process.env.JOB_TITLE;
+          const jobNamePattern = process.env.JOB_NAME_PATTERN;
+
+          const { data: { jobs } } = await github.rest.actions.listJobsForWorkflowRun({
+            owner, repo,
+            run_id: context.runId,
+            filter: 'latest',
+            per_page: 100
+          });
+
+          // Find the current job: it is in_progress and has at least one failed step.
+          // For matrix jobs, use the provided pattern to disambiguate.
+          const candidates = jobs.filter(j =>
+            j.status === 'in_progress' &&
+            j.steps?.some(s => s.conclusion === 'failure')
+          );
+
+          let currentJob;
+          if (candidates.length === 1) {
+            currentJob = candidates[0];
+          } else if (candidates.length > 1 && jobNamePattern) {
+            currentJob = candidates.find(j => j.name.includes(jobNamePattern)) || candidates[0];
+          } else {
+            currentJob = candidates[0];
+          }
+
+          if (!currentJob) {
+            core.warning('Could not find the current failing job');
+            return;
+          }
+
+          const failedSteps = (currentJob.steps || [])
+            .filter(s => s.conclusion === 'failure')
+            .map(s => s.name);
+
+          const MAX_LOG_LINES = 80;
+          let logs = '';
+          try {
+            const resp = await github.rest.actions.downloadJobLogsForWorkflowRun({
+              owner, repo, job_id: currentJob.id
+            });
+            const raw = typeof resp.data === 'string'
+              ? resp.data
+              : Buffer.isBuffer(resp.data)
+                ? resp.data.toString('utf-8')
+                : String(resp.data);
+
+            const lines = raw
+              .split('\n')
+              .map(l => l.replace(/^\d{4}-\d{2}-\d{2}T[\d:.]+Z\s?/, ''))
+              .map(l => l.replace(/\x1b\[[0-9;]*m/g, ''));
+
+            // Strip post-job cleanup noise
+            const cleanupIdx = lines.findIndex(l => /^Post job cleanup\b/.test(l));
+            logs = (cleanupIdx > -1 ? lines.slice(0, cleanupIdx) : lines)
+              .slice(-MAX_LOG_LINES)
+              .join('\n')
+              .trim();
+          } catch (e) {
+            logs = `Could not retrieve logs: ${e.message}`;
+          }
+
+          if (logs.length > 8000) {
+            logs = '... (truncated)\n' + logs.slice(-8000);
+          }
+
+          let prompt = `The CI pipeline failed in the "${jobTitle}" job. Fix the following issues:\n\n`;
+          prompt += `FAILED: ${currentJob.name}\n`;
+          if (failedSteps.length) {
+            prompt += `Steps: ${failedSteps.join(', ')}\n`;
+          }
+          prompt += `\nError output:\n---\n${logs}\n---\n\n`;
+          prompt += 'Analyze the failure, find the root cause in the codebase, and provide the exact code changes needed to fix it.';
+
+          if (prompt.length > 50000) {
+            prompt = prompt.slice(0, 50000) + '\n... (truncated)';
+          }
+
+          const body = [
+            `### 🔧 CI Fix Prompt — ${jobTitle}`,
+            '',
+            'Copy the prompt below and paste it into your AI coding assistant to fix the failure.',
+            '',
+            '<details>',
+            '<summary>📋 Click to expand prompt</summary>',
+            '',
+            '```',
+            prompt,
+            '```',
+            '',
+            '</details>',
+            '',
+            `[View failed job](${currentJob.html_url})`
+          ].join('\n');
+
+          fs.writeFileSync('ci-fix-prompt.md', body);
+
+    - name: Post CI fix prompt comment
+      uses: marocchino/sticky-pull-request-comment@d4d6b0936434b21bc8345ad45a440c5f7d2c40ff # v3
+      with:
+        header: ${{ inputs.comment-header }}
+        path: ci-fix-prompt.md

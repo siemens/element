@@ -9,8 +9,6 @@ on:
       MAPTILER_KEY:
         required: true
 
-permissions: read-all
-
 env:
   MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
   MAPTILER_URL: https://api.maptiler.com/maps/voyager/style.json?key=${{ secrets.MAPTILER_KEY }}
@@ -18,6 +16,10 @@ env:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
@@ -44,10 +46,21 @@ jobs:
           name: dist
           path: dist
 
+      - name: Post CI fix prompt
+        if: ${{ failure() && github.event_name == 'pull_request' }}
+        uses: ./.github/actions/post-ci-fix-prompt
+        with:
+          job-title: Build
+          comment-header: ci-fix-prompt-build
+
   test:
     runs-on: ubuntu-24.04
     # We use playwright browser to run tests
     container: mcr.microsoft.com/playwright:v1.59.1-noble
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: write
     env:
       # See: https://github.com/microsoft/playwright/issues/27620
       HOME: /root
@@ -98,8 +111,19 @@ jobs:
           path: coverage
           retention-days: 30
 
+      - name: Post CI fix prompt
+        if: ${{ failure() && github.event_name == 'pull_request' }}
+        uses: ./.github/actions/post-ci-fix-prompt
+        with:
+          job-title: Unit Tests
+          comment-header: ci-fix-prompt-test
+
   verification:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: write
     needs:
       - build
     steps:
@@ -122,9 +146,20 @@ jobs:
       - run: npm run lint:playwright:eslint
       - run: npm run api-goldens:test
 
+      - name: Post CI fix prompt
+        if: ${{ failure() && github.event_name == 'pull_request' }}
+        uses: ./.github/actions/post-ci-fix-prompt
+        with:
+          job-title: Verification
+          comment-header: ci-fix-prompt-verification
+
   e2e:
     runs-on: ubuntu-24.04
     container: mcr.microsoft.com/playwright:v1.59.1-noble
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: write
     needs:
       - build
     strategy:
@@ -160,6 +195,14 @@ jobs:
           name: blob-report-${{ matrix.shardIndex }}
           path: blob-report
           retention-days: 1
+
+      - name: Post CI fix prompt
+        if: ${{ failure() && github.event_name == 'pull_request' }}
+        uses: ./.github/actions/post-ci-fix-prompt
+        with:
+          job-title: 'E2E Tests (shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})'
+          comment-header: 'ci-fix-prompt-e2e-${{ matrix.shardIndex }}'
+          job-name-pattern: 'e2e (${{ matrix.shardIndex }}, ${{ matrix.shardTotal }})'
 
   e2e-merge-reports:
     if: ${{ !cancelled() }}
