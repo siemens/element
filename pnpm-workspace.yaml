@@ -21,7 +21,7 @@ strictPeerDependencies: false
 # workspace packages at the root level, which means peer dependencies declared
 # with a plain version range (e.g. "@siemens/element-theme": "49.6.0") would
 # be resolved from the registry instead of the local source.
-linkWorkspacePackages: deep
+# Verify is it required - linkWorkspacePackages: deep
 
 # When a workspace package satisfies a declared version range, prefer the local
 # source over the published registry copy. This ensures packages such as

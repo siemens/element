@@ -50,8 +50,6 @@ jobs:
           GIT_COMMITTER_NAME: 'Siemens Element Bot'
           GIT_COMMITTER_EMAIL: 'simpl.si@siemens.com'
           GITHUB_TOKEN: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }}
-          # Prevent npm (used by @semantic-release/npm for `npm version`) from creating package-lock.json
-          NPM_CONFIG_PACKAGE_LOCK: 'false'
       - id: check_release
         run: |
           BEFORE_TAG="${{ steps.before_release.outputs.before_tag }}"
