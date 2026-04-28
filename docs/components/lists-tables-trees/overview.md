@@ -1,14 +1,14 @@
 # Tables
 
-They are used to organize and display structured information in rows and columns,
+Tables are used to organize and display structured information in rows and columns,
 enabling users to scan, compare, and analyze data efficiently.
 
 ## Usage ---
 
 Element covers three different implementations, each suited to different levels of complexity and scale:
 
-- [HTML table](../lists-tables-trees/HTML-table.md): simple, static, HTML-based tables.
-- [NGX-datatable](../lists-tables-trees/NGX-datatable.md): data table for medium to large datasets
+- [HTML table](../lists-tables-trees/html-table.md): simple, static, HTML-based tables.
+- [ngx-datatable](../lists-tables-trees/ngx-datatable.md): data table for medium to large datasets
   with built-in features like sorting and filtering.
 - [AG Grid](../lists-tables-trees/ag-grid.md): advanced data grid for complex, enterprise scenarios
   with extensive functionality **(paid license required)**.
