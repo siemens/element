@@ -1,4 +1,4 @@
-import { templateConfig, tsConfig } from '../../../eslint.config.js';
+import { templateConfig, tsConfig, indexBarrelConfig } from '../../../eslint.config.js';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig(
@@ -11,5 +11,6 @@ export default defineConfig(
       }
     }
   },
-  ...templateConfig
+  ...templateConfig,
+  ...indexBarrelConfig
 );
