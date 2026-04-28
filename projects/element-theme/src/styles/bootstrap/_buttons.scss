@@ -201,7 +201,7 @@ button {
 // --------------
 .btn:is(.btn-circle, .btn-icon, .btn-close) {
   display: inline-flex;
-  padding: 0;
+  padding: 4px;
   flex-shrink: 0;
   font-size: var(--btn-icon-size);
   aspect-ratio: 1 / 1;
