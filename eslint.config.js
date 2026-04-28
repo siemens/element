@@ -148,4 +148,63 @@ export const templateConfig = defineConfig({
   }
 });
 
-export default defineConfig(...tsConfig, ...templateConfig);
+export const indexBarrelConfig = defineConfig({
+  files: ['**/index.ts'],
+  rules: {
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'ExportNamedDeclaration[declaration]',
+        message:
+          'index.ts files must only re-export from other modules. Move declarations to a dedicated file.'
+      },
+      {
+        selector: 'VariableDeclaration',
+        message:
+          'index.ts files must only re-export from other modules. Move declarations to a dedicated file.'
+      },
+      {
+        selector: 'FunctionDeclaration',
+        message:
+          'index.ts files must only re-export from other modules. Move declarations to a dedicated file.'
+      },
+      {
+        selector: 'ClassDeclaration',
+        message:
+          'index.ts files must only re-export from other modules. Move declarations to a dedicated file.'
+      },
+      {
+        selector: 'TSInterfaceDeclaration',
+        message:
+          'index.ts files must only re-export from other modules. Move declarations to a dedicated file.'
+      },
+      {
+        selector: 'TSTypeAliasDeclaration',
+        message:
+          'index.ts files must only re-export from other modules. Move declarations to a dedicated file.'
+      },
+      {
+        selector: 'TSEnumDeclaration',
+        message:
+          'index.ts files must only re-export from other modules. Move declarations to a dedicated file.'
+      },
+      {
+        selector: 'ExportDefaultDeclaration',
+        message:
+          'index.ts files must only use named re-exports. Default exports are not allowed in barrel files.'
+      },
+      {
+        selector: 'TSModuleDeclaration',
+        message:
+          'index.ts files must only re-export from other modules. Move namespace declarations to a dedicated file.'
+      },
+      {
+        selector: 'ExpressionStatement',
+        message:
+          'index.ts files must only re-export from other modules. Move expressions to a dedicated file.'
+      }
+    ]
+  }
+});
+
+export default defineConfig(...tsConfig, ...templateConfig, ...indexBarrelConfig);
