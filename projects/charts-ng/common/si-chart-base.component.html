@@ -34,7 +34,16 @@
         />
       }
     }
-    <div #chart class="echart-container" [style.height.px]="containerHeight()"></div>
+    <div
+      #chart
+      class="echart-container"
+      [style.height.px]="containerHeight()"
+      [attr.tabindex]="showCustomLegend() ? 0 : null"
+      [attr.role]="showCustomLegend() ? 'application' : null"
+      [attr.aria-label]="showCustomLegend() ? ariaLabel() || 'Chart' : null"
+      (focus)="onChartFocus()"
+      (blur)="onChartBlur()"
+    ></div>
   </div>
 </div>
 @if (externalZoomSlider()) {
