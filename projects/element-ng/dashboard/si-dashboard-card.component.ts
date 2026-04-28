@@ -14,12 +14,9 @@ import {
   signal
 } from '@angular/core';
 import { elementPinch, elementZoom } from '@siemens/element-icons';
-import { SiCardComponent } from '@siemens/element-ng/card';
+import { SiCardComponent, SiCardHeaderComponent } from '@siemens/element-ng/card';
 import { MenuItem } from '@siemens/element-ng/common';
-import {
-  ContentActionBarMainItem,
-  SiContentActionBarComponent
-} from '@siemens/element-ng/content-action-bar';
+import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { addIcons } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -27,7 +24,7 @@ import { SiDashboardService } from './si-dashboard.service';
 
 @Component({
   selector: 'si-dashboard-card',
-  imports: [SiContentActionBarComponent, SiTranslatePipe],
+  imports: [SiCardHeaderComponent, SiTranslatePipe],
   templateUrl: './si-dashboard-card.component.html',
   styleUrl: './si-dashboard-card.component.scss',
   host: {

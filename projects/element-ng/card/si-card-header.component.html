@@ -1,0 +1,24 @@
+<ng-content select="[headerIcon]" />
+<div class="heading">
+  @if (heading()) {
+    <div class="text-truncate si-h5" [id]="headingId()">{{ heading() | translate }}</div>
+  }
+  @if (subHeading()) {
+    <div class="text-truncate si-body text-secondary pt-2" [id]="subHeadingId()">
+      {{ subHeading() | translate }}
+    </div>
+  }
+</div>
+
+<div class="cab d-flex ms-6 my-n4 me-n5">
+  @if (displayContentActionBar()) {
+    <si-content-action-bar
+      class="ms-auto"
+      [primaryActions]="primaryActions()"
+      [secondaryActions]="secondaryActions()"
+      [actionParam]="actionParam()"
+      [viewType]="actionBarViewType()"
+      [attr.title]="actionBarTitle() | translate"
+    />
+  }
+</div>

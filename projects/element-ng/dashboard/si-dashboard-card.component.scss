@@ -1,7 +1,3 @@
-@use 'sass:map';
-
-@use '@siemens/element-theme/src/styles/variables';
-
 :host {
   &.card-horizontal {
     flex-direction: row;
@@ -14,19 +10,6 @@
     position: absolute;
     inset: 0;
   }
-}
-
-.text-truncate {
-  flex: 0 1 auto;
-}
-
-.heading {
-  overflow: hidden;
-}
-
-.cab {
-  flex: 1 0 0;
-  min-inline-size: 40px;
 }
 
 .card-img-top {

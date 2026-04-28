@@ -4,19 +4,16 @@
  */
 import { Component, computed, input } from '@angular/core';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
-import {
-  ContentActionBarMainItem,
-  SiContentActionBarComponent,
-  ViewType
-} from '@siemens/element-ng/content-action-bar';
+import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiCardBaseDirective } from './si-card-base.directive';
+import { SiCardHeaderComponent } from './si-card-header.component';
 
 @Component({
   selector: 'si-card',
-  imports: [SiContentActionBarComponent, SiTranslatePipe],
+  imports: [SiCardHeaderComponent, SiTranslatePipe],
   templateUrl: './si-card.component.html',
   styleUrl: './si-card.component.scss'
 })
