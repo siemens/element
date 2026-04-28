@@ -40,13 +40,6 @@ export default defineConfig(
           style: 'camelCase'
         }
       ],
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: 'TSEnumDeclaration',
-          message: "Don't declare enums"
-        }
-      ],
       '@typescript-eslint/no-deprecated': ['off']
     }
   },
