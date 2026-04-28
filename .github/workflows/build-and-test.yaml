@@ -35,7 +35,7 @@ jobs:
       - run: npm run prepare-brand
       - run: npm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
       - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
-      - run: npm run build:examples -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
+      - run: npm run build:examples:prod -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
       - run: npm run dashboards-demo:build-all -- --progress=false
       - run: npm run dashboards-demo:build-all:esm
 
