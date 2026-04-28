@@ -63,6 +63,16 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   readonly textOnly = input(false, { transform: booleanAttribute });
 
   /**
+   * When `true`, item-groups always open as a transient flyout panel adjacent to the
+   * trigger, regardless of whether the navbar is collapsed or expanded.
+   * Flyouts open on hover or click and close when the pointer leaves both the
+   * trigger and the flyout panel.
+   *
+   * @defaultValue false
+   */
+  readonly alwaysOpenGroupsInFlyout = input(false, { transform: booleanAttribute });
+
+  /**
    * List of vertical navigation items
    *
    * @deprecated Use the template-based declarative API with content projection instead. Use `<si-navbar-vertical-next-items>` and
