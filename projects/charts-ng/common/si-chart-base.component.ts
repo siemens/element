@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -56,6 +57,12 @@ import { themeSupport } from './theme-support';
   templateUrl: './si-chart-base.component.html',
   styleUrl: './si-chart-base.component.scss',
   host: {
+    '[attr.tabindex]': '!showCustomLegend() ? 0 : null',
+    '[attr.role]': '!showCustomLegend() ? "application" : null',
+    '[attr.aria-label]': '!showCustomLegend() ? (title() || "Chart") : null',
+    '(keydown)': 'onChartKeydown($event)',
+    '(focus)': 'onChartFocus()',
+    '(blur)': 'onChartBlur()',
     '(window:theme-switch)': 'themeSwitch()'
   }
 })
@@ -74,7 +81,6 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   protected readonly siCustomLegend = viewChildren('siCustomLegend', {
     read: SiCustomLegendComponent
   });
-
   /**
    * See [ECharts 5.x Documentation]{@link https://echarts.apache.org/en/option.html}
    * for all available options.
@@ -86,6 +92,10 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   readonly title = input<string>();
   /** The subtitle of the chart. */
   readonly subTitle = input<string>();
+  /**
+   * Aria label for the chart.
+   */
+  readonly ariaLabel = input<string>();
   /**
    * Show Echarts legend
    *
@@ -262,6 +272,10 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   private extZoomSliderChart!: echarts.ECharts;
   private echartElement!: HTMLElement;
   private eChartExtSliderElement!: HTMLElement;
+  /** Tracks which data point is currently highlighted via keyboard navigation. */
+  private keyNavDataIndex = 0;
+  /** True when focus is arriving from a mouse click — suppresses the keyboard-nav showTip on focus. */
+  private focusFromMouse = false;
   protected readonly inProgress = signal(false);
   protected readonly backgroundColor = signal('');
   protected readonly textColor = signal('');
@@ -283,6 +297,8 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   private measureCanvas?: CanvasRenderingContext2D;
   private readonly cdRef = inject(ChangeDetectorRef);
   private readonly ngZone = inject(NgZone);
+  private readonly hostEl = inject(ElementRef<HTMLElement>);
+  private readonly liveAnnouncer = inject(LiveAnnouncer);
 
   protected curWidth = 0;
   protected curHeight = 0;
@@ -537,6 +553,7 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
       const opts = { renderer: this.renderer() };
       this.chart = echarts.init(chartContainerEl, this.activeTheme, opts);
       this.echartElement = chartContainerEl as HTMLElement;
+
       this.getEChartInner()?.addEventListener('mousedown', this.echartMouseDown);
       this.chart.setOption(this.actualOptions);
       setTimeout(() => this.checkGridSizeChange());
@@ -725,6 +742,249 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   protected themeChanged(): void {}
 
   protected applyOptions(): void {}
+
+  /** Shows the tooltip at the first data point when the chart receives focus. */
+  protected onChartFocus(): void {
+    if (!this.chart) {
+      return;
+    }
+    // When focus arrives from a mouse click, ECharts handles the tooltip itself — skip keyboard-nav showTip.
+    if (this.focusFromMouse) {
+      this.focusFromMouse = false;
+      this.keyNavDataIndex = 0;
+      return;
+    }
+    this.keyNavDataIndex = 0;
+    const series = this.actualOptions.series;
+    const firstDataSeriesIndex = Array.isArray(series)
+      ? series.findIndex((s: any) => Array.isArray(s?.data) && s.data.length > 0)
+      : -1;
+    if (firstDataSeriesIndex < 0) {
+      return;
+    }
+    this.ngZone.runOutsideAngular(() => {
+      this.chart.dispatchAction({
+        type: 'showTip',
+        seriesIndex: firstDataSeriesIndex,
+        dataIndex: 0
+      });
+    });
+    this.announceDataPoint(0);
+  }
+
+  protected onChartBlur(): void {
+    if (!this.chart) {
+      return;
+    }
+    this.ngZone.runOutsideAngular(() => {
+      this.chart.dispatchAction({ type: 'hideTip' });
+      // Clear the axis pointers, highlights, and hover states  when the
+      // chart loses focus — matching the visual reset that a real mouseout triggers.
+      this.chart.getZr().trigger('globalout', {});
+    });
+  }
+
+  protected onChartKeydown(event: KeyboardEvent): void {
+    if (!this.chart) {
+      return;
+    }
+
+    if (this.handleLegendKeydown(event)) {
+      return;
+    }
+
+    if (this.handleZoomKeydown(event)) {
+      return;
+    }
+
+    this.handleTooltipKeydown(event);
+  }
+
+  /**
+   * Handles keyboard navigation within the custom-legend items.
+   */
+  private handleLegendKeydown(event: KeyboardEvent): boolean {
+    const legendItems = Array.from(
+      this.hostEl.nativeElement.querySelectorAll('.legend-item')
+    ) as HTMLElement[];
+    const legendIdx = legendItems.indexOf(event.target as HTMLElement);
+    if (legendIdx === -1) {
+      return false;
+    }
+
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      legendItems[legendIdx + 1]?.focus();
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      legendItems[legendIdx - 1]?.focus();
+    } else if (event.key === 'Tab' && !event.shiftKey) {
+      // Tab from any legend item jumps directly to the chart container.
+      event.preventDefault();
+      this.chartContainer()?.nativeElement?.focus();
+    }
+    return true;
+  }
+
+  /**
+   * Handles zoom-slider keyboard controls when the zoom slider is enabled.
+   */
+  private handleZoomKeydown(event: KeyboardEvent): boolean {
+    if (!this.zoomSlider()) {
+      return false;
+    }
+
+    const dz = this.getOptionNoClone()?.dataZoom?.[0];
+    if (dz === undefined) {
+      return false;
+    }
+
+    const step = 10;
+    let start: number = dz.start ?? 0;
+    let end: number = dz.end ?? 100;
+    const span = end - start;
+    let handled = true;
+
+    if (event.key === '+' || event.key === '=') {
+      // Zoom in: shrink the visible window symmetrically around its centre.
+      event.preventDefault();
+      const center = (start + end) / 2;
+      const newHalf = Math.max(span / 2 - step / 2, step / 2);
+      start = Math.max(0, center - newHalf);
+      end = Math.min(100, center + newHalf);
+    } else if (event.key === '-') {
+      // Zoom out: grow the visible window symmetrically around its centre.
+      event.preventDefault();
+      const center = (start + end) / 2;
+      const newHalf = Math.min(span / 2 + step / 2, 50);
+      start = Math.max(0, center - newHalf);
+      end = Math.min(100, center + newHalf);
+    } else if (event.shiftKey && event.key === 'ArrowLeft') {
+      // Pan left: shift the window towards the start.
+      event.preventDefault();
+      start = Math.max(0, start - step);
+      end = start + span;
+      if (end > 100) {
+        end = 100;
+        start = 100 - span;
+      }
+    } else if (event.shiftKey && event.key === 'ArrowRight') {
+      // Pan right: shift the window towards the end.
+      event.preventDefault();
+      end = Math.min(100, end + step);
+      start = end - span;
+      if (start < 0) {
+        start = 0;
+        end = span;
+      }
+    } else if (event.key === 'Home') {
+      // Reset to the full data range.
+      event.preventDefault();
+      start = 0;
+      end = 100;
+    } else {
+      handled = false;
+    }
+
+    if (handled) {
+      this.ngZone.runOutsideAngular(() => {
+        this.chart.dispatchAction({ type: 'dataZoom', start, end });
+      });
+    }
+    return handled;
+  }
+
+  /**
+   * Handles tooltip/data-point keyboard navigation on the chart.
+   * Escape clears the tooltip and resets ECharts hover state.
+   * ArrowLeft/Right move the highlighted data point along the first data series.
+   */
+  private handleTooltipKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      this.ngZone.runOutsideAngular(() => {
+        this.chart.dispatchAction({ type: 'hideTip' });
+        // Simulate a mouse-leave on ECharts' internal renderer (ZRender) so that
+        // axis pointers, highlights, and hover states are fully cleared — same as onChartBlur.
+        this.chart.getZr().trigger('globalout', {});
+      });
+      return;
+    }
+
+    const series = this.actualOptions.series;
+    if (!Array.isArray(series) || series.length === 0) {
+      return;
+    }
+
+    // Find the first series that has actual data to navigate.
+    const firstDataSeriesIndex = series.findIndex(
+      (s: any) => Array.isArray(s?.data) && s.data.length > 0
+    );
+    if (firstDataSeriesIndex < 0) {
+      return;
+    }
+    const dataLen = (series[firstDataSeriesIndex] as any).data.length as number;
+
+    switch (event.key) {
+      case 'ArrowRight': {
+        event.preventDefault();
+        this.keyNavDataIndex = Math.min(this.keyNavDataIndex + 1, dataLen - 1);
+        break;
+      }
+      case 'ArrowLeft': {
+        event.preventDefault();
+        this.keyNavDataIndex = Math.max(this.keyNavDataIndex - 1, 0);
+        break;
+      }
+      default:
+        return;
+    }
+
+    this.ngZone.runOutsideAngular(() => {
+      this.chart.dispatchAction({
+        type: 'showTip',
+        seriesIndex: firstDataSeriesIndex,
+        dataIndex: this.keyNavDataIndex
+      });
+    });
+    this.announceDataPoint(this.keyNavDataIndex);
+  }
+  /**
+   * Announces the current keyboard-navigated data point to screen readers via
+   * Angular CDK LiveAnnouncer.
+   */
+  private announceDataPoint(dataIndex: number): void {
+    const series = this.actualOptions.series;
+    if (!Array.isArray(series)) {
+      return;
+    }
+
+    let xLabel: string | undefined;
+    const parts = series
+      .filter((s: any) => Array.isArray(s?.data) && s.data[dataIndex] != null)
+      .map((s: any) => {
+        const point = s.data[dataIndex];
+        const value = Array.isArray(point)
+          ? ((xLabel ??= String(point[0])), point[1])
+          : (point?.value ?? point);
+        return s.name ? `${s.name}: ${value}` : String(value);
+      });
+
+    if (xLabel === undefined) {
+      const xAxisData = Array.isArray(this.actualOptions.xAxis)
+        ? this.actualOptions.xAxis[0]?.data
+        : this.actualOptions.xAxis?.data;
+      xLabel = Array.isArray(xAxisData)
+        ? String(xAxisData[dataIndex] ?? '') || undefined
+        : undefined;
+    }
+
+    if (parts.length > 0) {
+      this.liveAnnouncer.announce(
+        xLabel ? `${xLabel}. ${parts.join('. ')}` : parts.join('. '),
+        'polite'
+      );
+    }
+  }
 
   protected applyCustomLegendPosition(): void {
     if (this.showLegend() && this.showCustomLegend()) {
@@ -995,6 +1255,7 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   }
 
   private handleChartMouseDown(): void {
+    this.focusFromMouse = true;
     window.addEventListener('mouseup', this.echartMouseUp);
   }
 

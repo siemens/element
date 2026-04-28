@@ -18,27 +18,34 @@
           </div>
           <div
             class="legend-item-container both-scenario-legend-container custom-legend-left"
+            role="toolbar"
+            aria-label="Chart legend"
             [class.legend-single-axis]="customLegend()?.legendAxis === 'left'"
           >
             @for (legendItem of leg.list; track legendItem.name) {
-              <div class="legend-item" [class.hidden-legend]="!legendItem.selected">
+              <div
+                class="legend-item"
+                role="button"
+                tabindex="0"
+                [class.hidden-legend]="!legendItem.selected"
+                [attr.aria-pressed]="legendItem.selected"
+                [attr.aria-label]="legendItem.displayName"
+                (click)="legendItemToggle(legendItem)"
+                (keydown.enter)="legendItemToggle(legendItem)"
+                (keydown.space)="$event.preventDefault(); legendItemToggle(legendItem)"
+                (mouseenter)="legendHoverStartEvent.emit(legendItem)"
+                (mouseleave)="legendHoverEndEvent.emit(legendItem)"
+              >
                 <div
-                  class="me-4 d-flex align-items-center justify-content-center"
-                  (click)="legendIconClick(legendItem)"
-                  (mouseenter)="legendHoverStartEvent.emit(legendItem)"
-                  (mouseleave)="legendHoverEndEvent.emit(legendItem)"
+                  class="me-4 d-flex align-items-center justify-content-center symbol-focus-target"
                 >
-                  <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
+                  <svg width="12" height="12" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+                    <path class="symbol-focus-ring" fill="none" [attr.d]="legendItem.symbol" />
+                    <path class="symbol-focus-gap" fill="none" [attr.d]="legendItem.symbol" />
                     <path [attr.d]="legendItem.symbol" [attr.fill]="legendItem.color" />
                   </svg>
                 </div>
-                <span
-                  class="legend-text text-truncate"
-                  [style.color]="textColor()"
-                  (click)="legendClick(legendItem)"
-                  (mouseenter)="legendHoverStartEvent.emit(legendItem)"
-                  (mouseleave)="legendHoverEndEvent.emit(legendItem)"
-                >
+                <span class="legend-text text-truncate" [style.color]="textColor()">
                   {{ legendItem.displayName }}
                 </span>
                 @if (legendItem.tooltip) {
@@ -66,24 +73,32 @@
         >
           <div
             class="legend-item-container custom-legend-right legend-item-container-right-floating-inner"
+            role="toolbar"
+            aria-label="Chart legend"
           >
             @for (legendItem of leg.list; track legendItem.name) {
               <div
                 class="legend-item legend-item-right"
+                role="button"
+                tabindex="0"
                 [class.hidden-legend]="!legendItem.selected"
+                [attr.aria-pressed]="legendItem.selected"
+                [attr.aria-label]="legendItem.displayName"
+                (click)="legendItemToggle(legendItem)"
+                (keydown.enter)="legendItemToggle(legendItem)"
+                (keydown.space)="$event.preventDefault(); legendItemToggle(legendItem)"
+                (mouseenter)="legendHoverStartEvent.emit(legendItem)"
+                (mouseleave)="legendHoverEndEvent.emit(legendItem)"
               >
-                <span
-                  class="legend-text text-truncate"
-                  [style.color]="textColor()"
-                  (click)="legendClick(legendItem)"
-                >
+                <span class="legend-text text-truncate" [style.color]="textColor()">
                   {{ legendItem.displayName }}
                 </span>
                 <div
-                  class="right-legend-circle d-flex align-items-center justify-content-center"
-                  (click)="legendIconClick(legendItem)"
+                  class="right-legend-circle d-flex align-items-center justify-content-center symbol-focus-target"
                 >
-                  <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
+                  <svg width="12" height="12" overflow="visible" xmlns="http://www.w3.org/2000/svg">
+                    <path class="symbol-focus-ring" fill="none" [attr.d]="legendItem.symbol" />
+                    <path class="symbol-focus-gap" fill="none" [attr.d]="legendItem.symbol" />
                     <path [attr.d]="legendItem.symbol" [attr.fill]="legendItem.color" />
                   </svg>
                 </div>

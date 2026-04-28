@@ -35,6 +35,11 @@ export class SiCustomLegendComponent {
   /** The event emitted when the mouse leaves a legend. */
   readonly legendHoverEndEvent = output<CustomLegendItem>();
 
+  protected legendItemToggle(legend: CustomLegendItem): void {
+    legend.selected = !legend.selected;
+    this.legendIconClickEvent.emit(legend);
+  }
+
   protected legendIconClick(legend: CustomLegendItem): void {
     legend.selected = !legend.selected;
     this.legendIconClickEvent.emit(legend);

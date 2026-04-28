@@ -119,6 +119,23 @@ $default-chart-padding: 32px;
       display: block;
     }
   }
+
+  &:focus-visible {
+    outline: none;
+
+    .symbol-focus-target {
+      outline: none;
+    }
+
+    .symbol-focus-ring {
+      stroke: var(--element-focus-default);
+      stroke-width: 2;
+    }
+
+    .symbol-focus-gap {
+      stroke: var(--element-base-0);
+    }
+  }
 }
 
 .legend-item-right {
