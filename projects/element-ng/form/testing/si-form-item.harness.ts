@@ -30,7 +30,7 @@ export class SiFormItemHarness extends ComponentHarness {
     );
   }
 
-  private readonly getLabelElement = this.locatorForOptional('.form-label');
+  private readonly getLabelElement = this.locatorForOptional('.form-label, .col-form-label');
   private readonly getRequiredIndicator = this.locatorForOptional('.required');
   private readonly getFormCheckLabelElement = this.locatorForOptional('.form-check-label');
   private readonly getInvalidFeedback = this.locatorForAll('.invalid-feedback div');

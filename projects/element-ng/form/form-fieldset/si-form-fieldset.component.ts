@@ -9,11 +9,13 @@ import {
   computed,
   DoCheck,
   HostBinding,
+  inject,
   input,
   signal
 } from '@angular/core';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
+import { SiFormContainerComponent } from '../si-form-container/si-form-container.component';
 import { SiFormItemComponent } from '../si-form-item/si-form-item.component';
 
 @Component({
@@ -78,6 +80,8 @@ export class SiFormFieldsetComponent implements DoCheck {
 
   @HostBinding('attr.aria-labelledby')
   protected labelId = `__si-form-fieldset-label-${SiFormFieldsetComponent.labelIdCounter++}`;
+
+  protected container = inject(SiFormContainerComponent, { optional: true });
 
   ngDoCheck(): void {
     this.touched.set(this.formItems().some(item => item.ngControl()?.touched));
