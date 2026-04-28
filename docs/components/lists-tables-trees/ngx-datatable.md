@@ -1,6 +1,6 @@
-# NGX-datatable
+# ngx-datatable
 
-**NGX-datatable** is the default solution for large and interactive tables.
+**ngx-datatable** is the default solution for large and interactive tables.
 It is open-source software under MIT license and maintained by Siemens.
 
 ## Usage ---
@@ -8,7 +8,7 @@ It is open-source software under MIT license and maintained by Siemens.
 It supports sorting, filtering, paging, selection, virtualization, and keyboard interaction,
 while remaining flexible about data handling.
 
-![NGX-datatable](images/NGX-datatable.png)
+![ngx-datatable](images/NGX-datatable.png)
 
 ### When to use
 
