@@ -1,5 +1,5 @@
 name: Post CI Fix Prompt
-description: Collects failure logs for the current job and posts an AI fix prompt as a sticky PR comment
+description: Collects failure logs for a completed job and posts an AI fix prompt as a sticky PR comment
 
 inputs:
   job-title:
@@ -8,10 +8,9 @@ inputs:
   comment-header:
     description: Unique identifier for the sticky comment (used for dedup/update)
     required: true
-  job-name-pattern:
-    description: Pattern to match the current job name in the GitHub API (useful for matrix jobs)
-    required: false
-    default: ''
+  target-job-name:
+    description: Substring to match the target job name in the GitHub API (e.g. "verification", "e2e (1, 3)")
+    required: true
 
 runs:
   using: composite
@@ -20,13 +19,13 @@ runs:
       uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
       env:
         JOB_TITLE: ${{ inputs.job-title }}
-        JOB_NAME_PATTERN: ${{ inputs.job-name-pattern }}
+        TARGET_JOB_NAME: ${{ inputs.target-job-name }}
       with:
         script: |
           const fs = require('fs');
           const { owner, repo } = context.repo;
           const jobTitle = process.env.JOB_TITLE;
-          const jobNamePattern = process.env.JOB_NAME_PATTERN;
+          const targetJobName = process.env.TARGET_JOB_NAME;
 
           const { data: { jobs } } = await github.rest.actions.listJobsForWorkflowRun({
             owner, repo,
@@ -35,36 +34,27 @@ runs:
             per_page: 100
           });
 
-          // Find the current job: it is in_progress and has at least one failed step.
-          // For matrix jobs, use the provided pattern to disambiguate.
-          const candidates = jobs.filter(j =>
-            j.status === 'in_progress' &&
-            j.steps?.some(s => s.conclusion === 'failure')
+          // Find the target job — it should be completed with conclusion 'failure'
+          const targetJob = jobs.find(j =>
+            j.conclusion === 'failure' &&
+            j.name.includes(targetJobName)
           );
 
-          let currentJob;
-          if (candidates.length === 1) {
-            currentJob = candidates[0];
-          } else if (candidates.length > 1 && jobNamePattern) {
-            currentJob = candidates.find(j => j.name.includes(jobNamePattern)) || candidates[0];
-          } else {
-            currentJob = candidates[0];
-          }
-
-          if (!currentJob) {
-            core.warning('Could not find the current failing job');
+          if (!targetJob) {
+            core.warning(`Could not find failed job matching "${targetJobName}"`);
             return;
           }
 
-          const failedSteps = (currentJob.steps || [])
+          const failedSteps = (targetJob.steps || [])
             .filter(s => s.conclusion === 'failure')
             .map(s => s.name);
 
           const MAX_LOG_LINES = 80;
           let logs = '';
+
           try {
             const resp = await github.rest.actions.downloadJobLogsForWorkflowRun({
-              owner, repo, job_id: currentJob.id
+              owner, repo, job_id: targetJob.id
             });
             const raw = typeof resp.data === 'string'
               ? resp.data
@@ -92,7 +82,7 @@ runs:
           }
 
           let prompt = `The CI pipeline failed in the "${jobTitle}" job. Fix the following issues:\n\n`;
-          prompt += `FAILED: ${currentJob.name}\n`;
+          prompt += `FAILED: ${targetJob.name}\n`;
           if (failedSteps.length) {
             prompt += `Steps: ${failedSteps.join(', ')}\n`;
           }
@@ -117,7 +107,7 @@ runs:
             '',
             '</details>',
             '',
-            `[View failed job](${currentJob.html_url})`
+            `[View failed job](${targetJob.html_url})`
           ].join('\n');
 
           fs.writeFileSync('ci-fix-prompt.md', body);
