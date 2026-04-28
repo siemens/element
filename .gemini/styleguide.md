@@ -44,6 +44,13 @@ conventions and best practices when reviewing code.
 - Use `fixture.detectChanges()` deliberately for the initial render or when the change detection boundary itself is under test
 - Do NOT chain multiple `detectChanges()` calls hoping to flush async work — use `whenStable()` instead
 
+## Test Assertions
+
+- Prefer Vitest's semantic assertion matchers over generic `.toBe()` with manual property access — they produce clearer failure messages and more readable tests
+- Use `toHaveLength(n)` instead of accessing `.length` manually: `expect(items).toHaveLength(3)` not `expect(items.length).toBe(3)`
+- Use `toContain(item)` instead of `expect(array.includes(item)).toBe(true)`
+- Use `toMatchObject(subset)` to assert on a subset of properties instead of multiple individual `.toBe()` assertions
+
 ## Templates
 
 - Keep templates simple and avoid complex logic
