@@ -1,3 +1,41 @@
+# [49.7.0](https://github.com/siemens/element/compare/v49.6.0...v49.7.0) (2026-04-28)
+
+
+### Features
+
+* **ag-grid:** support version v35 ([e5e5ea1](https://github.com/siemens/element/commit/e5e5ea1cfc48ab5be8a47e86661fdfdfa59588a2))
+* **forms:** align input colors with guidelines ([4e2704f](https://github.com/siemens/element/commit/4e2704f3d524d6cbb3c6fdb1e0fea086be85212c))
+* **live-preview:** allow overriding root font size ([b4281a7](https://github.com/siemens/element/commit/b4281a78a6b66ec0513dfacd475a40210efb4b36))
+* **modal:** migrate .modal to use CSS starting-style instead of using timers ([a9f2d08](https://github.com/siemens/element/commit/a9f2d08166de3149574cd729d21bb45b76a35908))
+* **navbar-vertical-next:** add footer items support via si-navbar-vertical-next-footer-items ([ba5b62f](https://github.com/siemens/element/commit/ba5b62fb1e24175375a706e4ed11170d154f96fd))
+* **side-panel:** improve accessibility ([e6dd452](https://github.com/siemens/element/commit/e6dd452fe902e1d937dd169485bcd284efe994c2))
+
+
+### Bug Fixes
+
+* **about:** remove additional border and margin around pre tag ([999229c](https://github.com/siemens/element/commit/999229c457fbdb802bebc6ccbfc5eaac51d6864a))
+* **buttons:** keep label and icon size consistent across button sizes ([5aca798](https://github.com/siemens/element/commit/5aca7986d48bbe53bb94d041f272c71be6009db3))
+* **charts/gauge:** remove minvalue workaround ([2b673cd](https://github.com/siemens/element/commit/2b673cd854b38c52692a8a04baf9d72b7c0138dc))
+* **charts:** retain grid config on theme change ([e91f41c](https://github.com/siemens/element/commit/e91f41cf3ab4eb185d4b723b0c2592f2a00d016a))
+* **dashboard-card:** display subHeading ([9877b8b](https://github.com/siemens/element/commit/9877b8b6e7f4bae2d7e0fbe5599198062f17d363)), closes [#1874](https://github.com/siemens/element/issues/1874)
+* **dashboards-ng:** align catalog list styles with UX guidelines ([ca79c3e](https://github.com/siemens/element/commit/ca79c3ec14283d1db4eff65c485741e008280da1))
+* **dashboards-ng:** do not clip focus-ring in footer ([d420a52](https://github.com/siemens/element/commit/d420a52f76e03f47a1f0cafa3ba0e42fca77b0bb))
+* **dashboards-ng:** preserve auto-positioned widget layout on cancel ([841a990](https://github.com/siemens/element/commit/841a990115699330117c4c268a4d93c94490ad71))
+* **date-range-filter:** fix range selection, display message when incomplete ([c081396](https://github.com/siemens/element/commit/c08139677dcd43e8930659817cc889063509a5df))
+* **datepicker:** correct offset of calendar icon ([a7b6d98](https://github.com/siemens/element/commit/a7b6d98468b729146a537954f8bb4928d865592e))
+* **datepicker:** correctly classify noon as PM in si-timepicker meridian detection ([91263f0](https://github.com/siemens/element/commit/91263f0b18a51dfb9c2476062bcc464fe9057fd6)), closes [#1886](https://github.com/siemens/element/issues/1886)
+* **element-theme:** align `card-header` typography to design specs ([e8172bc](https://github.com/siemens/element/commit/e8172bca792f52ab002197d51a90df304bda64ba))
+* **forms:** align `.form-control` text-color with UX specs ([d9f1f99](https://github.com/siemens/element/commit/d9f1f99e63911d3c4bc4eb511516e6638740d1e0))
+* **header-dropdown:** decrement backdrop counter for every nested level on close ([f17380e](https://github.com/siemens/element/commit/f17380ec3ed6468b44ce374ae24b9307f0d8ab68))
+* **list-widget:** use translated labels for list widget filtering and sorting ([376f9bd](https://github.com/siemens/element/commit/376f9bd13dccc2b4a7f9d6677a4e3a6621654625))
+* **live-preview:** rendering error text not readable ([9d0e650](https://github.com/siemens/element/commit/9d0e65081d4d863466b08966aea0306f677620be))
+* **loading-spinner:** update blocking state when toggled at runtime ([143ca08](https://github.com/siemens/element/commit/143ca087b09dbe730b1fcf5b1c898096943ff678))
+* **native-charts:** fix visual in single gauge chart with min > 0 ([d21ec84](https://github.com/siemens/element/commit/d21ec84791a68a9273aa13c1eef5ea5df780bcdb))
+* **pagination:** improve accessibility of current page button ([2db7ded](https://github.com/siemens/element/commit/2db7ded32015b6e6d04253455c5a4f239d4ea376))
+* **pills-input:** show correct cursor when hovering delete ([14d3b44](https://github.com/siemens/element/commit/14d3b44a6ab774e33b2174fc4475d33b6c63c4e6)), closes [#888](https://github.com/siemens/element/issues/888)
+* **status-bar:** fix responsive mode items not updating ([88e97e4](https://github.com/siemens/element/commit/88e97e4a20b7b09d9b751e20af0ef51216087ab8))
+* **status-bar:** focus outline hidden behind background color ([45c83d6](https://github.com/siemens/element/commit/45c83d62f905480bf035ba2a3acc78b1424e9073))
+
 # [49.6.0](https://github.com/siemens/element/compare/v49.5.0...v49.6.0) (2026-04-13)
 
 
