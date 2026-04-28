@@ -104,6 +104,10 @@ export const tsConfig = defineConfig({
     'no-restricted-syntax': [
       'error',
       {
+        selector: 'TSEnumDeclaration',
+        message: "Don't declare enums"
+      },
+      {
         selector: 'TSTypeReference:not([typeArguments]) > Identifier[name="SimpleChanges"]',
         message: 'Use SimpleChanges<this> instead of plain SimpleChanges'
       }
