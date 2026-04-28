@@ -1,0 +1,123 @@
+<div class="has-navbar-fixed-top si-layout-fixed-height h-100">
+  <si-application-header>
+    <si-header-brand>
+      <h1 class="application-name">Bulk actions with side panel detail</h1>
+    </si-header-brand>
+  </si-application-header>
+
+  <si-side-panel
+    mode="scroll"
+    size="regular"
+    [collapsed]="panelCollapsed()"
+    (closed)="closePanel()"
+  >
+    <div class="si-layout-fixed-height si-layout-main-padding">
+      <ngx-datatable
+        #table
+        class="table-element si-layout-fixed-height"
+        siDatatableInteraction
+        columnMode="force"
+        [class.bulk-actions-mode]="checked().size > 0"
+        [selectionType]="checked().size > 0 ? undefined : 'single'"
+        [summaryRow]="checked().size > 0"
+        [summaryHeight]="tableConfig.rowHeightSmall"
+        [rows]="rows()"
+        [columns]="columns"
+        [rowHeight]="tableConfig.rowHeightSmall"
+        [scrollbarV]="true"
+        [footerHeight]="0"
+        [(selected)]="selectedRow"
+        (siResizeObserver)="table.recalculate()"
+        (selectedChange)="panelCollapsed.set(false)"
+      />
+    </div>
+
+    <si-side-panel-content>
+      <div class="d-flex flex-column h-100">
+        @if (checked().size > 0) {
+          <si-empty-state icon="element-user-group" [heading]="checked().size + ' rows selected'" />
+        } @else if (selectedRow().length === 1) {
+          @let selectedRow = this.selectedRow()[0];
+          <div class="p-6">
+            <div class="mb-4">
+              <label for="detailName" class="form-label">Name</label>
+              <input
+                readonly
+                type="text"
+                class="form-control"
+                id="detailName"
+                [value]="selectedRow.name"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="detailDepartment" class="form-label">Department</label>
+              <input
+                readonly
+                type="text"
+                class="form-control"
+                id="detailDepartment"
+                [value]="selectedRow.department"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="detailRole" class="form-label">Role</label>
+              <input
+                readonly
+                type="text"
+                class="form-control"
+                id="detailRole"
+                [value]="selectedRow.role"
+              />
+            </div>
+            <div class="mb-0">
+              <label for="detailStatus" class="form-label">Status</label>
+              <input
+                readonly
+                type="text"
+                class="form-control"
+                id="detailStatus"
+                [value]="selectedRow.status"
+              />
+            </div>
+          </div>
+          <div class="mt-auto p-5">
+            <button type="button" class="btn btn-primary w-100" (click)="acknowledge()">
+              Acknowledge
+            </button>
+          </div>
+        }
+      </div>
+    </si-side-panel-content>
+  </si-side-panel>
+</div>
+
+<ng-template #checkboxHeaderTmpl>
+  <input
+    type="checkbox"
+    class="form-check-input"
+    aria-label="Select all"
+    [checked]="allChecked()"
+    [indeterminate]="someChecked()"
+    (change)="toggleAll()"
+  />
+</ng-template>
+
+<ng-template #checkboxCellTmpl let-row="row">
+  <input
+    type="checkbox"
+    class="form-check-input"
+    [attr.aria-label]="'Select ' + row.name"
+    [checked]="checked().has(row.id)"
+    (click)="$event.stopPropagation()"
+    (change)="toggleRow(row)"
+  />
+</ng-template>
+
+<ng-template #bulkActionsTemplate>
+  <div class="d-flex align-items-center">
+    <span class="text-body text-nowrap fw-normal">{{ checked().size }} selected</span>
+    <div class="ms-auto">
+      <button type="button" class="btn btn-primary" (click)="acknowledge()"> Acknowledge </button>
+    </div>
+  </div>
+</ng-template>
