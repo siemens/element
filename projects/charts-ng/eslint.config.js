@@ -1,4 +1,4 @@
-import { tsConfig, templateConfig } from '../../eslint.config.js';
+import { tsConfig, templateConfig, indexBarrelConfig } from '../../eslint.config.js';
 import defaultValuePlugin from '@siemens/eslint-plugin-defaultvalue';
 import { defineConfig } from 'eslint/config';
 export default defineConfig(
@@ -36,5 +36,6 @@ export default defineConfig(
       '@typescript-eslint/no-deprecated': ['warn']
     }
   },
-  ...templateConfig
+  ...templateConfig,
+  ...indexBarrelConfig
 );
