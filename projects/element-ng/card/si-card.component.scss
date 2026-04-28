@@ -1,26 +1,7 @@
-@use 'sass:map';
-
-@use '@siemens/element-theme/src/styles/variables/spacers';
-
 :host {
   &.card-horizontal {
     flex-direction: row;
   }
-}
-
-.text-truncate {
-  flex: 0 1 auto;
-}
-
-.heading {
-  flex: 1 1 auto;
-  min-inline-size: 0;
-  overflow: hidden;
-}
-
-.cab {
-  flex: 1 0 0;
-  min-inline-size: 40px;
 }
 
 .card-img-top {
@@ -35,11 +16,6 @@
   inline-size: 50%;
   object-fit: var(--si-card-img-object-fit, scale-down);
   object-position: var(--si-card-img-object-position, left center);
-}
-
-.card-header ::ng-deep .icon[headerIcon] {
-  // The icon would be 8px too high without this.
-  margin-block: - map.get(spacers.$spacers, 2);
 }
 
 .card-content-split {

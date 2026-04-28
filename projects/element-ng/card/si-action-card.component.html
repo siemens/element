@@ -10,19 +10,14 @@
 
 <div class="content-container" [class.card-content-split]="imgSrc()">
   @if (heading()) {
-    <div class="card-header d-flex justify-content-between">
-      <ng-content #cardHeaderIcon select="[headerIcon]" />
-      <div class="heading">
-        @if (heading()) {
-          <div class="text-truncate si-h5" [id]="headingId">{{ heading() | translate }}</div>
-        }
-        @if (subHeading()) {
-          <div class="text-truncate si-body text-secondary pt-2" [id]="subHeadingId">{{
-            subHeading() | translate
-          }}</div>
-        }
-      </div>
-    </div>
+    <si-card-header
+      [heading]="heading()"
+      [subHeading]="subHeading()"
+      [headingId]="headingId"
+      [subHeadingId]="subHeadingId"
+    >
+      <ng-content select="[headerIcon]" ngProjectAs="[headerIcon]" />
+    </si-card-header>
   }
   <div class="d-contents" [id]="contentId">
     <ng-content #cardBody select="[body]" />

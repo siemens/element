@@ -6,6 +6,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, input, model } fr
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiCardBaseDirective } from './si-card-base.directive';
+import { SiCardHeaderComponent } from './si-card-header.component';
 
 /**
  * An action card component that extends the base card component with option to
@@ -21,7 +22,7 @@ import { SiCardBaseDirective } from './si-card-base.directive';
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'button[si-action-card]',
-  imports: [SiTranslatePipe],
+  imports: [SiCardHeaderComponent, SiTranslatePipe],
   templateUrl: './si-action-card.component.html',
   styleUrl: './si-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
