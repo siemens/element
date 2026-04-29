@@ -1,0 +1,48 @@
+<div class="p-5 bg-base-1">
+  <si-form-item label="Location">
+    <app-tree-select
+      class="form-control"
+      [items]="treeItems"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [(ngModel)]="selectedLocation"
+    />
+  </si-form-item>
+
+  <si-form-item label="Location (required)" class="mt-6">
+    <app-tree-select
+      class="form-control"
+      [items]="treeItems"
+      [readonly]="readonly"
+      [formControl]="locationControl"
+    />
+  </si-form-item>
+</div>
+
+<div class="card mt-6 e2e-ignore">
+  <div class="card-header">Control panel</div>
+  <div class="card-body">
+    <div class="mb-6">Current value (ngModel): {{ selectedLocation ?? 'none' }}</div>
+    <div class="mb-6">Current value (formControl): {{ locationControl.value ?? 'none' }}</div>
+    <div class="mb-6">Location valid: {{ locationControl.valid }}</div>
+    <div class="mb-6">
+      <div class="form-check form-check-inline">
+        <label>
+          <input type="checkbox" class="form-check-input" [(ngModel)]="readonly" />
+          <span class="form-check-label">Readonly</span>
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <label>
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [(ngModel)]="disabled"
+            (ngModelChange)="toggleDisabled($event)"
+          />
+          <span class="form-check-label">Disabled</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

@@ -15,3 +15,6 @@ export * from './select-list/si-select-list-has-filter.component';
 export * from './si-select-action.directive';
 export * from './si-select-actions.directive';
 export * from './si-select.types';
+export * from './si-custom-select.directive';
+export * from './si-select-combobox.component';
+export * from './si-select-dropdown.directive';

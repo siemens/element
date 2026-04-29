@@ -1,0 +1,34 @@
+<div class="p-5 bg-base-1">
+  <si-form-item label="Locations">
+    <app-tree-multi-select
+      class="form-control"
+      [items]="treeItems"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [(ngModel)]="selectedLocations"
+    />
+  </si-form-item>
+</div>
+
+<div class="card mt-6 e2e-ignore">
+  <div class="card-header">Control panel</div>
+  <div class="card-body">
+    <div class="mb-6"
+      >Selected: {{ selectedLocations.length ? selectedLocations.join(', ') : 'none' }}</div
+    >
+    <div class="mb-6">
+      <div class="form-check form-check-inline">
+        <label>
+          <input type="checkbox" class="form-check-input" [(ngModel)]="readonly" />
+          <span class="form-check-label">Readonly</span>
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <label>
+          <input type="checkbox" class="form-check-input" [(ngModel)]="disabled" />
+          <span class="form-check-label">Disabled</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
