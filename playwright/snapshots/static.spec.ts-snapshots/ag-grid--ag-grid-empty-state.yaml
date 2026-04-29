@@ -10,5 +10,5 @@
   - rowgroup
   - rowgroup
   - rowgroup
-  - heading "No data to display" [level=3]
+  - heading "No data to display" [level=2]
   - paragraph: There are currently no rows to display in this table.

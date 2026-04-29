@@ -1,5 +1,4 @@
 @use 'sass:map';
-
 @use '@siemens/element-theme/src/styles/variables';
 
 .list-group-item-empty {
@@ -12,7 +11,43 @@
   padding-block: map.get(variables.$spacers, 9);
 }
 
+.list-group-item-empty.auto-responsive {
+  container-type: size;
+  container-name: empty-state;
+}
+
+// With actions (ng-content slot has projected elements)
+.list-group-item-empty:has(span > *) {
+  @container empty-state (height < 152px) {
+    .state-icon {
+      display: none;
+    }
+  }
+
+  @container empty-state (height < 72px) {
+    .state-content {
+      display: none;
+    }
+  }
+}
+
+// Without actions
+.list-group-item-empty:not(:has(span > *)) {
+  @container empty-state (height < 96px) {
+    .state-icon {
+      display: none;
+    }
+  }
+
+  @container empty-state (height < 16px) {
+    .state-content {
+      display: none;
+    }
+  }
+}
+
 .state-icon {
   color: variables.$element-ui-2;
-  font-size: 80px;
+  font-size: 64px;
+  margin-block-end: map.get(variables.$spacers, 6);
 }

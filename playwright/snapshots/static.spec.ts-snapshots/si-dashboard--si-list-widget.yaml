@@ -191,7 +191,7 @@
 - text: Heading
 - menubar:
   - menuitem "Sort descending"
-- heading "No buildings found." [level=3]
+- heading "No buildings found." [level=2]
 - paragraph: Please refine your search.
 - link "Home":
   - /url: "#/"

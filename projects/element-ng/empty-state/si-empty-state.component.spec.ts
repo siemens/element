@@ -11,7 +11,7 @@ import { SiEmptyStateComponent as TestComponent } from '.';
 describe('SiEmptyStateComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let element: HTMLElement;
-  let icon: WritableSignal<string>;
+  let icon: WritableSignal<string | undefined>;
   let heading: WritableSignal<TranslatableString>;
   let content: WritableSignal<TranslatableString | undefined>;
 
@@ -33,10 +33,19 @@ describe('SiEmptyStateComponent', () => {
   it('should display the correct data', async () => {
     await fixture.whenStable();
 
-    expect(element.querySelector('h3')!).toHaveTextContent('No Devices');
+    expect(element.querySelector('h2')!).toHaveTextContent('No Devices');
     expect(element.querySelector('p')!).toHaveTextContent(
       'No devices were detected. Please retry!'
     );
     expect(element.querySelector('.element-icon')!.innerHTML).toBeDefined();
+  });
+
+  it('should not render icon or description when not provided', async () => {
+    icon.set(undefined);
+    content.set(undefined);
+    await fixture.whenStable();
+
+    expect(element.querySelector('si-icon')).toBeNull();
+    expect(element.querySelector('p.text-pre-wrap')).toBeNull();
   });
 });

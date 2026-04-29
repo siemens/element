@@ -9,5 +9,11 @@
   - /url: "#"
 - link "Step 6":
   - /url: "#"
-- heading "Occupied" [level=3]
+- link "Step 7":
+  - /url: "#"
+- link "Step 8":
+  - /url: "#"
+- link "Step 9":
+  - /url: "#"
+- heading "Occupied" [level=2]
 - button "Next"
