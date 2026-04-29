@@ -34,80 +34,79 @@ runs:
             per_page: 100
           });
 
-          // Find the target job — it should be completed with conclusion 'failure'
-          const targetJob = jobs.find(j =>
+          // Find all failed jobs matching the target name
+          const failedJobs = jobs.filter(j =>
             j.conclusion === 'failure' &&
             j.name.includes(targetJobName)
           );
 
-          if (!targetJob) {
+          if (!failedJobs.length) {
             core.warning(`Could not find failed job matching "${targetJobName}"`);
             return;
           }
 
-          const failedSteps = (targetJob.steps || [])
-            .filter(s => s.conclusion === 'failure')
-            .map(s => s.name);
-
           const MAX_LOG_LINES = 80;
-          let logs = '';
-
-          try {
-            const resp = await github.rest.actions.downloadJobLogsForWorkflowRun({
-              owner, repo, job_id: targetJob.id
-            });
-            const raw = typeof resp.data === 'string'
-              ? resp.data
-              : Buffer.isBuffer(resp.data)
-                ? resp.data.toString('utf-8')
-                : String(resp.data);
-
-            const lines = raw
-              .split('\n')
-              .map(l => l.replace(/^\d{4}-\d{2}-\d{2}T[\d:.]+Z\s?/, ''))
-              .map(l => l.replace(/\x1b\[[0-9;]*m/g, ''));
-
-            // Strip post-job cleanup noise
-            const cleanupIdx = lines.findIndex(l => /^Post job cleanup\b/.test(l));
-            logs = (cleanupIdx > -1 ? lines.slice(0, cleanupIdx) : lines)
-              .slice(-MAX_LOG_LINES)
-              .join('\n')
-              .trim();
-          } catch (e) {
-            logs = `Could not retrieve logs: ${e.message}`;
-          }
-
-          if (logs.length > 8000) {
-            logs = '... (truncated)\n' + logs.slice(-8000);
-          }
-
           let prompt = `The CI pipeline failed in the "${jobTitle}" job. Fix the following issues:\n\n`;
-          prompt += `FAILED: ${targetJob.name}\n`;
-          if (failedSteps.length) {
-            prompt += `Steps: ${failedSteps.join(', ')}\n`;
+
+          for (const targetJob of failedJobs) {
+            const failedSteps = (targetJob.steps || [])
+              .filter(s => s.conclusion === 'failure')
+              .map(s => s.name);
+
+            let logs = '';
+
+            try {
+              const resp = await github.rest.actions.downloadJobLogsForWorkflowRun({
+                owner, repo, job_id: targetJob.id
+              });
+              const raw = typeof resp.data === 'string'
+                ? resp.data
+                : Buffer.isBuffer(resp.data)
+                  ? resp.data.toString('utf-8')
+                  : String(resp.data);
+
+              const lines = raw
+                .split('\n')
+                .map(l => l.replace(/^\d{4}-\d{2}-\d{2}T[\d:.]+Z\s?/, ''))
+                .map(l => l.replace(/\x1b\[[0-9;]*m/g, ''));
+
+              // Strip post-job cleanup noise
+              const cleanupIdx = lines.findIndex(l => /^Post job cleanup\b/.test(l));
+              logs = (cleanupIdx > -1 ? lines.slice(0, cleanupIdx) : lines)
+                .slice(-MAX_LOG_LINES)
+                .join('\n')
+                .trim();
+            } catch (e) {
+              logs = `Could not retrieve logs: ${e.message}`;
+            }
+
+            if (logs.length > 8000) {
+              logs = '... (truncated)\n' + logs.slice(-8000);
+            }
+
+            prompt += `FAILED: ${targetJob.name}\n`;
+            if (failedSteps.length) {
+              prompt += `Steps: ${failedSteps.join(', ')}\n`;
+            }
+            prompt += `\nError output:\n---\n${logs}\n---\n\n`;
           }
-          prompt += `\nError output:\n---\n${logs}\n---\n\n`;
+
           prompt += 'Analyze the failure, find the root cause in the codebase, and provide the exact code changes needed to fix it.';
 
           if (prompt.length > 50000) {
             prompt = prompt.slice(0, 50000) + '\n... (truncated)';
           }
 
+          const runUrl = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
           const body = [
-            `### 🔧 CI Fix Prompt — ${jobTitle}`,
-            '',
-            'Copy the prompt below and paste it into your AI coding assistant to fix the failure.',
-            '',
-            '<details>',
-            '<summary>📋 Click to expand prompt</summary>',
+            `<details>`,
+            `<summary><b>🔧 CI Fix Prompt — ${jobTitle}</b></summary>`,
             '',
             '```',
             prompt,
             '```',
             '',
-            '</details>',
-            '',
-            `[View failed job](${targetJob.html_url})`
+            '</details>'
           ].join('\n');
 
           fs.writeFileSync('ci-fix-prompt.md', body);
