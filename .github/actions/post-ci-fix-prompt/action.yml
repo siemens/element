@@ -26,6 +26,7 @@ runs:
           const { owner, repo } = context.repo;
           const jobTitle = process.env.JOB_TITLE;
           const targetJobName = process.env.TARGET_JOB_NAME;
+          const isPlaywright = jobTitle === 'E2E Tests';
 
           const { data: { jobs } } = await github.rest.actions.listJobsForWorkflowRun({
             owner, repo,
@@ -87,6 +88,14 @@ runs:
                   inGroup = true;
                 } else if (line === '##[endgroup]') {
                   inGroup = false;
+                } else if (/^Post job cleanup\b/.test(line)) {
+                  // End current section; everything after this is cleanup noise
+                  if (current.header || current.lines.length) {
+                    sections.push(current);
+                  }
+                  current = { header: '', lines: [] };
+                  inGroup = false;
+                  break;
                 } else if (!inGroup) {
                   current.lines.push(line);
                 }
@@ -102,10 +111,42 @@ runs:
 
               if (errorSections.length) {
                 logs = errorSections.map(s => {
-                  const output = s.lines
-                    .map(l => l.replace(/^##\[error\]/, 'ERROR: '))
-                    .join('\n')
-                    .trim();
+                  const allLines = s.lines
+                    .map(l => l.replace(/^##\[error\]/, 'ERROR: '));
+
+                  let output;
+
+                  if (isPlaywright) {
+                    const relevant = [];
+                    let inSummary = false;
+
+                    for (const line of allLines) {
+                      // Start of the summary section (e.g. "  37 failed")
+                      if (/^\s+\d+ failed/.test(line)) {
+                        inSummary = true;
+                      }
+
+                      if (inSummary) {
+                        relevant.push(line);
+                        continue;
+                      }
+
+                      // Individual failure details (diffs, error context, expected/received)
+                      if (
+                        /^\s*(Error Context|Diff|Expected|Received|Snapshot|Call log|attachment):?/.test(line) ||
+                        /^ERROR:/.test(line) ||
+                        /^\s+\d+\s+\|/.test(line) || // code frame lines
+                        /^\s+at\s/.test(line) // stack trace lines
+                      ) {
+                        relevant.push(line);
+                      }
+                    }
+
+                    output = relevant.join('\n').trim();
+                  } else {
+                    output = allLines.join('\n').trim();
+                  }
+
                   return s.header ? `Step: ${s.header}\n${output}` : output;
                 }).join('\n\n');
               } else {
