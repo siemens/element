@@ -21,7 +21,8 @@
     "@stackblitz/sdk": "^1.11.0",
     "codeflask": "^1.4.1",
     "qrcode-generator": "^2.0.0",
-    "glob": "13.0.6"
+    "glob": "13.0.6",
+    "prismjs": "^1.30.0"
   },
   "devDependencies": {
     "@types/babel__standalone": "7.1.9",
