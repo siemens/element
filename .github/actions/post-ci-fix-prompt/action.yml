@@ -73,12 +73,49 @@ runs:
                 .map(l => l.replace(/^\d{4}-\d{2}-\d{2}T[\d:.]+Z\s?/, ''))
                 .map(l => l.replace(/\x1b\[[0-9;]*m/g, ''));
 
-              // Strip post-job cleanup noise
-              const cleanupIdx = lines.findIndex(l => /^Post job cleanup\b/.test(l));
-              logs = (cleanupIdx > -1 ? lines.slice(0, cleanupIdx) : lines)
-                .slice(-MAX_LOG_LINES)
-                .join('\n')
-                .trim();
+              // Split log into step sections using ##[group] markers
+              const sections = [];
+              let current = { header: '', lines: [] };
+              let inGroup = false;
+
+              for (const line of lines) {
+                if (line.startsWith('##[group]')) {
+                  if (current.header || current.lines.length) {
+                    sections.push(current);
+                  }
+                  current = { header: line.replace('##[group]', '').trim(), lines: [] };
+                  inGroup = true;
+                } else if (line === '##[endgroup]') {
+                  inGroup = false;
+                } else if (!inGroup) {
+                  current.lines.push(line);
+                }
+              }
+              if (current.header || current.lines.length) {
+                sections.push(current);
+              }
+
+              // Keep only sections that contain ##[error] (i.e. the failed steps)
+              const errorSections = sections.filter(s =>
+                s.lines.some(l => l.startsWith('##[error]'))
+              );
+
+              if (errorSections.length) {
+                logs = errorSections.map(s => {
+                  const output = s.lines
+                    .map(l => l.replace(/^##\[error\]/, 'ERROR: '))
+                    .join('\n')
+                    .trim();
+                  return s.header ? `Step: ${s.header}\n${output}` : output;
+                }).join('\n\n');
+              } else {
+                // Fallback: strip post-job cleanup noise and take the tail
+                const cleanupIdx = lines.findIndex(l => /^Post job cleanup\b/.test(l));
+                logs = (cleanupIdx > -1 ? lines.slice(0, cleanupIdx) : lines)
+                  .slice(-MAX_LOG_LINES)
+                  .join('\n')
+                  .trim();
+              }
             } catch (e) {
               logs = `Could not retrieve logs: ${e.message}`;
             }
