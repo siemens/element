@@ -702,9 +702,9 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     this.addCriterion(criterion, event.value);
   }
 
-  protected onSearchValueChange(value: string): void {
+  protected onSearchValueChange(): void {
     // Only emit a change event if free text pills are not enabled and the free text search is enabled.
-    if (value && !this.disableFreeTextSearch() && !this.freeTextCriterion()) {
+    if (!this.disableFreeTextSearch() && !this.freeTextCriterion()) {
       this.emitChangeEvent();
     }
   }
