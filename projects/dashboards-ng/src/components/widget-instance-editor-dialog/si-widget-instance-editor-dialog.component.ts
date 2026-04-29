@@ -2,36 +2,12 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  Component,
-  computed,
-  EnvironmentInjector,
-  inject,
-  Injector,
-  input,
-  isSignal,
-  model,
-  OnDestroy,
-  OnInit,
-  output,
-  OutputRefSubscription,
-  signal,
-  viewChild,
-  ViewContainerRef
-} from '@angular/core';
+import { Component, computed, inject, input, isSignal, model, OnInit, output } from '@angular/core';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
-import { Subscription } from 'rxjs';
 
-import {
-  Widget,
-  WidgetConfig,
-  WidgetConfigStatus,
-  WidgetInstanceEditor,
-  WidgetInstanceEditorWizard,
-  WidgetInstanceEditorWizardState
-} from '../../model/widgets.model';
-import { setupWidgetEditor } from '../../widget-loader';
+import { Widget, WidgetConfig } from '../../model/widgets.model';
+import { SiWidgetEditorBase } from '../si-widget-editor-base';
 
 /**
  * The Dialog component is utilized when editing a widget instance within a dashboard.
@@ -45,7 +21,7 @@ import { setupWidgetEditor } from '../../widget-loader';
   templateUrl: './si-widget-instance-editor-dialog.component.html',
   styleUrl: './si-widget-instance-editor-dialog.component.scss'
 })
-export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy {
+export class SiWidgetInstanceEditorDialogComponent extends SiWidgetEditorBase implements OnInit {
   /**
    * Input for the widget instance configuration. It is used to populate the
    * widget editor.
@@ -68,11 +44,6 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
    * Emits when the editor instantiation is completed.
    */
   readonly editorSetupCompleted = output<void>();
-
-  protected readonly editorHost = viewChild.required('editorHost', { read: ViewContainerRef });
-
-  /** Indicates if the current config is valid or not. If invalid, the save button will be disabled. */
-  protected readonly invalidConfig = signal(false);
 
   protected readonly showNextButton = computed(() =>
     this.editorWizardState() !== undefined ? true : false
@@ -121,70 +92,15 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
     () => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.CANCEL:Cancel`
   );
 
-  /**
-   * Marks the widget configuration as modified. Is set when widget editor instance
-   * emits configChange events. Triggers edit discard confirmation dialog when widget config
-   * is modified but not dialog is canceled.
-   * */
-  private readonly widgetConfigModified = signal(false);
-  private widgetInstanceEditor?: WidgetInstanceEditor;
-  private readonly editorWizardState = signal<WidgetInstanceEditorWizardState | undefined>(
-    undefined
-  );
-
-  private subscriptions: (Subscription | OutputRefSubscription)[] = [];
-  private injector = inject(Injector);
-  private envInjector = inject(EnvironmentInjector);
   private dialogService = inject(SiActionDialogService);
 
   ngOnInit(): void {
-    setupWidgetEditor(
-      this.widget().componentFactory,
-      this.editorHost(),
-      this.injector,
-      this.envInjector
-    ).subscribe(componentRef => {
-      this.widgetInstanceEditor = componentRef.instance;
-      if (isSignal(this.widgetInstanceEditor.config)) {
-        componentRef.setInput('config', this.widgetConfig()!);
-      } else {
-        this.widgetInstanceEditor.config = this.widgetConfig()!;
+    this.loadWidgetEditor(this.widget().componentFactory, this.editorHost()).subscribe(
+      componentRef => {
+        this.initializeEditor(componentRef, this.widgetConfig()!);
+        this.editorSetupCompleted.emit();
       }
-      // To be used by webcomponent wrapper
-      if ('statusChangesHandler' in this.widgetInstanceEditor) {
-        this.widgetInstanceEditor.statusChangesHandler = this.handleStatusChanges.bind(this);
-      }
-
-      if (this.widgetInstanceEditor.statusChanges) {
-        this.subscriptions.push(
-          this.widgetInstanceEditor.statusChanges.subscribe(statusChanges =>
-            this.handleStatusChanges(statusChanges)
-          )
-        );
-      } else if (this.widgetInstanceEditor.configChange) {
-        this.subscriptions.push(
-          this.widgetInstanceEditor.configChange.subscribe(() =>
-            this.widgetConfigModified.set(true)
-          )
-        );
-      }
-      if (this.isEditorWizard(this.widgetInstanceEditor)) {
-        this.editorWizardState.set(this.widgetInstanceEditor.state);
-
-        if (this.widgetInstanceEditor.stateChange) {
-          this.subscriptions.push(
-            this.widgetInstanceEditor.stateChange.subscribe(state =>
-              this.editorWizardState.set(state)
-            )
-          );
-        }
-      }
-      this.editorSetupCompleted.emit();
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.tearDownEditor();
+    );
   }
 
   protected onCancel(): void {
@@ -240,27 +156,5 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
     }
 
     this.closed.emit(this.widgetConfig());
-  }
-
-  private tearDownEditor(): void {
-    this.editorWizardState.set(undefined);
-    this.widgetInstanceEditor = undefined;
-    this.subscriptions.forEach(s => s.unsubscribe());
-    this.subscriptions = [];
-  }
-
-  private isEditorWizard(
-    editor?: WidgetInstanceEditor | WidgetInstanceEditorWizard
-  ): editor is WidgetInstanceEditorWizard {
-    return !!editor && 'state' in editor;
-  }
-
-  private handleStatusChanges(statusChanges: Partial<WidgetConfigStatus>): void {
-    if (statusChanges.invalid !== undefined) {
-      this.invalidConfig.set(statusChanges.invalid);
-    }
-    if (statusChanges.modified !== undefined) {
-      this.widgetConfigModified.set(statusChanges.modified);
-    }
   }
 }

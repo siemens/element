@@ -6,36 +6,22 @@ import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import {
   Component,
   computed,
-  EnvironmentInjector,
   inject,
-  Injector,
   input,
   isSignal,
-  OnDestroy,
   OnInit,
   output,
-  OutputRefSubscription,
   signal,
-  viewChild,
-  ViewContainerRef
+  viewChild
 } from '@angular/core';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
-import { Subscription } from 'rxjs';
 
-import {
-  createWidgetConfig,
-  Widget,
-  WidgetConfig,
-  WidgetConfigStatus,
-  WidgetInstanceEditor,
-  WidgetInstanceEditorWizard,
-  WidgetInstanceEditorWizardState
-} from '../../model/widgets.model';
-import { setupWidgetEditor } from '../../widget-loader';
+import { createWidgetConfig, Widget, WidgetConfig } from '../../model/widgets.model';
+import { SiWidgetEditorBase } from '../si-widget-editor-base';
 
 /**
  * Default widget catalog implementation to show all available widgets that can be added
@@ -56,7 +42,7 @@ import { setupWidgetEditor } from '../../widget-loader';
   templateUrl: './si-widget-catalog.component.html',
   styleUrl: './si-widget-catalog.component.scss'
 })
-export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
+export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnInit {
   /**
    * Placeholder text for the search input field in the widget catalog.
    *
@@ -82,8 +68,6 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
    * @defaultValue 'list'
    */
   readonly view = signal<'list' | 'editor' | 'editor-only'>('list');
-
-  protected readonly editorHost = viewChild.required('editorHost', { read: ViewContainerRef });
 
   /**
    * Property to provide the available widgets to the catalog. The flexible
@@ -158,23 +142,7 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
     }
   });
 
-  /** Indicates if the current config is valid or not. If invalid, the add button is disabled. */
-  private readonly invalidConfig = signal(false);
-
-  /**
-   * Marks the widget configuration as modified. Is set when widget editor instance
-   * emits configChange events. Triggers edit discard confirmation dialog when widget config
-   * is modified but not added to the dashboard.
-   * */
-  private widgetConfigModified = false;
-  private widgetInstanceEditor?: WidgetInstanceEditor;
-  private readonly editorWizardState = signal<WidgetInstanceEditorWizardState | undefined>(
-    undefined
-  );
-  private subscriptions: (Subscription | OutputRefSubscription)[] = [];
   private dialogService = inject(SiActionDialogService);
-  private injector = inject(Injector);
-  private envInjector = inject(EnvironmentInjector);
   private readonly widgetCdkListbox = viewChild(CdkListbox<Widget>);
 
   ngOnInit(): void {
@@ -182,10 +150,6 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
     if (this.widgetCatalog.length > 0) {
       this.selectWidget(this.widgetCatalog[0]);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.tearDownEditor();
   }
 
   protected onSearch(searchTerm?: string): void {
@@ -206,7 +170,7 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
   }
 
   protected onCancel(): void {
-    if (!this.widgetConfigModified) {
+    if (!this.widgetConfigModified()) {
       this.closed.emit(undefined);
     } else {
       this.dialogService
@@ -241,7 +205,7 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
     if (this.isEditorWizard(this.widgetInstanceEditor) && this.editorWizardState()?.hasPrevious) {
       this.widgetInstanceEditor.previous();
       this.editorWizardState.set(this.widgetInstanceEditor.state);
-    } else if (!this.widgetConfigModified) {
+    } else if (!this.widgetConfigModified()) {
       this.setupCatalog();
     } else {
       this.dialogService
@@ -270,63 +234,14 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
     this.view.set('editor');
     this.widgetConfig = createWidgetConfig(selected);
 
-    setupWidgetEditor(
-      selected.componentFactory,
-      this.editorHost(),
-      this.injector,
-      this.envInjector
-    ).subscribe({
+    this.loadWidgetEditor(selected.componentFactory, this.editorHost()).subscribe({
       next: componentRef => {
-        this.widgetInstanceEditor = componentRef.instance;
-        if (isSignal(this.widgetInstanceEditor.config)) {
-          componentRef.setInput('config', this.widgetConfig);
-        } else {
-          this.widgetInstanceEditor.config = this.widgetConfig!;
-        }
-        // To be used by webcomponent wrapper
-        if ('statusChangesHandler' in this.widgetInstanceEditor) {
-          this.widgetInstanceEditor.statusChangesHandler = this.handleStatusChanges.bind(this);
-        }
-
-        if (this.widgetInstanceEditor.statusChanges) {
-          this.subscriptions.push(
-            this.widgetInstanceEditor.statusChanges.subscribe(statusChanges =>
-              this.handleStatusChanges(statusChanges)
-            )
-          );
-        } else if (this.widgetInstanceEditor.configChange) {
-          this.subscriptions.push(
-            this.widgetInstanceEditor.configChange.subscribe(
-              () => (this.widgetConfigModified = true)
-            )
-          );
-        }
-
-        if (this.isEditorWizard(this.widgetInstanceEditor)) {
-          this.editorWizardState.set(this.widgetInstanceEditor.state);
-
-          if (this.widgetInstanceEditor.stateChange) {
-            this.subscriptions.push(
-              this.widgetInstanceEditor.stateChange.subscribe(state =>
-                this.editorWizardState.set(state)
-              )
-            );
-          }
-        }
+        this.initializeEditor(componentRef, this.widgetConfig!);
       },
       error: error => {
         console.error(error);
       }
     });
-  }
-
-  private tearDownEditor(): void {
-    this.invalidConfig.set(false);
-    this.widgetConfigModified = false;
-    this.editorWizardState.set(undefined);
-    this.widgetInstanceEditor = undefined;
-    this.subscriptions.forEach(s => s.unsubscribe());
-    this.subscriptions = [];
   }
 
   private setupCatalog(): void {
@@ -362,21 +277,6 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.widgetCdkListbox()?.selectValue(widget);
       });
-    }
-  }
-
-  private isEditorWizard(
-    editor?: WidgetInstanceEditor | WidgetInstanceEditorWizard
-  ): editor is WidgetInstanceEditorWizard {
-    return !!editor && 'state' in editor;
-  }
-
-  private handleStatusChanges(statusChanges: Partial<WidgetConfigStatus>): void {
-    if (statusChanges.invalid !== undefined) {
-      this.invalidConfig.set(statusChanges.invalid);
-    }
-    if (statusChanges.modified !== undefined) {
-      this.widgetConfigModified = statusChanges.modified;
     }
   }
 }
