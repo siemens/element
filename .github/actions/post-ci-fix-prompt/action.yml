@@ -34,11 +34,14 @@ runs:
             per_page: 100
           });
 
-          // Find all failed jobs matching the target name
-          const failedJobs = jobs.filter(j =>
-            j.conclusion === 'failure' &&
-            j.name.includes(targetJobName)
-          );
+          // Find all failed jobs matching the target name (match against last segment to avoid
+          // false positives from the workflow name prefix in reusable workflow calls)
+          const failedJobs = jobs.filter(j => {
+            if (j.conclusion !== 'failure') return false;
+            const segments = j.name.split(' / ');
+            const jobName = segments[segments.length - 1];
+            return jobName.includes(targetJobName);
+          });
 
           if (!failedJobs.length) {
             core.warning(`Could not find failed job matching "${targetJobName}"`);
