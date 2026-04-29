@@ -27,6 +27,7 @@ runs:
           const jobTitle = process.env.JOB_TITLE;
           const targetJobName = process.env.TARGET_JOB_NAME;
           const isPlaywright = jobTitle === 'E2E Tests';
+          const isUnitTest = jobTitle === 'Unit Tests';
 
           const { data: { jobs } } = await github.rest.actions.listJobsForWorkflowRun({
             owner, repo,
@@ -138,6 +139,27 @@ runs:
                         /^\s+\d+\s+\|/.test(line) || // code frame lines
                         /^\s+at\s/.test(line) // stack trace lines
                       ) {
+                        relevant.push(line);
+                      }
+                    }
+
+                    output = relevant.join('\n').trim();
+                  } else if (isUnitTest) {
+                    const relevant = [];
+                    let inFailureBlock = false;
+
+                    for (const line of allLines) {
+                      // Start of failure details (e.g. "⎯⎯⎯ Failed Tests 1 ⎯⎯⎯")
+                      if (/Failed Tests/.test(line)) {
+                        inFailureBlock = true;
+                      }
+
+                      // Final summary lines (Test Files, Tests, Start at, Duration)
+                      if (/^\s*(Test Files|Tests)\s+\d+/.test(line)) {
+                        inFailureBlock = true;
+                      }
+
+                      if (inFailureBlock || /^ERROR:/.test(line)) {
                         relevant.push(line);
                       }
                     }
