@@ -6,6 +6,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   ComponentRef,
+  computed,
   DestroyRef,
   EnvironmentInjector,
   inject,
@@ -138,10 +139,10 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   };
   protected widgetInstanceFooter?: TemplateRef<unknown>;
 
-  protected get accentLine(): string {
-    const widgetConfig = this.widgetConfig();
-    return widgetConfig.accentLine ? 'accent-' + widgetConfig.accentLine : '';
-  }
+  protected readonly accentLine = computed(() => {
+    const { accentLine } = this.widgetConfig();
+    return accentLine ? 'accent-' + accentLine : '';
+  });
 
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.widgetConfig) {
