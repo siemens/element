@@ -88,6 +88,7 @@ these Siemens UX writing guidelines.
 - Capitalize only the first letter of the first word in titles, tooltips, menu items, list items, and buttons
 - Do not use all-caps (e.g., `PLANNING` → `Planning`)
 - Capitalize proper nouns (places, organizations, products, tools, languages)
+- Preserve the original casing of library, package, and product names as they should follow the official capitalization as shown on their websites or GitHub repos, even in titles, headings, and list items (e.g., `ngx-datatable` stays lowercase, not `Ngx-datatable`; `AG Grid` stays as-is)
 - Capitalize named app functions and UI elements: "Go to Settings", "Press OK"
 
 ### Grammar
