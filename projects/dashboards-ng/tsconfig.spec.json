@@ -1,7 +1,12 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "types": ["vitest/globals", "@siemens/element-translate-ng/localize-types", "node"],
+    "types": [
+      "vitest/globals",
+      "vitest/browser",
+      "@siemens/element-translate-ng/localize-types",
+      "node"
+    ],
     "lib": ["es2022", "dom", "esnext.disposable"],
     "paths": {
       "@siemens/element-translate-ng": [
