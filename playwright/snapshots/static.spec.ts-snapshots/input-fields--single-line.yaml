@@ -2,7 +2,7 @@
 - text: Name
 - textbox "Name":
   - /placeholder: Placeholder
-- text: Message Disabled input
+- text: Helper text Disabled input
 - textbox "Disabled input" [disabled]: This is the value
 - text: Disabled input (empty with placeholder)
 - textbox "Disabled input (empty with placeholder)" [disabled]:
@@ -13,20 +13,20 @@
 - textbox "Name": This is valid
 - text: Name
 - textbox "Name": This is ok-ish
-- text: Warning Message Name
+- text: Feedback text Name
 - textbox "Name": Just no
-- text: Error Message
+- text: Feedback text
 - heading "Horizontal" [level=4]
 - text: Name
 - textbox "Name":
   - /placeholder: Placeholder
-- text: Message Name
+- text: Helper text Name
 - textbox "Name": This is valid
 - text: Name
 - textbox "Name": Also ok-ish
-- text: Warning Message Name
+- text: Feedback text Name
 - textbox "Name": No. No. No.
-- text: Error Message Name
+- text: Feedback text Name
 - combobox "Name":
   - option "Some value" [selected]
   - option "Another value"
