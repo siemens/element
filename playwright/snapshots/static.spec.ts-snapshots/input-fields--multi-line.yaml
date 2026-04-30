@@ -2,7 +2,7 @@
 - text: Name
 - textbox "Name":
   - /placeholder: Placeholder
-- text: Message Disabled textarea (empty with placeholder)
+- text: Helper text Disabled textarea (empty with placeholder)
 - textbox "Disabled textarea (empty with placeholder)" [disabled]:
   - /placeholder: Placeholder not visible
 - text: Placeholder text not displayed for disabled textarea Disabled textarea with value
@@ -13,6 +13,6 @@
 - textbox "Name": This is valid
 - text: Name
 - textbox "Name": This is ok-ish
-- text: Warning Message Name
+- text: Feedback text Name
 - textbox "Name": Just no
-- text: Error Message
+- text: Feedback text
