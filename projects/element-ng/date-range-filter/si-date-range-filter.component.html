@@ -91,7 +91,9 @@
           {{ calculated.start | date: pipeFormat() }} -
           {{ calculated.end | date: pipeFormat() }}
         } @else {
-          ?
+          <span class="text-secondary">
+            {{ selectRangeLabel() | translate }}
+          </span>
         }
       } @else {
         @let range = dateRange();
@@ -99,7 +101,9 @@
         @if (range.end) {
           {{ range.end | date: pipeFormat() }}
         } @else {
-          {{ rangeEndDateMissingLabel() | translate }}
+          <span class="text-secondary">
+            {{ rangeEndDateMissingLabel() | translate }}
+          </span>
         }
       }
     </span>

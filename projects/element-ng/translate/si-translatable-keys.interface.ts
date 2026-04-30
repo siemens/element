@@ -72,6 +72,7 @@ export interface SiTranslatableKeys {
   'SI_DATE_RANGE_FILTER.REF_POINT'?: string;
   'SI_DATE_RANGE_FILTER.SEARCH'?: string;
   'SI_DATE_RANGE_FILTER.SELECT_RANGE_END'?: string;
+  'SI_DATE_RANGE_FILTER.SELECT_RANGE_LABEL'?: string;
   'SI_DATE_RANGE_FILTER.TO'?: string;
   'SI_DATE_RANGE_FILTER.TODAY'?: string;
   'SI_DATE_RANGE_FILTER.UNIT'?: string;
