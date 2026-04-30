@@ -120,10 +120,10 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`)
    * ```
    */
-  readonly appSwitcherTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`));
+  readonly appSwitcherTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`));
 
   /**
    * sub-title for the launchpad
@@ -142,12 +142,10 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorites`)
    * ```
    */
-  readonly favoriteAppsTitle = input(
-    t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`)
-  );
+  readonly favoriteAppsTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorites`));
 
   /**
    * Title or translate key for the default apps section.
