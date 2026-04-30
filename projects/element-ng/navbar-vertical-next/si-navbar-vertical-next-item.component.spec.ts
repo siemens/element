@@ -46,27 +46,6 @@ class TestHostWithBadgeVisibilityComponent {
   readonly hideBadgeWhenCollapsed = signal(false);
 }
 
-@Component({
-  imports: [
-    SiNavbarVerticalNextItemComponent,
-    SiNavbarVerticalNextGroupTriggerDirective,
-    SiNavbarVerticalNextGroupComponent
-  ],
-  template: `
-    <button
-      type="button"
-      si-navbar-vertical-next-item
-      [siNavbarVerticalNextGroupTriggerFor]="groupTemplate"
-    >
-      Group Item
-    </button>
-    <ng-template #groupTemplate>
-      <si-navbar-vertical-next-group />
-    </ng-template>
-  `
-})
-class TestGroupItemHostComponent {}
-
 describe('SiNavbarVerticalNextItemComponent', () => {
   let component: TestHostComponent;
   let fixture: ComponentFixture<TestHostComponent>;
@@ -312,6 +291,27 @@ describe('SiNavbarVerticalNextItemComponent', () => {
   });
 
   describe('dropdown-caret icon based on openGroupsInFlyout', () => {
+    @Component({
+      imports: [
+        SiNavbarVerticalNextItemComponent,
+        SiNavbarVerticalNextGroupTriggerDirective,
+        SiNavbarVerticalNextGroupComponent
+      ],
+      template: `
+        <button
+          type="button"
+          si-navbar-vertical-next-item
+          [siNavbarVerticalNextGroupTriggerFor]="groupTemplate"
+        >
+          Group Item
+        </button>
+        <ng-template #groupTemplate>
+          <si-navbar-vertical-next-group />
+        </ng-template>
+      `
+    })
+    class TestGroupItemHostComponent {}
+
     let groupFixture: ComponentFixture<TestGroupItemHostComponent>;
 
     beforeEach(async () => {
