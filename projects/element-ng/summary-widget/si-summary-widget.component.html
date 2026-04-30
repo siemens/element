@@ -9,6 +9,7 @@
   [class.interactive]="interactive()"
   (click)="toggleSelected()"
   (keydown.enter)="toggleSelected()"
+  (keydown.space)="$event.preventDefault(); toggleSelected()"
 >
   @let actualIcon = statusIcon();
   @if (actualIcon.icon) {
