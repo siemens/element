@@ -1415,6 +1415,13 @@ describe('SiFilteredSearchComponent', () => {
         criteria: [],
         value: 'bla'
       });
+
+      await freeTextSearch.clearText();
+      await tick();
+      expect(component.doSearch).toHaveBeenCalledWith({
+        criteria: [],
+        value: ''
+      });
     });
 
     it('should emit values while typing in the typeahead part (criterion name and value)', async () => {

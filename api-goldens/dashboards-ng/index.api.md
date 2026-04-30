@@ -26,11 +26,13 @@ import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { OutputEmitterRef } from '@angular/core';
+import { OutputRefSubscription } from '@angular/core';
 import { Provider } from '@angular/core';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Type } from '@angular/core';
@@ -237,7 +239,7 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
 }
 
 // @public
-export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
+export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnInit {
     readonly closed: _angular_core.OutputEmitterRef<Omit<WidgetConfig, "id"> | undefined>;
     readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     widgetCatalog: Widget[];
@@ -254,7 +256,7 @@ export abstract class SiWidgetIdProvider {
 }
 
 // @public
-export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy {
+export class SiWidgetInstanceEditorDialogComponent extends SiWidgetEditorBase implements OnInit {
     readonly closed: _angular_core.OutputEmitterRef<WidgetConfig | undefined>;
     readonly editorSetupCompleted: _angular_core.OutputEmitterRef<void>;
     readonly widget: _angular_core.InputSignal<Widget>;
