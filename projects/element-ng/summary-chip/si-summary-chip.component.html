@@ -8,6 +8,7 @@
   [class.disabled]="disabled()"
   (click)="toggleSelected()"
   (keydown.enter)="toggleSelected()"
+  (keydown.space)="$event.preventDefault(); toggleSelected()"
 >
   @let actualIcon = statusIcon();
   @if (actualIcon.icon) {
