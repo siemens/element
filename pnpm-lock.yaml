@@ -6,6 +6,7 @@ settings:
 
 overrides:
   '@microsoft/api-extractor>typescript': 5.9.3
+  '@siemens/element-theme': workspace:*
 
 importers:
 
@@ -13,7 +14,7 @@ importers:
     dependencies:
       '@angular-architects/module-federation':
         specifier: 21.2.2
-        version: 21.2.2(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@module-federation/enhanced@2.3.3(@rspack/core@1.7.11)(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0(esbuild@0.26.0)))(@module-federation/runtime-core@2.3.3(node-fetch@3.3.2))
+        version: 21.2.2(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@module-federation/enhanced@2.3.3(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0))(@module-federation/runtime-core@2.3.3(node-fetch@3.3.2))
       '@angular-architects/native-federation':
         specifier: 21.1.0
         version: 21.1.0(typescript@5.9.3)
@@ -40,7 +41,7 @@ importers:
         version: 21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(rxjs@7.8.2)
       '@module-federation/enhanced':
         specifier: 2.3.3
-        version: 2.3.3(@rspack/core@1.7.11)(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0(esbuild@0.26.0))
+        version: 2.3.3(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0)
       '@ngx-formly/bootstrap':
         specifier: 6.3.12
         version: 6.3.12(@ngx-formly/core@6.3.12(@angular/forms@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2))(bootstrap@5.3.8(@popperjs/core@2.11.8))
@@ -104,7 +105,7 @@ importers:
         version: 21.0.3(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@24.12.2)(jiti@2.6.1)(less@4.4.2)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(postcss@8.5.10)(terser@5.44.0)(tslib@2.8.1)(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3)
       '@angular-devkit/build-angular':
         specifier: 21.0.5
-        version: 21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@1.7.11)(@types/node@24.12.2)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3)
+        version: 21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(@types/node@24.12.2)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3)
       '@angular-devkit/core':
         specifier: 21.0.5
         version: 21.0.5(chokidar@4.0.3)
@@ -132,9 +133,6 @@ importers:
       '@axe-core/playwright':
         specifier: 4.11.1
         version: 4.11.1(playwright-core@1.59.1)
-      '@babel/standalone':
-        specifier: 7.29.2
-        version: 7.29.2
       '@commitlint/cli':
         specifier: 20.5.2
         version: 20.5.2(@types/node@24.12.2)(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.4.0)(typescript@5.9.3)
@@ -162,18 +160,36 @@ importers:
       '@siemens/commitlint-config':
         specifier: 4.2.1
         version: 4.2.1(@commitlint/cli@20.5.2(@types/node@24.12.2)(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.4.0)(typescript@5.9.3))(@commitlint/config-conventional@20.5.0)
+      '@siemens/element-ng':
+        specifier: workspace:*
+        version: link:projects/element-ng
+      '@siemens/element-theme':
+        specifier: workspace:*
+        version: link:projects/element-theme
+      '@siemens/element-translate-cli':
+        specifier: workspace:*
+        version: link:projects/element-translate-cli
+      '@siemens/element-translate-ng':
+        specifier: workspace:*
+        version: link:projects/element-translate-ng
       '@siemens/eslint-config-angular':
         specifier: 4.2.1
         version: 4.2.1(@eslint/js@10.0.1(eslint@10.2.1(jiti@2.6.1)))(angular-eslint@21.3.1(@angular/cli@21.0.5(@types/node@24.12.2)(hono@4.12.15))(eslint@10.2.1(jiti@2.6.1))(typescript-eslint@8.59.0(eslint@10.2.1(jiti@2.6.1))(typescript@5.9.3))(typescript@5.9.3))(eslint-plugin-perfectionist@5.9.0(eslint@10.2.1(jiti@2.6.1))(typescript@5.9.3))(eslint-plugin-prefer-arrow@1.2.3(eslint@10.2.1(jiti@2.6.1)))(eslint@10.2.1(jiti@2.6.1))(typescript-eslint@8.59.0(eslint@10.2.1(jiti@2.6.1))(typescript@5.9.3))
       '@siemens/eslint-plugin-defaultvalue':
         specifier: 4.2.1
         version: 4.2.1(eslint@10.2.1(jiti@2.6.1))(typescript-eslint@8.59.0(eslint@10.2.1(jiti@2.6.1))(typescript@5.9.3))
+      '@siemens/live-preview':
+        specifier: workspace:*
+        version: link:projects/live-preview
       '@siemens/prettier-config':
         specifier: 4.2.1
         version: 4.2.1(prettier@3.8.3)
       '@siemens/stylelint-config-scss':
         specifier: 4.2.1
         version: 4.2.1(postcss-scss@4.0.9(postcss@8.5.10))(stylelint-scss@7.0.0(stylelint@16.26.1(typescript@5.9.3)))(stylelint@16.26.1(typescript@5.9.3))
+      '@simpl/brand':
+        specifier: 3.1.0
+        version: 3.1.0(@siemens/element-theme@projects+element-theme)
       '@types/geojson':
         specifier: 7946.0.16
         version: 7946.0.16
@@ -231,6 +247,9 @@ importers:
       ng-packagr:
         specifier: 21.0.1
         version: 21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3)
+      ngx-build-plus:
+        specifier: 20.0.0
+        version: 20.0.0(@angular-devkit/build-angular@21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(@types/node@24.12.2)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3))(@schematics/angular@21.0.5)(rxjs@7.8.2)
       piscina:
         specifier: 5.1.4
         version: 5.1.4
@@ -277,9 +296,6 @@ importers:
       '@siemens-ux/design-tokens':
         specifier: ^0.3.1
         version: 0.3.1
-      '@simpl/brand':
-        specifier: 3.1.0
-        version: 3.1.0(@siemens/element-theme@projects+element-theme)
       '@simpl/docs-composer':
         specifier: 11.16.8
         version: 11.16.8(typescript@5.9.3)
@@ -304,7 +320,7 @@ importers:
     devDependencies:
       ngx-build-plus:
         specifier: 20.0.0
-        version: 20.0.0(@angular-devkit/build-angular@21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@1.7.11)(@types/node@24.12.2)(chokidar@4.0.3)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3))(@schematics/angular@21.0.5(chokidar@4.0.3))(rxjs@7.8.2)
+        version: 20.0.0(@angular-devkit/build-angular@21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(@types/node@24.12.2)(chokidar@4.0.3)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3))(@schematics/angular@21.0.5(chokidar@4.0.3))(rxjs@7.8.2)
 
   projects/dashboards-ng:
     dependencies:
@@ -324,10 +340,10 @@ importers:
         specifier: ^2.0.0
         version: 2.3.3(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0)
       '@siemens/element-ng':
-        specifier: 49.7.0
+        specifier: workspace:*
         version: link:../element-ng
       '@siemens/element-theme':
-        specifier: 49.7.0
+        specifier: workspace:*
         version: link:../element-theme
       gridstack:
         specifier: ^12.3.3
@@ -360,10 +376,10 @@ importers:
         specifier: '1'
         version: 1.2.0
       '@siemens/element-theme':
-        specifier: 49.7.0
+        specifier: workspace:*
         version: link:../element-theme
       '@siemens/element-translate-ng':
-        specifier: 49.7.0
+        specifier: workspace:*
         version: link:../element-translate-ng
       '@siemens/ngx-datatable':
         specifier: 22 - 26
@@ -423,6 +439,9 @@ importers:
       glob:
         specifier: 13.0.6
         version: 13.0.6
+      prismjs:
+        specifier: ^1.30.0
+        version: 1.30.0
       qrcode-generator:
         specifier: ^2.0.0
         version: 2.0.4
@@ -461,10 +480,10 @@ importers:
         specifier: '21'
         version: 21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)
       '@siemens/element-theme':
-        specifier: 49.7.0
+        specifier: workspace:*
         version: link:../element-theme
       '@siemens/element-translate-ng':
-        specifier: 49.7.0
+        specifier: workspace:*
         version: link:../element-translate-ng
       ol:
         specifier: ~10.6.0 || ~10.7.0 || ~10.8.0 || ~10.9.0
@@ -485,7 +504,7 @@ importers:
         specifier: '21'
         version: 21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)
       '@siemens/element-theme':
-        specifier: 49.7.0
+        specifier: workspace:*
         version: link:../element-theme
 
 packages:
@@ -2827,9 +2846,6 @@ packages:
       webpack:
         optional: true
 
-  '@module-federation/error-codes@0.22.0':
-    resolution: {integrity: sha512-xF9SjnEy7vTdx+xekjPCV5cIHOGCkdn3pIxo9vU7gEZMIw0SvAEdsy6Uh17xaCpm8V0FWvR0SZoK9Ik6jGOaug==}
-
   '@module-federation/error-codes@2.3.3':
     resolution: {integrity: sha512-UVtKBoKnRDcHgByIDvPRZSxQqjqbNH7NvJm1KHLoce33+EDiIdZYs0HvvUQv43RgESpB9s7HjrqFlq3bEcAgfQ==}
 
@@ -2856,26 +2872,14 @@ packages:
       vue-tsc:
         optional: true
 
-  '@module-federation/runtime-core@0.22.0':
-    resolution: {integrity: sha512-GR1TcD6/s7zqItfhC87zAp30PqzvceoeDGYTgF3Vx2TXvsfDrhP6Qw9T4vudDQL3uJRne6t7CzdT29YyVxlgIA==}
-
   '@module-federation/runtime-core@2.3.3':
     resolution: {integrity: sha512-B07LDH9KxhBO3GbULGW64mQFVQBtrEd3PoaCBm7XR1IbU8rMQUJQjDNVZgXYcyhRPBVP+3KWZuiaKFRiNb6PQw==}
-
-  '@module-federation/runtime-tools@0.22.0':
-    resolution: {integrity: sha512-4ScUJ/aUfEernb+4PbLdhM/c60VHl698Gn1gY21m9vyC1Ucn69fPCA1y2EwcCB7IItseRMoNhdcWQnzt/OPCNA==}
 
   '@module-federation/runtime-tools@2.3.3':
     resolution: {integrity: sha512-XODzyLbBYcy4wnYBXKIBqaHPVfBx1HshGdjZmSctDDnx9/VYgdx9DShb6UI+WuQBKJgPzTcx4xbvbCM4SdMilQ==}
 
-  '@module-federation/runtime@0.22.0':
-    resolution: {integrity: sha512-38g5iPju2tPC3KHMPxRKmy4k4onNp6ypFPS1eKGsNLUkXgHsPMBFqAjDw96iEcjri91BrahG4XcdyKi97xZzlA==}
-
   '@module-federation/runtime@2.3.3':
     resolution: {integrity: sha512-JYJ3qv9V85DtBtT/ppDuJNwBTUrYqqZDYcyiTzwY5+44dC5QPvgJ//F+BOhAhZ02WkZV0b4jsKTyLOC3vXKGqQ==}
-
-  '@module-federation/sdk@0.22.0':
-    resolution: {integrity: sha512-x4aFNBKn2KVQRuNVC5A7SnrSCSqyfIWmm1DvubjbO9iKFe7ith5niw8dqSFBekYBg2Fwy+eMg4sEFNVvCAdo6g==}
 
   '@module-federation/sdk@2.3.3':
     resolution: {integrity: sha512-mwCS+LQdqiSc6fM5iz/S60ibaFNSH6kNqlZkCRIuS4yjdZ+jgnihz+6xp1QzppvfFgKLhEHBiXOmcYOdk3Ckew==}
@@ -2887,9 +2891,6 @@ packages:
 
   '@module-federation/third-party-dts-extractor@2.3.3':
     resolution: {integrity: sha512-rR94TjC1QVQLQPTazI0waLc76hI8dnv6aHTl+PUEIY9s5hXp8TA85XS0QJQqIf2KTjlPgZbWAwyFjOAJluTjaw==}
-
-  '@module-federation/webpack-bundler-runtime@0.22.0':
-    resolution: {integrity: sha512-aM8gCqXu+/4wBmJtVeMeeMN5guw3chf+2i6HajKtQv7SJfxV/f4IyNQJUeUQu9HfiAZHjqtMV5Lvq/Lvh8LdyA==}
 
   '@module-federation/webpack-bundler-runtime@2.3.3':
     resolution: {integrity: sha512-W+P6ZF9J3gwnQuoF07YV0OiR1D6sI/uErUu4+c3QXxka3orANUHujkddNSsDxL1obAGoJa7Da99crZKf7u2j/w==}
@@ -3118,9 +3119,6 @@ packages:
   '@napi-rs/nice@1.1.1':
     resolution: {integrity: sha512-xJIPs+bYuc9ASBl+cvGsKbGrJmS6fAKaSZCnT0lhahT5rhA2VVy9/EcIgd2JhtEuFOJNx7UHNn/qiTPTY4nrQw==}
     engines: {node: '>= 10'}
-
-  '@napi-rs/wasm-runtime@1.0.7':
-    resolution: {integrity: sha512-SeDnOO0Tk7Okiq6DbXmmBODgOAb9dp9gjlphokTUxmt8U3liIP1ZsozBahH69j/RJv+Rfs6IwUKHTgQYJ/HBAw==}
 
   '@napi-rs/wasm-runtime@1.1.4':
     resolution: {integrity: sha512-3NQNNgA1YSlJb/kMH1ildASP9HW7/7kYnRI2szWJaofaS1hWmbGI4H+d3+22aGzXXN9IJ+n+GiFVcGipJP18ow==}
@@ -3763,19 +3761,9 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  '@rspack/binding-darwin-arm64@1.7.11':
-    resolution: {integrity: sha512-oduECiZVqbO5zlVw+q7Vy65sJFth99fWPTyucwvLJJtJkPL5n17Uiql2cYP6Ijn0pkqtf1SXgK8WjiKLG5bIig==}
-    cpu: [arm64]
-    os: [darwin]
-
   '@rspack/binding-darwin-arm64@2.0.1':
     resolution: {integrity: sha512-CGFO5zmajD1Itch1lxAI7+gvKiagzyqXopHv/jHG9Su2WWQ2/Nhn2/rkSpdp6ptE9ri6+6tCOOahf099/v/Xog==}
     cpu: [arm64]
-    os: [darwin]
-
-  '@rspack/binding-darwin-x64@1.7.11':
-    resolution: {integrity: sha512-a1+TtTE9ap6RalgFi7FGIgkJP6O4Vy6ctv+9WGJy53E4kuqHR0RygzaiVxCI/GMc/vBT9vY23hyrpWb3d1vtXA==}
-    cpu: [x64]
     os: [darwin]
 
   '@rspack/binding-darwin-x64@2.0.1':
@@ -3783,23 +3771,11 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@rspack/binding-linux-arm64-gnu@1.7.11':
-    resolution: {integrity: sha512-P0QrGRPbTWu6RKWfN0bDtbnEps3rXH0MWIMreZABoUrVmNQKtXR6e73J3ub6a+di5s2+K0M2LJ9Bh2/H4UsDUA==}
-    cpu: [arm64]
-    os: [linux]
-    libc: [glibc]
-
   '@rspack/binding-linux-arm64-gnu@2.0.1':
     resolution: {integrity: sha512-uvNXk6ahE3AH3h2avnd1Mgno68YQpS4cfX1OkOGWIC/roL+NrOP2XVXV4yfVAoydPALDO7AfbIfN0QdmBK3rsA==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
-
-  '@rspack/binding-linux-arm64-musl@1.7.11':
-    resolution: {integrity: sha512-6ky7R43VMjWwmx3Yx7Jl7faLBBMAgMDt+/bN35RgwjiPgsIByz65EwytUVuW9rikB43BGHvA/eqlnjLrUzNBqw==}
-    cpu: [arm64]
-    os: [linux]
-    libc: [musl]
 
   '@rspack/binding-linux-arm64-musl@2.0.1':
     resolution: {integrity: sha512-S/a6uN9PiZ5O/PjSqyIXhuRC1lVzeJkJV69NeLk5sIEUiDQ/aQGZG97uN+tluwpbo1tPbLJkdHYETfjspOX4Pg==}
@@ -3807,23 +3783,11 @@ packages:
     os: [linux]
     libc: [musl]
 
-  '@rspack/binding-linux-x64-gnu@1.7.11':
-    resolution: {integrity: sha512-cuOJMfCOvb2Wgsry5enXJ3iT1FGUjdPqtGUBVupQlEG4ntSYsQ2PtF4wIDVasR3wdxC5nQbipOrDiN/u6fYsdQ==}
-    cpu: [x64]
-    os: [linux]
-    libc: [glibc]
-
   '@rspack/binding-linux-x64-gnu@2.0.1':
     resolution: {integrity: sha512-C13Kk0OkZiocZVj187Sf753UH6pDXnuEu6vzUvi3qv9ltibG1ki0H2Y8isXBYL2cHQOV+hk0g1S6/4z3TTB97A==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
-
-  '@rspack/binding-linux-x64-musl@1.7.11':
-    resolution: {integrity: sha512-CoK37hva4AmHGh3VCsQXmGr40L36m1/AdnN5LEjUX6kx5rEH7/1nEBN6Ii72pejqDVvk9anEROmPDiPw10tpFg==}
-    cpu: [x64]
-    os: [linux]
-    libc: [musl]
 
   '@rspack/binding-linux-x64-musl@2.0.1':
     resolution: {integrity: sha512-TQsiBFpEDGkuvK9tNdGj/Uc+AIytzqhxXH/1jKU6M24cWB1DTw/Cx7DdrkCBDyq3129K3POLdujvbWCGqBzQUw==}
@@ -3831,27 +3795,13 @@ packages:
     os: [linux]
     libc: [musl]
 
-  '@rspack/binding-wasm32-wasi@1.7.11':
-    resolution: {integrity: sha512-OtrmnPUVJMxjNa3eDMfHyPdtlLRmmp/aIm0fQHlAOATbZvlGm12q7rhPW5BXTu1yh+1rQ1/uqvz+SzKEZXuJaQ==}
-    cpu: [wasm32]
-
   '@rspack/binding-wasm32-wasi@2.0.1':
     resolution: {integrity: sha512-wk3gyUgBW/ayP49bI54bkY8+EQnfBHxdoe9dz3oobSTZQc8AOWwmUUDEPltW8rUvPOM6dfHECTOUMnfaf2f5yA==}
     cpu: [wasm32]
 
-  '@rspack/binding-win32-arm64-msvc@1.7.11':
-    resolution: {integrity: sha512-lObFW6e5lCWNgTBNwT//yiEDbsxm9QG4BYUojqeXxothuzJ/L6ibXz6+gLMvbOvLGV3nKgkXmx8GvT9WDKR0mA==}
-    cpu: [arm64]
-    os: [win32]
-
   '@rspack/binding-win32-arm64-msvc@2.0.1':
     resolution: {integrity: sha512-rHjLcy3VcAC3+x+PxH+gwhwv6tPe0JdXTNT5eAOs9wgZIM6T9p4wre49+K4Qy98+Fb7TTbLX0ObUitlOkGwTSA==}
     cpu: [arm64]
-    os: [win32]
-
-  '@rspack/binding-win32-ia32-msvc@1.7.11':
-    resolution: {integrity: sha512-0pYGnZd8PPqNR68zQ8skamqNAXEA1sUfXuAdYcknIIRq2wsbiwFzIc0Pov1cIfHYab37G7sSIPBiOUdOWF5Ivw==}
-    cpu: [ia32]
     os: [win32]
 
   '@rspack/binding-win32-ia32-msvc@2.0.1':
@@ -3859,30 +3809,13 @@ packages:
     cpu: [ia32]
     os: [win32]
 
-  '@rspack/binding-win32-x64-msvc@1.7.11':
-    resolution: {integrity: sha512-EeQXayoQk/uBkI3pdoXfQBXNIUrADq56L3s/DFyM2pJeUDrWmhfIw2UFIGkYPTMSCo8F2JcdcGM32FGJrSnU0Q==}
-    cpu: [x64]
-    os: [win32]
-
   '@rspack/binding-win32-x64-msvc@2.0.1':
     resolution: {integrity: sha512-oPM2Jtm7HOlmxl/aBfleAVlL6t9VeHx6WvEets7BBJMInemFXAQd4CErRqybf7rXutACzLeUWBOue4Jpd1/ykw==}
     cpu: [x64]
     os: [win32]
 
-  '@rspack/binding@1.7.11':
-    resolution: {integrity: sha512-2MGdy2s2HimsDT444Bp5XnALzNRxuBNc7y0JzyuqKbHBywd4x2NeXyhWXXoxufaCFu5PBc9Qq9jyfjW2Aeh06Q==}
-
   '@rspack/binding@2.0.1':
     resolution: {integrity: sha512-ynV1gw4KqFtQ0P+ZZh76SUj49wBb2FuHW3zSmHverHWuxBhzvrZS6/dZ+fCFQG8bTTPtrPz0RQUTN3uEDbPVBQ==}
-
-  '@rspack/core@1.7.11':
-    resolution: {integrity: sha512-rsD9b+Khmot5DwCMiB3cqTQo53ioPG3M/A7BySu8+0+RS7GCxKm+Z+mtsjtG/vsu4Tn2tcqCdZtA3pgLoJB+ew==}
-    engines: {node: '>=18.12.0'}
-    peerDependencies:
-      '@swc/helpers': '>=0.5.1'
-    peerDependenciesMeta:
-      '@swc/helpers':
-        optional: true
 
   '@rspack/core@2.0.1':
     resolution: {integrity: sha512-lgfZiExh8kDR/3obgi3RQKwKG5av1Xf5qDN1aVde777W9pbmx0Pqvrww1qtNvJ+gobEjbrrn5HEZWYGe0VLmcA==}
@@ -3895,9 +3828,6 @@ packages:
         optional: true
       '@swc/helpers':
         optional: true
-
-  '@rspack/lite-tapable@1.1.0':
-    resolution: {integrity: sha512-E2B0JhYFmVAwdDiG14+DW0Di4Ze4Jg10Pc4/lILUrd5DRCaklduz2OvJ5HYQ6G+hd+WTzqQb3QnDNfK4yvAFYw==}
 
   '@rushstack/node-core-library@5.23.1':
     resolution: {integrity: sha512-wlKmIKIYCKuCASbITvOxLZXepPbwXvrv7S6ig6XNWFchSyhL/E2txmVXspHY49Wu2dzf7nI27a2k/yV5BA3EiA==}
@@ -4068,12 +3998,12 @@ packages:
     engines: {node: ^20.17.0 || >=22.9.0}
 
   '@simpl/brand@3.1.0':
-    resolution: {integrity: sha1-uAERWuYmTr39aOMcDF8dQlmR94s=}
+    resolution: {integrity: sha1-uAERWuYmTr39aOMcDF8dQlmR94s=, tarball: https://code.siemens.com/api/v4/projects/732/packages/npm/@simpl/brand/-/@simpl/brand-3.1.0.tgz}
     peerDependencies:
-      '@siemens/element-theme': '49'
+      '@siemens/element-theme': workspace:*
 
   '@simpl/docs-composer@11.16.8':
-    resolution: {integrity: sha1-sxovHyvNFtMcpldzyGHFWbtA2CA=}
+    resolution: {integrity: sha1-sxovHyvNFtMcpldzyGHFWbtA2CA=, tarball: https://code.siemens.com/api/v4/projects/732/packages/npm/@simpl/docs-composer/-/@simpl/docs-composer-11.16.8.tgz}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -8471,8 +8401,8 @@ packages:
   tinybench@2.9.0:
     resolution: {integrity: sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==}
 
-  tinyexec@1.1.1:
-    resolution: {integrity: sha512-VKS/ZaQhhkKFMANmAOhhXVoIfBXblQxGX1myCQ2faQrfmobMftXeJPcZGp0gS07ocvGJWDLZGyOZDadDBqYIJg==}
+  tinyexec@1.1.2:
+    resolution: {integrity: sha512-dAqSqE/RabpBKI8+h26GfLq6Vb3JVXs30XYQjdMjaj/c2tS8IYYMbIzP599KtRj7c57/wYApb3QjgRgXmrCukA==}
     engines: {node: '>=18'}
 
   tinyglobby@0.2.15:
@@ -9252,14 +9182,6 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
 
-  '@angular-architects/module-federation-runtime@21.2.2(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@module-federation/enhanced@2.3.3(@rspack/core@1.7.11)(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0(esbuild@0.26.0)))(@module-federation/runtime-core@2.3.3(node-fetch@3.3.2))':
-    dependencies:
-      '@angular/common': 21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2)
-      '@angular/core': 21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)
-      '@module-federation/enhanced': 2.3.3(@rspack/core@1.7.11)(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0(esbuild@0.26.0))
-      '@module-federation/runtime-core': 2.3.3(node-fetch@3.3.2)
-      tslib: 2.8.1
-
   '@angular-architects/module-federation-runtime@21.2.2(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@module-federation/enhanced@2.3.3(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0))(@module-federation/runtime-core@2.3.3(node-fetch@3.3.2))':
     dependencies:
       '@angular/common': 21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2)
@@ -9267,19 +9189,6 @@ snapshots:
       '@module-federation/enhanced': 2.3.3(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0)
       '@module-federation/runtime-core': 2.3.3(node-fetch@3.3.2)
       tslib: 2.8.1
-
-  '@angular-architects/module-federation@21.2.2(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@module-federation/enhanced@2.3.3(@rspack/core@1.7.11)(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0(esbuild@0.26.0)))(@module-federation/runtime-core@2.3.3(node-fetch@3.3.2))':
-    dependencies:
-      '@angular-architects/module-federation-runtime': 21.2.2(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@module-federation/enhanced@2.3.3(@rspack/core@1.7.11)(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0(esbuild@0.26.0)))(@module-federation/runtime-core@2.3.3(node-fetch@3.3.2))
-      callsite: 1.0.0
-      node-fetch: 3.3.2
-      semver: 7.7.4
-      word-wrap: 1.2.5
-    transitivePeerDependencies:
-      - '@angular/common'
-      - '@angular/core'
-      - '@module-federation/enhanced'
-      - '@module-federation/runtime-core'
 
   '@angular-architects/module-federation@21.2.2(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@module-federation/enhanced@2.3.3(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0))(@module-federation/runtime-core@2.3.3(node-fetch@3.3.2))':
     dependencies:
@@ -9380,7 +9289,7 @@ snapshots:
     transitivePeerDependencies:
       - chokidar
 
-  '@angular-devkit/build-angular@21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@1.7.11)(@types/node@24.12.2)(chokidar@4.0.3)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3)':
+  '@angular-devkit/build-angular@21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(@types/node@24.12.2)(chokidar@4.0.3)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@angular-devkit/architect': 0.2100.5(chokidar@4.0.3)
@@ -9404,14 +9313,14 @@ snapshots:
       babel-loader: 10.0.0(@babel/core@7.28.4)(webpack@5.104.0(esbuild@0.26.0))
       browserslist: 4.28.2
       copy-webpack-plugin: 13.0.1(webpack@5.104.0(esbuild@0.26.0))
-      css-loader: 7.1.2(@rspack/core@1.7.11)(webpack@5.104.0)
+      css-loader: 7.1.2(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(webpack@5.104.0(esbuild@0.26.0))
       esbuild-wasm: 0.26.0
       http-proxy-middleware: 3.0.5
       istanbul-lib-instrument: 6.0.3
       jsonc-parser: 3.3.1
       karma-source-map-support: 1.4.0
       less: 4.4.2
-      less-loader: 12.3.0(@rspack/core@1.7.11)(less@4.4.2)(webpack@5.104.0)
+      less-loader: 12.3.0(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(less@4.4.2)(webpack@5.104.0(esbuild@0.26.0))
       license-webpack-plugin: 4.0.2(webpack@5.104.0(esbuild@0.26.0))
       loader-utils: 3.3.1
       mini-css-extract-plugin: 2.9.4(webpack@5.104.0(esbuild@0.26.0))
@@ -9420,11 +9329,11 @@ snapshots:
       picomatch: 4.0.3
       piscina: 5.1.3
       postcss: 8.5.6
-      postcss-loader: 8.2.0(@rspack/core@1.7.11)(postcss@8.5.6)(typescript@5.9.3)(webpack@5.104.0)
+      postcss-loader: 8.2.0(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(postcss@8.5.6)(typescript@5.9.3)(webpack@5.104.0(esbuild@0.26.0))
       resolve-url-loader: 5.0.0
       rxjs: 7.8.2
       sass: 1.93.2
-      sass-loader: 16.0.5(@rspack/core@1.7.11)(sass@1.93.2)(webpack@5.104.0)
+      sass-loader: 16.0.5(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(sass@1.93.2)(webpack@5.104.0(esbuild@0.26.0))
       semver: 7.7.3
       source-map-loader: 5.0.0(webpack@5.104.0(esbuild@0.26.0))
       source-map-support: 0.5.21
@@ -9469,7 +9378,7 @@ snapshots:
       - webpack-cli
       - yaml
 
-  '@angular-devkit/build-angular@21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@1.7.11)(@types/node@24.12.2)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3)':
+  '@angular-devkit/build-angular@21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(@types/node@24.12.2)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@angular-devkit/architect': 0.2100.5(chokidar@4.0.3)
@@ -9493,14 +9402,14 @@ snapshots:
       babel-loader: 10.0.0(@babel/core@7.28.4)(webpack@5.104.0(esbuild@0.26.0))
       browserslist: 4.28.2
       copy-webpack-plugin: 13.0.1(webpack@5.104.0(esbuild@0.26.0))
-      css-loader: 7.1.2(@rspack/core@1.7.11)(webpack@5.104.0)
+      css-loader: 7.1.2(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(webpack@5.104.0(esbuild@0.26.0))
       esbuild-wasm: 0.26.0
       http-proxy-middleware: 3.0.5
       istanbul-lib-instrument: 6.0.3
       jsonc-parser: 3.3.1
       karma-source-map-support: 1.4.0
       less: 4.4.2
-      less-loader: 12.3.0(@rspack/core@1.7.11)(less@4.4.2)(webpack@5.104.0)
+      less-loader: 12.3.0(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(less@4.4.2)(webpack@5.104.0(esbuild@0.26.0))
       license-webpack-plugin: 4.0.2(webpack@5.104.0(esbuild@0.26.0))
       loader-utils: 3.3.1
       mini-css-extract-plugin: 2.9.4(webpack@5.104.0(esbuild@0.26.0))
@@ -9509,11 +9418,11 @@ snapshots:
       picomatch: 4.0.3
       piscina: 5.1.3
       postcss: 8.5.6
-      postcss-loader: 8.2.0(@rspack/core@1.7.11)(postcss@8.5.6)(typescript@5.9.3)(webpack@5.104.0)
+      postcss-loader: 8.2.0(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(postcss@8.5.6)(typescript@5.9.3)(webpack@5.104.0(esbuild@0.26.0))
       resolve-url-loader: 5.0.0
       rxjs: 7.8.2
       sass: 1.93.2
-      sass-loader: 16.0.5(@rspack/core@1.7.11)(sass@1.93.2)(webpack@5.104.0)
+      sass-loader: 16.0.5(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(sass@1.93.2)(webpack@5.104.0(esbuild@0.26.0))
       semver: 7.7.3
       source-map-loader: 5.0.0(webpack@5.104.0(esbuild@0.26.0))
       source-map-support: 0.5.21
@@ -10838,7 +10747,7 @@ snapshots:
       '@commitlint/load': 20.5.2(@types/node@24.12.2)(typescript@5.9.3)
       '@commitlint/read': 20.5.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.4.0)
       '@commitlint/types': 20.5.0
-      tinyexec: 1.1.1
+      tinyexec: 1.1.2
       yargs: 17.7.2
     transitivePeerDependencies:
       - '@types/node'
@@ -10913,7 +10822,7 @@ snapshots:
       '@commitlint/types': 20.5.0
       git-raw-commits: 5.0.1(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.4.0)
       minimist: 1.2.8
-      tinyexec: 1.1.1
+      tinyexec: 1.1.2
     transitivePeerDependencies:
       - conventional-commits-filter
       - conventional-commits-parser
@@ -11850,34 +11759,6 @@ snapshots:
       - node-fetch
       - utf-8-validate
 
-  '@module-federation/enhanced@2.3.3(@rspack/core@1.7.11)(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0(esbuild@0.26.0))':
-    dependencies:
-      '@module-federation/bridge-react-webpack-plugin': 2.3.3(node-fetch@3.3.2)
-      '@module-federation/cli': 2.3.3(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/data-prefetch': 2.3.3(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@module-federation/dts-plugin': 2.3.3(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/error-codes': 2.3.3
-      '@module-federation/inject-external-runtime-core-plugin': 2.3.3(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2))
-      '@module-federation/managers': 2.3.3(node-fetch@3.3.2)
-      '@module-federation/manifest': 2.3.3(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/rspack': 2.3.3(@rspack/core@1.7.11)(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/runtime-tools': 2.3.3(node-fetch@3.3.2)
-      '@module-federation/sdk': 2.3.3(node-fetch@3.3.2)
-      '@module-federation/webpack-bundler-runtime': 2.3.3(node-fetch@3.3.2)
-      schema-utils: 4.3.0
-      tapable: 2.3.0
-      upath: 2.0.1
-    optionalDependencies:
-      typescript: 5.9.3
-      webpack: 5.104.0(esbuild@0.26.0)
-    transitivePeerDependencies:
-      - '@rspack/core'
-      - bufferutil
-      - node-fetch
-      - react
-      - react-dom
-      - utf-8-validate
-
   '@module-federation/enhanced@2.3.3(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(node-fetch@3.3.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@5.9.3)(webpack@5.104.0)':
     dependencies:
       '@module-federation/bridge-react-webpack-plugin': 2.3.3(node-fetch@3.3.2)
@@ -11906,8 +11787,6 @@ snapshots:
       - react-dom
       - utf-8-validate
 
-  '@module-federation/error-codes@0.22.0': {}
-
   '@module-federation/error-codes@2.3.3': {}
 
   '@module-federation/inject-external-runtime-core-plugin@2.3.3(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2))':
@@ -11934,23 +11813,6 @@ snapshots:
       - utf-8-validate
       - vue-tsc
 
-  '@module-federation/rspack@2.3.3(@rspack/core@1.7.11)(node-fetch@3.3.2)(typescript@5.9.3)':
-    dependencies:
-      '@module-federation/bridge-react-webpack-plugin': 2.3.3(node-fetch@3.3.2)
-      '@module-federation/dts-plugin': 2.3.3(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/inject-external-runtime-core-plugin': 2.3.3(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2))
-      '@module-federation/managers': 2.3.3(node-fetch@3.3.2)
-      '@module-federation/manifest': 2.3.3(node-fetch@3.3.2)(typescript@5.9.3)
-      '@module-federation/runtime-tools': 2.3.3(node-fetch@3.3.2)
-      '@module-federation/sdk': 2.3.3(node-fetch@3.3.2)
-      '@rspack/core': 1.7.11
-    optionalDependencies:
-      typescript: 5.9.3
-    transitivePeerDependencies:
-      - bufferutil
-      - node-fetch
-      - utf-8-validate
-
   '@module-federation/rspack@2.3.3(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(node-fetch@3.3.2)(typescript@5.9.3)':
     dependencies:
       '@module-federation/bridge-react-webpack-plugin': 2.3.3(node-fetch@3.3.2)
@@ -11968,11 +11830,6 @@ snapshots:
       - node-fetch
       - utf-8-validate
 
-  '@module-federation/runtime-core@0.22.0':
-    dependencies:
-      '@module-federation/error-codes': 0.22.0
-      '@module-federation/sdk': 0.22.0
-
   '@module-federation/runtime-core@2.3.3(node-fetch@3.3.2)':
     dependencies:
       '@module-federation/error-codes': 2.3.3
@@ -11980,23 +11837,12 @@ snapshots:
     transitivePeerDependencies:
       - node-fetch
 
-  '@module-federation/runtime-tools@0.22.0':
-    dependencies:
-      '@module-federation/runtime': 0.22.0
-      '@module-federation/webpack-bundler-runtime': 0.22.0
-
   '@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)':
     dependencies:
       '@module-federation/runtime': 2.3.3(node-fetch@3.3.2)
       '@module-federation/webpack-bundler-runtime': 2.3.3(node-fetch@3.3.2)
     transitivePeerDependencies:
       - node-fetch
-
-  '@module-federation/runtime@0.22.0':
-    dependencies:
-      '@module-federation/error-codes': 0.22.0
-      '@module-federation/runtime-core': 0.22.0
-      '@module-federation/sdk': 0.22.0
 
   '@module-federation/runtime@2.3.3(node-fetch@3.3.2)':
     dependencies:
@@ -12006,8 +11852,6 @@ snapshots:
     transitivePeerDependencies:
       - node-fetch
 
-  '@module-federation/sdk@0.22.0': {}
-
   '@module-federation/sdk@2.3.3(node-fetch@3.3.2)':
     optionalDependencies:
       node-fetch: 3.3.2
@@ -12016,11 +11860,6 @@ snapshots:
     dependencies:
       find-pkg: 2.0.0
       resolve: 1.22.8
-
-  '@module-federation/webpack-bundler-runtime@0.22.0':
-    dependencies:
-      '@module-federation/runtime': 0.22.0
-      '@module-federation/sdk': 0.22.0
 
   '@module-federation/webpack-bundler-runtime@2.3.3(node-fetch@3.3.2)':
     dependencies:
@@ -12173,13 +12012,6 @@ snapshots:
       '@napi-rs/nice-win32-arm64-msvc': 1.1.1
       '@napi-rs/nice-win32-ia32-msvc': 1.1.1
       '@napi-rs/nice-win32-x64-msvc': 1.1.1
-    optional: true
-
-  '@napi-rs/wasm-runtime@1.0.7':
-    dependencies:
-      '@emnapi/core': 1.10.0
-      '@emnapi/runtime': 1.10.0
-      '@tybys/wasm-util': 0.10.1
     optional: true
 
   '@napi-rs/wasm-runtime@1.1.4(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
@@ -12652,45 +12484,22 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  '@rspack/binding-darwin-arm64@1.7.11':
-    optional: true
-
   '@rspack/binding-darwin-arm64@2.0.1':
-    optional: true
-
-  '@rspack/binding-darwin-x64@1.7.11':
     optional: true
 
   '@rspack/binding-darwin-x64@2.0.1':
     optional: true
 
-  '@rspack/binding-linux-arm64-gnu@1.7.11':
-    optional: true
-
   '@rspack/binding-linux-arm64-gnu@2.0.1':
-    optional: true
-
-  '@rspack/binding-linux-arm64-musl@1.7.11':
     optional: true
 
   '@rspack/binding-linux-arm64-musl@2.0.1':
     optional: true
 
-  '@rspack/binding-linux-x64-gnu@1.7.11':
-    optional: true
-
   '@rspack/binding-linux-x64-gnu@2.0.1':
     optional: true
 
-  '@rspack/binding-linux-x64-musl@1.7.11':
-    optional: true
-
   '@rspack/binding-linux-x64-musl@2.0.1':
-    optional: true
-
-  '@rspack/binding-wasm32-wasi@1.7.11':
-    dependencies:
-      '@napi-rs/wasm-runtime': 1.0.7
     optional: true
 
   '@rspack/binding-wasm32-wasi@2.0.1':
@@ -12700,36 +12509,14 @@ snapshots:
       '@napi-rs/wasm-runtime': 1.1.4(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
     optional: true
 
-  '@rspack/binding-win32-arm64-msvc@1.7.11':
-    optional: true
-
   '@rspack/binding-win32-arm64-msvc@2.0.1':
-    optional: true
-
-  '@rspack/binding-win32-ia32-msvc@1.7.11':
     optional: true
 
   '@rspack/binding-win32-ia32-msvc@2.0.1':
     optional: true
 
-  '@rspack/binding-win32-x64-msvc@1.7.11':
-    optional: true
-
   '@rspack/binding-win32-x64-msvc@2.0.1':
     optional: true
-
-  '@rspack/binding@1.7.11':
-    optionalDependencies:
-      '@rspack/binding-darwin-arm64': 1.7.11
-      '@rspack/binding-darwin-x64': 1.7.11
-      '@rspack/binding-linux-arm64-gnu': 1.7.11
-      '@rspack/binding-linux-arm64-musl': 1.7.11
-      '@rspack/binding-linux-x64-gnu': 1.7.11
-      '@rspack/binding-linux-x64-musl': 1.7.11
-      '@rspack/binding-wasm32-wasi': 1.7.11
-      '@rspack/binding-win32-arm64-msvc': 1.7.11
-      '@rspack/binding-win32-ia32-msvc': 1.7.11
-      '@rspack/binding-win32-x64-msvc': 1.7.11
 
   '@rspack/binding@2.0.1':
     optionalDependencies:
@@ -12744,19 +12531,11 @@ snapshots:
       '@rspack/binding-win32-ia32-msvc': 2.0.1
       '@rspack/binding-win32-x64-msvc': 2.0.1
 
-  '@rspack/core@1.7.11':
-    dependencies:
-      '@module-federation/runtime-tools': 0.22.0
-      '@rspack/binding': 1.7.11
-      '@rspack/lite-tapable': 1.1.0
-
   '@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2))':
     dependencies:
       '@rspack/binding': 2.0.1
     optionalDependencies:
       '@module-federation/runtime-tools': 2.3.3(node-fetch@3.3.2)
-
-  '@rspack/lite-tapable@1.1.0': {}
 
   '@rushstack/node-core-library@5.23.1(@types/node@24.12.2)':
     dependencies:
@@ -13007,7 +12786,6 @@ snapshots:
   '@simpl/brand@3.1.0(@siemens/element-theme@projects+element-theme)':
     dependencies:
       '@siemens/element-theme': link:projects/element-theme
-    optional: true
 
   '@simpl/docs-composer@11.16.8(typescript@5.9.3)':
     dependencies:
@@ -14596,7 +14374,7 @@ snapshots:
 
   css-functions-list@3.3.3: {}
 
-  css-loader@7.1.2(@rspack/core@1.7.11)(webpack@5.104.0):
+  css-loader@7.1.2(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(webpack@5.104.0(esbuild@0.26.0)):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.10)
       postcss: 8.5.10
@@ -14607,7 +14385,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.7.4
     optionalDependencies:
-      '@rspack/core': 1.7.11
+      '@rspack/core': 2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2))
       webpack: 5.104.0(esbuild@0.26.0)
 
   css-select@6.0.0:
@@ -15934,11 +15712,11 @@ snapshots:
 
   lerc@3.0.0: {}
 
-  less-loader@12.3.0(@rspack/core@1.7.11)(less@4.4.2)(webpack@5.104.0):
+  less-loader@12.3.0(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(less@4.4.2)(webpack@5.104.0(esbuild@0.26.0)):
     dependencies:
       less: 4.4.2
     optionalDependencies:
-      '@rspack/core': 1.7.11
+      '@rspack/core': 2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2))
       webpack: 5.104.0(esbuild@0.26.0)
 
   less@4.4.2:
@@ -16412,9 +16190,16 @@ snapshots:
     optionalDependencies:
       rollup: 4.60.2
 
-  ngx-build-plus@20.0.0(@angular-devkit/build-angular@21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@1.7.11)(@types/node@24.12.2)(chokidar@4.0.3)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3))(@schematics/angular@21.0.5(chokidar@4.0.3))(rxjs@7.8.2):
+  ngx-build-plus@20.0.0(@angular-devkit/build-angular@21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(@types/node@24.12.2)(chokidar@4.0.3)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3))(@schematics/angular@21.0.5(chokidar@4.0.3))(rxjs@7.8.2):
     dependencies:
-      '@angular-devkit/build-angular': 21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@1.7.11)(@types/node@24.12.2)(chokidar@4.0.3)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3)
+      '@angular-devkit/build-angular': 21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(@types/node@24.12.2)(chokidar@4.0.3)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3)
+      '@schematics/angular': 21.0.5(chokidar@4.0.3)
+      rxjs: 7.8.2
+      webpack-merge: 6.0.1
+
+  ngx-build-plus@20.0.0(@angular-devkit/build-angular@21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(@types/node@24.12.2)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3))(@schematics/angular@21.0.5)(rxjs@7.8.2):
+    dependencies:
+      '@angular-devkit/build-angular': 21.0.5(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8)(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(@angular/localize@21.0.8(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(@angular/compiler@21.0.8))(@angular/platform-browser@21.0.8(@angular/common@21.0.8(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.0.8(@angular/compiler@21.0.8)(rxjs@7.8.2)))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(@types/node@24.12.2)(jiti@2.6.1)(ng-packagr@21.0.1(@angular/compiler-cli@21.0.8(@angular/compiler@21.0.8)(typescript@5.9.3))(tslib@2.8.1)(typescript@5.9.3))(tsx@4.21.0)(typescript@5.9.3)(vitest@4.1.5)(yaml@2.8.3)
       '@schematics/angular': 21.0.5(chokidar@4.0.3)
       rxjs: 7.8.2
       webpack-merge: 6.0.1
@@ -16888,14 +16673,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  postcss-loader@8.2.0(@rspack/core@1.7.11)(postcss@8.5.6)(typescript@5.9.3)(webpack@5.104.0):
+  postcss-loader@8.2.0(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(postcss@8.5.6)(typescript@5.9.3)(webpack@5.104.0(esbuild@0.26.0)):
     dependencies:
       cosmiconfig: 9.0.1(typescript@5.9.3)
       jiti: 2.6.1
       postcss: 8.5.6
       semver: 7.7.4
     optionalDependencies:
-      '@rspack/core': 1.7.11
+      '@rspack/core': 2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2))
       webpack: 5.104.0(esbuild@0.26.0)
     transitivePeerDependencies:
       - typescript
@@ -17327,11 +17112,11 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass-loader@16.0.5(@rspack/core@1.7.11)(sass@1.93.2)(webpack@5.104.0):
+  sass-loader@16.0.5(@rspack/core@2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2)))(sass@1.93.2)(webpack@5.104.0(esbuild@0.26.0)):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
-      '@rspack/core': 1.7.11
+      '@rspack/core': 2.0.1(@module-federation/runtime-tools@2.3.3(node-fetch@3.3.2))
       sass: 1.93.2
       webpack: 5.104.0(esbuild@0.26.0)
 
@@ -17922,7 +17707,7 @@ snapshots:
 
   tinybench@2.9.0: {}
 
-  tinyexec@1.1.1: {}
+  tinyexec@1.1.2: {}
 
   tinyglobby@0.2.15:
     dependencies:
@@ -18222,7 +18007,7 @@ snapshots:
       picomatch: 4.0.4
       std-env: 4.1.0
       tinybench: 2.9.0
-      tinyexec: 1.1.1
+      tinyexec: 1.1.2
       tinyglobby: 0.2.16
       tinyrainbow: 3.1.0
       vite: 7.3.0(@types/node@24.12.2)(jiti@2.6.1)(less@4.4.2)(sass@1.97.1)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.3)
@@ -18251,7 +18036,7 @@ snapshots:
       picomatch: 4.0.4
       std-env: 4.1.0
       tinybench: 2.9.0
-      tinyexec: 1.1.1
+      tinyexec: 1.1.2
       tinyglobby: 0.2.16
       tinyrainbow: 3.1.0
       vite: 7.3.0(@types/node@24.12.2)(jiti@2.6.1)(less@4.6.4)(sass@1.99.0)(terser@5.44.0)(tsx@4.21.0)(yaml@2.8.3)

@@ -36,7 +36,7 @@
     "build:examples:prod": "ng build --configuration production",
     "build:examples:aot": "ng build --configuration aot",
     "build:all": "pnpm run translate:build && pnpm run lib:build && pnpm run schematics:build && pnpm run live-preview:build && pnpm run charts:build && pnpm run native-charts:build && pnpm run dashboards:build && pnpm run maps:build",
-    "build:all:update-translatable-keys": "pnpm exec update-translatable-keys",
+    "build:all:update-translatable-keys": "pnpm --filter . exec update-translatable-keys",
     "release:copy-license": "cpy LICENSE.md projects/element-theme/ && cpy LICENSE.md projects/element-translate-cli/",
     "lib:build": "ng build element-ng && cpy \"projects/element-ng/*.scss\" \"./dist/@siemens/element-ng\" && cpy \"{LICENSE.md,README.md}\" \"./dist/@siemens/element-ng/\"",
     "lib:test": "ng test element-ng",
@@ -118,7 +118,6 @@
     "@angular/language-service": "21.0.8",
     "@angular/localize": "21.0.8",
     "@axe-core/playwright": "4.11.1",
-    "@babel/standalone": "7.29.2",
     "@commitlint/cli": "20.5.2",
     "@commitlint/config-conventional": "20.5.0",
     "@eslint/js": "10.0.1",
@@ -127,9 +126,15 @@
     "@schematics/angular": "21.0.5",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
+    "@simpl/brand": "3.1.0",
     "@siemens/commitlint-config": "4.2.1",
+    "@siemens/element-ng": "workspace:*",
+    "@siemens/element-theme": "workspace:*",
+    "@siemens/element-translate-cli": "workspace:*",
+    "@siemens/element-translate-ng": "workspace:*",
     "@siemens/eslint-config-angular": "4.2.1",
     "@siemens/eslint-plugin-defaultvalue": "4.2.1",
+    "@siemens/live-preview": "workspace:*",
     "@siemens/prettier-config": "4.2.1",
     "@siemens/stylelint-config-scss": "4.2.1",
     "@types/geojson": "7946.0.16",
@@ -151,6 +156,7 @@
     "http-server": "14.1.1",
     "husky": "9.1.7",
     "ng-packagr": "21.0.1",
+    "ngx-build-plus": "20.0.0",
     "piscina": "5.1.4",
     "postcss": "8.5.10",
     "postcss-scss": "4.0.9",
@@ -168,7 +174,6 @@
   },
   "optionalDependencies": {
     "@siemens-ux/design-tokens": "^0.3.1",
-    "@simpl/brand": "3.1.0",
     "@simpl/docs-composer": "11.16.8"
   }
 }

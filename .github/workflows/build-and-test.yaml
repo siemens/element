@@ -22,15 +22,17 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0 # We need this for commit-lint
-      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+      - uses: pnpm/action-setup@903f9c1a6ebcba6cf41d87230be49611ac97822e # v6.0.3
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: lts/krypton
           cache: 'pnpm'
-      - run: pnpm config set //code.siemens.com/:_authToken $SIEMENS_NPM_TOKEN
+      - name: Set up registry authentication
+        run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: pnpm ci --prefer-offline=true
+      - run: pnpm ci
+      - run: pnpm list @simpl/brand --json
       - run: pnpm run lint:commit
       - run: pnpm run build:all
       - run: pnpm run prepare-brand
@@ -56,7 +58,7 @@ jobs:
       - build
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+      - uses: pnpm/action-setup@903f9c1a6ebcba6cf41d87230be49611ac97822e # v6.0.3
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: lts/krypton
@@ -65,7 +67,11 @@ jobs:
         with:
           name: dist
           path: dist
-      - run: pnpm ci --prefer-offline=true
+      - name: Set up registry authentication
+        run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
+        env:
+          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      - run: pnpm install
       - run: pnpm run translate:test --watch=false --progress=false --coverage
       - run: pnpm run lib:test --watch=false --progress=false --coverage
       - run: pnpm run schematics:test
@@ -106,7 +112,7 @@ jobs:
       - build
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+      - uses: pnpm/action-setup@903f9c1a6ebcba6cf41d87230be49611ac97822e # v6.0.3
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: lts/krypton
@@ -115,10 +121,11 @@ jobs:
         with:
           name: dist
           path: dist
-      - run: pnpm config set //code.siemens.com/:_authToken $SIEMENS_NPM_TOKEN
+      - name: Set up registry authentication
+        run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: pnpm ci --prefer-offline=true
+      - run: pnpm install
       - run: pnpm run lint:format
       - run: pnpm run lint:scss
       - run: pnpm run lint:ng
@@ -146,7 +153,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           lfs: true
-      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+      - uses: pnpm/action-setup@903f9c1a6ebcba6cf41d87230be49611ac97822e # v6.0.3
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: lts/krypton
@@ -155,8 +162,11 @@ jobs:
         with:
           name: dist
           path: dist
-      # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
-      - run: pnpm ci --prefer-offline=true
+      - name: Set up registry authentication
+        run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
+        env:
+          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      - run: pnpm install
       - run: pnpm exec playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: ${{ !cancelled() }}
@@ -197,15 +207,16 @@ jobs:
         with:
           name: dist
           path: dist
-      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+      - uses: pnpm/action-setup@903f9c1a6ebcba6cf41d87230be49611ac97822e # v6.0.3
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: lts/krypton
           cache: 'pnpm'
-      - run: pnpm config set //code.siemens.com/:_authToken $SIEMENS_NPM_TOKEN
+      - name: Set up registry authentication
+        run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: pnpm ci --prefer-offline=true
+      - run: pnpm install
       - run: cp dist/element-examples/favicon.png docs/_src/favicon.png
       - run: uv sync
         env:
