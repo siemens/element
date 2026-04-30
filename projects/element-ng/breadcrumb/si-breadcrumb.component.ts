@@ -83,10 +83,10 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_BREADCRUMB:Breadcrumbs`)
+   * t(() => $localize`:@@SI_BREADCRUMB:Breadcrumb navigation`)
    * ```
    */
-  readonly ariaLabel = input(t(() => $localize`:@@SI_BREADCRUMB:Breadcrumbs`));
+  readonly ariaLabel = input(t(() => $localize`:@@SI_BREADCRUMB:Breadcrumb navigation`));
 
   private translationSubscription?: Subscription;
   private itemsProcessed = false;

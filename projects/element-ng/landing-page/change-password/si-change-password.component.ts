@@ -79,13 +79,13 @@ export class SiChangePasswordComponent implements OnInit, OnDestroy {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_CHANGE_PASSWORD.CHANGE_FACTORY_PASSWORD:Factory set password must be changed`)
+   * t(() => $localize`:@@SI_CHANGE_PASSWORD.CHANGE_FACTORY_PASSWORD:Default password must be changed`)
    * ```
    */
   readonly subheading = input(
     t(
       () =>
-        $localize`:@@SI_CHANGE_PASSWORD.CHANGE_FACTORY_PASSWORD:Factory set password must be changed`
+        $localize`:@@SI_CHANGE_PASSWORD.CHANGE_FACTORY_PASSWORD:Default password must be changed`
     )
   );
   /**

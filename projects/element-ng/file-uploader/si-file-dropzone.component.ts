@@ -31,66 +31,66 @@ export class SiFileDropzoneComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:select files to upload`)
    * ```
    */
   readonly uploadTextFileSelect = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:select files to upload`)
   );
   /**
    * Text or translation key of the drag&drop field (is combined with the `uploadTextFileSelect`).
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drag files here or`)
    * ```
    */
-  readonly uploadDropText = input(t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`));
+  readonly uploadDropText = input(t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drag files here or`));
   /**
    * Text or translation key for max file size.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Max. {{maxFileSize}} upload size.`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Upload max. {{maxFileSize}}`)
    * ```
    */
   readonly maxFileSizeText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Max. {{maxFileSize}} upload size.`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Upload max. {{maxFileSize}}`)
   );
   /**
    * Text or translation key for accepted types.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types: {{accept}}.`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Supported file types: {{accept}}`)
    * ```
    */
   readonly acceptText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types: {{accept}}.`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Supported file types: {{accept}}`)
   );
   /**
    * Text or translation key of message title if incorrect file type is dragged / dropped.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Invalid file type`)
    * ```
    */
   readonly errorTextFileType = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Invalid file type`)
   );
   /**
    * Message or translation key if file exceeds the maximum file size limit.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds max. size`)
    * ```
    */
   readonly errorTextFileMaxSize = input(
     t(
       () =>
-        $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`
+        $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds max. size`
     )
   );
   /**

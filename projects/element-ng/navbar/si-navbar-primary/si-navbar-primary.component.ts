@@ -120,21 +120,21 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch app`)
    * ```
    */
-  readonly appSwitcherTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`));
+  readonly appSwitcherTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch app`));
 
   /**
    * sub-title for the launchpad
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.SUB_TITLE:Access all your apps`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.SUB_TITLE:Access all of your apps`)
    * ```
    */
   readonly appSwitcherSubTitle = input(
-    t(() => $localize`:@@SI_LAUNCHPAD.SUB_TITLE:Access all your apps`)
+    t(() => $localize`:@@SI_LAUNCHPAD.SUB_TITLE:Access all of your apps`)
   );
 
   /**
@@ -142,11 +142,11 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorites`)
    * ```
    */
   readonly favoriteAppsTitle = input(
-    t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`)
+    t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorites`)
   );
 
   /**
@@ -166,20 +166,20 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:More`)
    * ```
    */
-  readonly showMoreAppsTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`));
+  readonly showMoreAppsTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:More`));
 
   /**
    * Title or translate key for the show less apps button.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Less`)
    * ```
    */
-  readonly showLessAppsTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`));
+  readonly showLessAppsTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Less`));
 
   /**
    * All app items shown in the launchpad. The launchpad will not be visible if the
@@ -233,11 +233,11 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_NAVBAR.OPEN_LAUNCHPAD:Open launchpad`)
+   * t(() => $localize`:@@SI_NAVBAR.OPEN_LAUNCHPAD:Switch app`)
    * ```
    */
   readonly openAppSwitcherText = input(
-    t(() => $localize`:@@SI_NAVBAR.OPEN_LAUNCHPAD:Open launchpad`)
+    t(() => $localize`:@@SI_NAVBAR.OPEN_LAUNCHPAD:Switch app`)
   );
 
   /**
@@ -245,11 +245,11 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_NAVBAR.TOGGLE_NAVIGATION:Toggle navigation`)
+   * t(() => $localize`:@@SI_NAVBAR.TOGGLE_NAVIGATION:Show navigation`)
    * ```
    */
   readonly toggleNavigationText = input(
-    t(() => $localize`:@@SI_NAVBAR.TOGGLE_NAVIGATION:Toggle navigation`)
+    t(() => $localize`:@@SI_NAVBAR.TOGGLE_NAVIGATION:Show navigation`)
   );
 
   /**

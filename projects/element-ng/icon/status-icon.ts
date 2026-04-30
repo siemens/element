@@ -61,7 +61,7 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           stackedColor: 'status-info-contrast',
           background: 'bg-base-info',
           severity: 4,
-          ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.INFO:Info`)
+          ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.INFO:Information`)
         },
         caution: {
           icon: 'elementSquare45Filled',
@@ -106,7 +106,7 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           stackedColor: 'status-info-contrast',
           background: 'bg-base-info',
           severity: 7,
-          ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.PROGRESS:Progress`)
+          ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.PROGRESS:Processing…`)
         },
         pending: {
           icon: 'elementCircleFilled',

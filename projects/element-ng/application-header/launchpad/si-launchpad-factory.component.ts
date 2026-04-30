@@ -58,10 +58,10 @@ export class SiLaunchpadFactoryComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch app`)
    * ```
    */
-  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`));
+  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch app`));
 
   /**
    * Subtitle of the launchpad.
@@ -94,20 +94,20 @@ export class SiLaunchpadFactoryComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:More`)
    * ```
    */
-  readonly showMoreAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`));
+  readonly showMoreAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:More`));
 
   /**
    * Title of the show less apps button.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Less`)
    * ```
    */
-  readonly showLessAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`));
+  readonly showLessAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Less`));
 
   readonly favoriteChange = output<FavoriteChangeEvent>();
 

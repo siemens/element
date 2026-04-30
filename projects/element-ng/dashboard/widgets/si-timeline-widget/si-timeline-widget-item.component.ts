@@ -133,7 +133,7 @@ export class SiTimelineWidgetItemComponent
    * Aria label text for actions button dropdown.
    */
   readonly ariaLabelDropdown = t(
-    () => $localize`:@@SI_DASHBOARD.EXPAND_WIDGET_ACTIONS:Expand actions`
+    () => $localize`:@@SI_DASHBOARD.EXPAND_WIDGET_ACTIONS:Show actions`
   );
 
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });

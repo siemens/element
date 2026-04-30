@@ -116,11 +116,11 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_DATEPICKER.PREVIOUS:Previous`)
+   * t(() => $localize`:@@SI_DATEPICKER.PREVIOUS:Back`)
    * ```
    */
   readonly previousLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_DATEPICKER.PREVIOUS:Previous`)
+    t(() => $localize`:@@SI_DATEPICKER.PREVIOUS:Back`)
   );
   /**
    * Aria label for the next button. Needed for a11y.
@@ -223,7 +223,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
     () => $localize`:@@SI_DATEPICKER.DISABLED_TIME_TEXT:Ignore time`
   );
   private readonly defaultEnableTimeText = t(
-    () => $localize`:@@SI_DATEPICKER.ENABLED_TIME_TEXT:Consider time`
+    () => $localize`:@@SI_DATEPICKER.ENABLED_TIME_TEXT:Include time`
   );
 
   protected readonly includeTimeLabel = computed(() =>

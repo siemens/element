@@ -38,19 +38,19 @@ export class SiPasswordToggleComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_PASSWORD_TOGGLE.SHOW:show password`)
+   * t(() => $localize`:@@SI_PASSWORD_TOGGLE.SHOW:Show password`)
    * ```
    */
-  readonly showLabel = input(t(() => $localize`:@@SI_PASSWORD_TOGGLE.SHOW:show password`));
+  readonly showLabel = input(t(() => $localize`:@@SI_PASSWORD_TOGGLE.SHOW:Show password`));
   /**
    * The aria-label (translatable) for the password hide icon.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_PASSWORD_TOGGLE.HIDE:hide password`)
+   * t(() => $localize`:@@SI_PASSWORD_TOGGLE.HIDE:Hide password`)
    * ```
    */
-  readonly hideLabel = input(t(() => $localize`:@@SI_PASSWORD_TOGGLE.HIDE:hide password`));
+  readonly hideLabel = input(t(() => $localize`:@@SI_PASSWORD_TOGGLE.HIDE:Hide password`));
 
   protected readonly showPassword = signal<boolean>(false);
   protected readonly icons = addIcons({ elementHide, elementShow });

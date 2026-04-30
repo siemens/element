@@ -46,11 +46,11 @@ export class SiListWidgetBodyComponent
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LIST_WIDGET.SEARCH_PLACEHOLDER:Search...`)
+   * t(() => $localize`:@@SI_LIST_WIDGET.SEARCH_PLACEHOLDER:Search…`)
    * ```
    */
   readonly searchPlaceholderLabel = input(
-    t(() => $localize`:@@SI_LIST_WIDGET.SEARCH_PLACEHOLDER:Search...`)
+    t(() => $localize`:@@SI_LIST_WIDGET.SEARCH_PLACEHOLDER:Search…`)
   );
 
   /**

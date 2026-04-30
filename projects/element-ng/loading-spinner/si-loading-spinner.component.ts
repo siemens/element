@@ -38,8 +38,8 @@ export class SiLoadingSpinnerComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LOADING_SPINNER.LABEL:Loading`)
+   * t(() => $localize`:@@SI_LOADING_SPINNER.LABEL:Loading…`)
    * ```
    */
-  readonly ariaLabel = input(t(() => $localize`:@@SI_LOADING_SPINNER.LABEL:Loading`));
+  readonly ariaLabel = input(t(() => $localize`:@@SI_LOADING_SPINNER.LABEL:Loading…`));
 }

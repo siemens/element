@@ -53,10 +53,10 @@ export class SiPaginationComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_PAGINATION.FORWARD:Forward`)
+   * t(() => $localize`:@@SI_PAGINATION.FORWARD:Next`)
    * ```
    */
-  readonly forwardButtonText = input(t(() => $localize`:@@SI_PAGINATION.FORWARD:Forward`));
+  readonly forwardButtonText = input(t(() => $localize`:@@SI_PAGINATION.FORWARD:Next`));
   /**
    * When multiple paginations are used on the same page each pagination needs a distinct aria label.
    * Required for a11y.

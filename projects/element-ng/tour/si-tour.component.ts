@@ -46,10 +46,10 @@ export class SiTourComponent implements OnDestroy {
 
   protected backText = t(() => $localize`:@@SI_TOUR.BACK:Back`);
   protected nextText = t(() => $localize`:@@SI_TOUR.NEXT:Next`);
-  protected skipText = t(() => $localize`:@@SI_TOUR.SKIP:Skip tour`);
+  protected skipText = t(() => $localize`:@@SI_TOUR.SKIP:Skip`);
   protected doneText = t(() => $localize`:@@SI_TOUR.DONE:Done`);
   protected ariaLabelClose = t(() => $localize`:@@SI_TOUR.CLOSE:Close`);
-  protected progressText = t(() => $localize`:@@SI_TOUR.PROGRESS: {{step}} of {{total}}`);
+  protected progressText = t(() => $localize`:@@SI_TOUR.PROGRESS:{{step}} of {{total}}`);
 
   private elementRef: ElementRef<HTMLElement> = inject(ElementRef);
   private subscription?: Subscription;

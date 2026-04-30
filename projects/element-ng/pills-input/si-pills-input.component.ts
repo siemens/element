@@ -76,11 +76,11 @@ export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFo
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_PILLS_INPUT.INPUT_ELEMENT_ARIA_LABEL:Create item`)
+   * t(() => $localize`:@@SI_PILLS_INPUT.INPUT_ELEMENT_ARIA_LABEL:Enter text to create entry`)
    * ```
    */
   readonly inputElementAriaLabel = input(
-    t(() => $localize`:@@SI_PILLS_INPUT.INPUT_ELEMENT_ARIA_LABEL:Create item`)
+    t(() => $localize`:@@SI_PILLS_INPUT.INPUT_ELEMENT_ARIA_LABEL:Enter text to create entry`)
   );
 
   /**

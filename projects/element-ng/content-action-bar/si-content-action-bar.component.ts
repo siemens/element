@@ -78,10 +78,10 @@ export class SiContentActionBarComponent implements AfterViewInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_CONTENT_ACTION_BAR.TOGGLE:Toggle`)
+   * t(() => $localize`:@@SI_CONTENT_ACTION_BAR.TOGGLE:Show actions`)
    * ```
    */
-  readonly toggleItemLabel = input(t(() => $localize`:@@SI_CONTENT_ACTION_BAR.TOGGLE:Toggle`));
+  readonly toggleItemLabel = input(t(() => $localize`:@@SI_CONTENT_ACTION_BAR.TOGGLE:Show actions`));
   /**
    * Option to remove all icons from dropdown menus of the content action bar.
    *

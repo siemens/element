@@ -72,15 +72,15 @@ export class SiWidgetInstanceEditorDialogComponent extends SiWidgetEditorBase im
 
   protected labelSave = t(() => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.SAVE:Save`);
   protected labelCancel = t(() => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.CANCEL:Cancel`);
-  protected labelPrevious = t(() => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.PREVIOUS:Previous`);
+  protected labelPrevious = t(() => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.PREVIOUS:Back`);
   protected labelNext = t(() => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.NEXT:Next`);
   protected labelDialogMessage = t(
     () =>
-      $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.MESSAGE:The widget configuration changed. Do you want to discard the changes?`
+      $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.MESSAGE:Discard changes?`
   );
   protected labelDialogHeading = t(
     () =>
-      $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.HEADING:Widget configuration changed`
+      $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.HEADING:Unsaved widget data`
   );
   protected labelDialogSave = t(
     () => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.SAVE:Save`

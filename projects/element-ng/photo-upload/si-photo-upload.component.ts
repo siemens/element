@@ -100,13 +100,13 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_TYPE:The image file is not valid. Please upload a PNG or JP(E)G.`)
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_TYPE:PNG, JPG, and JPEG supported only`)
    * ```
    */
   readonly uploadErrorWrongType = input(
     t(
       () =>
-        $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_TYPE:The image file is not valid. Please upload a PNG or JP(E)G.`
+        $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_TYPE:PNG, JPG, and JPEG supported only`
     )
   );
 
@@ -116,13 +116,13 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_SIZE_EXCEEDED:The actual file size {{mb}} MB exceeds the {{maxSizeMb}} MB limit.`)
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_SIZE_EXCEEDED:Current file size of {{mb}} MB exceeds file size of max. {{maxSizeMb}} MB`)
    * ```
    */
   readonly uploadErrorTooBig = input(
     t(
       () =>
-        $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_SIZE_EXCEEDED:The actual file size {{mb}} MB exceeds the {{maxSizeMb}} MB limit.`
+        $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_SIZE_EXCEEDED:Current file size of {{mb}} MB exceeds file size of max. {{maxSizeMb}} MB`
     )
   );
 
@@ -156,11 +156,11 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_PHOTO_UPLOAD.CROPPER_FRAME_LABEL:Crop photo`)
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.CROPPER_FRAME_LABEL:Crop picture`)
    * ```
    */
   readonly cropperFrameAriaLabel = input(
-    t(() => $localize`:@@SI_PHOTO_UPLOAD.CROPPER_FRAME_LABEL:Crop photo`)
+    t(() => $localize`:@@SI_PHOTO_UPLOAD.CROPPER_FRAME_LABEL:Crop picture`)
   );
 
   /**
@@ -168,11 +168,11 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_PHOTO_UPLOAD.UPLOAD_PHOTO:Upload photo`)
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.UPLOAD_PHOTO:Upload picture`)
    * ```
    */
   readonly uploadPhotoText = input(
-    t(() => $localize`:@@SI_PHOTO_UPLOAD.UPLOAD_PHOTO:Upload photo`)
+    t(() => $localize`:@@SI_PHOTO_UPLOAD.UPLOAD_PHOTO:Upload picture`)
   );
 
   /**
@@ -180,10 +180,10 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_PHOTO_UPLOAD.REMOVE:Remove`)
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.REMOVE:Delete`)
    * ```
    */
-  readonly removePhotoText = input(t(() => $localize`:@@SI_PHOTO_UPLOAD.REMOVE:Remove`));
+  readonly removePhotoText = input(t(() => $localize`:@@SI_PHOTO_UPLOAD.REMOVE:Delete`));
 
   /**
    * Text for the button cancelling the editing process.
@@ -210,10 +210,10 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_PHOTO_UPLOAD.MODAL_TITLE:Avatar photo`)
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.MODAL_TITLE:Profile picture`)
    * ```
    */
-  readonly modalHeader = input(t(() => $localize`:@@SI_PHOTO_UPLOAD.MODAL_TITLE:Avatar photo`));
+  readonly modalHeader = input(t(() => $localize`:@@SI_PHOTO_UPLOAD.MODAL_TITLE:Profile picture`));
 
   /**
    * Text displayed as description of the editing modal.

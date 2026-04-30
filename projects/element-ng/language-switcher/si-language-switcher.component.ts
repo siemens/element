@@ -30,11 +30,11 @@ export class SiLanguageSwitcherComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LANGUAGE_SWITCHER.LABEL:Language switcher`)
+   * t(() => $localize`:@@SI_LANGUAGE_SWITCHER.LABEL:Switch language`)
    * ```
    */
   readonly languageSwitcherLabel = input(
-    t(() => $localize`:@@SI_LANGUAGE_SWITCHER.LABEL:Language switcher`)
+    t(() => $localize`:@@SI_LANGUAGE_SWITCHER.LABEL:Switch language`)
   );
 
   /**

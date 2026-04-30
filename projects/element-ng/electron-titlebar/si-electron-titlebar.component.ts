@@ -66,10 +66,10 @@ export class SiElectrontitlebarComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_ELECTRON_TITLEBAR.FORWARD:Forward`)
+   * t(() => $localize`:@@SI_ELECTRON_TITLEBAR.FORWARD:Next`)
    * ```
    */
-  readonly ariaLabelForward = input(t(() => $localize`:@@SI_ELECTRON_TITLEBAR.FORWARD:Forward`));
+  readonly ariaLabelForward = input(t(() => $localize`:@@SI_ELECTRON_TITLEBAR.FORWARD:Next`));
 
   /**
    * Aria Label for Back Button
@@ -86,10 +86,10 @@ export class SiElectrontitlebarComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_ELECTRON_TITLEBAR.MENU:Menu`)
+   * t(() => $localize`:@@SI_ELECTRON_TITLEBAR.MENU:Show actions`)
    * ```
    */
-  readonly ariaLabelMenu = input(t(() => $localize`:@@SI_ELECTRON_TITLEBAR.MENU:Menu`));
+  readonly ariaLabelMenu = input(t(() => $localize`:@@SI_ELECTRON_TITLEBAR.MENU:Show actions`));
 
   protected readonly icons = addIcons({ elementLeft4, elementRight4, elementOptionsVertical });
 }

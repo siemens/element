@@ -135,10 +135,10 @@ export class SiDateRangeFilterComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.REF_POINT:Reference point`)
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.REF_POINT:Reference`)
    * ```
    */
-  readonly refLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.REF_POINT:Reference point`));
+  readonly refLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.REF_POINT:Reference`));
   /**
    * label for the "Reference point" title
    *
@@ -162,10 +162,10 @@ export class SiDateRangeFilterComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.RANGE:Range`)
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.RANGE:Period`)
    * ```
    */
-  readonly rangeLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.RANGE:Range`));
+  readonly rangeLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.RANGE:Period`));
   /**
    * label for the "Today" checkbox
    *
@@ -263,10 +263,10 @@ export class SiDateRangeFilterComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.SEARCH:Search`)
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.SEARCH:Search…`)
    * ```
    */
-  readonly searchLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.SEARCH:Search`));
+  readonly searchLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.SEARCH:Search…`));
   /**
    * label for the "search" input
    *
