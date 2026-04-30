@@ -25,12 +25,17 @@
       class="status-toggle-item focus-inside px-4"
       role="radio"
       [attr.aria-checked]="$index === selIndexValue"
-      [attr.tabindex]="isDisabled() || item.disabled ? '' : '0'"
+      [attr.tabindex]="
+        isDisabled() || item.disabled ? null : $index === focusedIndex() ? '0' : '-1'
+      "
       [attr.aria-disabled]="isDisabled() || item.disabled"
       [class.active]="$index === selIndexValue"
       [class.disabled]="item.disabled || isDisabled()"
       [style.width.%]="100 / $count"
+      (keydown.space)="$event.preventDefault(); selectItem($index)"
       (keydown.enter)="selectItem($index)"
+      (keydown.arrowRight)="navigateFocus($event, $index, 1)"
+      (keydown.arrowLeft)="navigateFocus($event, $index, -1)"
     >
       <span class="icon icon-stack">
         <si-icon
