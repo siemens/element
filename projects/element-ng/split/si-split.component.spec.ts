@@ -410,7 +410,8 @@ describe('SiSplitComponent', () => {
         });
 
         it('should save ui state ', async () => {
-          // cannot use jasmine.clock here
+          // Drain the async chain: asapScheduler -> parts.changes -> setTimeout(refreshAllPartSizes)
+          await new Promise(resolve => setTimeout(resolve));
           await new Promise(resolve => setTimeout(resolve));
           wrapperComponent.splitPart().toggleCollapse();
           const uiStateMock =
@@ -435,15 +436,17 @@ describe('SiSplitComponent', () => {
           fixture = TestBed.createComponent(WrapperComponent);
           wrapperComponent = fixture.componentInstance;
           wrapperComponent.sizes = [20, 60, 20];
-          // We need this here to run checks after async tasks completed.
-          fixture.autoDetectChanges(true);
           element = fixture.nativeElement;
         });
 
         it('should load and configure split parts', async () => {
-          // cannot use jasmine.clock here
+          fixture.detectChanges();
+          // Drain the async chain: asapScheduler -> parts.changes handler ->
+          // restoreFormUIState() -> uiStateService.load().then() -> setTimeout(refreshAllPartSizes)
+          // Multiple setTimeout rounds are needed to flush the nested async operations.
           await new Promise(resolve => setTimeout(resolve));
-          await fixture.whenStable();
+          await new Promise(resolve => setTimeout(resolve));
+          fixture.detectChanges();
           expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
           expect(wrapperComponent.measureSize2()).toBeCloseTo(200, 0);
           expect(wrapperComponent.measureSize3()).toBeCloseTo(100, 0);
@@ -510,6 +513,8 @@ describe('SiSplitComponent', () => {
         wrapperComponent.scale3 = 'none';
         await runOnPushChangeDetection(fixture);
         fixture.detectChanges();
+        // Drain the async chain: asapScheduler -> parts.changes -> setTimeout(refreshAllPartSizes)
+        await new Promise(resolve => setTimeout(resolve));
         await new Promise(resolve => setTimeout(resolve));
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);

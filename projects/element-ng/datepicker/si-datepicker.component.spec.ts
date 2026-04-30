@@ -63,6 +63,10 @@ describe('SiDatepickerComponent', () => {
     picker = await loader.getHarness(SiDatepickerComponentHarness);
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('should includeTimeLabel matches enabledTimeText', async () => {
     const enabledTimeText = 'Consider Time';
     await updateConfig({ ...component.config(), enabledTimeText, showTime: true });

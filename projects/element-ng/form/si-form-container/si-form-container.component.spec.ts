@@ -167,6 +167,7 @@ describe('SiFormContainerComponent', () => {
 
     afterEach(() => {
       vi.useRealTimers();
+      vi.restoreAllMocks();
     });
 
     it('should create', async () => {

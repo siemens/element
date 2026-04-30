@@ -276,12 +276,14 @@ describe('SiDatatableInteractionDirective', () => {
 
       await refresh();
 
-      expect(wrapperComponent.selected).toContain({
-        id: 1,
-        firstname: 'First 1',
-        lastname: 'Last 1',
-        age: 50
-      });
+      expect(wrapperComponent.selected).toContainEqual(
+        expect.objectContaining({
+          id: 1,
+          firstname: 'First 1',
+          lastname: 'Last 1',
+          age: 50
+        })
+      );
     }
   });
 
@@ -317,12 +319,14 @@ describe('SiDatatableInteractionDirective', () => {
 
       await refresh();
 
-      expect(wrapperComponent.selected).toContain({
-        id: 1,
-        firstname: 'First 1',
-        lastname: 'Last 1',
-        age: 50
-      });
+      expect(wrapperComponent.selected).toContainEqual(
+        expect.objectContaining({
+          id: 1,
+          firstname: 'First 1',
+          lastname: 'Last 1',
+          age: 50
+        })
+      );
     }
   });
 });
