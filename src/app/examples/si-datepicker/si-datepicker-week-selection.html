@@ -1,0 +1,22 @@
+<div class="d-flex align-items-start">
+  <si-datepicker
+    class="d-inline-block"
+    [config]="{ enableDateRange: true }"
+    [dateRange]="range()"
+    (dateRangeChange)="onDateRangeChange($event)"
+  />
+</div>
+<div class="card mt-6 e2e-ignore">
+  <div class="card-header">Control panel</div>
+  <div class="card-body">
+    <div class="mb-6"
+      ><span class="si-h5">Selected week:</span><pre>{{ range() | json }}</pre>
+    </div>
+    <div class="mb-6"
+      ><span class="si-h5">Locale:</span><pre>{{ local }}</pre>
+    </div>
+    <div class="mb-6"
+      ><span class="si-h5">Week start:</span><pre>{{ weekStart }}</pre>
+    </div>
+  </div>
+</div>
