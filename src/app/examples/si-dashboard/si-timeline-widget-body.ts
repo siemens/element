@@ -39,7 +39,7 @@ export class SampleComponent implements OnInit {
         type: 'action',
         label: 'Copy',
         icon: 'element-copy',
-        customClass: 'btn-ghost',
+        customClass: 'btn-tertiary-ghost',
         action: item => this.logEvent(`Action clicked: ${item.label}`)
       }
     },
