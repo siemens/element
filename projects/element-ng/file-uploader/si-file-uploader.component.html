@@ -74,7 +74,7 @@
         @if (file.status === 'added' || file.status === 'error' || file.status === 'invalid') {
           <button
             type="button"
-            class="btn btn-circle btn-ghost"
+            class="btn btn-circle btn-tertiary-ghost"
             [title]="removeButtonText() | translate"
             [attr.aria-label]="removeButtonText() | translate"
             (click)="removeFile($index)"

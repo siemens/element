@@ -33,7 +33,6 @@
 - button "tertiary warning badge"
 - button "tertiary danger badge"
 - button "tertiary ghost badge"
-- button "ghost delete"
 - button "close"
 - button "close"
 - heading "Circle buttons" [level=4]
@@ -49,10 +48,12 @@
 - button "tertiary warning badge"
 - button "tertiary danger badge"
 - button "tertiary ghost badge"
-- button "ghost delete"
 - button "close"
 - button "close"
 - heading "Button sizing" [level=4]
+- button "Large"
+- button "Default"
+- button "Small"
 - button "Large"
 - button "Default"
 - button "Small"
