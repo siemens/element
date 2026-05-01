@@ -1,10 +1,13 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/all-variables';
+@use '@siemens/element-theme/src/styles/variables/si-vars';
 
 :host {
   display: block;
   min-inline-size: 237px;
-  --si-action-icon-offset: 22px;
+  --si-action-icon-offset: calc(
+    #{si-vars.$si-icon-font-size} + #{map.get(all-variables.$spacers, 1)}
+  );
   padding-inline-end: map.get(all-variables.$spacers, 2) - all-variables.$input-border-width;
 }
 
@@ -47,5 +50,7 @@ input {
 }
 
 .btn-icon {
-  margin-inline-start: var(--si-feedback-icon-offset, map.get(all-variables.$spacers, 2));
+  margin-inline-start: calc(
+    var(--si-feedback-icon-offset, 0px) + #{map.get(all-variables.$spacers, 1)}
+  );
 }

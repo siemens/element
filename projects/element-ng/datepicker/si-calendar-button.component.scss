@@ -1,0 +1,9 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/all-variables';
+@use '@siemens/element-theme/src/styles/variables/si-vars';
+
+:host {
+  --si-action-icon-offset: calc(
+    #{si-vars.$si-icon-font-size} + #{map.get(all-variables.$spacers, 1)}
+  );
+}
