@@ -88,11 +88,11 @@ describe('SiPillsInputComponent', () => {
       fixture.detectChanges();
       await fixture.whenStable();
       fixture.detectChanges();
-      componentElement.querySelectorAll<HTMLElement>('.btn-ghost')![1].click();
+      componentElement.querySelectorAll<HTMLElement>('.btn-tertiary-ghost')![1].click();
       expect(component.value).toEqual(['item-1']);
       fixture.detectChanges();
       await fixture.whenStable();
-      componentElement.querySelector<HTMLElement>('.btn-ghost')!.click();
+      componentElement.querySelector<HTMLElement>('.btn-tertiary-ghost')!.click();
       expect(component.value).toEqual([]);
     });
 

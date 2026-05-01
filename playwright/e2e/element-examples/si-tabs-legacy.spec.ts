@@ -11,7 +11,7 @@ test.describe('si-tabs', () => {
     await si.visitExample(example);
     await page.locator('si-tabset-legacy button').getByText('Reception').click();
     await si.runVisualAndA11yTests();
-    await page.locator('si-tabset-legacy .btn-ghost.close').first().click();
+    await page.locator('si-tabset-legacy .btn-tertiary-ghost.close').first().click();
     await expect(page.locator('#si-tabset button').getByText('Reception')).toHaveCount(0);
     await si.runVisualAndA11yTests('delete');
   });
