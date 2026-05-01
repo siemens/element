@@ -56,7 +56,7 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
     >
       <si-icon [icon]="icons.elementCalendar" />
     </button>`,
-  styles: ':host {--si-action-icon-offset: 24px;}',
+  styleUrl: './si-calendar-button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'd-inline-block position-relative form-control-wrapper'
