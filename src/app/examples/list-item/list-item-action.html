@@ -1,0 +1,33 @@
+<div class="list-group">
+  <div class="list-item list-item-action" (click)="logEvent('Open project Alpha')">
+    <p class="list-item-timestamp">Edited 2 hours ago</p>
+    <h5 class="list-item-title">Project Alpha</h5>
+    <p class="list-item-description">Automation config for assembly line 3</p>
+  </div>
+  <div class="list-item list-item-action" (click)="logEvent('Open project Beta')">
+    <p class="list-item-timestamp">Edited 3 days ago</p>
+    <h5 class="list-item-title">Project Beta</h5>
+    <p class="list-item-description">Drive parameter tuning for conveyor motors</p>
+    <div class="list-item-metadata">
+      <div class="d-inline-flex align-items-center gap-1">
+        <si-icon class="icon-sm" [icon]="icons.elementUser" />
+        <span>3 contributors</span>
+      </div>
+    </div>
+  </div>
+  <div class="list-item list-item-action" (click)="logEvent('Open project Gamma')">
+    <p class="list-item-timestamp">Edited last week</p>
+    <h5 class="list-item-title">Project Gamma</h5>
+    <p class="list-item-description">Safety interlock logic for press station</p>
+    <div class="list-item-metadata">
+      <span>Workspace B</span>
+      <div class="list-item-metadata-divider"></div>
+      <div class="d-inline-flex align-items-center gap-1">
+        <si-icon class="icon-sm" [icon]="icons.elementLock" />
+        <span>Private</span>
+      </div>
+      <div class="list-item-metadata-divider"></div>
+      <span class="badge bg-warning">Review pending</span>
+    </div>
+  </div>
+</div>

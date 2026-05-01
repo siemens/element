@@ -1,0 +1,19 @@
+- list:
+  - listitem:
+    - paragraph: /Today at \d+:\d+/
+    - heading "Conveyor belt inspection completed" [level=5]
+    - paragraph: /Routine inspection of conveyor belt CB-\d+ finished without issues\. All parameters within tolerance\./
+  - listitem:
+    - paragraph: /Today at \d+:\d+/
+    - heading "Sensor calibration report available" [level=5]
+    - paragraph: Calibration of temperature sensors on production line 2 has been completed and documented.
+    - text: Production line 2
+    - link "View report":
+      - /url: "#"
+  - listitem:
+    - paragraph: /Yesterday at \d+:\d+/
+    - heading "Motor drive fault detected" [level=5]
+    - paragraph: /Drive unit DU-\d+ on packaging station reported overcurrent fault\. Manual reset required\./
+- text: Interactive Demo Controls
+- checkbox "Unread (indicator and emphasis)" [checked]
+- text: Unread (indicator and emphasis)
