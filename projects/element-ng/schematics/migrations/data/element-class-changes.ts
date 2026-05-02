@@ -29,4 +29,17 @@ export interface ElementClassChangeInstruction {
   addClasses: string[];
 }
 
-export const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = [];
+export const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = [
+  // btn-ghost now represents the primary ghost style; old btn-ghost (tertiary ghost) must become btn-tertiary-ghost
+  {
+    requiredClasses: ['btn-ghost'],
+    removeClasses: ['btn-ghost'],
+    addClasses: ['btn-tertiary-ghost']
+  },
+  // btn-primary-ghost (transitional class from v49.5.0) must become btn-ghost
+  {
+    requiredClasses: ['btn-primary-ghost'],
+    removeClasses: ['btn-primary-ghost'],
+    addClasses: ['btn-ghost']
+  }
+];
