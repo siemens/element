@@ -29,31 +29,4 @@ export interface ElementClassChangeInstruction {
   addClasses: string[];
 }
 
-export const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = [
-  // btn-circle with btn-sm should have btn-sm removed
-  {
-    requiredClasses: ['btn', 'btn-circle', 'btn-sm'],
-    removeClasses: ['btn-sm'],
-    addClasses: []
-  },
-  // btn-circle with btn-xs should migrate to btn-sm
-  {
-    requiredClasses: ['btn', 'btn-circle', 'btn-xs'],
-    removeClasses: ['btn-xs'],
-    addClasses: ['btn-sm']
-  },
-  // btn-circle without size modifier should get btn-lg
-  {
-    requiredClasses: ['btn', 'btn-circle'],
-    excludedClasses: ['btn-lg', 'btn-sm', 'btn-xs'],
-    removeClasses: [],
-    addClasses: ['btn-lg']
-  },
-  // Non-circle buttons with btn-xs should migrate to btn-sm
-  {
-    requiredClasses: ['btn', 'btn-xs'],
-    excludedClasses: ['btn-circle'],
-    removeClasses: ['btn-xs'],
-    addClasses: ['btn-sm']
-  }
-];
+export const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = [];
