@@ -4001,7 +4001,7 @@ packages:
     engines: {node: ^20.17.0 || >=22.9.0}
 
   '@simpl/brand@3.1.0':
-    resolution: {integrity: sha1-uAERWuYmTr39aOMcDF8dQlmR94s=}
+    resolution: {integrity: sha1-uAERWuYmTr39aOMcDF8dQlmR94s=, tarball: https://code.siemens.com/api/v4/projects/732/packages/npm/@simpl/brand/-/@simpl/brand-3.1.0.tgz}
     peerDependencies:
       '@siemens/element-theme': workspace:*
     peerDependenciesMeta:
@@ -4009,7 +4009,7 @@ packages:
         optional: true
 
   '@simpl/docs-composer@11.16.8':
-    resolution: {integrity: sha1-sxovHyvNFtMcpldzyGHFWbtA2CA=}
+    resolution: {integrity: sha1-sxovHyvNFtMcpldzyGHFWbtA2CA=, tarball: https://code.siemens.com/api/v4/projects/732/packages/npm/@simpl/docs-composer/-/@simpl/docs-composer-11.16.8.tgz}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
