@@ -13,10 +13,9 @@
     "email": "info@siemens.com"
   },
   "type": "module",
+  "packageManager": "pnpm@11.0.0",
   "engines": {
-    "node": "^24.0.0",
-    "yarn": "Please use NPM to install dependencies",
-    "npm": "11"
+    "node": "^24.0.0"
   },
   "commitlint": {
     "extends": [
@@ -36,8 +35,8 @@
     "build:examples": "ng build",
     "build:examples:prod": "ng build --configuration production",
     "build:examples:aot": "ng build --configuration aot",
-    "build:all": "npm run translate:build && npm run lib:build && npm run schematics:build && npm run live-preview:build && npm run charts:build && npm run native-charts:build && npm run dashboards:build && npm run maps:build",
-    "build:all:update-translatable-keys": "npm exec update-translatable-keys",
+    "build:all": "pnpm run translate:build && pnpm run lib:build && pnpm run schematics:build && pnpm run live-preview:build && pnpm run charts:build && pnpm run native-charts:build && pnpm run dashboards:build && pnpm run maps:build",
+    "build:all:update-translatable-keys": "pnpm --filter . exec update-translatable-keys",
     "release:copy-license": "cpy LICENSE.md projects/element-theme/ && cpy LICENSE.md projects/element-translate-cli/",
     "lib:build": "ng build element-ng && cpy \"projects/element-ng/*.scss\" \"./dist/@siemens/element-ng\" && cpy \"{LICENSE.md,README.md}\" \"./dist/@siemens/element-ng/\"",
     "lib:test": "ng test element-ng",
@@ -56,7 +55,7 @@
     "live-preview:build": "ng build live-preview && cpy LICENSE.md \"./dist/@siemens/live-preview/\"",
     "prepare": "husky; exit 0",
     "prepare-brand": "cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png docs/_src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png projects/dashboards-demo/src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png projects/dashboards-demo/mfe/src --rename=favicon.png",
-    "postversion": "npm run format",
+    "postversion": "pnpm run format",
     "charts:test": "ng test charts-ng",
     "charts:build": "ng build charts-ng && cpy \"{LICENSE.md,projects/charts-ng/README.md}\" \"./dist/@siemens/charts-ng/\"",
     "native-charts:test": "ng test native-charts-ng",
@@ -65,30 +64,17 @@
     "maps:build": "ng build maps-ng && cpy \"{LICENSE.md,projects/maps-ng/README.md}\" \"./dist/@siemens/maps-ng/\"",
     "dashboards:test": "ng test dashboards-ng",
     "dashboards:build": "ng build dashboards-ng && cpy LICENSE.md \"./dist/@siemens/dashboards-ng/\"",
-    "dashboards-demo:build-all:esm": "ng run dashboards-demo:build-esm:production && npm run dashboards-demo:build:webcomponents &&  ng build dashboards-demo-mfe --configuration production,bridge --output-hashing none && ng run dashboards-demo-mfe:build-esm:production",
-    "dashboards-demo:build-all": "ng build dashboards-demo --configuration demo-deployment && npm run dashboards-demo:build:webcomponents && ng build dashboards-demo-mfe --configuration production --output-hashing none",
-    "dashboards-demo:build-and-run-all:esm": "npm run dashboards-demo:build-all:esm && http-server dist/dashboards-demo-esm -s -p 4204 -a 127.0.0.1",
-    "dashboards-demo:build-and-run-all": "npm run dashboards-demo:build-all && http-server dist/dashboards-demo -s -p 4201 -a 127.0.0.1",
-    "dashboards-demo:run-all:local": "npm run dashboards-demo:build:webcomponents && (ng serve dashboards-demo-mfe & http-server dist/dashboards-demo-webcomponents -s -p 4202 & ng serve dashboards-demo)",
-    "dashboards-demo:run-all:esm:local": "rm -rf dist/dashboards-demo-esm && npm run dashboards-demo:build:webcomponents && (ng serve dashboards-demo-mfe & http-server dist/dashboards-demo-webcomponents -s -p 4202 & ng run dashboards-demo-mfe:serve-esm & ng run dashboards-demo:serve-esm) ",
+    "dashboards-demo:build-all:esm": "ng run dashboards-demo:build-esm:production && pnpm run dashboards-demo:build:webcomponents &&  ng build dashboards-demo-mfe --configuration production,bridge --output-hashing none && ng run dashboards-demo-mfe:build-esm:production",
+    "dashboards-demo:build-all": "ng build dashboards-demo --configuration demo-deployment && pnpm run dashboards-demo:build:webcomponents && ng build dashboards-demo-mfe --configuration production --output-hashing none",
+    "dashboards-demo:build-and-run-all:esm": "pnpm run dashboards-demo:build-all:esm && http-server dist/dashboards-demo-esm -s -p 4204 -a 127.0.0.1",
+    "dashboards-demo:build-and-run-all": "pnpm run dashboards-demo:build-all && http-server dist/dashboards-demo -s -p 4201 -a 127.0.0.1",
+    "dashboards-demo:run-all:local": "pnpm run dashboards-demo:build:webcomponents && (ng serve dashboards-demo-mfe & http-server dist/dashboards-demo-webcomponents -s -p 4202 & ng serve dashboards-demo)",
+    "dashboards-demo:run-all:esm:local": "rm -rf dist/dashboards-demo-esm && pnpm run dashboards-demo:build:webcomponents && (ng serve dashboards-demo-mfe & http-server dist/dashboards-demo-webcomponents -s -p 4202 & ng run dashboards-demo-mfe:serve-esm & ng run dashboards-demo:serve-esm) ",
     "dashboards-demo:build:webcomponents": "ng build dashboards-demo-webcomponents --configuration production --output-hashing none && node projects/dashboards-demo/webcomponents/concat.cjs",
-    "api-goldens:test": "npm exec tsx tools/api-goldens/index",
-    "api-goldens:accept": "npm exec tsx tools/api-goldens/index -- accept",
-    "api-goldens:build-accept": "rimraf .angular dist && npm run build:all && npm run api-goldens:accept"
+    "api-goldens:test": "pnpm exec tsx tools/api-goldens/index",
+    "api-goldens:accept": "pnpm exec tsx tools/api-goldens/index accept",
+    "api-goldens:build-accept": "rimraf .angular dist && pnpm run build:all && pnpm run api-goldens:accept"
   },
-  "workspaces": [
-    "projects/element-ng",
-    "projects/element-translate-cli",
-    "projects/element-translate-ng",
-    "projects/element-theme",
-    "projects/live-preview",
-    "projects/charts-ng",
-    "projects/maps-ng",
-    "projects/native-charts-ng",
-    "projects/dashboards-ng",
-    "projects/dashboards-demo",
-    "projects/icon-viewer"
-  ],
   "dependencies": {
     "@angular-architects/module-federation": "21.2.2",
     "@angular-architects/native-federation": "21.1.0",
@@ -140,9 +126,15 @@
     "@schematics/angular": "21.0.5",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
+    "@simpl/brand": "3.1.0",
     "@siemens/commitlint-config": "4.2.1",
+    "@siemens/element-ng": "workspace:*",
+    "@siemens/element-theme": "workspace:*",
+    "@siemens/element-translate-cli": "workspace:*",
+    "@siemens/element-translate-ng": "workspace:*",
     "@siemens/eslint-config-angular": "4.2.1",
     "@siemens/eslint-plugin-defaultvalue": "4.2.1",
+    "@siemens/live-preview": "workspace:*",
     "@siemens/prettier-config": "4.2.1",
     "@siemens/stylelint-config-scss": "4.2.1",
     "@types/geojson": "7946.0.16",
@@ -164,6 +156,8 @@
     "http-server": "14.1.1",
     "husky": "9.1.7",
     "ng-packagr": "21.0.1",
+    "ngx-build-plus": "20.0.0",
+    "ngx-translate-multi-http-loader": "20.0.0",
     "piscina": "5.1.4",
     "postcss": "8.5.10",
     "postcss-scss": "4.0.9",
@@ -180,16 +174,7 @@
     "vitest": "4.1.5"
   },
   "optionalDependencies": {
-    "@siemens-ux/design-tokens": "^0.3.1",
-    "@simpl/brand": "3.1.0",
-    "@simpl/docs-composer": "11.16.8"
-  },
-  "overrides": {
-    "@microsoft/api-extractor": {
-      "typescript": "$typescript"
-    },
-    "@simpl/brand": {
-      "@siemens/element-theme": "file:projects/element-theme"
-    }
+    "@simpl/docs-composer": "11.16.8",
+    "@siemens-ux/design-tokens": "^0.3.1"
   }
 }

@@ -5,6 +5,7 @@ coverage
 dist
 tmp
 playwright/snapshots
+pnpm-lock.yaml
 CHANGELOG.md
 api-goldens
 

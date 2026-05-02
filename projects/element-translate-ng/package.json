@@ -17,9 +17,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {
-    "postversion": "node ../../postversion.js"
-  },
   "peerDependencies": {
     "@angular/common": "21",
     "@angular/core": "21",

@@ -38,8 +38,8 @@ recommend the following:
 
 - Open an [Issue](https://github.com/siemens/element/issues/new).
 - Provide as much context as you can about what you're running into.
-- Provide project and platform versions (nodejs, npm, etc), depending on what
-  seems relevant.
+  - Provide project and platform versions (nodejs, pnpm, etc), depending on what
+    seems relevant.
 
 We will then take care of the issue as soon as possible.
 
@@ -189,13 +189,13 @@ and our [Siemens Lint ruleset](https://github.com/siemens/lint/).
 You can run ESLint with the following command:
 
 ```sh
-npm run lint
+pnpm run lint
 ```
 
 To automatically fix most of the findings, run the following command:
 
 ```sh
-npm run lint:fix
+pnpm run lint:fix
 ```
 
 > **Note:** Many editors/IDEs have plugin support for linting and fixing
@@ -212,13 +212,13 @@ to adhere closer to Angular's style guide.
 You can run Prettier with the following command:
 
 ```sh
-npm run format:check
+pnpm run format:check
 ```
 
 To automatically fix the findings, run the following command:
 
 ```sh
-npm run format
+pnpm run format
 ```
 
 > **Note:** Many editors/IDEs have plugin support for Prettier, check out the

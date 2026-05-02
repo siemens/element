@@ -16,9 +16,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {
-    "postversion": "node ../../postversion.js"
-  },
   "type": "module",
   "schematics": "./schematics/collection.json",
   "ng-add": {
@@ -46,8 +43,8 @@
     "@ngx-formly/bootstrap": "^6.2.2",
     "@ngx-formly/core": "^6.2.2",
     "@siemens/element-icons": "1",
-    "@siemens/element-translate-ng": "49.7.0",
-    "@siemens/element-theme": "49.7.0",
+    "@siemens/element-translate-ng": "workspace:*",
+    "@siemens/element-theme": "workspace:*",
     "@siemens/ngx-datatable": "22 - 26",
     "ag-grid-community": "^34.3.1 || ^35.0.0",
     "flag-icons": "^7.3.2",
