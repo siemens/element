@@ -157,6 +157,7 @@
     "husky": "9.1.7",
     "ng-packagr": "21.0.1",
     "ngx-build-plus": "20.0.0",
+    "ngx-translate-multi-http-loader": "20.0.0",
     "piscina": "5.1.4",
     "postcss": "8.5.10",
     "postcss-scss": "4.0.9",
