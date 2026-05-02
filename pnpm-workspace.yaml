@@ -72,3 +72,10 @@ allowBuilds:
   esbuild: true
   lmdb: true
   msgpackr-extract: true
+
+# Always write the explicit tarball URL for every package into the lockfile.
+# Without this, pnpm constructs the download URL from the registry base + package
+# name, which omits the scope prefix for scoped packages on GitLab-hosted npm
+# registries (e.g. resolves to brand-3.1.0.tgz instead of @simpl/brand-3.1.0.tgz).
+# That mismatch causes ERR_PNPM_FETCH_404 on a clean install.
+lockfileIncludeTarballUrl: true
