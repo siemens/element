@@ -106,7 +106,7 @@ describe('SiAboutComponent', () => {
     const subheading = element.querySelector('.list-group-item:first-of-type')!.innerHTML;
     const links = element.querySelector('.card:first-of-type')!.innerHTML;
 
-    expect(title).toContain('About');
+    expect(title).toContain('About-fail');
     expect(licenseTitle).toContain('License');
     expect(licenseText).toContain('This is a text for some licenses');
     expect(icon).toContain('https://lorempixel.com/200/200/sports/1/');

@@ -2,7 +2,10 @@ name: Pull request
 on:
   pull_request:
 
-permissions: read-all
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
 
 # Stops the workflow run if the PR is updated
 # https://stackoverflow.com/a/72408109
