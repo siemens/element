@@ -11,10 +11,16 @@ const dashboardsEsmPort = process.env.DASHBOARDS_ESM_PORT ?? '4204';
 const localAddress = process.env.LOCAL_ADDRESS ?? 'localhost';
 const onDifferentLocalAddress = localAddress !== 'localhost';
 const isCI = !!process.env.CI;
-const webServerCommand = 'npx http-server dist/element-examples -s -p 4200 -a 127.0.0.1';
-const dashboardsServerCommand = 'npx http-server dist/dashboards-demo -s -p 4201 -a 127.0.0.1';
-const dashboardsEsmServerCommand =
-  'npx http-server dist/dashboards-demo-esm -s -p 4204 -a 127.0.0.1';
+const isBun = !!process.env.PLAYWRIGHT_isBun;
+const webServerCommand = !isBun
+  ? 'npx http-server dist/element-examples -s -p 4200 -a 127.0.0.1'
+  : 'bunx --bun http-server dist/element-examples -s -p 4200 -a 127.0.0.1';
+const dashboardsServerCommand = !isBun
+  ? 'npx http-server dist/dashboards-demo -s -p 4201 -a 127.0.0.1'
+  : 'bunx --bun http-server dist/dashboards-demo -s -p 4201 -a 127.0.0.1';
+const dashboardsEsmServerCommand = !isBun
+  ? 'npx http-server dist/dashboards-demo-esm -s -p 4204 -a 127.0.0.1'
+  : 'bunx --bun http-server dist/dashboards-demo-esm -s -p 4204 -a 127.0.0.1';
 let isA11y =
   !!process.env.PLAYWRIGHT_isa11y && process.env.PLAYWRIGHT_isa11y.toLocaleLowerCase() !== 'false';
 let isVrt =
