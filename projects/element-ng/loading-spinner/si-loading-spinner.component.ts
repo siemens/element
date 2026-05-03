@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, input } from '@angular/core';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 export const LOADING_SPINNER_BLOCKING = new InjectionToken<boolean>('isBlockingSpinner');
 export const LOADING_SPINNER_OVERLAY = new InjectionToken<boolean>('isSpinnerOverlay');
@@ -42,4 +42,9 @@ export class SiLoadingSpinnerComponent {
    * ```
    */
   readonly ariaLabel = input(t(() => $localize`:@@SI_LOADING_SPINNER.LABEL:Loading`));
+
+  /**
+   * Optional text to be displayed below the spinner.
+   */
+  readonly loadingText = input<TranslatableString>();
 }

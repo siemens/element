@@ -19,6 +19,7 @@ import {
   SimpleChanges,
   ViewContainerRef
 } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, combineLatest, merge, Subscription, timer } from 'rxjs';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
@@ -52,6 +53,11 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
    * @defaultValue true
    */
   readonly initialDelay = input(true, { transform: booleanAttribute });
+
+  /**
+   * Optional text to be displayed below the spinner.
+   */
+  readonly loadingText = input<TranslatableString>();
 
   private el = inject(ElementRef);
   private readonly viewRef = inject(ViewContainerRef);
@@ -87,6 +93,7 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
     this.compPortal.injector = this.createPortalInjector();
     this.portalOutlet ??= new DomPortalOutlet(this.el.nativeElement);
     this.compPortalRef = this.compPortal.attach(this.portalOutlet);
+    this.compPortalRef.setInput('loadingText', this.loadingText());
   }
 
   ngOnInit(): void {
@@ -107,8 +114,13 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
     if (newState !== this.progressSubject.value) {
       this.progressSubject.next(newState);
     }
-    if (changes.blocking && this.compPortalRef) {
-      this.compPortalRef.setInput('isBlockingSpinner', this.blocking());
+    if (this.compPortalRef) {
+      if (changes.blocking) {
+        this.compPortalRef.setInput('isBlockingSpinner', this.blocking());
+      }
+      if (changes.loadingText) {
+        this.compPortalRef.setInput('loadingText', this.loadingText());
+      }
     }
   }
 

@@ -10,7 +10,7 @@ import { SiLoadingSpinnerModule } from './si-loading-spinner.module';
 @Component({
   imports: [SiLoadingSpinnerModule],
   template: `
-    <div [siLoading]="loading()" [blocking]="blocking()">
+    <div [siLoading]="loading()" [blocking]="blocking()" [loadingText]="loadingText()">
       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
       invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
       justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
@@ -24,6 +24,7 @@ import { SiLoadingSpinnerModule } from './si-loading-spinner.module';
 export class TestHostComponent {
   readonly loading = signal(true);
   readonly blocking = signal(false);
+  readonly loadingText = signal<string | undefined>(undefined);
 }
 
 describe('SiLoadingSpinnerDirective', () => {
@@ -91,5 +92,13 @@ describe('SiLoadingSpinnerDirective', () => {
     component.blocking.set(false);
     await vi.advanceTimersByTimeAsync(0);
     expect(fixture.nativeElement.querySelector('.blocking-spinner')).not.toBeInTheDocument();
+  });
+
+  it('should display loading text when provided', async () => {
+    component.loadingText.set('Loading...');
+    await vi.advanceTimersByTimeAsync(initialDelay);
+    await vi.advanceTimersByTimeAsync(initialDelay);
+    expect(isLoading()).toBe(true);
+    expect(fixture.nativeElement.querySelector('.loading')).toHaveTextContent('Loading...');
   });
 });
