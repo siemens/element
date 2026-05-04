@@ -26,7 +26,11 @@ import {
 import { GridItemHTMLElement, GridStack, GridStackNode, GridStackOptions } from 'gridstack';
 
 import { DEFAULT_GRIDSTACK_OPTIONS, GridConfig } from '../../model/gridstack.model';
-import { WidgetConfig, WidgetPositionConfig } from '../../model/widgets.model';
+import {
+  WidgetComponentFactory,
+  WidgetConfig,
+  WidgetPositionConfig
+} from '../../model/widgets.model';
 import { SiWidgetHostComponent } from '../widget-host/si-widget-host.component';
 
 export interface GridWrapperEvent {
@@ -60,6 +64,15 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
    * Module configuration
    */
   readonly gridConfig = input<GridConfig>();
+
+  /**
+   * Map of widget id to widget definition, passed through to widget hosts.
+   *
+   * @defaultValue new Map()
+   */
+  readonly widgetCatalogMap = input<Map<string, { componentFactory: WidgetComponentFactory }>>(
+    new Map()
+  );
 
   /**
    * Emits dashboard grid events.
@@ -198,10 +211,15 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
     const configSignal = signal(item);
     this.widgetConfigSignals.set(item.id, configSignal);
 
+    const componentFactory = computed(
+      () => this.widgetCatalogMap().get(item.widgetId)?.componentFactory
+    );
+
     const componentRef = this.gridstackContainer()!.createComponent(SiWidgetHostComponent, {
       bindings: [
         inputBinding('widgetConfig', configSignal),
         inputBinding('editable', this.editable),
+        inputBinding('componentFactory', componentFactory),
         outputBinding<string>('remove', widgetId => {
           this.widgetInstanceRemove.emit(widgetId);
         }),

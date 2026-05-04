@@ -32,8 +32,12 @@ import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { t } from '@siemens/element-translate-ng/translate';
 
-import { WidgetConfig, WidgetConfigEvent, WidgetInstance } from '../../model/widgets.model';
-import { SiGridService } from '../../services/si-grid.service';
+import {
+  WidgetComponentFactory,
+  WidgetConfig,
+  WidgetConfigEvent,
+  WidgetInstance
+} from '../../model/widgets.model';
 import { setupWidgetInstance } from '../../widget-loader';
 
 @Component({
@@ -47,12 +51,16 @@ import { setupWidgetInstance } from '../../widget-loader';
 })
 export class SiWidgetHostComponent implements OnInit, OnChanges {
   private readonly siModal = inject(SiActionDialogService);
-  private readonly gridService = inject(SiGridService);
   private readonly injector = inject(Injector);
   private readonly envInjector = inject(EnvironmentInjector);
   private readonly destroyRef = inject(DestroyRef);
 
   readonly widgetConfig = input.required<WidgetConfig>();
+
+  /**
+   * The component factory for this widget's type.
+   */
+  readonly componentFactory = input<WidgetComponentFactory>();
 
   /**
    * Sets the widget host into editable mode.
@@ -165,10 +173,10 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   }
 
   private attachWidgetInstance(): void {
-    const widget = this.gridService.getWidget(this.widgetConfig().widgetId);
-    if (widget) {
+    const componentFactory = this.componentFactory();
+    if (componentFactory) {
       setupWidgetInstance(
-        widget.componentFactory,
+        componentFactory,
         this.widgetHost(),
         this.injector,
         this.envInjector
@@ -256,10 +264,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
 
   private isEditable(): boolean {
     const widgetConfig = this.widgetConfig();
-    return (
-      !widgetConfig.immutable &&
-      !!this.gridService.getWidget(widgetConfig.widgetId)?.componentFactory?.editorComponentName
-    );
+    return !widgetConfig.immutable && !!this.componentFactory()?.editorComponentName;
   }
 
   onEdit(): void {

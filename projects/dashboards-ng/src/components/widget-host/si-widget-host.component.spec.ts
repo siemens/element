@@ -21,7 +21,6 @@ import {
   TEST_WIDGET_STANDALONE
 } from '../../../test/test-widget/test-widget';
 import { TestingModule } from '../../../test/testing.module';
-import { SiGridService } from '../../services/si-grid.service';
 import { SiWidgetHostComponent } from './si-widget-host.component';
 
 class SiActionDialogMockService {
@@ -41,15 +40,11 @@ describe('SiWidgetHostComponent', () => {
       let component: SiWidgetHostComponent;
       let fixture: ComponentFixture<SiWidgetHostComponent>;
       let actionDialogService: SiActionDialogMockService;
-      let gridService: SiGridService;
 
       beforeEach(async () => {
         await TestBed.configureTestingModule({
           imports: [BrowserModule, CommonModule, TestingModule, SiWidgetHostComponent],
-          providers: [
-            { provide: SiActionDialogService, useClass: SiActionDialogMockService },
-            SiGridService
-          ],
+          providers: [{ provide: SiActionDialogService, useClass: SiActionDialogMockService }],
           schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
       });
@@ -60,8 +55,7 @@ describe('SiWidgetHostComponent', () => {
         actionDialogService = TestBed.inject(
           SiActionDialogService
         ) as unknown as SiActionDialogMockService;
-        gridService = TestBed.inject(SiGridService);
-        gridService.widgetCatalog.set([TEST_WIDGET]);
+        fixture.componentRef.setInput('componentFactory', widget.componentFactory);
         fixture.componentRef.setInput('widgetConfig', TEST_WIDGET_CONFIG_0);
       });
 
@@ -79,7 +73,7 @@ describe('SiWidgetHostComponent', () => {
       });
 
       it('should not create widget instance without widget', async () => {
-        gridService.widgetCatalog.set([]);
+        fixture.componentRef.setInput('componentFactory', undefined);
         vi.useFakeTimers();
         vi.advanceTimersByTime(0);
         await fixture.whenStable();
