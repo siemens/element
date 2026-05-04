@@ -8,7 +8,7 @@
   padding-inline-end: map.get(all-variables.$spacers, 2) - all-variables.$input-border-width;
 }
 
-:host(:focus-within) {
+:host(:focus-within:has(input:focus)) {
   @include all-variables.make-outline-focus();
 }
 

@@ -24,6 +24,18 @@ test.describe('si-datepicker', () => {
     await page.locator('tbody > tr .si-h4').nth(5).click();
     await si.runVisualAndA11yTests('selection');
   });
+
+  test(example + ' input focus shows focus ring', async ({ page, si }) => {
+    await si.visitExample(example);
+    await page.locator('si-date-range input').first().focus();
+    await si.runVisualAndA11yTests('input-focus');
+  });
+
+  test(example + ' calendar button focus hides focus ring', async ({ page, si }) => {
+    await si.visitExample(example);
+    await page.getByLabel('Open calendar').first().focus();
+    await si.runVisualAndA11yTests('button-focus');
+  });
 });
 
 test.describe('si-datepicker', () => {
