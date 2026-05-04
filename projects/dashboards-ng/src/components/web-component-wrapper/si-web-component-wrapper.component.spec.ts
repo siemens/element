@@ -10,7 +10,6 @@ import {
 } from '@siemens/element-ng/action-modal';
 import { Observable, Subject } from 'rxjs';
 
-import { SiGridService } from '../../services/si-grid.service';
 import { SiWebComponentWrapperComponent } from './si-web-component-wrapper.component';
 
 class SiActionDialogMockService {
@@ -28,10 +27,7 @@ describe('SiWidgetHostComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SiWebComponentWrapperComponent],
-      providers: [
-        { provide: SiActionDialogService, useClass: SiActionDialogMockService },
-        SiGridService
-      ],
+      providers: [{ provide: SiActionDialogService, useClass: SiActionDialogMockService }],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   });
