@@ -5,6 +5,8 @@
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { SiNavbarVerticalNextGroupTriggerDirective } from './si-navbar-vertical-next-group-trigger.directive';
+import { SiNavbarVerticalNextGroupComponent } from './si-navbar-vertical-next-group.component';
 import { SiNavbarVerticalNextItemComponent } from './si-navbar-vertical-next-item.component';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
@@ -51,12 +53,14 @@ describe('SiNavbarVerticalNextItemComponent', () => {
   const mockNavbar = {
     collapsed: signal(false),
     textOnly: signal(false),
+    alwaysOpenGroupsInFlyout: signal(false),
     itemTriggered: vi.fn()
   };
 
   beforeEach(async () => {
     mockNavbar.collapsed.set(false);
     mockNavbar.textOnly.set(false);
+    mockNavbar.alwaysOpenGroupsInFlyout.set(false);
 
     await TestBed.configureTestingModule({
       providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useValue: mockNavbar }]
@@ -283,6 +287,55 @@ describe('SiNavbarVerticalNextItemComponent', () => {
       badgeTestFixture.detectChanges();
       linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
       expect(linkElement).not.toHaveClass('hide-badge-collapsed');
+    });
+  });
+
+  describe('dropdown-caret icon based on openGroupsInFlyout', () => {
+    @Component({
+      imports: [
+        SiNavbarVerticalNextItemComponent,
+        SiNavbarVerticalNextGroupTriggerDirective,
+        SiNavbarVerticalNextGroupComponent
+      ],
+      template: `
+        <button
+          type="button"
+          si-navbar-vertical-next-item
+          [siNavbarVerticalNextGroupTriggerFor]="groupTemplate"
+        >
+          Group Item
+        </button>
+        <ng-template #groupTemplate>
+          <si-navbar-vertical-next-group />
+        </ng-template>
+      `
+    })
+    class TestGroupItemHostComponent {}
+
+    let groupFixture: ComponentFixture<TestGroupItemHostComponent>;
+
+    beforeEach(async () => {
+      TestBed.resetTestingModule();
+      await TestBed.configureTestingModule({
+        providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useValue: mockNavbar }]
+      }).compileComponents();
+
+      mockNavbar.alwaysOpenGroupsInFlyout.set(false);
+      groupFixture = TestBed.createComponent(TestGroupItemHostComponent);
+      groupFixture.detectChanges();
+    });
+
+    it('should show down caret when alwaysOpenGroupsInFlyout is false', () => {
+      const caretIcon = groupFixture.nativeElement.querySelector('si-icon.dropdown-caret');
+      expect(caretIcon.getAttribute('data-icon')).toBe('elementDown2');
+    });
+
+    it('should show right caret when alwaysOpenGroupsInFlyout is true', async () => {
+      mockNavbar.alwaysOpenGroupsInFlyout.set(true);
+      await groupFixture.whenStable();
+
+      const caretIcon = groupFixture.nativeElement.querySelector('si-icon.dropdown-caret');
+      expect(caretIcon.getAttribute('data-icon')).toBe('elementRight2');
     });
   });
 });

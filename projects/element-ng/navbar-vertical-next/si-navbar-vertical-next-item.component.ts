@@ -12,7 +12,7 @@ import {
   OnInit
 } from '@angular/core';
 import { RouterLinkActive } from '@angular/router';
-import { elementDown2 } from '@siemens/element-icons';
+import { elementDown2, elementRight2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 
@@ -29,15 +29,15 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'class': 'focus-inside',
-    '[class.dropdown-item]': 'this.parent?.group?.flyout()',
-    '[class.navbar-vertical-item]': '!this.parent?.group?.flyout()',
+    '[class.dropdown-item]': '!openGroupsInFlyout() && this.parent?.group?.flyout()',
+    '[class.navbar-vertical-item]': '!this.parent?.group?.flyout() || openGroupsInFlyout()',
     '[class.active]': 'active',
     '[class.hide-badge-collapsed]': 'hideBadgeWhenCollapsed()',
     '(click)': 'triggered()'
   }
 })
 export class SiNavbarVerticalNextItemComponent implements OnInit {
-  protected readonly icons = addIcons({ elementDown2 });
+  protected readonly icons = addIcons({ elementDown2, elementRight2 });
 
   /** Optional icon to render before the label. */
   readonly icon = input<string>();
@@ -91,6 +91,8 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     }
     return badge.toString();
   });
+
+  protected readonly openGroupsInFlyout = computed(() => this.navbar?.alwaysOpenGroupsInFlyout());
 
   ngOnInit(): void {
     if (this.group && this.active) {

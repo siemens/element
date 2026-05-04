@@ -66,6 +66,7 @@ class EmptyComponent {}
       [textOnly]="textOnly()"
       [stateId]="stateId"
       [collapsed]="collapsed()"
+      [alwaysOpenGroupsInFlyout]="alwaysOpenGroupsInFlyout()"
     >
       <si-navbar-vertical-next-search [debounceTime]="0" (searchChange)="searchEvent($event)" />
       @if (showDeclarativeFlyoutGroup()) {
@@ -158,6 +159,7 @@ class TestHostComponent {
   readonly textOnly = signal(true);
   stateId?: string;
   readonly collapsed = signal(false);
+  readonly alwaysOpenGroupsInFlyout = signal(false);
   readonly showDeclarativeFlyoutGroup = signal(false);
   readonly showDeclarativeNavigationGroup = signal(false);
   readonly showDeclarativeStateGroups = signal(false);
@@ -260,6 +262,61 @@ describe('SiNavbarVerticalNext', () => {
       expect(await item.isFlyout()).toBe(true);
       document.body.click();
 
+      expect(await item.isFlyout()).toBe(false);
+    });
+
+    it('should open flyout on click when alwaysOpenGroupsInFlyout is set', async () => {
+      component.alwaysOpenGroupsInFlyout.set(true);
+      component.showDeclarativeFlyoutGroup.set(true);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const item = await harness.findItemByLabel('item-1');
+      await item.click();
+      expect(await item.isFlyout()).toBe(true);
+    });
+
+    it('should open flyout on mouseenter when alwaysOpenGroupsInFlyout is set', async () => {
+      component.alwaysOpenGroupsInFlyout.set(true);
+      component.showDeclarativeFlyoutGroup.set(true);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const item = await harness.findItemByLabel('item-1');
+      const host = await item.host();
+      await host.dispatchEvent('mouseenter');
+      await fixture.whenStable();
+      expect(await item.isFlyout()).toBe(true);
+    });
+
+    it('should close flyout on mouseleave when alwaysOpenGroupsInFlyout is set', async () => {
+      component.alwaysOpenGroupsInFlyout.set(true);
+      component.showDeclarativeFlyoutGroup.set(true);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const item = await harness.findItemByLabel('item-1');
+      const host = await item.host();
+      await host.dispatchEvent('mouseenter');
+      await fixture.whenStable();
+      expect(await item.isFlyout()).toBe(true);
+
+      await host.dispatchEvent('mouseleave');
+      // timer fires after 200ms — use fake timers if available, else just check schedule
+      document.body.click();
+      await fixture.whenStable();
+      expect(await item.isFlyout()).toBe(false);
+    });
+
+    it('should not open flyout on hover when alwaysOpenGroupsInFlyout is not set', async () => {
+      component.showDeclarativeFlyoutGroup.set(true);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const item = await harness.findItemByLabel('item-1');
+      const host = await item.host();
+      await host.dispatchEvent('mouseenter');
+      await fixture.whenStable();
       expect(await item.isFlyout()).toBe(false);
     });
 

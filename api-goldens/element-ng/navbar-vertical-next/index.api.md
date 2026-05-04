@@ -6,6 +6,7 @@
 
 import * as _angular_core from '@angular/core';
 import { OnChanges } from '@angular/core';
+import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as _siemens_element_ng_navbar_vertical_next from '@siemens/element-ng/navbar-vertical-next';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
@@ -15,6 +16,7 @@ import { TemplateRef } from '@angular/core';
 // @public (undocumented)
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     constructor();
+    readonly alwaysOpenGroupsInFlyout: _angular_core.InputSignalWithTransform<boolean, unknown>;
     collapse(): void;
     readonly collapsed: _angular_core.ModelSignal<boolean>;
     expand(): void;
@@ -44,7 +46,7 @@ export class SiNavbarVerticalNextGroupComponent {
 }
 
 // @public (undocumented)
-export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
+export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit, OnDestroy {
     constructor();
     // (undocumented)
     readonly expanded: _angular_core.WritableSignal<boolean>;

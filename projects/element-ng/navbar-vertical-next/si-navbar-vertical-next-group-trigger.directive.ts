@@ -15,6 +15,7 @@ import {
   Injector,
   input,
   linkedSignal,
+  OnDestroy,
   OnInit,
   signal,
   TemplateRef,
@@ -50,10 +51,12 @@ class SiNavbarFlyoutAnchorComponent {
     '[class.show]': 'expanded()',
     '[attr.aria-controls]': 'groupId',
     '[attr.aria-expanded]': 'expanded()',
-    '(click)': 'triggered()'
+    '(click)': 'triggered()',
+    '(mouseenter)': 'onMouseEnter()',
+    '(mouseleave)': 'onMouseLeave()'
   }
 })
-export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
+export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit, OnDestroy {
   private static idCounter = 0;
 
   /** @internal */
@@ -86,6 +89,10 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
 
   protected readonly navbar = inject(SI_NAVBAR_VERTICAL_NEXT);
 
+  private hoverCloseTimer: ReturnType<typeof setTimeout> | undefined;
+
+  /** @internal */
+  private readonly hoverCloseDelayMs = 200;
   private flyoutOutsideClickSubscription?: Subscription;
   private readonly viewContainer = inject(ViewContainerRef);
   private readonly overlay = inject(Overlay);
@@ -121,8 +128,15 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
     this.attachInline();
   }
 
+  ngOnDestroy(): void {
+    this.cancelHoverClose();
+    this.flyoutOutsideClickSubscription?.unsubscribe();
+    this.overlayRef.dispose();
+  }
+
   /** @internal */
   hideFlyout(): void {
+    this.cancelHoverClose();
     if (this.flyout()) {
       this.flyout.set(false);
       this.active.set(false);
@@ -133,8 +147,20 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
     }
   }
 
+  /** @internal */
+  cancelHoverClose(): void {
+    clearTimeout(this.hoverCloseTimer);
+    this.hoverCloseTimer = undefined;
+  }
+
+  /** @internal */
+  scheduleHoverClose(): void {
+    this.cancelHoverClose();
+    this.hoverCloseTimer = setTimeout(() => this.hideFlyout(), this.hoverCloseDelayMs);
+  }
+
   protected triggered(): void {
-    if (this.navbar.collapsed()) {
+    if (this.navbar.collapsed() || this.navbar.alwaysOpenGroupsInFlyout()) {
       this.toggleFlyout();
     } else {
       this.expanded.set(!this.expanded());
@@ -142,12 +168,31 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
     }
   }
 
+  protected onMouseEnter(): void {
+    if (this.navbar.alwaysOpenGroupsInFlyout()) {
+      this.cancelHoverClose();
+      if (!this.flyout()) {
+        this.openFlyout();
+      }
+    }
+  }
+
+  protected onMouseLeave(): void {
+    if (this.navbar.alwaysOpenGroupsInFlyout()) {
+      this.scheduleHoverClose();
+    }
+  }
+
+  private openFlyout(): void {
+    this.flyout.set(true);
+    this.attachFlyout();
+  }
+
   private toggleFlyout(): void {
     if (this.flyout()) {
       this.hideFlyout();
     } else {
-      this.flyout.set(true);
-      this.attachFlyout();
+      this.openFlyout();
     }
   }
 

@@ -20,7 +20,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
       [class.inline-group]="!flyout"
       [class.dropdown-menu]="flyout"
       [cdkTrapFocus]="flyout"
-      [cdkTrapFocusAutoCapture]="flyout"
+      [cdkTrapFocusAutoCapture]="autoCaptureFocus()"
     >
       <div [class.overflow-hidden]="!flyout">
         <ng-content />
@@ -33,7 +33,9 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
     '[id]': 'groupTrigger.groupId',
     '[attr.aria-labelledby]': 'groupTrigger.id',
     'animate.enter': 'component-enter',
-    '(keydown.escape)': 'close()'
+    '(keydown.escape)': 'close()',
+    '(mouseenter)': 'onMouseEnter()',
+    '(mouseleave)': 'onMouseLeave()'
   }
 })
 export class SiNavbarVerticalNextGroupComponent {
@@ -43,6 +45,10 @@ export class SiNavbarVerticalNextGroupComponent {
 
   // Store initial value, as the mode for an instance never changes.
   protected flyout = this.groupTrigger.flyout();
+
+  protected readonly autoCaptureFocus = computed(
+    () => this.flyout && !this.navbar.alwaysOpenGroupsInFlyout()
+  );
 
   protected readonly visible = computed(() => {
     return this.flyout || (!this.navbar.collapsed() && this.groupTrigger.expanded());
@@ -56,5 +62,17 @@ export class SiNavbarVerticalNextGroupComponent {
 
   protected close(): void {
     this.groupTrigger.hideFlyout();
+  }
+
+  protected onMouseEnter(): void {
+    if (this.flyout && this.navbar.alwaysOpenGroupsInFlyout()) {
+      this.groupTrigger.cancelHoverClose();
+    }
+  }
+
+  protected onMouseLeave(): void {
+    if (this.flyout && this.navbar.alwaysOpenGroupsInFlyout()) {
+      this.groupTrigger.scheduleHoverClose();
+    }
   }
 }
