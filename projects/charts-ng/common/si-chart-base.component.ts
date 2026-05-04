@@ -388,8 +388,7 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
       this.actualOptions.color = changes.options.previousValue.color;
     }
     if (changes.theme || changes.renderer) {
-      // need to completely redo the chart for the theme change to take effect
-      return this.resetChart();
+      return this.themeSwitch();
     }
 
     let updates = 0;
@@ -610,32 +609,6 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
       this.extZoomSliderChart.setTheme(this.activeTheme);
       this.extZoomSliderChart.setOption(this.extZoomSliderOptions);
     }
-    this.cdRef.markForCheck();
-  }
-
-  /**
-   * Re-render the whole chart.
-   * @deprecated The method is deprecated and should not be used directly by the consumer.
-   */
-  resetChart(): void {
-    this.applyTheme();
-
-    if (!this.actualOptions) {
-      // this can happen if the SiThemeService fires the theme switch when the chart is not
-      // yet completely initialized
-      return;
-    }
-
-    this.disposeChart();
-    this.applyPalette();
-    const addOpts = this.additionalOptions();
-    if (addOpts?.palette) {
-      echarts.util.merge(this.actualOptions.palette, addOpts.palette, true);
-    }
-    this.themeChanged();
-    this.applyStyles();
-    this.applyTitles();
-    this.ngAfterViewInit(true); // eslint-disable-line @angular-eslint/no-lifecycle-call
     this.cdRef.markForCheck();
   }
 
