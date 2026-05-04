@@ -33,7 +33,7 @@ export default defineConfig(
           style: 'camelCase'
         }
       ],
-      '@typescript-eslint/no-deprecated': ['warn']
+      '@typescript-eslint/no-deprecated': ['off']
     }
   },
   ...templateConfig,

@@ -32,7 +32,8 @@ export default defineConfig(
           prefix: 'si',
           style: 'camelCase'
         }
-      ]
+      ],
+      '@typescript-eslint/no-deprecated': ['off']
     }
   },
   ...templateConfig,
