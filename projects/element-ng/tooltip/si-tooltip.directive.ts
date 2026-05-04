@@ -27,7 +27,8 @@ import { SiTooltipService, TooltipRef } from './si-tooltip.service';
     '(mouseenter)': 'show()',
     '(touchstart)': 'hide()',
     '(focusout)': 'hide()',
-    '(mouseleave)': 'hide()'
+    '(mouseleave)': 'hide()',
+    '(document:keydown.escape)': 'isTooltipVisible && hide()'
   }
 })
 export class SiTooltipDirective implements OnDestroy {
@@ -60,6 +61,7 @@ export class SiTooltipDirective implements OnDestroy {
   readonly tooltipContext = input();
 
   protected describedBy = `__tooltip_${SiTooltipDirective.idCounter++}`;
+  protected isTooltipVisible = false;
 
   private tooltipRef?: TooltipRef;
   private showTimeout?: ReturnType<typeof setTimeout>;
@@ -98,6 +100,7 @@ export class SiTooltipDirective implements OnDestroy {
         tooltipContext: this.tooltipContext
       });
       this.tooltipRef.show();
+      this.isTooltipVisible = true;
     }, delay);
   }
 
@@ -114,5 +117,6 @@ export class SiTooltipDirective implements OnDestroy {
   protected hide(): void {
     this.clearShowTimeout();
     this.tooltipRef?.hide();
+    this.isTooltipVisible = false;
   }
 }

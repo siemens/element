@@ -73,6 +73,26 @@ describe('SiTooltipDirective', () => {
       expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
 
+    it('should hide tooltip on Escape key while trigger has focus', async () => {
+      button.dispatchEvent(new Event('focus'));
+      vi.advanceTimersByTime(0);
+      await fixture.whenStable();
+      expect(document.querySelector('.tooltip')).toBeInTheDocument();
+
+      button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+    });
+
+    it('should hide tooltip on Escape key while tooltip is open via hover', async () => {
+      button.dispatchEvent(new MouseEvent('mouseenter'));
+      vi.advanceTimersByTime(500);
+      await fixture.whenStable();
+      expect(document.querySelector('.tooltip')).toBeInTheDocument();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+    });
+
     it('should update tooltip content while open', async () => {
       button.dispatchEvent(new Event('focus'));
       vi.advanceTimersByTime(0);
