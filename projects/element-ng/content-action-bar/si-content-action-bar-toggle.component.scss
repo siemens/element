@@ -1,0 +1,20 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  --btn-bg: #{variables.$element-base-1};
+}
+
+:host(.btn-icon) {
+  aspect-ratio: auto;
+  padding-inline: map.get(variables.$spacers, 4);
+}
+
+:host(.in-bar) {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+:host-context(.card-outline) {
+  --btn-bg: transparent;
+}

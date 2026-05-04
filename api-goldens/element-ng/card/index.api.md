@@ -5,6 +5,7 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
+import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/common';
 import { MenuItem as MenuItem_2 } from '@siemens/element-ng/menu';
@@ -22,6 +23,7 @@ export class SiCardComponent extends SiCardBaseDirective {
     readonly actionBarTitle: _angular_core.InputSignal<TranslatableString>;
     readonly actionBarViewType: _angular_core.InputSignal<ViewType>;
     readonly actionParam: _angular_core.InputSignal<any>;
+    readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
     readonly displayContentActionBar: _angular_core.Signal<boolean>;
     readonly primaryActions: _angular_core.InputSignal<(MenuItem | ContentActionBarMainItem)[]>;
     readonly secondaryActions: _angular_core.InputSignal<(MenuItem | MenuItem_2)[]>;

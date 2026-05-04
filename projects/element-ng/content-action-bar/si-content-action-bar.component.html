@@ -15,6 +15,7 @@
       siAutoCollapsableListItem
       [forceHide]="!expanded()"
       [disabled]="disabled()"
+      [colorVariant]="colorVariant()"
     >
       <!-- ?? syntax is not working for track -->
       @for (primaryAction of primaryActions(); track primaryAction.id ? primaryAction.id : $index) {

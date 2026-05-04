@@ -17,7 +17,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { elementCancel, elementOptionsVertical } from '@siemens/element-icons';
 import { SiAutoCollapsableListModule } from '@siemens/element-ng/auto-collapsable-list';
-import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
+import { BackgroundColorVariant, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { addIcons } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
 import {
@@ -95,6 +95,12 @@ export class SiContentActionBarComponent implements AfterViewInit {
    * @defaultValue false
    */
   readonly preventIconsInDropdownMenus = input(false, { transform: booleanAttribute });
+  /**
+   * Color variant of the background surface the action bar is placed on.
+   *
+   * @defaultValue 'base-1'
+   */
+  readonly colorVariant = input<BackgroundColorVariant>('base-1');
   /**
    * Disables the whole content-action-bar.
    *
