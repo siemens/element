@@ -5,6 +5,7 @@
   [widgetConfigs]="(visibleWidgetInstances$ | async) ?? []"
   [gridConfig]="gridConfig()"
   [editable]="editable()"
+  [widgetCatalogMap]="widgetCatalogMap()"
   [siLoading]="!hideProgressIndicator() && initialLoad && (isLoading | async)!"
   [blocking]="false"
   (gridEvent)="handleGridEvent($event)"
