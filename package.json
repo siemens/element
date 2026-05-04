@@ -182,8 +182,8 @@
     "vitest": "4.1.9"
   },
   "optionalDependencies": {
-    "@siemens-ux/design-tokens": "^0.3.1",
-    "@simpl/brand": "3.1.0",
+    "@siemens-ux/design-tokens": "^0.4.1",
+    "@simpl/brand": "3.2.0",
     "@simpl/docs-composer": "11.16.10"
   },
   "overrides": {
