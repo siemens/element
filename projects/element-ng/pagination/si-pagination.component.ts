@@ -68,9 +68,11 @@ export class SiPaginationComponent {
    */
   readonly navAriaLabel = input(t(() => $localize`:@@SI_PAGINATION.NAV_LABEL:Pagination`));
 
-  private readonly calculatedTotalPages = computed(
-    () => this.totalPages() ?? Math.ceil((this.totalRowCount() ?? 0) / (this.pageSize() ?? 1))
-  );
+  private readonly calculatedTotalPages = computed(() => {
+    const pageSize = this.pageSize();
+    const safePageSize = pageSize && pageSize > 0 ? pageSize : 1;
+    return this.totalPages() ?? Math.ceil((this.totalRowCount() ?? 0) / safePageSize);
+  });
 
   protected readonly prevDisabled = computed(() => this.currentPage() === 1);
 
