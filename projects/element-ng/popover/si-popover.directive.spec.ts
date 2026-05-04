@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, viewChild } from '@angular/core';
+import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiPopoverDirective } from './si-popover.directive';
@@ -191,5 +192,43 @@ describe('with custom template', () => {
 
     expect(document.activeElement).toBe(document.querySelector('#input-1'));
     vi.useRealTimers();
+  });
+});
+
+describe('with scrollStrategy', () => {
+  let fixture: ComponentFixture<ScrollStrategyHostComponent>;
+  let button: HTMLButtonElement;
+
+  @Component({
+    imports: [SiPopoverDirective],
+    template: `<button type="button" siPopover="test" [siPopoverScrollStrategy]="scrollStrategy()"
+      >Test</button
+    >`,
+    changeDetection: ChangeDetectionStrategy.OnPush
+  })
+  class ScrollStrategyHostComponent {
+    readonly scrollStrategy = signal<ScrollStrategy | undefined>(undefined);
+  }
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ScrollStrategyHostComponent);
+    button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    fixture.detectChanges();
+  });
+
+  it('should close popover on scroll when custom close scroll strategy is provided', async () => {
+    const overlay = TestBed.inject(Overlay);
+    fixture.componentInstance.scrollStrategy.set(overlay.scrollStrategies.close());
+    fixture.detectChanges();
+
+    button.click();
+    await fixture.whenStable();
+
+    expect(document.querySelector('.popover')).toBeInTheDocument();
+
+    document.dispatchEvent(new Event('scroll', { bubbles: true }));
+    await fixture.whenStable();
+
+    expect(document.querySelector('.popover')).not.toBeInTheDocument();
   });
 });
