@@ -5,6 +5,10 @@
 import { NgModule } from '@angular/core';
 import { SiNChartGaugeComponent } from '@siemens/native-charts-ng/gauge';
 
+/**
+ * @deprecated The {@link SiNativeChartsNgModule} is deprecated and will be removed in v51.
+ * Import individual components directly to avoid unnecessary module imports.
+ */
 @NgModule({
   imports: [SiNChartGaugeComponent],
   exports: [SiNChartGaugeComponent]
