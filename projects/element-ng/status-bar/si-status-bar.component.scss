@@ -70,8 +70,10 @@ $blink-transition-duration: variables.$element-default-transition-duration;
 
 .collapse-expand {
   background-color: variables.$element-base-1;
+  border: 0;
   border-radius: 0 0 20px 20px;
   inline-size: 40px;
+  color: variables.$element-ui-0;
   cursor: pointer;
 
   &.expanded {

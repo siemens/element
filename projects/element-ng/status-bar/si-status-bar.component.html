@@ -88,19 +88,17 @@
   </div>
   @if (responsiveMode) {
     <div class="d-flex align-items-center justify-content-center">
-      <a
+      <button
+        type="button"
         class="collapse-expand text-center p-0 focus-force"
-        tabindex="0"
-        role="button"
         [attr.aria-label]="(expanded() ? collapseButtonText() : expandButtonText()) | translate"
         [attr.aria-expanded]="!!expanded()"
         [attr.aria-controls]="statusId"
         [class.expanded]="expanded() === 2"
-        (keydown.enter)="toggleExpand()"
         (click)="toggleExpand()"
       >
         <si-icon class="icon" [icon]="icons.elementDown2" />
-      </a>
+      </button>
     </div>
   }
 </div>
