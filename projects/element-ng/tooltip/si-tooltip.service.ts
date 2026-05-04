@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef, ScrollStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, ElementRef, inject, Injectable, Injector } from '@angular/core';
 import { getOverlay, getPositionStrategy, positions } from '@siemens/element-ng/common';
@@ -71,6 +71,7 @@ export class SiTooltipService {
     injector?: Injector;
     tooltip: () => SiTooltipContent;
     tooltipContext: () => unknown;
+    scrollStrategy?: ScrollStrategy;
   }): TooltipRef {
     const injector = Injector.create({
       parent: config.injector,
@@ -87,7 +88,15 @@ export class SiTooltipService {
     });
 
     return new TooltipRef(
-      getOverlay(config.element, this.overlay, false, config.placement),
+      getOverlay(
+        config.element,
+        this.overlay,
+        false,
+        config.placement,
+        false,
+        true,
+        config.scrollStrategy
+      ),
       config.element,
       injector
     );
