@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal } from '@angular/core';
+import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiTooltipModule } from './si-tooltip.module';
@@ -134,6 +135,52 @@ describe('SiTooltipDirective', () => {
       button.dispatchEvent(new Event('focusout'));
       vi.advanceTimersByTime(500);
       await fixture.whenStable();
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('with scrollStrategy', () => {
+    let fixture: ComponentFixture<TestHostComponent>;
+    let button: HTMLButtonElement;
+
+    @Component({
+      imports: [SiTooltipModule],
+      template: `<button type="button" siTooltip="test" [tooltipScrollStrategy]="scrollStrategy()"
+        >Test</button
+      >`,
+      changeDetection: ChangeDetectionStrategy.OnPush
+    })
+    class TestHostComponent {
+      readonly scrollStrategy = signal<ScrollStrategy | undefined>(undefined);
+    }
+
+    beforeEach(() => {
+      vi.useFakeTimers();
+      fixture = TestBed.createComponent(TestHostComponent);
+      button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+      vi.spyOn(button, 'matches').mockReturnValue(true);
+      fixture.detectChanges();
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it('should close tooltip on scroll when custom close scroll strategy is provided', async () => {
+      const overlay = TestBed.inject(Overlay);
+      fixture.componentInstance.scrollStrategy.set(overlay.scrollStrategies.close());
+      fixture.detectChanges();
+
+      button.dispatchEvent(new Event('focus'));
+      vi.advanceTimersByTime(0);
+      await fixture.whenStable();
+
+      expect(document.querySelector('.tooltip')).toBeInTheDocument();
+
+      document.dispatchEvent(new Event('scroll', { bubbles: true }));
+      vi.advanceTimersByTime(0);
+      await fixture.whenStable();
+
       expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
   });

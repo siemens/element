@@ -10,7 +10,8 @@ import {
   Overlay,
   OverlayConfig,
   OverlayRef,
-  PositionStrategy
+  PositionStrategy,
+  ScrollStrategy
 } from '@angular/cdk/overlay';
 import { ElementRef } from '@angular/core';
 
@@ -51,11 +52,12 @@ export function makePositionStrategy(
 export function makeOverlay(
   positionStrategy: PositionStrategy,
   overlay: Overlay,
-  hasBackdrop: boolean
+  hasBackdrop: boolean,
+  scrollStrategy?: ScrollStrategy
 ): OverlayRef {
   const config = new OverlayConfig();
   config.positionStrategy = positionStrategy;
-  config.scrollStrategy = overlay.scrollStrategies.reposition();
+  config.scrollStrategy = scrollStrategy ?? overlay.scrollStrategies.reposition();
   config.direction = isRTL() ? 'rtl' : 'ltr';
   if (hasBackdrop) {
     config.hasBackdrop = true;
@@ -72,10 +74,11 @@ export function getOverlay(
   hasBackdrop: boolean,
   placement: keyof typeof positions | ConnectionPositionPair[],
   constrain = false,
-  center = true
+  center = true,
+  scrollStrategy?: ScrollStrategy
 ): OverlayRef {
   const positionStrategy = makePositionStrategy(elementRef, overlay, placement, constrain, center);
-  return makeOverlay(positionStrategy, overlay, hasBackdrop);
+  return makeOverlay(positionStrategy, overlay, hasBackdrop, scrollStrategy);
 }
 
 export function getPositionStrategy(

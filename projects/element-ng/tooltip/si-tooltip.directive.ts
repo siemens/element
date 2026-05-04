@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import { isPlatformBrowser } from '@angular/common';
 import {
   booleanAttribute,
@@ -55,6 +56,12 @@ export class SiTooltipDirective implements OnDestroy {
   readonly isDisabled = input(false, { transform: booleanAttribute });
 
   /**
+   * Optional CDK scroll strategy used for the tooltip overlay.
+   * If not provided, the default reposition strategy is used.
+   */
+  readonly tooltipScrollStrategy = input<ScrollStrategy>();
+
+  /**
    * The context for the attached template
    */
   readonly tooltipContext = input();
@@ -95,7 +102,8 @@ export class SiTooltipDirective implements OnDestroy {
         element: this.elementRef,
         placement: this.placement(),
         tooltip: this.siTooltip,
-        tooltipContext: this.tooltipContext
+        tooltipContext: this.tooltipContext,
+        scrollStrategy: this.tooltipScrollStrategy()
       });
       this.tooltipRef.show();
     }, delay);
