@@ -305,6 +305,17 @@ export class SiDateRangeFilterComponent implements OnChanges {
   readonly rangeEndDateMissingLabel = input(
     t(() => $localize`:@@SI_DATE_RANGE_FILTER.SELECT_RANGE_END:Select end date`)
   );
+  /**
+   * label when range is not defined in the preview
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.SELECT_RANGE_LABEL:SELECT range`)
+   * ```
+   */
+  readonly selectRangeLabel = input(
+    t(() => $localize`:@@SI_DATE_RANGE_FILTER.SELECT_RANGE_LABEL:SELECT range`)
+  );
 
   /** Event fired when the apply button has been clicked */
   readonly applyClicked = output<void>();

@@ -105,6 +105,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
     readonly refLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly reverseInputFields: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly selectRangeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly showApplyButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly todayLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly toLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
