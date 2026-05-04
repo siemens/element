@@ -767,9 +767,9 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
     if (paletteValue) {
       const palette = this.getThemeCustomValue(['colorPalettes', paletteValue], null);
       if (palette) {
-        this.actualOptions.color = palette;
+        this.actualOptions.color = Array.isArray(palette) ? palette.filter(Boolean) : palette;
         if (this.customLegendAction()) {
-          this.fetchSeriesColors(palette);
+          this.fetchSeriesColors(this.actualOptions.color);
         }
       }
     }
