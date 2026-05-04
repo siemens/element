@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef, ScrollStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ComponentRef,
@@ -88,6 +88,14 @@ export class SiPopoverDirective implements OnDestroy {
   readonly context = input<unknown>(undefined, { alias: 'siPopoverContext' });
 
   /**
+   * Optional CDK scroll strategy used for the popover overlay.
+   * If not provided, the default reposition strategy is used.
+   *
+   * @defaultValue undefined
+   */
+  readonly scrollStrategy = input<ScrollStrategy>(undefined, { alias: 'siPopoverScrollStrategy' });
+
+  /**
    * Emits an event when the popover is shown/hidden
    */
   readonly visibilityChange = output<void>({ alias: 'siPopoverVisibilityChange' });
@@ -118,7 +126,15 @@ export class SiPopoverDirective implements OnDestroy {
     if (this.overlayref?.hasAttached()) {
       return;
     }
-    this.overlayref = getOverlay(this.elementRef, this.overlay, false, this.placementInternal());
+    this.overlayref = getOverlay(
+      this.elementRef,
+      this.overlay,
+      false,
+      this.placementInternal(),
+      false,
+      true,
+      this.scrollStrategy()
+    );
     this.overlayref
       .outsidePointerEvents()
       .pipe(takeUntil(this.destroyer))
