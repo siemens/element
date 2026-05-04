@@ -15,7 +15,7 @@
   (input)="modelChanged()"
 />
 @if (unit()) {
-  <span class="unit ms-2" [class.text-secondary]="!disabled()" [class.text-disabled]="disabled()">{{
+  <span class="unit" [class.text-secondary]="!disabled()" [class.text-disabled]="disabled()">{{
     unit()
   }}</span>
 } @else {
@@ -27,7 +27,7 @@
     type="button"
     tabindex="-1"
     aria-hidden="true"
-    class="dec btn btn-icon btn-tertiary btn-sm my-n3 ms-2"
+    class="dec btn btn-icon btn-tertiary btn-sm my-n3 ms-1"
     [disabled]="disabled() || readonly() || !canDec"
     (mousedown)="autoUpdateStart($event, false)"
     (touchstart)="autoUpdateStart($event, false)"
