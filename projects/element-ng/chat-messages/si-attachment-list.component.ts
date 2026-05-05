@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { booleanAttribute, Component, inject, input, output, TemplateRef } from '@angular/core';
-import { elementDelete, elementDocument } from '@siemens/element-icons';
+import { elementStateClose, elementDocument } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiModalService } from '@siemens/element-ng/modal';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -54,7 +54,7 @@ export interface Attachment {
 })
 export class SiAttachmentListComponent {
   protected modalService = inject(SiModalService);
-  protected readonly icons = addIcons({ elementDelete, elementDocument });
+  protected readonly icons = addIcons({ elementStateClose, elementDocument });
 
   /**
    * List of attachments to display

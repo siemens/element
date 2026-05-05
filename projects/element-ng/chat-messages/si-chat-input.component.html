@@ -1,5 +1,5 @@
 <div
-  class="input-wrapper border rounded-3 bg-body"
+  class="input-wrapper border rounded-3"
   [class.drag-over]="dragOver"
   (click)="onContainerClick($event)"
   (drop)="dropHandler($event)"
@@ -7,21 +7,19 @@
   (dragleave)="dragOver = false"
 >
   @if (hasAttachments()) {
-    <div class="p-4 pb-0">
-      <si-attachment-list
-        [attachments]="attachmentList"
-        [removeLabel]="removeAttachmentLabel()"
-        [removable]="true"
-        (remove)="removeAttachment($event)"
-      />
-    </div>
+    <si-attachment-list
+      [attachments]="attachmentList"
+      [removeLabel]="removeAttachmentLabel()"
+      [removable]="true"
+      (remove)="removeAttachment($event)"
+    />
   }
 
-  <div class="p-4 pe-2 pb-0 si-body-2">
+  <div class="si-body-2">
     <label class="form-label d-none" [for]="id">{{ label() | translate }}</label>
     <textarea
       #textInput
-      class="chat-textarea w-100 border-0 p-2"
+      class="chat-textarea w-100 border-0"
       rows="1"
       [id]="id"
       [placeholder]="placeholder() | translate"
@@ -33,66 +31,36 @@
     ></textarea>
   </div>
 
-  <div class="d-flex align-items-center justify-content-between px-4 ps-5 pb-2">
-    <div class="d-flex align-items-center gap-4">
-      @if (allowAttachments()) {
-        <input
-          #fileInput
-          type="file"
-          class="d-none"
-          siFileUpload
-          [accept]="accept()"
-          [maxFileSize]="maxFileSize()"
-          [multiple]="true"
-          (validFiles)="onFilesAdded($event)"
-          (fileError)="onFileError($event)"
-        />
+  <div class="d-flex align-items-center justify-content-between">
+    <div class="btn-group" role="group">
+      <input
+        #fileInput
+        type="file"
+        class="d-none"
+        siFileUpload
+        [accept]="accept()"
+        [maxFileSize]="maxFileSize()"
+        [multiple]="true"
+        (validFiles)="onFilesAdded($event)"
+        (fileError)="onFileError($event)"
+      />
 
+      @if (hasMenuActions()) {
         <button
           type="button"
           class="btn btn-tertiary-ghost btn-icon"
-          [attr.aria-label]="attachFileLabel() | translate"
-          [disabled]="disabled()"
-          (click)="fileInput.click()"
+          [cdkMenuTriggerFor]="allActionsMenu"
+          [attr.aria-label]="secondaryActionsLabel() | translate"
+          [attr.title]="secondaryActionsLabel() | translate"
         >
-          <si-icon [icon]="icons.elementAttachment" />
+          <si-icon [icon]="icons.elementPlus" />
         </button>
+
+        <ng-template #allActionsMenu>
+          <si-menu-factory [items]="allMenuActions()" [actionParam]="actionParam()" />
+        </ng-template>
       }
-
-      @if (hasActions() || hasSecondaryActions()) {
-        <div class="d-flex gap-4 ai-message-actions" siChatMessageAction>
-          @for (action of actions(); track $index) {
-            <button
-              type="button"
-              class="btn btn-tertiary-ghost btn-icon"
-              [disabled]="action.disabled"
-              [attr.aria-label]="action.label | translate"
-              (click)="action.action(actionParam(), action)"
-            >
-              <si-icon [icon]="action.icon" />
-            </button>
-          }
-
-          @if (secondaryActions().length > 0) {
-            <button
-              type="button"
-              class="btn btn-tertiary-ghost btn-icon"
-              [cdkMenuTriggerFor]="secondaryActionsMenu"
-              [attr.aria-label]="secondaryActionsLabel() | translate"
-              [attr.title]="secondaryActionsLabel() | translate"
-            >
-              <si-icon [icon]="icons.elementOptionsVertical" />
-            </button>
-
-            <ng-template #secondaryActionsMenu>
-              <si-menu-factory [items]="secondaryActions()" [actionParam]="actionParam()" />
-            </ng-template>
-          }
-        </div>
-      }
-      <div #projected class="d-flex flex-wrap align-items-start gap-4">
-        <ng-content />
-      </div>
+      <ng-content />
     </div>
 
     <button

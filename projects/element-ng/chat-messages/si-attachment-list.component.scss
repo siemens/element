@@ -2,8 +2,8 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 :host {
-  --attachment-list-bg: #{variables.$element-base-1-hover};
-  --attachment-name-color: #{variables.$element-text-primary};
+  --attachment-list-bg: transparent;
+  --attachment-name-color: #{variables.$element-text-secondary};
 }
 
 .attachment-item {
@@ -11,6 +11,7 @@
   overflow: hidden;
   background-color: var(--attachment-list-bg);
   color: var(--attachment-name-color);
+  border: 1px solid variables.$element-ui-4;
 }
 
 .attachment-main {
@@ -29,6 +30,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: variables.$element-text-primary;
 }
 
 .attachment-info {
@@ -47,5 +49,5 @@
 }
 
 .expand-button {
-  border-radius: 0;
+  border-radius: variables.$element-radius-2;
 }

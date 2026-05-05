@@ -12,7 +12,7 @@
     }
   }
   @if (actions().length > 0 || secondaryActions().length > 0) {
-    <div class="d-flex gap-4 user-message-actions" siChatMessageAction>
+    <div class="btn-group user-message-actions" role="group" siChatMessageAction>
       @for (action of actions(); track $index) {
         <button
           type="button"
