@@ -73,26 +73,15 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   readonly visible = input(true, { transform: booleanAttribute });
 
   /**
-   * Text for the navbar expand button. Required for a11y
+   * Text for the navbar toggle button used as `aria-label`.
+   * The expanded state is communicated via `aria-expanded`.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.EXPAND:Expand`)
+   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.TOGGLE:Toggle`)
    * ```
    */
-  readonly navbarExpandButtonText = input(t(() => $localize`:@@SI_NAVBAR_VERTICAL.EXPAND:Expand`));
-
-  /**
-   * Text for the navbar collapse button. Required for a11y
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.COLLAPSE:Collapse`)
-   * ```
-   */
-  readonly navbarCollapseButtonText = input(
-    t(() => $localize`:@@SI_NAVBAR_VERTICAL.COLLAPSE:Collapse`)
-  );
+  readonly toggleButtonText = input(t(() => $localize`:@@SI_NAVBAR_VERTICAL.TOGGLE:Toggle`));
 
   /**
    * An optional stateId to uniquely identify a component instance.

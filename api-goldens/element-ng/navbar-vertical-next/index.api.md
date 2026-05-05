@@ -18,12 +18,11 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     collapse(): void;
     readonly collapsed: _angular_core.ModelSignal<boolean>;
     expand(): void;
-    readonly navbarCollapseButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly navbarExpandButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly skipLinkMainContentLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly skipLinkNavigationLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
     readonly textOnly: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly toggleButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     readonly uiStateExpandedItems: _angular_core.WritableSignal<Record<string, boolean>>;
     // @deprecated
