@@ -51,5 +51,7 @@
 }
 
 ::ng-deep button[si-action-card] {
-  background-color: variables.$element-base-input-experimental;
+  background-color: transparent;
+  border-radius: variables.$element-radius-2;
+  border: 1px solid variables.$element-ui-4;
 }
