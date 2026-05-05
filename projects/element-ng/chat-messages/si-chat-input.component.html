@@ -1,5 +1,5 @@
 <div
-  class="input-wrapper border rounded-3 bg-body"
+  class="input-wrapper border rounded-3"
   [class.drag-over]="dragOver"
   (click)="onContainerClick($event)"
   (drop)="dropHandler($event)"
@@ -7,17 +7,15 @@
   (dragleave)="dragOver = false"
 >
   @if (hasAttachments()) {
-    <div class="p-4 pb-0">
-      <si-attachment-list
-        [attachments]="attachmentList"
-        [removeLabel]="removeAttachmentLabel()"
-        [removable]="true"
-        (remove)="removeAttachment($event)"
-      />
-    </div>
+    <si-attachment-list
+      [attachments]="attachmentList"
+      [removeLabel]="removeAttachmentLabel()"
+      [removable]="true"
+      (remove)="removeAttachment($event)"
+    />
   }
 
-  <div class="p-4 pe-2 pb-0 si-body-2">
+  <div class="si-body-2">
     <label class="form-label d-none" [for]="id">{{ label() | translate }}</label>
     <textarea
       #textInput
@@ -33,7 +31,7 @@
     ></textarea>
   </div>
 
-  <div class="d-flex align-items-center justify-content-between px-4 ps-5 pb-2">
+  <div class="d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center gap-4">
       <input
         #fileInput
