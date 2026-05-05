@@ -16,8 +16,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  elementAttachment,
-  elementOptionsVertical,
+  elementPlus,
   elementSendFilled,
   elementStopFilled
 } from '@siemens/element-icons';
@@ -95,9 +94,9 @@ export class SiChatInputComponent implements AfterViewInit {
   private readonly textInput = viewChild<ElementRef<HTMLTextAreaElement>>('textInput');
   private readonly projectedContent = viewChild<ElementRef>('projected');
   private readonly fileUploadDirective = viewChild(SiFileUploadDirective);
+  protected readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
   protected readonly icons = addIcons({
-    elementAttachment,
-    elementOptionsVertical,
+    elementPlus,
     elementSendFilled,
     elementStopFilled
   });
@@ -298,6 +297,37 @@ export class SiChatInputComponent implements AfterViewInit {
   protected readonly hasAttachments = computed(() => this.attachments().length > 0);
   protected readonly hasActions = computed(() => this.actions().length > 0);
   protected readonly hasSecondaryActions = computed(() => this.secondaryActions().length > 0);
+  protected readonly allMenuActions = computed<MenuItem[]>(() => [
+    ...(this.allowAttachments()
+      ? [
+          {
+            type: 'action' as const,
+            label: this.attachFileLabel(),
+            icon: 'element-attachment',
+            disabled: this.disabled(),
+            action: () => this.triggerFileInput()
+          } satisfies MenuItem
+        ]
+      : []),
+    ...this.actions().map(
+      (a): MenuItem => ({
+        type: 'action',
+        label: a.label,
+        icon: a.icon,
+        disabled: a.disabled,
+        action: (param: any) => a.action(param, a)
+      })
+    ),
+    ...this.secondaryActions()
+  ]);
+
+  protected readonly hasMenuActions = computed(
+    () => this.allowAttachments() || this.hasActions() || this.hasSecondaryActions()
+  );
+
+  protected triggerFileInput(): void {
+    this.fileInput()?.nativeElement.click();
+  }
   protected readonly canSend = computed(
     () => (this.hasContent() || this.hasAttachments()) && !this.disabled() && !this.sending()
   );
