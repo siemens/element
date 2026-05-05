@@ -7,7 +7,18 @@
 
 .input-wrapper {
   border-color: variables.$element-ui-4;
-  background-color: variables.$element-base-input-experimental;
+  background-color: variables.$element-base-1;
+  padding-block: map.get(variables.$spacers, 5) map.get(variables.$spacers, 4);
+  padding-inline: map.get(variables.$spacers, 5);
+  display: flex;
+  flex-direction: column;
+  gap: map.get(variables.$spacers, 5);
+
+  &:hover,
+  &:active {
+    background-color: variables.$element-base-input-experimental;
+    border-color: variables.$element-ui-1;
+  }
 
   &.drag-over {
     border: 1px solid variables.$element-focus-default;
@@ -17,20 +28,20 @@
 
 .chat-textarea {
   // Prevent layout shift on first input
-  min-block-size: calc(1.5em * variables.$si-line-height-body);
+  min-block-size: 1lh;
   font-family: inherit;
+  padding-block: 0;
+  display: block;
   outline: none;
   resize: none;
-  // stylelint-disable-next-line declaration-no-important
-  background-color: transparent !important;
+  background-color: transparent;
 
   &::placeholder {
     color: variables.$element-text-secondary;
   }
 
   &:disabled {
-    // stylelint-disable-next-line declaration-no-important
-    background-color: transparent !important;
+    background-color: transparent;
     color: variables.$element-text-disabled;
     cursor: not-allowed;
 
