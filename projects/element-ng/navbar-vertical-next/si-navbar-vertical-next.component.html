@@ -14,9 +14,7 @@
         <button
           type="button"
           class="btn btn-icon btn-tertiary-ghost"
-          [attr.aria-label]="
-            (collapsed() ? navbarExpandButtonText() : navbarCollapseButtonText()) | translate
-          "
+          [attr.aria-label]="toggleButtonText() | translate"
           [attr.aria-expanded]="!collapsed()"
           (click)="toggleCollapse()"
         >

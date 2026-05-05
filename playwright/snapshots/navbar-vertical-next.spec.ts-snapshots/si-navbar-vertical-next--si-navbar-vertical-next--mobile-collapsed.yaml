@@ -5,7 +5,7 @@
     - /url: "#/"
   - heading "Navbar Vertical Next Example" [level=1]
 - navigation:
-  - button "expand"
+  - button "Toggle"
 - main:
   - heading "Here is a title" [level=2]
   - text: Content with path 'home'
