@@ -95,6 +95,25 @@ export class DashboardPageComponent {
         }
       }
     },
+    {
+      id: 'native-note-widget-web-component',
+      name: 'Note (native web-component)',
+      description:
+        'Framework-agnostic native web component widget showcasing integration of vanilla custom elements in the flexible dashboard',
+      componentFactory: {
+        factoryType: 'web-component',
+        url: `${environment.webComponentsBaseUrl}/webcomponent-widgets.js`,
+        componentName: 'native-note-widget',
+        editorComponentName: 'native-note-widget-editor'
+      },
+      defaults: {
+        width: 6,
+        height: 2
+      },
+      payload: {
+        message: 'Private notes (native web-component)'
+      }
+    },
     DOWNLOAD_WIDGET,
     UPLOAD_WIDGET
   ];
