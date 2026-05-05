@@ -118,8 +118,18 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
    */
   readonly blinkPulse = input<Observable<boolean>>();
   /**
+   * Text for the navbar expand/collapse toggle button. Required for a11y.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_STATUS_BAR.TOGGLE:Toggle`)
+   * ```
+   */
+  readonly toggleButtonText = input(t(() => $localize`:@@SI_STATUS_BAR.TOGGLE:Toggle`));
+  /**
    * Text for the navbar expand button. Required for a11y
    *
+   * @deprecated Use {@link toggleButtonText} instead.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_STATUS_BAR.EXPAND:Expand`)
@@ -129,6 +139,7 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
   /**
    * Text for the navbar collapse button. Required for a11y
    *
+   * @deprecated Use {@link toggleButtonText} instead.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_STATUS_BAR.COLLAPSE:Collapse`)
