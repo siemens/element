@@ -17,7 +17,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import {
   elementAttachment,
-  elementOptionsVertical,
+  elementPlus,
   elementSendFilled,
   elementStopFilled
 } from '@siemens/element-icons';
@@ -93,11 +93,11 @@ export interface ChatInputAttachment extends Attachment {
 export class SiChatInputComponent implements AfterViewInit {
   private static idCounter = 0;
   private readonly textInput = viewChild<ElementRef<HTMLTextAreaElement>>('textInput');
-  private readonly projectedContent = viewChild<ElementRef>('projected');
   private readonly fileUploadDirective = viewChild(SiFileUploadDirective);
+  protected readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
   protected readonly icons = addIcons({
     elementAttachment,
-    elementOptionsVertical,
+    elementPlus,
     elementSendFilled,
     elementStopFilled
   });
@@ -298,6 +298,37 @@ export class SiChatInputComponent implements AfterViewInit {
   protected readonly hasAttachments = computed(() => this.attachments().length > 0);
   protected readonly hasActions = computed(() => this.actions().length > 0);
   protected readonly hasSecondaryActions = computed(() => this.secondaryActions().length > 0);
+  protected readonly allMenuActions = computed<MenuItem[]>(() => [
+    ...(this.allowAttachments()
+      ? [
+          {
+            type: 'action' as const,
+            label: this.attachFileLabel(),
+            icon: this.icons.elementAttachment,
+            disabled: this.disabled(),
+            action: () => this.triggerFileInput()
+          } satisfies MenuItem
+        ]
+      : []),
+    ...this.actions().map(
+      (a): MenuItem => ({
+        type: 'action' as const,
+        label: a.label,
+        icon: a.icon,
+        disabled: a.disabled,
+        action: (param: unknown) => a.action(param, a)
+      })
+    ),
+    ...this.secondaryActions()
+  ]);
+
+  protected readonly hasMenuActions = computed(
+    () => this.allowAttachments() || this.hasActions() || this.hasSecondaryActions()
+  );
+
+  protected triggerFileInput(): void {
+    this.fileInput()?.nativeElement.click();
+  }
   protected readonly canSend = computed(
     () => (this.hasContent() || this.hasAttachments()) && !this.disabled() && !this.sending()
   );
@@ -395,8 +426,7 @@ export class SiChatInputComponent implements AfterViewInit {
       target.tagName === 'TEXTAREA' ||
       target.closest('button') ||
       target.closest('[siChatMessageAction]') ||
-      (target.closest('si-attachment-list') && target.closest('.attachment-item')) ||
-      this.projectedContent()?.nativeElement?.contains(target)
+      (target.closest('si-attachment-list') && target.closest('.attachment-item'))
     ) {
       return;
     }

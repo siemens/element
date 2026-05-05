@@ -7,6 +7,7 @@
 - paragraph:
   - code: console.log('Hello World')
 - paragraph: I'm getting an error when I run it.
-- button "Edit message"
-- button "Copy message"
-- button "Delete message"
+- group:
+  - button "Edit message"
+  - button "Copy message"
+  - button "Delete message"

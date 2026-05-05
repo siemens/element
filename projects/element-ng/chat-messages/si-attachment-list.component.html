@@ -12,7 +12,7 @@
           (keydown.space)="openPreview($event, attachment)"
         >
           <si-icon
-            class="attachment-icon icon flex-shrink-0 mx-1"
+            class="attachment-icon icon flex-shrink-0 m-2"
             [icon]="getFileIcon(attachment.name)"
           />
           <div class="attachment-info flex-grow-1 min-width-0">
@@ -27,7 +27,7 @@
       } @else {
         <div class="attachment-main--static d-flex align-items-center flex-grow-1 min-width-0">
           <si-icon
-            class="attachment-icon icon flex-shrink-0 mx-1"
+            class="attachment-icon icon flex-shrink-0 m-2"
             [icon]="getFileIcon(attachment.name)"
           />
           <div class="attachment-info flex-grow-1 min-width-0">
@@ -44,11 +44,11 @@
       @if (removable()) {
         <button
           type="button"
-          class="btn btn-tertiary-ghost btn-icon expand-button flex-shrink-0 ms-auto align-self-center focus-inside"
+          class="btn btn-tertiary-ghost btn-sm btn-icon expand-button flex-shrink-0 ms-auto align-self-center focus-inside m-2"
           [attr.aria-label]="(removeLabel() | translate) + ' ' + attachment.name"
           (click)="remove.emit(attachment); $event.stopPropagation()"
         >
-          <si-icon class="icon" [icon]="icons.elementDelete" />
+          <si-icon class="icon" [icon]="icons.elementStateClose" />
         </button>
       }
     </div>

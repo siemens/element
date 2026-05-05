@@ -44,6 +44,7 @@
 .messages-container {
   overflow-y: auto;
   overflow-x: visible;
+  padding-inline: map.get(variables.$spacers, 4);
   // Ensure the messages can still be seen on very short screens
   min-block-size: 5rem;
   gap: map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4);
