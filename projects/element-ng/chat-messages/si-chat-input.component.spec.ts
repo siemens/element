@@ -489,9 +489,12 @@ describe('SiChatInputComponent', () => {
     ]);
     await fixture.whenStable();
 
-    const actionButtons = fixture.nativeElement.querySelectorAll('[siChatMessageAction] button');
-    expect(actionButtons.length).toBe(1);
-    expect(actionButtons[0]).toHaveAttribute('aria-label', 'Attach');
+    const menuTrigger = fixture.nativeElement.querySelector('.btn-group button[aria-label="More actions"]');
+    expect(menuTrigger).toBeTruthy();
+
+    const menuActions = (component as any).allMenuActions();
+    expect(menuActions.length).toBe(1);
+    expect(menuActions[0].label).toBe('Attach');
   });
 
   it('should have focus method', async () => {
