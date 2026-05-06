@@ -8,7 +8,8 @@
 .input-wrapper {
   border-color: variables.$element-ui-4;
   background-color: variables.$element-base-1;
-  padding: map.get(variables.$spacers, 5) map.get(variables.$spacers, 5) map.get(variables.$spacers, 4);
+  padding-block: map.get(variables.$spacers, 5) map.get(variables.$spacers, 4);
+  padding-inline: map.get(variables.$spacers, 5);
   display: flex;
   flex-direction: column;
   gap: map.get(variables.$spacers, 5);

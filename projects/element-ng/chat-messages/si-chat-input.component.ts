@@ -16,6 +16,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
+  elementAttachment,
   elementPlus,
   elementSendFilled,
   elementStopFilled
@@ -95,6 +96,7 @@ export class SiChatInputComponent implements AfterViewInit {
   private readonly fileUploadDirective = viewChild(SiFileUploadDirective);
   protected readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
   protected readonly icons = addIcons({
+    elementAttachment,
     elementPlus,
     elementSendFilled,
     elementStopFilled
@@ -314,7 +316,7 @@ export class SiChatInputComponent implements AfterViewInit {
         label: a.label,
         icon: a.icon,
         disabled: a.disabled,
-        action: (param: any) => a.action(param, a)
+        action: (param: unknown) => a.action(param, a)
       })
     ),
     ...this.secondaryActions()
