@@ -97,6 +97,13 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
   readonly disabledInput = input(false, { alias: 'disabled', transform: booleanAttribute });
 
   /**
+   * Defines the maximum length of the search input.
+   *
+   * @defaultValue undefined
+   */
+  readonly maxlength = input(undefined, { transform: numberAttribute });
+
+  /**
    * Aria label for the clear button.
    *
    * @defaultValue
