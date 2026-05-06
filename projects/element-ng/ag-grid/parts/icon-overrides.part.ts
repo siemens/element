@@ -8,7 +8,6 @@ import {
   elementCopy,
   elementCut,
   elementDown2,
-  elementDown4,
   elementDownload,
   elementEdit,
   elementFilter,
@@ -34,10 +33,10 @@ import {
   elementRight2,
   elementRight4,
   elementShow,
+  elementSortDown,
   elementSortUp,
   elementSum,
   elementUp2,
-  elementUp4,
   elementZoom
 } from '@siemens/element-icons';
 import { iconOverrides } from 'ag-grid-community';
@@ -67,7 +66,7 @@ export const elementIconOverrides = iconOverrides({
   icons: createIconMap({
     aggregation: elementSum,
     arrows: elementMove,
-    asc: elementUp4,
+    asc: elementSortUp,
     cancel: elementCancel,
     chart: elementReport,
     'chevron-down': elementDown2,
@@ -80,7 +79,7 @@ export const elementIconOverrides = iconOverrides({
     copy: elementCopy,
     cross: elementCancel,
     cut: elementCut,
-    desc: elementDown4,
+    desc: elementSortDown,
     edit: elementEdit,
     expanded: elementLeft2,
     'eye-slash': elementHide,
