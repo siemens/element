@@ -5,7 +5,7 @@
     - /url: "#/"
   - heading "Navbar Vertical Next Badges Example" [level=1]
 - navigation:
-  - button "expand"
+  - button "Toggle"
   - button "Search..."
   - link "Home":
     - /url: "#/viewer/viewer/home"
@@ -19,6 +19,8 @@
     - /url: "#/viewer/viewer/success"
   - link /Danger emphasis badge \+\d+/:
     - /url: "#/viewer/viewer/danger"
+  - link "Settings":
+    - /url: "#/viewer/viewer/settings"
 - main:
   - heading "Badge Examples" [level=2]
   - text: Content with path 'sub-badge-2'

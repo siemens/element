@@ -5,7 +5,7 @@
     - /url: "#/"
   - heading "Navbar Vertical Next Example" [level=1]
 - navigation:
-  - button "expand"
+  - button "Toggle"
   - button "Search..."
   - link "Home":
     - /url: "#/viewer/viewer/home"
@@ -18,6 +18,8 @@
   - button "Documentation"
   - group "Documentation"
   - button "Action"
+  - link "Settings":
+    - /url: "#/viewer/viewer/settings"
 - main:
   - heading "Here is a title" [level=2]
   - text: Content with path 'subItem2'

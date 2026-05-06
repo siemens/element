@@ -18,8 +18,7 @@ import {
 import { firstValueFrom, take, toArray } from 'rxjs';
 
 import { TestingModule } from '../../../test/testing.module';
-import { WidgetConfig } from '../../model/widgets.model';
-import { SiGridService } from '../../services/si-grid.service';
+import { Widget, WidgetConfig } from '../../model/widgets.model';
 import { SiWidgetHostComponent } from '../widget-host/si-widget-host.component';
 import { SiGridstackWrapperComponent } from './si-gridstack-wrapper.component';
 
@@ -29,25 +28,24 @@ import { SiGridstackWrapperComponent } from './si-gridstack-wrapper.component';
     [style.width.px]="600"
     [style.height.px]="600"
     [widgetConfigs]="widgets"
+    [widgetCatalogMap]="widgetCatalogMap"
   />`
 })
 class HostComponent {
   readonly gridStackWrapper = viewChild(SiGridstackWrapperComponent);
   widgets: WidgetConfig[] = [];
+  widgetCatalogMap = new Map<string, Widget>();
 }
 
 describe('SiGridstackWrapperComponent', () => {
   let fixture: ComponentFixture<HostComponent>;
   let host: HostComponent;
-  let gridService: SiGridService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HostComponent],
-      providers: [SiActionDialogService, SiGridService]
+      providers: [SiActionDialogService]
     }).compileComponents();
-    gridService = TestBed.inject(SiGridService);
-    gridService.widgetCatalog.set([]);
   });
 
   describe('initialization', () => {
@@ -63,7 +61,7 @@ describe('SiGridstackWrapperComponent', () => {
     it('should mount the grid items', () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
-      gridService.widgetCatalog.set([TEST_WIDGET]);
+      host.widgetCatalogMap = new Map([[TEST_WIDGET.id, TEST_WIDGET]]);
       host.widgets = TEST_WIDGET_CONFIGS;
       const gridStackWrapper = host.gridStackWrapper();
       vi.spyOn(gridStackWrapper!, 'mount');
@@ -76,7 +74,7 @@ describe('SiGridstackWrapperComponent', () => {
     it('should render grid items', async () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
-      gridService.widgetCatalog.set([TEST_WIDGET]);
+      host.widgetCatalogMap = new Map([[TEST_WIDGET.id, TEST_WIDGET]]);
       host.widgets = [TEST_WIDGET_CONFIG_0, TEST_WIDGET_CONFIG_1];
       fixture.detectChanges();
 
@@ -91,7 +89,7 @@ describe('SiGridstackWrapperComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
-      gridService.widgetCatalog.set([TEST_WIDGET]);
+      host.widgetCatalogMap = new Map([[TEST_WIDGET.id, TEST_WIDGET]]);
       host.widgets = [TEST_WIDGET_CONFIG_0, TEST_WIDGET_CONFIG_1];
       fixture.detectChanges();
     });
@@ -177,7 +175,7 @@ describe('SiGridstackWrapperComponent', () => {
     it('should return layout for a given widget id', async () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
-      gridService.widgetCatalog.set([TEST_WIDGET]);
+      host.widgetCatalogMap = new Map([[TEST_WIDGET.id, TEST_WIDGET]]);
       host.widgets = TEST_WIDGET_CONFIGS;
       fixture.detectChanges();
       // to avoid injector destroyed error
@@ -196,7 +194,7 @@ describe('SiGridstackWrapperComponent', () => {
     it('should return undefined for unknown widget id', () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
-      gridService.widgetCatalog.set([TEST_WIDGET]);
+      host.widgetCatalogMap = new Map([[TEST_WIDGET.id, TEST_WIDGET]]);
       host.widgets = [];
       fixture.detectChanges();
       const position = host.gridStackWrapper()!.getWidgetLayout('non-existent-id');

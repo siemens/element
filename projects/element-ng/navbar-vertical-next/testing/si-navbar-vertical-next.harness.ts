@@ -22,18 +22,14 @@ export class SiNavbarVerticalNextHarness extends ComponentHarness {
 
   async isCollapsed(): Promise<boolean> {
     return this.collapseToggle()
-      .then(host =>
-        parallel(() => [host.getAttribute('aria-expanded'), host.getAttribute('aria-label')])
-      )
-      .then(([value, text]) => value === 'false' && text === 'Expand');
+      .then(host => host.getAttribute('aria-expanded'))
+      .then(value => value === 'false');
   }
 
   async isExpanded(): Promise<boolean> {
     return this.collapseToggle()
-      .then(host =>
-        parallel(() => [host.getAttribute('aria-expanded'), host.getAttribute('aria-label')])
-      )
-      .then(([value, text]) => value === 'true' && text === 'Collapse');
+      .then(host => host.getAttribute('aria-expanded'))
+      .then(value => value === 'true');
   }
 
   async findItems(

@@ -5,6 +5,7 @@
 import { AsyncPipe } from '@angular/common';
 import {
   Component,
+  computed,
   inject,
   input,
   model,
@@ -26,7 +27,6 @@ import { GridConfig } from '../../model/gridstack.model';
 import { SI_WIDGET_ID_PROVIDER } from '../../model/si-widget-id-provider';
 import { SI_WIDGET_STORE } from '../../model/si-widget-storage';
 import { Widget, WidgetConfig } from '../../model/widgets.model';
-import { SiGridService } from '../../services/si-grid.service';
 import {
   GridWrapperEvent,
   SiGridstackWrapperComponent
@@ -41,12 +41,10 @@ import { SiWidgetInstanceEditorDialogComponent } from '../widget-instance-editor
   selector: 'si-grid',
   imports: [SiGridstackWrapperComponent, SiLoadingSpinnerDirective, AsyncPipe],
   templateUrl: './si-grid.component.html',
-  styleUrl: './si-grid.component.scss',
-  providers: [SiGridService]
+  styleUrl: './si-grid.component.scss'
 })
 export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
   private storeSubscription?: Subscription;
-  private gridService = inject(SiGridService);
   private modalService = inject(SiModalService);
   private widgetStorage = inject(SI_WIDGET_STORE);
   private widgetIdProvider = inject(SI_WIDGET_ID_PROVIDER);
@@ -80,6 +78,10 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
    *
    * @defaultValue [] */
   readonly widgetCatalog = input<Widget[]>([]);
+
+  protected readonly widgetCatalogMap = computed(
+    () => new Map(this.widgetCatalog().map(widget => [widget.id, widget]))
+  );
 
   /**
    * When the user clicks edit on a widget instance, an editor need to appear and the
@@ -190,15 +192,10 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
         this.restoreSavedState();
       }
     }
-
-    if (changes.widgetCatalog) {
-      this.gridService.widgetCatalog.set(this.widgetCatalog());
-    }
   }
 
   ngOnInit(): void {
     queueMicrotask(() => this.loadAndSubscribeWidgets());
-    this.gridService.widgetCatalog.set(this.widgetCatalog());
   }
 
   ngOnDestroy(): void {
@@ -310,7 +307,7 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
     if (this.emitWidgetInstanceEditEvents()) {
       this.widgetInstanceEdit.emit(widgetConfigClone);
     } else {
-      const widget = this.gridService.getWidget(widgetConfigClone.widgetId);
+      const widget = this.widgetCatalogMap().get(widgetConfigClone.widgetId);
       const config: ModalOptions<SiWidgetInstanceEditorDialogComponent> = {
         animated: true,
         keyboard: true,
