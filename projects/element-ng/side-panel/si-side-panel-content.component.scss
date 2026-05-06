@@ -53,6 +53,11 @@
         background: all-variables.$element-base-1-hover;
       }
 
+      &.dot-outer {
+        inline-size: 100%;
+        justify-content: center;
+      }
+
       .icon {
         padding: map.get(all-variables.$spacers, 1);
       }
