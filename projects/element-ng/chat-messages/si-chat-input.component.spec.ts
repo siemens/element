@@ -489,7 +489,9 @@ describe('SiChatInputComponent', () => {
     ]);
     await fixture.whenStable();
 
-    const menuTrigger = fixture.nativeElement.querySelector('.btn-group button[aria-label="More actions"]');
+    const menuTrigger = fixture.nativeElement.querySelector(
+      '.btn-group button[aria-label="More actions"]'
+    );
     expect(menuTrigger).toBeTruthy();
 
     const menuActions = (component as any).allMenuActions();
