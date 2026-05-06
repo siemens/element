@@ -1,7 +1,8 @@
+@use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
 :host {
-  --avatar-size: 2.5rem;
+  --avatar-size: calc(#{variables.$si-icon-font-size} + 20px);
   --indicator-size: #{variables.$si-icon-font-size};
   --background: #{variables.$element-base-0};
   --indicator-offset-x: -0.625rem;
@@ -29,23 +30,29 @@
   }
 
   &.tiny {
-    --avatar-size: 1.5rem;
+    --avatar-size: calc(#{variables.$si-icon-font-size} + #{2 * map.get(variables.$spacers, 1)});
   }
 
   &.xsmall {
-    --avatar-size: 1.75rem;
+    --avatar-size: calc(#{variables.$si-icon-font-size} + #{2 * map.get(variables.$spacers, 2)});
   }
 
   &.small {
-    --avatar-size: 2rem;
+    --avatar-size: calc(#{variables.$si-icon-font-size} + #{2 * map.get(variables.$spacers, 3)});
   }
 
   &.large {
-    --avatar-size: 3.5rem;
+    --avatar-size: calc(
+      #{variables.$si-icon-font-size} + #{2 *
+        (map.get(variables.$spacers, 6) + map.get(variables.$spacers, 1))}
+    );
   }
 
   &.xlarge {
-    --avatar-size: 5rem;
+    --avatar-size: calc(
+      #{variables.$si-icon-font-size} + #{2 *
+        (map.get(variables.$spacers, 8) + map.get(variables.$spacers, 3))}
+    );
   }
 }
 

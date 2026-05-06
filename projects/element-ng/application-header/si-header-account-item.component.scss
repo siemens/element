@@ -1,6 +1,7 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables/spacers';
 
-si-avatar {
-  --avatar-size: calc(1.5rem + 2 * #{map.get(spacers.$spacers, 2)});
+si-avatar.small {
+  // makes the avatar slightly larger with increased font size, aligning with the icons
+  --avatar-size: calc(1.5rem + #{2 * map.get(spacers.$spacers, 2)});
 }
