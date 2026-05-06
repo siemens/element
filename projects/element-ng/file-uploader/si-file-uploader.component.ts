@@ -234,13 +234,13 @@ export class SiFileUploaderComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size of {{maxFileSize}}`)
    * ```
    */
   readonly errorTextFileMaxSize = input(
     t(
       () =>
-        $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`
+        $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size of {{maxFileSize}}`
     )
   );
   /**
