@@ -12,5 +12,6 @@ export interface UploadFile {
   fileName: string;
   size: string;
   errorText?: TranslatableString;
+  errorParams?: Record<string, unknown>;
   progress: number;
 }

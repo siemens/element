@@ -236,10 +236,10 @@ describe('SiFileUploaderComponent', () => {
   });
 
   it('should reject files that exceeds "maxFileSize" parameter', async () => {
-    maxFileSize.set(1000);
-    errorTextFileMaxSize.set('File exceeds allowed maximum size');
+    maxFileSize.set(1024);
+    errorTextFileMaxSize.set('File exceeds allowed maximum size of {{maxFileSize}}');
     await handleFiles(createFileListWithFileSizeOf1200Bytes(['notMatching.fmwr']));
-    expect(getError()!).toHaveTextContent('File exceeds allowed maximum size');
+    expect(getError()!).toHaveTextContent('File exceeds allowed maximum size of 1KB');
   });
 
   it('should accept files that less than or equal to "maxFileSize" parameter', async () => {
