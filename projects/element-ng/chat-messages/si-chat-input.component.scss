@@ -11,7 +11,7 @@
   padding: map.get(variables.$spacers, 5) map.get(variables.$spacers, 5) map.get(variables.$spacers, 4);
   display: flex;
   flex-direction: column;
-  gap: map.get(variables.$spacers, 2);
+  gap: map.get(variables.$spacers, 5);
 
   &:hover,
   &:active {

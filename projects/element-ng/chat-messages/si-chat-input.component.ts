@@ -92,7 +92,6 @@ export interface ChatInputAttachment extends Attachment {
 export class SiChatInputComponent implements AfterViewInit {
   private static idCounter = 0;
   private readonly textInput = viewChild<ElementRef<HTMLTextAreaElement>>('textInput');
-  private readonly projectedContent = viewChild<ElementRef>('projected');
   private readonly fileUploadDirective = viewChild(SiFileUploadDirective);
   protected readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
   protected readonly icons = addIcons({
@@ -425,8 +424,7 @@ export class SiChatInputComponent implements AfterViewInit {
       target.tagName === 'TEXTAREA' ||
       target.closest('button') ||
       target.closest('[siChatMessageAction]') ||
-      (target.closest('si-attachment-list') && target.closest('.attachment-item')) ||
-      this.projectedContent()?.nativeElement?.contains(target)
+      (target.closest('si-attachment-list') && target.closest('.attachment-item'))
     ) {
       return;
     }
