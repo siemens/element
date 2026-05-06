@@ -14,6 +14,7 @@ import {
   SiUIStateService,
   UIStateStorage
 } from '@siemens/element-ng/common';
+import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -41,10 +42,17 @@ class SynchronousMockStore implements UIStateStorage {
 
 @Injectable({ providedIn: 'root' })
 class BreakpointObserverMock implements Partial<BreakpointObserver> {
+  /** Controls the lg breakpoint — drives collapsed/smallScreen state. */
   readonly isSmall = new BehaviorSubject<boolean>(false);
+  /** Controls the sm breakpoint — drives mobileScreen/drill-down state. */
+  readonly isMobile = new BehaviorSubject<boolean>(false);
 
-  observe(): Observable<BreakpointState> {
-    return this.isSmall.pipe(map(matches => ({ matches, breakpoints: {} })));
+  observe(value: string | readonly string[]): Observable<BreakpointState> {
+    const query = Array.isArray(value) ? value[0] : (value as string);
+    const source$ = query.includes(`${BOOTSTRAP_BREAKPOINTS.smMinimum}px`)
+      ? this.isMobile
+      : this.isSmall;
+    return source$.pipe(map(matches => ({ matches, breakpoints: { [query]: matches } })));
   }
 }
 
@@ -66,6 +74,7 @@ class EmptyComponent {}
       [textOnly]="textOnly()"
       [stateId]="stateId"
       [collapsed]="collapsed()"
+      [alwaysOpenGroupsInFlyout]="alwaysOpenGroupsInFlyout()"
     >
       <si-navbar-vertical-next-search [debounceTime]="0" (searchChange)="searchEvent($event)" />
       @if (showDeclarativeFlyoutGroup()) {
@@ -112,6 +121,19 @@ class EmptyComponent {}
           </button>
         </si-navbar-vertical-next-items>
       }
+
+      @if (showDrillDownGroup()) {
+        <si-navbar-vertical-next-items>
+          <a si-navbar-vertical-next-item routerLink="home" routerLinkActive>Home</a>
+          <button
+            type="button"
+            si-navbar-vertical-next-item
+            [siNavbarVerticalNextGroupTriggerFor]="drillDownGroup"
+          >
+            item-drill
+          </button>
+        </si-navbar-vertical-next-items>
+      }
     </si-navbar-vertical-next>
 
     <ng-template #flyoutGroup>
@@ -152,15 +174,28 @@ class EmptyComponent {}
           sub-item2
         </a>
       </si-navbar-vertical-next-group>
+    </ng-template>
+
+    <ng-template #drillDownGroup>
+      <si-navbar-vertical-next-group>
+        <a si-navbar-vertical-next-item routerLink="item-1/sub-item-1" routerLinkActive>
+          drill-sub-item1
+        </a>
+        <a si-navbar-vertical-next-item routerLink="item-1/sub-item-2" routerLinkActive>
+          drill-sub-item2
+        </a>
+      </si-navbar-vertical-next-group>
     </ng-template>`
 })
 class TestHostComponent {
   readonly textOnly = signal(true);
   stateId?: string;
   readonly collapsed = signal(false);
+  readonly alwaysOpenGroupsInFlyout = signal(false);
   readonly showDeclarativeFlyoutGroup = signal(false);
   readonly showDeclarativeNavigationGroup = signal(false);
   readonly showDeclarativeStateGroups = signal(false);
+  readonly showDrillDownGroup = signal(false);
 
   searchEvent(event: string): void {}
 }
@@ -261,6 +296,99 @@ describe('SiNavbarVerticalNext', () => {
       document.body.click();
 
       expect(await item.isFlyout()).toBe(false);
+    });
+
+    it('should open flyout on click when alwaysOpenGroupsInFlyout is set', async () => {
+      component.alwaysOpenGroupsInFlyout.set(true);
+      component.showDeclarativeFlyoutGroup.set(true);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const item = await harness.findItemByLabel('item-1');
+      await item.click();
+      expect(await item.isFlyout()).toBe(true);
+    });
+
+    it('should drill down into group on click when on small screen', async () => {
+      const breakpointObserver = TestBed.inject(BreakpointObserverMock);
+      // Only activate mobile (sm) breakpoint — lg stays false so navbar remains expanded.
+      breakpointObserver.isMobile.next(true);
+      component.showDrillDownGroup.set(true);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const nativeEl = fixture.nativeElement as HTMLElement;
+      const groupTrigger = nativeEl.querySelector<HTMLButtonElement>(
+        'button[si-navbar-vertical-next-item]'
+      )!;
+      groupTrigger.click();
+      await fixture.whenStable();
+
+      // Back button appears with the group's label
+      const backBtn = nativeEl.querySelector<HTMLElement>('.drill-back-btn');
+      expect(backBtn).not.toBeNull();
+      expect(backBtn!.textContent).toContain('item-drill');
+
+      // Sub-items for the drilled group are rendered
+      const subItems = nativeEl.querySelectorAll<HTMLElement>('a[si-navbar-vertical-next-item]');
+      expect(subItems.length).toBeGreaterThan(0);
+
+      // Top-level items panel is hidden while drilled
+      const itemsPanel = nativeEl.querySelector('si-navbar-vertical-next-items');
+      expect(itemsPanel).toHaveStyle('display: none');
+    });
+
+    it('should return to top-level when back button is clicked after drill-down', async () => {
+      const breakpointObserver = TestBed.inject(BreakpointObserverMock);
+      breakpointObserver.isMobile.next(true);
+      component.showDrillDownGroup.set(true);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const nativeEl = fixture.nativeElement as HTMLElement;
+      const groupTrigger = nativeEl.querySelector<HTMLButtonElement>(
+        'button[si-navbar-vertical-next-item]'
+      )!;
+      groupTrigger.click();
+      await fixture.whenStable();
+
+      const backBtn = nativeEl.querySelector<HTMLButtonElement>('.drill-back-btn')!;
+      expect(backBtn).not.toBeNull();
+
+      backBtn.click();
+      await fixture.whenStable();
+
+      // Back button is gone
+      expect(nativeEl.querySelector('.drill-back-btn')).toBeNull();
+
+      // The top-level items panel button is visible again
+      const groupTriggerAfter = nativeEl.querySelector<HTMLButtonElement>(
+        'button[si-navbar-vertical-next-item]'
+      );
+      expect(groupTriggerAfter).not.toBeNull();
+
+      // Top-level items panel is visible again
+      const itemsPanel = nativeEl.querySelector('si-navbar-vertical-next-items');
+      expect(itemsPanel).not.toHaveStyle('display: none');
+    });
+
+    it('should end drill-down when viewport grows beyond mobile breakpoint', async () => {
+      const breakpointObserver = TestBed.inject(BreakpointObserverMock);
+      breakpointObserver.isMobile.next(true);
+      component.showDrillDownGroup.set(true);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const nativeEl = fixture.nativeElement as HTMLElement;
+      nativeEl.querySelector<HTMLButtonElement>('button[si-navbar-vertical-next-item]')!.click();
+      await fixture.whenStable();
+      expect(nativeEl.querySelector('.drill-back-btn')).not.toBeNull();
+
+      // Simulate resizing to a wider viewport (no longer mobile)
+      breakpointObserver.isMobile.next(false);
+      await fixture.whenStable();
+
+      expect(nativeEl.querySelector('.drill-back-btn')).toBeNull();
     });
 
     it('should emit search event', async () => {

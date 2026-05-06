@@ -12,6 +12,10 @@
   display: none;
 }
 
+:host-context(.nav-drill-down) {
+  display: none;
+}
+
 @include all-variables.media-breakpoint-up(sm) {
   :host-context(:not(.nav-text-only).nav-collapsed) {
     display: block;

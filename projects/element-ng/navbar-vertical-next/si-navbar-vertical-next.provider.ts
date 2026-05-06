@@ -10,3 +10,7 @@ import type { SiNavbarVerticalNextComponent } from './si-navbar-vertical-next.co
 export const SI_NAVBAR_VERTICAL_NEXT = new InjectionToken<SiNavbarVerticalNextComponent>(
   'SI_NAVBAR_VERTICAL_NEXT'
 );
+
+/** @experimental */
+/** @internal Provides the label text of the navbar item hosting the group trigger. */
+export const SI_NAVBAR_ITEM_LABEL = new InjectionToken<() => string>('SI_NAVBAR_ITEM_LABEL');

@@ -26,6 +26,15 @@
       </div>
     </div>
     <ng-content select="si-navbar-vertical-next-search" />
+    @if (mobileScreen() && drilledGroupInfo()) {
+      <div class="navbar-vertical-no-collapse drill-back-header">
+        <button type="button" class="btn focus-inside drill-back-btn" (click)="endDrillDown()">
+          <si-icon class="icon-lg flip-rtl" [icon]="icons.elementLeft2" />
+          <span class="si-h5 text-truncate">{{ drilledGroupInfo()!.label }}</span>
+        </button>
+      </div>
+    }
+    <ng-container #drillDownOutlet />
     <ng-content select="si-navbar-vertical-next-items" />
     <ng-content select="si-navbar-vertical-next-footer-items" />
   </nav>

@@ -1,0 +1,96 @@
+<div class="has-navbar-fixed-top">
+  <si-application-header>
+    <si-header-brand>
+      <a routerLink="/" siHeaderLogo></a>
+      <h1 class="application-name">Navbar Vertical Next — Always Open Groups In Flyout</h1>
+    </si-header-brand>
+  </si-application-header>
+
+  <si-navbar-vertical-next
+    alwaysOpenGroupsInFlyout
+    stateId="navbar-vertical-next-always-flyout"
+    navbarCollapseButtonText="collapse"
+    navbarExpandButtonText="expand"
+  >
+    <si-navbar-vertical-next-search placeholder="Search..." />
+    <si-navbar-vertical-next-items>
+      <a si-navbar-vertical-next-item routerLink="home" routerLinkActive icon="element-home">
+        Home
+      </a>
+      <si-navbar-vertical-next-header>Modules</si-navbar-vertical-next-header>
+      <a si-navbar-vertical-next-item routerLink="energy" routerLinkActive icon="element-trend">
+        Energy &amp; sustainability
+      </a>
+      <button
+        type="button"
+        si-navbar-vertical-next-item
+        icon="element-user-group"
+        [siNavbarVerticalNextGroupTriggerFor]="userManagement"
+      >
+        User management
+      </button>
+      <a
+        si-navbar-vertical-next-item
+        routerLink="coverage"
+        routerLinkActive
+        icon="element-diagnostic"
+      >
+        Test coverage
+      </a>
+      <si-navbar-vertical-next-divider />
+      <button
+        type="button"
+        si-navbar-vertical-next-item
+        icon="element-document"
+        [siNavbarVerticalNextGroupTriggerFor]="documentation"
+      >
+        Documentation
+      </button>
+    </si-navbar-vertical-next-items>
+    <si-navbar-vertical-next-footer-items>
+      <a
+        si-navbar-vertical-next-item
+        routerLink="settings"
+        routerLinkActive
+        icon="element-settings"
+      >
+        Settings
+      </a>
+    </si-navbar-vertical-next-footer-items>
+
+    <div class="si-layout-main-padding">
+      <div class="si-layout-header">
+        <h2 class="si-layout-title si-layout-top-element">Here is a title</h2>
+      </div>
+      <router-outlet />
+    </div>
+  </si-navbar-vertical-next>
+</div>
+
+<ng-template #userManagement>
+  <si-navbar-vertical-next-group routerLinkActive>
+    <a si-navbar-vertical-next-item routerLink="subItem" routerLinkActive icon="element-rocket">
+      Sub item
+    </a>
+    <a si-navbar-vertical-next-item routerLink="subItem2" routerLinkActive icon="element-rocket">
+      Sub item 2
+    </a>
+    <a si-navbar-vertical-next-item routerLink="subItem3" routerLinkActive icon="element-rocket">
+      Sub item 3
+    </a>
+  </si-navbar-vertical-next-group>
+</ng-template>
+
+<ng-template #documentation>
+  <si-navbar-vertical-next-group routerLinkActive>
+    <a si-navbar-vertical-next-item routerLink="subItem4" routerLinkActive icon="element-rocket">
+      Sub item 4
+    </a>
+    <a si-navbar-vertical-next-item routerLink="subItem5" routerLinkActive icon="element-rocket">
+      Sub item 5
+    </a>
+    <a si-navbar-vertical-next-item routerLink="subItem6" routerLinkActive icon="element-rocket">
+      Sub item 6
+    </a>
+  </si-navbar-vertical-next-group>
+</ng-template>

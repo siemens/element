@@ -15,6 +15,7 @@ import {
   Injector,
   input,
   linkedSignal,
+  OnDestroy,
   OnInit,
   signal,
   TemplateRef,
@@ -23,7 +24,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
+import { SI_NAVBAR_ITEM_LABEL, SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
 /**
  * Using this component, to anchor the flyout inside the navbar within the a11y tree.
@@ -53,7 +54,7 @@ class SiNavbarFlyoutAnchorComponent {
     '(click)': 'triggered()'
   }
 })
-export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
+export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit, OnDestroy {
   private static idCounter = 0;
 
   /** @internal */
@@ -85,7 +86,9 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
   readonly active = signal(false);
 
   protected readonly navbar = inject(SI_NAVBAR_VERTICAL_NEXT);
+  private readonly itemLabel = inject(SI_NAVBAR_ITEM_LABEL, { optional: true });
 
+  private drillDownActive = false;
   private flyoutOutsideClickSubscription?: Subscription;
   private readonly viewContainer = inject(ViewContainerRef);
   private readonly overlay = inject(Overlay);
@@ -121,6 +124,14 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
     this.attachInline();
   }
 
+  ngOnDestroy(): void {
+    this.flyoutOutsideClickSubscription?.unsubscribe();
+    this.overlayRef.dispose();
+    if (this.drillDownActive) {
+      this.navbar.endDrillDownSilently();
+    }
+  }
+
   /** @internal */
   hideFlyout(): void {
     if (this.flyout()) {
@@ -134,12 +145,32 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
   }
 
   protected triggered(): void {
-    if (this.navbar.collapsed()) {
+    if (this.navbar.mobileScreen() && !this.navbar.collapsed()) {
+      if (this.drillDownActive) {
+        this.navbar.endDrillDown();
+      } else {
+        this.showDrillDown();
+      }
+    } else if (this.navbar.collapsed() || this.navbar.alwaysOpenGroupsInFlyout()) {
       this.toggleFlyout();
     } else {
       this.expanded.set(!this.expanded());
       this.navbar.groupStateChanged(this.stateId(), this.expanded());
     }
+  }
+
+  private showDrillDown(): void {
+    this.drillDownActive = true;
+    const label = this.itemLabel?.() ?? '';
+
+    const idx = this.viewContainer.indexOf(this.groupView);
+    if (idx !== -1) {
+      this.viewContainer.detach(idx);
+    }
+    this.navbar.startDrillDown(this.groupTemplate(), this.injector, label, this.groupId, () => {
+      this.drillDownActive = false;
+      this.attachInline();
+    });
   }
 
   private toggleFlyout(): void {

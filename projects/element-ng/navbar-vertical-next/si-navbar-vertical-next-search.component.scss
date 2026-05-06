@@ -17,6 +17,10 @@
   }
 }
 
+:host-context(.nav-drill-down) {
+  display: none;
+}
+
 si-search-bar {
   inline-size: 100%;
 }

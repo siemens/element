@@ -16,14 +16,8 @@
   - group "User management"
   - link "Test coverage":
     - /url: "#/viewer/viewer/coverage"
-  - button "Documentation" [expanded]
-  - group "Documentation":
-    - link "Sub item 4":
-      - /url: "#/viewer/viewer/subItem4"
-    - link "Sub item 5":
-      - /url: "#/viewer/viewer/subItem5"
-    - link "Sub item 6":
-      - /url: "#/viewer/viewer/subItem6"
+  - button "Documentation"
+  - group "Documentation"
   - button "Action"
   - link "Settings":
     - /url: "#/viewer/viewer/settings"

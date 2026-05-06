@@ -20,7 +20,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
       [class.inline-group]="!flyout"
       [class.dropdown-menu]="flyout"
       [cdkTrapFocus]="flyout"
-      [cdkTrapFocusAutoCapture]="flyout"
+      [cdkTrapFocusAutoCapture]="autoCaptureFocus"
     >
       <div [class.overflow-hidden]="!flyout">
         <ng-content />
@@ -44,8 +44,12 @@ export class SiNavbarVerticalNextGroupComponent {
   // Store initial value, as the mode for an instance never changes.
   protected flyout = this.groupTrigger.flyout();
 
+  protected readonly autoCaptureFocus = this.flyout;
+
   protected readonly visible = computed(() => {
-    return this.flyout || (!this.navbar.collapsed() && this.groupTrigger.expanded());
+    const drillInfo = this.navbar.drilledGroupInfo();
+    const isDrilled = !!drillInfo && drillInfo.groupId === this.groupTrigger.groupId;
+    return isDrilled || this.flyout || (!this.navbar.collapsed() && this.groupTrigger.expanded());
   });
 
   constructor() {

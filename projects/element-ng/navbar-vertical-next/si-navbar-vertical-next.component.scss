@@ -116,3 +116,34 @@ nav {
     padding-inline-start: $vertical-nav-width;
   }
 }
+
+.drill-back-header {
+  margin-block-start: map.get(all-variables.$spacers, 4);
+}
+
+.drill-back-btn {
+  display: flex;
+  justify-content: flex-start;
+  inline-size: 100%;
+  padding-block: map.get(all-variables.$spacers, 4);
+  padding-inline: 0 map.get(all-variables.$spacers, 5);
+  min-block-size: 40px;
+  border-radius: 0;
+  background: none;
+  border: 0;
+  color: all-variables.$element-text-secondary;
+
+  si-icon {
+    margin-inline-start: map.get(all-variables.$spacers, 5);
+    flex-shrink: 0;
+  }
+
+  span {
+    margin-inline-start: map.get(all-variables.$spacers, 4);
+    min-inline-size: 0;
+  }
+
+  &:hover {
+    background: all-variables.$element-base-1-hover;
+  }
+}

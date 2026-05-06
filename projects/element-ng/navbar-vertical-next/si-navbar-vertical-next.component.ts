@@ -7,16 +7,21 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  EmbeddedViewRef,
   inject,
+  Injector,
   input,
   model,
   OnChanges,
   OnInit,
   signal,
-  SimpleChanges
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { elementDoubleLeft, elementDoubleRight } from '@siemens/element-icons';
+import { elementDoubleLeft, elementDoubleRight, elementLeft2 } from '@siemens/element-icons';
 import { SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
@@ -43,11 +48,12 @@ interface UIState {
     class: 'si-layout-inner ready',
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
-    '[class.visible]': 'visible()'
+    '[class.visible]': 'visible()',
+    '[class.nav-drill-down]': 'mobileScreen() && drilledGroupInfo()'
   }
 })
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
-  protected readonly icons = addIcons({ elementDoubleLeft, elementDoubleRight });
+  protected readonly icons = addIcons({ elementDoubleLeft, elementDoubleRight, elementLeft2 });
   /**
    * Whether the navbar-vertical is collapsed.
    *
@@ -61,6 +67,15 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
    * @defaultValue false
    */
   readonly textOnly = input(false, { transform: booleanAttribute });
+
+  /**
+   * When `true`, item-groups always open as a transient flyout panel adjacent to the
+   * trigger, regardless of whether the navbar is collapsed or expanded.
+   * Flyouts open and close on click.
+   *
+   * @defaultValue false
+   */
+  readonly alwaysOpenGroupsInFlyout = input(false, { transform: booleanAttribute });
 
   /**
    * List of vertical navigation items
@@ -115,7 +130,22 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
   private breakpointObserver = inject(BreakpointObserver);
 
+  /** @defaultValue false */
   protected readonly smallScreen = signal(false);
+
+  /** @internal — true when viewport ≤ smMinimum (576 px); drives drill-down behaviour */
+  readonly mobileScreen = signal(false);
+
+  /** @internal */
+  readonly drilledGroupInfo = signal<{
+    label: string;
+    groupId: string;
+    onBack: () => void;
+  } | null>(null);
+
+  @ViewChild('drillDownOutlet', { read: ViewContainerRef })
+  private drillDownVCR?: ViewContainerRef;
+  private drillDownViewRef?: EmbeddedViewRef<unknown>;
 
   /**
    * @defaultValue
@@ -135,6 +165,16 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
       .subscribe(({ matches }) => {
         this.collapsed.set(matches || this.preferCollapse);
         this.smallScreen.set(matches);
+      });
+
+    this.breakpointObserver
+      .observe(`(max-width: ${BOOTSTRAP_BREAKPOINTS.smMinimum}px)`)
+      .pipe(takeUntilDestroyed())
+      .subscribe(({ matches }) => {
+        this.mobileScreen.set(matches);
+        if (!matches) {
+          this.endDrillDown();
+        }
       });
   }
 
@@ -210,5 +250,38 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     if (this.smallScreen()) {
       this.collapsed.set(true);
     }
+    this.endDrillDown();
+  }
+
+  /** @internal */
+  startDrillDown(
+    template: TemplateRef<unknown>,
+    injector: Injector,
+    label: string,
+    groupId: string,
+    onBack: () => void
+  ): void {
+    this.drilledGroupInfo.set({ label, groupId, onBack });
+    this.drillDownVCR?.clear();
+    this.drillDownViewRef = this.drillDownVCR?.createEmbeddedView(template, undefined, {
+      injector
+    });
+  }
+
+  /** @internal */
+  endDrillDown(): void {
+    const onBack = this.drilledGroupInfo()?.onBack;
+    this.endDrillDownSilently();
+    onBack?.();
+  }
+
+  /** @internal */
+  endDrillDownSilently(): void {
+    if (!this.drilledGroupInfo()) {
+      return;
+    }
+    this.drilledGroupInfo.set(null);
+    this.drillDownViewRef?.destroy();
+    this.drillDownViewRef = undefined;
   }
 }
