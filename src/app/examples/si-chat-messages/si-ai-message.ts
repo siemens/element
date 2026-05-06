@@ -31,22 +31,28 @@ You can use \`inline code\` and create lists:
   actions: MessageAction[] = [
     {
       label: 'Good response',
-      icon: 'element-plus',
+      icon: 'element-thumbs-up',
       action: (messageId: string) => this.logEvent(`Thumbs up for message ${messageId}`)
     },
     {
-      label: 'Copy response',
-      icon: 'element-export',
-      action: (messageId: string) => this.logEvent(`Copy message ${messageId}`)
+      label: 'Bad response',
+      icon: 'element-thumbs-down',
+      action: (messageId: string) => this.logEvent(`Thumbs down for message ${messageId}`)
     },
     {
-      label: 'Retry response',
-      icon: 'element-refresh',
-      action: (messageId: string) => this.logEvent(`Retry message ${messageId}`)
+      label: 'Copy response',
+      icon: 'element-copy',
+      action: (messageId: string) => this.logEvent(`Copy message ${messageId}`)
     }
   ];
 
   secondaryActions: MenuItemAction[] = [
+    {
+      type: 'action',
+      label: 'Retry response',
+      icon: 'element-refresh',
+      action: (messageId: string) => this.logEvent(`Retry message ${messageId}`)
+    },
     {
       type: 'action',
       label: 'Bookmark',
