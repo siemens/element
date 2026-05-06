@@ -13,6 +13,7 @@
     [class.is-invalid]="isInvalid"
     [class.icon-end]="searchValue()"
     [attr.tabindex]="tabbable() ? '' : '-1'"
+    [attr.maxlength]="maxlength()"
     [readonly]="readonly()"
     (focus)="inFocus = true"
     (blur)="onBlur()"
