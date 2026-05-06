@@ -172,7 +172,8 @@ export default {
                 'CHANGELOG.md',
                 'package.json',
                 'package-lock.json',
-                'projects/*/package.json'
+                'projects/*/package.json',
+                'projects/live-preview/assets/*/package.json'
               ],
               message: 'chore(release): ${nextRelease.version}'
             }

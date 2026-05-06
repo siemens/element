@@ -36,25 +36,25 @@ async function updatePeerDependencies() {
   for await (const file of glob([
     join(rootDir, 'package.json'),
     join(rootDir, 'projects/**/package.json'),
-    join(rootDir, 'dist/**/package.json')
+    join(rootDir, 'dist/**/package.json'),
+    join(rootDir, 'projects/live-preview/assets/**/package.json')
   ])) {
     let updated = false;
     const content = JSON.parse(await readFile(file, { encoding: 'utf8' }));
-    if (content.peerDependencies) {
-      for (const dependencyType of [
-        'dependencies',
-        'devDependencies',
-        'peerDependencies',
-        'optionalDependencies'
-      ]) {
-        for (const name of Object.keys(content[dependencyType] ?? [])) {
-          if (versions.has(name)) {
-            content[dependencyType][name] = getNewVersionOrRange(
-              content[dependencyType][name],
-              versions.get(name)
-            );
-            updated = true;
-          }
+
+    for (const dependencyType of [
+      'dependencies',
+      'devDependencies',
+      'peerDependencies',
+      'optionalDependencies'
+    ]) {
+      for (const name of Object.keys(content[dependencyType] ?? [])) {
+        if (versions.has(name)) {
+          content[dependencyType][name] = getNewVersionOrRange(
+            content[dependencyType][name],
+            versions.get(name)
+          );
+          updated = true;
         }
       }
     }
