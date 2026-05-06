@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
-$main-button-block-size: 32px;
+$main-button-block-size: calc(1rem + 2 * map.get(variables.$spacers, 4));
 $main-button-margin: 1px;
 
 :host {
@@ -29,9 +29,9 @@ $main-button-margin: 1px;
       margin: 0;
       line-height: 1;
       border-radius: 0;
-      inline-size: 32px;
+      inline-size: $main-button-block-size;
       block-size: $main-button-block-size;
-      font-size: 1.5rem;
+      font-size: variables.$si-icon-font-size;
       outline: none;
 
       &:hover {
@@ -68,8 +68,9 @@ $main-button-margin: 1px;
   }
 
   .ol-zoom {
-    padding-block-end: map.get(variables.$spacers, 4) + $main-button-margin +
-      $main-button-block-size;
+    padding-block-end: calc(
+      #{map.get(variables.$spacers, 4) + $main-button-margin} + #{$main-button-block-size}
+    );
   }
 
   .ol-attribution {
@@ -86,7 +87,9 @@ $main-button-margin: 1px;
   }
 
   .ol-full-screen {
-    inset-block-end: 10 * map.get(variables.$spacers, 4);
+    inset-block-end: calc(
+      #{map.get(variables.$spacers, 4) + 3 * $main-button-margin} + 3 * $main-button-block-size
+    );
     inset-inline-end: map.get(variables.$spacers, 4);
   }
 
