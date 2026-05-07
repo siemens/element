@@ -50,8 +50,7 @@
   }
 
   @if $color {
-    &:not(.no-validation):not(:hover),
-    &:not(.no-validation):focus {
+    &:not(.no-validation) {
       --border-color: #{$color};
     }
   }
