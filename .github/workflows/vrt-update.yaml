@@ -84,7 +84,7 @@ jobs:
             const { data: runs } = await github.rest.actions.listWorkflowRuns({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'build-and-test.yaml',
+              workflow_id: 'pull-request.yaml',
               branch: '${{ steps.check.outputs.target-ref }}',
               per_page: 10,
               status: 'completed'
@@ -96,7 +96,7 @@ jobs:
             }
 
             // Find the most recent run that has the required jobs completed successfully
-            const requiredJobs = ['build'];
+            const requiredJobs = ['build-and-test / build'];
             let latestValidRun = null;
 
             for (const run of runs.workflow_runs) {
