@@ -68,7 +68,7 @@
     background: semantic-tokens.$element-base-information;
   }
 
-  &:is(:focus, :hover) {
+  &:is(:focus, :hover, :has(+ .form-control-actions:is(:hover, :focus-within))) {
     --border-color: #{semantic-tokens.$element-ui-1};
     --si-textarea-mask: #{semantic-tokens.$element-base-input-experimental};
     background-color: semantic-tokens.$element-base-input-experimental;
@@ -76,7 +76,7 @@
 
   &:is(.readonly, [readonly]) {
     &,
-    &:is(:hover, :focus) {
+    &:is(:hover, :focus, :has(+ .form-control-actions:is(:hover, :focus-within))) {
       --border-color: #{semantic-tokens.$element-ui-4};
       --si-textarea-mask: transparent;
       background-color: transparent;
@@ -86,7 +86,7 @@
 
   &:is(.disabled, :disabled) {
     &,
-    &:is(:hover, :focus) {
+    &:is(:hover, :focus, :has(+ .form-control-actions:is(:hover, :focus-within))) {
       --border-color: #{semantic-tokens.$element-ui-4};
       --si-textarea-mask: transparent;
       background-color: transparent;
