@@ -10,23 +10,24 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  DestroyRef,
   DoCheck,
   effect,
   ElementRef,
   HostBinding,
   inject,
-  OnDestroy,
   OnInit,
   signal,
   TemplateRef,
   viewChild
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { correctKeyRTL, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
-import { asyncScheduler, Subject, Subscription } from 'rxjs';
+import { asyncScheduler, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { TREE_ITEM_CONTEXT } from '../si-tree-view-item-context';
@@ -70,12 +71,11 @@ import {
     '(keydown)': 'onKeydown($event)'
   }
 })
-export class SiTreeViewItemComponent
-  implements OnInit, OnDestroy, AfterViewInit, FocusableOption, DoCheck
-{
+export class SiTreeViewItemComponent implements OnInit, AfterViewInit, FocusableOption, DoCheck {
   private element = inject(ElementRef);
   private siTreeViewService = inject(SiTreeViewService);
   private cdRef = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
   protected treeItemContext = inject(TREE_ITEM_CONTEXT);
   protected treeViewComponent = this.treeItemContext.parent;
   /** @internal */
@@ -102,7 +102,6 @@ export class SiTreeViewItemComponent
   protected icons = this.treeViewComponent.computedIcons;
 
   private savedElement: ElementRef | undefined;
-  private subscriptions: Subscription[] = [];
   private indentLevel = this.treeItem.level ?? 0;
   private nextSiblingElement!: HTMLElement;
   protected readonly menuTrigger = viewChild(CdkMenuTrigger);
@@ -145,15 +144,17 @@ export class SiTreeViewItemComponent
   }
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      this.scrollIntoView.subscribe(event => this.onScrollIntoViewByConsumer(event))
-    );
-    this.subscriptions.push(
-      this.childrenLoaded.subscribe(event => this.childrenLoadingDone(event))
-    );
-    this.subscriptions.push(
-      this.siTreeViewService.triggerMarkForCheck.subscribe(() => this.cdRef.markForCheck())
-    );
+    this.scrollIntoView
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(event => this.onScrollIntoViewByConsumer(event));
+
+    this.childrenLoaded
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(event => this.childrenLoadingDone(event));
+
+    this.siTreeViewService.triggerMarkForCheck
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.cdRef.markForCheck());
   }
 
   ngDoCheck(): void {
@@ -174,12 +175,6 @@ export class SiTreeViewItemComponent
       this.savedElement = undefined;
     }
     this.nextSiblingElement = this.element.nativeElement?.nextElementSibling;
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions
-      .filter(subscription => !!subscription)
-      .forEach(subscription => subscription.unsubscribe());
   }
 
   protected readonly enableSelection = this.treeViewComponent.enableSelection;

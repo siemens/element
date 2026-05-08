@@ -17,6 +17,7 @@ import {
   computed,
   contentChild,
   contentChildren,
+  DestroyRef,
   ElementRef,
   inject,
   INJECTOR,
@@ -32,11 +33,12 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { ElementDimensions, ResizeObserverService } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
-import { asyncScheduler, defer, fromEvent, merge, Observable, Subject, Subscription } from 'rxjs';
+import { asyncScheduler, defer, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { map, withLatestFrom } from 'rxjs/operators';
 
 import { SiTreeViewConverterService } from './si-tree-view-converter.service';
@@ -377,7 +379,6 @@ export class SiTreeViewComponent
   private manuallySelectedTreeItems = false;
   private latestFolderChanged?: TreeItem;
   private breadCrumbTreeItems: TreeItem[] = [];
-  private subscriptions: Subscription[] = [];
   private multiSelectionStart!: TreeItem;
   private _multiSelectionActive = false;
   private domChangeObserver?: MutationObserver;
@@ -391,6 +392,7 @@ export class SiTreeViewComponent
   private cdRef = inject(ChangeDetectorRef);
   private resizeObserver = inject(ResizeObserverService);
   private injector = inject(INJECTOR);
+  private destroyRef = inject(DestroyRef);
   /**
    * Create a virtual root node so there is just a single root node. This makes sure the tree
    * can be fully traversed starting from any node. This is needed e.g. for recursively
@@ -533,56 +535,62 @@ export class SiTreeViewComponent
     this.scroll$ = defer(() => fromEvent(this.treeViewInnerElement().nativeElement, 'scroll'));
     this.siTreeViewService.scroll$ = this.scroll$;
     if (this.isVirtualized()) {
-      this.subscriptions.push(this.scroll$.subscribe(event => this.onScroll(event)));
+      this.scroll$
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(event => this.onScroll(event));
     }
 
-    this.subscriptions.push(
-      this.siTreeViewService.clickEvent.subscribe(event => this.onItemClicked(event))
-    );
-    this.subscriptions.push(
-      this.siTreeViewService.folderClickEvent.subscribe(event => this.onItemFolderClicked(event))
-    );
-    this.subscriptions.push(
-      this.siTreeViewService.checkboxClickEvent.subscribe(event =>
-        this.onItemCheckboxClicked(event)
-      )
-    );
-    this.subscriptions.push(
-      this.siTreeViewService.loadChildrenEvent.subscribe(event => this.onLoadChildren(event))
-    );
-    this.subscriptions.push(
-      this.siTreeViewService.scrollIntoViewEvent.subscribe(event => this.onScrollIntoView(event))
-    );
-    this.subscriptions.push(
-      this.siTreeViewService.focusParentEvent.subscribe(event => {
+    this.siTreeViewService.clickEvent
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(event => this.onItemClicked(event));
+
+    this.siTreeViewService.folderClickEvent
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(event => this.onItemFolderClicked(event));
+
+    this.siTreeViewService.checkboxClickEvent
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(event => this.onItemCheckboxClicked(event));
+
+    this.siTreeViewService.loadChildrenEvent
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(event => this.onLoadChildren(event));
+
+    this.siTreeViewService.scrollIntoViewEvent
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(event => this.onScrollIntoView(event));
+
+    this.siTreeViewService.focusParentEvent
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(event => {
         if (!this.flatTree()) {
           this.focusParentItem(event);
           return;
         }
         this.onFlatTreeNavigateUp();
-      })
-    );
-    this.subscriptions.push(
-      this.siTreeViewService.focusFirstChildEvent.subscribe(event =>
-        this.focusFirstChildItem(event)
-      )
-    );
-    this.subscriptions.push(
-      this.siTreeViewVirtualizationService.itemsVirtualizedChanged.subscribe(
-        (event: ItemsVirtualizedArgs) => {
-          this.itemsVirtualizedChanged.emit(event);
-          this.evaluateForTreeItemsDiffer.next();
-          this.cdRef.markForCheck();
-        }
-      )
-    );
+      });
+
+    this.siTreeViewService.focusFirstChildEvent
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(event => this.focusFirstChildItem(event));
+
+    this.siTreeViewVirtualizationService.itemsVirtualizedChanged
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((event: ItemsVirtualizedArgs) => {
+        this.itemsVirtualizedChanged.emit(event);
+        this.evaluateForTreeItemsDiffer.next();
+        this.cdRef.markForCheck();
+      });
+
     this.initialized = true;
     this.handleTreeMode();
   }
 
   ngAfterViewInit(): void {
     this.addClassObserver();
-    this.subscriptions.push(this.monitorTreeSizeChanges().subscribe(d => this.updatePageSize(d)));
+    this.monitorTreeSizeChanges()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(d => this.updatePageSize(d));
     this.keyManager = new FocusKeyManager(this.getChildren(), this.injector)
       .withWrap()
       .withAllowedModifierKeys(['shiftKey'])
@@ -663,9 +671,9 @@ export class SiTreeViewComponent
   }
 
   ngOnDestroy(): void {
-    this.subscriptions
-      .filter(subscription => !!subscription)
-      .forEach(subscription => subscription.unsubscribe());
+    this.scrollChildIntoView.complete();
+    this.childrenLoaded.complete();
+    this.evaluateForTreeItemsDiffer.complete();
     this.domChangeObserver?.disconnect();
   }
 
@@ -1025,7 +1033,7 @@ export class SiTreeViewComponent
   }
 
   private emitSelectedItems(): void {
-    if (this.enableSelection()) {
+    if (!this.destroyRef.destroyed && this.enableSelection()) {
       if (this.siTreeViewService.groupedList) {
         const filtered: TreeItem[] = this.selectedTreeItems.filter(
           item => !this.siTreeViewService.isGroupedItem(item)
