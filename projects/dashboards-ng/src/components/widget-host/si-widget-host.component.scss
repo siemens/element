@@ -68,3 +68,12 @@
   position: absolute;
   z-index: 100;
 }
+
+// Ensure the empty state can scroll within small widget cards
+// instead of overflowing the card body.
+si-empty-state {
+  display: block;
+  block-size: 100%;
+  inline-size: 100%;
+  overflow: auto;
+}
