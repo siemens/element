@@ -3,14 +3,16 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiLoadingSpinnerComponent],
+  imports: [SiLoadingSpinnerComponent, FormsModule],
   templateUrl: './si-loading-spinner.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   loading = true;
+  withLoadingText: any;
 }

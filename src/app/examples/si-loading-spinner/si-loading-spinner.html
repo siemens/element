@@ -1,3 +1,13 @@
 @if (loading) {
-  <si-loading-spinner />
+  <si-loading-spinner [loadingText]="withLoadingText ? 'Loading data...' : undefined" />
 }
+
+<div class="form-check mt-4 ms-6 e2e-ignore">
+  <input
+    type="checkbox"
+    class="form-check-input"
+    id="with-loading-text"
+    [(ngModel)]="withLoadingText"
+  />
+  <label class="form-check-label" for="with-loading-text">With loading text</label>
+</div>
