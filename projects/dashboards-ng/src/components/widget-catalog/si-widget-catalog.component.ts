@@ -4,15 +4,16 @@
  */
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import {
+  booleanAttribute,
   Component,
   computed,
+  effect,
   inject,
   input,
   isSignal,
   OnInit,
   output,
-  signal,
-  viewChild
+  signal
 } from '@angular/core';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
@@ -47,6 +48,10 @@ import { SiWidgetEditorBase } from '../si-widget-editor-base';
   styleUrl: './si-widget-catalog.component.scss'
 })
 export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnInit {
+  /** @defaultValue false */
+  readonly enableMultiSelect = input(false, {
+    transform: booleanAttribute
+  });
   /**
    * Placeholder text for the search input field in the widget catalog.
    *
@@ -60,10 +65,11 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   );
   /**
    * Emits when the catalog is `closed`, either by canceling or by adding or saving
-   * a widget configuration. On cancel `undefined` is emitted, otherwise the related
-   * widget configuration is emitted.
+   * widget configurations. On cancel `undefined` is emitted, otherwise an array of
+   * the related widget configurations is emitted. In single-select mode the array
+   * always contains exactly one entry.
    */
-  readonly closed = output<Omit<WidgetConfig, 'id'> | undefined>();
+  readonly closed = output<Omit<WidgetConfig, 'id'>[] | undefined>();
 
   /**
    * View defines if the catalog widget list or the widget editor is visible.
@@ -90,10 +96,21 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
    * Array used to hold the search result on the widget catalog.
    * @defaultValue [] */
   protected filteredWidgetCatalog: Widget[] = [];
+  protected readonly selectedWidgets = signal<Widget[]>([]);
+  protected readonly hasSelection = computed(() => this.selectedWidgets().length > 0);
+  /**
+   * @deprecated Use `selectedWidgets` and `hasSelection` instead.
+   * This property only holds the first selected widget and is not updated when multiple selection is allowed.
+   * It will be removed in one of the next major releases.
+   */
   protected readonly selected = signal<Widget | undefined>(undefined);
+  private readonly singleSelectedWidget = computed(() => {
+    const selectedWidgets = this.selectedWidgets();
+    return selectedWidgets.length === 1 ? selectedWidgets[0] : undefined;
+  });
   private widgetConfig?: Omit<WidgetConfig, 'id'>;
-  private readonly hasEditor = computed(
-    () => !!this.selected()?.componentFactory.editorComponentName
+  private readonly singleSelectedWidgetHasEditor = computed(
+    () => !!this.singleSelectedWidget()?.componentFactory.editorComponentName
   );
 
   private readonly translateService = injectSiTranslateService();
@@ -123,20 +140,24 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   );
 
   protected readonly showAddButton = computed(() =>
-    this.view() === 'list' ? !this.hasEditor() : true
+    this.view() === 'list' ? !this.singleSelectedWidgetHasEditor() : true
   );
 
   protected readonly showNextButton = computed(() =>
-    this.view() === 'list' ? this.hasEditor() : this.editorWizardState() !== undefined
+    this.view() === 'list'
+      ? this.singleSelectedWidgetHasEditor()
+      : this.editorWizardState() !== undefined
   );
 
   protected readonly showPreviousButton = computed(() => this.view() === 'editor');
 
-  protected readonly disableAddButton = computed(() => !this.selected() || this.invalidConfig());
+  protected readonly disableAddButton = computed(() =>
+    this.view() === 'list' ? !this.hasSelection() : this.invalidConfig()
+  );
   protected readonly disableNextButton = computed(() => {
     const wizardState = this.editorWizardState();
     if (this.view() === 'list') {
-      return !this.selected();
+      return !this.singleSelectedWidgetHasEditor();
     } else if (!wizardState) {
       return true;
     } else if (!wizardState.hasNext) {
@@ -149,12 +170,21 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   });
 
   private dialogService = inject(SiActionDialogService);
-  private readonly widgetCdkListbox = viewChild(CdkListbox<Widget>);
+
+  constructor() {
+    super();
+    effect(() => {
+      const selected = this.selected();
+      if (selected) {
+        this.selectedWidgets.set([selected]);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.filteredWidgetCatalog = this.widgetCatalog;
-    if (this.widgetCatalog.length > 0) {
-      this.selectWidget(this.widgetCatalog[0]);
+    if (this.widgetCatalog.length > 0 && !this.enableMultiSelect()) {
+      this.selectWidgets([this.widgetCatalog[0]]);
     }
   }
 
@@ -170,10 +200,10 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
         return name.toLowerCase().includes(term);
       });
     }
-    if (this.filteredWidgetCatalog.length > 0) {
-      this.selectWidget(this.filteredWidgetCatalog[0]);
-    } else {
-      this.selectWidget(undefined);
+    // In multi selection mode, filter is independent of the selection,
+    // so we don't need to sync the selection with the filtered catalog.
+    if (!this.enableMultiSelect()) {
+      this.syncSelectionWithFilteredCatalog();
     }
   }
 
@@ -234,7 +264,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   }
 
   private setupWidgetInstanceEditor(): void {
-    const selected = this.selected();
+    const selected = this.singleSelectedWidget();
     if (!selected) {
       return;
     }
@@ -260,13 +290,33 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   }
 
   protected onAddWidget(): void {
-    const selected = this.selected();
-    if (!selected) {
+    if (this.view() === 'list') {
+      const selectedWidgets = this.selectedWidgets();
+      if (selectedWidgets.length === 0) {
+        return;
+      }
+
+      if (!this.enableMultiSelect() && selectedWidgets.length === 1) {
+        const [selectedWidget] = selectedWidgets;
+        if (selectedWidget.componentFactory.editorComponentName) {
+          return;
+        }
+        this.closed.emit([createWidgetConfig(selectedWidget)]);
+        return;
+      }
+
+      const configs = selectedWidgets.map(widget => this.createConfigForSelection(widget));
+      this.closed.emit(configs);
+      return;
+    }
+
+    const selectedWidget = this.singleSelectedWidget();
+    if (!selectedWidget) {
       return;
     }
 
     if (!this.widgetConfig) {
-      this.widgetConfig = createWidgetConfig(selected);
+      this.widgetConfig = createWidgetConfig(selectedWidget);
     } else {
       // Make sure we use the same config object as the editor
       if (isSignal(this.widgetInstanceEditor?.config)) {
@@ -275,16 +325,42 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
         this.widgetConfig = this.widgetInstanceEditor?.config ?? this.widgetConfig;
       }
     }
-    this.closed.emit(this.widgetConfig);
+
+    this.closed.emit([this.widgetConfig]);
   }
 
-  protected selectWidget(widget?: Widget): void {
-    this.selected.set(widget);
-    if (widget) {
-      // need to keep this in setTimeout to avoid ExpressionChangedAfterItHasBeenCheckedError
-      setTimeout(() => {
-        this.widgetCdkListbox()?.selectValue(widget);
-      });
+  protected selectWidgets(widgets: readonly Widget[]): void {
+    if (this.enableMultiSelect()) {
+      this.selectedWidgets.set([...widgets]);
+    } else {
+      this.selected.set(widgets.length > 0 ? widgets[0] : undefined);
     }
+  }
+
+  private syncSelectionWithFilteredCatalog(): void {
+    const filteredWidgets = new Set(this.filteredWidgetCatalog);
+    const selectedFilteredWidgets = this.selectedWidgets().filter(widget =>
+      filteredWidgets.has(widget)
+    );
+
+    if (selectedFilteredWidgets.length > 0) {
+      this.selectedWidgets.set(selectedFilteredWidgets);
+      return;
+    }
+
+    if (this.filteredWidgetCatalog.length > 0) {
+      this.selectedWidgets.set([this.filteredWidgetCatalog[0]]);
+      return;
+    }
+
+    this.selectedWidgets.set([]);
+  }
+
+  private createConfigForSelection(widget: Widget): Omit<WidgetConfig, 'id'> {
+    const config = createWidgetConfig(widget);
+    if (this.enableMultiSelect() && widget.componentFactory.editorComponentName) {
+      return { ...config, setupPending: true };
+    }
+    return config;
   }
 }

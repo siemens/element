@@ -20,6 +20,7 @@
     </div>
     <div class="draggable-overlay"></div>
   }
+
   <si-dashboard-card
     #card
     class="h-100 dragging-card"
@@ -35,13 +36,19 @@
     [imgDir]="widgetConfig().image?.dir"
     [imgObjectFit]="widgetConfig().image?.objectFit"
     [imgObjectPosition]="widgetConfig().image?.objectPosition"
-    [imgSrc]="widgetConfig().image?.src"
+    [imgSrc]="!setupPending() ? widgetConfig().image?.src : ''"
   >
     <div class="card-body overflow-auto" body>
       <ng-container #widgetHost />
+      @if (setupPending()) {
+        <si-empty-state
+          [icon]="emptyStateIcon()"
+          [heading]="labelSetup"
+          [content]="labelSetupMessage"
+        />
+      }
     </div>
-
-    @if (widgetInstanceFooter) {
+    @if (widgetInstanceFooter && !setupPending()) {
       <div class="card-footer" footer>
         <ng-container *ngTemplateOutlet="widgetInstanceFooter" />
       </div>

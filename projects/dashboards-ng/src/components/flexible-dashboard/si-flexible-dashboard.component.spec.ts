@@ -41,10 +41,10 @@ let widgetConfig: Omit<WidgetConfig, 'id'>;
   template: ''
 })
 export class SiWidgetCatalogMockComponent extends SiWidgetCatalogComponent implements OnInit {
-  static staticClosed: OutputEmitterRef<Omit<WidgetConfig, 'id'> | undefined> | undefined =
+  static staticClosed: OutputEmitterRef<Omit<WidgetConfig, 'id'>[] | undefined> | undefined =
     undefined;
 
-  override readonly closed = output<Omit<WidgetConfig, 'id'> | undefined>();
+  override readonly closed = output<Omit<WidgetConfig, 'id'>[] | undefined>();
 
   override ngOnInit(): void {
     SiWidgetCatalogMockComponent.staticClosed ??= this.closed;
@@ -164,7 +164,7 @@ describe('SiFlexibleDashboardComponent', () => {
       fixture.detectChanges();
       component.showWidgetCatalog();
       fixture.detectChanges();
-      SiWidgetCatalogMockComponent.staticClosed?.emit({ widgetId: 'widgetId' });
+      SiWidgetCatalogMockComponent.staticClosed?.emit([{ widgetId: 'widgetId' }]);
       vi.advanceTimersByTime(200);
       await fixture.whenStable();
       expect(widgetConfig).toBeDefined();
