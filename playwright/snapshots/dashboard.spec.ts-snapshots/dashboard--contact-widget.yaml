@@ -13,78 +13,127 @@
   - button "Cancel"
   - button "Save"
   - img
-  - img "Buildings at scale"
-  - text: Project Issues!
-  - button "Toggle"
-  - text: /\d+ Issues Number of contributing issues/
-  - link "Go to issues":
-    - /url: https://github.com/siemens/element/issues
+  - application "Project Issues!":
+    - img "Buildings at scale"
+    - text: ""
+    - button "Toggle"
+    - text: /\d+ Issues Number of contributing issues/
+    - link "Go to issues":
+      - /url: https://github.com/siemens/element/issues
   - img
-  - text: Bar Chart
-  - menubar:
-    - menuitem "Remove"
-    - menuitem "Expand"
+  - application "Bar Chart":
+    - text: ""
+    - menubar:
+      - menuitem "Remove"
+      - menuitem "Expand"
   - img
-  - text: Pie Chart
-  - menubar:
-    - menuitem "Remove"
-    - menuitem "Expand"
+  - application "Pie Chart":
+    - text: ""
+    - menubar:
+      - menuitem "Remove"
+      - menuitem "Expand"
   - img
-  - text: Full Speed
-  - menubar:
-    - menuitem "Remove"
+  - application "Full Speed":
+    - text: ""
+    - menubar:
+      - menuitem "Remove"
   - img
-  - text: Line Chart
-  - menubar:
-    - menuitem "Remove"
-    - menuitem "Expand"
+  - application "Line Chart":
+    - text: ""
+    - menubar:
+      - menuitem "Remove"
+      - menuitem "Expand"
   - img
-  - text: List Widget
-  - menubar:
-    - menuitem "Remove"
-  - textbox "Search..."
-  - list:
-    - listitem:
-      - text: /\d+\+/
-      - link "Taj Mahal":
-        - /url: https://en.wikipedia.org/wiki/Taj_Mahal
-      - text: /The Taj Mahal is an ivory-white marble mausoleum \d+\.\d+/
-      - button "Building overview"
-    - listitem:
-      - text: info
-      - link "Tower of Pisa":
-        - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
-      - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral. 9.7
-      - button "Building overview"
-    - listitem:
-      - text: 3 Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris. 8.3
-      - button "Building overview"
-    - listitem:
-      - text: /5 Colosseum \d+\.\d+/
-      - button "Building overview"
-    - listitem:
-      - text: 5 Burj Khalifa 4.5
-      - button "Building overview"
-    - listitem:
-      - text: /6 St\. Basil's Cathedral \d+\.\d+/
-      - button "Building overview"
-  - link "Go to...":
-    - /url: https://github.com/siemens/element/issues
+  - application "List Widget":
+    - text: ""
+    - menubar:
+      - menuitem "Remove"
+    - textbox "Search..."
+    - list:
+      - listitem:
+        - text: /\d+\+/
+        - link "Taj Mahal":
+          - /url: https://en.wikipedia.org/wiki/Taj_Mahal
+        - text: /The Taj Mahal is an ivory-white marble mausoleum \d+\.\d+/
+        - button "Building overview"
+      - listitem:
+        - text: info
+        - link "Tower of Pisa":
+          - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
+        - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral. 9.7
+        - button "Building overview"
+      - listitem:
+        - text: 3 Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris. 8.3
+        - button "Building overview"
+      - listitem:
+        - text: /5 Colosseum \d+\.\d+/
+        - button "Building overview"
+      - listitem:
+        - text: 5 Burj Khalifa 4.5
+        - button "Building overview"
+      - listitem:
+        - text: /6 St\. Basil's Cathedral \d+\.\d+/
+        - button "Building overview"
+    - link "Go to...":
+      - /url: https://github.com/siemens/element/issues
   - img
-  - text: Timeline Widget
-  - menubar:
-    - menuitem "Remove"
-  - list:
-    - listitem: /Today \d+:\d+ Title Description/
-    - listitem: /Today \d+:\d+ Title Description/
-    - listitem: /Today \d+:\d+ Title Description/
-    - listitem: /Today \d+:\d+ Title Description/
-  - link "Go to...":
-    - /url: https://github.com/siemens/element/issues
+  - application "Timeline Widget":
+    - text: ""
+    - menubar:
+      - menuitem "Remove"
+    - list:
+      - listitem: /Today \d+:\d+ Title Description/
+      - listitem: /Today \d+:\d+ Title Description/
+      - listitem: /Today \d+:\d+ Title Description/
+      - listitem: /Today \d+:\d+ Title Description/
+    - link "Go to...":
+      - /url: https://github.com/siemens/element/issues
   - img
-  - menubar:
-    - menuitem "Edit"
-    - menuitem "Remove"
-  - heading "Lorem Ipsum Dolor Sit" [level=3]
-  - term: Job title
-  - definition: Software Engineer
+  - application "Weather":
+    - text: ""
+    - menubar:
+      - menuitem "Edit"
+      - menuitem "Remove"
+      - menuitem "Expand"
+    - text: /\d+°/
+    - img "Sunny"
+    - text: /Sunny \d+° \d+°/
+    - list "Additional weather data":
+      - listitem: /Wind [\d,.]+[bkmBKM]+\/h/
+      - listitem: /Cloud cover \d+%/
+      - listitem: /Precipitation [\d,.]+[bkmBKM]+/
+      - listitem: UVI 1 low
+    - list:
+      - listitem:
+        - text: Mon
+        - img "Mon"
+        - 'img /Wind: [\d,.]+[bkmBKM]+\/h/'
+        - text: /\d+° \d+°/
+      - listitem:
+        - text: Tue
+        - img "Tue"
+        - 'img /Wind: [\d,.]+[bkmBKM]+\/h/'
+        - text: /\d+° \d+°/
+      - listitem:
+        - text: Wed
+        - img "Wed"
+        - 'img /Wind: [\d,.]+[bkmBKM]+\/h/'
+        - text: /\d+° \d+°/
+      - listitem:
+        - text: Thu
+        - img "Thu"
+        - 'img /Wind: [\d,.]+[bkmBKM]+\/h/'
+        - text: /\d+° \d+°/
+      - listitem:
+        - text: Fri
+        - img "Fri"
+        - 'img /Wind: [\d,.]+[bkmBKM]+\/h/'
+        - text: /\d+° \d+°/
+  - img
+  - application:
+    - menubar:
+      - menuitem "Edit"
+      - menuitem "Remove"
+    - heading "Lorem Ipsum Dolor Sit" [level=3]
+    - term: Job title
+    - definition: Software Engineer
