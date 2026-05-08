@@ -13,9 +13,11 @@ import {
   SiTranslateService
 } from '@siemens/element-translate-ng/translate';
 import { firstValueFrom, NEVER } from 'rxjs';
+import { page } from 'vitest/browser';
 
 import { TEST_WIDGET } from '../../../test/test-widget/test-widget';
 import { createTestingWidget, TestingModule } from '../../../test/testing.module';
+import { WidgetConfig } from '../../model/widgets.model';
 import { SiWidgetCatalogComponent } from './si-widget-catalog.component';
 
 describe('SiWidgetCatalogComponent', () => {
@@ -25,7 +27,9 @@ describe('SiWidgetCatalogComponent', () => {
   const buttonsByName = (label: string): DebugElement[] => {
     return fixture.debugElement
       .queryAll(By.css('button'))
-      .filter((debugElement: DebugElement) => debugElement.nativeElement.innerHTML === label);
+      .filter(
+        (debugElement: DebugElement) => debugElement.nativeElement.textContent.trim() === label
+      );
   };
 
   beforeEach(async () => {
@@ -86,8 +90,9 @@ describe('SiWidgetCatalogComponent', () => {
       const widgetConfigPromise = firstValueFrom(outputToObservable(component.closed));
       buttonsByName('Add')[0].nativeElement.click();
       fixture.detectChanges();
-      const widgetConfig = await widgetConfigPromise;
-      expect(widgetConfig?.widgetId).toBe('id-1234');
+      const widgetConfigs = (await widgetConfigPromise) as Omit<WidgetConfig, 'id'>[];
+      expect(widgetConfigs).toHaveLength(1);
+      expect(widgetConfigs[0].widgetId).toBe('id-1234');
     });
   });
 
@@ -288,6 +293,72 @@ describe('SiWidgetCatalogComponent', () => {
       fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
         .tagName
     ).not.toBe('SI-TEST-WIDGET-EDITOR');
+  });
+
+  describe('List multi selection', () => {
+    const widgetWithoutEditor = createTestingWidget('widgetA', 'a-1');
+    const widgetWithoutEditor2 = createTestingWidget('widgetB', 'b-1');
+    const widgetWithEditor = createTestingWidget('widgetC', 'c-1', 'CComponent', 'CEditor');
+
+    // The checkboxes are decorative (aria-hidden, inert). The accessible, interactive
+    // elements are the cdkListbox options, so query and interact with those.
+    const options = (): HTMLElement[] => page.getByRole('option').elements() as HTMLElement[];
+
+    beforeEach(() => {
+      component.widgetCatalog = [widgetWithoutEditor, widgetWithoutEditor2, widgetWithEditor];
+      fixture.componentRef.setInput('multiSelect', true);
+      fixture.detectChanges();
+    });
+
+    it('should always show checkboxes in list view', () => {
+      expect(options()).toHaveLength(3);
+    });
+
+    it('should allow selecting widgets with editor components', async () => {
+      const editorOption = options()[2];
+      expect(editorOption).not.toHaveAttribute('aria-disabled', 'true');
+
+      editorOption.click();
+      await fixture.whenStable();
+
+      expect(editorOption).toHaveAttribute('aria-selected', 'true');
+      expect(buttonsByName('Next')).toHaveLength(1);
+    });
+
+    it('should show add for multi-selection and hide next', async () => {
+      const opts = options();
+      opts[1].click();
+      await fixture.whenStable();
+      opts[2].click();
+      await fixture.whenStable();
+
+      expect(buttonsByName('Next')).toHaveLength(0);
+      expect(buttonsByName('Add')).toHaveLength(1);
+      expect(buttonsByName('Add')[0].nativeElement).not.toHaveAttribute('disabled');
+    });
+
+    it('should emit deferred config for editor widgets in multi-selection', async () => {
+      const opts = options();
+      opts[1].click();
+      await fixture.whenStable();
+      opts[2].click();
+      await fixture.whenStable();
+
+      const closedPromise = firstValueFrom(outputToObservable(component.closed));
+      buttonsByName('Add')[0].nativeElement.click();
+      await fixture.whenStable();
+
+      const result = (await closedPromise) as Omit<WidgetConfig, 'id'>[];
+      expect(result).toBeDefined();
+      expect(result).toHaveLength(2);
+      expect(result.find(config => config.widgetId === 'b-1')?.setupPending).toBe(undefined);
+      expect(result.find(config => config.widgetId === 'c-1')?.setupPending).toBe(true);
+    });
+
+    it('should disable add button when no widget is selected', async () => {
+      await fixture.whenStable();
+      expect(buttonsByName('Add')[0].nativeElement).toHaveAttribute('disabled');
+    });
   });
 
   describe('Widget name and description translation', () => {
