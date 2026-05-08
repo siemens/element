@@ -43,9 +43,12 @@
     "@angular/router": "22",
     "@ngx-formly/bootstrap": "^6.2.2 || ^7.0.1",
     "@ngx-formly/core": "^6.2.2 || ^7.0.1",
+    "@maplibre/ngx-maplibre-gl": "21",
+    "maplibre-gl": ">=5",
     "@siemens/element-icons": "1",
     "@siemens/element-theme": "workspace:*",
     "@siemens/element-translate-ng": "workspace:*",
+    "@siemens/map-styles": "workspace:*",
     "@siemens/ngx-datatable": "22 - 26",
     "ag-grid-community": "^34.3.1 || ^35.0.0 || ^36.0.0",
     "flag-icons": "^7.3.2",
@@ -53,6 +56,9 @@
     "ngx-image-cropper": "^9.0.0"
   },
   "peerDependenciesMeta": {
+    "@maplibre/ngx-maplibre-gl": {
+      "optional": true
+    },
     "@ngx-formly/bootstrap": {
       "optional": true
     },
@@ -60,6 +66,9 @@
       "optional": true
     },
     "@siemens/ngx-datatable": {
+      "optional": true
+    },
+    "@siemens/map-styles": {
       "optional": true
     },
     "ngx-image-cropper": {
@@ -72,6 +81,9 @@
       "optional": true
     },
     "ag-grid-community": {
+      "optional": true
+    },
+    "maplibre-gl": {
       "optional": true
     }
   }

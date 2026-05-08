@@ -125,6 +125,7 @@
     "@commitlint/cli": "21.2.0",
     "@commitlint/config-conventional": "21.2.0",
     "@eslint/js": "10.0.1",
+    "@maplibre/ngx-maplibre-gl": "^21.0.2",
     "@microsoft/api-extractor": "7.58.9",
     "@playwright/test": "1.61.1",
     "@schematics/angular": "22.0.5",

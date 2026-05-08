@@ -30,6 +30,8 @@
 @use '@siemens/element-theme/src/styles/themes';
 // OpenLayers styling
 @use 'ol/ol.css';
+// MapLibre styling
+@use '@siemens/element-ng/maplibre/styles';
 @include themes.make-theme(brand-light.$tokens, 'siemens-brand');
 @include themes.make-theme(brand-dark.$tokens, 'siemens-brand', true);
 

@@ -1,0 +1,16 @@
+<mgl-map
+  class="h-100"
+  [attributionControl]="false"
+  [mapStyle]="mapStyle()"
+  [center]="[11.6, 48.1]"
+  [canvasContextAttributes]="{ preserveDrawingBuffer: true }"
+  [zoom]="[10]"
+  (mapError)="onError($event)"
+>
+  <mgl-control mglFullscreen />
+  <mgl-control mglGlobe position="top-right" />
+  <mgl-control mglScale unit="metric" position="top-right" />
+  <mgl-control mglAttribution position="bottom-left" />
+  <mgl-control mglNavigation position="bottom-right" />
+  <mgl-control mglGeolocate position="bottom-right" (geolocate)="onGeolocate($event)" />
+</mgl-map>
