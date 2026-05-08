@@ -5,11 +5,13 @@
 >
   @if (grid) {
     @for (item of widgetConfigs(); track item.id) {
+      @let widget = widgetCatalogMap().get(item.widgetId);
       <si-widget-host
         [grid]="grid"
         [editable]="editable()"
         [widgetConfig]="item"
-        [componentFactory]="widgetCatalogMap().get(item.widgetId)?.componentFactory"
+        [iconClass]="widget?.iconClass ?? 'element-apps'"
+        [componentFactory]="widget?.componentFactory"
         (remove)="widgetInstanceRemove.emit(item.id)"
         (edit)="widgetInstanceEdit.emit(item)"
       />

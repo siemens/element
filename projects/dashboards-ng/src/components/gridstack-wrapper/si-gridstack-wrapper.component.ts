@@ -24,11 +24,7 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { GridItemHTMLElement, GridStack, GridStackNode, GridStackOptions } from 'gridstack';
 
 import { DEFAULT_GRIDSTACK_OPTIONS, GridConfig } from '../../model/gridstack.model';
-import {
-  WidgetComponentFactory,
-  WidgetConfig,
-  WidgetPositionConfig
-} from '../../model/widgets.model';
+import { Widget, WidgetConfig, WidgetPositionConfig } from '../../model/widgets.model';
 import { SiWidgetHostComponent } from '../widget-host/si-widget-host.component';
 
 export interface GridWrapperEvent {
@@ -69,9 +65,7 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
    *
    * @defaultValue new Map()
    */
-  readonly widgetCatalogMap = input<Map<string, { componentFactory: WidgetComponentFactory }>>(
-    new Map()
-  );
+  readonly widgetCatalogMap = input<Map<string, Widget>>(new Map());
 
   /**
    * Emits dashboard grid events.

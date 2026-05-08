@@ -5,6 +5,7 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   ComponentRef,
   computed,
@@ -16,7 +17,6 @@ import {
   input,
   isSignal,
   OnChanges,
-  OnInit,
   output,
   signal,
   SimpleChanges,
@@ -32,6 +32,7 @@ import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import type { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
+import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { MenuItem } from '@siemens/element-ng/menu';
 import {
   injectSiTranslateService,
@@ -51,7 +52,7 @@ import { setupWidgetInstance } from '../../widget-loader';
 
 @Component({
   selector: 'si-widget-host',
-  imports: [SiDashboardCardComponent, NgTemplateOutlet, SiTranslatePipe],
+  imports: [SiDashboardCardComponent, SiEmptyStateComponent, NgTemplateOutlet, SiTranslatePipe],
   templateUrl: './si-widget-host.component.html',
   styleUrl: './si-widget-host.component.scss',
   host: {
@@ -64,7 +65,7 @@ import { setupWidgetInstance } from '../../widget-loader';
     '[attr.aria-label]': 'editable() || !widgetAriaLabel() ? null : widgetAriaLabel()'
   }
 })
-export class SiWidgetHostComponent implements OnInit, OnChanges {
+export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   private readonly siModal = inject(SiActionDialogService);
   private readonly injector = inject(Injector);
   private readonly envInjector = inject(EnvironmentInjector);
@@ -86,6 +87,13 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   readonly componentFactory = input<WidgetComponentFactory>();
 
   /**
+   * CSS icon class for the widget, displayed in the configuration placeholder.
+   *
+   * @defaultValue 'element-apps'
+   */
+  readonly iconClass = input('element-apps');
+
+  /**
    * Sets the widget host into editable mode.
    *
    * @defaultValue false
@@ -102,6 +110,10 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
 
   protected labelEdit = t(() => $localize`:@@DASHBOARD.WIDGET.EDIT:Edit`);
   protected labelRemove = t(() => $localize`:@@DASHBOARD.WIDGET.REMOVE:Remove`);
+  protected labelSetup = t(() => $localize`:@@DASHBOARD.WIDGET.SETUP:Setup required`);
+  protected labelSetupMessage = t(
+    () => $localize`:@@DASHBOARD.WIDGET.SETUP_MESSAGE:Edit widget to display data`
+  );
   protected labelExpand = t(() => $localize`:@@DASHBOARD.WIDGET.EXPAND:Expand`);
   protected labelRestore = t(() => $localize`:@@DASHBOARD.WIDGET.RESTORE:Restore`);
   protected labelDialogMessage = t(
@@ -143,8 +155,11 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
     return null;
   });
 
+  protected readonly emptyStateIcon = computed(() => `${this.iconClass()} si-display-xl`);
+
   widgetInstance?: WidgetInstance;
   widgetRef?: ComponentRef<WidgetInstance>;
+  private attaching = false;
   /** @defaultValue [] */
   protected readonly primaryActions = signal<(MenuItemLegacy | ContentActionBarMainItem)[]>([]);
   /** @defaultValue [] */
@@ -200,8 +215,9 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
 
   protected readonly accentLine = computed(() => {
     const { accentLine } = this.widgetConfig();
-    return accentLine ? 'accent-' + accentLine : '';
+    return accentLine && !this.setupPending() ? 'accent-' + accentLine : '';
   });
+  protected readonly setupPending = computed(() => !!this.widgetConfig().setupPending);
 
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.widgetConfig) {
@@ -219,6 +235,14 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
       } else {
         this.grid()?.makeWidget(this.elementRef, options);
       }
+    }
+    if (changes.componentFactory && !changes.componentFactory.firstChange) {
+      this.detachWidgetInstance();
+      this.syncWidgetAttachment();
+    }
+
+    if (changes.widgetConfig && !changes.widgetConfig.firstChange) {
+      this.syncWidgetAttachment();
       if (this.widgetRef) {
         if (isSignal(this.widgetRef.instance.config)) {
           this.widgetRef.setInput('config', this.widgetConfig());
@@ -233,8 +257,20 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit(): void {
-    this.attachWidgetInstance();
+  ngAfterViewInit(): void {
+    this.syncWidgetAttachment();
+  }
+
+  private syncWidgetAttachment(): void {
+    if (this.widgetConfig().setupPending) {
+      this.detachWidgetInstance();
+      this.setupEditable(this.editable());
+      return;
+    }
+
+    if (!this.widgetRef) {
+      this.attachWidgetInstance();
+    }
   }
 
   protected onToggleActive(event: Event): void {
@@ -383,8 +419,13 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   }
 
   private attachWidgetInstance(): void {
+    if (this.widgetRef || this.attaching) {
+      return;
+    }
+
     const componentFactory = this.componentFactory();
     if (componentFactory) {
+      this.attaching = true;
       setupWidgetInstance(
         componentFactory,
         this.widgetHost(),
@@ -392,6 +433,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
         this.envInjector
       ).subscribe({
         next: (widgetRef: ComponentRef<WidgetInstance>) => {
+          this.attaching = false;
           this.widgetInstance = widgetRef.instance;
           this.widgetRef = widgetRef;
           if (this.widgetInstance.configChange) {
@@ -410,11 +452,22 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
           this.widgetInstanceFooter.set(this.widgetInstance.footer);
           this.setupEditable(this.editable());
         },
-        error: error => console.error('Error: ', error)
+        error: error => {
+          this.attaching = false;
+          console.error('Error: ', error);
+        }
       });
     } else {
       console.error(`Cannot find widget with id ${this.widgetConfig().widgetId}`);
     }
+  }
+
+  private detachWidgetInstance(): void {
+    this.widgetRef?.destroy();
+    this.widgetRef = undefined;
+    this.widgetInstance = undefined;
+    this.widgetInstanceFooter.set(undefined);
+    this.widgetHost().clear();
   }
 
   setupEditable(editable: boolean, widgetConfig?: WidgetConfigEvent): void {
