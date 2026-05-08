@@ -166,6 +166,10 @@ export class SiWidgetInstanceEditorDialogComponent extends SiWidgetEditorBase im
       }
     }
 
+    if (this.widgetConfig().setupPending) {
+      this.widgetConfig.update(widgetConfig => ({ ...widgetConfig, setupPending: false }));
+    }
+
     this.closed.emit(this.widgetConfig());
   }
 }
