@@ -7,12 +7,16 @@
 import { EventEmitter } from '@angular/core';
 import * as i0 from '@angular/core';
 import { Observable } from 'rxjs';
+import { Signal } from '@angular/core';
 
 // @public (undocumented)
 export const ELEMENT_THEME_NAME = "element";
 
 // @public (undocumented)
 export const elementTheme: ThemeDescription;
+
+// @public
+export const injectIsDarkTheme: () => Signal<boolean>;
 
 // @public (undocumented)
 export const SI_THEME_LOCAL_STORAGE_KEY = "si-themes";

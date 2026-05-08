@@ -4,6 +4,7 @@
     "outDir": "../../out-tsc/spec",
     "lib": ["es2024", "dom", "esnext.disposable"],
     "types": [
+      "geojson",
       "vitest/globals",
       "vitest/browser",
       "node",
