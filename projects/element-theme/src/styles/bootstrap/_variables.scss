@@ -331,7 +331,9 @@ $input-padding-x: (map.get(spacers.$spacers, 4) - 1px); // 8px including 1px bor
 $input-font-family: null !default;
 $input-font-size: $font-size-base;
 $input-font-weight: $font-weight-base;
-$input-line-height: $line-height-base;
+// Use an explicit rem value instead of a unitless ratio to prevent cross-browser
+// rounding differences (Safari rounds 14 × 1.1428... to 15px, Chrome to 16px). See #2031
+$input-line-height: typography.$si-line-height-body-rem !default;
 
 $input-bg: semantic-tokens.$element-base-1 !default;
 $input-disabled-bg: semantic-tokens.$element-base-1 !default;
@@ -353,13 +355,10 @@ $input-plaintext-color: $body-color !default;
 
 $input-height-border: $input-border-width * 2 !default;
 
-$input-height: functions.add(
-  $input-line-height * 1em,
-  ($input-padding-y + $input-border-width) * 2
-) !default;
+$input-height: functions.add(1lh, ($input-padding-y + $input-border-width) * 2) !default;
 
 // don't derive from $input-height as it generates a nested calc() expression
-$input-height-inner: functions.add($input-line-height * 1em, $input-padding-y * 2) !default;
+$input-height-inner: functions.add($input-line-height, $input-padding-y * 2) !default;
 // Wrap in parenthesis: `*` binds tighter than `-`, so without them only the border term gets multiplied.
 // DEPRECATED: Calculate it yourself using $input-height-inner
 $input-height-inner-half: calc((#{$input-height-inner}) * 0.5) !default;
