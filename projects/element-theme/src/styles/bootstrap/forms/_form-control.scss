@@ -37,7 +37,7 @@
   background-repeat: no-repeat;
   background-size: variables.$form-feedback-icon-size;
   background-position-y: top
-    calc((#{variables.$input-height-inner-half} - (#{variables.$form-feedback-icon-size} * 0.5)));
+    calc((#{variables.$input-height-inner} - #{variables.$form-feedback-icon-size}) * 0.5);
   background-position-x: right
     calc(
       #{map.get(spacers.$spacers, 2) - variables.$input-border-width} +
