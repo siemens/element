@@ -9,7 +9,6 @@
     <button
       type="button"
       class="open-month-view flex-fill text-end px-4 btn btn-tertiary calendar-button"
-      tabindex="0"
       (click)="emitViewChange('month')"
     >
       {{ focusedDate() | date: 'MMMM' }}
@@ -17,7 +16,6 @@
     <button
       type="button"
       class="open-year-view flex-fill text-start px-4 btn btn-tertiary calendar-button"
-      tabindex="0"
       (click)="emitViewChange('year')"
     >
       {{ focusedDate() | date: 'yyyy' }}
