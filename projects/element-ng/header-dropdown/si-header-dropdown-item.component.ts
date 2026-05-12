@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, HostListener, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { elementDown2, elementOk, elementRecordFilled } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
@@ -19,7 +19,8 @@ import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
   styleUrl: './si-header-dropdown-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'dropdown-item focus-inside'
+    class: 'dropdown-item focus-inside',
+    '(click)': 'click()'
   }
 })
 export class SiHeaderDropdownItemComponent {
@@ -43,7 +44,6 @@ export class SiHeaderDropdownItemComponent {
   protected readonly parentTrigger = inject(SiHeaderDropdownTriggerDirective, { skipSelf: true });
   protected readonly navbar = inject(SI_HEADER_WITH_DROPDOWNS, { optional: true });
 
-  @HostListener('click')
   protected click(): void {
     if (!this.ownTrigger) {
       this.parentTrigger.close({ all: true });
