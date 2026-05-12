@@ -1,3 +1,11 @@
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Application name
+  - button "Tenant 1"
+  - button "4 Notifications"
+  - button "Support"
+  - button "John Doe"
 - paragraph: Notifications
 - menubar:
   - menuitem "Mark all as read"
@@ -78,11 +86,3 @@
 - button "Read"
 - button "Archive"
 - button "Delete"
-- banner:
-  - link "Siemens logo":
-    - /url: "#/"
-  - text: Application name
-  - button "Tenant 1"
-  - button "4 Notifications"
-  - button "Support"
-  - button "John Doe"

@@ -1,12 +1,3 @@
-- paragraph: Title
-- button "Enter fullscreen"
-- button "Close"
-- button "Hey there" [expanded]
-- region "Hey there": And here we have some content
-- button "Another one"
-- region "Another one"
-- button "Number three"
-- region "Number three"
 - banner:
   - link "Siemens logo":
     - /url: "#/"
@@ -56,3 +47,12 @@
   - text: input.
 - checkbox "disableBackdrop"
 - text: disableBackdrop
+- paragraph: Title
+- button "Enter fullscreen"
+- button "Close"
+- button "Hey there" [expanded]
+- region "Hey there": And here we have some content
+- button "Another one"
+- region "Another one"
+- button "Number three"
+- region "Number three"
