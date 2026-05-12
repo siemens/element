@@ -8,7 +8,6 @@ import {
   Component,
   computed,
   DoCheck,
-  HostBinding,
   input,
   signal
 } from '@angular/core';
@@ -25,7 +24,8 @@ import { SiFormItemComponent } from '../si-form-item/si-form-item.component';
   host: {
     role: 'group',
     class: 'si-form-input',
-    '[style.--si-form-label-width]': 'labelWidth()'
+    '[style.--si-form-label-width]': 'labelWidth()',
+    '[attr.aria-labelledby]': 'labelId'
   }
 })
 export class SiFormFieldsetComponent implements DoCheck {
@@ -76,8 +76,7 @@ export class SiFormFieldsetComponent implements DoCheck {
       this.required() || (this.hasOnlyRadios() && this.formItems().every(item => item.required()))
   );
 
-  @HostBinding('attr.aria-labelledby')
-  protected labelId = `__si-form-fieldset-label-${SiFormFieldsetComponent.labelIdCounter++}`;
+  protected readonly labelId = `__si-form-fieldset-label-${SiFormFieldsetComponent.labelIdCounter++}`;
 
   ngDoCheck(): void {
     this.touched.set(this.formItems().some(item => item.ngControl()?.touched));
