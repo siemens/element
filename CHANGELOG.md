@@ -1,3 +1,31 @@
+# [49.8.0](https://github.com/siemens/element/compare/v49.7.0...v49.8.0) (2026-05-08)
+
+
+### Features
+
+* **ag-grid:** update sorting icons ([0909157](https://github.com/siemens/element/commit/09091570294c3e3cd7ce0ea9f279f677dd60b1a5)), closes [#2009](https://github.com/siemens/element/issues/2009)
+* **dashboards-ng:** add translation support for widget name, description, and heading ([eb3e07b](https://github.com/siemens/element/commit/eb3e07b28e1138230311d91198baabba05ebb903))
+* **file-uploader:** show max file size in error message for exceeded file size ([9642f3e](https://github.com/siemens/element/commit/9642f3e7bbd0db6f88df5fff637ce195d98be7b7)), closes [#2008](https://github.com/siemens/element/issues/2008)
+* **form-control:** introduce `.form-control-actions` wrapper ([436c998](https://github.com/siemens/element/commit/436c99893568f359be0d728b070864c22965f7a0))
+* **popover:** add `scrollStrategy` input ([d642809](https://github.com/siemens/element/commit/d64280946b1036e7c5c196dfadef973e81f8c7b8))
+* **search-bar:** add maxlength input to limit search input length ([6d42511](https://github.com/siemens/element/commit/6d425115b9c7e26f065cb88884e4ddeb9fcceed2))
+* **tooltip:** add `scrollStrategy` input ([fac50c9](https://github.com/siemens/element/commit/fac50c9a1a6af166f6c9210a51e6d8c612a69113))
+
+
+### Bug Fixes
+
+* **a11y:** add space key activation for summary chip and widget ([3c9bb11](https://github.com/siemens/element/commit/3c9bb11fd188a08a37ff72b2032097e94fe5b306))
+* **datepicker:** remove focus ring on date-range input when calendar ([50ddddb](https://github.com/siemens/element/commit/50ddddbacb5bcc3eefaab98eba3caafa676eefdd))
+* **datepicker:** use correct spacing between calendar button and ([3d08006](https://github.com/siemens/element/commit/3d0800601971ca14602758ba9caa9045ecbe0dfe))
+* **filtered-search:** emit event when search text is cleared ([630cf29](https://github.com/siemens/element/commit/630cf29e5c78297b8adaa6f7e64527d7fb9c3b3b)), closes [#1980](https://github.com/siemens/element/issues/1980)
+* **filtered-search:** focus ring not visible in case of empty option value ([1c2a627](https://github.com/siemens/element/commit/1c2a62734cfdb4596ca07f75dc7fc818f809ec09))
+* **forms:** invalid controls should always have a red border ([7649734](https://github.com/siemens/element/commit/7649734a7910961f4b999090bcef4f9e7191e0f4))
+* **navbar-primary:** align translation defaults with launchpad ([46c727b](https://github.com/siemens/element/commit/46c727b48ef164d5a00c229bcd22eb87eb204f8a))
+* **navbar-vertical-next:** replace expand/collapse button texts with single toggleButtonText ([18d9d04](https://github.com/siemens/element/commit/18d9d04e8ff9d11e9383a99661f41f085fb5e990)), closes [#2003](https://github.com/siemens/element/issues/2003)
+* **number-input:** use correct spacing icons ([60bc1c1](https://github.com/siemens/element/commit/60bc1c1f613b54f78b7fb6325ed6196b890de1a6))
+* **select:** align position of dropdown arrow ([e27d7eb](https://github.com/siemens/element/commit/e27d7eb033423f93bab723104bccbe3ca48f4071))
+* **status-bar:** a11y fix for collapse button ([d465032](https://github.com/siemens/element/commit/d46503279d972e88020f7c3150874ebb1460d899))
+
 # [49.7.0](https://github.com/siemens/element/compare/v49.6.0...v49.7.0) (2026-04-28)
 
 

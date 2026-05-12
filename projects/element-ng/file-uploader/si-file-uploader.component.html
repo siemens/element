@@ -41,7 +41,7 @@
                 class="icon-sm"
                 [status]="file.status === 'invalid' ? 'warning' : 'danger'"
               />
-              {{ file.errorText | translate }}
+              {{ file.errorText | translate: file.errorParams }}
               @if (file.httpErrorText) {
                 : {{ file.httpErrorText }}
               }

@@ -127,6 +127,8 @@ export class SiFileUploaderModule {
 // @public (undocumented)
 export interface UploadFile {
     // (undocumented)
+    errorParams?: Record<string, unknown>;
+    // (undocumented)
     errorText?: TranslatableString;
     // (undocumented)
     file: File;
