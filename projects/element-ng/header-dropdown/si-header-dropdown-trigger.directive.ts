@@ -10,8 +10,6 @@ import {
   Directive,
   ElementRef,
   EmbeddedViewRef,
-  HostBinding,
-  HostListener,
   inject,
   Injector,
   input,
@@ -41,7 +39,12 @@ class SiHeaderAnchorComponent {
 @Directive({
   selector: '[siHeaderDropdownTriggerFor]',
   host: {
-    class: 'dropdown-toggle'
+    class: 'dropdown-toggle',
+    '[id]': 'id',
+    '[class.show]': '_isOpen',
+    '[attr.aria-expanded]': '_isOpen',
+    '[attr.aria-controls]': 'ariaControls',
+    '(click)': 'click()'
   },
   exportAs: 'siHeaderDropdownTrigger'
 })
@@ -83,15 +86,13 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
   private destroying = false;
 
   /** @internal */
-  @HostBinding('id') readonly id =
-    `si-navbar-dropdown-trigger-${SiHeaderDropdownTriggerDirective.idCounter++}`;
+  readonly id = `si-navbar-dropdown-trigger-${SiHeaderDropdownTriggerDirective.idCounter++}`;
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  @HostBinding('class.show') @HostBinding('attr.aria-expanded') protected _isOpen = false;
+  protected _isOpen = false;
 
   /** @internal */
-  @HostBinding('attr.aria-controls') readonly ariaControls =
-    `si-navbar-dropdown-${SiHeaderDropdownTriggerDirective.idCounter}`;
+  readonly ariaControls = `si-navbar-dropdown-${SiHeaderDropdownTriggerDirective.idCounter}`;
 
   private headerAnchorComponentRef?: ComponentRef<SiHeaderAnchorComponent>;
 
@@ -190,7 +191,6 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
     }
   }
 
-  @HostListener('click')
   protected click(): void {
     if (this._isOpen) {
       this.close();
