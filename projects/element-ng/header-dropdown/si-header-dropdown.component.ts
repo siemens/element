@@ -3,15 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule, CdkTrapFocus } from '@angular/cdk/a11y';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  HostBinding,
-  HostListener,
-  inject,
-  viewChild,
-  DOCUMENT
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, viewChild, DOCUMENT } from '@angular/core';
 
 import { SiHeaderDropdownTriggerDirective } from './si-header-dropdown-trigger.directive';
 import { SI_HEADER_DROPDOWN_OPTIONS } from './si-header.model';
@@ -30,7 +22,11 @@ import { SI_HEADER_DROPDOWN_OPTIONS } from './si-header.model';
     class: 'dropdown-menu position-static',
     role: 'group',
     '[id]': 'trigger.ariaControls',
-    '[attr.aria-labelledby]': 'trigger.id'
+    '[attr.aria-labelledby]': 'trigger.id',
+    '[class.show]': 'trigger.isOpen',
+    '[class.header-dropdown-overlay]': 'trigger.isOverlay',
+    '[class.sub-menu]': 'trigger.level > 1',
+    '(keydown.escape)': 'trigger.close()'
   }
 })
 export class SiHeaderDropdownComponent {
@@ -63,32 +59,10 @@ export class SiHeaderDropdownComponent {
   }
 
   /** @internal */
-  @HostBinding('class.show')
-  protected get show(): boolean {
-    return this.trigger.isOpen;
-  }
-
-  /** @internal */
-  @HostBinding('class.header-dropdown-overlay') protected get overlay(): boolean {
-    return this.trigger.isOverlay;
-  }
-
-  /** @internal */
-  @HostBinding('class.sub-menu') protected get submenu(): boolean {
-    return this.trigger.level > 1;
-  }
-
-  /** @internal */
   protected get trapFocus(): boolean {
     return (
       this.trigger.isOverlay ||
       (!this.options?.disableRootFocusTrapForInlineMode && this.trigger.level === 1)
     );
-  }
-
-  /** @internal */
-  @HostListener('keydown.escape')
-  protected escape(): void {
-    this.trigger?.close();
   }
 }
