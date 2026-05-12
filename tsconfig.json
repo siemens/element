@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "preserveSymlinks": true,
     "types": [],
     "sourceMap": true,
     "esModuleInterop": true,
