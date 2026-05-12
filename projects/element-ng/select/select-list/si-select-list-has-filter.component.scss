@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
 .si-select-filtered-items {
@@ -9,4 +10,8 @@
 
 si-loading-spinner {
   --loading-spinner-size: #{variables.$si-icon-font-size};
+}
+
+.icon-start {
+  padding-inline-start: calc(#{variables.$si-icon-font-size} + #{map.get(variables.$spacers, 5)});
 }
