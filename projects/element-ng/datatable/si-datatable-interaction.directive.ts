@@ -6,8 +6,6 @@ import {
   booleanAttribute,
   Directive,
   ElementRef,
-  HostBinding,
-  HostListener,
   inject,
   input,
   isSignal,
@@ -26,6 +24,13 @@ const unwrapSignalOrValue = <T>(valueOrSignal: T | Signal<T>): T => {
 
 @Directive({
   selector: 'ngx-datatable[siDatatableInteraction]',
+  host: {
+    tabindex: '0',
+    '(keydown)': 'onKeydown($event)',
+    '(mousedown)': 'onMousedown($event)',
+    '(mouseup)': 'onMouseup($event)',
+    '(focusin)': 'onFocusin($event)'
+  },
   exportAs: 'si-datatable-interaction'
 })
 export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
@@ -38,8 +43,6 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
    */
   readonly datatableInteractionAutoSelect = input(false, { transform: booleanAttribute });
 
-  @HostBinding('attr.tabindex') protected tabIndex = '0';
-
   private element: HTMLElement = inject(ElementRef).nativeElement;
   private tableBody?: HTMLElement;
 
@@ -47,7 +50,6 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
 
   private isMousedown = false;
 
-  @HostListener('keydown', ['$event'])
   protected onKeydown(event: KeyboardEvent): void {
     if (event.key === 'ArrowDown') {
       const first =
@@ -74,17 +76,14 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
     }
   }
 
-  @HostListener('mousedown', ['$event'])
   protected onMousedown(event: MouseEvent): void {
     this.isMousedown = true;
   }
 
-  @HostListener('mouseup', ['$event'])
   protected onMouseup(event: MouseEvent): void {
     this.isMousedown = false;
   }
 
-  @HostListener('focusin', ['$event'])
   protected onFocusin(event: FocusEvent): void {
     const target = event.target as HTMLElement;
     if (!target) {
