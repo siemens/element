@@ -16,6 +16,7 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { PositionStrategy } from '@angular/cdk/overlay';
 import { Provider } from '@angular/core';
 import * as rxjs from 'rxjs';
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Type } from '@angular/core';
 
@@ -111,7 +112,7 @@ export const getContentPositionString: (params: {
 }) => string;
 
 // @public (undocumented)
-export function getOverlay(elementRef: ElementRef<any>, overlay: Overlay, hasBackdrop: boolean, placement: keyof typeof positions | ConnectionPositionPair[], constrain?: boolean, center?: boolean): OverlayRef;
+export function getOverlay(elementRef: ElementRef<any>, overlay: Overlay, hasBackdrop: boolean, placement: keyof typeof positions | ConnectionPositionPair[], constrain?: boolean, center?: boolean, scrollStrategy?: ScrollStrategy): OverlayRef;
 
 // @public (undocumented)
 export function getOverlayPositions(elementRef: ElementRef<any>, placement: keyof typeof positions | ConnectionPositionPair[], center?: boolean): ConnectionPositionPair[];
@@ -129,7 +130,7 @@ export const isRTL: (elem?: HTMLElement) => boolean;
 export const listenGlobal: (eventName: string, handler: (e: any) => void, active?: boolean) => (() => void);
 
 // @public (undocumented)
-export function makeOverlay(positionStrategy: PositionStrategy, overlay: Overlay, hasBackdrop: boolean): OverlayRef;
+export function makeOverlay(positionStrategy: PositionStrategy, overlay: Overlay, hasBackdrop: boolean, scrollStrategy?: ScrollStrategy): OverlayRef;
 
 // @public
 export function makePositionStrategy(elementRef: ElementRef<any> | undefined, overlay: Overlay, placement: keyof typeof positions | ConnectionPositionPair[], constrain?: boolean, center?: boolean): PositionStrategy;

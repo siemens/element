@@ -259,14 +259,15 @@ describe('SiFileDropzoneComponent', () => {
   });
 
   it('should reject files that exceeds "maxFileSize" parameter', async () => {
-    maxFileSize.set(1000);
-    errorTextFileMaxSize.set('File exceeds allowed maximum size');
+    maxFileSize.set(1024);
+    errorTextFileMaxSize.set('File exceeds allowed maximum size of {{maxFileSize}}');
     await fixture.whenStable();
     dropFiles(createFileListWithFileSizeOf1200Bytes(['notMatching.fmwr']));
     await fixture.whenStable();
     const files = getFiles();
     expect(files[0].status).toBe('invalid');
-    expect(files[0].errorText).toBe('File exceeds allowed maximum size');
+    expect(files[0].errorText).toBe('File exceeds allowed maximum size of {{maxFileSize}}');
+    expect(files[0].errorParams).toEqual({ maxFileSize: '1KB' });
   });
 
   it('should accept files that less than or equal to "maxFileSize" parameter', async () => {

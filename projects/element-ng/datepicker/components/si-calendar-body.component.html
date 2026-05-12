@@ -2,8 +2,8 @@
   <tr role="row">
     <!-- Typically used for week numbers -->
     @if (rowLabels()) {
-      <td [class]="`si-calendar-row-label ${rowLabelCssClasses()}`" [attr.data-row]="rowIndex">
-        {{ rowLabels()?.at(rowIndex) ?? '' }}
+      <td class="si-calendar-row-label" [attr.data-row]="rowIndex">
+        <div [class]="rowLabelCssClasses()">{{ rowLabels()?.at(rowIndex) ?? '' }}</div>
       </td>
     }
     @for (col of row; track colIndex; let colIndex = $index) {
