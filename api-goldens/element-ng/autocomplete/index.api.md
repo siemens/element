@@ -4,8 +4,8 @@
 
 ```ts
 
+import * as _angular_core from '@angular/core';
 import { Highlightable } from '@angular/cdk/a11y';
-import * as i0 from '@angular/core';
 import { OnInit } from '@angular/core';
 
 // @public (undocumented)
@@ -20,13 +20,13 @@ export class SiAutocompleteListboxDirective<T> implements OnInit {
     // (undocumented)
     get active(): SiAutocompleteOptionDirective<T> | null;
     // (undocumented)
-    readonly autocomplete: i0.InputSignal<SiAutocompleteDirective<T>>;
+    readonly autocomplete: _angular_core.InputSignal<SiAutocompleteDirective<T>>;
     // (undocumented)
-    readonly id: i0.InputSignal<string>;
+    readonly id: _angular_core.InputSignal<string>;
     // (undocumented)
-    readonly siAutocompleteDefaultIndex: i0.InputSignal<number>;
+    readonly siAutocompleteDefaultIndex: _angular_core.InputSignal<number>;
     // (undocumented)
-    readonly siAutocompleteOptionSubmitted: i0.OutputEmitterRef<T | undefined>;
+    readonly siAutocompleteOptionSubmitted: _angular_core.OutputEmitterRef<T | undefined>;
 }
 
 // @public (undocumented)
@@ -38,11 +38,11 @@ export class SiAutocompleteOptionDirective<T = unknown> implements Highlightable
     // (undocumented)
     get disabled(): boolean;
     // (undocumented)
-    readonly disabledInput: i0.InputSignalWithTransform<boolean, unknown>;
+    readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
-    readonly id: i0.InputSignal<string>;
+    readonly id: _angular_core.InputSignal<string>;
     // (undocumented)
-    readonly value: i0.InputSignal<T | undefined>;
+    readonly value: _angular_core.InputSignal<T | undefined>;
 }
 
 // (No @packageDocumentation comment for this package)
