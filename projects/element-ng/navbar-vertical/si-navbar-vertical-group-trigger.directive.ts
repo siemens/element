@@ -10,7 +10,6 @@ import {
   computed,
   Directive,
   EmbeddedViewRef,
-  HostListener,
   inject,
   Injector,
   input,
@@ -47,7 +46,8 @@ class SiNavbarFlyoutAnchorComponent {
     '[id]': 'id',
     '[class.show]': 'expanded()',
     '[attr.aria-controls]': 'groupId',
-    '[attr.aria-expanded]': 'expanded()'
+    '[attr.aria-expanded]': 'expanded()',
+    '(click)': 'triggered()'
   }
 })
 export class SiNavbarVerticalGroupTriggerDirective implements OnInit {
@@ -111,7 +111,7 @@ export class SiNavbarVerticalGroupTriggerDirective implements OnInit {
     }
   }
 
-  @HostListener('click') protected triggered(): void {
+  protected triggered(): void {
     if (this.navbar.collapsed()) {
       this.toggleFlyout();
     } else {
