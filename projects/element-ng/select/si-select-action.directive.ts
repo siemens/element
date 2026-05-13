@@ -2,14 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Directive, HostListener, inject, input } from '@angular/core';
+import { booleanAttribute, Directive, inject, input } from '@angular/core';
 
 import { SiSelectComponent } from './si-select.component';
 
 @Directive({
   selector: '[siSelectAction]',
   host: {
-    class: 'mx-5 my-4'
+    class: 'mx-5 my-4',
+    '(click)': 'close()'
   },
   exportAs: 'si-select-action'
 })
@@ -21,7 +22,6 @@ export class SiSelectActionDirective {
    */
   readonly selectActionAutoClose = input(false, { transform: booleanAttribute });
 
-  @HostListener('click')
   protected close(): void {
     if (this.selectActionAutoClose()) {
       this.select.close();
