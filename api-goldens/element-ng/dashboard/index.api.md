@@ -47,7 +47,7 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
     constructor();
     readonly enableExpandInteractions: _angular_core.InputSignalWithTransform<boolean, unknown>;
     expand(card: SiDashboardCardComponent): void;
-    readonly heading: _angular_core.InputSignal<string | undefined>;
+    readonly heading: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly hideMenubar: _angular_core.InputSignalWithTransform<boolean, unknown>;
     get isExpanded(): boolean;
     restore(): void;
