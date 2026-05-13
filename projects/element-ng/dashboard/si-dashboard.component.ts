@@ -27,7 +27,7 @@ import {
   ElementDimensions,
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Subject, takeUntil } from 'rxjs';
 
 import { SiDashboardCardComponent } from './si-dashboard-card.component';
@@ -48,7 +48,7 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
   /**
    * Heading for the dashboard page.
    */
-  readonly heading = input<string>();
+  readonly heading = input<TranslatableString>();
 
   /**
    * Opt-in to enable expand interaction for all cards.
