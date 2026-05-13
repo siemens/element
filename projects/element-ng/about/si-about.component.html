@@ -13,7 +13,7 @@
               class="rounded-circle"
               height="150"
               [src]="icon()"
-              [alt]="appName() + '\'s Logo'"
+              [alt]="logoAlt() | translate: { appName: appName() }"
             />
           } @else if (appIcon) {
             <si-icon class="app-icon" [icon]="appIcon" />

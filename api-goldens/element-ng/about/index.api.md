@@ -9,6 +9,7 @@ import * as _angular_platform_browser from '@angular/platform-browser';
 import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
 import { Link } from '@siemens/element-ng/link';
 import { OnInit } from '@angular/core';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export interface ApiInfo {
@@ -40,6 +41,7 @@ export class SiAboutComponent implements OnInit {
     readonly imprintLink: _angular_core.InputSignal<Link | undefined>;
     readonly licenseInfo: _angular_core.InputSignal<LicenseInfo>;
     readonly links: _angular_core.InputSignal<Link[]>;
+    readonly logoAlt: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly privacyLink: _angular_core.InputSignal<Link | undefined>;
     readonly subheading: _angular_core.InputSignal<string[] | undefined>;
     readonly termsLink: _angular_core.InputSignal<Link | undefined>;

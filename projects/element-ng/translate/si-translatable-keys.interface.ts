@@ -3,6 +3,7 @@
 // Auto-generated file. Run 'npx update-translatable-keys' to update.
 
 export interface SiTranslatableKeys {
+  'SI_ABOUT.LOGO_ALT'?: string;
   'SI_AI_MESSAGE.SECONDARY_ACTIONS'?: string;
   'SI_ALERT_DIALOG.OK'?: string;
   'SI_APPLICATION_HEADER.LAUNCHPAD'?: string;

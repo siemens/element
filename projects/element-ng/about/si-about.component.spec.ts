@@ -25,6 +25,9 @@ describe('SiAboutComponent', () => {
   const cookieNoticeLink = signal<Link | undefined>(undefined);
   const termsLink = signal<Link | undefined>(undefined);
   const linksInput = signal<Link[]>([]);
+  const logoAlt = signal<string | undefined>(undefined);
+
+  const getLogoImg = (): HTMLImageElement | null => element.querySelector('img');
 
   const toggleCollapsePanel = (e?: HTMLElement): void =>
     (e ?? element).querySelector<HTMLElement>('.collapsible-header')?.click();
@@ -53,6 +56,7 @@ describe('SiAboutComponent', () => {
     cookieNoticeLink.set(undefined);
     termsLink.set(undefined);
     linksInput.set([]);
+    logoAlt.set(undefined);
     fixture = TestBed.createComponent(SiAboutComponent, {
       bindings: [
         inputBinding('aboutTitle', aboutTitle),
@@ -65,7 +69,8 @@ describe('SiAboutComponent', () => {
         inputBinding('privacyLink', privacyLink),
         inputBinding('cookieNoticeLink', cookieNoticeLink),
         inputBinding('termsLink', termsLink),
-        inputBinding('links', linksInput)
+        inputBinding('links', linksInput),
+        inputBinding('logoAlt', logoAlt)
       ]
     });
     element = fixture.nativeElement;
@@ -154,6 +159,17 @@ describe('SiAboutComponent', () => {
     expect(links).not.toContain('Terms and Conditions');
     expect(links).not.toContain('Some other link');
     expect(links).not.toContain('More information about stuff');
+  });
+
+  describe('logoAlt', () => {
+    it('should use custom logoAlt with appName interpolated', async () => {
+      appName.set('The');
+      iconInput.set('https://example.com/logo.png');
+      logoAlt.set('{{appName}} Application Logo');
+      await fixture.whenStable();
+
+      expect(getLogoImg()!.alt).toBe('The Application Logo');
+    });
   });
 
   describe('with iFrame mode', () => {
