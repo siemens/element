@@ -9,7 +9,6 @@ import {
   Component,
   computed,
   Directive,
-  HostBinding,
   inject,
   input,
   model,
@@ -80,7 +79,7 @@ export class SiNavbarVerticalItemGuardDirective {
   styleUrl: './si-navbar-vertical.component.scss',
   providers: [{ provide: SI_NAVBAR_VERTICAL, useExisting: SiNavbarVerticalComponent }],
   host: {
-    class: 'si-layout-inner',
+    class: 'si-layout-inner ready',
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
     '[class.visible]': 'visible()'
@@ -208,9 +207,6 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
 
   private readonly searchBar = viewChild.required(SiSearchBarComponent);
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
-  // Is required to prevent the navbar from running the padding animation on creation.
-  @HostBinding('class.ready') protected readonly ready = true;
-
   private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
   private breakpointObserver = inject(BreakpointObserver);
   private readonly navbarItems = viewChildren(SiNavbarVerticalItemComponent);
