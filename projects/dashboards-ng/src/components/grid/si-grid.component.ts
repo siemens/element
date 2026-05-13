@@ -179,7 +179,7 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges<this>): void {
-    // Reload widgets if the dashboardId changes. Do not load on inital
+    // Reload widgets if the dashboardId changes. Do not load on initial
     // dashboardId property binding as first load will be done in ngOnInit()
     if (changes.dashboardId && !changes.dashboardId.firstChange) {
       queueMicrotask(() => this.loadAndSubscribeWidgets());
