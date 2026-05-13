@@ -19,7 +19,7 @@ import { SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import { CopyrightDetails, SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { ApiInfo, LicenseInfo } from './si-about-data.model';
 
@@ -40,6 +40,16 @@ import { ApiInfo, LicenseInfo } from './si-about-data.model';
 export class SiAboutComponent implements OnInit {
   private http = inject(HttpClient);
   private sanitizer = inject(DomSanitizer);
+
+  /**
+   * Alt text for the application logo. Supports `{{appName}}` placeholder for interpolation.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_ABOUT.LOGO_ALT:{{appName}} logo`)
+   * ```
+   */
+  readonly logoAlt = input(t(() => $localize`:@@SI_ABOUT.LOGO_ALT:{{appName}} logo`));
 
   /**
    * Title shown above the about information.
