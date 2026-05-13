@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ComponentRef,
-  HostListener,
-  inject,
-  signal
-} from '@angular/core';
+import { Component, ComponentRef, HostListener, inject, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
@@ -22,7 +15,6 @@ import { generateKeyEvent } from './testing/test-helper';
 @Component({
   imports: [FormsModule, SiDateInputDirective],
   template: `<input siDateInput type="text" class="form-control" [(ngModel)]="inputText" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [
     {
       directive: SiDatepickerOverlayDirective,

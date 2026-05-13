@@ -4,7 +4,6 @@
  */
 import { A11yModule, CdkTrapFocus } from '@angular/cdk/a11y';
 import {
-  ChangeDetectionStrategy,
   Component,
   DOCUMENT,
   ElementRef,
@@ -31,7 +30,6 @@ import { PositionChange, SI_TOUR_TOKEN, TourAction, TourStepInternal } from './s
   imports: [A11yModule, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-tour.component.html',
   styleUrl: './si-tour.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.data-step-id]': 'step()?.step?.id'
   }

@@ -8,7 +8,6 @@ import { DomPortal } from '@angular/cdk/portal';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   contentChildren,
@@ -54,8 +53,7 @@ import { SI_TABSET } from './si-tabs-tokens';
       provide: SI_TABSET,
       useExisting: SiTabsetComponent
     }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 export class SiTabsetComponent {
   /**

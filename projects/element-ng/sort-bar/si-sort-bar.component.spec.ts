@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiSortBarComponent } from './si-sort-bar.component';
@@ -14,8 +14,7 @@ import { SiSortBarComponent } from './si-sort-bar.component';
     [sortCriteria]="sortCriteria"
     [defaultSortCriteria]="defaultSortCriteria"
     (sortChange)="logEvent($event)"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class TestHostComponent {
   readonly component = viewChild.required(SiSortBarComponent);

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, ChangeDetectionStrategy, Component, input, model } from '@angular/core';
+import { booleanAttribute, Component, input, model } from '@angular/core';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiCardBaseDirective } from './si-card-base.directive';
@@ -25,7 +25,6 @@ import { SiCardHeaderComponent } from './si-card-header.component';
   imports: [SiCardHeaderComponent, SiTranslatePipe],
   templateUrl: './si-action-card.component.html',
   styleUrl: './si-card.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'action-card',
     '[attr.aria-pressed]': 'selectable() ? (selected() ? "true" : "false") : undefined',

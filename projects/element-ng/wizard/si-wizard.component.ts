@@ -5,7 +5,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   contentChildren,
@@ -59,7 +58,6 @@ interface StepMetadata {
   imports: [SiIconComponent, SiResizeObserverDirective, SiTranslatePipe, NgTemplateOutlet],
   templateUrl: './si-wizard.component.html',
   styleUrl: './si-wizard.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'py-6 px-8 d-flex flex-column',
     '[class.vertical]': 'verticalLayout()',

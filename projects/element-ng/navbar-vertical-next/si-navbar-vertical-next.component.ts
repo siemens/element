@@ -7,7 +7,6 @@ import { PortalModule } from '@angular/cdk/portal';
 import {
   afterNextRender,
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   contentChildren,
@@ -51,7 +50,6 @@ interface UIState {
   templateUrl: './si-navbar-vertical-next.component.html',
   styleUrl: './si-navbar-vertical-next.component.scss',
   providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useExisting: SiNavbarVerticalNextComponent }],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'si-layout-inner ready',
     '[class.nav-collapsed]': 'collapsed()',

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiNavbarPrimaryComponent } from '@siemens/element-ng/navbar';
@@ -13,8 +13,7 @@ import { SiNavbarItemComponent } from './si-navbar-item.component';
 
 @Component({
   imports: [SiNavbarItemComponent],
-  template: ` <si-navbar-item #testComponent [item]="item" [quickAction]="quickAction" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `<si-navbar-item #testComponent [item]="item" [quickAction]="quickAction" />`
 })
 class WrapperComponent {
   item!: MenuItem;

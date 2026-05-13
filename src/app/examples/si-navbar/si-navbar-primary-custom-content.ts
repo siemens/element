@@ -3,15 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 /* eslint-disable @typescript-eslint/no-deprecated */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SiNavbarModule } from '@siemens/element-ng/navbar';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
   imports: [SiNavbarModule],
-  templateUrl: './si-navbar-primary-custom-content.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-navbar-primary-custom-content.html'
 })
 export class SampleComponent {
   primaryItems = [

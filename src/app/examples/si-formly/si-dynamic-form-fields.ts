@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormRecord } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { DatepickerInputConfig } from '@siemens/element-ng/datepicker';
@@ -13,8 +13,7 @@ import { SiFormlyModule } from '@siemens/element-ng/formly';
 @Component({
   selector: 'app-sample',
   imports: [CommonModule, SiFormModule, SiFormlyModule],
-  templateUrl: './si-dynamic-form-fields.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-dynamic-form-fields.html'
 })
 export class SampleComponent {
   form = new FormRecord({});

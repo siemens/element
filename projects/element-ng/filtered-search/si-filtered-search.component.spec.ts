@@ -4,14 +4,7 @@
  */
 import { HarnessLoader, parallel, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  signal,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectorRef, Component, inject, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CriterionDefinition } from '@siemens/element-ng/filtered-search';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
@@ -56,8 +49,7 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     (doSearch)="doSearch($event)"
     (searchCriteriaChange)="searchCriteriaChange($event)"
     (interceptDisplayedCriteria)="showCriteria($event)"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class TestHostComponent {
   readonly filteredSearch = viewChild.required(SiFilteredSearchComponent);

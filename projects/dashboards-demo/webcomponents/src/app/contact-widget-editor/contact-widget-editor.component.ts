@@ -10,7 +10,8 @@ import {
   inject,
   model,
   output,
-  signal
+  signal,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -38,7 +39,8 @@ import { SiFormModule } from '@siemens/element-ng/form';
     SiDatepickerDirective,
     SiCalendarButtonComponent
   ],
-  templateUrl: './contact-widget-editor.component.html'
+  templateUrl: './contact-widget-editor.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class ContactWidgetEditorComponent implements WidgetInstanceEditorWizard, AfterViewInit {
   readonly config = model.required<Omit<WidgetConfig, 'id'>>();

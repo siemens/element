@@ -4,7 +4,7 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
 import type { Mock } from 'vitest';
@@ -36,8 +36,7 @@ export type Spied<T> = {
     [ngModelOptions]="{ standalone: true }"
     [ngModel]="date()"
     (ngModelChange)="date.set($event)"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class WrapperComponent {
   readonly siDatePicker = viewChild.required<ElementRef>('siDatePicker');

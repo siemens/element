@@ -2,15 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  contentChild,
-  DestroyRef,
-  effect,
-  inject
-} from '@angular/core';
+import { Component, computed, contentChild, DestroyRef, effect, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -22,7 +14,6 @@ import { SiListDetailsComponent } from '../si-list-details.component';
   imports: [],
   templateUrl: './si-details-pane.component.html',
   styleUrl: './si-details-pane.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.expanded]': 'parent.hasLargeSize()',
     '[class.details-active]': 'parent.detailsActive() && !parent.hasLargeSize()',

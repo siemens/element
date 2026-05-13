@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, InjectionToken, input } from '@angular/core';
+import { Component, inject, InjectionToken, input } from '@angular/core';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 export const LOADING_SPINNER_BLOCKING = new InjectionToken<boolean>('isBlockingSpinner');
@@ -13,7 +13,6 @@ export const LOADING_SPINNER_OVERLAY = new InjectionToken<boolean>('isSpinnerOve
   imports: [SiTranslatePipe],
   templateUrl: './si-loading-spinner.component.html',
   styleUrl: './si-loading-spinner.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'animate.leave': 'spinner-leave'
   }

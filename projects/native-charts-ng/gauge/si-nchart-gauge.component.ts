@@ -4,7 +4,6 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   inject,
   input,
@@ -74,7 +73,6 @@ interface Tick {
   selector: 'si-nchart-gauge',
   templateUrl: './si-nchart-gauge.component.html',
   styleUrl: './si-nchart-gauge.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class]': '"legend-" + legendPosition()'
   }

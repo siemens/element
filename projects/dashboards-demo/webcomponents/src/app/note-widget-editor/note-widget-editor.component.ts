@@ -2,14 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, model, OnInit, output } from '@angular/core';
+import { Component, model, OnInit, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WidgetConfig, WidgetConfigStatus, WidgetInstanceEditor } from '@siemens/dashboards-ng';
 
 @Component({
   selector: 'app-note-widget-editor',
   imports: [FormsModule],
-  templateUrl: './note-widget-editor.component.html'
+  templateUrl: './note-widget-editor.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class NoteWidgetEditorComponent implements WidgetInstanceEditor, OnInit {
   readonly config = model.required<WidgetConfig | Omit<WidgetConfig, 'id'>>();

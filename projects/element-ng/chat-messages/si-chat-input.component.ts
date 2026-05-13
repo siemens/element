@@ -12,7 +12,8 @@ import {
   input,
   model,
   output,
-  viewChild
+  viewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -88,7 +89,8 @@ export interface ChatInputAttachment extends Attachment {
     SiFileUploadDirective
   ],
   templateUrl: './si-chat-input.component.html',
-  styleUrl: './si-chat-input.component.scss'
+  styleUrl: './si-chat-input.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiChatInputComponent implements AfterViewInit {
   private static idCounter = 0;

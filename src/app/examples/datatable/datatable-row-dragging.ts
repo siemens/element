@@ -4,7 +4,7 @@
  */
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { elementMenu } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
@@ -21,7 +21,6 @@ import { DatatableRowDefDirective, NgxDatatableModule } from '@siemens/ngx-datat
     SiIconComponent
   ],
   templateUrl: './datatable-row-dragging.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

@@ -16,7 +16,8 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
-  viewChild
+  viewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -38,7 +39,8 @@ import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.
   selector: 'si-live-preview',
   imports: [KeyValuePipe, FormsModule, SiLivePreviewIframeComponent, SiStackblitzButtonDirective],
   templateUrl: './si-live-preview.component.html',
-  styleUrls: ['./si-live-preview.component.scss', './si-live-preview-codeflask.scss']
+  styleUrls: ['./si-live-preview.component.scss', './si-live-preview-codeflask.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges {
   private config = inject(SI_LIVE_PREVIEW_CONFIG);

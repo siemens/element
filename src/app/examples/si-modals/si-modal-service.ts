@@ -20,7 +20,6 @@ import { AppTableComponent } from './app-table.component';
   selector: 'app-sample',
   imports: [SiStatusIconComponent],
   templateUrl: './si-modal-service.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnDestroy {

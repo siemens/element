@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   SiUserMessageComponent,
@@ -15,8 +15,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [SiUserMessageComponent],
-  templateUrl: './si-user-message.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-user-message.html'
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

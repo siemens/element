@@ -5,7 +5,6 @@
 import {
   AfterViewChecked,
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   computed,
   contentChild,
@@ -74,12 +73,10 @@ interface ClusterHolder {
 
 @Component({
   selector: 'si-map',
-
   imports: [SiMapTooltipComponent, SiMapPopoverComponent],
   templateUrl: './si-map.component.html',
   styleUrl: './si-map.component.scss',
-  providers: [MapService],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [MapService]
 })
 export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, AfterViewChecked {
   /**

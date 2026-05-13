@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   SiApplicationHeaderComponent,
@@ -55,7 +55,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
       max-height: 70vh;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

@@ -2,15 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  InjectionToken,
-  input,
-  Provider
-} from '@angular/core';
+import { Component, computed, inject, InjectionToken, input, Provider } from '@angular/core';
 
 import { IconService } from './si-icons';
 
@@ -52,7 +44,6 @@ export const provideIconConfig = (config: IconConfig): Provider => ({
   selector: 'si-icon',
   template: ` <div aria-hidden="true" [class]="svgIcon() ? 'svg-element-icon' : fontIcon()"></div>`,
   styleUrl: './si-icon.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.data-icon]': 'icon()',
     '[style.--svg-element-icon]': 'svgIcon()'

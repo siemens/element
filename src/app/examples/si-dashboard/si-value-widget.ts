@@ -24,7 +24,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
       height: 400px;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {

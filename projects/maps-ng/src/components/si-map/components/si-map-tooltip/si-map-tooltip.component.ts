@@ -9,7 +9,6 @@ import { TOOLTIP_FEATURES_TO_DISPLAY } from '../../models/constants';
 
 @Component({
   selector: 'si-map-tooltip',
-
   imports: [SiTranslatePipe],
   templateUrl: './si-map-tooltip.component.html',
   styleUrl: './si-map-tooltip.component.scss'

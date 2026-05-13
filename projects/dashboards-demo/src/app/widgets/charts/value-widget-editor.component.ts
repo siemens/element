@@ -2,16 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  inject,
-  model,
-  OnInit,
-  output
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, DestroyRef, inject, model, OnInit, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   ObjectFit,
@@ -33,6 +24,7 @@ import {
 } from '@siemens/element-ng/select';
 
 import { ValueWidgetComponent } from './value-widget.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-value-widget-editor',
@@ -54,11 +46,11 @@ import { ValueWidgetComponent } from './value-widget.component';
           class="h-100"
           [heading]="widgetConfig.heading"
           [enableExpandInteraction]="widgetConfig.expandable"
-          [imgAlt]="widgetConfig.image?.alt"
-          [imgDir]="widgetConfig.image?.dir"
-          [imgObjectFit]="widgetConfig.image?.objectFit"
-          [imgObjectPosition]="widgetConfig.image?.objectPosition"
-          [imgSrc]="widgetConfig.image?.src"
+          [imgAlt]="$safeNavigationMigration(widgetConfig.image?.alt)"
+          [imgDir]="$safeNavigationMigration(widgetConfig.image?.dir)"
+          [imgObjectFit]="$safeNavigationMigration(widgetConfig.image?.objectFit)"
+          [imgObjectPosition]="$safeNavigationMigration(widgetConfig.image?.objectPosition)"
+          [imgSrc]="$safeNavigationMigration(widgetConfig.image?.src)"
         >
           <div class="card-body overflow-auto" body>
             <app-value-widget [config]="widgetConfig" />
@@ -133,8 +125,7 @@ import { ValueWidgetComponent } from './value-widget.component';
         </form>
       </div>
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class ValueWidgetEditorComponent implements WidgetInstanceEditor, OnInit {
   readonly config = model.required<WidgetConfig | Omit<WidgetConfig, 'id'>>();

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -43,8 +43,7 @@ import { LoadChildrenEventArgs, MenuItemsProvider, TreeItem } from './si-tree-vi
     [deleteChildrenOnCollapse]="deleteChildrenOnCollapse()"
     [expandCollapseAll]="expandCollapseAll()"
     (loadChildren)="loadChildren($event)"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class WrapperComponent {
   readonly treeViewComponent = viewChild.required(SiTreeViewComponent);

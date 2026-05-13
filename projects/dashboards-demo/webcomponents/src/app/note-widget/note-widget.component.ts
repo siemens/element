@@ -2,14 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, EventEmitter, input, OnInit } from '@angular/core';
+import { Component, EventEmitter, input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { WidgetConfig, WidgetConfigEvent, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
 
 @Component({
   selector: 'app-note-widget',
-  templateUrl: './note-widget.component.html'
+  templateUrl: './note-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class NoteWidgetComponent implements WidgetInstance, OnInit {
   readonly config = input.required<WidgetConfig>();

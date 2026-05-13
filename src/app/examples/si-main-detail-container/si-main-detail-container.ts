@@ -38,7 +38,6 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
   templateUrl: './si-main-detail-container.html',
   styleUrl: './si-main-detail-container.scss',
   providers: [DataService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'si-layout-fixed-height'
   }

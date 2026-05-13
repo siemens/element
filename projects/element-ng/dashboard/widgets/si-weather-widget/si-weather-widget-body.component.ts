@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, Directive, input } from '@angular/core';
+import { Component, computed, Directive, input } from '@angular/core';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiWidgetBaseDirective } from '../si-widget-base.directive';
@@ -67,7 +67,6 @@ export class SiWeatherRangeDefDirective {
   ],
   templateUrl: './si-weather-widget-body.component.html',
   styleUrl: './si-weather-widget-body.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '[class]': 'layoutClass()' }
 })
 export class SiWeatherWidgetBodyComponent extends SiWidgetBaseDirective<SiWeatherWidgetData> {

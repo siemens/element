@@ -3,16 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule, CdkTrapFocus } from '@angular/cdk/a11y';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  inject,
-  input,
-  OnDestroy,
-  signal,
-  viewChild
-} from '@angular/core';
+import { Component, ElementRef, inject, input, OnDestroy, signal, viewChild } from '@angular/core';
 import { elementOptionsVertical } from '@siemens/element-icons';
 import { SI_HEADER_DROPDOWN_OPTIONS } from '@siemens/element-ng/header-dropdown';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
@@ -31,7 +22,6 @@ import { SiApplicationHeaderComponent } from './si-application-header.component'
   providers: [
     { provide: SI_HEADER_DROPDOWN_OPTIONS, useValue: { disableRootFocusTrapForInlineMode: true } }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'd-contents' }
 })
 export class SiHeaderCollapsibleActionsComponent implements OnDestroy {

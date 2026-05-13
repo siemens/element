@@ -37,7 +37,6 @@ const ONE_DAY = 60 * 60 * 24 * 1000;
     SiFormItemComponent
   ],
   templateUrl: './si-date-range-filter-popup.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {

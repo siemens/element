@@ -12,7 +12,8 @@ import {
   inject,
   input,
   linkedSignal,
-  viewChild
+  viewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { elementCancel, elementOptionsVertical } from '@siemens/element-icons';
@@ -48,6 +49,7 @@ import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.mode
   ],
   templateUrl: './si-content-action-bar.component.html',
   styleUrl: './si-content-action-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class]': 'viewType()'
   }

@@ -29,8 +29,7 @@ import { CorporateEmployee, DataService, Page, PageRequest } from './data.servic
   ],
   templateUrl: './datatable-fixed-height.html',
   styleUrl: './datatable.scss',
-  providers: [DataService],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [DataService]
 })
 export class SampleComponent implements OnDestroy {
   tableConfig = SI_DATATABLE_CONFIG;

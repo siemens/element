@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -17,8 +17,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
   selector: 'si-info-page',
   imports: [SiLinkDirective, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-info-page.component.html',
-  styleUrl: './si-info-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-info-page.component.scss'
 })
 export class SiInfoPageComponent {
   /**

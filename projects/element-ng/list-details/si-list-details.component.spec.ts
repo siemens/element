@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, DebugElement, signal, viewChild } from '@angular/core';
+import { Component, DebugElement, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter, RouterOutlet } from '@angular/router';
@@ -56,8 +56,7 @@ import { SiListPaneComponent } from './si-list-pane/si-list-pane.component';
         </si-details-pane-footer>
       </si-details-pane>
     </si-list-details>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class WrapperComponent {
   readonly listDetails = viewChild.required(SiListDetailsComponent);

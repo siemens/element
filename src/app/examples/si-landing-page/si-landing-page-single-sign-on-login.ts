@@ -21,8 +21,7 @@ import {
 @Component({
   selector: 'app-sample',
   imports: [SiLandingPageComponent, TranslateModule, SiLoginSingleSignOnComponent],
-  templateUrl: './si-landing-page-single-sign-on-login.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-landing-page-single-sign-on-login.html'
 })
 export class SampleComponent implements OnInit {
   private translate = inject(TranslateService);

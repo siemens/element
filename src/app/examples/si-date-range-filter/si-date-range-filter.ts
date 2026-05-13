@@ -26,7 +26,6 @@ const ONE_DAY = 60 * 60 * 24 * 1000;
   selector: 'app-sample',
   imports: [CommonModule, FormsModule, SiDateRangeFilterComponent],
   templateUrl: './si-date-range-filter.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {

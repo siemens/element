@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { SiHeaderLogoDirective } from './si-header-logo.directive';
 
@@ -23,7 +23,6 @@ import { SiHeaderLogoDirective } from './si-header-logo.directive';
  */
 @Component({
   selector: 'si-header-siemens-logo, [si-header-siemens-logo]',
-  template: '',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: ''
 })
 export class SiHeaderSiemensLogoComponent extends SiHeaderLogoDirective {}

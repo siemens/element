@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input, model, OnDestroy } from '@angular/core';
+import { Component, input, model, OnDestroy } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
@@ -27,7 +27,6 @@ import { SiTabBaseDirective } from './si-tab-base.directive';
   templateUrl: './si-tab.component.html',
   styleUrl: './si-tab.component.scss',
   providers: [{ provide: SiTabBaseDirective, useExisting: SiTabComponent }],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(click)': 'selectTabByUser()',
     '(keydown.enter)': 'selectTabByUser()'

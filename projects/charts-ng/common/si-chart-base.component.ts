@@ -18,7 +18,8 @@ import {
   signal,
   SimpleChanges,
   viewChild,
-  viewChildren
+  viewChildren,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   CustomLegend,
@@ -55,6 +56,7 @@ import { themeSupport } from './theme-support';
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: './si-chart-base.component.html',
   styleUrl: './si-chart-base.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '(window:theme-switch)': 'themeSwitch()'
   }

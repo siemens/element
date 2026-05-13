@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -44,7 +44,6 @@ type IllustrationSize = 'sm' | 'md' | 'lg';
     }
   `,
   styleUrl: './si-weather-widget-illustration.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.si-weather-widget-illustration-sm]': "size() === 'sm'",
     '[class.si-weather-widget-illustration-md]': "size() === 'md'",

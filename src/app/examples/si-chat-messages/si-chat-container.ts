@@ -71,8 +71,7 @@ interface ChatMessage {
     SiAttachmentListComponent,
     SiAiWelcomeScreenComponent
   ],
-  templateUrl: './si-chat-container.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-chat-container.html'
 })
 export class SampleComponent {
   private logEvent = inject(LOG_EVENT);

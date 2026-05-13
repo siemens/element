@@ -13,8 +13,6 @@ import { InputSignal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import * as _siemens_element_ng_select from '@siemens/element-ng/select';
-import { SiFormItemControl } from '@siemens/element-ng/form';
 import { Signal } from '@angular/core';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';

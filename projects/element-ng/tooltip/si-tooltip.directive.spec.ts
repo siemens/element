@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiTooltipModule } from './si-tooltip.module';
@@ -147,8 +147,7 @@ describe('SiTooltipDirective', () => {
       imports: [SiTooltipModule],
       template: `<button type="button" siTooltip="test" [tooltipScrollStrategy]="scrollStrategy()"
         >Test</button
-      >`,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      >`
     })
     class TestHostComponent {
       readonly scrollStrategy = signal<ScrollStrategy | undefined>(undefined);

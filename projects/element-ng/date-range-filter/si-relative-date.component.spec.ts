@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { t } from '@siemens/element-translate-ng/translate';
 
@@ -18,8 +18,7 @@ const ONE_DAY = ONE_MINUTE * 60 * 24;
     [unitLabel]="unitLabel"
     [valueLabel]="valueLabel"
     [(value)]="value"
-  /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class TestHostComponent {
   readonly value = signal(0);

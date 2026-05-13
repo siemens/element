@@ -38,8 +38,7 @@ import { Subject } from 'rxjs';
     CdkMenuTrigger
   ],
   templateUrl: './datatable-responsive.html',
-  styleUrl: './datatable.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './datatable.scss'
 })
 export class SampleComponent implements OnInit, OnDestroy {
   readonly statusCellTempl = viewChild.required<TemplateRef<any>>('statusCellTempl');

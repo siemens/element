@@ -10,7 +10,6 @@ import {
 } from '@angular/cdk/a11y';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -84,7 +83,6 @@ import { DatepickerConfig, DateRange } from './si-datepicker.model';
     }
   `,
   styleUrl: './si-datepicker-overlay.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'mt-md-1 d-flex elevation-2 rounded-2 overflow-auto align-items-stretch',
     '[class.flex-wrap]': 'isMobile()',

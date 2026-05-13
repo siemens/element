@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { SiIconComponent } from '@siemens/element-ng/icon';
@@ -17,8 +17,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     .card-size {
       height: 250px;
     }
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

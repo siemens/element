@@ -37,8 +37,7 @@ interface MapPointCustom extends MapPointMetaData {
         <td>{{ mapPoint().shapeType }}</td>
       </tr>
     </table>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class CustomPopoverComponent {
   readonly mapPoint = input.required<MapPointCustom>();
@@ -48,6 +47,7 @@ export class CustomPopoverComponent {
   selector: 'app-sample',
   imports: [SiMapComponent],
   templateUrl: './si-map-geo-json.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'h-100 d-flex flex-column p-5' }
 })
 export class SampleComponent implements OnInit, AfterViewInit {

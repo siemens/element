@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Injectable,
-  TemplateRef,
-  viewChild
-} from '@angular/core';
+import { Component, ElementRef, Injectable, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideSiUiState, SI_UI_STATE_SERVICE, UIStateStorage } from '@siemens/element-ng/common';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
@@ -108,8 +101,7 @@ class SynchronousMockStore implements UIStateStorage {
         </si-split-part>
       </si-split>
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class WrapperComponent {
   readonly split = viewChild.required(TestComponent);

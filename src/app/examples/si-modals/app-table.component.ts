@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { ModalRef } from '@siemens/element-ng/modal';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
@@ -15,7 +15,8 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
   selector: 'app-table',
   imports: [NgxDatatableModule, SiDatatableModule, SiResizeObserverModule],
   templateUrl: './app-table.component.html',
-  providers: [DataService]
+  providers: [DataService],
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AppTableComponent {
   logEvent = inject(LOG_EVENT);

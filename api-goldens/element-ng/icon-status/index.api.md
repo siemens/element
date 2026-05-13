@@ -4,9 +4,7 @@
 
 ```ts
 
-import * as i0 from '@angular/core';
-import * as i1 from '@siemens/element-ng/status-counter';
-import { SiStatusCounterComponent } from '@siemens/element-ng/status-counter';
+import * as _angular_core from '@angular/core';
 
 // @public @deprecated (undocumented)
 export const SiIconStatusComponent: typeof SiStatusCounterComponent;

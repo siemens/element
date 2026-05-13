@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -31,8 +30,7 @@ import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
   styleUrl: './si-filtered-search-multi-select.component.scss',
   providers: [
     { provide: SiFilteredSearchValueBase, useExisting: SiFilteredSearchMultiSelectComponent }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 export class SiFilteredSearchMultiSelectComponent
   extends SiFilteredSearchOptionValueBase

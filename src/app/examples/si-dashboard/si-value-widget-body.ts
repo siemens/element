@@ -22,7 +22,6 @@ import { Link, SiLinkDirective } from '@siemens/element-ng/link';
       height: 400px;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {

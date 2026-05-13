@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { Coordinate, makePolyline } from '@siemens/native-charts-ng/utils';
 
 export interface MicrochartLineSeries {
@@ -18,8 +18,7 @@ export interface MicrochartLineSeries {
 
 @Component({
   selector: 'si-microchart-line',
-  templateUrl: './si-microchart-line.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-microchart-line.component.html'
 })
 export class SiMicrochartLineComponent {
   /**

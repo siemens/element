@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
 import { BlinkService } from '@siemens/element-ng/common';
@@ -13,8 +13,7 @@ import { Subscription, timer } from 'rxjs';
 @Component({
   selector: 'app-sample',
   imports: [SiStatusBarComponent, SiCircleStatusModule],
-  templateUrl: './si-status-bar-custom.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-status-bar-custom.html'
 })
 export class SampleComponent implements OnInit {
   private readonly logEvent = inject(LOG_EVENT);

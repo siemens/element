@@ -52,7 +52,12 @@ export const livePreviewRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(livePreviewRoutes, { useHash: true })],
+  imports: [
+    RouterModule.forRoot(livePreviewRoutes, {
+      useHash: true,
+      paramsInheritanceStrategy: 'emptyOnly'
+    })
+  ],
   exports: [RouterModule]
 })
 export class SiLivePreviewRoutingModule {}

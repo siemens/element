@@ -53,8 +53,7 @@ import { CorporateEmployee, DataService, Page, PageRequest } from '../datatable/
     SiHeaderLogoDirective
   ],
   templateUrl: './content-full-layout-full-scroll.html',
-  providers: [DataService],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [DataService]
 })
 export class SampleComponent implements OnInit {
   menuItems: NavbarVerticalItem[] = [

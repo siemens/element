@@ -5,7 +5,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -51,7 +50,6 @@ import { SiImageCropperStyleComponent } from './si-image-cropper-style.component
   ],
   templateUrl: './si-photo-upload.component.html',
   styleUrl: './si-photo-upload.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [
     {
       directive: SiAvatarBackgroundColorDirective,

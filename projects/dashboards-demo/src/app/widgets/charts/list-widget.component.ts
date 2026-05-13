@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  signal,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
+import { Component, input, signal, TemplateRef, ViewChild } from '@angular/core';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import {
@@ -33,8 +26,7 @@ import { Link, SiLinkDirective } from '@siemens/element-ng/link';
       />
     </si-list-widget-body>
     <ng-template #footer><a [siLink]="link">Go to...</a></ng-template>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class ListWidgetComponent implements WidgetInstance {
   readonly config = input.required<WidgetConfig>();

@@ -2,16 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  ElementRef,
-  input,
-  model,
-  output,
-  viewChild
-} from '@angular/core';
+import { Component, computed, ElementRef, input, model, output, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiTypeaheadDirective, TypeaheadOption } from '@siemens/element-ng/typeahead';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -24,7 +15,6 @@ import { InternalCriterionDefinition } from './si-filtered-search-helper';
   imports: [FormsModule, SiTypeaheadDirective, SiTranslatePipe],
   templateUrl: './si-filtered-search-input.component.html',
   styleUrl: './si-filtered-search-input.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'w-100'
   }

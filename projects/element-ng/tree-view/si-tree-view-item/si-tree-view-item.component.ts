@@ -19,7 +19,8 @@ import {
   OnInit,
   signal,
   TemplateRef,
-  viewChild
+  viewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { correctKeyRTL, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
@@ -58,6 +59,7 @@ import {
   ],
   templateUrl: './si-tree-view-item.component.html',
   styleUrl: './si-tree-view-item.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     role: 'treeitem',
     '[attr.tabindex]':

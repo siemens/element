@@ -9,7 +9,8 @@ import {
   HostListener,
   inject,
   NgZone,
-  viewChild
+  viewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent } from 'rxjs';
@@ -33,7 +34,8 @@ const filterTargets = ['_self', '_top', '_parent', ''];
   selector: 'si-live-preview-wrapper',
   imports: [SiLivePreviewRendererComponent],
   templateUrl: './si-live-preview-wrapper.component.html',
-  styles: 'si-live-preview-renderer { flex: 1;}'
+  styles: 'si-live-preview-renderer { flex: 1;}',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiLivePreviewWrapperComponent {
   readonly renderer = viewChild.required<SiLivePreviewRendererComponent>('renderer');

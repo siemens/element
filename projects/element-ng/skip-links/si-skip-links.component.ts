@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiSkipLinkTargetDirective } from './si-skip-link-target.directive';
@@ -11,8 +11,7 @@ import { SiSkipLinkTargetDirective } from './si-skip-link-target.directive';
   selector: 'si-skip-links',
   imports: [SiTranslatePipe],
   templateUrl: './si-skip-links.component.html',
-  styleUrl: './si-skip-links.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-skip-links.component.scss'
 })
 export class SiSkipLinksComponent {
   /** @defaultValue [] */

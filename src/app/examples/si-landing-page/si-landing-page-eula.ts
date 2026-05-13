@@ -188,8 +188,7 @@ export const ROUTES: Route[] = [
   selector: 'app-sample',
   imports: [SiLandingPageComponent, RouterOutlet, TranslateModule],
   templateUrl: './si-landing-page-eula.html',
-  providers: [provideExampleRoutes(ROUTES)],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [provideExampleRoutes(ROUTES)]
 })
 export class SampleComponent implements OnInit, OnDestroy {
   private activeRoute = inject(ActivatedRoute);

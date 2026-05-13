@@ -4,7 +4,7 @@
  */
 
 import { AsyncPipe } from '@angular/common';
-import { Component, input, OnInit } from '@angular/core';
+import { Component, input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
@@ -22,7 +22,8 @@ export interface WidgetChartCartesianConfig {
 @Component({
   selector: 'app-chart-widget',
   imports: [SiChartCartesianComponent, SiResizeObserverModule, AsyncPipe],
-  templateUrl: './chart-widget.component.html'
+  templateUrl: './chart-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class ChartWidgetComponent implements OnInit, WidgetInstance {
   readonly config = input.required<WidgetConfig>();

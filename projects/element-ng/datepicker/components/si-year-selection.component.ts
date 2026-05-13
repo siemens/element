@@ -4,7 +4,6 @@
  */
 import { DatePipe } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   computed,
   HostListener,
@@ -37,7 +36,6 @@ import { SiInitialFocusComponent } from './si-initial-focus.component';
   selector: 'si-year-selection',
   imports: [SiCalendarDirectionButtonComponent, SiCalendarBodyComponent, DatePipe],
   templateUrl: './si-year-selection.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'd-flex flex-column gap-6'
   }

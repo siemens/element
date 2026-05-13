@@ -10,7 +10,8 @@ import {
   model,
   OnInit,
   output,
-  viewChild
+  viewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyForm, FormlyFormOptions } from '@ngx-formly/core';
@@ -21,7 +22,8 @@ import { JSONSchema7 } from 'json-schema';
   selector: 'si-formly',
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false,
-  templateUrl: './si-formly.component.html'
+  templateUrl: './si-formly.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlyComponent<
   TControl extends { [K in keyof TControl]: AbstractControl }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -100,7 +100,6 @@ export const noEconomy: ValidatorFn = control => {
   ],
   templateUrl: './si-form.html',
   providers: [JsonPipe],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

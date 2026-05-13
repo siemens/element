@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -28,7 +28,8 @@ import { SiThemeService, ThemeType } from '@siemens/element-ng/theme';
     SiHeaderBrandDirective,
     SiHeaderLogoDirective
   ],
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AppComponent implements OnInit {
   menuItems: NavbarVerticalItem[] = [

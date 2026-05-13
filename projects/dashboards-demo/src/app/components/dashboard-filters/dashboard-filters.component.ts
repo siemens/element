@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -12,7 +12,8 @@ import { DataService, days, severity } from '../../widgets/charts/data.service';
   selector: 'app-dashboard-filters',
   imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './dashboard-filters.component.html',
-  styleUrl: './dashboard-filters.component.scss'
+  styleUrl: './dashboard-filters.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class DashboardFiltersComponent implements OnInit {
   form!: FormGroup;

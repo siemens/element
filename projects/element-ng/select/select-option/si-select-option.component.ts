@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, TemplateRef } from '@angular/core';
+import { Component, input, TemplateRef } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
@@ -14,7 +14,6 @@ import { SelectOption } from '../si-select.types';
   selector: 'si-select-option',
   imports: [NgTemplateOutlet, SiIconComponent, SiTranslatePipe, SiSelectOptionTemplateDirective],
   templateUrl: './si-select-option.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'd-flex align-items-center overflow-hidden'
   }

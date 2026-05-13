@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
@@ -14,8 +14,7 @@ import { CorporateEmployee, DataService, PageRequest } from './data.service';
   imports: [NgxDatatableModule, SiDatatableModule, SiEmptyStateComponent],
   templateUrl: './datatable-empty-server.html',
   styleUrl: './datatable.scss',
-  providers: [DataService],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [DataService]
 })
 export class SampleComponent {
   tableConfig = SI_DATATABLE_CONFIG;

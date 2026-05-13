@@ -17,7 +17,8 @@ import {
   Output,
   signal,
   SimpleChanges,
-  TemplateRef
+  TemplateRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -31,6 +32,7 @@ import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-spl
   styleUrl: './si-split-part.component.scss',
   // Signals cannot be used directly with @HostBinding. See: https://github.com/angular/angular/issues/53888#issuecomment-1888935225
   // Having every binding here for consistency.
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class.is-collapsed]': 'collapsedState()',
     '[class.collapse-start]': 'collapseDirection === "start"',

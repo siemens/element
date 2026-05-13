@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -10,8 +10,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
   selector: 'si-empty-state',
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-empty-state.component.html',
-  styleUrl: './si-empty-state.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-empty-state.component.scss'
 })
 export class SiEmptyStateComponent {
   /**

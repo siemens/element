@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { SiAvatarComponent } from '@siemens/element-ng/avatar';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 
@@ -15,7 +15,6 @@ import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.di
   imports: [SiAvatarComponent, SiIconComponent],
   templateUrl: './si-header-account-item.component.html',
   styleUrl: './si-header-account-item.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'header-item focus-inside px-4 py-0',
     '[class.dropdown-toggle]': '!!dropdownTrigger'

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiTreeViewComponent, TreeItem } from '@siemens/element-ng/tree-view';
 
@@ -10,7 +10,6 @@ import { SiTreeViewComponent, TreeItem } from '@siemens/element-ng/tree-view';
   selector: 'app-sample',
   imports: [SiTreeViewComponent],
   templateUrl: './si-tree-view-expand-collapse.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -22,7 +22,6 @@ interface TabModel {
   selector: 'app-sample',
   imports: [FormsModule, SiTabsetComponent, SiTabComponent],
   templateUrl: './si-tabs.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

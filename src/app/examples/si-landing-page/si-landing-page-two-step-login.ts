@@ -110,8 +110,7 @@ export const ROUTES: Route[] = [
   selector: 'app-sample',
   imports: [SiLandingPageComponent, TranslateModule, RouterOutlet],
   templateUrl: './si-landing-page-two-step-login.html',
-  providers: [provideExampleRoutes(ROUTES)],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [provideExampleRoutes(ROUTES)]
 })
 export class SampleComponent implements OnInit, OnDestroy {
   private activeRoute = inject(ActivatedRoute);

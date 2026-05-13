@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -37,8 +36,7 @@ import { StatusToggleItem } from './status-toggle.model';
       useExisting: forwardRef(() => SiStatusToggleComponent),
       multi: true
     }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, OnDestroy, OnChanges {
   /** List of status items. */

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { SiDatepickerDirective } from '@siemens/element-ng/datepicker';
@@ -24,7 +24,6 @@ export const DATE_PATTERN_ENABLE = 'date-pattern.enable';
     FormsModule
   ],
   templateUrl: './si-localization.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

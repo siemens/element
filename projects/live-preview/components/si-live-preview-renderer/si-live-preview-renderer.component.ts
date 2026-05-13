@@ -27,7 +27,8 @@ import {
   ViewContainerRef,
   viewChild,
   ViewChild,
-  output
+  output,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ɵDomRendererFactory2 as DomRendererFactory2 } from '@angular/platform-browser';
 import { ActivatedRoute, Routes } from '@angular/router';
@@ -58,13 +59,15 @@ const getCircularReplacer = (): ((_key: any, value: any | null) => any) => {
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'app-sample',
   template: '',
+  changeDetection: ChangeDetectionStrategy.Eager,
   jit: true
 })
 export class DummyAppSampleComponent {}
 
 @Component({
   selector: 'si-live-preview-renderer',
-  template: '<div #renderedExample></div><div #react id="app"></div>'
+  template: '<div #renderedExample></div><div #react id="app"></div>',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
   readonly renderedExample = viewChild.required('renderedExample', { read: ViewContainerRef });

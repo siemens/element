@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortalOutlet } from '@angular/cdk/portal';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { SiTabsetComponent } from './si-tabset.component';
 
@@ -32,8 +32,7 @@ import { SiTabsetComponent } from './si-tabset.component';
 @Component({
   selector: 'si-tab-portal',
   imports: [CdkPortalOutlet],
-  template: ` <ng-template [cdkPortalOutlet]="tabset().contentPortal()" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `<ng-template [cdkPortalOutlet]="tabset().contentPortal()" />`
 })
 export class SiTabPortalComponent {
   /**

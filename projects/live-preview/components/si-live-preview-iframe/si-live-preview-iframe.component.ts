@@ -15,7 +15,8 @@ import {
   OnInit,
   output,
   SimpleChanges,
-  viewChild
+  viewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -32,7 +33,8 @@ import { availableDevices, Device } from './devices';
   selector: 'si-live-preview-iframe',
   imports: [FormsModule, SiLivePreviewQrComponent],
   templateUrl: './si-live-preview-iframe.component.html',
-  styleUrl: './si-live-preview-iframe.component.scss'
+  styleUrl: './si-live-preview-iframe.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
   readonly previewIframe = viewChild<ElementRef>('previewIframe');

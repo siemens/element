@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { SiIconComponent } from '@siemens/element-ng/icon';
@@ -31,7 +31,6 @@ import { SiTabBaseDirective } from './si-tab-base.directive';
   templateUrl: './si-tab.component.html',
   styleUrl: './si-tab.component.scss',
   providers: [{ provide: SiTabBaseDirective, useExisting: SiTabLinkComponent }],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [
     {
       directive: RouterLinkActive

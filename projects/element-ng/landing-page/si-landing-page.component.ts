@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, TemplateRef, signal } from '@angular/core';
+import { Component, input, TemplateRef, signal } from '@angular/core';
 import { CopyrightDetails, SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import {
@@ -61,8 +61,7 @@ import { LandingPageWarning } from './si-landing-page.model';
     NgTemplateOutlet
   ],
   templateUrl: './si-landing-page.component.html',
-  styleUrl: './si-landing-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-landing-page.component.scss'
 })
 export class SiLandingPageComponent {
   /**

@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  signal,
-  OnInit,
-  OnDestroy
-} from '@angular/core';
+import { Component, inject, signal, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Route, Router, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
@@ -166,8 +159,7 @@ export const ROUTES: Route[] = [
   selector: 'app-sample',
   imports: [SiLandingPageComponent, TranslateModule, RouterOutlet],
   templateUrl: './si-landing-page-change-password.html',
-  providers: [provideExampleRoutes(ROUTES)],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [provideExampleRoutes(ROUTES)]
 })
 export class SampleComponent implements OnInit, OnDestroy {
   private activeRoute = inject(ActivatedRoute);

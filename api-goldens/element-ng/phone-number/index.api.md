@@ -9,10 +9,10 @@ import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { ElementRef } from '@angular/core';
 import { OnChanges } from '@angular/core';
-import { SelectOption } from '@siemens/element-ng/select';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
-import { SiFormItemControl } from '@siemens/element-ng/form';
+import { Signal } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { ValidationErrors } from '@angular/forms';
 import { Validator } from '@angular/forms';
 

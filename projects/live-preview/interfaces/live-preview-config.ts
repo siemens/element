@@ -9,7 +9,7 @@ export interface SiLivePreviewConfig {
   modules: any[];
   errorHandler?: (err: any) => void;
   componentLoader: {
-    load: (name: string) => Promise<any>;
+    load: (name: string) => Promise<any> | undefined;
     list: string[];
     webcomponentsList: string[];
   };

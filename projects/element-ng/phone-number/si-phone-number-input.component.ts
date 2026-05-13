@@ -6,7 +6,6 @@ import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { LowerCasePipe } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -72,7 +71,6 @@ import { CountryInfo, PhoneDetails } from './si-phone-number-input.models';
       useExisting: SiPhoneNumberInputComponent
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'role': 'group',
     '[attr.aria-labelledby]': 'labelledby()',

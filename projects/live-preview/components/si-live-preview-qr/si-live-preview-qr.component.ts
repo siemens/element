@@ -9,14 +9,16 @@ import {
   OnChanges,
   OnDestroy,
   output,
-  SimpleChanges
+  SimpleChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import qrcode from 'qrcode-generator';
 
 @Component({
   selector: 'si-live-preview-qr',
   templateUrl: './si-live-preview-qr.component.html',
-  styleUrl: './si-live-preview-qr.component.scss'
+  styleUrl: './si-live-preview-qr.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() url?: string;

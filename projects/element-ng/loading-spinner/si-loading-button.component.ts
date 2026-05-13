@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { booleanAttribute, Component, input } from '@angular/core';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiLoadingSpinnerComponent } from './si-loading-spinner.component';
@@ -12,7 +12,6 @@ import { SiLoadingSpinnerComponent } from './si-loading-spinner.component';
   imports: [SiLoadingSpinnerComponent, SiTranslatePipe],
   templateUrl: './si-loading-button.component.html',
   styleUrl: './si-loading-button.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.pe-none]': 'disabled()'
   }

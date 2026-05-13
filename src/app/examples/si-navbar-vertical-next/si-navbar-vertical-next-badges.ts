@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   ActivatedRoute,
@@ -51,8 +51,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     RouterLinkActive,
     RouterOutlet
   ],
-  templateUrl: './si-navbar-vertical-next-badges.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-navbar-vertical-next-badges.html'
 })
 export class SampleComponent implements OnInit {
   private activeRoute = inject(ActivatedRoute);

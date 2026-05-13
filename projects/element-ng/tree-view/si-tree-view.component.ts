@@ -31,7 +31,8 @@ import {
   SimpleChanges,
   TemplateRef,
   viewChild,
-  viewChildren
+  viewChildren,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
@@ -115,6 +116,7 @@ const rootDefaults: TreeItem = {
     SiTreeViewVirtualizationService,
     { provide: SI_TREE_VIEW, useExisting: SiTreeViewComponent }
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '(document:keyup.shift)': 'onKeyUpShift()',
     '(document:keyup.control)': 'onKeyUpCtrl()',

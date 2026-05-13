@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiPopoverDirective } from './si-popover.directive';
@@ -203,8 +203,7 @@ describe('with scrollStrategy', () => {
     imports: [SiPopoverDirective],
     template: `<button type="button" siPopover="test" [siPopoverScrollStrategy]="scrollStrategy()"
       >Test</button
-    >`,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    >`
   })
   class ScrollStrategyHostComponent {
     readonly scrollStrategy = signal<ScrollStrategy | undefined>(undefined);

@@ -20,8 +20,7 @@ import { CorporateEmployee, DataService, PageRequest } from './data.service';
   imports: [NgxDatatableModule, SiDatatableModule, SiEmptyStateComponent],
   templateUrl: './datatable-filter.html',
   styleUrl: './datatable.scss',
-  providers: [DataService],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [DataService]
 })
 export class SampleComponent {
   readonly table = viewChild.required(DatatableComponent);

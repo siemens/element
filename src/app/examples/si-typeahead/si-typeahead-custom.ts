@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { SiSearchBarModule } from '@siemens/element-ng/search-bar';
@@ -13,8 +13,7 @@ import { SiFilterSettingsComponent } from '../si-filter-settings/si-filter-setti
 @Component({
   selector: 'app-sample',
   imports: [SiFilterSettingsComponent, SiSearchBarModule, FormsModule, SiTypeaheadDirective],
-  templateUrl: './si-typeahead-custom.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-typeahead-custom.html'
 })
 export class SampleComponent {
   variant: BackgroundColorVariant = 'base-1';

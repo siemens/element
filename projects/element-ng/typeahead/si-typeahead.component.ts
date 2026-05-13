@@ -5,7 +5,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -39,7 +38,6 @@ import { TypeaheadMatch } from './si-typeahead.model';
   ],
   templateUrl: './si-typeahead.component.html',
   styleUrl: './si-typeahead.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'w-100' }
 })
 export class SiTypeaheadComponent implements AfterViewInit {

@@ -17,7 +17,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
   selector: 'app-sample',
   imports: [SiTimelineWidgetBodyComponent, SiEmptyStateComponent],
   templateUrl: './si-timeline-widget-body.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {

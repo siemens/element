@@ -11,7 +11,8 @@ import {
   LOCALE_ID,
   OnChanges,
   SimpleChange,
-  SimpleChanges
+  SimpleChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { SiChartBaseComponent, GaugeSeriesOption, echarts } from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
@@ -26,7 +27,8 @@ echarts.use([GaugeChart]);
   selector: 'si-chart-gauge',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../common/si-chart-base.component.html',
-  styleUrl: '../common/si-chart-base.component.scss'
+  styleUrl: '../common/si-chart-base.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiChartGaugeComponent extends SiChartBaseComponent implements OnChanges {
   /** @defaultValue 0 */

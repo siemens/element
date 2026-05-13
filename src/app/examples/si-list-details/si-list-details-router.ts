@@ -4,13 +4,7 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { AsyncPipe, CommonModule, JsonPipe } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  AfterViewInit,
-  Component,
-  inject,
-  ChangeDetectorRef
-} from '@angular/core';
+import { AfterViewInit, Component, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent, SiEmptyStateModule } from '@siemens/element-ng/empty-state';
@@ -64,7 +58,7 @@ class OverviewComponent {
   );
 }
 
-@Component({ template: 'History', changeDetection: ChangeDetectionStrategy.OnPush })
+@Component({ template: 'History' })
 class HistoryComponent {}
 
 @Component({
@@ -120,7 +114,7 @@ class DetailsComponent {
 
 @Component({
   imports: [SiEmptyStateComponent],
-  template: ` <si-empty-state heading="No entity selected" icon="element-cancel" /> `
+  template: `<si-empty-state heading="No entity selected" icon="element-cancel" />`
 })
 class EmptyComponent {}
 

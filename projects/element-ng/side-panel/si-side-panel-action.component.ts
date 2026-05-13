@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { booleanAttribute, Component, input } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 
 /**
@@ -48,7 +48,6 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
     }
   `,
   styleUrl: './si-side-panel-action.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'focus-inside'
   }

@@ -4,7 +4,6 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -39,7 +38,6 @@ import { debounceTime } from 'rxjs/operators';
       multi: true
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.readonly]': 'readonly()'
   }

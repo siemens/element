@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiAccordionComponent } from './si-accordion.component';
@@ -16,8 +16,7 @@ import { SiCollapsiblePanelComponent } from './si-collapsible-panel.component';
       <si-collapsible-panel heading="two"><div>content</div></si-collapsible-panel>
       <si-collapsible-panel heading="three"><div>content</div></si-collapsible-panel>
     </si-accordion>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestHostComponent {
   readonly component = viewChild.required(SiAccordionComponent);

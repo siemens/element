@@ -5,7 +5,6 @@
 /* eslint-disable @angular-eslint/prefer-output-emitter-ref */
 import {
   AfterContentInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -50,7 +49,6 @@ interface SplitPartState {
   selector: 'si-split',
   templateUrl: './si-split.component.html',
   styleUrl: './si-split.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   // Signals cannot be used directly with @HostBinding. See: https://github.com/angular/angular/issues/53888#issuecomment-1888935225
   host: {
     '[class]': '_orientation()',

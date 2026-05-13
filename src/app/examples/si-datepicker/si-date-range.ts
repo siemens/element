@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DateRange, SiDateRangeComponent } from '@siemens/element-ng/datepicker';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
@@ -12,7 +12,6 @@ import { SiFormItemComponent } from '@siemens/element-ng/form';
   selector: 'app-sample',
   imports: [CommonModule, ReactiveFormsModule, SiDateRangeComponent, SiFormItemComponent],
   templateUrl: './si-date-range.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

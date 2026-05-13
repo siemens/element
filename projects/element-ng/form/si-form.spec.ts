@@ -4,7 +4,7 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   FormControl,
@@ -70,8 +70,7 @@ describe('SiForm', () => {
             </si-form-item>
           </form>
         </si-form-container>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {
       form = new FormGroup({
@@ -190,7 +189,7 @@ describe('SiForm', () => {
 
     it('should update required indicator', async () => {
       fixture.componentInstance.form.controls.input.setValidators([]);
-      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
       await fixture.whenStable();
       const field = await loader.getHarness(SiFormItemHarness.with({ label: 'Input' }));
       expect(await field.isRequired()).toBe(false);
@@ -203,14 +202,14 @@ describe('SiForm', () => {
       template: `
         <form>
           <si-form-item label="Input">
-            <input name="value" [required]="required" [(ngModel)]="value" />
+            <input name="value" [required]="required()" [(ngModel)]="value" />
           </si-form-item>
         </form>
       `
     })
     class TestHostComponent {
-      value = '';
-      required = true;
+      readonly value = signal('');
+      readonly required = signal(true);
     }
 
     let fixture: ComponentFixture<TestHostComponent>;
@@ -228,8 +227,7 @@ describe('SiForm', () => {
     it('should update required indicator', async () => {
       const field = await loader.getHarness(SiFormItemHarness.with({ label: 'Input' }));
       expect(await field.isRequired()).toBe(true);
-      fixture.componentInstance.required = false;
-      fixture.changeDetectorRef.markForCheck();
+      fixture.componentInstance.required.set(false);
       await fixture.whenStable();
       expect(await field.isRequired()).toBe(false);
     });
@@ -242,8 +240,7 @@ describe('SiForm', () => {
         <si-form-item label="Input">
           <input type="text" id="email" class="form-control" [formControl]="email" />
         </si-form-item>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {
       readonly email = new FormControl('email', [Validators.email]);
