@@ -10,9 +10,13 @@
     <span>{{ uploadDropText() | translate }}</span>
     &nbsp;
     <label class="select-file si-h5 mb-0">
-      <span tabindex="0" (keydown.enter)="inputEnterHandler()">{{
-        uploadTextFileSelect() | translate
-      }}</span>
+      <span
+        tabindex="0"
+        role="button"
+        (keydown.enter)="inputEnterHandler()"
+        (keydown.space)="$event.preventDefault(); inputEnterHandler()"
+        >{{ uploadTextFileSelect() | translate }}</span
+      >
       <input
         #fileInput
         type="file"
