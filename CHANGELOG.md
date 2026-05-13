@@ -1,3 +1,11 @@
+## [48.11.2](https://github.com/siemens/element/compare/v48.11.1...v48.11.2) (2026-05-13)
+
+
+### Bug Fixes
+
+* **charts:** retain grid and legend config on theme change ([142b445](https://github.com/siemens/element/commit/142b4450d66ab4d93213d518da431d0ea909290f))
+* **native-charts:** fix visual in single gauge chart with min > 0 ([bff888c](https://github.com/siemens/element/commit/bff888ca94d70d31aaead71e7d6047506ce03d5d))
+
 ## [48.11.1](https://github.com/siemens/element/compare/v48.11.0...v48.11.1) (2026-04-20)
 
 
