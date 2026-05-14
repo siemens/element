@@ -20,7 +20,7 @@ import {
   SimpleChanges,
   viewChild
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { outputToObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ScrollbarHelper } from '@siemens/element-ng/common';
 import {
   BOOTSTRAP_BREAKPOINTS,
@@ -28,6 +28,7 @@ import {
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { Subject, takeUntil } from 'rxjs';
 
 import { SiDashboardCardComponent } from './si-dashboard-card.component';
 import { SiDashboardService } from './si-dashboard.service';
@@ -86,6 +87,7 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
   private _isExpanded = false;
   private scrollPosition: [number, number] = [0, 0];
 
+  private readonly reinitCards$ = new Subject<void>();
   private cards: SiDashboardCardComponent[] = [];
   private readonly expandedPortalOutlet = viewChild.required('expandedPortalOutlet', {
     read: CdkPortalOutlet
@@ -108,6 +110,8 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
     this.dashboardService.cards$
       .pipe(takeUntilDestroyed())
       .subscribe(cards => this.subscribeToCards(cards));
+
+    this.destroyRef.onDestroy(() => this.reinitCards$.complete());
   }
 
   ngOnChanges(changes: SimpleChanges<this>): void {
@@ -133,6 +137,8 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
   }
 
   private initCards(): void {
+    this.reinitCards$.next();
+
     for (const card of this.cards) {
       // We only enforce expand if the dashboard value is true, otherwise we would remove the individual
       // card settings.
@@ -141,14 +147,16 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
         card.enableExpandInteractionInternal.set(enableExpandInteractions);
       }
 
-      card.expandChange.subscribe((expand: boolean) => {
-        if (expand) {
-          this.expand(card);
-        } else {
-          this.restoreDashboard();
-        }
-        this.cdRef.markForCheck();
-      });
+      outputToObservable(card.expandChange)
+        .pipe(takeUntil(this.reinitCards$), takeUntilDestroyed(this.destroyRef))
+        .subscribe((expand: boolean) => {
+          if (expand) {
+            this.expand(card);
+          } else {
+            this.restoreDashboard();
+          }
+          this.cdRef.markForCheck();
+        });
     }
   }
 
@@ -194,8 +202,6 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
     }
     // Restore the dashboard and scroll to previous position
     this.restoreDashboard();
-    // Subscribe to cards events again
-    this.initCards();
     this.cdRef.markForCheck();
   }
 
