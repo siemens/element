@@ -123,6 +123,28 @@ describe('SiDashboardComponent', () => {
       expect(expandSpy).toHaveBeenCalled();
       expect(component.cardComponents().at(-1)!.hide).toBe(false);
     });
+
+    it('should not call expand multiple times after initCards re-subscriptions', async () => {
+      const expandSpy = vi.spyOn(component.dashboard(), 'expand');
+      const card = component.cardComponents().at(0)!;
+
+      // toggle enableExpandInteractions to trigger initCards re-subscriptions via ngOnChanges
+      component.enableExpandInteractions = false;
+      await fixture.whenStable();
+
+      component.enableExpandInteractions = true;
+      await fixture.whenStable();
+
+      component.enableExpandInteractions = false;
+      await fixture.whenStable();
+
+      component.enableExpandInteractions = true;
+      await fixture.whenStable();
+
+      // after multiple initCards cycles, expanding should only trigger expand once
+      card.expand();
+      expect(expandSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   it('resize should trigger setDashboardFrameEndPadding on resize', () => {
