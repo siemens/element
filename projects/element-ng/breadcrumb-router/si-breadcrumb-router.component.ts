@@ -5,6 +5,7 @@
 import { Component, inject, input, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { BreadcrumbItem, SiBreadcrumbComponent } from '@siemens/element-ng/breadcrumb';
+import { t } from '@siemens/element-translate-ng/translate';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -19,9 +20,12 @@ export class SiBreadcrumbRouterComponent implements OnInit, OnDestroy {
   /**
    * Aria label for the main breadcrumb navigation. Needed for a11y.
    *
-   * @defaultValue 'breadcrumb'
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_BREADCRUMB_ROUTER_LABEL:breadcrumb`)
+   * ```
    */
-  readonly ariaLabel = input('breadcrumb');
+  readonly ariaLabel = input(t(() => $localize`:@@SI_BREADCRUMB_ROUTER_LABEL:breadcrumb`));
 
   protected readonly items = signal<BreadcrumbItem[]>([]);
 
