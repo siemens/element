@@ -22,7 +22,6 @@ import {
   viewChild
 } from '@angular/core';
 import { outputToObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ScrollbarHelper } from '@siemens/element-ng/common';
 import {
   BOOTSTRAP_BREAKPOINTS,
   ElementDimensions,
@@ -102,7 +101,6 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
   private scroller = inject(ViewportScroller);
   private dashboardService = inject(SiDashboardService);
   private resizeObserver = inject(ResizeObserverService);
-  private scrollbarHelper = inject(ScrollbarHelper);
   private cdRef = inject(ChangeDetectorRef);
   private document = inject(DOCUMENT);
   private readonly hideMenubarInternal = signal(false);
@@ -263,7 +261,8 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
       dashboardFrameDimensions &&
       dashboardDimensions.height > dashboardFrameDimensions.height
     ) {
-      padding = padding - this.scrollbarHelper.width;
+      const { offsetWidth, clientWidth } = this.dashboardFrame().nativeElement;
+      padding = padding - (offsetWidth - clientWidth);
     }
     this.dashboardFrameEndPadding.set(padding);
   }

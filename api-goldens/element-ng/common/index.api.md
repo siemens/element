@@ -235,7 +235,7 @@ export const responsivelyCheckDirection: (params: {
     close: boolean;
 };
 
-// @public
+// @public @deprecated
 export class ScrollbarHelper {
     readonly width: number;
 }
