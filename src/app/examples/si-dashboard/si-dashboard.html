@@ -122,8 +122,10 @@
       @case ('door') {
         <table class="table">
           <thead>
-            <th>Day</th>
-            <th>Door access events</th>
+            <tr>
+              <th scope="col">Day</th>
+              <th scope="col">Door access events</th>
+            </tr>
           </thead>
           <tbody>
             @for (event of doorAccessEventsfiltered; track event) {
