@@ -7,7 +7,13 @@ import { inject, Injectable, DOCUMENT } from '@angular/core';
 /**
  * Gets the width of the scrollbar.  Nesc for windows
  * http://stackoverflow.com/a/13382873/888165
+ *
+ * @deprecated This service uses a legacy DOM-measurement hack to determine scrollbar width.
+ * Use `element.offsetWidth - element.clientWidth` on the scrollable element directly,
+ * which is more accurate, SSR-safe, and accounts for OS-level theming and CSS overrides.
+ * Will be removed in v51.
  */
+
 @Injectable({ providedIn: 'root' })
 export class ScrollbarHelper {
   private document = inject(DOCUMENT);
