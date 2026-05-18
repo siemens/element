@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { inputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {
@@ -12,34 +12,19 @@ import {
 } from '../resize-observer/testing/resize-observer.mock';
 import { SiStatusBarComponent, StatusBarItem } from './index';
 
-@Component({
-  imports: [SiStatusBarComponent],
-  template: `<si-status-bar [items]="items()" [muteButton]="muteButton()" /> `,
-  styles: `
-    :host {
-      display: block;
-    }
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    '[style.width.px]': 'width()'
-  }
-})
-class TestHostComponent {
-  readonly width = signal<number | undefined>(undefined);
-  readonly items = signal<StatusBarItem[]>([]);
-  readonly muteButton = signal<boolean | undefined>(undefined);
-}
-
 describe('SiStatusBarComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
+  let fixture: ComponentFixture<SiStatusBarComponent>;
   let element: HTMLElement;
+  const items = signal<StatusBarItem[]>([]);
+  const muteButton = signal<boolean | undefined>(undefined);
 
   beforeEach(() => {
     mockResizeObserver();
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
+    items.set([]);
+    muteButton.set(undefined);
+    fixture = TestBed.createComponent(SiStatusBarComponent, {
+      bindings: [inputBinding('items', items), inputBinding('muteButton', muteButton)]
+    });
     element = fixture.nativeElement;
     fixture.detectChanges();
   });
@@ -49,7 +34,7 @@ describe('SiStatusBarComponent', () => {
   });
 
   it('should display all items with relevant content', async () => {
-    component.items.set([
+    items.set([
       { title: 'Success', status: 'success', value: 200 },
       { title: 'Failure', status: 'danger', value: 404 }
     ]);
@@ -59,7 +44,7 @@ describe('SiStatusBarComponent', () => {
   });
 
   it('should handle item click', async () => {
-    component.items.set([{ title: 'Success', status: 'success', value: 200 }]);
+    items.set([{ title: 'Success', status: 'success', value: 200 }]);
     await fixture.whenStable();
     expect(() =>
       element.querySelector<HTMLElement>('si-status-bar-item')!.click()
@@ -68,23 +53,23 @@ describe('SiStatusBarComponent', () => {
 
   it('should invoke callback action if set', async () => {
     const spy = vi.fn();
-    component.items.set([{ title: 'Success', status: 'success', value: 200, action: spy }]);
+    items.set([{ title: 'Success', status: 'success', value: 200, action: spy }]);
     await fixture.whenStable();
     element.querySelector<HTMLElement>('si-status-bar-item')!.click();
-    expect(spy).toHaveBeenCalledWith(component.items()[0]);
+    expect(spy).toHaveBeenCalledWith(items()[0]);
   });
 
   it('shows an optional mute button', async () => {
     expect(element.querySelector('.mute-button')).not.toBeInTheDocument();
 
-    component.muteButton.set(true);
+    muteButton.set(true);
     await fixture.whenStable();
 
     const mute = element.querySelector('.mute-button > si-icon') as HTMLElement;
     expect(mute).toBeInTheDocument();
     expect(mute).toHaveAttribute('data-icon', 'elementSoundOn');
 
-    component.muteButton.set(false);
+    muteButton.set(false);
     await fixture.whenStable();
     expect(mute).not.toHaveAttribute('data-icon', 'elementSoundOn');
   });
@@ -101,8 +86,7 @@ describe('SiStatusBarComponent', () => {
     });
 
     const applySize = (outerSize: number): void => {
-      component.width.set(outerSize);
-      fixture.detectChanges();
+      element.style.width = `${outerSize}px`;
       MockResizeObserver.triggerResize({});
       vi.advanceTimersByTime(200);
       fixture.detectChanges();
@@ -110,8 +94,8 @@ describe('SiStatusBarComponent', () => {
 
     sizes.forEach(size => {
       it(`sets the correct amount of items for size ${size}`, () => {
-        component.muteButton.set(undefined);
-        component.items.set([
+        muteButton.set(undefined);
+        items.set([
           { title: 'one with some text', status: 'success', value: 0 },
           { title: 'two with some text', status: 'warning', value: 0 },
           { title: 'three with some text', status: 'danger', value: 0 },
@@ -124,7 +108,7 @@ describe('SiStatusBarComponent', () => {
 
         applySize(size);
 
-        const responsive = component.items().length * 152 > size;
+        const responsive = items().length * 152 > size;
         const container = element.querySelector('.responsive') as HTMLElement;
 
         if (!responsive) {
@@ -137,8 +121,8 @@ describe('SiStatusBarComponent', () => {
       });
 
       it(`sets the correct amount of items for size ${size} using value`, () => {
-        component.muteButton.set(undefined);
-        component.items.set([
+        muteButton.set(undefined);
+        items.set([
           { value: 'one with some text', status: 'success', title: '' },
           { value: 'two with some text', status: 'warning', title: '' },
           { value: 'three with some text', status: 'danger', title: '' },
@@ -151,7 +135,7 @@ describe('SiStatusBarComponent', () => {
 
         applySize(size);
 
-        const responsive = component.items().length * 152 > size;
+        const responsive = items().length * 152 > size;
         const container = element.querySelector('.responsive') as HTMLElement;
 
         if (!responsive) {
@@ -165,8 +149,8 @@ describe('SiStatusBarComponent', () => {
     });
 
     it('shows the correct number of hidden active items', () => {
-      component.muteButton.set(undefined);
-      component.items.set([
+      muteButton.set(undefined);
+      items.set([
         { title: 'one with some text', status: 'success', value: 1 },
         { title: 'two with some text', status: 'warning', value: 2 },
         { title: 'three with some text', status: 'danger', value: 1 },
@@ -182,12 +166,12 @@ describe('SiStatusBarComponent', () => {
       const container = element.querySelector('.responsive') as HTMLElement;
       expect(container).toHaveClass('responsive-4');
 
-      const items = container.querySelectorAll('si-status-bar-item');
-      expect(items[3].querySelector<HTMLElement>('.item-value')).toHaveTextContent('2+');
+      const barItems = container.querySelectorAll('si-status-bar-item');
+      expect(barItems[3].querySelector<HTMLElement>('.item-value')).toHaveTextContent('2+');
     });
 
-    it('allows expanding in responsive mode', () => {
-      component.items.set([
+    it('allows expanding in responsive mode', async () => {
+      items.set([
         { title: 'one with some text', status: 'success', value: 111 },
         { title: 'two with some text', status: 'warning', value: 222 },
         { title: 'three with some text', status: 'danger', value: 333 },
@@ -196,17 +180,17 @@ describe('SiStatusBarComponent', () => {
       fixture.detectChanges();
       applySize(575);
       const expander = element.querySelector('.collapse-expand') as HTMLElement;
-      expect(expander).toBeTruthy();
+      expect(expander).toBeInTheDocument();
 
       expander.click();
-      fixture.detectChanges();
       vi.advanceTimersByTime(1000);
+      await fixture.whenStable();
 
       expect(element.querySelector('.expanded')).toBeInTheDocument();
 
       expander.click();
       vi.advanceTimersByTime(1000);
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       expect(element.querySelector('.expanded')).not.toBeInTheDocument();
     });
