@@ -1,3 +1,17 @@
+@if (followUpPrompts().length) {
+  <div class="follow-up-prompts d-flex flex-wrap gap-4 mb-4">
+    @for (prompt of followUpPrompts(); track $index) {
+      <button
+        type="button"
+        class="btn btn-secondary-ghost fw-normal"
+        [disabled]="disabled() || sending()"
+        (click)="selectFollowUpPrompt(prompt)"
+        >{{ prompt }}</button
+      >
+    }
+  </div>
+}
+
 <div
   class="input-wrapper border rounded-3"
   [class.drag-over]="dragOver()"
