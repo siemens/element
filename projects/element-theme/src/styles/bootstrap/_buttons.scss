@@ -199,7 +199,9 @@ button {
 
 // Icon buttons with circle variant
 // --------------
-.btn:is(.btn-circle, .btn-icon, .btn-close) {
+.btn-circle,
+.btn-icon,
+.btn-close {
   display: inline-flex;
   padding: 0;
   flex-shrink: 0;
@@ -213,7 +215,8 @@ button {
   }
 }
 
-.btn-circle {
+.btn-circle,
+.btn-close {
   border-radius: 50%;
 }
 

@@ -95,12 +95,6 @@
   border-start-start-radius: variables.$modal-content-inner-border-radius;
   border-start-end-radius: variables.$modal-content-inner-border-radius;
 
-  .btn-close {
-    padding-block: variables.$modal-header-padding-y * 0.5;
-    padding-inline: variables.$modal-header-padding-x * 0.5;
-    margin: 0;
-  }
-
   .icon {
     font-size: si-vars.$si-icon-font-size-lg;
     margin-inline-end: map.get(spacers.$spacers, 4);
