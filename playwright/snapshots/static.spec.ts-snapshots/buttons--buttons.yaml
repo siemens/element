@@ -33,8 +33,6 @@
 - button "tertiary warning badge"
 - button "tertiary danger badge"
 - button "tertiary ghost badge"
-- button "close"
-- button "close"
 - heading "Circle buttons" [level=4]
 - button "clock"
 - button "bath"
