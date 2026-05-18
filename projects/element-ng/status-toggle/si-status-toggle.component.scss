@@ -4,11 +4,10 @@
 
 :host {
   display: block;
-  block-size: 48px;
   border: 1px solid variables.$element-ui-4;
   border-radius: variables.$element-radius-2;
   background: variables.$element-base-2;
-  padding: 2px;
+  padding: (map.get(variables.$spacers, 2) - 1px);
 }
 
 .status-toggle-container {
@@ -42,6 +41,7 @@
   color: variables.$element-text-secondary;
   border-radius: 1px;
   cursor: pointer;
+  padding-block: map.get(variables.$spacers, 1);
 
   &.active {
     color: variables.$element-text-primary !important; // stylelint-disable-line declaration-no-important
