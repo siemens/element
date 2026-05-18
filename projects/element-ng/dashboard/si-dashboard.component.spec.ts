@@ -3,15 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  signal,
-  viewChild,
-  viewChildren
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild, viewChildren } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ElementDimensions, ResizeObserverService } from '@siemens/element-ng/resize-observer';
@@ -25,16 +17,16 @@ import { SiDashboardCardComponent, SiDashboardComponent } from './index';
     <si-dashboard
       heading="Dashboard"
       style="height: 300px"
-      [enableExpandInteractions]="enableExpandInteractions"
+      [enableExpandInteractions]="enableExpandInteractions()"
     >
       <ng-container menubar><select></select></ng-container>
       <ng-container dashboard>
-        @for (item of cards; track $index) {
+        @for (item of cards(); track $index) {
           <si-dashboard-card
             class="row"
             [heading]="'heading ' + ($index + 1)"
-            [primaryActions]="primaryActions"
-            [secondaryActions]="secondaryActions"
+            [primaryActions]="primaryActions()"
+            [secondaryActions]="secondaryActions()"
             [showMenubar]="showMenubar()[$index]"
           >
             <ng-container *ngTemplateOutlet="cardTemplate" body />
@@ -51,12 +43,11 @@ import { SiDashboardCardComponent, SiDashboardComponent } from './index';
 class WrapperComponent {
   readonly dashboard = viewChild.required(SiDashboardComponent);
   readonly cardComponents = viewChildren(SiDashboardCardComponent);
-  primaryActions: any;
-  secondaryActions: any;
-  enableExpandInteractions = false;
-  cards = ['Item1', 'Item2'];
+  readonly primaryActions = signal<any>(undefined);
+  readonly secondaryActions = signal<any>(undefined);
+  readonly enableExpandInteractions = signal(false);
+  readonly cards = signal(['Item1', 'Item2']);
   readonly showMenubar = signal([true, true]);
-  readonly cdRef = inject(ChangeDetectorRef);
 }
 
 describe('SiDashboardComponent', () => {
@@ -97,9 +88,8 @@ describe('SiDashboardComponent', () => {
 
   describe('with enableExpandInteraction', () => {
     beforeEach(async () => {
-      component.enableExpandInteractions = true;
-      component.cdRef.markForCheck();
-      fixture.detectChanges();
+      component.enableExpandInteractions.set(true);
+      await fixture.whenStable();
     });
 
     it('should show expand menu', () => {
@@ -129,16 +119,16 @@ describe('SiDashboardComponent', () => {
       const card = component.cardComponents().at(0)!;
 
       // toggle enableExpandInteractions to trigger initCards re-subscriptions via ngOnChanges
-      component.enableExpandInteractions = false;
+      component.enableExpandInteractions.set(false);
       await fixture.whenStable();
 
-      component.enableExpandInteractions = true;
+      component.enableExpandInteractions.set(true);
       await fixture.whenStable();
 
-      component.enableExpandInteractions = false;
+      component.enableExpandInteractions.set(false);
       await fixture.whenStable();
 
-      component.enableExpandInteractions = true;
+      component.enableExpandInteractions.set(true);
       await fixture.whenStable();
 
       // after multiple initCards cycles, expanding should only trigger expand once
@@ -158,7 +148,7 @@ describe('SiDashboardComponent', () => {
     expect(setPaddingSpy).toHaveBeenCalledTimes(2);
   });
 
-  it('#expand() shall expand a card', () => {
+  it('#expand() shall expand a card', async () => {
     let expandDiv = fixture.debugElement.queryAll(By.css('div.position-relative'))[0];
     expect(expandDiv).toBeDefined();
     expect(expandDiv.classes['d-none']).toBe(true);
@@ -166,49 +156,49 @@ describe('SiDashboardComponent', () => {
     const card = component.cardComponents().at(-1)!;
     expect(card).toBeDefined();
     component.dashboard().expand(card);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expandDiv = fixture.debugElement.queryAll(By.css('div.position-relative'))[0];
     expect(expandDiv.classes['d-none']).toBeUndefined();
   });
 
-  it('#restore() shall restore the dashboard', () => {
+  it('#restore() shall restore the dashboard', async () => {
     const card = component.cardComponents().at(-1)!;
     component.dashboard().expand(card);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     let expandDiv = fixture.debugElement.queryAll(By.css('div.position-relative'))[0];
     expect(expandDiv.classes['d-none']).toBeUndefined();
 
     component.dashboard().restore();
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expandDiv = fixture.debugElement.queryAll(By.css('div.position-relative'))[0];
     expect(expandDiv.classes['d-none']).toBeDefined();
   });
 
-  it('expand card with card#hideMenubar shall hide the menu bar', () => {
+  it('expand card with card#hideMenubar shall hide the menu bar', async () => {
     const card = component.cardComponents().at(-1)!;
     component.showMenubar.set([true, false]);
-    fixture.detectChanges();
+    await fixture.whenStable();
     let select = fixture.debugElement.queryAll(By.css('select'))[0];
     expect(select).toBeDefined();
 
     component.dashboard().expand(card);
-    fixture.detectChanges();
+    await fixture.whenStable();
     select = fixture.debugElement.queryAll(By.css('select'))[0];
     expect(select).toBeUndefined();
   });
 
-  it('#expand() called twice on different cards should restore first an apply expand on second', () => {
+  it('#expand() called twice on different cards should restore first an apply expand on second', async () => {
     const card = component.cardComponents().at(-1)!;
     component.showMenubar.set([true, false]);
-    fixture.detectChanges();
+    await fixture.whenStable();
     let select = fixture.debugElement.queryAll(By.css('select'))[0];
     expect(select).toBeDefined();
 
     component.dashboard().expand(card);
-    fixture.detectChanges();
+    await fixture.whenStable();
     select = fixture.debugElement.queryAll(By.css('select'))[0];
     expect(select).toBeUndefined();
     let expanded = fixture.debugElement.queryAll(By.css('div.position-relative'))[0];
@@ -217,7 +207,7 @@ describe('SiDashboardComponent', () => {
 
     const firstCard = component.cardComponents().at(0)!;
     component.dashboard().expand(firstCard);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     select = fixture.debugElement.queryAll(By.css('select'))[0];
     expect(select).toBeDefined();
