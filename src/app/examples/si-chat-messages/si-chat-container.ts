@@ -189,6 +189,11 @@ export class SampleComponent {
 
   readonly loading = signal(false);
   readonly sending = signal(false);
+  readonly followUpPrompts = signal<string[]>([
+    'What are the risks if this insight is ignored?',
+    'Show related insights from similar customer events.',
+    'Summarize this insight in 2 bullet points for presentation.'
+  ]);
   readonly disabled = signal(false);
   readonly disableInterrupt = signal(false);
   readonly interrupting = signal(false);
@@ -260,6 +265,11 @@ export class SampleComponent {
     this.onMessageSent({ content: suggestion.text, attachments: [] });
   }
 
+  onFollowUpPromptSelected(prompt: string): void {
+    this.inputValue.set(prompt);
+    this.followUpPrompts.set([]);
+  }
+
   onClearMessages(): void {
     this.logEvent('Clear messages clicked');
     this.messages.set([]);
@@ -279,6 +289,7 @@ export class SampleComponent {
   onMessageSent(event: { content: string; attachments: ChatInputAttachment[] }): void {
     this.logEvent(`Message sent: "${event.content}" with ${event.attachments.length} attachments`);
     this.firstMessageSent.set(true);
+    this.followUpPrompts.set([]);
     this.messages.update(current => [
       ...current,
       {
@@ -337,6 +348,12 @@ export class SampleComponent {
             content: response,
             actions: this.aiActions
           }
+        ]);
+        this.followUpPrompts.set([
+          'What are the risks if this insight is ignored?',
+          'Show related insights from similar customer events.',
+          'Summarize this insight in 2 bullet points for presentation.',
+          'Generate a summary report'
         ]);
         this.loading.set(false);
       }, 2000);
