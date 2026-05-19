@@ -21,6 +21,7 @@ import {
 import { WIZARD_WIDGET_DESCRIPTOR } from '../../widgets/contact-widget/contact-descriptors';
 import { HELLO_DESCRIPTOR } from '../../widgets/hello-widget/widget-descriptors';
 import { DOWNLOAD_WIDGET, UPLOAD_WIDGET } from '../../widgets/module-federation-widgets';
+import { WEATHER_WIDGET } from '../../widgets/weather';
 
 @Component({
   selector: 'app-dashboard',
@@ -41,6 +42,7 @@ export class DashboardPageComponent {
     LIST_WIDGET,
     TIMELINE_WIDGET,
     VALUE_WIDGET,
+    WEATHER_WIDGET,
     {
       id: 'note-widget-web-component',
       name: 'Note (web-component)',

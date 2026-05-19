@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { DataService, days, severity } from '../../widgets/charts/data.service';
@@ -21,6 +22,7 @@ export class DashboardFiltersComponent implements OnInit {
 
   private formBuilder = inject(FormBuilder);
   private dataService = inject(DataService);
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     const formControls = {
@@ -28,7 +30,7 @@ export class DashboardFiltersComponent implements OnInit {
       severity: [this.severity[0]]
     };
     this.form = this.formBuilder.group(formControls);
-    this.form.valueChanges.subscribe(form => {
+    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(form => {
       this.dataService.filter.next({ days: form.day, severity: form.severity });
     });
   }

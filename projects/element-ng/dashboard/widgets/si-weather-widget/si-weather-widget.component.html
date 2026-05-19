@@ -1,0 +1,23 @@
+<si-card
+  class="h-100"
+  [class]="accentClass()"
+  [heading]="cardHeading()"
+  [primaryActions]="primaryActions()"
+  [secondaryActions]="secondaryActions()"
+  [imgSrc]="imgSrc()"
+  [imgDir]="imgDir()"
+  [imgAlt]="imgAlt()"
+  [imgObjectFit]="imgObjectFit()"
+  [imgObjectPosition]="imgObjectPosition()"
+>
+  <div class="card-body" body>
+    <si-weather-widget-body
+      [layout]="layout()"
+      [value]="value()"
+      [location]="bodyLocation()"
+      [disableAutoLoadingIndicator]="disableAutoLoadingIndicator()"
+      [showLoadingIndicator]="showLoadingIndicator()"
+      [initialLoadingIndicatorDebounceTime]="initialLoadingIndicatorDebounceTime()"
+    />
+  </div>
+</si-card>

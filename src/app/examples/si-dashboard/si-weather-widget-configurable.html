@@ -1,0 +1,287 @@
+<div class="row align-items-start">
+  <aside class="col-lg-4 col-md-5 mb-6">
+    <h5>Data source</h5>
+    <div class="btn-group mb-4" role="group" aria-label="Data source">
+      <input
+        type="radio"
+        class="btn-check"
+        id="src-manual"
+        name="src"
+        value="manual"
+        [ngModel]="mode()"
+        (ngModelChange)="mode.set($event)"
+      />
+      <label class="btn btn-secondary" for="src-manual">Manual</label>
+      <input
+        type="radio"
+        class="btn-check"
+        id="src-ow"
+        name="src"
+        value="openweather"
+        [ngModel]="mode()"
+        (ngModelChange)="mode.set($event)"
+      />
+      <label class="btn btn-secondary" for="src-ow">OpenWeather</label>
+    </div>
+
+    @if (mode() === 'openweather') {
+      <form class="row g-3 mb-5" (submit)="$event.preventDefault(); onSearch()">
+        <div class="col-12">
+          <label class="form-label" for="cfg-api-key">OpenWeather API key</label>
+          <input
+            id="cfg-api-key"
+            class="form-control"
+            type="password"
+            autocomplete="off"
+            placeholder="paste your free API key"
+            name="apiKey"
+            [ngModel]="apiKey()"
+            (ngModelChange)="onApiKeyChange($event)"
+          />
+          <small class="form-text">
+            Get one at
+            <a href="https://home.openweathermap.org/api_keys" target="_blank" rel="noopener">
+              openweathermap.org
+            </a>
+            . Stored only in your browser's localStorage.
+          </small>
+        </div>
+      </form>
+    }
+
+    <form (submit)="$event.preventDefault(); mode() === 'openweather' && onSearch()">
+      <div class="row g-3">
+        <div [class]="mode() === 'openweather' ? 'col-8' : 'col-12'">
+          <label class="form-label" for="cfg-location">Location</label>
+          <input
+            id="cfg-location"
+            class="form-control"
+            name="location"
+            [ngModel]="location()"
+            (ngModelChange)="location.set($event)"
+          />
+        </div>
+
+        @if (mode() === 'openweather') {
+          <div class="col-4">
+            <label class="form-label" for="cfg-units">Units</label>
+            <select
+              id="cfg-units"
+              class="form-select"
+              name="units"
+              [ngModel]="units()"
+              (ngModelChange)="units.set($event)"
+            >
+              <option value="metric">metric</option>
+              <option value="imperial">imperial</option>
+            </select>
+          </div>
+
+          <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-primary" [disabled]="fetching()"> Search </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              [disabled]="!selectedCity() || fetching()"
+              (click)="onReload()"
+            >
+              Reload
+            </button>
+          </div>
+
+          @if (fetchError()) {
+            <div class="col-12 text-danger">{{ fetchError() }}</div>
+          }
+          @if (suggestions().length) {
+            <div class="col-12">
+              <ul class="list-group">
+                @for (city of suggestions(); track city.label) {
+                  <button
+                    type="button"
+                    class="list-group-item list-group-item-action"
+                    (click)="onSelectCity(city)"
+                  >
+                    {{ city.label }}
+                  </button>
+                }
+              </ul>
+            </div>
+          }
+          @if (selectedCity()) {
+            <div class="col-12 text-muted">
+              Showing: <strong>{{ selectedCity()!.label }}</strong>
+            </div>
+          }
+        }
+
+        <div class="col-12">
+          <label class="form-label" for="cfg-layout">Layout</label>
+          <select
+            id="cfg-layout"
+            class="form-select"
+            name="layout"
+            [ngModel]="layout()"
+            (ngModelChange)="layout.set($event)"
+          >
+            <option value="vertical">vertical</option>
+            <option value="horizontal">horizontal</option>
+            <option value="compact">compact</option>
+          </select>
+        </div>
+
+        @if (mode() === 'manual') {
+          <div class="col-4">
+            <label class="form-label" for="cfg-temp">Temperature</label>
+            <input
+              id="cfg-temp"
+              class="form-control"
+              name="temp"
+              [ngModel]="temperature()"
+              (ngModelChange)="temperature.set($event)"
+            />
+          </div>
+          <div class="col-4">
+            <label class="form-label" for="cfg-min">Min</label>
+            <input
+              id="cfg-min"
+              class="form-control"
+              name="min"
+              [ngModel]="minTemperature()"
+              (ngModelChange)="minTemperature.set($event)"
+            />
+          </div>
+          <div class="col-4">
+            <label class="form-label" for="cfg-max">Max</label>
+            <input
+              id="cfg-max"
+              class="form-control"
+              name="max"
+              [ngModel]="maxTemperature()"
+              (ngModelChange)="maxTemperature.set($event)"
+            />
+          </div>
+
+          <div class="col-12">
+            <label class="form-label" for="cfg-condition">Condition (token)</label>
+            <select
+              id="cfg-condition"
+              class="form-select"
+              name="condition"
+              [ngModel]="condition()"
+              (ngModelChange)="condition.set($event)"
+            >
+              @for (c of conditions; track c) {
+                <option [value]="c">{{ c }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label" for="cfg-condition-label">Condition label (display)</label>
+            <input
+              id="cfg-condition-label"
+              class="form-control"
+              name="conditionLabel"
+              [ngModel]="conditionLabel()"
+              (ngModelChange)="conditionLabel.set($event)"
+            />
+          </div>
+        }
+
+        <div class="col-6">
+          <label class="form-label" for="cfg-accent">Accent line</label>
+          <select
+            id="cfg-accent"
+            class="form-select"
+            name="accent"
+            [ngModel]="accentLine()"
+            (ngModelChange)="accentLine.set($event)"
+          >
+            <option [ngValue]="undefined">(none)</option>
+            <option ngValue="primary">primary</option>
+            <option ngValue="success">success</option>
+            <option ngValue="warning">warning</option>
+            <option ngValue="caution">caution</option>
+            <option ngValue="danger">danger</option>
+          </select>
+        </div>
+
+        <div class="col-12 form-check ms-2">
+          <input
+            id="cfg-metrics"
+            class="form-check-input"
+            type="checkbox"
+            name="metrics"
+            [ngModel]="showMetrics()"
+            (ngModelChange)="showMetrics.set($event)"
+          />
+          <label class="form-check-label" for="cfg-metrics">Show additional data</label>
+        </div>
+        <div class="col-12 form-check ms-2">
+          <input
+            id="cfg-forecast"
+            class="form-check-input"
+            type="checkbox"
+            name="forecast"
+            [ngModel]="showForecast()"
+            (ngModelChange)="showForecast.set($event)"
+          />
+          <label class="form-check-label" for="cfg-forecast">Show forecast</label>
+        </div>
+        <div class="col-12 form-check ms-2">
+          <input
+            id="cfg-fcols"
+            class="form-check-input"
+            type="checkbox"
+            name="fcols"
+            [ngModel]="showForecastColumns()"
+            (ngModelChange)="showForecastColumns.set($event)"
+          />
+          <label class="form-check-label" for="cfg-fcols">
+            Show forecast extra columns (vertical, manual mode)
+          </label>
+        </div>
+        <div class="col-12 form-check ms-2">
+          <input
+            id="cfg-loading"
+            class="form-check-input"
+            type="checkbox"
+            name="loading"
+            [ngModel]="showLoading()"
+            (ngModelChange)="showLoading.set($event)"
+          />
+          <label class="form-check-label" for="cfg-loading">Show loading indicator</label>
+        </div>
+        <div class="col-12 ms-4">
+          <label class="form-label" for="cfg-extras-count">
+            Extra forecast columns ({{ extrasCount() }} of 5)
+          </label>
+          <input
+            id="cfg-extras-count"
+            class="form-range"
+            type="range"
+            name="extrasCount"
+            min="0"
+            max="5"
+            step="1"
+            [disabled]="!showForecastColumns()"
+            [ngModel]="extrasCount()"
+            (ngModelChange)="extrasCount.set(+$event)"
+          />
+        </div>
+      </div>
+    </form>
+  </aside>
+
+  <section class="col-lg-8 col-md-7">
+    <si-weather-widget
+      [layout]="layout()"
+      [heading]="effectiveHeading()"
+      [location]="effectiveLocation()"
+      [value]="value()"
+      [accentLine]="accentLine()"
+      [disableAutoLoadingIndicator]="true"
+      [showLoadingIndicator]="effectiveLoading()"
+    />
+  </section>
+</div>

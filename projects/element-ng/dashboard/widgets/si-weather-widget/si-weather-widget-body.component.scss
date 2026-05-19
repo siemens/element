@@ -1,0 +1,111 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/variables/typography';
+
+// Base layout applies to every body instance. The host always carries one of
+// the three layout discriminator classes (`-vertical`, `-horizontal`,
+// `-compact`), so `:host` alone is sufficient.
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: map.get(variables.$spacers, 9);
+  block-size: 100%;
+}
+
+// Shared Body/body-lg typography for the today condition and the vertical /
+// horizontal today range. Per-class rules below add their own color, layout,
+// and spacing.
+.si-weather-widget-condition,
+:host.si-weather-widget-vertical .si-weather-widget-range,
+:host.si-weather-widget-horizontal .si-weather-widget-range {
+  @include typography.si-font(
+    typography.$si-font-size-body-lg,
+    typography.$si-line-height-body-lg,
+    typography.$si-font-weight-body-lg
+  );
+}
+
+.si-weather-widget-today {
+  display: flex;
+  align-items: start;
+  gap: map.get(variables.$spacers, 4);
+}
+
+// vertical & horizontal: temperature at the inline-start,
+// illustration + condition + min/max stacked at the inline-end.
+:host.si-weather-widget-vertical .si-weather-widget-today,
+:host.si-weather-widget-horizontal .si-weather-widget-today {
+  justify-content: space-between;
+}
+
+:host.si-weather-widget-vertical .si-weather-widget-today-info,
+:host.si-weather-widget-horizontal .si-weather-widget-today-info {
+  align-items: flex-end;
+  text-align: end;
+}
+
+.si-weather-widget-today-info {
+  display: flex;
+  flex-direction: column;
+  gap: map.get(variables.$spacers, 1);
+  min-inline-size: 0;
+}
+
+.si-weather-widget-temperature {
+  @include typography.si-font(
+    typography.$si-font-size-display-xl,
+    typography.$si-line-height-display-xl,
+    typography.$si-font-weight-display-xl
+  );
+  color: variables.$element-text-primary;
+}
+
+.si-weather-widget-condition {
+  color: variables.$element-text-primary;
+}
+
+.si-weather-widget-location {
+  font-weight: variables.$si-font-weight-semibold;
+  color: variables.$element-text-primary;
+}
+
+.si-weather-widget-range {
+  display: flex;
+  gap: map.get(variables.$spacers, 2);
+}
+
+.si-weather-widget-range-min {
+  color: variables.$element-text-secondary;
+}
+
+.si-weather-widget-range-max {
+  color: variables.$element-text-primary;
+  font-weight: variables.$si-font-weight-semibold;
+}
+
+.si-weather-widget-metrics {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: map.get(variables.$spacers, 4);
+  margin-block: 0;
+  inline-size: 100%;
+}
+
+.si-weather-widget-metric {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: map.get(variables.$spacers, 4);
+}
+
+.si-weather-widget-metric-label {
+  color: variables.$element-text-secondary;
+}
+
+.si-weather-widget-metric-value {
+  color: variables.$element-text-primary;
+  font-weight: variables.$si-font-weight-semibold;
+  text-align: end;
+}

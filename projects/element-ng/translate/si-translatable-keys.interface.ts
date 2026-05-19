@@ -236,6 +236,9 @@ export interface SiTranslatableKeys {
   'SI_TREE_VIEW.EXPAND_ALL'?: string;
   'SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL'?: string;
   'SI_USER_MESSAGE.SECONDARY_ACTIONS'?: string;
+  'SI_WEATHER_WIDGET.FORECAST_LABEL'?: string;
+  'SI_WEATHER_WIDGET.ILLUSTRATION_ALT'?: string;
+  'SI_WEATHER_WIDGET.METRICS_LABEL'?: string;
   'SI_WIZARD.BACK'?: string;
   'SI_WIZARD.CANCEL'?: string;
   'SI_WIZARD.COMPLETED'?: string;

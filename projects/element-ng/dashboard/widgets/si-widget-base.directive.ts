@@ -9,8 +9,7 @@ import {
   input,
   OnChanges,
   OnInit,
-  signal,
-  SimpleChanges
+  signal
 } from '@angular/core';
 
 /**
@@ -61,18 +60,21 @@ export abstract class SiWidgetBaseDirective<T> implements OnInit, OnChanges {
 
   protected loadingTimer?: ReturnType<typeof setTimeout>;
 
-  ngOnChanges(changes: SimpleChanges<this>): void {
-    if (
-      !this.disableAutoLoadingIndicator() &&
-      !changes.value?.firstChange &&
-      changes.value?.currentValue
-    ) {
+  ngOnChanges(): void {
+    if (this.disableAutoLoadingIndicator()) {
+      return;
+    }
+
+    if (this.value()) {
       if (this.loadingTimer) {
         clearTimeout(this.loadingTimer);
         this.loadingTimer = undefined;
       }
-
       this.showLoadingIndicatorInternal.set(false);
+    } else {
+      // Data was removed: yield control back to the `showLoadingIndicator` input
+      // so callers can drive the loader manually.
+      this.showLoadingIndicatorInternal.set(undefined);
     }
   }
 

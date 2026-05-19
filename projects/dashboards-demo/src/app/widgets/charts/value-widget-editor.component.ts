@@ -2,7 +2,16 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, model, OnInit, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  model,
+  OnInit,
+  output
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   ObjectFit,
@@ -132,6 +141,8 @@ export class ValueWidgetEditorComponent implements WidgetInstanceEditor, OnInit 
 
   readonly statusChanges = output<Partial<WidgetConfigStatus>>();
 
+  private readonly destroyRef = inject(DestroyRef);
+
   protected form = new FormGroup({
     heading: new FormControl<string>(''),
     image: new FormGroup({
@@ -157,7 +168,7 @@ export class ValueWidgetEditorComponent implements WidgetInstanceEditor, OnInit 
 
   ngOnInit(): void {
     this.form.reset(this.config());
-    this.form.valueChanges.subscribe(value => {
+    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
       const config = this.config();
       Object.assign(config, value);
       this.statusChanges.emit({

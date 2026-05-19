@@ -82,6 +82,7 @@ nav:
       - List widget:                      'components/dashboards/list-widget.md'
       - Timeline widget:                  'components/dashboards/timeline-widget.md'
       - Value widget:                     'components/dashboards/value-widget.md'
+      - Weather widget:                   'components/dashboards/weather-widget.md'
     - Forms & inputs:
       - Checkbox:                         'components/forms-inputs/checkbox.md'
       - Color picker:                     'components/forms-inputs/color-picker.md'
