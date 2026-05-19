@@ -129,6 +129,27 @@ export const WIDGETS: WidgetConfig[] = [
     width: 4,
     height: 4,
     payload: {}
+  },
+  {
+    id: '8',
+    heading: 'Weather',
+    widgetId: '@siemens/dashboards-demo/weather',
+    minWidth: 3,
+    width: 4,
+    height: 6,
+    expandable: true,
+    payload: {
+      layout: 'vertical',
+      location: 'Zug',
+      temperature: '26°',
+      minTemperature: '20°',
+      maxTemperature: '28°',
+      condition: 'clear',
+      conditionLabel: 'Sunny',
+      showMetrics: true,
+      showForecast: true,
+      forecastColumnCount: 2
+    }
   }
 ];
 

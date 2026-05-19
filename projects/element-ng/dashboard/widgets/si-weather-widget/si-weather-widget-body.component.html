@@ -1,0 +1,74 @@
+@let data = value();
+@let current = data?.current;
+@let metrics = data?.metrics;
+@let forecast = data?.forecast;
+@let loading = showLoadingIndicator();
+
+@if (loading) {
+  <si-weather-widget-skeleton />
+} @else if (current) {
+  @if (isCompact()) {
+    <div class="si-weather-widget-today">
+      <si-weather-widget-illustration
+        size="sm"
+        [illustration]="current.illustration"
+        [condition]="current.condition"
+        [altFallback]="current.illustrationAlt"
+      />
+      <div class="si-weather-widget-today-info">
+        @if (location()) {
+          <div class="si-weather-widget-location">{{ location() | translate }}</div>
+        }
+        <ng-container *ngTemplateOutlet="rangeTpl; context: { $implicit: current }" />
+      </div>
+    </div>
+  } @else {
+    <div class="si-weather-widget-today">
+      <div class="si-weather-widget-temperature">{{ current.temperature }}</div>
+      <div class="si-weather-widget-today-info">
+        <si-weather-widget-illustration
+          size="lg"
+          [illustration]="current.illustration"
+          [condition]="current.condition"
+          [altFallback]="current.illustrationAlt"
+        />
+        @if (current.condition) {
+          <div class="si-weather-widget-condition">{{ current.condition | translate }}</div>
+        }
+        <ng-container *ngTemplateOutlet="rangeTpl; context: { $implicit: current }" />
+      </div>
+    </div>
+  }
+
+  @if (metrics?.length) {
+    <ul class="si-weather-widget-metrics" [attr.aria-label]="metricsLabel() | translate">
+      @for (metric of metrics; track $index) {
+        <li class="si-weather-widget-metric">
+          <span class="si-weather-widget-metric-label">{{ metric.label | translate }}</span>
+          <span class="si-weather-widget-metric-value">{{ metric.value }}</span>
+        </li>
+      }
+    </ul>
+  }
+
+  @if (!isCompact() && forecast && forecast.days.length) {
+    <si-weather-widget-forecast
+      [forecast]="forecast"
+      [layout]="layout() === 'horizontal' ? 'horizontal' : 'vertical'"
+      [forecastLabel]="forecastLabel()"
+    />
+  }
+}
+
+<ng-template #rangeTpl let-c siWeatherRangeDef>
+  @if (c.minTemperature !== undefined || c.maxTemperature !== undefined) {
+    <div class="si-weather-widget-range">
+      @if (c.minTemperature !== undefined) {
+        <span class="si-weather-widget-range-min">{{ c.minTemperature }}</span>
+      }
+      @if (c.maxTemperature !== undefined) {
+        <span class="si-weather-widget-range-max">{{ c.maxTemperature }}</span>
+      }
+    </div>
+  }
+</ng-template>

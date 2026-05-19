@@ -18,6 +18,7 @@ module.exports = withNativeFederation({
     '@siemens/ngx-datatable',
     // Use RegExp to skip ALL entry points!
     /^@angular\/platform-browser\/animations/,
+    '@meteocons/svg-static',
     /^@module-federation/,
     /^@ngx-formly/,
     /^ol/,

@@ -1,0 +1,43 @@
+- heading "Vertical body" [level=5]
+- text: /\d+°/
+- img "Sunny"
+- text: /Sunny \d+° \d+°/
+- list "Additional weather data":
+  - listitem: Wind 7 km/h
+  - listitem: /Humidity \d+%/
+  - listitem: UVI 1 low
+- list:
+  - listitem:
+    - text: Mon
+    - img "Mon"
+    - text: /\d+° \d+°/
+  - listitem:
+    - text: Tue
+    - img "Tue"
+    - text: /\d+° \d+°/
+  - listitem:
+    - text: Wed
+    - img "Wed"
+    - text: /\d+° \d+°/
+- heading "Horizontal body" [level=5]
+- text: /\d+°/
+- img "Sunny"
+- text: /Sunny \d+° \d+°/
+- list "Additional weather data":
+  - listitem: Wind 7 km/h
+  - listitem: /Humidity \d+%/
+  - listitem: UVI 1 low
+- text: Mon
+- img "Mon"
+- text: /\d+° \d+° Tue/
+- img "Tue"
+- text: /\d+° \d+° Wed/
+- img "Wed"
+- text: /\d+° \d+°/
+- heading "Compact body" [level=5]
+- img "Sunny"
+- text: /Zug \d+° \d+°/
+- list "Additional weather data":
+  - listitem: Wind 7 km/h
+  - listitem: /Humidity \d+%/
+  - listitem: UVI 1 low

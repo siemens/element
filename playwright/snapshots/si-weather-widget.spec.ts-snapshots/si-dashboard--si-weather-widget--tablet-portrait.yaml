@@ -1,0 +1,109 @@
+- text: /Zug, Switzerland \d+°/
+- img "Sunny"
+- text: /Sunny \d+° \d+°/
+- list "Additional weather data":
+  - listitem: Wind 7 km/h
+  - listitem: /Cloud cover \d+%/
+  - listitem: Precipitation 8 mm
+  - listitem: UVI 1 low
+- list:
+  - listitem:
+    - text: Mon
+    - img "Mon"
+    - 'img "Wind: 7 km/h"'
+    - text: /\d+° \d+°/
+  - listitem:
+    - text: Tue
+    - img "Tue"
+    - 'img "Wind: 6 km/h"'
+    - text: /\d+° \d+°/
+  - listitem:
+    - text: Wed
+    - img "Wed"
+    - 'img /Wind: \d+ km\/h/'
+    - text: /\d+° \d+°/
+  - listitem:
+    - text: Thu
+    - img "Thu"
+    - 'img /Wind: \d+ km\/h/'
+    - text: /\d+° \d+°/
+  - listitem:
+    - text: Fri
+    - img "Fri"
+    - 'img "Wind: 9 km/h"'
+    - text: /\d+° \d+°/
+- text: Oslo, Norway 9°
+- img "Rain"
+- text: /Rain 6° \d+°/
+- list:
+  - listitem:
+    - text: Mon
+    - img "Mon"
+    - text: /6° \d+°/
+  - listitem:
+    - text: Tue
+    - img "Tue"
+    - text: 5° 9°
+  - listitem:
+    - text: Wed
+    - img "Wed"
+    - text: /7° \d+°/
+  - listitem:
+    - text: Thu
+    - img "Thu"
+    - text: /8° \d+°/
+  - listitem:
+    - text: Fri
+    - img "Fri"
+    - text: /6° \d+°/
+- text: /Madrid, Spain \d+°/
+- img "Clear"
+- text: /Clear \d+° \d+° Tokyo, Japan \d+°/
+- img "Cloudy"
+- text: /Cloudy \d+° \d+°/
+- list "Additional weather data":
+  - listitem: /Visibility \d+ km/
+  - listitem: /Pressure \d+ hPa/
+  - listitem: /Humidity \d+%/
+- text: Mon
+- img "Mon"
+- text: /\d+° \d+° Tue/
+- img "Tue"
+- text: /\d+° \d+° Wed/
+- img "Wed"
+- text: /\d+° \d+° Thu/
+- img "Thu"
+- text: /\d+° \d+° Singapore \d+°/
+- img "Thunderstorm"
+- text: /Thunderstorm \d+° \d+° Mon/
+- img "Mon"
+- text: /\d+° \d+° Tue/
+- img "Tue"
+- text: /\d+° \d+° Wed/
+- img "Wed"
+- text: /\d+° \d+° Thu/
+- img "Thu"
+- text: /\d+° \d+° Dubai, UAE \d+°/
+- img "Sunny"
+- text: /Sunny \d+° \d+°/
+- img "Weather illustration"
+- text: /Zürich \d+° \d+°/
+- img "Weather illustration"
+- text: Vienna Munich, Germany
+- img "Beach"
+- text: /Palekastro, Crete \d+°/
+- img "Sunny"
+- text: /Sunny \d+° \d+°/
+- list "Additional weather data":
+  - listitem: /Wind \d+ knots/
+  - listitem: /Humidity \d+%/
+  - listitem: UVI 9 high
+- text: Mon
+- img "Mon"
+- text: /\d+° \d+° Tue/
+- img "Tue"
+- text: /\d+° \d+° Wed/
+- img "Wed"
+- text: /\d+° \d+° Thu/
+- img "Thu"
+- text: /\d+° \d+°/
