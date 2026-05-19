@@ -1,0 +1,37 @@
+@let bodyValue = value();
+@let currentInput = current();
+@let metricsInput = metrics();
+@let forecastInput = forecast();
+
+<si-card
+  class="h-100"
+  [class]="accentClass()"
+  [heading]="cardHeading()"
+  [primaryActions]="primaryActions()"
+  [secondaryActions]="secondaryActions()"
+  [imgSrc]="imgSrc()"
+  [imgDir]="imgDir()"
+  [imgAlt]="imgAlt()"
+  [imgObjectFit]="imgObjectFit()"
+  [imgObjectPosition]="imgObjectPosition()"
+>
+  <div class="card-body" body>
+    <si-weather-widget-body
+      [layout]="layout()"
+      [value]="bodyValue"
+      [current]="currentInput"
+      [metrics]="metricsInput"
+      [forecast]="forecastInput"
+      [location]="bodyLocation()"
+      [disableAutoLoadingIndicator]="disableAutoLoadingIndicator()"
+      [showLoadingIndicator]="showLoadingIndicator()"
+      [initialLoadingIndicatorDebounceTime]="initialLoadingIndicatorDebounceTime()"
+    />
+  </div>
+  @let linkObject = link();
+  @if (linkObject) {
+    <div class="card-footer" footer>
+      <a [siLink]="linkObject">{{ linkObject.title | translate }}</a>
+    </div>
+  }
+</si-card>

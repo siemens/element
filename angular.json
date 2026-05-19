@@ -461,6 +461,11 @@
                 "glob": "*",
                 "input": "projects/dashboards-ng/assets/i18n",
                 "output": "assets/i18n/dashboards-ng/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/weather-icons",
+                "output": "assets/weather-icons/"
               }
             ],
             "stylePreprocessorOptions": {
@@ -573,6 +578,11 @@
                 "glob": "*",
                 "input": "projects/dashboards-ng/assets/i18n",
                 "output": "assets/i18n/dashboards-ng/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/weather-icons",
+                "output": "assets/weather-icons/"
               }
             ],
             "stylePreprocessorOptions": {

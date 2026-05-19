@@ -9,8 +9,7 @@ import {
   input,
   OnChanges,
   OnInit,
-  signal,
-  SimpleChanges
+  signal
 } from '@angular/core';
 
 /**
@@ -45,7 +44,7 @@ export abstract class SiWidgetBaseDirective<T> implements OnInit, OnChanges {
     transform: booleanAttribute
   });
 
-  private readonly showLoadingIndicatorInternal = signal<boolean | undefined>(undefined);
+  protected readonly showLoadingIndicatorInternal = signal<boolean | undefined>(undefined);
 
   readonly showLoadingIndicator = computed(() => {
     return this.showLoadingIndicatorInternal() ?? this.showLoadingIndicatorInput();
@@ -61,25 +60,38 @@ export abstract class SiWidgetBaseDirective<T> implements OnInit, OnChanges {
 
   protected loadingTimer?: ReturnType<typeof setTimeout>;
 
-  ngOnChanges(changes: SimpleChanges<this>): void {
-    if (
-      !this.disableAutoLoadingIndicator() &&
-      !changes.value?.firstChange &&
-      changes.value?.currentValue
-    ) {
+  /**
+   * Returns whether the widget currently has data to display. The base
+   * implementation only inspects {@link value}. Subclasses with additional
+   * data inputs SHOULD override this to consider those inputs as well, so the
+   * automatic loading indicator is suppressed when any data is available.
+   */
+  protected hasWidgetData(): boolean {
+    return !!this.value();
+  }
+
+  ngOnChanges(): void {
+    if (this.disableAutoLoadingIndicator()) {
+      return;
+    }
+
+    if (this.hasWidgetData()) {
       if (this.loadingTimer) {
         clearTimeout(this.loadingTimer);
         this.loadingTimer = undefined;
       }
-
       this.showLoadingIndicatorInternal.set(false);
+    } else {
+      // Data was removed: yield control back to the `showLoadingIndicator` input
+      // so callers can drive the loader manually.
+      this.showLoadingIndicatorInternal.set(undefined);
     }
   }
 
   ngOnInit(): void {
-    if (!this.disableAutoLoadingIndicator() && !this.value()) {
+    if (!this.disableAutoLoadingIndicator() && !this.hasWidgetData()) {
       this.loadingTimer = setTimeout(() => {
-        this.showLoadingIndicatorInternal.set(!this.value());
+        this.showLoadingIndicatorInternal.set(!this.hasWidgetData());
       }, this.initialLoadingIndicatorDebounceTime());
     }
   }

@@ -1,0 +1,201 @@
+@let current = resolvedCurrent();
+@let metrics = resolvedMetrics();
+@let forecast = resolvedForecast();
+@let loading = showLoadingIndicator();
+
+@if (loading) {
+  <div class="si-weather-widget-skeleton">
+    <div class="si-weather-widget-skeleton-row">
+      <div class="si-weather-widget-skeleton-value si-skeleton"></div>
+      <div class="si-weather-widget-skeleton-col">
+        <div class="si-weather-widget-skeleton-illustration si-skeleton"></div>
+        <div class="si-weather-widget-skeleton-line si-skeleton"></div>
+        <div class="si-weather-widget-skeleton-line si-skeleton"></div>
+      </div>
+    </div>
+  </div>
+} @else if (current) {
+  @let illustration = currentIllustration();
+  @if (isCompact()) {
+    <div class="si-weather-widget-today">
+      @if (illustration) {
+        @if (isMaskable(illustration.src)) {
+          <span
+            class="si-weather-widget-illustration si-weather-widget-illustration-mask"
+            role="img"
+            [style.--si-weather-mask-image]="maskUrl(illustration.src)"
+            [attr.aria-label]="illustration.alt | translate"
+          ></span>
+        } @else {
+          <img
+            class="si-weather-widget-illustration"
+            [src]="illustration.src"
+            [alt]="illustration.alt | translate"
+          />
+        }
+      }
+      <div class="si-weather-widget-today-info">
+        @if (location()) {
+          <div class="si-weather-widget-location">{{ location() | translate }}</div>
+        }
+        @if (current.minTemperature !== null || current.maxTemperature !== null) {
+          <div class="si-weather-widget-range">
+            <ng-container *ngTemplateOutlet="rangeTpl; context: { $implicit: current }" />
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="si-weather-widget-today">
+      <div class="si-weather-widget-temperature">{{ current.temperature }}</div>
+      <div class="si-weather-widget-today-info">
+        @if (illustration) {
+          @if (isMaskable(illustration.src)) {
+            <span
+              class="si-weather-widget-illustration si-weather-widget-illustration-mask"
+              role="img"
+              [style.--si-weather-mask-image]="maskUrl(illustration.src)"
+              [attr.aria-label]="illustration.alt | translate"
+            ></span>
+          } @else {
+            <img
+              class="si-weather-widget-illustration"
+              [src]="illustration.src"
+              [alt]="illustration.alt | translate"
+            />
+          }
+        }
+        @if (current.condition) {
+          <div class="si-weather-widget-condition">{{ current.condition | translate }}</div>
+        }
+        @if (current.minTemperature !== null || current.maxTemperature !== null) {
+          <div class="si-weather-widget-range">
+            <ng-container *ngTemplateOutlet="rangeTpl; context: { $implicit: current }" />
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  @if (metrics?.length) {
+    <ul class="si-weather-widget-metrics" [attr.aria-label]="metricsLabel() | translate">
+      @for (metric of metrics; track $index) {
+        <li class="si-weather-widget-metric">
+          <span class="si-weather-widget-metric-label">{{ metric.label | translate }}</span>
+          <span class="si-weather-widget-metric-value">{{ metric.value }}</span>
+        </li>
+      }
+    </ul>
+  }
+
+  @if (!isCompact() && forecast?.days?.length) {
+    <div class="si-weather-widget-forecast" [attr.aria-label]="forecastLabel() | translate">
+      @if (layout() === 'horizontal') {
+        @for (day of forecast!.days; track $index) {
+          @let dayIcon = dayIllustration(day);
+          <div
+            class="si-weather-widget-forecast-day"
+            [class.si-weather-widget-forecast-day-2]="$index === 1"
+            [class.si-weather-widget-forecast-day-3]="$index === 2"
+            [class.si-weather-widget-forecast-day-4]="$index === 3"
+            [class.si-weather-widget-forecast-day-5]="$index === 4"
+          >
+            <div class="si-weather-widget-forecast-day-label">{{ day.label | translate }}</div>
+            @if (dayIcon) {
+              @if (isMaskable(dayIcon.src)) {
+                <span
+                  class="si-weather-widget-forecast-illustration si-weather-widget-illustration-mask"
+                  role="img"
+                  [style.--si-weather-mask-image]="maskUrl(dayIcon.src)"
+                  [attr.aria-label]="dayIcon.alt | translate"
+                ></span>
+              } @else {
+                <img
+                  class="si-weather-widget-forecast-illustration"
+                  [src]="dayIcon.src"
+                  [alt]="dayIcon.alt | translate"
+                />
+              }
+            }
+            <div class="si-weather-widget-range">
+              <span class="si-weather-widget-range-min">{{ day.minTemperature }}</span>
+              <span class="si-weather-widget-range-max">{{ day.maxTemperature }}</span>
+            </div>
+          </div>
+        }
+      } @else {
+        @let cols = forecastColumns();
+        <ul
+          class="si-weather-widget-forecast-list"
+          role="list"
+          [style.--si-weather-forecast-extras]="cols.length"
+        >
+          @for (day of forecast!.days; track $index; let i = $index) {
+            @let dayIcon = dayIllustration(day);
+            <li class="si-weather-widget-forecast-row">
+              <span class="si-weather-widget-forecast-day-label">
+                {{ day.label | translate }}
+              </span>
+              <span class="si-weather-widget-forecast-illustration-cell">
+                @if (dayIcon) {
+                  @if (isMaskable(dayIcon.src)) {
+                    <span
+                      class="si-weather-widget-forecast-illustration si-weather-widget-illustration-mask"
+                      role="img"
+                      [style.--si-weather-mask-image]="maskUrl(dayIcon.src)"
+                      [attr.aria-label]="dayIcon.alt | translate"
+                    ></span>
+                  } @else {
+                    <img
+                      class="si-weather-widget-forecast-illustration"
+                      [src]="dayIcon.src"
+                      [alt]="dayIcon.alt | translate"
+                    />
+                  }
+                }
+              </span>
+              @for (col of cols; track $index; let extraIdx = $index) {
+                <span
+                  class="si-weather-widget-forecast-extra"
+                  role="img"
+                  [class.si-weather-widget-forecast-extra-1]="extraIdx === 0"
+                  [class.si-weather-widget-forecast-extra-2]="extraIdx === 1"
+                  [class.si-weather-widget-forecast-extra-3]="extraIdx === 2"
+                  [class.si-weather-widget-forecast-extra-4]="extraIdx === 3"
+                  [class.si-weather-widget-forecast-extra-5]="extraIdx === 4"
+                  [attr.aria-label]="
+                    (col.label | translate) + ': ' + (forecastColumnValue(col, i) ?? '')
+                  "
+                >
+                  @if (col.icon) {
+                    <si-icon
+                      class="icon si-weather-widget-forecast-extra-icon"
+                      aria-hidden="true"
+                      [icon]="col.icon"
+                    />
+                  }
+                  <span aria-hidden="true">{{ forecastColumnValue(col, i) ?? '' }}</span>
+                </span>
+              }
+              <span class="si-weather-widget-forecast-range-cell">
+                <span class="si-weather-widget-forecast-range">
+                  <span class="si-weather-widget-range-min">{{ day.minTemperature }}</span>
+                  <span class="si-weather-widget-range-max">{{ day.maxTemperature }}</span>
+                </span>
+              </span>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  }
+}
+
+<ng-template #rangeTpl let-c>
+  @if (c.minTemperature !== null) {
+    <span class="si-weather-widget-range-min">{{ c.minTemperature }}</span>
+  }
+  @if (c.maxTemperature !== null) {
+    <span class="si-weather-widget-range-max">{{ c.maxTemperature }}</span>
+  }
+</ng-template>
