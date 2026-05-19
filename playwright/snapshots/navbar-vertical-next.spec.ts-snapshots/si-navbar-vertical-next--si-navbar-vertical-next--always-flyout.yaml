@@ -5,14 +5,21 @@
     - /url: "#/"
   - heading "Navbar Vertical Next Example" [level=1]
 - navigation:
-  - button "Toggle"
-  - button "Search..."
+  - button "Toggle" [expanded]
+  - textbox "Search..."
   - link "Home":
     - /url: "#/viewer/viewer/home"
+  - text: Modules
   - link "Energy & sustainability":
     - /url: "#/viewer/viewer/energy"
   - button "User management"
-  - group "User management"
+  - group "User management":
+    - link "Sub item":
+      - /url: "#/viewer/viewer/subItem"
+    - link "Sub item 2":
+      - /url: "#/viewer/viewer/subItem2"
+    - link "Sub item 3":
+      - /url: "#/viewer/viewer/subItem3"
   - link "Test coverage":
     - /url: "#/viewer/viewer/coverage"
   - button "Documentation"
@@ -22,6 +29,6 @@
     - /url: "#/viewer/viewer/settings"
 - main:
   - heading "Here is a title" [level=2]
-  - text: Content with path 'subItem2' Control panel
-  - checkbox "Always flyout"
+  - text: Content with path 'home' Control panel
+  - checkbox "Always flyout" [checked]
   - text: Always flyout

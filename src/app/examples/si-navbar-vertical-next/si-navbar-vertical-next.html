@@ -6,7 +6,11 @@
     </si-header-brand>
   </si-application-header>
 
-  <si-navbar-vertical-next stateId="navbar-vertical-next-with-icons" toggleButtonText="Toggle">
+  <si-navbar-vertical-next
+    stateId="navbar-vertical-next-with-icons"
+    toggleButtonText="Toggle"
+    [alwaysFlyout]="alwaysFlyout"
+  >
     <si-navbar-vertical-next-search placeholder="Search..." />
     <si-navbar-vertical-next-items>
       <a si-navbar-vertical-next-item routerLink="home" routerLinkActive icon="element-home">
@@ -67,6 +71,14 @@
         <h2 class="si-layout-title si-layout-top-element">Here is a title</h2>
       </div>
       <router-outlet />
+      <div class="card p-5 mt-8 e2e-ignore">
+        <div class="card-header">Control panel</div>
+        <div class="card-body">
+          <si-form-item label="Always flyout">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="alwaysFlyout" />
+          </si-form-item>
+        </div>
+      </div>
     </div>
   </si-navbar-vertical-next>
 </div>

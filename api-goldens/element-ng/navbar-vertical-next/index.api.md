@@ -15,6 +15,7 @@ import { TemplateRef } from '@angular/core';
 // @public (undocumented)
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     constructor();
+    readonly alwaysFlyout: _angular_core.InputSignalWithTransform<boolean, unknown>;
     collapse(): void;
     readonly collapsed: _angular_core.ModelSignal<boolean>;
     expand(): void;
@@ -43,7 +44,7 @@ export class SiNavbarVerticalNextGroupComponent {
 }
 
 // @public (undocumented)
-export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
+export class SiNavbarVerticalNextGroupTriggerDirective {
     constructor();
     // (undocumented)
     readonly expanded: _angular_core.WritableSignal<boolean>;

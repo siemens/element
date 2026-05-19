@@ -6,7 +6,11 @@
     </si-header-brand>
   </si-application-header>
 
-  <si-navbar-vertical-next stateId="navbar-vertical-next-badges" toggleButtonText="Toggle">
+  <si-navbar-vertical-next
+    stateId="navbar-vertical-next-badges"
+    toggleButtonText="Toggle"
+    [alwaysFlyout]="alwaysFlyout"
+  >
     <si-navbar-vertical-next-search placeholder="Search..." />
     <si-navbar-vertical-next-items>
       <a
@@ -87,6 +91,14 @@
         <h2 class="si-layout-title si-layout-top-element">Badge Examples</h2>
       </div>
       <router-outlet />
+      <div class="card p-5 mt-8 e2e-ignore">
+        <div class="card-header">Control panel</div>
+        <div class="card-body">
+          <si-form-item label="Always flyout">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="alwaysFlyout" />
+          </si-form-item>
+        </div>
+      </div>
     </div>
   </si-navbar-vertical-next>
 </div>
@@ -124,7 +136,7 @@
 </ng-template>
 
 <ng-template #groupItem>
-  <si-navbar-vertical-next-group>
+  <si-navbar-vertical-next-group routerLinkActive>
     <a si-navbar-vertical-next-item routerLink="sub-badge-4" routerLinkActive> Sub item </a>
     <a si-navbar-vertical-next-item routerLink="sub-badge-5" routerLinkActive> Sub item </a>
     <a si-navbar-vertical-next-item routerLink="sub-badge-6" routerLinkActive> Sub item </a>

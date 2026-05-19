@@ -15,8 +15,6 @@ import {
   Injector,
   input,
   linkedSignal,
-  OnInit,
-  signal,
   TemplateRef,
   untracked,
   ViewContainerRef
@@ -53,7 +51,7 @@ class SiNavbarFlyoutAnchorComponent {
     '(click)': 'triggered()'
   }
 })
-export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
+export class SiNavbarVerticalNextGroupTriggerDirective {
   private static idCounter = 0;
 
   /** @internal */
@@ -67,24 +65,57 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
   readonly stateId = input<string>();
 
   /** @defaultValue false */
-  readonly expanded = linkedSignal({
+  readonly expanded = linkedSignal<
+    { uiState: boolean | undefined; alwaysFlyout: boolean },
+    boolean
+  >({
     source: () => {
       const stateId = this.stateId();
-      if (!stateId) {
-        return undefined;
-      }
-      return this.navbar.uiStateExpandedItems()[stateId];
+      return {
+        uiState: stateId ? this.navbar.uiStateExpandedItems()[stateId] : undefined,
+        alwaysFlyout: this.navbar.alwaysFlyout()
+      };
     },
-    computation: source => source ?? false
+    computation: (source, previous) => {
+      // `alwaysFlyout` toggled: reset expansion. When switching back to inline,
+      // surface the group that owns the active route.
+      if (previous && source.alwaysFlyout !== previous.source.alwaysFlyout) {
+        return !source.alwaysFlyout && untracked(() => this.active());
+      }
+      // First run or UIState (re)loaded: honor the persisted value when present,
+      // otherwise keep the user's current expansion.
+      if (source.uiState !== undefined) {
+        return source.uiState;
+      }
+      return previous?.value ?? false;
+    }
   });
 
-  /** @internal */
-  readonly flyout = signal(false);
+  /**
+   * Whether the group is currently rendered as a transient flyout overlay
+   * (true) or inline within the navbar (false). Automatically resets to
+   * `false` whenever the rendering mode changes.
+   * @internal
+   */
+  readonly flyout = linkedSignal({
+    source: () => this.flyoutMode(),
+    computation: () => false
+  });
 
-  /** @internal */
-  readonly active = signal(false);
+  /**
+   * Whether the open flyout overlay currently contains the active route.
+   * Reset together with `flyout` so it never lingers across mode changes.
+   * @internal
+   */
+  readonly active = linkedSignal<boolean, boolean>({
+    source: () => this.flyout(),
+    computation: (open, previous) => (open ? (previous?.value ?? false) : false)
+  });
 
   protected readonly navbar = inject(SI_NAVBAR_VERTICAL_NEXT);
+
+  /** @internal */
+  readonly flyoutMode = computed(() => this.navbar.alwaysFlyout() || this.navbar.collapsed());
 
   private flyoutOutsideClickSubscription?: Subscription;
   private readonly viewContainer = inject(ViewContainerRef);
@@ -99,42 +130,35 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
         { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
       ])
   });
-  private groupView!: EmbeddedViewRef<unknown>;
+  private groupView?: EmbeddedViewRef<unknown>;
   private flyoutAnchorComponentRef?: ComponentRef<SiNavbarFlyoutAnchorComponent>;
   private readonly templatePortal = computed(
     () => new TemplatePortal(this.groupTemplate(), this.viewContainer, undefined, this.injector)
   );
 
   constructor() {
-    // Sync expanded state from navbar UIState when it loads
+    // Manage the rendering of the inline projection / flyout overlay in
+    // response to mode changes. Only side effects belong here; the related
+    // signal state is propagated by `flyout` / `expanded` linked signals.
     effect(() => {
-      const stateId = this.stateId();
-      if (!stateId) return;
-      const state = this.navbar.uiStateExpandedItems()[stateId];
-      if (state !== undefined) {
-        untracked(() => this.expanded.set(state));
-      }
+      this.flyoutMode();
+      untracked(() => {
+        this.detachFlyout();
+        this.attachInline();
+      });
     });
-  }
-
-  ngOnInit(): void {
-    this.attachInline();
   }
 
   /** @internal */
   hideFlyout(): void {
-    if (this.flyout()) {
-      this.flyout.set(false);
-      this.active.set(false);
-      this.flyoutAnchorComponentRef?.destroy();
-      this.flyoutAnchorComponentRef = undefined;
-      this.attachInline();
-      this.flyoutOutsideClickSubscription?.unsubscribe();
-    }
+    if (!this.flyout()) return;
+    this.flyout.set(false);
+    this.detachFlyout();
+    this.attachInline();
   }
 
   protected triggered(): void {
-    if (this.navbar.collapsed()) {
+    if (this.flyoutMode()) {
       this.toggleFlyout();
     } else {
       this.expanded.set(!this.expanded());
@@ -153,14 +177,14 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
 
   private attachInline(): void {
     this.overlayRef.detach();
-    this.groupView?.destroy(); // we need ?. for first attachment
+    this.groupView?.destroy();
     this.groupView = this.viewContainer.createEmbeddedView(this.groupTemplate(), undefined, {
       injector: this.injector
     });
   }
 
   private attachFlyout(): void {
-    this.groupView.destroy();
+    this.groupView?.destroy();
     this.groupView = this.overlayRef.attach(this.templatePortal());
     this.flyoutAnchorComponentRef = this.viewContainer.createComponent(
       SiNavbarFlyoutAnchorComponent
@@ -169,5 +193,12 @@ export class SiNavbarVerticalNextGroupTriggerDirective implements OnInit {
     this.flyoutOutsideClickSubscription = this.overlayRef
       .outsidePointerEvents()
       .subscribe(() => this.hideFlyout());
+  }
+
+  private detachFlyout(): void {
+    this.flyoutAnchorComponentRef?.destroy();
+    this.flyoutAnchorComponentRef = undefined;
+    this.flyoutOutsideClickSubscription?.unsubscribe();
+    this.flyoutOutsideClickSubscription = undefined;
   }
 }

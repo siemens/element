@@ -86,6 +86,10 @@
   }
 }
 
+:host-context(.dropdown-menu) :host(.navbar-vertical-item) {
+  padding-inline-start: 0;
+}
+
 :host(.dropdown-item) {
   .item-title {
     font-weight: normal;

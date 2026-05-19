@@ -51,12 +51,14 @@ describe('SiNavbarVerticalNextItemComponent', () => {
   const mockNavbar = {
     collapsed: signal(false),
     textOnly: signal(false),
+    alwaysFlyout: signal(false),
     itemTriggered: vi.fn()
   };
 
   beforeEach(async () => {
     mockNavbar.collapsed.set(false);
     mockNavbar.textOnly.set(false);
+    mockNavbar.alwaysFlyout.set(false);
 
     await TestBed.configureTestingModule({
       providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useValue: mockNavbar }]

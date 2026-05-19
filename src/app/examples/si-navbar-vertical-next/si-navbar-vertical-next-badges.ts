@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   ActivatedRoute,
   Router,
@@ -15,6 +16,7 @@ import {
   SiHeaderBrandDirective,
   SiHeaderLogoDirective
 } from '@siemens/element-ng/application-header';
+import { SiFormItemComponent } from '@siemens/element-ng/form';
 import {
   SiNavbarVerticalNextItemsComponent,
   SiNavbarVerticalNextSearchComponent,
@@ -43,6 +45,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiApplicationHeaderComponent,
     SiHeaderBrandDirective,
     SiHeaderLogoDirective,
+    SiFormItemComponent,
+    FormsModule,
     RouterLink,
     RouterLinkActive,
     RouterOutlet
@@ -54,6 +58,8 @@ export class SampleComponent implements OnInit {
   private activeRoute = inject(ActivatedRoute);
   private router = inject(Router);
   logEvent = inject(LOG_EVENT);
+
+  alwaysFlyout = false;
 
   ngOnInit(): void {
     this.router.navigate(['home'], { relativeTo: this.activeRoute });

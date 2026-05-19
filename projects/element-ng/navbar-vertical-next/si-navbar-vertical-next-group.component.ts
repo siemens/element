@@ -15,6 +15,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   selector: 'si-navbar-vertical-next-group',
   imports: [CdkTrapFocus],
   template: `@if (visible()) {
+    @let flyout = groupTrigger.flyout();
     <div
       animate.leave="group-leave"
       [class.inline-group]="!flyout"
@@ -41,11 +42,8 @@ export class SiNavbarVerticalNextGroupComponent {
   protected readonly groupTrigger = inject(SiNavbarVerticalNextGroupTriggerDirective);
   private readonly routerLinkActive = inject(RouterLinkActive, { optional: true });
 
-  // Store initial value, as the mode for an instance never changes.
-  protected flyout = this.groupTrigger.flyout();
-
   protected readonly visible = computed(() => {
-    return this.flyout || (!this.navbar.collapsed() && this.groupTrigger.expanded());
+    return this.groupTrigger.flyout() || (!this.navbar.collapsed() && this.groupTrigger.expanded());
   });
 
   constructor() {
