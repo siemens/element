@@ -10,6 +10,6 @@
   - listitem: First item
   - listitem: Second item
 - button "Good response"
+- button "Bad response"
 - button "Copy response"
-- button "Retry response"
 - button "More actions"

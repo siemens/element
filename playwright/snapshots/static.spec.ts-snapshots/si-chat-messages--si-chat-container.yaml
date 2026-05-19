@@ -7,14 +7,18 @@
 - button "Export message"
 - paragraph: I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
 - paragraph: Let me examine the structure and provide guidance.
-- button "Add to list"
-- button "Export response"
-- button "Retry response"
+- button "Good response"
+- button "Bad response"
+- button "Copy response"
 - button "More actions"
 - paragraph: Perfect! What should I focus on first
 - paragraph: I also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?
 - button "Export message"
 - paragraph: Great question! When analyzing large datasets, it's crucial to focus on...
+- button "Good response"
+- button "Bad response"
+- button "Copy response"
+- button "More actions"
 - alert: Info AI responses are for demonstration purposes.
 - group:
   - text: requirements.pdf
