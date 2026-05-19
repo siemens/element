@@ -15,7 +15,7 @@ $transition-duration: variables.element-transition-duration(0.25s);
 :host {
   display: flex;
   align-items: center;
-  block-size: 40px;
+  block-size: calc(1lh + (2 * map.get(variables.$spacers, 5)));
   transition: block-size variables.$element-default-transition-duration ease-out;
 
   &.collapsed {
