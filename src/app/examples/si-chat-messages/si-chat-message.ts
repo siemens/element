@@ -4,6 +4,14 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  elementBookmark,
+  elementDelete,
+  elementEdit,
+  elementExport,
+  elementOptionsVertical,
+  elementUser
+} from '@siemens/element-icons';
 import { SiAvatarComponent } from '@siemens/element-ng/avatar';
 import {
   SiChatMessageComponent,
@@ -12,7 +20,7 @@ import {
   SiChatMessageActionDirective,
   MessageAction
 } from '@siemens/element-ng/chat-messages';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-renderer';
 import { MenuItemAction, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -37,15 +45,24 @@ import { LOG_EVENT } from '@siemens/live-preview';
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
 
+  protected readonly icons = addIcons({
+    elementUser,
+    elementOptionsVertical,
+    elementExport,
+    elementEdit,
+    elementBookmark,
+    elementDelete
+  });
+
   actions: MessageAction[] = [
     {
       label: 'Copy',
-      icon: 'element-export',
+      icon: this.icons.elementExport,
       action: (messageId: string) => this.logEvent(`Copy message ${messageId}`)
     },
     {
       label: 'Edit',
-      icon: 'element-edit',
+      icon: this.icons.elementEdit,
       action: (messageId: string) => this.logEvent(`Edit message ${messageId}`)
     }
   ];
@@ -54,13 +71,13 @@ export class SampleComponent {
     {
       type: 'action',
       label: 'Bookmark',
-      icon: 'element-bookmark',
+      icon: this.icons.elementBookmark,
       action: (messageId: string) => this.logEvent(`Bookmark message ${messageId}`)
     },
     {
       type: 'action',
       label: 'Delete',
-      icon: 'element-delete',
+      icon: this.icons.elementDelete,
       action: (messageId: string) => this.logEvent(`Delete message ${messageId}`)
     }
   ];
