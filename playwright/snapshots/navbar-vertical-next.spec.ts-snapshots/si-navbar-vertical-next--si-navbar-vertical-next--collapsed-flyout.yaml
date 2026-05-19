@@ -28,4 +28,6 @@
     - /url: "#/viewer/viewer/settings"
 - main:
   - heading "Here is a title" [level=2]
-  - text: Content with path 'subItem2'
+  - text: Content with path 'subItem2' Control panel
+  - checkbox "Always flyout"
+  - text: Always flyout

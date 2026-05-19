@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   SiApplicationHeaderComponent,
@@ -11,6 +12,7 @@ import {
   SiHeaderBrandDirective,
   SiHeaderLogoDirective
 } from '@siemens/element-ng/application-header';
+import { SiFormItemComponent } from '@siemens/element-ng/form';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownTriggerDirective
@@ -41,6 +43,8 @@ import {
     SiNavbarVerticalNextGroupComponent,
     SiNavbarVerticalNextGroupTriggerDirective,
     SiNavbarVerticalNextHeaderComponent,
+    SiFormItemComponent,
+    FormsModule,
     RouterLink,
     RouterLinkActive,
     SiHeaderLogoDirective
@@ -48,4 +52,6 @@ import {
   templateUrl: './si-navbar-vertical-next-text.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SampleComponent {}
+export class SampleComponent {
+  alwaysFlyout = false;
+}

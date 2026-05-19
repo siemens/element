@@ -34,6 +34,26 @@ test.describe('navbar vertical next', () => {
     await si.runVisualAndA11yTests('collapsed-flyout');
   });
 
+  test(example + ' always flyout toggle', async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.getByRole('button', { name: 'User management' }).click();
+    await expect(page.getByRole('group', { name: 'User management' })).toBeVisible();
+
+    await page.getByRole('checkbox', { name: 'Always flyout' }).check();
+    await expect(page.getByRole('button', { name: 'User management' })).not.toHaveClass(/show/);
+    await expect(page.getByRole('button', { name: 'User management' })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
+
+    await page.getByRole('button', { name: 'User management' }).click();
+    await expect(page.getByRole('group', { name: 'User management' })).toBeVisible();
+
+    await si.waitForAllAnimationsToComplete();
+    await si.runVisualAndA11yTests('always-flyout');
+  });
+
   test.skip('it should show tooltip only on keyboard interaction', async ({ page, si }) => {
     await si.visitExample(example);
     await page.getByLabel('Toggle', { exact: true }).click();
