@@ -1,3 +1,28 @@
+
+@if (kioskMode()) {
+  <si-dashboard heading="Sample Dashboard">
+    <app-dashboard-filters menubar filters-slot />
+    <ng-container dashboard>
+      @if (widgets().length === 0) {
+        <si-loading-spinner />
+      } @else {
+        <app-carousel [columns]="columns()" [rows]="rows()" [intervalMs]="3000">
+          @for (widget of widgets(); track widget.id) {
+              <si-dashboard-card appCarouselItem [heading]="widget.heading ?? widget.widgetId" [imgSrc]="widget.image?.src" [imgAlt]="widget.image?.alt" [imgObjectFit]="widget.image?.objectFit" [imgObjectPosition]="widget.image?.objectPosition" [imgDir]="widget.image?.dir">
+                <app-widget-renderer #renderer body class="card-body overflow-auto" [widgetConfig]="widget" [widgetDescriptor]="widgetCatalogMap().get(widget.widgetId)" />
+                @if (renderer.footer()) {
+                  <div class="card-footer" footer>
+                    <ng-container *ngTemplateOutlet="renderer.footer()!" />
+                  </div>
+                }
+              </si-dashboard-card>
+          }
+        </app-carousel>
+      }
+    </ng-container>
+  </si-dashboard>
+}
+@else {
 <si-flexible-dashboard
   #dashboard
   heading="Sample Dashboard"
@@ -19,3 +44,4 @@
     }
   </si-empty-state>
 </si-flexible-dashboard>
+}
