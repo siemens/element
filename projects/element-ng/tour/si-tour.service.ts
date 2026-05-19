@@ -224,11 +224,11 @@ export class SiTourService {
         { originX: 'start', overlayX: 'end', originY: 'center', overlayY: 'center' },
         { originX: 'end', overlayX: 'start', originY: 'center', overlayY: 'center' }
       ]);
-    this.overlayRef!.updatePositionStrategy(positionStrategy);
     this.positionChangeSub = positionStrategy.positionChanges
       .pipe(map(change => ({ change, anchor })))
       // We only want to forward the next channel, as the positionChanges completes when setting a new origin.
       .subscribe(value => this.tourToken.positionChange.next(value));
+    this.overlayRef!.updatePositionStrategy(positionStrategy);
   }
 
   private createOrUpdateOverlays(): void {

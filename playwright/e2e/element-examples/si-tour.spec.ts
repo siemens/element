@@ -11,11 +11,8 @@ test.describe('si-tour', () => {
     const nextClick = (): Promise<any> =>
       page.locator('si-tour button', { hasText: 'Next' }).click();
 
-    const waitForTourStep = async (hasArrow = true): Promise<void> => {
+    const waitForTourStep = async (): Promise<void> => {
       await expect(page.locator('si-tour .tour-content.show')).toBeVisible();
-      if (hasArrow) {
-        await expect(page.locator('si-tour .popover-arrow')).toBeVisible();
-      }
     };
 
     await si.visitExample(example);
@@ -33,7 +30,7 @@ test.describe('si-tour', () => {
     await waitForTourStep();
     await si.runVisualAndA11yTests('open-menu');
     await nextClick();
-    await waitForTourStep(false);
+    await waitForTourStep();
     await si.runVisualAndA11yTests('last-step');
   });
 });
