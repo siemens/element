@@ -13,6 +13,17 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
+  elementBookmark,
+  elementCopy,
+  elementDelete,
+  elementExport,
+  elementRefresh,
+  elementShare,
+  elementThumbsDown,
+  elementThumbsUp,
+  elementUser
+} from '@siemens/element-icons';
+import {
   SiChatContainerComponent,
   SiAiMessageComponent,
   SiUserMessageComponent,
@@ -28,7 +39,7 @@ import {
   PromptSuggestion
 } from '@siemens/element-ng/chat-messages';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import {
   getMarkdownRenderer,
@@ -72,6 +83,51 @@ export class SampleComponent {
 
   protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
 
+  protected readonly icons = addIcons({
+    elementUser,
+    elementExport,
+    elementDelete,
+    elementThumbsUp,
+    elementThumbsDown,
+    elementCopy,
+    elementRefresh,
+    elementBookmark,
+    elementShare
+  });
+
+  protected readonly aiActions: MessageAction[] = [
+    {
+      label: 'Good response',
+      icon: this.icons.elementThumbsUp,
+      action: (_message: ChatMessage) => this.logEvent('Thumbs up for AI message')
+    },
+    {
+      label: 'Bad response',
+      icon: this.icons.elementThumbsDown,
+      action: (_message: ChatMessage) => this.logEvent('Thumbs down for AI message')
+    },
+    {
+      label: 'Copy response',
+      icon: this.icons.elementCopy,
+      action: (_message: ChatMessage) => this.logEvent('Copy AI message')
+    },
+    {
+      label: 'Retry response',
+      icon: this.icons.elementRefresh,
+      action: (_message: ChatMessage) => this.logEvent('Retry AI message')
+    },
+    {
+      label: 'Bookmark',
+      icon: this.icons.elementBookmark,
+      action: (_message: ChatMessage) => this.logEvent('Bookmark AI message')
+    },
+    {
+      label: 'Share',
+      icon: this.icons.elementShare,
+      action: (_message: ChatMessage) => this.logEvent('Share AI message')
+    }
+  ];
+
   readonly preAttachedFiles: ChatInputAttachment[] = [
     {
       name: 'requirements.pdf',
@@ -107,7 +163,7 @@ export class SampleComponent {
       actions: [
         {
           label: 'Export message',
-          icon: 'element-export',
+          icon: this.icons.elementExport,
           action: (message: ChatMessage) =>
             this.logEvent(`Export user message ${message.content.slice(0, 20)}...`)
         }
@@ -118,28 +174,7 @@ export class SampleComponent {
       content: `I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
 
   Let me examine the structure and provide guidance.`,
-      actions: [
-        {
-          label: 'Add to list',
-          icon: 'element-plus',
-          action: (_message: ChatMessage) => this.logEvent('Add AI message to list')
-        },
-        {
-          label: 'Export response',
-          icon: 'element-export',
-          action: (_message: ChatMessage) => this.logEvent('Export AI message')
-        },
-        {
-          label: 'Retry response',
-          icon: 'element-refresh',
-          action: (_message: ChatMessage) => this.logEvent('Retry AI message')
-        },
-        {
-          label: 'Bookmark',
-          icon: 'element-bookmark',
-          action: (_message: ChatMessage) => this.logEvent('Bookmark AI message')
-        }
-      ]
+      actions: this.aiActions
     },
     {
       type: 'user',
@@ -148,7 +183,7 @@ export class SampleComponent {
       actions: [
         {
           label: 'Export message',
-          icon: 'element-export',
+          icon: this.icons.elementExport,
           action: (_message: ChatMessage) =>
             this.logEvent(`Export user message ${_message.content.slice(0, 20)}...`)
         }
@@ -156,7 +191,8 @@ export class SampleComponent {
     },
     {
       type: 'ai',
-      content: "Great question! When analyzing large datasets, it's crucial to focus on..."
+      content: "Great question! When analyzing large datasets, it's crucial to focus on...",
+      actions: this.aiActions
     }
   ]);
 
@@ -171,7 +207,7 @@ export class SampleComponent {
   inputActions: MessageAction[] = [
     {
       label: 'Clear messages',
-      icon: 'element-delete',
+      icon: this.icons.elementDelete,
       action: () => this.onClearMessages()
     }
   ];
@@ -179,28 +215,15 @@ export class SampleComponent {
   userActions: MessageAction[] = [
     {
       label: 'Export message',
-      icon: 'element-export',
+      icon: this.icons.elementExport,
       action: (_message: ChatMessage) =>
         this.logEvent(`Export user message ${_message.content.slice(0, 20)}...`)
     },
     {
       label: 'Delete message',
-      icon: 'element-delete',
+      icon: this.icons.elementDelete,
       action: (_message: ChatMessage) =>
         this.logEvent(`Delete user message ${_message.content.slice(0, 20)}...`)
-    }
-  ];
-
-  aiActions: MessageAction[] = [
-    {
-      label: 'Add to list',
-      icon: 'element-plus',
-      action: (_message: ChatMessage) => this.logEvent('Add AI message to list')
-    },
-    {
-      label: 'Export response',
-      icon: 'element-export',
-      action: (_message: ChatMessage) => this.logEvent('Export AI message')
     }
   ];
 
@@ -273,7 +296,7 @@ export class SampleComponent {
         actions: [
           {
             label: 'Export message',
-            icon: 'element-export',
+            icon: this.icons.elementExport,
             action: () => this.logEvent('Export user message')
           }
         ],
@@ -313,18 +336,7 @@ export class SampleComponent {
           {
             type: 'ai',
             content: response,
-            actions: [
-              {
-                label: 'Add to list',
-                icon: 'element-plus',
-                action: () => this.logEvent('Add AI message to list')
-              },
-              {
-                label: 'Export response',
-                icon: 'element-export',
-                action: () => this.logEvent('Export AI message')
-              }
-            ]
+            actions: this.aiActions
           }
         ]);
         this.loading.set(false);
@@ -332,10 +344,20 @@ export class SampleComponent {
     }, 1000);
   }
 
+  private readonly messageActionsCache = new WeakMap<
+    ChatMessage,
+    { primary: MessageAction[]; secondary: MenuItem[] }
+  >();
+
   private getMessageActions(message: ChatMessage): {
     primary: MessageAction[];
     secondary: MenuItem[];
   } {
+    const cached = this.messageActionsCache.get(message);
+    if (cached) {
+      return cached;
+    }
+
     const actions = message.actions ?? [];
 
     const primary = actions.slice(0, 3);
@@ -349,6 +371,7 @@ export class SampleComponent {
     );
 
     const result = { primary, secondary };
+    this.messageActionsCache.set(message, result);
     return result;
   }
 
