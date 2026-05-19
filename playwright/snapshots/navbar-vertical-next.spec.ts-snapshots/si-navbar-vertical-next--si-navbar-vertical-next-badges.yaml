@@ -30,4 +30,6 @@
     - /url: "#/viewer/viewer/settings"
 - main:
   - heading "Badge Examples" [level=2]
-  - text: Content with path 'sub-badge-1'
+  - text: Content with path 'sub-badge-1' Control panel
+  - checkbox "Always flyout"
+  - text: Always flyout

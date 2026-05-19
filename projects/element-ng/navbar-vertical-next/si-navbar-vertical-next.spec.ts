@@ -16,6 +16,7 @@ import {
 } from '@siemens/element-ng/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { page, userEvent } from 'vitest/browser';
 
 import {
   SiNavbarVerticalNextItemsComponent,
@@ -66,6 +67,7 @@ class EmptyComponent {}
       [textOnly]="textOnly()"
       [stateId]="stateId"
       [collapsed]="collapsed()"
+      [alwaysFlyout]="alwaysFlyout()"
     >
       <si-navbar-vertical-next-search [debounceTime]="0" (searchChange)="searchEvent($event)" />
       @if (showDeclarativeFlyoutGroup()) {
@@ -158,6 +160,7 @@ class TestHostComponent {
   readonly textOnly = signal(true);
   stateId?: string;
   readonly collapsed = signal(false);
+  readonly alwaysFlyout = signal(false);
   readonly showDeclarativeFlyoutGroup = signal(false);
   readonly showDeclarativeNavigationGroup = signal(false);
   readonly showDeclarativeStateGroups = signal(false);
@@ -297,6 +300,60 @@ describe('SiNavbarVerticalNext', () => {
       [subItem1, subItem2] = await item.getChildren();
       expect(await subItem1.isActive()).toBe(false);
       expect(await subItem2.isActive()).toBe(true);
+    });
+
+    it('should re-expand the active group when switching back from flyout to inline mode', async () => {
+      component.textOnly.set(false);
+      component.showDeclarativeNavigationGroup.set(true);
+      await fixture.whenStable();
+
+      await TestBed.inject(Router).navigate(['/item-1/sub-item-2/sub-path']);
+      await fixture.whenStable();
+
+      const item = page.getByRole('button', { name: 'item1' });
+
+      // Switch to flyout mode: groups collapse, overlays render on click.
+      component.alwaysFlyout.set(true);
+      await fixture.whenStable();
+      expect(item.element()).toHaveAttribute('aria-expanded', 'false');
+      const flyoutId = item.element().getAttribute('aria-controls');
+      expect(document.querySelector(`#${flyoutId} .dropdown-menu`)).toBeNull();
+
+      // Switch back to inline: the children re-mount and the active child's
+      // `ngOnInit` cascade re-expands the parent group automatically.
+      component.alwaysFlyout.set(false);
+      await fixture.whenStable();
+      expect(item.element()).toHaveAttribute('aria-expanded', 'true');
+      const subItem2 = page.getByRole('link', { name: 'sub-item2' });
+      expect(subItem2.element()).toHaveClass('active');
+    });
+
+    it('should restore manual group expansion after collapsing and re-expanding the navbar', async () => {
+      component.textOnly.set(false);
+      component.showDeclarativeNavigationGroup.set(true);
+      await fixture.whenStable();
+
+      const item = page.getByRole('button', { name: 'item1' });
+      const collapseToggle = page.getByRole('button', { name: 'Toggle' });
+
+      // User expands the group inline.
+      await userEvent.click(item);
+      await fixture.whenStable();
+      expect(item.element()).toHaveAttribute('aria-expanded', 'true');
+
+      // Collapsing the navbar switches to flyout overlays — inline expansion
+      // is hidden but the underlying state must be retained.
+      await userEvent.click(collapseToggle);
+      await fixture.whenStable();
+      expect(collapseToggle.element()).toHaveAttribute('aria-expanded', 'false');
+      const flyoutId = item.element().getAttribute('aria-controls');
+      expect(document.querySelector(`#${flyoutId} .dropdown-menu`)).toBeNull();
+
+      // Re-expanding the navbar restores the previous inline expansion.
+      await userEvent.click(collapseToggle);
+      await fixture.whenStable();
+      expect(collapseToggle.element()).toHaveAttribute('aria-expanded', 'true');
+      expect(item.element()).toHaveAttribute('aria-expanded', 'true');
     });
   });
 
