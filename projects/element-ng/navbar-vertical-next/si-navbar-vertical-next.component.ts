@@ -4,10 +4,12 @@
  */
 import { BreakpointObserver } from '@angular/cdk/layout';
 import {
+  afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   inject,
+  Injector,
   input,
   model,
   OnChanges,
@@ -43,7 +45,8 @@ interface UIState {
     class: 'si-layout-inner ready',
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
-    '[class.visible]': 'visible()'
+    '[class.visible]': 'visible()',
+    '[class.ready]': 'ready()'
   }
 })
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
@@ -123,7 +126,9 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   );
   private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
   private breakpointObserver = inject(BreakpointObserver);
+  private injector = inject(Injector);
 
+  protected readonly ready = signal(false);
   protected readonly smallScreen = signal(false);
 
   /**
@@ -164,7 +169,10 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
             this.uiStateExpandedItems.set(uiState.expandedItems);
           }
         }
+        afterNextRender(() => this.ready.set(true), { injector: this.injector });
       });
+    } else {
+      this.ready.set(true);
     }
   }
 
