@@ -99,7 +99,8 @@ export const treeItems: TreeItem[] = [
     icon: 'element-project',
     children: [
       {
-        label: 'Child Company3'
+        label: 'Child Company3',
+        state: 'leaf'
       }
     ]
   }

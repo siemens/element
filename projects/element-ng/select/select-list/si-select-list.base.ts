@@ -6,8 +6,6 @@ import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cd
 import {
   Directive,
   ElementRef,
-  HostBinding,
-  HostListener,
   inject,
   input,
   OnDestroy,
@@ -25,7 +23,9 @@ import { SelectGroup, SelectOption } from '../si-select.types';
 
 @Directive({
   host: {
-    class: 'dropdown-menu position-static w-100 py-4 d-flex flex-column'
+    class: 'dropdown-menu position-static w-100 py-4 d-flex flex-column',
+    '[class.si-multi-select]': 'multiSelect',
+    '(keydown.tab)': 'keydownTab()'
   }
 })
 export abstract class SiSelectListBase<T> implements OnInit, OnDestroy {
@@ -54,7 +54,6 @@ export abstract class SiSelectListBase<T> implements OnInit, OnDestroy {
   protected rows = this.selectOptions.rows;
   protected focusTrap!: ConfigurableFocusTrap;
 
-  @HostBinding('class.si-multi-select')
   protected multiSelect = this.selectionStrategy.allowMultiple;
 
   ngOnInit(): void {
@@ -65,7 +64,6 @@ export abstract class SiSelectListBase<T> implements OnInit, OnDestroy {
     this.focusTrap.destroy();
   }
 
-  @HostListener('keydown.tab')
   protected keydownTab(): void {
     // Ignore tab key if actions are displayed.
     if (!this.actionsTemplate()) {

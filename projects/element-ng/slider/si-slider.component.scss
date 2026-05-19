@@ -1,11 +1,12 @@
+@use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
-$button-width: 32px;
-$button-height: 32px;
+$button-size: calc(1lh + 2 * map.get(variables.$spacers, 4));
 $button-gap: 4px;
 
 $track-height: 4px;
-$thumb-size: 24px;
+$thumb-size: 1.5rem;
+$thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers, 4)});
 
 :host {
   display: flex;
@@ -13,22 +14,26 @@ $thumb-size: 24px;
 }
 
 .slider-container {
-  display: flex;
-  align-items: flex-end;
+  display: grid;
+  grid-template: auto $button-size / auto 1fr auto;
+  column-gap: $button-gap;
 }
 
 .decrement-button {
-  margin-inline-end: $button-gap;
+  grid-column: 1;
+  grid-row: 2;
+  align-self: center;
 }
 
 .increment-button {
-  margin-inline-start: $button-gap;
+  grid-column: 3;
+  grid-row: 2;
+  align-self: center;
 }
 
 .slider-wrapper {
-  position: relative;
-  flex: 1 1 0;
-  min-inline-size: 0;
+  grid-column: 2;
+  grid-row: 1 / -1;
   display: flex;
   flex-direction: column;
 }
@@ -53,7 +58,7 @@ $thumb-size: 24px;
 
 .range-indicator-wrapper {
   margin-block: 0;
-  margin-inline: calc($button-width + $button-gap);
+  margin-inline: calc($button-size + $button-gap);
 
   .range-indicator {
     display: inline-flex;
@@ -70,7 +75,7 @@ $thumb-size: 24px;
 .slider {
   position: relative;
   inline-size: 100%;
-  block-size: $button-height;
+  block-size: $button-size;
   cursor: pointer;
 
   &.dragging {
@@ -108,10 +113,10 @@ $thumb-size: 24px;
     justify-content: center;
     position: absolute;
     inset-block-start: 50%;
-    margin-block-start: -20px;
-    margin-inline: -20px;
-    inline-size: 40px;
-    block-size: 40px;
+    margin-block-start: calc($thumb-handle-size / -2);
+    margin-inline: calc($thumb-handle-size / -2);
+    inline-size: $thumb-handle-size;
+    block-size: $thumb-handle-size;
 
     :host.disabled & {
       pointer-events: none;

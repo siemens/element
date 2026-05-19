@@ -1,0 +1,9 @@
+- text: Button variant
+- combobox "Milano"
+- text: Form-control variant Location (required)*
+- combobox "Select a location..."
+- text: "Required Control panel Current value (ngModel): Milano Current value (formControl): none Location valid: false"
+- checkbox "Readonly"
+- text: Readonly
+- checkbox "Disabled"
+- text: Disabled
