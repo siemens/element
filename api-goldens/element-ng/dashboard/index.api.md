@@ -66,6 +66,12 @@ export class SiDashboardService {
 }
 
 // @public
+export class SiDefaultWeatherIconResolver extends SiWeatherIconResolver {
+    // (undocumented)
+    resolve(icon: SiWeatherIcon): SiWeatherIconResolution | null;
+}
+
+// @public
 export class SiLinkWidgetComponent extends SiWidgetBaseDirective<Link[]> {
     readonly numberOfLinks: _angular_core.InputSignal<number>;
     readonly showLinkIcons: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -165,7 +171,7 @@ export class SiValueWidgetComponent {
     readonly disableAutoLoadingIndicator: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly heading: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
-    readonly imgAlt: _angular_core.InputSignal<string | undefined>;
+    readonly imgAlt: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly imgDir: _angular_core.InputSignal<"horizontal" | "vertical">;
     readonly imgObjectFit: _angular_core.InputSignal<"fill" | "contain" | "cover" | "none" | "scale-down">;
     readonly imgObjectPosition: _angular_core.InputSignal<string | undefined>;
@@ -178,6 +184,106 @@ export class SiValueWidgetComponent {
     readonly status: _angular_core.InputSignal<EntityStatusType | undefined>;
     readonly unit: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly value: _angular_core.InputSignal<TranslatableString | undefined>;
+}
+
+// @public
+export type SiWeatherCondition = 'clear' | 'clouds' | 'rain' | 'storm' | 'wind' | 'unknown';
+
+// @public
+export interface SiWeatherIcon {
+    alt?: TranslatableString;
+    condition?: SiWeatherCondition | string;
+    src?: string;
+}
+
+// @public
+export interface SiWeatherIconResolution {
+    alt?: TranslatableString;
+    icon?: string;
+    src?: string;
+}
+
+// @public
+export abstract class SiWeatherIconResolver {
+    // (undocumented)
+    abstract resolve(icon: SiWeatherIcon): SiWeatherIconResolution | null;
+}
+
+// @public
+export class SiWeatherWidgetBodyComponent extends SiWidgetBaseDirective<SiWeatherWidgetData> {
+    readonly forecastLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly layout: _angular_core.InputSignal<SiWeatherWidgetLayout>;
+    readonly location: _angular_core.InputSignal<TranslatableString | undefined>;
+    readonly metricsLabel: _angular_core.InputSignal<TranslatableString>;
+}
+
+// @public
+export class SiWeatherWidgetComponent {
+    readonly accentLine: _angular_core.InputSignal<AccentLineType | undefined>;
+    readonly disableAutoLoadingIndicator: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly heading: _angular_core.InputSignal<TranslatableString | undefined>;
+    readonly imgAlt: _angular_core.InputSignal<TranslatableString | undefined>;
+    readonly imgDir: _angular_core.InputSignal<"horizontal" | "vertical">;
+    readonly imgObjectFit: _angular_core.InputSignal<"fill" | "contain" | "cover" | "none" | "scale-down">;
+    readonly imgObjectPosition: _angular_core.InputSignal<string | undefined>;
+    readonly imgSrc: _angular_core.InputSignal<string | undefined>;
+    readonly initialLoadingIndicatorDebounceTime: _angular_core.InputSignal<number>;
+    readonly layout: _angular_core.InputSignal<SiWeatherWidgetLayout>;
+    readonly location: _angular_core.InputSignal<TranslatableString | undefined>;
+    readonly primaryActions: _angular_core.InputSignal<ContentActionBarMainItem[]>;
+    readonly secondaryActions: _angular_core.InputSignal<MenuItem_2[]>;
+    readonly showLoadingIndicator: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly value: _angular_core.InputSignal<SiWeatherWidgetData | undefined>;
+}
+
+// @public
+export interface SiWeatherWidgetCurrent {
+    condition?: TranslatableString;
+    illustration?: SiWeatherIcon | string;
+    illustrationAlt?: TranslatableString;
+    maxTemperature?: string | number;
+    minTemperature?: string | number;
+    temperature: string | number;
+}
+
+// @public
+export interface SiWeatherWidgetData {
+    // (undocumented)
+    current: SiWeatherWidgetCurrent;
+    // (undocumented)
+    forecast?: SiWeatherWidgetForecast;
+    // (undocumented)
+    metrics?: readonly SiWeatherWidgetMetric[];
+}
+
+// @public
+export interface SiWeatherWidgetForecast {
+    columns?: readonly SiWeatherWidgetForecastColumn[];
+    days: readonly SiWeatherWidgetForecastDay[];
+}
+
+// @public
+export interface SiWeatherWidgetForecastColumn {
+    icon?: string;
+    label?: TranslatableString;
+    values: readonly (string | number | undefined)[];
+}
+
+// @public
+export interface SiWeatherWidgetForecastDay {
+    illustration?: SiWeatherIcon | string;
+    label: TranslatableString;
+    maxTemperature: string | number;
+    minTemperature: string | number;
+}
+
+// @public
+export type SiWeatherWidgetLayout = 'vertical' | 'horizontal' | 'compact';
+
+// @public
+export interface SiWeatherWidgetMetric {
+    label: TranslatableString;
+    value: string | number;
 }
 
 // @public

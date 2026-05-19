@@ -42,6 +42,11 @@
                 "glob": "**/*",
                 "input": "projects/live-preview/assets/",
                 "output": "/assets/"
+              },
+              {
+                "glob": "*.svg",
+                "input": "node_modules/@meteocons/svg-static/fill",
+                "output": "/assets/meteocons/"
               }
             ],
             "stylePreprocessorOptions": {
@@ -461,6 +466,11 @@
                 "glob": "*",
                 "input": "projects/dashboards-ng/assets/i18n",
                 "output": "assets/i18n/dashboards-ng/"
+              },
+              {
+                "glob": "*.svg",
+                "input": "node_modules/@meteocons/svg-static/fill",
+                "output": "/assets/meteocons/"
               }
             ],
             "stylePreprocessorOptions": {

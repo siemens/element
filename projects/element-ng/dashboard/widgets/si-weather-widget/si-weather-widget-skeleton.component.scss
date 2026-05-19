@@ -1,0 +1,48 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+$si-weather-illustration-size: 40px;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: map.get(variables.$spacers, 3);
+}
+
+.si-weather-widget-skeleton-row {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: map.get(variables.$spacers, 4);
+}
+
+.si-weather-widget-skeleton-col {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: map.get(variables.$spacers, 3);
+}
+
+.si-weather-widget-skeleton-illustration {
+  flex: 0 0 auto;
+  inline-size: $si-weather-illustration-size;
+  block-size: $si-weather-illustration-size;
+  border-radius: 50%;
+}
+
+.si-weather-widget-skeleton-value {
+  flex: 0 0 auto;
+  align-self: stretch;
+  inline-size: 5.3125rem; // 85px
+  block-size: auto;
+}
+
+.si-weather-widget-skeleton-line {
+  block-size: variables.$si-font-size-body;
+  inline-size: 7.5rem; // 120px
+
+  &:last-child {
+    inline-size: 5rem; // 80px
+  }
+}

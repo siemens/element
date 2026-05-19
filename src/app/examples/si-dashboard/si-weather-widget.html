@@ -1,0 +1,85 @@
+<div class="row align-items-start">
+  <!-- 1. Vertical, full payload with 5-day forecast and extra columns -->
+  <si-weather-widget
+    class="col-lg-4 col-md-6 mb-6"
+    layout="vertical"
+    heading="Zug, Switzerland"
+    [value]="zugFullData"
+  />
+
+  <!-- 2. Vertical, rain — current + forecast, no metrics -->
+  <si-weather-widget
+    class="col-lg-4 col-md-6 mb-6"
+    layout="vertical"
+    heading="Oslo, Norway"
+    [value]="osloRainData"
+  />
+
+  <!-- 3. Vertical, current only -->
+  <si-weather-widget
+    class="col-lg-4 col-md-6 mb-6"
+    layout="vertical"
+    heading="Madrid, Spain"
+    [value]="madridSunData"
+  />
+
+  <!-- 4. Horizontal, full payload, distinct metric set -->
+  <si-weather-widget
+    class="col-lg-4 col-md-6 mb-6"
+    layout="horizontal"
+    heading="Tokyo, Japan"
+    [value]="tokyoFullData"
+  />
+
+  <!-- 5. Horizontal, storm — current + forecast -->
+  <si-weather-widget
+    class="col-lg-4 col-md-6 mb-6"
+    layout="horizontal"
+    heading="Singapore"
+    [value]="singaporeStormData"
+  />
+
+  <!-- 6. Vertical, current only -->
+  <si-weather-widget
+    class="col-lg-4 col-md-6 mb-6"
+    layout="vertical"
+    heading="Dubai, UAE"
+    [value]="dubaiSunData"
+  />
+
+  <!-- 7. Compact with min/max range -->
+  <si-weather-widget
+    class="col-lg-4 col-md-4 col-sm-6 mb-6"
+    layout="compact"
+    location="Zürich"
+    [value]="zurichCompactData"
+  />
+
+  <!-- 8. Compact, temperature only -->
+  <si-weather-widget
+    class="col-lg-4 col-md-4 col-sm-6 mb-6"
+    layout="compact"
+    location="Vienna"
+    [value]="viennaCompactData"
+  />
+
+  <!-- 9. Loading state -->
+  <si-weather-widget
+    class="col-lg-4 col-md-4 col-sm-6 mb-6"
+    layout="vertical"
+    heading="Munich, Germany"
+    showLoadingIndicator
+  />
+
+  <!-- 10. Horizontal with image on the start (left) side -->
+  <si-weather-widget
+    class="col-lg-12 col-md-12 mb-6"
+    layout="horizontal"
+    heading="Palekastro, Crete"
+    imgSrc="assets/images/beach.jpg"
+    imgAlt="Beach"
+    imgDir="horizontal"
+    imgObjectFit="cover"
+    [value]="palekastroFullData"
+  />
+</div>

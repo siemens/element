@@ -1,0 +1,81 @@
+@let days = forecast().days;
+@let cols = columns();
+@let illustrationSize = layout() === 'vertical' ? 'sm' : 'md';
+
+<div
+  class="si-weather-widget-forecast"
+  [class.si-weather-widget-vertical]="layout() === 'vertical'"
+  [class.si-weather-widget-horizontal]="layout() === 'horizontal'"
+  [attr.aria-label]="forecastLabel() | translate"
+>
+  @if (layout() === 'horizontal') {
+    @for (day of days; track $index) {
+      <div
+        class="si-weather-widget-forecast-day"
+        [class.si-weather-widget-forecast-day-2]="$index === 1"
+        [class.si-weather-widget-forecast-day-3]="$index === 2"
+        [class.si-weather-widget-forecast-day-4]="$index === 3"
+        [class.si-weather-widget-forecast-day-5]="$index === 4"
+      >
+        <div class="si-weather-widget-forecast-day-label">{{ day.label | translate }}</div>
+        <si-weather-widget-illustration
+          [size]="illustrationSize"
+          [illustration]="day.illustration"
+          [altFallback]="day.label"
+        />
+        <div class="si-weather-widget-forecast-day-range">
+          <span class="si-weather-widget-forecast-range-min">{{ day.minTemperature }}</span>
+          <span class="si-weather-widget-forecast-range-max">{{ day.maxTemperature }}</span>
+        </div>
+      </div>
+    }
+  } @else {
+    <ul
+      class="si-weather-widget-forecast-list"
+      role="list"
+      [style.--si-weather-forecast-extras]="cols.length"
+    >
+      @for (day of days; track $index; let i = $index) {
+        <li class="si-weather-widget-forecast-row">
+          <span class="si-weather-widget-forecast-day-label">
+            {{ day.label | translate }}
+          </span>
+          <span class="si-weather-widget-forecast-illustration-cell">
+            <si-weather-widget-illustration
+              [size]="illustrationSize"
+              [illustration]="day.illustration"
+              [altFallback]="day.label"
+            />
+          </span>
+          @for (col of cols; track $index; let extraIdx = $index) {
+            <span
+              class="si-weather-widget-forecast-extra"
+              role="img"
+              [class.si-weather-widget-forecast-extra-1]="extraIdx === 0"
+              [class.si-weather-widget-forecast-extra-2]="extraIdx === 1"
+              [class.si-weather-widget-forecast-extra-3]="extraIdx === 2"
+              [class.si-weather-widget-forecast-extra-4]="extraIdx === 3"
+              [class.si-weather-widget-forecast-extra-5]="extraIdx === 4"
+              [attr.aria-label]="(col.label | translate) + ': ' + (columnValue(col, i) ?? '')"
+            >
+              @if (col.icon) {
+                <si-icon
+                  class="icon si-weather-widget-forecast-extra-icon"
+                  aria-hidden="true"
+                  [icon]="col.icon"
+                />
+              }
+              <span aria-hidden="true">{{ columnValue(col, i) ?? '' }}</span>
+            </span>
+          }
+          <span class="si-weather-widget-forecast-range-cell">
+            <span class="si-weather-widget-forecast-range">
+              <span class="si-weather-widget-forecast-range-min">{{ day.minTemperature }}</span>
+              <span class="si-weather-widget-forecast-range-max">{{ day.maxTemperature }}</span>
+            </span>
+          </span>
+        </li>
+      }
+    </ul>
+  }
+</div>

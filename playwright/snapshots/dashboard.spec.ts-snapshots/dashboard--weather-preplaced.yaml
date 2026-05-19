@@ -1,0 +1,117 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - heading "Siemens Dashboards" [level=1]
+  - button "Toggle theme"
+- navigation:
+  - button "expand"
+- main:
+  - heading "Sample Dashboard" [level=2]
+  - combobox "number":
+    - option "All week" [selected]
+    - option "Mon"
+    - option "Tue"
+    - option "Wed"
+    - option "Thu"
+    - option "Fri"
+  - combobox "number":
+    - option "All levels" [selected]
+    - option "Success"
+    - option "Warning"
+    - option "Danger"
+  - button "Edit"
+  - img "Buildings at scale"
+  - text: /Project Issues! \d+ Issues Number of contributing issues/
+  - link "Go to issues":
+    - /url: https://github.com/siemens/element/issues
+  - text: Bar Chart
+  - menubar:
+    - menuitem "Print"
+    - menuitem "Expand"
+    - menuitem "Toggle"
+  - text: Pie Chart
+  - menubar:
+    - menuitem "Expand"
+  - text: Full Speed Line Chart
+  - menubar:
+    - menuitem "Print"
+    - menuitem "Expand"
+    - menuitem "Toggle"
+  - text: List Widget
+  - menubar:
+    - menuitem "Sort descending"
+  - textbox "Search..."
+  - list:
+    - listitem:
+      - text: /\d+\+/
+      - link "Taj Mahal":
+        - /url: https://en.wikipedia.org/wiki/Taj_Mahal
+      - text: /The Taj Mahal is an ivory-white marble mausoleum \d+\.\d+/
+      - button "Building overview"
+    - listitem:
+      - text: info
+      - link "Tower of Pisa":
+        - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
+      - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral. 9.7
+      - button "Building overview"
+    - listitem:
+      - text: 3 Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris. 8.3
+      - button "Building overview"
+    - listitem:
+      - text: /5 Colosseum \d+\.\d+/
+      - button "Building overview"
+    - listitem:
+      - text: 5 Burj Khalifa 4.5
+      - button "Building overview"
+    - listitem:
+      - text: /6 St\. Basil's Cathedral \d+\.\d+/
+      - button "Building overview"
+  - link "Go to...":
+    - /url: https://github.com/siemens/element/issues
+  - text: Timeline Widget
+  - list:
+    - listitem: /Today \d+:\d+ Title Description/
+    - listitem: /Today \d+:\d+ Title Description/
+    - listitem: /Today \d+:\d+ Title Description/
+    - listitem: /Today \d+:\d+ Title Description/
+  - link "Go to...":
+    - /url: https://github.com/siemens/element/issues
+  - text: Weather
+  - menubar:
+    - menuitem "Expand"
+  - text: /\d+°/
+  - img "Sunny"
+  - text: /Sunny \d+° \d+°/
+  - list "Additional weather data":
+    - listitem: /Wind [\d,.]+[bkmBKM]+\/h/
+    - listitem: /Cloud cover \d+%/
+    - listitem: /Precipitation [\d,.]+[bkmBKM]+/
+    - listitem: UVI 1 low
+  - list:
+    - listitem:
+      - text: Mon
+      - img "Mon"
+      - 'img /Wind: [\d,.]+[bkmBKM]+\/h/'
+      - text: /\d+° \d+°/
+    - listitem:
+      - text: Tue
+      - img "Tue"
+      - 'img /Wind: [\d,.]+[bkmBKM]+\/h/'
+      - text: /\d+° \d+°/
+    - listitem:
+      - text: Wed
+      - img "Wed"
+      - 'img /Wind: [\d,.]+[bkmBKM]+\/h/'
+      - text: /\d+° \d+°/
+    - listitem:
+      - text: Thu
+      - img "Thu"
+      - 'img /Wind: [\d,.]+[bkmBKM]+\/h/'
+      - text: /\d+° \d+°/
+    - listitem:
+      - text: Fri
+      - img "Fri"
+      - 'img /Wind: [\d,.]+[bkmBKM]+\/h/'
+      - text: /\d+° \d+°/
