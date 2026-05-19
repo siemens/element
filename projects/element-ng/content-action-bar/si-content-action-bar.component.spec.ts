@@ -2,9 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { booleanAttribute, Component, Input } from '@angular/core';
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -13,62 +12,51 @@ import { SiContentActionBarComponent } from './si-content-action-bar.component';
 import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.model';
 import { SiContentActionBarHarness } from './testing/si-content-action-bar.harness';
 
-@Component({
-  imports: [SiContentActionBarComponent],
-  template: `
-    <div class="d-flex">
-      <si-content-action-bar
-        #ref
-        class="ms-auto"
-        [primaryActions]="primaryActions"
-        [secondaryActions]="secondaryActions"
-        [viewType]="viewType"
-        [preventIconsInDropdownMenus]="preventIconsInDropdownMenus"
-      />
-    </div>
-  `
-})
-class TestComponent {
-  @Input() primaryActions: ContentActionBarMainItem[] = [];
-  @Input() secondaryActions: MenuItem[] = [];
-  @Input() viewType: ViewType = 'expanded';
-  @Input({ transform: booleanAttribute }) preventIconsInDropdownMenus = false;
-}
-
 describe('SiContentActionBarComponent', () => {
-  let fixture: ComponentFixture<TestComponent>;
-  let component: TestComponent;
-  let loader: HarnessLoader;
+  let fixture: ComponentFixture<SiContentActionBarComponent>;
   let harness: SiContentActionBarHarness;
+  let primaryActions: WritableSignal<ContentActionBarMainItem[]>;
+  let secondaryActions: WritableSignal<MenuItem[]>;
+  let viewType: WritableSignal<ViewType>;
+  let preventIconsInDropdownMenus: WritableSignal<boolean>;
 
   beforeEach(() => {
+    primaryActions = signal<ContentActionBarMainItem[]>([]);
+    secondaryActions = signal<MenuItem[]>([]);
+    viewType = signal<ViewType>('expanded');
+    preventIconsInDropdownMenus = signal(false);
+
     TestBed.configureTestingModule({
-      imports: [TestComponent],
       providers: [provideRouter([])]
-    }).compileComponents();
+    });
+
+    fixture = TestBed.createComponent(SiContentActionBarComponent, {
+      bindings: [
+        inputBinding('primaryActions', primaryActions),
+        inputBinding('secondaryActions', secondaryActions),
+        inputBinding('viewType', viewType),
+        inputBinding('preventIconsInDropdownMenus', preventIconsInDropdownMenus)
+      ]
+    });
   });
 
   beforeEach(async () => {
-    fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentInstance;
-    loader = TestbedHarnessEnvironment.loader(fixture);
-    harness = await loader.getHarness(SiContentActionBarHarness);
+    harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, SiContentActionBarHarness);
   });
 
   it('should set primary actions', async () => {
-    component.primaryActions = [
+    primaryActions.set([
       { type: 'link', label: 'Create', href: '#' },
       { type: 'router-link', label: 'Route me', routerLink: '/' },
       { type: 'group', label: 'Save', children: [] },
       { type: 'action', label: 'Delete', action: () => alert('Delete') }
-    ];
-    fixture.changeDetectorRef.markForCheck();
+    ]);
     await fixture.whenStable();
     expect(await harness.getPrimaryActionTexts()).toEqual(['Create', 'Route me', 'Save', 'Delete']);
   });
 
   it('should set secondary actions', async () => {
-    component.secondaryActions = [
+    secondaryActions.set([
       { type: 'action', label: 'Import', action: () => alert('Import') },
       { type: 'action', label: 'Export', action: () => alert('Export') },
       {
@@ -79,8 +67,7 @@ describe('SiContentActionBarComponent', () => {
           { type: 'action', label: 'Image', action: () => alert('Image') }
         ]
       }
-    ];
-    fixture.changeDetectorRef.markForCheck();
+    ]);
     await fixture.whenStable();
 
     await harness.toggleSecondary();
@@ -96,8 +83,8 @@ describe('SiContentActionBarComponent', () => {
   });
 
   it('should activate links when the menu icon is clicked', async () => {
-    component.viewType = 'collapsible';
-    component.primaryActions = [
+    viewType.set('collapsible');
+    primaryActions.set([
       {
         type: 'group',
         label: 'Item',
@@ -109,8 +96,7 @@ describe('SiContentActionBarComponent', () => {
           }
         ]
       }
-    ];
-    fixture.changeDetectorRef.markForCheck();
+    ]);
     await fixture.whenStable();
 
     // cannot use jasmine.clock here
@@ -122,11 +108,8 @@ describe('SiContentActionBarComponent', () => {
   });
 
   it('should disable menu item by disabled attribute', async () => {
-    component.viewType = 'expanded';
-    component.primaryActions = [
-      { type: 'action', label: 'Item', disabled: true, action: () => {} }
-    ];
-    fixture.changeDetectorRef.markForCheck();
+    viewType.set('expanded');
+    primaryActions.set([{ type: 'action', label: 'Item', disabled: true, action: () => {} }]);
     await fixture.whenStable();
 
     expect(await harness.getPrimaryAction('Item').then(item => item.isDisabled())).toBe(true);
@@ -134,9 +117,8 @@ describe('SiContentActionBarComponent', () => {
 
   it('should call action on item click', async () => {
     const actionSpy = vi.fn();
-    component.viewType = 'expanded';
-    component.primaryActions = [{ type: 'action', label: 'Item', action: actionSpy }];
-    fixture.changeDetectorRef.markForCheck();
+    viewType.set('expanded');
+    primaryActions.set([{ type: 'action', label: 'Item', action: actionSpy }]);
     await fixture.whenStable();
     await harness.getPrimaryAction('Item').then(item => item.click());
     expect(actionSpy).toHaveBeenCalled();
@@ -144,11 +126,10 @@ describe('SiContentActionBarComponent', () => {
 
   describe('#preventIconsInDropdownMenus', () => {
     it('should show primary action icon', async () => {
-      component.primaryActions = [
+      primaryActions.set([
         { type: 'action', label: 'primaryItem', icon: 'element-user', action: () => {} }
-      ];
-      component.preventIconsInDropdownMenus = true;
-      fixture.changeDetectorRef.markForCheck();
+      ]);
+      preventIconsInDropdownMenus.set(true);
       await fixture.whenStable();
       expect(
         await harness.getPrimaryAction('primaryItem').then(item => item.hasIcon('element-user'))
@@ -156,11 +137,10 @@ describe('SiContentActionBarComponent', () => {
     });
 
     it('should show primary action icon in in menu', async () => {
-      component.primaryActions = [
+      primaryActions.set([
         { type: 'action', label: 'primaryItem', icon: 'element-user', action: () => {} }
-      ];
-      component.viewType = 'mobile';
-      fixture.changeDetectorRef.markForCheck();
+      ]);
+      viewType.set('mobile');
       await fixture.whenStable();
 
       await harness.toggleMobile();
@@ -173,12 +153,11 @@ describe('SiContentActionBarComponent', () => {
     });
 
     it('should not show primary action icon in menus with mobile view', async () => {
-      component.primaryActions = [
+      primaryActions.set([
         { type: 'action', label: 'primaryItem', icon: 'element-user', action: () => {} }
-      ];
-      component.viewType = 'mobile';
-      component.preventIconsInDropdownMenus = true;
-      fixture.changeDetectorRef.markForCheck();
+      ]);
+      viewType.set('mobile');
+      preventIconsInDropdownMenus.set(true);
       await fixture.whenStable();
 
       await harness.toggleMobile();
@@ -191,14 +170,13 @@ describe('SiContentActionBarComponent', () => {
     });
 
     it('should show secondary action icon in menu with expanded view', async () => {
-      component.viewType = 'expanded';
-      component.primaryActions = [
+      viewType.set('expanded');
+      primaryActions.set([
         { type: 'action', label: 'primaryItem', icon: 'element-user', action: () => {} }
-      ];
-      component.secondaryActions = [
+      ]);
+      secondaryActions.set([
         { type: 'action', label: 'secondaryItem', icon: 'element-copy', action: () => {} }
-      ];
-      fixture.changeDetectorRef.markForCheck();
+      ]);
       await fixture.whenStable();
 
       await harness.toggleSecondary();
@@ -211,16 +189,15 @@ describe('SiContentActionBarComponent', () => {
     });
 
     it('should not show secondary action icon in menus with expanded view', async () => {
-      component.viewType = 'expanded';
-      component.primaryActions = [
+      viewType.set('expanded');
+      primaryActions.set([
         { type: 'action', label: 'primaryItem', icon: 'element-user', action: () => {} }
-      ];
-      component.secondaryActions = [
+      ]);
+      secondaryActions.set([
         { type: 'action', label: 'secondaryItem', icon: 'element-copy', action: () => {} }
-      ];
-      component.preventIconsInDropdownMenus = true;
+      ]);
+      preventIconsInDropdownMenus.set(true);
 
-      fixture.changeDetectorRef.markForCheck();
       await fixture.whenStable();
       await harness.toggleMobile();
       expect(
@@ -233,14 +210,12 @@ describe('SiContentActionBarComponent', () => {
   });
 
   it('should force mobile if no primary actions are provided', async () => {
-    component.primaryActions = [
+    primaryActions.set([
       { type: 'action', label: 'primaryItem', icon: 'element-user', action: () => {} }
-    ];
-    fixture.changeDetectorRef.markForCheck();
+    ]);
     await fixture.whenStable();
     expect(await harness.isMobile()).toBe(false);
-    component.primaryActions = [];
-    fixture.changeDetectorRef.markForCheck();
+    primaryActions.set([]);
     await fixture.whenStable();
     expect(await harness.isMobile()).toBe(true);
   });
