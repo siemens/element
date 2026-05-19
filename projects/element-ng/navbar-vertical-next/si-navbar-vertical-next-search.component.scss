@@ -4,8 +4,8 @@
 :host {
   display: flex;
   align-items: center;
-  block-size: 40px;
   margin-block-start: map.get(all-variables.$spacers, 4);
+  padding-block: map.get(all-variables.$spacers, 2);
   overflow-x: hidden;
 }
 
@@ -25,6 +25,9 @@ si-search-bar {
   display: none;
   border: 0;
   border-radius: all-variables.$element-radius-2;
+  block-size: all-variables.$input-height;
+  inline-size: calc(1.5rem + 2 * map.get(all-variables.$spacers, 2));
+  text-align: start;
 }
 
 @include all-variables.media-breakpoint-up(sm) {
