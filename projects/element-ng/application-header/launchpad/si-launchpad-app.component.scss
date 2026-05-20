@@ -8,8 +8,8 @@
   flex-flow: column nowrap;
   position: relative;
   padding-block: map.get(variables.$spacers, 8);
-  inline-size: 152px;
-  max-inline-size: 152px;
+  inline-size: calc(7rem + 2 * map.get(variables.$spacers, 7));
+  max-inline-size: calc(7rem + 2 * map.get(variables.$spacers, 7));
   padding-inline: map.get(variables.$spacers, 4);
   color: variables.$element-text-primary;
   border-radius: variables.$element-radius-2;
@@ -45,14 +45,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  inline-size: 48px;
-  block-size: 48px;
+  inline-size: 3rem;
+  block-size: 3rem;
   margin-block-end: map.get(variables.$spacers, 4);
   border-radius: variables.$element-radius-2;
 
   &:is(si-icon) {
     background: variables.$element-launchpad-app-background;
-    font-size: 40px;
+    font-size: 2.5rem;
     padding: map.get(variables.$spacers, 2);
     color: variables.$element-launchpad-app-color;
   }
