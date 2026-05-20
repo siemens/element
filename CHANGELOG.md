@@ -1,3 +1,21 @@
+# [49.9.0](https://github.com/siemens/element/compare/v49.8.0...v49.9.0) (2026-05-20)
+
+
+### Features
+
+* **breadcrumb-router:** make ariaLabel type TranslatableString ([9cb6f87](https://github.com/siemens/element/commit/9cb6f874443b8a9150e8192a9b46d5595a2f065d))
+* **navbar-vertical-next:** add alwaysFlyout mode for groups ([d627796](https://github.com/siemens/element/commit/d627796a36dced43175f3da6e547aeeeaf4b5419)), closes [#1944](https://github.com/siemens/element/issues/1944)
+* **select:** support constructions of custom select ([f1279ba](https://github.com/siemens/element/commit/f1279ba4f9629db7cafa86ba69b92a9f271c0c9f)), closes [#1840](https://github.com/siemens/element/issues/1840)
+
+
+### Bug Fixes
+
+* **dashboard:** correct heading input type to TranslatableString ([e34a867](https://github.com/siemens/element/commit/e34a867c54cb3042e024cfb831f98bf28c473da1))
+* **navbar-vertical:** prevent initial animation ([af31e36](https://github.com/siemens/element/commit/af31e3674ae577af48d9392553dcfeb77550036b))
+* **side-panel:** fix position of legacy status action dot with increased RFS ([720c733](https://github.com/siemens/element/commit/720c73328d1fa510fabe1d865f94c91b169bafde))
+* **theme:** ensure the input line-height is consistent between browsers ([1336e45](https://github.com/siemens/element/commit/1336e45bb5c59431c4336197475fa89471e68355)), closes [#2031](https://github.com/siemens/element/issues/2031)
+* **theme:** make .badge-text center aligned ([33764a1](https://github.com/siemens/element/commit/33764a1a333656f88b6ac53eb8a427799f830c2a))
+
 # [49.8.0](https://github.com/siemens/element/compare/v49.7.0...v49.8.0) (2026-05-08)
 
 
