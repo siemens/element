@@ -45,7 +45,7 @@ export abstract class SiWidgetBaseDirective<T> implements OnInit, OnChanges {
     transform: booleanAttribute
   });
 
-  private readonly showLoadingIndicatorInternal = signal<boolean | undefined>(false);
+  private readonly showLoadingIndicatorInternal = signal<boolean | undefined>(undefined);
 
   readonly showLoadingIndicator = computed(() => {
     return this.showLoadingIndicatorInternal() ?? this.showLoadingIndicatorInput();
