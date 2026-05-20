@@ -16,6 +16,20 @@ env:
   MAPTILER_URL: https://api.maptiler.com/maps/voyager/style.json?key=${{ secrets.MAPTILER_KEY }}
 
 jobs:
+  check-commit-messages:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+      - name: Check for forbidden commit messages
+        run: |
+          FORBIDDEN_MSG="fix(filtered-search): omit daterange specific properties from datepickerConfig"
+          if git log --format='%s' origin/${{ github.base_ref }}..HEAD | grep -qF "$FORBIDDEN_MSG"; then
+            echo "::error::PR contains a commit with forbidden message: $FORBIDDEN_MSG"
+            exit 1
+          fi
+
   build:
     runs-on: ubuntu-24.04
     steps:
