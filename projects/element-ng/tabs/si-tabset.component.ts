@@ -24,6 +24,7 @@ import { elementOptions } from '@siemens/element-icons';
 import { isRTL } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiMenuDirective, SiMenuItemComponent } from '@siemens/element-ng/menu';
+import { t, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 
 import { SiTabBadgeComponent } from './si-tab-badge.component';
@@ -45,7 +46,8 @@ import { SI_TABSET } from './si-tabs-tokens';
     SiResizeObserverModule,
     RouterLink,
     SiTabBadgeComponent,
-    SiIconComponent
+    SiIconComponent,
+    SiTranslatePipe
   ],
   templateUrl: './si-tabset.component.html',
   styleUrl: './si-tabset.component.scss',
@@ -63,6 +65,12 @@ export class SiTabsetComponent {
    * @defaultValue false
    **/
   readonly contentOverflowAuto = input(false, { transform: booleanAttribute });
+
+  /**
+   * Aria label for the overflow menu button shown when tabs don't fit.
+   * @defaultValue 'More tabs'
+   */
+  readonly moreTabsLabel = input(t(() => $localize`:@@SI_TABS.MORE_TABS:More tabs`));
 
   protected readonly icons = addIcons({ elementOptions });
 

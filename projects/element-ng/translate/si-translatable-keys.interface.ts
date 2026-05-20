@@ -10,7 +10,6 @@ export interface SiTranslatableKeys {
   'SI_APPLICATION_HEADER.TOGGLE_NAVIGATION'?: string;
   'SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT'?: string;
   'SI_BREADCRUMB'?: string;
-  'SI_BREADCRUMB_ROUTER_LABEL'?: string;
   'SI_CHANGE_PASSWORD.BACK'?: string;
   'SI_CHANGE_PASSWORD.CHANGE'?: string;
   'SI_CHANGE_PASSWORD.CHANGE_FACTORY_PASSWORD'?: string;
@@ -220,6 +219,7 @@ export interface SiTranslatableKeys {
   'SI_STATUS_BAR.COLLAPSE'?: string;
   'SI_STATUS_BAR.EXPAND'?: string;
   'SI_STATUS_BAR.MUTE'?: string;
+  'SI_TABS.MORE_TABS'?: string;
   'SI_THRESHOLD.ADD'?: string;
   'SI_THRESHOLD.DELETE'?: string;
   'SI_THRESHOLD.INPUT_LABEL'?: string;

@@ -17,8 +17,7 @@
       <button
         type="button"
         class="dropdown btn btn-tertiary focus-inside"
-        tabindex="-1"
-        aria-hidden="true"
+        [attr.aria-label]="moreTabsLabel() | translate"
         [cdkMenuTriggerFor]="tabsMenu"
       >
         <si-icon class="icon m-0" [icon]="icons.elementOptions" />
