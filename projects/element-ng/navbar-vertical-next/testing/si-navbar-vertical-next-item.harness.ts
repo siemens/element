@@ -14,7 +14,7 @@ export interface SiNavbarVerticalNextItemHarnessFilters extends BaseHarnessFilte
 }
 
 export class SiNavbarVerticalNextItemHarness extends ComponentHarness {
-  static hostSelector = '.dropdown-item, .navbar-vertical-item';
+  static hostSelector = '.navbar-vertical-item';
 
   static with(
     filters: SiNavbarVerticalNextItemHarnessFilters = {}

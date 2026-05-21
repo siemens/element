@@ -28,9 +28,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   styleUrl: './si-navbar-vertical-next-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'focus-inside',
-    '[class.dropdown-item]': 'isDropdownItem()',
-    '[class.navbar-vertical-item]': '!isDropdownItem()',
+    'class': 'focus-inside navbar-vertical-item',
     '[class.active]': 'active',
     '[class.hide-badge-collapsed]': 'hideBadgeWhenCollapsed()',
     '(click)': 'triggered()'
@@ -91,10 +89,6 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     }
     return badge.toString();
   });
-
-  protected readonly isDropdownItem = computed(
-    () => !this.navbar.alwaysFlyout() && !!this.parent?.group?.flyout()
-  );
 
   ngOnInit(): void {
     if (this.group && this.active) {
