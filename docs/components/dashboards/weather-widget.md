@@ -1,96 +1,59 @@
 # Weather dashboard widget
 
-**Weather dashboard widget** displays current weather conditions, optional
-environmental metrics and a short-term forecast for a single location.
+**Weather dashboard widget** displays current weather conditions
+and, optionally, a short-term forecast for a single location.
 
 ## Usage ---
 
-The weather dashboard widget summarizes the outdoor or environmental conditions
-relevant to a dashboard at a glance. It is a pure presentation component:
-applications pre-format every value (temperatures, wind speed, humidity, …) and
-pass the data in as strings or numbers. The widget itself never performs unit
-conversion.
+The weather dashboard widget displays current temperature and sky conditions, with an optional short-term forecast and additional meteorological parameters like humidity or wind speed.
 
-It can include:
+The widget supports different layouts, and both the
+forecast days and the number of additional meteological parameters can be configured according to the use case.
 
-- Current temperature with an illustration of the condition.
-- A location label as the card heading (vertical and horizontal layouts) or
-  next to the illustration (compact layout).
-- A list of environmental metrics, such as wind, humidity or UV index.
-- A short-term forecast of up to five days, optionally with additional
-  per-day columns (e.g. precipitation, wind, humidity).
-
-![Weather dashboard widget](images/weather-dashboard-widget.png)
+![Weather dashboard widget](images/weather-widget.png)
 
 ### When to use
 
 - In dashboards and [tile layouts](../../fundamentals/layouts/content.md#tile-layout).
-- To surface current outdoor or environmental conditions next to operational
-  data that depends on weather context.
-- To give users a quick orientation about the day or week ahead at the
-  monitored location.
+- To display current outdoor or environmental conditions.
+- To offer users a quick overview of the day's or week's weather.
 
 ### Best practices
 
-- Display only the conditions and metrics that are relevant for the
-  dashboard's purpose; avoid recreating a full weather application.
-- Pre-format every value with units before passing it in. The widget does
-  not localize numbers or convert units.
-- Pick the layout that matches the available tile size:
-  vertical for narrow tiles, horizontal for wide tiles, compact for headers
-  or tiles that only need the current condition.
-- Out of the box, the widget renders illustrations for the built-in condition
-  tokens (`clear`, `clouds`, `rain`, `storm`, `wind`) using Element icons.
-  Register a custom `SiWeatherIconResolver` if you need a provider-specific
-  vocabulary or your own imagery.
+- Show only the metrics most relevant to the context.
+- Keep units consistent (e.g. °C or °F, km/h or mph).
+- Pick the layout that matches the available tile size.
 - Use a [skeleton](../progress-indication/skeleton.md) to represent the
   loading state.
-
-<!-- TODO: confirm with design -->
 
 ## Design ---
 
 ### Elements
 
-![Weather dashboard widget elements](images/weather-dashboard-widget-vertical.png)
+![Weather dashboard widget elements](images/weather-widget-elements.png)
 
-> 1. Heading (location), 2. Current temperature, 3. Illustration,
-> 2. Condition label, 5. Min/Max range, 6. Metrics list, 7. Forecast list
+> 1\. Heading (location), 2. Current temperature, 3. Illustration, 4. Condition label, 5. Min/Max range, 6. Additional metrics (optional), 7. Forecast (optional)
 
-With the exception of the current temperature (2), all items are optional.
+### Layout variants
 
-### Variants
+The widget supports three layouts:
 
-The widget supports three layouts selected through the `layout` input.
+- **Vertical:** Forecast with up to five columns of additional data
+  (e.g., wind, precipitation, humidity, UV, pressure).
+- **Horizontal:** Forecast with condition and temperature only.
+- **Compact:** No forecast.
 
-![Vertical layout](images/weather-dashboard-widget-vertical.png)
+The forecast shows **up to seven days**. The number of days is configurable.
+Columns are hidden automatically as the widget narrows.
 
-**Vertical** — the default layout. Renders the today block at the top of the
-card and a vertical forecast list below. The forecast supports up to two
-additional columns (e.g. wind, humidity) next to the min/max temperature
-range.
+![Weather dashboard widget layout types](images/weather-widget-layouts.png)
 
-![Horizontal layout](images/weather-dashboard-widget-horizontal.png)
+### Icon style
 
-**Horizontal** — wider layout that places the today block on the left and the
-forecast as a strip on the right. Forecast columns (extras) are not shown in
-this layout.
+Weather conditions can be represented with flat Element icons or illustrated icons.
+For illustrated icons, the style may vary depending on the weather provider.
 
-![Compact layout](images/weather-dashboard-widget-compact.png)
-
-**Compact** — single-row condensed layout without a card heading. The
-location and min/max temperature are rendered next to the illustration. The
-compact layout does not show metrics or a forecast.
-
-### Responsive behavior
-
-The forecast accepts at most **five days** and at most **five extra columns**.
-As the widget narrows, trailing extra columns (vertical layout) or trailing
-forecast days (horizontal layout) are hidden via CSS container queries; no
-JavaScript measurement is involved. The first day and the min/max temperature
-range are always visible.
-
-<!-- TODO: confirm with design -->
+![Weather dashboard widget icon style](images/weather-widget-icon-style.png)
 
 ## Code ---
 
@@ -173,9 +136,10 @@ static SVG set (`@meteocons/svg-static`). The icons are exposed via
 }
 ```
 
-The resolver itself is a small class that maps the six built-in condition
-tokens to file names; it is registered as a component-level provider so the
-override is scoped to the example:
+The resolver is a small class that maps the six built-in condition tokens to
+file names. For more complex scenarios, you can introduce or reuse a richer
+condition vocabulary. It is registered as a component-level provider, so the
+override is scoped to this example:
 
 ```ts
 providers: [{ provide: SiWeatherIconResolver, useClass: SiWeatherWidgetMeteoconsIconResolver }];
