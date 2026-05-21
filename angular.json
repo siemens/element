@@ -382,6 +382,41 @@
         }
       }
     },
+    "map-styles": {
+      "projectType": "library",
+      "root": "projects/map-styles",
+      "sourceRoot": "projects/map-styles",
+      "prefix": "si",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "tsConfig": "projects/map-styles/tsconfig.lib.json",
+            "project": "projects/map-styles/ng-package.json"
+          },
+          "configurations": {
+            "development": {}
+          }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/map-styles/tsconfig.spec.json",
+            "browsers": ["chromium"],
+            "coverageExclude": ["**/index.ts", "**/*.module.ts", "public-api.ts"],
+            "coverageReporters": ["cobertura", "html", "text"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "cache": true,
+            "lintFilePatterns": ["projects/map-styles/**/*.ts", "projects/map-styles/**/*.html"],
+            "eslintConfig": "projects/map-styles/eslint.config.js"
+          }
+        }
+      }
+    },
     "dashboards-ng": {
       "projectType": "library",
       "root": "projects/dashboards-ng",

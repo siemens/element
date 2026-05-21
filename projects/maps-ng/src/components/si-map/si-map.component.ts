@@ -28,6 +28,7 @@ import {
   SiTranslateServiceBuilder,
   t
 } from '@siemens/element-translate-ng/translate';
+import { siMapStyle } from '@siemens/map-styles/common';
 import { apply as applyMapboxStyle } from 'ol-mapbox-style';
 import Control from 'ol/control/Control';
 import { defaults as defaultControls } from 'ol/control/defaults';
@@ -66,7 +67,6 @@ import { MapPoint, MapPointMetaData } from './models/map-point.interface';
 import { OverlayNativeProperties } from './models/overlay-native-properties.interface';
 import { MapService } from './services/map.service';
 import { SelectCluster } from './services/SelectCluster';
-import { styleJson } from './shared/themes/style';
 
 interface ClusterHolder {
   feature?: Feature;
@@ -731,7 +731,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
           this.map!.removeLayer(layer);
         }
       });
-      this.mapboxStyles(styleJson(key, dark));
+      this.mapboxStyles(siMapStyle(key, dark));
     }
   }
 

@@ -3,11 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-// Fonts
-// TODO: This is a workaround to disable loading of google fonts.
-const italicFonts = ['SiemensSans Pro', 'sans-serif'];
-const regularFonts = ['SiemensSans Pro', 'sans-serif'];
-const boldFonts = ['SiemensSans Pro', 'sans-serif'];
+const fonts = ['SiemensSans Pro', 'sans-serif'];
 
 // Colors
 const deepBlue900 = 'rgba(32, 33, 50, 1)';
@@ -17,7 +13,8 @@ const green300 = (opacity: number): string => `rgba(114, 230, 163, ${opacity})`;
 const blue700 = 'rgb(30, 82, 153)';
 const blue100 = 'rgb(210, 226, 247)';
 
-export const styleJson = (key: string, dark?: boolean): any => ({
+/** Build the style specification based on the current element theme. */
+export const siMapStyle = (key: string, dark?: boolean): object => ({
   'version': 8,
   'name': 'siemens-brand',
   'sources': {
@@ -53,22 +50,28 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source': 'openmaptiles',
       'source-layer': 'landcover',
       'paint': {
-        'fill-color': {
-          'stops': [
-            [8, dark ? green500(0.15) : green300(0.15)],
-            [9, dark ? green500(0.15) : green300(0.2)],
-            [11, dark ? green500(0.2) : green300(0.3)],
-            [13, dark ? green500(0.1) : green300(0.35)],
-            [15, dark ? green500(0.15) : green300(0.5)]
-          ]
-        },
+        'fill-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          8,
+          dark ? green500(0.15) : green300(0.15),
+          9,
+          dark ? green500(0.15) : green300(0.2),
+          11,
+          dark ? green500(0.2) : green300(0.3),
+          13,
+          dark ? green500(0.1) : green300(0.35),
+          15,
+          dark ? green500(0.15) : green300(0.5)
+        ],
         'fill-opacity': 1
       },
       'filter': [
         'any',
-        ['==', 'class', 'wood'],
-        ['==', 'class', 'grass'],
-        ['==', 'subclass', 'recreation_ground']
+        ['==', ['get', 'class'], 'wood'],
+        ['==', ['get', 'class'], 'grass'],
+        ['==', ['get', 'subclass'], 'recreation_ground']
       ]
     },
     {
@@ -81,19 +84,25 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'visibility': 'visible'
       },
       'paint': {
-        'fill-color': {
-          'stops': [
-            [8, dark ? green700(0.2) : green300(0.2)],
-            [9, dark ? green700(0.25) : green300(0.25)],
-            [11, dark ? green700(0.35) : green300(0.35)],
-            [13, dark ? green700(0.4) : green300(0.4)],
-            [15, dark ? green700(0.6) : green300(0.6)]
-          ]
-        },
+        'fill-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          8,
+          dark ? green700(0.2) : green300(0.2),
+          9,
+          dark ? green700(0.25) : green300(0.25),
+          11,
+          dark ? green700(0.35) : green300(0.35),
+          13,
+          dark ? green700(0.4) : green300(0.4),
+          15,
+          dark ? green700(0.6) : green300(0.6)
+        ],
         'fill-opacity': 1,
         'fill-translate-anchor': 'map'
       },
-      'filter': ['all', ['==', 'class', 'national_park']]
+      'filter': ['all', ['==', ['get', 'class'], 'national_park']]
     },
     {
       'id': 'park_nature_reserve',
@@ -105,24 +114,25 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'visibility': 'visible'
       },
       'paint': {
-        'fill-color': {
-          'stops': [
-            [8, dark ? green700(0.2) : green300(0.2)],
-            [9, dark ? green700(0.25) : green300(0.25)],
-            [11, dark ? green700(0.35) : green300(0.35)],
-            [13, dark ? green700(0.4) : green300(0.4)],
-            [15, dark ? green700(0.6) : green300(0.6)]
-          ]
-        },
-        'fill-opacity': {
-          'stops': [
-            [6, 0.7],
-            [9, 0.9]
-          ]
-        },
+        'fill-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          8,
+          dark ? green700(0.2) : green300(0.2),
+          9,
+          dark ? green700(0.25) : green300(0.25),
+          11,
+          dark ? green700(0.35) : green300(0.35),
+          13,
+          dark ? green700(0.4) : green300(0.4),
+          15,
+          dark ? green700(0.6) : green300(0.6)
+        ],
+        'fill-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0.7, 9, 0.9],
         'fill-antialias': true
       },
-      'filter': ['all', ['==', 'class', 'nature_reserve']]
+      'filter': ['all', ['==', ['get', 'class'], 'nature_reserve']]
     },
     {
       'id': 'landuse_residential',
@@ -131,25 +141,28 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source-layer': 'landuse',
       'minzoom': 6,
       'paint': {
-        'fill-color': {
-          'stops': [
-            [5, dark ? 'rgba(27, 28, 29, 0.5)' : 'rgba(222, 226, 232, 0.5)'],
-            [8, dark ? 'rgba(27, 28, 29, 0.45)' : 'rgba(222, 226, 232, 0.45)'],
-            [9, dark ? 'rgba(27, 28, 29, 0.4)' : 'rgba(222, 226, 232, 0.4)'],
-            [11, dark ? 'rgba(27, 28, 29, 0.35)' : 'rgba(222, 226, 232, 0.35)'],
-            [13, dark ? 'rgba(27, 28, 29, 0.3)' : 'rgba(222, 226, 232, 0.3)'],
-            [15, dark ? 'rgba(27, 28, 29, 0.25)' : 'rgba(222, 226, 232, 0.25)'],
-            [16, dark ? 'rgba(27, 28, 29, 0.15)' : 'rgba(222, 226, 232, 0.15)']
-          ]
-        },
-        'fill-opacity': {
-          'stops': [
-            [6, 0.6],
-            [9, 1]
-          ]
-        }
+        'fill-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          5,
+          dark ? 'rgba(27, 28, 29, 0.5)' : 'rgba(222, 226, 232, 0.5)',
+          8,
+          dark ? 'rgba(27, 28, 29, 0.45)' : 'rgba(222, 226, 232, 0.45)',
+          9,
+          dark ? 'rgba(27, 28, 29, 0.4)' : 'rgba(222, 226, 232, 0.4)',
+          11,
+          dark ? 'rgba(27, 28, 29, 0.35)' : 'rgba(222, 226, 232, 0.35)',
+          13,
+          dark ? 'rgba(27, 28, 29, 0.3)' : 'rgba(222, 226, 232, 0.3)',
+          15,
+          dark ? 'rgba(27, 28, 29, 0.25)' : 'rgba(222, 226, 232, 0.25)',
+          16,
+          dark ? 'rgba(27, 28, 29, 0.15)' : 'rgba(222, 226, 232, 0.15)'
+        ],
+        'fill-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0.6, 9, 1]
       },
-      'filter': ['any', ['==', 'class', 'residential']]
+      'filter': ['any', ['==', ['get', 'class'], 'residential']]
     },
     {
       'id': 'landuse',
@@ -157,17 +170,23 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source': 'openmaptiles',
       'source-layer': 'landuse',
       'paint': {
-        'fill-color': {
-          'stops': [
-            [8, dark ? 'rgba(0, 0, 0, 0.2)' : 'rgba(195, 189, 205, 0.2)'],
-            [9, dark ? 'rgba(0, 0, 0, 0.25)' : 'rgba(195, 189, 205, 0.25)'],
-            [11, dark ? 'rgba(0, 0, 0, 0.35)' : 'rgba(195, 189, 205, 0.35)'],
-            [13, dark ? 'rgba(0, 0, 0, 0.4)' : 'rgba(195, 189, 205, 0.4)'],
-            [15, dark ? 'rgb(20, 20, 20)' : 'rgb(218, 216, 222)']
-          ]
-        }
+        'fill-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          8,
+          dark ? 'rgba(0, 0, 0, 0.2)' : 'rgba(195, 189, 205, 0.2)',
+          9,
+          dark ? 'rgba(0, 0, 0, 0.25)' : 'rgba(195, 189, 205, 0.25)',
+          11,
+          dark ? 'rgba(0, 0, 0, 0.35)' : 'rgba(195, 189, 205, 0.35)',
+          13,
+          dark ? 'rgba(0, 0, 0, 0.4)' : 'rgba(195, 189, 205, 0.4)',
+          15,
+          dark ? 'rgb(20, 20, 20)' : 'rgb(218, 216, 222)'
+        ]
       },
-      'filter': ['any', ['==', 'class', 'cemetery'], ['==', 'class', 'stadium']]
+      'filter': ['any', ['==', ['get', 'class'], 'cemetery'], ['==', ['get', 'class'], 'stadium']]
     },
     {
       'id': 'waterway',
@@ -179,14 +198,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? blue700 : blue100,
-        'line-width': {
-          'stops': [
-            [8, 0.5],
-            [9, 1],
-            [15, 2],
-            [16, 3]
-          ]
-        }
+        'line-width': ['interpolate', ['linear'], ['zoom'], 8, 0.5, 9, 1, 15, 2, 16, 3]
       }
     },
     {
@@ -197,21 +209,25 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'minzoom': 9,
       'maxzoom': 24,
       'paint': {
-        'line-color': {
-          'stops': [
-            [4, dark ? 'rgba(110, 110, 110, 1)' : 'rgba(145, 145, 145, 0.6)'],
-            [5, dark ? 'rgba(112, 112, 112, 1)' : 'rgba(145, 145, 145, 0.8)'],
-            [6, dark ? 'rgba(189, 189, 189, 1)' : 'rgba(145, 145, 145, 0.9)']
-          ]
-        },
-        'line-width': {
-          'stops': [
-            [4, 0.5],
-            [7, 1]
-          ]
-        }
+        'line-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          4,
+          dark ? 'rgba(110, 110, 110, 1)' : 'rgba(145, 145, 145, 0.6)',
+          5,
+          dark ? 'rgba(112, 112, 112, 1)' : 'rgba(145, 145, 145, 0.8)',
+          6,
+          dark ? 'rgba(189, 189, 189, 1)' : 'rgba(145, 145, 145, 0.9)'
+        ],
+        'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.5, 7, 1]
       },
-      'filter': ['all', ['==', 'admin_level', 6], ['==', 'maritime', 0], ['==', 'disputed', 0]]
+      'filter': [
+        'all',
+        ['==', ['get', 'admin_level'], 6],
+        ['==', ['get', 'maritime'], 0],
+        ['==', ['get', 'disputed'], 0]
+      ]
     },
     {
       'id': 'boundary_state',
@@ -220,23 +236,25 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source-layer': 'boundary',
       'minzoom': 4,
       'paint': {
-        'line-color': {
-          'stops': [
-            [4, dark ? 'rgba(68, 73, 76, 1)' : '#d4d5d6'],
-            [5, dark ? 'rgba(68, 73, 76, 1)' : '#d4d5d6'],
-            [6, dark ? '#656A6E' : '#e1c5c7']
-          ]
-        },
-        'line-width': {
-          'stops': [
-            [4, 0.5],
-            [7, 1],
-            [8, 1],
-            [9, 1.2]
-          ]
-        }
+        'line-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          4,
+          dark ? 'rgba(68, 73, 76, 1)' : '#d4d5d6',
+          5,
+          dark ? 'rgba(68, 73, 76, 1)' : '#d4d5d6',
+          6,
+          dark ? '#656A6E' : '#e1c5c7'
+        ],
+        'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.5, 7, 1, 8, 1, 9, 1.2]
       },
-      'filter': ['all', ['==', 'admin_level', 4], ['==', 'maritime', 0], ['==', 'disputed', 0]]
+      'filter': [
+        'all',
+        ['==', ['get', 'admin_level'], 4],
+        ['==', ['get', 'maritime'], 0],
+        ['==', ['get', 'disputed'], 0]
+      ]
     },
     {
       'id': 'water',
@@ -254,7 +272,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'fill-antialias': true,
         'fill-translate-anchor': 'map'
       },
-      'filter': ['all', ['==', '$type', 'Polygon'], ['!=', 'brunnel', 'tunnel']]
+      'filter': ['all', ['==', ['geometry-type'], 'Polygon'], ['!=', ['get', 'brunnel'], 'tunnel']]
     },
     {
       'id': 'water_shadow',
@@ -269,17 +287,22 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'fill-color': dark ? 'rgba(74, 84, 113, 1)' : 'rgb(210, 226, 247)',
         'fill-opacity': 1,
         'fill-antialias': true,
-        'fill-translate': {
-          'stops': [
-            [0, [0, 2]],
-            [6, [0, 1]],
-            [14, [0, 1]],
-            [17, [0, 2]]
-          ]
-        },
+        'fill-translate': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          0,
+          ['literal', [0, 2]],
+          6,
+          ['literal', [0, 1]],
+          14,
+          ['literal', [0, 1]],
+          17,
+          ['literal', [0, 2]]
+        ],
         'fill-translate-anchor': 'map'
       },
-      'filter': ['all', ['==', '$type', 'Polygon'], ['!=', 'brunnel', 'tunnel']]
+      'filter': ['all', ['==', ['geometry-type'], 'Polygon'], ['!=', ['get', 'brunnel'], 'tunnel']]
     },
     {
       'id': 'aeroway-runway',
@@ -292,17 +315,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(97, 97, 97)' : 'rgb(227, 226, 226)',
-        'line-width': {
-          'stops': [
-            [11, 1],
-            [13, 4],
-            [14, 6],
-            [15, 8],
-            [16, 10]
-          ]
-        }
+        'line-width': ['interpolate', ['linear'], ['zoom'], 11, 1, 13, 4, 14, 6, 15, 8, 16, 10]
       },
-      'filter': ['all', ['==', 'class', 'runway']]
+      'filter': ['all', ['==', ['get', 'class'], 'runway']]
     },
     {
       'id': 'aeroway-taxiway',
@@ -312,16 +327,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'minzoom': 13,
       'paint': {
         'line-color': dark ? 'rgb(97, 97, 97)' : 'rgb(227, 226, 226)',
-        'line-width': {
-          'stops': [
-            [13, 0.5],
-            [14, 1],
-            [15, 2],
-            [16, 4]
-          ]
-        }
+        'line-width': ['interpolate', ['linear'], ['zoom'], 13, 0.5, 14, 1, 15, 2, 16, 4]
       },
-      'filter': ['all', ['==', 'class', 'taxiway']]
+      'filter': ['all', ['==', ['get', 'class'], 'taxiway']]
     },
     {
       'id': 'waterway_label',
@@ -329,22 +337,21 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source': 'openmaptiles',
       'source-layer': 'waterway',
       'layout': {
-        'text-font': italicFonts,
-        'text-size': {
-          'stops': [
-            [9, 8],
-            [10, 9]
-          ]
-        },
-        'text-field': '{name_en}',
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 9, 8, 10, 9],
+        'text-field': ['get', 'name_en'],
         'visibility': 'visible',
-        'text-offset': {
-          'stops': [
-            [6, [0, -0.2]],
-            [11, [0, -0.4]],
-            [12, [0, -0.6]]
-          ]
-        },
+        'text-offset': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          6,
+          ['literal', [0, -0.2]],
+          11,
+          ['literal', [0, -0.4]],
+          12,
+          ['literal', [0, -0.6]]
+        ],
         'text-padding': 2,
         'symbol-spacing': 300,
         'symbol-placement': 'line',
@@ -359,7 +366,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-color': dark ? 'rgba(0, 0, 0, 1)' : 'rgb(240, 245, 252)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['has', 'name'], ['==', 'class', 'river']]
+      'filter': ['all', ['has', 'name'], ['==', ['get', 'class'], 'river']]
     },
     {
       'id': 'tunnel_service_case',
@@ -374,17 +381,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 0)' : 'rgb(163, 163, 152)',
-        'line-width': {
-          'stops': [
-            [15, 1],
-            [16, 3],
-            [17, 6],
-            [18, 8]
-          ]
-        },
+        'line-width': ['interpolate', ['linear'], ['zoom'], 15, 1, 16, 3, 17, 6, 18, 8],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'service'], ['==', 'brunnel', 'tunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'service'], ['==', ['get', 'brunnel'], 'tunnel']]
     },
     {
       'id': 'tunnel_minor_case',
@@ -399,20 +399,28 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 0)' : 'rgb(163, 163, 152)',
-        'line-width': {
-          'stops': [
-            [11, 0.5],
-            [12, 0.5],
-            [14, 2],
-            [15, 4],
-            [16, 6],
-            [17, 10],
-            [18, 14]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          0.5,
+          12,
+          0.5,
+          14,
+          2,
+          15,
+          4,
+          16,
+          6,
+          17,
+          10,
+          18,
+          14
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'minor'], ['==', 'brunnel', 'tunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'minor'], ['==', ['get', 'brunnel'], 'tunnel']]
     },
     {
       'id': 'tunnel_sec_case',
@@ -427,21 +435,34 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 0)' : 'rgb(163, 163, 152)',
-        'line-width': {
-          'stops': [
-            [11, 0.5],
-            [12, 1],
-            [13, 2],
-            [14, 5],
-            [15, 6],
-            [16, 8],
-            [17, 12],
-            [18, 16]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          0.5,
+          12,
+          1,
+          13,
+          2,
+          14,
+          5,
+          15,
+          6,
+          16,
+          8,
+          17,
+          12,
+          18,
+          16
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['in', 'class', 'secondary', 'tertiary'], ['==', 'brunnel', 'tunnel']]
+      'filter': [
+        'all',
+        ['in', ['get', 'class'], ['literal', ['secondary', 'tertiary']]],
+        ['==', ['get', 'brunnel'], 'tunnel']
+      ]
     },
     {
       'id': 'tunnel_pri_case',
@@ -456,28 +477,39 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 0)' : 'rgb(163, 163, 152)',
-        'line-width': {
-          'stops': [
-            [6, 0.5],
-            [7, 0.8],
-            [8, 1],
-            [11, 3],
-            [13, 4],
-            [14, 6],
-            [15, 8],
-            [16, 10],
-            [17, 14],
-            [18, 18]
-          ]
-        },
-        'line-opacity': {
-          'stops': [
-            [5, 0.5],
-            [7, 1]
-          ]
-        }
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          6,
+          0.5,
+          7,
+          0.8,
+          8,
+          1,
+          11,
+          3,
+          13,
+          4,
+          14,
+          6,
+          15,
+          8,
+          16,
+          10,
+          17,
+          14,
+          18,
+          18
+        ],
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.5, 7, 1]
       },
-      'filter': ['all', ['==', 'class', 'primary'], ['!=', 'ramp', 1], ['==', 'brunnel', 'tunnel']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'primary'],
+        ['!=', ['get', 'ramp'], 1],
+        ['==', ['get', 'brunnel'], 'tunnel']
+      ]
     },
     {
       'id': 'tunnel_trunk_case',
@@ -493,28 +525,39 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 0)' : 'rgb(163, 163, 152)',
-        'line-width': {
-          'stops': [
-            [6, 0.5],
-            [7, 0.8],
-            [8, 1],
-            [11, 3],
-            [13, 4],
-            [14, 6],
-            [15, 8],
-            [16, 10],
-            [17, 14],
-            [18, 18]
-          ]
-        },
-        'line-opacity': {
-          'stops': [
-            [5, 0.5],
-            [7, 1]
-          ]
-        }
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          6,
+          0.5,
+          7,
+          0.8,
+          8,
+          1,
+          11,
+          3,
+          13,
+          4,
+          14,
+          6,
+          15,
+          8,
+          16,
+          10,
+          17,
+          14,
+          18,
+          18
+        ],
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.5, 7, 1]
       },
-      'filter': ['all', ['==', 'class', 'trunk'], ['!=', 'ramp', 1], ['==', 'brunnel', 'tunnel']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'trunk'],
+        ['!=', ['get', 'ramp'], 1],
+        ['==', ['get', 'brunnel'], 'tunnel']
+      ]
     },
     {
       'id': 'tunnel_mot_case',
@@ -529,29 +572,41 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 0)' : 'rgb(163, 163, 152)',
-        'line-width': {
-          'stops': [
-            [6, 0.5],
-            [7, 0.8],
-            [8, 1],
-            [11, 3],
-            [12, 4],
-            [13, 5],
-            [14, 7],
-            [15, 9],
-            [16, 11],
-            [17, 13],
-            [18, 22]
-          ]
-        },
-        'line-opacity': {
-          'stops': [
-            [6, 0.5],
-            [7, 1]
-          ]
-        }
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          6,
+          0.5,
+          7,
+          0.8,
+          8,
+          1,
+          11,
+          3,
+          12,
+          4,
+          13,
+          5,
+          14,
+          7,
+          15,
+          9,
+          16,
+          11,
+          17,
+          13,
+          18,
+          22
+        ],
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0.5, 7, 1]
       },
-      'filter': ['all', ['==', 'class', 'motorway'], ['!=', 'ramp', 1], ['==', 'brunnel', 'tunnel']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'motorway'],
+        ['!=', ['get', 'ramp'], 1],
+        ['==', ['get', 'brunnel'], 'tunnel']
+      ]
     },
     {
       'id': 'tunnel_path',
@@ -566,16 +621,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(80, 80, 80)' : 'rgb(210, 209, 209)',
-        'line-width': {
-          'stops': [
-            [15, 0.5],
-            [16, 1],
-            [18, 3]
-          ]
-        },
+        'line-width': ['interpolate', ['linear'], ['zoom'], 15, 0.5, 16, 1, 18, 3],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'path'], ['==', 'brunnel', 'tunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'path'], ['==', ['get', 'brunnel'], 'tunnel']]
     },
     {
       'id': 'tunnel_service_fill',
@@ -590,17 +639,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 0)' : 'rgb(163, 163, 152)',
-        'line-width': {
-          'stops': [
-            [15, 2],
-            [16, 2],
-            [17, 4],
-            [18, 6]
-          ]
-        },
+        'line-width': ['interpolate', ['linear'], ['zoom'], 15, 2, 16, 2, 17, 4, 18, 6],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'service'], ['==', 'brunnel', 'tunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'service'], ['==', ['get', 'brunnel'], 'tunnel']]
     },
     {
       'id': 'tunnel_minor_fill',
@@ -615,17 +657,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 0)' : 'rgb(163, 163, 152)',
-        'line-width': {
-          'stops': [
-            [15, 3],
-            [16, 4],
-            [17, 8],
-            [18, 12]
-          ]
-        },
+        'line-width': ['interpolate', ['linear'], ['zoom'], 15, 3, 16, 4, 17, 8, 18, 12],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'minor'], ['==', 'brunnel', 'tunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'minor'], ['==', ['get', 'brunnel'], 'tunnel']]
     },
     {
       'id': 'tunnel_sec_fill',
@@ -640,20 +675,32 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 0)' : 'rgb(163, 163, 152)',
-        'line-width': {
-          'stops': [
-            [11, 2],
-            [13, 2],
-            [14, 3],
-            [15, 4],
-            [16, 6],
-            [17, 10],
-            [18, 14]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          2,
+          13,
+          2,
+          14,
+          3,
+          15,
+          4,
+          16,
+          6,
+          17,
+          10,
+          18,
+          14
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['in', 'class', 'secondary', 'tertiary'], ['==', 'brunnel', 'tunnel']]
+      'filter': [
+        'all',
+        ['in', ['get', 'class'], ['literal', ['secondary', 'tertiary']]],
+        ['==', ['get', 'brunnel'], 'tunnel']
+      ]
     },
     {
       'id': 'tunnel_pri_fill',
@@ -668,20 +715,33 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 0)' : 'rgb(163, 163, 152)',
-        'line-width': {
-          'stops': [
-            [11, 1],
-            [13, 2],
-            [14, 4],
-            [15, 6],
-            [16, 8],
-            [17, 12],
-            [18, 16]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          1,
+          13,
+          2,
+          14,
+          4,
+          15,
+          6,
+          16,
+          8,
+          17,
+          12,
+          18,
+          16
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'primary'], ['!=', 'ramp', 1], ['==', 'brunnel', 'tunnel']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'primary'],
+        ['!=', ['get', 'ramp'], 1],
+        ['==', ['get', 'brunnel'], 'tunnel']
+      ]
     },
     {
       'id': 'tunnel_trunk_fill',
@@ -697,20 +757,33 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 0)' : 'rgb(163, 163, 152)',
-        'line-width': {
-          'stops': [
-            [11, 1],
-            [13, 2],
-            [14, 4],
-            [15, 6],
-            [16, 8],
-            [17, 12],
-            [18, 16]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          1,
+          13,
+          2,
+          14,
+          4,
+          15,
+          6,
+          16,
+          8,
+          17,
+          12,
+          18,
+          16
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'trunk'], ['!=', 'ramp', 1], ['==', 'brunnel', 'tunnel']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'trunk'],
+        ['!=', ['get', 'ramp'], 1],
+        ['==', ['get', 'brunnel'], 'tunnel']
+      ]
     },
     {
       'id': 'tunnel_mot_fill',
@@ -725,21 +798,35 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 0)' : 'rgb(163, 163, 152)',
-        'line-width': {
-          'stops': [
-            [10, 1],
-            [12, 2],
-            [13, 3],
-            [14, 5],
-            [15, 7],
-            [16, 9],
-            [17, 11],
-            [18, 20]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          10,
+          1,
+          12,
+          2,
+          13,
+          3,
+          14,
+          5,
+          15,
+          7,
+          16,
+          9,
+          17,
+          11,
+          18,
+          20
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'motorway'], ['!=', 'ramp', 1], ['==', 'brunnel', 'tunnel']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'motorway'],
+        ['!=', ['get', 'ramp'], 1],
+        ['==', ['get', 'brunnel'], 'tunnel']
+      ]
     },
     {
       'id': 'tunnel_rail',
@@ -753,19 +840,24 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(86, 86, 86)' : 'rgb(216, 215, 215)',
-        'line-width': {
-          'base': 1.3,
-          'stops': [
-            [13, 0.5],
-            [14, 1],
-            [15, 1],
-            [16, 3],
-            [21, 7]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['exponential', 1.3],
+          ['zoom'],
+          13,
+          0.5,
+          14,
+          1,
+          15,
+          1,
+          16,
+          3,
+          21,
+          7
+        ],
         'line-opacity': 0.5
       },
-      'filter': ['all', ['==', 'class', 'rail'], ['==', 'brunnel', 'tunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'rail'], ['==', ['get', 'brunnel'], 'tunnel']]
     },
     {
       'id': 'tunnel_rail_dash',
@@ -779,17 +871,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(120, 120, 120)' : 'rgb(250, 249, 249)',
-        'line-width': {
-          'base': 1.3,
-          'stops': [
-            [15, 0.5],
-            [16, 1],
-            [20, 5]
-          ]
-        },
+        'line-width': ['interpolate', ['exponential', 1.3], ['zoom'], 15, 0.5, 16, 1, 20, 5],
         'line-opacity': 0.5
       },
-      'filter': ['all', ['==', 'class', 'rail'], ['==', 'brunnel', 'tunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'rail'], ['==', ['get', 'brunnel'], 'tunnel']]
     },
     {
       'id': 'road_area_pier',
@@ -804,7 +889,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'fill-antialias': true
       },
       'metadata': {},
-      'filter': ['all', ['==', '$type', 'Polygon'], ['==', 'class', 'pier']]
+      'filter': ['all', ['==', ['geometry-type'], 'Polygon'], ['==', ['get', 'class'], 'pier']]
     },
     {
       'id': 'road_pier',
@@ -817,16 +902,14 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? '#fbf8f3' : '#fbf8f3',
-        'line-width': {
-          'base': 1.2,
-          'stops': [
-            [15, 1],
-            [17, 4]
-          ]
-        }
+        'line-width': ['interpolate', ['exponential', 1.2], ['zoom'], 15, 1, 17, 4]
       },
       'metadata': {},
-      'filter': ['all', ['==', '$type', 'LineString'], ['in', 'class', 'pier']]
+      'filter': [
+        'all',
+        ['==', ['geometry-type'], 'LineString'],
+        ['in', ['get', 'class'], ['literal', ['pier']]]
+      ]
     },
     {
       'id': 'road_area_bridge',
@@ -841,7 +924,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'fill-antialias': true
       },
       'metadata': {},
-      'filter': ['all', ['==', '$type', 'Polygon'], ['==', 'brunnel', 'bridge']]
+      'filter': ['all', ['==', ['geometry-type'], 'Polygon'], ['==', ['get', 'brunnel'], 'bridge']]
     },
     {
       'id': 'road_service_case',
@@ -856,17 +939,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [15, 1],
-            [16, 3],
-            [17, 6],
-            [18, 8]
-          ]
-        },
+        'line-width': ['interpolate', ['linear'], ['zoom'], 15, 1, 16, 3, 17, 6, 18, 8],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'service'], ['!has', 'brunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'service'], ['!', ['has', 'brunnel']]]
     },
     {
       'id': 'road_minor_case',
@@ -881,20 +957,28 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [11, 0.5],
-            [12, 0.5],
-            [14, 2],
-            [15, 3],
-            [16, 4.3],
-            [17, 10],
-            [18, 14]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          0.5,
+          12,
+          0.5,
+          14,
+          2,
+          15,
+          3,
+          16,
+          4.3,
+          17,
+          10,
+          18,
+          14
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'minor'], ['!has', 'brunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'minor'], ['!', ['has', 'brunnel']]]
     },
     {
       'id': 'road_pri_case_ramp',
@@ -909,24 +993,26 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [12, 2],
-            [13, 3],
-            [14, 4],
-            [15, 5],
-            [16, 8],
-            [17, 10]
-          ]
-        },
-        'line-opacity': {
-          'stops': [
-            [5, 0.5],
-            [7, 1]
-          ]
-        }
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          12,
+          2,
+          13,
+          3,
+          14,
+          4,
+          15,
+          5,
+          16,
+          8,
+          17,
+          10
+        ],
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.5, 7, 1]
       },
-      'filter': ['all', ['==', 'class', 'primary'], ['==', 'ramp', 1]]
+      'filter': ['all', ['==', ['get', 'class'], 'primary'], ['==', ['get', 'ramp'], 1]]
     },
     {
       'id': 'road_trunk_case_ramp',
@@ -941,19 +1027,26 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [12, 2],
-            [13, 3],
-            [14, 4],
-            [15, 5],
-            [16, 8],
-            [17, 10]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          12,
+          2,
+          13,
+          3,
+          14,
+          4,
+          15,
+          5,
+          16,
+          8,
+          17,
+          10
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'trunk'], ['==', 'ramp', 1]]
+      'filter': ['all', ['==', ['get', 'class'], 'trunk'], ['==', ['get', 'ramp'], 1]]
     },
     {
       'id': 'road_mot_case_ramp',
@@ -968,19 +1061,26 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [12, 2],
-            [13, 3],
-            [14, 4],
-            [15, 5],
-            [16, 8],
-            [17, 10]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          12,
+          2,
+          13,
+          3,
+          14,
+          4,
+          15,
+          5,
+          16,
+          8,
+          17,
+          10
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'motorway'], ['==', 'ramp', 1]]
+      'filter': ['all', ['==', ['get', 'class'], 'motorway'], ['==', ['get', 'ramp'], 1]]
     },
     {
       'id': 'road_sec_case_noramp',
@@ -995,21 +1095,34 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [11, 0.5],
-            [12, 1.5],
-            [13, 3],
-            [14, 5],
-            [15, 6],
-            [16, 8],
-            [17, 12],
-            [18, 16]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          0.5,
+          12,
+          1.5,
+          13,
+          3,
+          14,
+          5,
+          15,
+          6,
+          16,
+          8,
+          17,
+          12,
+          18,
+          16
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['in', 'class', 'secondary', 'tertiary'], ['!has', 'brunnel']]
+      'filter': [
+        'all',
+        ['in', ['get', 'class'], ['literal', ['secondary', 'tertiary']]],
+        ['!', ['has', 'brunnel']]
+      ]
     },
     {
       'id': 'road_pri_case_noramp',
@@ -1024,28 +1137,39 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [6, 0.5],
-            [7, 0.8],
-            [8, 1],
-            [11, 3],
-            [13, 4],
-            [14, 6],
-            [15, 8],
-            [16, 10],
-            [17, 14],
-            [18, 18]
-          ]
-        },
-        'line-opacity': {
-          'stops': [
-            [5, 0.5],
-            [7, 1]
-          ]
-        }
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          6,
+          0.5,
+          7,
+          0.8,
+          8,
+          1,
+          11,
+          3,
+          13,
+          4,
+          14,
+          6,
+          15,
+          8,
+          16,
+          10,
+          17,
+          14,
+          18,
+          18
+        ],
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.5, 7, 1]
       },
-      'filter': ['all', ['==', 'class', 'primary'], ['!=', 'ramp', 1], ['!has', 'brunnel']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'primary'],
+        ['!=', ['get', 'ramp'], 1],
+        ['!', ['has', 'brunnel']]
+      ]
     },
     {
       'id': 'road_trunk_case_noramp',
@@ -1060,28 +1184,39 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [6, 0.5],
-            [7, 0.8],
-            [8, 1],
-            [11, 3],
-            [13, 4],
-            [14, 6],
-            [15, 8],
-            [16, 10],
-            [17, 14],
-            [18, 18]
-          ]
-        },
-        'line-opacity': {
-          'stops': [
-            [5, 0.5],
-            [7, 1]
-          ]
-        }
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          6,
+          0.5,
+          7,
+          0.8,
+          8,
+          1,
+          11,
+          3,
+          13,
+          4,
+          14,
+          6,
+          15,
+          8,
+          16,
+          10,
+          17,
+          14,
+          18,
+          18
+        ],
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.5, 7, 1]
       },
-      'filter': ['all', ['==', 'class', 'trunk'], ['!=', 'ramp', 1], ['!has', 'brunnel']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'trunk'],
+        ['!=', ['get', 'ramp'], 1],
+        ['!', ['has', 'brunnel']]
+      ]
     },
     {
       'id': 'road_mot_case_noramp',
@@ -1096,29 +1231,41 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [6, 0.5],
-            [7, 0.7],
-            [8, 0.8],
-            [11, 3],
-            [12, 4],
-            [13, 5],
-            [14, 7],
-            [15, 9],
-            [16, 11],
-            [17, 13],
-            [18, 22]
-          ]
-        },
-        'line-opacity': {
-          'stops': [
-            [6, 0.5],
-            [7, 1]
-          ]
-        }
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          6,
+          0.5,
+          7,
+          0.7,
+          8,
+          0.8,
+          11,
+          3,
+          12,
+          4,
+          13,
+          5,
+          14,
+          7,
+          15,
+          9,
+          16,
+          11,
+          17,
+          13,
+          18,
+          22
+        ],
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0.5, 7, 1]
       },
-      'filter': ['all', ['==', 'class', 'motorway'], ['!=', 'ramp', 1], ['!has', 'brunnel']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'motorway'],
+        ['!=', ['get', 'ramp'], 1],
+        ['!', ['has', 'brunnel']]
+      ]
     },
     {
       'id': 'road_path',
@@ -1133,16 +1280,14 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(80, 80, 80)' : 'rgb(210, 209, 209)',
-        'line-width': {
-          'stops': [
-            [15, 0.5],
-            [16, 1],
-            [18, 3]
-          ]
-        },
+        'line-width': ['interpolate', ['linear'], ['zoom'], 15, 0.5, 16, 1, 18, 3],
         'line-opacity': 1
       },
-      'filter': ['all', ['in', 'class', 'path', 'track'], ['!has', 'brunnel']]
+      'filter': [
+        'all',
+        ['in', ['get', 'class'], ['literal', ['path', 'track']]],
+        ['!', ['has', 'brunnel']]
+      ]
     },
     {
       'id': 'road_service_fill',
@@ -1157,17 +1302,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgba(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [15, 2],
-            [16, 2],
-            [17, 4],
-            [18, 6]
-          ]
-        },
+        'line-width': ['interpolate', ['linear'], ['zoom'], 15, 2, 16, 2, 17, 4, 18, 6],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'service'], ['!has', 'brunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'service'], ['!', ['has', 'brunnel']]]
     },
     {
       'id': 'road_minor_fill',
@@ -1182,17 +1320,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [15, 3],
-            [16, 4],
-            [17, 8],
-            [18, 12]
-          ]
-        },
+        'line-width': ['interpolate', ['linear'], ['zoom'], 15, 3, 16, 4, 17, 8, 18, 12],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'minor'], ['!has', 'brunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'minor'], ['!', ['has', 'brunnel']]]
     },
     {
       'id': 'road_pri_fill_ramp',
@@ -1207,19 +1338,26 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [12, 1],
-            [13, 1.5],
-            [14, 2],
-            [15, 3],
-            [16, 6],
-            [17, 8]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          12,
+          1,
+          13,
+          1.5,
+          14,
+          2,
+          15,
+          3,
+          16,
+          6,
+          17,
+          8
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'primary'], ['==', 'ramp', 1]]
+      'filter': ['all', ['==', ['get', 'class'], 'primary'], ['==', ['get', 'ramp'], 1]]
     },
     {
       'id': 'road_trunk_fill_ramp',
@@ -1234,19 +1372,26 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [12, 1],
-            [13, 1.5],
-            [14, 2],
-            [15, 3],
-            [16, 6],
-            [17, 8]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          12,
+          1,
+          13,
+          1.5,
+          14,
+          2,
+          15,
+          3,
+          16,
+          6,
+          17,
+          8
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'trunk'], ['==', 'ramp', 1]]
+      'filter': ['all', ['==', ['get', 'class'], 'trunk'], ['==', ['get', 'ramp'], 1]]
     },
     {
       'id': 'road_mot_fill_ramp',
@@ -1261,19 +1406,26 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [12, 1],
-            [13, 1.5],
-            [14, 2],
-            [15, 3],
-            [16, 6],
-            [17, 8]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          12,
+          1,
+          13,
+          1.5,
+          14,
+          2,
+          15,
+          3,
+          16,
+          6,
+          17,
+          8
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'motorway'], ['==', 'ramp', 1]]
+      'filter': ['all', ['==', ['get', 'class'], 'motorway'], ['==', ['get', 'ramp'], 1]]
     },
     {
       'id': 'road_sec_fill_noramp',
@@ -1288,20 +1440,32 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [11, 2],
-            [13, 2],
-            [14, 3],
-            [15, 4],
-            [16, 6],
-            [17, 10],
-            [18, 14]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          2,
+          13,
+          2,
+          14,
+          3,
+          15,
+          4,
+          16,
+          6,
+          17,
+          10,
+          18,
+          14
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['in', 'class', 'secondary', 'tertiary'], ['!has', 'brunnel']]
+      'filter': [
+        'all',
+        ['in', ['get', 'class'], ['literal', ['secondary', 'tertiary']]],
+        ['!', ['has', 'brunnel']]
+      ]
     },
     {
       'id': 'road_pri_fill_noramp',
@@ -1316,20 +1480,33 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [10, 0.3],
-            [13, 2],
-            [14, 4],
-            [15, 6],
-            [16, 8],
-            [17, 12],
-            [18, 16]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          10,
+          0.3,
+          13,
+          2,
+          14,
+          4,
+          15,
+          6,
+          16,
+          8,
+          17,
+          12,
+          18,
+          16
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'primary'], ['!=', 'ramp', 1], ['!has', 'brunnel']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'primary'],
+        ['!=', ['get', 'ramp'], 1],
+        ['!', ['has', 'brunnel']]
+      ]
     },
     {
       'id': 'road_trunk_fill_noramp',
@@ -1344,20 +1521,33 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [11, 1],
-            [13, 2],
-            [14, 4],
-            [15, 6],
-            [16, 8],
-            [17, 12],
-            [18, 16]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          1,
+          13,
+          2,
+          14,
+          4,
+          15,
+          6,
+          16,
+          8,
+          17,
+          12,
+          18,
+          16
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'trunk'], ['!=', 'ramp', 1], ['!has', 'brunnel']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'trunk'],
+        ['!=', ['get', 'ramp'], 1],
+        ['!', ['has', 'brunnel']]
+      ]
     },
     {
       'id': 'road_mot_fill_noramp',
@@ -1372,21 +1562,35 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [10, 1],
-            [12, 2],
-            [13, 3],
-            [14, 5],
-            [15, 7],
-            [16, 9],
-            [17, 11],
-            [18, 20]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          10,
+          1,
+          12,
+          2,
+          13,
+          3,
+          14,
+          5,
+          15,
+          7,
+          16,
+          9,
+          17,
+          11,
+          18,
+          20
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'motorway'], ['!=', 'ramp', 1], ['!has', 'brunnel']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'motorway'],
+        ['!=', ['get', 'ramp'], 1],
+        ['!', ['has', 'brunnel']]
+      ]
     },
     {
       'id': 'rail',
@@ -1400,18 +1604,23 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(153, 153, 169)' : 'rgb(153, 153, 169)',
-        'line-width': {
-          'base': 1.3,
-          'stops': [
-            [13, 0.5],
-            [14, 1],
-            [15, 1],
-            [16, 3],
-            [21, 7]
-          ]
-        }
+        'line-width': [
+          'interpolate',
+          ['exponential', 1.3],
+          ['zoom'],
+          13,
+          0.5,
+          14,
+          1,
+          15,
+          1,
+          16,
+          3,
+          21,
+          7
+        ]
       },
-      'filter': ['all', ['==', 'class', 'rail'], ['!=', 'brunnel', 'tunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'rail'], ['!=', ['get', 'brunnel'], 'tunnel']]
     },
     {
       'id': 'rail_dash',
@@ -1425,16 +1634,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(120, 120, 120)' : 'rgb(250, 249, 249)',
-        'line-width': {
-          'base': 1.3,
-          'stops': [
-            [15, 0.5],
-            [16, 1],
-            [20, 5]
-          ]
-        }
+        'line-width': ['interpolate', ['exponential', 1.3], ['zoom'], 15, 0.5, 16, 1, 20, 5]
       },
-      'filter': ['all', ['==', 'class', 'rail'], ['!=', 'brunnel', 'tunnel']]
+      'filter': ['all', ['==', ['get', 'class'], 'rail'], ['!=', ['get', 'brunnel'], 'tunnel']]
     },
     {
       'id': 'bridge_service_case',
@@ -1449,17 +1651,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [15, 1],
-            [16, 3],
-            [17, 6],
-            [18, 8]
-          ]
-        },
+        'line-width': ['interpolate', ['linear'], ['zoom'], 15, 1, 16, 3, 17, 6, 18, 8],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'service'], ['==', 'brunnel', 'bridge']]
+      'filter': ['all', ['==', ['get', 'class'], 'service'], ['==', ['get', 'brunnel'], 'bridge']]
     },
     {
       'id': 'bridge_minor_case',
@@ -1474,20 +1669,28 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [11, 0.5],
-            [12, 0.5],
-            [14, 2],
-            [15, 3],
-            [16, 4.3],
-            [17, 10],
-            [18, 14]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          0.5,
+          12,
+          0.5,
+          14,
+          2,
+          15,
+          3,
+          16,
+          4.3,
+          17,
+          10,
+          18,
+          14
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'minor'], ['==', 'brunnel', 'bridge']]
+      'filter': ['all', ['==', ['get', 'class'], 'minor'], ['==', ['get', 'brunnel'], 'bridge']]
     },
     {
       'id': 'bridge_sec_case',
@@ -1502,21 +1705,34 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [11, 0.5],
-            [12, 1.5],
-            [13, 3],
-            [14, 5],
-            [15, 6],
-            [16, 8],
-            [17, 12],
-            [18, 16]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          0.5,
+          12,
+          1.5,
+          13,
+          3,
+          14,
+          5,
+          15,
+          6,
+          16,
+          8,
+          17,
+          12,
+          18,
+          16
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['in', 'class', 'secondary', 'tertiary'], ['==', 'brunnel', 'bridge']]
+      'filter': [
+        'all',
+        ['in', ['get', 'class'], ['literal', ['secondary', 'tertiary']]],
+        ['==', ['get', 'brunnel'], 'bridge']
+      ]
     },
     {
       'id': 'bridge_pri_case',
@@ -1531,28 +1747,39 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [6, 0.5],
-            [7, 0.8],
-            [8, 1],
-            [11, 3],
-            [13, 4],
-            [14, 6],
-            [15, 8],
-            [16, 10],
-            [17, 14],
-            [18, 18]
-          ]
-        },
-        'line-opacity': {
-          'stops': [
-            [5, 0.5],
-            [7, 1]
-          ]
-        }
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          6,
+          0.5,
+          7,
+          0.8,
+          8,
+          1,
+          11,
+          3,
+          13,
+          4,
+          14,
+          6,
+          15,
+          8,
+          16,
+          10,
+          17,
+          14,
+          18,
+          18
+        ],
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.5, 7, 1]
       },
-      'filter': ['all', ['==', 'class', 'primary'], ['!=', 'ramp', 1], ['==', 'brunnel', 'bridge']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'primary'],
+        ['!=', ['get', 'ramp'], 1],
+        ['==', ['get', 'brunnel'], 'bridge']
+      ]
     },
     {
       'id': 'bridge_trunk_case',
@@ -1568,28 +1795,39 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [6, 0.5],
-            [7, 0.8],
-            [8, 1],
-            [11, 3],
-            [13, 4],
-            [14, 6],
-            [15, 8],
-            [16, 10],
-            [17, 14],
-            [18, 18]
-          ]
-        },
-        'line-opacity': {
-          'stops': [
-            [5, 0.5],
-            [7, 1]
-          ]
-        }
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          6,
+          0.5,
+          7,
+          0.8,
+          8,
+          1,
+          11,
+          3,
+          13,
+          4,
+          14,
+          6,
+          15,
+          8,
+          16,
+          10,
+          17,
+          14,
+          18,
+          18
+        ],
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.5, 7, 1]
       },
-      'filter': ['all', ['==', 'class', 'trunk'], ['!=', 'ramp', 1], ['==', 'brunnel', 'bridge']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'trunk'],
+        ['!=', ['get', 'ramp'], 1],
+        ['==', ['get', 'brunnel'], 'bridge']
+      ]
     },
     {
       'id': 'bridge_mot_case',
@@ -1604,29 +1842,41 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [6, 0.5],
-            [7, 0.8],
-            [8, 1],
-            [11, 3],
-            [12, 4],
-            [13, 5],
-            [14, 7],
-            [15, 9],
-            [16, 11],
-            [17, 13],
-            [18, 22]
-          ]
-        },
-        'line-opacity': {
-          'stops': [
-            [6, 0.5],
-            [7, 1]
-          ]
-        }
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          6,
+          0.5,
+          7,
+          0.8,
+          8,
+          1,
+          11,
+          3,
+          12,
+          4,
+          13,
+          5,
+          14,
+          7,
+          15,
+          9,
+          16,
+          11,
+          17,
+          13,
+          18,
+          22
+        ],
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0.5, 7, 1]
       },
-      'filter': ['all', ['==', 'class', 'motorway'], ['!=', 'ramp', 1], ['==', 'brunnel', 'bridge']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'motorway'],
+        ['!=', ['get', 'ramp'], 1],
+        ['==', ['get', 'brunnel'], 'bridge']
+      ]
     },
     {
       'id': 'bridge_path',
@@ -1641,16 +1891,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(80, 80, 80)' : 'rgb(210, 209, 209)',
-        'line-width': {
-          'stops': [
-            [15, 0.5],
-            [16, 1],
-            [18, 3]
-          ]
-        },
+        'line-width': ['interpolate', ['linear'], ['zoom'], 15, 0.5, 16, 1, 18, 3],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'path'], ['==', 'brunnel', 'bridge']]
+      'filter': ['all', ['==', ['get', 'class'], 'path'], ['==', ['get', 'brunnel'], 'bridge']]
     },
     {
       'id': 'bridge_service_fill',
@@ -1665,17 +1909,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [15, 2],
-            [16, 2],
-            [17, 4],
-            [18, 6]
-          ]
-        },
+        'line-width': ['interpolate', ['linear'], ['zoom'], 15, 2, 16, 2, 17, 4, 18, 6],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'service'], ['==', 'brunnel', 'bridge']]
+      'filter': ['all', ['==', ['get', 'class'], 'service'], ['==', ['get', 'brunnel'], 'bridge']]
     },
     {
       'id': 'bridge_minor_fill',
@@ -1690,17 +1927,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [15, 3],
-            [16, 4],
-            [17, 8],
-            [18, 12]
-          ]
-        },
+        'line-width': ['interpolate', ['linear'], ['zoom'], 15, 3, 16, 4, 17, 8, 18, 12],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'minor'], ['==', 'brunnel', 'bridge']]
+      'filter': ['all', ['==', ['get', 'class'], 'minor'], ['==', ['get', 'brunnel'], 'bridge']]
     },
     {
       'id': 'bridge_sec_fill',
@@ -1715,20 +1945,32 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [11, 2],
-            [13, 2],
-            [14, 3],
-            [15, 4],
-            [16, 6],
-            [17, 10],
-            [18, 14]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          2,
+          13,
+          2,
+          14,
+          3,
+          15,
+          4,
+          16,
+          6,
+          17,
+          10,
+          18,
+          14
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['in', 'class', 'secondary', 'tertiary'], ['==', 'brunnel', 'bridge']]
+      'filter': [
+        'all',
+        ['in', ['get', 'class'], ['literal', ['secondary', 'tertiary']]],
+        ['==', ['get', 'brunnel'], 'bridge']
+      ]
     },
     {
       'id': 'bridge_pri_fill',
@@ -1743,20 +1985,33 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [11, 1],
-            [13, 2],
-            [14, 4],
-            [15, 6],
-            [16, 8],
-            [17, 12],
-            [18, 16]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          1,
+          13,
+          2,
+          14,
+          4,
+          15,
+          6,
+          16,
+          8,
+          17,
+          12,
+          18,
+          16
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'primary'], ['!=', 'ramp', 1], ['==', 'brunnel', 'bridge']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'primary'],
+        ['!=', ['get', 'ramp'], 1],
+        ['==', ['get', 'brunnel'], 'bridge']
+      ]
     },
     {
       'id': 'bridge_trunk_fill',
@@ -1772,20 +2027,33 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [11, 1],
-            [13, 2],
-            [14, 4],
-            [15, 6],
-            [16, 8],
-            [17, 12],
-            [18, 16]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          11,
+          1,
+          13,
+          2,
+          14,
+          4,
+          15,
+          6,
+          16,
+          8,
+          17,
+          12,
+          18,
+          16
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'trunk'], ['!=', 'ramp', 1], ['==', 'brunnel', 'bridge']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'trunk'],
+        ['!=', ['get', 'ramp'], 1],
+        ['==', ['get', 'brunnel'], 'bridge']
+      ]
     },
     {
       'id': 'bridge_mot_fill',
@@ -1800,21 +2068,35 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'line-color': dark ? 'rgb(0, 0, 40)' : 'rgb(217, 217, 211)',
-        'line-width': {
-          'stops': [
-            [10, 1],
-            [12, 2],
-            [13, 3],
-            [14, 5],
-            [15, 7],
-            [16, 9],
-            [17, 11],
-            [18, 20]
-          ]
-        },
+        'line-width': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          10,
+          1,
+          12,
+          2,
+          13,
+          3,
+          14,
+          5,
+          15,
+          7,
+          16,
+          9,
+          17,
+          11,
+          18,
+          20
+        ],
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'class', 'motorway'], ['!=', 'ramp', 1], ['==', 'brunnel', 'bridge']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'motorway'],
+        ['!=', ['get', 'ramp'], 1],
+        ['==', ['get', 'brunnel'], 'bridge']
+      ]
     },
     {
       'id': 'building',
@@ -1825,12 +2107,15 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'visibility': 'visible'
       },
       'paint': {
-        'fill-color': {
-          'stops': [
-            [15, dark ? 'rgba(7, 72, 89, 1)' : 'rgba(255, 255, 255, 1)'],
-            [16, dark ? 'rgba(7, 72, 89, 1)' : 'rgba(152, 145, 123, 0.18)']
-          ]
-        },
+        'fill-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          15,
+          dark ? 'rgba(7, 72, 89, 1)' : 'rgba(255, 255, 255, 1)',
+          16,
+          dark ? 'rgba(7, 72, 89, 1)' : 'rgba(152, 145, 123, 0.18)'
+        ],
         'fill-antialias': true
       }
     },
@@ -1844,20 +2129,16 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       },
       'paint': {
         'fill-color': dark ? 'rgba(7, 72, 89, 1)' : 'rgba(164, 146, 127, 1)',
-        'fill-opacity': {
-          'base': 1,
-          'stops': [
-            [13, 0],
-            [16, 1]
-          ]
-        },
-        'fill-translate': {
-          'base': 1,
-          'stops': [
-            [14, [0, 0]],
-            [16, [-2, -2]]
-          ]
-        },
+        'fill-opacity': ['interpolate', ['linear'], ['zoom'], 13, 0, 16, 1],
+        'fill-translate': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          14,
+          ['literal', [0, 0]],
+          16,
+          ['literal', [-2, -2]]
+        ],
         'fill-outline-color': 'rgba(255, 255, 255, 1)'
       }
     },
@@ -1879,7 +2160,12 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'line-offset': 0,
         'line-opacity': 0.5
       },
-      'filter': ['all', ['==', 'admin_level', 2], ['==', 'maritime', 0], ['==', 'disputed', 0]]
+      'filter': [
+        'all',
+        ['==', ['get', 'admin_level'], 2],
+        ['==', ['get', 'maritime'], 0],
+        ['==', ['get', 'disputed'], 0]
+      ]
     },
     {
       'id': 'boundary_country_inner_z0-4',
@@ -1894,28 +2180,27 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'visibility': 'visible'
       },
       'paint': {
-        'line-color': {
-          'stops': [
-            [4, dark ? 'rgba(68, 73, 76, 0.8)' : 'rgba(151, 151, 151, 0.3)'],
-            [5, dark ? 'rgba(163, 168, 173, 0.6)' : 'rgba(151, 151, 151, 0.51)'],
-            [6, dark ? 'rgba(163, 168, 173, 0.6)' : 'rgba(151, 151, 151, 0.5)']
-          ]
-        },
-        'line-width': {
-          'stops': [
-            [3, 1],
-            [6, 1.5]
-          ]
-        },
+        'line-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          4,
+          dark ? 'rgba(68, 73, 76, 0.8)' : 'rgba(151, 151, 151, 0.3)',
+          5,
+          dark ? 'rgba(163, 168, 173, 0.6)' : 'rgba(151, 151, 151, 0.51)',
+          6,
+          dark ? 'rgba(163, 168, 173, 0.6)' : 'rgba(151, 151, 151, 0.5)'
+        ],
+        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 1, 6, 1.5],
         'line-offset': 0,
         'line-opacity': 1
       },
       'filter': [
         'all',
-        ['==', 'admin_level', 2],
-        ['==', 'maritime', 0],
-        ['!has', 'claimed_by'],
-        ['==', 'disputed', 0]
+        ['==', ['get', 'admin_level'], 2],
+        ['==', ['get', 'maritime'], 0],
+        ['!', ['has', 'claimed_by']],
+        ['==', ['get', 'disputed'], 0]
       ]
     },
     {
@@ -1930,23 +2215,27 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'visibility': 'visible'
       },
       'paint': {
-        'line-color': {
-          'stops': [
-            [4, dark ? 'rgba(101, 106, 110, 0.72)' : 'rgba(127, 127, 127, 0.5)'],
-            [5, dark ? 'rgba(131, 136, 142, 0.6)' : 'rgba(127, 127, 127, 0.5)'],
-            [6, dark ? 'rgba(163, 168, 174, 0.8)' : 'rgba(127, 127, 127, 0.71)']
-          ]
-        },
-        'line-width': {
-          'stops': [
-            [3, 1],
-            [6, 1.5]
-          ]
-        },
+        'line-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          4,
+          dark ? 'rgba(101, 106, 110, 0.72)' : 'rgba(127, 127, 127, 0.5)',
+          5,
+          dark ? 'rgba(131, 136, 142, 0.6)' : 'rgba(127, 127, 127, 0.5)',
+          6,
+          dark ? 'rgba(163, 168, 174, 0.8)' : 'rgba(127, 127, 127, 0.71)'
+        ],
+        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 1, 6, 1.5],
         'line-offset': 0,
         'line-opacity': 1
       },
-      'filter': ['all', ['==', 'admin_level', 2], ['==', 'maritime', 0], ['==', 'disputed', 0]]
+      'filter': [
+        'all',
+        ['==', ['get', 'admin_level'], 2],
+        ['==', ['get', 'maritime'], 0],
+        ['==', ['get', 'disputed'], 0]
+      ]
     },
     {
       'id': 'boundary_2_disputed',
@@ -1960,26 +2249,28 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'visibility': 'visible'
       },
       'paint': {
-        'line-color': {
-          'stops': [
-            [4, dark ? 'rgba(101, 106, 110, 0.72)' : 'rgba(127, 127, 127, 0.5)'],
-            [5, dark ? 'rgba(131, 136, 142, 0.6)' : 'rgba(127, 127, 127, 0.5)'],
-            [6, dark ? 'rgba(163, 168, 174, 0.8)' : 'rgba(127, 127, 127, 0.71)']
-          ]
-        },
-        'line-width': {
-          'base': 1,
-          'stops': [
-            [3, 0.3],
-            [5, 1.2],
-            [12, 2]
-          ]
-        },
+        'line-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          4,
+          dark ? 'rgba(101, 106, 110, 0.72)' : 'rgba(127, 127, 127, 0.5)',
+          5,
+          dark ? 'rgba(131, 136, 142, 0.6)' : 'rgba(127, 127, 127, 0.5)',
+          6,
+          dark ? 'rgba(163, 168, 174, 0.8)' : 'rgba(127, 127, 127, 0.71)'
+        ],
+        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 0.3, 5, 1.2, 12, 2],
         'line-opacity': 1,
         'line-dasharray': [4, 3]
       },
       'metadata': {},
-      'filter': ['all', ['==', 'admin_level', 2], ['==', 'disputed', 1], ['==', 'maritime', 0]]
+      'filter': [
+        'all',
+        ['==', ['get', 'admin_level'], 2],
+        ['==', ['get', 'disputed'], 1],
+        ['==', ['get', 'maritime'], 0]
+      ]
     },
     {
       'id': 'watername_ocean',
@@ -1989,15 +2280,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'minzoom': 0,
       'maxzoom': 5,
       'layout': {
-        'text-font': italicFonts,
-        'text-size': {
-          'stops': [
-            [0, 13],
-            [2, 14],
-            [4, 18]
-          ]
-        },
-        'text-field': '{name}',
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 0, 13, 2, 14, 4, 18],
+        'text-field': ['get', 'name'],
         'text-padding': 2,
         'text-max-width': 6,
         'symbol-placement': 'point',
@@ -2014,7 +2299,12 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-color': dark ? 'rgb(10, 21, 40)' : 'rgba(255, 255, 255, 0.47)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['has', 'name'], ['==', '$type', 'Point'], ['==', 'class', 'ocean']]
+      'filter': [
+        'all',
+        ['has', 'name'],
+        ['==', ['geometry-type'], 'Point'],
+        ['==', ['get', 'class'], 'ocean']
+      ]
     },
     {
       'id': 'watername_sea',
@@ -2023,9 +2313,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source-layer': 'water_name',
       'minzoom': 5,
       'layout': {
-        'text-font': italicFonts,
+        'text-font': fonts,
         'text-size': 12,
-        'text-field': '{name}',
+        'text-field': ['get', 'name'],
         'text-padding': 2,
         'text-max-width': 6,
         'symbol-placement': 'point',
@@ -2042,7 +2332,12 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-color': dark ? 'rgba(0, 0, 0, 1)' : 'rgba(255, 255, 255, 1)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['has', 'name'], ['==', '$type', 'Point'], ['==', 'class', 'sea']]
+      'filter': [
+        'all',
+        ['has', 'name'],
+        ['==', ['geometry-type'], 'Point'],
+        ['==', ['get', 'class'], 'sea']
+      ]
     },
     {
       'id': 'watername_lake',
@@ -2051,22 +2346,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source-layer': 'water_name',
       'minzoom': 4,
       'layout': {
-        'text-font': italicFonts,
-        'text-size': {
-          'stops': [
-            [13, 9],
-            [14, 10],
-            [15, 11],
-            [16, 12],
-            [17, 13]
-          ]
-        },
-        'text-field': {
-          'stops': [
-            [8, '{name_en}'],
-            [13, '{name}']
-          ]
-        },
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 13, 9, 14, 10, 15, 11, 16, 12, 17, 13],
+        'text-field': ['step', ['zoom'], ['get', 'name_en'], 13, ['get', 'name']],
         'text-padding': 2,
         'symbol-placement': 'point',
         'text-line-height': 1.2,
@@ -2081,7 +2363,12 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-color': dark ? 'rgba(0, 0, 0, 1)' : 'rgb(240, 245, 252)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['has', 'name'], ['==', '$type', 'Point'], ['==', 'class', 'lake']]
+      'filter': [
+        'all',
+        ['has', 'name'],
+        ['==', ['geometry-type'], 'Point'],
+        ['==', ['get', 'class'], 'lake']
+      ]
     },
     {
       'id': 'watername_lake_line',
@@ -2089,22 +2376,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source': 'openmaptiles',
       'source-layer': 'water_name',
       'layout': {
-        'text-font': italicFonts,
-        'text-size': {
-          'stops': [
-            [13, 9],
-            [14, 10],
-            [15, 11],
-            [16, 12],
-            [17, 13]
-          ]
-        },
-        'text-field': {
-          'stops': [
-            [8, '{name_en}'],
-            [13, '{name}']
-          ]
-        },
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 13, 9, 14, 10, 15, 11, 16, 12, 17, 13],
+        'text-field': ['step', ['zoom'], ['get', 'name_en'], 13, ['get', 'name']],
         'symbol-spacing': 350,
         'symbol-placement': 'line',
         'text-line-height': 1.2,
@@ -2117,7 +2391,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-color': dark ? 'rgba(0, 0, 0, 1)' : 'rgb(240, 245, 252)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['has', 'name'], ['==', '$type', 'LineString']]
+      'filter': ['all', ['has', 'name'], ['==', ['geometry-type'], 'LineString']]
     },
     {
       'id': 'park-label',
@@ -2126,15 +2400,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source-layer': 'park',
       'minzoom': 0,
       'layout': {
-        'text-font': regularFonts,
-        'text-size': {
-          'base': 1.2,
-          'stops': [
-            [12, 10],
-            [15, 14]
-          ]
-        },
-        'text-field': '{name:latin}\n{name:nonlatin}',
+        'text-font': fonts,
+        'text-size': ['interpolate', ['exponential', 1.2], ['zoom'], 12, 10, 15, 14],
+        'text-field': ['concat', ['get', 'name:latin'], '\n', ['get', 'name:nonlatin']],
         'visibility': 'visible',
         'text-max-width': 9,
         'text-transform': 'none',
@@ -2150,7 +2418,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'metadata': {
         'mapbox:group': '1444849242106.713'
       },
-      'filter': ['all', ['==', 'rank', 1], ['==', '$type', 'Point']]
+      'filter': ['all', ['==', ['get', 'rank'], 1], ['==', ['geometry-type'], 'Point']]
     },
     {
       'id': 'place_hamlet',
@@ -2161,31 +2429,15 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'maxzoom': 16,
       'layout': {
         'icon-size': 1,
-        'text-font': regularFonts,
-        'text-size': {
-          'stops': [
-            [13, 8],
-            [14, 10],
-            [16, 11]
-          ]
-        },
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 13, 8, 14, 10, 16, 11],
         'icon-image': '',
-        'text-field': {
-          'stops': [
-            [8, '{name_en}'],
-            [14, '{name}']
-          ]
-        },
+        'text-field': ['step', ['zoom'], ['get', 'name_en'], 14, ['get', 'name']],
         'icon-offset': [16, 0],
         'text-anchor': 'center',
         'text-offset': [0.2, 0.2],
         'text-max-width': 10,
-        'text-transform': {
-          'stops': [
-            [12, 'none'],
-            [14, 'uppercase']
-          ]
-        },
+        'text-transform': ['step', ['zoom'], 'none', 14, 'uppercase'],
         'text-keep-upright': true
       },
       'paint': {
@@ -2195,7 +2447,11 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-width': 1,
         'icon-translate-anchor': 'map'
       },
-      'filter': ['any', ['==', 'class', 'neighbourhood'], ['==', 'class', 'hamlet']]
+      'filter': [
+        'any',
+        ['==', ['get', 'class'], 'neighbourhood'],
+        ['==', ['get', 'class'], 'hamlet']
+      ]
     },
     {
       'id': 'place_suburbs',
@@ -2206,33 +2462,15 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'maxzoom': 16,
       'layout': {
         'icon-size': 1,
-        'text-font': regularFonts,
-        'text-size': {
-          'stops': [
-            [12, 9],
-            [13, 10],
-            [14, 11],
-            [15, 12],
-            [16, 13]
-          ]
-        },
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 12, 9, 13, 10, 14, 11, 15, 12, 16, 13],
         'icon-image': '',
-        'text-field': {
-          'stops': [
-            [8, '{name_en}'],
-            [13, '{name}']
-          ]
-        },
+        'text-field': ['step', ['zoom'], ['get', 'name_en'], 13, ['get', 'name']],
         'icon-offset': [16, 0],
         'text-anchor': 'center',
         'text-offset': [0.2, 0.2],
         'text-max-width': 10,
-        'text-transform': {
-          'stops': [
-            [8, 'none'],
-            [12, 'uppercase']
-          ]
-        },
+        'text-transform': ['step', ['zoom'], 'none', 12, 'uppercase'],
         'text-keep-upright': true
       },
       'paint': {
@@ -2242,7 +2480,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-width': 1,
         'icon-translate-anchor': 'map'
       },
-      'filter': ['all', ['==', 'class', 'suburb']]
+      'filter': ['all', ['==', ['get', 'class'], 'suburb']]
     },
     {
       'id': 'place_villages',
@@ -2253,23 +2491,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'maxzoom': 16,
       'layout': {
         'icon-size': 1,
-        'text-font': boldFonts,
-        'text-size': {
-          'stops': [
-            [10, 9],
-            [12, 10],
-            [13, 11],
-            [14, 12],
-            [16, 13]
-          ]
-        },
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 10, 9, 12, 10, 13, 11, 14, 12, 16, 13],
         'icon-image': '',
-        'text-field': {
-          'stops': [
-            [8, '{name_en}'],
-            [13, '{name}']
-          ]
-        },
+        'text-field': ['step', ['zoom'], ['get', 'name_en'], 13, ['get', 'name']],
         'icon-offset': [16, 0],
         'text-anchor': 'center',
         'text-offset': [0.2, 0.2],
@@ -2284,7 +2509,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-width': 1,
         'icon-translate-anchor': 'map'
       },
-      'filter': ['all', ['==', 'class', 'village']]
+      'filter': ['all', ['==', ['get', 'class'], 'village']]
     },
     {
       'id': 'place_town',
@@ -2295,23 +2520,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'maxzoom': 14,
       'layout': {
         'icon-size': 1,
-        'text-font': boldFonts,
-        'text-size': {
-          'stops': [
-            [8, 10],
-            [9, 10],
-            [10, 11],
-            [13, 14],
-            [14, 15]
-          ]
-        },
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 8, 10, 9, 10, 10, 11, 13, 14, 14, 15],
         'icon-image': '',
-        'text-field': {
-          'stops': [
-            [8, '{name_en}'],
-            [13, '{name}']
-          ]
-        },
+        'text-field': ['step', ['zoom'], ['get', 'name_en'], 13, ['get', 'name']],
         'icon-offset': [16, 0],
         'text-anchor': 'center',
         'text-offset': [0.2, 0.2],
@@ -2326,7 +2538,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-width': 1,
         'icon-translate-anchor': 'map'
       },
-      'filter': ['all', ['==', 'class', 'town']]
+      'filter': ['all', ['==', ['get', 'class'], 'town']]
     },
     {
       'id': 'place_country_2',
@@ -2336,31 +2548,32 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'minzoom': 3,
       'maxzoom': 10,
       'layout': {
-        'text-font': boldFonts,
-        'text-size': {
-          'stops': [
-            [3, 10],
-            [5, 11],
-            [6, 12],
-            [7, 13],
-            [8, 14]
-          ]
-        },
-        'text-field': '{name_en}',
-        'text-transform': 'sentencecase'
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 3, 10, 5, 11, 6, 12, 7, 13, 8, 14],
+        'text-field': ['get', 'name_en'],
+        'text-transform': 'none'
       },
       'paint': {
-        'text-color': {
-          'stops': [
-            [3, dark ? 'rgba(179, 179, 190, 1)' : 'rgb(101, 106, 110)'],
-            [5, dark ? 'rgba(179, 179, 190, 1)' : 'rgb(127, 129, 131)'],
-            [6, dark ? 'rgba(179, 179, 190, 1)' : 'rgba(131, 131, 131, 1)']
-          ]
-        },
+        'text-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          3,
+          dark ? 'rgba(179, 179, 190, 1)' : 'rgb(101, 106, 110)',
+          5,
+          dark ? 'rgba(179, 179, 190, 1)' : 'rgb(127, 129, 131)',
+          6,
+          dark ? 'rgba(179, 179, 190, 1)' : 'rgba(131, 131, 131, 1)'
+        ],
         'text-halo-color': dark ? 'rgba(0, 0, 0, 1)' : 'rgba(255, 255, 255, 1)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['==', 'class', 'country'], ['>=', 'rank', 3], ['has', 'iso_a2']]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'country'],
+        ['>=', ['get', 'rank'], 3],
+        ['has', 'iso_a2']
+      ]
     },
     {
       'id': 'place_country_1',
@@ -2370,38 +2583,28 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'minzoom': 2,
       'maxzoom': 7,
       'layout': {
-        'text-font': boldFonts,
-        'text-size': {
-          'stops': [
-            [3, 11],
-            [4, 12],
-            [5, 13],
-            [6, 14]
-          ]
-        },
-        'text-field': '{name_en}',
-        'text-max-width': {
-          'stops': [
-            [2, 6],
-            [3, 6],
-            [4, 9],
-            [5, 12]
-          ]
-        },
-        'text-transform': 'sentencecase'
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 3, 11, 4, 12, 5, 13, 6, 14],
+        'text-field': ['get', 'name_en'],
+        'text-max-width': ['interpolate', ['linear'], ['zoom'], 2, 6, 3, 6, 4, 9, 5, 12],
+        'text-transform': 'none'
       },
       'paint': {
-        'text-color': {
-          'stops': [
-            [3, dark ? 'rgba(179, 179, 190, 1)' : 'rgba(114, 114, 114, 1)'],
-            [5, dark ? 'rgba(179, 179, 190, 1)' : 'rgba(116, 116, 116, 1)'],
-            [6, dark ? 'rgba(179, 179, 190, 1)' : 'rgba(116, 116, 116, 1)']
-          ]
-        },
+        'text-color': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          3,
+          dark ? 'rgba(179, 179, 190, 1)' : 'rgba(114, 114, 114, 1)',
+          5,
+          dark ? 'rgba(179, 179, 190, 1)' : 'rgba(116, 116, 116, 1)',
+          6,
+          dark ? 'rgba(179, 179, 190, 1)' : 'rgba(116, 116, 116, 1)'
+        ],
         'text-halo-color': dark ? 'rgba(0, 0, 0, 1)' : 'rgba(255, 255, 255, 1)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['==', 'class', 'country'], ['<=', 'rank', 2]]
+      'filter': ['all', ['==', ['get', 'class'], 'country'], ['<=', ['get', 'rank'], 2]]
     },
     {
       'id': 'place_state',
@@ -2411,23 +2614,18 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'minzoom': 5,
       'maxzoom': 10,
       'layout': {
-        'text-font': boldFonts,
-        'text-size': {
-          'stops': [
-            [5, 12],
-            [7, 14]
-          ]
-        },
-        'text-field': '{name_en}',
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 5, 12, 7, 14],
+        'text-field': ['get', 'name_en'],
         'text-max-width': 9,
-        'text-transform': 'sentencecase'
+        'text-transform': 'none'
       },
       'paint': {
         'text-color': dark ? 'rgba(179, 179, 190, 1)' : 'rgb(116, 119, 122)',
         'text-halo-color': dark ? 'rgba(0, 0, 0, 1)' : 'rgb(216, 238, 215)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['==', 'class', 'state'], ['<=', 'rank', 4]]
+      'filter': ['all', ['==', ['get', 'class'], 'state'], ['<=', ['get', 'rank'], 4]]
     },
     {
       'id': 'place_continent',
@@ -2437,9 +2635,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'minzoom': 0,
       'maxzoom': 2,
       'layout': {
-        'text-font': boldFonts,
+        'text-font': fonts,
         'text-size': 14,
-        'text-field': '{name_en}',
+        'text-field': ['get', 'name_en'],
         'text-justify': 'center',
         'text-max-width': 9,
         'text-transform': 'uppercase',
@@ -2451,7 +2649,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-color': dark ? 'rgba(0, 0, 0, 1)' : 'rgba(255, 255, 255, 1)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['==', 'class', 'continent']]
+      'filter': ['all', ['==', ['get', 'class'], 'continent']]
     },
     {
       'id': 'place_city_r6',
@@ -2462,23 +2660,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'maxzoom': 15,
       'layout': {
         'icon-size': 1,
-        'text-font': boldFonts,
-        'text-size': {
-          'stops': [
-            [8, 12],
-            [9, 13],
-            [10, 14],
-            [13, 17],
-            [14, 20]
-          ]
-        },
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 8, 12, 9, 13, 10, 14, 13, 17, 14, 20],
         'icon-image': '',
-        'text-field': {
-          'stops': [
-            [8, '{name_en}'],
-            [13, '{name}']
-          ]
-        },
+        'text-field': ['step', ['zoom'], ['get', 'name_en'], 13, ['get', 'name']],
         'icon-offset': [16, 0],
         'text-anchor': 'center',
         'text-offset': [0.2, 0.2],
@@ -2493,7 +2678,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-width': 1,
         'icon-translate-anchor': 'map'
       },
-      'filter': ['all', ['==', 'class', 'city'], ['>=', 'rank', 6]]
+      'filter': ['all', ['==', ['get', 'class'], 'city'], ['>=', ['get', 'rank'], 6]]
     },
     {
       'id': 'place_city_r5',
@@ -2504,22 +2689,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'maxzoom': 15,
       'layout': {
         'icon-size': 1,
-        'text-font': boldFonts,
-        'text-size': {
-          'stops': [
-            [8, 14],
-            [10, 16],
-            [13, 19],
-            [14, 22]
-          ]
-        },
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 8, 14, 10, 16, 13, 19, 14, 22],
         'icon-image': '',
-        'text-field': {
-          'stops': [
-            [8, '{name_en}'],
-            [13, '{name}']
-          ]
-        },
+        'text-field': ['step', ['zoom'], ['get', 'name_en'], 13, ['get', 'name']],
         'icon-offset': [16, 0],
         'text-anchor': 'center',
         'text-offset': [0.2, 0.2],
@@ -2534,7 +2707,12 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-width': 1,
         'icon-translate-anchor': 'map'
       },
-      'filter': ['all', ['==', 'class', 'city'], ['>=', 'rank', 0], ['<=', 'rank', 5]]
+      'filter': [
+        'all',
+        ['==', ['get', 'class'], 'city'],
+        ['>=', ['get', 'rank'], 0],
+        ['<=', ['get', 'rank'], 5]
+      ]
     },
     {
       'id': 'place_city_dot_r7',
@@ -2545,10 +2723,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'maxzoom': 7,
       'layout': {
         'icon-size': 0.4,
-        'text-font': boldFonts,
+        'text-font': fonts,
         'text-size': 12,
         'icon-image': 'circle-11',
-        'text-field': '{name_en}',
+        'text-field': ['get', 'name_en'],
         'icon-offset': [16, 5],
         'text-anchor': 'right',
         'text-offset': [0.2, 0.2],
@@ -2562,7 +2740,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-width': 1,
         'icon-translate-anchor': 'map'
       },
-      'filter': ['all', ['==', 'class', 'city'], ['<=', 'rank', 7]]
+      'filter': ['all', ['==', ['get', 'class'], 'city'], ['<=', ['get', 'rank'], 7]]
     },
     {
       'id': 'place_city_dot_r4',
@@ -2573,10 +2751,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'maxzoom': 7,
       'layout': {
         'icon-size': 0.4,
-        'text-font': boldFonts,
+        'text-font': fonts,
         'text-size': 12,
         'icon-image': 'circle-11',
-        'text-field': '{name_en}',
+        'text-field': ['get', 'name_en'],
         'icon-offset': [16, 5],
         'text-anchor': 'right',
         'text-offset': [0.2, 0.2],
@@ -2590,7 +2768,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-width': 1,
         'icon-translate-anchor': 'map'
       },
-      'filter': ['all', ['==', 'class', 'city'], ['<=', 'rank', 4]]
+      'filter': ['all', ['==', ['get', 'class'], 'city'], ['<=', ['get', 'rank'], 4]]
     },
     {
       'id': 'place_city_dot_r2',
@@ -2601,10 +2779,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'maxzoom': 7,
       'layout': {
         'icon-size': 0.4,
-        'text-font': boldFonts,
+        'text-font': fonts,
         'text-size': 12,
         'icon-image': 'circle-11',
-        'text-field': '{name_en}',
+        'text-field': ['get', 'name_en'],
         'icon-offset': [16, 5],
         'text-anchor': 'right',
         'text-offset': [0.2, 0.2],
@@ -2618,7 +2796,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-width': 1,
         'icon-translate-anchor': 'map'
       },
-      'filter': ['all', ['==', 'class', 'city'], ['<=', 'rank', 2]]
+      'filter': ['all', ['==', ['get', 'class'], 'city'], ['<=', ['get', 'rank'], 2]]
     },
     {
       'id': 'place_city_dot_z7',
@@ -2629,10 +2807,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'maxzoom': 8,
       'layout': {
         'icon-size': 0.4,
-        'text-font': boldFonts,
+        'text-font': fonts,
         'text-size': 12,
         'icon-image': 'circle-11',
-        'text-field': '{name_en}',
+        'text-field': ['get', 'name_en'],
         'icon-offset': [16, 5],
         'text-anchor': 'right',
         'text-offset': [0.2, 0.2],
@@ -2646,7 +2824,11 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-width': 1,
         'icon-translate-anchor': 'map'
       },
-      'filter': ['all', ['!has', 'capital'], ['!in', 'class', 'country', 'state']]
+      'filter': [
+        'all',
+        ['!', ['has', 'capital']],
+        ['!', ['in', ['get', 'class'], ['literal', ['country', 'state']]]]
+      ]
     },
     {
       'id': 'place_capital_dot_z7',
@@ -2657,10 +2839,10 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'maxzoom': 8,
       'layout': {
         'icon-size': 0.4,
-        'text-font': boldFonts,
+        'text-font': fonts,
         'text-size': 12,
         'icon-image': 'circle-11',
-        'text-field': '{name_en}',
+        'text-field': ['get', 'name_en'],
         'icon-offset': [16, 5],
         'text-anchor': 'right',
         'text-offset': [0.2, 0.2],
@@ -2675,7 +2857,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-width': 1,
         'icon-translate-anchor': 'map'
       },
-      'filter': ['all', ['>', 'capital', 0]]
+      'filter': ['all', ['>', ['get', 'capital'], 0]]
     },
     {
       'id': 'poi_stadium',
@@ -2684,15 +2866,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source-layer': 'poi',
       'minzoom': 15,
       'layout': {
-        'text-font': boldFonts,
-        'text-size': {
-          'stops': [
-            [15, 8],
-            [17, 9],
-            [18, 10]
-          ]
-        },
-        'text-field': '{name}',
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 15, 8, 17, 9, 18, 10],
+        'text-field': ['get', 'name'],
         'text-transform': 'uppercase'
       },
       'paint': {
@@ -2700,7 +2876,11 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-color': dark ? 'rgba(201, 201, 201, 0.15)' : 'rgba(234, 234, 234, 0.15)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['in', 'class', 'stadium', 'cemetery', 'attraction'], ['<=', 'rank', 3]]
+      'filter': [
+        'all',
+        ['in', ['get', 'class'], ['literal', ['stadium', 'cemetery', 'attraction']]],
+        ['<=', ['get', 'rank'], 3]
+      ]
     },
     {
       'id': 'poi_park',
@@ -2709,15 +2889,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source-layer': 'poi',
       'minzoom': 15,
       'layout': {
-        'text-font': boldFonts,
-        'text-size': {
-          'stops': [
-            [15, 8],
-            [17, 9],
-            [18, 10]
-          ]
-        },
-        'text-field': '{name}',
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 15, 8, 17, 9, 18, 10],
+        'text-field': ['get', 'name'],
         'text-transform': 'uppercase'
       },
       'paint': {
@@ -2725,7 +2899,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-color': dark ? 'rgba(0, 0, 0, 0.5)' : 'rgba(234, 234, 234, 0.15)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['==', 'class', 'park']]
+      'filter': ['all', ['==', ['get', 'class'], 'park']]
     },
     {
       'id': 'roadname_minor',
@@ -2734,9 +2908,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source-layer': 'transportation_name',
       'minzoom': 16,
       'layout': {
-        'text-font': regularFonts,
+        'text-font': fonts,
         'text-size': 9,
-        'text-field': '{name}',
+        'text-field': ['get', 'name'],
         'text-justify': 'center',
         'symbol-spacing': 200,
         'symbol-placement': 'line',
@@ -2749,7 +2923,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-color': dark ? 'rgba(0, 0, 0, 1)' : 'rgba(255, 255, 255, 1)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['in', 'class', 'minor', 'service']]
+      'filter': ['all', ['in', ['get', 'class'], ['literal', ['minor', 'service']]]]
     },
     {
       'id': 'roadname_sec',
@@ -2758,15 +2932,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source-layer': 'transportation_name',
       'minzoom': 15,
       'layout': {
-        'text-font': regularFonts,
-        'text-size': {
-          'stops': [
-            [15, 9],
-            [16, 11],
-            [18, 12]
-          ]
-        },
-        'text-field': '{name}',
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 15, 9, 16, 11, 18, 12],
+        'text-field': ['get', 'name'],
         'text-justify': 'center',
         'symbol-spacing': 200,
         'symbol-placement': 'line',
@@ -2779,7 +2947,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-color': dark ? 'rgba(0, 0, 0, 1)' : 'rgba(255, 255, 255, 1)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['in', 'class', 'secondary', 'tertiary']]
+      'filter': ['all', ['in', ['get', 'class'], ['literal', ['secondary', 'tertiary']]]]
     },
     {
       'id': 'roadname_pri',
@@ -2788,31 +2956,14 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source-layer': 'transportation_name',
       'minzoom': 14,
       'layout': {
-        'text-font': regularFonts,
-        'text-size': {
-          'stops': [
-            [14, 10],
-            [15, 10],
-            [16, 11],
-            [18, 12]
-          ]
-        },
-        'text-field': '{name}',
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 14, 10, 15, 10, 16, 11, 18, 12],
+        'text-field': ['get', 'name'],
         'text-justify': 'center',
-        'symbol-spacing': {
-          'stops': [
-            [6, 200],
-            [16, 250]
-          ]
-        },
+        'symbol-spacing': ['interpolate', ['linear'], ['zoom'], 6, 200, 16, 250],
         'symbol-placement': 'line',
         'symbol-avoid-edges': false,
-        'text-letter-spacing': {
-          'stops': [
-            [14, 0],
-            [16, 0.2]
-          ]
-        },
+        'text-letter-spacing': ['interpolate', ['linear'], ['zoom'], 14, 0, 16, 0.2],
         'text-pitch-alignment': 'auto',
         'text-rotation-alignment': 'auto'
       },
@@ -2821,7 +2972,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-color': dark ? 'rgb(0, 0, 0)' : 'rgb(255, 255, 255)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['in', 'class', 'primary']]
+      'filter': ['all', ['in', ['get', 'class'], ['literal', ['primary']]]]
     },
     {
       'id': 'roadname_major',
@@ -2830,31 +2981,14 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'source-layer': 'transportation_name',
       'minzoom': 13,
       'layout': {
-        'text-font': regularFonts,
-        'text-size': {
-          'stops': [
-            [14, 10],
-            [15, 10],
-            [16, 11],
-            [18, 12]
-          ]
-        },
-        'text-field': '{name}',
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 14, 10, 15, 10, 16, 11, 18, 12],
+        'text-field': ['get', 'name'],
         'text-justify': 'center',
-        'symbol-spacing': {
-          'stops': [
-            [6, 200],
-            [16, 250]
-          ]
-        },
+        'symbol-spacing': ['interpolate', ['linear'], ['zoom'], 6, 200, 16, 250],
         'symbol-placement': 'line',
         'symbol-avoid-edges': false,
-        'text-letter-spacing': {
-          'stops': [
-            [13, 0],
-            [16, 0.2]
-          ]
-        },
+        'text-letter-spacing': ['interpolate', ['linear'], ['zoom'], 13, 0, 16, 0.2],
         'text-pitch-alignment': 'auto',
         'text-rotation-alignment': 'auto'
       },
@@ -2863,7 +2997,7 @@ export const styleJson = (key: string, dark?: boolean): any => ({
         'text-halo-color': dark ? 'rgb(0, 0, 0)' : 'rgb(255, 255, 255)',
         'text-halo-width': 1
       },
-      'filter': ['all', ['in', 'class', 'trunk', 'motorway']]
+      'filter': ['all', ['in', ['get', 'class'], ['literal', ['trunk', 'motorway']]]]
     },
     {
       'id': 'housenumber',
@@ -2873,14 +3007,9 @@ export const styleJson = (key: string, dark?: boolean): any => ({
       'minzoom': 17,
       'maxzoom': 24,
       'layout': {
-        'text-font': regularFonts,
-        'text-size': {
-          'stops': [
-            [17, 9],
-            [18, 11]
-          ]
-        },
-        'text-field': '{housenumber}'
+        'text-font': fonts,
+        'text-size': ['interpolate', ['linear'], ['zoom'], 17, 9, 18, 11],
+        'text-field': ['get', 'housenumber']
       },
       'paint': {
         'text-color': dark ? 'rgb(69, 158, 124)' : 'rgba(255, 255, 255, 1)',

@@ -33,7 +33,8 @@
       "@siemens/dashboards-ng": ["projects/dashboards-ng/src/public-api.ts"],
       "@siemens/dashboards-ng/*": ["projects/dashboards-ng/*/index.ts"],
       "@siemens/maps-ng": ["projects/maps-ng/src/public-api.ts"],
-      "@siemens/maps-ng/*": ["projects/maps-ng/*/index.ts"]
+      "@siemens/maps-ng/*": ["projects/maps-ng/*/index.ts"],
+      "@siemens/map-styles/*": ["projects/map-styles/*/index.ts"]
     }
   },
   "angularCompilerOptions": {
@@ -106,6 +107,12 @@
     },
     {
       "path": "./projects/maps-ng/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/map-styles/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/map-styles/tsconfig.spec.json"
     },
     {
       "path": "./projects/dashboards-demo/tsconfig.app.json"

@@ -69,6 +69,7 @@ jobs:
       - run: npm run schematics:test
       - run: npm run charts:test -- --watch=false --progress=false --coverage
       - run: npm run dashboards:test -- --watch=false --progress=false --coverage
+      - run: npm run map-styles:test -- --watch=false --progress=false --coverage
       - run: npm run maps:test -- --watch=false --progress=false --coverage
       - run: npm run native-charts:test -- --watch=false --progress=false --coverage
       - name: Generate coverage summary
