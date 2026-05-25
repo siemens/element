@@ -25,8 +25,8 @@
     - /url: "#/viewer/viewer/success"
   - link /Danger emphasis badge \+\d+/:
     - /url: "#/viewer/viewer/danger"
-  - link "Settings":
-    - /url: "#/viewer/viewer/settings"
+  - link "Configuration":
+    - /url: "#/viewer/viewer/configuration"
 - main:
   - heading "Badge Examples" [level=2]
   - text: Content with path 'sub-badge-2' Control panel
