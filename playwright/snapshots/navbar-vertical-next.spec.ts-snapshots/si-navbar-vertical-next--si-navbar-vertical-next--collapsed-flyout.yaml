@@ -24,8 +24,8 @@
   - button "Documentation"
   - group "Documentation"
   - button "Action"
-  - link "Settings":
-    - /url: "#/viewer/viewer/settings"
+  - link "Configuration":
+    - /url: "#/viewer/viewer/configuration"
 - main:
   - heading "Here is a title" [level=2]
   - text: Content with path 'subItem2' Control panel
