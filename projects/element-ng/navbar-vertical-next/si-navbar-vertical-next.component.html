@@ -2,6 +2,7 @@
   @if (smallScreen() && !collapsed()) {
     <div class="modal-backdrop" animate.leave="backdrop-leave" (click)="toggleCollapse()"></div>
   }
+  @let inlineCollapsed = inlineCollapse() && collapsed();
   <nav
     tabindex="-1"
     class="bg-base-1 focus-sub-inside"
@@ -12,23 +13,37 @@
     <div class="collapse-toggle ms-auto">
       <div class="mobile-drawer focus-inside navbar-vertical-no-collapse">
         <button
+          #navToggleButton
           type="button"
           class="btn btn-icon btn-tertiary-ghost"
           [attr.aria-label]="toggleButtonText() | translate"
           [attr.aria-expanded]="!collapsed()"
           (click)="toggleCollapse()"
         >
-          <si-icon
-            class="flip-rtl"
-            [icon]="collapsed() ? icons.elementDoubleRight : icons.elementDoubleLeft"
-          />
+          <si-icon class="flip-rtl" [icon]="toggleIcon()" />
         </button>
       </div>
     </div>
-    <ng-content select="si-navbar-vertical-next-search" />
-    <ng-content select="si-navbar-vertical-next-items" />
-    <ng-content select="si-navbar-vertical-next-footer-items" />
+    <div class="nav-content" [attr.inert]="inlineCollapsed ? '' : null">
+      <ng-content select="si-navbar-vertical-next-search" />
+      <ng-content select="si-navbar-vertical-next-items" />
+      <ng-content select="si-navbar-vertical-next-footer-items" />
+    </div>
   </nav>
+  @if (inlineCollapsed) {
+    <button
+      #inlineToggleButton
+      type="button"
+      class="btn btn-icon btn-tertiary-ghost bg-base-1 inline-collapse-toggle"
+      animate.enter="fade-enter"
+      animate.leave="fade-leave"
+      [attr.aria-label]="toggleButtonText() | translate"
+      [attr.aria-expanded]="false"
+      (click)="toggleCollapse()"
+    >
+      <si-icon class="flip-rtl" [icon]="icons.elementLayoutPane2" />
+    </button>
+  }
 }
 <main
   class="si-layout-inner focus-none"

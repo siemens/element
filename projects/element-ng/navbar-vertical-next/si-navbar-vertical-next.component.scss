@@ -95,7 +95,7 @@ nav {
     --si-layout-header-first-element-offset: 0;
   }
 
-  :host:not(.nav-text-only) {
+  :host:not(.nav-text-only):not(.nav-inline-collapse) {
     padding-inline-start: $vertical-nav-collapsed-width;
 
     .mobile-drawer {
@@ -104,7 +104,7 @@ nav {
     }
   }
 
-  :host:not(.nav-text-only) {
+  :host:not(.nav-text-only):not(.nav-inline-collapse) {
     nav {
       inline-size: $vertical-nav-collapsed-width;
 
@@ -116,7 +116,58 @@ nav {
 }
 
 @include all-variables.media-breakpoint-up(lg) {
-  :host:not(.nav-collapsed) {
+  :host:not(.nav-collapsed):not(.nav-inline-collapse) {
     padding-inline-start: $vertical-nav-width;
+  }
+}
+
+.nav-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-block-size: 0;
+}
+
+:host(.nav-inline-collapse) {
+  nav {
+    // The in-nav toggle must clip out as the nav collapses to inline-size 0.
+    overflow: hidden;
+  }
+
+  &.nav-collapsed .mobile-drawer {
+    inline-size: 0;
+  }
+
+  @include all-variables.media-breakpoint-up(lg) {
+    &:not(.nav-collapsed) {
+      padding-inline-start: $vertical-nav-width;
+    }
+  }
+}
+
+.inline-collapse-toggle {
+  display: block;
+  margin-block-start: map.get(all-variables.$spacers, 6);
+  margin-inline-start: map.get(all-variables.$spacers, 9);
+  block-size: calc(1lh + (2 * map.get(all-variables.$spacers, 2)));
+  opacity: 1;
+  transition-property: opacity, block-size, margin-block-start;
+  transition-duration: all-variables.element-transition-duration(0.25s);
+  transition-delay: all-variables.element-transition-duration(0.25s);
+  transition-timing-function: ease;
+
+  &.fade-enter {
+    @starting-style {
+      opacity: 0;
+      block-size: 0;
+      margin-block-start: 0;
+    }
+  }
+
+  &.fade-leave {
+    opacity: 0;
+    block-size: 0;
+    margin-block-start: 0;
+    transition-delay: 0s;
   }
 }

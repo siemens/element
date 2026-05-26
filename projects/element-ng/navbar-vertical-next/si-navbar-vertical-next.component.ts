@@ -8,6 +8,8 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  computed,
+  ElementRef,
   inject,
   Injector,
   input,
@@ -15,10 +17,16 @@ import {
   OnChanges,
   OnInit,
   signal,
-  SimpleChanges
+  SimpleChanges,
+  viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { elementDoubleLeft, elementDoubleRight } from '@siemens/element-icons';
+import {
+  elementDoubleLeft,
+  elementDoubleRight,
+  elementLayoutPane2,
+  elementLayoutPane2Right
+} from '@siemens/element-icons';
 import { SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
@@ -45,12 +53,19 @@ interface UIState {
     class: 'si-layout-inner ready',
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
+    '[class.nav-inline-collapse]': 'inlineCollapse()',
     '[class.visible]': 'visible()',
     '[class.ready]': 'ready()'
   }
 })
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
-  protected readonly icons = addIcons({ elementDoubleLeft, elementDoubleRight });
+  protected readonly icons = addIcons({
+    elementDoubleLeft,
+    elementDoubleRight,
+    elementLayoutPane2,
+    elementLayoutPane2Right
+  });
+
   /**
    * Whether the navbar-vertical is collapsed.
    *
@@ -66,9 +81,17 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   readonly textOnly = input(false, { transform: booleanAttribute });
 
   /**
+   * Enables an alternative inline collapsed mode.
+   *
+   * inline control bar without rendering items, headers, the search slot or
+   * footer items.
+   *
+   * @defaultValue false
+   */
+  readonly inlineCollapse = input(false, { transform: booleanAttribute });
+
+  /**
    * When `true`, item-groups always open as a transient flyout panel adjacent to the
-   * trigger, regardless of whether the navbar is collapsed or expanded.
-   * Flyouts open and close on click.
    *
    * @defaultValue false
    */
@@ -131,6 +154,10 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   protected readonly ready = signal(false);
   protected readonly smallScreen = signal(false);
 
+  private readonly navToggleButton = viewChild<ElementRef<HTMLButtonElement>>('navToggleButton');
+  private readonly inlineToggleButton =
+    viewChild<ElementRef<HTMLButtonElement>>('inlineToggleButton');
+
   /**
    * @defaultValue
    * ```
@@ -141,6 +168,13 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
 
   // Indicates if the user prefers a collapsed navbar. Relevant for resizing.
   private preferCollapse = false;
+
+  protected readonly toggleIcon = computed(() => {
+    if (this.inlineCollapse()) {
+      return this.collapsed() ? this.icons.elementLayoutPane2 : this.icons.elementLayoutPane2Right;
+    }
+    return this.collapsed() ? this.icons.elementDoubleRight : this.icons.elementDoubleLeft;
+  });
 
   constructor() {
     this.breakpointObserver
@@ -177,10 +211,26 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   }
 
   protected toggleCollapse(): void {
-    if (this.collapsed()) {
+    const wasCollapsed = this.collapsed();
+    if (wasCollapsed) {
       this.expand();
     } else {
       this.collapse();
+    }
+    // In inline-collapse mode the visible toggle button swaps between the
+    // in-nav button (expanded) and the in-page button (collapsed). Move focus
+    // to the newly visible one after the view updates so keyboard users don't
+    // lose their place.
+    if (this.inlineCollapse()) {
+      afterNextRender(
+        () => {
+          const next = wasCollapsed
+            ? this.navToggleButton()?.nativeElement
+            : this.inlineToggleButton()?.nativeElement;
+          next?.focus();
+        },
+        { injector: this.injector }
+      );
     }
   }
 

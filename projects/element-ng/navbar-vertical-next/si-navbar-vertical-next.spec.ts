@@ -67,6 +67,7 @@ class EmptyComponent {}
       [textOnly]="textOnly()"
       [stateId]="stateId"
       [collapsed]="collapsed()"
+      [inlineCollapse]="inlineCollapse()"
       [alwaysFlyout]="alwaysFlyout()"
     >
       <si-navbar-vertical-next-search [debounceTime]="0" (searchChange)="searchEvent($event)" />
@@ -160,6 +161,7 @@ class TestHostComponent {
   readonly textOnly = signal(true);
   stateId?: string;
   readonly collapsed = signal(false);
+  readonly inlineCollapse = signal(false);
   readonly alwaysFlyout = signal(false);
   readonly showDeclarativeFlyoutGroup = signal(false);
   readonly showDeclarativeNavigationGroup = signal(false);
@@ -399,6 +401,92 @@ describe('SiNavbarVerticalNext', () => {
       const harness = await harnessLoader.getHarness(SiNavbarVerticalNextHarness);
       breakpointObserver.isSmall.next(true);
       expect(await harness.isCollapsed()).toBe(true);
+    });
+  });
+
+  describe('with inlineCollapse', () => {
+    beforeEach(() => {
+      component.inlineCollapse.set(true);
+      component.textOnly.set(false);
+      component.showDeclarativeNavigationGroup.set(true);
+    });
+
+    it('should add nav-inline-collapse host class', async () => {
+      await fixture.whenStable();
+      const host = page.getByRole('navigation').element().closest('si-navbar-vertical-next')!;
+      expect(host).toHaveClass('nav-inline-collapse');
+    });
+
+    it('should render an in-page toggle when collapsed and not when expanded', async () => {
+      component.collapsed.set(true);
+      await fixture.whenStable();
+
+      const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+      expect(host.querySelector('.inline-collapse-toggle')).toBeInTheDocument();
+
+      component.collapsed.set(false);
+      await fixture.whenStable();
+      expect(host.querySelector('.inline-collapse-toggle')).not.toBeInTheDocument();
+    });
+
+    it('should drop inert when expanded', async () => {
+      component.collapsed.set(false);
+      await fixture.whenStable();
+
+      const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+      expect(host).not.toHaveClass('nav-collapsed');
+
+      const content = host.querySelector('.nav-content') as HTMLElement;
+      expect(content).not.toHaveAttribute('inert');
+    });
+
+    it('should move focus to the in-page toggle when collapsing', async () => {
+      component.collapsed.set(false);
+      await fixture.whenStable();
+
+      const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+      const navToggle = host.querySelector('nav .collapse-toggle button') as HTMLButtonElement;
+      navToggle.focus();
+      expect(document.activeElement).toBe(navToggle);
+
+      await userEvent.click(navToggle);
+      await fixture.whenStable();
+
+      const inlineToggle = host.querySelector('.inline-collapse-toggle') as HTMLButtonElement;
+      expect(inlineToggle).toBeInTheDocument();
+      expect(document.activeElement).toBe(inlineToggle);
+    });
+
+    it('should move focus to the in-nav toggle when expanding', async () => {
+      component.collapsed.set(true);
+      await fixture.whenStable();
+
+      const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+      const inlineToggle = host.querySelector('.inline-collapse-toggle') as HTMLButtonElement;
+      inlineToggle.focus();
+      expect(document.activeElement).toBe(inlineToggle);
+
+      await userEvent.click(inlineToggle);
+      await fixture.whenStable();
+
+      const navToggle = host.querySelector('nav .collapse-toggle button') as HTMLButtonElement;
+      expect(document.activeElement).toBe(navToggle);
+    });
+
+    it('should expose correct aria-expanded on both toggles', async () => {
+      component.collapsed.set(true);
+      await fixture.whenStable();
+
+      const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+      const navToggle = host.querySelector('nav .collapse-toggle button') as HTMLButtonElement;
+      const inlineToggle = host.querySelector('.inline-collapse-toggle') as HTMLButtonElement;
+
+      expect(navToggle).toHaveAttribute('aria-expanded', 'false');
+      expect(inlineToggle).toHaveAttribute('aria-expanded', 'false');
+
+      component.collapsed.set(false);
+      await fixture.whenStable();
+      expect(navToggle).toHaveAttribute('aria-expanded', 'true');
     });
   });
 });

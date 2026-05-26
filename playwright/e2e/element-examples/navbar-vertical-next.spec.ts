@@ -54,6 +54,22 @@ test.describe('navbar vertical next', () => {
     await si.runVisualAndA11yTests('always-flyout');
   });
 
+  test(example + ' inline collapse toggle', async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.getByRole('checkbox', { name: 'Inline collapse' }).check();
+
+    await page.locator('si-navbar-vertical-next nav .collapse-toggle button').click();
+    await expect(
+      page.locator('si-navbar-vertical-next.nav-inline-collapse.nav-collapsed')
+    ).toBeVisible();
+    await expect(page.locator('si-navbar-vertical-next .nav-content[inert]')).toHaveCount(1);
+    await expect(page.locator('si-navbar-vertical-next .inline-collapse-toggle')).toBeVisible();
+
+    await si.waitForAllAnimationsToComplete();
+    await si.runVisualAndA11yTests('inline-collapse');
+  });
+
   test.skip('it should show tooltip only on keyboard interaction', async ({ page, si }) => {
     await si.visitExample(example);
     await page.getByLabel('Toggle', { exact: true }).click();
