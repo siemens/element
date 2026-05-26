@@ -2,8 +2,10 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 :host {
-  display: inline;
+  display: inline-block;
+  position: relative;
   margin-inline: map.get(variables.$spacers, 3);
+  vertical-align: middle;
 }
 
 .citation-pill {

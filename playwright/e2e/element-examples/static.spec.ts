@@ -112,13 +112,13 @@ test('typography/display-styles', ({ si }) => si.static());
 test('typography/typography', ({ si }) => si.static());
 test('si-markdown-renderer/si-markdown-renderer', ({ si }) =>
   si.static({ disabledA11yRules: ['link-in-text-block'] }));
-test('si-chat-messages/si-ai-message', ({ si }) => si.static());
+test('si-chat-messages/si-ai-message', ({ si }) => si.static({ withPopover: 'si-citation-pill' }));
 test('si-chat-messages/si-user-message', ({ si }) => si.static());
 test('si-chat-messages/si-chat-message', ({ si }) => si.static());
 test('si-chat-messages/si-attachment-list', ({ si }) => si.static());
 test('si-chat-messages/si-chat-input', ({ si }) => si.static());
-// FIXME: test is unstable
-test.skip('si-chat-messages/si-chat-container', ({ si }) => si.static());
+test('si-chat-messages/si-chat-container', ({ si }) =>
+  si.static({ withPopover: 'si-citation-pill' }));
 test('si-chat-messages/si-ai-welcome-screen', ({ si }) => si.static());
 test('ag-grid/ag-grid-empty-state', async ({ si }) => {
   await si.static({ disabledA11yRules: ['aria-required-children'] });

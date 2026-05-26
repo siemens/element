@@ -64,6 +64,8 @@ export type StaticTestOptions = {
   waitCallback?: (page: Page) => Promise<void>;
   skipAutoScaleViewport?: boolean;
   skipAriaSnapshot?: boolean;
+  /** CSS selector of an element to hover after the initial snapshot to open a popover for a second snapshot. */
+  withPopover?: string;
 };
 
 // Playwright since 1.48 has the mouse cursor at 0/0 causing any element at this coordinate to be
@@ -113,6 +115,15 @@ class SiTestHelpers {
           maxDiffPixels: options?.maxDiffPixels,
           skipAriaSnapshot: options?.skipAriaSnapshot
         });
+        if (options?.withPopover) {
+          await this.page.locator(options.withPopover).first().hover();
+          await expect(this.page.getByRole('dialog')).toBeVisible();
+          await this.runVisualAndA11yTests(step ? `${step}--popover` : 'popover', {
+            axeRulesSet: options?.disabledA11yRules?.map(item => ({ id: item, enabled: false })),
+            maxDiffPixels: options?.maxDiffPixels,
+            skipAriaSnapshot: options?.skipAriaSnapshot
+          });
+        }
       }
     }
   }

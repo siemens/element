@@ -11,6 +11,8 @@ export interface SiChatCitation {
   title: string;
   /** Optional URL to the original source. */
   url?: string;
+  /** Optional short snippet showing the exact passage or section the AI used. */
+  description?: string;
 }
 
 /** A plain-text run within an annotated message. */

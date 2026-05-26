@@ -70,12 +70,16 @@ You can use \`inline code\` and create lists:
       {
         id: '1',
         title: 'Deep Learning – Ian Goodfellow et al.',
-        url: 'https://www.deeplearningbook.org'
+        url: 'https://examples.org/deeplearningbook',
+        description:
+          'Neural networks are universal function approximators composed of alternating linear transformations and non-linear activations, trained end-to-end via gradient descent.'
       },
       {
         id: '2',
         title: 'Backpropagation Algorithm – Stanford CS231n',
-        url: 'https://cs231n.github.io'
+        url: 'https://examples.org/cs231n',
+        description:
+          'Backpropagation computes the gradient of the loss with respect to each weight by applying the chain rule recursively from the output layer to the input layer.'
       }
     ]
   };

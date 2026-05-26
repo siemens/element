@@ -194,7 +194,9 @@ export class SampleComponent {
           {
             id: 'c1',
             title: 'Data Pipeline Design Patterns',
-            url: 'https://martinfowler.com/articles/data-pipeline.html'
+            url: 'https://examples.org/articles/data-pipeline.html',
+            description:
+              'Pipelines can be structured as linear chains or branching graphs. Each stage transforms data independently, enabling testability and reuse.'
           }
         ]
       },
@@ -250,7 +252,9 @@ export class SampleComponent {
           {
             id: 'c2',
             title: 'Pandas Performance Guide',
-            url: 'https://pandas.pydata.org/docs/user_guide/enhancingperf.html'
+            url: 'https://examples.org/docs/user_guide/enhancingperf.html',
+            description:
+              'Vectorized operations with NumPy arrays outperform row-by-row iteration by orders of magnitude, especially on DataFrames with millions of rows.'
           }
         ]
       },

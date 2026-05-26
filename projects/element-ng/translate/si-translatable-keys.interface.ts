@@ -33,6 +33,7 @@ export interface SiTranslatableKeys {
   'SI_CHAT_INPUT.SECONDARY_ACTIONS'?: string;
   'SI_CHAT_INPUT.SEND'?: string;
   'SI_CITATION_PILL.LABEL'?: string;
+  'SI_CITATION_PILL.VIEW_SOURCE'?: string;
   'SI_COLOR_PICKER.SELECTED_LABEL'?: string;
   'SI_COLUMN_SELECTION_DIALOG.CANCEL'?: string;
   'SI_COLUMN_SELECTION_DIALOG.HIDDEN'?: string;

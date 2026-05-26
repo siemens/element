@@ -44,3 +44,8 @@
   - button "Show Welcome Screen"
 - button "Send"
 - text: The content is AI generated. Always verify the information for accuracy.
+- dialog "Data Pipeline Design Patterns":
+  - text: ""
+  - paragraph: Pipelines can be structured as linear chains or branching graphs. Each stage transforms data independently, enabling testability and reuse.
+  - link "View source":
+    - /url: https://examples.org/articles/data-pipeline.html

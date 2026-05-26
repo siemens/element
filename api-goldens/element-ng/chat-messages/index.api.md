@@ -12,8 +12,10 @@ import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import * as i1 from '@siemens/element-ng/resize-observer';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { OnDestroy } from '@angular/core';
+import { OnInit } from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SiModalService } from '@siemens/element-ng/modal';
+import { SiPopoverDirective } from '@siemens/element-ng/popover';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate';
@@ -91,6 +93,7 @@ export interface SiChatAnnotatedText {
 
 // @public
 export interface SiChatCitation {
+    description?: string;
     id: string;
     title: string;
     url?: string;
@@ -178,7 +181,7 @@ export interface SiChatTextRun {
 export type SiChatTextSegment = SiChatTextRun | SiChatCitationRun;
 
 // @public
-export class SiCitationPillComponent {
+export class SiCitationPillComponent implements OnInit {
     readonly citation: _angular_core.InputSignal<SiChatCitation>;
     readonly clicked: _angular_core.OutputEmitterRef<SiChatCitation>;
     readonly icon: _angular_core.InputSignal<string | undefined>;

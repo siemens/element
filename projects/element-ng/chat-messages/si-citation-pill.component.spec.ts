@@ -6,6 +6,7 @@ import { DebugElement, inputBinding, signal, WritableSignal } from '@angular/cor
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { elementGlobal } from '@siemens/element-icons';
+import { SiPopoverDirective } from '@siemens/element-ng/popover';
 
 import { SiChatCitation } from './si-annotated-text.model';
 import { SiCitationPillComponent as TestComponent } from './si-citation-pill.component';
@@ -19,6 +20,13 @@ const CITATION_WITH_URL: SiChatCitation = {
 const CITATION_WITHOUT_URL: SiChatCitation = {
   id: '2',
   title: 'Backpropagation Algorithm – Stanford CS231n'
+};
+
+const CITATION_WITH_DESCRIPTION: SiChatCitation = {
+  id: '3',
+  title: 'Neural Networks – Deep Dive',
+  description: 'An excerpt describing neural networks in depth.',
+  url: 'https://example.com/neural-networks'
 };
 
 describe('SiCitationPillComponent', () => {
@@ -168,6 +176,92 @@ describe('SiCitationPillComponent', () => {
       const iconEl = debugElement.query(By.css('si-icon'));
       expect(iconEl).toBeTruthy();
       expect(iconEl.componentInstance.icon()).toBe(customIcon);
+    });
+  });
+
+  describe('popover', () => {
+    const getPopoverDir = (): SiPopoverDirective =>
+      debugElement.query(By.directive(SiPopoverDirective)).injector.get(SiPopoverDirective);
+
+    beforeEach(() => vi.useFakeTimers({ shouldAdvanceTime: true }));
+    afterEach(async () => {
+      // Flush the applyFocus setTimeout while the overlay is still attached so
+      // the resulting afterNextRender runs against a valid injector.
+      vi.advanceTimersByTime(10);
+      await fixture.whenStable();
+      getPopoverDir().hide();
+      vi.useRealTimers();
+    });
+
+    it('should open the popover on mouseenter', async () => {
+      await fixture.whenStable();
+
+      fixture.nativeElement.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+      vi.advanceTimersByTime(10);
+      await fixture.whenStable();
+
+      expect(document.querySelector('.popover')).toBeInTheDocument();
+    });
+
+    it('should show the citation title in the popover', async () => {
+      await fixture.whenStable();
+
+      fixture.nativeElement.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+      vi.advanceTimersByTime(10);
+      await fixture.whenStable();
+
+      expect(document.querySelector('.popover')).toHaveTextContent(CITATION_WITH_URL.title);
+    });
+
+    it('should show the description in the popover when present', async () => {
+      citation.set(CITATION_WITH_DESCRIPTION);
+      await fixture.whenStable();
+
+      fixture.nativeElement.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+      vi.advanceTimersByTime(10);
+      await fixture.whenStable();
+
+      expect(document.querySelector('.popover')).toHaveTextContent(
+        CITATION_WITH_DESCRIPTION.description!
+      );
+    });
+
+    it('should show a "View source" link in the popover when citation has a URL', async () => {
+      await fixture.whenStable();
+
+      fixture.nativeElement.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+      vi.advanceTimersByTime(10);
+      await fixture.whenStable();
+
+      const link = document.querySelector('.popover a[target="_blank"]') as HTMLAnchorElement;
+      expect(link).toBeTruthy();
+      expect(link.getAttribute('href')).toBe(CITATION_WITH_URL.url);
+    });
+
+    it('should not show a "View source" link in the popover when citation has no URL', async () => {
+      citation.set(CITATION_WITHOUT_URL);
+      await fixture.whenStable();
+
+      fixture.nativeElement.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+      vi.advanceTimersByTime(10);
+      await fixture.whenStable();
+
+      expect(document.querySelector('.popover a[target="_blank"]')).toBeFalsy();
+    });
+
+    it('should close the popover on mouseleave after a short delay', async () => {
+      await fixture.whenStable();
+
+      fixture.nativeElement.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+      vi.advanceTimersByTime(10); // flush applyFocus timer while overlay is alive
+      await fixture.whenStable();
+      expect(document.querySelector('.popover')).toBeInTheDocument();
+
+      fixture.nativeElement.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+      vi.advanceTimersByTime(200); // exceeds the 150 ms scheduleHide delay
+      await fixture.whenStable();
+
+      expect(document.querySelector('.popover')).not.toBeInTheDocument();
     });
   });
 });

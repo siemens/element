@@ -1,0 +1,36 @@
+- paragraph:
+  - text: Here's a
+  - strong: simple response
+  - text: with basic formatting.
+- paragraph:
+  - text: You can use
+  - code: inline code
+  - text: "and create lists:"
+- list:
+  - listitem: First item
+  - listitem: Second item
+- group:
+  - button "Good response"
+  - button "Bad response"
+  - button "Copy response"
+  - button "More actions"
+- text: Neural networks are composed of layers of interconnected nodes that process information in parallel, enabling the model to learn complex patterns from large datasets.
+- group:
+  - link "Deep Learning – Ian Goodfellow et al.":
+    - /url: https://examples.org/deeplearningbook
+    - text: ""
+- text: The training process adjusts the weights of these connections to minimize prediction error using backpropagation.
+- group:
+  - link "Backpropagation Algorithm – Stanford CS231n":
+    - /url: https://examples.org/cs231n
+    - text: ""
+- group:
+  - button "Good response"
+  - button "Bad response"
+  - button "Copy response"
+  - button "More actions"
+- dialog "Deep Learning – Ian Goodfellow et al.":
+  - text: ""
+  - paragraph: Neural networks are universal function approximators composed of alternating linear transformations and non-linear activations, trained end-to-end via gradient descent.
+  - link "View source":
+    - /url: https://examples.org/deeplearningbook
