@@ -36,7 +36,9 @@ import {
   Attachment,
   SiAiWelcomeScreenComponent,
   PromptCategory,
-  PromptSuggestion
+  PromptSuggestion,
+  SiChatAnnotatedText,
+  SiChatCitation
 } from '@siemens/element-ng/chat-messages';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
@@ -52,6 +54,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 interface ChatMessage {
   type: 'user' | 'ai' | 'custom';
   content: string;
+  annotatedText?: SiChatAnnotatedText;
   attachments?: Attachment[];
   actions?: MessageAction[];
 }
@@ -174,7 +177,49 @@ export class SampleComponent {
       content: `I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
 
   Let me examine the structure and provide guidance.`,
-      actions: this.aiActions
+      annotatedText: {
+        segments: [
+          {
+            type: 'text',
+            content:
+              "I'd be happy to help! Data processing pipelines typically follow a structured approach."
+          },
+          { type: 'citation', citationId: 'c1' },
+          {
+            type: 'text',
+            content: ' Let me examine your files and provide detailed guidance.'
+          }
+        ],
+        citations: [
+          {
+            id: 'c1',
+            title: 'Data Pipeline Design Patterns',
+            url: 'https://martinfowler.com/articles/data-pipeline.html'
+          }
+        ]
+      },
+      actions: [
+        {
+          label: 'Add to list',
+          icon: 'element-plus',
+          action: (_message: ChatMessage) => this.logEvent('Add AI message to list')
+        },
+        {
+          label: 'Export response',
+          icon: 'element-export',
+          action: (_message: ChatMessage) => this.logEvent('Export AI message')
+        },
+        {
+          label: 'Retry response',
+          icon: 'element-refresh',
+          action: (_message: ChatMessage) => this.logEvent('Retry AI message')
+        },
+        {
+          label: 'Bookmark',
+          icon: 'element-bookmark',
+          action: (_message: ChatMessage) => this.logEvent('Bookmark AI message')
+        }
+      ]
     },
     {
       type: 'user',
@@ -192,7 +237,45 @@ export class SampleComponent {
     {
       type: 'ai',
       content: "Great question! When analyzing large datasets, it's crucial to focus on...",
-      actions: this.aiActions
+      annotatedText: {
+        segments: [
+          {
+            type: 'text',
+            content:
+              "Great question! When analyzing large datasets, it's crucial to focus on vectorized operations and avoid row-by-row iteration."
+          },
+          { type: 'citation', citationId: 'c2' }
+        ],
+        citations: [
+          {
+            id: 'c2',
+            title: 'Pandas Performance Guide',
+            url: 'https://pandas.pydata.org/docs/user_guide/enhancingperf.html'
+          }
+        ]
+      },
+      actions: [
+        {
+          label: 'Add to list',
+          icon: 'element-plus',
+          action: (_message: ChatMessage) => this.logEvent('Add AI message to list')
+        },
+        {
+          label: 'Export response',
+          icon: 'element-export',
+          action: (_message: ChatMessage) => this.logEvent('Export AI message')
+        },
+        {
+          label: 'Retry response',
+          icon: 'element-refresh',
+          action: (_message: ChatMessage) => this.logEvent('Retry AI message')
+        },
+        {
+          label: 'Bookmark',
+          icon: 'element-bookmark',
+          action: (_message: ChatMessage) => this.logEvent('Bookmark AI message')
+        }
+      ]
     }
   ]);
 
@@ -314,6 +397,10 @@ export class SampleComponent {
     this.logEvent('Interrupt clicked');
     this.loading.set(false);
     this.interrupting.set(false);
+  }
+
+  onCitationClicked(citation: SiChatCitation): void {
+    alert(`Source: ${citation.title}${citation.url ? `\n${citation.url}` : ''}`);
   }
 
   onFileError(error: FileUploadError): void {

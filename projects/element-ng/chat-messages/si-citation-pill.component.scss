@@ -1,0 +1,42 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: inline;
+  margin-inline: map.get(variables.$spacers, 3);
+}
+
+.citation-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding-block: 0;
+  padding-inline: 0.375rem;
+  block-size: 20px;
+  box-sizing: border-box;
+  border: 1px solid variables.$element-ui-3;
+  border-radius: 9999px;
+  color: variables.$element-text-primary;
+  background: transparent;
+  font-size: 0.75rem;
+  line-height: 1;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+
+  &:hover,
+  &:active {
+    background: variables.$element-base-1-hover;
+    border-color: variables.$element-ui-3;
+    color: variables.$element-text-primary;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid variables.$element-focus-default;
+    outline-offset: 2px;
+  }
+}

@@ -18,6 +18,10 @@ si-chat-message {
   margin-block-start: map.get(variables.$spacers, 5) - map.get(variables.$spacers, 2);
 }
 
+.annotated-content {
+  line-height: 20px;
+}
+
 // Loading spinner size adjustment (inherited from generic component)
 :host ::ng-deep si-loading-spinner {
   --loading-spinner-size: 1.5em;

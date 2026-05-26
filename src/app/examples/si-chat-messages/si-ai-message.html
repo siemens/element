@@ -8,6 +8,14 @@
     [loading]="false"
   />
 
+  <si-ai-message
+    actionParam="message-2"
+    [annotatedText]="annotatedText"
+    [actions]="actions"
+    [secondaryActions]="secondaryActions"
+    (citationClicked)="onCitationClicked($event)"
+  />
+
   <div class="mt-5">
     <si-ai-message [loading]="true" />
   </div>

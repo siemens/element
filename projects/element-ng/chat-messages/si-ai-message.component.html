@@ -1,5 +1,20 @@
 <si-chat-message alignment="start" actionsPosition="bottom" [loading]="loading()">
-  @if (content()) {
+  @if (annotatedText(); as annotated) {
+    <span class="annotated-content text-pre-wrap">
+      @for (segment of annotated.segments; track $index) {
+        @if (segment.type === 'text') {
+          <span>{{ segment.content }}</span>
+        } @else {
+          @let cit = getCitation(segment.citationId);
+          <si-citation-pill
+            [citation]="cit"
+            [label]="cit.title.length > 24 ? cit.title.slice(0, 24) + '…' : cit.title"
+            (clicked)="citationClicked.emit($event)"
+          /><br />
+        }
+      }
+    </span>
+  } @else if (content()) {
     @let content = textContent();
     @if (content) {
       <span class="text-pre-wrap">{{ content }}</span>

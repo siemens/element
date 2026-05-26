@@ -11,12 +11,21 @@
         />
       }
       @if (message.type === 'ai') {
-        <si-ai-message
-          [content]="message.content"
-          [actions]="getMessagePrimaryActions(message)"
-          [secondaryActions]="getMessageSecondaryActions(message)"
-          [contentFormatter]="markdownRenderer"
-        />
+        @if (message.annotatedText) {
+          <si-ai-message
+            [annotatedText]="message.annotatedText"
+            [actions]="getMessagePrimaryActions(message)"
+            [secondaryActions]="getMessageSecondaryActions(message)"
+            (citationClicked)="onCitationClicked($event)"
+          />
+        } @else {
+          <si-ai-message
+            [content]="message.content"
+            [actions]="getMessagePrimaryActions(message)"
+            [secondaryActions]="getMessageSecondaryActions(message)"
+            [contentFormatter]="markdownRenderer"
+          />
+        }
       }
       @if (message.type === 'custom') {
         <si-chat-message alignment="start" actionsPosition="bottom">

@@ -57,6 +57,8 @@ export class SiAiMessageComponent {
     constructor();
     readonly actionParam: _angular_core.InputSignal<unknown>;
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
+    readonly annotatedText: _angular_core.InputSignal<SiChatAnnotatedText | undefined>;
+    readonly citationClicked: _angular_core.OutputEmitterRef<SiChatCitation>;
     readonly content: _angular_core.InputSignal<string>;
     readonly contentFormatter: _angular_core.InputSignal<((text: string) => string | Node) | undefined>;
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -79,6 +81,27 @@ export class SiAttachmentListComponent {
     readonly removable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly remove: _angular_core.OutputEmitterRef<Attachment>;
     readonly removeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+}
+
+// @public
+export interface SiChatAnnotatedText {
+    citations: SiChatCitation[];
+    segments: SiChatTextSegment[];
+}
+
+// @public
+export interface SiChatCitation {
+    id: string;
+    title: string;
+    url?: string;
+}
+
+// @public
+export interface SiChatCitationRun {
+    // (undocumented)
+    citationId: string;
+    // (undocumented)
+    type: 'citation';
 }
 
 // @public
@@ -141,6 +164,25 @@ export class SiChatMessageComponent {
     readonly actionsPosition: _angular_core.InputSignal<"bottom" | "side">;
     readonly alignment: _angular_core.InputSignal<"start" | "end">;
     readonly loading: _angular_core.InputSignal<boolean>;
+}
+
+// @public
+export interface SiChatTextRun {
+    // (undocumented)
+    content: string;
+    // (undocumented)
+    type: 'text';
+}
+
+// @public (undocumented)
+export type SiChatTextSegment = SiChatTextRun | SiChatCitationRun;
+
+// @public
+export class SiCitationPillComponent {
+    readonly citation: _angular_core.InputSignal<SiChatCitation>;
+    readonly clicked: _angular_core.OutputEmitterRef<SiChatCitation>;
+    readonly icon: _angular_core.InputSignal<string | undefined>;
+    readonly label: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
 
 // @public

@@ -12,7 +12,12 @@ import {
   elementThumbsDown,
   elementThumbsUp
 } from '@siemens/element-icons';
-import { MessageAction, SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
+import {
+  MessageAction,
+  SiAiMessageComponent,
+  SiChatAnnotatedText,
+  SiChatCitation
+} from '@siemens/element-ng/chat-messages';
 import { addIcons } from '@siemens/element-ng/icon';
 import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { MenuItemAction } from '@siemens/element-ng/menu';
@@ -45,6 +50,39 @@ You can use \`inline code\` and create lists:
 
 - First item
 - Second item`;
+
+  annotatedText: SiChatAnnotatedText = {
+    segments: [
+      {
+        type: 'text',
+        content:
+          'Neural networks are composed of layers of interconnected nodes that process information in parallel, enabling the model to learn complex patterns from large datasets.'
+      },
+      { type: 'citation', citationId: '1' },
+      {
+        type: 'text',
+        content:
+          ' The training process adjusts the weights of these connections to minimize prediction error using backpropagation.'
+      },
+      { type: 'citation', citationId: '2' }
+    ],
+    citations: [
+      {
+        id: '1',
+        title: 'Deep Learning – Ian Goodfellow et al.',
+        url: 'https://www.deeplearningbook.org'
+      },
+      {
+        id: '2',
+        title: 'Backpropagation Algorithm – Stanford CS231n',
+        url: 'https://cs231n.github.io'
+      }
+    ]
+  };
+
+  onCitationClicked(citation: SiChatCitation): void {
+    alert(`Source: ${citation.title}${citation.url ? `\n${citation.url}` : ''}`);
+  }
 
   actions: MessageAction[] = [
     {

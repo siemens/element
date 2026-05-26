@@ -8,6 +8,7 @@ import {
   Component,
   effect,
   input,
+  output,
   viewChild,
   ElementRef,
   signal,
@@ -19,8 +20,10 @@ import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
+import { SiChatAnnotatedText, SiChatCitation } from './si-annotated-text.model';
 import { SiChatMessageActionDirective } from './si-chat-message-action.directive';
 import { SiChatMessageComponent } from './si-chat-message.component';
+import { SiCitationPillComponent } from './si-citation-pill.component';
 
 /**
  * AI message component for displaying AI-generated responses in conversational interfaces.
@@ -48,6 +51,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
   imports: [
     CdkMenuTrigger,
     SiChatMessageComponent,
+    SiCitationPillComponent,
     SiIconComponent,
     SiMenuFactoryComponent,
     SiChatMessageActionDirective,
@@ -60,6 +64,29 @@ import { SiChatMessageComponent } from './si-chat-message.component';
 export class SiAiMessageComponent {
   protected readonly formattedContent = viewChild<ElementRef<HTMLDivElement>>('formattedContent');
   protected readonly icons = addIcons({ elementOptionsVertical });
+
+  /**
+   * Pre-segmented annotated text containing inline citation references.
+   * When provided, takes precedence over the `content` input.
+   * Use `parseCitationMarkers` or `parseCitationOffsets` to produce this value.
+   * @defaultValue undefined
+   */
+  readonly annotatedText = input<SiChatAnnotatedText | undefined>(undefined);
+
+  /**
+   * Emitted when a citation pill inside the message is clicked.
+   * The emitted value is the {@link SiChatCitation} that was clicked.
+   */
+  readonly citationClicked = output<SiChatCitation>();
+
+  protected getCitation(id: string): SiChatCitation {
+    return (
+      this.annotatedText()?.citations.find(c => c.id === id) ?? {
+        id,
+        title: id
+      }
+    );
+  }
 
   /**
    * The AI-generated message content
