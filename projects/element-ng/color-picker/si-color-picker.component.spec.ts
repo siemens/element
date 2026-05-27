@@ -35,6 +35,17 @@ describe('SiColorPickerComponent', () => {
       expect(element).toBeDefined();
     });
 
+    it('should use color as aria-label when ariaLabel input is not set', async () => {
+      await fixture.whenStable();
+      expect(element.getAttribute('aria-label')).toBe('Selected color element-data-2');
+    });
+
+    it('should use translated ariaLabel with color param when ariaLabel is set', async () => {
+      componentRef.setInput('ariaLabel', 'Color picker {{color}}');
+      await fixture.whenStable();
+      expect(element.getAttribute('aria-label')).toBe('Color picker element-data-2');
+    });
+
     it('should open color palette', () => {
       element.click();
       fixture.detectChanges();

@@ -16,7 +16,7 @@
   - group "User management"
   - link "Test coverage":
     - /url: "#/viewer/viewer/coverage"
-  - button "Documentation"
+  - button "Documentation" [expanded]
   - group "Documentation":
     - link "Sub item 4":
       - /url: "#/viewer/viewer/subItem4"
@@ -25,8 +25,8 @@
     - link "Sub item 6":
       - /url: "#/viewer/viewer/subItem6"
   - button "Action"
-  - link "Settings":
-    - /url: "#/viewer/viewer/settings"
+  - link "Configuration":
+    - /url: "#/viewer/viewer/configuration"
 - main:
   - heading "Here is a title" [level=2]
   - text: Content with path 'subItem4' Control panel

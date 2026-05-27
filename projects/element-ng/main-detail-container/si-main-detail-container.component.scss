@@ -128,12 +128,8 @@
   );
 }
 
-.main-search-actions:not(:empty) {
-  min-block-size: map.get(variables.$spacers, 9);
-  margin-block-end: map.get(variables.$spacers, 6);
-}
-
+.main-search-actions:not(:empty),
 .detail-heading-actions:not(:empty) {
-  min-block-size: map.get(variables.$spacers, 9);
+  min-block-size: calc(1lh + 2 * map.get(variables.$spacers, 4));
   margin-block-end: map.get(variables.$spacers, 6);
 }
