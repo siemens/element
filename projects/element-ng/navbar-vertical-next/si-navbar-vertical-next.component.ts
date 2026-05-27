@@ -8,6 +8,7 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   Injector,
   input,
@@ -18,7 +19,12 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { elementDoubleLeft, elementDoubleRight } from '@siemens/element-icons';
+import {
+  elementDoubleLeft,
+  elementDoubleRight,
+  elementLayoutPane2,
+  elementLayoutPane2Right
+} from '@siemens/element-icons';
 import { SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
@@ -45,12 +51,19 @@ interface UIState {
     class: 'si-layout-inner ready',
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
+    '[class.nav-inline-collapse]': 'inlineCollapse()',
     '[class.visible]': 'visible()',
     '[class.ready]': 'ready()'
   }
 })
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
-  protected readonly icons = addIcons({ elementDoubleLeft, elementDoubleRight });
+  protected readonly icons = addIcons({
+    elementDoubleLeft,
+    elementDoubleRight,
+    elementLayoutPane2,
+    elementLayoutPane2Right
+  });
+
   /**
    * Whether the navbar-vertical is collapsed.
    *
@@ -64,6 +77,16 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
    * @defaultValue false
    */
   readonly textOnly = input(false, { transform: booleanAttribute });
+
+  /**
+   * Enables an alternative inline-collapse behavior.
+   *
+   * When collapsed, nav content becomes inert while the toggle remains
+   * available in the page flow.
+   *
+   * @defaultValue false
+   */
+  readonly inlineCollapse = input(false, { transform: booleanAttribute });
 
   /**
    * When `true`, item-groups always open as a transient flyout panel adjacent to the
@@ -141,6 +164,13 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
 
   // Indicates if the user prefers a collapsed navbar. Relevant for resizing.
   private preferCollapse = false;
+
+  protected readonly toggleIcon = computed(() => {
+    if (this.inlineCollapse()) {
+      return this.collapsed() ? this.icons.elementLayoutPane2 : this.icons.elementLayoutPane2Right;
+    }
+    return this.collapsed() ? this.icons.elementDoubleRight : this.icons.elementDoubleLeft;
+  });
 
   constructor() {
     this.breakpointObserver

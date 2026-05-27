@@ -30,6 +30,7 @@
     toggleButtonText="Toggle"
     [textOnly]="true"
     [alwaysFlyout]="alwaysFlyout"
+    [inlineCollapse]="inlineCollapse"
   >
     <si-navbar-vertical-next-items>
       <button
@@ -67,9 +68,18 @@
       <div class="card p-5 mt-8 e2e-ignore">
         <div class="card-header">Control panel</div>
         <div class="card-body">
-          <si-form-item label="Always flyout">
-            <input type="checkbox" class="form-check-input" [(ngModel)]="alwaysFlyout" />
-          </si-form-item>
+          <div class="row">
+            <div class="col-sm-auto">
+              <si-form-item label="Always flyout">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="alwaysFlyout" />
+              </si-form-item>
+            </div>
+            <div class="col-sm-auto">
+              <si-form-item label="Inline collapse">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="inlineCollapse" />
+              </si-form-item>
+            </div>
+          </div>
         </div>
       </div>
     </div>

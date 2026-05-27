@@ -4,6 +4,13 @@
 $vertical-nav-width: 240px;
 $vertical-nav-collapsed-width: calc(1.5rem + 2 * map.get(all-variables.$spacers, 5));
 $vertical-nav-transition-duration: all-variables.$element-default-transition-duration;
+$vertical-nav-top-offset: calc(
+  all-variables.$si-application-header-height + all-variables.$si-titlebar-spacing +
+    all-variables.$si-system-banner-spacing
+);
+$mobile-drawer-padding-block: map.get(all-variables.$spacers, 2);
+$mobile-drawer-padding-inline: map.get(all-variables.$spacers, 4);
+$mobile-drawer-margin-block-start: map.get(all-variables.$spacers, 4);
 
 :host {
   display: block;
@@ -25,10 +32,7 @@ nav {
   flex-direction: column;
   position: fixed;
   z-index: all-variables.$zindex-vertical-nav;
-  inset-block-start: calc(
-    all-variables.$si-application-header-height + all-variables.$si-titlebar-spacing +
-      all-variables.$si-system-banner-spacing
-  );
+  inset-block-start: $vertical-nav-top-offset;
   inset-block-end: 0;
   inset-inline-start: 0;
   inline-size: 0;
@@ -49,9 +53,9 @@ nav {
   border: 0;
   inline-size: $vertical-nav-collapsed-width;
   color: all-variables.$element-text-primary;
-  padding-block: 4px;
-  padding-inline: 8px;
-  margin-block-start: 8px;
+  padding-block: $mobile-drawer-padding-block;
+  padding-inline: $mobile-drawer-padding-inline;
+  margin-block-start: $mobile-drawer-margin-block-start;
   border-start-end-radius: all-variables.$border-radius;
   border-end-end-radius: all-variables.$border-radius;
 
@@ -62,16 +66,6 @@ nav {
 
   :host(:not(.nav-collapsed)) & {
     inline-size: $vertical-nav-width;
-  }
-}
-
-:host.nav-collapsed {
-  .mobile-drawer {
-    border: 0;
-    color: all-variables.$element-text-primary;
-    background: all-variables.$element-base-1;
-    text-align: end;
-    box-shadow: all-variables.$element-elevation-1;
   }
 }
 
@@ -89,22 +83,33 @@ nav {
   }
 }
 
+// Surface styling for the collapsed drawer when it floats over content:
+// the .nav-text-only sidebar and the mobile off-canvas drawer below sm.
+@mixin mobile-drawer-overlay {
+  background: all-variables.$element-base-1;
+  box-shadow: all-variables.$element-elevation-1;
+}
+
+:host(.nav-text-only:not(.nav-inline-collapse)).nav-collapsed .mobile-drawer {
+  @include mobile-drawer-overlay;
+}
+
+@include all-variables.media-breakpoint-down(sm) {
+  :host.nav-collapsed .mobile-drawer {
+    @include mobile-drawer-overlay;
+  }
+}
+
 @include all-variables.media-breakpoint-up(sm) {
   :host:not(.nav-text-only),
-  :host:not(.nav-collapsed) {
+  :host:not(.nav-collapsed),
+  :host(.nav-inline-collapse) {
     --si-layout-header-first-element-offset: 0;
   }
 
-  :host:not(.nav-text-only) {
+  :host:where(:not(.nav-text-only):not(.nav-inline-collapse)) {
     padding-inline-start: $vertical-nav-collapsed-width;
 
-    .mobile-drawer {
-      background: transparent;
-      box-shadow: none;
-    }
-  }
-
-  :host:not(.nav-text-only) {
     nav {
       inline-size: $vertical-nav-collapsed-width;
 
@@ -118,5 +123,62 @@ nav {
 @include all-variables.media-breakpoint-up(lg) {
   :host:not(.nav-collapsed) {
     padding-inline-start: $vertical-nav-width;
+  }
+}
+
+.nav-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-block-size: 0;
+}
+
+:host(.nav-inline-collapse) {
+  $toggle-size: calc(1lh + (2 * map.get(all-variables.$spacers, 4)));
+
+  nav {
+    overflow: hidden; // clip the drawer as it collapses to inline-size 0
+  }
+
+  .mobile-drawer::before {
+    content: '';
+    display: block;
+    block-size: $toggle-size;
+  }
+
+  .toggle-placeholder {
+    block-size: 0;
+    margin-block-start: 0;
+    transition:
+      block-size $vertical-nav-transition-duration ease,
+      margin-block-start $vertical-nav-transition-duration ease;
+  }
+
+  .toggle-button {
+    position: fixed;
+    z-index: all-variables.$zindex-vertical-nav;
+    inset-block-start: calc(
+      #{$vertical-nav-top-offset} + #{$mobile-drawer-margin-block-start} +
+        #{$mobile-drawer-padding-block}
+    );
+    inset-inline-start: calc(
+      #{$vertical-nav-width} - #{$toggle-size} - #{$mobile-drawer-padding-inline}
+    );
+    transition:
+      inset-inline-start $vertical-nav-transition-duration ease,
+      inset-block-start $vertical-nav-transition-duration ease;
+  }
+
+  // Parked state: nav collapsed, button + placeholder move to the in-page slot.
+  &.nav-collapsed {
+    .toggle-placeholder {
+      block-size: $toggle-size;
+      margin-block-start: map.get(all-variables.$spacers, 6);
+    }
+
+    .toggle-button {
+      inset-block-start: calc(#{$vertical-nav-top-offset} + #{map.get(all-variables.$spacers, 6)});
+      inset-inline-start: map.get(all-variables.$spacers, 9);
+    }
   }
 }
