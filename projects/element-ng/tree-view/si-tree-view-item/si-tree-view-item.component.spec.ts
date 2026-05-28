@@ -378,8 +378,7 @@ describe('transferTreeItem copy semantics', () => {
     copiedItem.label = 'Modified';
     copiedItem.customData.id = 99;
 
-    expect(sensor.label).toBe('Sensor A');
-    expect(sensor.customData.id).toBe(42);
+    expect(sensor).toMatchObject({ label: 'Sensor A', customData: { id: 42 } });
   });
 
   it('copies the same item multiple times as separate clones', () => {
@@ -405,8 +404,8 @@ describe('transferTreeItem copy semantics', () => {
 
     expect(target.children).toHaveLength(3);
     expect(target.children![0]).not.toBe(target.children![1]);
-    expect(target.children![0].label).toBe('Sensor A');
-    expect(target.children![1].label).toBe('Sensor A');
+    expect(target.children![0]).toMatchObject({ label: 'Sensor A' });
+    expect(target.children![1]).toMatchObject({ label: 'Sensor A' });
   });
 
   it('inserts copy as child when target is expanded', () => {
@@ -425,8 +424,7 @@ describe('transferTreeItem copy semantics', () => {
     transferTreeItem(sourceItems, targetItems, event, false);
 
     expect(target.children).toHaveLength(2);
-    expect(target.children![0].label).toBe('Sensor A');
-    expect(target.children![0].parent).toBe(target);
+    expect(target.children![0]).toMatchObject({ label: 'Sensor A', parent: target });
   });
 
   it('inserts copy as sibling when target is a leaf', () => {
@@ -445,9 +443,8 @@ describe('transferTreeItem copy semantics', () => {
     transferTreeItem(sourceItems, targetItems, event, false);
 
     expect(parent.children).toHaveLength(2);
-    expect(parent.children![0].label).toBe('Room 101');
-    expect(parent.children![1].label).toBe('Sensor A');
-    expect(parent.children![1].parent).toBe(parent);
+    expect(parent.children![0]).toMatchObject({ label: 'Room 101' });
+    expect(parent.children![1]).toMatchObject({ label: 'Sensor A', parent });
   });
 
   it('does not modify trees when source item is not found', () => {
