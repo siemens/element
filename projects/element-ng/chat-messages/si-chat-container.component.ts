@@ -80,18 +80,17 @@ export class SiChatContainerComponent implements OnDestroy {
     });
 
     afterNextRender(() => {
-      // Double rAF: first flush lets layout/style settle (including ResizeObserver first fire),
-      // second runs after the browser has painted — at that point scrollHeight is final.
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          const container = this.messagesContainer();
-          if (container && !this.noAutoScroll()) {
-            const el = container.nativeElement;
-            el.scrollTop = el.scrollHeight;
-          }
-          this.initialScrollDone = true;
-        });
-      });
+      // Scroll synchronously inside afterNextRender: this callback fires within the same
+      // Angular zone task that commits DOM writes (including the live-preview-done class).
+      // Playwright can only observe between tasks, so the scroll is guaranteed to be done
+      // before any screenshot is taken. Reading scrollHeight here forces a synchronous
+      // reflow — all projected content is already in the DOM at this point.
+      const container = this.messagesContainer();
+      if (container && !this.noAutoScroll()) {
+        const el = container.nativeElement;
+        el.scrollTop = el.scrollHeight;
+      }
+      this.initialScrollDone = true;
     });
   }
 
