@@ -6,7 +6,6 @@ import { isPlatformBrowser } from '@angular/common';
 import {
   afterNextRender,
   Component,
-  effect,
   ElementRef,
   input,
   OnDestroy,
@@ -72,25 +71,34 @@ export class SiChatContainerComponent implements OnDestroy {
   });
 
   constructor() {
-    effect(() => {
-      if (this.messagesContainer()) {
+    // Use the phased afterNextRender API: the `read` phase forces a layout read of
+    // scrollHeight against fully committed DOM, the `write` phase performs the
+    // scroll mutation, and the observers are wired up only after that initial
+    // settled scroll. This guarantees a single deterministic scrollTop write per
+    // mount before the live-preview-done class becomes visible, eliminating the
+    // race that produced flaky VRT snapshots.
+    afterNextRender({
+      earlyRead: () => this.messagesContainer()?.nativeElement.scrollHeight,
+      write: scrollHeight => {
+        const el = this.messagesContainer()?.nativeElement;
+        if (el && scrollHeight != null && !this.noAutoScroll()) {
+          el.scrollTop = scrollHeight;
+        }
+        this.initialScrollDone = true;
         this.setupResizeObserver();
         this.setupContentObserver();
-      }
-    });
 
-    afterNextRender(() => {
-      // Scroll synchronously inside afterNextRender: this callback fires within the same
-      // Angular zone task that commits DOM writes (including the live-preview-done class).
-      // Playwright can only observe between tasks, so the scroll is guaranteed to be done
-      // before any screenshot is taken. Reading scrollHeight here forces a synchronous
-      // reflow — all projected content is already in the DOM at this point.
-      const container = this.messagesContainer();
-      if (container && !this.noAutoScroll()) {
-        const el = container.nativeElement;
-        el.scrollTop = el.scrollHeight;
+        // Web fonts may settle after the initial layout commit and shift the
+        // content height. Re-pin to the bottom once fonts are ready so VRT
+        // screenshots and real users both see the latest message.
+        if (isPlatformBrowser(this.platformId)) {
+          document.fonts.ready.then(() => {
+            if (this.isUserAtBottom) {
+              this.scrollToBottomDuringStreaming();
+            }
+          });
+        }
       }
-      this.initialScrollDone = true;
     });
   }
 
