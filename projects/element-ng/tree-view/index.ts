@@ -10,3 +10,4 @@ export * from './si-tree-view.model';
 export * from './si-tree-view.utils';
 export * from './si-tree-view-item/si-tree-view-item.directive';
 export * from './drag-drop.util';
+export * from './si-copy-drag.directive';

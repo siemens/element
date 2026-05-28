@@ -8,6 +8,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { removeItemFromTree, reorderTreeItem, transferTreeItem } from '../drag-drop.util';
+import { SiCopyDragDirective } from '../si-copy-drag.directive';
 import { SiTreeViewComponent } from '../si-tree-view.component';
 import { TreeItem } from '../si-tree-view.model';
 import { SiTreeViewItemComponent } from './si-tree-view-item.component';
@@ -254,5 +255,218 @@ describe('SiTreeViewComponentWithDragDrop', () => {
         .nativeElement.textContent
     ).toBe('Company2');
     expect(debugElement.query(By.css('si-tree-view-item')).nativeElement.tabIndex).toBe(0);
+  });
+});
+
+describe('SiCopyDragDirective', () => {
+  @Component({
+    imports: [
+      SiTreeViewComponent,
+      SiTreeViewItemComponent,
+      SiTreeViewItemDirective,
+      DragDropModule,
+      SiCopyDragDirective
+    ],
+    template: `<div style="height: 300px">
+      <si-tree-view
+        #tree
+        cdkDropList
+        [items]="items()"
+        [cdkDropListData]="treeComponent().dropListItems"
+      >
+        <ng-template siTreeViewItem>
+          <si-tree-view-item cdkDrag siCopyDrag />
+        </ng-template>
+      </si-tree-view>
+    </div>`,
+    changeDetection: ChangeDetectionStrategy.OnPush
+  })
+  class CopyDragWrapperComponent {
+    readonly treeComponent = viewChild.required('tree', { read: SiTreeViewComponent });
+    readonly items = signal<TreeItem[]>([
+      { label: 'Item 1', state: 'leaf' },
+      { label: 'Item 2', state: 'leaf' }
+    ]);
+  }
+
+  it('renders items with siCopyDrag directive', async () => {
+    const fixture = TestBed.createComponent(CopyDragWrapperComponent);
+    await fixture.whenStable();
+
+    const items = fixture.debugElement.queryAll(By.css('si-tree-view-item'));
+    expect(items).toHaveLength(2);
+    expect(items[0].nativeElement.classList).toContain('si-copy-drag');
+  });
+});
+
+describe('transferTreeItem copy semantics', () => {
+  const initTree = (items: TreeItem[], parent?: TreeItem, level = 0): void => {
+    for (const item of items) {
+      item.parent = parent;
+      item.level = level;
+      if (item.children) {
+        initTree(item.children, item, level + 1);
+      }
+    }
+  };
+
+  const flatten = (items: TreeItem[]): TreeItem[] => {
+    const result: TreeItem[] = [];
+    for (const item of items) {
+      result.push(item);
+      if (item.children && item.state === 'expanded') {
+        result.push(...flatten(item.children));
+      }
+    }
+    return result;
+  };
+
+  const makeDrop = (
+    sourceData: TreeItem[],
+    targetData: TreeItem[],
+    previousIndex: number,
+    currentIndex: number
+  ): CdkDragDrop<TreeItem[]> =>
+    ({
+      container: { data: targetData } as CdkDropList<TreeItem[]>,
+      previousContainer: { data: sourceData } as CdkDropList<TreeItem[]>,
+      previousIndex,
+      currentIndex
+    }) as CdkDragDrop<TreeItem[]>;
+
+  it('does not remove source item when removeFromSource is false', () => {
+    const sensor: TreeItem = { label: 'Sensor A', state: 'leaf' };
+    const sourceItems = [sensor];
+    initTree(sourceItems);
+
+    const target: TreeItem = {
+      label: 'Floor 1',
+      state: 'expanded',
+      children: [{ label: 'Room 101', state: 'leaf' }]
+    };
+    const targetItems = [target];
+    initTree(targetItems);
+
+    const targetFlat = flatten(targetItems);
+    const event = makeDrop(sourceItems, targetFlat, 0, 1);
+
+    const result = transferTreeItem(sourceItems, targetItems, event, false);
+
+    expect(result.sourceTree).toHaveLength(1);
+    expect(result.sourceTree[0].label).toBe('Sensor A');
+  });
+
+  it('creates an independent deep clone of the copied item', () => {
+    const sensor: TreeItem = { label: 'Sensor A', state: 'leaf', customData: { id: 42 } };
+    const sourceItems = [sensor];
+    initTree(sourceItems);
+
+    const target: TreeItem = {
+      label: 'Floor 1',
+      state: 'expanded',
+      children: [{ label: 'Room 101', state: 'leaf' }]
+    };
+    const targetItems = [target];
+    initTree(targetItems);
+
+    const targetFlat = flatten(targetItems);
+    const event = makeDrop(sourceItems, targetFlat, 0, 1);
+
+    transferTreeItem(sourceItems, targetItems, event, false);
+
+    const copiedItem = target.children![0];
+    copiedItem.label = 'Modified';
+    copiedItem.customData.id = 99;
+
+    expect(sensor.label).toBe('Sensor A');
+    expect(sensor.customData.id).toBe(42);
+  });
+
+  it('copies the same item multiple times as separate clones', () => {
+    const sensor: TreeItem = { label: 'Sensor A', state: 'leaf' };
+    const sourceItems = [sensor];
+    initTree(sourceItems);
+
+    const target: TreeItem = {
+      label: 'Floor 1',
+      state: 'expanded',
+      children: [{ label: 'Room 101', state: 'leaf' }]
+    };
+    const targetItems = [target];
+    initTree(targetItems);
+
+    const targetFlat1 = flatten(targetItems);
+    const event1 = makeDrop(sourceItems, targetFlat1, 0, 1);
+    transferTreeItem(sourceItems, targetItems, event1, false);
+
+    const targetFlat2 = flatten(targetItems);
+    const event2 = makeDrop(sourceItems, targetFlat2, 0, 1);
+    transferTreeItem(sourceItems, targetItems, event2, false);
+
+    expect(target.children).toHaveLength(3);
+    expect(target.children![0]).not.toBe(target.children![1]);
+    expect(target.children![0].label).toBe('Sensor A');
+    expect(target.children![1].label).toBe('Sensor A');
+  });
+
+  it('inserts copy as child when target is expanded', () => {
+    const sensor: TreeItem = { label: 'Sensor A', state: 'leaf' };
+    const sourceItems = [sensor];
+    initTree(sourceItems);
+
+    const existing: TreeItem = { label: 'Existing', state: 'leaf' };
+    const target: TreeItem = { label: 'Floor 1', state: 'expanded', children: [existing] };
+    const targetItems = [target];
+    initTree(targetItems);
+
+    const targetFlat = flatten(targetItems);
+    const event = makeDrop(sourceItems, targetFlat, 0, 1);
+
+    transferTreeItem(sourceItems, targetItems, event, false);
+
+    expect(target.children).toHaveLength(2);
+    expect(target.children![0].label).toBe('Sensor A');
+    expect(target.children![0].parent).toBe(target);
+  });
+
+  it('inserts copy as sibling when target is a leaf', () => {
+    const sensor: TreeItem = { label: 'Sensor A', state: 'leaf' };
+    const sourceItems = [sensor];
+    initTree(sourceItems);
+
+    const leaf: TreeItem = { label: 'Room 101', state: 'leaf' };
+    const parent: TreeItem = { label: 'Floor 1', state: 'expanded', children: [leaf] };
+    const targetItems = [parent];
+    initTree(targetItems);
+
+    const targetFlat = flatten(targetItems);
+    const event = makeDrop(sourceItems, targetFlat, 0, 2);
+
+    transferTreeItem(sourceItems, targetItems, event, false);
+
+    expect(parent.children).toHaveLength(2);
+    expect(parent.children![0].label).toBe('Room 101');
+    expect(parent.children![1].label).toBe('Sensor A');
+    expect(parent.children![1].parent).toBe(parent);
+  });
+
+  it('does not modify trees when source item is not found', () => {
+    vi.spyOn(console, 'error');
+
+    const orphan: TreeItem = { label: 'Orphan', state: 'leaf' };
+    const sourceItems: TreeItem[] = [{ label: 'Other', state: 'leaf' }];
+    initTree(sourceItems);
+
+    const target: TreeItem = { label: 'Floor 1', state: 'expanded', children: [] };
+    const targetItems = [target];
+    initTree(targetItems);
+
+    const targetFlat = flatten(targetItems);
+    const event = makeDrop([orphan], targetFlat, 0, 1);
+
+    transferTreeItem(sourceItems, targetItems, event, false);
+
+    expect(target.children).toHaveLength(0);
+    expect(console.error).toHaveBeenCalledWith('Source tree item not found');
   });
 });

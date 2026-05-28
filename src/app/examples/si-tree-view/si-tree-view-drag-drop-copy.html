@@ -1,0 +1,65 @@
+<h3>Copy between trees</h3>
+<p
+  >Drag equipment from the catalog into a room. Items are copied (not moved) and inserted as
+  children of the drop target. The <code>siCopyDrag</code> directive keeps the catalog item visible
+  during drag.</p
+>
+<div class="d-flex h-100" style="width: 600px">
+  <div>
+    <h4>Building tree</h4>
+
+    <si-tree-view
+      #buildingTree
+      ariaLabel="Building tree"
+      class="me-8"
+      style="width: 300px; height: 500px"
+      [enableDataField1]="true"
+      [enableSelection]="true"
+      [expandCollapseAll]="true"
+      [items]="buildingItems"
+      [flatTree]="false"
+    >
+      <div
+        #buildingDropList="cdkDropList"
+        cdkDropList
+        [cdkDropListConnectedTo]="equipmentDropList"
+        [cdkDropListData]="buildingTree.dropListItems"
+        (cdkDropListDropped)="onBuildingDrop($event)"
+      >
+        <ng-template let-item="treeItem" siTreeViewItem>
+          <si-tree-view-item cdkDrag [cdkDragData]="item">
+            <si-tree-view-item *cdkDragPreview />
+          </si-tree-view-item>
+        </ng-template>
+      </div>
+    </si-tree-view>
+  </div>
+  <div>
+    <h4>Equipment catalog</h4>
+
+    <si-tree-view
+      #equipmentTree
+      ariaLabel="Equipment catalog"
+      style="width: 300px; height: 500px"
+      [enableDataField1]="true"
+      [enableSelection]="true"
+      [items]="equipmentItems"
+      [flatTree]="true"
+    >
+      <div
+        #equipmentDropList="cdkDropList"
+        cdkDropList
+        [cdkDropListConnectedTo]="buildingDropList"
+        [cdkDropListData]="equipmentTree.dropListItems"
+        [cdkDropListEnterPredicate]="rejectBuildingItems"
+        [cdkDropListSortingDisabled]="true"
+      >
+        <ng-template let-item="treeItem" siTreeViewItem>
+          <si-tree-view-item cdkDrag siCopyDrag [cdkDragData]="item">
+            <si-tree-view-item *cdkDragPreview />
+          </si-tree-view-item>
+        </ng-template>
+      </div>
+    </si-tree-view>
+  </div>
+</div>
