@@ -35,7 +35,7 @@ jobs:
     permissions:
       actions: read
       pull-requests: write
-    container: mcr.microsoft.com/playwright:v1.60.0-noble
+    container: mcr.microsoft.com/playwright:v1.60.0-noble@sha256:9bd26ad900bb5e0f4dee75839e957a89ae89c2b7ab1e76050e559790e946b948
     # PR from non-collaborators requires a manual re-run from collaborators which
     # makes run_attempt > 1 on first attempt causing the workflow to run.
     # So we always skip if the PR is not from a collaborator.
@@ -66,7 +66,7 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: ${{ steps.check.outputs.target-ref }}
           lfs: true
@@ -236,7 +236,7 @@ jobs:
 
       - name: Comment on PR with download link
         if: success() && github.event_name == 'pull_request'
-        uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # v3.0.4
+        uses: marocchino/sticky-pull-request-comment@d4d6b0936434b21bc8345ad45a440c5f7d2c40ff # v3
         with:
           message: |
             [⬇️ Download VRTs](${{ steps.artifact.outputs.download_url }})
