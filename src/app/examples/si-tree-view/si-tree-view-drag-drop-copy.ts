@@ -74,9 +74,7 @@ export class SampleComponent {
     }
   ];
 
-  rejectBuildingItems(drag: CdkDrag<TreeItem>, drop: CdkDropList<TreeItem[]>): boolean {
-    return false;
-  }
+  rejectBuildingItems = (drag: CdkDrag<TreeItem>, drop: CdkDropList<TreeItem[]>): boolean => false;
 
   onBuildingDrop(event: CdkDragDrop<TreeItem[]>): void {
     if (event.container === event.previousContainer) {

@@ -33,6 +33,10 @@ export class SiCopyDragDirective {
     const drag = inject(CdkDrag);
     const destroyRef = inject(DestroyRef);
 
+    destroyRef.onDestroy(() => {
+      this.clone?.remove();
+    });
+
     drag.started.pipe(takeUntilDestroyed(destroyRef)).subscribe(() => {
       const placeholder = drag.getPlaceholderElement();
       this.clone = placeholder.cloneNode(true) as HTMLElement;
