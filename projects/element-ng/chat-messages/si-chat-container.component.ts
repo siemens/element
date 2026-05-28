@@ -55,6 +55,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
   private scrollDebounceMs = 7; // ~144fps
   private resizeObserver: ResizeObserver | undefined;
   private contentObserver: MutationObserver | undefined;
+  private lastScrollHeight = 0;
 
   /**
    * The color variant to apply to the container.
@@ -145,9 +146,15 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
     }
 
     this.resizeObserver = new ResizeObserver(() => {
-      this.debouncedScrollToBottom();
+      const element = container.nativeElement;
+      const currentScrollHeight = element.scrollHeight;
+      if (currentScrollHeight > this.lastScrollHeight) {
+        this.debouncedScrollToBottom();
+      }
+      this.lastScrollHeight = currentScrollHeight;
     });
 
+    this.lastScrollHeight = container.nativeElement.scrollHeight;
     this.resizeObserver.observe(container.nativeElement);
   }
 
