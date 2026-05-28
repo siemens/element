@@ -4,7 +4,7 @@
  */
 import { isPlatformBrowser } from '@angular/common';
 import {
-  AfterContentInit,
+  afterNextRender,
   Component,
   effect,
   ElementRef,
@@ -44,7 +44,7 @@ import {
     '[class]': 'colorVariant()'
   }
 })
-export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
+export class SiChatContainerComponent implements OnDestroy {
   private readonly messagesContainer = viewChild<ElementRef<HTMLDivElement>>('messagesContainer');
   private readonly platformId = inject(PLATFORM_ID);
 
@@ -55,6 +55,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
   private scrollDebounceMs = 7; // ~144fps
   private resizeObserver: ResizeObserver | undefined;
   private contentObserver: MutationObserver | undefined;
+  private initialScrollDone = false;
 
   /**
    * The color variant to apply to the container.
@@ -77,10 +78,21 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
         this.setupContentObserver();
       }
     });
-  }
 
-  ngAfterContentInit(): void {
-    this.scrollToBottomDuringStreaming();
+    afterNextRender(() => {
+      // Double rAF: first flush lets layout/style settle (including ResizeObserver first fire),
+      // second runs after the browser has painted — at that point scrollHeight is final.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const container = this.messagesContainer();
+          if (container && !this.noAutoScroll()) {
+            const el = container.nativeElement;
+            el.scrollTop = el.scrollHeight;
+          }
+          this.initialScrollDone = true;
+        });
+      });
+    });
   }
 
   ngOnDestroy(): void {
@@ -110,6 +122,12 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
   }
 
   private debouncedScrollToBottom(): void {
+    // Skip observer-driven scrolls until the explicit initial scroll has completed.
+    // This prevents racing with the afterNextRender settled scrollTop assignment.
+    if (!this.initialScrollDone) {
+      return;
+    }
+
     const now = Date.now();
     const timeSinceLastScroll = now - this.lastScrollTime;
 
