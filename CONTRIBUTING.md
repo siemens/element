@@ -189,13 +189,7 @@ and our [Siemens Lint ruleset](https://github.com/siemens/lint/).
 You can run ESLint with the following command:
 
 ```sh
-npm run lint
-```
-
-To automatically fix most of the findings, run the following command:
-
-```sh
-npm run lint:fix
+npm run lint:ng
 ```
 
 > **Note:** Many editors/IDEs have plugin support for linting and fixing
@@ -212,7 +206,7 @@ to adhere closer to Angular's style guide.
 You can run Prettier with the following command:
 
 ```sh
-npm run format:check
+npm run lint:format
 ```
 
 To automatically fix the findings, run the following command:
