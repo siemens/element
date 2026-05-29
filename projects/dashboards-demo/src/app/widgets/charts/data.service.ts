@@ -2,11 +2,12 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CartesianChartSeries } from '@siemens/charts-ng/cartesian';
 import { CircleChartSeries } from '@siemens/charts-ng/circle';
 import { ChartXAxis, ChartYAxis } from '@siemens/charts-ng/common';
-import { BehaviorSubject, combineLatest, map, Observable, of, shareReplay } from 'rxjs';
+import { SiEventBus } from '@siemens/dashboards-ng';
+import { combineLatest, map, Observable, of, shareReplay, startWith } from 'rxjs';
 
 export interface CartesianChartData {
   series: CartesianChartSeries[];
@@ -15,8 +16,8 @@ export interface CartesianChartData {
 }
 
 export interface Filter {
-  days?: string;
-  severity?: string;
+  key: 'days' | 'severity';
+  value: string;
 }
 
 export const days = ['All week', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
@@ -24,7 +25,12 @@ export const severity = ['All levels', 'Success', 'Warning', 'Danger'];
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-  readonly filter = new BehaviorSubject<Filter>({});
+  private readonly eventBus = inject(SiEventBus);
+
+  private currentFilterArray = this.eventBus.snapshot<Filter[]>('filter', ['days', 'severity']);
+  readonly filter = this.eventBus
+    .on<Filter[]>('filter')
+    .pipe(startWith(this.currentFilterArray), shareReplay(1));
 
   private getCartesianChartData(type: string): Observable<CartesianChartData> {
     const data: CartesianChartData = {
@@ -53,18 +59,21 @@ export class DataService {
     };
 
     return combineLatest([of(data), this.filter]).pipe(
-      map<[CartesianChartData, Filter], CartesianChartData>(([result, filter]) => {
+      map<[CartesianChartData, Filter[]], CartesianChartData>(([result, filters]) => {
         const filteredData = JSON.parse(JSON.stringify(result));
         filteredData.series.forEach((seriesEntry: any) => (seriesEntry.type = type));
 
-        if (filter.severity && filter.severity !== severity[0]) {
+        const severityFilter = filters?.find(f => f.key === 'severity');
+        const daysFilter = filters?.find(f => f.key === 'days');
+
+        if (severityFilter?.value && severityFilter.value !== severity[0]) {
           filteredData.series = filteredData.series.filter(
-            (entry: any) => entry.name === this.filter.value.severity
+            (entry: any) => entry.name === severityFilter.value
           );
         }
 
-        if (filter.days && !filter.days.includes(days[0])) {
-          const index = days.indexOf(filter.days) - 1;
+        if (daysFilter?.value && daysFilter.value !== days[0]) {
+          const index = days.indexOf(daysFilter.value) - 1;
           filteredData.series.forEach((seriesEntry: any) => {
             seriesEntry.data = [seriesEntry.data![index]];
           });
@@ -84,7 +93,7 @@ export class DataService {
     return this.getCartesianChartData('line');
   }
 
-  getPieChartData(filter?: Filter): Observable<CircleChartSeries[]> {
+  getPieChartData(): Observable<CircleChartSeries[]> {
     return this.getCartesianChartData('any').pipe(
       map(data => {
         const aggregatedData: { value: number; name: string }[] = [];
@@ -108,7 +117,7 @@ export class DataService {
     );
   }
 
-  getValueWidgetValue(filter?: Filter): Observable<{ value: string; unit: string }> {
+  getValueWidgetValue(): Observable<{ value: string; unit: string }> {
     return this.getCartesianChartData('any').pipe(
       map(data => {
         let valueWidgetValue = 0;
@@ -126,7 +135,7 @@ export class DataService {
     );
   }
 
-  getGaugeChartData(filter?: Filter): Observable<number> {
+  getGaugeChartData(): Observable<number> {
     return this.getCartesianChartData('any').pipe(
       map(data => {
         let result = 0;
