@@ -95,7 +95,7 @@ const config: PlaywrightTestConfig = {
    * which produces flaky visual snapshots. Keep CI conservative (sharding already provides
    * cross-job parallelism) and use more workers locally.
    */
-  workers: isCI ? 1 : 4,
+  workers: isCI ? 2 : 4,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: isCI
     ? [['dot'], ['blob']]
