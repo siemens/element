@@ -64,6 +64,12 @@ export type StaticTestOptions = {
   waitCallback?: (page: Page) => Promise<void>;
   skipAutoScaleViewport?: boolean;
   skipAriaSnapshot?: boolean;
+  /**
+   * Disables CSS transitions/animations before waiting for animations to settle. Required for
+   * examples with infinite animations (e.g. loading spinners, shimmer/typing indicators) where
+   * `document.getAnimations()` never drains to zero and the settle-wait would otherwise time out.
+   */
+  disableAnimations?: boolean;
 };
 
 // Playwright since 1.48 has the mouse cursor at 0/0 causing any element at this coordinate to be
@@ -107,6 +113,9 @@ class SiTestHelpers {
         }
         if (options?.delay) {
           await this.page.waitForTimeout(options?.delay);
+        }
+        if (options?.disableAnimations) {
+          await this.enableDisableAnimations(this.page, false);
         }
         await this.waitForAllAnimationsToComplete();
         await this.runVisualAndA11yTests(step, {
