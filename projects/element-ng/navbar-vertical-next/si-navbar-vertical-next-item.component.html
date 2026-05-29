@@ -2,7 +2,7 @@
 @if (icon) {
   <si-icon class="icon-lg" [icon]="icon" />
 }
-<div class="item-title text-truncate si-h5">
+<div #labelContent class="item-title text-truncate si-h5">
   <ng-content />
 </div>
 @if (!navbar.textOnly() && formattedBadge()) {
@@ -23,3 +23,16 @@
     [icon]="group.flyoutMode() ? icons.elementRight2 : icons.elementDown2"
   />
 }
+<ng-template cdkPortal>
+  <button
+    type="button"
+    class="btn btn-primary-ghost inline-collapse-active-item"
+    aria-current="page"
+    (click)="triggered()"
+  >
+    @if (icon) {
+      <si-icon class="icon" [icon]="icon" />
+    }
+    <span class="inline-collapse-chip-label" [cdkPortalOutlet]="labelPortalRef()"></span>
+  </button>
+</ng-template>

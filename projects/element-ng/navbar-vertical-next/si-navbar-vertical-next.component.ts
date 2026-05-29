@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { PortalModule } from '@angular/cdk/portal';
 import {
   afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
+  contentChildren,
   inject,
   Injector,
   input,
@@ -16,7 +18,8 @@ import {
   OnChanges,
   OnInit,
   signal,
-  SimpleChanges
+  SimpleChanges,
+  viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -31,6 +34,7 @@ import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
+import { SiNavbarVerticalNextItemComponent } from './si-navbar-vertical-next-item.component';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
 /** @experimental */
@@ -42,7 +46,7 @@ interface UIState {
 /** @experimental */
 @Component({
   selector: 'si-navbar-vertical-next',
-  imports: [SiIconComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
+  imports: [PortalModule, SiIconComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
   templateUrl: './si-navbar-vertical-next.component.html',
   styleUrl: './si-navbar-vertical-next.component.scss',
   providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useExisting: SiNavbarVerticalNextComponent }],
@@ -153,6 +157,24 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
 
   protected readonly ready = signal(false);
   protected readonly smallScreen = signal(false);
+
+  /**
+   * All navigation items currently projected into the navbar, including
+   * subitems rendered inside group templates.
+   */
+  private readonly items = contentChildren(SiNavbarVerticalNextItemComponent, {
+    descendants: true
+  });
+
+  /**
+   * The currently-active top-level item. Used to surface the active item
+   * alongside the inline-collapse toggle. For routes nested inside a group,
+   * this resolves to the group trigger (the parent menu) rather than the
+   * deeply-nested leaf.
+   */
+  protected readonly activeItem = computed(() =>
+    this.items().find(item => item.isActiveRootItem())
+  );
 
   /**
    * @defaultValue
