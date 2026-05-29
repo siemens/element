@@ -477,13 +477,15 @@ describe('SiNavbarVerticalNext', () => {
 
         const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
         const chipWrapper = host.querySelector('.active-item-button') as HTMLElement;
+        expect(chipWrapper).not.toHaveAttribute('inert');
+        expect(chipWrapper).not.toHaveAttribute('aria-hidden');
         const chip = page.elementLocator(chipWrapper).getByRole('button', { name: 'item1' });
 
         await expect.element(chip).toBeVisible();
         await expect.element(chip).toHaveAttribute('aria-current', 'page');
       });
 
-      it('should not render the chip when the navbar is expanded', async () => {
+      it('should hide the chip when the navbar is expanded but keep it in the DOM for animation', async () => {
         await TestBed.inject(Router).navigate(['/item-1/sub-item-1']);
         await fixture.whenStable();
 
@@ -491,7 +493,13 @@ describe('SiNavbarVerticalNext', () => {
         await fixture.whenStable();
 
         const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
-        expect(host.querySelector('.active-item-button')).toBeNull();
+        const chipWrapper = host.querySelector('.active-item-button') as HTMLElement;
+        // Wrapper stays in the DOM so the CdkPortalOutlet doesn't tear down
+        // mid-transition; the `.active-item-visible` class drives visibility.
+        expect(chipWrapper).not.toBeNull();
+        expect(chipWrapper).not.toHaveClass('active-item-visible');
+        expect(chipWrapper).toHaveAttribute('inert', '');
+        expect(chipWrapper).toHaveAttribute('aria-hidden', 'true');
       });
 
       it('should keep the chip clickable without expanding the navbar', async () => {
