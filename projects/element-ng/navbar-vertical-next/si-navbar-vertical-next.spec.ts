@@ -477,9 +477,7 @@ describe('SiNavbarVerticalNext', () => {
 
         const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
         const chipWrapper = host.querySelector('.active-item-button') as HTMLElement;
-        const chip = page
-          .elementLocator(chipWrapper)
-          .getByRole('button', { name: 'item1' });
+        const chip = page.elementLocator(chipWrapper).getByRole('button', { name: 'item1' });
 
         await expect.element(chip).toBeVisible();
         await expect.element(chip).toHaveAttribute('aria-current', 'page');
@@ -502,9 +500,7 @@ describe('SiNavbarVerticalNext', () => {
 
         const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
         const chipWrapper = host.querySelector('.active-item-button') as HTMLElement;
-        const chip = page
-          .elementLocator(chipWrapper)
-          .getByRole('button', { name: 'item1' });
+        const chip = page.elementLocator(chipWrapper).getByRole('button', { name: 'item1' });
 
         await chip.click();
         await fixture.whenStable();

@@ -190,9 +190,7 @@ nav {
       position: fixed;
       z-index: all-variables.$zindex-vertical-nav;
       inset-block-start: calc(#{$vertical-nav-top-offset} + #{map.get(all-variables.$spacers, 6)});
-      inset-inline-start: calc(
-        #{map.get(all-variables.$spacers, 9)} + #{$toggle-size} + 1px
-      );
+      inset-inline-start: calc(#{map.get(all-variables.$spacers, 9)} + #{$toggle-size} + 1px);
 
       &.fade-enter {
         @starting-style {
