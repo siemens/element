@@ -68,7 +68,7 @@ body:has(.cdk-drag-preview, .ui-draggable-dragging) {
   }
 }
 
-.cdk-drag-placeholder {
+.cdk-drop-list:not([cdkDropListHasAnchor]) .cdk-drag-placeholder {
   opacity: 0.3;
   background-color: variables.$element-base-information !important;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
@@ -77,6 +77,13 @@ body:has(.cdk-drag-preview, .ui-draggable-dragging) {
   * {
     visibility: hidden;
   }
+}
+
+// The anchor is a clone of the placeholder left behind in the source list when
+// `cdkDropListHasAnchor` is used. Make sure it always renders like the original item.
+.cdk-drag-anchor,
+.cdk-drag-anchor * {
+  visibility: visible;
 }
 
 .cdk-drop-list-dragging .cdk-drag {

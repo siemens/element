@@ -158,6 +158,7 @@ fit. For example:
 
 <si-docs-component base="si-tree-view" height="400">
   <si-docs-tab example="si-tree-view-drag-drop-move" heading="Moving between trees"></si-docs-tab>
+  <si-docs-tab example="si-tree-view-drag-drop-copy" heading="Copying between trees"></si-docs-tab>
   <si-docs-tab example="si-tree-view-drag-drop-reorder" heading="Reordering"></si-docs-tab>
   <si-docs-tab example="si-tree-view-drag-drop-assign" heading="Assignment"></si-docs-tab>
 </si-docs-component>

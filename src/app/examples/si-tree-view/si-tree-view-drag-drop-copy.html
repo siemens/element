@@ -1,0 +1,61 @@
+<h3>Provisioning sites from a device template catalog</h3>
+<p
+  >Drag a device template from the catalog onto a building in the site configuration to provision
+  it. Templates remain in the catalog so the same device type can be reused across multiple
+  buildings.</p
+>
+<div class="d-flex h-100" style="width: 600px">
+  <div>
+    <h4>Device template catalog</h4>
+
+    <si-tree-view
+      #catalog
+      ariaLabel="Device template catalog"
+      class="me-8"
+      style="width: 300px; height: 500px"
+      [enableSelection]="false"
+      [items]="catalogList"
+      [flatTree]="false"
+    >
+      <div
+        cdkDropList
+        cdkDropListHasAnchor
+        cdkDropListSortingDisabled
+        [cdkDropListConnectedTo]="siteDropList"
+        [cdkDropListData]="catalog.dropListItems"
+      >
+        <ng-template let-item="treeItem" siTreeViewItem>
+          <si-tree-view-item cdkDrag [cdkDragDisabled]="item.state !== 'leaf'" [cdkDragData]="item">
+            <si-tree-view-item *cdkDragPreview />
+          </si-tree-view-item>
+        </ng-template>
+      </div>
+    </si-tree-view>
+  </div>
+  <div>
+    <h4>Site configuration</h4>
+
+    <si-tree-view
+      #site
+      ariaLabel="Site configuration"
+      style="width: 300px; height: 500px"
+      [enableSelection]="true"
+      [items]="siteList"
+      [flatTree]="false"
+    >
+      <div
+        #siteDropList="cdkDropList"
+        cdkDropList
+        [cdkDropListData]="site.dropListItems"
+        [cdkDropListEnterPredicate]="allowDropOnSite"
+        (cdkDropListDropped)="itemDroppedOnSite($event)"
+      >
+        <ng-template let-item="treeItem" siTreeViewItem>
+          <si-tree-view-item cdkDrag cdkDragDisabled>
+            <si-tree-view-item *cdkDragPreview />
+          </si-tree-view-item>
+        </ng-template>
+      </div>
+    </si-tree-view>
+  </div>
+</div>
