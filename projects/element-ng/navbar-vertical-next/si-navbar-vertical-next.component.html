@@ -38,6 +38,11 @@
   @if (inlineCollapse()) {
     <div class="toggle-placeholder" aria-hidden="true"></div>
   }
+  @if (inlineCollapsed && activeItem(); as item) {
+    <div class="active-item-button" animate.enter="fade-enter" animate.leave="fade-leave">
+      <ng-container [cdkPortalOutlet]="item.portalContent()" />
+    </div>
+  }
 }
 <main
   class="si-layout-inner focus-none"

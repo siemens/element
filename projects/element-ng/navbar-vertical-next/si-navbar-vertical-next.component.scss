@@ -11,6 +11,7 @@ $vertical-nav-top-offset: calc(
 $mobile-drawer-padding-block: map.get(all-variables.$spacers, 2);
 $mobile-drawer-padding-inline: map.get(all-variables.$spacers, 4);
 $mobile-drawer-margin-block-start: map.get(all-variables.$spacers, 4);
+$toggle-size: calc(1lh + (2 * map.get(all-variables.$spacers, 4)));
 
 :host {
   display: block;
@@ -47,6 +48,13 @@ nav {
   }
 }
 
+.nav-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-block-size: 0;
+}
+
 .mobile-drawer {
   display: block;
   text-align: end;
@@ -64,7 +72,7 @@ nav {
     background-color $vertical-nav-transition-duration ease,
     box-shadow $vertical-nav-transition-duration ease;
 
-  :host(:not(.nav-collapsed)) & {
+  :host(:not(.nav-collapsed):not(.nav-inline-collapse)) & {
     inline-size: $vertical-nav-width;
   }
 }
@@ -98,6 +106,12 @@ nav {
   :host.nav-collapsed .mobile-drawer {
     @include mobile-drawer-overlay;
   }
+
+  // Hide the active-item chip on phones to avoid layout collisions with
+  // mobile drawer overlays. Mobile users still see the toggle button.
+  :host(.nav-inline-collapse.nav-collapsed) .active-item-button {
+    display: none;
+  }
 }
 
 @include all-variables.media-breakpoint-up(sm) {
@@ -126,16 +140,7 @@ nav {
   }
 }
 
-.nav-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-block-size: 0;
-}
-
 :host(.nav-inline-collapse) {
-  $toggle-size: calc(1lh + (2 * map.get(all-variables.$spacers, 4)));
-
   nav {
     overflow: hidden; // clip the drawer as it collapses to inline-size 0
   }
@@ -179,6 +184,33 @@ nav {
     .toggle-button {
       inset-block-start: calc(#{$vertical-nav-top-offset} + #{map.get(all-variables.$spacers, 6)});
       inset-inline-start: map.get(all-variables.$spacers, 9);
+    }
+
+    .active-item-button {
+      position: fixed;
+      z-index: all-variables.$zindex-vertical-nav;
+      inset-block-start: calc(#{$vertical-nav-top-offset} + #{map.get(all-variables.$spacers, 6)});
+      inset-inline-start: calc(
+        #{map.get(all-variables.$spacers, 9)} + #{$toggle-size} + 1px
+      );
+
+      &.fade-enter {
+        @starting-style {
+          opacity: 0;
+        }
+      }
+
+      &.fade-leave {
+        opacity: 0;
+        transition: opacity all-variables.element-transition-duration(0.15s) linear;
+      }
+    }
+
+    // When the chip is present, drop the toggle's inline-end radius so the
+    // two buttons appear as one continuous control.
+    &:has(.active-item-button) .toggle-button {
+      border-start-end-radius: 0;
+      border-end-end-radius: 0;
     }
   }
 }

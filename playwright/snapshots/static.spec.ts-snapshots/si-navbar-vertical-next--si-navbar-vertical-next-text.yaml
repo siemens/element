@@ -16,8 +16,8 @@
     - /url: "#/viewer/viewer/energy"
   - link "Test Coverage":
     - /url: "#/viewer/viewer/coverage"
-  - link "Configuration":
-    - /url: "#/viewer/viewer/configuration"
+  - link "Settings":
+    - /url: "#/viewer/viewer/settings"
 - main:
   - heading "Here is a title" [level=2]
   - text: Here goes the content Control panel
