@@ -25,6 +25,11 @@
         </button>
       </div>
     </div>
+    @if (inlineCollapsed && activeItem(); as item) {
+      <div class="active-item-button" animate.enter="fade-enter" animate.leave="fade-leave">
+        <ng-container [cdkPortalOutlet]="item.portalContent()" />
+      </div>
+    }
     <div
       class="nav-content"
       [attr.inert]="inlineCollapsed ? '' : null"
@@ -37,11 +42,6 @@
   </nav>
   @if (inlineCollapse()) {
     <div class="toggle-placeholder" aria-hidden="true"></div>
-  }
-  @if (inlineCollapsed && activeItem(); as item) {
-    <div class="active-item-button" animate.enter="fade-enter" animate.leave="fade-leave">
-      <ng-container [cdkPortalOutlet]="item.portalContent()" />
-    </div>
   }
 }
 <main
