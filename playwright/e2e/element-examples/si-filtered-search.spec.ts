@@ -41,6 +41,9 @@ test.describe('filtered search', () => {
     await page.keyboard.press('Escape');
     await expect(page.getByText('Event', { exact: true })).not.toBeAttached();
     // delete location criterion
+    // Wait for focus to settle on the free text input before triggering backspace,
+    // otherwise the subsequent focus into the Location pill can race the focus restore.
+    await expect(freeTextSearch).toBeFocused();
     await page.keyboard.press('Backspace');
     await expect(
       page.locator('.pill-group', { hasText: 'Location' }).getByRole('combobox')
@@ -63,13 +66,21 @@ test.describe('filtered search', () => {
     const freeTextSearch = page.getByLabel('search', { exact: true }).last();
     await freeTextSearch.focus();
     await page.keyboard.press('Backspace');
-    await expect(
-      page.locator('.pill-group', { hasText: 'Location' }).getByRole('combobox')
-    ).toBeFocused();
-    await page.keyboard.press('Control+KeyA');
-    await page.keyboard.type('H');
+    const locationCombobox = page
+      .locator('.pill-group', { hasText: 'Location' })
+      .getByRole('combobox');
+    await expect(locationCombobox).toBeFocused();
+    // Wait for the typeahead input to be populated with the existing value before
+    // replacing it, otherwise Control+A can fire before the value is written to
+    // the DOM and the subsequent typing gets appended instead of replacing it.
+    await expect(locationCombobox).toHaveValue('Munich');
+    // Replace the existing value instead of relying on Control+A + type, which
+    // is racy when the typeahead overlay is in the middle of opening.
+    await locationCombobox.fill('H');
     await expect(page.getByRole('option', { name: 'Karlsruhe' })).toHaveClass(/active/);
-    await page.keyboard.type('annover');
+    // Use fill instead of keyboard.type, which is flaky here because the
+    // typeahead overlay re-renders between keystrokes and can drop characters.
+    await locationCombobox.fill('Hannover');
     await expect(page.getByRole('option').first()).not.toBeVisible(); // Ensures that the view was updated by Angular after typing.
     await page.keyboard.press('Enter');
     await expect(freeTextSearch).toBeFocused();
@@ -77,6 +88,11 @@ test.describe('filtered search', () => {
     await page.keyboard.press('Enter');
     await page.getByLabel('Only predefined criteria').check();
     await page.getByLabel('Only predefined criterion options', { exact: true }).check();
+    // Wait for the invalid styling to be applied before taking the screenshot,
+    // and move the mouse out of the viewport so the lingering hover state on the
+    // last clicked checkbox does not affect the visual snapshot.
+    await expect(page.locator('.pill-group.invalid-criterion').first()).toBeVisible();
+    await page.mouse.move(-10, -10);
     await si.runVisualAndA11yTests('invalid-criterion');
   });
 

@@ -56,6 +56,7 @@ const chromeLaunchOptions = {
   args: [
     '--disable-skia-runtime-opts',
     '--force-color-profile=srgb',
+    '--font-render-hinting=none',
     '--disable-low-res-tiling',
     '--disable-oop-rasterization',
     '--disable-composited-antialiasing',
