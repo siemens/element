@@ -108,6 +108,7 @@ class SiTestHelpers {
         if (options?.delay) {
           await this.page.waitForTimeout(options?.delay);
         }
+        await this.waitForAllAnimationsToComplete();
         await this.runVisualAndA11yTests(step, {
           axeRulesSet: options?.disabledA11yRules?.map(item => ({ id: item, enabled: false })),
           maxDiffPixels: options?.maxDiffPixels,
@@ -233,12 +234,14 @@ class SiTestHelpers {
         }
         if (this.testInfo.project.metadata.isVrt) {
           try {
+            await this.enableDisableAnimations(this.page, false);
             await this.showHideIgnores(this.page, false, options?.snapshotDelay);
             await expect(this.page).toHaveScreenshot(testName + '.png', {
               maxDiffPixels: options?.maxDiffPixels
             });
           } finally {
             await this.showHideIgnores(this.page, true);
+            await this.enableDisableAnimations(this.page, true);
           }
 
           if (!options?.skipAriaSnapshot && !this.testInfo.project.metadata.skipAriaSnapshot) {
@@ -255,7 +258,8 @@ class SiTestHelpers {
   public async waitForAllAnimationsToComplete(threshold = 0): Promise<void> {
     await this.page.waitForFunction(
       count => window.document.getAnimations().length <= count,
-      threshold
+      threshold,
+      { timeout: 5000 }
     );
   }
   /**

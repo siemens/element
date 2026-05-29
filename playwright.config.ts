@@ -59,7 +59,11 @@ const chromeLaunchOptions = {
     '--disable-low-res-tiling',
     '--disable-oop-rasterization',
     '--disable-composited-antialiasing',
-    '--disable-smooth-scrolling'
+    '--disable-smooth-scrolling',
+    // Force deterministic software rendering so GPU/rasterization timing under CI load does not
+    // shift antialiasing by a pixel and flip the strict screenshot comparison.
+    '--disable-gpu',
+    '--in-process-gpu'
   ]
 };
 
@@ -85,8 +89,13 @@ const config: PlaywrightTestConfig = {
   forbidOnly: isCI,
   /* Retry on CI only */
   retries: isCI ? 1 : 0,
-  /* Use fixed number of workers. */
-  workers: 4,
+  /**
+   * Use fixed number of workers. GitHub-hosted ubuntu runners only have 2 vCPUs, so running many
+   * parallel browser workers saturates the CPU and makes rasterization/antialiasing timing-dependent,
+   * which produces flaky visual snapshots. Keep CI conservative (sharding already provides
+   * cross-job parallelism) and use more workers locally.
+   */
+  workers: isCI ? 1 : 4,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: isCI
     ? [['dot'], ['blob']]
