@@ -172,7 +172,8 @@ nav {
   nav {
     overflow: hidden; // clip the drawer as it collapses to inline-size 0
 
-    // Surface that covers the fixed-position chip while the nav slides.
+    // Surface that covers the fixed-position chip during the slide so nav
+    // items never appear behind/over it mid-animation.
     &::before {
       content: '';
       position: absolute;
@@ -213,23 +214,26 @@ nav {
       inset-block-start $vertical-nav-transition-duration ease;
   }
 
+  // Active-item chip. Wrapper stays in the DOM while inline-collapse is on
+  // and an item is active so the slide can animate. The portal outlet is
+  // gated by `chipPortalAttached()` so DomPortal returns the label DOM to
+  // the item once the slide-out completes. `z-index: 0` keeps the chip
+  // below the nav::before overlay so it's hidden during the nav slide.
   .active-item-button {
     position: fixed;
-    z-index: 0; // below nav::before overlay
-    inset-block-start: $toggle-expanded-block-start;
-    inset-inline-start: $toggle-expanded-inline-start;
+    z-index: 0;
+    inset-block-start: $toggle-parked-block-start;
+    inset-inline-start: calc(
+      #{$toggle-parked-inline-start} + #{$toggle-size} + #{$segmented-gap}
+    );
+    translate: -100% 0;
     opacity: 0;
     transition:
-      inset-inline-start $vertical-nav-transition-duration ease,
-      inset-block-start $vertical-nav-transition-duration ease,
+      translate $vertical-nav-transition-duration ease,
       opacity $vertical-nav-transition-duration ease;
 
-    // Visible: slide out next to the collapsed toggle and fade in.
     &.active-item-visible {
-      inset-block-start: $toggle-parked-block-start;
-      inset-inline-start: calc(
-        #{$toggle-parked-inline-start} + #{$toggle-size} + #{$segmented-gap}
-      );
+      translate: 0 0;
       opacity: 1;
     }
   }

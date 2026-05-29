@@ -30,9 +30,11 @@
         class="active-item-button"
         [class.active-item-visible]="collapsed()"
         [attr.inert]="collapsed() ? null : ''"
-        [attr.aria-hidden]="collapsed() ? null : 'true'"
+        (transitionend)="onChipTransitionEnd($event)"
       >
-        <ng-container [cdkPortalOutlet]="item.portalContent()" />
+        @if (chipPortalAttached()) {
+          <ng-container [cdkPortalOutlet]="item.portalContent()" />
+        }
       </div>
     }
     <div

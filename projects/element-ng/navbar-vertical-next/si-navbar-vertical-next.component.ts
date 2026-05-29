@@ -11,6 +11,7 @@ import {
   Component,
   computed,
   contentChildren,
+  effect,
   inject,
   Injector,
   input,
@@ -165,14 +166,29 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   });
 
   /**
-   * The currently-active top-level item. Used to surface the active item
-   * alongside the inline-collapse toggle. For routes nested inside a group,
-   * this resolves to the group trigger (the parent menu) rather than the
-   * deeply-nested leaf.
+   * The currently-active top-level item, surfaced alongside the inline-collapse
+   * toggle. Routes nested in a group resolve to the group trigger.
    */
   protected readonly activeItem = computed(() =>
     this.items().find(item => item.isActiveRootItem())
   );
+
+  /**
+   * Whether the chip's CdkPortalOutlet is attached. Set true on collapse
+   * (constructor effect) and cleared after the slide-out transition ends
+   * (onChipTransitionEnd) so DomPortal can restore the label DOM to the item.
+   */
+  protected readonly chipPortalAttached = signal(false);
+
+  protected onChipTransitionEnd(event: TransitionEvent): void {
+    // Ignore bubbled transitions from children.
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+    if (!this.collapsed()) {
+      this.chipPortalAttached.set(false);
+    }
+  }
 
   /**
    * @defaultValue
@@ -200,6 +216,14 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
         this.collapsed.set(matches || this.preferCollapse);
         this.smallScreen.set(matches);
       });
+
+    // Attach the chip portal on collapse so the slide-in has content.
+    // Detach happens in onChipTransitionEnd after the slide-out finishes.
+    effect(() => {
+      if (this.collapsed()) {
+        this.chipPortalAttached.set(true);
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges<this>): void {
