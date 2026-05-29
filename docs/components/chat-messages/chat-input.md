@@ -32,7 +32,7 @@ The chat input enables users to send messages or comments depending on context:
 
 ![Chat input elements](images/chat-input-elements.png)
 
-> 1. Placeholder text, 2. Container, 3. Send button, 4. Actions (optional), 5. Legal disclaimer (only for AI)
+> 1. Placeholder text, 2. Container, 3. Send button, 4. Actions (optional), 5. Legal disclaimer (only for conversational AI)
 
 ### Interaction states
 
@@ -40,25 +40,24 @@ The chat input enables users to send messages or comments depending on context:
 
 ### Actions
 
-When actions are available, they appear directly below the text area. Up to three actions can be displayed inline; any additional actions are grouped into a menu.
+When actions are available, they appear directly below the text area
+It is recommended to display up to one action inline; any additional actions should be grouped into a menu.
 
 ![Chat input actions](images/chat-input-actions.png)
 
-### Overflow behavior
-
-The input field begins as a single line and automatically expands into a multi-line field as the user types.
-When the content exceeds the visible area, the field grows vertically—up to a set maximum height.
-Beyond that point, scrolling is enabled within the input.
-
-![Chat input overflow](images/chat-input-overflow.png)
-
 ### Attachments
 
-When supported, attachments appear within the input area as part of the composed message, allowing users to review and remove them before sending.
+When supported, attachments appear within the input area as part of the composed message,
+allowing users to review and remove them before sending.
 
-If multiple attachments are added, they wrap and stack within the input field to manage overflow gracefully.
+If multiple attachments are added, they wrap and stack within the input field.
 
 ![Chat input attachments](images/chat-input-attachments.png)
+
+### Overflow behavior
+
+The input field automatically expands as the user types, up to a set maximum height.
+Beyond that point, scrolling is enabled within the input.
 
 ## Code ---
 
