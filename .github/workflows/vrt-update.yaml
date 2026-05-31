@@ -163,10 +163,12 @@ jobs:
             fi
             mkdir -p playwright/snapshots
             echo "Starting fresh snapshot generation..."
-            npx playwright test --update-snapshots=all
+            npx playwright test --update-snapshots=all || true
           else
             echo "Updating only changed snapshots..."
-            npx playwright test --update-snapshots=changed
+            # playwright exits 1 when it updates snapshots (tests "fail" with diff);
+            # that is the expected outcome here - subsequent steps must still run.
+            npx playwright test --update-snapshots=changed || true
           fi
 
           # Verify that snapshots were generated
