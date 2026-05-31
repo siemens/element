@@ -2,7 +2,16 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Directive, ElementRef, input, model, output, signal, Signal } from '@angular/core';
+import {
+  computed,
+  Directive,
+  ElementRef,
+  input,
+  model,
+  output,
+  signal,
+  Signal
+} from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { CriterionDefinition, CriterionValue } from '../si-filtered-search.model';
@@ -28,6 +37,11 @@ export abstract class SiFilteredSearchValueBase {
   protected abstract readonly validValue: Signal<boolean>;
 
   readonly focusInOverlay = signal(false).asReadonly();
+  /** @internal */
+  readonly valueInputSize = computed(() => {
+    const value = this.criterionValue().value;
+    return Math.max(Array.isArray(value) ? 0 : (value?.length ?? 0), 20);
+  });
 
   focus(): void {
     this.valueInput()?.nativeElement.focus();

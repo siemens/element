@@ -13,6 +13,7 @@
     type="text"
     class="px-4 py-0 border-0 focus-inside"
     [attr.aria-label]="searchLabel() | translate"
+    [attr.size]="valueInputSize()"
     [disabled]="disabled()"
     [value]="criterionValue().value"
     (input)="freeTextValueChange($event)"
