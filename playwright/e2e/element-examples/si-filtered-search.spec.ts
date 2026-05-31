@@ -71,6 +71,10 @@ test.describe('filtered search', () => {
     await expect(page.getByRole('option', { name: 'Karlsruhe' })).toHaveClass(/active/);
     await page.keyboard.type('annover');
     await expect(page.getByRole('option').first()).not.toBeVisible(); // Ensures that the view was updated by Angular after typing.
+    // Guard against dropped keystrokes under CPU load: confirm full value before committing.
+    await expect(
+      page.locator('.pill-group', { hasText: 'Location' }).getByRole('combobox')
+    ).toHaveValue('Hannover');
     await page.keyboard.press('Enter');
     await expect(freeTextSearch).toBeFocused();
     await freeTextSearch.fill('Building:House');

@@ -127,8 +127,8 @@ const config: PlaywrightTestConfig = {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: `http://${localAddress}:${port}`,
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: isCI ? 'on-first-retry' : 'retain-on-failure',
+    /* Retain a full trace from the failing attempt. See https://playwright.dev/docs/trace-viewer */
+    trace: 'retain-on-failure',
 
     viewport: baseViewport,
 
