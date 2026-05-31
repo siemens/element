@@ -59,11 +59,7 @@ const chromeLaunchOptions = {
     '--disable-low-res-tiling',
     '--disable-oop-rasterization',
     '--disable-composited-antialiasing',
-    '--disable-smooth-scrolling',
-    // Force deterministic software rendering so GPU/rasterization timing under CI load does not
-    // shift antialiasing by a pixel and flip the strict screenshot comparison.
-    '--disable-gpu',
-    '--in-process-gpu'
+    '--disable-smooth-scrolling'
   ]
 };
 
