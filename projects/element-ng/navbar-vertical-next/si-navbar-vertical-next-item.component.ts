@@ -124,6 +124,22 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
   });
 
   /**
+   * `true` when this item — or one of its descendants — is on the
+   * currently-active route. Ungated counterpart of `active()`: shares the
+   * same source signals but omits the
+   * `(!group.expanded() || navbar.collapsed())` suppression so the
+   * inline-collapse chip wrapper stays mounted across collapse↔expand
+   * transitions and the slide animation can run.
+   */
+  private readonly isOnActiveRoute = computed(
+    () =>
+      !!this.activeOverride() ||
+      this.routerActive() ||
+      !!this.siLink?.active() ||
+      !!this.group?.active()
+  );
+
+  /**
    * `true` when this item is currently active (via router link, link
    * directive, override, or active group state).
    */
@@ -138,9 +154,12 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
   /**
    * `true` when this item is a top-level (root) item and is currently active.
    * Used by the navbar to surface the active item in the inline-collapse bar.
+   * Uses the ungated `isOnActiveRoute` so the chip wrapper survives the
+   * collapse↔expand transition (the gate in `active()` would otherwise drop
+   * to `false` mid-animation and tear down the wrapper).
    * @internal
    */
-  readonly isActiveRootItem = computed(() => !this.parent && this.active());
+  readonly isActiveRootItem = computed(() => !this.parent && this.isOnActiveRoute());
 
   ngOnInit(): void {
     if (this.group && this.active()) {

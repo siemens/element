@@ -11,10 +11,10 @@ import {
   Component,
   computed,
   contentChildren,
-  effect,
   inject,
   Injector,
   input,
+  linkedSignal,
   model,
   OnChanges,
   OnInit,
@@ -174,14 +174,32 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   );
 
   /**
-   * Whether the chip's CdkPortalOutlet is attached. Set true on collapse
-   * (constructor effect) and cleared after the slide-out transition ends
-   * (onChipTransitionEnd) so DomPortal can restore the label DOM to the item.
+   * Whether the chip's CdkPortalOutlet is attached.
+   * - Attach when collapsed-with-active-item: slide-in needs content.
+   * - Detach eagerly when expanded-with-no-active-item: nothing to slide.
+   * - When expanded-with-active-item, preserve the previous value so the
+   *   slide-out animates with content. `onChipTransitionEnd` flips it false
+   *   after the wrapper transition finishes (timed implicitly to the shortest
+   *   transitioned property, currently `opacity` at 0.25s). DomPortal then
+   *   returns the label DOM to the item.
    */
-  protected readonly chipPortalAttached = signal(false);
+  protected readonly chipPortalAttached = linkedSignal<
+    { collapsed: boolean; hasActive: boolean },
+    boolean
+  >({
+    source: () => ({ collapsed: this.collapsed(), hasActive: !!this.activeItem() }),
+    computation: (source, previous) => {
+      if (source.collapsed && source.hasActive) {
+        return true;
+      }
+      if (!source.collapsed && !source.hasActive) {
+        return false;
+      }
+      return previous?.value ?? false;
+    }
+  });
 
   protected onChipTransitionEnd(event: TransitionEvent): void {
-    // Ignore bubbled transitions from children.
     if (event.target !== event.currentTarget) {
       return;
     }
@@ -216,14 +234,6 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
         this.collapsed.set(matches || this.preferCollapse);
         this.smallScreen.set(matches);
       });
-
-    // Attach the chip portal on collapse so the slide-in has content.
-    // Detach happens in onChipTransitionEnd after the slide-out finishes.
-    effect(() => {
-      if (this.collapsed()) {
-        this.chipPortalAttached.set(true);
-      }
-    });
   }
 
   ngOnChanges(changes: SimpleChanges<this>): void {

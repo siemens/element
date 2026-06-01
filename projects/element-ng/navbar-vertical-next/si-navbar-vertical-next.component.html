@@ -30,6 +30,7 @@
         class="active-item-button"
         [class.active-item-visible]="collapsed()"
         [attr.inert]="collapsed() ? null : ''"
+        [attr.aria-hidden]="collapsed() ? null : 'true'"
         (transitionend)="onChipTransitionEnd($event)"
       >
         @if (chipPortalAttached()) {

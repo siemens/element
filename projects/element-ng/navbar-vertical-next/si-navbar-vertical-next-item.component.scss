@@ -127,4 +127,12 @@
 .btn.inline-collapse-active-item {
   border-start-start-radius: 0;
   border-end-start-radius: 0;
+  // Fill the wrapper (capped to viewport in navbar.scss) and allow flex
+  // children to shrink so `.item-title.text-truncate` can ellipsize.
+  inline-size: 100%;
+  min-inline-size: 0;
+
+  .inline-collapse-chip-label {
+    min-inline-size: 0;
+  }
 }

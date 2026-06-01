@@ -15,6 +15,7 @@ import {
   Injector,
   input,
   linkedSignal,
+  signal,
   TemplateRef,
   untracked,
   ViewContainerRef
@@ -103,14 +104,14 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
   });
 
   /**
-   * Whether the open flyout overlay currently contains the active route.
-   * Reset together with `flyout` so it never lingers across mode changes.
+   * Whether this group currently contains the active route. Set imperatively
+   * by `si-navbar-vertical-next-group.component` from its `RouterLinkActive`
+   * subscription. Kept as a plain writable signal (no `linkedSignal` reset)
+   * so it preserves its value across collapse↔expand and flyout toggles,
+   * letting consumers like the inline-collapse chip animate cleanly.
    * @internal
    */
-  readonly active = linkedSignal<boolean, boolean>({
-    source: () => this.flyout(),
-    computation: (open, previous) => (open ? (previous?.value ?? false) : false)
-  });
+  readonly active = signal<boolean>(false);
 
   protected readonly navbar = inject(SI_NAVBAR_VERTICAL_NEXT);
 

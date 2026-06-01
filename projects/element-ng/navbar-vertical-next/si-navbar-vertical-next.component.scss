@@ -124,11 +124,6 @@ nav {
   :host.nav-collapsed .mobile-drawer {
     @include mobile-drawer-overlay;
   }
-
-  // Hide chip on phones to avoid drawer overlap.
-  :host(.nav-inline-collapse.nav-collapsed) .active-item-button {
-    display: none;
-  }
 }
 
 @include all-variables.media-breakpoint-up(sm) {
@@ -215,22 +210,31 @@ nav {
   }
 
   // Active-item chip. Wrapper stays in the DOM while inline-collapse is on
-  // and an item is active so the slide can animate. The portal outlet is
-  // gated by `chipPortalAttached()` so DomPortal returns the label DOM to
-  // the item once the slide-out completes. `z-index: 0` keeps the chip
-  // below the nav::before overlay so it's hidden during the nav slide.
+  // and an item is active so the slide can animate. The inner portal outlet
+  // is gated by `chipPortalAttached()` so DomPortal returns the label DOM
+  // to the item only once the slide-out completes (driven by
+  // `onChipTransitionEnd` — implicitly timed to the shortest transitioned
+  // property on the wrapper, currently `opacity` at 0.25s). `z-index: 0`
+  // keeps the chip below the nav::before overlay so it's hidden during
+  // the nav slide. The portaled button + label are styled in
+  // `si-navbar-vertical-next-item.component.scss` (view encapsulation).
   .active-item-button {
     position: fixed;
     z-index: 0;
     inset-block-start: $toggle-parked-block-start;
-    inset-inline-start: calc(
-      #{$toggle-parked-inline-start} + #{$toggle-size} + #{$segmented-gap}
+    inset-inline-start: calc(#{$toggle-parked-inline-start} + #{$toggle-size} + #{$segmented-gap});
+    // Cap the chip width so long labels truncate via `.item-title.text-truncate`
+    // instead of overflowing the viewport. Reserves space for the toggle slot
+    // on the start and an equal end-gutter so the chip never butts the edge.
+    max-inline-size: calc(
+      100vw - #{$toggle-parked-inline-start} - #{$toggle-size} - #{$segmented-gap} -
+        #{$toggle-parked-inline-start}
     );
     translate: -100% 0;
     opacity: 0;
     transition:
       translate $vertical-nav-transition-duration ease,
-      opacity $vertical-nav-transition-duration ease;
+      opacity all-variables.element-transition-duration(0.25s) ease;
 
     &.active-item-visible {
       translate: 0 0;
