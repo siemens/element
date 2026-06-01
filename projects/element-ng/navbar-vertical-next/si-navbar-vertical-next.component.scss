@@ -128,8 +128,7 @@ nav {
 
 @include all-variables.media-breakpoint-up(sm) {
   :host:not(.nav-text-only),
-  :host:not(.nav-collapsed),
-  :host(.nav-inline-collapse) {
+  :host:not(.nav-collapsed) {
     --si-layout-header-first-element-offset: 0;
   }
 
@@ -227,8 +226,7 @@ nav {
     // instead of overflowing the viewport. Reserves space for the toggle slot
     // on the start and an equal end-gutter so the chip never butts the edge.
     max-inline-size: calc(
-      100vw - #{$toggle-parked-inline-start} - #{$toggle-size} - #{$segmented-gap} -
-        #{$toggle-parked-inline-start}
+      100vw - (2 * #{$toggle-parked-inline-start}) - #{$toggle-size} - #{$segmented-gap}
     );
     translate: -100% 0;
     opacity: 0;

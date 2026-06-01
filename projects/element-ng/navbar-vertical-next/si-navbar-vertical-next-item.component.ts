@@ -87,6 +87,13 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
   /**
    * DOM portal of this item's label element. Used internally by the chip
    * template to relocate the label into the inline-collapse chip button.
+   *
+   * While portaled, the label slot in the original item is empty. During the
+   * nav expand transition the chip is still mounted (drained on
+   * `transitionend`), so the active item would briefly render without its
+   * label — masked by the `nav::before` overlay in
+   * `si-navbar-vertical-next.component.scss`. Keep that overlay in sync if
+   * the chip detach timing changes.
    * @internal
    */
   protected readonly labelPortalRef = computed(() => new DomPortal(this.labelContentEl()));
@@ -124,19 +131,22 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
   });
 
   /**
-   * `true` when this item — or one of its descendants — is on the
-   * currently-active route. Ungated counterpart of `active()`: shares the
-   * same source signals but omits the
-   * `(!group.expanded() || navbar.collapsed())` suppression so the
+   * Shared activity sources for this item: override, router link, link
+   * directive. Excludes group state so consumers can layer their own gate.
+   */
+  private readonly anyRouteActive = computed(
+    () => !!this.activeOverride() || this.routerActive() || !!this.siLink?.active()
+  );
+
+  /**
+   * `true` when this item's own route matches, or — if it's a group trigger —
+   * when one of its sub-items matches. Ungated counterpart of `active()`:
+   * omits the `(!group.expanded() || navbar.collapsed())` suppression so the
    * inline-collapse chip wrapper stays mounted across collapse↔expand
    * transitions and the slide animation can run.
    */
   private readonly isOnActiveRoute = computed(
-    () =>
-      !!this.activeOverride() ||
-      this.routerActive() ||
-      !!this.siLink?.active() ||
-      !!this.group?.active()
+    () => this.anyRouteActive() || !!this.group?.active()
   );
 
   /**
@@ -145,10 +155,8 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
    */
   readonly active = computed(
     () =>
-      this.activeOverride() ||
-      this.routerActive() ||
-      (this.siLink?.active() ?? false) ||
-      ((!this.group?.expanded() || this.navbar.collapsed()) && (this.group?.active() ?? false))
+      this.anyRouteActive() ||
+      ((!this.group?.expanded() || this.navbar.collapsed()) && !!this.group?.active())
   );
 
   /**
