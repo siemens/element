@@ -61,7 +61,7 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     # We use playwright browser to run tests
-    container: mcr.microsoft.com/playwright:v1.59.1-noble
+    container: mcr.microsoft.com/playwright:v1.60.0-noble
     env:
       # See: https://github.com/microsoft/playwright/issues/27620
       HOME: /root
@@ -138,7 +138,7 @@ jobs:
 
   e2e:
     runs-on: ubuntu-24.04
-    container: mcr.microsoft.com/playwright:v1.59.1-noble
+    container: mcr.microsoft.com/playwright:v1.60.0-noble
     needs:
       - build
     strategy:
