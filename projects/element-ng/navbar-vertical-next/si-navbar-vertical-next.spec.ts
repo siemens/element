@@ -541,9 +541,7 @@ describe('SiNavbarVerticalNext', () => {
         await fixture.whenStable();
         const recollapsedChip = host.querySelector('.active-item-button') as HTMLElement;
         expect(recollapsedChip).toHaveClass('active-item-visible');
-        const chip = page
-          .elementLocator(recollapsedChip)
-          .getByRole('button', { name: 'item1' });
+        const chip = page.elementLocator(recollapsedChip).getByRole('button', { name: 'item1' });
         await expect.element(chip).toBeVisible();
       });
 
