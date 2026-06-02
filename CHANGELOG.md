@@ -1,3 +1,19 @@
+# [49.10.0](https://github.com/siemens/element/compare/v49.9.0...v49.10.0) (2026-06-02)
+
+
+### Features
+
+* **chat-messages:** update components to latest design specs ([364fe8e](https://github.com/siemens/element/commit/364fe8e79d9027b4cb60ef7a542e1ccf50983d17))
+* **dashboard:** add weather widget ([d1e8281](https://github.com/siemens/element/commit/d1e828149d7c4955aaf993e816f71d2087081aab))
+* **navbar-vertical-next:** add inline collapse mode ([349c889](https://github.com/siemens/element/commit/349c88964e156025d93c988d9f8a549c5510c4b8)), closes [#1945](https://github.com/siemens/element/issues/1945)
+
+
+### Bug Fixes
+
+* **color-picker:** pass color as interpolation param to aria-label translation ([95424a2](https://github.com/siemens/element/commit/95424a23fc9ec4967c6c62a5c8c4c42575967805))
+* **dashboard:** respect showLoadingIndicator input when auto-loading is disabled ([1e855e4](https://github.com/siemens/element/commit/1e855e4ad5f22fadea8e103317ca252348834833))
+* **navbar-vertical-next:** make flyout sub-item styling consistent in all flyout modes ([27ffa33](https://github.com/siemens/element/commit/27ffa3320c50e485c186acf4aa00c149b580d773))
+
 # [49.9.0](https://github.com/siemens/element/compare/v49.8.0...v49.9.0) (2026-05-20)
 
 
