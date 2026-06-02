@@ -54,4 +54,5 @@ import {
 })
 export class SampleComponent {
   alwaysFlyout = false;
+  inlineCollapse = false;
 }

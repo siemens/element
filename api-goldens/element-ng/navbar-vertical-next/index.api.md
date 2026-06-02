@@ -19,6 +19,7 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     collapse(): void;
     readonly collapsed: _angular_core.ModelSignal<boolean>;
     expand(): void;
+    readonly inlineCollapse: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly skipLinkMainContentLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly skipLinkNavigationLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;

@@ -60,6 +60,7 @@ export class SampleComponent implements OnInit {
   logEvent = inject(LOG_EVENT);
 
   alwaysFlyout = false;
+  inlineCollapse = false;
 
   ngOnInit(): void {
     this.router.navigate(['home'], { relativeTo: this.activeRoute });
