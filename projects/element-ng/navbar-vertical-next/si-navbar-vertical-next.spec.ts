@@ -67,6 +67,7 @@ class EmptyComponent {}
       [textOnly]="textOnly()"
       [stateId]="stateId"
       [collapsed]="collapsed()"
+      [inlineCollapse]="inlineCollapse()"
       [alwaysFlyout]="alwaysFlyout()"
     >
       <si-navbar-vertical-next-search [debounceTime]="0" (searchChange)="searchEvent($event)" />
@@ -160,6 +161,7 @@ class TestHostComponent {
   readonly textOnly = signal(true);
   stateId?: string;
   readonly collapsed = signal(false);
+  readonly inlineCollapse = signal(false);
   readonly alwaysFlyout = signal(false);
   readonly showDeclarativeFlyoutGroup = signal(false);
   readonly showDeclarativeNavigationGroup = signal(false);
@@ -399,6 +401,62 @@ describe('SiNavbarVerticalNext', () => {
       const harness = await harnessLoader.getHarness(SiNavbarVerticalNextHarness);
       breakpointObserver.isSmall.next(true);
       expect(await harness.isCollapsed()).toBe(true);
+    });
+  });
+
+  describe('with inlineCollapse', () => {
+    beforeEach(() => {
+      component.inlineCollapse.set(true);
+      component.textOnly.set(false);
+      component.showDeclarativeNavigationGroup.set(true);
+    });
+
+    it('should add nav-inline-collapse host class', async () => {
+      await fixture.whenStable();
+      const host = page.getByRole('navigation').element().closest('si-navbar-vertical-next')!;
+      expect(host).toHaveClass('nav-inline-collapse');
+    });
+
+    it('should inert the content when collapsed', async () => {
+      component.collapsed.set(true);
+      await fixture.whenStable();
+
+      const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+      expect(host).toHaveClass('nav-collapsed', 'nav-inline-collapse');
+
+      const nav = page.getByRole('navigation').element();
+      expect(nav).toHaveAttribute('tabindex', '-1');
+
+      const content = host.querySelector('.nav-content') as HTMLElement;
+      expect(content).toHaveAttribute('inert', '');
+
+      // Page reclaims its full inline-start space when collapsed.
+      expect(host).toHaveStyle({ paddingInlineStart: '0px' });
+    });
+
+    it('should drop inert when expanded', async () => {
+      component.collapsed.set(false);
+      await fixture.whenStable();
+
+      const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+      expect(host).not.toHaveClass('nav-collapsed');
+
+      const content = host.querySelector('.nav-content') as HTMLElement;
+      expect(content).not.toHaveAttribute('inert');
+    });
+
+    it('should expose correct aria-expanded on the toggle', async () => {
+      component.collapsed.set(true);
+      await fixture.whenStable();
+
+      const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+      const toggle = host.querySelector('.toggle-button') as HTMLButtonElement;
+
+      expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+      component.collapsed.set(false);
+      await fixture.whenStable();
+      expect(toggle).toHaveAttribute('aria-expanded', 'true');
     });
   });
 });
