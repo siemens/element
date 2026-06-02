@@ -1,5 +1,9 @@
 # Notification item
 
+!!! warning "Deprecated"
+
+    This component is deprecated. Use the [list item](../lists-tables-trees/list-item.md) component instead.
+
 ## Usage ---
 
 Notifications keep users updated on changes, prompt timely responses to important updates, and guide them through interactions.
