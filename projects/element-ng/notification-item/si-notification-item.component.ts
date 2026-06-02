@@ -16,6 +16,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
  * @param type - The type of the link, always 'router-link'.
  * @param routerLink - The router link to navigate to.
  * @param extras - Optional navigation extras for the router.
+ * @deprecated Use the CSS-based list item component instead.
  */
 export interface NotificationItemRouterLink {
   type: 'router-link';
@@ -28,6 +29,7 @@ export interface NotificationItemRouterLink {
  * @param type - The type of the link, always 'link'.
  * @param href - The URL to navigate to.
  * @param target - Optional target attribute for the link.
+ * @deprecated Use the CSS-based list item component instead.
  */
 export interface NotificationItemLink {
   type: 'link';
@@ -39,6 +41,7 @@ export interface NotificationItemLink {
  * Base interface for notification item actions.
  * @param ariaLabel - The ARIA label for accessibility.
  * @param icon - The icon to display for the action.
+ * @deprecated Use the CSS-based list item component instead.
  */
 export interface NotificationItemBase {
   ariaLabel: TranslatableString;
@@ -63,6 +66,7 @@ export interface NotificationItemActionCircleButton extends NotificationItemBase
  * @param type - The type of the action, always 'action-icon-button'.
  * @param customClass - Optional custom CSS class for styling.
  * @param action - The action to perform when the button is clicked.
+ * @deprecated Use the CSS-based list item component instead.
  */
 export interface NotificationItemActionIconButton extends NotificationItemBase {
   type: 'action-icon-button';
@@ -75,6 +79,7 @@ export interface NotificationItemActionIconButton extends NotificationItemBase {
  * @param type - The type of the link, always 'router-link'.
  * @param routerLink - The router link to navigate to.
  * @param extras - Optional navigation extras for the router.
+ * @deprecated Use the CSS-based list item component instead.
  */
 export interface NotificationItemRouterLinkIcon extends NotificationItemBase {
   type: 'router-link';
@@ -87,6 +92,7 @@ export interface NotificationItemRouterLinkIcon extends NotificationItemBase {
  * @param type - The type of the link, always 'link'.
  * @param href - The URL to navigate to.
  * @param target - Optional target attribute for the link.
+ * @deprecated Use the CSS-based list item component instead.
  */
 export interface NotificationItemLinkIcon extends NotificationItemBase {
   type: 'link';
@@ -99,6 +105,7 @@ export interface NotificationItemLinkIcon extends NotificationItemBase {
  * @param type - The type of the action, always 'action-button'.
  * @param label - The label to display on the button.
  * @param action - The action to perform when the button is clicked.
+ * @deprecated Use the CSS-based list item component instead.
  */
 export interface NotificationItemActionButton {
   type: 'action-button';
@@ -110,6 +117,7 @@ export interface NotificationItemActionButton {
  * Interface for a menu in a notification item.
  * @param type - The type of the action, always 'menu'.
  * @param menuItems - The menu items to display in the menu.
+ * @deprecated Use the CSS-based list item component instead.
  */
 export interface NotificationItemMenu {
   type: 'menu';
@@ -118,6 +126,7 @@ export interface NotificationItemMenu {
 
 /**
  * Union type for quick actions in a notification item.
+ * @deprecated Use the CSS-based list item component instead.
  */
 export type NotificationItemQuickAction =
   | NotificationItemActionCircleButton
@@ -127,6 +136,7 @@ export type NotificationItemQuickAction =
 
 /**
  * Union type for primary actions in a notification item.
+ * @deprecated Use the CSS-based list item component instead.
  */
 export type NotificationItemPrimaryAction =
   | NotificationItemActionCircleButton
@@ -140,6 +150,8 @@ export type NotificationItemPrimaryAction =
  * This component represents a single notification that can be used within notification
  * centers, popovers, or other containers. It supports various action types including
  * router links, standard links, action buttons, and menus.
+ *
+ * @deprecated Use the CSS-based list item component instead.
  */
 @Component({
   selector: 'si-notification-item',
