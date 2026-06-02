@@ -128,7 +128,8 @@ nav {
 
 @include all-variables.media-breakpoint-up(sm) {
   :host:not(.nav-text-only),
-  :host:not(.nav-collapsed) {
+  :host:not(.nav-collapsed),
+  :host(.nav-inline-collapse) {
     --si-layout-header-first-element-offset: 0;
   }
 

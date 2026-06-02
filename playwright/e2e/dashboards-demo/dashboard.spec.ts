@@ -305,6 +305,63 @@ test.describe('dashboard', () => {
     await si.runVisualAndA11yTests('web-component-note-widget');
   });
 
+  test(example + ' weather widget preplaced', async ({ page, si }) => {
+    await si.visitExample(example, undefined);
+    const weatherHost = page.locator('si-widget-host', { hasText: 'Weather' }).first();
+    await weatherHost.scrollIntoViewIfNeeded();
+    await expect(weatherHost.locator('.si-weather-widget-temperature')).toBeVisible();
+    await si.runVisualAndA11yTests('weather-preplaced');
+  });
+
+  test(example + ' weather widget tablet', async ({ page, si }) => {
+    await page.setViewportSize({ width: 768, height: 1600 });
+    await si.visitExample(example, false);
+    const weatherHost = page.locator('si-widget-host', { hasText: 'Weather' }).first();
+    await weatherHost.scrollIntoViewIfNeeded();
+    await expect(weatherHost.locator('.si-weather-widget-temperature')).toBeVisible();
+    await si.runVisualAndA11yTests('weather-tablet');
+  });
+
+  test(example + ' weather widget editor', async ({ page, si }) => {
+    await si.visitExample(example, undefined);
+    await openWidgetCatalog(page);
+
+    const weatherOption = page.getByRole('option', {
+      name: /Weather/i
+    });
+    await expect(weatherOption).toBeVisible();
+    await weatherOption.click();
+
+    const next = page.getByText('Next', { exact: true });
+    await next.click();
+    // Wait for the editor's live preview to render the today block.
+    await expect(page.locator('.si-weather-widget-temperature').first()).toBeAttached();
+    // And for the Add button (only present once the editor wizard is ready).
+    await expect(page.getByText('Add', { exact: true })).toBeVisible();
+    await si.runVisualAndA11yTests('weather-editor');
+
+    const locationInput = page.getByRole('textbox', { name: /^Location/ });
+    await expect(locationInput).toBeVisible();
+    await locationInput.fill('Munich');
+
+    const temperatureInput = page.getByRole('textbox', { name: 'Temperature', exact: true });
+    await temperatureInput.fill('19°');
+
+    const addBtn = page.getByText('Add', { exact: true });
+    await expect(addBtn).not.toBeDisabled();
+    await addBtn.click();
+
+    // Confirm the new weather instance landed on the dashboard with the
+    // user-supplied temperature.
+    const newWeatherHost = page
+      .locator('si-widget-host')
+      .filter({ has: page.locator('.si-weather-widget-temperature', { hasText: '19°' }) })
+      .first();
+    await newWeatherHost.scrollIntoViewIfNeeded();
+    await expect(newWeatherHost).toBeVisible();
+    await si.runVisualAndA11yTests('weather-added');
+  });
+
   const openWidgetCatalog = async (page: Page): Promise<void> => {
     await expect(page.getByLabel('Edit')).toBeVisible();
     const editBtn = page.getByLabel('Edit');
