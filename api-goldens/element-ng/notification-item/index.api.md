@@ -10,7 +10,7 @@ import { NavigationExtras } from '@angular/router';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
 
-// @public
+// @public @deprecated
 export interface NotificationItemActionButton {
     // (undocumented)
     action: (source: this) => void;
@@ -30,7 +30,7 @@ export interface NotificationItemActionCircleButton extends NotificationItemBase
     type: 'action-circle-button';
 }
 
-// @public
+// @public @deprecated
 export interface NotificationItemActionIconButton extends NotificationItemBase {
     // (undocumented)
     action: (source: this) => void;
@@ -40,7 +40,7 @@ export interface NotificationItemActionIconButton extends NotificationItemBase {
     type: 'action-icon-button';
 }
 
-// @public
+// @public @deprecated
 export interface NotificationItemBase {
     // (undocumented)
     ariaLabel: TranslatableString;
@@ -48,7 +48,7 @@ export interface NotificationItemBase {
     icon: string;
 }
 
-// @public
+// @public @deprecated
 export interface NotificationItemLink {
     // (undocumented)
     href: string;
@@ -58,7 +58,7 @@ export interface NotificationItemLink {
     type: 'link';
 }
 
-// @public
+// @public @deprecated
 export interface NotificationItemLinkIcon extends NotificationItemBase {
     // (undocumented)
     href: string;
@@ -68,7 +68,7 @@ export interface NotificationItemLinkIcon extends NotificationItemBase {
     type: 'link';
 }
 
-// @public
+// @public @deprecated
 export interface NotificationItemMenu {
     // (undocumented)
     menuItems: MenuItem[];
@@ -76,13 +76,13 @@ export interface NotificationItemMenu {
     type: 'menu';
 }
 
-// @public
+// @public @deprecated
 export type NotificationItemPrimaryAction = NotificationItemActionCircleButton | NotificationItemActionIconButton | NotificationItemLinkIcon | NotificationItemRouterLinkIcon | NotificationItemMenu | NotificationItemActionButton;
 
-// @public
+// @public @deprecated
 export type NotificationItemQuickAction = NotificationItemActionCircleButton | NotificationItemActionIconButton | NotificationItemLinkIcon | NotificationItemRouterLinkIcon;
 
-// @public
+// @public @deprecated
 export interface NotificationItemRouterLink {
     // (undocumented)
     extras?: NavigationExtras;
@@ -92,7 +92,7 @@ export interface NotificationItemRouterLink {
     type: 'router-link';
 }
 
-// @public
+// @public @deprecated
 export interface NotificationItemRouterLinkIcon extends NotificationItemBase {
     // (undocumented)
     extras?: NavigationExtras;
@@ -102,7 +102,7 @@ export interface NotificationItemRouterLinkIcon extends NotificationItemBase {
     type: 'router-link';
 }
 
-// @public
+// @public @deprecated
 export class SiNotificationItemComponent {
     readonly description: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
