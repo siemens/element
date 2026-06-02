@@ -66,7 +66,7 @@ import { MapPoint, MapPointMetaData } from './models/map-point.interface';
 import { OverlayNativeProperties } from './models/overlay-native-properties.interface';
 import { MapService } from './services/map.service';
 import { SelectCluster } from './services/SelectCluster';
-import { styleJson } from './shared/themes/style';
+import { styleJson } from './shared/themes/map-style';
 
 interface ClusterHolder {
   feature?: Feature;
@@ -731,7 +731,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
           this.map!.removeLayer(layer);
         }
       });
-      this.mapboxStyles(styleJson(key, dark));
+      this.mapboxStyles(styleJson(key, dark ?? false));
     }
   }
 

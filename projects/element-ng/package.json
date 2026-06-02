@@ -45,6 +45,8 @@
     "@angular/router": "21",
     "@ngx-formly/bootstrap": "^6.2.2",
     "@ngx-formly/core": "^6.2.2",
+    "@maplibre/ngx-maplibre-gl": "21",
+    "maplibre-gl": ">=5",
     "@siemens/element-icons": "1",
     "@siemens/element-translate-ng": "49.9.0",
     "@siemens/element-theme": "49.9.0",
@@ -74,6 +76,12 @@
       "optional": true
     },
     "ag-grid-community": {
+      "optional": true
+    },
+    "@maplibre/ngx-maplibre-gl": {
+      "optional": true
+    },
+    "maplibre-gl": {
       "optional": true
     }
   }

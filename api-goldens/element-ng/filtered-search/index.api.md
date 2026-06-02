@@ -15,7 +15,7 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
 export interface CriterionDefinition {
-    datepickerConfig?: DatepickerInputConfig;
+    datepickerConfig?: Omit<DatepickerInputConfig, 'enableDateRange' | 'enableTwoMonthDateRange'>;
     label?: TranslatableString;
     multiSelect?: boolean;
     name: string;
