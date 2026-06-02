@@ -264,6 +264,12 @@ export class SiWidgetInstanceEditorDialogComponent extends SiWidgetEditorBase im
 }
 
 // @public
+export class SiWidgetRendererComponent {
+    readonly widget: _angular_core.InputSignal<Widget>;
+    readonly widgetConfig: _angular_core.InputSignal<WidgetConfig>;
+}
+
+// @public
 export abstract class SiWidgetStorage {
     // @deprecated
     getToolbarMenuItems?: (dashboardId?: string) => {
