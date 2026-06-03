@@ -3,20 +3,25 @@
  * SPDX-License-Identifier: MIT
  */
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { PortalModule } from '@angular/cdk/portal';
 import {
   afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
+  contentChildren,
+  effect,
   inject,
   Injector,
   input,
+  linkedSignal,
   model,
   OnChanges,
   OnInit,
   signal,
-  SimpleChanges
+  SimpleChanges,
+  untracked
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -31,6 +36,7 @@ import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
+import { SiNavbarVerticalNextItemComponent } from './si-navbar-vertical-next-item.component';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
 /** @experimental */
@@ -42,7 +48,7 @@ interface UIState {
 /** @experimental */
 @Component({
   selector: 'si-navbar-vertical-next',
-  imports: [SiIconComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
+  imports: [PortalModule, SiIconComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
   templateUrl: './si-navbar-vertical-next.component.html',
   styleUrl: './si-navbar-vertical-next.component.scss',
   providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useExisting: SiNavbarVerticalNextComponent }],
@@ -155,6 +161,57 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   protected readonly smallScreen = signal(false);
 
   /**
+   * All navigation items currently projected into the navbar, including
+   * subitems rendered inside group templates.
+   */
+  private readonly items = contentChildren(SiNavbarVerticalNextItemComponent, {
+    descendants: true
+  });
+
+  /**
+   * The currently-active top-level item, surfaced alongside the inline-collapse
+   * toggle. Routes nested in a group resolve to the group trigger.
+   */
+  protected readonly activeItem = computed(() =>
+    this.items().find(item => item.isActiveRootItem())
+  );
+
+  /**
+   * Whether the chip's CdkPortalOutlet is attached.
+   * - Attach when collapsed-with-active-item: slide-in needs content.
+   * - Detach eagerly when expanded-with-no-active-item: nothing to slide.
+   * - When expanded-with-active-item, preserve the previous value so the
+   *   slide-out animates with content. `onChipTransitionEnd` flips it false
+   *   after the wrapper transition finishes (timed implicitly to the shortest
+   *   transitioned property, currently `opacity` at 0.25s). DomPortal then
+   *   returns the label DOM to the item.
+   */
+  protected readonly chipPortalAttached = linkedSignal<
+    { collapsed: boolean; hasActive: boolean },
+    boolean
+  >({
+    source: () => ({ collapsed: this.collapsed(), hasActive: !!this.activeItem() }),
+    computation: (source, previous) => {
+      if (source.collapsed && source.hasActive) {
+        return true;
+      }
+      if (!source.collapsed && !source.hasActive) {
+        return false;
+      }
+      return previous?.value ?? false;
+    }
+  });
+
+  protected onChipTransitionEnd(event: TransitionEvent): void {
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+    if (!this.collapsed()) {
+      this.chipPortalAttached.set(false);
+    }
+  }
+
+  /**
    * @defaultValue
    * ```
    * {}
@@ -172,6 +229,8 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     return this.collapsed() ? this.icons.elementDoubleRight : this.icons.elementDoubleLeft;
   });
 
+  readonly inlineCollapsed = computed(() => this.inlineCollapse() && this.collapsed());
+
   constructor() {
     this.breakpointObserver
       .observe(`(max-width: ${BOOTSTRAP_BREAKPOINTS.lgMinimum}px)`)
@@ -180,6 +239,23 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
         this.collapsed.set(matches || this.preferCollapse);
         this.smallScreen.set(matches);
       });
+
+    // Sync inStrip signal on the active item via the same signals that gate
+    // the portal outlet (chipPortalAttached + activeItem).
+    // CdkPortalOutlet.attachDomPortal does not emit (attached) (CDK gap),
+    // so this effect mirrors the attachment state onto the item.
+    effect(() => {
+      const attached = this.chipPortalAttached();
+      const item = this.activeItem();
+      untracked(() => {
+        this.items().forEach(other => {
+          if (other !== item) {
+            other.inStrip.set(false);
+          }
+        });
+        item?.inStrip.set(attached);
+      });
+    });
   }
 
   ngOnChanges(changes: SimpleChanges<this>): void {

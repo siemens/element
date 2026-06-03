@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/all-variables';
 @use '@siemens/element-theme/src/styles/bootstrap/mixins/badge-text';
 @use '@siemens/element-theme/src/styles/bootstrap/mixins/visually-hidden';
 
@@ -94,7 +95,7 @@
   }
 }
 
-:host-context(.nav-collapsed) {
+:host-context(.nav-collapsed):not(.in-strip) {
   .badge {
     position: absolute;
     inset-block-start: map.get(variables.$spacers, 2);
@@ -118,4 +119,53 @@
 
 .badge {
   margin-inline: auto 0;
+}
+
+// Chip appearance when this item's host has been relocated to the
+// inline-collapse active-item slot. The `.btn .btn-primary-ghost` classes
+// (toggled via host bindings) set the `--btn-*` CSS custom properties;
+// these rules win the cascade over the nav-item base styles by virtue of
+// the two-class specificity and consume those vars so the chip matches
+// the standard ghost button look. Shows icon + label; badge and dropdown
+// caret are suppressed.
+:host(.in-strip) {
+  // background: var(--btn-bg);
+  // color: var(--btn-color);
+  // border-radius: all-variables.$border-radius;
+  // inline-size: auto;
+
+  // &:hover {
+  //   background: var(--btn-bg-hover);
+  //   color: var(--btn-color-hover);
+  // }
+
+  // &:active,
+  // &.active {
+  //   background: var(--btn-bg-active);
+  //   color: var(--btn-color-active);
+  // }
+
+  // Suppress the left-bar active indicator; `aria-current="page"` carries
+  // the active role in the chip.
+  &.active::after {
+    display: none;
+  }
+
+  // Dropdown caret not needed in the chip — the flyout opens on click.
+  .dropdown-caret {
+    display: none;
+  }
+
+  :is(.item-title) {
+    font-weight: normal;
+  }
+}
+
+// Within the active-item slot: fuse the left edge with the toggle button
+// (segmented control) and fill the wrapper so the label can truncate.
+:host-context(.active-item-button).in-strip {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  inline-size: 100%;
+  min-inline-size: 0;
 }

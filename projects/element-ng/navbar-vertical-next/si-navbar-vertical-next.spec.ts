@@ -458,5 +458,153 @@ describe('SiNavbarVerticalNext', () => {
       await fixture.whenStable();
       expect(toggle).toHaveAttribute('aria-expanded', 'true');
     });
+
+    describe('active item chip', () => {
+      beforeEach(() => {
+        component.collapsed.set(true);
+      });
+
+      it('should not render a chip when no item is active', async () => {
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        expect(host.querySelector('.active-item-button')).toBeNull();
+      });
+
+      it('should render the active top-level item as a chip', async () => {
+        await TestBed.inject(Router).navigate(['/item-1/sub-item-1']);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        const chipWrapper = host.querySelector('.active-item-button') as HTMLElement;
+        expect(chipWrapper).not.toHaveAttribute('inert');
+        expect(chipWrapper).not.toHaveAttribute('aria-hidden');
+        const chip = page.elementLocator(chipWrapper).getByRole('button', { name: 'item1' });
+
+        await expect.element(chip).toBeVisible();
+        await expect.element(chip).toHaveAttribute('aria-current', 'page');
+      });
+
+      it('should hide the chip when the navbar is expanded but keep it in the DOM for animation', async () => {
+        await TestBed.inject(Router).navigate(['/item-1/sub-item-1']);
+        await fixture.whenStable();
+
+        component.collapsed.set(false);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        const chipWrapper = host.querySelector('.active-item-button') as HTMLElement;
+        // Wrapper stays in the DOM so the CdkPortalOutlet doesn't tear down
+        // mid-transition; the `.active-item-visible` class drives visibility.
+        expect(chipWrapper).not.toBeNull();
+        expect(chipWrapper).not.toHaveClass('active-item-visible');
+        expect(chipWrapper).toHaveAttribute('inert', '');
+        expect(chipWrapper).toHaveAttribute('aria-hidden', 'true');
+      });
+
+      it('should keep the chip clickable without expanding the navbar', async () => {
+        await TestBed.inject(Router).navigate(['/item-1/sub-item-1']);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        const chipWrapper = host.querySelector('.active-item-button') as HTMLElement;
+        const chip = page.elementLocator(chipWrapper).getByRole('button', { name: 'item1' });
+
+        await chip.click();
+        await fixture.whenStable();
+
+        expect(host).toHaveClass('nav-collapsed');
+        await expect.element(chip).toBeVisible();
+      });
+
+      it('should keep the chip wrapper mounted across a collapse→expand→collapse cycle for a group route', async () => {
+        // Regression: previously `item.active()` for a group trigger dropped to
+        // false on expand (gate `!group.expanded() || navbar.collapsed()`),
+        // tearing down the chip wrapper before the slide-out could animate.
+        // The ungated `isOnActiveRoute` now drives `isActiveRootItem` so the
+        // wrapper persists for the full transition.
+        await TestBed.inject(Router).navigate(['/item-1/sub-item-1']);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        expect(host.querySelector('.active-item-button')).not.toBeNull();
+
+        component.collapsed.set(false);
+        await fixture.whenStable();
+        // Wrapper must persist with content while the slide-out animation runs.
+        const expandedChip = host.querySelector('.active-item-button') as HTMLElement;
+        expect(expandedChip).not.toBeNull();
+        expect(expandedChip).not.toHaveClass('active-item-visible');
+        expect(expandedChip.querySelector('button')).not.toBeNull();
+
+        component.collapsed.set(true);
+        await fixture.whenStable();
+        const recollapsedChip = host.querySelector('.active-item-button') as HTMLElement;
+        expect(recollapsedChip).toHaveClass('active-item-visible');
+        const chip = page.elementLocator(recollapsedChip).getByRole('button', { name: 'item1' });
+        await expect.element(chip).toBeVisible();
+      });
+
+      it('should not mark the group trigger as active while inline-expanded with an active sub-item', async () => {
+        // The visual gate in `active()` (no-double-highlight) is preserved:
+        // when a group is inline-expanded and the navbar is expanded, the
+        // trigger button must not carry `.active` — only the sub-item does.
+        component.collapsed.set(false);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        const trigger = host.querySelector('.nav-content button.dropdown-toggle') as HTMLElement;
+
+        // User clicks to inline-expand the group, then navigates to a sub-item.
+        trigger.click();
+        await fixture.whenStable();
+        expect(trigger).toHaveAttribute('aria-expanded', 'true');
+
+        await TestBed.inject(Router).navigate(['/item-1/sub-item-1']);
+        await fixture.whenStable();
+
+        const subItem = host.querySelector(
+          '.nav-content a[si-navbar-vertical-next-item]'
+        ) as HTMLElement;
+        expect(trigger).not.toHaveClass('active');
+        expect(subItem).toHaveClass('active');
+      });
+
+      it('should clear the chip when navigating away to a non-active route', async () => {
+        await TestBed.inject(Router).navigate(['/item-1/sub-item-1']);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        expect(host.querySelector('.active-item-button')).not.toBeNull();
+
+        await TestBed.inject(Router).navigate(['/somewhere-else']);
+        await fixture.whenStable();
+
+        expect(host.querySelector('.active-item-button')).toBeNull();
+      });
+
+      it('should swap the chip content when the active route changes between sub-items', async () => {
+        await TestBed.inject(Router).navigate(['/item-1/sub-item-1']);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        const chipWrapper = host.querySelector('.active-item-button') as HTMLElement;
+        // Both sub-items resolve to the same group trigger ("item1"), so the
+        // chip identity is stable while the underlying active route changes.
+        await expect
+          .element(page.elementLocator(chipWrapper).getByRole('button', { name: 'item1' }))
+          .toBeVisible();
+
+        await TestBed.inject(Router).navigate(['/item-1/sub-item-2']);
+        await fixture.whenStable();
+
+        // Chip remains, still surfacing the group trigger.
+        const stillThere = host.querySelector('.active-item-button') as HTMLElement;
+        expect(stillThere).toHaveClass('active-item-visible');
+        await expect
+          .element(page.elementLocator(stillThere).getByRole('button', { name: 'item1' }))
+          .toBeVisible();
+      });
+    });
   });
 });

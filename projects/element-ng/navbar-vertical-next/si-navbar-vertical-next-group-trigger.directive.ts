@@ -2,7 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Overlay } from '@angular/cdk/overlay';
+import {
+  ConnectionPositionPair,
+  FlexibleConnectedPositionStrategy,
+  Overlay
+} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
   Component,
@@ -15,6 +19,7 @@ import {
   Injector,
   input,
   linkedSignal,
+  OnDestroy,
   TemplateRef,
   untracked,
   ViewContainerRef
@@ -51,7 +56,7 @@ class SiNavbarFlyoutAnchorComponent {
     '(click)': 'triggered()'
   }
 })
-export class SiNavbarVerticalNextGroupTriggerDirective {
+export class SiNavbarVerticalNextGroupTriggerDirective implements OnDestroy {
   private static idCounter = 0;
 
   /** @internal */
@@ -122,13 +127,7 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
   private readonly overlay = inject(Overlay);
   private readonly injector = Injector.create({ parent: inject(Injector), providers: [] });
   private readonly overlayRef = this.overlay.create({
-    positionStrategy: this.overlay
-      .position()
-      .flexibleConnectedTo(this.viewContainer.element)
-      .withPositions([
-        { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top' },
-        { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
-      ])
+    positionStrategy: this.buildPositionStrategy(this.navbar.inlineCollapsed())
   });
   private groupView?: EmbeddedViewRef<unknown>;
   private flyoutAnchorComponentRef?: ComponentRef<SiNavbarFlyoutAnchorComponent>;
@@ -147,6 +146,30 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
         this.attachInline();
       });
     });
+
+    effect(() => {
+      const inlineCollapsed = this.navbar.inlineCollapsed();
+      const positionStrategy = this.buildPositionStrategy(inlineCollapsed);
+      this.overlayRef.updatePositionStrategy(positionStrategy);
+    });
+  }
+
+  /** @internal */
+  private buildPositionStrategy(inlineCollapsed: boolean): FlexibleConnectedPositionStrategy {
+    const positions: ConnectionPositionPair[] = inlineCollapsed
+      ? [
+          { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
+          { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' }
+        ]
+      : [
+          { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top' },
+          { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
+        ];
+
+    return this.overlay
+      .position()
+      .flexibleConnectedTo(this.viewContainer.element)
+      .withPositions(positions);
   }
 
   /** @internal */
@@ -200,5 +223,10 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
     this.flyoutAnchorComponentRef = undefined;
     this.flyoutOutsideClickSubscription?.unsubscribe();
     this.flyoutOutsideClickSubscription = undefined;
+  }
+
+  ngOnDestroy(): void {
+    this.overlayRef?.detach();
+    this.overlayRef?.dispose();
   }
 }
