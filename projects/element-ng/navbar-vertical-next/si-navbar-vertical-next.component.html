@@ -2,6 +2,7 @@
   @if (smallScreen() && !collapsed()) {
     <div class="modal-backdrop" animate.leave="backdrop-leave" (click)="toggleCollapse()"></div>
   }
+  @let inlineCollapsed = inlineCollapse() && collapsed();
   <nav
     tabindex="-1"
     class="bg-base-1 focus-sub-inside"
@@ -14,8 +15,8 @@
         <button
           type="button"
           class="btn btn-icon toggle-button"
-          [class.btn-primary-ghost]="inlineCollapsed()"
-          [class.btn-tertiary-ghost]="!inlineCollapsed()"
+          [class.btn-primary-ghost]="inlineCollapsed"
+          [class.btn-tertiary-ghost]="!inlineCollapsed"
           [attr.aria-label]="toggleButtonText() | translate"
           [attr.aria-expanded]="!collapsed()"
           (click)="toggleCollapse()"
@@ -33,14 +34,14 @@
         (transitionend)="onChipTransitionEnd($event)"
       >
         @if (chipPortalAttached()) {
-          <ng-container [cdkPortalOutlet]="item.hostPortal" />
+          <ng-container [cdkPortalOutlet]="item.portalContent()" />
         }
       </div>
     }
     <div
       class="nav-content"
-      [attr.inert]="inlineCollapsed() ? '' : null"
-      [attr.aria-hidden]="inlineCollapsed() ? 'true' : null"
+      [attr.inert]="inlineCollapsed ? '' : null"
+      [attr.aria-hidden]="inlineCollapsed ? 'true' : null"
     >
       <ng-content select="si-navbar-vertical-next-search" />
       <ng-content select="si-navbar-vertical-next-items" />

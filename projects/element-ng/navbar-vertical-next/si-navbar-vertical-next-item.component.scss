@@ -94,7 +94,7 @@
   }
 }
 
-:host-context(.nav-collapsed):not(.in-strip) {
+:host-context(.nav-collapsed) {
   .badge {
     position: absolute;
     inset-block-start: map.get(variables.$spacers, 2);
@@ -120,31 +120,19 @@
   margin-inline: auto 0;
 }
 
-// When this item's host is relocated to the inline-collapse active-item slot
-// the `.btn.btn-primary-ghost` host bindings handle all button styling.
-// Only suppress the nav-specific chrome that `.btn` does not cover.
-:host(.in-strip) {
-  // Suppress the left-bar active indicator; `aria-current="page"` carries
-  // the active role in the chip.
-  &.active::after {
-    display: none;
-  }
-
-  // Dropdown caret not needed in the chip — the flyout opens on click.
-  .dropdown-caret {
-    display: none;
-  }
-
-  :is(.item-title) {
-    font-weight: normal;
-  }
+.inline-collapse-chip-label > .item-title {
+  font-weight: normal;
 }
 
-// Within the active-item slot: fuse the left edge with the toggle button
-// (segmented control) and fill the wrapper so the label can truncate.
-:host-context(.active-item-button).in-strip {
+.btn.inline-collapse-active-item {
   border-start-start-radius: 0;
   border-end-start-radius: 0;
+  // Fill the wrapper (capped to viewport in navbar.scss) and allow flex
+  // children to shrink so `.item-title.text-truncate` can ellipsize.
   inline-size: 100%;
   min-inline-size: 0;
+
+  .inline-collapse-chip-label {
+    min-inline-size: 0;
+  }
 }
