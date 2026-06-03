@@ -8,6 +8,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } fro
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
 import type { Mock } from 'vitest';
+import { page, userEvent } from 'vitest/browser';
 
 import { SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive';
 import { SiDatepickerDirective } from './si-datepicker.directive';
@@ -262,5 +263,32 @@ describe('SiDatepickerDirective', () => {
       await fixture.whenStable();
       expect(document.querySelector('si-datepicker-overlay')).not.toBeInTheDocument();
     });
+  });
+
+  it('should keep the AM/PM input after disabling, reopening and re-enabling time', async () => {
+    const meridianCombo = page.getByRole('combobox', { name: 'Period' });
+    await updateConfig({
+      showTime: true,
+      showSeconds: true,
+      dateFormat: 'MM/dd/yyyy',
+      dateTimeFormat: 'MM/dd/yyyy, h:mm:ss a'
+    });
+
+    await userEvent.click(getInput());
+    await fixture.whenStable();
+    await expect.element(meridianCombo).toBeVisible();
+
+    await userEvent.click(page.getByRole('switch', { name: 'Consider Time' }));
+    await fixture.whenStable();
+
+    await backdropClick(fixture);
+
+    await userEvent.click(getInput());
+    await fixture.whenStable();
+
+    await userEvent.click(page.getByRole('switch', { name: 'Ignore time' }));
+    await fixture.whenStable();
+
+    await expect.element(meridianCombo).toBeVisible();
   });
 });
