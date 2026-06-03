@@ -226,6 +226,8 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     return this.collapsed() ? this.icons.elementDoubleRight : this.icons.elementDoubleLeft;
   });
 
+  readonly inlineCollapsed = computed(() => this.inlineCollapse() && this.collapsed());
+
   constructor() {
     this.breakpointObserver
       .observe(`(max-width: ${BOOTSTRAP_BREAKPOINTS.lgMinimum}px)`)

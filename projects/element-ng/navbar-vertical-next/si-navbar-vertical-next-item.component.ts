@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { CdkPortal, DomPortal, PortalModule } from '@angular/cdk/portal';
+import { DomPortal } from '@angular/cdk/portal';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -11,8 +11,7 @@ import {
   ElementRef,
   inject,
   input,
-  OnInit,
-  viewChild
+  OnInit
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLinkActive } from '@angular/router';
@@ -28,14 +27,19 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'a[si-navbar-vertical-next-item], button[si-navbar-vertical-next-item]',
-  imports: [PortalModule, SiIconComponent],
+  imports: [SiIconComponent],
   templateUrl: './si-navbar-vertical-next-item.component.html',
   styleUrl: './si-navbar-vertical-next-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'focus-inside navbar-vertical-item',
+    'class': 'focus-inside',
+    '[class.navbar-vertical-item]': '!inStrip()',
     '[class.active]': 'active()',
+    '[class.in-strip]': 'inStrip()',
+    '[class.btn]': 'inStrip()',
+    '[class.btn-primary-ghost]': 'inStrip()',
     '[class.hide-badge-collapsed]': 'hideBadgeWhenCollapsed()',
+    '[attr.aria-current]': 'active() && inStrip() ? "page" : null',
     '(click)': 'triggered()'
   }
 })
@@ -82,31 +86,16 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     { initialValue: this.routerLinkActive?.isActive ?? false }
   );
 
-  private readonly labelContentEl = viewChild.required<ElementRef<HTMLElement>>('labelContent');
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
   /**
-   * DOM portal of this item's label element. Used internally by the chip
-   * template to relocate the label into the inline-collapse chip button.
-   *
-   * While portaled, the label slot in the original item is empty. During the
-   * nav expand transition the chip is still mounted (drained on
-   * `transitionend`), so the active item would briefly render without its
-   * label — masked by the `nav::before` overlay in
-   * `si-navbar-vertical-next.component.scss`. Keep that overlay in sync if
-   * the chip detach timing changes.
+   * DOM portal of this item's host element. The navbar attaches it to the
+   * inline-collapse active-item slot when collapsed, relocating the entire
+   * host (with all its listeners, RouterLink, and group directive) into the
+   * chip. Restored to the item's original parent on detach.
    * @internal
    */
-  protected readonly labelPortalRef = computed(() => new DomPortal(this.labelContentEl()));
-
-  /**
-   * Template portal of this item's inline-collapse chip view. The navbar
-   * attaches it to a `CdkPortalOutlet` in the inline-collapse bar. The
-   * template renders a `<button>` that invokes `triggered()` on click and
-   * embeds the item's icon and label, so all interactive behavior remains
-   * owned by the item.
-   * @internal
-   */
-  readonly portalContent = viewChild.required(CdkPortal);
+  readonly hostPortal = new DomPortal(this.elementRef.nativeElement);
 
   /**
    * Determines if the badge contains text-only content (not numeric)
@@ -168,6 +157,8 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
    * @internal
    */
   readonly isActiveRootItem = computed(() => !this.parent && this.isOnActiveRoute());
+
+  readonly inStrip = computed(() => this.navbar.inlineCollapsed() && this.isActiveRootItem());
 
   ngOnInit(): void {
     if (this.group && this.active()) {

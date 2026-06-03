@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Overlay } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
   Component,
@@ -122,15 +122,7 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
   private readonly viewContainer = inject(ViewContainerRef);
   private readonly overlay = inject(Overlay);
   private readonly injector = Injector.create({ parent: inject(Injector), providers: [] });
-  private readonly overlayRef = this.overlay.create({
-    positionStrategy: this.overlay
-      .position()
-      .flexibleConnectedTo(this.viewContainer.element)
-      .withPositions([
-        { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top' },
-        { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
-      ])
-  });
+  private overlayRef!: OverlayRef;
   private groupView?: EmbeddedViewRef<unknown>;
   private flyoutAnchorComponentRef?: ComponentRef<SiNavbarFlyoutAnchorComponent>;
   private readonly templatePortal = computed(
@@ -147,6 +139,42 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
         this.detachFlyout();
         this.attachInline();
       });
+    });
+
+    effect(() => {
+      const inlineCollapsed = this.navbar.inlineCollapsed();
+
+      if (inlineCollapsed) {
+        this.createInlineCollapsedOverlay();
+      } else {
+        this.createFlyoutOverlay();
+      }
+    });
+  }
+
+  /** @internal */
+  private createFlyoutOverlay(): void {
+    this.overlayRef = this.overlay.create({
+      positionStrategy: this.overlay
+        .position()
+        .flexibleConnectedTo(this.viewContainer.element)
+        .withPositions([
+          { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top' },
+          { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
+        ])
+    });
+  }
+
+  /** @internal */
+  private createInlineCollapsedOverlay(): void {
+    this.overlayRef = this.overlay.create({
+      positionStrategy: this.overlay
+        .position()
+        .flexibleConnectedTo(this.viewContainer.element)
+        .withPositions([
+          { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
+          { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' }
+        ])
     });
   }
 
