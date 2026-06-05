@@ -1,7 +1,7 @@
 {
   "name": "@siemens/element-translate-cli",
   "description": "Element translation abstraction layer CLI.",
-  "version": "49.9.0",
+  "version": "49.10.0",
   "license": "MIT",
   "type": "module",
   "repository": {

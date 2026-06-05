@@ -1,0 +1,44 @@
+// Host is transparent so the existing parent layout (today block, forecast
+// cells) is unchanged. Each call site picks a size modifier class; the loop
+// below emits the matching sizing rules.
+//
+// Sizes are expressed in `rem` so the illustration scales with the user's
+// root font size. Pixel equivalents assume the default 16px root.
+//
+// - sm (1.25rem / 20px): compact today block, vertical forecast list
+// - md (1.5rem  / 24px): horizontal forecast strip
+// - lg (2.5rem  / 40px): non-compact today block
+
+$sizes: (
+  sm: 1.25rem,
+  md: 1.5rem,
+  lg: 2.5rem
+);
+
+:host {
+  display: contents;
+}
+
+:host img {
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+@each $name, $size in $sizes {
+  :host(.si-weather-widget-illustration-#{$name}) {
+    img,
+    si-icon {
+      inline-size: $size;
+      block-size: $size;
+    }
+
+    // <si-icon> sizes its glyph via font-size; intrinsic dimensions are
+    // released so the icon fills exactly the requested box.
+    si-icon {
+      font-size: $size;
+      line-height: 1;
+      inline-size: auto;
+      block-size: auto;
+    }
+  }
+}

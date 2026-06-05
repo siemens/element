@@ -1,0 +1,294 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/variables/typography';
+
+// Body/body-lg typography for the forecast row range and the horizontal-layout
+// day range — matches the today min/max sizing.
+.si-weather-widget-forecast-range,
+.si-weather-widget-forecast.si-weather-widget-horizontal .si-weather-widget-forecast-day-range {
+  @include typography.si-font(
+    typography.$si-font-size-body-lg,
+    typography.$si-line-height-body-lg,
+    typography.$si-font-weight-body-lg
+  );
+}
+
+// Horizontal-day min/max wrapper. The forecast component owns its own copy of
+// these rules because view encapsulation prevents the body component's
+// equivalent rules from reaching inside the forecast template.
+.si-weather-widget-forecast-day-range {
+  display: flex;
+  gap: map.get(variables.$spacers, 2);
+}
+
+.si-weather-widget-forecast-range-min {
+  color: variables.$element-text-secondary;
+}
+
+.si-weather-widget-forecast-range-max {
+  color: variables.$element-text-primary;
+  font-weight: variables.$si-font-weight-semibold;
+}
+
+// Registered integer custom property used as the extras-track count. Registering
+// as `<integer>` lets `min()` inside `repeat()` resolve to an integer, which
+// `repeat()` requires. The forecast template sets this inline to the configured
+// extras count; container queries cap it via `--si-weather-forecast-extras-cap`.
+@property --si-weather-forecast-extras {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --si-weather-forecast-extras-cap {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 5;
+}
+
+.si-weather-widget-forecast-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  // Effective extras = min(configured, breakpoint cap). Tracks: day label
+  // (`max-content` — hugs the label text so it scales with the root font size
+  // without wrapping), illustration (1.25rem ≈ 20px at the default 16px root),
+  // then for each visible extra a `1fr` spacer followed by the extra (`auto`),
+  // and finally a `1fr` spacer before the range cell (`auto`). The `1fr` spacer
+  // tracks share the remaining inline space equally, producing equal gaps
+  // between the illustration, every extra column, and the range cell.
+  grid-template-columns:
+    max-content
+    1.25rem
+    repeat(min(var(--si-weather-forecast-extras), var(--si-weather-forecast-extras-cap)), 1fr auto)
+    1fr
+    auto;
+  row-gap: map.get(variables.$spacers, 4);
+  align-items: center;
+  inline-size: 100%;
+  // Enable inline-size container queries so the cap can be lowered as the
+  // widget narrows.
+  container-type: inline-size;
+
+  // Breakpoint formula: width = label(44) + labelGap(16) + illustration(20) +
+  // range(60) + N * extra(80) + (N + 1) * minGap(16) = 156 + 96 * N.
+  // N = 5 → 636 ; N = 4 → 540 ; N = 3 → 444 ; N = 2 → 348 ; N = 1 → 252.
+  // Each query lowers the cap; the smallest matching query wins.
+  @container (max-width: 635px) {
+    --si-weather-forecast-extras-cap: 4;
+
+    .si-weather-widget-forecast-extra-5 {
+      display: none;
+    }
+  }
+
+  @container (max-width: 539px) {
+    --si-weather-forecast-extras-cap: 3;
+
+    .si-weather-widget-forecast-extra-4,
+    .si-weather-widget-forecast-extra-5 {
+      display: none;
+    }
+  }
+
+  @container (max-width: 443px) {
+    --si-weather-forecast-extras-cap: 2;
+
+    .si-weather-widget-forecast-extra-3,
+    .si-weather-widget-forecast-extra-4,
+    .si-weather-widget-forecast-extra-5 {
+      display: none;
+    }
+  }
+
+  @container (max-width: 347px) {
+    --si-weather-forecast-extras-cap: 1;
+
+    .si-weather-widget-forecast-extra-2,
+    .si-weather-widget-forecast-extra-3,
+    .si-weather-widget-forecast-extra-4,
+    .si-weather-widget-forecast-extra-5 {
+      display: none;
+    }
+  }
+
+  @container (max-width: 251px) {
+    --si-weather-forecast-extras-cap: 0;
+
+    .si-weather-widget-forecast-extra-1,
+    .si-weather-widget-forecast-extra-2,
+    .si-weather-widget-forecast-extra-3,
+    .si-weather-widget-forecast-extra-4,
+    .si-weather-widget-forecast-extra-5 {
+      display: none;
+    }
+  }
+}
+
+// Row participates as a transparent group so its children become direct grid items.
+.si-weather-widget-forecast-row {
+  display: contents;
+}
+
+.si-weather-widget-forecast-day-label {
+  color: variables.$element-text-secondary;
+  margin-block: map.get(variables.$spacers, 4);
+  // The label track is `max-content`; prevent wrapping if the container
+  // ever constrains the row below `max-content` (e.g. very large root font
+  // sizes combined with the smallest breakpoint).
+  white-space: nowrap;
+}
+
+// Vertical-layout-only positioning: the label sits in the first grid track
+// with a fixed gap to the illustration.
+.si-weather-widget-forecast.si-weather-widget-vertical .si-weather-widget-forecast-day-label {
+  // Fixed gap between the day label and the illustration (Figma spacing-6).
+  padding-inline-end: map.get(variables.$spacers, 6);
+  grid-column-start: 1;
+}
+
+// Horizontal-layout-only: center the day label inside its forecast column.
+.si-weather-widget-forecast.si-weather-widget-horizontal .si-weather-widget-forecast-day-label {
+  text-align: center;
+}
+
+.si-weather-widget-forecast-illustration-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-block: map.get(variables.$spacers, 3);
+  grid-column-start: 2;
+}
+
+.si-weather-widget-forecast-extra {
+  display: inline-flex;
+  align-items: center;
+  gap: map.get(variables.$spacers, 1);
+  white-space: nowrap;
+}
+
+// Place each extra into its dedicated `auto` track (tracks 4, 6, 8, 10, 12),
+// skipping the `1fr` spacer tracks. The container queries above shrink the
+// template; extras that no longer have a track are hidden via `display: none`,
+// so out-of-range placements are inert.
+.si-weather-widget-forecast-extra-1 {
+  grid-column-start: 4;
+}
+
+.si-weather-widget-forecast-extra-2 {
+  grid-column-start: 6;
+}
+
+.si-weather-widget-forecast-extra-3 {
+  grid-column-start: 8;
+}
+
+.si-weather-widget-forecast-extra-4 {
+  grid-column-start: 10;
+}
+
+.si-weather-widget-forecast-extra-5 {
+  grid-column-start: 12;
+}
+
+// Range always anchors to the last track regardless of how many extras are visible.
+.si-weather-widget-forecast-range-cell {
+  white-space: nowrap;
+  grid-column-end: -1;
+}
+
+// Forecast min/max wrapper: typography matches today min/max — Body/body-lg (16/20).
+.si-weather-widget-forecast-range {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: map.get(variables.$spacers, 2);
+  margin-block: map.get(variables.$spacers, 3);
+}
+
+:host {
+  display: contents;
+}
+
+.si-weather-widget-forecast {
+  // horizontal strip layout
+  display: flex;
+  flex-wrap: wrap;
+  gap: map.get(variables.$spacers, 4);
+}
+
+.si-weather-widget-forecast.si-weather-widget-vertical {
+  display: block;
+}
+
+// Horizontal-layout variant: no wrapping. As the strip narrows, drop forecast
+// days one by one from the end via container queries. The horizontal gap
+// between days is `spacing-4` (8px), factored into the breakpoint formula.
+.si-weather-widget-forecast.si-weather-widget-horizontal {
+  flex-wrap: nowrap;
+  overflow: hidden;
+  container-type: inline-size;
+
+  // Breakpoint formula (each day min ~64px + spacing-4 (8px) gap between days):
+  // width(N) = N * 64 + (N - 1) * 8 = 72N - 8.
+  // N = 5 → 352 ; N = 4 → 280 ; N = 3 → 208 ; N = 2 → 136.
+  // Drop the trailing day below each threshold.
+  @container (max-width: 351px) {
+    .si-weather-widget-forecast-day-5 {
+      display: none;
+    }
+  }
+
+  @container (max-width: 279px) {
+    .si-weather-widget-forecast-day-4,
+    .si-weather-widget-forecast-day-5 {
+      display: none;
+    }
+  }
+
+  @container (max-width: 207px) {
+    .si-weather-widget-forecast-day-3,
+    .si-weather-widget-forecast-day-4,
+    .si-weather-widget-forecast-day-5 {
+      display: none;
+    }
+  }
+
+  @container (max-width: 135px) {
+    .si-weather-widget-forecast-day-2,
+    .si-weather-widget-forecast-day-3,
+    .si-weather-widget-forecast-day-4,
+    .si-weather-widget-forecast-day-5 {
+      display: none;
+    }
+  }
+}
+
+.si-weather-widget-forecast-day {
+  flex: 1 1 0;
+  min-inline-size: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: map.get(variables.$spacers, 1);
+  text-align: center;
+}
+
+// Horizontal-layout variant: add block padding to each forecast column so the
+// items don't sit flush against the top/bottom of the strip.
+.si-weather-widget-forecast.si-weather-widget-horizontal .si-weather-widget-forecast-day {
+  padding-block: map.get(variables.$spacers, 1);
+}
+
+.si-weather-widget-forecast.si-weather-widget-horizontal .si-weather-widget-forecast-day-label {
+  margin-block: map.get(variables.$spacers, 0);
+}
+
+.si-weather-widget-forecast-extra-icon {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-inline-end: map.get(variables.$spacers, 1);
+  color: variables.$element-text-secondary;
+  margin-block: map.get(variables.$spacers, 3);
+}
