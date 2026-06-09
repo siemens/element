@@ -14,7 +14,6 @@ import {
 import { RouterLinkActive } from '@angular/router';
 import { elementDown2, elementRight2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiLinkDirective } from '@siemens/element-ng/link';
 
 import { SiNavbarVerticalNextGroupTriggerDirective } from './si-navbar-vertical-next-group-trigger.directive';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
@@ -66,7 +65,6 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     self: true
   });
   private readonly routerLinkActive = inject(RouterLinkActive, { optional: true });
-  private readonly siLink = inject(SiLinkDirective, { optional: true });
 
   /**
    * Determines if the badge contains text-only content (not numeric)
@@ -107,7 +105,6 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     return (
       this.activeOverride() ||
       this.routerLinkActive?.isActive ||
-      this.siLink?.active() ||
       ((!this.group?.expanded() || this.navbar.collapsed()) && this.group?.active()) ||
       false
     );
