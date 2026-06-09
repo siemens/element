@@ -38,11 +38,11 @@
     "migrations": "./schematics/migration.json"
   },
   "peerDependencies": {
-    "@angular/cdk": "21",
-    "@angular/common": "21",
-    "@angular/core": "21",
-    "@angular/forms": "21",
-    "@angular/router": "21",
+    "@angular/cdk": "21 - 22",
+    "@angular/common": "21 - 22",
+    "@angular/core": "21 - 22",
+    "@angular/forms": "21 - 22",
+    "@angular/router": "21 - 22",
     "@ngx-formly/bootstrap": "^6.2.2",
     "@ngx-formly/core": "^6.2.2",
     "@siemens/element-icons": "1",
