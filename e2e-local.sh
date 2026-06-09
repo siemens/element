@@ -60,6 +60,7 @@ if [ x$1 = "xshell" ]; then
     -e PLAYWRIGHT_CONTAINER=true \
     -e PLAYWRIGHT_isvrt=true \
     -e PLAYWRIGHT_staticTest=$PLAYWRIGHT_staticTest \
+    -e PW_WORKERS=3 \
     -v $CWD:/e2e:rw$MOUNT_FLAGS \
     -w /e2e \
     --net=$NETWORK_MODE \
