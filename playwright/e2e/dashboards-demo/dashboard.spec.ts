@@ -142,7 +142,7 @@ test.describe('dashboard', () => {
     await si.runVisualAndA11yTests('contact-widget');
   });
 
-  test(example + 'delete', async ({ page, si }) => {
+  test(example + ' delete', async ({ page, si }) => {
     await si.visitExample(example, undefined);
     await expect(page.getByLabel('Edit')).toBeVisible();
     const editBtn = page.getByLabel('Edit');
@@ -151,6 +151,7 @@ test.describe('dashboard', () => {
     await pieChart.getByLabel('Remove').click();
     await page.waitForTimeout(100);
     await expect(page.locator('si-delete-confirmation-dialog')).toBeVisible();
+    await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('delete-confirmation-dialog');
 
     const deleteBtn = page.locator('si-delete-confirmation-dialog').getByText('Remove', {
@@ -160,6 +161,7 @@ test.describe('dashboard', () => {
     await expect(page.locator('.modal-backdrop')).not.toBeVisible();
     await expect(page.getByText('Pie Chart', { exact: true })).not.toBeVisible();
 
+    await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('delete');
   });
 
@@ -268,7 +270,8 @@ test.describe('dashboard', () => {
 
     // Cancel the edit
     await page.getByText('Cancel', { exact: true }).click();
-    await expect(page.getByLabel('Edit')).toBeVisible();
+    // count 1: the dashboard edit button is visible, all c-a-b edit buttons are hidden
+    await expect(page.getByLabel('Edit')).toHaveCount(1);
 
     // Scroll the widgets container to top before verifying positions
     await page.locator('.si-dashboard-content').evaluate(el => el.scrollTo(0, 0));
@@ -280,6 +283,7 @@ test.describe('dashboard', () => {
       );
     }
   });
+
   test(example + ' web-component note widget', async ({ page, si }) => {
     await si.visitExample(example, undefined);
     await openWidgetCatalog(page);
