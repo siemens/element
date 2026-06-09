@@ -132,6 +132,8 @@ jobs:
       matrix:
         shardIndex: [1, 2, 3]
         shardTotal: [3]
+    env:
+      PW_WORKERS: 3
     steps:
       # As we are in another container, we need to install LFS manually.
       # See: https://github.com/orgs/community/discussions/160433
