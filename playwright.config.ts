@@ -11,6 +11,7 @@ const dashboardsEsmPort = process.env.DASHBOARDS_ESM_PORT ?? '4204';
 const localAddress = process.env.LOCAL_ADDRESS ?? 'localhost';
 const onDifferentLocalAddress = localAddress !== 'localhost';
 const isCI = !!process.env.CI;
+const workers = process.env.PW_WORKERS ? parseInt(process.env.PW_WORKERS, 10) : 4;
 const webServerCommand = 'npx http-server dist/element-examples -s -p 4200 -a 127.0.0.1';
 const dashboardsServerCommand = 'npx http-server dist/dashboards-demo -s -p 4201 -a 127.0.0.1';
 const dashboardsEsmServerCommand =
@@ -86,7 +87,7 @@ const config: PlaywrightTestConfig = {
   /* Retry on CI only */
   retries: isCI ? 1 : 0,
   /* Use fixed number of workers. */
-  workers: 4,
+  workers,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: isCI
     ? [['dot'], ['blob']]
