@@ -4,10 +4,13 @@
  */
 import { CdkMonitorFocus, FocusOrigin } from '@angular/cdk/a11y';
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
+  inject,
+  Injector,
   input,
   model,
   OnInit,
@@ -48,6 +51,8 @@ import { SiFilteredSearchTypeaheadComponent } from './values/typeahead/si-filter
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiFilteredSearchValueComponent implements OnInit {
+  private readonly injector = inject(Injector);
+
   readonly value = model.required<CriterionValue>();
   readonly definition = input.required<InternalCriterionDefinition>();
   readonly disabled = input.required<boolean>();
@@ -123,16 +128,19 @@ export class SiFilteredSearchValueComponent implements OnInit {
     this.active.set(true);
     this.hasPendingFocus = true;
 
-    setTimeout(() => {
-      if (field === 'value') {
-        this.valueInput()?.focus();
-      } else if (field === 'operator') {
-        this.operatorInput()?.nativeElement.focus();
-      } else {
-        (this.operatorInput()?.nativeElement ?? this.valueInput())?.focus();
-      }
-      this.hasPendingFocus = false;
-    });
+    afterNextRender(
+      () => {
+        if (field === 'value') {
+          this.valueInput()?.focus();
+        } else if (field === 'operator') {
+          this.operatorInput()?.nativeElement.focus();
+        } else {
+          (this.operatorInput()?.nativeElement ?? this.valueInput())?.focus();
+        }
+        this.hasPendingFocus = false;
+      },
+      { injector: this.injector }
+    );
   }
 
   protected backspaceOverflow(): void {
