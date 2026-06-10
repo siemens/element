@@ -17,6 +17,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "builders": "./builders.json",
   "dependencies": {
     "@stackblitz/sdk": "^1.11.0",
     "codeflask": "^1.4.1",
@@ -33,6 +34,8 @@
   "peerDependencies": {
     "@angular/common": "22",
     "@angular/core": "22",
+    "@angular/build": "22",
+    "@angular-devkit/architect": "^0.2200.0",
     "react": "18 || 19",
     "react-dom": "18 || 19",
     "vue": "3",
@@ -57,6 +60,7 @@
     }
   },
   "exports": {
+    "./package.json": "./package.json",
     "./component-loader": {
       "default": "./component-loader.cjs"
     },

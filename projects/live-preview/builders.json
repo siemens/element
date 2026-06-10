@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/@angular-devkit/architect/src/builders-schema.json",
+  "builders": {
+    "application": {
+      "implementation": "./builders/dist/application",
+      "schema": "./builders/dist/application/schema.json",
+      "description": "Angular application builder with custom esbuild plugin support"
+    },
+    "dev-server": {
+      "implementation": "./builders/dist/dev-server",
+      "schema": "./builders/dist/dev-server/schema.json",
+      "description": "Angular dev-server with custom esbuild plugin support"
+    }
+  }
+}
