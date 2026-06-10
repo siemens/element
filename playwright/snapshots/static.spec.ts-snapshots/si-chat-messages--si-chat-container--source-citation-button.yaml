@@ -1,0 +1,41 @@
+- group:
+  - button "data-analysis.py"
+- group:
+  - button "dataset.csv"
+- paragraph: Can you help me analyze these files?
+- paragraph: I'm having trouble understanding the data structure and need assistance with the implementation.
+- group:
+  - button "Export message"
+- text: I'd be happy to help! Data processing pipelines typically follow a structured approach. Let me examine your files and provide detailed guidance.
+- group:
+  - button "Add to list"
+  - button "Export response"
+  - button "Retry response"
+  - button "More actions"
+  - button "Sources"
+- paragraph: Perfect! What should I focus on first
+- paragraph: I also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?
+- group:
+  - button "Export message"
+- text: Great question! When analyzing large datasets, it's crucial to focus on vectorized operations and avoid row-by-row iteration. Additionally, memory-efficient chunking strategies allow you to process files that exceed available RAM.
+- group:
+  - button "Add to list"
+  - button "Export response"
+  - button "Retry response"
+  - button "More actions"
+  - button "Sources"
+- alert: Info AI responses are for demonstration purposes.
+- group:
+  - text: requirements.pdf
+  - button "Remove attachment requirements.pdf"
+- group:
+  - text: mockup.png
+  - button "Remove attachment mockup.png"
+- textbox "Chat message input":
+  - /placeholder: Enter a command, question or topic...
+- group:
+  - button "More actions"
+  - button "Show Welcome Screen"
+  - button "Use Inline Citations"
+- button "Send"
+- text: The content is AI generated. Always verify the information for accuracy.

@@ -1,0 +1,37 @@
+- checkbox "Toggle source citation." [checked]
+- text: Toggle source citation.
+- paragraph:
+  - text: Here's a
+  - strong: simple response
+  - text: with basic formatting.
+- paragraph:
+  - text: You can use
+  - code: inline code
+  - text: "and create lists:"
+- list:
+  - listitem: First item
+  - listitem: Second item
+- group:
+  - button "Good response"
+  - button "Bad response"
+  - button "Copy response"
+  - button "More actions"
+- text: Neural networks are composed of layers of interconnected nodes that process information in parallel, enabling the model to learn complex patterns from large datasets. The training process adjusts the weights of these connections to minimize prediction error using backpropagation.
+- group:
+  - button "Good response"
+  - button "Bad response"
+  - button "Copy response"
+  - button "More actions"
+  - button "Sources"
+- dialog:
+  - list:
+    - listitem:
+      - paragraph: Deep Learning – Ian Goodfellow et al.
+      - paragraph: Neural networks are universal function approximators composed of alternating linear transformations and non-linear activations, trained end-to-end via gradient descent.
+      - link "View source":
+        - /url: https://examples.org/deeplearningbook
+    - listitem:
+      - paragraph: Backpropagation Algorithm – Stanford CS231n
+      - paragraph: Backpropagation computes the gradient of the loss with respect to each weight by applying the chain rule recursively from the output layer to the input layer.
+      - link "View source":
+        - /url: https://examples.org/cs231n

@@ -1,0 +1,25 @@
+- checkbox "Toggle source citation." [checked]
+- text: Toggle source citation.
+- paragraph:
+  - text: Here's a
+  - strong: simple response
+  - text: with basic formatting.
+- paragraph:
+  - text: You can use
+  - code: inline code
+  - text: "and create lists:"
+- list:
+  - listitem: First item
+  - listitem: Second item
+- group:
+  - button "Good response"
+  - button "Bad response"
+  - button "Copy response"
+  - button "More actions"
+- text: Neural networks are composed of layers of interconnected nodes that process information in parallel, enabling the model to learn complex patterns from large datasets. The training process adjusts the weights of these connections to minimize prediction error using backpropagation.
+- group:
+  - button "Good response"
+  - button "Bad response"
+  - button "Copy response"
+  - button "More actions"
+  - button "Sources"
