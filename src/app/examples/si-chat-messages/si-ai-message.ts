@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   elementBookmark,
@@ -32,6 +32,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
   private sanitizer = inject(DomSanitizer);
+
+  protected readonly showSourceCitationButton = signal(false);
 
   protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
 

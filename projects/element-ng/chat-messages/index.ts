@@ -5,6 +5,7 @@
 export * from './si-ai-message.component';
 export * from './si-annotated-text.model';
 export * from './si-attachment-list.component';
+export * from './si-citation-button.component';
 export * from './si-citation-pill.component';
 export * from './si-chat-container.component';
 export * from './si-chat-container-input.directive';

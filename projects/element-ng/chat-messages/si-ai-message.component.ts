@@ -6,6 +6,7 @@ import { CdkMenuTrigger } from '@angular/cdk/menu';
 import {
   booleanAttribute,
   Component,
+  computed,
   effect,
   input,
   output,
@@ -23,6 +24,7 @@ import { MessageAction } from './message-action.model';
 import { SiChatAnnotatedText, SiChatCitation } from './si-annotated-text.model';
 import { SiChatMessageActionDirective } from './si-chat-message-action.directive';
 import { SiChatMessageComponent } from './si-chat-message.component';
+import { SiCitationButtonComponent } from './si-citation-button.component';
 import { SiCitationPillComponent } from './si-citation-pill.component';
 
 /**
@@ -51,6 +53,7 @@ import { SiCitationPillComponent } from './si-citation-pill.component';
   imports: [
     CdkMenuTrigger,
     SiChatMessageComponent,
+    SiCitationButtonComponent,
     SiCitationPillComponent,
     SiIconComponent,
     SiMenuFactoryComponent,
@@ -74,10 +77,22 @@ export class SiAiMessageComponent {
   readonly annotatedText = input<SiChatAnnotatedText | undefined>(undefined);
 
   /**
-   * Emitted when a citation pill inside the message is clicked.
+   * When `true`, replaces the inline citation pills with a single circular globe
+   * button in the action bar that opens a popover listing all citations.
+   * Has no effect when {@link SiAiMessageComponent#annotatedText} is not provided
+   * or contains no citations.
+   * @defaultValue false
+   */
+  readonly showSourceCitationButton = input(false, { transform: booleanAttribute });
+
+  /**
+   * Emitted when a citation pill inside the message is clicked, or when a citation
+   * inside the source citation button popover is activated.
    * The emitted value is the {@link SiChatCitation} that was clicked.
    */
   readonly citationClicked = output<SiChatCitation>();
+
+  protected readonly allCitations = computed(() => this.annotatedText()?.citations ?? []);
 
   protected getCitation(id: string): SiChatCitation {
     return (

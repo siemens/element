@@ -246,7 +246,13 @@ export class SampleComponent {
             content:
               "Great question! When analyzing large datasets, it's crucial to focus on vectorized operations and avoid row-by-row iteration."
           },
-          { type: 'citation', citationId: 'c2' }
+          { type: 'citation', citationId: 'c2' },
+          {
+            type: 'text',
+            content:
+              ' Additionally, memory-efficient chunking strategies allow you to process files that exceed available RAM.'
+          },
+          { type: 'citation', citationId: 'c3' }
         ],
         citations: [
           {
@@ -255,6 +261,13 @@ export class SampleComponent {
             url: 'https://examples.org/docs/user_guide/enhancingperf.html',
             description:
               'Vectorized operations with NumPy arrays outperform row-by-row iteration by orders of magnitude, especially on DataFrames with millions of rows.'
+          },
+          {
+            id: 'c3',
+            title: 'Chunking Large Datasets – Dask Documentation',
+            url: 'https://examples.org/dask/dataframe-best-practices.html',
+            description:
+              'Dask and pandas chunksize parameters enable out-of-core computation by splitting a dataset into manageable partitions processed one at a time.'
           }
         ]
       },
@@ -290,6 +303,7 @@ export class SampleComponent {
   readonly interrupting = signal(false);
   readonly inputValue = signal('');
   readonly firstMessageSent = signal(false);
+  readonly showSourceCitationButton = signal(false);
 
   inputActions: MessageAction[] = [
     {

@@ -9,7 +9,10 @@ import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { MenuItem } from '@siemens/element-ng/menu';
 
 import { MessageAction } from './message-action.model';
+import { SiChatAnnotatedText } from './si-annotated-text.model';
 import { SiAiMessageComponent as TestComponent } from './si-ai-message.component';
+import { SiCitationButtonComponent } from './si-citation-button.component';
+import { SiCitationPillComponent } from './si-citation-pill.component';
 
 describe('SiAiMessageComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -21,6 +24,8 @@ describe('SiAiMessageComponent', () => {
   let actions: WritableSignal<MessageAction[]>;
   let secondaryActions: WritableSignal<MenuItem[]>;
   let actionParam: WritableSignal<unknown>;
+  let annotatedText: WritableSignal<SiChatAnnotatedText | undefined>;
+  let showSourceCitationButton: WritableSignal<boolean>;
 
   beforeEach(() => {
     content = signal('');
@@ -29,6 +34,8 @@ describe('SiAiMessageComponent', () => {
     actions = signal<MessageAction[]>([]);
     secondaryActions = signal<MenuItem[]>([]);
     actionParam = signal<unknown>(undefined);
+    annotatedText = signal<SiChatAnnotatedText | undefined>(undefined);
+    showSourceCitationButton = signal(false);
 
     fixture = TestBed.createComponent(TestComponent, {
       bindings: [
@@ -37,7 +44,9 @@ describe('SiAiMessageComponent', () => {
         inputBinding('loading', loading),
         inputBinding('actions', actions),
         inputBinding('secondaryActions', secondaryActions),
-        inputBinding('actionParam', actionParam)
+        inputBinding('actionParam', actionParam),
+        inputBinding('annotatedText', annotatedText),
+        inputBinding('showSourceCitationButton', showSourceCitationButton)
       ]
     });
     debugElement = fixture.debugElement;
@@ -184,5 +193,107 @@ describe('SiAiMessageComponent', () => {
 
     const actionButtons = fixture.nativeElement.querySelectorAll('[siChatMessageAction] button');
     expect(actionButtons).toHaveLength(0);
+  });
+
+  describe('showSourceCitationButton', () => {
+    const ANNOTATED: SiChatAnnotatedText = {
+      segments: [
+        { type: 'text', content: 'Hello ' },
+        { type: 'citation', citationId: 'src1' },
+        { type: 'text', content: ' world' }
+      ],
+      citations: [{ id: 'src1', title: 'Source One', url: 'https://example.com/1' }]
+    };
+
+    it('should not render inline citation pills when showSourceCitationButton is true', async () => {
+      annotatedText.set(ANNOTATED);
+      showSourceCitationButton.set(true);
+      await fixture.whenStable();
+
+      const pills = debugElement.queryAll(By.directive(SiCitationPillComponent));
+      expect(pills).toHaveLength(0);
+    });
+
+    it('should render inline citation pills when showSourceCitationButton is false (default)', async () => {
+      annotatedText.set(ANNOTATED);
+      showSourceCitationButton.set(false);
+      await fixture.whenStable();
+
+      const pills = debugElement.queryAll(By.directive(SiCitationPillComponent));
+      expect(pills).toHaveLength(1);
+    });
+
+    it('should render the citation button in the action bar when showSourceCitationButton is true and citations exist', async () => {
+      annotatedText.set(ANNOTATED);
+      showSourceCitationButton.set(true);
+      await fixture.whenStable();
+
+      const citationButton = debugElement.query(By.directive(SiCitationButtonComponent));
+      expect(citationButton).toBeTruthy();
+    });
+
+    it('should not render the citation button when showSourceCitationButton is false', async () => {
+      annotatedText.set(ANNOTATED);
+      showSourceCitationButton.set(false);
+      await fixture.whenStable();
+
+      const citationButton = debugElement.query(By.directive(SiCitationButtonComponent));
+      expect(citationButton).toBeFalsy();
+    });
+
+    it('should not render the citation button when there are no citations', async () => {
+      annotatedText.set({ segments: [{ type: 'text', content: 'Hello' }], citations: [] });
+      showSourceCitationButton.set(true);
+      await fixture.whenStable();
+
+      const citationButton = debugElement.query(By.directive(SiCitationButtonComponent));
+      expect(citationButton).toBeFalsy();
+    });
+
+    it('should show the action bar via citation button even when actions array is empty', async () => {
+      annotatedText.set(ANNOTATED);
+      showSourceCitationButton.set(true);
+      actions.set([]);
+      secondaryActions.set([]);
+      await fixture.whenStable();
+
+      const actionBar = fixture.nativeElement.querySelector('[siChatMessageAction]');
+      expect(actionBar).toBeTruthy();
+    });
+
+    it('should pass all citations to the citation button', async () => {
+      const multiCitation: SiChatAnnotatedText = {
+        segments: [
+          { type: 'citation', citationId: 'a' },
+          { type: 'citation', citationId: 'b' }
+        ],
+        citations: [
+          { id: 'a', title: 'Citation A' },
+          { id: 'b', title: 'Citation B' }
+        ]
+      };
+      annotatedText.set(multiCitation);
+      showSourceCitationButton.set(true);
+      await fixture.whenStable();
+
+      const citationButton = debugElement.query(By.directive(SiCitationButtonComponent));
+      expect(citationButton.componentInstance.citations()).toHaveLength(2);
+    });
+
+    it('should emit citationClicked when the citation button emits citationClicked', async () => {
+      annotatedText.set(ANNOTATED);
+      showSourceCitationButton.set(true);
+      await fixture.whenStable();
+
+      const emitted: unknown[] = [];
+      fixture.componentInstance.citationClicked.subscribe(c => emitted.push(c));
+
+      const citationButton = debugElement.query(By.directive(SiCitationButtonComponent));
+      citationButton.componentInstance.citationClicked.emit(ANNOTATED.citations[0]);
+      await fixture.whenStable();
+
+      expect(emitted).toHaveLength(1);
+      expect(emitted[0]).toBe(ANNOTATED.citations[0]);
+    });
   });
 });

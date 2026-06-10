@@ -1,3 +1,13 @@
+  <div class="d-flex align-items-center gap-2 mb-4">
+    <label class="d-flex align-items-center gap-2 mb-0">
+      <input
+        type="checkbox"
+        [checked]="showSourceCitationButton()"
+        (change)="showSourceCitationButton.set(!showSourceCitationButton())"
+      />
+      Toggle source citation.
+    </label>
+  </div>
 <div class="p-2">
   <si-ai-message
     actionParam="message-1"
@@ -13,6 +23,7 @@
     [annotatedText]="annotatedText"
     [actions]="actions"
     [secondaryActions]="secondaryActions"
+    [showSourceCitationButton]="showSourceCitationButton()"
     (citationClicked)="onCitationClicked($event)"
   />
 

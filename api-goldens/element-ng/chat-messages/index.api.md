@@ -66,6 +66,7 @@ export class SiAiMessageComponent {
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly showSourceCitationButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
 // @public
@@ -179,6 +180,13 @@ export interface SiChatTextRun {
 
 // @public (undocumented)
 export type SiChatTextSegment = SiChatTextRun | SiChatCitationRun;
+
+// @public
+export class SiCitationButtonComponent implements OnInit {
+    readonly citationClicked: _angular_core.OutputEmitterRef<SiChatCitation>;
+    readonly citations: _angular_core.InputSignal<SiChatCitation[]>;
+    readonly label: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+}
 
 // @public
 export class SiCitationPillComponent implements OnInit {
