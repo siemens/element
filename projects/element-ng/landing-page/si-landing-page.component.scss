@@ -33,7 +33,7 @@ $margin-bottom-footer: map.get(all-variables.$spacers, 9);
 }
 
 .landing-page-content {
-  block-size: 100vh;
+  block-size: 100vb;
   overflow-y: auto;
   inline-size: 40%;
   background-color: all-variables.$element-base-0;

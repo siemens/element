@@ -478,7 +478,7 @@ select {
 // 1. Textareas should really only resize vertically so they don't break their (horizontal) containers.
 
 textarea {
-  resize: vertical; // 1
+  resize: block; // 1
 }
 
 // 1. Browsers set a default `min-width: min-content;` on fieldsets,

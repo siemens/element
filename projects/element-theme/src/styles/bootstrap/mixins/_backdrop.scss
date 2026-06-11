@@ -5,8 +5,8 @@
   inset-block-start: 0;
   inset-inline-start: 0;
   z-index: $zindex;
-  inline-size: 100vw;
-  block-size: 100vh;
+  inline-size: 100vi;
+  block-size: 100vb;
   background-color: $backdrop-bg;
   opacity: $backdrop-opacity;
   transition: variables.$transition-fade;

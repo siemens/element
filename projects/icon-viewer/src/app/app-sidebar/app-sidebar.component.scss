@@ -2,10 +2,10 @@
   position: sticky;
   inset-inline-start: 0;
   inset-block-start: 105px;
-  max-block-size: calc(100vh - 105px);
+  max-block-size: calc(100vb - 105px);
   overflow-y: auto;
 
   &.categorized {
-    max-block-size: calc(60vh - 105px);
+    max-block-size: calc(60vb - 105px);
   }
 }
