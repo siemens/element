@@ -19,7 +19,6 @@
         columnMode="force"
         [class.bulk-actions-mode]="checked().size > 0"
         [selectionType]="checked().size > 0 ? undefined : 'single'"
-        [summaryRow]="checked().size > 0"
         [summaryHeight]="tableConfig.rowHeightSmall"
         [rows]="rows()"
         [columns]="columns"
@@ -29,7 +28,25 @@
         [(selected)]="selectedRow"
         (siResizeObserver)="table.recalculate()"
         (selectedChange)="panelCollapsed.set(false)"
-      />
+      >
+        @if (checked().size > 0) {
+          <ng-template ngx-datatable-summary-row>
+            <div
+              class="d-flex align-items-center flex-grow-1"
+              [style.height.px]="tableConfig.rowHeightSmall"
+            >
+              <span class="text-secondary text-nowrap fw-normal"
+                >{{ checked().size }} of {{ rows().length }} selected</span
+              >
+              <div class="ms-auto">
+                <button type="button" class="btn btn-primary" (click)="acknowledge()">
+                  Acknowledge
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        }
+      </ngx-datatable>
     </div>
 
     <si-side-panel-content>
@@ -111,16 +128,4 @@
     (click)="$event.stopPropagation()"
     (change)="toggleRow(row)"
   />
-</ng-template>
-
-<ng-template #bulkActionsTemplate>
-  <div class="d-flex align-items-center">
-    <span class="text-body text-nowrap fw-normal">{{ checked().size }} selected</span>
-    <div class="ms-auto">
-      <button type="button" class="btn btn-primary" (click)="acknowledge()"> Acknowledge </button>
-      <button type="button" class="btn btn-secondary ms-4" (click)="clearSelection()">
-        Clear
-      </button>
-    </div>
-  </div>
 </ng-template>
