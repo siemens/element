@@ -106,7 +106,7 @@
     "@ngx-formly/core": "6.3.12",
     "@ngx-translate/core": "16.0.4",
     "@siemens/element-icons": "1.2.0",
-    "@siemens/ngx-datatable": "26.0.0",
+    "@siemens/ngx-datatable": "26.2.0",
     "@softarc/native-federation-node": "^3.3.4",
     "ag-grid-angular": "^35.0.0",
     "ag-grid-community": "^35.0.0",
