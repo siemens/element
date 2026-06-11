@@ -2,11 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DOCUMENT } from '@angular/common';
-/**
- * Copyright (c) Siemens 2016 - 2026
- * SPDX-License-Identifier: MIT
- */
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -16,6 +12,7 @@ import {
   input,
   OnInit,
   output,
+  PLATFORM_ID,
   signal,
   viewChild
 } from '@angular/core';
@@ -54,7 +51,7 @@ import { SiChatCitation } from './si-annotated-text.model';
     SiPopoverBodyDirective
   ],
   template: `
-    <span role="group" [siPopover]="citationPreview" [siPopoverPlacement]="placement()">
+    <span [siPopover]="citationPreview" [siPopoverPlacement]="placement()">
       @if (citation().url) {
         <a
           class="citation-pill"
@@ -119,7 +116,10 @@ export class SiCitationPillComponent implements OnInit {
   private readonly elementRef = inject(ElementRef);
   private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly platformId = inject(PLATFORM_ID);
   private hideTimer: ReturnType<typeof setTimeout> | undefined;
+  private hoverListenerTimeout: ReturnType<typeof setTimeout> | undefined;
+  private overlayAbortController: AbortController | undefined;
   private overlayListenersAttached = false;
   private observer: MutationObserver | undefined;
 
@@ -155,7 +155,8 @@ export class SiCitationPillComponent implements OnInit {
   ngOnInit(): void {
     this.destroyRef.onDestroy(() => {
       clearTimeout(this.hideTimer);
-      this.observer?.disconnect();
+      clearTimeout(this.hoverListenerTimeout);
+      this.cleanupOverlayListeners();
     });
   }
 
@@ -178,28 +179,36 @@ export class SiCitationPillComponent implements OnInit {
   }
 
   private attachOverlayHoverListeners(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     if (this.overlayListenersAttached) return;
     // Run after the overlay is attached to the DOM
-    setTimeout(() => {
+    this.hoverListenerTimeout = setTimeout(() => {
       const dir = this.popoverDir();
       if (!dir) return;
       const panel = this.document.getElementById(dir.popoverId)?.closest('.cdk-overlay-pane');
       if (!panel) return;
       this.overlayListenersAttached = true;
+      this.overlayAbortController = new AbortController();
       const onEnter = (): void => clearTimeout(this.hideTimer);
       const onLeave = (): void => this.scheduleHide();
-      panel.addEventListener('mouseenter', onEnter);
-      panel.addEventListener('mouseleave', onLeave);
+      panel.addEventListener('mouseenter', onEnter, { signal: this.overlayAbortController.signal });
+      panel.addEventListener('mouseleave', onLeave, { signal: this.overlayAbortController.signal });
       // Reset flag once the panel is removed from the DOM
       this.observer = new MutationObserver(() => {
         if (!this.document.contains(panel)) {
-          this.overlayListenersAttached = false;
-          this.observer?.disconnect();
-          this.observer = undefined;
+          this.cleanupOverlayListeners();
         }
       });
       this.observer.observe(this.document.body, { childList: true, subtree: true });
     });
+  }
+
+  private cleanupOverlayListeners(): void {
+    this.overlayListenersAttached = false;
+    this.overlayAbortController?.abort();
+    this.overlayAbortController = undefined;
+    this.observer?.disconnect();
+    this.observer = undefined;
   }
 
   protected onMouseEnter(): void {

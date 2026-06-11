@@ -9,8 +9,8 @@ import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { MenuItem } from '@siemens/element-ng/menu';
 
 import { MessageAction } from './message-action.model';
-import { SiChatAnnotatedText } from './si-annotated-text.model';
 import { SiAiMessageComponent as TestComponent } from './si-ai-message.component';
+import { SiChatAnnotatedText } from './si-annotated-text.model';
 import { SiCitationButtonComponent } from './si-citation-button.component';
 import { SiCitationPillComponent } from './si-citation-pill.component';
 

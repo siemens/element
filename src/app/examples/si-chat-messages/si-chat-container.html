@@ -97,10 +97,12 @@
       <button
         type="button"
         class="btn btn-tertiary btn-sm"
-        [title]="showSourceCitationButton() ? 'Switch to inline citations' : 'Switch to summary citation'"
+        [title]="
+          showSourceCitationButton() ? 'Switch to inline citations' : 'Switch to summary citation'
+        "
         (click)="showSourceCitationButton.set(!showSourceCitationButton())"
       >
-        {{ showSourceCitationButton() ? 'Use Inline Citations' : 'Use Summary Citation' }}
+        {{ showSourceCitationButton() ? 'Use inline citations' : 'Use summary citation' }}
       </button>
     </si-chat-input>
   </si-chat-container>

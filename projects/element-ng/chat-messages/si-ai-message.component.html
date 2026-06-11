@@ -8,9 +8,9 @@
           @let cit = getCitation(segment.citationId);
           <si-citation-pill
             [citation]="cit"
-            [label]="cit.title.length > 24 ? cit.title.slice(0, 24) + '…' : cit.title"
+            [label]="cit.title"
             (clicked)="citationClicked.emit($event)"
-          /><br />
+          />
         }
       }
     </span>
@@ -23,7 +23,11 @@
     }
   }
 
-  @if (actions().length > 0 || secondaryActions().length > 0 || (showSourceCitationButton() && allCitations().length > 0)) {
+  @if (
+    actions().length > 0 ||
+    secondaryActions().length > 0 ||
+    (showSourceCitationButton() && allCitations().length > 0)
+  ) {
     <div class="btn-group ai-message-actions" role="group" siChatMessageAction>
       @for (action of actions(); track $index) {
         <button

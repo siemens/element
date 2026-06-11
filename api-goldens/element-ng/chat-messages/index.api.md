@@ -185,7 +185,7 @@ export type SiChatTextSegment = SiChatTextRun | SiChatCitationRun;
 export class SiCitationButtonComponent implements OnInit {
     readonly citationClicked: _angular_core.OutputEmitterRef<SiChatCitation>;
     readonly citations: _angular_core.InputSignal<SiChatCitation[]>;
-    readonly label: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly label: _angular_core.InputSignal<TranslatableString_2>;
 }
 
 // @public

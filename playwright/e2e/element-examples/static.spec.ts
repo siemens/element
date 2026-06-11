@@ -113,13 +113,19 @@ test('typography/typography', ({ si }) => si.static());
 test('si-markdown-renderer/si-markdown-renderer', ({ si }) =>
   si.static({ disabledA11yRules: ['link-in-text-block'] }));
 test('si-chat-messages/si-ai-message', ({ si }) =>
-  si.static({ withPopover: 'si-citation-pill', withSourceCitationButton: 'input[type="checkbox"]' }));
+  si.static({
+    withPopover: 'si-citation-pill',
+    withSourceCitationButton: 'input[type="checkbox"]'
+  }));
 test('si-chat-messages/si-user-message', ({ si }) => si.static());
 test('si-chat-messages/si-chat-message', ({ si }) => si.static());
 test('si-chat-messages/si-attachment-list', ({ si }) => si.static());
 test('si-chat-messages/si-chat-input', ({ si }) => si.static());
 test('si-chat-messages/si-chat-container', ({ si }) =>
-  si.static({ withPopover: 'si-citation-pill', withSourceCitationButton: 'button:has-text("Use Summary Citation")' }));
+  si.static({
+    withPopover: 'si-citation-pill',
+    withSourceCitationButton: 'button:has-text("Use summary citation")'
+  }));
 test('si-chat-messages/si-ai-welcome-screen', ({ si }) => si.static());
 test('ag-grid/ag-grid-empty-state', async ({ si }) => {
   await si.static({ disabledA11yRules: ['aria-required-children'] });

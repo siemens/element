@@ -1,3 +1,5 @@
+- checkbox "Toggle source citation"
+- text: Toggle source citation
 - paragraph:
   - text: Here's a
   - strong: simple response
@@ -15,15 +17,11 @@
   - button "Copy response"
   - button "More actions"
 - text: Neural networks are composed of layers of interconnected nodes that process information in parallel, enabling the model to learn complex patterns from large datasets.
-- group:
-  - link "Deep Learning – Ian Goodfellow et al.":
-    - /url: https://examples.org/deeplearningbook
-    - text: ""
+- link "Deep Learning – Ian Goodfellow et al.":
+  - /url: https://examples.org/deeplearningbook
 - text: The training process adjusts the weights of these connections to minimize prediction error using backpropagation.
-- group:
-  - link "Backpropagation Algorithm – Stanford CS231n":
-    - /url: https://examples.org/cs231n
-    - text: ""
+- link "Backpropagation Algorithm – Stanford CS231n":
+  - /url: https://examples.org/cs231n
 - group:
   - button "Good response"
   - button "Bad response"

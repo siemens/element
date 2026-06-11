@@ -36,6 +36,6 @@
 - group:
   - button "More actions"
   - button "Show Welcome Screen"
-  - button "Use Inline Citations"
+  - button "Use inline citations"
 - button "Send"
 - text: The content is AI generated. Always verify the information for accuracy.

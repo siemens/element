@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,15 +12,13 @@ import {
   input,
   OnInit,
   output,
+  PLATFORM_ID,
   signal,
   viewChild
 } from '@angular/core';
 import { elementGlobal } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import {
-  SiPopoverBodyDirective,
-  SiPopoverDirective
-} from '@siemens/element-ng/popover';
+import { SiPopoverBodyDirective, SiPopoverDirective } from '@siemens/element-ng/popover';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiChatCitation } from './si-annotated-text.model';
@@ -44,12 +42,7 @@ import { SiChatCitation } from './si-annotated-text.model';
  */
 @Component({
   selector: 'si-citation-button',
-  imports: [
-    SiIconComponent,
-    SiTranslatePipe,
-    SiPopoverDirective,
-    SiPopoverBodyDirective
-  ],
+  imports: [SiIconComponent, SiTranslatePipe, SiPopoverDirective, SiPopoverBodyDirective],
   template: `
     <span [siPopover]="citationsPreview" [siPopoverPlacement]="placement()">
       <button
@@ -67,8 +60,8 @@ import { SiChatCitation } from './si-annotated-text.model';
     <ng-template #citationsPreview>
       <si-popover-body>
         <ul class="list-unstyled mb-0">
-          @for (cit of citations(); track cit.id; let last = $last) {
-            <li [class.mb-5]="!last">
+          @for (cit of citations(); track cit.id) {
+            <li [class.mb-5]="!$last">
               <p class="fw-bold mb-0">{{ cit.title }}</p>
               @if (cit.description) {
                 <p class="text-secondary mb-0">{{ cit.description }}</p>
@@ -79,7 +72,7 @@ import { SiChatCitation } from './si-annotated-text.model';
                   target="_blank"
                   rel="noopener noreferrer"
                   [href]="cit.url"
-                  (click)="onCitationClicked(cit)"
+                  (click)="onCitationClicked(cit, $event)"
                   >{{ viewSource | translate }}
                   <i aria-hidden="true" class="link-icon element-right-2 flip-rtl"></i>
                 </a>
@@ -105,7 +98,10 @@ export class SiCitationButtonComponent implements OnInit {
   private readonly elementRef = inject(ElementRef);
   private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly platformId = inject(PLATFORM_ID);
   private hideTimer: ReturnType<typeof setTimeout> | undefined;
+  private hoverListenerTimeout: ReturnType<typeof setTimeout> | undefined;
+  private overlayAbortController: AbortController | undefined;
   private overlayListenersAttached = false;
   private observer: MutationObserver | undefined;
 
@@ -137,7 +133,8 @@ export class SiCitationButtonComponent implements OnInit {
   ngOnInit(): void {
     this.destroyRef.onDestroy(() => {
       clearTimeout(this.hideTimer);
-      this.observer?.disconnect();
+      clearTimeout(this.hoverListenerTimeout);
+      this.cleanupOverlayListeners();
     });
   }
 
@@ -160,26 +157,34 @@ export class SiCitationButtonComponent implements OnInit {
   }
 
   private attachOverlayHoverListeners(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     if (this.overlayListenersAttached) return;
-    setTimeout(() => {
+    this.hoverListenerTimeout = setTimeout(() => {
       const dir = this.popoverDir();
       if (!dir) return;
       const panel = this.document.getElementById(dir.popoverId)?.closest('.cdk-overlay-pane');
       if (!panel) return;
       this.overlayListenersAttached = true;
+      this.overlayAbortController = new AbortController();
       const onEnter = (): void => clearTimeout(this.hideTimer);
       const onLeave = (): void => this.scheduleHide();
-      panel.addEventListener('mouseenter', onEnter);
-      panel.addEventListener('mouseleave', onLeave);
+      panel.addEventListener('mouseenter', onEnter, { signal: this.overlayAbortController.signal });
+      panel.addEventListener('mouseleave', onLeave, { signal: this.overlayAbortController.signal });
       this.observer = new MutationObserver(() => {
         if (!this.document.contains(panel)) {
-          this.overlayListenersAttached = false;
-          this.observer?.disconnect();
-          this.observer = undefined;
+          this.cleanupOverlayListeners();
         }
       });
       this.observer.observe(this.document.body, { childList: true, subtree: true });
     });
+  }
+
+  private cleanupOverlayListeners(): void {
+    this.overlayListenersAttached = false;
+    this.overlayAbortController?.abort();
+    this.overlayAbortController = undefined;
+    this.observer?.disconnect();
+    this.observer = undefined;
   }
 
   protected onMouseEnter(): void {

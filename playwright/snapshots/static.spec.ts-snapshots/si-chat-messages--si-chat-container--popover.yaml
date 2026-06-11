@@ -7,10 +7,8 @@
 - group:
   - button "Export message"
 - text: I'd be happy to help! Data processing pipelines typically follow a structured approach.
-- group:
-  - link "Data Pipeline Design Patterns":
-    - /url: https://examples.org/articles/data-pipeline.html
-    - text: ""
+- link "Data Pipeline Design Patterns":
+  - /url: https://examples.org/articles/data-pipeline.html
 - text: Let me examine your files and provide detailed guidance.
 - group:
   - button "Add to list"
@@ -22,9 +20,11 @@
 - group:
   - button "Export message"
 - text: Great question! When analyzing large datasets, it's crucial to focus on vectorized operations and avoid row-by-row iteration.
-- group:
-  - link "Pandas Performance Guide":
-    - /url: https://examples.org/docs/user_guide/enhancingperf.html
+- link "Pandas Performance Guide":
+  - /url: https://examples.org/docs/user_guide/enhancingperf.html
+- text: Additionally, memory-efficient chunking strategies allow you to process files that exceed available RAM.
+- link "Chunking Large Datasets – Dask Documentation":
+  - /url: https://examples.org/dask/dataframe-best-practices.html
 - group:
   - button "Add to list"
   - button "Export response"
@@ -42,6 +42,7 @@
 - group:
   - button "More actions"
   - button "Show Welcome Screen"
+  - button "Use summary citation"
 - button "Send"
 - text: The content is AI generated. Always verify the information for accuracy.
 - dialog "Data Pipeline Design Patterns":

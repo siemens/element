@@ -1,5 +1,5 @@
-- checkbox "Toggle source citation." [checked]
-- text: Toggle source citation.
+- checkbox "Toggle source citation" [checked]
+- text: Toggle source citation
 - paragraph:
   - text: Here's a
   - strong: simple response
