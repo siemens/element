@@ -43,7 +43,6 @@ interface Employee {
     SiSidePanelContentComponent
   ],
   templateUrl: './datatable-bulk-actions-side-panel.html',
-  styleUrl: './datatable-bulk-actions.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
@@ -51,9 +50,6 @@ export class SampleComponent implements OnInit {
   protected readonly panelCollapsed = signal(true);
   protected readonly selectedRow = signal<Employee[]>([]);
 
-  private readonly bulkActionsTemplate = viewChild.required('bulkActionsTemplate', {
-    read: TemplateRef<unknown>
-  });
   private readonly checkboxCellTemplate = viewChild.required('checkboxCellTmpl', {
     read: TemplateRef<unknown>
   });
@@ -106,13 +102,12 @@ export class SampleComponent implements OnInit {
         canAutoResize: false,
         headerTemplate: this.checkboxHeaderTemplate(),
         cellTemplate: this.checkboxCellTemplate(),
-        summaryTemplate: this.bulkActionsTemplate(),
         cellClass: 'bulk-actions'
       },
-      { name: 'Name', prop: 'name', summaryFunc: null },
-      { name: 'Department', prop: 'department', summaryFunc: null },
-      { name: 'Role', prop: 'role', summaryFunc: null },
-      { name: 'Status', prop: 'status', summaryFunc: null }
+      { name: 'Name', prop: 'name' },
+      { name: 'Department', prop: 'department' },
+      { name: 'Role', prop: 'role' },
+      { name: 'Status', prop: 'status' }
     ];
   }
 
@@ -147,10 +142,6 @@ export class SampleComponent implements OnInit {
   closePanel(): void {
     this.panelCollapsed.set(true);
     this.selectedRow.set([]);
-  }
-
-  protected clearSelection(): void {
-    this.checked.set(new Set());
   }
 
   private updatePanel(): void {

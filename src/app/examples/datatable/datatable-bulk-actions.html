@@ -5,7 +5,6 @@
     columnMode="force"
     [class.bulk-actions-mode]="checked().size > 0"
     [selectionType]="checked().size > 0 ? undefined : 'single'"
-    [summaryRow]="checked().size > 0"
     [summaryHeight]="tableConfig.rowHeightSmall"
     [rows]="rows()"
     [columns]="columns"
@@ -13,7 +12,47 @@
     [scrollbarV]="true"
     [footerHeight]="0"
     [(selected)]="selected"
-  />
+  >
+    @if (checked().size > 0) {
+      <ng-template ngx-datatable-summary-row>
+        <div
+          class="d-flex align-items-center justify-content-between flex-grow-1"
+          siAutoCollapsableList
+          [style.height.px]="tableConfig.rowHeightSmall"
+        >
+          <div class="text-secondary text-nowrap fw-normal" siAutoCollapsableListItem
+            >{{ checked().size }} of {{ rows().length }} selected</div
+          >
+
+          <button
+            type="button"
+            class="btn btn-icon btn-tertiary"
+            aria-label="Actions"
+            siAutoCollapsableListOverflowItem
+            [cdkMenuTriggerFor]="allActionsMenu"
+          >
+            <si-icon [icon]="icons.elementOptionsVertical" />
+          </button>
+
+          <div class="d-flex gap-2" siAutoCollapsableListItem>
+            <button
+              type="button"
+              class="btn btn-tertiary dropdown-toggle"
+              [class.show]="statusMenuOpen()"
+              [cdkMenuTriggerFor]="statusMenu"
+              (cdkMenuOpened)="statusMenuOpen.set(true)"
+              (cdkMenuClosed)="statusMenuOpen.set(false)"
+            >
+              Change status
+              <i aria-hidden="true" class="dropdown-caret icon element-down-2"></i>
+            </button>
+            <button type="button" class="btn btn-tertiary" (click)="delete()"> Delete </button>
+            <button type="button" class="btn btn-tertiary" (click)="export()"> Export </button>
+          </div>
+        </div>
+      </ng-template>
+    }
+  </ngx-datatable>
 </div>
 
 <ng-template #checkboxHeaderTmpl>
@@ -36,39 +75,6 @@
     (click)="$event.stopPropagation()"
     (change)="toggleRow(row)"
   />
-</ng-template>
-
-<ng-template #bulkActionsTemplate>
-  <div class="d-flex align-items-center" (siResizeObserver)="onResize($event)">
-    <span class="text-body text-nowrap fw-normal">{{ checked().size }} selected</span>
-    <div class="d-flex gap-2 ms-auto">
-      @if (collapsed()) {
-        <button
-          type="button"
-          class="btn btn-icon btn-tertiary"
-          aria-label="Actions"
-          [cdkMenuTriggerFor]="allActionsMenu"
-        >
-          <si-icon [icon]="icons.elementOptionsVertical" />
-        </button>
-      } @else {
-        <button
-          type="button"
-          class="btn btn-tertiary dropdown-toggle"
-          [class.show]="statusMenuOpen()"
-          [cdkMenuTriggerFor]="statusMenu"
-          (cdkMenuOpened)="statusMenuOpen.set(true)"
-          (cdkMenuClosed)="statusMenuOpen.set(false)"
-        >
-          Change status
-          <i aria-hidden="true" class="dropdown-caret icon element-down-2"></i>
-        </button>
-        <button type="button" class="btn btn-tertiary" (click)="delete()"> Delete </button>
-        <button type="button" class="btn btn-tertiary" (click)="export()"> Export </button>
-        <button type="button" class="btn btn-tertiary" (click)="clear()"> Clear </button>
-      }
-    </div>
-  </div>
 </ng-template>
 
 <ng-template #allActionsMenu>
