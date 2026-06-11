@@ -17,8 +17,8 @@ import { elementDown2, elementOptionsVertical } from '@siemens/element-icons';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
-import { ElementDimensions, SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
+import { SiAutoCollapsableListModule } from 'projects/element-ng/auto-collapsable-list';
 
 type Status = 'Active' | 'Inactive' | 'On Leave';
 
@@ -30,8 +30,6 @@ interface Employee {
   status: Status;
 }
 
-const COLLAPSED_BREAKPOINT = 400;
-
 @Component({
   selector: 'app-sample',
   imports: [
@@ -39,9 +37,9 @@ const COLLAPSED_BREAKPOINT = 400;
     SiDatatableModule,
     SiIconComponent,
     SiMenuFactoryComponent,
-    SiResizeObserverDirective,
     CdkMenuTrigger,
-    FormsModule
+    FormsModule,
+    SiAutoCollapsableListModule
   ],
   templateUrl: './datatable-bulk-actions.html',
   styleUrl: './datatable-bulk-actions.scss',
@@ -123,14 +121,12 @@ export class SampleComponent implements OnInit {
         resizeable: false,
         canAutoResize: false,
         headerTemplate: this.checkboxHeaderTemplate(),
-        cellTemplate: this.checkboxCellTemplate(),
-        summaryTemplate: this.bulkActionsTemplate(),
-        cellClass: 'bulk-actions'
+        cellTemplate: this.checkboxCellTemplate()
       },
-      { name: 'Name', prop: 'name', summaryFunc: null },
-      { name: 'Department', prop: 'department', summaryFunc: null },
-      { name: 'Role', prop: 'role', summaryFunc: null },
-      { name: 'Status', prop: 'status', summaryFunc: null }
+      { name: 'Name', prop: 'name' },
+      { name: 'Department', prop: 'department' },
+      { name: 'Role', prop: 'role' },
+      { name: 'Status', prop: 'status' }
     ];
   }
 
@@ -161,16 +157,7 @@ export class SampleComponent implements OnInit {
     alert(`Exporting ${this.checked().size} items`);
   }
 
-  protected onResize(dimensions: ElementDimensions): void {
-    this.collapsed.set(dimensions.width < COLLAPSED_BREAKPOINT);
-  }
-
   private changeStatus(status: Status): void {
     this.rows.set(this.rows().map(row => (this.checked().has(row.id) ? { ...row, status } : row)));
-  }
-
-  protected clear(): void {
-    this.checked.set(new Set());
-    this.selected.set([]);
   }
 }
