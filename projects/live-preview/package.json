@@ -27,7 +27,7 @@
   "devDependencies": {
     "@types/babel__standalone": "7.1.9",
     "@types/codeflask": "1.4.6",
-    "@types/react": "19.2.14",
+    "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3"
   },
   "peerDependencies": {
@@ -37,7 +37,7 @@
     "react-dom": "18 || 19",
     "vue": "3",
     "vue3-sfc-loader": "0.9.5",
-    "@babel/standalone": "7.29.3"
+    "@babel/standalone": "7.29.7"
   },
   "peerDependenciesMeta": {
     "react": {
