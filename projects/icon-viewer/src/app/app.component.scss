@@ -28,7 +28,7 @@
   grid-column: 2;
 
   &.categorized {
-    max-block-size: calc(60vh - 105px);
+    max-block-size: calc(60vb - 105px);
     overflow-y: auto;
   }
 }

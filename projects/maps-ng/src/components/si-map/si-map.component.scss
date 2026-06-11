@@ -53,10 +53,10 @@ $main-button-margin: 1px;
   .ol-full-screen,
   .ol-zoom,
   .ol-zoom-extent {
-    left: unset; // stylelint-disable-line liberty/use-logical-spec
-    right: unset; // stylelint-disable-line liberty/use-logical-spec
-    top: unset; // stylelint-disable-line liberty/use-logical-spec
-    bottom: unset; // stylelint-disable-line liberty/use-logical-spec
+    left: unset; // stylelint-disable-line property-layout-mappings
+    right: unset; // stylelint-disable-line property-layout-mappings
+    top: unset; // stylelint-disable-line property-layout-mappings
+    bottom: unset; // stylelint-disable-line property-layout-mappings
   }
 
   .ol-zoom,
@@ -95,6 +95,6 @@ $main-button-margin: 1px;
 
   // needed for RTL
   .ol-overlay-container {
-    left: 0; // stylelint-disable-line liberty/use-logical-spec
+    left: 0; // stylelint-disable-line property-layout-mappings
   }
 }

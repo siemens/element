@@ -5,7 +5,7 @@
   --popover-arrow-height: 12px;
   --popover-bg-color: #{semantic-tokens.$element-base-1};
   max-inline-size: 400px;
-  inline-size: 100vw;
+  inline-size: 100vi;
   opacity: 0;
 
   &.show {

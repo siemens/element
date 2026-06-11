@@ -4,7 +4,7 @@
   ::ng-deep {
     image-cropper {
       // Ensure cropper dialog fit into screen
-      max-block-size: 70vh;
+      max-block-size: 70vb;
       // map sass processed vars to CSS vars
       --image-cropper-outline-color: var(--element-base-translucent-1);
 

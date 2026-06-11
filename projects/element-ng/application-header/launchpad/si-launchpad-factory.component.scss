@@ -11,7 +11,7 @@
   inset-inline: 0;
   min-block-size: 200px;
   max-block-size: calc(
-    100vh - variables.$si-application-header-height - variables.$si-titlebar-spacing -
+    100vb - variables.$si-application-header-height - variables.$si-titlebar-spacing -
       variables.$si-system-banner-spacing
   );
   padding: map.get(variables.$spacers, 6);

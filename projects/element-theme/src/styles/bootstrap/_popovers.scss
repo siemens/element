@@ -12,8 +12,8 @@ $si-popover-bg: var(--popover-bg-color, variables.$popover-bg);
 
 .popover {
   position: absolute;
-  top: 0; // stylelint-disable-line liberty/use-logical-spec
-  left: 0; // stylelint-disable-line liberty/use-logical-spec
+  top: 0; // stylelint-disable-line property-layout-mappings
+  left: 0; // stylelint-disable-line property-layout-mappings
   z-index: zindex.$zindex-popover;
   display: block;
   min-block-size: 50px;
