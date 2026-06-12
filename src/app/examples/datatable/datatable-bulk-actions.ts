@@ -42,7 +42,6 @@ interface Employee {
     SiAutoCollapsableListModule
   ],
   templateUrl: './datatable-bulk-actions.html',
-  styleUrl: './datatable-bulk-actions.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
