@@ -2,8 +2,8 @@
 - link "Jump to Navigation"
 - text: My Application
 - button "Back"
-- button "Forward" [disabled]
-- button "Menu"
+- button "Next" [disabled]
+- button "Show actions"
 - banner:
   - button "Launchpad"
   - link "Siemens logo":
@@ -11,7 +11,7 @@
   - heading "Application name" [level=1]
   - button "Layout"
   - button "Help"
-  - button "Jane Smith"
+  - button "Jane Smith": JS
 - navigation:
   - button "collapse" [expanded]
   - button "Home"
@@ -23,7 +23,7 @@
   - link "Test Coverage":
     - /url: "#/viewer/viewer/coverage"
 - main:
-  - button "Toggle"
+  - button "Show side pane"
   - button "Properties"
   - button "Documents"
   - button "Graphics"
@@ -31,7 +31,7 @@
   - button "Expand"
   - heading "Here is a title" [level=2]
   - text: A nice list of things
-  - button "Toggle"
+  - button "Show actions"
   - list:
     - listitem:
       - status "door in status info"

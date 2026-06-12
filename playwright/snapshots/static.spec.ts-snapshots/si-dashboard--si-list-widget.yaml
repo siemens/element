@@ -1,7 +1,7 @@
 - text: Heading
 - menubar:
   - menuitem "Sort descending"
-- textbox "Search..."
+- textbox "Search…"
 - list:
   - listitem:
     - text: 5 Burj Khalifa 4.5
@@ -32,7 +32,7 @@
 - text: Heading
 - menubar:
   - menuitem "Sort descending"
-- textbox "Search..."
+- textbox "Search…"
 - list:
   - listitem:
     - text: 5 Burj Khalifa

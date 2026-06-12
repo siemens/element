@@ -20,7 +20,7 @@ test.describe('navbar launchpad', () => {
     await page.setViewportSize({ width: 500, height: 660 });
     await si.visitExample(example, false);
 
-    await page.getByLabel('Toggle navigation').click();
+    await page.getByLabel('Show navigation').click();
     await page.getByText('item 2', { exact: true }).click();
     await si.runVisualAndA11yTests('small-expanded');
   });
@@ -38,7 +38,7 @@ test.describe('navbar launchpad', () => {
     await page.setViewportSize({ width: 500, height: 660 });
     await si.visitExample(exampleEnd, false);
 
-    await page.getByLabel('Toggle actions').click();
+    await page.getByLabel('Show actions').click();
     await page.getByRole('button', { name: 'Help' }).click();
     await page.waitForTimeout(400); // wait for expand-icon animation
     await si.runVisualAndA11yTests('small-expanded');

@@ -1,6 +1,6 @@
 - link "Jump to Main content"
 - link "Jump to Navigation"
-- button "Toggle"
+- button "Show side pane"
 - banner:
   - link "Siemens logo":
     - /url: "#/"
@@ -10,7 +10,7 @@
 - main:
   - text: /\d+ Not clickable/
   - button "Expand"
-  - navigation "Breadcrumbs":
+  - navigation "Breadcrumb navigation":
     - list:
       - listitem:
         - link "Root":
@@ -27,7 +27,7 @@
     - menuitem "Print"
     - menuitem "Share"
     - menuitem "Save As"
-    - menuitem "Toggle"
+    - menuitem "Show actions"
   - textbox "Search"
   - button "Toolbar item"
   - text: Page Header Controls

@@ -1,4 +1,4 @@
-- textbox "Search..."
+- textbox "Search…"
 - list:
   - listitem:
     - text: /\d+\+/
@@ -49,7 +49,7 @@
   - listitem:
     - text: /6 St\. Basil's Cathedral \d+\.\d+/
     - button "Building overview"
-- textbox "Search..."
+- textbox "Search…"
 - list:
   - listitem:
     - text: /\d+\+/

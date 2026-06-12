@@ -33,3 +33,5 @@
   - text: Content with path 'sub-badge-1' Control panel
   - checkbox "Always flyout"
   - text: Always flyout
+  - checkbox "Inline collapse"
+  - text: Inline collapse

@@ -16,7 +16,7 @@
   - application "Project Issues!":
     - img "Buildings at scale"
     - text: ""
-    - button "Toggle"
+    - button "Show actions"
     - text: /\d+ Issues Number of contributing issues/
     - link "Go to issues":
       - /url: https://github.com/siemens/element/issues
@@ -48,7 +48,7 @@
     - text: ""
     - menubar:
       - menuitem "Remove"
-    - textbox "Search..."
+    - textbox "Search…"
     - list:
       - listitem:
         - text: /\d+\+/

@@ -50,7 +50,7 @@ describe('SiMapTooltipComponent', () => {
     component.setTooltip([...labels, ...labels]);
     fixture.detectChanges();
     const tooltip = fixture.debugElement.query(By.css('.si-map-tooltip'));
-    expect(tooltip.nativeElement.innerHTML).toContain('and 2 more...');
+    expect(tooltip.nativeElement.innerHTML).toContain('+ 2 locations');
   });
 
   it('should trim the label if too long', () => {

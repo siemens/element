@@ -1,9 +1,9 @@
-- button "Toggle"
+- button "Show side pane"
 - link "Out of Service":
   - /url: ""
 - link "Event source active, ack":
   - /url: ""
-- button "Properties"
+- button "Properties": "5"
 - button "Documents"
 - button "Graphics"
 - banner:
@@ -16,21 +16,21 @@
 - button "Close"
 - group "Size toggle button group":
   - radio "Regular" [checked]
-  - text: ""
+  - text: Regular
   - radio "Wide"
-  - text: ""
+  - text: Wide
   - radio "Extended"
-  - text: ""
+  - text: Extended
 - group "Display mode toggle button group":
   - radio "Overlay" [checked]
-  - text: ""
+  - text: Overlay
   - radio "Navigate"
-  - text: ""
+  - text: Navigate
 - group "Mode toggle button group":
   - radio "Over" [checked]
-  - text: ""
+  - text: Over
   - radio "Scroll"
-  - text: ""
+  - text: Scroll
 - separator
 - heading "Collapsible side panel" [level=2]
 - paragraph:

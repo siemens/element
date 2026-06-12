@@ -1,8 +1,8 @@
 - text: Date Range Input*
 - group "Date Range Input*":
-  - textbox /Start dd[\d,.]+[bkmBKM]+\.yyyy/
-  - text: ""
-  - textbox /End dd[\d,.]+[bkmBKM]+\.yyyy/
+  - textbox /Start dd[\d,.]+[bkmBKM]+\.yyyy/: /\d+\.\d+\.\d+/
+  - text: "-"
+  - textbox /End dd[\d,.]+[bkmBKM]+\.yyyy/: /\d+\.\d+\.\d+/
   - button "Open calendar"
 - text: Control panel
 - checkbox "Readonly"
@@ -33,7 +33,7 @@
 - text: Max date
 - textbox "Max date": /\d+-\d+-\d+/
 - text: Date format
-- textbox "Date format"
+- textbox "Date format": /dd[\d,.]+[bkmBKM]+\.yyyy/
 - text: Week start day
 - combobox "Week start day":
   - option "Monday" [selected]
@@ -159,14 +159,14 @@
         - button /Sat Apr \d+ \d+/
 - button "Today"
 - switch "Ignore time"
-- text: Ignore time from
+- text: Ignore time From
 - group:
   - textbox "Hours" [disabled]:
     - /placeholder: hh
-    - text: ""
+    - text: /\d+/
   - textbox "Minutes" [disabled]:
     - /placeholder: mm
-    - text: ""
+    - text: /\d+/
   - combobox "Period" [disabled]:
     - option "AM" [selected]
     - option "PM"
@@ -283,14 +283,14 @@
       - gridcell /Sat Jan \d+ \d+/:
         - button /Sat Jan \d+ \d+/
 - button "Today"
-- text: to
+- text: To
 - group:
   - textbox "Hours" [disabled]:
     - /placeholder: hh
-    - text: ""
+    - text: /\d+/
   - textbox "Minutes" [disabled]:
     - /placeholder: mm
-    - text: ""
+    - text: /\d+/
   - combobox "Period" [disabled]:
     - option "AM" [selected]
     - option "PM"

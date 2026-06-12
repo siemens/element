@@ -1,8 +1,8 @@
 - banner:
-  - button "Toggle navigation"
+  - button "Show navigation"
   - heading "My application" [level=1]
   - button "Notifications"
-  - button "Toggle actions"
+  - button "Show actions"
   - button "Lars Vegas" [expanded]
   - group "Lars Vegas":
     - text: Lars Vegas lars.vegas@siemens.com Siemens AG Admin

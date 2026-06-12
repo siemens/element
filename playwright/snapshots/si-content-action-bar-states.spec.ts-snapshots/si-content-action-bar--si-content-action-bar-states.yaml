@@ -4,7 +4,7 @@
   - menuitem "Title - Disabled" [disabled]
   - menuitem "Primary-Sub-Menu"
   - menuitemcheckbox "Toggle" [checked]
-  - menuitem "Toggle"
+  - menuitem "Show actions"
 - heading "Disabled menu and menu item variations" [level=4]
 - menubar:
   - menuitem "Menu 1" [disabled]
@@ -12,7 +12,7 @@
   - menuitem "Long-List" [expanded]
   - menuitem "Menu 3"
   - menuitem "Menu 4"
-  - menuitem "Toggle"
+  - menuitem "Show actions"
 - heading "Completely disabled" [level=4]
 - menubar:
   - menuitem "Menu 1" [disabled]
@@ -20,7 +20,7 @@
   - menuitem "Long-List" [disabled]
   - menuitem "Menu 3" [disabled]
   - menuitem "Menu 4" [disabled]
-  - menuitem "Toggle" [disabled]
+  - menuitem "Show actions" [disabled]
 - menu:
   - menuitem "Item 1"
   - menuitem "Item 2"

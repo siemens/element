@@ -20,7 +20,7 @@ describe('SiElectrontitlebarComponent', () => {
   let backSpy: (event: void) => void;
 
   const forwardButton = (): HTMLButtonElement =>
-    element.querySelector<HTMLButtonElement>('[aria-label="Forward"]')!;
+    element.querySelector<HTMLButtonElement>('[aria-label="Next"]')!;
   const backButton = (): HTMLButtonElement =>
     element.querySelector<HTMLButtonElement>('[aria-label="Back"]')!;
 
