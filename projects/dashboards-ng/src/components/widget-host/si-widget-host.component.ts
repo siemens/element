@@ -57,7 +57,13 @@ import { setupWidgetInstance } from '../../widget-loader';
   styleUrl: './si-widget-host.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'grid-stack-item'
+    class: 'grid-stack-item',
+    // In non-edit mode, expose each widget as a labeled list item so screen
+    // readers group the widgets and let users jump between them. In edit mode
+    // the inner card carries the interactive `application` role instead.
+    '[attr.role]': "editable() ? null : 'listitem'",
+    '[attr.aria-roledescription]': "editable() ? null : 'widget'",
+    '[attr.aria-label]': 'editable() || !widgetAriaLabel() ? null : widgetAriaLabel()'
   }
 })
 export class SiWidgetHostComponent implements OnInit, OnChanges {
@@ -131,6 +137,13 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
     () =>
       $localize`:@@DASHBOARD.WIDGET.A11Y.DESCRIPTION:Press Enter or Space to activate. Then use arrow keys to move, Shift+arrow keys to resize, Escape to exit.`
   );
+  protected readonly widgetAriaLabel = computed(() => {
+    const widgetHeading = this.widgetConfig().heading;
+    if (widgetHeading) {
+      return this.translateService.translateSync(widgetHeading);
+    }
+    return null;
+  });
 
   widgetInstance?: WidgetInstance;
   widgetRef?: ComponentRef<WidgetInstance>;
