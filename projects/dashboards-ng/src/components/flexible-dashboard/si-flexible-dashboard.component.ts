@@ -138,11 +138,11 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
+   * t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search…`)
    * ```
    */
   readonly searchPlaceholder = input(
-    t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
+    t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search…`)
   );
 
   /**

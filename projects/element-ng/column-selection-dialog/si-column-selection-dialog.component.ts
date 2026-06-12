@@ -137,11 +137,11 @@ export class SiColumnSelectionDialogComponent implements OnInit {
   /**
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename column`)
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename element`)
    * ```
    */
   readonly renameInputAriaLabel = input(
-    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename column`)
+    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename element`)
   );
 
   /**
