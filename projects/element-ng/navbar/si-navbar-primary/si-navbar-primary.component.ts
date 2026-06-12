@@ -122,10 +122,10 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch app`)
    * ```
    */
-  readonly appSwitcherTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`));
+  readonly appSwitcherTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch app`));
 
   /**
    * sub-title for the launchpad
@@ -233,23 +233,21 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_NAVBAR.OPEN_LAUNCHPAD:Open launchpad`)
+   * t(() => $localize`:@@SI_NAVBAR.OPEN_LAUNCHPAD:Switch app`)
    * ```
    */
-  readonly openAppSwitcherText = input(
-    t(() => $localize`:@@SI_NAVBAR.OPEN_LAUNCHPAD:Open launchpad`)
-  );
+  readonly openAppSwitcherText = input(t(() => $localize`:@@SI_NAVBAR.OPEN_LAUNCHPAD:Switch app`));
 
   /**
    * Text or translate key for the toggle navigation icon. Needed for a11y.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_NAVBAR.TOGGLE_NAVIGATION:Toggle navigation`)
+   * t(() => $localize`:@@SI_NAVBAR.TOGGLE_NAVIGATION:Show navigation`)
    * ```
    */
   readonly toggleNavigationText = input(
-    t(() => $localize`:@@SI_NAVBAR.TOGGLE_NAVIGATION:Toggle navigation`)
+    t(() => $localize`:@@SI_NAVBAR.TOGGLE_NAVIGATION:Show navigation`)
   );
 
   /**

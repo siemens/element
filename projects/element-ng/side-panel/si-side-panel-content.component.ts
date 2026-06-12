@@ -167,11 +167,11 @@ export class SiSidePanelContentComponent implements OnInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_SIDE_PANEL.SEARCH_PLACEHOLDER:Search...`)
+   * t(() => $localize`:@@SI_SIDE_PANEL.SEARCH_PLACEHOLDER:Search…`)
    * ```
    */
   readonly searchPlaceholder = input(
-    t(() => $localize`:@@SI_SIDE_PANEL.SEARCH_PLACEHOLDER:Search...`)
+    t(() => $localize`:@@SI_SIDE_PANEL.SEARCH_PLACEHOLDER:Search…`)
   );
 
   /**
@@ -199,11 +199,11 @@ export class SiSidePanelContentComponent implements OnInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_SIDE_PANEL.ENTER_FULLSCREEN:Enter fullscreen`)
+   * t(() => $localize`:@@SI_SIDE_PANEL.ENTER_FULLSCREEN:Full screen`)
    * ```
    */
   readonly enterFullscreenLabel = input(
-    t(() => $localize`:@@SI_SIDE_PANEL.ENTER_FULLSCREEN:Enter fullscreen`)
+    t(() => $localize`:@@SI_SIDE_PANEL.ENTER_FULLSCREEN:Full screen`)
   );
 
   /**
@@ -211,11 +211,11 @@ export class SiSidePanelContentComponent implements OnInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_SIDE_PANEL.EXIT_FULLSCREEN:Exit fullscreen`)
+   * t(() => $localize`:@@SI_SIDE_PANEL.EXIT_FULLSCREEN:Exit full screen`)
    * ```
    */
   readonly exitFullscreenLabel = input(
-    t(() => $localize`:@@SI_SIDE_PANEL.EXIT_FULLSCREEN:Exit fullscreen`)
+    t(() => $localize`:@@SI_SIDE_PANEL.EXIT_FULLSCREEN:Exit full screen`)
   );
 
   /**

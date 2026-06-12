@@ -49,10 +49,10 @@ export class SiLaunchpadFactoryComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch app`)
    * ```
    */
-  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`));
+  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch app`));
 
   /**
    * Subtitle of the launchpad.

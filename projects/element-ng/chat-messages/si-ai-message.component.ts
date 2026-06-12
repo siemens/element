@@ -132,10 +132,10 @@ export class SiAiMessageComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_AI_MESSAGE.SECONDARY_ACTIONS:More actions`)
+   * t(() => $localize`:@@SI_AI_MESSAGE.SECONDARY_ACTIONS:Additional actions`)
    * ```
    */
   readonly secondaryActionsLabel = input(
-    t(() => $localize`:@@SI_AI_MESSAGE.SECONDARY_ACTIONS:More actions`)
+    t(() => $localize`:@@SI_AI_MESSAGE.SECONDARY_ACTIONS:Additional actions`)
   );
 }

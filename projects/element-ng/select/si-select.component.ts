@@ -74,10 +74,10 @@ export class SiSelectComponent<T> implements SiFormItemControl {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search...`)
+   * t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search…`)
    * ```
    */
-  readonly filterPlaceholder = input(t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search...`));
+  readonly filterPlaceholder = input(t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search…`));
   /**
    * Label if no item can be found.
    *

@@ -25,14 +25,11 @@ export class SiEditDiscardDialogComponent {
   /**
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.MESSAGE:Do you want to save changes to the modified element?`)
+   * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.MESSAGE:Save changes?`)
    * ```
    */
   readonly message = input(
-    t(
-      () =>
-        $localize`:@@SI_EDIT_DISCARD_DIALOG.MESSAGE:Do you want to save changes to the modified element?`
-    )
+    t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.MESSAGE:Save changes?`)
   );
   /**
    * @defaultValue
@@ -62,14 +59,11 @@ export class SiEditDiscardDialogComponent {
   /**
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISABLE_SAVE_MESSAGE:Do you want to discard the changes`)
+   * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISABLE_SAVE_MESSAGE:Discard changes?`)
    * ```
    */
   readonly disableSaveMessage = input<TranslatableString>(
-    t(
-      () =>
-        $localize`:@@SI_EDIT_DISCARD_DIALOG.DISABLE_SAVE_MESSAGE:Do you want to discard the changes`
-    )
+    t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISABLE_SAVE_MESSAGE:Discard changes?`)
   );
   /**
    * @defaultValue
