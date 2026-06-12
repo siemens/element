@@ -2,12 +2,17 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Overlay } from '@angular/cdk/overlay';
+import {
+  ConnectionPositionPair,
+  FlexibleConnectedPositionStrategy,
+  Overlay
+} from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
   Component,
   ComponentRef,
   computed,
+  DestroyRef,
   Directive,
   effect,
   EmbeddedViewRef,
@@ -15,6 +20,7 @@ import {
   Injector,
   input,
   linkedSignal,
+  signal,
   TemplateRef,
   untracked,
   ViewContainerRef
@@ -47,7 +53,7 @@ class SiNavbarFlyoutAnchorComponent {
     '[id]': 'id',
     '[class.show]': 'expanded()',
     '[attr.aria-controls]': 'groupId',
-    '[attr.aria-expanded]': 'expanded()',
+    '[attr.aria-expanded]': 'flyoutMode() ? flyout() : expanded()',
     '(click)': 'triggered()'
   }
 })
@@ -102,33 +108,25 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
     computation: () => false
   });
 
-  /**
-   * Whether the open flyout overlay currently contains the active route.
-   * Reset together with `flyout` so it never lingers across mode changes.
+  /** `true` when this group contains the active route. Set by the group component.
    * @internal
    */
-  readonly active = linkedSignal<boolean, boolean>({
-    source: () => this.flyout(),
-    computation: (open, previous) => (open ? (previous?.value ?? false) : false)
-  });
+  readonly active = signal<boolean>(false);
 
   protected readonly navbar = inject(SI_NAVBAR_VERTICAL_NEXT);
 
-  /** @internal */
-  readonly flyoutMode = computed(() => this.navbar.alwaysFlyout() || this.navbar.collapsed());
+  /** Signal mirror of the navbar's flyout mode. `true` when groups should render as transient overlays instead of inline.
+   * @internal
+   */
+  readonly flyoutMode = computed(() => this.navbar.flyoutMode());
 
   private flyoutOutsideClickSubscription?: Subscription;
   private readonly viewContainer = inject(ViewContainerRef);
   private readonly overlay = inject(Overlay);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly injector = Injector.create({ parent: inject(Injector), providers: [] });
   private readonly overlayRef = this.overlay.create({
-    positionStrategy: this.overlay
-      .position()
-      .flexibleConnectedTo(this.viewContainer.element)
-      .withPositions([
-        { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top' },
-        { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
-      ])
+    positionStrategy: this.buildPositionStrategy(this.navbar.chipMode())
   });
   private groupView?: EmbeddedViewRef<unknown>;
   private flyoutAnchorComponentRef?: ComponentRef<SiNavbarFlyoutAnchorComponent>;
@@ -147,6 +145,29 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
         this.attachInline();
       });
     });
+
+    this.destroyRef.onDestroy(() => {
+      this.overlayRef.detach();
+      this.overlayRef.dispose();
+    });
+  }
+
+  /** @internal */
+  private buildPositionStrategy(chipMode: boolean): FlexibleConnectedPositionStrategy {
+    const positions: ConnectionPositionPair[] = chipMode
+      ? [
+          { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
+          { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' }
+        ]
+      : [
+          { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top' },
+          { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
+        ];
+
+    return this.overlay
+      .position()
+      .flexibleConnectedTo(this.viewContainer.element)
+      .withPositions(positions);
   }
 
   /** @internal */
@@ -184,11 +205,13 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
   }
 
   private attachFlyout(): void {
+    this.overlayRef.updatePositionStrategy(this.buildPositionStrategy(this.navbar.chipMode()));
     this.groupView?.destroy();
     this.groupView = this.overlayRef.attach(this.templatePortal());
-    this.flyoutAnchorComponentRef = this.viewContainer.createComponent(
-      SiNavbarFlyoutAnchorComponent
-    );
+    // In chip mode the trigger's DOM is outside <nav> via DomPortal; use the
+    // navbar's in-nav anchor host so aria-owns stays within the navigation landmark.
+    const anchorHost = this.navbar.flyoutAnchorHost() ?? this.viewContainer;
+    this.flyoutAnchorComponentRef = anchorHost.createComponent(SiNavbarFlyoutAnchorComponent);
     this.flyoutAnchorComponentRef.setInput('groupId', this.groupId);
     this.flyoutOutsideClickSubscription = this.overlayRef
       .outsidePointerEvents()
