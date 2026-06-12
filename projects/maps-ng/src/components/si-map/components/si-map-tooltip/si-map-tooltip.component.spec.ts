@@ -57,6 +57,6 @@ describe('SiMapTooltipComponent', () => {
     const longLabel = 'This is too long label, which will be trimmed 50 ch';
     component.setTooltip(longLabel);
     const tooltip = fixture.debugElement.query(By.css('.si-map-tooltip'));
-    expect(tooltip.nativeElement.innerHTML).toContain('...');
+    expect(tooltip.nativeElement.innerHTML).toContain('…');
   });
 });
