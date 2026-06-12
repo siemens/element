@@ -78,8 +78,7 @@ export const buildDefaults = (): SiFormValidationErrorMapper => ({
   email: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.EMAIL:Invalid email address`),
   numberFormat: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.NUMBER_FORMAT:Number required`),
   pattern: t(
-    () =>
-      $localize`:@@SI_FORM_CONTAINER.ERROR.PATTERN:The value does not match the predefined pattern.`
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.PATTERN:Required value format not fulfilled`
   ),
   required: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED:Required`),
   requiredTrue: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED_TRUE:Required`)

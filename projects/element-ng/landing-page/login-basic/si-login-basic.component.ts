@@ -91,10 +91,10 @@ export class SiLoginBasicComponent implements OnInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LOGIN_BASIC.LOGIN:Login`)
+   * t(() => $localize`:@@SI_LOGIN_BASIC.LOGIN:Log in`)
    * ```
    */
-  readonly loginButtonLabel = input(t(() => $localize`:@@SI_LOGIN_BASIC.LOGIN:Login`));
+  readonly loginButtonLabel = input(t(() => $localize`:@@SI_LOGIN_BASIC.LOGIN:Log in`));
   /**
    * Disables the login button.
    *

@@ -33,11 +33,11 @@ export class SiFileDropzoneComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Max. {{maxFileSize}} upload size.`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Upload max. {{maxFileSize}}`)
    * ```
    */
   readonly maxFileSizeText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Max. {{maxFileSize}} upload size.`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Upload max. {{maxFileSize}}`)
   );
   /**
    * Text or translation key for accepted types.
@@ -55,25 +55,22 @@ export class SiFileDropzoneComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Invalid file type`)
    * ```
    */
   readonly errorTextFileType = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Invalid file type`)
   );
   /**
    * Message or translation key if file exceeds the maximum file size limit.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size of {{maxFileSize}}`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:Max. {{maxFileSize}}`)
    * ```
    */
   readonly errorTextFileMaxSize = input(
-    t(
-      () =>
-        $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size of {{maxFileSize}}`
-    )
+    t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:Max. {{maxFileSize}}`)
   );
   /**
    * Define which file types are suggested in file browser.
