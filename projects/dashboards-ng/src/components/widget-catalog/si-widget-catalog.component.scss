@@ -11,6 +11,10 @@
 
 .list-group-item {
   cursor: pointer;
+
+  .form-check {
+    block-size: 2.5rem;
+  }
 }
 
 .catalog-footer {

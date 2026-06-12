@@ -4,6 +4,7 @@
  */
 import { AsyncPipe } from '@angular/common';
 import {
+  booleanAttribute,
   Component,
   computed,
   inject,
@@ -155,6 +156,11 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
    */
   readonly secondaryEditActions = input<DashboardToolbarItem[]>([]);
 
+  /** @defaultValue false */
+  readonly enableMultiSelect = input(false, {
+    transform: booleanAttribute
+  });
+
   /**
    * The grid component is the actual container for the widgets.
    */
@@ -275,13 +281,12 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     const componentType = this.widgetCatalogComponent() ?? SiWidgetCatalogComponent;
     const catalogRef = this.catalogHost().createComponent<SiWidgetCatalogComponent>(componentType, {
       bindings: [
+        inputBinding('enableMultiSelect', this.enableMultiSelect),
         inputBinding('searchPlaceholder', this.searchPlaceholder),
-        outputBinding<Omit<WidgetConfig, 'id'> | undefined>('closed', widgetConfig => {
+        outputBinding<Omit<WidgetConfig, 'id'>[] | undefined>('closed', widgetConfigs => {
           this.viewState.set('dashboard');
           this.catalogHost().clear();
-          if (widgetConfig) {
-            this.grid().addWidgetInstance(widgetConfig);
-          }
+          widgetConfigs?.forEach(config => this.grid().addWidgetInstance(config));
         })
       ]
     });

@@ -13,8 +13,8 @@
     <button
       type="button"
       class="list-group-item list-group-item-action d-flex align-items-center"
-      [class.active]="selected() === myDescriptor"
-      (click)="selected.set(myDescriptor)"
+      [class.active]="selectedWidgets()[0] === myDescriptor"
+      (click)="selectedWidgets.set([myDescriptor])"
     >
       <si-circle-status class="my-n4 me-5" [icon]="myDescriptor.iconClass" />
       <div class="d-flex flex-column align-items-start">
@@ -28,7 +28,11 @@
   <button type="button" class="btn btn-secondary" (click)="onCancel()">{{
     'DASHBOARD.WIDGET_LIBRARY.CANCEL' | translate
   }}</button>
-  <button type="button" class="btn btn-primary" [disabled]="!selected()" (click)="onAddWidget()">{{
-    'DASHBOARD.WIDGET_LIBRARY.ADD' | translate
-  }}</button>
+  <button
+    type="button"
+    class="btn btn-primary"
+    [disabled]="!selectedWidgets()[0]"
+    (click)="onAddWidget()"
+    >{{ 'DASHBOARD.WIDGET_LIBRARY.ADD' | translate }}</button
+  >
 </div>

@@ -70,9 +70,9 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
    *
    * @defaultValue new Map()
    */
-  readonly widgetCatalogMap = input<Map<string, { componentFactory: WidgetComponentFactory }>>(
-    new Map()
-  );
+  readonly widgetCatalogMap = input<
+    Map<string, { componentFactory: WidgetComponentFactory; iconClass?: string }>
+  >(new Map());
 
   /**
    * Emits dashboard grid events.
@@ -215,11 +215,16 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
       () => this.widgetCatalogMap().get(item.widgetId)?.componentFactory
     );
 
+    const iconClass = computed(
+      () => this.widgetCatalogMap().get(item.widgetId)?.iconClass ?? 'element-apps'
+    );
+
     const componentRef = this.gridstackContainer()!.createComponent(SiWidgetHostComponent, {
       bindings: [
         inputBinding('widgetConfig', configSignal),
         inputBinding('editable', this.editable),
         inputBinding('componentFactory', componentFactory),
+        inputBinding('iconClass', iconClass),
         outputBinding<string>('remove', widgetId => {
           this.widgetInstanceRemove.emit(widgetId);
         }),
