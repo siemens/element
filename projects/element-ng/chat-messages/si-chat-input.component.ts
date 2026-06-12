@@ -195,10 +195,10 @@ export class SiChatInputComponent implements AfterViewInit {
    * The label for the input, used for accessibility
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_CHAT_INPUT.LABEL:Chat message input`)
+   * t(() => $localize`:@@SI_CHAT_INPUT.LABEL:Chat input`)
    * ```
    */
-  readonly label = input<string>(t(() => $localize`:@@SI_CHAT_INPUT.LABEL:Chat message input`));
+  readonly label = input<string>(t(() => $localize`:@@SI_CHAT_INPUT.LABEL:Chat input`));
 
   /** Parameter to pass to action handlers */
   readonly actionParam = input<any>();
@@ -227,11 +227,11 @@ export class SiChatInputComponent implements AfterViewInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_CHAT_INPUT.INTERRUPT:Interrupt`)
+   * t(() => $localize`:@@SI_CHAT_INPUT.INTERRUPT:Stop processing`)
    * ```
    */
   readonly interruptButtonLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_CHAT_INPUT.INTERRUPT:Interrupt`)
+    t(() => $localize`:@@SI_CHAT_INPUT.INTERRUPT:Stop processing`)
   );
 
   /**
@@ -270,11 +270,11 @@ export class SiChatInputComponent implements AfterViewInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_CHAT_INPUT.SECONDARY_ACTIONS:More actions`)
+   * t(() => $localize`:@@SI_CHAT_INPUT.SECONDARY_ACTIONS:Additional actions`)
    * ```
    */
   readonly secondaryActionsLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_CHAT_INPUT.SECONDARY_ACTIONS:More actions`)
+    t(() => $localize`:@@SI_CHAT_INPUT.SECONDARY_ACTIONS:Additional actions`)
   );
 
   /**

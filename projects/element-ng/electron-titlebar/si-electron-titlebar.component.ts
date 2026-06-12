@@ -87,10 +87,10 @@ export class SiElectrontitlebarComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_ELECTRON_TITLEBAR.MENU:Menu`)
+   * t(() => $localize`:@@SI_ELECTRON_TITLEBAR.MENU:Show actions`)
    * ```
    */
-  readonly ariaLabelMenu = input(t(() => $localize`:@@SI_ELECTRON_TITLEBAR.MENU:Menu`));
+  readonly ariaLabelMenu = input(t(() => $localize`:@@SI_ELECTRON_TITLEBAR.MENU:Show actions`));
 
   protected readonly icons = addIcons({ elementLeft4, elementRight4, elementOptionsVertical });
 }

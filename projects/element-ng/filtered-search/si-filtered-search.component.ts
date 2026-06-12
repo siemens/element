@@ -195,10 +195,10 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILTERED_SEARCH.SEARCH:Search`)
+   * t(() => $localize`:@@SI_FILTERED_SEARCH.SEARCH:Search…`)
    * ```
    */
-  readonly searchLabel = input(t(() => $localize`:@@SI_FILTERED_SEARCH.SEARCH:Search`));
+  readonly searchLabel = input(t(() => $localize`:@@SI_FILTERED_SEARCH.SEARCH:Search…`));
 
   /**
    * Clear button aria label. Needed for a11y
@@ -215,11 +215,11 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Submit search`)
+   * t(() => $localize`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Apply search criteria`)
    * ```
    */
   readonly submitButtonLabel = input(
-    t(() => $localize`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Submit search`)
+    t(() => $localize`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Apply search criteria`)
   );
   /**
    * Items count text appended to the count in case of multi-selection of values.
@@ -227,11 +227,11 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILTERED_SEARCH.ITEM_COUNT:{{itemCount}} items`)
+   * t(() => $localize`:@@SI_FILTERED_SEARCH.ITEM_COUNT:{{itemCount}} selected`)
    * ```
    */
   readonly itemCountText = input<TranslatableString>(
-    t(() => $localize`:@@SI_FILTERED_SEARCH.ITEM_COUNT:{{itemCount}} items`)
+    t(() => $localize`:@@SI_FILTERED_SEARCH.ITEM_COUNT:{{itemCount}} selected`)
   );
   /**
    * Color variant to determine component background
