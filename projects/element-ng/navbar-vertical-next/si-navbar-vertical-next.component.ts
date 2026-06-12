@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { PortalModule } from '@angular/cdk/portal';
 import {
   afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
+  contentChildren,
   inject,
   Injector,
   input,
@@ -16,7 +18,9 @@ import {
   OnChanges,
   OnInit,
   signal,
-  SimpleChanges
+  SimpleChanges,
+  viewChild,
+  ViewContainerRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -31,6 +35,7 @@ import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
+import { SiNavbarVerticalNextItemComponent } from './si-navbar-vertical-next-item.component';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
 /** @experimental */
@@ -42,7 +47,7 @@ interface UIState {
 /** @experimental */
 @Component({
   selector: 'si-navbar-vertical-next',
-  imports: [SiIconComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
+  imports: [PortalModule, SiIconComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
   templateUrl: './si-navbar-vertical-next.component.html',
   styleUrl: './si-navbar-vertical-next.component.scss',
   providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useExisting: SiNavbarVerticalNextComponent }],
@@ -154,6 +159,30 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   protected readonly ready = signal(false);
   protected readonly smallScreen = signal(false);
 
+  /** Stable ViewContainerRef inside <nav>, used to host flyout anchors when the chip DomPortal moves a trigger outside the nav.
+   * @internal
+   */
+  readonly flyoutAnchorHost = viewChild('flyoutAnchorHost', { read: ViewContainerRef });
+
+  /** All projected nav items, including descendants inside group templates.
+   * @internal
+   */
+  private readonly items = contentChildren(SiNavbarVerticalNextItemComponent, {
+    descendants: true
+  });
+
+  /** The active root-level item; group triggers resolve for nested routes.
+   * @internal
+   */
+  readonly activeItem = computed(() => this.items().find(item => item.isActiveRootItem()));
+
+  /** `true` when the active item's portal should occupy the chip slot.
+   * @internal
+   */
+  readonly chipPortalAttached = computed(
+    () => this.inlineCollapse() && this.collapsed() && !!this.activeItem()
+  );
+
   /**
    * @defaultValue
    * ```
@@ -171,6 +200,16 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     }
     return this.collapsed() ? this.icons.elementDoubleRight : this.icons.elementDoubleLeft;
   });
+
+  /** `true` when inline-collapse is active and the nav is collapsed.
+   * @internal
+   */
+  readonly chipMode = computed(() => this.inlineCollapse() && this.collapsed());
+
+  /** `true` when groups should render as flyout overlays.
+   * @internal
+   */
+  readonly flyoutMode = computed(() => this.alwaysFlyout() || this.collapsed());
 
   constructor() {
     this.breakpointObserver
