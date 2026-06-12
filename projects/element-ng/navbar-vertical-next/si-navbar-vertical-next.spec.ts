@@ -458,5 +458,49 @@ describe('SiNavbarVerticalNext', () => {
       await fixture.whenStable();
       expect(toggle).toHaveAttribute('aria-expanded', 'true');
     });
+
+    describe('active item chip', () => {
+      beforeEach(() => {
+        component.collapsed.set(true);
+      });
+
+      it('should not render a chip when no item is active', async () => {
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        expect(host.querySelector('.chip')).not.toBeInTheDocument();
+      });
+
+      it('should render the active top-level item as a chip', async () => {
+        await TestBed.inject(Router).navigate(['/item-1/sub-item-1']);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        const chipWrapper = host.querySelector('.chip') as HTMLElement;
+        expect(chipWrapper).not.toHaveAttribute('inert');
+        expect(chipWrapper).not.toHaveAttribute('aria-hidden');
+        const chip = page.elementLocator(chipWrapper).getByRole('button', { name: 'item1' });
+
+        await expect.element(chip).toBeVisible();
+      });
+
+      it('should open the sub-item flyout when the chip is clicked', async () => {
+        await TestBed.inject(Router).navigate(['/item-1/sub-item-1']);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        const chipWrapper = host.querySelector('.chip') as HTMLElement;
+        const chip = page.elementLocator(chipWrapper).getByRole('button', { name: 'item1' });
+
+        await userEvent.click(chip);
+        await fixture.whenStable();
+
+        expect(chip.element()).toHaveAttribute('aria-expanded', 'true');
+        const flyoutId = chip.element().getAttribute('aria-controls');
+        const flyoutMenu = document.querySelector(`#${flyoutId} .dropdown-menu`);
+        expect(flyoutMenu).toBeInTheDocument();
+        expect(flyoutMenu!.textContent).toContain('sub-item1');
+      });
+    });
   });
 });

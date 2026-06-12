@@ -6,7 +6,11 @@
     </si-header-brand>
   </si-application-header>
 
-  <si-navbar-vertical-next stateId="navbar-vertical-next-routing" toggleButtonText="Toggle">
+  <si-navbar-vertical-next
+    stateId="navbar-vertical-next-routing"
+    toggleButtonText="Toggle"
+    [inlineCollapse]="inlineCollapse()"
+  >
     <si-navbar-vertical-next-search placeholder="Search..." />
     <si-navbar-vertical-next-items>
       <a si-navbar-vertical-next-item routerLink="home" routerLinkActive icon="element-home">
@@ -47,6 +51,18 @@
         <h2 class="si-layout-title si-layout-top-element">Example with angular routing</h2>
       </div>
       <router-outlet />
+      <div class="card p-5 mt-8 e2e-ignore">
+        <div class="card-header">Control panel</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-auto">
+              <si-form-item label="Inline collapse">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="inlineCollapse" />
+              </si-form-item>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </si-navbar-vertical-next>
 </div>

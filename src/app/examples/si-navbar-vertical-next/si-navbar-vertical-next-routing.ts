@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   ActivatedRoute,
   Route,
@@ -17,6 +18,7 @@ import {
   SiHeaderLogoDirective
 } from '@siemens/element-ng/application-header';
 import { SiBreadcrumbRouterComponent } from '@siemens/element-ng/breadcrumb-router';
+import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import {
   SiNavbarVerticalNextSearchComponent,
@@ -112,6 +114,8 @@ export const ROUTES: Route[] = [
     SiApplicationHeaderComponent,
     SiHeaderBrandDirective,
     SiHeaderLogoDirective,
+    SiFormItemComponent,
+    FormsModule,
     RouterLink,
     RouterLinkActive,
     RouterOutlet,
@@ -124,6 +128,8 @@ export const ROUTES: Route[] = [
 export class SampleComponent implements OnInit {
   private activeRoute = inject(ActivatedRoute);
   private router = inject(Router);
+
+  readonly inlineCollapse = signal<boolean>(false);
 
   ngOnInit(): void {
     this.router.navigate(['home'], { relativeTo: this.activeRoute });
