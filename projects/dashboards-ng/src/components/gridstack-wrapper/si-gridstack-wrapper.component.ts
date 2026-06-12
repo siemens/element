@@ -24,6 +24,7 @@ import {
   ViewContainerRef,
   WritableSignal
 } from '@angular/core';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { GridItemHTMLElement, GridStack, GridStackNode, GridStackOptions } from 'gridstack';
 
 import { DEFAULT_GRIDSTACK_OPTIONS, GridConfig } from '../../model/gridstack.model';
@@ -43,6 +44,7 @@ export interface GridWrapperEvent {
 
 @Component({
   selector: 'si-gridstack-wrapper',
+  imports: [SiTranslatePipe],
   templateUrl: './si-gridstack-wrapper.component.html',
   styleUrl: './si-gridstack-wrapper.component.scss',
   changeDetection: ChangeDetectionStrategy.Default
@@ -91,6 +93,10 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
   readonly widgetInstanceEdit = output<WidgetConfig>();
 
   readonly gridstackContainer = viewChild('gridstackContainer', { read: ViewContainerRef });
+
+  protected readonly a11yWidgetsListLabel = t(
+    () => $localize`:@@DASHBOARD.A11Y.WIDGETS_LIST:Dashboard widgets`
+  );
 
   private grid!: GridStack;
   private markedForRender: WidgetConfig[] = [];
