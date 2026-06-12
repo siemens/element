@@ -75,7 +75,7 @@ export class SiMapTooltipComponent {
 
   private getLabelSnippet(label: string): string {
     if (this.maxLabelLength() != -1 && label.length > this.maxLabelLength()) {
-      return `<div>${label.substring(0, this.maxLabelLength())}...</div>`;
+      return `<div>${label.substring(0, this.maxLabelLength())}…</div>`;
     } else {
       return `<div>${label}</div>`;
     }
