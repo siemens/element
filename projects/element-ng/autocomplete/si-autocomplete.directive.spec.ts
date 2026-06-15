@@ -57,6 +57,7 @@ describe('SiAutocompleteDirective', () => {
 
   afterEach(() => {
     vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
   it('should be navigable', async () => {

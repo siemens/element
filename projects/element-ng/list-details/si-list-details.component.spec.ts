@@ -85,10 +85,10 @@ describe('ListDetailsComponent', () => {
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       const bounding = elem.getBoundingClientRect();
       return (
-        bounding.top >= 0 &&
-        bounding.left >= 0 &&
-        bounding.bottom <= viewportHeight &&
-        bounding.right <= viewportWidth
+        Math.round(bounding.top) >= 0 &&
+        Math.round(bounding.left) >= 0 &&
+        Math.round(bounding.bottom) <= viewportHeight &&
+        Math.round(bounding.right) <= viewportWidth
       );
     };
     const drag = (
@@ -417,6 +417,10 @@ describe('ListDetailsComponent', () => {
           ])
         ]
       });
+    });
+
+    afterEach(() => {
+      vi.restoreAllMocks();
     });
 
     it('should navigate back and forward in mobile mode by clicking', async () => {

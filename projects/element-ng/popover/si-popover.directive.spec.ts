@@ -51,6 +51,10 @@ describe('SiPopoverNextDirective', () => {
     wrapperComponent = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('should open/close on click', async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     fixture.detectChanges();
@@ -176,6 +180,10 @@ describe('with custom template', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CustomTemplateHostComponent);
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('should focus on the first interactive element', async () => {

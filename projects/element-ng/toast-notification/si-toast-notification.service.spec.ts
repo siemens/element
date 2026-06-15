@@ -17,6 +17,10 @@ describe('SiToastNotificationService', () => {
 
   beforeEach(() => (service = TestBed.inject(SiToastNotificationService)));
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });

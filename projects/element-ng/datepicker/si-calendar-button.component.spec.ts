@@ -52,6 +52,10 @@ describe('SiCalendarButtonComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('should show datepicker overlay', async () => {
     calendarToggleButton().click();
     fixture.detectChanges();
@@ -72,11 +76,12 @@ describe('SiCalendarButtonComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should mark as touched if button is blurred', () => {
+  it('should mark as touched if button is blurred', async () => {
     const touchSpy = vi.spyOn(SiDatepickerDirective.prototype, 'touch');
     const button = calendarToggleButton();
     button.focus();
     button.blur();
+    await fixture.whenStable();
     expect(touchSpy).toHaveBeenCalled();
   });
 

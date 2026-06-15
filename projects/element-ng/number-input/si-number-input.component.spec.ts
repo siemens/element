@@ -93,6 +93,10 @@ describe('SiNumberInputComponent', () => {
       element = fixture.nativeElement;
     });
 
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
     it('should support short press increments', async () => {
       value.set(50);
       await fixture.whenStable();

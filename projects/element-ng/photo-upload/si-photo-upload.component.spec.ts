@@ -16,22 +16,19 @@ describe(`SiPhotoUploadComponent`, () => {
   let componentRef: ComponentRef<SiPhotoUploadComponent>;
   let fixture: ComponentFixture<SiPhotoUploadComponent>;
   let callback: (e: any) => void;
-  let originalFileReader: typeof FileReader;
 
   const mockFileReader = (data: string): any => {
-    const readerSpy = {
-      addEventListener: vi.fn((event: string, cb: (e: any) => void) => (callback = cb)),
-      readAsDataURL: vi.fn(() => callback(data)),
-      result: data
-    };
-
-    originalFileReader = window.FileReader;
-    window.FileReader = class {
-      addEventListener = readerSpy.addEventListener;
-      readAsDataURL = readerSpy.readAsDataURL;
-      result = readerSpy.result;
-    } as any;
-    return readerSpy;
+    vi.spyOn(window, 'FileReader').mockImplementation(
+      class MockFileReader implements Partial<FileReader> {
+        addEventListener = (event: unknown, cb: (e: Event) => void): void => {
+          callback = cb;
+        };
+        readAsDataURL = (blob: Blob): void => {
+          callback(blob);
+        };
+        result = data;
+      } as typeof FileReader
+    );
   };
 
   const generateImage = (): File => {
@@ -60,11 +57,7 @@ describe(`SiPhotoUploadComponent`, () => {
     componentRef = fixture.componentRef;
   });
 
-  afterEach(() => {
-    if (originalFileReader) {
-      window.FileReader = originalFileReader;
-    }
-  });
+  afterEach(() => vi.resetAllMocks());
 
   it('should display placeholder', () => {
     componentRef.setInput('placeholderAltText', 'MX');
@@ -143,13 +136,12 @@ describe(`SiPhotoUploadComponent`, () => {
     await fixture.whenStable();
     const modal = document.querySelector('si-modal');
     expect(modal).toBeInTheDocument();
-    // cannot use vi.useFakeTimers here
-    await new Promise(resolve => setTimeout(resolve, 100)); // Allow cropping lib to process
-    expect(modal?.querySelector('img')).toBeInTheDocument();
+    // Wait for the cropping lib to render the image
+    await expect.poll(() => modal?.querySelector('img')).toBeTruthy();
   });
 
   it('should apply photo', async () => {
-    fixture.detectChanges();
+    await fixture.whenStable();
     const input = fixture.debugElement.query(By.css('input[type="file"]'));
     vi.spyOn(input.nativeElement, 'click').mockImplementation(() => {
       input.triggerEventHandler('change', {
@@ -162,17 +154,16 @@ describe(`SiPhotoUploadComponent`, () => {
 
     fixture.debugElement.query(By.css('button'))!.nativeElement.click();
 
-    fixture.detectChanges();
     await fixture.whenStable();
 
-    // cannot use vi.useFakeTimers here
-    await new Promise(resolve => setTimeout(resolve, 100)); // Allow cropping lib to process
+    // Wait for the cropping lib to render the image
+    await expect.poll(() => document.querySelector('si-modal img')).toBeTruthy();
 
     getButton(document.querySelector('si-modal')!, 'Apply').click();
-    fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(fixture.debugElement.query(By.css('img'))!.attributes.src).toBeTruthy();
+    // Wait for the cropped image to be processed and rendered
+    await expect.poll(() => fixture.nativeElement.querySelector('img')?.src).toBeTruthy();
   });
 
   it('should apply photo without modal when disabledCropping = true', async () => {

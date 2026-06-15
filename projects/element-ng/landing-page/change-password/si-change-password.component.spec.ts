@@ -21,16 +21,16 @@ describe('SiChangePasswordComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let element: HTMLElement;
 
-  const passwordPolicyContent = signal<string>('Policy content');
-  const passwordStrength = signal<PasswordPolicy>(passwordStrengthValue);
-  const newPasswordLabel = signal('');
-  const confirmPasswordLabel = signal('');
-  const changeButtonLabel = signal('');
-  const backButtonLabel = signal('');
-  const disableChange = signal(false);
-  const passwordPolicyTitle = signal('');
-  const changePasswordRequested = vi.fn<(value: ChangePassword) => void>();
-  const back = vi.fn();
+  let passwordPolicyContent = signal<string>('Policy content');
+  let passwordStrength = signal<PasswordPolicy>(passwordStrengthValue);
+  let newPasswordLabel = signal('');
+  let confirmPasswordLabel = signal('');
+  let changeButtonLabel = signal('');
+  let backButtonLabel = signal('');
+  let disableChange = signal(false);
+  let passwordPolicyTitle = signal('');
+  let changePasswordRequested = vi.fn<(value: ChangePassword) => void>();
+  let back = vi.fn();
 
   const enterValue = (input: HTMLInputElement, value: string): void => {
     input.value = value;
@@ -38,6 +38,16 @@ describe('SiChangePasswordComponent', () => {
   };
 
   beforeEach(async () => {
+    passwordPolicyContent = signal<string>('Policy content');
+    passwordStrength = signal<PasswordPolicy>(passwordStrengthValue);
+    newPasswordLabel = signal('');
+    confirmPasswordLabel = signal('');
+    changeButtonLabel = signal('');
+    backButtonLabel = signal('');
+    disableChange = signal(false);
+    passwordPolicyTitle = signal('');
+    changePasswordRequested = vi.fn<(value: ChangePassword) => void>();
+    back = vi.fn();
     fixture = TestBed.createComponent(TestComponent, {
       bindings: [
         inputBinding('passwordPolicyContent', passwordPolicyContent),

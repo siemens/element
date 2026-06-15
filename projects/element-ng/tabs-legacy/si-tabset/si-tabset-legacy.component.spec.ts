@@ -199,9 +199,11 @@ describe('SiTabset', () => {
   it('should handle focus correctly', async () => {
     testComponent.tabs = ['1', '2', '3'];
     fixture.detectChanges();
+    vi.advanceTimersByTime(1000);
     await fixture.whenStable();
     if (document.hasFocus()) {
       getElement(0).focus();
+      vi.advanceTimersByTime(1000);
       await fixture.whenStable();
       expect(getElement(0).getAttribute('tabindex')).toEqual('-1');
       focusNext();

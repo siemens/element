@@ -25,6 +25,10 @@ describe('SiDaySelectionComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let helper: CalendarTestHelper;
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   const selectDate = (date: number): void => {
     helper.clickEnabledCell(date.toString());
     fixture.detectChanges();

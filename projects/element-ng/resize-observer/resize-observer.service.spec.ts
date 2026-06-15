@@ -23,12 +23,6 @@ class TestHostComponent {
   readonly height = signal(100);
 }
 
-// A timeout that works with `await`. We have to use `waitForAsync()``
-// in the tests below because `tick()` doesn't work because `ResizeObserver`
-// operates outside of the zone
-const timeout = async (ms: number): Promise<void> =>
-  new Promise(resolve => setTimeout(resolve, ms));
-
 describe('ResizeObserverService', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
@@ -51,6 +45,7 @@ describe('ResizeObserverService', () => {
   };
 
   beforeEach(() => {
+    vi.useFakeTimers();
     mockResizeObserver();
     service = TestBed.inject(ResizeObserverService);
     fixture = TestBed.createComponent(TestHostComponent);
@@ -63,71 +58,63 @@ describe('ResizeObserverService', () => {
   afterEach(() => {
     subscription?.unsubscribe();
     restoreResizeObserver();
+    vi.useRealTimers();
   });
 
-  it('emits initial size event when asked', async () => {
+  it('emits initial size event when asked', () => {
     subscribe(true);
-    await timeout(10);
+    vi.advanceTimersByTime(10);
     expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
   });
 
-  it('emits no initial size event when not asked', async () => {
+  it('emits no initial size event when not asked', () => {
     subscribe(false);
-    await timeout(10);
+    vi.advanceTimersByTime(10);
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('emits on width change', async () => {
+  it('emits on width change', () => {
     subscribe(false);
     detectSizeChange(200, 100);
 
-    // Skip test when browser is not focussed to prevent failures.
-    if (document.hasFocus()) {
-      // with throttling, this shouldn't fire just yet
-      await timeout(20);
-      expect(spy).not.toHaveBeenCalled();
+    // with throttling, this shouldn't fire just yet
+    vi.advanceTimersByTime(20);
+    expect(spy).not.toHaveBeenCalled();
 
-      await timeout(150);
-      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
-    }
+    vi.advanceTimersByTime(50);
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
   });
 
-  it('emits on height change', async () => {
+  it('emits on height change', () => {
     subscribe(false);
     detectSizeChange(100, 200);
 
-    // Skip test when browser is not focussed to prevent failures.
-    if (document.hasFocus()) {
-      // with throttling, this shouldn't fire just yet
-      await timeout(20);
-      expect(spy).not.toHaveBeenCalled();
+    // with throttling, this shouldn't fire just yet
+    vi.advanceTimersByTime(20);
+    expect(spy).not.toHaveBeenCalled();
 
-      await timeout(150);
-      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 200 }));
-    }
+    vi.advanceTimersByTime(50);
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 200 }));
   });
 
-  it('can handle multiple subscriptions on same element', async () => {
+  it('can handle multiple subscriptions on same element', () => {
     subscribe(true);
 
-    // Skip test when browser is not focussed to prevent failures.
-    if (document.hasFocus()) {
-      const spy2: Mock<(dim: ElementDimensions) => void> = vi.fn();
-      const subs2 = service
-        .observe(component.theDiv().nativeElement, 50, true)
-        .subscribe(dim => spy2(dim));
+    const spy2: Mock<(dim: ElementDimensions) => void> = vi.fn();
+    const subs2 = service
+      .observe(component.theDiv().nativeElement, 50, true)
+      .subscribe(dim => spy2(dim));
 
-      await timeout(20);
-      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
-      expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
+    vi.advanceTimersByTime(10);
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
+    expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
 
-      detectSizeChange(200, 100);
+    detectSizeChange(200, 100);
 
-      await timeout(150);
-      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
-      expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
+    vi.advanceTimersByTime(100);
+    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
+    expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
 
-      subs2.unsubscribe();
-    }
+    subs2.unsubscribe();
   });
 });

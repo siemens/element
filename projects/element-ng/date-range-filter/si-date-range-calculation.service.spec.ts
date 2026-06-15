@@ -18,10 +18,15 @@ describe('SiDateRangeCalculationService', () => {
     expect(formatDate(d1, 'dateShort', 'en')).toEqual(formatDate(d2, 'dateShort', 'en'));
 
   beforeEach(() => {
+    vi.useFakeTimers();
     TestBed.configureTestingModule({
       providers: [SiDateRangeCalculationService]
     });
     service = TestBed.inject(SiDateRangeCalculationService);
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('resolves with before', () => {

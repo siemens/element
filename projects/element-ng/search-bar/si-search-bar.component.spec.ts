@@ -175,6 +175,10 @@ describe('SiSearchBarComponent', () => {
   });
 
   describe('debounceTime', () => {
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
     const fakeInput = (text: string, element: HTMLElement): void => {
       const input = getInput(element);
       input.value = text;

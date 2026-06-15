@@ -40,6 +40,10 @@ describe('SiCircleStatusComponent', () => {
     element = fixture.nativeElement;
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('should not set icon class, if no icon is configured', async () => {
     icon.set(undefined);
     await fixture.whenStable();

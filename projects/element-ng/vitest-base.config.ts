@@ -13,8 +13,7 @@ export default defineConfig({
   test: {
     env: {
       TZ: 'UTC'
-    },
-    isolate: true
+    }
   },
   resolve: {
     dedupe: ['@angular/core', '@angular/common', '@angular/platform-browser']

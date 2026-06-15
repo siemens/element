@@ -10,11 +10,12 @@ import { SiLoginSingleSignOnComponent as TestComponent } from './si-login-single
 describe('SiLoginSingleSignOnComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let element: HTMLElement;
-
-  const disableSso = signal(false);
-  const ssoEvent = vi.fn();
+  let disableSso = signal(false);
+  let ssoEvent = vi.fn();
 
   beforeEach(async () => {
+    disableSso = signal(false);
+    ssoEvent = vi.fn();
     fixture = TestBed.createComponent(TestComponent, {
       bindings: [inputBinding('disableSso', disableSso), outputBinding('ssoEvent', ssoEvent)]
     });

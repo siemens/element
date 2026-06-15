@@ -69,6 +69,7 @@ describe('SiLoadingSpinnerDirective', () => {
   });
 
   it('should show and hide spinner', async () => {
+    await fixture.whenStable();
     await vi.advanceTimersByTimeAsync(initialDelay);
     await vi.advanceTimersByTimeAsync(initialDelay);
     expect(isLoading()).toBe(true);

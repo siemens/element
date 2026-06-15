@@ -68,6 +68,10 @@ describe('SiSidePanelComponent', () => {
     service = TestBed.inject(SiSidePanelService);
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
