@@ -116,9 +116,7 @@
               }
             },
             "additionalProperties": false,
-            "required": [
-              "input"
-            ]
+            "required": ["input"]
           },
           {
             "type": "string",
@@ -153,9 +151,7 @@
               }
             },
             "additionalProperties": false,
-            "required": [
-              "input"
-            ]
+            "required": ["input"]
           },
           {
             "type": "string",
@@ -169,12 +165,7 @@
       "description": "The stylesheet language to use for the application's inline component styles.",
       "type": "string",
       "default": "css",
-      "enum": [
-        "css",
-        "less",
-        "sass",
-        "scss"
-      ]
+      "enum": ["css", "less", "sass", "scss"]
     },
     "stylePreprocessorOptions": {
       "description": "Options to pass to style preprocessors.",
@@ -308,14 +299,7 @@
       "type": "object",
       "patternProperties": {
         "^\\.\\S+$": {
-          "enum": [
-            "text",
-            "binary",
-            "file",
-            "dataurl",
-            "base64",
-            "empty"
-          ]
+          "enum": ["text", "binary", "file", "dataurl", "base64", "empty"]
         }
       }
     },
@@ -370,9 +354,7 @@
               "description": "The output directory name of your media files within the output browser directory. Defaults to 'media'."
             }
           },
-          "required": [
-            "base"
-          ],
+          "required": ["base"],
           "additionalProperties": false
         },
         {
@@ -443,21 +425,13 @@
     "i18nMissingTranslation": {
       "type": "string",
       "description": "How to handle missing translations for i18n.",
-      "enum": [
-        "warning",
-        "error",
-        "ignore"
-      ],
+      "enum": ["warning", "error", "ignore"],
       "default": "warning"
     },
     "i18nDuplicateTranslation": {
       "type": "string",
       "description": "How to handle duplicate translations for i18n.",
-      "enum": [
-        "warning",
-        "error",
-        "ignore"
-      ],
+      "enum": ["warning", "error", "ignore"],
       "default": "warning"
     },
     "localize": {
@@ -487,12 +461,7 @@
       "type": "string",
       "description": "Define the output filename cache-busting hashing mode.\n\n- `none`: No hashing.\n- `all`: Hash for all output bundles. \n- `media`: Hash for all output media (e.g., images, fonts, etc. that are referenced in CSS files).\n- `bundles`: Hash for output of lazy and main bundles.",
       "default": "none",
-      "enum": [
-        "none",
-        "all",
-        "media",
-        "bundles"
-      ]
+      "enum": ["none", "all", "media", "bundles"]
     },
     "poll": {
       "type": "number",
@@ -565,9 +534,7 @@
               "description": "Generates 'preload', 'modulepreload', and 'preconnect' link elements for initial application files and resources."
             }
           },
-          "required": [
-            "input"
-          ]
+          "required": ["input"]
         },
         {
           "const": false,
@@ -597,11 +564,7 @@
       "type": "string",
       "description": "Define the crossorigin attribute setting of elements that provide CORS support.",
       "default": "none",
-      "enum": [
-        "none",
-        "anonymous",
-        "use-credentials"
-      ]
+      "enum": ["none", "anonymous", "use-credentials"]
     },
     "allowedCommonJsDependencies": {
       "description": "A list of CommonJS or AMD packages that are allowed to be used without a build time warning. Use `'*'` to allow all.",
@@ -653,10 +616,7 @@
             "platform": {
               "description": "Specifies the platform for which the server bundle is generated. This affects the APIs and modules available in the server-side code. \n\n- `node`:  (Default) Generates a bundle optimized for Node.js environments. \n- `neutral`: Generates a platform-neutral bundle suitable for environments like edge workers, and other serverless platforms. This option avoids using Node.js-specific APIs, making the bundle more portable. \n\nPlease note that this feature does not provide polyfills for Node.js modules.",
               "default": "node",
-              "enum": [
-                "node",
-                "neutral"
-              ]
+              "enum": ["node", "neutral"]
             }
           },
           "additionalProperties": false
@@ -670,16 +630,11 @@
     "outputMode": {
       "type": "string",
       "description": "Defines the type of build output artifact. 'static': Generates a static site build artifact for deployment on any static hosting service. 'server': Generates a server application build artifact, required for applications using hybrid rendering or APIs.",
-      "enum": [
-        "static",
-        "server"
-      ]
+      "enum": ["static", "server"]
     }
   },
   "additionalProperties": false,
-  "required": [
-    "tsConfig"
-  ],
+  "required": ["tsConfig"],
   "definitions": {
     "assetPattern": {
       "oneOf": [
@@ -713,10 +668,7 @@
             }
           },
           "additionalProperties": false,
-          "required": [
-            "glob",
-            "input"
-          ]
+          "required": ["glob", "input"]
         },
         {
           "type": "string"
@@ -736,10 +688,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "replace",
-        "with"
-      ]
+      "required": ["replace", "with"]
     },
     "budget": {
       "type": "object",
@@ -747,15 +696,7 @@
         "type": {
           "type": "string",
           "description": "The type of budget.",
-          "enum": [
-            "all",
-            "allScript",
-            "any",
-            "anyScript",
-            "anyComponentStyle",
-            "bundle",
-            "initial"
-          ]
+          "enum": ["all", "allScript", "any", "anyScript", "anyComponentStyle", "bundle", "initial"]
         },
         "name": {
           "type": "string",
@@ -791,9 +732,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "type"
-      ]
+      "required": ["type"]
     }
   }
 }

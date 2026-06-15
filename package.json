@@ -92,16 +92,16 @@
   "dependencies": {
     "@angular-architects/module-federation": "21.2.2",
     "@angular-architects/native-federation": "22.0.0",
-    "@angular/cdk": "22.0.0",
-    "@angular/common": "22.0.0",
-    "@angular/core": "22.0.0",
-    "@angular/elements": "22.0.0",
-    "@angular/forms": "22.0.0",
-    "@angular/platform-browser": "22.0.0",
-    "@angular/router": "22.0.0",
+    "@angular/cdk": "22.0.1",
+    "@angular/common": "22.0.1",
+    "@angular/core": "22.0.1",
+    "@angular/elements": "22.0.1",
+    "@angular/forms": "22.0.1",
+    "@angular/platform-browser": "22.0.1",
+    "@angular/router": "22.0.1",
+    "@meteocons/svg-static": "0.1.0",
     "@module-federation/enhanced": "2.5.1",
     "@module-federation/runtime": "2.5.1",
-    "@meteocons/svg-static": "0.1.0",
     "@ngx-formly/bootstrap": "6.3.12",
     "@ngx-formly/core": "6.3.12",
     "@ngx-translate/core": "16.0.4",
@@ -123,21 +123,22 @@
     "tslib": "2.8.1"
   },
   "devDependencies": {
-    "@angular-devkit/core": "22.0.0",
-    "@angular-devkit/schematics": "22.0.0",
-    "@angular/build": "22.0.0",
-    "@angular/cli": "22.0.0",
-    "@angular/compiler": "22.0.0",
-    "@angular/compiler-cli": "22.0.0",
-    "@angular/language-service": "22.0.0",
-    "@angular/localize": "22.0.0",
+    "@angular-devkit/build-angular": "22.0.1",
+    "@angular-devkit/core": "22.0.1",
+    "@angular-devkit/schematics": "22.0.1",
+    "@angular/build": "22.0.1",
+    "@angular/cli": "22.0.1",
+    "@angular/compiler": "22.0.1",
+    "@angular/compiler-cli": "22.0.1",
+    "@angular/language-service": "22.0.1",
+    "@angular/localize": "22.0.1",
     "@axe-core/playwright": "4.11.1",
     "@commitlint/cli": "21.0.2",
     "@commitlint/config-conventional": "21.0.2",
     "@eslint/js": "10.0.1",
     "@microsoft/api-extractor": "7.58.7",
     "@playwright/test": "1.60.0",
-    "@schematics/angular": "22.0.0",
+    "@schematics/angular": "22.0.1",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@siemens/commitlint-config": "4.3.1",
@@ -164,6 +165,7 @@
     "http-server": "14.1.1",
     "husky": "9.1.7",
     "ng-packagr": "22.0.0",
+    "ngx-build-plus": "20.0.0",
     "piscina": "5.1.4",
     "postcss": "8.5.15",
     "postcss-scss": "4.0.9",
@@ -184,13 +186,13 @@
     "@simpl/docs-composer": "11.16.10"
   },
   "overrides": {
-    "@angular-architects/module-federation": {
+    "@microsoft/api-extractor": {
       "typescript": "$typescript"
     },
     "@module-federation/dts-plugin": {
       "typescript": "$typescript"
     },
-    "@microsoft/api-extractor": {
+    "@module-federation/enhanced": {
       "typescript": "$typescript"
     },
     "@siemens/eslint-config-angular": {

@@ -134,15 +134,11 @@
             }
           },
           "additionalProperties": false,
-          "required": [
-            "exclude"
-          ]
+          "required": ["exclude"]
         }
       ]
     }
   },
   "additionalProperties": false,
-  "required": [
-    "buildTarget"
-  ]
+  "required": ["buildTarget"]
 }
