@@ -93,7 +93,7 @@ describe('SiThemeService', () => {
       setupTestBed();
       expect(service.activeThemeName).toBe(ELEMENT_THEME_NAME);
       expect(service.hasTheme(ELEMENT_THEME_NAME)).toBe(true);
-      expect(service.themeNames.length).toBe(1);
+      expect(service.themeNames).toHaveLength(1);
       const result = await firstValueFrom(service.getActiveTheme());
       expect(result).toBeUndefined();
     });
@@ -128,13 +128,7 @@ describe('SiThemeService', () => {
     it('addOrUpdateTheme should return error on storage errors', async () => {
       store.saveTheme.mockImplementation(() => throwError(() => 'no network'));
       setupTestBed(false, store);
-      try {
-        await firstValueFrom(service.addOrUpdateTheme(theme));
-        expect.unreachable('Should have thrown an error');
-      } catch (error) {
-        expect(error).toBeDefined();
-        expect(error).toBe('no network');
-      }
+      await expect(firstValueFrom(service.addOrUpdateTheme(theme))).rejects.toBe('no network');
     });
   });
 
@@ -187,13 +181,7 @@ describe('SiThemeService', () => {
     it('deleteTheme should return error on storage errors', async () => {
       store.deleteTheme.mockImplementation(() => throwError(() => 'no network'));
       setupTestBed(false, store);
-      try {
-        await firstValueFrom(service.deleteTheme(theme.name));
-        expect.unreachable('Should have thrown an error');
-      } catch (error) {
-        expect(error).toBeDefined();
-        expect(error).toBe('no network');
-      }
+      await expect(firstValueFrom(service.deleteTheme(theme.name))).rejects.toBe('no network');
     });
 
     it('setActiveTheme with element should call deactive theme on storage', async () => {

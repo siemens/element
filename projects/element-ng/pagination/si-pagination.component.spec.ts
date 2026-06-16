@@ -37,8 +37,8 @@ describe('SiPaginationComponent', () => {
 
     fixture.detectChanges();
 
-    expect(getItems().length).toBe(7);
-    expect(getSeparators().length).toBe(0);
+    expect(getItems()).toHaveLength(7);
+    expect(getSeparators()).toHaveLength(0);
   });
 
   it('show separator on end', () => {
@@ -47,19 +47,19 @@ describe('SiPaginationComponent', () => {
 
     fixture.detectChanges();
 
-    expect(getItems().length).toBe(6);
-    expect(getSeparators().length).toBe(1);
+    expect(getItems()).toHaveLength(6);
+    expect(getSeparators()).toHaveLength(1);
     expect(getCurrentItem()).toHaveTextContent('4');
   });
 
-  it('show separator on end', () => {
+  it('show separator on end (many)', () => {
     fixture.componentRef.setInput('totalPages', 20);
     fixture.componentRef.setInput('currentPage', 17);
 
     fixture.detectChanges();
 
-    expect(getItems().length).toBe(6);
-    expect(getSeparators().length).toBe(1);
+    expect(getItems()).toHaveLength(6);
+    expect(getSeparators()).toHaveLength(1);
     expect(getCurrentItem()).toHaveTextContent('17');
   });
 
@@ -69,8 +69,8 @@ describe('SiPaginationComponent', () => {
 
     fixture.detectChanges();
 
-    expect(getItems().length).toBe(5);
-    expect(getSeparators().length).toBe(2);
+    expect(getItems()).toHaveLength(5);
+    expect(getSeparators()).toHaveLength(2);
     expect(getCurrentItem()).toHaveTextContent('9');
   });
 

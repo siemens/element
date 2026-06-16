@@ -109,6 +109,6 @@ describe('SiChartProgressComponent', () => {
     const component = fixture.componentInstance;
     fixture.detectChanges();
 
-    expect(getOption(component).series.length).toEqual(0);
+    expect(getOption(component).series).toHaveLength(0);
   });
 });

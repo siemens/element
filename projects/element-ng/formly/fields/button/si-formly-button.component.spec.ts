@@ -280,7 +280,7 @@ describe('formly button type', () => {
       expect(spy).toHaveBeenCalled();
     });
 
-    it('should trigger the clickListener function with custom params', () => {
+    it('should trigger the clickListener function with custom args', () => {
       component.options.set({
         formState: {
           click: (f: string, s: number) => spy(f, s)
@@ -324,7 +324,7 @@ describe('formly button type', () => {
       expect(spy).toHaveBeenCalledWith('foo');
     });
 
-    it('should trigger the clickListener function with custom params', () => {
+    it('should trigger the clickListener function with custom params (object)', () => {
       vi.spyOn(console, 'warn');
       spy.mockImplementation(() => {
         throw new Error('error');

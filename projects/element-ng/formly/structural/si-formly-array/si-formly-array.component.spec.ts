@@ -83,7 +83,7 @@ describe('ElementFormComponent', () => {
 
     const rows = fixture.debugElement.queryAll(By.css('.row'));
     expect(rows).toBeTruthy();
-    expect(rows.length).toEqual(1);
+    expect(rows).toHaveLength(1);
     expect(rows[0].nativeElement).toHaveTextContent('test set 1');
   });
 });

@@ -84,7 +84,7 @@ describe('SiAiWelcomeScreenComponent', () => {
 
     const compiled = fixture.nativeElement;
     const categoryChips = compiled.querySelectorAll('si-summary-chip');
-    expect(categoryChips.length).toBe(0);
+    expect(categoryChips).toHaveLength(0);
   });
 
   it('should hide suggestions when no suggestions provided', async () => {
@@ -93,6 +93,6 @@ describe('SiAiWelcomeScreenComponent', () => {
 
     const compiled = fixture.nativeElement;
     const actionCards = compiled.querySelectorAll('[si-action-card]');
-    expect(actionCards.length).toBe(0);
+    expect(actionCards).toHaveLength(0);
   });
 });

@@ -49,24 +49,24 @@ describe('SiListWidgetBodyComponent', () => {
   it('should show 6 skeletons as default without value', () => {
     fixture.detectChanges();
     expect(element.querySelector('.si-link-widget-skeleton')).toBeDefined();
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(6);
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(6);
   });
 
   it('should enable number skeleton configuration', () => {
     numberOfLinks.set(10);
     fixture.detectChanges();
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(10);
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(10);
 
     numberOfLinks.set(12);
     fixture.detectChanges();
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(12);
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(12);
   });
 
   it('should display list items', () => {
     value.set([{ label: 'item_1' }, { label: 'item_2' }, { label: 'item_3' }]);
     fixture.detectChanges();
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(0);
-    expect(element.querySelectorAll('si-list-widget-item').length).toBe(3);
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(0);
+    expect(element.querySelectorAll('si-list-widget-item')).toHaveLength(3);
   });
 
   it('should support initial sorting of list items', () => {
@@ -74,7 +74,7 @@ describe('SiListWidgetBodyComponent', () => {
     value.set([{ label: 'item_1' }, { label: 'item_2' }, { label: 'item_3' }]);
     fixture.detectChanges();
     const items = element.querySelectorAll('si-list-widget-item');
-    expect(items.length).toBe(3);
+    expect(items).toHaveLength(3);
     expect(items.item(0).textContent).toContain('item_3');
   });
 
@@ -83,14 +83,14 @@ describe('SiListWidgetBodyComponent', () => {
     value.set([{ label: 'item_1' }, { label: 'item_2' }, { label: 'item_3' }]);
     fixture.detectChanges();
     let items = element.querySelectorAll('si-list-widget-item');
-    expect(items.length).toBe(3);
+    expect(items).toHaveLength(3);
     expect(items.item(0).textContent).toContain('item_3');
 
     value.set([{ label: 'item_4' }, { label: 'item_5' }, { label: 'item_6' }, { label: 'item_7' }]);
     fixture.detectChanges();
 
     items = element.querySelectorAll('si-list-widget-item');
-    expect(items.length).toBe(4);
+    expect(items).toHaveLength(4);
     expect(items.item(0).textContent).toContain('item_7');
   });
 
@@ -103,7 +103,7 @@ describe('SiListWidgetBodyComponent', () => {
     fixture.detectChanges();
 
     const items = element.querySelectorAll('si-list-widget-item');
-    expect(items.length).toBe(4);
+    expect(items).toHaveLength(4);
     expect(items.item(0).textContent).toContain('item_1');
   });
 
@@ -121,7 +121,7 @@ describe('SiListWidgetBodyComponent', () => {
     fixture.detectChanges();
 
     const items = element.querySelectorAll('si-list-widget-item');
-    expect(items.length).toBe(4);
+    expect(items).toHaveLength(4);
     expect(items.item(0).textContent).toContain('item_1');
   });
 
@@ -152,7 +152,7 @@ describe('SiListWidgetBodyComponent', () => {
       fixture.detectChanges();
 
       let items = element.querySelectorAll('si-list-widget-item');
-      expect(items.length).toBe(1);
+      expect(items).toHaveLength(1);
       expect(items.item(0).textContent).not.toContain('item_1');
       expect(items.item(0).textContent).toContain('item_3');
 
@@ -163,7 +163,7 @@ describe('SiListWidgetBodyComponent', () => {
       fixture.detectChanges();
 
       items = element.querySelectorAll('si-list-widget-item');
-      expect(items.length).toBe(4);
+      expect(items).toHaveLength(4);
     });
   });
 
@@ -184,7 +184,7 @@ describe('SiListWidgetBodyComponent', () => {
 
       // Should show 6 skeletons after search
       let items = element.querySelectorAll('.si-link-widget-skeleton');
-      expect(items.length).toBe(6);
+      expect(items).toHaveLength(6);
 
       // Clear search again
       searchBarInput!.value = '';
@@ -194,7 +194,7 @@ describe('SiListWidgetBodyComponent', () => {
 
       // Should still show 6 skeletons after clearing search
       items = element.querySelectorAll('si-list-widget-item');
-      expect(items.length).toBe(6);
+      expect(items).toHaveLength(6);
     });
   });
 });

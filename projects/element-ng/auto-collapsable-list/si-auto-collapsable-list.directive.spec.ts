@@ -122,10 +122,10 @@ describe('SiAutoCollapsableListDirective', () => {
     component.items().forEach(item => expect(item.canBeVisible()).toBe(true));
   });
 
-  it('should collapse and expand items on container size changes', async () => {
-    fixture.detectChanges();
-    // Skip test when browser is not focussed to prevent failures.
-    if (document.hasFocus()) {
+  it.skipIf(!document.hasFocus())(
+    'should collapse and expand items on container size changes',
+    async () => {
+      fixture.detectChanges();
       await detectSizeChange({ width: 300 });
       expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
       expect(
@@ -143,47 +143,41 @@ describe('SiAutoCollapsableListDirective', () => {
         hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
       ).toHaveStyle({ visibility: 'hidden' });
     }
+  );
+
+  it.skipIf(!document.hasFocus())('should respect additional content', async () => {
+    fixture.detectChanges();
+    await detectSizeChange();
+    component.showAdditionalContent.set(true);
+    await detectSizeChange({ width: 300 });
+    expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
   });
 
-  it('should respect additional content', async () => {
+  it.skipIf(!document.hasFocus())('should react to item changes', async () => {
     fixture.detectChanges();
-    // Skip test when browser is not focussed to prevent failures.
-    if (document.hasFocus()) {
-      await detectSizeChange();
-      component.showAdditionalContent.set(true);
-      await detectSizeChange({ width: 300 });
-      expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
-    }
-  });
-
-  it('should react to item changes', async () => {
-    fixture.detectChanges();
-    // Skip test when browser is not focussed to prevent failures.
-    if (document.hasFocus()) {
-      await detectSizeChange();
-      component.moreItems.update(items => [...items, 100, 100]);
-      await detectSizeChange({ width: 700 });
-      expect(readVisibilityStates()).toEqual([
-        'visible',
-        'visible',
-        'visible',
-        'visible',
-        'visible',
-        'visible',
-        'visible'
-      ]);
-      component.moreItems.update(items => [0, ...items.slice(1)]);
-      await detectSizeChange();
-      expect(readVisibilityStates()).toEqual([
-        'visible',
-        'visible',
-        'visible',
-        'visible',
-        'visible',
-        'visible',
-        'visible'
-      ]);
-    }
+    await detectSizeChange();
+    component.moreItems.update(items => [...items, 100, 100]);
+    await detectSizeChange({ width: 700 });
+    expect(readVisibilityStates()).toEqual([
+      'visible',
+      'visible',
+      'visible',
+      'visible',
+      'visible',
+      'visible',
+      'visible'
+    ]);
+    component.moreItems.update(items => [0, ...items.slice(1)]);
+    await detectSizeChange();
+    expect(readVisibilityStates()).toEqual([
+      'visible',
+      'visible',
+      'visible',
+      'visible',
+      'visible',
+      'visible',
+      'visible'
+    ]);
   });
 
   it('should react to disabled changes', async () => {

@@ -183,7 +183,8 @@ describe('formly text-display-type', () => {
     expect(inputField.nativeElement.textContent).toBeDefined();
     expect(inputField.nativeElement).toHaveTextContent('thisIsASuffix');
   });
-  it('should render a suffix without value', () => {
+
+  it('should render a suffix without value (nested path)', () => {
     component.fields.set([
       {
         key: 'name',

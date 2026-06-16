@@ -32,7 +32,7 @@ describe('SiToastNotificationService', () => {
   it('should successfully hide all toast notifications', () => {
     service.queueToastNotification('success', 'Success!', 'A successful event has occurred.');
     service.hideToastNotification();
-    expect(service.activeToasts.length).toBe(0);
+    expect(service.activeToasts).toHaveLength(0);
   });
 
   it('should close a toast', () => {
@@ -42,11 +42,11 @@ describe('SiToastNotificationService', () => {
       'A successful event has occurred.'
     );
     vi.spyOn(toast.hidden!, 'next');
-    expect(service.activeToasts.length).toBe(1);
+    expect(service.activeToasts).toHaveLength(1);
 
     toast.close!();
 
-    expect(service.activeToasts.length).toBe(0);
+    expect(service.activeToasts).toHaveLength(0);
     expect(toast.hidden?.next).toHaveBeenCalled();
   });
 
@@ -56,29 +56,29 @@ describe('SiToastNotificationService', () => {
     service.queueToastNotification('success', 'Toast 3', 'Message 3');
     service.queueToastNotification('success', 'Toast 4', 'Message 4');
 
-    expect(service.activeToasts.length).toBe(3);
+    expect(service.activeToasts).toHaveLength(3);
     expect(service.activeToasts[0].message).toBe('Message 2'); // first one is dropped
   });
 
   it('automatically closes toast after a while', () => {
     vi.useFakeTimers();
     service.queueToastNotification('success', 'Toast 1', 'Message 1');
-    expect(service.activeToasts.length).toBe(1);
+    expect(service.activeToasts).toHaveLength(1);
 
     vi.advanceTimersByTime(6000);
 
-    expect(service.activeToasts.length).toBe(0);
+    expect(service.activeToasts).toHaveLength(0);
     vi.useRealTimers();
   });
 
   it('should respect the disableAutoClose flag', () => {
     vi.useFakeTimers();
     service.queueToastNotification('success', 'Toast 1', 'Message 1', true);
-    expect(service.activeToasts.length).toBe(1);
+    expect(service.activeToasts).toHaveLength(1);
 
     vi.advanceTimersByTime(6000);
 
-    expect(service.activeToasts.length).toBe(1);
+    expect(service.activeToasts).toHaveLength(1);
     vi.useRealTimers();
   });
 });

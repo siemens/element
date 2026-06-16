@@ -115,7 +115,7 @@ describe('ElementFormComponent', () => {
 
     const rows = fixture.debugElement.queryAll(By.css('si-form-item'));
     expect(rows).toBeTruthy();
-    expect(rows.length).toEqual(2);
+    expect(rows).toHaveLength(2);
     const label1 = rows[0].nativeElement.innerText;
     expect(label1).toContain('Property 1');
     const label2 = rows[1].nativeElement.innerText;

@@ -336,11 +336,11 @@ describe('SiFilteredSearchComponent', () => {
     });
 
     it('should display criterion label in input', async () => {
-      component.logEvent = vi
-        .fn()
-        .mockImplementation((searchCriteria: typeof component.searchCriteria) => {
+      vi.spyOn(component, 'logEvent').mockImplementation(
+        (searchCriteria: typeof component.searchCriteria) => {
           component.searchCriteria = searchCriteria;
-        });
+        }
+      );
 
       // Select criterion
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
@@ -510,7 +510,7 @@ describe('SiFilteredSearchComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should emit selected optionType value ', async () => {
+    it('should emit selected optionType value', async () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const criteria = await filteredSearch.getCriteria();
       const criteriaValue = await criteria[0].value();
@@ -1702,24 +1702,24 @@ describe('SiFilteredSearchComponent', () => {
   });
 
   describe('with Keyboard interaction workflows', () => {
-    it('should focus out of criterion after keyboard Enter (criterion value)', async () => {
-      component.searchCriteria.set({
-        criteria: [{ name: 'location', value: 'Munich' }],
-        value: 'Max'
-      });
+    it.skipIf(!document.hasFocus())(
+      'should focus out of criterion after keyboard Enter (criterion value)',
+      async () => {
+        component.searchCriteria.set({
+          criteria: [{ name: 'location', value: 'Munich' }],
+          value: 'Max'
+        });
 
-      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
-      const criteria = await filteredSearch.getCriteria();
-      const criteriaValue = await criteria[0].value();
-      await criteriaValue?.click();
-      await criteriaValue?.sendKeys(TestKey.ENTER);
+        const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+        const criteria = await filteredSearch.getCriteria();
+        const criteriaValue = await criteria[0].value();
+        await criteriaValue?.click();
+        await criteriaValue?.sendKeys(TestKey.ENTER);
 
-      // Skip test when browser is not focussed to prevent failures.
-      if (document.hasFocus()) {
         const input = fixture.nativeElement.querySelector('input.value-input:focus');
         expect(input).toBeTruthy();
       }
-    });
+    );
 
     it('should focus out of criterion after keyboard semicolon (criterion value)', async () => {
       component.searchCriteria.set({
@@ -2150,7 +2150,7 @@ describe('SiFilteredSearchComponent', () => {
       });
     });
 
-    it('should contain actual search and criteria list ', async () => {
+    it('should contain actual search and criteria list', async () => {
       const spy = vi.spyOn(component, 'showCriteria');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
@@ -2256,7 +2256,7 @@ describe('SiFilteredSearchComponent', () => {
 
       // Verify the pill was created
       let criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(1);
+      expect(criteria).toHaveLength(1);
       let value = await criteria[0].value();
       expect(await value?.text()).toBe('first pill');
 
@@ -2270,7 +2270,7 @@ describe('SiFilteredSearchComponent', () => {
 
       // Verify still only one pill exists
       criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(1);
+      expect(criteria).toHaveLength(1);
 
       // Step 3: Remove the existing pill
       await filteredSearch
@@ -2280,7 +2280,7 @@ describe('SiFilteredSearchComponent', () => {
 
       // Verify the pill was removed
       criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(0);
+      expect(criteria).toHaveLength(0);
 
       // Step 4: Add a new free-text pill (should be allowed again)
       await freeTextSearch.focus();
@@ -2293,7 +2293,7 @@ describe('SiFilteredSearchComponent', () => {
 
       // Verify the pill was created
       criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(1);
+      expect(criteria).toHaveLength(1);
       value = await criteria[0].value();
       expect(await value?.text()).toBe('new pill');
     });
@@ -2604,7 +2604,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
 
       // Verify no pills exist initially
       let criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(0);
+      expect(criteria).toHaveLength(0);
 
       // Type text into the free text search
       await freeTextSearch.focus();
@@ -2617,7 +2617,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
 
       // Verify a free text pill was created
       criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(1);
+      expect(criteria).toHaveLength(1);
       const value = await criteria[0].value();
       expect(await value?.text()).toBe('test pill text');
 
@@ -2637,7 +2637,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       let criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(1);
+      expect(criteria).toHaveLength(1);
 
       // Verify the initial value
       let value = await criteria[0].value();
@@ -2658,7 +2658,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
 
       // Verify the value has been updated
       criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(1);
+      expect(criteria).toHaveLength(1);
       value = await criteria[0].value();
       expect(await value?.text()).toBe('updated value');
 
@@ -2678,7 +2678,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       let criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(1);
+      expect(criteria).toHaveLength(1);
 
       // Verify the initial value
       const value = (await criteria[0].value())!;
@@ -2698,7 +2698,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
 
       // Verify the criterion was removed
       criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(0);
+      expect(criteria).toHaveLength(0);
 
       // Verify the search criteria no longer contains the criterion
       expect(component.searchCriteria().criteria).toEqual([]);
@@ -2718,7 +2718,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
 
       // Verify initial pill exists
       let criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(1);
+      expect(criteria).toHaveLength(1);
       const value = await criteria[0].value();
       expect(await value?.text()).toBe('initial pill');
 
@@ -2738,7 +2738,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
 
       // Verify the second pill was created
       criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(2);
+      expect(criteria).toHaveLength(2);
       const values = await parallel(() =>
         criteria.map(criterion => criterion.value().then(criteriaValue => criteriaValue!.text()))
       );
@@ -2755,7 +2755,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
 
       // Verify only two pills exist
       criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(2);
+      expect(criteria).toHaveLength(2);
 
       // Blur the input to verify no pill is created on blur
       await freeTextSearch.blur();
@@ -2763,7 +2763,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
 
       // Verify still only two pills exist after blur
       criteria = await filteredSearch.getCriteria();
-      expect(criteria.length).toBe(2);
+      expect(criteria).toHaveLength(2);
 
       // Verify the input text was unchanged after blur
       expect(await freeTextSearch.getValue()).toBe('third pill');

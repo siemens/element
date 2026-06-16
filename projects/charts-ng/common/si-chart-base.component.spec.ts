@@ -81,8 +81,8 @@ describe('SiChartBase', () => {
       const options: any = component.chartComponent().getOptionNoClone();
 
       expect(options).toBeDefined();
-      expect(options.series.length).toEqual(1);
-      expect(options.series[0].data.length).toEqual(4);
+      expect(options.series).toHaveLength(1);
+      expect(options.series[0].data).toHaveLength(4);
     });
   });
 });

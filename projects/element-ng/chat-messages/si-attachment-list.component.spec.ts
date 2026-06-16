@@ -56,7 +56,7 @@ describe('SiAttachmentListComponent', () => {
     await fixture.whenStable();
 
     const attachmentElements = debugElement.queryAll(By.css('.attachment-item'));
-    expect(attachmentElements.length).toBe(0);
+    expect(attachmentElements).toHaveLength(0);
   });
 
   it('should render attachment items', async () => {
@@ -64,7 +64,7 @@ describe('SiAttachmentListComponent', () => {
     await fixture.whenStable();
 
     const attachmentElements = debugElement.queryAll(By.css('.attachment-item'));
-    expect(attachmentElements.length).toBe(2);
+    expect(attachmentElements).toHaveLength(2);
   });
 
   it('should display attachment names', async () => {
@@ -98,7 +98,7 @@ describe('SiAttachmentListComponent', () => {
     await fixture.whenStable();
 
     const removeButtons = debugElement.queryAll(By.css('.btn-icon'));
-    expect(removeButtons.length).toBe(0);
+    expect(removeButtons).toHaveLength(0);
   });
 
   it('should show remove buttons when removable is true', async () => {
@@ -107,7 +107,7 @@ describe('SiAttachmentListComponent', () => {
     await fixture.whenStable();
 
     const removeButtons = debugElement.queryAll(By.css('.btn-icon'));
-    expect(removeButtons.length).toBe(2);
+    expect(removeButtons).toHaveLength(2);
   });
 
   it('should emit remove event when remove button is clicked', async () => {

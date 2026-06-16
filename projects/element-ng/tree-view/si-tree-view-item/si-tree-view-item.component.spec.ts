@@ -216,14 +216,14 @@ describe('SiTreeViewComponentWithDragDrop', () => {
 
   it('removes item from tree if node is found', async () => {
     await fixture.whenStable();
-    expect(debugElement.queryAll(By.css('.tree-one si-tree-view-item')).length).toBe(3);
+    expect(debugElement.queryAll(By.css('.tree-one si-tree-view-item'))).toHaveLength(3);
 
     const treeNode = fixture.componentInstance.items()[1];
     const treeItems = removeItemFromTree(fixture.componentInstance.items(), treeNode);
     fixture.componentInstance.items.set(structuredClone(treeItems));
     await fixture.whenStable();
 
-    expect(debugElement.queryAll(By.css('.tree-one si-tree-view-item')).length).toBe(2);
+    expect(debugElement.queryAll(By.css('.tree-one si-tree-view-item'))).toHaveLength(2);
   });
 
   it('returns same tree if node to be removed not found', async () => {

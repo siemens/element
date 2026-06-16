@@ -30,14 +30,14 @@ describe('SiDashboardToolbarComponent', () => {
 
     expect(component.editable()).toBe(true);
     const buttons = fixture.debugElement.queryAll(By.css('button'));
-    expect(buttons.length).toBe(2);
+    expect(buttons).toHaveLength(2);
   });
 
   it('#onCancel() shall cancel editable mode', async () => {
     fixture.componentRef.setInput('editable', true);
     fixture.detectChanges();
     const buttons = fixture.debugElement.queryAll(By.css('button'));
-    expect(buttons.length).toBe(2);
+    expect(buttons).toHaveLength(2);
     expect(buttons[0].nativeElement.textContent).toContain('Cancel');
 
     buttons[0].triggerEventHandler('click', null);
@@ -51,7 +51,7 @@ describe('SiDashboardToolbarComponent', () => {
     fixture.componentRef.setInput('editable', true);
     fixture.detectChanges();
     const buttons = fixture.debugElement.queryAll(By.css('button'));
-    expect(buttons.length).toBe(2);
+    expect(buttons).toHaveLength(2);
     const loadingButton = fixture.debugElement.query(By.css('si-loading-button'));
     expect(buttons[1].nativeElement.textContent).toContain('Save');
 

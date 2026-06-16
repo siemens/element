@@ -70,7 +70,7 @@ describe('SiWidgetHostComponent', () => {
         vi.useFakeTimers();
         vi.advanceTimersByTime(0);
         await fixture.whenStable();
-        expect(component.widgetHost().length).toBe(1);
+        expect(component.widgetHost()).toHaveLength(1);
         vi.useRealTimers();
       });
 
@@ -79,7 +79,7 @@ describe('SiWidgetHostComponent', () => {
         vi.useFakeTimers();
         vi.advanceTimersByTime(0);
         await fixture.whenStable();
-        expect(component.widgetHost().length).toBe(0);
+        expect(component.widgetHost()).toHaveLength(0);
         vi.useRealTimers();
       });
 
@@ -136,11 +136,11 @@ describe('SiWidgetHostComponent', () => {
           vi.useFakeTimers();
           vi.advanceTimersByTime(0);
           await fixture.whenStable();
-          expect(component.primaryActions.length).toBe(0);
+          expect(component.primaryActions).toHaveLength(0);
           fixture.changeDetectorRef.markForCheck();
           fixture.detectChanges();
           component.setupEditable(true);
-          expect(component.primaryActions.length).toBe(3);
+          expect(component.primaryActions).toHaveLength(3);
           expect((component.primaryActions[0] as MenuItem).title).toBe('Hello User');
           expect(component.primaryActions[1]).toBe(component.editAction);
           expect(component.primaryActions[2]).toBe(component.removeAction);
@@ -153,10 +153,10 @@ describe('SiWidgetHostComponent', () => {
           vi.advanceTimersByTime(0);
           await fixture.whenStable();
           component.widgetInstance!.primaryEditActions = undefined;
-          expect(component.primaryActions.length).toBe(0);
+          expect(component.primaryActions).toHaveLength(0);
 
           component.setupEditable(true);
-          expect(component.primaryActions.length).toBe(2);
+          expect(component.primaryActions).toHaveLength(2);
           expect(component.primaryActions[0]).toBe(component.editAction);
           expect(component.primaryActions[1]).toBe(component.removeAction);
           expect(component.widgetInstance!.editable).toBe(true);

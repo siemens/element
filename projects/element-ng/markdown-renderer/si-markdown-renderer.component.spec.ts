@@ -104,7 +104,7 @@ describe('SiMarkdownRendererComponent', () => {
 
     const markdownDiv = hostElement.firstElementChild!;
     const brElements = markdownDiv.querySelectorAll('br');
-    expect(brElements.length).toBe(1);
+    expect(brElements).toHaveLength(1);
   });
 
   it('should handle complex markdown with multiple elements', async () => {
@@ -189,8 +189,8 @@ const example = "code block";
     expect(tableElement).toBeTruthy();
     expect(tableElement).toHaveClass('table');
     expect(tableElement).toHaveClass('table-hover');
-    expect(trElements.length).toBe(3); // Header + 2 data rows
-    expect(tdElements.length).toBe(6); // 2 columns × 3 rows
+    expect(trElements).toHaveLength(3); // Header + 2 data rows
+    expect(tdElements).toHaveLength(6); // 2 columns × 3 rows
     expect(tdElements[0]).toHaveTextContent('Name');
     expect(tdElements[1]).toHaveTextContent('Role');
     expect(tdElements[2]).toHaveTextContent('Alice');

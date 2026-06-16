@@ -65,7 +65,7 @@ describe('SiLandingPageComponent', () => {
 
     const linkEls = element.querySelectorAll('footer a');
 
-    expect(linkEls.length).toBe(2);
+    expect(linkEls).toHaveLength(2);
     expect(linkEls[0]).toHaveTextContent('Privacy Notice');
     expect((linkEls[0] as HTMLAnchorElement).href).toBe('https://privacy/');
     expect(linkEls[1]).toHaveTextContent('Terms of Use');
@@ -80,7 +80,7 @@ describe('SiLandingPageComponent', () => {
     await fixture.whenStable();
 
     const linkEls = element.querySelectorAll('footer a');
-    expect(linkEls.length).toBe(1);
+    expect(linkEls).toHaveLength(1);
     (linkEls[0] as HTMLElement).click();
     expect(spy).toHaveBeenCalled();
   });

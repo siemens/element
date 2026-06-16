@@ -316,7 +316,7 @@ describe('SiChatInputComponent', () => {
 
     (component as any).removeAttachment(testAttachments[0]);
 
-    expect(attachments().length).toBe(1);
+    expect(attachments()).toHaveLength(1);
     expect(attachments()[0].name).toBe('file2.txt');
   });
 
@@ -332,7 +332,7 @@ describe('SiChatInputComponent', () => {
 
     (component as any).onFilesAdded(uploadFiles);
 
-    expect(attachments().length).toBe(1);
+    expect(attachments()).toHaveLength(1);
     expect(attachments()[0].name).toBe('test.txt');
     expect(attachments()[0].file).toBe(mockFile);
   });
@@ -353,7 +353,7 @@ describe('SiChatInputComponent', () => {
 
     (component as any).onFilesAdded(uploadFiles);
 
-    expect(attachments().length).toBe(1);
+    expect(attachments()).toHaveLength(1);
     expect(attachments()[0].name).toBe('test1.txt');
   });
 

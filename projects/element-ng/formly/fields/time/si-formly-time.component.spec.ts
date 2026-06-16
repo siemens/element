@@ -166,7 +166,7 @@ describe('formly time-type', () => {
     expect(instance.showSeconds()).toBe(true);
   });
 
-  it('should set timepicker showSeconds to true', () => {
+  it('should set timepicker showMilliseconds to true', () => {
     component.fields.set([
       {
         key: 'time',
