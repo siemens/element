@@ -234,12 +234,17 @@ class SiTestHelpers {
         }
         if (this.testInfo.project.metadata.isVrt) {
           try {
+            // force-disable animations. Playwright is supposed to do that, but sometimes rendering
+            // is not up to date.
+            await this.enableDisableAnimations(this.page, false);
             await this.showHideIgnores(this.page, false, options?.snapshotDelay);
+            await this.waitForAllAnimationsToComplete();
             await expect(this.page).toHaveScreenshot(testName + '.png', {
               maxDiffPixels: options?.maxDiffPixels,
               fullPage: options?.fullPage ?? true
             });
           } finally {
+            await this.enableDisableAnimations(this.page, true);
             await this.showHideIgnores(this.page, true);
           }
 
