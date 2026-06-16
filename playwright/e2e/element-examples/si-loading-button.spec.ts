@@ -12,7 +12,7 @@ test.describe('si-loading-button', () => {
     await si.runVisualAndA11yTests('normal state');
 
     await page.locator('input[type=checkbox]').check();
-    await expect(page.locator('si-loading-spinner')).not.toHaveCount(0);
-    await si.runVisualAndA11yTests('second-step', { maxDiffPixels: 45 });
+    await expect(page.locator('si-loading-spinner')).toHaveCount(11);
+    await si.runVisualAndA11yTests('second-step');
   });
 });
