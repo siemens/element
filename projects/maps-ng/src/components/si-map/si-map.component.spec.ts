@@ -174,13 +174,14 @@ describe('SiMapComponent', () => {
     componentRef.setInput('cluster', false);
     component.init();
     component.refresh([]);
-    component.map?.getLayers().forEach(layer => {
-      if (layer instanceof VectorLayer) {
-        if (layer.getSource() instanceof VectorSource) {
-          expect(layer.getSource().getFeatures().length).toBe(0);
-        }
-      }
-    });
+    const vectorLayers = component
+      .map!.getLayers()
+      .getArray()
+      .filter(layer => layer instanceof VectorLayer);
+    const vectorSources = vectorLayers
+      ?.map(layer => layer.getSource())
+      .filter(source => source instanceof VectorSource);
+    vectorSources?.forEach(source => expect(source.getFeatures()).toHaveLength(0));
   });
 
   it('should no display tooltip if feature is Clicked', () => {
@@ -205,10 +206,10 @@ describe('SiMapComponent', () => {
   });
 
   it('should emit clicked MapPoint', () => {
-    vi.spyOn(component.pointsSelected, 'emit');
+    const pointsSelectedSpy = vi.spyOn(component.pointsSelected, 'emit');
     fixture.detectChanges();
     component.select(singlePoint);
-    expect(component.pointsSelected.emit).toHaveBeenCalledWith([singlePoint]);
+    expect(pointsSelectedSpy).toHaveBeenCalledWith([singlePoint]);
   });
 
   it('should display tooltip only on features of type Feature', () => {
@@ -272,16 +273,16 @@ describe('SiMapComponent', () => {
 
   it('update map style to light map on theme change', () => {
     componentRef.setInput('maptilerKey', 'asdfghjkl');
-    vi.spyOn(component, 'setMapStyle');
+    const setMapStyleSpy = vi.spyOn(component, 'setMapStyle');
     component.onThemeSwitch(false);
-    expect(component.setMapStyle).toHaveBeenCalledWith(false, 'asdfghjkl');
+    expect(setMapStyleSpy).toHaveBeenCalledWith(false, 'asdfghjkl');
   });
 
   it('update map style to dark map on theme change', () => {
     componentRef.setInput('maptilerKey', 'qwertyuiop');
-    vi.spyOn(component, 'setMapStyle');
+    const setMapStyleSpy = vi.spyOn(component, 'setMapStyle');
     component.onThemeSwitch(true);
-    expect(component.setMapStyle).toHaveBeenCalledWith(true, 'qwertyuiop');
+    expect(setMapStyleSpy).toHaveBeenCalledWith(true, 'qwertyuiop');
   });
 
   it('set tooltip offset and position', () => {
@@ -290,10 +291,10 @@ describe('SiMapComponent', () => {
         geometry: new Point([4456989.943596791, 1369860.9690134972])
       })
     ];
-    vi.spyOn(component.tooltipOverlay, 'setOffset');
-    vi.spyOn(component.tooltipOverlay, 'setPosition');
+    const setOffsetSpy = vi.spyOn(component.tooltipOverlay, 'setOffset');
+    const setPositionSpy = vi.spyOn(component.tooltipOverlay, 'setPosition');
     component.showClusterTooltipContent(feat);
-    expect(component.tooltipOverlay.setOffset).toHaveBeenCalledWith([0, 20]);
-    expect(component.tooltipOverlay.setPosition).toHaveBeenCalled();
+    expect(setOffsetSpy).toHaveBeenCalledWith([0, 20]);
+    expect(setPositionSpy).toHaveBeenCalled();
   });
 });

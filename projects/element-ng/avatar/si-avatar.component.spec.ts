@@ -121,7 +121,7 @@ describe('SiAvatarComponent', () => {
       expect(element.querySelector<HTMLElement>('.initials')).toHaveTextContent('JS');
     });
 
-    it('should support account with first, middle and last name', async () => {
+    it('should support account with first, middle and last name (comma format)', async () => {
       altText.set('Smith, Jane Aubrey (stuff here) (and more stuff)');
       await fixture.whenStable();
 

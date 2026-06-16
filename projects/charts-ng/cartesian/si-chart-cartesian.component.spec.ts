@@ -98,8 +98,8 @@ describe('SiChartBarLineComponent', () => {
 
     component.chartCartesianComponent().addData(0, ['e', 5]);
     expect(
-      (component.chartCartesianComponent().chart.getOption() as any).series[0].data.length
-    ).toEqual(5);
+      (component.chartCartesianComponent().chart.getOption() as any).series[0].data
+    ).toHaveLength(5);
   });
 
   it('should have undefined x- and y-Axis, when no input provided', () => {
@@ -116,7 +116,7 @@ describe('SiChartBarLineComponent', () => {
     const component = fixture.debugElement.componentInstance;
     fixture.detectChanges();
 
-    expect(component.chart.getOption().series.length).toEqual(0);
+    expect(component.chart.getOption().series).toHaveLength(0);
   });
 
   it('should have a default number for visible entries', () => {
@@ -136,15 +136,15 @@ describe('SiChartBarLineComponent', () => {
     component.chartCartesianComponent().addData(0, ['h', 8]);
     component.chartCartesianComponent().addData(0, ['i', 9]);
     component.chartCartesianComponent().addData(0, ['j', 10]);
-    expect(getOption(component.chartCartesianComponent()).series[0].data.length).toEqual(10);
+    expect(getOption(component.chartCartesianComponent()).series[0].data).toHaveLength(10);
 
     component.chartCartesianComponent().addData(0, ['k', 11]);
-    expect(getOption(component.chartCartesianComponent()).series[0].data.length).toEqual(10);
+    expect(getOption(component.chartCartesianComponent()).series[0].data).toHaveLength(10);
   });
 
   it('should not create legend data by default', async () => {
     const { component } = await createChartWithTestData();
-    expect(getOption(component.chartCartesianComponent()).legend[0].data.length).toEqual(0);
+    expect(getOption(component.chartCartesianComponent()).legend[0].data).toHaveLength(0);
   });
 
   it('should create legend data, if configured', async () => {

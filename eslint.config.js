@@ -2,6 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import angularTypescriptConfig from '@siemens/eslint-config-angular';
 import angularTemplateConfig from '@siemens/eslint-config-angular/template';
+import vitest from '@vitest/eslint-plugin';
 import tsdocPlugin from 'eslint-plugin-tsdoc';
 import eslintPluginHeaders from 'eslint-plugin-headers';
 import { defineConfig } from 'eslint/config';
@@ -21,9 +22,20 @@ export const tsConfig = defineConfig({
   },
   plugins: {
     'tsdoc': tsdocPlugin,
-    'headers': eslintPluginHeaders
+    'headers': eslintPluginHeaders,
+    'vitest': vitest
   },
   rules: {
+    ...vitest.configs.recommended.rules, // you can also use vitest.configs.all.rules to enable all rules
+    'vitest/expect-expect': ['off'],
+    'vitest/require-awaited-expect-poll': 'error',
+    'vitest/prefer-vi-mocked': 'error',
+    'vitest/prefer-to-have-length': 'error',
+    'vitest/prefer-to-have-been-called-times': 'error',
+    'vitest/prefer-to-contain': 'error',
+    'vitest/prefer-to-be-object': 'error',
+    'vitest/prefer-each': 'error',
+    'vitest/prefer-comparison-matcher': 'error',
     '@typescript-eslint/no-unused-vars': ['off'],
     '@angular-eslint/directive-selector': [
       'error',
