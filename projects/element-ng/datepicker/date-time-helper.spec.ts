@@ -192,7 +192,7 @@ describe('date time helper', () => {
       expect(actual.getDay()).toBe(SUNDAY);
     });
 
-    it('should be sunday', () => {
+    it('should be saturday', () => {
       const actual = getWeekStartDate(input, 'saturday');
       expect(actual.getDay()).toBe(SATURDAY);
     });
@@ -260,7 +260,7 @@ describe('date time helper', () => {
       });
     });
 
-    describe('should result in minDate', () => {
+    describe('should result in min date', () => {
       it('when minDate is in future', () => {
         const expected = addDays(input, 1);
         const actual = getDateSameOrBetween(input, expected);
@@ -275,7 +275,7 @@ describe('date time helper', () => {
       });
     });
 
-    describe('should result in maxDate', () => {
+    describe('should result in max date', () => {
       it('when maxDate is in past', () => {
         const expected = addDays(input, -1);
         const actual = getDateSameOrBetween(input, undefined, expected);
@@ -283,7 +283,7 @@ describe('date time helper', () => {
       });
     });
 
-    describe('should result in maxDate', () => {
+    describe('should result in max date with min date', () => {
       it('when maxDate is in past', () => {
         const minDate = addDays(input, -2);
         const expected = addDays(input, -1);

@@ -134,7 +134,7 @@ describe('SiPhoneNumberInputComponent', () => {
     await list.sendKeys('S');
     await list.clear();
     // All the five countries should be listed
-    expect((await list.getAllItems()).length).toEqual(5);
+    expect(await list.getAllItems()).toHaveLength(5);
   });
 
   it('should show invalid status on invalid phone entry', () => {

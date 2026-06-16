@@ -382,13 +382,13 @@ describe('SiTreeViewComponent', () => {
     root[0].children = createTreeItems(99);
     component.items.set(root);
     await fixture.whenStable();
-    expect(element.querySelectorAll('.si-tree-view-item').length).toBe(1);
+    expect(element.querySelectorAll('.si-tree-view-item')).toHaveLength(1);
 
     element
       .querySelectorAll('.si-tree-view-expand-collapse-container button')[0]
       .dispatchEvent(new Event('click'));
 
-    expect(element.querySelectorAll('.si-tree-view-item').length).toBe(100);
+    expect(element.querySelectorAll('.si-tree-view-item')).toHaveLength(100);
   });
 
   it('should be virtualized', async () => {
@@ -412,7 +412,7 @@ describe('SiTreeViewComponent', () => {
     expect(input.checked).toBeTruthy(); // state after click
   });
 
-  it('should show checkbox and check click', async () => {
+  it('should show checkbox and check click (inherited)', async () => {
     component.enableCheckbox.set(true);
     component.inheritChecked.set(true);
     component.folderStateStart.set(false);
@@ -490,7 +490,7 @@ describe('SiTreeViewComponent', () => {
     const item = element.querySelectorAll('.si-tree-view-item-toggle')[1];
     item.dispatchEvent(new Event('click'));
     await fixture.whenStable();
-    expect(element.querySelectorAll('.si-tree-view-header-btn').length).toBe(2);
+    expect(element.querySelectorAll('.si-tree-view-header-btn')).toHaveLength(2);
     element.querySelectorAll('.si-tree-view-header-btn')[1].dispatchEvent(new Event('click'));
 
     expect(spy).toHaveBeenCalled();
@@ -641,7 +641,7 @@ describe('SiTreeViewComponent', () => {
     component.items.set(createTreeItems(100));
     await fixture.whenStable();
 
-    expect(element.querySelectorAll('si-tree-view-item').length).toBe(50);
+    expect(element.querySelectorAll('si-tree-view-item')).toHaveLength(50);
   });
 
   it('should delete children on collapse', async () => {
@@ -669,18 +669,18 @@ describe('SiTreeViewComponent', () => {
   it('should handle refresh API', async () => {
     await fixture.whenStable();
     component.flatTree.set(true);
-    expect(element.querySelectorAll('si-tree-view-item').length).toBe(1);
+    expect(element.querySelectorAll('si-tree-view-item')).toHaveLength(1);
 
     component.items.set(createTreeItems(2));
     component.treeViewComponent().refresh();
     await fixture.whenStable();
-    expect(element.querySelectorAll('si-tree-view-item').length).toBe(2);
+    expect(element.querySelectorAll('si-tree-view-item')).toHaveLength(2);
 
     component.flatTree.set(false);
     component.items.set(createTreeItems(3));
     component.treeViewComponent().refresh();
     await fixture.whenStable();
-    expect(element.querySelectorAll('si-tree-view-item').length).toBe(3);
+    expect(element.querySelectorAll('si-tree-view-item')).toHaveLength(3);
   });
 
   it('should handle method scrollIntoView', async () => {
@@ -752,7 +752,7 @@ describe('SiTreeViewComponent', () => {
   it('should handle scroll', async () => {
     component.items.set(createTreeItems(100));
     await fixture.whenStable();
-    expect(element.querySelectorAll('si-tree-view-item').length).toBe(60);
+    expect(element.querySelectorAll('si-tree-view-item')).toHaveLength(60);
 
     element.querySelector('.si-tree-view')?.scroll(0, 5000);
     await fixture.whenStable();
@@ -761,7 +761,7 @@ describe('SiTreeViewComponent', () => {
     element.querySelector('.si-tree-view')?.scroll(0, 0);
     element.querySelector('.si-tree-view')?.dispatchEvent(new Event('scroll'));
     await fixture.whenStable();
-    expect(element.querySelectorAll('si-tree-view-item').length).toBe(60);
+    expect(element.querySelectorAll('si-tree-view-item')).toHaveLength(60);
   });
 
   it('should handle scroll with grouped list', async () => {
@@ -775,12 +775,12 @@ describe('SiTreeViewComponent', () => {
     element.querySelector('.si-tree-view')?.dispatchEvent(new Event('scroll'));
     await fixture.whenStable();
     expect(component.treeViewComponent().groupedList()).toBe(true);
-    expect(element.querySelectorAll('si-tree-view-item').length).toBe(60);
+    expect(element.querySelectorAll('si-tree-view-item')).toHaveLength(60);
 
     element.querySelector('.si-tree-view')?.scroll(0, 0);
     element.querySelector('.si-tree-view')?.dispatchEvent(new Event('scroll'));
     await fixture.whenStable();
-    expect(element.querySelectorAll('si-tree-view-item').length).toBe(60);
+    expect(element.querySelectorAll('si-tree-view-item')).toHaveLength(60);
   });
 
   it('should auto scroll if children not visible when node is expanded', async () => {
@@ -865,8 +865,8 @@ describe('SiTreeViewComponent', () => {
       vi.runAllTimers();
       await fixture.whenStable();
       expect(
-        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected').length
-      ).toBe(3);
+        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected')
+      ).toHaveLength(3);
     });
 
     it('should handle selectedItem changes', async () => {
@@ -878,15 +878,15 @@ describe('SiTreeViewComponent', () => {
       vi.runAllTimers();
       await fixture.whenStable();
       expect(
-        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected').length
-      ).toBe(3);
+        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected')
+      ).toHaveLength(3);
 
       component.selectedItem.set(undefined);
       await fixture.whenStable();
 
       expect(
-        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected').length
-      ).toBe(0);
+        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected')
+      ).toHaveLength(0);
     });
 
     it('should select all items on click', async () => {
@@ -902,8 +902,8 @@ describe('SiTreeViewComponent', () => {
       await fixture.whenStable();
 
       expect(
-        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected').length
-      ).toBe(component.items().length);
+        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected')
+      ).toHaveLength(component.items().length);
     });
 
     it('should emit selection on keyup shift', async () => {
@@ -947,8 +947,8 @@ describe('SiTreeViewComponent', () => {
       await fixture.whenStable();
 
       expect(
-        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected').length
-      ).toBe(2);
+        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected')
+      ).toHaveLength(2);
     });
 
     it('should deselect item on click', async () => {
@@ -968,8 +968,8 @@ describe('SiTreeViewComponent', () => {
       await fixture.whenStable();
 
       expect(
-        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected').length
-      ).toBe(1);
+        element.querySelectorAll('.si-tree-view-li-item.si-tree-view-item-selected')
+      ).toHaveLength(1);
     });
 
     it('should emit selection on keyup control', async () => {
@@ -1008,16 +1008,16 @@ describe('SiTreeViewComponent', () => {
 
     it('should display icons', () => {
       expect(
-        element.querySelectorAll('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)').length
-      ).toBe(10);
+        element.querySelectorAll('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)')
+      ).toHaveLength(10);
     });
 
     it('should hide icons', async () => {
       component.enableIcon.set(false);
       await fixture.whenStable();
       expect(
-        element.querySelectorAll('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)').length
-      ).toBe(0);
+        element.querySelectorAll('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)')
+      ).toHaveLength(0);
     });
   });
 
@@ -1203,7 +1203,7 @@ describe('SiTreeViewComponent', () => {
           element.querySelectorAll<HTMLElement>('si-tree-view-item input.form-check-input')
         );
 
-        expect(actualItems.length).toBe(14);
+        expect(actualItems).toHaveLength(14);
       });
     });
 

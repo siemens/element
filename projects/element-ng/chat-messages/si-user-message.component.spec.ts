@@ -74,7 +74,7 @@ describe('SiUserMessageComponent', () => {
     await fixture.whenStable();
 
     const actionButtons = fixture.nativeElement.querySelectorAll('[siChatMessageAction] button');
-    expect(actionButtons.length).toBe(1);
+    expect(actionButtons).toHaveLength(1);
     expect(actionButtons[0]).toHaveAttribute('aria-label', 'Edit');
   });
 
@@ -84,7 +84,7 @@ describe('SiUserMessageComponent', () => {
     await fixture.whenStable();
 
     const actionButtons = fixture.nativeElement.querySelectorAll('[siChatMessageAction] button');
-    expect(actionButtons.length).toBe(0);
+    expect(actionButtons).toHaveLength(0);
   });
 
   it('should render secondary actions menu trigger', async () => {
@@ -117,7 +117,7 @@ describe('SiUserMessageComponent', () => {
     await fixture.whenStable();
 
     const actionButtons = fixture.nativeElement.querySelectorAll('[siChatMessageAction] button');
-    expect(actionButtons.length).toBe(2);
+    expect(actionButtons).toHaveLength(2);
     expect(actionButtons[0]).toHaveAttribute('aria-label', 'Edit');
     expect(actionButtons[1]).toHaveAttribute('aria-label', 'Copy');
   });

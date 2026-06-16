@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+/* eslint-disable vitest/no-standalone-expect */
 import { expect } from 'vitest';
 
 export class CalendarTestHelper {

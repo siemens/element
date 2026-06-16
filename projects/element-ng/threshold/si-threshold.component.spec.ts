@@ -118,7 +118,7 @@ describe('SiThresholdComponent', () => {
 
   it('should display steps', async () => {
     const steps = element.querySelectorAll<HTMLElement>('.ths-step');
-    expect(steps.length).toBe(5);
+    expect(steps).toHaveLength(5);
     expect(steps[0].querySelector('.ths-value')).not.toBeInTheDocument();
     expect(steps[1].querySelector('.ths-value')).toBeInTheDocument();
 
@@ -141,9 +141,9 @@ describe('SiThresholdComponent', () => {
     await fixture.whenStable();
 
     expect(component.thresholdStepsChange).toHaveBeenCalled();
-    expect(component.thresholdSteps().length).toBe(6);
+    expect(component.thresholdSteps()).toHaveLength(6);
     expect(component.thresholdSteps()[2].value).toBeUndefined();
-    expect(element.querySelectorAll<HTMLElement>('.ths-step').length).toBe(6);
+    expect(element.querySelectorAll<HTMLElement>('.ths-step')).toHaveLength(6);
   });
 
   it('should allow to remove steps when enabled', async () => {
@@ -155,17 +155,17 @@ describe('SiThresholdComponent', () => {
     await fixture.whenStable();
 
     expect(component.thresholdStepsChange).toHaveBeenCalled();
-    expect(component.thresholdSteps().length).toBe(4);
+    expect(component.thresholdSteps()).toHaveLength(4);
     expect(component.thresholdSteps()[2].value).toBe(26);
-    expect(element.querySelectorAll<HTMLElement>('.ths-step').length).toBe(4);
+    expect(element.querySelectorAll<HTMLElement>('.ths-step')).toHaveLength(4);
   });
 
   it('should prevent to add/remove steps when disabled', async () => {
     component.canAddRemoveSteps.set(false);
     await fixture.whenStable();
 
-    expect(element.querySelectorAll<HTMLElement>('[aria-label="Add step"]').length).toBe(0);
-    expect(element.querySelectorAll<HTMLElement>('[aria-label="Delete step"]').length).toBe(0);
+    expect(element.querySelectorAll<HTMLElement>('[aria-label="Add step"]')).toHaveLength(0);
+    expect(element.querySelectorAll<HTMLElement>('[aria-label="Delete step"]')).toHaveLength(0);
   });
 
   it('should limit max. number of steps', async () => {
@@ -246,16 +246,16 @@ describe('SiThresholdComponent', () => {
     });
 
     it('should hide add and delete buttons', () => {
-      expect(element.querySelectorAll('[aria-label="Add step"]').length).toBe(0);
-      expect(element.querySelectorAll('[aria-label="Delete step"]').length).toBe(0);
+      expect(element.querySelectorAll('[aria-label="Add step"]')).toHaveLength(0);
+      expect(element.querySelectorAll('[aria-label="Delete step"]')).toHaveLength(0);
     });
 
     it('should show readonly text inputs instead of number inputs', () => {
       const numberInputs = element.querySelectorAll('si-number-input');
-      expect(numberInputs.length).toBe(0);
+      expect(numberInputs).toHaveLength(0);
 
       const textInputs = element.querySelectorAll<HTMLInputElement>('.ths-value input[readonly]');
-      expect(textInputs.length).toBe(3);
+      expect(textInputs).toHaveLength(3);
     });
 
     it('should display alias labels in readonly inputs', () => {
@@ -273,7 +273,7 @@ describe('SiThresholdComponent', () => {
       await fixture.whenStable();
 
       const textInputs = element.querySelectorAll<HTMLInputElement>('.ths-value input[readonly]');
-      expect(textInputs.length).toBe(1);
+      expect(textInputs).toHaveLength(1);
       expect(textInputs[0].value).toBe('');
     });
   });

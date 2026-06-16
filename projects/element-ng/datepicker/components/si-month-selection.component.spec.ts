@@ -70,7 +70,7 @@ describe('SiMonthSelectionComponent', () => {
   it('should contain all months', () => {
     const monthCells = helper.getEnabledCells();
 
-    expect(monthCells.length).toBe(12);
+    expect(monthCells).toHaveLength(12);
   });
 
   it('shows selected month', () => {
@@ -193,7 +193,6 @@ describe('SiMonthSelectionComponent', () => {
     let calendarBodyElement: HTMLElement;
     beforeEach(() => {
       calendarBodyElement = helper.getCalendarBody();
-      expect(calendarBodyElement).not.toBeNull();
       fixture.detectChanges();
     });
 
@@ -272,8 +271,8 @@ describe('SiMonthSelectionComponent', () => {
     });
 
     it('should disable months which are out of range', () => {
-      expect(helper.getEnabledCells().length).toBe(10);
-      expect(helper.getDisabledCells().length).toBe(2);
+      expect(helper.getEnabledCells()).toHaveLength(10);
+      expect(helper.getDisabledCells()).toHaveLength(2);
     });
 
     it('should not select when month out of range', () => {

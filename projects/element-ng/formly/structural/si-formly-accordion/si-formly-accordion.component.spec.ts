@@ -109,26 +109,23 @@ describe('formly accordion type', () => {
 
     const panels = accordion.queryAll(By.css('si-collapsible-panel'));
     expect(panels).toBeTruthy();
-    expect(panels.length).toEqual(2);
+    expect(panels).toHaveLength(2);
   });
 
   it('should update props based on state of panel', () => {
     fixture.detectChanges();
 
-    const fieldGroups = fixture.componentInstance.fields()[0].fieldGroup;
+    const fieldGroups = fixture.componentInstance.fields()[0].fieldGroup!;
 
     // check if default is open
-    if (fieldGroups) {
-      expect(fieldGroups[0].props?.opened).toBe(true);
-    }
+    expect(fieldGroups).toBeDefined();
+    expect(fieldGroups[0].props?.opened).toBe(true);
 
     clickOnHeader(1, fixture.nativeElement);
     fixture.detectChanges();
 
     // check if property changes when clicking on panel
-    if (fieldGroups) {
-      expect(fieldGroups[0].props?.opened).toBe(false);
-      expect(fieldGroups[1].props?.opened).toBe(true);
-    }
+    expect(fieldGroups[0].props?.opened).toBe(false);
+    expect(fieldGroups[1].props?.opened).toBe(true);
   });
 });

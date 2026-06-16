@@ -132,39 +132,34 @@ describe('SiDatatableInteractionDirective', () => {
     wrapperElement = fixture.nativeElement;
   });
 
-  it('should navigate into table using arrow keys', async () => {
+  it.skipIf(!document.hasFocus())('should navigate into table using arrow keys', async () => {
     await refresh();
+    getTableElement().focus();
 
-    // Skip test when browser is not focussed to prevent failures.
-    if (document.hasFocus()) {
-      getTableElement().focus();
+    expect(document.activeElement).toBe(getTableElement());
 
-      expect(document.activeElement).toBe(getTableElement());
+    await arrowDown();
 
-      await arrowDown();
+    expect(document.activeElement).toBe(
+      getTableElement().querySelector('.datatable-row-wrapper > .datatable-body-row')
+    );
 
-      expect(document.activeElement).toBe(
-        getTableElement().querySelector('.datatable-row-wrapper > .datatable-body-row')
-      );
+    getTableElement().focus();
 
-      getTableElement().focus();
+    expect(document.activeElement).toBe(getTableElement());
 
-      expect(document.activeElement).toBe(getTableElement());
+    await arrowUp();
 
-      await arrowUp();
-
-      expect(document.activeElement).toBe(
-        getTableElement().querySelector('.datatable-row-wrapper:last-child > .datatable-body-row')
-      );
-    }
+    expect(document.activeElement).toBe(
+      getTableElement().querySelector('.datatable-row-wrapper:last-child > .datatable-body-row')
+    );
   });
 
-  it('should navigate into and inside arrow keys when using virtualization', async () => {
-    wrapperComponent.virtualization = true;
-    await refresh();
-
-    // Skip test when browser is not focussed to prevent failures.
-    if (document.hasFocus()) {
+  it.skipIf(!document.hasFocus())(
+    'should navigate into and inside arrow keys when using virtualization',
+    async () => {
+      wrapperComponent.virtualization = true;
+      await refresh();
       getTableElement().focus();
 
       expect(document.activeElement).toBe(getTableElement());
@@ -205,15 +200,14 @@ describe('SiDatatableInteractionDirective', () => {
         scrollTopBeforeUp
       );
     }
-  });
+  );
 
-  it('should navigate into and inside table using arrow keys when using virtualization and cell selection', async () => {
-    wrapperComponent.selectionType = 'cell';
-    wrapperComponent.virtualization = true;
-    await refresh();
-
-    // Skip test when browser is not focussed to prevent failures.
-    if (document.hasFocus()) {
+  it.skipIf(!document.hasFocus())(
+    'should navigate into and inside table using arrow keys when using virtualization and cell selection',
+    async () => {
+      wrapperComponent.selectionType = 'cell';
+      wrapperComponent.virtualization = true;
+      await refresh();
       getTableElement().focus();
 
       expect(document.activeElement).toBe(getTableElement());
@@ -258,40 +252,35 @@ describe('SiDatatableInteractionDirective', () => {
         scrollTopBeforeUp
       );
     }
-  });
+  );
 
-  it('should auto select on focus when enabled', async () => {
+  it.skipIf(!document.hasFocus())('should auto select on focus when enabled', async () => {
     wrapperComponent.selectionType = 'single';
     wrapperComponent.datatableInteractionAutoSelect = true;
     await refresh();
+    expect(wrapperComponent.selected).toHaveLength(0);
 
-    // Skip test when browser is not focussed to prevent failures.
-    if (document.hasFocus()) {
-      expect(wrapperComponent.selected).toHaveLength(0);
+    const row = getTableElement().querySelector(
+      '.datatable-row-wrapper > .datatable-body-row'
+    ) as HTMLElement;
+    row.dispatchEvent(new Event('focusin', { bubbles: true }));
 
-      const row = getTableElement().querySelector(
-        '.datatable-row-wrapper > .datatable-body-row'
-      ) as HTMLElement;
-      row.dispatchEvent(new Event('focusin', { bubbles: true }));
+    await refresh();
 
+    expect(wrapperComponent.selected).toContain({
+      id: 1,
+      firstname: 'First 1',
+      lastname: 'Last 1',
+      age: 50
+    });
+  });
+
+  it.skipIf(!document.hasFocus())(
+    'should not auto select on mouse click when enabled',
+    async () => {
+      wrapperComponent.selectionType = 'single';
+      wrapperComponent.datatableInteractionAutoSelect = true;
       await refresh();
-
-      expect(wrapperComponent.selected).toContain({
-        id: 1,
-        firstname: 'First 1',
-        lastname: 'Last 1',
-        age: 50
-      });
-    }
-  });
-
-  it('should not auto select on mouse click when enabled', async () => {
-    wrapperComponent.selectionType = 'single';
-    wrapperComponent.datatableInteractionAutoSelect = true;
-    await refresh();
-
-    // Skip test when browser is not focussed to prevent failures.
-    if (document.hasFocus()) {
       expect(wrapperComponent.selected).toHaveLength(0);
 
       const table = getTableElement();
@@ -324,5 +313,5 @@ describe('SiDatatableInteractionDirective', () => {
         age: 50
       });
     }
-  });
+  );
 });

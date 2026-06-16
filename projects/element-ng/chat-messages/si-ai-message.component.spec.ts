@@ -81,7 +81,7 @@ describe('SiAiMessageComponent', () => {
     await fixture.whenStable();
 
     const actionButtons = fixture.nativeElement.querySelectorAll('[siChatMessageAction] button');
-    expect(actionButtons.length).toBe(1);
+    expect(actionButtons).toHaveLength(1);
     expect(actionButtons[0]).toHaveAttribute('aria-label', 'Copy');
   });
 
@@ -91,7 +91,7 @@ describe('SiAiMessageComponent', () => {
     await fixture.whenStable();
 
     const actionButtons = fixture.nativeElement.querySelectorAll('[siChatMessageAction] button');
-    expect(actionButtons.length).toBe(0);
+    expect(actionButtons).toHaveLength(0);
   });
 
   it('should render secondary actions menu trigger', async () => {
@@ -124,7 +124,7 @@ describe('SiAiMessageComponent', () => {
     await fixture.whenStable();
 
     const actionButtons = fixture.nativeElement.querySelectorAll('[siChatMessageAction] button');
-    expect(actionButtons.length).toBe(2);
+    expect(actionButtons).toHaveLength(2);
     expect(actionButtons[0]).toHaveAttribute('aria-label', 'Thumbs Up');
     expect(actionButtons[1]).toHaveAttribute('aria-label', 'Thumbs Down');
   });
@@ -183,6 +183,6 @@ describe('SiAiMessageComponent', () => {
     await fixture.whenStable();
 
     const actionButtons = fixture.nativeElement.querySelectorAll('[siChatMessageAction] button');
-    expect(actionButtons.length).toBe(0);
+    expect(actionButtons).toHaveLength(0);
   });
 });

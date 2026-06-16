@@ -131,7 +131,6 @@ describe('SiDatepickerDirective', () => {
       fixture.detectChanges();
       getInput().focus();
       await fixture.whenStable();
-      expect(document.querySelector('si-datepicker-overlay')).toBeDefined();
     });
 
     it('should hide datepicker on focus out', async () => {

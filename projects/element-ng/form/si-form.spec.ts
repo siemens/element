@@ -102,7 +102,7 @@ describe('SiForm', () => {
       loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
-    it('it should render checkbox properly when using a fieldset', async () => {
+    it('should render checkbox properly when using a fieldset', async () => {
       const fieldset = await loader.getHarness(SiFormFieldsetHarness.with('Fieldset-CB'));
 
       const item = await fieldset.getFormField({ label: 'CB-1' });

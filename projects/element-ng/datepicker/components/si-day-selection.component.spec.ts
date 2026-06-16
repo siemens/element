@@ -142,7 +142,7 @@ describe('SiDaySelectionComponent', () => {
       fixture.detectChanges();
 
       const actual = helper.getRowLabels();
-      expect(actual.length).toBe(0);
+      expect(actual).toHaveLength(0);
       expect(element.querySelector('.week-num')).not.toBeInTheDocument();
     });
 
@@ -283,7 +283,7 @@ describe('SiDaySelectionComponent', () => {
         await fixture.whenStable();
 
         const actual = helper.queryAsArray('[aria-current]');
-        expect(actual.length).toBe(1);
+        expect(actual).toHaveLength(1);
         expect(actual[0]).toHaveAttribute('aria-current', 'date');
       });
     });
@@ -293,8 +293,6 @@ describe('SiDaySelectionComponent', () => {
 
       beforeEach(() => {
         calendarBodyElement = helper.getCalendarBody();
-        expect(calendarBodyElement).not.toBeNull();
-
         fixture.detectChanges();
       });
 
@@ -561,42 +559,42 @@ describe('SiDaySelectionComponent', () => {
       selectDate(16);
 
       let selectedElements = helper.queryAsArray('.selected')!;
-      expect(selectedElements.length).toBe(1);
+      expect(selectedElements).toHaveLength(1);
       expect(selectedElements.at(-1)!).toHaveTextContent('16');
       expect(isSameDate(focusedDate(), new Date('2022-03-16'))).toBe(true);
 
       selectDate(31);
 
       selectedElements = helper.queryAsArray('.selected')!;
-      expect(selectedElements.length).toBe(2);
+      expect(selectedElements).toHaveLength(2);
       expect(selectedElements.at(-1)!).toHaveTextContent('31');
     });
 
     it('range start and end cell should have .range-start and .range-end class', () => {
       selectDate(16);
       selectDate(31);
-      expect(helper.queryAsArray('.range-start').length).toBe(1);
-      expect(helper.queryAsArray('.range-end').length).toBe(1);
+      expect(helper.queryAsArray('.range-start')).toHaveLength(1);
+      expect(helper.queryAsArray('.range-end')).toHaveLength(1);
     });
 
     it('range start and end cell should have range class', () => {
       selectDate(16);
       selectDate(31);
-      expect(helper.queryAsArray('.range').length).toBe(14);
+      expect(helper.queryAsArray('.range')).toHaveLength(14);
     });
 
     it('mouse before current selected date should preview range', () => {
       selectDate(16);
       mouseOverDate(18);
 
-      expect(helper.queryAsArray('.range-hover').length).toBe(2);
+      expect(helper.queryAsArray('.range-hover')).toHaveLength(2);
     });
 
     it('mouse before current selected date should not preview range', () => {
       selectDate(16);
       mouseOverDate(14);
 
-      expect(helper.queryAsArray('.range-hover').length).toBe(0);
+      expect(helper.queryAsArray('.range-hover')).toHaveLength(0);
     });
   });
 });

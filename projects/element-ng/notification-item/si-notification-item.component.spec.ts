@@ -104,8 +104,8 @@ describe('SiNotificationItemComponent', () => {
       { type: 'router-link', routerLink: '/test', ariaLabel: 'Router Link', icon: 'element-plant' }
     ]);
     await fixture.whenStable();
-    expect(element.querySelectorAll('button').length).toBe(1);
-    expect(element.querySelectorAll('a').length).toBe(2);
+    expect(element.querySelectorAll('button')).toHaveLength(1);
+    expect(element.querySelectorAll('a')).toHaveLength(2);
   });
 
   it('should display the primary action menu', async () => {

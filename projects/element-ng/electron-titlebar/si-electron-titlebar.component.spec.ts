@@ -67,7 +67,7 @@ describe('SiElectrontitlebarComponent', () => {
     await fixture.whenStable();
 
     const disabledButtons = element.querySelectorAll('button:disabled');
-    expect(disabledButtons.length).toEqual(2);
+    expect(disabledButtons).toHaveLength(2);
 
     expect(forwardButton()).toBeDisabled();
     expect(backButton()).toBeDisabled();

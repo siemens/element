@@ -409,7 +409,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should use emit on full match', async () => {
     wrapperComponent.items.set(testList);
-    wrapperComponent.onFullMatch = vi.fn();
+    vi.spyOn(wrapperComponent, 'onFullMatch').mockImplementation(() => {});
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).typeText('so');
     await tick(0);
@@ -418,7 +418,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should not use emit on partial match', async () => {
     wrapperComponent.items.set(testList);
-    wrapperComponent.onFullMatch = vi.fn();
+    vi.spyOn(wrapperComponent, 'onFullMatch').mockImplementation(() => {});
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).typeText('s');
     await tick(0);
@@ -427,7 +427,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should use emit on select', async () => {
     wrapperComponent.minLength.set(0);
-    wrapperComponent.onSelect = vi.fn();
+    vi.spyOn(wrapperComponent, 'onSelect').mockImplementation(() => {});
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -451,7 +451,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should properly select item on click', async () => {
     wrapperComponent.minLength.set(0);
-    wrapperComponent.onModelChange = vi.fn();
+    vi.spyOn(wrapperComponent, 'onModelChange').mockImplementation(() => {});
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -489,7 +489,7 @@ describe('SiTypeaheadDirective', () => {
   it('should properly select item with arrow down and enter', async () => {
     wrapperComponent.items.set(testList);
     wrapperComponent.minLength.set(0);
-    wrapperComponent.onModelChange = vi.fn();
+    vi.spyOn(wrapperComponent, 'onModelChange').mockImplementation(() => {});
 
     fixture.detectChanges();
 
@@ -516,7 +516,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should not select any item when selecting the first item is disabled', async () => {
     wrapperComponent.minLength.set(0);
-    wrapperComponent.onModelChange = vi.fn();
+    vi.spyOn(wrapperComponent, 'onModelChange').mockImplementation(() => {});
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();

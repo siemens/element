@@ -125,6 +125,6 @@ describe('SiChartSunburstComponent', () => {
     const fixture = TestBed.createComponent(SiChartSunburstComponent);
     const component = fixture.debugElement.componentInstance;
     fixture.detectChanges();
-    expect(component.chart.getOption().series.length).toBe(0);
+    expect(component.chart.getOption().series).toHaveLength(0);
   });
 });

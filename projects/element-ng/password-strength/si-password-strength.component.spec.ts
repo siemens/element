@@ -79,20 +79,20 @@ describe('SiPasswordStrengthDirective', () => {
   it('should not display anything when the field is empty', () => {
     fixture.detectChanges();
 
-    expect(element.classList.length).toBe(0);
+    expect(element.classList).toHaveLength(0);
     expect(wrapperComponent.passwordStrengthChangedFunc).not.toHaveBeenCalledWith(
       expect.any(Number)
     );
 
     setInput('f');
 
-    expect(element.classList.length).not.toBe(0);
+    expect(element.classList).not.toHaveLength(0);
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-4);
     wrapperComponent.passwordStrengthChangedFunc.mockClear();
 
     setInput('');
 
-    expect(element.classList.length).toBe(0);
+    expect(element.classList).toHaveLength(0);
     expect(wrapperComponent.passwordStrengthChangedFunc).not.toHaveBeenCalledWith(
       expect.any(Number)
     );
@@ -167,7 +167,7 @@ describe('SiPasswordStrengthDirective', () => {
     fixture.detectChanges();
 
     setInput('s3K! TEst');
-    expect(element.classList.length).toEqual(0);
+    expect(element.classList).toHaveLength(0);
   });
 
   it('should allow whitespaces when configured', () => {
