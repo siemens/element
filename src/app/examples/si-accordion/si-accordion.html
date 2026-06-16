@@ -28,4 +28,36 @@
       Nothing to see here
     </si-collapsible-panel>
   </si-accordion>
+
+  <br />
+  <h4>Using Angular ARIA</h4>
+
+  <si-accordion-aria [multiExpandable]="false">
+    <si-collapsible-panel-aria heading="Hey there" (panelToggle)="logEvent('toggle Hey there', $event)">
+      <div class="p-6"> Here is some content </div>
+    </si-collapsible-panel-aria>
+    <si-collapsible-panel-aria
+      heading="Another one"
+      badge="5"
+      badgeColor="info"
+      contentCssClasses="p-6"
+      (panelToggle)="logEvent('toggle Another one', $event)"
+    >
+      And this is the content
+    </si-collapsible-panel-aria>
+    <si-collapsible-panel-aria
+      heading="Number three"
+      contentCssClasses="p-6"
+      (panelToggle)="logEvent('toggle Number three', $event)"
+    >
+      Nothing to see here
+    </si-collapsible-panel-aria>
+    <si-collapsible-panel-aria
+      contentCssClasses="p-6"
+      (panelToggle)="logEvent('toggle Number four', $event)"
+    >
+      <span si-panel-heading>Heading via content projection</span>
+      Nothing to see here
+    </si-collapsible-panel-aria>
+  </si-accordion-aria>
 </div>

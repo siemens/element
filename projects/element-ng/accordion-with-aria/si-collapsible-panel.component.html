@@ -1,0 +1,61 @@
+<div
+  ngAccordionTrigger
+  placement="start"
+  [panel]="panel"
+  [siTooltip]="hcollapsed() && heading() ? (heading()! | translate) : ''"
+  [class]="`collapsible-header focus-inside ${headerCssClasses()}`"
+  [class.px-5]="hcollapsed()"
+  [class.px-6]="!hcollapsed()"
+  [class.open]="opened()"
+  [class.disabled]="disabled()"
+  [disabled]="disabled()"
+  [(expanded)]="opened"
+  (expandedChange)="doToggle($event)"
+>
+  @let headerIcon = icon();
+  @if (headerIcon) {
+    <si-icon
+      class="icon"
+      [class.p-1]="hcollapsed()"
+      [class.pe-2]="!hcollapsed()"
+      [icon]="headerIcon"
+      [class.collapsed-icon]="isHCollapsible"
+    />
+  }
+  @if (icon() && badge() !== undefined && badge() !== '') {
+    <span class="badge-text">
+      {{ badge() }}
+    </span>
+  }
+  <div class="si-h5 autohide">
+    {{ heading() | translate }}
+    <ng-content select="[si-panel-heading]" />
+  </div>
+
+  @if (badge() !== undefined && badge() !== '') {
+    <span [class]="'badge autohide' + (badgeColor() ? ' bg-' + badgeColor() : '')">
+      {{ badge() }}
+    </span>
+  }
+  <span class="ms-auto autohide">
+    <si-icon class="icon dropdown-caret" [icon]="icons.elementDown2" />
+  </span>
+</div>
+<div
+  #content
+  #panel="ngAccordionPanel"
+  ngAccordionPanel
+  role="region"
+  [class]="`collapsible-content ${contentBgClasses()}`"
+  [class.full-height]="fullHeight()"
+>
+  <ng-template ngAccordionContent>
+    <div class="content-motion" animate.leave="content-leave">
+      <div class="overflow-hidden">
+        <div [class]="contentCssClasses()">
+          <ng-content />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

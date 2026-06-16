@@ -1,0 +1,7 @@
+/**
+ * Copyright (c) Siemens 2016 - 2026
+ * SPDX-License-Identifier: MIT
+ */
+export * from './si-collapsible-panel.component';
+export * from './si-accordion.component';
+export * from './si-accordion.module';

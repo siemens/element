@@ -7,6 +7,7 @@ import { Component, inject, OnDestroy, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
+import { SiAccordionAriaComponent } from '@siemens/element-ng/accordion-with-aria';
 import {
   App,
   SiAccountDetailsComponent,
@@ -34,6 +35,7 @@ import {
 } from '@siemens/element-ng/side-panel';
 import { SiStatusBarModule, StatusBarItem } from '@siemens/element-ng/status-bar';
 import { LOG_EVENT } from '@siemens/live-preview';
+import { SiCollapsiblePanelAriaComponent } from 'projects/element-ng/accordion-with-aria/si-collapsible-panel.component';
 
 @Component({
   selector: 'app-sample',
@@ -59,7 +61,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiHeaderDropdownTriggerDirective,
     SiLaunchpadFactoryComponent,
     SiHeaderLogoDirective,
-    FormsModule
+    FormsModule,
+    SiAccordionAriaComponent, SiCollapsiblePanelAriaComponent
   ],
   templateUrl: './si-fixed-height-layout-side-panel.html'
 })

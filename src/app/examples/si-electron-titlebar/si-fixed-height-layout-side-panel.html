@@ -148,21 +148,21 @@
       </div>
 
       <si-side-panel-content heading="Cooling coil" [searchable]="true">
-        <si-accordion [fullHeight]="true">
-          <si-collapsible-panel
+        <si-accordion-aria [fullHeight]="true" [multiExpandable]="false">
+          <si-collapsible-panel-aria
             heading="Properties"
             icon="element-settings"
             contentCssClasses="p-6"
           >
             And here we have some content
-          </si-collapsible-panel>
-          <si-collapsible-panel heading="Documents" icon="element-document" contentCssClasses="p-6">
+          </si-collapsible-panel-aria>
+          <si-collapsible-panel-aria heading="Documents" icon="element-document" contentCssClasses="p-6">
             And this is the content
-          </si-collapsible-panel>
-          <si-collapsible-panel heading="Graphics" icon="element-image" contentCssClasses="p-6">
+          </si-collapsible-panel-aria>
+          <si-collapsible-panel-aria heading="Graphics" icon="element-image" contentCssClasses="p-6">
             Nothing to see here
-          </si-collapsible-panel>
-        </si-accordion>
+          </si-collapsible-panel-aria>
+        </si-accordion-aria>
       </si-side-panel-content>
     </si-side-panel>
   </si-navbar-vertical>

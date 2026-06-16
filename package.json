@@ -92,6 +92,7 @@
   "dependencies": {
     "@angular-architects/module-federation": "21.2.2",
     "@angular-architects/native-federation": "22.0.0",
+    "@angular/aria": "^22.0.1",
     "@angular/cdk": "22.0.1",
     "@angular/common": "22.0.1",
     "@angular/core": "22.0.1",
