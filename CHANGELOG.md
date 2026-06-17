@@ -1,3 +1,28 @@
+# [49.11.0](https://github.com/siemens/element/compare/v49.10.0...v49.11.0) (2026-06-17)
+
+
+### Features
+
+* **about:** add translatable logoAlt input to SiAboutComponent ([11f6747](https://github.com/siemens/element/commit/11f67475e815059b836931d72a86eb8439355d30))
+* **dashboards-ng:** add keyboard support for moving and resizing widgets ([dbe8b32](https://github.com/siemens/element/commit/dbe8b32e2c3072b2d3e55025aa5c4a19025ee99c))
+* **navbar-vertical-next:** add inline collapse mode ([255c7d3](https://github.com/siemens/element/commit/255c7d30745fbb525ca70879b768b7ba784dbf22)), closes [#1945](https://github.com/siemens/element/issues/1945)
+
+
+### Bug Fixes
+
+* **application-header:** declare launchpad as `role="dialog"` ([e94135b](https://github.com/siemens/element/commit/e94135bcbe2263f67a8e60cab3ca892e41ee400c)), closes [#2152](https://github.com/siemens/element/issues/2152)
+* **datatable:** no hover and min inline size on summary row with templates ([deb539d](https://github.com/siemens/element/commit/deb539d2f3d2366ee7e01372b100f6bdaf26422e))
+* **date-range-filter:** show a label instead of ? when range is not defined ([2903cec](https://github.com/siemens/element/commit/2903cec2a54861e04cb617e002e64b95e2410d0b))
+* **datepicker:** keep AM/PM input visible after re-enabling time ([c89dd98](https://github.com/siemens/element/commit/c89dd98376f78c68c1d76a5c8d4faca0d4b61753))
+* **drag-drop:** support cdkDropListHasAnchor placeholder styling ([fbb121b](https://github.com/siemens/element/commit/fbb121b4830f992898cb9e8f3cc53927a42104b9))
+* **filtered-search:** prevent free-text input from collapsing with multiple criteria ([acc6be5](https://github.com/siemens/element/commit/acc6be5ce775a7cebe2441025fe108f9ec4d32b0))
+* **form:** correct misleading validation messages for date/time bounds ([8f7f481](https://github.com/siemens/element/commit/8f7f4815eb4146efd47f8703e81d669c6b2589c6))
+* **forms:** maintain hover/focus state with sibling form-control-actions ([5bfaff9](https://github.com/siemens/element/commit/5bfaff9dd98ea12a329f7fd3073a5944e39701fb))
+* **landing-page:** remove footer only scrolling ([d538b4b](https://github.com/siemens/element/commit/d538b4b7bf551214234f155082554010bb179b76)), closes [#2151](https://github.com/siemens/element/issues/2151)
+* **navbar-vertical:** dynamically update group content when data changes ([26fb653](https://github.com/siemens/element/commit/26fb653f30af856e75bbed02d369714992b0bd03))
+* **si-map-tooltip:** replace three dots with ellipsis character ([b101c6e](https://github.com/siemens/element/commit/b101c6e1ea7a85b9a2b8118e554c719cc7229496))
+* **theme:** make .btn-close always round ([37bda5d](https://github.com/siemens/element/commit/37bda5d63d052442b8a95c30c6693eca95005cfa))
+
 # [49.10.0](https://github.com/siemens/element/compare/v49.9.0...v49.10.0) (2026-06-02)
 
 
