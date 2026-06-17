@@ -48,6 +48,11 @@ Here are the key features:
 - Bullet point lists
 - Blockquote support
 
+- [ ] Open task-list item
+- [x] Completed task-list item
+- [x] Completed task-list item with uppercase marker
+- [~] Disabled task-list item
+
 * Or in the alternate format
 * Another bullet point
 

@@ -228,6 +228,56 @@ describe('SiMarkdownRendererComponent', () => {
     expect(innerHTML).toContain('<ul>');
   });
 
+  it('should render markdown checkbox list items as non-interactive checkboxes', async () => {
+    text.set(
+      '- [ ] Unchecked item\n- [x] Checked item\n- [X] Checked uppercase item\n- [~] Disabled item'
+    );
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const listItems = markdownDiv.querySelectorAll('li');
+    const checkboxElements =
+      markdownDiv.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+
+    expect(listItems).toHaveLength(4);
+    expect(checkboxElements).toHaveLength(4);
+    expect(listItems[0]).toHaveTextContent('Unchecked item');
+    expect(listItems[1]).toHaveTextContent('Checked item');
+    expect(listItems[2]).toHaveTextContent('Checked uppercase item');
+    expect(listItems[3]).toHaveTextContent('Disabled item');
+    expect(checkboxElements[0].checked).toBe(false);
+    expect(checkboxElements[1].checked).toBe(true);
+    expect(checkboxElements[2].checked).toBe(true);
+    expect(checkboxElements[3].checked).toBe(false);
+    expect(checkboxElements[0].getAttribute('aria-checked')).toBe('false');
+    expect(checkboxElements[1].getAttribute('aria-checked')).toBe('true');
+    expect(checkboxElements[2].getAttribute('aria-checked')).toBe('true');
+    expect(checkboxElements[3].getAttribute('aria-checked')).toBe('false');
+    expect(checkboxElements[0]).not.toHaveAttribute('disabled');
+    expect(checkboxElements[1]).not.toHaveAttribute('disabled');
+    expect(checkboxElements[2]).not.toHaveAttribute('disabled');
+    expect(checkboxElements[3]).toHaveAttribute('disabled');
+    checkboxElements.forEach((checkboxElement, index) => {
+      expect(checkboxElement).not.toHaveAttribute('name');
+      if (index < 3) {
+        expect(checkboxElement.getAttribute('tabindex')).toBe('-1');
+        expect(checkboxElement.getAttribute('aria-disabled')).toBe('true');
+      }
+    });
+  });
+
+  it('should keep task lists separated from following bullet lists', async () => {
+    text.set('- [ ] Task item\n\n* Bullet item');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const lists = markdownDiv.querySelectorAll('ul');
+
+    expect(lists).toHaveLength(2);
+    expect(lists[0]).toHaveTextContent('Task item');
+    expect(lists[1]).toHaveTextContent('Bullet item');
+  });
+
   it('should convert newlines to line breaks', async () => {
     text.set('Line 1\nLine 2');
     await fixture.whenStable();

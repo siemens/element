@@ -33,6 +33,17 @@
     overflow-wrap: break-word;
   }
 
+  .task-list-item {
+    list-style: none;
+
+    .form-check-input {
+      margin-inline-start: calc(-1rem - map.get(variables.$spacers, 2));
+      margin-inline-end: map.get(variables.$spacers, 2);
+      vertical-align: text-bottom;
+      pointer-events: none;
+    }
+  }
+
   .code-wrapper {
     display: flex;
     flex-direction: column;

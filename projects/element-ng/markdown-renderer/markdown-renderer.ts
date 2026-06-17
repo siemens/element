@@ -434,6 +434,7 @@ export const getMarkdownRenderer = (
    */
   const processInlineFormatting = (input: string, domSanitizer: DomSanitizer): string => {
     let result = input;
+    const taskListCheckboxMap = new Map<string, string>();
 
     // Preserve escaped characters
     result = result.replace(/\\\*/g, '___ESCAPED_ASTERISK___');
@@ -457,17 +458,30 @@ export const getMarkdownRenderer = (
     result = result.replace(/_(.+?)_/g, '<em>$1</em>');
 
     // Lists
+    result = result.replace(/^[•\-*] \[([ xX~])\] (.+)$/gm, (match, checked, content) => {
+      const placeholder = `___TASK_LIST_CHECKBOX_${Math.random().toString(36).substring(2, 15)}___`;
+      const isChecked = checked.toLowerCase() === 'x';
+      const checkedAttribute = isChecked ? ' checked' : '';
+      const ariaChecked = isChecked ? 'true' : 'false';
+      const disabledAttribute =
+        checked === '~' ? ' disabled aria-disabled="true"' : ' tabindex="-1" aria-disabled="true"';
+      taskListCheckboxMap.set(
+        placeholder,
+        `<input type="checkbox" class="form-check-input" aria-checked="${ariaChecked}"${disabledAttribute}${checkedAttribute}>`
+      );
+      return `<li class="unordered task-list-item">${placeholder} ${content}</li>`;
+    });
     result = result.replace(/^[•\-*] (.+)$/gm, '<li class="unordered">$1</li>');
     result = result.replace(/^&#8226; (.+)$/gm, '<li class="unordered">$1</li>');
     result = result.replace(/^\d+\. (.+)$/gm, '<li class="ordered">$1</li>');
 
     // Wrap lists (remove whitespace between items)
     result = result.replace(
-      /(<li class="ordered">.*?<\/li>)\s*\n\s*(?=<li class="ordered">)/gs,
+      /(<li class="ordered">.*?<\/li>)[^\S\r\n]*\r?\n[^\S\r\n]*(?=<li class="ordered">)/gs,
       '$1'
     );
     result = result.replace(
-      /(<li class="unordered">.*?<\/li>)\s*\n\s*(?=<li class="unordered">)/gs,
+      /(<li class="[^"]*\bunordered\b[^"]*">.*?<\/li>)[^\S\r\n]*\r?\n[^\S\r\n]*(?=<li class="[^"]*\bunordered\b[^"]*">)/gs,
       '$1'
     );
 
@@ -476,11 +490,12 @@ export const getMarkdownRenderer = (
       '<ol>$1</ol>'
     );
     result = result.replace(
-      /(<li class="unordered">.*?<\/li>(?:<li class="unordered">.*?<\/li>)*)/gs,
+      /(<li class="[^"]*\bunordered\b[^"]*">.*?<\/li>(?:<li class="[^"]*\bunordered\b[^"]*">.*?<\/li>)*)/gs,
       '<ul>$1</ul>'
     );
 
     result = result.replace(/ class="ordered"/g, '');
+    result = result.replace(/ class="unordered task-list-item"/g, ' class="task-list-item"');
     result = result.replace(/ class="unordered"/g, '');
 
     // Paragraphs
@@ -514,7 +529,13 @@ export const getMarkdownRenderer = (
     result = result.replace(/___ESCAPED_UNDERSCORE___/g, '_');
 
     const sanitized = domSanitizer.sanitize(SecurityContext.HTML, result);
-    return sanitized ?? '';
+    result = sanitized ?? '';
+
+    taskListCheckboxMap.forEach((checkbox, placeholder) => {
+      result = result.replace(placeholder, checkbox);
+    });
+
+    return result;
   };
 
   /**
