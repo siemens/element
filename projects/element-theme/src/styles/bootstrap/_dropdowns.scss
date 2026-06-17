@@ -19,7 +19,7 @@
   z-index: zindex.$zindex-dropdown;
   display: none; // none by default, but block on "open" of the menu
   min-inline-size: bootstrap-variables.$dropdown-min-width;
-  max-block-size: calc(100vh - #{map.get(spacers.$spacers, 1) * 2});
+  max-block-size: calc(100vb - #{map.get(spacers.$spacers, 1) * 2});
   overflow-y: auto;
   padding-block: bootstrap-variables.$dropdown-padding-y;
   padding-inline: bootstrap-variables.$dropdown-padding-x;
@@ -42,7 +42,7 @@
   overflow: auto;
   // 266px is based on figma and gives 6-8 items. Depending on the number of headings
   max-block-size: min(
-    100vh,
+    100vb,
     calc((1lh + 2 * #{bootstrap-variables.$dropdown-item-padding-y}) * 8.3125) // = 266px with rfs 16px
   );
 }
@@ -209,8 +209,8 @@
 
 .dropdown-menu {
   &.align-center {
-    left: 0; // stylelint-disable-line liberty/use-logical-spec
-    right: unset; // stylelint-disable-line liberty/use-logical-spec
+    left: 0; // stylelint-disable-line property-layout-mappings
+    right: unset; // stylelint-disable-line property-layout-mappings
     transform: translateX(-50%);
   }
 

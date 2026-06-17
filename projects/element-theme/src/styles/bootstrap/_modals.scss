@@ -225,7 +225,7 @@
 
   @include breakpoints.media-breakpoint-down($breakpoint) {
     .modal-fullscreen#{$postfix} {
-      inline-size: 100vw;
+      inline-size: 100vi;
       max-inline-size: none;
       block-size: 100%;
       margin: 0;

@@ -5,6 +5,10 @@ input {
   border: 0;
   padding-block: 0;
 
+  &:focus {
+    min-inline-size: 20ch;
+  }
+
   &:hover::placeholder {
     opacity: 1;
   }

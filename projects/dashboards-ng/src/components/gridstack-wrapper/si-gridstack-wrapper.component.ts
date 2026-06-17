@@ -225,6 +225,9 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
         }),
         outputBinding<WidgetConfig>('edit', widgetConfig => {
           this.widgetInstanceEdit.emit(widgetConfig);
+        }),
+        outputBinding<Event>('gridEvent', event => {
+          this.gridEvent.emit({ event, grid: this.grid });
         })
       ]
     });

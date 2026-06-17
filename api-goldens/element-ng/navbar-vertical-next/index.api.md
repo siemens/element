@@ -5,12 +5,14 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
+import { DomPortal } from '@angular/cdk/portal';
 import { OnChanges } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as _siemens_element_ng_navbar_vertical_next from '@siemens/element-ng/navbar-vertical-next';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';
+import { ViewContainerRef } from '@angular/core';
 
 // @public (undocumented)
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
@@ -63,8 +65,7 @@ export class SiNavbarVerticalNextHeaderComponent {
 
 // @public (undocumented)
 export class SiNavbarVerticalNextItemComponent implements OnInit {
-    // (undocumented)
-    get active(): boolean;
+    readonly active: _angular_core.Signal<boolean>;
     readonly activeOverride: _angular_core.InputSignal<boolean | undefined>;
     readonly badge: _angular_core.InputSignal<string | number | undefined>;
     readonly badgeColor: _angular_core.InputSignal<string | undefined>;

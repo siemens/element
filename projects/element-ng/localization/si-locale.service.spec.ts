@@ -61,7 +61,7 @@ describe('SiLocaleService', () => {
 
     it('should have a complete configuration without any input', () => {
       expect(service.config.availableLocales).toBeDefined();
-      expect(service.config.availableLocales!.length).toBe(1);
+      expect(service.config.availableLocales!).toHaveLength(1);
       expect(service.config.availableLocales![0]).toBe('en');
       expect(service.config.defaultLocale).toBe('en');
       expect(service.config.dynamicLanguageChange).toBe(false);
@@ -119,7 +119,7 @@ describe('SiLocaleService', () => {
     });
     service = TestBed.inject(SiLocaleService);
     const translate = TestBed.inject(TranslateService);
-    expect(translate.getLangs().length).toBe(3);
+    expect(translate.getLangs()).toHaveLength(3);
     expect(translate.getLangs()[2]).toBe('fr');
   });
 

@@ -30,4 +30,14 @@ test.describe('si-datepicker', () => {
       await si.runVisualAndA11yTests('year');
     });
   });
+
+  test('calendar-button states', async ({ page, si }) => {
+    await si.visitExample('si-datepicker/si-datepicker-input');
+    const calendarButton = page.getByLabel('Open calendar').first();
+    await calendarButton.focus();
+    await si.runVisualAndA11yTests('calendar-button-focus', { skipAriaSnapshot: true });
+    await calendarButton.blur();
+    await calendarButton.hover();
+    await si.runVisualAndA11yTests('calendar-button-hover', { skipAriaSnapshot: true });
+  });
 });

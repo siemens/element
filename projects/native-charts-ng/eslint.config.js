@@ -1,4 +1,9 @@
-import { tsConfig, templateConfig, indexBarrelConfig } from '../../eslint.config.js';
+import {
+  tsConfig,
+  templateConfig,
+  indexBarrelConfig,
+  strictLinterOptions
+} from '../../eslint.config.js';
 import defaultValuePlugin from '@siemens/eslint-plugin-defaultvalue';
 import { defineConfig } from 'eslint/config';
 export default defineConfig(
@@ -40,5 +45,6 @@ export default defineConfig(
     }
   },
   ...templateConfig,
-  ...indexBarrelConfig
+  ...indexBarrelConfig,
+  ...strictLinterOptions
 );

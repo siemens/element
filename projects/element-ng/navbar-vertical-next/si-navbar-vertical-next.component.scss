@@ -11,6 +11,25 @@ $vertical-nav-top-offset: calc(
 $mobile-drawer-padding-block: map.get(all-variables.$spacers, 2);
 $mobile-drawer-padding-inline: map.get(all-variables.$spacers, 4);
 $mobile-drawer-margin-block-start: map.get(all-variables.$spacers, 4);
+$toggle-size: calc(1lh + (2 * map.get(all-variables.$spacers, 4)));
+$segmented-gap: 1px;
+
+// Position of the toggle/chip in the nav's expanded layout (top-right of nav).
+$toggle-expanded-block-start: calc(
+  #{$vertical-nav-top-offset} + #{$mobile-drawer-margin-block-start} +
+    #{$mobile-drawer-padding-block}
+);
+$toggle-expanded-inline-start: calc(
+  #{$vertical-nav-width} - #{$toggle-size} - #{$mobile-drawer-padding-inline}
+);
+
+// Position of the parked toggle/chip when the nav is collapsed (in-page slot).
+// Inline-start uses a CSS custom property so it can track `.si-layout-main-padding`
+// across breakpoints (16px below md, 32px from md up).
+$toggle-parked-block-start: calc(
+  #{$vertical-nav-top-offset} + #{map.get(all-variables.$spacers, 6)}
+);
+$toggle-parked-inline-start: var(--si-navbar-parked-inline-start);
 
 :host {
   display: block;
@@ -64,7 +83,7 @@ nav {
     background-color $vertical-nav-transition-duration ease,
     box-shadow $vertical-nav-transition-duration ease;
 
-  :host(:not(.nav-collapsed)) & {
+  :host(:not(.nav-collapsed):not(.nav-inline-collapse)) & {
     inline-size: $vertical-nav-width;
   }
 }
@@ -134,10 +153,36 @@ nav {
 }
 
 :host(.nav-inline-collapse) {
-  $toggle-size: calc(1lh + (2 * map.get(all-variables.$spacers, 4)));
+  // Inline-collapse parks the toggle inside the page gutter at all widths, so
+  // the page title doesn't need to reserve the default 40px offset.
+  --si-layout-header-first-element-offset: 0;
+
+  // Match `.si-layout-main-padding` so the parked toggle/chip align with page content.
+  --si-navbar-parked-inline-start: #{map.get(all-variables.$spacers, 6)};
+
+  @include all-variables.media-breakpoint-up(md) {
+    --si-navbar-parked-inline-start: #{map.get(all-variables.$spacers, 9)};
+  }
 
   nav {
     overflow: hidden; // clip the drawer as it collapses to inline-size 0
+
+    // Surface that covers the fixed-position chip during the slide so nav
+    // items never appear behind/over it mid-animation.
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: all-variables.$element-base-1;
+      z-index: 1;
+      pointer-events: none;
+    }
+  }
+
+  // Keep menu above the surface overlay.
+  .nav-content {
+    position: relative;
+    z-index: 2;
   }
 
   .mobile-drawer::before {
@@ -157,19 +202,47 @@ nav {
   .toggle-button {
     position: fixed;
     z-index: all-variables.$zindex-vertical-nav;
-    inset-block-start: calc(
-      #{$vertical-nav-top-offset} + #{$mobile-drawer-margin-block-start} +
-        #{$mobile-drawer-padding-block}
-    );
-    inset-inline-start: calc(
-      #{$vertical-nav-width} - #{$toggle-size} - #{$mobile-drawer-padding-inline}
-    );
+    inset-block-start: $toggle-expanded-block-start;
+    inset-inline-start: $toggle-expanded-inline-start;
     transition:
       inset-inline-start $vertical-nav-transition-duration ease,
       inset-block-start $vertical-nav-transition-duration ease;
   }
 
-  // Parked state: nav collapsed, button + placeholder move to the in-page slot.
+  .chip {
+    position: fixed;
+    z-index: 0;
+    inset-block-start: $toggle-parked-block-start;
+    // Cap the chip width so long labels truncate via `.item-title.text-truncate`
+    // instead of overflowing the viewport. Reserves space for the toggle slot
+    // on the start and an equal end-gutter so the chip never butts the edge.
+    max-inline-size: calc(
+      100vi - (2 * #{$toggle-parked-inline-start}) - #{$toggle-size} - #{$segmented-gap}
+    );
+    inset-inline-start: $toggle-parked-inline-start;
+    opacity: 0;
+    transition:
+      inset-inline-start $vertical-nav-transition-duration ease,
+      opacity $vertical-nav-transition-duration ease;
+
+    &:has(:focus-visible) {
+      z-index: all-variables.$zindex-vertical-nav + 1;
+    }
+
+    &.chip-visible {
+      @starting-style {
+        inset-inline-start: $toggle-parked-inline-start;
+        opacity: 0;
+      }
+
+      inset-inline-start: calc(
+        #{$toggle-parked-inline-start} + #{$toggle-size} + #{$segmented-gap}
+      );
+      opacity: 1;
+    }
+  }
+
+  // Parked state: nav collapsed, toggle + placeholder in the in-page slot.
   &.nav-collapsed {
     .toggle-placeholder {
       block-size: $toggle-size;
@@ -177,8 +250,14 @@ nav {
     }
 
     .toggle-button {
-      inset-block-start: calc(#{$vertical-nav-top-offset} + #{map.get(all-variables.$spacers, 6)});
-      inset-inline-start: map.get(all-variables.$spacers, 9);
+      inset-block-start: $toggle-parked-block-start;
+      inset-inline-start: $toggle-parked-inline-start;
+    }
+
+    // Fuse toggle + chip into a segmented control.
+    &:has(.chip.chip-visible) .toggle-button {
+      border-start-end-radius: 0;
+      border-end-end-radius: 0;
     }
   }
 }

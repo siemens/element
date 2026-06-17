@@ -28,10 +28,10 @@ describe('SiTimelineWidgetItemComponent', () => {
   it('should display a skeleton without value', async () => {
     await fixture.whenStable();
     expect(element.querySelector('.si-skeleton')).toBeDefined();
-    expect(element.querySelectorAll('.si-skeleton').length).toBe(1);
+    expect(element.querySelectorAll('.si-skeleton')).toHaveLength(1);
     expect(element.querySelector('.si-link-widget-skeleton')).toBeDefined();
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(3);
-    expect(element.querySelectorAll('.si-timeline-widget-lower-line').length).toBe(0);
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(3);
+    expect(element.querySelectorAll('.si-timeline-widget-lower-line')).toHaveLength(0);
   });
 
   it('should display a skeleton without value and without showing the description', async () => {
@@ -39,9 +39,9 @@ describe('SiTimelineWidgetItemComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     expect(element.querySelector('.si-skeleton')).toBeDefined();
-    expect(element.querySelectorAll('.si-skeleton').length).toBe(1);
+    expect(element.querySelectorAll('.si-skeleton')).toHaveLength(1);
     expect(element.querySelector('.si-link-widget-skeleton')).toBeDefined();
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(2);
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(2);
   });
 
   it('should display the lower line', async () => {
@@ -52,7 +52,7 @@ describe('SiTimelineWidgetItemComponent', () => {
     });
     await fixture.whenStable();
     expect(element.querySelector('.si-timeline-widget-item-lower-line')).toBeDefined();
-    expect(element.querySelectorAll('.si-timeline-widget-item-lower-line').length).toBe(1);
+    expect(element.querySelectorAll('.si-timeline-widget-item-lower-line')).toHaveLength(1);
   });
 
   it('should display the item timestamp string', async () => {
@@ -116,7 +116,7 @@ describe('SiTimelineWidgetItemComponent', () => {
       stackedIcon: 'element-state-exclamation-mark'
     });
     await fixture.whenStable();
-    expect(element.querySelectorAll('.element-state-exclamation-mark').length).toBe(1);
+    expect(element.querySelectorAll('.element-state-exclamation-mark')).toHaveLength(1);
   });
 
   it('should display the item icon stacked color', async () => {
@@ -129,7 +129,7 @@ describe('SiTimelineWidgetItemComponent', () => {
       stackedIconColor: 'status-danger-contrast'
     });
     await fixture.whenStable();
-    expect(element.querySelectorAll('.status-danger-contrast').length).toBe(1);
+    expect(element.querySelectorAll('.status-danger-contrast')).toHaveLength(1);
   });
 
   it('should display the item action', async () => {
@@ -145,6 +145,6 @@ describe('SiTimelineWidgetItemComponent', () => {
       }
     });
     await fixture.whenStable();
-    expect(element.querySelectorAll('.si-timeline-widget-item-action').length).toBe(1);
+    expect(element.querySelectorAll('.si-timeline-widget-item-action')).toHaveLength(1);
   });
 });

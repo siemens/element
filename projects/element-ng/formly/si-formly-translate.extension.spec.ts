@@ -93,7 +93,7 @@ describe('Formly translations', () => {
     expect(cfg.expressions?.['props.label']).toBeTruthy();
   });
 
-  it('should translate a label', () => {
+  it('should translate description', () => {
     const cfg: FormlyFieldConfig = {
       props: {
         description: 'descriptiontxt'

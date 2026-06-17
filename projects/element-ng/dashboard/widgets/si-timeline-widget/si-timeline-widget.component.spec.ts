@@ -32,28 +32,28 @@ describe('SiTimelineWidgetComponent', () => {
   it('should show 4 si-skeletons as default without value', () => {
     fixture.detectChanges();
     expect(element.querySelector('.si-skeleton')).toBeDefined();
-    expect(element.querySelectorAll('.si-skeleton').length).toBe(4);
+    expect(element.querySelectorAll('.si-skeleton')).toHaveLength(4);
   });
 
   it('should show 12 si-link-widget-skeletons as default without value', () => {
     fixture.detectChanges();
     expect(element.querySelector('.si-link-widget-skeleton')).toBeDefined();
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(12);
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(12);
   });
 
   it('should show 8 si-link-widget-skeletons as default without value and without showing the description', () => {
     showDescription.set(false);
     fixture.detectChanges();
     expect(element.querySelector('.si-link-widget-skeleton')).toBeDefined();
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(8);
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(8);
   });
 
   it('should enable number skeleton configuration', () => {
     const numItems = 3;
     numberOfItems.set(numItems);
     fixture.detectChanges();
-    expect(element.querySelectorAll('.si-skeleton').length).toBe(numItems);
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(numItems * 3);
+    expect(element.querySelectorAll('.si-skeleton')).toHaveLength(numItems);
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(numItems * 3);
   });
 
   it('should enable number skeleton configuration without showing the description', () => {
@@ -61,8 +61,8 @@ describe('SiTimelineWidgetComponent', () => {
     numberOfItems.set(numItems);
     showDescription.set(false);
     fixture.detectChanges();
-    expect(element.querySelectorAll('.si-skeleton').length).toBe(numItems);
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(numItems * 2);
+    expect(element.querySelectorAll('.si-skeleton')).toHaveLength(numItems);
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(numItems * 2);
   });
 
   it('should display timeline items', () => {
@@ -91,7 +91,7 @@ describe('SiTimelineWidgetComponent', () => {
       }
     ]);
     fixture.detectChanges();
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(0);
-    expect(element.querySelectorAll('si-timeline-widget-item').length).toBe(3);
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(0);
+    expect(element.querySelectorAll('si-timeline-widget-item')).toHaveLength(3);
   });
 });

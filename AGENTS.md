@@ -50,6 +50,67 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Use `toContain(item)` instead of `expect(array.includes(item)).toBe(true)`
 - Use `toMatchObject(subset)` to assert on a subset of properties instead of multiple individual `.toBe()` assertions
 
+## Running Tests
+
+Infer the correct test command from the file path being edited. After implementation changes, run the matching unit test command to verify.
+
+### Unit Tests
+
+All unit tests use **Vitest**. Do NOT use `npx ng test` or Karma/Jasmine commands.
+
+| File path prefix                 | Command                      |
+| -------------------------------- | ---------------------------- |
+| `projects/element-ng/`           | `npm run lib:test`           |
+| `projects/charts-ng/`            | `npm run charts:test`        |
+| `projects/native-charts-ng/`     | `npm run native-charts:test` |
+| `projects/maps-ng/`              | `npm run maps:test`          |
+| `projects/dashboards-ng/`        | `npm run dashboards:test`    |
+| `projects/element-translate-ng/` | `npm run translate:test`     |
+
+To run a specific test file, use `--include` and `--no-watch`:
+
+```shell
+npm run lib:test -- --include='**/component-name/component-name.component.spec.ts' --no-watch
+```
+
+Only these CLI flags are supported: `--include` (glob filter) and `--no-watch` (run once).
+Do NOT use `--reporter`, `--watch=false`, or any other flags.
+
+### Schematics Tests
+
+Run `npm run schematics:test` (uses Vitest). Config: `projects/element-ng/vitest.config.schematics.ts`.
+
+### E2E Tests
+
+E2E tests require Docker and a running dev server. They are executed via `./e2e-local.sh`.
+
+```shell
+# 1. Start the dev server (in one terminal)
+npm run start -- --allowed-hosts true --host 0.0.0.0
+
+# 2. For dashboards tests, also start dashboards artifacts
+npm run dashboards-demo:build-and-run-all      # webpack
+npm run dashboards-demo:build-and-run-all:esm   # ESM
+
+# 3. Run e2e tests (in another terminal)
+./e2e-local.sh                                          # run all
+./e2e-local.sh run '--project=dashboards-demo/*'        # specific project
+./e2e-local.sh run '--project=dashboards-demo-esm/*'    # ESM project
+./e2e-local.sh vrt                                      # visual regression only
+./e2e-local.sh a11y                                     # accessibility only
+
+# Update snapshots
+./e2e-local.sh update                           # changed snapshots
+./e2e-local.sh update-all                       # all snapshots
+./e2e-local.sh update <test-file-name>          # specific test (glob supported)
+
+# Run specific static test
+PLAYWRIGHT_staticTest=buttons/buttons:badges/badges ./e2e-local.sh run static
+
+# Use Podman instead of Docker (Linux)
+DOCKER=podman ./e2e-local.sh
+```
+
 ## State Management
 
 - Use signals for local component state

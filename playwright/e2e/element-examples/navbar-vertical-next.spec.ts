@@ -64,10 +64,30 @@ test.describe('navbar vertical next', () => {
       'aria-expanded',
       'false'
     );
-    await expect(page.getByRole('link', { name: 'Home' })).toBeHidden();
+    await expect(page.locator('.nav-content')).toHaveAttribute('inert', '');
 
     await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('inline-collapse');
+  });
+
+  test(example + ' inline collapse chip opens sub-menu', async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.getByRole('checkbox', { name: 'Inline collapse' }).check();
+    await page.getByRole('button', { name: 'User management' }).click();
+    await page.getByRole('link', { name: 'Sub item', exact: true }).click();
+    await page.getByLabel('Toggle', { exact: true }).click();
+    await si.waitForAllAnimationsToComplete();
+
+    const chip = page.getByRole('button', { name: 'User management' });
+    await expect(chip).toBeVisible();
+    await chip.click();
+
+    await expect(page.getByRole('group', { name: 'User management' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Sub item', exact: true })).toBeVisible();
+
+    await si.waitForAllAnimationsToComplete();
+    await si.runVisualAndA11yTests('inline-collapse-chip-submenu');
   });
 
   test.skip('it should show tooltip only on keyboard interaction', async ({ page, si }) => {
