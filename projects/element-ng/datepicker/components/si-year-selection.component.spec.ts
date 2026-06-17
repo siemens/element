@@ -66,7 +66,7 @@ describe('SiYearSelectionComponent', () => {
   it('should contain 18 years', () => {
     const yearCells = helper.getEnabledCells();
 
-    expect(yearCells.length).toBe(18);
+    expect(yearCells).toHaveLength(18);
   });
 
   it('shows selected year', () => {
@@ -165,7 +165,6 @@ describe('SiYearSelectionComponent', () => {
     let calendarBodyElement: HTMLElement;
     beforeEach(() => {
       calendarBodyElement = helper.getCalendarBody();
-      expect(calendarBodyElement).not.toBeNull();
       fixture.detectChanges();
     });
 

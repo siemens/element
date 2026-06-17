@@ -32,7 +32,7 @@ describe('SiDefaultThemeStore', () => {
     it('should initially have no theme names', async () => {
       const names = await firstValueFrom(store.loadThemeNames());
       expect(names).toBeDefined();
-      expect(names.length).toBe(0);
+      expect(names).toHaveLength(0);
     });
 
     it('should return undefined for a name that does not exist', async () => {
@@ -161,7 +161,7 @@ describe('SiDefaultThemeStore', () => {
     it('loadThemeNames on node shall return []', async () => {
       const result = await firstValueFrom(store.loadThemeNames());
       expect(result).toBeDefined();
-      expect(result.length).toBe(0);
+      expect(result).toHaveLength(0);
     });
 
     it('saveTheme on node shall return false', async () => {

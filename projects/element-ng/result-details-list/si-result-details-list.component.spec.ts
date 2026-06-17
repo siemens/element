@@ -54,7 +54,7 @@ describe('SiResultDetailsListComponent', () => {
     ]);
     fixture.detectChanges();
 
-    expect(element.querySelectorAll('.result-description').length).toEqual(steps().length);
+    expect(element.querySelectorAll('.result-description')).toHaveLength(steps().length);
   });
 
   it('should show step values if provided', () => {
@@ -67,7 +67,7 @@ describe('SiResultDetailsListComponent', () => {
     ]);
     fixture.detectChanges();
 
-    expect(element.querySelectorAll('.result-value').length).toEqual(1);
+    expect(element.querySelectorAll('.result-value')).toHaveLength(1);
   });
 
   it('should show no test step values if none provided', () => {
@@ -79,7 +79,7 @@ describe('SiResultDetailsListComponent', () => {
     ]);
     fixture.detectChanges();
 
-    expect(element.querySelectorAll('.result-value').length).toEqual(0);
+    expect(element.querySelectorAll('.result-value')).toHaveLength(0);
   });
 
   it('should show step errors if provided', () => {
@@ -92,7 +92,7 @@ describe('SiResultDetailsListComponent', () => {
     ]);
     fixture.detectChanges();
 
-    expect(element.querySelectorAll('.text-danger').length).toEqual(1);
+    expect(element.querySelectorAll('.text-danger')).toHaveLength(1);
   });
 
   it('should show no step errors if none provided', () => {
@@ -104,7 +104,7 @@ describe('SiResultDetailsListComponent', () => {
     ]);
     fixture.detectChanges();
 
-    expect(element.querySelectorAll('.result-error').length).toEqual(0);
+    expect(element.querySelectorAll('.result-error')).toHaveLength(0);
   });
 
   it('should show detail text if provided', () => {
@@ -116,6 +116,6 @@ describe('SiResultDetailsListComponent', () => {
       }
     ]);
     fixture.detectChanges();
-    expect(element.querySelectorAll('.result-detail').length).toEqual(1);
+    expect(element.querySelectorAll('.result-detail')).toHaveLength(1);
   });
 });

@@ -16,18 +16,16 @@ describe('widget-loader', () => {
       moduleName: 'TestWidgetModule'
     } as any as WidgetComponentTypeFactory;
 
-    try {
-      await firstValueFrom(
+    await expect(
+      firstValueFrom(
         setupWidgetInstance(
           brokenComponentFactory,
           {} as ViewContainerRef,
           {} as Injector,
           {} as EnvironmentInjector
         )
-      );
-    } catch (error) {
-      expect(error).toBe('Provided component factory has no componentName component configuration');
-    }
+      )
+    ).rejects.toBe('Provided component factory has no componentName component configuration');
   });
 });
 
