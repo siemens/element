@@ -126,6 +126,74 @@ describe('SiMarkdownRendererComponent', () => {
     expect(codeElement.querySelector('em')).not.toBeInTheDocument();
   });
 
+  it('should attribute-escape markdown link URLs', async () => {
+    text.set('[link](https://example.com/" onmouseover="x)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+
+    expect(linkElement).not.toHaveAttribute('onmouseover');
+    expect(linkElement.getAttribute('href')).toBe('https://example.com/" onmouseover="x');
+  });
+
+  it('should preserve valid markdown link URLs with query parameters', async () => {
+    text.set('[link](https://example.com/search?q=test&lang=en#results)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+
+    expect(linkElement.getAttribute('href')).toBe(
+      'https://example.com/search?q=test&lang=en#results'
+    );
+  });
+
+  it('should attribute-escape mailto link URLs', async () => {
+    text.set('[mail](mailto:test@example.com" onmouseover="x)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+
+    expect(linkElement).not.toHaveAttribute('onmouseover');
+    expect(linkElement.getAttribute('href')).toBe('mailto:test@example.com" onmouseover="x');
+  });
+
+  it('should preserve valid mailto link URLs with query parameters', async () => {
+    text.set('[mail](mailto:test@example.com?subject=Hello&body=World)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+
+    expect(linkElement.getAttribute('href')).toBe(
+      'mailto:test@example.com?subject=Hello&body=World'
+    );
+  });
+
+  it('should attribute-escape auto link URLs', async () => {
+    text.set('https://example.com/"onmouseover="x/path');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+
+    expect(linkElement).not.toHaveAttribute('onmouseover');
+    expect(linkElement.getAttribute('href')).toBe('https://example.com/"onmouseover="x/path');
+  });
+
+  it('should attribute-escape angle autolink URLs', async () => {
+    text.set('<https://example.com/"onmouseover="x/path>');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+
+    expect(linkElement).not.toHaveAttribute('onmouseover');
+    expect(linkElement.getAttribute('href')).toBe('https://example.com/"onmouseover="x/path');
+  });
+
   it('should transform code blocks ```code```', async () => {
     text.set('```\nconst x = 1;\n```');
     await fixture.whenStable();
@@ -312,6 +380,21 @@ const example = "code block";
     expect(codeElement.querySelector('strong')).not.toBeInTheDocument();
   });
 
+  it('should attribute-escape markdown link URLs in table cells', async () => {
+    const tableMarkdown = `| Link |
+|------|
+| [link](https://example.com/" onmouseover="x) |`;
+
+    text.set(tableMarkdown);
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('td a')!;
+
+    expect(linkElement).not.toHaveAttribute('onmouseover');
+    expect(linkElement.getAttribute('href')).toBe('https://example.com/" onmouseover="x');
+  });
+
   it('should handle escaped pipe characters in tables', async () => {
     const tableMarkdown = `| Command | Description |
 |---------|-------------|
@@ -365,6 +448,29 @@ const example = "code block";
     expect(imgElement).toBeTruthy();
     expect(imgElement.getAttribute('src')).toBe('https://example.com/image.png');
     expect(imgElement.getAttribute('alt')).toBe('alt text');
+  });
+
+  it('should attribute-escape image URLs', async () => {
+    text.set('![alt](https://example.com/"onerror="x/path)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const imgElement = markdownDiv.querySelector('img')!;
+
+    expect(imgElement).not.toHaveAttribute('onerror');
+    expect(imgElement.getAttribute('src')).toBe('https://example.com/"onerror="x/path');
+  });
+
+  it('should preserve valid image URLs with query parameters', async () => {
+    text.set('![alt](https://example.com/image.png?size=small&theme=dark#preview)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const imgElement = markdownDiv.querySelector('img')!;
+
+    expect(imgElement.getAttribute('src')).toBe(
+      'https://example.com/image.png?size=small&theme=dark#preview'
+    );
   });
 
   it('should render images alongside text', async () => {

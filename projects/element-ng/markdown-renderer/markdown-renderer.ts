@@ -158,13 +158,13 @@ export const getMarkdownRenderer = (
     // Step 5: Process links (both formats, can contain inline code)
     if (processOpts.allowLinks) {
       result = result.replace(/<(https?:\/\/[^\s>]+)>/g, (match, url) => {
-        const sanitizedUrl = sanitizeUrl(url, sanitizer);
+        const sanitizedUrl = sanitizeUrlAttribute(url, sanitizer);
         return `<a href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>`;
       });
 
       // Images: ![alt](url)
       result = result.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, url) => {
-        const sanitizedUrl = sanitizeUrl(url, sanitizer);
+        const sanitizedUrl = sanitizeUrlAttribute(url, sanitizer);
         const escapedAlt = escapeHtml(alt);
         return `<img src="${sanitizedUrl}" alt="${escapedAlt}">`;
       });
@@ -178,7 +178,7 @@ export const getMarkdownRenderer = (
 
       // Auto-detect URLs
       result = result.replace(/(?<!["'=(])\b(https?:\/\/[^\s<]+[^\s<.,;!?"')\]])/g, match => {
-        const sanitizedUrl = sanitizeUrl(match, sanitizer);
+        const sanitizedUrl = sanitizeUrlAttribute(match, sanitizer);
         return `<a class="link-text" href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(match)}</a>`;
       });
     }
@@ -413,13 +413,12 @@ export const getMarkdownRenderer = (
 
     // Restore links
     linkPlaceholderMap.forEach((linkData, placeholder) => {
-      const sanitizedUrl = sanitizeUrl(linkData.url, sanitizer);
+      const sanitizedUrl = sanitizeUrlAttribute(linkData.url, sanitizer);
       let linkText = linkData.text;
 
       // Process inline code in link text
       linkText = linkText.replace(/(?<!\\)(?:\\\\)*`([^`]+)`/g, (match, content) => {
-        const escaped = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        return `<code>${escaped}</code>`;
+        return `<code>${escapeHtml(content)}</code>`;
       });
 
       const sanitizedText = domSanitizer.sanitize(SecurityContext.HTML, linkText) ?? '';
@@ -601,6 +600,10 @@ const sanitizeUrl = (url: string, sanitizer: DomSanitizer): string => {
 
   const sanitized = sanitizer.sanitize(SecurityContext.URL, url);
   return sanitized ?? '#';
+};
+
+const sanitizeUrlAttribute = (url: string, sanitizer: DomSanitizer): string => {
+  return escapeHtml(sanitizeUrl(url, sanitizer));
 };
 
 /**
