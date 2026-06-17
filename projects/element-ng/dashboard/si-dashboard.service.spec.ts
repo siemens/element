@@ -1,0 +1,44 @@
+/**
+ * Copyright (c) Siemens 2016 - 2026
+ * SPDX-License-Identifier: MIT
+ */
+import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
+
+import { SiDashboardCardComponent } from './si-dashboard-card.component';
+import { SiDashboardService as TestService } from './si-dashboard.service';
+
+describe('SiDashboardService', () => {
+  let service: TestService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: TestService }]
+    }).compileComponents();
+    service = TestBed.inject(TestService);
+  });
+
+  it('should initially have no cards registered', async () => {
+    const cards = await firstValueFrom(service.cards$);
+    expect(cards).toEqual([]);
+  });
+
+  it('should emit cards on registration', async () => {
+    const card = {} as SiDashboardCardComponent;
+    service.register(card);
+    const cards = await firstValueFrom(service.cards$);
+    expect(cards).toHaveLength(1);
+    expect(cards[0]).toBe(card);
+  });
+
+  it('should emit cards on unregistration', async () => {
+    const card1 = { name: '1' } as any as SiDashboardCardComponent;
+    const card2 = { name: '2' } as any as SiDashboardCardComponent;
+    service.register(card1);
+    service.register(card2);
+    service.unregister(card1);
+    const cards = await firstValueFrom(service.cards$);
+    expect(cards).toHaveLength(1);
+    expect(cards[0]).toBe(card2);
+  });
+});
