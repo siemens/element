@@ -31,14 +31,19 @@
     - menuitem "Print"
     - menuitem "Expand"
     - menuitem "Toggle"
+  - application "Chart"
   - text: Pie Chart
   - menubar:
     - menuitem "Expand"
-  - text: Full Speed Line Chart
+  - application "Chart"
+  - text: Full Speed
+  - application "Chart"
+  - text: Line Chart
   - menubar:
     - menuitem "Print"
     - menuitem "Expand"
     - menuitem "Toggle"
+  - application "Chart"
   - text: List Widget
   - menubar:
     - menuitem "Sort descending"
@@ -78,3 +83,35 @@
     - listitem: /Today \d+:\d+ Title Description/
   - link "Go to...":
     - /url: https://github.com/siemens/element/issues
+  - text: Weather
+  - menubar:
+    - menuitem "Expand"
+  - text: /\d+°/
+  - img "Sunny"
+  - text: /Sunny \d+° \d+°/
+  - list "Additional weather data":
+    - listitem: /Wind [\d,.]+[bkmBKM]+\/h/
+    - listitem: /Cloud cover \d+%/
+    - listitem: /Precipitation [\d,.]+[bkmBKM]+/
+    - listitem: UVI 1 low
+  - list:
+    - listitem:
+      - text: Mon
+      - img "Mon"
+      - text: /\d+° \d+°/
+    - listitem:
+      - text: Tue
+      - img "Tue"
+      - text: /\d+° \d+°/
+    - listitem:
+      - text: Wed
+      - img "Wed"
+      - text: /\d+° \d+°/
+    - listitem:
+      - text: Thu
+      - img "Thu"
+      - text: /\d+° \d+°/
+    - listitem:
+      - text: Fri
+      - img "Fri"
+      - text: /\d+° \d+°/
