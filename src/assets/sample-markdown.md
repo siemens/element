@@ -107,3 +107,21 @@ Tables are also supported:
 | Line breaks       | Line 1<br>Line 2<br>Line 3                                   | ✓ Complete | Uses `<br>` tags            |
 
 This paragraph appears after the tables to demonstrate proper spacing.
+
+---
+
+## Math Expressions
+
+LaTeX math expressions are supported for mathematical notation.
+
+Inline math can be written like this: $E = mc^2$ or the quadratic formula $x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$.
+
+Simple prices are kept as literal text: $100, $50, $25. You can still escape dollar signs when needed: \$100.
+
+Display math uses double dollar signs for block equations:
+
+$$
+\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+$$
+
+UML is not supported in this markdown component.

@@ -166,3 +166,10 @@
           - code: <br>
           - text: tags
 - paragraph: This paragraph appears after the tables to demonstrate proper spacing.
+- separator
+- heading "Math Expressions" [level=2]
+- paragraph: LaTeX math expressions are supported for mathematical notation.
+- paragraph: "Inline math can be written like this: or the quadratic formula ."
+- paragraph: "/Simple prices are kept as literal text: \\$\\d+, \\$\\d+, \\$\\d+\\. You can still escape dollar signs when needed: \\$\\d+\\./"
+- paragraph: "Display math uses double dollar signs for block equations:"
+- paragraph: UML is not supported in this markdown component.

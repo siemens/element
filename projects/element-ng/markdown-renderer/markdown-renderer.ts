@@ -5,16 +5,27 @@
 import { SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { getCachedOrCreateElement } from './markdown-renderer-helpers';
+import {
+  getCachedOrCreateElement,
+  getCachedOrCreateString,
+  sanitizeHtmlWithStyles
+} from './markdown-renderer-helpers';
 
 const CACHE_SIZE = 100;
 
-export type MarkdownRendererOptions = Record<string, never>;
+export interface MarkdownRendererOptions {
+  /**
+   * Optional LaTeX renderer function.
+   * Receives LaTeX content and display mode, returns rendered HTML or undefined.
+   */
+  latexRenderer?: (latex: string, displayMode: boolean) => string | undefined;
+}
 
 interface ProcessOptions {
   allowCodeBlocks?: boolean;
   allowBlockquotes?: boolean;
   allowTables?: boolean;
+  allowLatex?: boolean;
   allowInlineCode?: boolean;
   allowLinks?: boolean;
 }
@@ -44,14 +55,18 @@ export const getMarkdownRenderer = (
   // Persistent caches within this renderer instance
   const codeBlockCache = new Map<string, HTMLElement>();
   const tableCache = new Map<string, HTMLElement>();
+  const latexCache = new Map<string, string>();
   const codeBlockCacheOrder: string[] = [];
   const tableCacheOrder: string[] = [];
+  const latexCacheOrder: string[] = [];
 
   // Placeholder maps for cached elements
   const codeBlockPlaceholderMap = new Map<string, string>();
   const tablePlaceholderMap = new Map<string, string>();
 
   // Placeholder maps for inline elements
+  const displayLatexPlaceholderMap = new Map<string, string>();
+  const inlineLatexPlaceholderMap = new Map<string, string>();
   const linkPlaceholderMap = new Map<string, { text: string; url: string }>();
 
   /**
@@ -63,6 +78,7 @@ export const getMarkdownRenderer = (
       allowCodeBlocks: true,
       allowBlockquotes: true,
       allowTables: true,
+      allowLatex: true,
       allowInlineCode: true,
       allowLinks: true
     }
@@ -146,7 +162,19 @@ export const getMarkdownRenderer = (
       result = processTables(result);
     }
 
-    // Step 4: Extract and process inline code (must be before inline formatting)
+    // Step 4: Extract and process display LaTeX (multi-line formulas)
+    if (processOpts.allowLatex) {
+      result = result.replace(
+        /(^|[^\\$])\$\$([\s\S]*?)(?<!\\)\$\$(?!\$)/g,
+        (match, prefix, latex) => {
+          const placeholder = `--LATEX-DISPLAY-${Math.random().toString(36).substring(2, 15)}--`;
+          displayLatexPlaceholderMap.set(placeholder, latex.trim());
+          return `${prefix}<!--LATEX-DISPLAY-PLACEHOLDER-${placeholder}-->`;
+        }
+      );
+    }
+
+    // Step 5: Extract and process inline code (must be before inline LaTeX)
     if (processOpts.allowInlineCode) {
       result = result.replace(/(?<!\\)(?:\\\\)*`([^`]+)`/g, (match, content) => {
         const placeholder = `--INLINE-CODE-${Math.random().toString(36).substring(2, 15)}--`;
@@ -155,7 +183,25 @@ export const getMarkdownRenderer = (
       });
     }
 
-    // Step 5: Process links (both formats, can contain inline code)
+    // Step 6: Extract and process inline LaTeX (keep as placeholder to protect from line breaks)
+    if (processOpts.allowLatex) {
+      // Escape dollar signs (handle properly with even number of backslashes)
+      result = result.replace(/(?<!\\)(?:\\\\)*\\\$/g, '___ESCAPED_DOLLAR___');
+
+      result = result.replace(
+        /(^|[^\\$])\$(?!\$)(?!\s)(?!\d+(?:[.,]\d+)*(?=\s|[.,;:!?)]|$))([^$\n]*?\S)\$(?![\d$])/g,
+        (match, prefix, latex) => {
+          const placeholder = `--LATEX-INLINE-${Math.random().toString(36).substring(2, 15)}--`;
+          inlineLatexPlaceholderMap.set(placeholder, latex.trim());
+          return `${prefix}${placeholder}`;
+        }
+      );
+
+      // Restore escaped dollar signs
+      result = result.replace(/___ESCAPED_DOLLAR___/g, '$');
+    }
+
+    // Step 7: Process links (both formats, can contain inline code)
     if (processOpts.allowLinks) {
       result = result.replace(/<(https?:\/\/[^\s>]+)>/g, (match, url) => {
         const sanitizedUrl = sanitizeUrlAttribute(url, sanitizer);
@@ -183,7 +229,7 @@ export const getMarkdownRenderer = (
       });
     }
 
-    // Step 6: Process inline formatting only on text segments, not on block elements
+    // Step 8: Process inline formatting only on text segments, not on block elements
     result = processTextSegments(result, sanitizer);
 
     inlineCodeMap.forEach((html, placeholder) => {
@@ -229,6 +275,53 @@ export const getMarkdownRenderer = (
       },
       docRef
     );
+  };
+
+  /**
+   * Render LaTeX formula
+   */
+  const renderLatex = (latex: string, displayMode: boolean): string => {
+    const cacheKey = `${displayMode ? 'display' : 'inline'}|||${latex}`;
+
+    return getCachedOrCreateString(latexCache, latexCacheOrder, CACHE_SIZE, cacheKey, () => {
+      if (!options?.latexRenderer) {
+        return escapeHtml(displayMode ? `$$${latex}$$` : `$${latex}$`);
+      }
+
+      let rendered: string | undefined;
+      try {
+        rendered = options.latexRenderer(latex, displayMode);
+      } catch {
+        return escapeHtml(displayMode ? `$$${latex}$$` : `$${latex}$`);
+      }
+
+      if (!rendered) {
+        return escapeHtml(displayMode ? `$$${latex}$$` : `$${latex}$`);
+      }
+
+      // Preserve HTML entities through sanitization
+      const withPlaceholders = rendered
+        .replace(/&amp;/g, '<!--AMP-->')
+        .replace(/&lt;/g, '<!--LT-->')
+        .replace(/&gt;/g, '<!--GT-->')
+        .replace(/&quot;/g, '<!--QUOT-->');
+
+      const sanitized = sanitizeHtmlWithStyles(withPlaceholders, sanitizer);
+      if (!sanitized) {
+        return escapeHtml(displayMode ? `$$${latex}$$` : `$${latex}$`);
+      }
+
+      // Restore HTML entities
+      const restored = sanitized
+        .replace(/<!--AMP-->/g, '&amp;')
+        .replace(/<!--LT-->/g, '&lt;')
+        .replace(/<!--GT-->/g, '&gt;')
+        .replace(/<!--QUOT-->/g, '&quot;');
+
+      return displayMode
+        ? `<div class="latex-display-wrapper">${restored}</div>`
+        : `<span class="latex-inline-wrapper">${restored}</span>`;
+    });
   };
 
   /**
@@ -339,6 +432,7 @@ export const getMarkdownRenderer = (
               allowCodeBlocks: false,
               allowBlockquotes: false,
               allowTables: false,
+              allowLatex: true,
               allowInlineCode: true,
               allowLinks: true
             });
@@ -385,7 +479,7 @@ export const getMarkdownRenderer = (
    */
   const processTextSegments = (input: string, domSanitizer: DomSanitizer): string => {
     const blockElementRegex =
-      /(<(pre|blockquote|ul|ol|hr|h[1-6]|table)[^>]*>[\s\S]*?<\/\2>)|(<!--(?:CODE-BLOCK|TABLE|BLOCKQUOTE)-PLACEHOLDER-[^>]+-->)/g;
+      /(<(pre|blockquote|ul|ol|hr|h[1-6]|table)[^>]*>[\s\S]*?<\/\2>)|(<!--(?:CODE-BLOCK|TABLE|BLOCKQUOTE|LATEX-DISPLAY)-PLACEHOLDER-[^>]+-->)/g;
 
     const parts: string[] = [];
     let lastIndex = 0;
@@ -409,7 +503,20 @@ export const getMarkdownRenderer = (
       return processInlineFormatting(part, domSanitizer);
     });
 
+    // Now restore LaTeX and links after inline formatting
     let result = processedParts.join('');
+
+    // Restore display LaTeX
+    displayLatexPlaceholderMap.forEach((latex, placeholder) => {
+      const rendered = renderLatex(latex, true);
+      result = result.replace(`<!--LATEX-DISPLAY-PLACEHOLDER-${placeholder}-->`, rendered);
+    });
+
+    // Restore inline LaTeX
+    inlineLatexPlaceholderMap.forEach((latex, placeholder) => {
+      const rendered = renderLatex(latex, false);
+      result = result.replace(placeholder, rendered);
+    });
 
     // Restore links
     linkPlaceholderMap.forEach((linkData, placeholder) => {
