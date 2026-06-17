@@ -12,6 +12,7 @@ import {
   signal
 } from '@angular/core';
 import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-renderer';
+import hljs from 'highlight.js';
 
 @Component({
   selector: 'app-sample',
@@ -23,6 +24,17 @@ export class SampleComponent implements OnInit {
   private readonly http = inject(HttpClient);
   readonly markdownText = signal<string>('');
   private cdRef = inject(ChangeDetectorRef);
+
+  readonly syntaxHighlighter = (code: string, language?: string): string | undefined => {
+    if (language && hljs.getLanguage(language)) {
+      try {
+        return hljs.highlight(code, { language }).value;
+      } catch {
+        // fall back to no highlighting
+      }
+    }
+    return undefined;
+  };
 
   ngOnInit(): void {
     this.http.get('assets/sample-markdown.md', { responseType: 'text' }).subscribe(text => {

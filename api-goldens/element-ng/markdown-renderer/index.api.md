@@ -4,19 +4,22 @@
 
 ```ts
 
+import * as _angular_core from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import * as i0 from '@angular/core';
 
 // @public
 export const getMarkdownRenderer: (sanitizer: DomSanitizer, options?: MarkdownRendererOptions, doc?: Document, isBrowser?: boolean) => ((text: string) => Node);
 
 // @public (undocumented)
-export type MarkdownRendererOptions = Record<string, never>;
+export interface MarkdownRendererOptions {
+    syntaxHighlighter?: (code: string, language?: string) => string | undefined;
+}
 
 // @public
 export class SiMarkdownRendererComponent {
     constructor();
-    readonly text: i0.InputSignal<string | undefined>;
+    readonly syntaxHighlighter: _angular_core.InputSignal<((code: string, language?: string) => string | undefined) | undefined>;
+    readonly text: _angular_core.InputSignal<string | undefined>;
 }
 
 // (No @packageDocumentation comment for this package)
