@@ -5,6 +5,7 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   ComponentRef,
   computed,
@@ -54,6 +55,7 @@ import { setupWidgetInstance } from '../../widget-loader';
   imports: [SiDashboardCardComponent, NgTemplateOutlet, SiTranslatePipe],
   templateUrl: './si-widget-host.component.html',
   styleUrl: './si-widget-host.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'grid-stack-item'
   }
@@ -131,15 +133,17 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   widgetInstance?: WidgetInstance;
   widgetRef?: ComponentRef<WidgetInstance>;
   /** @defaultValue [] */
-  primaryActions: (MenuItemLegacy | ContentActionBarMainItem)[] = [];
+  protected readonly primaryActions = signal<(MenuItemLegacy | ContentActionBarMainItem)[]>([]);
   /** @defaultValue [] */
-  secondaryActions: (MenuItemLegacy | MenuItem)[] = [];
+  protected readonly secondaryActions = signal<(MenuItemLegacy | MenuItem)[]>([]);
   /** @defaultValue 'expanded' */
-  actionBarViewType: ViewType = 'expanded';
+  protected readonly actionBarViewType = signal<ViewType>('expanded');
   /** @defaultValue [] */
-  editablePrimaryActions: (MenuItemLegacy | ContentActionBarMainItem)[] = [];
+  private readonly editablePrimaryActions = signal<(MenuItemLegacy | ContentActionBarMainItem)[]>(
+    []
+  );
   /** @defaultValue [] */
-  editableSecondaryActions: (MenuItemLegacy | MenuItem)[] = [];
+  private readonly editableSecondaryActions = signal<(MenuItemLegacy | MenuItem)[]>([]);
 
   /**
    * @defaultValue
@@ -153,7 +157,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
    * }
    * ```
    */
-  editAction: ContentActionBarMainItem = {
+  private readonly editAction: ContentActionBarMainItem = {
     type: 'action',
     label: this.labelEdit,
     icon: 'element-edit',
@@ -179,7 +183,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
     iconOnly: true,
     action: () => this.onRemove()
   };
-  protected widgetInstanceFooter?: TemplateRef<unknown>;
+  protected readonly widgetInstanceFooter = signal<TemplateRef<unknown> | undefined>(undefined);
 
   protected readonly accentLine = computed(() => {
     const { accentLine } = this.widgetConfig();
@@ -376,7 +380,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
           } else {
             this.widgetInstance.config = this.widgetConfig();
           }
-          this.widgetInstanceFooter = this.widgetInstance.footer;
+          this.widgetInstanceFooter.set(this.widgetInstance.footer);
           this.setupEditable(this.editable());
         },
         error: error => console.error('Error: ', error)
@@ -397,31 +401,34 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
       secondaryEditActions: this.widgetInstance?.secondaryEditActions
     };
     if (editable) {
-      this.editablePrimaryActions = [];
+      this.editablePrimaryActions.set([]);
       if (this.isEditable()) {
-        this.editablePrimaryActions.push(this.editAction);
+        this.editablePrimaryActions.set([...this.editablePrimaryActions(), this.editAction]);
       }
       if (!this.widgetConfig().isNotRemovable) {
-        this.editablePrimaryActions.push(this.removeAction);
+        this.editablePrimaryActions.set([...this.editablePrimaryActions(), this.removeAction]);
       }
       if (widgetConfig.primaryEditActions) {
-        this.primaryActions = [...widgetConfig.primaryEditActions, ...this.editablePrimaryActions];
+        this.primaryActions.set([
+          ...widgetConfig.primaryEditActions,
+          ...this.editablePrimaryActions()
+        ]);
       } else {
-        this.primaryActions = this.editablePrimaryActions;
+        this.primaryActions.set(this.editablePrimaryActions());
       }
       if (widgetConfig.secondaryEditActions) {
-        this.secondaryActions = [
+        this.secondaryActions.set([
           ...widgetConfig.secondaryEditActions,
-          ...this.editableSecondaryActions
-        ];
+          ...this.editableSecondaryActions()
+        ]);
       } else {
-        this.secondaryActions = this.editableSecondaryActions;
+        this.secondaryActions.set(this.editableSecondaryActions());
       }
-      this.actionBarViewType = 'expanded';
+      this.actionBarViewType.set('expanded');
     } else {
-      this.actionBarViewType = this.widgetConfig().actionBarViewType ?? 'expanded';
-      this.primaryActions = widgetConfig.primaryActions ?? [];
-      this.secondaryActions = widgetConfig.secondaryActions ?? [];
+      this.actionBarViewType.set(this.widgetConfig().actionBarViewType ?? 'expanded');
+      this.primaryActions.set(widgetConfig.primaryActions ?? []);
+      this.secondaryActions.set(widgetConfig.secondaryActions ?? []);
     }
 
     if (this.widgetInstance?.editable !== undefined) {

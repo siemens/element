@@ -34,9 +34,9 @@
     [expandText]="labelExpand"
     [restoreText]="labelRestore"
     [heading]="widgetConfig().heading"
-    [primaryActions]="primaryActions"
-    [secondaryActions]="secondaryActions"
-    [actionBarViewType]="actionBarViewType"
+    [primaryActions]="primaryActions()"
+    [secondaryActions]="secondaryActions()"
+    [actionBarViewType]="actionBarViewType()"
     [enableExpandInteraction]="widgetConfig().expandable"
     [imgAlt]="widgetConfig().image?.alt"
     [imgDir]="widgetConfig().image?.dir"
@@ -59,10 +59,10 @@
     <div class="card-body overflow-auto" body>
       <ng-container #widgetHost />
     </div>
-
-    @if (widgetInstanceFooter) {
+    @let footer = widgetInstanceFooter();
+    @if (footer) {
       <div class="card-footer" footer>
-        <ng-container *ngTemplateOutlet="widgetInstanceFooter" />
+        <ng-container *ngTemplateOutlet="footer" />
       </div>
     }
   </si-dashboard-card>
