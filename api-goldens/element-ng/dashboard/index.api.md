@@ -16,7 +16,9 @@ import { MenuItem } from '@siemens/element-ng/common';
 import { MenuItem as MenuItem_2 } from '@siemens/element-ng/menu';
 import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
+import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
+import * as rxjs from 'rxjs';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import * as _siemens_element_ng_content_action_bar from '@siemens/element-ng/content-action-bar';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
@@ -24,7 +26,8 @@ import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
-export class SiDashboardCardComponent extends SiCardComponent {
+export class SiDashboardCardComponent extends SiCardComponent implements OnDestroy {
+    constructor();
     // (undocumented)
     readonly displayContentActionBar: _angular_core.Signal<boolean>;
     readonly enableExpandInteraction: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -53,6 +56,13 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
 
 // @public (undocumented)
 export class SiDashboardModule {
+}
+
+// @public (undocumented)
+export class SiDashboardService {
+    readonly cards$: rxjs.Observable<SiDashboardCardComponent[]>;
+    register(card: SiDashboardCardComponent): void;
+    unregister(card: SiDashboardCardComponent): void;
 }
 
 // @public

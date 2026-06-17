@@ -9,6 +9,7 @@ import {
   ElementRef,
   inject,
   input,
+  OnDestroy,
   output,
   signal
 } from '@angular/core';
@@ -18,6 +19,8 @@ import { MenuItem } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { addIcons } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+
+import { SiDashboardService } from './si-dashboard.service';
 
 @Component({
   selector: 'si-dashboard-card',
@@ -30,7 +33,7 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
     '[class.d-none]': 'hide'
   }
 })
-export class SiDashboardCardComponent extends SiCardComponent {
+export class SiDashboardCardComponent extends SiCardComponent implements OnDestroy {
   /**
    * Description of cancel button & action.
    *
@@ -174,6 +177,16 @@ export class SiDashboardCardComponent extends SiCardComponent {
   private readonly hasContentBarActions = computed(() => {
     return this.primaryActions()?.length > 0 || this.secondaryActions()?.length > 0;
   });
+  private dashboardService = inject(SiDashboardService, { optional: true });
+
+  constructor() {
+    super();
+    this.dashboardService?.register(this);
+  }
+
+  ngOnDestroy(): void {
+    this.dashboardService?.unregister(this);
+  }
 
   /**
    * Expand the dashboard card.

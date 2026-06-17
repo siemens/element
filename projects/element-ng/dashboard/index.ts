@@ -5,6 +5,7 @@
 export * from './si-dashboard-card.component';
 export * from './si-dashboard.component';
 export * from './si-dashboard.module';
+export * from './si-dashboard.service';
 export * from './widgets/si-link-widget/si-link-widget.component';
 export * from './widgets/si-list-widget/si-list-widget.component';
 export * from './widgets/si-list-widget/si-list-widget-body.component';
