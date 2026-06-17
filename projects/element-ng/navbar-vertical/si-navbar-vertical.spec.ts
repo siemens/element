@@ -255,6 +255,40 @@ describe('SiNavbarVertical', () => {
       expect(await subItem1.isActive()).toBe(false);
       expect(await subItem2.isActive()).toBe(true);
     });
+
+    it('should update group content', async () => {
+      const groupItem = signal({
+        type: 'group' as const,
+        label: 'test-group',
+        expanded: true,
+        children: [{ type: 'router-link' as const, label: 'child-1', routerLink: '/item-1' }]
+      });
+
+      component.items.set([groupItem()]);
+      await fixture.whenStable();
+
+      let groupTrigger = await harness.findItemByLabel('test-group');
+      let children = await groupTrigger.getChildren();
+      expect(children).toHaveLength(1);
+      expect(await children[0].getLabel()).toBe('child-1');
+
+      groupItem.update(item => ({
+        ...item,
+        expanded: true,
+        children: [
+          { type: 'router-link' as const, label: 'child-1', routerLink: '/item-1' },
+          { type: 'router-link' as const, label: 'child-2', routerLink: '/item-2' }
+        ]
+      }));
+      component.items.set([groupItem()]);
+      await fixture.whenStable();
+
+      groupTrigger = await harness.findItemByLabel('test-group');
+      children = await groupTrigger.getChildren();
+      expect(children).toHaveLength(2);
+      expect(await children[0].getLabel()).toBe('child-1');
+      expect(await children[1].getLabel()).toBe('child-2');
+    });
   });
 
   describe('with SiUIStateService', () => {
