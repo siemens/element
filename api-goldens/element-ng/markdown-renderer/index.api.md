@@ -18,6 +18,7 @@ export interface MarkdownRendererOptions {
     syntaxHighlighter?: (code: string, language?: string) => string | undefined;
     copyCodeButton?: TranslatableString;
     translateSync?: SiTranslateService['translateSync'];
+    latexRenderer?: (latex: string, displayMode: boolean) => string | undefined;
 }
 
 // @public
@@ -26,6 +27,7 @@ export class SiMarkdownRendererComponent {
     readonly syntaxHighlighter: _angular_core.InputSignal<((code: string, language?: string) => string | undefined) | undefined>;
     readonly copyButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly disableCopyButton: _angular_core.InputSignal<boolean>;
+    readonly latexRenderer: _angular_core.InputSignal<((latex: string, displayMode: boolean) => string | undefined) | undefined>;
     readonly text: _angular_core.InputSignal<string | undefined>;
 }
 

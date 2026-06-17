@@ -194,4 +194,34 @@
     display: block;
     margin-block: map.get(variables.$spacers, 4);
   }
+
+  .latex-inline-wrapper,
+  .latex-display-wrapper {
+    word-break: normal;
+    overflow-wrap: normal;
+
+    .katex,
+    .katex * {
+      word-break: normal;
+      overflow-wrap: normal;
+    }
+  }
+
+  .latex-inline-wrapper {
+    white-space: nowrap;
+  }
+
+  .latex-display-wrapper {
+    display: block;
+    text-align: center;
+    inline-size: 100%;
+    overflow-y: visible;
+    overflow-x: auto;
+    margin-block-end: map.get(variables.$spacers, 6);
+
+    .katex-display {
+      inline-size: max-content;
+      overflow: visible;
+    }
+  }
 }

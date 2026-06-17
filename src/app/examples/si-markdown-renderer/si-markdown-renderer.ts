@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-renderer';
 import hljs from 'highlight.js';
+import katex from 'katex';
 
 @Component({
   selector: 'app-sample',
@@ -30,10 +31,22 @@ export class SampleComponent implements OnInit {
       try {
         return hljs.highlight(code, { language }).value;
       } catch {
-        // fall back to no highlighting
+        return undefined;
       }
     }
     return undefined;
+  };
+
+  readonly latexRenderer = (latex: string, displayMode: boolean): string | undefined => {
+    try {
+      return katex.renderToString(latex, {
+        displayMode,
+        throwOnError: false,
+        output: 'html'
+      });
+    } catch {
+      return undefined;
+    }
   };
 
   ngOnInit(): void {
