@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Component, effect, inject, input, ElementRef, PLATFORM_ID } from '@angular/core';
+import { Component, computed, effect, inject, input, ElementRef, PLATFORM_ID } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
 
-import { getMarkdownRenderer } from './markdown-renderer';
+import { getMarkdownRenderer, type MarkdownRendererOptions } from './markdown-renderer';
 
 /**
  * Component to display markdown text, uses the {@link getMarkdownRenderer} function internally, relies on `markdown-content` theme class.
@@ -19,6 +20,7 @@ import { getMarkdownRenderer } from './markdown-renderer';
 export class SiMarkdownRendererComponent {
   private sanitizer = inject(DomSanitizer);
   private hostElement = inject(ElementRef<HTMLElement>);
+  private translateService = injectSiTranslateService();
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
   private doc = inject(DOCUMENT);
@@ -29,20 +31,40 @@ export class SiMarkdownRendererComponent {
    */
   readonly text = input<string | undefined>();
 
-  private markdownRenderer = getMarkdownRenderer(
-    this.sanitizer,
-    undefined,
-    this.doc,
-    this.isBrowser
+  /**
+   * Do not display the download CSV button for tables.
+   * @defaultValue false
+   */
+  readonly disableDownloadButton = input<boolean>(false);
+
+  /**
+   * Label for the download CSV button.
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`)
+   * ```
+   */
+  readonly downloadButtonLabel = input(
+    t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`)
   );
+
+  private readonly markdownRenderer = computed(() => {
+    const options: MarkdownRendererOptions = {
+      downloadTableButton: !this.disableDownloadButton() ? this.downloadButtonLabel() : undefined,
+      translateSync: this.translateService.translateSync.bind(this.translateService)
+    };
+
+    return getMarkdownRenderer(this.sanitizer, options, this.doc, this.isBrowser);
+  });
 
   constructor() {
     effect(() => {
       const contentValue = this.text();
       const containerEl = this.hostElement.nativeElement;
+      const renderer = this.markdownRenderer();
 
       if (containerEl) {
-        const formattedNode = this.markdownRenderer(contentValue ?? '');
+        const formattedNode = renderer(contentValue ?? '');
         containerEl.innerHTML = '';
         containerEl.appendChild(formattedNode);
       }
