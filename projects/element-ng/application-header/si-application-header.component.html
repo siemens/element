@@ -5,6 +5,7 @@
   @if (launchpad()) {
     <button
       type="button"
+      aria-haspopup="dialog"
       [class]="`header-toggle focus-inside d-${expandBreakpoint()}-block`"
       [class.show]="launchpadOpen()"
       [class.d-none]="hasNavigation()"
@@ -51,7 +52,12 @@
 </header>
 
 @if (launchpadOpen() && launchpad()) {
-  <div [id]="id + '-launchpad'">
+  <div
+    role="dialog"
+    aria-modal="true"
+    [id]="id + '-launchpad'"
+    [attr.aria-label]="launchpadLabel() | translate"
+  >
     <ng-template [ngTemplateOutlet]="launchpad()!" [ngTemplateOutletInjector]="injector" />
   </div>
 }
