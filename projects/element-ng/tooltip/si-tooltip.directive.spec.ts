@@ -5,6 +5,7 @@
 import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { userEvent } from 'vitest/browser';
 
 import { SiTooltipModule } from './si-tooltip.module';
 
@@ -71,6 +72,32 @@ describe('SiTooltipDirective', () => {
       expect(document.querySelector('.tooltip')).toBeInTheDocument();
 
       button.dispatchEvent(new MouseEvent('mouseleave'));
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+    });
+
+    it('should cancel the pending hover tooltip on focusout', async () => {
+      await userEvent.hover(button);
+      vi.advanceTimersByTime(250);
+      await fixture.whenStable();
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+
+      // focusout (e.g. user switched to keyboard navigation) must stop the
+      // pending hover timer so the tooltip never appears.
+      button.dispatchEvent(new Event('focusout'));
+      vi.advanceTimersByTime(500);
+      await fixture.whenStable();
+
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+    });
+
+    it('should hide a hover-visible tooltip on focusout', async () => {
+      await userEvent.hover(button);
+      vi.advanceTimersByTime(500);
+      await fixture.whenStable();
+      expect(document.querySelector('.tooltip')).toBeInTheDocument();
+
+      button.dispatchEvent(new Event('focusout'));
+
       expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
 
