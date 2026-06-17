@@ -12,7 +12,7 @@ import {
   signal
 } from '@angular/core';
 import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-renderer';
-import hljs from 'highlight.js';
+import hljs from 'highlight.js/lib/common';
 
 @Component({
   selector: 'app-sample',
