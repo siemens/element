@@ -9,6 +9,7 @@ import {
   ComponentRef,
   computed,
   Directive,
+  effect,
   EmbeddedViewRef,
   inject,
   Injector,
@@ -94,6 +95,26 @@ export class SiNavbarVerticalGroupTriggerDirective implements OnInit {
     () =>
       new TemplatePortal(this.groupTemplate(), this.viewContainer, this.groupData(), this.injector)
   );
+
+  constructor() {
+    effect(() => {
+      const data = this.groupData();
+      const view = this.groupView;
+      if (data && view && !view.destroyed) {
+        const context = view.context as {
+          item?: NavbarVerticalItem;
+          group: NavbarVerticalItemGroup;
+        };
+        if (context) {
+          context.group = data.group;
+          if (data.item !== undefined) {
+            context.item = data.item;
+          }
+          view.detectChanges();
+        }
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.attachInline();
