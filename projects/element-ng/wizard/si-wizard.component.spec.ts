@@ -95,7 +95,7 @@ describe('SiWizardComponent', () => {
 
     it('should generate a link with a heading for each step', () => {
       const steps = element.querySelectorAll('.step');
-      expect(steps.length).toBe(3);
+      expect(steps).toHaveLength(3);
       for (let i = 0; i < steps.length; i++) {
         expect(steps[i].querySelector<HTMLElement>('.title')).toHaveTextContent(
           hostComponent.steps()[i]
@@ -358,7 +358,7 @@ describe('SiWizardComponent', () => {
       hostComponent.steps.set([]);
       await fixture.whenStable();
       const steps = element.querySelectorAll('.step');
-      expect(steps.length).toBe(0);
+      expect(steps).toHaveLength(0);
       vi.useFakeTimers();
       setTimeout(() => {
         hostComponent.generateSteps(3);
@@ -368,7 +368,7 @@ describe('SiWizardComponent', () => {
 
       await fixture.whenStable();
       const updatedSteps = element.querySelectorAll('.step');
-      expect(updatedSteps.length).toBe(3);
+      expect(updatedSteps).toHaveLength(3);
       vi.useRealTimers();
     });
   });

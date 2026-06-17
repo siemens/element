@@ -409,7 +409,7 @@ describe('SiSplitComponent', () => {
           expect(wrapperComponent.split().orientation).toEqual('horizontal');
         });
 
-        it('should save ui state ', async () => {
+        it('should save ui state', async () => {
           // cannot use jasmine.clock here
           await new Promise(resolve => setTimeout(resolve));
           wrapperComponent.splitPart().toggleCollapse();

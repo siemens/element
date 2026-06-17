@@ -43,9 +43,9 @@ describe('SiWidgetCatalogComponent', () => {
   it('should create', () => {
     fixture.detectChanges();
     expect(component).toBeTruthy();
-    expect(fixture.debugElement.queryAll(By.css('.list-group-item')).length).toBe(0);
+    expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(0);
     const addButtons = buttonsByName('Add');
-    expect(addButtons.length).toBe(1);
+    expect(addButtons).toHaveLength(1);
     expect(addButtons[0].attributes.disabled).toBeDefined();
   });
 
@@ -55,7 +55,7 @@ describe('SiWidgetCatalogComponent', () => {
       fixture.detectChanges();
 
       const addButtons = buttonsByName('Add');
-      expect(addButtons.length).toBe(1);
+      expect(addButtons).toHaveLength(1);
       expect(addButtons[0].attributes.disabled).toBeUndefined();
     });
 
@@ -66,7 +66,7 @@ describe('SiWidgetCatalogComponent', () => {
       fixture.detectChanges();
 
       const addButtons = buttonsByName('Add');
-      expect(addButtons.length).toBe(0);
+      expect(addButtons).toHaveLength(0);
     });
 
     it('should be visible on the editor view', () => {
@@ -76,7 +76,7 @@ describe('SiWidgetCatalogComponent', () => {
       component.view.set('editor');
       fixture.detectChanges();
       const addButtons = buttonsByName('Add');
-      expect(addButtons.length).toBe(1);
+      expect(addButtons).toHaveLength(1);
     });
 
     it('should create and emit widget config from selected', async () => {
@@ -100,7 +100,7 @@ describe('SiWidgetCatalogComponent', () => {
 
       expect(component.view()).toBe('list');
       const addButtons = buttonsByName('Next');
-      expect(addButtons.length).toBe(1);
+      expect(addButtons).toHaveLength(1);
     });
 
     it('should be invisible false if the selected widget has no editor component', () => {
@@ -108,7 +108,7 @@ describe('SiWidgetCatalogComponent', () => {
       fixture.detectChanges();
 
       const addButtons = buttonsByName('Next');
-      expect(addButtons.length).toBe(0);
+      expect(addButtons).toHaveLength(0);
     });
 
     it('should be invisible in editor view', () => {
@@ -118,15 +118,15 @@ describe('SiWidgetCatalogComponent', () => {
       component.view.set('editor');
       fixture.detectChanges();
 
-      expect(buttonsByName('Next').length).toBe(0);
+      expect(buttonsByName('Next')).toHaveLength(0);
 
       component.view.set('editor-only');
       fixture.detectChanges();
-      expect(buttonsByName('Next').length).toBe(0);
+      expect(buttonsByName('Next')).toHaveLength(0);
 
       component.view.set('list');
       fixture.detectChanges();
-      expect(buttonsByName('Next').length).toBe(1);
+      expect(buttonsByName('Next')).toHaveLength(1);
     });
 
     it('should switch to editor view and display the widget editor component', async () => {
@@ -157,11 +157,13 @@ describe('SiWidgetCatalogComponent', () => {
       await fixture.whenStable();
 
       expect(component.view()).toBe('editor');
-      expect(fixture.debugElement.query(By.css('.si-layout-fixed-height')).children.length).toBe(0);
+      expect(fixture.debugElement.query(By.css('.si-layout-fixed-height')).children).toHaveLength(
+        0
+      );
     });
   });
 
-  describe('Search ', () => {
+  describe('Search', () => {
     beforeEach(() => {
       component.widgetCatalog = [
         createTestingWidget('eins', '1'),
@@ -177,13 +179,13 @@ describe('SiWidgetCatalogComponent', () => {
         .triggerEventHandler('searchChange', 'some');
       fixture.detectChanges();
 
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item')).length).toBe(0);
+      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(0);
 
       fixture.debugElement
         .query(By.css('si-search-bar'))
         .triggerEventHandler('searchChange', undefined);
       fixture.detectChanges();
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item')).length).toBe(3);
+      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(3);
     });
 
     it('with case-insensitive matching string should filter visible widgets', () => {
@@ -192,7 +194,7 @@ describe('SiWidgetCatalogComponent', () => {
         .triggerEventHandler('searchChange', 'WEI');
       fixture.detectChanges();
 
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item')).length).toBe(1);
+      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
     });
 
     it('with empty string should not filter visible widgets', () => {
@@ -200,17 +202,17 @@ describe('SiWidgetCatalogComponent', () => {
         .query(By.css('si-search-bar'))
         .triggerEventHandler('searchChange', 'some');
       fixture.detectChanges();
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item')).length).toBe(0);
+      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(0);
 
       fixture.debugElement
         .query(By.css('si-search-bar'))
         .triggerEventHandler('searchChange', '   ');
       fixture.detectChanges();
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item')).length).toBe(3);
+      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(3);
     });
 
     it('shall keep the search term and result after clicking `Next` to widget editor and `Previous` to catalog', async () => {
-      expect(buttonsByName('Next').length).toBe(0);
+      expect(buttonsByName('Next')).toHaveLength(0);
 
       let searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
       searchInput.value = 'zwei';
@@ -224,8 +226,8 @@ describe('SiWidgetCatalogComponent', () => {
       await new Promise(resolve => setTimeout(resolve, debounceTime + 1)); // wait for debounce time + extra 1 ms to avoid flaky test
       await fixture.whenStable();
 
-      expect(buttonsByName('Next').length).toBe(1);
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item')).length).toBe(1);
+      expect(buttonsByName('Next')).toHaveLength(1);
+      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
 
       const nextButton = buttonsByName('Next')[0].nativeElement;
       expect(nextButton.innerHTML).toBe('Next');
@@ -249,8 +251,8 @@ describe('SiWidgetCatalogComponent', () => {
       searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
       expect(searchInput).not.toBeNull();
       expect(searchInput.value).toBe('zwei');
-      expect(buttonsByName('Next').length).toBe(1);
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item')).length).toBe(1);
+      expect(buttonsByName('Next')).toHaveLength(1);
+      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
     });
   });
 

@@ -62,13 +62,13 @@ describe('SiAccordion', () => {
     checkExpanded(true, false, false);
   });
 
-  it('configure the first panel to be closed ', () => {
+  it('configure the first panel to be closed', () => {
     component.expandFirstPanel.set(false);
     fixture.detectChanges();
     checkExpanded(false, false, false);
   });
 
-  it('configure the first panel to be open ', () => {
+  it('configure the first panel to be open', () => {
     component.expandFirstPanel.set(true);
     fixture.detectChanges();
     checkExpanded(true, false, false);

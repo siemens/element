@@ -150,7 +150,7 @@ describe('SiFileDropzoneComponent', () => {
     dropFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.PNG']));
     await fixture.whenStable();
     const files = getFiles();
-    expect(files.length).toBe(2);
+    expect(files).toHaveLength(2);
     expect(files[0].fileName).toBe('first.png');
     expect(files[0].size).toBe('1.17KB');
     expect(files[0].status).toBe('added');
@@ -167,7 +167,7 @@ describe('SiFileDropzoneComponent', () => {
     await fixture.whenStable();
 
     const files = getFiles();
-    expect(files.length).toBe(2);
+    expect(files).toHaveLength(2);
     expect(files[0].fileName).toBe('first.png');
     expect(files[0].status).toBe('added');
     expect(files[1].fileName).toBe('second.PNG');
@@ -303,7 +303,7 @@ describe('SiFileDropzoneComponent', () => {
 
     expect(filesAddedSpy).toHaveBeenCalled();
     const files = getFiles();
-    expect(files.length).toBe(2);
+    expect(files).toHaveLength(2);
     expect(files[0].fileName).toBe('file.txt');
     expect(files[1].fileName).toBe('newFile.txt');
   });
