@@ -95,8 +95,6 @@ $margin-bottom-footer: map.get(all-variables.$spacers, 9);
 
 footer {
   color: all-variables.$element-text-secondary;
-  // Ensure we use the space in a surrounding container
-  overflow: auto;
 }
 
 // large tablet
