@@ -260,7 +260,9 @@ describe('SiMarkdownRendererComponent', () => {
     checkboxElements.forEach((checkboxElement, index) => {
       expect(checkboxElement).not.toHaveAttribute('name');
       if (index < 3) {
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(checkboxElement.getAttribute('tabindex')).toBe('-1');
+        // eslint-disable-next-line vitest/no-conditional-expect
         expect(checkboxElement.getAttribute('aria-disabled')).toBe('true');
       }
     });
