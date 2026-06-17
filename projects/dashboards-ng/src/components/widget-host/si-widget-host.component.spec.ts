@@ -4,18 +4,19 @@
  */
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, WritableSignal, inputBinding, signal } from '@angular/core';
 import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
+import { WidgetComponentFactory } from '@siemens/dashboards-ng';
 import {
   DeleteConfirmationDialogResult,
   SiActionDialogService
 } from '@siemens/element-ng/action-modal';
-import { MenuItem } from '@siemens/element-ng/common';
 import { MenuItemAction } from '@siemens/element-ng/menu';
 import { GridItemHTMLElement } from 'gridstack';
 import { firstValueFrom, Observable, Subject } from 'rxjs';
+import { page, userEvent } from 'vitest/browser';
 
 import {
   TEST_WIDGET,
@@ -42,6 +43,7 @@ describe('SiWidgetHostComponent', () => {
       let component: SiWidgetHostComponent;
       let fixture: ComponentFixture<SiWidgetHostComponent>;
       let actionDialogService: SiActionDialogMockService;
+      let componentFactory: WritableSignal<WidgetComponentFactory | undefined>;
 
       beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -49,16 +51,18 @@ describe('SiWidgetHostComponent', () => {
           providers: [{ provide: SiActionDialogService, useClass: SiActionDialogMockService }],
           schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
-      });
 
-      beforeEach(() => {
-        fixture = TestBed.createComponent(SiWidgetHostComponent);
+        componentFactory = signal(widget.componentFactory);
+        fixture = TestBed.createComponent(SiWidgetHostComponent, {
+          bindings: [
+            inputBinding('componentFactory', componentFactory),
+            inputBinding('widgetConfig', () => TEST_WIDGET_CONFIG_0)
+          ]
+        });
         component = fixture.componentInstance;
         actionDialogService = TestBed.inject(
           SiActionDialogService
         ) as unknown as SiActionDialogMockService;
-        fixture.componentRef.setInput('componentFactory', widget.componentFactory);
-        fixture.componentRef.setInput('widgetConfig', TEST_WIDGET_CONFIG_0);
       });
 
       it('should create', () => {
@@ -75,24 +79,12 @@ describe('SiWidgetHostComponent', () => {
       });
 
       it('should not create widget instance without widget', async () => {
-        fixture.componentRef.setInput('componentFactory', undefined);
+        componentFactory.set(undefined);
         vi.useFakeTimers();
         vi.advanceTimersByTime(0);
         await fixture.whenStable();
         expect(component.widgetHost()).toHaveLength(0);
         vi.useRealTimers();
-      });
-
-      it('#editAction should call onEdit', async () => {
-        fixture.detectChanges();
-        vi.useFakeTimers();
-        vi.advanceTimersByTime(0);
-        await fixture.whenStable();
-        vi.useRealTimers();
-        const spy = vi.spyOn(component, 'onEdit');
-        ((component.editAction as MenuItemAction).action! as (param?: any) => void)();
-
-        expect(spy).toHaveBeenCalled();
       });
 
       it('#onEdit() should emit #widgetConfig', async () => {
@@ -132,35 +124,54 @@ describe('SiWidgetHostComponent', () => {
       });
 
       describe('#setupEditable()', () => {
-        it('should setup default edit actions with widgets edit actions', async () => {
-          vi.useFakeTimers();
-          vi.advanceTimersByTime(0);
+        beforeEach(async () => {
+          // The widget host is `display: flex` and normally sized by gridstack. Without a grid
+          // placing the widget, the card collapses to its intrinsic content width, leaving the
+          // content action bar too narrow for the `siAutoCollapsableList` to reveal any button.
+          // Give the host an explicit width to mirror a real grid cell so the buttons can render.
+          fixture.nativeElement.style.width = '600px';
           await fixture.whenStable();
-          expect(component.primaryActions).toHaveLength(0);
-          fixture.changeDetectorRef.markForCheck();
-          fixture.detectChanges();
+        });
+
+        it('#editAction should call onEdit', async () => {
           component.setupEditable(true);
-          expect(component.primaryActions).toHaveLength(3);
-          expect((component.primaryActions[0] as MenuItem).title).toBe('Hello User');
-          expect(component.primaryActions[1]).toBe(component.editAction);
-          expect(component.primaryActions[2]).toBe(component.removeAction);
+          await fixture.whenStable();
+          const spy = vi.spyOn(component, 'onEdit');
+          const actionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+          expect(actionBar).toBeInTheDocument();
+          const editButton = page.getByRole('menuitem', { name: 'Edit' });
+          await expect.element(editButton).toBeVisible();
+          await userEvent.click(editButton);
+          expect(spy).toHaveBeenCalled();
+        });
+
+        it('should setup default edit actions with widgets edit actions', async () => {
+          await fixture.whenStable();
+          let actionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+          expect(actionBar).not.toBeInTheDocument();
+          component.setupEditable(true);
+          await fixture.whenStable();
+          actionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+          expect(actionBar).toBeInTheDocument();
+          await expect.element(page.getByRole('menuitem', { name: 'Hello User' })).toBeVisible();
+          await expect.element(page.getByRole('menuitem', { name: 'Edit' })).toBeVisible();
+          await expect.element(page.getByRole('menuitem', { name: 'Remove' })).toBeVisible();
           expect(component.widgetInstance!.editable).toBe(true);
-          vi.useRealTimers();
         });
 
         it('should setup default edit actions without widgets edit actions', async () => {
-          vi.useFakeTimers();
-          vi.advanceTimersByTime(0);
           await fixture.whenStable();
           component.widgetInstance!.primaryEditActions = undefined;
-          expect(component.primaryActions).toHaveLength(0);
+          let actionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+          expect(actionBar).not.toBeInTheDocument();
 
           component.setupEditable(true);
-          expect(component.primaryActions).toHaveLength(2);
-          expect(component.primaryActions[0]).toBe(component.editAction);
-          expect(component.primaryActions[1]).toBe(component.removeAction);
+          await fixture.whenStable();
+          actionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+          expect(actionBar).toBeInTheDocument();
+          await expect.element(page.getByRole('menuitem', { name: 'Edit' })).toBeVisible();
+          await expect.element(page.getByRole('menuitem', { name: 'Remove' })).toBeVisible();
           expect(component.widgetInstance!.editable).toBe(true);
-          vi.useRealTimers();
         });
       });
     });
