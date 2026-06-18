@@ -46,7 +46,7 @@ import { SiGridComponent } from '../grid/si-grid.component';
     SiTooltipDirective
   ],
   templateUrl: './si-dashboard-toolbar.component.html',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'd-flex flex-column flex-grow-1'
   }

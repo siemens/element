@@ -6,11 +6,6 @@
 
 import { ActivatedRoute } from '@angular/router';
 import * as _angular_core from '@angular/core';
-import { Breakpoints } from '@siemens/element-ng/resize-observer';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { ElementDimensions } from '@siemens/element-ng/resize-observer';
-import { MenuItem } from '@siemens/element-ng/common';
-import { MenuItem as MenuItem_2 } from '@siemens/element-ng/menu';
 import { NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
@@ -20,6 +15,7 @@ import { Portal } from '@angular/cdk/portal';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
 
 // @public
 export type SidePanelDisplayMode = 'navigate' | 'overlay';

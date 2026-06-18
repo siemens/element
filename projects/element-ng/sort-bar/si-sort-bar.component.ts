@@ -23,7 +23,7 @@ export interface SortCriteria {
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-sort-bar.component.html',
   styleUrl: './si-sort-bar.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiSortBarComponent implements OnInit {
   /**

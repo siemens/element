@@ -60,7 +60,7 @@ import {
   ],
   templateUrl: './si-filtered-search.component.html',
   styleUrl: './si-filtered-search.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class.disabled]': 'disabled()',
     '[class.dark-background]': "colorVariant() === 'base-0'"

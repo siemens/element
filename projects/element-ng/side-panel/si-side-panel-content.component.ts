@@ -85,7 +85,7 @@ export interface StatusItem extends MenuItemLegacy {
   templateUrl: './si-side-panel-content.component.html',
   styleUrl: './si-side-panel-content.component.scss',
   providers: [SiAccordionHCollapseService],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class.collapsed]': 'isCollapsed()',
     '[class.expanded]': 'isExpanded()',

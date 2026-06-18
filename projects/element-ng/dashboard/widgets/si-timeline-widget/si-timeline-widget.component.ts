@@ -26,7 +26,7 @@ import { SiTimelineWidgetItem } from './si-timeline-widget-item.component';
     SiIconComponent
   ],
   templateUrl: './si-timeline-widget.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiTimelineWidgetComponent
   extends SiWidgetBaseDirective<SiTimelineWidgetItem[]>

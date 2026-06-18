@@ -10,7 +10,7 @@ import { IconCategory } from '../icon.service';
   selector: 'app-sidebar',
   templateUrl: './app-sidebar.component.html',
   styleUrl: './app-sidebar.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AppSidebarComponent {
   readonly categories = input<IconCategory[]>([]);

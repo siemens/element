@@ -5,7 +5,6 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { ExtendedStatusType } from '@siemens/element-ng/common';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public

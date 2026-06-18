@@ -30,7 +30,7 @@ import { SiPopoverDirective } from './si-popover.directive';
   selector: 'si-popover',
   imports: [NgTemplateOutlet, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-popover.component.html',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[id]': 'this.popoverDirective().popoverId'
   }

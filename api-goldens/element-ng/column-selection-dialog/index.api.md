@@ -4,9 +4,11 @@
 
 ```ts
 
+import { EnvironmentInjector } from '@angular/core';
 import * as i0 from '@angular/core';
-import { ModalDependencyInjectionOptions } from '@siemens/element-ng/modal';
+import { Injector } from '@angular/core';
 import { Observable } from 'rxjs';
+import { StaticProvider } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public

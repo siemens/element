@@ -20,7 +20,7 @@ import { TOOLTIP_FEATURES_TO_DISPLAY } from '../../models/constants';
   imports: [SiTranslatePipe],
   templateUrl: './si-map-tooltip.component.html',
   styleUrl: './si-map-tooltip.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiMapTooltipComponent {
   protected readonly content = viewChild.required<ElementRef>('content');

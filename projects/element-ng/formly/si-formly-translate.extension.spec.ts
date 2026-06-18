@@ -4,8 +4,10 @@
  */
 import { TestBed } from '@angular/core/testing';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { SiTranslateService } from '@siemens/element-ng/translate';
-import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
+import {
+  SiTranslateService,
+  provideMockTranslateServiceBuilder
+} from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
 
 import { SiFormlyTranslateExtension } from './si-formly-translate.extension';

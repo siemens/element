@@ -153,7 +153,7 @@ export type NotificationItemPrimaryAction =
   ],
   templateUrl: './si-notification-item.component.html',
   styleUrl: './si-notification-item.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiNotificationItemComponent {
   protected readonly icons = addIcons({ elementOptionsVertical });

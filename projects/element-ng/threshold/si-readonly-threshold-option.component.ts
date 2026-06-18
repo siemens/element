@@ -21,7 +21,7 @@ import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
     }
     <span class="text-truncate">{{ label() | translate }}</span>`,
   styleUrl: './si-readonly-threshold-option.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'd-flex align-items-center py-2 my-4 px-4 si-h5' }
 })
 export class SiReadonlyThresholdOptionComponent {

@@ -30,7 +30,7 @@ import { SiWidgetEditorBase } from '../si-widget-editor-base';
   imports: [SiTranslatePipe],
   templateUrl: './si-widget-instance-editor-dialog.component.html',
   styleUrl: './si-widget-instance-editor-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiWidgetInstanceEditorDialogComponent extends SiWidgetEditorBase implements OnInit {
   /**

@@ -40,7 +40,7 @@ import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.
   imports: [KeyValuePipe, FormsModule, SiLivePreviewIframeComponent, SiStackblitzButtonDirective],
   templateUrl: './si-live-preview.component.html',
   styleUrls: ['./si-live-preview.component.scss', './si-live-preview-codeflask.scss'],
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges {
   private config = inject(SI_LIVE_PREVIEW_CONFIG);

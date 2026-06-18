@@ -5,7 +5,6 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 

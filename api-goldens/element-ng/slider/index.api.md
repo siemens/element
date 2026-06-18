@@ -7,7 +7,7 @@
 import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
-import { SiFormItemControl } from '@siemens/element-ng/form';
+import { Signal } from '@angular/core';
 
 // @public (undocumented)
 export class SiSliderComponent implements ControlValueAccessor, SiFormItemControl {

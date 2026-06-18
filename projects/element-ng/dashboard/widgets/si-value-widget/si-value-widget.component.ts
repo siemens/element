@@ -38,7 +38,7 @@ import { SiValueWidgetBodyComponent } from './si-value-widget-body.component';
   selector: 'si-value-widget',
   imports: [SiCardComponent, SiLinkDirective, SiTranslatePipe, SiValueWidgetBodyComponent],
   templateUrl: './si-value-widget.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiValueWidgetComponent {
   /**

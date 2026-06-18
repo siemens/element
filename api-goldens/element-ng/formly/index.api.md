@@ -5,8 +5,12 @@
 ```ts
 
 import { AbstractControl } from '@angular/forms';
+import { AfterContentChecked } from '@angular/core';
+import { AfterContentInit } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import { ConfigOption } from '@ngx-formly/core';
+import { DoCheck } from '@angular/core';
+import { ElementRef } from '@angular/core';
 import { FieldArrayType } from '@ngx-formly/core';
 import { FieldType } from '@ngx-formly/core';
 import { FieldTypeConfig } from '@ngx-formly/core';
@@ -17,13 +21,21 @@ import { FormlyForm } from '@ngx-formly/core';
 import { FormlyFormOptions } from '@ngx-formly/core';
 import * as i0 from '@angular/core';
 import * as i2 from '@angular/common';
-import * as i23 from '@siemens/element-ng/form';
 import * as i3 from '@ngx-formly/bootstrap';
 import * as i5 from '@angular/forms';
+import { InjectionToken } from '@angular/core';
 import { JSONSchema7 } from 'json-schema';
 import { ModuleWithProviders } from '@angular/core';
+import { NgControl } from '@angular/forms';
 import * as _ngx_formly_core from '@ngx-formly/core';
+import { OnChanges } from '@angular/core';
+import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { Provider } from '@angular/core';
+import { RequiredValidator } from '@angular/forms';
+import { Signal } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiFormlyComponent<TControl extends {

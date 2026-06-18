@@ -121,7 +121,7 @@ export interface SiTimelineWidgetItem {
   imports: [SiIconComponent, SiTranslatePipe, A11yModule, RouterLink, SiMenuModule, CdkMenuTrigger],
   templateUrl: './si-timeline-widget-item.component.html',
   styleUrl: './si-timeline-widget-item.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     role: 'listitem'
   }

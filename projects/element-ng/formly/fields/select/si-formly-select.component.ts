@@ -27,6 +27,6 @@ import { SiValidationErrorIdPipe } from '../../utils';
     SiValidationErrorIdPipe
   ],
   templateUrl: './si-formly-select.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlySelectComponent extends FieldType<FieldTypeConfig> {}

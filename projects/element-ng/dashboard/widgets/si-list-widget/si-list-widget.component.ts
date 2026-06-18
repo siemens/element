@@ -37,7 +37,7 @@ import { SiListWidgetItem } from './si-list-widget-item.component';
     SiTranslatePipe
   ],
   templateUrl: './si-list-widget.component.html',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'si-list-widget' }
 })
 export class SiListWidgetComponent

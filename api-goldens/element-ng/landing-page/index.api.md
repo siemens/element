@@ -5,16 +5,12 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
 import { FormControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { IsoLanguageValue } from '@siemens/element-ng/language-switcher';
-import { Link } from '@siemens/element-ng/link';
+import { NavigationExtras } from '@angular/router';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { PasswordPolicy } from '@siemens/element-ng/password-strength';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
-import { StatusType } from '@siemens/element-ng/common';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 

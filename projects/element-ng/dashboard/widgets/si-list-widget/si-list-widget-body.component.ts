@@ -38,7 +38,7 @@ export type SortOrder = 'ASC' | 'DSC';
   imports: [SiListWidgetItemComponent, SiSearchBarComponent, SiTranslatePipe, FormsModule],
   templateUrl: './si-list-widget-body.component.html',
   styleUrl: './si-list-widget-body.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: '' }
 })
 export class SiListWidgetBodyComponent

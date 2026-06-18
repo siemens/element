@@ -40,7 +40,7 @@ let widgetConfig: Omit<WidgetConfig, 'id'>;
   selector: 'si-widget-catalog',
   imports: [TestingModule, SiLoadingSpinnerModule],
   template: '',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiWidgetCatalogMockComponent extends SiWidgetCatalogComponent implements OnInit {
   static staticClosed: OutputEmitterRef<Omit<WidgetConfig, 'id'> | undefined> | undefined =
@@ -57,7 +57,7 @@ export class SiWidgetCatalogMockComponent extends SiWidgetCatalogComponent imple
   selector: 'si-dashboard-toolbar',
   imports: [TestingModule, SiLoadingSpinnerModule],
   template: '',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiDashboardToolbarStubComponent {
   readonly primaryEditActions = input<MenuItem[]>([]);
@@ -74,7 +74,7 @@ export class SiDashboardToolbarStubComponent {
   selector: 'si-grid',
   imports: [TestingModule, SiLoadingSpinnerModule],
   template: '',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class GridComponent {
   readonly gridConfig = input<GridConfig>();

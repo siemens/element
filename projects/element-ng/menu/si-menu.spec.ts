@@ -28,7 +28,7 @@ class ButtonHarness extends ComponentHarness {
       <si-menu-factory actionParam="action!" [items]="items" />
     </ng-template>
   `,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestLegacyObjectComponent {
   items: MenuItem[] = [

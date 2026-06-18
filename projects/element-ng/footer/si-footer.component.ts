@@ -11,7 +11,7 @@ import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
   imports: [SiLinkDirective, SiTranslatePipe],
   templateUrl: './si-footer.component.html',
   styleUrl: './si-footer.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFooterComponent {
   /**

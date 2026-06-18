@@ -27,7 +27,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
     </div>
   }`,
   styleUrl: './si-navbar-vertical-group.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     role: 'group',
     '[id]': 'groupTrigger.groupId',

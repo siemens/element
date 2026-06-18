@@ -8,16 +8,19 @@ import { AfterContentInit } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
 import { ElementRef } from '@angular/core';
-import { FileUploadError } from '@siemens/element-ng/file-uploader';
-import * as i1 from '@siemens/element-ng/resize-observer';
-import { MenuItem } from '@siemens/element-ng/menu';
+import { EnvironmentInjector } from '@angular/core';
+import { Injector } from '@angular/core';
+import { NavigationExtras } from '@angular/router';
+import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
-import { SiModalService } from '@siemens/element-ng/modal';
+import { StaticProvider } from '@angular/core';
+import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate';
-import { UploadFile } from '@siemens/element-ng/file-uploader';
 
 // @public
 export interface Attachment {

@@ -10,7 +10,7 @@ import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
   selector: 'si-formly-button',
   imports: [SiTranslatePipe, FormlyModule],
   templateUrl: './si-formly-button.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlyButtonComponent extends FieldType {
   protected click(): void {

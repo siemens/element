@@ -10,7 +10,7 @@ import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
-} from '@siemens/element-ng/translate';
+} from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
 
 import { SiFormlyModule } from '../../si-formly.module';

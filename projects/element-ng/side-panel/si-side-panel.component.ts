@@ -45,7 +45,7 @@ import { SidePanelMode, SidePanelSize } from './side-panel.model';
   imports: [PortalModule],
   templateUrl: './si-side-panel.component.html',
   styleUrl: './si-side-panel.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'si-layout-inner',
     '[class.enable-mobile]': 'enableMobile()',

@@ -23,7 +23,7 @@ import { SI_BREADCRUMB_RESOLVER_SERVICE } from './si-breadcrumb-router.model';
   selector: 'si-breadcrumb-router',
   imports: [SiBreadcrumbComponent],
   templateUrl: './si-breadcrumb-router.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiBreadcrumbRouterComponent implements OnInit, OnDestroy {
   /**

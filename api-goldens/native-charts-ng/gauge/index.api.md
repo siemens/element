@@ -5,7 +5,6 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { Coordinate } from '@siemens/native-charts-ng/utils';
 import { OnChanges } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { SimpleChanges } from '@angular/core';

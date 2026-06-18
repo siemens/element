@@ -7,7 +7,6 @@
 import { ActivatedRoute } from '@angular/router';
 import * as _angular_core from '@angular/core';
 import { IsActiveMatchOptions } from '@angular/router';
-import { MenuItem } from '@siemens/element-ng/common';
 import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
 import { OnInit } from '@angular/core';

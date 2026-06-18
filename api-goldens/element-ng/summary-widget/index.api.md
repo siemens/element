@@ -5,9 +5,20 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { ExtendedStatusType } from '@siemens/element-ng/common';
-import * as _siemens_element_ng_common from '@siemens/element-ng/common';
+import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { ConnectionPositionPair } from '@angular/cdk/overlay';
+import { ElementRef } from '@angular/core';
+import { FlexibleConnectedPositionStrategy } from '@angular/cdk/overlay';
+import { InjectionToken } from '@angular/core';
+import { NavigationExtras } from '@angular/router';
+import { Overlay } from '@angular/cdk/overlay';
+import { OverlayRef } from '@angular/cdk/overlay';
+import { PositionStrategy } from '@angular/cdk/overlay';
+import { Provider } from '@angular/core';
+import * as rxjs from 'rxjs';
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { Type } from '@angular/core';
 
 // @public (undocumented)
 export class SiSummaryWidgetComponent {

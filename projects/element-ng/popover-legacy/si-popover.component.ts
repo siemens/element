@@ -21,7 +21,7 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
   selector: 'si-popover',
   imports: [NgTemplateOutlet, SiIconComponent],
   templateUrl: './si-popover.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PopoverComponent implements OnInit {
   readonly popover = input<string | TemplateRef<any>>();

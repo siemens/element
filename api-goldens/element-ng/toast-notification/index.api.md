@@ -5,9 +5,8 @@
 ```ts
 
 import * as i0 from '@angular/core';
-import { Link } from '@siemens/element-ng/link';
+import { NavigationExtras } from '@angular/router';
 import { OnDestroy } from '@angular/core';
-import { StatusType } from '@siemens/element-ng/common';
 import { Subject } from 'rxjs';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 

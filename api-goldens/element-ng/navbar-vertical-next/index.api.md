@@ -8,7 +8,6 @@ import * as _angular_core from '@angular/core';
 import { DomPortal } from '@angular/cdk/portal';
 import { OnChanges } from '@angular/core';
 import { OnInit } from '@angular/core';
-import * as _siemens_element_ng_navbar_vertical_next from '@siemens/element-ng/navbar-vertical-next';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';

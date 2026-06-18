@@ -13,7 +13,7 @@ import { IconService } from '../icon.service';
   imports: [NgTemplateOutlet, FormsModule],
   templateUrl: './app-menu.component.html',
   styleUrl: './app-menu.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AppMenuComponent {
   // Signal outputs

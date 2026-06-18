@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'si-dummy',
   template: `<div class="ion-padding"> Content with path '{{ path }}'</div>`,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiDummyComponent {
   path = '';

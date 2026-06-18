@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "rootDir": "schematics",
@@ -10,5 +11,5 @@
     "types": ["node"]
   },
   "include": ["schematics/**/*.ts"],
-  "exclude": ["schematics/**/files/", "**/*.spec.ts"]
+  "exclude": ["schematics/**/files/", "**/*.spec.ts", "schematics/vitest-setup.ts"]
 }

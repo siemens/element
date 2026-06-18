@@ -67,6 +67,6 @@ echarts.use([
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../common/si-chart-base.component.html',
   styleUrl: '../common/si-chart-base.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiChartComponent extends SiChartBaseComponent {}

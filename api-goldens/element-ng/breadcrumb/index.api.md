@@ -5,10 +5,11 @@
 ```ts
 
 import * as i0 from '@angular/core';
-import { Link } from '@siemens/element-ng/link';
+import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
 export interface BreadcrumbItem extends Link {

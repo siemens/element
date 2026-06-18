@@ -35,7 +35,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
 @Component({
   selector: 'si-navbar-flyout-anchor',
   template: '',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { '[attr.aria-owns]': 'groupId()' }
 })
 class SiNavbarFlyoutAnchorComponent {
