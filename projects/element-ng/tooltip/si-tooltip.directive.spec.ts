@@ -101,6 +101,17 @@ describe('SiTooltipDirective', () => {
       expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
 
+    it('should hide the tooltip on touchstart', async () => {
+      await userEvent.hover(button);
+      vi.advanceTimersByTime(500);
+      await fixture.whenStable();
+      expect(document.querySelector('.tooltip')).toBeInTheDocument();
+
+      button.dispatchEvent(new Event('touchstart'));
+
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+    });
+
     it('should update tooltip content while open', async () => {
       button.dispatchEvent(new Event('focus'));
       vi.advanceTimersByTime(0);
