@@ -33,7 +33,7 @@ describe('SiEmptyStateComponent', () => {
   it('should display the correct data', async () => {
     await fixture.whenStable();
 
-    expect(element.querySelector('h3')!).toHaveTextContent('No Devices');
+    expect(element.querySelector('.si-h3')!).toHaveTextContent('No Devices');
     expect(element.querySelector('p')!).toHaveTextContent(
       'No devices were detected. Please retry!'
     );
