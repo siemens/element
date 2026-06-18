@@ -15,7 +15,7 @@ import { By } from '@angular/platform-browser';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
-import { page } from '@vitest/browser/context';
+import { page } from 'vitest/browser';
 
 import { MessageAction } from './message-action.model';
 import {
