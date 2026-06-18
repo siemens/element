@@ -53,17 +53,17 @@ export interface AxisPointerEvent {
 }
 
 export interface DataZoomRange {
-  startValue?: any;
-  endValue?: any;
-  visibleWidth?: any; // Time in ms
-  start?: any;
-  end?: any;
+  startValue?: number | string | Date;
+  endValue?: number | string | Date;
+  visibleWidth?: number; // Time in ms
+  start?: number;
+  end?: number;
 }
 
 export interface DataZoomEvent {
   rangeType: AxisType;
-  rangeStart: any;
-  rangeEnd: any;
+  rangeStart: number;
+  rangeEnd: number;
   width?: number;
   autoZoomUpdate?: boolean;
   requested?: DataZoomRange;
