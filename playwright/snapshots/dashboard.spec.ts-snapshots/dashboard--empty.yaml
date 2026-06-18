@@ -9,8 +9,8 @@
   - button "expand"
 - main:
   - heading "Add widget" [level=2]
-  - textbox "Search widget"
+  - textbox "Search widget": empty
   - button "clear"
-  - heading "No widgets available." [level=3]
+  - text: No widgets available.
   - button "Cancel"
   - button "Add" [disabled]
