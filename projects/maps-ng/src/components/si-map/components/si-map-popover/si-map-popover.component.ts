@@ -28,7 +28,7 @@ export interface RenderOptions {
   imports: [SiMapPopoverTemplateDirective, SiMapPopoverClusterTemplateDirective],
   templateUrl: './si-map-popover.component.html',
   styleUrl: './si-map-popover.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiMapPopoverComponent {
   private readonly elementRef = viewChild.required<ElementRef>('popover');

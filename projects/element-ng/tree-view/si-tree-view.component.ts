@@ -116,7 +116,7 @@ const rootDefaults: TreeItem = {
     SiTreeViewVirtualizationService,
     { provide: SI_TREE_VIEW, useExisting: SiTreeViewComponent }
   ],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '(document:keyup.shift)': 'onKeyUpShift()',
     '(document:keyup.control)': 'onKeyUpCtrl()',

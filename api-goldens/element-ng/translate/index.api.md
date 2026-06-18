@@ -9,9 +9,6 @@ import { Provider } from '@angular/core';
 // @public
 export const provideSiTranslatableOverrides: (values: SiTranslatableKeys) => Provider;
 
-
-export * from "@siemens/element-translate-ng/translate";
-
 // (No @packageDocumentation comment for this package)
 
 ```

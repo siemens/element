@@ -14,7 +14,6 @@ import { WidgetConfig, WidgetConfigStatus, WidgetInstanceEditor } from '@siemens
 export class HelloWidgetEditorComponent implements WidgetInstanceEditor {
   readonly config = model.required<WidgetConfig | Omit<WidgetConfig, 'id'>>();
   readonly statusChanges = output<Partial<WidgetConfigStatus>>();
-  readonly configChange = output<WidgetConfig | Omit<WidgetConfig, 'id'>>();
 
   onChange(): void {
     const config = this.config();
@@ -24,6 +23,5 @@ export class HelloWidgetEditorComponent implements WidgetInstanceEditor {
       invalid: config!.heading.trim().length === 0
     });
     this.config.set(config);
-    this.configChange.emit(config);
   }
 }

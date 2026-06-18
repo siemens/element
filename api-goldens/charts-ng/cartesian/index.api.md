@@ -4,24 +4,31 @@
 
 ```ts
 
+import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
-import { BarSeriesOption } from '@siemens/charts-ng/common';
-import { CandlestickSeriesOption } from '@siemens/charts-ng/common';
-import { ChartXAxis } from '@siemens/charts-ng/common';
-import { ChartYAxis } from '@siemens/charts-ng/common';
-import { DataZoomRange } from '@siemens/charts-ng/common';
+import { BarSeriesOption } from 'echarts';
+import { CandlestickSeriesOption } from 'echarts';
+import { CustomSeriesOption } from 'echarts';
+import { DataZoomComponentOption } from 'echarts';
+import * as echarts from 'echarts/core';
 import * as echarts_2 from 'echarts';
-import { HeatmapSeriesOption } from '@siemens/charts-ng/common';
-import { LineSeriesOption } from '@siemens/charts-ng/common';
-import { MarkAreaComponentOption } from '@siemens/charts-ng/common';
-import { MarkLineComponentOption } from '@siemens/charts-ng/common';
-import { MarkPointComponentOption } from '@siemens/charts-ng/common';
+import { ElementRef } from '@angular/core';
+import { GaugeSeriesOption } from 'echarts';
+import { GridComponentOption } from 'echarts';
+import { HeatmapSeriesOption } from 'echarts';
+import { LegendComponentOption } from 'echarts';
+import { LineSeriesOption } from 'echarts';
+import { MarkAreaComponentOption } from 'echarts';
+import { MarkLineComponentOption } from 'echarts';
+import { MarkPointComponentOption } from 'echarts';
 import { OnChanges } from '@angular/core';
-import { ScatterSeriesOption } from '@siemens/charts-ng/common';
-import { SeriesUpdate } from '@siemens/charts-ng/common';
-import { SiChartBaseComponent } from '@siemens/charts-ng/common';
+import { OnDestroy } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { PieSeriesOption } from 'echarts';
+import { SankeySeriesOption } from 'echarts';
+import { ScatterSeriesOption } from 'echarts';
 import { SimpleChanges } from '@angular/core';
-import { SiSeriesOption } from '@siemens/charts-ng/common';
+import { SunburstSeriesOption } from 'echarts';
 
 // @public (undocumented)
 export type BarSeriesData = NonNullable<BarSeriesOption['data']>;

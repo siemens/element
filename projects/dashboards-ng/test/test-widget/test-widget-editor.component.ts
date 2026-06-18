@@ -9,7 +9,7 @@ import { WidgetConfig, WidgetInstanceEditor } from '@siemens/dashboards-ng';
   selector: 'si-test-widget-editor',
   imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './test-widget-editor.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestWidgetEditorComponent implements WidgetInstanceEditor, OnInit {
   @Input() config!: WidgetConfig | Omit<WidgetConfig, 'id'>;

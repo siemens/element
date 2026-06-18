@@ -9,7 +9,7 @@ import { MenuItem } from '@siemens/element-ng/common';
 @Component({
   selector: 'si-test-widget',
   templateUrl: './test-widget.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class TestWidgetComponent implements WidgetInstance {
   @Input() config!: WidgetConfig;

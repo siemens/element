@@ -30,7 +30,7 @@ export interface SiFormValidationError {
   imports: [NgTemplateOutlet, SiResponsiveContainerDirective],
   templateUrl: './si-form-container.component.html',
   styleUrl: './si-form-container.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[style.--si-form-label-width]': 'labelWidth()'
   }

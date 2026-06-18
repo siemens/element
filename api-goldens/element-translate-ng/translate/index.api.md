@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { PipeTransform } from '@angular/core';
 import { Provider } from '@angular/core';
-import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 
 // @public (undocumented)
 export const getBrowserCultureLanguage: () => string | undefined;
@@ -28,11 +27,11 @@ export const provideMockTranslateServiceBuilder: (buildService: (injector: Injec
 // @public
 export const SI_TRANSLATABLE_VALUES: InjectionToken<Record<string, string>[]>;
 
+// @public
+export type TranslatableString = string & Translatable;
+
 // @public (undocumented)
 export type TranslationResult<T> = T extends string ? string : Record<string, string>;
-
-
-export * from "@siemens/element-translate-ng/translate-types";
 
 // (No @packageDocumentation comment for this package)
 

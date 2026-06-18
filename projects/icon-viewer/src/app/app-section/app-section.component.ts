@@ -12,7 +12,7 @@ import { AppIconContainerComponent } from './app-icon-container/app-icon-contain
   imports: [AppIconContainerComponent],
   templateUrl: './app-section.component.html',
   styleUrl: './app-section.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AppSectionComponent {
   readonly category = input.required<IconCategory>();

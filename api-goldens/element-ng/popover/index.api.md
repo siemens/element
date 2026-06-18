@@ -10,7 +10,6 @@ import { ElementRef } from '@angular/core';
 import { Injector } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { OverlayArrowPosition } from '@siemens/element-ng/common';
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { TemplateRef } from '@angular/core';

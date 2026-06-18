@@ -29,7 +29,7 @@ import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from '../si-toast.model';
   imports: [SiLinkModule, SiIconComponent, SiStatusIconComponent, SiTranslatePipe],
   templateUrl: './si-toast-notification.component.html',
   styleUrl: './si-toast-notification.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiToastNotificationComponent {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);

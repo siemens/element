@@ -20,7 +20,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
     }
   `,
   styleUrl: './si-navbar-vertical-header.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class.collapsed]': 'navbar.collapsed()',
     'animate.enter': 'component-enter'

@@ -91,7 +91,7 @@ interface ExtUploadFile extends UploadFile {
   ],
   templateUrl: './si-file-uploader.component.html',
   styleUrl: './si-file-uploader.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFileUploaderComponent {
   /**

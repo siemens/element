@@ -13,7 +13,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
   imports: [SiLinkDirective, SiTranslatePipe, SiStatusIconComponent],
   templateUrl: './si-inline-notification.component.html',
   styleUrl: './si-inline-notification.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiInlineNotificationComponent {
   /**

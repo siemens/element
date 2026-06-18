@@ -69,7 +69,7 @@ let controlIdCounter = 1;
   ],
   templateUrl: './si-breadcrumb.component.html',
   styleUrl: './si-breadcrumb.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
   /** Array of breadcrumb items. */

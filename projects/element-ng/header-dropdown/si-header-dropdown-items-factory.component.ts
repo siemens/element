@@ -27,7 +27,7 @@ import { SiHeaderDropdownComponent } from './si-header-dropdown.component';
     SiHeaderDropdownTriggerDirective
   ],
   templateUrl: './si-header-dropdown-items-factory.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiHeaderDropdownItemsFactoryComponent {
   readonly items = input.required<MenuItem[]>();

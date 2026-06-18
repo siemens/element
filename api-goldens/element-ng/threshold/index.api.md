@@ -6,7 +6,6 @@
 
 import * as _angular_core from '@angular/core';
 import { OnChanges } from '@angular/core';
-import { SelectOption } from '@siemens/element-ng/select';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)

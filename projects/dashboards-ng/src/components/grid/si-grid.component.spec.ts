@@ -32,7 +32,7 @@ import { SiGridComponent } from './si-grid.component';
   selector: 'si-widget-editor-dialog',
   imports: [TestingModule, SiLoadingSpinnerModule],
   template: '',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiWidgetEditorDialogMockComponent
   extends SiWidgetInstanceEditorDialogComponent

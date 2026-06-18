@@ -4,26 +4,19 @@
 
 ```ts
 
-import { AccentLineType } from '@siemens/element-ng/common';
 import { ActivatedRoute } from '@angular/router';
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { ElementRef } from '@angular/core';
-import { EntityStatusType } from '@siemens/element-ng/common';
-import { Link } from '@siemens/element-ng/link';
-import { MenuItem } from '@siemens/element-ng/common';
-import { MenuItem as MenuItem_2 } from '@siemens/element-ng/menu';
 import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as rxjs from 'rxjs';
-import { SiCardComponent } from '@siemens/element-ng/card';
-import * as _siemens_element_ng_content_action_bar from '@siemens/element-ng/content-action-bar';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
 
 // @public (undocumented)
 export class SiDashboardCardComponent extends SiCardComponent implements OnDestroy {

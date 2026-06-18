@@ -6,9 +6,9 @@
 
 import { ActivatedRoute } from '@angular/router';
 import * as _angular_core from '@angular/core';
-import { MenuItem } from '@siemens/element-ng/menu';
 import { NavigationExtras } from '@angular/router';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
 
 // @public
 export interface NotificationItemActionButton {

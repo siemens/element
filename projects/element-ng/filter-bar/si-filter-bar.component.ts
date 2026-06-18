@@ -35,7 +35,7 @@ import { SiFilterPillComponent } from './si-filter-pill.component';
   ],
   templateUrl: './si-filter-bar.component.html',
   styleUrl: './si-filter-bar.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class.reset]': 'allowReset()'
   }

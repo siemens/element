@@ -31,7 +31,7 @@ import { SI_DATATABLE_CONFIG, SiDatatableModule } from '.';
       [(selected)]="selected"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class WrapperComponent {
   readonly selectionType = signal<'multi' | 'single' | 'cell'>('multi');

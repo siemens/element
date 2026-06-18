@@ -38,7 +38,7 @@ import { SiMenuDirective } from './si-menu.directive';
     SiMenuFactoryItemGuardDirective
   ],
   templateUrl: './si-menu-factory.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiMenuFactoryComponent {
   readonly items = input<readonly (MenuItemLegacy | MenuItem)[]>();

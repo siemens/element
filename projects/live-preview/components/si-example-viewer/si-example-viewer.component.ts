@@ -23,7 +23,7 @@ import { SiLivePreviewComponent } from '../si-live-preview/si-live-preview.compo
   imports: [SiLivePreviewComponent, SiLivePreviewRendererComponent],
   templateUrl: './si-example-viewer.component.html',
   styleUrl: './si-example-viewer.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiExampleViewerComponent {
   private router = inject(Router);

@@ -7,7 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
-import { SiTranslateService } from '@siemens/element-ng/translate';
+import { SiTranslateService } from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
 
 import { SiFormlyModule } from '../../si-formly.module';
