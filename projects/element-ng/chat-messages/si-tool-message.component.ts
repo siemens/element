@@ -9,11 +9,11 @@ import {
   booleanAttribute,
   viewChild,
   ElementRef,
-  effect
+  effect,
+  signal
 } from '@angular/core';
-import { SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { TranslatableString, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-translate-ng/translate';
 
 import { SiChatMessageComponent } from './si-chat-message.component';
 
@@ -40,7 +40,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
  */
 @Component({
   selector: 'si-tool-message',
-  imports: [SiChatMessageComponent, SiIconComponent, SiCollapsiblePanelComponent],
+  imports: [SiChatMessageComponent, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-tool-message.component.html',
   styleUrl: './si-tool-message.component.scss',
   host: {
@@ -130,8 +130,20 @@ export class SiToolMessageComponent {
     viewChild<ElementRef<HTMLDivElement>>('formattedInputContent');
   protected readonly formattedOutputContent =
     viewChild<ElementRef<HTMLDivElement>>('formattedOutputContent');
+  protected readonly inputArgumentsOpened = signal(false);
+  protected readonly outputOpened = signal(false);
+  protected readonly inputArgumentsContentId = `si-tool-message-input-${nextToolMessageId++}`;
+  protected readonly outputContentId = `si-tool-message-output-${nextToolMessageId++}`;
 
   constructor() {
+    effect(() => {
+      this.inputArgumentsOpened.set(this.expandInputArguments());
+    });
+
+    effect(() => {
+      this.outputOpened.set(this.expandOutput());
+    });
+
     effect(() => {
       const formatter = this.contentFormatter();
 
@@ -206,7 +218,7 @@ export class SiToolMessageComponent {
 
   protected hasOutput(): boolean {
     const outputValue = this.output();
-    return outputValue !== undefined && outputValue !== null;
+    return outputValue !== undefined && outputValue !== null && outputValue !== '';
   }
 
   protected getLoadingState(): boolean {
@@ -221,8 +233,22 @@ export class SiToolMessageComponent {
     return false;
   }
 
+  protected hasBodyContent(): boolean {
+    return this.hasInputArguments() || this.hasOutput() || this.getLoadingState();
+  }
+
   protected getOutputValue(): string | object | undefined {
     const outputValue = this.output();
     return outputValue as string | object | undefined;
   }
+
+  protected toggleInputArguments(): void {
+    this.inputArgumentsOpened.update(opened => !opened);
+  }
+
+  protected toggleOutput(): void {
+    this.outputOpened.update(opened => !opened);
+  }
 }
+
+let nextToolMessageId = 0;

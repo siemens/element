@@ -1,6 +1,6 @@
-- heading "fetch_weather_data" [level=6]
+- text: Retrieving relevant sources
 - button "Input Arguments"
-- region "Input Arguments"
 - button "Output"
-- region "Output"
-- heading "processing_data" [level=6]
+- text: Generic trace item Thinking
+- button "Reasoning"
+- text: Thinking Generating dashboard Dashboard ready

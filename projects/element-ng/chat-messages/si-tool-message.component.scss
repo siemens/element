@@ -3,6 +3,7 @@
 
 :host {
   display: block;
+  margin-block: 0;
 }
 
 si-chat-message {
@@ -16,13 +17,51 @@ si-chat-message {
   --loading-spinner-size: 1.5em;
 }
 
+.tool-trace {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  color: variables.$element-text-secondary;
+}
+
+.tool-trace-marker {
+  display: flex;
+  align-items: center;
+  gap: map.get(variables.$spacers, 2);
+  min-block-size: map.get(variables.$spacers, 9);
+}
+
+.tool-marker-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 variables.$si-icon-font-size;
+  inline-size: variables.$si-icon-font-size;
+  block-size: variables.$si-icon-font-size;
+
+  .icon {
+    font-size: variables.$si-icon-font-size;
+  }
+}
+
+.tool-marker-dot {
+  inline-size: map.get(variables.$spacers, 2);
+  block-size: map.get(variables.$spacers, 2);
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.tool-trace-body {
+  padding-inline-start: calc(variables.$si-icon-font-size + map.get(variables.$spacers, 2));
+}
+
 .tool-message-content {
   display: flex;
   flex-direction: column;
-  inline-size: fit-content;
+  gap: map.get(variables.$spacers, 4);
+  padding-block-start: map.get(variables.$spacers, 2);
   max-inline-size: 100%;
-  overflow: hidden;
-  transition: inline-size variables.$element-default-transition-duration ease-out;
+  min-inline-size: 0;
 
   > * {
     inline-size: 100%;
@@ -31,11 +70,52 @@ si-chat-message {
   }
 }
 
-.tool-name {
-  color: variables.$element-text-primary;
+.tool-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.tool-section-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: map.get(variables.$spacers, 2);
+  padding: 0;
+  color: variables.$element-text-secondary;
+  background: transparent;
+  border: 0;
+  font-size: variables.$si-font-size-caption;
   font-weight: variables.$si-font-weight-semibold;
-  margin-block-end: map.get(variables.$spacers, 3);
-  inline-size: 100%;
+  text-align: start;
+
+  &:enabled {
+    cursor: pointer;
+  }
+}
+
+.tool-section-caret {
+  flex: 0 0 auto;
+  transition: transform variables.$element-default-transition-duration;
+
+  [aria-expanded='true'] > & {
+    transform: rotate(180deg);
+  }
+}
+
+.tool-section-content {
+  display: block;
+  padding-inline-start: calc(variables.$si-icon-font-size + map.get(variables.$spacers, 2));
+  padding-block-start: map.get(variables.$spacers, 2);
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.tool-name {
+  color: variables.$element-text-secondary;
+  font-size: variables.$si-font-size-body-lg;
+  line-height: variables.$si-line-height-body-lg;
+  letter-spacing: 0.006em;
   max-inline-size: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -47,19 +127,19 @@ si-chat-message {
   padding: map.get(variables.$spacers, 3);
   border-radius: variables.$element-radius-1;
   margin: 0;
-  max-block-size: 300px;
+  max-block-size: map.get(variables.$spacers, 11) * 3;
   max-inline-size: 100%;
   overflow: auto;
   word-wrap: break-word;
   white-space: pre-wrap;
   font-family:
     'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  font-size: 0.875rem;
-  line-height: 1.4;
+  font-size: variables.$si-font-size-caption;
+  line-height: variables.$si-line-height-caption;
 
   code {
     // Because different font
-    font-size: 0.9em;
+    font-size: inherit;
     background: none;
     padding: 0;
     color: variables.$element-text-primary;
@@ -70,7 +150,7 @@ si-chat-message {
 }
 
 .tool-data-formatted {
-  max-block-size: 300px;
+  max-block-size: map.get(variables.$spacers, 11) * 3;
   max-inline-size: 100%;
   overflow: auto;
 
@@ -90,35 +170,8 @@ si-chat-message {
   }
 }
 
-si-collapsible-panel {
-  inline-size: 100%;
-  max-inline-size: 100%;
-  overflow: hidden;
-
-  ::ng-deep :has(> .loading-panel-header) {
-    inline-size: 100%;
-    padding-inline-end: map.get(variables.$spacers, 2);
-  }
-
-  ::ng-deep .collapsible-header {
-    inline-size: 100%;
-    max-inline-size: 100%;
-    overflow: hidden;
-  }
-
-  ::ng-deep .collapsible-content {
-    inline-size: 100%;
-    max-inline-size: 100%;
-    overflow: hidden;
-  }
-}
-
-si-collapsible-panel ::ng-deep .collapsible-header:has(.loading-panel-header) .dropdown-caret {
-  color: variables.$element-text-disabled;
-}
-
 .loading-panel-header {
   inline-size: 100%;
-  min-inline-size: 75px;
+  min-inline-size: map.get(variables.$spacers, 10);
   margin-block-start: map.get(variables.$spacers, 1);
 }

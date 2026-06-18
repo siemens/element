@@ -54,6 +54,20 @@
     margin-block-end: -1 * (map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4));
   }
 
+  ::ng-deep si-tool-message + si-tool-message {
+    margin-block-start: map.get(variables.$spacers, 2) - map.get(variables.$spacers, 9);
+  }
+
+  ::ng-deep si-ai-message + si-tool-message,
+  ::ng-deep si-tool-message + si-ai-message {
+    margin-block-start: -1 * map.get(variables.$spacers, 6);
+  }
+
+  ::ng-deep si-user-message + si-tool-message,
+  ::ng-deep si-tool-message + si-user-message {
+    margin-block-start: map.get(variables.$spacers, 1) - map.get(variables.$spacers, 5);
+  }
+
   ::ng-deep &:not(:has(si-ai-welcome-screen)) {
     max-inline-size: 720px;
   }

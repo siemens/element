@@ -117,6 +117,66 @@ describe('SiAiChatContainerComponent', () => {
     expect(aiMessage).toBeTruthy();
   });
 
+  it('should render tool messages', () => {
+    const messages: ChatMessage[] = [
+      {
+        type: 'tool',
+        name: 'Calculator',
+        content: '',
+        output: '42'
+      }
+    ];
+
+    fixture.componentRef.setInput('messages', messages);
+    fixture.detectChanges();
+
+    const toolMessage = debugElement.query(By.css('si-tool-message'));
+    expect(toolMessage).toBeTruthy();
+  });
+
+  it('should pass custom tool input arguments labels from messages', () => {
+    const customLabel = 'Custom Input';
+    const messages: ChatMessage[] = [
+      {
+        type: 'tool',
+        name: 'Calculator',
+        inputArguments: '{"x": 5}',
+        inputArgumentsLabel: customLabel
+      }
+    ];
+
+    fixture.componentRef.setInput('messages', messages);
+    fixture.detectChanges();
+
+    const toolMessage = debugElement.query(By.css('si-tool-message'));
+    expect(toolMessage.componentInstance.inputArgumentsLabel()).toBe(customLabel);
+  });
+
+  it('should use container tool input arguments label as fallback', () => {
+    const customLabel = 'Container Input';
+    const messages: ChatMessage[] = [
+      {
+        type: 'tool',
+        name: 'Calculator',
+        inputArguments: '{"x": 5}'
+      }
+    ];
+
+    fixture.componentRef.setInput('messages', messages);
+    fixture.componentRef.setInput('toolInputArgumentsLabel', customLabel);
+    fixture.detectChanges();
+
+    const toolMessage = debugElement.query(By.css('si-tool-message'));
+    expect(toolMessage.componentInstance.inputArgumentsLabel()).toBe(customLabel);
+  });
+
+  it('should not render status notification when statusSeverity is not set', () => {
+    fixture.detectChanges();
+
+    const notification = debugElement.query(By.css('si-inline-notification'));
+    expect(notification).toBeFalsy();
+  });
+
   it('should render loading AI message when loading is true', () => {
     fixture.componentRef.setInput('messages', []);
     fixture.componentRef.setInput('loading', true);
@@ -287,13 +347,6 @@ describe('SiAiChatContainerComponent', () => {
     expect(notification).toBeTruthy();
   });
 
-  it('should not render status notification when statusSeverity is not set', () => {
-    fixture.detectChanges();
-
-    const notification = debugElement.query(By.css('si-inline-notification'));
-    expect(notification).toBeFalsy();
-  });
-
   it('should have focus method', () => {
     expect(typeof component.focus).toBe('function');
   });
@@ -375,6 +428,28 @@ describe('SiAiChatContainerComponent', () => {
 
     const aiMessage = debugElement.query(By.css('si-ai-message'));
     expect(aiMessage).toBeTruthy();
+  });
+
+  it('should display tool message', () => {
+    const messages: ChatMessage[] = [
+      {
+        type: 'ai',
+        content: 'Answer'
+      },
+      {
+        type: 'tool',
+        name: 'Tool',
+        content: '',
+        output: 'Result'
+      }
+    ];
+
+    fixture.componentRef.setInput('messages', messages);
+    fixture.detectChanges();
+
+    const toolMessages = debugElement.queryAll(By.css('si-tool-message'));
+
+    expect(toolMessages).toHaveLength(1);
   });
 
   it('should apply color variant to underlying container', () => {

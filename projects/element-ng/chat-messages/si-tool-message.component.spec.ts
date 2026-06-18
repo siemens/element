@@ -98,16 +98,16 @@ describe('SiToolMessageComponent', () => {
     fixture.componentRef.setInput('inputArguments', undefined);
     fixture.detectChanges();
 
-    const panels = debugElement.queryAll(By.css('si-collapsible-panel'));
-    expect(panels.length).toBe(0);
+    const sections = debugElement.queryAll(By.css('.tool-section'));
+    expect(sections).toHaveLength(0);
   });
 
   it('should render input arguments section when input arguments provided', () => {
     fixture.componentRef.setInput('inputArguments', '{"x": 5, "y": 10}');
     fixture.detectChanges();
 
-    const inputPanel = debugElement.query(By.css('si-collapsible-panel'));
-    expect(inputPanel).toBeTruthy();
+    const inputSection = debugElement.query(By.css('.tool-section'));
+    expect(inputSection).toBeTruthy();
   });
 
   it('should format string input arguments', () => {
@@ -132,16 +132,24 @@ describe('SiToolMessageComponent', () => {
     fixture.componentRef.setInput('output', undefined);
     fixture.detectChanges();
 
-    const outputPanels = debugElement.queryAll(By.css('si-collapsible-panel'));
-    expect(outputPanels.length).toBe(0);
+    const outputSections = debugElement.queryAll(By.css('.tool-section'));
+    expect(outputSections).toHaveLength(0);
+  });
+
+  it('should not render output section for empty string output', () => {
+    fixture.componentRef.setInput('output', '');
+    fixture.detectChanges();
+
+    const outputSections = debugElement.queryAll(By.css('.tool-section'));
+    expect(outputSections).toHaveLength(0);
   });
 
   it('should render output section when output provided', () => {
     fixture.componentRef.setInput('output', '{"result": 15}');
     fixture.detectChanges();
 
-    const outputPanel = debugElement.query(By.css('si-collapsible-panel'));
-    expect(outputPanel).toBeTruthy();
+    const outputSection = debugElement.query(By.css('.tool-section'));
+    expect(outputSection).toBeTruthy();
   });
 
   it('should format string output', () => {
@@ -174,8 +182,8 @@ describe('SiToolMessageComponent', () => {
     fixture.componentRef.setInput('expandInputArguments', true);
     fixture.detectChanges();
 
-    const inputPanel = debugElement.query(By.css('si-collapsible-panel'));
-    expect(inputPanel.componentInstance.opened()).toBe(true);
+    const inputContent = debugElement.query(By.css('.tool-section-content'));
+    expect(inputContent.nativeElement).not.toHaveAttribute('hidden');
   });
 
   it('should collapse input arguments when expandInputArguments is false', () => {
@@ -183,8 +191,8 @@ describe('SiToolMessageComponent', () => {
     fixture.componentRef.setInput('expandInputArguments', false);
     fixture.detectChanges();
 
-    const inputPanel = debugElement.query(By.css('si-collapsible-panel'));
-    expect(inputPanel.componentInstance.opened()).toBe(false);
+    const inputContent = debugElement.query(By.css('.tool-section-content'));
+    expect(inputContent.nativeElement).toHaveAttribute('hidden');
   });
 
   it('should expand output when expandOutput is true', () => {
@@ -192,9 +200,8 @@ describe('SiToolMessageComponent', () => {
     fixture.componentRef.setInput('expandOutput', true);
     fixture.detectChanges();
 
-    const panels = debugElement.queryAll(By.css('si-collapsible-panel'));
-    const outputPanel = panels[panels.length - 1]; // Get last panel (output panel)
-    expect(outputPanel.componentInstance.opened()).toBe(true);
+    const outputContent = debugElement.query(By.css('.tool-section-content'));
+    expect(outputContent.nativeElement).not.toHaveAttribute('hidden');
   });
 
   it('should collapse output when expandOutput is false', () => {
@@ -202,9 +209,25 @@ describe('SiToolMessageComponent', () => {
     fixture.componentRef.setInput('expandOutput', false);
     fixture.detectChanges();
 
-    const panels = debugElement.queryAll(By.css('si-collapsible-panel'));
-    const outputPanel = panels[panels.length - 1]; // Get last panel (output panel)
-    expect(outputPanel.componentInstance.opened()).toBe(false);
+    const outputContent = debugElement.query(By.css('.tool-section-content'));
+    expect(outputContent.nativeElement).toHaveAttribute('hidden');
+  });
+
+  it('should toggle section content when disclosure button is clicked', () => {
+    fixture.componentRef.setInput('output', '{"result": 15}');
+    fixture.detectChanges();
+
+    const outputToggle = debugElement.query(By.css('.tool-section-toggle'));
+    const outputContent = debugElement.query(By.css('.tool-section-content'));
+
+    expect(outputToggle.nativeElement).toHaveAttribute('aria-expanded', 'false');
+    expect(outputContent.nativeElement).toHaveAttribute('hidden');
+
+    outputToggle.nativeElement.click();
+    fixture.detectChanges();
+
+    expect(outputToggle.nativeElement).toHaveAttribute('aria-expanded', 'true');
+    expect(outputContent.nativeElement).not.toHaveAttribute('hidden');
   });
 
   it('should use custom inputArgumentsLabel', () => {
@@ -213,8 +236,8 @@ describe('SiToolMessageComponent', () => {
     fixture.componentRef.setInput('inputArgumentsLabel', customLabel);
     fixture.detectChanges();
 
-    const inputPanel = debugElement.query(By.css('si-collapsible-panel'));
-    expect(inputPanel.componentInstance.heading()).toBe(customLabel);
+    const inputToggle = debugElement.query(By.css('.tool-section-toggle'));
+    expect(inputToggle.nativeElement).toHaveTextContent(customLabel);
   });
 
   it('should use custom outputLabel', () => {
@@ -223,9 +246,8 @@ describe('SiToolMessageComponent', () => {
     fixture.componentRef.setInput('outputLabel', customLabel);
     fixture.detectChanges();
 
-    const panels = debugElement.queryAll(By.css('si-collapsible-panel'));
-    const outputPanel = panels[panels.length - 1]; // Get last panel (output panel)
-    expect(outputPanel.componentInstance.heading()).toBe(customLabel);
+    const outputToggle = debugElement.query(By.css('.tool-section-toggle'));
+    expect(outputToggle.nativeElement).toHaveTextContent(customLabel);
   });
 
   it('should handle null input arguments', () => {
