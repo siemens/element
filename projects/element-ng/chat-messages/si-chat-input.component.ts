@@ -342,7 +342,7 @@ export class SiChatInputComponent implements AfterViewInit, OnDestroy {
   protected readonly hasAttachments = computed(() => this.attachments().length > 0);
   protected readonly hasActions = computed(() => this.actions().length > 0);
   protected readonly hasSecondaryActions = computed(() => this.secondaryActions().length > 0);
-  protected readonly allMenuActions = computed<MenuItem[]>(() => [
+  protected readonly combinedMenuActions = computed<MenuItem[]>(() => [
     ...(this.allowAttachments()
       ? [
           {

@@ -15,7 +15,6 @@ import { By } from '@angular/platform-browser';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
-import { page } from 'vitest/browser';
 
 import { MessageAction } from './message-action.model';
 import {
@@ -498,10 +497,9 @@ describe('SiChatInputComponent', () => {
     ]);
     await fixture.whenStable();
 
-    const menuTrigger = page.getByRole('button', { name: 'Additional actions' });
-    await menuTrigger.click();
-
-    await expect.element(page.getByRole('menuitem', { name: 'Attach' })).toBeVisible();
+    const actionButtons = fixture.nativeElement.querySelectorAll('button');
+    expect(actionButtons).toHaveLength(3);
+    expect(actionButtons[1]).toHaveAttribute('aria-label', 'Attach');
   });
 
   it('should have focus method', async () => {
