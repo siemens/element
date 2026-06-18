@@ -13,7 +13,6 @@ import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import * as rxjs from 'rxjs';
 import * as _siemens_element_ng_application_header from '@siemens/element-ng/application-header';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SiHeaderDropdownTriggerDirective } from '@siemens/element-ng/header-dropdown';
@@ -78,6 +77,7 @@ export class SiAccountDetailsComponent {
 
 // @public
 export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDestroy {
+    constructor();
     readonly expandBreakpoint: _angular_core.InputSignal<"sm" | "md" | "lg" | "xl" | "xxl" | "never">;
     // (undocumented)
     readonly launchpad: _angular_core.InputSignal<TemplateRef<void> | undefined>;
