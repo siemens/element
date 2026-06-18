@@ -25,16 +25,36 @@ export class SampleComponent {
     this.isBrowser
   );
 
-  toolName = 'fetch_weather_data';
-
-  inputArguments = {
-    location: 'San Francisco, CA',
-    units: 'metric'
+  retrievalInput = {
+    query: 'breadcrumb navigation for large datasets',
+    sources: ['data-analysis.py', 'dataset.csv']
   };
 
-  output = {
-    temperature: 18,
-    condition: 'partly_cloudy',
-    humidity: 65
-  };
+  retrievalOutput = `Found relevant sources:
+
+- \`data-analysis.py\`
+- \`dataset.csv\`
+- Performance notes from previous runs`;
+
+  reasoningName = 'Thinking';
+
+  reasoningOutput = `Agent: UI Generator
+Model: GPT-X
+Duration: 2.3s
+
+**Key findings**
+
+- Breadcrumb is recommended for navigation hierarchy
+- Requires items with labels and links
+- Placed below the header
+
+**Relevant inputs**
+
+\`page.txs\` \`layout.txs\`
+
+**Plan**
+
+- Add breadcrumb to header
+- Use standard component (2-3 levels)
+- Align with existing layout`;
 }
