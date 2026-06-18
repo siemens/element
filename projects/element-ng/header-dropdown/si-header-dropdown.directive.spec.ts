@@ -4,9 +4,8 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
 
 import { SiHeaderDropdownItemComponent } from './si-header-dropdown-item.component';
 import { SiHeaderDropdownTriggerDirective } from './si-header-dropdown-trigger.directive';
@@ -44,7 +43,7 @@ import { SiHeaderDropdownTriggerHarness } from './testing/si-header-dropdown-tri
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent implements HeaderWithDropdowns {
-  inlineDropdown = new BehaviorSubject(false);
+  readonly inlineDropdown = signal(false);
   readonly trigger1 = viewChild.required('trigger1', { read: SiHeaderDropdownTriggerDirective });
   readonly trigger2 = viewChild.required('trigger2', { read: SiHeaderDropdownTriggerDirective });
 }
@@ -96,7 +95,7 @@ describe('SiHeaderDropdown', () => {
     it('should close on resize', async () => {
       await trigger1Harness.toggle();
       expect(await trigger1Harness.isOpen()).toBe(true);
-      fixture.componentInstance.inlineDropdown.next(false);
+      fixture.componentInstance.inlineDropdown.set(true);
       expect(await trigger1Harness.isOpen()).toBe(false);
     });
 
@@ -131,7 +130,7 @@ describe('SiHeaderDropdown', () => {
   });
 
   describe('in mobile mode', () => {
-    beforeEach(() => fixture.componentInstance.inlineDropdown.next(true));
+    beforeEach(() => fixture.componentInstance.inlineDropdown.set(true));
 
     it('should open inline in mobile view', async () => {
       await trigger1Harness.toggle();
@@ -156,7 +155,7 @@ describe('SiHeaderDropdown', () => {
     it('should close on resize', async () => {
       await trigger1Harness.toggle();
       expect(await trigger1Harness.isOpen()).toBe(true);
-      fixture.componentInstance.inlineDropdown.next(true);
+      fixture.componentInstance.inlineDropdown.set(false);
       expect(await trigger1Harness.isOpen()).toBe(false);
     });
 
