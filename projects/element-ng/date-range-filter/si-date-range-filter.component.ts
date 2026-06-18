@@ -534,11 +534,16 @@ export class SiDateRangeFilterComponent implements OnChanges {
     this.updateRange();
   }
 
-  protected selectPresetItem(event: Event, item: DateRangePreset): void {
+  protected selectPresetItem(label: string): void {
+    const selectedItem = this.filteredPresetList().find(item => item.label === label);
+    if (!selectedItem) {
+      return;
+    }
+
     const newRange: DateRangeFilter =
-      item.type === 'custom'
-        ? item.calculate(item, this.range())
-        : { point1: 'now', range: 'before', point2: item.offset };
+      selectedItem.type === 'custom'
+        ? selectedItem.calculate(selectedItem, this.range())
+        : { point1: 'now', range: 'before', point2: selectedItem.offset };
     if (this.advancedMode()) {
       this.updateFromRange(newRange);
       this.updateRange();
@@ -546,8 +551,6 @@ export class SiDateRangeFilterComponent implements OnChanges {
       this.updateSimpleMode(newRange);
     }
     if (this.smallScreen) {
-      // Prevent re-opening the dropdown when pressing enter on the selected item
-      event.preventDefault();
       this.presetOpen.set(false);
     }
   }

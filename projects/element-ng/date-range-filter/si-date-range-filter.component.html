@@ -127,15 +127,16 @@
       [(ngModel)]="presetFilter"
     />
   }
-  <ul class="overflow-auto" cdkListbox [attr.aria-label]="presetLabel() | translate">
+  <ul
+    class="overflow-auto"
+    cdkListbox
+    [cdkListboxValue]="[]"
+    [attr.aria-label]="presetLabel() | translate"
+    (cdkListboxValueChange)="selectPresetItem($event.value[0])"
+  >
     @for (item of filteredPresetList(); track $index) {
       @if (item.label | translate | presetMatchFilter: presetFilter()) {
-        <li
-          class="preset-item focus-inside px-8 py-5"
-          [cdkOption]="item.label"
-          (click)="selectPresetItem($event, item)"
-          (keydown.enter)="selectPresetItem($event, item)"
-        >
+        <li class="preset-item focus-inside px-8 py-5" [cdkOption]="item.label">
           {{ item.label | translate }}
         </li>
       }
