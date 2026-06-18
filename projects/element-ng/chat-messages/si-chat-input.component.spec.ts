@@ -492,10 +492,9 @@ describe('SiChatInputComponent', () => {
     ]);
     await fixture.whenStable();
 
-    const menuTrigger = page.getByRole('button', { name: 'Additional actions' });
-    await menuTrigger.click();
-
-    await expect.element(page.getByRole('menuitem', { name: 'Attach' })).toBeVisible();
+    const actionButtons = fixture.nativeElement.querySelectorAll('button');
+    expect(actionButtons).toHaveLength(3);
+    expect(actionButtons[1]).toHaveAttribute('aria-label', 'Attach');
   });
 
   it('should have focus method', async () => {
