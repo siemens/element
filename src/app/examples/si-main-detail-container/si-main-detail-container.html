@@ -1,106 +1,103 @@
-<div class="flex-grow-1">
-  <si-main-detail-container
-    stateId="si-main-detail-demo"
-    [style.maxWidth.px]="containerMaxWidth ? containerMaxWidth : null"
-    [largeLayoutBreakpoint]="largeLayoutBreakpoint"
-    [heading]="heading"
-    [truncateHeading]="truncateHeading"
-    [detailsHeading]="detailsHeading"
-    [resizableParts]="resizableParts"
-    [hideBackButton]="false"
-    [mainContainerWidth]="50"
-    [minMainSize]="200"
-    [minDetailSize]="100"
-    [(detailsActive)]="detailsActive"
-    (hasLargeSizeChange)="isLarge = $event"
-    (mainContainerWidthChange)="onSplitChange($event)"
+<si-main-detail-container
+  stateId="si-main-detail-demo"
+  [style.maxWidth.px]="containerMaxWidth ? containerMaxWidth : null"
+  [largeLayoutBreakpoint]="largeLayoutBreakpoint"
+  [heading]="heading"
+  [truncateHeading]="truncateHeading"
+  [detailsHeading]="detailsHeading"
+  [resizableParts]="resizableParts"
+  [hideBackButton]="false"
+  [mainContainerWidth]="50"
+  [minMainSize]="200"
+  [minDetailSize]="100"
+  [(detailsActive)]="detailsActive"
+  (hasLargeSizeChange)="isLarge = $event"
+  (mainContainerWidthChange)="onSplitChange($event)"
+>
+  <si-search-bar
+    slot="mainSearch"
+    placeholder="Search"
+    (searchChange)="searchTermChanged($event)"
+  />
+  <si-content-action-bar slot="mainActions" viewType="collapsible" [primaryActions]="mainActions" />
+
+  <ngx-datatable
+    #table
+    slot="mainData"
+    class="list-view table-element"
+    siDatatableInteraction
+    columnMode="force"
+    selectionType="single"
+    [cssClasses]="tableConfig.cssClasses"
+    [rows]="rows"
+    [columns]="[
+      { name: 'Name', sortable: false },
+      { name: 'Role', sortable: false },
+      { name: 'Company', sortable: false }
+    ]"
+    [reorderable]="false"
+    [headerHeight]="tableConfig.headerHeight"
+    [rowHeight]="tableConfig.rowHeightSmall"
+    [footerHeight]="0"
+    [ghostLoadingIndicator]="isLoading > 0"
+    [scrollbarV]="true"
+    [externalPaging]="true"
+    [externalSorting]="true"
+    [count]="totalElements"
+    [offset]="pageNumber"
+    [selected]="selectedEntities"
+    [datatableInteractionAutoSelect]="isLarge"
+    (page)="setPage($event)"
+    (select)="datatableOnSelect($event.selected)"
   >
-    <si-search-bar
-      slot="mainSearch"
-      placeholder="Search"
-      (searchChange)="searchTermChanged($event)"
-    />
-    <si-content-action-bar
-      slot="mainActions"
-      viewType="collapsible"
-      [primaryActions]="mainActions"
-    />
+    <si-empty-state empty-content icon="element-users" heading="No users to display" />
+  </ngx-datatable>
 
-    <ngx-datatable
-      #table
-      slot="mainData"
-      class="list-view table-element"
-      siDatatableInteraction
-      columnMode="force"
-      selectionType="single"
-      [cssClasses]="tableConfig.cssClasses"
-      [rows]="rows"
-      [columns]="[
-        { name: 'Name', sortable: false },
-        { name: 'Role', sortable: false },
-        { name: 'Company', sortable: false }
-      ]"
-      [reorderable]="false"
-      [headerHeight]="tableConfig.headerHeight"
-      [rowHeight]="tableConfig.rowHeightSmall"
-      [footerHeight]="0"
-      [ghostLoadingIndicator]="isLoading > 0"
-      [scrollbarV]="true"
-      [externalPaging]="true"
-      [externalSorting]="true"
-      [count]="totalElements"
-      [offset]="pageNumber"
-      [selected]="selectedEntities"
-      [datatableInteractionAutoSelect]="isLarge"
-      (page)="setPage($event)"
-      (select)="datatableOnSelect($event.selected)"
-    >
-      <si-empty-state empty-content icon="element-users" heading="No users to display" />
-    </ngx-datatable>
-
-    <!-- Detail (content slots: detailActions | details) -->
-    <!-- detailActions -->
-    <si-content-action-bar
-      slot="detailActions"
-      viewType="collapsible"
-      [primaryActions]="detailActions"
-    />
-    <!-- details -->
-    <div slot="details" class="card">
-      <div class="card-body overflow-auto pt-4">
-        @if (selectedEntity) {
-          {{ selectedEntity | json }}
-        } @else {
-          <div class="mx-auto text-center">No entity selected.</div>
-        }
-      </div>
-    </div>
-</si-main-detail-container>
-</div>
-
-<form class="e2e-ignore px-6 pb-6">
-  <div class="card mt-4">
-    <div class="card-header">Settings</div>
-    <div class="card-body">
-      <si-form-item label="Resizable parts">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          id="customCheckResizableParts"
-          name="resizableParts"
-          [(ngModel)]="resizableParts"
-        />
-      </si-form-item>
-      <si-form-item label="Simulate mobile layout">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          id="customCheckMobileLayout"
-          name="simulateMobileLayout"
-          ngModel
-          (ngModelChange)="toggleMobileLayout($event)"
-        />
-      </si-form-item>
+  <!-- Detail (content slots: detailActions | details) -->
+  <!-- detailActions -->
+  <si-content-action-bar
+    slot="detailActions"
+    viewType="collapsible"
+    [primaryActions]="detailActions"
+  />
+  <!-- details -->
+  <div slot="details" class="card">
+    <div class="card-body overflow-auto pt-4">
+      @if (selectedEntity) {
+        {{ selectedEntity | json }}
+      } @else {
+        <div class="mx-auto text-center">No entity selected.</div>
+      }
     </div>
   </div>
-</form>
+</si-main-detail-container>
+
+<div class="e2e-ignore">
+  <hr />
+  <form class="px-6 px-md-9 pb-6 pt-5">
+    <div class="card">
+      <div class="card-header">Settings</div>
+      <div class="card-body">
+        <si-form-item label="Resizable parts">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="customCheckResizableParts"
+            name="resizableParts"
+            [(ngModel)]="resizableParts"
+          />
+        </si-form-item>
+        <si-form-item label="Simulate mobile layout">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="customCheckMobileLayout"
+            name="simulateMobileLayout"
+            ngModel
+            (ngModelChange)="toggleMobileLayout($event)"
+          />
+        </si-form-item>
+      </div>
+    </div>
+  </form>
+</div>
