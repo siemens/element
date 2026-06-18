@@ -5,13 +5,13 @@ import angularTemplateConfig from '@siemens/eslint-config-angular/template';
 import vitest from '@vitest/eslint-plugin';
 import tsdocPlugin from 'eslint-plugin-tsdoc';
 import eslintPluginHeaders from 'eslint-plugin-headers';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
 // mimic CommonJS variables
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const tsConfig = defineConfig({
+export const tsConfig = defineConfig(globalIgnores(['**/dist/']), {
   extends: [...angularTypescriptConfig],
   files: ['**/*.ts'],
   languageOptions: {

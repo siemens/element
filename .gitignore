@@ -78,3 +78,6 @@ Thumbs.db
 
 # EsLint cache
 .eslintcache
+
+# Angular builder
+projects/live-preview/builders/dist
