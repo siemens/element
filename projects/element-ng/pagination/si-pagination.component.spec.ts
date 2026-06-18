@@ -102,4 +102,27 @@ describe('SiPaginationComponent', () => {
     expect(buttons.item(1)).toBeDisabled();
     expect(getCurrentItem()).toHaveTextContent('3');
   });
+
+  it('should calculate total pages from pageSize and totalRowCount', () => {
+    fixture.componentRef.setInput('pageSize', 10);
+    fixture.componentRef.setInput('totalRowCount', 45);
+    fixture.componentRef.setInput('currentPage', 1);
+
+    fixture.detectChanges();
+
+    expect(getItems()).toHaveLength(5);
+    expect(getSeparators()).toHaveLength(0);
+  });
+
+  it('should treat a page size of zero as one item per page', () => {
+    fixture.componentRef.setInput('pageSize', 0);
+    fixture.componentRef.setInput('totalRowCount', 3);
+    fixture.componentRef.setInput('currentPage', 1);
+
+    fixture.detectChanges();
+
+    expect(getItems()).toHaveLength(3);
+    expect(getSeparators()).toHaveLength(0);
+    expect(getCurrentItem()).toHaveTextContent('1');
+  });
 });
