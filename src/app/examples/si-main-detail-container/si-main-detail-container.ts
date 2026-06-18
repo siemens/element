@@ -44,7 +44,7 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
   providers: [DataService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'si-layout-fixed-height d-flex flex-column'
+    class: 'si-layout-fixed-height'
   }
 })
 export class SampleComponent {

@@ -9,7 +9,7 @@ test.describe('si-main-detail-container', () => {
 
   test(example, async ({ page, si }) => {
     await si.visitExample(example);
-    await expect(page.getByText('Max Meier 8')).toHaveCount(1);
+    await expect(page.getByText('Max Meier 5')).toHaveCount(1);
     await si.runVisualAndA11yTests(undefined, {
       axeRulesSet: [{ id: 'scrollable-region-focusable', enabled: false }]
     });

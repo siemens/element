@@ -66,29 +66,32 @@
   </div>
 </si-main-detail-container>
 
-<form class="e2e-ignore px-6 pb-6">
-  <div class="card mt-4">
-    <div class="card-header">Settings</div>
-    <div class="card-body">
-      <si-form-item label="Resizable parts">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          id="customCheckResizableParts"
-          name="resizableParts"
-          [(ngModel)]="resizableParts"
-        />
-      </si-form-item>
-      <si-form-item label="Simulate mobile layout">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          id="customCheckMobileLayout"
-          name="simulateMobileLayout"
-          ngModel
-          (ngModelChange)="toggleMobileLayout($event)"
-        />
-      </si-form-item>
+<div class="e2e-ignore">
+  <hr />
+  <form class="px-6 px-md-9 pb-6 pt-5">
+    <div class="card">
+      <div class="card-header">Settings</div>
+      <div class="card-body">
+        <si-form-item label="Resizable parts">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="customCheckResizableParts"
+            name="resizableParts"
+            [(ngModel)]="resizableParts"
+          />
+        </si-form-item>
+        <si-form-item label="Simulate mobile layout">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="customCheckMobileLayout"
+            name="simulateMobileLayout"
+            ngModel
+            (ngModelChange)="toggleMobileLayout($event)"
+          />
+        </si-form-item>
+      </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>
