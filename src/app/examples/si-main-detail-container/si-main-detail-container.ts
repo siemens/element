@@ -10,12 +10,14 @@ import {
   inject,
   viewChild
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
 } from '@siemens/element-ng/content-action-bar';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
+import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { SiMainDetailContainerComponent } from '@siemens/element-ng/main-detail-container';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarModule } from '@siemens/element-ng/search-bar';
@@ -28,12 +30,14 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
   selector: 'app-sample',
   imports: [
     CommonModule,
+    FormsModule,
     SiMainDetailContainerComponent,
     SiSearchBarModule,
     SiContentActionBarComponent,
     NgxDatatableModule,
     SiDatatableModule,
-    SiEmptyStateComponent
+    SiEmptyStateComponent,
+    SiFormItemComponent
   ],
   templateUrl: './si-main-detail-container.html',
   styleUrl: './si-main-detail-container.scss',

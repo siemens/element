@@ -12,7 +12,6 @@
   (hasLargeSizeChange)="isLarge = $event"
   (mainContainerWidthChange)="table.recalculate()"
 >
-  >
   <si-search-bar
     slot="mainSearch"
     placeholder="Search"
@@ -67,25 +66,29 @@
   </div>
 </si-main-detail-container>
 
-<form class="p-5 e2e-ignore">
-  <div class="form-check">
-    <input
-      type="checkbox"
-      class="form-check-input"
-      id="customCheckResizableParts"
-      [checked]="resizableParts"
-      (change)="resizableParts = !resizableParts"
-    />
-    <label class="form-check-label" for="customCheckResizableParts">Resizable Parts</label>
-  </div>
-  <div class="form-check">
-    <input
-      #checkbox
-      type="checkbox"
-      class="form-check-input"
-      id="customCheckMobileLayout"
-      (change)="toggleMobileLayout(checkbox.checked)"
-    />
-    <label class="form-check-label" for="customCheckMobileLayout">Simulate mobile layout</label>
+<form class="e2e-ignore px-6 pb-6">
+  <div class="card mt-4">
+    <div class="card-header">Settings</div>
+    <div class="card-body">
+      <si-form-item label="Resizable parts">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="customCheckResizableParts"
+          name="resizableParts"
+          [(ngModel)]="resizableParts"
+        />
+      </si-form-item>
+      <si-form-item label="Simulate mobile layout">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="customCheckMobileLayout"
+          name="simulateMobileLayout"
+          [ngModel]
+          (ngModelChange)="toggleMobileLayout($event)"
+        />
+      </si-form-item>
+    </div>
   </div>
 </form>
