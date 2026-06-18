@@ -154,7 +154,7 @@ export class SiFileDropzoneComponent {
     this.dragOver = true;
   }
 
-  protected inputEnterHandler(): void {
+  protected triggerFileSelect(): void {
     this.fileUploadDirective().triggerClick();
   }
 
