@@ -324,7 +324,7 @@ export class SiChatInputComponent implements AfterViewInit, OnDestroy {
   protected readonly hasAttachments = computed(() => this.attachments().length > 0);
   protected readonly hasActions = computed(() => this.actions().length > 0);
   protected readonly hasSecondaryActions = computed(() => this.secondaryActions().length > 0);
-  protected readonly allMenuActions = computed<MenuItem[]>(() => [
+  protected readonly combinedMenuActions = computed<MenuItem[]>(() => [
     ...(this.allowAttachments()
       ? [
           {
@@ -336,15 +336,6 @@ export class SiChatInputComponent implements AfterViewInit, OnDestroy {
           } satisfies MenuItem
         ]
       : []),
-    ...this.actions().map(
-      (a): MenuItem => ({
-        type: 'action' as const,
-        label: a.label,
-        icon: a.icon,
-        disabled: a.disabled,
-        action: (param: unknown) => a.action(param, a)
-      })
-    ),
     ...this.secondaryActions()
   ]);
 

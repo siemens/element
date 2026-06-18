@@ -33,17 +33,19 @@
 
   <div class="d-flex align-items-center justify-content-between">
     <div class="btn-group" role="group">
-      <input
-        #fileInput
-        type="file"
-        class="d-none"
-        siFileUpload
-        [accept]="accept()"
-        [maxFileSize]="maxFileSize()"
-        [multiple]="true"
-        (validFiles)="onFilesAdded($event)"
-        (fileError)="onFileError($event)"
-      />
+      @if (allowAttachments()) {
+        <input
+          #fileInput
+          type="file"
+          class="d-none"
+          siFileUpload
+          [accept]="accept()"
+          [maxFileSize]="maxFileSize()"
+          [multiple]="true"
+          (validFiles)="onFilesAdded($event)"
+          (fileError)="onFileError($event)"
+        />
+      }
 
       @if (hasMenuActions()) {
         <button
@@ -57,10 +59,24 @@
         </button>
 
         <ng-template #allActionsMenu>
-          <si-menu-factory [items]="allMenuActions()" [actionParam]="actionParam()" />
+          <si-menu-factory [items]="combinedMenuActions()" [actionParam]="actionParam()" />
         </ng-template>
       }
       <ng-content />
+
+      @if (hasActions()) {
+        @for (action of actions(); track $index) {
+          <button
+            type="button"
+            class="btn btn-tertiary-ghost btn-icon"
+            [disabled]="action.disabled"
+            [attr.aria-label]="action.label | translate"
+            (click)="action.action(actionParam(), action)"
+          >
+            <si-icon [icon]="action.icon" />
+          </button>
+        }
+      }
     </div>
 
     <button
