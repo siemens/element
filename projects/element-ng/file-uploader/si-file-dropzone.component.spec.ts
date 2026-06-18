@@ -126,7 +126,7 @@ describe('SiFileDropzoneComponent', () => {
     uploadTextFileSelect.set('browse files');
     uploadDropText.set('droppi droppi');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file span')!).toHaveTextContent('browse files');
+    expect(element.querySelector('.select-file')!).toHaveTextContent('browse files');
     expect(element.querySelector('.drag-and-drop-description')!).toHaveTextContent('droppi droppi');
   });
 
@@ -177,7 +177,7 @@ describe('SiFileDropzoneComponent', () => {
   it('should allow one to define accepted mime types', async () => {
     accept.set('image/*');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file input')!).toHaveAttribute(
+    expect(element.querySelector('.select-file ~ input')!).toHaveAttribute(
       'accept',
       expect.stringContaining('image/*')
     );

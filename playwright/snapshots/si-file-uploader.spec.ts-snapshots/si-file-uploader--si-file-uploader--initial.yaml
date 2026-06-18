@@ -1,4 +1,6 @@
-- text: "/Drop files here or click to upload Max\\. [\\d,.]+[bkmBKM]+ upload size\\. Accepted file types: image\\/\\*\\./"
+- text: Drop files here or
+- button "click to upload"
+- text: "/Max\\. [\\d,.]+[bkmBKM]+ upload size\\. Accepted file types: image\\/\\*\\./"
 - button "Clear" [disabled]
 - button "Upload" [disabled]
 - text: si-file-uploader settings
@@ -8,9 +10,9 @@
 - text: Auto-upload mode
 - checkbox "Upload directory"
 - text: Upload directory Max. files
-- spinbutton "Max. files"
+- spinbutton "Max. files": /\d+/
 - text: Max. concurrent uploads
-- spinbutton "Max. concurrent uploads"
+- spinbutton "Max. concurrent uploads": "3"
 - text: Demo settings
 - checkbox "Upload shall fail"
 - text: Upload shall fail

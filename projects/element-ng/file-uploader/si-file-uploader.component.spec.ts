@@ -135,7 +135,7 @@ describe('SiFileUploaderComponent', () => {
     clearButtonText.set('Reset');
     uploadButtonText.set('Do it');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file span')!).toHaveTextContent('browse files');
+    expect(element.querySelector('.select-file')!).toHaveTextContent('browse files');
     expect(element.querySelector('.drag-and-drop-description')!).toHaveTextContent('droppi droppi');
     expect(getClearButton()).toHaveTextContent('Reset');
     expect(getUploadButton()).toHaveTextContent('Do it');
@@ -174,7 +174,7 @@ describe('SiFileUploaderComponent', () => {
   it('should allow one to define accepted mime types', async () => {
     accept.set('image/*');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file input')!).toHaveAttribute(
+    expect(element.querySelector('.select-file ~ input')!).toHaveAttribute(
       'accept',
       expect.stringContaining('image/*')
     );
