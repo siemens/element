@@ -101,9 +101,9 @@ export interface DataZoomEvent {
     // (undocumented)
     autoZoomUpdate?: boolean;
     // (undocumented)
-    rangeEnd: any;
+    rangeEnd: number;
     // (undocumented)
-    rangeStart: any;
+    rangeStart: number;
     // (undocumented)
     rangeType: AxisType;
     // (undocumented)
@@ -117,15 +117,15 @@ export interface DataZoomEvent {
 // @public (undocumented)
 export interface DataZoomRange {
     // (undocumented)
-    end?: any;
+    end?: number;
     // (undocumented)
-    endValue?: any;
+    endValue?: number | string | Date;
     // (undocumented)
-    start?: any;
+    start?: number;
     // (undocumented)
-    startValue?: any;
+    startValue?: number | string | Date;
     // (undocumented)
-    visibleWidth?: any;
+    visibleWidth?: number;
 }
 
 // @public (undocumented)
