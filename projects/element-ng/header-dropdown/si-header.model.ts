@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ConnectedPosition } from '@angular/cdk/overlay';
-import { InjectionToken } from '@angular/core';
-import { Observable } from 'rxjs';
+import { InjectionToken, Signal } from '@angular/core';
 
 import { SiHeaderDropdownTriggerDirective } from './si-header-dropdown-trigger.directive';
 
@@ -13,7 +12,7 @@ export interface HeaderWithDropdowns {
   /** Called whenever an item is triggered that is not opening another dropdown. */
   onDropdownItemTriggered?(): void;
   /** Whether the dropdown should be opened inline. */
-  inlineDropdown?: Observable<boolean>;
+  inlineDropdown: Signal<boolean>;
   /** The position of the dropdown if opened in an overlay. */
   overlayPosition?: ConnectedPosition[];
   /** Called whenever a dropdown is opened **/

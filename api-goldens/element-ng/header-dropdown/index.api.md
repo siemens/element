@@ -8,11 +8,11 @@ import * as _angular_core from '@angular/core';
 import { ConnectedPosition } from '@angular/cdk/overlay';
 import { InjectionToken } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
-import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as _siemens_element_ng_header_dropdown from '@siemens/element-ng/header-dropdown';
+import { Signal } from '@angular/core';
 import { TemplateRef } from '@angular/core';
 
 // @public
@@ -31,6 +31,7 @@ export class SiHeaderDropdownItemComponent {
 
 // @public
 export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDestroy {
+    constructor();
     close(options?: {
         all?: boolean;
     }): void;

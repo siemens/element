@@ -8,6 +8,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   ElementRef,
   inject,
   Injector,
@@ -15,8 +16,10 @@ import {
   OnDestroy,
   signal,
   TemplateRef,
+  untracked,
   viewChild
 } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { elementMenu, elementThumbnails } from '@siemens/element-icons';
 import {
   HeaderWithDropdowns,
@@ -26,8 +29,8 @@ import {
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS, Breakpoints } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
-import { defer, of, Subject } from 'rxjs';
-import { map, skip, takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 /** Root component for the application header. */
 @Component({
@@ -83,20 +86,30 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
   });
 
   /** @internal */
-  // defer is required to re-check the current breakpoint as it may change.
-  readonly inlineDropdown = defer(() => {
-    const expandBreakpoint = this.expandBreakpoint();
-    if (expandBreakpoint === 'never') {
-      return of(true);
-    }
-    return this.breakpointObserver
-      .observe(
-        `(min-width: ${
-          BOOTSTRAP_BREAKPOINTS[(expandBreakpoint + 'Minimum') as keyof Breakpoints]
-        }px)`
-      )
-      .pipe(map(({ matches }) => !matches));
-  });
+  readonly inlineDropdown = toSignal(
+    toObservable(this.expandBreakpoint).pipe(
+      switchMap(expandBreakpoint => {
+        if (expandBreakpoint === 'never') {
+          return of(true);
+        }
+        return this.breakpointObserver
+          .observe(
+            `(min-width: ${
+              BOOTSTRAP_BREAKPOINTS[(expandBreakpoint + 'Minimum') as keyof Breakpoints]
+            }px)`
+          )
+          .pipe(map(({ matches }) => !matches));
+      })
+    ),
+    { initialValue: false }
+  );
+
+  constructor() {
+    effect(() => {
+      this.inlineDropdown();
+      untracked(() => this.closeMobileMenus.next());
+    });
+  }
 
   ngOnDestroy(): void {
     this.closeMobileSub.unsubscribe();
@@ -177,9 +190,6 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
       this.closeMobileMenus.next();
       this.mobileNavigationExpanded.set(true);
       this.dropdownOpened();
-      this.inlineDropdown
-        .pipe(skip(1), takeUntil(this.closeMobileMenus))
-        .subscribe(() => this.closeMobileMenus.next());
       this.focusTrap().focusTrap.focusFirstTabbableElementWhenReady();
     }
   }

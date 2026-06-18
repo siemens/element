@@ -16,7 +16,6 @@ import { MenuItem } from '@siemens/element-ng/common';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import * as rxjs from 'rxjs';
 import { SiApplicationHeaderComponent } from '@siemens/element-ng/application-header';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SiHeaderCollapsibleActionsComponent } from '@siemens/element-ng/application-header';

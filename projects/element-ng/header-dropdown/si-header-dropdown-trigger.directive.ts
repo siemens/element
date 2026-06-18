@@ -9,6 +9,7 @@ import {
   Component,
   ComponentRef,
   Directive,
+  effect,
   ElementRef,
   EmbeddedViewRef,
   inject,
@@ -19,10 +20,11 @@ import {
   OnInit,
   output,
   TemplateRef,
+  untracked,
   ViewContainerRef
 } from '@angular/core';
-import { of, Subject } from 'rxjs';
-import { filter, skip, take, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, take, takeUntil } from 'rxjs/operators';
 
 import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
 
@@ -101,6 +103,17 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
 
   private headerAnchorComponentRef?: ComponentRef<SiHeaderAnchorComponent>;
 
+  constructor() {
+    effect(() => {
+      const inline = this.navbar?.inlineDropdown() ?? false;
+      untracked(() => {
+        if (this._isOpen && inline === this.isOverlay) {
+          this.close();
+        }
+      });
+    });
+  }
+
   /** Whether the dropdown is open. */
   get isOpen(): boolean {
     return this._isOpen;
@@ -134,15 +147,10 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
       return;
     }
 
-    (this.navbar?.inlineDropdown ?? of(false)).pipe(take(1)).subscribe(inline => {
-      this._isOpen = true;
-      if (!inline) {
-        this.attachDropdownOverlay();
-      }
-      this.navbar?.inlineDropdown
-        ?.pipe(skip(1), takeUntil(this.dropdownClose))
-        .subscribe(() => this.close());
-    });
+    this._isOpen = true;
+    if (!(this.navbar?.inlineDropdown() ?? false)) {
+      this.attachDropdownOverlay();
+    }
 
     if (this.parent) {
       this.parent.openSubmenu = this;
