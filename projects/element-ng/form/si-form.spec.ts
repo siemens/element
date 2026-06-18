@@ -231,7 +231,6 @@ describe('SiForm', () => {
       const field = await loader.getHarness(SiFormItemHarness.with({ label: 'Input' }));
       expect(await field.isRequired()).toBe(true);
       fixture.componentInstance.required.set(false);
-
       await fixture.whenStable();
       expect(await field.isRequired()).toBe(false);
     });

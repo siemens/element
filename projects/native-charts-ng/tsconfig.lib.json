@@ -7,9 +7,6 @@
     "types": []
   },
   "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true,
     "compilationMode": "partial"
   },
   "include": ["./**/*.ts"],

@@ -73,7 +73,7 @@ import { AppItem, AppItemCategory } from './si-navbar-primary.model';
     }
   `,
   providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: SiNavbarPrimaryComponent }],
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns {
   /**

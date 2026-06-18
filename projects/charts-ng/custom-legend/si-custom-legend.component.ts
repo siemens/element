@@ -17,7 +17,7 @@ import { CustomLegend, CustomLegendItem } from './si-custom-legend.interface';
   selector: 'si-custom-legend',
   templateUrl: './si-custom-legend.component.html',
   styleUrl: './si-custom-legend.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiCustomLegendComponent {
   /** @internal */

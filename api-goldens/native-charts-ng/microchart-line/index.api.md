@@ -5,7 +5,6 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { Coordinate } from '@siemens/native-charts-ng/utils';
 
 // @public (undocumented)
 export interface MicrochartLineSeries {

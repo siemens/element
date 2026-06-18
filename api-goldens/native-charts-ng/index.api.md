@@ -5,7 +5,24 @@
 ```ts
 
 import * as i0 from '@angular/core';
-import * as i1 from '@siemens/native-charts-ng/gauge';
+import { OnChanges } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
+
+// @public
+export interface GaugeSegment {
+    colorToken: string;
+    endValue: number;
+}
+
+// @public
+export interface GaugeSeries {
+    colorToken: string;
+    description?: string;
+    id?: string;
+    name: string;
+    value: number;
+}
 
 // @public (undocumented)
 class SiNativeChartsNgModule {
@@ -13,8 +30,26 @@ class SiNativeChartsNgModule {
 export { SiNativeChartsNgModule }
 export { SiNativeChartsNgModule as SimplNativeChartsNgModule }
 
-
-export * from "@siemens/native-charts-ng/gauge";
+// @public (undocumented)
+export class SiNChartGaugeComponent implements OnInit, OnChanges {
+    readonly axisLabelFormatter: i0.InputSignal<((val: number) => string) | undefined>;
+    readonly axisNumberOfDecimals: i0.InputSignal<number>;
+    readonly endAngle: i0.InputSignalWithTransform<number, unknown>;
+    readonly legendPosition: i0.InputSignal<"row" | "column">;
+    readonly max: i0.InputSignalWithTransform<number, unknown>;
+    readonly maxNumberOfDecimals: i0.InputSignal<number>;
+    readonly min: i0.InputSignalWithTransform<number, unknown>;
+    readonly minNumberOfDecimals: i0.InputSignal<number>;
+    readonly mode: i0.InputSignal<"sum" | "single">;
+    readonly segments: i0.InputSignal<GaugeSegment[]>;
+    readonly series: i0.InputSignal<GaugeSeries[]>;
+    readonly showLegend: i0.InputSignalWithTransform<boolean, unknown>;
+    readonly showRangeLabelsOutside: i0.InputSignalWithTransform<boolean, unknown>;
+    readonly showTicks: i0.InputSignalWithTransform<boolean, unknown>;
+    readonly startAngle: i0.InputSignalWithTransform<number, unknown>;
+    readonly unit: i0.InputSignal<string>;
+    readonly valueFormatter: i0.InputSignal<((val: number) => string) | undefined>;
+}
 
 // (No @packageDocumentation comment for this package)
 

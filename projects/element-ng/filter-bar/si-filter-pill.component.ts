@@ -15,7 +15,7 @@ import { Filter } from './filter';
   imports: [NgTemplateOutlet, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-filter-pill.component.html',
   styleUrl: './si-filter-pill.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFilterPillComponent {
   protected readonly icons = addIcons({ elementCancel });

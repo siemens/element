@@ -6,7 +6,6 @@
 
 import { AfterContentInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
-import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { OnChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';

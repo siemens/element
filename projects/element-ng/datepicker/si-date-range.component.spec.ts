@@ -210,7 +210,7 @@ describe('SiDateRangeComponent', () => {
     await fixture.whenStable();
 
     const dateRange = vi.mocked(spy).mock.lastCall![0]!;
-    expect(dateRange.end).toBeNull();
+    expect(dateRange.end).toBeUndefined();
     expect(dateRange.start).toEqual(new Date(2023, 4, 1));
   });
 

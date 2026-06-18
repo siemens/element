@@ -28,7 +28,7 @@ import { SiDashboardService } from './si-dashboard.service';
   imports: [SiCardHeaderComponent, SiTranslatePipe],
   templateUrl: './si-dashboard-card.component.html',
   styleUrl: './si-dashboard-card.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class.elevation-2]': 'isExpanded()',
     '[class.expanded]': 'isExpanded()',

@@ -57,7 +57,7 @@ type ViewState = 'dashboard' | 'catalog' | 'editor';
   imports: [SiDashboardComponent, SiDashboardToolbarComponent, SiGridComponent, AsyncPipe],
   templateUrl: './si-flexible-dashboard.component.html',
   styleUrl: './si-flexible-dashboard.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestroy {
   /**

@@ -18,7 +18,7 @@ import { SiFormlyFormFieldProviderDirective } from './si-formly-form-field-provi
     SiValidationErrorIdPipe
   ],
   templateUrl: './si-formly-wrapper.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlyWrapperComponent extends FieldWrapper {
   protected get label(): string {

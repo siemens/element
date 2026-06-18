@@ -46,7 +46,7 @@ import { SiWidgetEditorBase } from '../si-widget-editor-base';
   ],
   templateUrl: './si-widget-catalog.component.html',
   styleUrl: './si-widget-catalog.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnInit {
   /**

@@ -11,7 +11,7 @@ import { Icon } from '../../icon.service';
   imports: [],
   templateUrl: './app-icon-container.component.html',
   styleUrl: './app-icon-container.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '(click)': 'copyIconName()'
   }

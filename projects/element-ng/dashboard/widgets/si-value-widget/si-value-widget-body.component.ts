@@ -16,7 +16,7 @@ import { SiWidgetBaseDirective } from '../si-widget-base.directive';
   selector: 'si-value-widget-body',
   imports: [SiIconComponent, SiStatusIconComponent, SiTranslatePipe],
   templateUrl: './si-value-widget-body.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiValueWidgetBodyComponent
   extends SiWidgetBaseDirective<TranslatableString>

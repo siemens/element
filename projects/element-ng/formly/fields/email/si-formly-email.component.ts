@@ -12,7 +12,7 @@ import { SiValidationErrorIdPipe } from '../../utils';
   selector: 'si-formly-email',
   imports: [FormsModule, ReactiveFormsModule, FormlyModule, SiValidationErrorIdPipe],
   templateUrl: './si-formly-email.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlyEmailComponent extends FieldType<FieldTypeConfig> {
   // Patterns are not recommended to validate email addresses.

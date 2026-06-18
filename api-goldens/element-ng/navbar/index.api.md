@@ -5,22 +5,20 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { App } from '@siemens/element-ng/application-header';
-import { AppCategory } from '@siemens/element-ng/application-header';
+import { ConnectedPosition } from '@angular/cdk/overlay';
 import { DoCheck } from '@angular/core';
-import { EntityStatusType } from '@siemens/element-ng/common';
-import { FavoriteChangeEvent } from '@siemens/element-ng/application-header';
-import { HeaderWithDropdowns } from '@siemens/element-ng/header-dropdown';
-import { Link } from '@siemens/element-ng/link';
-import { MenuItem } from '@siemens/element-ng/common';
+import { InjectionToken } from '@angular/core';
+import { Injector } from '@angular/core';
+import { IsActiveMatchOptions } from '@angular/router';
+import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { SiApplicationHeaderComponent } from '@siemens/element-ng/application-header';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
-import { SiHeaderCollapsibleActionsComponent } from '@siemens/element-ng/application-header';
-import { SiHeaderDropdownTriggerDirective } from '@siemens/element-ng/header-dropdown';
+import { Signal } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
+import { Subject } from 'rxjs';
+import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public @deprecated (undocumented)

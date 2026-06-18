@@ -165,7 +165,7 @@ The overriding of text keys is available for every framework except `@angular/lo
 Overrides are declared like this:
 
 ```ts
-import { provideSiTranslatableOverrides } from '@siemens/element-ng/translate';
+import { provideSiTranslatableOverrides } from '@siemens/element-translate-ng/translate';
 
 @NgModule({
   providers: [

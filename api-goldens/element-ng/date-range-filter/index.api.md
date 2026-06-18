@@ -5,9 +5,6 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { DatepickerConfig } from '@siemens/element-ng/datepicker';
-import { DatepickerInputConfig } from '@siemens/element-ng/datepicker';
-import { DateRange } from '@siemens/element-ng/datepicker';
 import { OnChanges } from '@angular/core';
 import { PipeTransform } from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';

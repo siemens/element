@@ -25,7 +25,7 @@ echarts.use([BarChart, GridComponent, LegacyGridContainLabel]);
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../common/si-chart-base.component.html',
   styleUrl: '../common/si-chart-base.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiChartProgressBarComponent extends SiChartBaseComponent {
   /** The series for the chart. */

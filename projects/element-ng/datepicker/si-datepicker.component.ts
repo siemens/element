@@ -71,7 +71,7 @@ export type RangeType = 'START' | 'END' | undefined;
   ],
   templateUrl: './si-datepicker.component.html',
   styleUrl: './si-datepicker.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   private readonly locale = inject(LOCALE_ID).toString();

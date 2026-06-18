@@ -20,7 +20,7 @@ import { SiValidationErrorIdPipe } from '../../utils';
   imports: [FormsModule, ReactiveFormsModule, FormlyModule, SiValidationErrorIdPipe],
   templateUrl: './si-formly-textarea.component.html',
   styleUrl: './si-formly-textarea.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlyTextareaComponent
   extends FieldType<FieldTypeConfig>

@@ -18,13 +18,13 @@
   "bugs": "https://github.com/siemens/element/issues/new",
   "type": "module",
   "peerDependencies": {
-    "@angular/common": "21 - 22",
-    "@angular/core": "21 - 22",
+    "@angular/common": "22",
+    "@angular/core": "22",
     "@siemens/element-ng": "49.13.0",
     "@siemens/element-theme": "49.13.0",
     "gridstack": "^12.3.3",
     "@angular-architects/module-federation": "^20.0.0 || ^21.0.0",
-    "@angular-architects/native-federation": "^21.1.0",
+    "@angular-architects/native-federation": "^22.0.0",
     "@module-federation/enhanced": "^2.0.0",
     "@module-federation/runtime": "^2.0.0"
   },

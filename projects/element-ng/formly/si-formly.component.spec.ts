@@ -7,8 +7,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { SiTranslateService } from '@siemens/element-ng/translate';
-import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
+import {
+  SiTranslateService,
+  provideMockTranslateServiceBuilder
+} from '@siemens/element-translate-ng/translate';
 import { JSONSchema7 } from 'json-schema';
 import { of } from 'rxjs';
 

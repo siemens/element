@@ -27,7 +27,7 @@ import { IDateComp, IDateParams } from 'ag-grid-community';
       />
     </si-calendar-button>
   `,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AgDateInputComponent implements IDateComp, OnDestroy {
   private elementRef = inject(ElementRef);

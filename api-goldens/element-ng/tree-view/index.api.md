@@ -12,18 +12,17 @@ import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { FocusableOption } from '@angular/cdk/a11y';
-import { MenuItem } from '@siemens/element-ng/common';
-import { MenuItem as MenuItem_2 } from '@siemens/element-ng/menu';
+import { NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import * as _siemens_element_ng_tree_view from '@siemens/element-ng/tree-view';
 import { Signal } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
 
 // @public (undocumented)
 export const addChildItem: (parent: TreeItem, child: TreeItem, position?: number, callback?: (item: TreeItem) => void) => void;

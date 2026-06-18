@@ -43,7 +43,7 @@ import { SiWidgetInstanceEditorDialogComponent } from '../widget-instance-editor
   imports: [SiGridstackWrapperComponent, SiLoadingSpinnerDirective, AsyncPipe],
   templateUrl: './si-grid.component.html',
   styleUrl: './si-grid.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
   private storeSubscription?: Subscription;

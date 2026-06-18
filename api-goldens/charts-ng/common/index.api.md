@@ -10,13 +10,10 @@ import { AxisPointerComponentOption } from 'echarts';
 import { BarSeriesOption } from 'echarts';
 import { BrushComponentOption } from 'echarts';
 import { CandlestickSeriesOption } from 'echarts';
-import { CustomLegend } from '@siemens/charts-ng/custom-legend';
-import { CustomLegendItem } from '@siemens/charts-ng/custom-legend';
-import { CustomLegendProps } from '@siemens/charts-ng/custom-legend';
 import { CustomSeriesOption } from 'echarts';
 import { DatasetComponentOption } from 'echarts';
 import { DataZoomComponentOption } from 'echarts';
-import * as echarts_2 from 'echarts/core';
+import * as echarts from 'echarts/core';
 import { ElementRef } from '@angular/core';
 import { GaugeSeriesOption } from 'echarts';
 import { GridComponentOption } from 'echarts';
@@ -33,7 +30,6 @@ import { PieSeriesOption } from 'echarts';
 import { PolarComponentOption } from 'echarts';
 import { SankeySeriesOption } from 'echarts';
 import { ScatterSeriesOption } from 'echarts';
-import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SimpleChanges } from '@angular/core';
 import { SingleAxisComponentOption } from 'echarts';
 import { SunburstSeriesOption } from 'echarts';
@@ -142,7 +138,7 @@ export interface EChartOption {
     series?: EChartSeries;
 }
 
-export { echarts_2 as echarts }
+export { echarts }
 
 // @public (undocumented)
 export type EChartSeries = EChartSeriesOption[];
@@ -249,7 +245,7 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
     readonly dataZoomMaxValueSpan: _angular_core.InputSignal<number | undefined>;
     readonly dataZoomMinValueSpan: _angular_core.InputSignal<number | undefined>;
     readonly dataZoomRange: _angular_core.InputSignal<DataZoomRange | undefined>;
-    dispatchEChartAction(action: echarts_2.Payload): void;
+    dispatchEChartAction(action: echarts.Payload): void;
     readonly eChartContainerHeight: _angular_core.InputSignal<string | null | undefined>;
     readonly externalXAxisFormatter: _angular_core.InputSignal<((value: any, visibleRange: number) => string) | undefined>;
     readonly externalZoomSlider: _angular_core.InputSignal<boolean>;

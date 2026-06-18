@@ -20,7 +20,7 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-password-toggle.component.html',
   styleUrl: './si-password-toggle.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'form-control-wrapper',
     '[class.show-visibility-icon]': 'showVisibilityIcon()'

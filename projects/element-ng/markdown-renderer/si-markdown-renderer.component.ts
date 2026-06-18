@@ -21,7 +21,7 @@ import { getMarkdownRenderer } from './markdown-renderer';
 @Component({
   selector: 'si-markdown-renderer',
   template: ``,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiMarkdownRendererComponent {
   private sanitizer = inject(DomSanitizer);

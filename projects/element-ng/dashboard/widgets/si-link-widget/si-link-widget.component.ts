@@ -24,7 +24,7 @@ import { SiWidgetBaseDirective } from '../si-widget-base.directive';
   selector: 'si-link-widget',
   imports: [SiIconComponent, SiLinkDirective, SiTranslatePipe],
   templateUrl: './si-link-widget.component.html',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'si-link-widget' }
 })
 export class SiLinkWidgetComponent extends SiWidgetBaseDirective<Link[]> {

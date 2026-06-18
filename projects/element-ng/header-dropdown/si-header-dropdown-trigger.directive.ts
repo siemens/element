@@ -31,7 +31,7 @@ import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
 
 @Component({
   template: '',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { '[attr.aria-owns]': 'ariaOwns()' }
 })
 class SiHeaderAnchorComponent {

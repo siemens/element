@@ -10,7 +10,7 @@ import { ElementRef } from '@angular/core';
 import { FlexibleConnectedPositionStrategy } from '@angular/cdk/overlay';
 import * as i0 from '@angular/core';
 import { InjectionToken } from '@angular/core';
-import { Link } from '@siemens/element-ng/link';
+import { NavigationExtras } from '@angular/router';
 import { Overlay } from '@angular/cdk/overlay';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { PositionStrategy } from '@angular/cdk/overlay';

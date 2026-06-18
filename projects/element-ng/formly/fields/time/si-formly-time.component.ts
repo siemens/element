@@ -23,7 +23,7 @@ import { SiValidationErrorIdPipe } from '../../utils';
     [readonly]="props.readonly || false"
     [errormessageId]="id | siValidationErrorId"
   />`,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlyTimeComponent extends FieldType<FieldTypeConfig> implements OnInit {
   ngOnInit(): void {

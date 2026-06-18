@@ -19,7 +19,7 @@ import { SiWebComponentWrapperBaseComponent } from './si-web-component-wrapper-b
 @Component({
   selector: 'si-web-component-wrapper',
   templateUrl: './si-web-component-wrapper.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiWebComponentWrapperComponent
   extends SiWebComponentWrapperBaseComponent<WidgetInstance>

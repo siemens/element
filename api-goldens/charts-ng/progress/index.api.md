@@ -4,8 +4,27 @@
 
 ```ts
 
+import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
-import { SiChartBaseComponent } from '@siemens/charts-ng/common';
+import { BarSeriesOption } from 'echarts';
+import { CandlestickSeriesOption } from 'echarts';
+import { CustomSeriesOption } from 'echarts';
+import { DataZoomComponentOption } from 'echarts';
+import * as echarts from 'echarts/core';
+import { ElementRef } from '@angular/core';
+import { GaugeSeriesOption } from 'echarts';
+import { GridComponentOption } from 'echarts';
+import { HeatmapSeriesOption } from 'echarts';
+import { LegendComponentOption } from 'echarts';
+import { LineSeriesOption } from 'echarts';
+import { OnChanges } from '@angular/core';
+import { OnDestroy } from '@angular/core';
+import { OnInit } from '@angular/core';
+import { PieSeriesOption } from 'echarts';
+import { SankeySeriesOption } from 'echarts';
+import { ScatterSeriesOption } from 'echarts';
+import { SimpleChanges } from '@angular/core';
+import { SunburstSeriesOption } from 'echarts';
 
 // @public (undocumented)
 export interface ProgressChartSeries {

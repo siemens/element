@@ -37,7 +37,7 @@ import { INoRowsOverlayParams } from 'ag-grid-community';
       width: 100%;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AgNoRowsOverlayComponent {
   /**

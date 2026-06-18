@@ -5,11 +5,9 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { MenuItem } from '@siemens/element-ng/common';
-import { MenuItem as MenuItem_2 } from '@siemens/element-ng/menu';
+import { NavigationExtras } from '@angular/router';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
-import { ViewType } from '@siemens/element-ng/content-action-bar';
+import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
 
 // @public
 export class SiActionCardComponent extends SiCardBaseDirective {

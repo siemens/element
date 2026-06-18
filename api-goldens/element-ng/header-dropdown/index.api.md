@@ -7,13 +7,13 @@
 import * as _angular_core from '@angular/core';
 import { ConnectedPosition } from '@angular/cdk/overlay';
 import { InjectionToken } from '@angular/core';
-import { MenuItem } from '@siemens/element-ng/common';
+import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import * as _siemens_element_ng_header_dropdown from '@siemens/element-ng/header-dropdown';
 import { Signal } from '@angular/core';
 import { TemplateRef } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
 export class SiHeaderDropdownComponent {

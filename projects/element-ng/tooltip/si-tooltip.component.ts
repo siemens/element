@@ -24,7 +24,7 @@ import { SI_TOOLTIP_CONFIG } from './si-tooltip.model';
   imports: [NgTemplateOutlet, SiTranslatePipe, NgComponentOutlet],
   templateUrl: './si-tooltip.component.html',
   styleUrl: './si-tooltip.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     'animate.leave': 'tooltip-leave'
   }

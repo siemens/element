@@ -11,6 +11,6 @@ import { SampleComponent } from './example.component';
   selector: 'app-root',
   imports: [SampleComponent],
   template: `<app-sample />`,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AppComponent {}

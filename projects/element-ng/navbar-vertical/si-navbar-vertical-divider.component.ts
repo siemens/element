@@ -9,6 +9,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'si-navbar-vertical-divider',
   template: '',
   styleUrl: './si-navbar-vertical-divider.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiNavbarVerticalDividerComponent {}

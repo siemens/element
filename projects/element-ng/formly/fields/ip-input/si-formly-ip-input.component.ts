@@ -19,6 +19,6 @@ import { SiValidationErrorIdPipe } from '../../utils';
     SiValidationErrorIdPipe
   ],
   templateUrl: './si-formly-ip-input.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlyIpInputComponent extends FieldType<FieldTypeConfig> {}

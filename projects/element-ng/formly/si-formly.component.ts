@@ -23,7 +23,7 @@ import { JSONSchema7 } from 'json-schema';
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false,
   templateUrl: './si-formly.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlyComponent<
   TControl extends { [K in keyof TControl]: AbstractControl }

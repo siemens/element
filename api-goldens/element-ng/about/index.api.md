@@ -6,10 +6,10 @@
 
 import * as _angular_core from '@angular/core';
 import * as _angular_platform_browser from '@angular/platform-browser';
-import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
-import { Link } from '@siemens/element-ng/link';
+import { NavigationExtras } from '@angular/router';
 import { OnInit } from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export interface ApiInfo {

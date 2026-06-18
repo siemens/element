@@ -6,15 +6,10 @@
 
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
-import { MenuItem } from '@siemens/element-ng/common';
-import { MenuItem as MenuItem_2 } from '@siemens/element-ng/menu';
-import { MenuItemAction } from '@siemens/element-ng/menu';
-import { MenuItemCheckbox } from '@siemens/element-ng/menu';
-import { MenuItemGroup } from '@siemens/element-ng/menu';
-import { MenuItemLink } from '@siemens/element-ng/menu';
-import { MenuItemRadio } from '@siemens/element-ng/menu';
-import { MenuItemRouterLink } from '@siemens/element-ng/menu';
+import { NavigationExtras } from '@angular/router';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
 
 // @public (undocumented)
 export type ContentActionBarMainItem = (MenuItemAction | MenuItemCheckbox | MenuItemLink | MenuItemRouterLink | MenuItemGroup) & {

@@ -6,9 +6,9 @@
 
 import * as i0 from '@angular/core';
 import * as i1 from '@angular/cdk/menu';
-import { MenuItem as MenuItem_2 } from '@siemens/element-ng/common';
 import { NavigationExtras } from '@angular/router';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
+import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export interface MenuDivider {

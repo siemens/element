@@ -16,7 +16,7 @@ import { IsoLanguageValue } from './iso-language-value';
   imports: [SiTranslatePipe],
   templateUrl: './si-language-switcher.component.html',
   styleUrl: './si-language-switcher.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiLanguageSwitcherComponent {
   /**

@@ -34,7 +34,7 @@ import { availableDevices, Device } from './devices';
   imports: [FormsModule, SiLivePreviewQrComponent],
   templateUrl: './si-live-preview-iframe.component.html',
   styleUrl: './si-live-preview-iframe.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
   readonly previewIframe = viewChild<ElementRef>('previewIframe');

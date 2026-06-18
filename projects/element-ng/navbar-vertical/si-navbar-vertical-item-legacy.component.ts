@@ -33,7 +33,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
   ],
   templateUrl: './si-navbar-vertical-item-legacy.component.html',
   styleUrl: './si-navbar-vertical-item-legacy.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     'class': 'd-block mb-4'
   }

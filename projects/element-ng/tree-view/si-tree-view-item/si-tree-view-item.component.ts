@@ -59,7 +59,7 @@ import {
   ],
   templateUrl: './si-tree-view-item.component.html',
   styleUrl: './si-tree-view-item.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     role: 'treeitem',
     '[attr.tabindex]':

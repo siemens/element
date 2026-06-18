@@ -19,7 +19,7 @@ import { CircleChartSeries } from './si-chart-circle.interface';
       [subTitle]="subTitle"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestHostComponent {
   readonly chartCircleComponent = viewChild.required(SiChartCircleComponent);

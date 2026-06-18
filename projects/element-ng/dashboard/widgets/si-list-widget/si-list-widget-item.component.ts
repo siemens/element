@@ -41,7 +41,7 @@ export interface SiListWidgetItem {
   selector: 'si-list-widget-item',
   imports: [SiIconComponent, SiLinkDirective, SiTranslatePipe],
   templateUrl: './si-list-widget-item.component.html',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'list-group-item d-flex align-items-center',
     role: 'listitem'

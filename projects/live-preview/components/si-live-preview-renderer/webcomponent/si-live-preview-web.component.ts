@@ -19,7 +19,7 @@ import { SiLivePreviewConfig } from '../../../interfaces/live-preview-config';
 @Component({
   selector: 'si-live-preview-webcomponent',
   template: '<div #root id="app"></div>',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiLivePreviewWebComponent implements OnChanges {
   readonly root = viewChild.required('root', { read: ElementRef });

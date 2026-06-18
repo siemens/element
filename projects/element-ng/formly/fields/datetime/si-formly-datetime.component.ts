@@ -19,7 +19,7 @@ import { SiValidationErrorIdPipe } from '../../utils';
     SiValidationErrorIdPipe
   ],
   templateUrl: './si-formly-datetime.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlyDateTimeComponent extends FieldType<FieldTypeConfig> implements OnInit {
   ngOnInit(): void {

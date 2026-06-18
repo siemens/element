@@ -5,7 +5,6 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { StatusType } from '@siemens/element-ng/common';
 
 // @public (undocumented)
 export type BadgeType = StatusType | 'default' | 'inverse' | 'info-emphasis' | 'success-emphasis' | 'warning-emphasis' | 'danger-emphasis' | 'critical-emphasis' | 'caution-emphasis';

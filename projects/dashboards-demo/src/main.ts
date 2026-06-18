@@ -34,7 +34,8 @@ import { environment } from './environments/environment';
      * 3. Create a Module Federation runtime instance for Webpack-based remotes
      * 4. Register both widget loaders to support mixed federation environments
      */
-    const { getShared, initFederation } = await import('@angular-architects/native-federation');
+    const { initFederation } = await import('@angular-architects/native-federation');
+    const { getShared } = await import('@softarc/native-federation-runtime');
 
     const { createInstance } = await import('@module-federation/runtime');
 
