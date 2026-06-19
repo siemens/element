@@ -15,7 +15,8 @@
   gap: map.get(variables.$spacers, 5);
 
   &:hover,
-  &:active {
+  &:active,
+  &:focus-within {
     background-color: variables.$element-base-input-experimental;
     border-color: variables.$element-ui-1;
   }
@@ -53,7 +54,6 @@
 
 .input-wrapper:has(.chat-textarea:focus-visible) {
   @include variables.make-outline-focus();
-  border-color: variables.$element-ui-1;
 }
 
 .disclaimer-wrapper:empty {
