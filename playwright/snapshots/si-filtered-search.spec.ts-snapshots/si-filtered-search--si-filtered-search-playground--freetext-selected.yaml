@@ -2,7 +2,7 @@
 - button "clear"
 - text: my free text
 - button "clear"
-- combobox "search"
+- combobox "search" [expanded]
 - button "clear"
 - button "Submit search"
 - text: Control panel
@@ -33,3 +33,10 @@
 - textbox "Search criteria input":
   - /placeholder: "Enter and assign search criteria as JSON e.g. { \"criterias\": [], \"value\": \"test\" }"
   - text: "{ \"criteria\": [{\"name\":\"location\", \"value\":\"Munich\"}], \"value\": \"\" }"
+- listbox "Suggestions":
+  - option "Country"
+  - option "Event"
+  - option "Location"
+  - option "Name"
+  - option "Score"
+  - option "Test Result"

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, computed, input } from '@angular/core';
-import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
+import { BackgroundColorVariant, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -51,6 +51,13 @@ export class SiCardComponent extends SiCardBaseDirective {
    * @defaultValue ''
    */
   readonly actionBarTitle = input<TranslatableString>('');
+  /**
+   * Color variant of the background surface the card sits on.
+   *
+   * @defaultValue 'base-1'
+   */
+  readonly colorVariant = input<BackgroundColorVariant>('base-1');
+
   /**
    * Returns `true` when primary or secondary actions are set.
    */
