@@ -22,6 +22,7 @@ documentation.
 ## C
 
 - [Cards](layout-navigation/cards.md)
+- [Carousel](layout-navigation/carousel.md)
 - [Charts](charts/index.md)
 - [Checkbox](forms-inputs/checkbox.md)
 - [Circle Chart](charts/circle-chart.md)
