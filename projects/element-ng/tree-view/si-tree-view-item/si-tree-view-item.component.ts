@@ -7,6 +7,7 @@ import { CdkContextMenuTrigger, CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -58,6 +59,7 @@ import {
   ],
   templateUrl: './si-tree-view-item.component.html',
   styleUrl: './si-tree-view-item.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     role: 'treeitem',
     '[attr.tabindex]':

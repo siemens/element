@@ -12,6 +12,7 @@ import {
   AfterViewChecked,
   AfterViewInit,
   booleanAttribute,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -115,6 +116,7 @@ const rootDefaults: TreeItem = {
     SiTreeViewVirtualizationService,
     { provide: SI_TREE_VIEW, useExisting: SiTreeViewComponent }
   ],
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     '(document:keyup.shift)': 'onKeyUpShift()',
     '(document:keyup.control)': 'onKeyUpCtrl()',
