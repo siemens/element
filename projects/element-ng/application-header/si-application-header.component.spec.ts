@@ -345,7 +345,8 @@ describe('SiApplicationHeaderComponent', () => {
         <ng-template #launchpad>
           <si-launchpad-factory [apps]="[]" />
         </ng-template>
-      `
+      `,
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {}
 
