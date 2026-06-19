@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router, RouterOutlet, Routes } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
@@ -22,13 +22,14 @@ import { SiBreadcrumbDefaultResolverService } from './si-breadcrumb-default-reso
   template: `
     <si-breadcrumb-router />
     <router-outlet />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   readonly breadcrumbResolver = viewChild.required(TestComponent, { read: ElementRef });
 }
 
-@Component({ template: '' })
+@Component({ template: '', changeDetection: ChangeDetectionStrategy.OnPush })
 class TestSubComponent {}
 
 describe('SiBreadcrumbRouterComponent', () => {

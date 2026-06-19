@@ -2,7 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, input, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+  signal
+} from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { BreadcrumbItem, SiBreadcrumbComponent } from '@siemens/element-ng/breadcrumb';
 import { t } from '@siemens/element-translate-ng/translate';
@@ -14,7 +22,8 @@ import { SI_BREADCRUMB_RESOLVER_SERVICE } from './si-breadcrumb-router.model';
 @Component({
   selector: 'si-breadcrumb-router',
   imports: [SiBreadcrumbComponent],
-  templateUrl: './si-breadcrumb-router.component.html'
+  templateUrl: './si-breadcrumb-router.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiBreadcrumbRouterComponent implements OnInit, OnDestroy {
   /**
