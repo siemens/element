@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
-import { Component, ErrorHandler } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ErrorHandler, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -15,13 +15,13 @@ import { SiAutocompleteDirective } from './si-autocomplete.directive';
   imports: [SiAutocompleteDirective, SiAutocompleteListboxDirective, SiAutocompleteOptionDirective],
   template: `
     <input #autocomplete="siAutocomplete" siAutocomplete />
-    @if (showList) {
+    @if (showList()) {
       <div
         [siAutocompleteListboxFor]="autocomplete"
-        [siAutocompleteDefaultIndex]="defaultIndex"
+        [siAutocompleteDefaultIndex]="defaultIndex()"
         (siAutocompleteOptionSubmitted)="submitted($event)"
       >
-        @if (hasValues) {
+        @if (hasValues()) {
           <div siAutocompleteOption="a" id="option-a"></div>
           <div siAutocompleteOption="b" id="option-b"></div>
           <div siAutocompleteOption="c"></div>
@@ -29,15 +29,16 @@ import { SiAutocompleteDirective } from './si-autocomplete.directive';
         }
       </div>
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
-  showList = false;
-  hasValues = true;
-  value?: string;
-  defaultIndex = 0;
+  readonly showList = signal(false);
+  readonly hasValues = signal(true);
+  readonly value = signal<string | undefined>(undefined);
+  readonly defaultIndex = signal(0);
   submitted(event: string): void {
-    this.value = event;
+    this.value.set(event);
   }
 }
 
@@ -50,22 +51,11 @@ describe('SiAutocompleteDirective', () => {
     testComponent = fixture.componentInstance;
   });
 
-  beforeEach(() => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date());
-  });
-
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
   it('should be navigable', async () => {
     const input = fixture.debugElement.query(By.css('input'));
     expect(Object.keys(input.attributes)).not.toContain('ariaActiveDescendant');
-    testComponent.showList = true;
-    fixture.detectChanges();
+    testComponent.showList.set(true);
     await fixture.whenStable();
-    fixture.detectChanges();
     expect(Object.keys(input.attributes)).toContain('aria-activedescendant');
     expect(input.attributes['aria-activedescendant']).toBe('option-a');
     input.triggerEventHandler('keydown', {
@@ -89,26 +79,24 @@ describe('SiAutocompleteDirective', () => {
       preventDefault: () => {},
       stopImmediatePropagation: () => {}
     });
-    fixture.detectChanges();
+    await fixture.whenStable();
     expect(input.attributes['aria-activedescendant']).toBe('option-b');
   });
 
   it('should detect click', async () => {
-    testComponent.showList = true;
-    fixture.detectChanges();
+    testComponent.showList.set(true);
     await fixture.whenStable();
-    fixture.detectChanges();
     fixture.debugElement
       .queryAll(By.directive(SiAutocompleteOptionDirective))
       .at(3)!
       .triggerEventHandler('click');
-    expect(testComponent.value).toBe('d');
+    expect(testComponent.value()).toBe('d');
   });
 
   it('should not throw an error when the user presses enter on empty suggestion list', async () => {
-    testComponent.showList = true;
-    testComponent.hasValues = false;
-    fixture.detectChanges();
+    testComponent.showList.set(true);
+    testComponent.hasValues.set(false);
+    await fixture.whenStable();
     const spy = vi.spyOn(testComponent, 'submitted');
     const spyError = vi.spyOn(ErrorHandler.prototype, 'handleError');
 
@@ -125,31 +113,24 @@ describe('SiAutocompleteDirective', () => {
   });
 
   it('should select an element if default index was changed and none was selected', async () => {
-    testComponent.defaultIndex = -1;
-    testComponent.showList = true;
-    fixture.changeDetectorRef.markForCheck();
-    fixture.detectChanges();
+    testComponent.defaultIndex.set(-1);
+    testComponent.showList.set(true);
+    await fixture.whenStable();
 
     expect(
       fixture.debugElement
         .queryAll(By.directive(SiAutocompleteOptionDirective))
         .filter(option => option.classes.active)
     ).toHaveLength(0);
-    testComponent.defaultIndex = 0;
-    fixture.changeDetectorRef.markForCheck();
-    fixture.detectChanges();
+    testComponent.defaultIndex.set(0);
     await fixture.whenStable();
-
-    vi.advanceTimersByTime(0);
-    await fixture.whenStable();
+    //await fixture.whenStable();
     expect(
       fixture.debugElement
         .queryAll(By.directive(SiAutocompleteOptionDirective))
         .filter(option => option.classes.active)
     ).toHaveLength(1);
-    testComponent.defaultIndex = 1;
-    fixture.changeDetectorRef.markForCheck();
-    fixture.detectChanges();
+    testComponent.defaultIndex.set(1);
     await fixture.whenStable();
     expect(
       fixture.debugElement
