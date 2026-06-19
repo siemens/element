@@ -12,7 +12,8 @@ import {
   OnDestroy,
   PLATFORM_ID,
   viewChild,
-  inject
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 /**
@@ -39,6 +40,7 @@ import {
   selector: 'si-chat-container',
   templateUrl: './si-chat-container.component.html',
   styleUrl: './si-chat-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'd-flex si-layout-inner flex-grow-1 flex-column h-100 w-100',
     '[class]': 'colorVariant()'

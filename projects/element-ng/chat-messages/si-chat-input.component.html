@@ -1,14 +1,14 @@
 <div
   class="input-wrapper border rounded-3"
-  [class.drag-over]="dragOver"
+  [class.drag-over]="dragOver()"
   (click)="onContainerClick($event)"
   (drop)="dropHandler($event)"
   (dragover)="dragOverHandler($event)"
-  (dragleave)="dragOver = false"
+  (dragleave)="dragOver.set(false)"
 >
   @if (hasAttachments()) {
     <si-attachment-list
-      [attachments]="attachmentList"
+      [attachments]="attachments()"
       [removeLabel]="removeAttachmentLabel()"
       [removable]="true"
       (remove)="removeAttachment($event)"

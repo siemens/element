@@ -6,12 +6,14 @@ import { CdkMenuTrigger } from '@angular/cdk/menu';
 import {
   AfterViewInit,
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
   input,
   model,
   output,
+  signal,
   viewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -88,7 +90,8 @@ export interface ChatInputAttachment extends Attachment {
     SiFileUploadDirective
   ],
   templateUrl: './si-chat-input.component.html',
-  styleUrl: './si-chat-input.component.scss'
+  styleUrl: './si-chat-input.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiChatInputComponent implements AfterViewInit {
   private static idCounter = 0;
@@ -347,11 +350,7 @@ export class SiChatInputComponent implements AfterViewInit {
     this.showInterruptButton() ? this.interruptButtonLabel() : this.sendButtonLabel()
   );
 
-  protected dragOver = false;
-
-  protected get attachmentList(): Attachment[] {
-    return this.attachments() as Attachment[];
-  }
+  protected readonly dragOver = signal(false);
 
   protected onInputChange(value: string): void {
     this.value.set(value);
@@ -466,7 +465,7 @@ export class SiChatInputComponent implements AfterViewInit {
   protected dropHandler(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    this.dragOver = false;
+    this.dragOver.set(false);
 
     if (!this.allowAttachments() || this.disabled()) {
       return;
@@ -485,7 +484,7 @@ export class SiChatInputComponent implements AfterViewInit {
 
     event.preventDefault();
     event.stopPropagation();
-    this.dragOver = true;
+    this.dragOver.set(true);
   }
 
   private setTextareaHeight(textarea: HTMLTextAreaElement): void {
