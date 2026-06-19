@@ -17,7 +17,7 @@ import { MenuItem } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { page } from 'vitest/browser';
 
-import { MessageAction } from './message-action.model';
+import { MessageAction } from './chat-message.model';
 import {
   ChatInputAttachment,
   SiChatInputComponent as TestComponent

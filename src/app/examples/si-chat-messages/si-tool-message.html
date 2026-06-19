@@ -1,0 +1,35 @@
+<div class="p-4">
+  <si-tool-message
+    name="Retrieving relevant sources"
+    toolIcon="element-search"
+    [inputArguments]="retrievalInput"
+    [output]="retrievalOutput"
+    [contentFormatter]="markdownRenderer"
+  />
+
+  <div class="mt-4">
+    <si-tool-message name="Generic trace item" toolIcon="record-filled" />
+  </div>
+
+  <div class="mt-4">
+    <si-tool-message
+      toolIcon="element-light"
+      outputLabel="Reasoning"
+      [name]="reasoningName"
+      [output]="reasoningOutput"
+      [contentFormatter]="markdownRenderer"
+    />
+  </div>
+
+  <div class="mt-4">
+    <si-tool-message name="Thinking" toolIcon="element-light" [loading]="true" />
+  </div>
+
+  <div class="mt-4">
+    <si-tool-message name="Generating dashboard" toolIcon="element-ai" [loading]="true" />
+  </div>
+
+  <div class="mt-4">
+    <si-tool-message name="Dashboard ready" toolIcon="element-ok" />
+  </div>
+</div>
