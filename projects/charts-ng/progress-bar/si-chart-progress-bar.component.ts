@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import {
   SiChartBaseComponent,
   echarts,
@@ -24,7 +24,8 @@ echarts.use([BarChart, GridComponent, LegacyGridContainLabel]);
   selector: 'si-chart-progress-bar',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../common/si-chart-base.component.html',
-  styleUrl: '../common/si-chart-base.component.scss'
+  styleUrl: '../common/si-chart-base.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiChartProgressBarComponent extends SiChartBaseComponent {
   /** The series for the chart. */
