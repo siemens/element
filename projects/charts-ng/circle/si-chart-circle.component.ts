@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SiChartBaseComponent, PieSeriesOption, echarts } from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
@@ -17,7 +17,8 @@ echarts.use([PieChart, LegendComponent]);
   selector: 'si-chart-circle',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../common/si-chart-base.component.html',
-  styleUrl: '../common/si-chart-base.component.scss'
+  styleUrl: '../common/si-chart-base.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiChartCircleComponent extends SiChartBaseComponent {
   /** The series for the chart. */

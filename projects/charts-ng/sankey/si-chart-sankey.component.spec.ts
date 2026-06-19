@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, SimpleChange, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { SankeySeriesOption } from '@siemens/charts-ng/common';
 
@@ -17,7 +17,8 @@ import { SiChartSankeyComponent } from './si-chart-sankey.component';
       [title]="title"
       [subTitle]="subTitle"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 class TestHostComponent {
   readonly chartSankeyComponent = viewChild.required(SiChartSankeyComponent);

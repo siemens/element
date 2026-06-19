@@ -4,6 +4,7 @@
  */
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -55,6 +56,7 @@ import { themeSupport } from './theme-support';
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: './si-chart-base.component.html',
   styleUrl: './si-chart-base.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     '(window:theme-switch)': 'themeSwitch()'
   }

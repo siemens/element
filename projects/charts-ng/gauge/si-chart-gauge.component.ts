@@ -4,6 +4,7 @@
  */
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -26,7 +27,8 @@ echarts.use([GaugeChart]);
   selector: 'si-chart-gauge',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../common/si-chart-base.component.html',
-  styleUrl: '../common/si-chart-base.component.scss'
+  styleUrl: '../common/si-chart-base.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiChartGaugeComponent extends SiChartBaseComponent implements OnChanges {
   /** @defaultValue 0 */
