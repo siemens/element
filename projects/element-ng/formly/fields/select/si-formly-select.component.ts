@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
 import {
@@ -26,6 +26,7 @@ import { SiValidationErrorIdPipe } from '../../utils';
     SiSelectSingleValueDirective,
     SiValidationErrorIdPipe
   ],
-  templateUrl: './si-formly-select.component.html'
+  templateUrl: './si-formly-select.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiFormlySelectComponent extends FieldType<FieldTypeConfig> {}

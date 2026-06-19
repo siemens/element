@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 import { SiCalendarButtonComponent, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
@@ -18,7 +18,8 @@ import { SiValidationErrorIdPipe } from '../../utils';
     SiDatepickerDirective,
     SiValidationErrorIdPipe
   ],
-  templateUrl: './si-formly-datetime.component.html'
+  templateUrl: './si-formly-datetime.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiFormlyDateTimeComponent extends FieldType<FieldTypeConfig> implements OnInit {
   ngOnInit(): void {
