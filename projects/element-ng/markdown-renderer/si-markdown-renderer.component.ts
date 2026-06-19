@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, effect, inject, input, ElementRef } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, effect, inject, input, ElementRef, PLATFORM_ID } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { getMarkdownRenderer } from './markdown-renderer';
@@ -18,13 +19,22 @@ import { getMarkdownRenderer } from './markdown-renderer';
 export class SiMarkdownRendererComponent {
   private sanitizer = inject(DomSanitizer);
   private hostElement = inject(ElementRef<HTMLElement>);
-  private markdownRenderer = getMarkdownRenderer(this.sanitizer);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
+  private doc = inject(DOCUMENT);
 
   /**
    * The markdown text to transform and display
    * @defaultValue ''
    */
   readonly text = input<string | undefined>();
+
+  private markdownRenderer = getMarkdownRenderer(
+    this.sanitizer,
+    undefined,
+    this.doc,
+    this.isBrowser
+  );
 
   constructor() {
     effect(() => {
