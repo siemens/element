@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Component, ElementRef, OnDestroy, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiCalendarButtonComponent, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
 import { IDateComp, IDateParams } from 'ag-grid-community';
@@ -26,7 +26,8 @@ import { IDateComp, IDateParams } from 'ag-grid-community';
         (ngModelChange)="onDateChange()"
       />
     </si-calendar-button>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class AgDateInputComponent implements IDateComp, OnDestroy {
   private elementRef = inject(ElementRef);
