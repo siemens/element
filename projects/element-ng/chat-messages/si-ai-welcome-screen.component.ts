@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, model, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, output } from '@angular/core';
 import { SiActionCardComponent } from '@siemens/element-ng/card';
 import { SiSummaryChipComponent } from '@siemens/element-ng/summary-chip';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -38,6 +38,7 @@ export interface PromptSuggestion {
   imports: [SiActionCardComponent, SiSummaryChipComponent],
   templateUrl: './si-ai-welcome-screen.component.html',
   styleUrl: './si-ai-welcome-screen.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'd-block'
   }

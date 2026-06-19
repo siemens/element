@@ -2,7 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, inject, input, output, TemplateRef } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  output,
+  TemplateRef
+} from '@angular/core';
 import { elementStateClose, elementDocument } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiModalService } from '@siemens/element-ng/modal';
@@ -50,7 +58,8 @@ export interface Attachment {
   selector: 'si-attachment-list',
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-attachment-list.component.html',
-  styleUrl: './si-attachment-list.component.scss'
+  styleUrl: './si-attachment-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiAttachmentListComponent {
   protected modalService = inject(SiModalService);

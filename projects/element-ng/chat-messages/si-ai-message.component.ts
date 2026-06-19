@@ -10,7 +10,8 @@ import {
   input,
   viewChild,
   ElementRef,
-  signal
+  signal,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { elementOptionsVertical } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
@@ -53,7 +54,8 @@ import { SiChatMessageComponent } from './si-chat-message.component';
     SiTranslatePipe
   ],
   templateUrl: './si-ai-message.component.html',
-  styleUrl: './si-ai-message.component.scss'
+  styleUrl: './si-ai-message.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiAiMessageComponent {
   protected readonly formattedContent = viewChild<ElementRef<HTMLDivElement>>('formattedContent');

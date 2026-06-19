@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
 
 /**
@@ -40,6 +40,7 @@ import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-obser
   selector: 'si-chat-message',
   templateUrl: './si-chat-message.component.html',
   styleUrl: './si-chat-message.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'd-block'
   },
