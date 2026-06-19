@@ -4,6 +4,7 @@
  */
 import { AsyncPipe } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -41,7 +42,8 @@ import { SiWidgetInstanceEditorDialogComponent } from '../widget-instance-editor
   selector: 'si-grid',
   imports: [SiGridstackWrapperComponent, SiLoadingSpinnerDirective, AsyncPipe],
   templateUrl: './si-grid.component.html',
-  styleUrl: './si-grid.component.scss'
+  styleUrl: './si-grid.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
   private storeSubscription?: Subscription;

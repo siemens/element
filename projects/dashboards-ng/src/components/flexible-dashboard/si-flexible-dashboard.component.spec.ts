@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ChangeDetectionStrategy,
   Component,
   input,
   model,
@@ -38,7 +39,8 @@ let widgetConfig: Omit<WidgetConfig, 'id'>;
 @Component({
   selector: 'si-widget-catalog',
   imports: [TestingModule, SiLoadingSpinnerModule],
-  template: ''
+  template: '',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiWidgetCatalogMockComponent extends SiWidgetCatalogComponent implements OnInit {
   static staticClosed: OutputEmitterRef<Omit<WidgetConfig, 'id'> | undefined> | undefined =
@@ -54,7 +56,8 @@ export class SiWidgetCatalogMockComponent extends SiWidgetCatalogComponent imple
 @Component({
   selector: 'si-dashboard-toolbar',
   imports: [TestingModule, SiLoadingSpinnerModule],
-  template: ''
+  template: '',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiDashboardToolbarStubComponent {
   readonly primaryEditActions = input<MenuItem[]>([]);
@@ -70,7 +73,8 @@ export class SiDashboardToolbarStubComponent {
 @Component({
   selector: 'si-grid',
   imports: [TestingModule, SiLoadingSpinnerModule],
-  template: ''
+  template: '',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class GridComponent {
   readonly gridConfig = input<GridConfig>();
