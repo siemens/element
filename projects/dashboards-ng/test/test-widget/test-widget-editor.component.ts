@@ -2,13 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WidgetConfig, WidgetInstanceEditor } from '@siemens/dashboards-ng';
 @Component({
   selector: 'si-test-widget-editor',
   imports: [ReactiveFormsModule, FormsModule],
-  templateUrl: './test-widget-editor.component.html'
+  templateUrl: './test-widget-editor.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class TestWidgetEditorComponent implements WidgetInstanceEditor, OnInit {
   @Input() config!: WidgetConfig | Omit<WidgetConfig, 'id'>;

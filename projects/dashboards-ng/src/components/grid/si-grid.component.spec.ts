@@ -2,7 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnInit, output, OutputEmitterRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  output,
+  OutputEmitterRef
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
@@ -25,7 +31,8 @@ import { SiGridComponent } from './si-grid.component';
 @Component({
   selector: 'si-widget-editor-dialog',
   imports: [TestingModule, SiLoadingSpinnerModule],
-  template: ''
+  template: '',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiWidgetEditorDialogMockComponent
   extends SiWidgetInstanceEditorDialogComponent
