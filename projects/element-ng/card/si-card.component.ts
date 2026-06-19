@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -15,7 +15,8 @@ import { SiCardHeaderComponent } from './si-card-header.component';
   selector: 'si-card',
   imports: [SiCardHeaderComponent, SiTranslatePipe],
   templateUrl: './si-card.component.html',
-  styleUrl: './si-card.component.scss'
+  styleUrl: './si-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiCardComponent extends SiCardBaseDirective {
   /**
