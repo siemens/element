@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnChanges, SimpleChanges } from '@angular/core';
 import {
   echarts,
   GridComponentOption,
@@ -66,7 +66,8 @@ echarts.use([
   selector: 'si-chart-cartesian',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../common/si-chart-base.component.html',
-  styleUrl: '../common/si-chart-base.component.scss'
+  styleUrl: '../common/si-chart-base.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiChartCartesianComponent extends SiChartBaseComponent implements OnChanges {
   /** The series for the chart. */

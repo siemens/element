@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { echarts, SiChartBaseComponent } from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
@@ -66,6 +66,7 @@ echarts.use([
   selector: 'si-chart',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../common/si-chart-base.component.html',
-  styleUrl: '../common/si-chart-base.component.scss'
+  styleUrl: '../common/si-chart-base.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiChartComponent extends SiChartBaseComponent {}

@@ -2,14 +2,22 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, input, output, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  input,
+  output,
+  viewChild
+} from '@angular/core';
 
 import { CustomLegend, CustomLegendItem } from './si-custom-legend.interface';
 
 @Component({
   selector: 'si-custom-legend',
   templateUrl: './si-custom-legend.component.html',
-  styleUrl: './si-custom-legend.component.scss'
+  styleUrl: './si-custom-legend.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiCustomLegendComponent {
   /** @internal */
