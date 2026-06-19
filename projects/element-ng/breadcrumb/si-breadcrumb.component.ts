@@ -5,6 +5,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -67,7 +68,8 @@ let controlIdCounter = 1;
     SiBreadcrumbItemTemplateDirective
   ],
   templateUrl: './si-breadcrumb.component.html',
-  styleUrl: './si-breadcrumb.component.scss'
+  styleUrl: './si-breadcrumb.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
   /** Array of breadcrumb items. */
