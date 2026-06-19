@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { INoRowsOverlayParams } from 'ag-grid-community';
 
@@ -36,7 +36,8 @@ import { INoRowsOverlayParams } from 'ag-grid-community';
       height: 100%;
       width: 100%;
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class AgNoRowsOverlayComponent {
   /**
