@@ -64,6 +64,136 @@ describe('SiMarkdownRendererComponent', () => {
     expect(codeElement).toHaveTextContent('code_');
   });
 
+  it('should not transform emphasis markers inside inline code', async () => {
+    text.set('This is `code_with_underscore and **bold** and a*b*c` text');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const codeElement = markdownDiv.querySelector('code')!;
+
+    expect(codeElement).toHaveTextContent('code_with_underscore and **bold** and a*b*c');
+    expect(codeElement.querySelector('em')).not.toBeInTheDocument();
+    expect(codeElement.querySelector('strong')).not.toBeInTheDocument();
+  });
+
+  it('should keep inline code protected while transforming surrounding emphasis', async () => {
+    text.set('This is **bold** `not_italic` *italic*');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const codeElement = markdownDiv.querySelector('code')!;
+
+    expect(markdownDiv.querySelector('strong')).toHaveTextContent('bold');
+    expect(markdownDiv.querySelector('em')).toHaveTextContent('italic');
+    expect(codeElement).toHaveTextContent('not_italic');
+    expect(codeElement.querySelector('em')).not.toBeInTheDocument();
+  });
+
+  it('should protect multiple inline code snippets on one line', async () => {
+    text.set('Use `first_value` and `second**value**` here');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const codeElements = markdownDiv.querySelectorAll('code');
+
+    expect(codeElements).toHaveLength(2);
+    expect(codeElements[0]).toHaveTextContent('first_value');
+    expect(codeElements[1]).toHaveTextContent('second**value**');
+    expect(codeElements[1].querySelector('strong')).not.toBeInTheDocument();
+  });
+
+  it('should not auto-link URLs inside inline code', async () => {
+    text.set('Use `https://example.com/path_with_underscore` here');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const codeElement = markdownDiv.querySelector('code')!;
+
+    expect(codeElement).toHaveTextContent('https://example.com/path_with_underscore');
+    expect(codeElement.querySelector('a')).not.toBeInTheDocument();
+  });
+
+  it('should protect inline code in link text', async () => {
+    text.set('[Use `code_with_underscore`](https://example.com)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+    const codeElement = linkElement.querySelector('code')!;
+
+    expect(linkElement.getAttribute('href')).toBe('https://example.com');
+    expect(codeElement).toHaveTextContent('code_with_underscore');
+    expect(codeElement.querySelector('em')).not.toBeInTheDocument();
+  });
+
+  it('should attribute-escape markdown link URLs', async () => {
+    text.set('[link](https://example.com/" onmouseover="x)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+
+    expect(linkElement).not.toHaveAttribute('onmouseover');
+    expect(linkElement.getAttribute('href')).toBe('https://example.com/" onmouseover="x');
+  });
+
+  it('should preserve valid markdown link URLs with query parameters', async () => {
+    text.set('[link](https://example.com/search?q=test&lang=en#results)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+
+    expect(linkElement.getAttribute('href')).toBe(
+      'https://example.com/search?q=test&lang=en#results'
+    );
+  });
+
+  it('should attribute-escape mailto link URLs', async () => {
+    text.set('[mail](mailto:test@example.com" onmouseover="x)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+
+    expect(linkElement).not.toHaveAttribute('onmouseover');
+    expect(linkElement.getAttribute('href')).toBe('mailto:test@example.com" onmouseover="x');
+  });
+
+  it('should preserve valid mailto link URLs with query parameters', async () => {
+    text.set('[mail](mailto:test@example.com?subject=Hello&body=World)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+
+    expect(linkElement.getAttribute('href')).toBe(
+      'mailto:test@example.com?subject=Hello&body=World'
+    );
+  });
+
+  it('should attribute-escape auto link URLs', async () => {
+    text.set('https://example.com/"onmouseover="x/path');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+
+    expect(linkElement).not.toHaveAttribute('onmouseover');
+    expect(linkElement.getAttribute('href')).toBe('https://example.com/"onmouseover="x/path');
+  });
+
+  it('should attribute-escape angle autolink URLs', async () => {
+    text.set('<https://example.com/"onmouseover="x/path>');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('a')!;
+
+    expect(linkElement).not.toHaveAttribute('onmouseover');
+    expect(linkElement.getAttribute('href')).toBe('https://example.com/"onmouseover="x/path');
+  });
+
   it('should transform code blocks ```code```', async () => {
     text.set('```\nconst x = 1;\n```');
     await fixture.whenStable();
@@ -74,8 +204,8 @@ describe('SiMarkdownRendererComponent', () => {
     expect(codeElement).toHaveTextContent('const x = 1;');
   });
 
-  it('should transform bullet points to lists (• character)', async () => {
-    text.set('• First item\n• Second item');
+  it('should transform bullet points to lists (\u2022 character)', async () => {
+    text.set('\u2022 First item\n\u2022 Second item');
     await fixture.whenStable();
 
     const markdownDiv = hostElement.firstElementChild!;
@@ -98,6 +228,58 @@ describe('SiMarkdownRendererComponent', () => {
     expect(innerHTML).toContain('<ul>');
   });
 
+  it('should render markdown checkbox list items as non-interactive checkboxes', async () => {
+    text.set(
+      '- [ ] Unchecked item\n- [x] Checked item\n- [X] Checked uppercase item\n- [~] Disabled item'
+    );
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const listItems = markdownDiv.querySelectorAll('li');
+    const checkboxElements =
+      markdownDiv.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+
+    expect(listItems).toHaveLength(4);
+    expect(checkboxElements).toHaveLength(4);
+    expect(listItems[0]).toHaveTextContent('Unchecked item');
+    expect(listItems[1]).toHaveTextContent('Checked item');
+    expect(listItems[2]).toHaveTextContent('Checked uppercase item');
+    expect(listItems[3]).toHaveTextContent('Disabled item');
+    expect(checkboxElements[0].checked).toBe(false);
+    expect(checkboxElements[1].checked).toBe(true);
+    expect(checkboxElements[2].checked).toBe(true);
+    expect(checkboxElements[3].checked).toBe(false);
+    expect(checkboxElements[0].getAttribute('aria-checked')).toBe('false');
+    expect(checkboxElements[1].getAttribute('aria-checked')).toBe('true');
+    expect(checkboxElements[2].getAttribute('aria-checked')).toBe('true');
+    expect(checkboxElements[3].getAttribute('aria-checked')).toBe('false');
+    expect(checkboxElements[0]).not.toHaveAttribute('disabled');
+    expect(checkboxElements[1]).not.toHaveAttribute('disabled');
+    expect(checkboxElements[2]).not.toHaveAttribute('disabled');
+    expect(checkboxElements[3]).toHaveAttribute('disabled');
+    checkboxElements.forEach((checkboxElement, index) => {
+      expect(checkboxElement).not.toHaveAttribute('name');
+      if (index < 3) {
+        // eslint-disable-next-line vitest/no-conditional-expect
+        expect(checkboxElement.getAttribute('tabindex')).toBe('-1');
+        // eslint-disable-next-line vitest/no-conditional-expect
+        expect(checkboxElement.getAttribute('aria-disabled')).toBe('true');
+      }
+    });
+  });
+
+  it('should keep task lists separated from following bullet lists', async () => {
+    text.set('- [ ] Task item\n\n* Bullet item');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const lists = markdownDiv.querySelectorAll('ul');
+
+    expect(lists).toHaveLength(2);
+    expect(lists[0]).toHaveTextContent('Task item');
+    expect(lists[1]).toHaveTextContent('Bullet item');
+  });
+
   it('should convert newlines to line breaks', async () => {
     text.set('Line 1\nLine 2');
     await fixture.whenStable();
@@ -110,8 +292,8 @@ describe('SiMarkdownRendererComponent', () => {
   it('should handle complex markdown with multiple elements', async () => {
     const complexMarkdown = `This is **bold** text with _italic_, escaped \\_ and \\* and \`code\`.
 
-• First item
-• Second item
+\u2022 First item
+\u2022 Second item
 
 \`\`\`
 const example = "code block";
@@ -123,11 +305,15 @@ const example = "code block";
     const markdownDiv = hostElement.firstElementChild!;
     const innerHTML = markdownDiv.innerHTML;
 
-    // Check for transformed markdown in the HTML string
     expect(innerHTML).toContain('<strong>bold</strong>');
     expect(innerHTML).toContain('<em>italic</em>');
     expect(innerHTML).toContain('<code>code</code>');
-    expect(innerHTML).toContain('<pre><code>');
+    const codeWrapper = markdownDiv.querySelector('.code-wrapper')!;
+    expect(codeWrapper).toBeTruthy();
+    expect(codeWrapper.querySelector('button.copy-code-btn')).toBeTruthy();
+    const preElement = codeWrapper.querySelector('pre')!;
+    expect(preElement).toBeTruthy();
+    expect(preElement.querySelector('code')).toBeTruthy();
     expect(innerHTML).toContain('<li>First item</li>');
   });
 
@@ -138,7 +324,6 @@ const example = "code block";
     const markdownDiv = hostElement.firstElementChild!;
     const innerHTML = markdownDiv.innerHTML;
 
-    // Script tags should be completely removed by Angular's sanitizer
     expect(innerHTML).not.toContain('<script>');
     expect(innerHTML).not.toContain('alert("xss")');
     expect(markdownDiv).toHaveTextContent('Safe text');
@@ -153,7 +338,6 @@ const example = "code block";
     const markdownDiv = hostElement.firstElementChild!;
     const innerHTML = markdownDiv.innerHTML;
 
-    // Event handlers and javascript: URLs should be removed
     expect(innerHTML).not.toContain('onerror=');
     expect(innerHTML).not.toContain('javascript:');
     expect(innerHTML).not.toContain('<iframe');
@@ -167,7 +351,6 @@ const example = "code block";
     const markdownDiv = hostElement.firstElementChild!;
     const innerHTML = markdownDiv.innerHTML;
 
-    // onclick should be removed but div element should remain
     expect(innerHTML).not.toContain('onclick=');
     expect(innerHTML).toContain('Safe div');
   });
@@ -184,17 +367,21 @@ const example = "code block";
     const markdownDiv = hostElement.firstElementChild!;
     const tableElement = markdownDiv.querySelector('table')!;
     const trElements = markdownDiv.querySelectorAll('tr');
+    const thElements = markdownDiv.querySelectorAll('th');
     const tdElements = markdownDiv.querySelectorAll('td');
 
     expect(tableElement).toBeTruthy();
     expect(tableElement).toHaveClass('table');
     expect(tableElement).toHaveClass('table-hover');
-    expect(trElements).toHaveLength(3); // Header + 2 data rows
-    expect(tdElements).toHaveLength(6); // 2 columns × 3 rows
-    expect(tdElements[0]).toHaveTextContent('Name');
-    expect(tdElements[1]).toHaveTextContent('Role');
-    expect(tdElements[2]).toHaveTextContent('Alice');
-    expect(tdElements[3]).toHaveTextContent('Developer');
+    expect(trElements).toHaveLength(3);
+    expect(thElements).toHaveLength(2);
+    expect(tdElements).toHaveLength(4);
+    expect(thElements[0]).toHaveTextContent('Name');
+    expect(thElements[1]).toHaveTextContent('Role');
+    expect(tdElements[0]).toHaveTextContent('Alice');
+    expect(tdElements[1]).toHaveTextContent('Developer');
+    expect(tdElements[2]).toHaveTextContent('Bob');
+    expect(tdElements[3]).toHaveTextContent('Designer');
   });
 
   it('should escape HTML in table cells', async () => {
@@ -208,9 +395,9 @@ const example = "code block";
     const markdownDiv = hostElement.firstElementChild!;
     const tdElements = markdownDiv.querySelectorAll('td');
 
-    expect(tdElements[2].innerHTML).not.toContain('<script>');
-    expect(tdElements[2].textContent).toBe('');
-    expect(tdElements[3].innerHTML).toContain('<b>Bold</b>');
+    expect(tdElements[0].innerHTML).not.toContain('<script>');
+    expect(tdElements[0].textContent).toBe('');
+    expect(tdElements[1].innerHTML).toContain('<b>Bold</b>');
   });
 
   it('should handle tables with markdown formatting inside cells', async () => {
@@ -230,6 +417,37 @@ const example = "code block";
     expect(innerHTML).toContain('<code>Code</code>');
   });
 
+  it('should protect inline code in table cells', async () => {
+    const tableMarkdown = `| Feature | Code |
+|---------|------|
+| **Bold** | \`code_with_underscore and **bold**\` |`;
+
+    text.set(tableMarkdown);
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const codeElement = markdownDiv.querySelector('td code')!;
+
+    expect(codeElement).toHaveTextContent('code_with_underscore and **bold**');
+    expect(codeElement.querySelector('em')).not.toBeInTheDocument();
+    expect(codeElement.querySelector('strong')).not.toBeInTheDocument();
+  });
+
+  it('should attribute-escape markdown link URLs in table cells', async () => {
+    const tableMarkdown = `| Link |
+|------|
+| [link](https://example.com/" onmouseover="x) |`;
+
+    text.set(tableMarkdown);
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const linkElement = markdownDiv.querySelector('td a')!;
+
+    expect(linkElement).not.toHaveAttribute('onmouseover');
+    expect(linkElement.getAttribute('href')).toBe('https://example.com/" onmouseover="x');
+  });
+
   it('should handle escaped pipe characters in tables', async () => {
     const tableMarkdown = `| Command | Description |
 |---------|-------------|
@@ -242,10 +460,10 @@ const example = "code block";
     const markdownDiv = hostElement.firstElementChild!;
     const tdElements = markdownDiv.querySelectorAll('td');
 
-    expect(tdElements[2]).toHaveTextContent('grep "text|pattern"');
-    expect(tdElements[3]).toHaveTextContent('Search for text OR pattern');
-    expect(tdElements[4]).toHaveTextContent("awk '{print $1|$2}'");
-    expect(tdElements[5]).toHaveTextContent('Print fields separated by pipe');
+    expect(tdElements[0]).toHaveTextContent('grep "text|pattern"');
+    expect(tdElements[1]).toHaveTextContent('Search for text OR pattern');
+    expect(tdElements[2]).toHaveTextContent("awk '{print $1|$2}'");
+    expect(tdElements[3]).toHaveTextContent('Print fields separated by pipe');
   });
 
   it('should handle lists and line breaks inside table cells', async () => {
@@ -261,19 +479,64 @@ const example = "code block";
     const innerHTML = markdownDiv.innerHTML;
     const tdElements = markdownDiv.querySelectorAll('td');
 
-    // Check that formatting is preserved
     expect(innerHTML).toContain('<strong>Lists</strong>');
     expect(innerHTML).toContain('<em>Line breaks</em>');
 
-    // Check that lists are properly formatted
-    expect(tdElements[3].innerHTML).toContain('<ul>');
-    expect(tdElements[3].innerHTML).toContain('<li>First item</li>');
-    expect(tdElements[3].innerHTML).toContain('<li>Second item</li>');
-    expect(tdElements[3].innerHTML).toContain('<li>Third item</li>');
+    expect(tdElements[1].innerHTML).toContain('<ul>');
+    expect(tdElements[1].innerHTML).toContain('<li>First item</li>');
+    expect(tdElements[1].innerHTML).toContain('<li>Second item</li>');
+    expect(tdElements[1].innerHTML).toContain('<li>Third item</li>');
 
-    // Check that line breaks work in cells - <br> tags remain as <br> in innerHTML, don't convert to \n in textContent
-    expect(tdElements[5].innerHTML).toContain('<br>');
-    expect(tdElements[5]).toHaveTextContent('Line 1Line 2Line 3');
+    expect(tdElements[3].innerHTML).toContain('<br>');
+    expect(tdElements[3]).toHaveTextContent('Line 1Line 2Line 3');
+  });
+
+  it('should render images from markdown', async () => {
+    text.set('![alt text](https://example.com/image.png)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const imgElement = markdownDiv.querySelector('img')!;
+
+    expect(imgElement).toBeTruthy();
+    expect(imgElement.getAttribute('src')).toBe('https://example.com/image.png');
+    expect(imgElement.getAttribute('alt')).toBe('alt text');
+  });
+
+  it('should attribute-escape image URLs', async () => {
+    text.set('![alt](https://example.com/"onerror="x/path)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const imgElement = markdownDiv.querySelector('img')!;
+
+    expect(imgElement).not.toHaveAttribute('onerror');
+    expect(imgElement.getAttribute('src')).toBe('https://example.com/"onerror="x/path');
+  });
+
+  it('should preserve valid image URLs with query parameters', async () => {
+    text.set('![alt](https://example.com/image.png?size=small&theme=dark#preview)');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const imgElement = markdownDiv.querySelector('img')!;
+
+    expect(imgElement.getAttribute('src')).toBe(
+      'https://example.com/image.png?size=small&theme=dark#preview'
+    );
+  });
+
+  it('should render images alongside text', async () => {
+    text.set('Some text ![logo](https://example.com/logo.png) more text');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const imgElement = markdownDiv.querySelector('img')!;
+
+    expect(imgElement).toBeTruthy();
+    expect(imgElement.getAttribute('src')).toBe('https://example.com/logo.png');
+    expect(markdownDiv).toHaveTextContent('Some text');
+    expect(markdownDiv).toHaveTextContent('more text');
   });
 
   it('should update content when input changes', async () => {
