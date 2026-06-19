@@ -2,14 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FieldType, FormlyModule } from '@ngx-formly/core';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-formly-button',
   imports: [SiTranslatePipe, FormlyModule],
-  templateUrl: './si-formly-button.component.html'
+  templateUrl: './si-formly-button.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiFormlyButtonComponent extends FieldType {
   protected click(): void {

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -21,7 +22,8 @@ import { JSONSchema7 } from 'json-schema';
   selector: 'si-formly',
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false,
-  templateUrl: './si-formly.component.html'
+  templateUrl: './si-formly.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiFormlyComponent<
   TControl extends { [K in keyof TControl]: AbstractControl }

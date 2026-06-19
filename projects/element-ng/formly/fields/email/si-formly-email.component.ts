@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
 
@@ -11,7 +11,8 @@ import { SiValidationErrorIdPipe } from '../../utils';
 @Component({
   selector: 'si-formly-email',
   imports: [FormsModule, ReactiveFormsModule, FormlyModule, SiValidationErrorIdPipe],
-  templateUrl: './si-formly-email.component.html'
+  templateUrl: './si-formly-email.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiFormlyEmailComponent extends FieldType<FieldTypeConfig> {
   // Patterns are not recommended to validate email addresses.

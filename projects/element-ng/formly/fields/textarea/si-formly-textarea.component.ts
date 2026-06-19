@@ -2,7 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { AfterViewInit, Component, ElementRef, OnInit, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnInit,
+  viewChild
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
 
@@ -12,7 +19,8 @@ import { SiValidationErrorIdPipe } from '../../utils';
   selector: 'si-formly-textarea',
   imports: [FormsModule, ReactiveFormsModule, FormlyModule, SiValidationErrorIdPipe],
   templateUrl: './si-formly-textarea.component.html',
-  styleUrl: './si-formly-textarea.component.scss'
+  styleUrl: './si-formly-textarea.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiFormlyTextareaComponent
   extends FieldType<FieldTypeConfig>

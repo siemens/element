@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -12,7 +12,8 @@ import { getFieldValue, getKeyPath } from '../../utils';
 @Component({
   selector: 'si-formly-text-display',
   imports: [FormlyModule, ReactiveFormsModule, SiTranslatePipe],
-  templateUrl: './si-formly-text-display.component.html'
+  templateUrl: './si-formly-text-display.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiFormlyTextDisplayComponent extends FieldType<FieldTypeConfig> {
   protected get value(): any {

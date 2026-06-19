@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 import { SiTimepickerComponent } from '@siemens/element-ng/datepicker';
@@ -22,7 +22,8 @@ import { SiValidationErrorIdPipe } from '../../utils';
     [formControl]="formControl"
     [readonly]="props.readonly || false"
     [errormessageId]="id | siValidationErrorId"
-  />`
+  />`,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiFormlyTimeComponent extends FieldType<FieldTypeConfig> implements OnInit {
   ngOnInit(): void {
