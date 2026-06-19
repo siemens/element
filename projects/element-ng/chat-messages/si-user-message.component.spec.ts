@@ -2,14 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { DOCUMENT } from '@angular/common';
 import { DebugElement, inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, DomSanitizer } from '@angular/platform-browser';
 import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { MenuItem } from '@siemens/element-ng/menu';
 
-import { MessageAction } from './message-action.model';
-import { Attachment } from './si-attachment-list.component';
+import { Attachment, MessageAction } from './chat-message.model';
 import { SiUserMessageComponent as TestComponent } from './si-user-message.component';
 
 describe('SiUserMessageComponent', () => {
@@ -43,7 +43,8 @@ describe('SiUserMessageComponent', () => {
     });
     debugElement = fixture.debugElement;
     const sanitizer = TestBed.inject(DomSanitizer);
-    markdownRenderer = getMarkdownRenderer(sanitizer);
+    const doc = TestBed.inject(DOCUMENT);
+    markdownRenderer = getMarkdownRenderer(sanitizer, undefined, doc, true);
   });
 
   it('should render markdown content', async () => {
