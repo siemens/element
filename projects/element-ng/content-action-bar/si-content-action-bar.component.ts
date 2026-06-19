@@ -6,6 +6,7 @@ import { CdkMenuBar, CdkMenuModule } from '@angular/cdk/menu';
 import {
   AfterViewInit,
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -48,6 +49,7 @@ import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.mode
   ],
   templateUrl: './si-content-action-bar.component.html',
   styleUrl: './si-content-action-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     '[class]': 'viewType()'
   }
