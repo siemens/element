@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { page, userEvent } from '@vitest/browser/context';
 
@@ -26,7 +26,8 @@ import { SiCarouselComponent } from './si-carousel.component';
         <div siCarouselItem class="carousel-item">{{ item }}</div>
       }
     </si-carousel>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestCarouselComponent {
   readonly carousel = viewChild.required(SiCarouselComponent);
