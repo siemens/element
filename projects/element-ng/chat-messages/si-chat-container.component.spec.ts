@@ -2,7 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, DebugElement, inputBinding, signal, WritableSignal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  inputBinding,
+  signal,
+  WritableSignal
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -14,13 +21,15 @@ import { SiChatContainerComponent } from './si-chat-container.component';
     <si-chat-container colorVariant="base-0" noAutoScroll="false">
       <div class="test-message">Test message</div>
     </si-chat-container>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {}
 
 @Component({
   imports: [SiChatContainerComponent],
-  template: `<si-chat-container noAutoScroll />`
+  template: `<si-chat-container noAutoScroll />`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class NoAutoScrollHostComponent {}
 
