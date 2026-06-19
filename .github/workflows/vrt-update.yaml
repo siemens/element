@@ -35,7 +35,7 @@ jobs:
     permissions:
       actions: read
       pull-requests: write
-    container: mcr.microsoft.com/playwright:v1.60.0-noble
+    container: mcr.microsoft.com/playwright:v1.61.0-noble@sha256:57b65fdc9ceabe0ef613124c7bbe2babcf9362c4d85e382fe3b03604e84b428a
     # PR from non-collaborators requires a manual re-run from collaborators which
     # makes run_attempt > 1 on first attempt causing the workflow to run.
     # So we always skip if the PR is not from a collaborator.
