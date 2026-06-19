@@ -50,9 +50,6 @@ export class SampleComponent implements OnInit {
   protected readonly collapsed = signal(false);
   protected readonly statusMenuOpen = signal(false);
 
-  private readonly bulkActionsTemplate = viewChild.required('bulkActionsTemplate', {
-    read: TemplateRef<unknown>
-  });
   private readonly checkboxCellTemplate = viewChild.required('checkboxCellTmpl', {
     read: TemplateRef<unknown>
   });

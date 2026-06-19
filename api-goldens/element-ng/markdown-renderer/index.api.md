@@ -8,7 +8,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import * as i0 from '@angular/core';
 
 // @public
-export const getMarkdownRenderer: (sanitizer: DomSanitizer) => ((text: string) => Node);
+export const getMarkdownRenderer: (sanitizer: DomSanitizer, options?: MarkdownRendererOptions, doc?: Document, isBrowser?: boolean) => ((text: string) => Node);
+
+// @public (undocumented)
+export type MarkdownRendererOptions = Record<string, never>;
 
 // @public
 export class SiMarkdownRendererComponent {
