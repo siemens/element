@@ -4,6 +4,7 @@
  */
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -44,7 +45,8 @@ import { SiWidgetEditorBase } from '../si-widget-editor-base';
     CdkOption
   ],
   templateUrl: './si-widget-catalog.component.html',
-  styleUrl: './si-widget-catalog.component.scss'
+  styleUrl: './si-widget-catalog.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnInit {
   /**

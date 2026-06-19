@@ -2,13 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { MenuItem } from '@siemens/element-ng/common';
 
 @Component({
   selector: 'si-test-widget',
-  templateUrl: './test-widget.component.html'
+  templateUrl: './test-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class TestWidgetComponent implements WidgetInstance {
   @Input() config!: WidgetConfig;

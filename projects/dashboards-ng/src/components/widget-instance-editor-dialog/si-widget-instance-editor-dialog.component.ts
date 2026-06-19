@@ -2,7 +2,17 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, inject, input, isSignal, model, OnInit, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  isSignal,
+  model,
+  OnInit,
+  output
+} from '@angular/core';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -19,7 +29,8 @@ import { SiWidgetEditorBase } from '../si-widget-editor-base';
   selector: 'si-widget-instance-editor-dialog',
   imports: [SiTranslatePipe],
   templateUrl: './si-widget-instance-editor-dialog.component.html',
-  styleUrl: './si-widget-instance-editor-dialog.component.scss'
+  styleUrl: './si-widget-instance-editor-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiWidgetInstanceEditorDialogComponent extends SiWidgetEditorBase implements OnInit {
   /**
