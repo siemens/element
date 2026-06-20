@@ -9,7 +9,6 @@ import { ElementRef } from '@angular/core';
 import * as i0 from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
-import * as rxjs from 'rxjs';
 import { SimpleChanges } from '@angular/core';
 
 // @public (undocumented)
@@ -18,6 +17,7 @@ export class SiAutoCollapsableListAdditionalContentDirective extends SiAutoColla
 
 // @public (undocumented)
 export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges, OnDestroy {
+    constructor();
     readonly containerElement: i0.InputSignal<HTMLElement | null | undefined>;
     readonly gap: i0.InputSignal<number | undefined>;
     readonly items: i0.Signal<readonly SiAutoCollapsableListItemDirective[]>;
@@ -34,7 +34,7 @@ export class SiAutoCollapsableListItemDirective extends SiAutoCollapsableListMea
 
 // @public (undocumented)
 export class SiAutoCollapsableListMeasurable {
-    size$: rxjs.Observable<number>;
+    readonly inlineSize: i0.Signal<any>;
 }
 
 // @public (undocumented)

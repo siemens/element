@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 export * from './resize-observer.service';
+export * from './si-observe-element-size';
 export * from './si-resize-observer.directive';
 export * from './si-resize-observer.module';
 export * from './si-responsive-container.directive';

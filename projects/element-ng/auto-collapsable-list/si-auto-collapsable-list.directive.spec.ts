@@ -109,7 +109,6 @@ describe('SiAutoCollapsableListDirective', () => {
   afterEach(() => vi.useRealTimers());
 
   it('should not flicker on initial render', async () => {
-    fixture.detectChanges();
     hostElement
       .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
       .forEach(element => expect(element).toHaveStyle({ visibility: 'hidden' }));
