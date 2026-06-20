@@ -2,10 +2,9 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgTemplateOutlet } from '@angular/common';
 import { booleanAttribute, Component, computed, inject, input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { Breakpoints, SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
+import { Breakpoints } from '@siemens/element-ng/resize-observer';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiFormValidationErrorMapper } from '../si-form-validation-error.model';
@@ -20,7 +19,6 @@ export interface SiFormValidationError {
 
 @Component({
   selector: 'si-form-container',
-  imports: [NgTemplateOutlet, SiResponsiveContainerDirective],
   templateUrl: './si-form-container.component.html',
   styleUrl: './si-form-container.component.scss',
   host: {
@@ -44,9 +42,7 @@ export class SiFormContainerComponent<TControl extends { [K in keyof TControl]: 
   readonly readonly = input(false, { transform: booleanAttribute });
 
   /**
-   * The container hosts the form within a siResizeContainer to configure the breakpoint for
-   * different screen sizes. Optionally, change the container breakpoints with the contentContainerBreakpoints
-   * input.
+   * @deprecated has no effect
    */
   readonly contentContainerBreakpoints = input<Breakpoints>();
 

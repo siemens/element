@@ -16,7 +16,6 @@ import {
   SiFormModule,
   SiFormValidationErrorMapper
 } from '@siemens/element-ng/form';
-import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
 
 interface TestForm {
   name: FormControl<string | null>;
@@ -43,20 +42,6 @@ export class TestHostComponent {
   });
   enableValidationHelp = false;
   customErrorMapper?: SiFormValidationErrorMapper | Map<string, string>;
-}
-
-@Component({
-  imports: [SiFormContainerComponent],
-  template: `
-    <si-form-container style="inline-size: 100px" [form]="form">
-      <si-form-container si-form-container-content [form]="form">
-        <div si-form-container-content style="block-size: 10px"></div>
-      </si-form-container>
-    </si-form-container>
-  `
-})
-class TestHostWithNestingComponent {
-  form = new FormGroup({});
 }
 
 describe('SiFormContainerComponent', () => {
@@ -153,28 +138,6 @@ describe('SiFormContainerComponent', () => {
         component.form!.controls.name.markAsTouched();
         expect(formContainer.invalidFormContainerMessage).toBe(true);
       });
-    });
-  });
-
-  describe('with nested form containers', () => {
-    let fixture: ComponentFixture<TestHostWithNestingComponent>;
-
-    beforeEach(() => {
-      vi.useFakeTimers();
-      fixture = TestBed.createComponent(TestHostWithNestingComponent);
-      fixture.detectChanges();
-    });
-
-    afterEach(() => {
-      vi.useRealTimers();
-    });
-
-    it('should create', async () => {
-      const spy = vi.spyOn(SiResponsiveContainerDirective.prototype as any, 'setResponsiveSize');
-      await vi.advanceTimersByTimeAsync(100);
-
-      expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy).toHaveBeenCalledWith(100, 26);
     });
   });
 });

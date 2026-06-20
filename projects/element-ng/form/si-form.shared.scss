@@ -29,13 +29,10 @@
 }
 
 /// ACCOUNT FOR MEASURED CONTAINERS
-:host-context(.si-container-sm),
-:host-context(.si-container-md),
-:host-context(.si-container-lg),
-:host-context(.si-container-xl),
-:host-context(.si-container-xxl) {
+@container si-form-container (inline-size >= #{map.get(all-variables.$grid-breakpoints, sm)}) {
   :host.si-form-input {
-    display: flex;
+    // need !important here to override the fallback checkbox not inline style.
+    display: flex !important; // stylelint-disable-line declaration-no-important
     flex-direction: row;
     align-items: center;
   }
