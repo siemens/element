@@ -6,6 +6,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 import {
   AfterViewInit,
   booleanAttribute,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ComponentRef,
@@ -76,6 +77,7 @@ import { DatepickerInputConfig, DateRange } from './si-datepicker.model';
       useExisting: SiDateRangeComponent
     }
   ],
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     class: 'form-control d-flex align-items-center',
     role: 'group',

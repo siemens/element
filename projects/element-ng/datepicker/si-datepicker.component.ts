@@ -6,6 +6,7 @@ import { getLocaleFirstDayOfWeek, WeekDay } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -69,7 +70,8 @@ export type RangeType = 'START' | 'END' | undefined;
     SiTranslatePipe
   ],
   templateUrl: './si-datepicker.component.html',
-  styleUrl: './si-datepicker.component.scss'
+  styleUrl: './si-datepicker.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   private readonly locale = inject(LOCALE_ID).toString();
