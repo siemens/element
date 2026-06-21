@@ -5,6 +5,7 @@
 import { A11yModule } from '@angular/cdk/a11y';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   input,
@@ -141,6 +142,7 @@ class RangeSelectionStrategy extends SelectionStrategy {
   selector: '[si-calendar-body]',
   imports: [A11yModule, SiCalendarDateCellDirective],
   templateUrl: './si-calendar-body.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'si-calendar-body'
   },
