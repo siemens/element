@@ -31,14 +31,15 @@ class TestComponent {
 
 @Injectable({ providedIn: 'root' })
 class SiAsyncTranslateService extends SiTranslateService {
+  private readonly lang = 'en';
   translationPrefixer = new BehaviorSubject<TranslationResult<string>>('translated');
 
   override get currentLanguage(): string {
-    return 'en';
+    return this.lang;
   }
 
   override get availableLanguages(): string[] {
-    return ['en'];
+    return [this.lang];
   }
 
   override setCurrentLanguage(lang: string): Observable<void> {
@@ -46,7 +47,7 @@ class SiAsyncTranslateService extends SiTranslateService {
   }
 
   override getDefaultLanguage(): string {
-    return 'en';
+    return this.lang;
   }
 
   override setDefaultLanguage(lang: string): void {}

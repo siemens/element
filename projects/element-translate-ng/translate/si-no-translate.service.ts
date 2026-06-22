@@ -29,12 +29,14 @@ const replacePlaceholders = (str: string, params: Record<string, unknown>): stri
  */
 @Injectable({ providedIn: 'root' })
 export class SiNoTranslateService extends SiTranslateService {
+  private readonly lang = 'en';
+
   override get currentLanguage(): string {
-    return 'en';
+    return this.lang;
   }
 
   override get availableLanguages(): string[] {
-    return ['en'];
+    return [this.lang];
   }
 
   override set availableLanguages(lang: string[]) {}
@@ -44,7 +46,7 @@ export class SiNoTranslateService extends SiTranslateService {
   }
 
   override getDefaultLanguage(): string {
-    return 'en';
+    return this.lang;
   }
 
   override setDefaultLanguage(lang: string): void {}

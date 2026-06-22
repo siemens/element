@@ -104,7 +104,7 @@
     "@module-federation/runtime": "2.5.1",
     "@ngx-formly/bootstrap": "6.3.12",
     "@ngx-formly/core": "6.3.12",
-    "@ngx-translate/core": "16.0.4",
+    "@ngx-translate/core": "18.0.0",
     "@siemens/element-icons": "1.2.0",
     "@siemens/ngx-datatable": "26.2.1",
     "@softarc/native-federation-orchestrator": "4.4.0",
