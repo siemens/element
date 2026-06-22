@@ -3,7 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import { booleanAttribute, Component, computed, inject, input } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input
+} from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Breakpoints, SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -23,6 +30,7 @@ export interface SiFormValidationError {
   imports: [NgTemplateOutlet, SiResponsiveContainerDirective],
   templateUrl: './si-form-container.component.html',
   styleUrl: './si-form-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     '[style.--si-form-label-width]': 'labelWidth()'
   }

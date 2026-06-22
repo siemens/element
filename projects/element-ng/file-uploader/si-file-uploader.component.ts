@@ -13,14 +13,15 @@ import {
 } from '@angular/common/http';
 import {
   booleanAttribute,
-  ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
+  effect,
   inject,
   input,
   numberAttribute,
-  OnChanges,
   output,
-  SimpleChanges,
+  signal,
+  untracked,
   viewChild
 } from '@angular/core';
 import { elementCancel, elementDelete, elementDocument, elementRedo } from '@siemens/element-icons';
@@ -89,9 +90,10 @@ interface ExtUploadFile extends UploadFile {
     SiTranslatePipe
   ],
   templateUrl: './si-file-uploader.component.html',
-  styleUrl: './si-file-uploader.component.scss'
+  styleUrl: './si-file-uploader.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
-export class SiFileUploaderComponent implements OnChanges {
+export class SiFileUploaderComponent {
   /**
    * Text of the link to open the file select dialog (follows `uploadDropText`).
    *
@@ -342,20 +344,22 @@ export class SiFileUploaderComponent implements OnChanges {
     elementDocument,
     elementRedo
   });
-  protected files: ExtUploadFile[] = [];
+  protected readonly files = signal<ExtUploadFile[]>([]);
   protected pending = 0;
   private uploading = 0;
-  protected uploadEnabled = false;
-  protected maxFilesReached = false;
+  protected readonly uploadEnabled = signal(false);
+  protected readonly maxFilesReached = signal(false);
 
   private readonly dropZone = viewChild.required<SiFileDropzoneComponent>('dropZone');
-  private cdRef = inject(ChangeDetectorRef);
   private http? = inject(HttpClient, { optional: true });
 
-  ngOnChanges(changes: SimpleChanges<this>): void {
-    if (changes.maxFiles || changes.disableUpload) {
-      this.updateStates();
-    }
+  constructor() {
+    effect(() => {
+      // Track only these inputs; use untracked to avoid tracking files() inside updateStates()
+      this.maxFiles();
+      this.disableUpload();
+      untracked(() => this.updateStates());
+    });
   }
 
   protected handleFiles(files: UploadFile[]): void {
@@ -365,13 +369,14 @@ export class SiFileUploaderComponent implements OnChanges {
 
     const maxFiles = this.maxFiles();
     // for single-file case, replace exiting file if any
-    if (maxFiles === 1 && this.files.length) {
+    if (maxFiles === 1 && this.files().length) {
       this.reset(false);
     }
 
     let numValid = this.countValid();
+    const current = this.files().slice();
     for (const file of files) {
-      const duplicate = this.isDuplicate(file);
+      const duplicate = this.isDuplicate(file, current);
       if (duplicate) {
         // in case this is duplicated: reset if already uploaded or not handled yet
         if (duplicate.status !== 'uploading' && duplicate.status !== 'queued') {
@@ -383,34 +388,31 @@ export class SiFileUploaderComponent implements OnChanges {
       const canAdd = numValid + 1 <= maxFiles;
       const valid = file.status === 'added';
       if (valid && !canAdd) {
-        this.maxFilesReached = true;
+        this.maxFilesReached.set(true);
         break;
       } else if (valid) {
         numValid++;
       }
-      this.files.push(file);
+      current.push(file);
     }
 
-    this.files.sort((a, b) => a.fileName.localeCompare(b.fileName));
-
-    this.filesChanges.emit(this.files.slice());
+    current.sort((a, b) => a.fileName.localeCompare(b.fileName));
+    this.files.set(current);
+    this.filesChanges.emit(current.slice());
 
     this.updateStates();
 
-    // needed for drag drop of directory
-    this.cdRef.markForCheck();
-
     if (this.autoUpload()) {
       // allow concurrent uploads for auto upload mode.
-      this.uploadEnabled = true;
+      this.uploadEnabled.set(true);
       this.fileUpload(false);
     }
   }
 
   protected removeFile(index: number): void {
     if (index >= 0) {
-      this.files.splice(index, 1);
-      this.filesChanges.emit(this.files.slice());
+      this.files.update(current => current.filter((_, i) => i !== index));
+      this.filesChanges.emit(this.files());
       this.dropZone().reset();
       this.updateStates();
     }
@@ -425,6 +427,7 @@ export class SiFileUploaderComponent implements OnChanges {
     this.pending--;
     file.status = 'added';
     file.progress = 0;
+    this.files.update(f => [...f]);
     this.updateStates();
 
     const { status, fileName, size, progress } = file;
@@ -446,8 +449,8 @@ export class SiFileUploaderComponent implements OnChanges {
    * Reset the state.
    */
   reset(emit = true): void {
-    this.files.forEach(f => f.subscription?.unsubscribe());
-    this.files = [];
+    this.files().forEach(f => f.subscription?.unsubscribe());
+    this.files.set([]);
     this.dropZone().reset();
     this.updateStates();
     if (emit) {
@@ -459,11 +462,11 @@ export class SiFileUploaderComponent implements OnChanges {
    * Uploads the file
    */
   fileUpload(doRetry = true): void {
-    if (!this.uploadEnabled) {
+    if (!this.uploadEnabled()) {
       return;
     }
-    this.uploadEnabled = false;
-    this.doUpload(this.files, doRetry);
+    this.uploadEnabled.set(false);
+    this.doUpload(this.files(), doRetry);
   }
 
   private doUpload(files: UploadFile[], doRetry: boolean): void {
@@ -478,8 +481,8 @@ export class SiFileUploaderComponent implements OnChanges {
   }
 
   private processQueue(): void {
-    for (let i = 0; i < this.files.length && this.uploading < this.maxConcurrentUploads(); i++) {
-      const file = this.files[i];
+    for (let i = 0; i < this.files().length && this.uploading < this.maxConcurrentUploads(); i++) {
+      const file = this.files()[i];
       if (file.status === 'queued') {
         this.uploading++;
         this.uploadOneFile(file);
@@ -513,6 +516,7 @@ export class SiFileUploaderComponent implements OnChanges {
     file.status = 'uploading';
     file.errorText = undefined;
     file.httpErrorText = undefined;
+    this.files.update(f => [...f]);
 
     const requestHandler =
       config.handler ??
@@ -531,8 +535,8 @@ export class SiFileUploaderComponent implements OnChanges {
   }
 
   // this is a light check for duplicate file - name and size only, not content!
-  private isDuplicate(file: UploadFile): UploadFile | null {
-    for (const uploadFile of this.files) {
+  private isDuplicate(file: UploadFile, current: ExtUploadFile[]): UploadFile | null {
+    for (const uploadFile of current) {
       if (uploadFile.file.name === file.file.name && uploadFile.file.size === file.file.size) {
         return uploadFile;
       }
@@ -545,7 +549,7 @@ export class SiFileUploaderComponent implements OnChanges {
       file.successResponse = httpEvent as HttpResponse<unknown>;
     } else if (httpEvent.type === HttpEventType.UploadProgress && httpEvent.total) {
       file.progress = Math.floor((100 * httpEvent.loaded) / httpEvent.total);
-      this.cdRef.markForCheck();
+      this.files.update(f => [...f]);
     }
   }
 
@@ -574,6 +578,7 @@ export class SiFileUploaderComponent implements OnChanges {
     file.subscription = undefined;
     this.pending--;
     this.uploading--;
+    this.files.update(f => [...f]);
     this.updateStates();
     this.processQueue();
   }
@@ -581,26 +586,25 @@ export class SiFileUploaderComponent implements OnChanges {
   private fadeOut(file: ExtUploadFile): void {
     setTimeout(() => {
       file.fadeOut = true;
-      this.cdRef.markForCheck();
+      this.files.update(f => [...f]);
       setTimeout(() => {
-        this.removeFile(this.files.indexOf(file));
-        this.cdRef.markForCheck();
+        this.removeFile(this.files().indexOf(file));
       }, 500);
-      this.cdRef.markForCheck();
     }, 3500);
   }
 
   private updateStates(): void {
-    this.uploadEnabled =
+    this.uploadEnabled.set(
       !this.disableUpload() &&
-      !this.pending &&
-      this.files.some(f => f.status === 'added' || f.status === 'error');
-    if (this.maxFilesReached && this.countValid() < this.maxFiles()) {
-      this.maxFilesReached = false;
+        !this.pending &&
+        this.files().some(f => f.status === 'added' || f.status === 'error')
+    );
+    if (this.maxFilesReached() && this.countValid() < this.maxFiles()) {
+      this.maxFilesReached.set(false);
     }
   }
 
   private countValid(): number {
-    return this.files.reduce<number>((acc, f) => acc + (f.status !== 'invalid' ? 1 : 0), 0);
+    return this.files().reduce<number>((acc, f) => acc + (f.status !== 'invalid' ? 1 : 0), 0);
   }
 }

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import {
   injectSiTranslateService,
   SiTranslatePipe,
@@ -15,7 +15,8 @@ import { IsoLanguageValue } from './iso-language-value';
   selector: 'si-language-switcher',
   imports: [SiTranslatePipe],
   templateUrl: './si-language-switcher.component.html',
-  styleUrl: './si-language-switcher.component.scss'
+  styleUrl: './si-language-switcher.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiLanguageSwitcherComponent {
   /**
