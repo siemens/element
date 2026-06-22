@@ -134,6 +134,38 @@ describe('SiAiChatContainerComponent', () => {
     expect(toolMessage).toBeTruthy();
   });
 
+  it('should render reasoning messages with the reasoning icon', () => {
+    const messages: ChatMessage[] = [
+      {
+        type: 'reasoning',
+        content: 'Checking the available files'
+      }
+    ];
+
+    fixture.componentRef.setInput('messages', messages);
+    fixture.detectChanges();
+
+    const toolMessage = debugElement.query(By.css('si-tool-message'));
+    expect(toolMessage).toBeTruthy();
+    expect(toolMessage.componentInstance.toolIcon()).toBe('element-light');
+  });
+
+  it('should pass tool input alias from messages', () => {
+    const messages: ChatMessage[] = [
+      {
+        type: 'tool',
+        name: 'Calculator',
+        input: '{"x": 5}'
+      }
+    ];
+
+    fixture.componentRef.setInput('messages', messages);
+    fixture.detectChanges();
+
+    const toolMessage = debugElement.query(By.css('si-tool-message'));
+    expect(toolMessage.componentInstance.input()).toBe('{"x": 5}');
+  });
+
   it('should pass custom tool input arguments labels from messages', () => {
     const customLabel = 'Custom Input';
     const messages: ChatMessage[] = [
@@ -450,6 +482,151 @@ describe('SiAiChatContainerComponent', () => {
     const toolMessages = debugElement.queryAll(By.css('si-tool-message'));
 
     expect(toolMessages).toHaveLength(1);
+  });
+
+  it('should keep tool auto-expand when followed by reasoning', () => {
+    const messages: ChatMessage[] = [
+      {
+        type: 'tool',
+        name: 'Tool',
+        output: 'Result',
+        autoExpandOutput: true
+      },
+      {
+        type: 'reasoning',
+        content: 'Reasoning'
+      }
+    ];
+
+    fixture.componentRef.setInput('messages', messages);
+    fixture.detectChanges();
+
+    const toolMessages = debugElement.queryAll(By.css('si-tool-message'));
+    expect(toolMessages[0].componentInstance.expandOutput()).toBe(true);
+  });
+
+  it('should keep tool auto-expand when followed by reasoning and AI messages', () => {
+    const messages: ChatMessage[] = [
+      {
+        type: 'tool',
+        name: 'Tool',
+        output: 'Result',
+        autoExpandOutput: true
+      },
+      {
+        type: 'reasoning',
+        content: 'Reasoning'
+      },
+      {
+        type: 'ai',
+        content: 'Answer'
+      }
+    ];
+
+    fixture.componentRef.setInput('messages', messages);
+    fixture.detectChanges();
+
+    const toolMessages = debugElement.queryAll(By.css('si-tool-message'));
+    expect(toolMessages[0].componentInstance.expandOutput()).toBe(true);
+  });
+
+  it('should keep tool auto-expand when followed by AI and reasoning messages', () => {
+    const messages: ChatMessage[] = [
+      {
+        type: 'tool',
+        name: 'Tool',
+        output: 'Result',
+        autoExpandOutput: true
+      },
+      {
+        type: 'ai',
+        content: 'Answer'
+      },
+      {
+        type: 'reasoning',
+        content: 'More reasoning'
+      }
+    ];
+
+    fixture.componentRef.setInput('messages', messages);
+    fixture.detectChanges();
+
+    const toolMessages = debugElement.queryAll(By.css('si-tool-message'));
+    expect(toolMessages[0].componentInstance.expandOutput()).toBe(true);
+  });
+
+  it('should close tool auto-expand when followed by another tool message', () => {
+    const messages: ChatMessage[] = [
+      {
+        type: 'tool',
+        name: 'Tool',
+        output: 'Result',
+        autoExpandOutput: true
+      },
+      {
+        type: 'ai',
+        content: 'Answer'
+      },
+      {
+        type: 'reasoning',
+        content: 'Reasoning'
+      },
+      {
+        type: 'tool',
+        name: 'Next tool',
+        output: 'Next result'
+      }
+    ];
+
+    fixture.componentRef.setInput('messages', messages);
+    fixture.detectChanges();
+
+    const toolMessages = debugElement.queryAll(By.css('si-tool-message'));
+    expect(toolMessages[0].componentInstance.expandOutput()).toBe(false);
+  });
+
+  it('should close tool auto-expand when followed by user message', () => {
+    const messages: ChatMessage[] = [
+      {
+        type: 'tool',
+        name: 'Tool',
+        output: 'Result',
+        autoExpandOutput: true
+      },
+      {
+        type: 'reasoning',
+        content: 'Reasoning'
+      },
+      {
+        type: 'user',
+        content: 'Next question'
+      }
+    ];
+
+    fixture.componentRef.setInput('messages', messages);
+    fixture.detectChanges();
+
+    const toolMessages = debugElement.queryAll(By.css('si-tool-message'));
+    expect(toolMessages[0].componentInstance.expandOutput()).toBe(false);
+  });
+
+  it('should show loading for in-progress tool output', () => {
+    const emptyOutput = signal('');
+    const loading = signal(true);
+    const messages: ChatMessage[] = [
+      {
+        type: 'tool',
+        name: 'Tool',
+        output: emptyOutput,
+        loading
+      }
+    ];
+
+    fixture.componentRef.setInput('messages', messages);
+    fixture.detectChanges();
+
+    const toolMessage = debugElement.query(By.css('si-tool-message'));
+    expect(toolMessage.componentInstance.loading()).toBe(true);
   });
 
   it('should apply color variant to underlying container', () => {

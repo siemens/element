@@ -78,6 +78,22 @@ describe('SiToolMessageComponent', () => {
     expect(icon.componentInstance.icon()).toBe('element-calculator');
   });
 
+  it('should render generic dot when tool icon is false', () => {
+    fixture.componentRef.setInput('toolIcon', false);
+    fixture.detectChanges();
+
+    expect(debugElement.query(By.css('.tool-marker-dot'))).toBeTruthy();
+    expect(debugElement.query(By.css('si-icon'))).toBeFalsy();
+  });
+
+  it('should render loading spinner instead of tool icon while loading', () => {
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+
+    expect(debugElement.query(By.css('si-loading-spinner'))).toBeTruthy();
+    expect(debugElement.query(By.css('si-icon'))).toBeFalsy();
+  });
+
   it('should pass loading state to chat message', () => {
     fixture.componentRef.setInput('loading', true);
     fixture.detectChanges();
@@ -106,8 +122,16 @@ describe('SiToolMessageComponent', () => {
     fixture.componentRef.setInput('inputArguments', '{"x": 5, "y": 10}');
     fixture.detectChanges();
 
-    const inputSection = debugElement.query(By.css('.tool-section'));
+    const inputSection = debugElement.query(By.css('.tool-section-content-top'));
     expect(inputSection).toBeTruthy();
+  });
+
+  it('should support input alias', () => {
+    fixture.componentRef.setInput('input', '{"x": 5, "y": 10}');
+    fixture.detectChanges();
+
+    expect((component as any).hasInputArguments()).toBe(true);
+    expect((component as any).formatData((component as any).getInputValue())).toContain('"x": 5');
   });
 
   it('should format string input arguments', () => {
@@ -148,7 +172,7 @@ describe('SiToolMessageComponent', () => {
     fixture.componentRef.setInput('output', '{"result": 15}');
     fixture.detectChanges();
 
-    const outputSection = debugElement.query(By.css('.tool-section'));
+    const outputSection = debugElement.query(By.css('.tool-section-content-top'));
     expect(outputSection).toBeTruthy();
   });
 
@@ -217,7 +241,7 @@ describe('SiToolMessageComponent', () => {
     fixture.componentRef.setInput('output', '{"result": 15}');
     fixture.detectChanges();
 
-    const outputToggle = debugElement.query(By.css('.tool-section-toggle'));
+    const outputToggle = debugElement.query(By.css('.tool-trace-marker-toggle'));
     const outputContent = debugElement.query(By.css('.tool-section-content'));
 
     expect(outputToggle.nativeElement).toHaveAttribute('aria-expanded', 'false');
@@ -233,6 +257,7 @@ describe('SiToolMessageComponent', () => {
   it('should use custom inputArgumentsLabel', () => {
     const customLabel = 'Custom Input';
     fixture.componentRef.setInput('inputArguments', '{"x": 5}');
+    fixture.componentRef.setInput('output', '{"result": 15}');
     fixture.componentRef.setInput('inputArgumentsLabel', customLabel);
     fixture.detectChanges();
 
@@ -242,11 +267,12 @@ describe('SiToolMessageComponent', () => {
 
   it('should use custom outputLabel', () => {
     const customLabel = 'Custom Output';
+    fixture.componentRef.setInput('inputArguments', '{"x": 5}');
     fixture.componentRef.setInput('output', '{"result": 15}');
     fixture.componentRef.setInput('outputLabel', customLabel);
     fixture.detectChanges();
 
-    const outputToggle = debugElement.query(By.css('.tool-section-toggle'));
+    const outputToggle = debugElement.queryAll(By.css('.tool-section-toggle'))[1];
     expect(outputToggle.nativeElement).toHaveTextContent(customLabel);
   });
 

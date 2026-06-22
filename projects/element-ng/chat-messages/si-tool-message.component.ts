@@ -13,6 +13,7 @@ import {
   signal
 } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
+import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-translate-ng/translate';
 
 import { SiChatMessageComponent } from './si-chat-message.component';
@@ -40,7 +41,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
  */
 @Component({
   selector: 'si-tool-message',
-  imports: [SiChatMessageComponent, SiIconComponent, SiTranslatePipe],
+  imports: [SiChatMessageComponent, SiIconComponent, SiLoadingSpinnerComponent, SiTranslatePipe],
   templateUrl: './si-tool-message.component.html',
   styleUrl: './si-tool-message.component.scss',
   host: {
@@ -59,6 +60,12 @@ export class SiToolMessageComponent {
    * @defaultValue undefined
    */
   readonly inputArguments = input<string | object>();
+
+  /**
+   * Input arguments for the tool call. Alias for {@link inputArguments}.
+   * @defaultValue undefined
+   */
+  readonly input = input<string | object>();
 
   /**
    * Output result from the tool call (optional, JSON string or object)
@@ -85,10 +92,10 @@ export class SiToolMessageComponent {
   readonly loading = input(false, { transform: booleanAttribute });
 
   /**
-   * Custom tool icon name
+   * Custom tool icon name. Set to `false` to render the generic trace dot.
    * @defaultValue 'element-maintenance'
    */
-  readonly toolIcon = input('element-maintenance');
+  readonly toolIcon = input<string | false>('element-maintenance');
 
   /**
    * Label for the input arguments section
@@ -132,6 +139,8 @@ export class SiToolMessageComponent {
     viewChild<ElementRef<HTMLDivElement>>('formattedOutputContent');
   protected readonly inputArgumentsOpened = signal(false);
   protected readonly outputOpened = signal(false);
+  protected readonly inputArgumentsManuallyToggled = signal(false);
+  protected readonly outputManuallyToggled = signal(false);
   protected readonly inputArgumentsContentId = `si-tool-message-input-${nextToolMessageId++}`;
   protected readonly outputContentId = `si-tool-message-output-${nextToolMessageId++}`;
 
@@ -149,7 +158,7 @@ export class SiToolMessageComponent {
 
       const inputContainer = this.formattedInputContent()?.nativeElement;
       if (inputContainer && formatter) {
-        this.renderFormatted(formatter, inputContainer, this.formatData(this.inputArguments()));
+        this.renderFormatted(formatter, inputContainer, this.formatData(this.getInputValue()));
       }
 
       const outputContainer = this.formattedOutputContent()?.nativeElement;
@@ -213,7 +222,8 @@ export class SiToolMessageComponent {
   }
 
   protected hasInputArguments(): boolean {
-    return this.inputArguments() !== undefined && this.inputArguments() !== null;
+    const inputValue = this.getInputValue();
+    return inputValue !== undefined && inputValue !== null;
   }
 
   protected hasOutput(): boolean {
@@ -237,16 +247,58 @@ export class SiToolMessageComponent {
     return this.hasInputArguments() || this.hasOutput() || this.getLoadingState();
   }
 
+  protected hasSingleSection(): boolean {
+    return this.hasInputArguments() !== this.hasOutput();
+  }
+
+  protected singleSectionOpened(): boolean {
+    return this.hasInputArguments() ? this.inputArgumentsOpened() : this.outputOpened();
+  }
+
+  protected singleSectionManuallyToggled(): boolean {
+    return this.hasInputArguments()
+      ? this.inputArgumentsManuallyToggled()
+      : this.outputManuallyToggled();
+  }
+
+  protected singleSectionContentId(): string {
+    return this.hasInputArguments() ? this.inputArgumentsContentId : this.outputContentId;
+  }
+
+  protected getInputValue(): string | object | undefined {
+    const inputValue = this.input();
+    if (inputValue !== undefined && inputValue !== null) {
+      return inputValue;
+    }
+
+    return this.inputArguments();
+  }
+
+  protected getToolIcon(): string | undefined {
+    const icon = this.toolIcon();
+    return icon === false ? undefined : icon;
+  }
+
   protected getOutputValue(): string | object | undefined {
     const outputValue = this.output();
     return outputValue as string | object | undefined;
   }
 
+  protected toggleSingleSection(): void {
+    if (this.hasInputArguments()) {
+      this.toggleInputArguments();
+    } else {
+      this.toggleOutput();
+    }
+  }
+
   protected toggleInputArguments(): void {
+    this.inputArgumentsManuallyToggled.set(true);
     this.inputArgumentsOpened.update(opened => !opened);
   }
 
   protected toggleOutput(): void {
+    this.outputManuallyToggled.set(true);
     this.outputOpened.update(opened => !opened);
   }
 }
