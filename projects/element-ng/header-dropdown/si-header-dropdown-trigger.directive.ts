@@ -5,6 +5,7 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
+  ChangeDetectionStrategy,
   Component,
   ComponentRef,
   Directive,
@@ -25,7 +26,11 @@ import { filter, skip, take, takeUntil } from 'rxjs/operators';
 
 import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
 
-@Component({ template: '', host: { '[attr.aria-owns]': 'ariaOwns()' } })
+@Component({
+  template: '',
+  changeDetection: ChangeDetectionStrategy.Default,
+  host: { '[attr.aria-owns]': 'ariaOwns()' }
+})
 class SiHeaderAnchorComponent {
   readonly ariaOwns = input<string>();
 }

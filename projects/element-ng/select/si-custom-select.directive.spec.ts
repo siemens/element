@@ -54,7 +54,8 @@ class SiTestSelectComponent {
 
 @Component({
   imports: [SiTestSelectComponent, ReactiveFormsModule],
-  template: `<si-test-select [formControl]="control" />`
+  template: `<si-test-select [formControl]="control" />`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormHostComponent {
   readonly control = new FormControl<string | undefined>(undefined);

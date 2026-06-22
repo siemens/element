@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { SampleComponent } from './example.component';
 
@@ -10,6 +10,7 @@ import { SampleComponent } from './example.component';
   /* eslint-disable @angular-eslint/component-selector */
   selector: 'app-root',
   imports: [SampleComponent],
-  template: `<app-sample />`
+  template: `<app-sample />`,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class AppComponent {}

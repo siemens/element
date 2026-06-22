@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import {
   elementCircleFilled,
   elementNotChecked,
@@ -20,7 +20,8 @@ import { ResultDetailStep } from './si-result-details-list.datamodel';
   selector: 'si-result-details-list',
   imports: [SiLoadingSpinnerComponent, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-result-details-list.component.html',
-  styleUrl: './si-result-details-list.component.scss'
+  styleUrl: './si-result-details-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiResultDetailsListComponent {
   /**

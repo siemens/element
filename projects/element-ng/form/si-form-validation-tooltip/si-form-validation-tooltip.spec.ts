@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -13,7 +13,8 @@ import { SiFormValidationTooltipDirective } from './si-form-validation-tooltip.d
 describe('SiFormValidationTooltipDirective', () => {
   @Component({
     imports: [SiFormValidationTooltipDirective, ReactiveFormsModule],
-    template: `<input siFormValidationTooltip required [formControl]="control" />`
+    template: `<input siFormValidationTooltip required [formControl]="control" />`,
+    changeDetection: ChangeDetectionStrategy.OnPush
   })
   class TestHostComponent {
     control = new FormControl('');

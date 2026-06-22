@@ -2,7 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, contentChild, input, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  contentChild,
+  input,
+  output,
+  signal
+} from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { elementHide, elementShow } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
@@ -13,6 +20,7 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-password-toggle.component.html',
   styleUrl: './si-password-toggle.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     class: 'form-control-wrapper',
     '[class.show-visibility-icon]': 'showVisibilityIcon()'

@@ -14,7 +14,7 @@
   (filesAdded)="handleFiles($event)"
 />
 
-@if (maxFilesReached) {
+@if (maxFilesReached()) {
   <si-inline-notification
     class="mb-4"
     severity="info"
@@ -24,7 +24,7 @@
 }
 
 <div class="file-list">
-  @for (file of files; track file) {
+  @for (file of files(); track file) {
     <div class="file" [class.fade-out]="file.fadeOut">
       <si-icon class="icon align-self-center ms-6 me-4" icon="element-document" />
       <div class="flex-fill overflow-hidden mt-6">
@@ -63,7 +63,7 @@
           <button
             type="button"
             class="btn btn-circle btn-tertiary me-4"
-            [disabled]="!uploadEnabled"
+            [disabled]="!uploadEnabled()"
             [title]="uploadButtonText() | translate"
             [attr.aria-label]="uploadButtonText() | translate"
             (click)="retryUpload(file)"
@@ -106,14 +106,14 @@
     <button
       type="button"
       class="btn btn-secondary me-4"
-      [disabled]="pending || !files.length"
+      [disabled]="pending || !files().length"
       (click)="reset()"
       >{{ clearButtonText() | translate }}</button
     >
     <button
       type="button"
       class="btn btn-primary"
-      [disabled]="!uploadEnabled"
+      [disabled]="!uploadEnabled()"
       (click)="fileUpload()"
       >{{ uploadButtonText() | translate }}</button
     >

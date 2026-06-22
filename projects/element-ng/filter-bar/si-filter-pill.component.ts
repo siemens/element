@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import { booleanAttribute, Component, input, output } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { elementCancel } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -14,7 +14,8 @@ import { Filter } from './filter';
   selector: 'si-filter-pill',
   imports: [NgTemplateOutlet, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-filter-pill.component.html',
-  styleUrl: './si-filter-pill.component.scss'
+  styleUrl: './si-filter-pill.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiFilterPillComponent {
   protected readonly icons = addIcons({ elementCancel });

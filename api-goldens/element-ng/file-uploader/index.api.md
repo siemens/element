@@ -10,9 +10,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { HttpRequest } from '@angular/common/http';
 import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { OnChanges } from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
-import { SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -88,7 +86,8 @@ export class SiFileUploadDirective {
 }
 
 // @public (undocumented)
-export class SiFileUploaderComponent implements OnChanges {
+export class SiFileUploaderComponent {
+    constructor();
     readonly accept: _angular_core.InputSignal<string | undefined>;
     readonly acceptText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly autoUpload: _angular_core.InputSignalWithTransform<boolean, unknown>;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import { booleanAttribute, Component, input, output } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { elementLeft4, elementOptionsVertical, elementRight4 } from '@siemens/element-icons';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
@@ -14,7 +14,8 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
   selector: 'si-electron-titlebar',
   imports: [CdkMenuTrigger, SiMenuFactoryComponent, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-electron-titlebar.component.html',
-  styleUrl: './si-electron-titlebar.component.scss'
+  styleUrl: './si-electron-titlebar.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiElectrontitlebarComponent {
   /**

@@ -2,7 +2,16 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, HostListener, inject, input, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  HostListener,
+  inject,
+  input,
+  output,
+  signal
+} from '@angular/core';
 import { elementCancel } from '@siemens/element-icons';
 import {
   addIcons,
@@ -19,7 +28,8 @@ import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from '../si-toast.model';
   selector: 'si-toast-notification',
   imports: [SiLinkModule, SiIconComponent, SiStatusIconComponent, SiTranslatePipe],
   templateUrl: './si-toast-notification.component.html',
-  styleUrl: './si-toast-notification.component.scss'
+  styleUrl: './si-toast-notification.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiToastNotificationComponent {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);
