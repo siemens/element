@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
@@ -32,7 +32,8 @@ import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './ind
       display: block;
       width: 1200px;
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 class TestHostComponent {
   readonly steps = signal<string[]>([]);

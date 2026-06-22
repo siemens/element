@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SelectOption } from '@siemens/element-ng/select';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -21,6 +21,7 @@ import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
     }
     <span class="text-truncate">{{ label() | translate }}</span>`,
   styleUrl: './si-readonly-threshold-option.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: { class: 'd-flex align-items-center py-2 my-4 px-4 si-h5' }
 })
 export class SiReadonlyThresholdOptionComponent {

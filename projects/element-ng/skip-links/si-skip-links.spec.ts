@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiSkipLinkTargetDirective } from './si-skip-link-target.directive';
@@ -12,7 +12,8 @@ import { SiSkipLinkTargetDirective } from './si-skip-link-target.directive';
   template: `
     <button siSkipLinkTarget="T1" type="button">Target 1</button>
     <button siSkipLinkTarget="T2" type="button">Target 2</button>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {}
 

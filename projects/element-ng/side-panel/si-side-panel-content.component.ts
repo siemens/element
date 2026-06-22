@@ -5,6 +5,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   DestroyRef,
@@ -84,6 +85,7 @@ export interface StatusItem extends MenuItemLegacy {
   templateUrl: './si-side-panel-content.component.html',
   styleUrl: './si-side-panel-content.component.scss',
   providers: [SiAccordionHCollapseService],
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     '[class.collapsed]': 'isCollapsed()',
     '[class.expanded]': 'isExpanded()',

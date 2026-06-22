@@ -4,6 +4,7 @@
  */
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -23,6 +24,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-status-bar-item.component.html',
   styleUrl: './si-status-bar-item.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     '[class.clickable]': 'clickable()'
   }

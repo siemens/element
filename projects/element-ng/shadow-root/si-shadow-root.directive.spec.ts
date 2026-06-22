@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
-import { Component, input, signal, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  signal,
+  ViewEncapsulation
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiShadowRootDirective } from './si-shadow-root.directive';
@@ -25,6 +31,7 @@ describe('ShadowRootDirective', () => {
         color: #fff;
       }
     `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.ShadowDom,
     hostDirectives: [SiShadowRootDirective]
   })
@@ -42,7 +49,8 @@ describe('ShadowRootDirective', () => {
       .test-style {
         color: #000 !important;
       }
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
   })
   class TestHostComponent {
     readonly open = signal(false);

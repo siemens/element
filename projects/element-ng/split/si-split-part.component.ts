@@ -6,6 +6,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -29,6 +30,7 @@ import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-spl
   imports: [NgTemplateOutlet, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-split-part.component.html',
   styleUrl: './si-split-part.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   // Signals cannot be used directly with @HostBinding. See: https://github.com/angular/angular/issues/53888#issuecomment-1888935225
   // Having every binding here for consistency.
   host: {

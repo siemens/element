@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -11,7 +11,8 @@ import { StatusToggleItem } from './status-toggle.model';
 
 @Component({
   imports: [SiStatusToggleComponent],
-  template: `<si-status-toggle #toggle [items]="items" [disabled]="disabled" [(value)]="value" />`
+  template: `<si-status-toggle #toggle [items]="items" [disabled]="disabled" [(value)]="value" />`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class HostComponent {
   disabled = false;
@@ -26,7 +27,8 @@ class HostComponent {
 
 @Component({
   imports: [SiStatusToggleComponent, ReactiveFormsModule],
-  template: `<si-status-toggle #toggle [items]="items" [formControl]="formControl" />`
+  template: `<si-status-toggle #toggle [items]="items" [formControl]="formControl" />`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormHostComponent {
   readonly formControl = new FormControl('A');

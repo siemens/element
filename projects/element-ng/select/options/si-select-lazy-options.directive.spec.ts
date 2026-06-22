@@ -4,7 +4,7 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -24,7 +24,8 @@ describe('SelectLazyOptionsDirective', () => {
       ReactiveFormsModule,
       SiSelectMultiValueDirective
     ],
-    template: ` <si-select multi hasFilter [optionSource]="optionSource" [formControl]="control" />`
+    template: `<si-select multi hasFilter [optionSource]="optionSource" [formControl]="control" />`,
+    changeDetection: ChangeDetectionStrategy.OnPush
   })
   class TestHostComponent {
     readonly optionSource: SelectOptionSource<string> = {

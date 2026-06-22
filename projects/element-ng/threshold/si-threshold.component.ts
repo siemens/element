@@ -5,6 +5,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   input,
@@ -56,6 +57,7 @@ export interface ThresholdStep {
   ],
   templateUrl: './si-threshold.component.html',
   styleUrl: './si-threshold.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     '[class.add-remove]': 'canAddRemoveSteps()',
     '[class.horizontal]': 'horizontalLayout()',

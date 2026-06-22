@@ -4,7 +4,15 @@
  */
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
-import { Component, computed, ElementRef, inject, signal, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  signal,
+  TemplateRef
+} from '@angular/core';
 import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
@@ -15,6 +23,7 @@ import { SI_TOOLTIP_CONFIG } from './si-tooltip.model';
   imports: [NgTemplateOutlet, SiTranslatePipe, NgComponentOutlet],
   templateUrl: './si-tooltip.component.html',
   styleUrl: './si-tooltip.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     'animate.leave': 'tooltip-leave'
   }
