@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { elementHelp } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiPopoverDirective } from '@siemens/element-ng/popover';
@@ -32,6 +32,7 @@ import { SiPopoverDirective } from '@siemens/element-ng/popover';
     <si-icon [icon]="icons.elementHelp" />
   `,
   styleUrl: './si-help-button.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   hostDirectives: [
     {
       directive: SiPopoverDirective,

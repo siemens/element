@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -26,7 +26,8 @@ import { SiHeaderDropdownComponent } from './si-header-dropdown.component';
     SiLinkDirective,
     SiHeaderDropdownTriggerDirective
   ],
-  templateUrl: './si-header-dropdown-items-factory.component.html'
+  templateUrl: './si-header-dropdown-items-factory.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiHeaderDropdownItemsFactoryComponent {
   readonly items = input.required<MenuItem[]>();

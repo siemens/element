@@ -2,7 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, effect, inject, input, ElementRef } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  input,
+  ElementRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { getMarkdownRenderer } from './markdown-renderer';
@@ -13,7 +20,8 @@ import { getMarkdownRenderer } from './markdown-renderer';
  */
 @Component({
   selector: 'si-markdown-renderer',
-  template: ``
+  template: ``,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiMarkdownRendererComponent {
   private sanitizer = inject(DomSanitizer);

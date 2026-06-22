@@ -5,7 +5,7 @@
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { ComponentHarness, HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLinkActionService } from '@siemens/element-ng/link';
@@ -27,7 +27,8 @@ class ButtonHarness extends ComponentHarness {
     <ng-template #menu>
       <si-menu-factory actionParam="action!" [items]="items" />
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 class TestLegacyObjectComponent {
   items: MenuItem[] = [

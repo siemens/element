@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, input } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { StatusType } from '@siemens/element-ng/common';
 import { SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
@@ -12,7 +12,8 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
   selector: 'si-inline-notification',
   imports: [SiLinkDirective, SiTranslatePipe, SiStatusIconComponent],
   templateUrl: './si-inline-notification.component.html',
-  styleUrl: './si-inline-notification.component.scss'
+  styleUrl: './si-inline-notification.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiInlineNotificationComponent {
   /**

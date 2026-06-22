@@ -4,7 +4,7 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { CommonModule } from '@angular/common';
-import { booleanAttribute, Component, inject, input } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { ActivatedRoute, RouterModule, type NavigationExtras } from '@angular/router';
 import { elementOptionsVertical } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
@@ -152,7 +152,8 @@ export type NotificationItemPrimaryAction =
     SiIconComponent
   ],
   templateUrl: './si-notification-item.component.html',
-  styleUrl: './si-notification-item.component.scss'
+  styleUrl: './si-notification-item.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiNotificationItemComponent {
   protected readonly icons = addIcons({ elementOptionsVertical });

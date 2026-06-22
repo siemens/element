@@ -4,7 +4,7 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   FormControl,
@@ -157,7 +157,8 @@ describe('SiForm', () => {
             <input formControlName="input" />
           </si-form-item>
         </form>
-      `
+      `,
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {
       form = new FormGroup({
@@ -190,7 +191,7 @@ describe('SiForm', () => {
 
     it('should update required indicator', async () => {
       fixture.componentInstance.form.controls.input.setValidators([]);
-      fixture.changeDetectorRef.markForCheck();
+      fixture.componentInstance.form.controls.input.updateValueAndValidity();
       await fixture.whenStable();
       const field = await loader.getHarness(SiFormItemHarness.with({ label: 'Input' }));
       expect(await field.isRequired()).toBe(false);
@@ -203,14 +204,15 @@ describe('SiForm', () => {
       template: `
         <form>
           <si-form-item label="Input">
-            <input name="value" [required]="required" [(ngModel)]="value" />
+            <input name="value" [required]="required()" [(ngModel)]="value" />
           </si-form-item>
         </form>
-      `
+      `,
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {
-      value = '';
-      required = true;
+      readonly value = signal('');
+      readonly required = signal(true);
     }
 
     let fixture: ComponentFixture<TestHostComponent>;
@@ -228,8 +230,8 @@ describe('SiForm', () => {
     it('should update required indicator', async () => {
       const field = await loader.getHarness(SiFormItemHarness.with({ label: 'Input' }));
       expect(await field.isRequired()).toBe(true);
-      fixture.componentInstance.required = false;
-      fixture.changeDetectorRef.markForCheck();
+      fixture.componentInstance.required.set(false);
+
       await fixture.whenStable();
       expect(await field.isRequired()).toBe(false);
     });
@@ -282,7 +284,8 @@ describe('SiForm', () => {
         <si-form-item label="Normal">
           <input type="checkbox" class="form-check-input" [formControl]="normal" />
         </si-form-item>
-      `
+      `,
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {
       normal = new FormControl(true);

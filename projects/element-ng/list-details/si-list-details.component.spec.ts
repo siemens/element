@@ -371,11 +371,16 @@ describe('ListDetailsComponent', () => {
       template: `
         <si-details-pane-header>Header</si-details-pane-header>
         <si-details-pane-body>Body</si-details-pane-body>
-      `
+      `,
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class DetailsComponent {}
 
-    @Component({ selector: 'si-empty', template: 'EMPTY' })
+    @Component({
+      selector: 'si-empty',
+      template: 'EMPTY',
+      changeDetection: ChangeDetectionStrategy.OnPush
+    })
     class EmptyComponent {}
 
     @Component({
@@ -387,7 +392,8 @@ describe('ListDetailsComponent', () => {
             <router-outlet />
           </si-details-pane>
         </si-list-details>
-      `
+      `,
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class ListComponent {}
 

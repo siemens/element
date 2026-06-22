@@ -53,7 +53,8 @@ export class TestHostComponent {
         <div si-form-container-content style="block-size: 10px"></div>
       </si-form-container>
     </si-form-container>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostWithNestingComponent {
   form = new FormGroup({});
@@ -68,7 +69,6 @@ describe('SiFormContainerComponent', () => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
         imports: [
-          ReactiveFormsModule,
           SiFormModule.withConfiguration({
             validationErrorMapper: { minlength: 'custom-length-message' }
           }),
