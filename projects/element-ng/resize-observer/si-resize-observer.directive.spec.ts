@@ -5,23 +5,18 @@
 import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockInstance } from 'vitest';
+import { page } from 'vitest/browser';
 
 import { ElementDimensions } from './index';
 import { SiResizeObserverDirective } from './si-resize-observer.directive';
-import {
-  MockResizeObserver,
-  mockResizeObserver,
-  restoreResizeObserver
-} from './testing/resize-observer.mock';
 
 @Component({
   imports: [SiResizeObserverDirective],
   template: `
     <div
       #theDiv
-      [style.width.px]="width()"
-      [style.height.px]="height()"
-      [emitInitial]="emitInitial"
+      class="vh-100 w-100"
+      [emitInitial]="emitInitial()"
       (siResizeObserver)="resizeHandler($event)"
     >
       Testli
@@ -30,9 +25,7 @@ import {
 })
 class TestHostComponent {
   readonly theDiv = viewChild.required<ElementRef>('theDiv');
-  readonly width = signal(100);
-  readonly height = signal(100);
-  emitInitial = true;
+  readonly emitInitial = signal(true);
 
   resizeHandler(dim: ElementDimensions): void {}
 }
@@ -42,56 +35,38 @@ describe('SiResizeObserverDirective', () => {
   let component: TestHostComponent;
   let spy: MockInstance;
 
-  const detectSizeChange = (inlineSize: number = 100, blockSize: number = 100): void => {
-    component.width.set(inlineSize);
-    component.height.set(blockSize);
-    fixture.detectChanges();
-    MockResizeObserver.triggerResize({});
-    fixture.detectChanges();
-  };
-
-  beforeEach(() => {
-    vi.useFakeTimers();
-    mockResizeObserver();
+  beforeEach(async () => {
+    await page.viewport(100, 100);
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     spy = vi.spyOn(component, 'resizeHandler');
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
     spy.mockClear();
-    restoreResizeObserver();
     vi.useRealTimers();
   });
 
   it('emits initial size event', async () => {
-    fixture.detectChanges();
-    vi.advanceTimersByTime(100);
     await fixture.whenStable();
+    vi.advanceTimersByTime(100);
     expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 100 });
   });
 
   it('emits on width change', async () => {
-    detectSizeChange(200, 100);
-
+    await page.viewport(200, 100);
     expect(component.resizeHandler).not.toHaveBeenCalled();
 
     vi.advanceTimersByTime(100);
-    fixture.detectChanges();
-    await fixture.whenStable();
-
     expect(component.resizeHandler).toHaveBeenCalledWith({ width: 200, height: 100 });
   });
 
   it('emits on height change', async () => {
-    detectSizeChange(100, 200);
-
+    await page.viewport(100, 200);
     expect(component.resizeHandler).not.toHaveBeenCalled();
 
     vi.advanceTimersByTime(100);
-    fixture.detectChanges();
-    await fixture.whenStable();
-
     expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 200 });
   });
 });
@@ -104,7 +79,7 @@ describe('SiResizeObserverDirective with emitInitial=false', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
-    component.emitInitial = false;
+    component.emitInitial.set(false);
     spy = vi.spyOn(component, 'resizeHandler');
     fixture.detectChanges();
   });
