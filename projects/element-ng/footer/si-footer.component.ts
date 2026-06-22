@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
@@ -10,7 +10,8 @@ import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
   selector: 'si-footer',
   imports: [SiLinkDirective, SiTranslatePipe],
   templateUrl: './si-footer.component.html',
-  styleUrl: './si-footer.component.scss'
+  styleUrl: './si-footer.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiFooterComponent {
   /**

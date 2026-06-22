@@ -35,7 +35,8 @@ class TestHostComponent {
 
 @Component({
   selector: 'si-empty',
-  template: `empty`
+  template: `empty`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class SiEmptyComponent {}
 

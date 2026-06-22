@@ -4,7 +4,7 @@
  */
 import { CdkMenuGroup, CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { SiLinkActionService, SiLinkModule } from '@siemens/element-ng/link';
@@ -37,7 +37,8 @@ import { SiMenuDirective } from './si-menu.directive';
     RouterLink,
     SiMenuFactoryItemGuardDirective
   ],
-  templateUrl: './si-menu-factory.component.html'
+  templateUrl: './si-menu-factory.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiMenuFactoryComponent {
   readonly items = input<readonly (MenuItemLegacy | MenuItem)[]>();
