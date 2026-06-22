@@ -2,32 +2,21 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subscription } from 'rxjs';
 import { Mock } from 'vitest';
+import { page } from 'vitest/browser';
 
 import { ElementDimensions, ResizeObserverService } from './resize-observer.service';
-import {
-  MockResizeObserver,
-  mockResizeObserver,
-  restoreResizeObserver
-} from './testing/resize-observer.mock';
 
 @Component({
-  template: `<div #theDiv [style.width.px]="width()" [style.height.px]="height()">Testli</div>`
+  template: `<div #theDiv class="w-100 vh-100">Testli</div>`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly theDiv = viewChild.required<ElementRef>('theDiv');
-  readonly width = signal(100);
-  readonly height = signal(100);
 }
-
-// A timeout that works with `await`. We have to use `waitForAsync()``
-// in the tests below because `tick()` doesn't work because `ResizeObserver`
-// operates outside of the zone
-const timeout = async (ms: number): Promise<void> =>
-  new Promise(resolve => setTimeout(resolve, ms));
 
 describe('ResizeObserverService', () => {
   let fixture: ComponentFixture<TestHostComponent>;
@@ -42,66 +31,59 @@ describe('ResizeObserverService', () => {
       .subscribe(dim => spy(dim));
   };
 
-  const detectSizeChange = (inlineSize: number = 100, blockSize: number = 100): void => {
-    component.width.set(inlineSize);
-    component.height.set(blockSize);
-    fixture.detectChanges();
-    MockResizeObserver.triggerResize({});
-    fixture.detectChanges();
-  };
-
-  beforeEach(() => {
-    mockResizeObserver();
+  beforeEach(async () => {
+    await page.viewport(100, 100);
     service = TestBed.inject(ResizeObserverService);
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
-
+    await fixture.whenStable();
     spy = vi.fn();
+
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
     subscription?.unsubscribe();
-    restoreResizeObserver();
+    vi.useRealTimers();
   });
 
   it('emits initial size event when asked', async () => {
     subscribe(true);
-    await timeout(10);
+    vi.advanceTimersByTime(10);
     expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
   });
 
   it('emits no initial size event when not asked', async () => {
     subscribe(false);
-    await timeout(10);
+    vi.advanceTimersByTime(10);
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it.skipIf(!document.hasFocus())('emits on width change', async () => {
+  it('emits on width change', async () => {
     subscribe(false);
-    detectSizeChange(200, 100);
+    await page.viewport(200, 100);
 
     // with throttling, this shouldn't fire just yet
-    await timeout(20);
+    vi.advanceTimersByTime(20);
     expect(spy).not.toHaveBeenCalled();
 
-    await timeout(150);
+    vi.advanceTimersByTime(150);
     expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
   });
 
-  it.skipIf(!document.hasFocus())('emits on height change', async () => {
+  it('emits on height change', async () => {
     subscribe(false);
-    detectSizeChange(100, 200);
+    await page.viewport(100, 200);
 
     // with throttling, this shouldn't fire just yet
-    await timeout(20);
+    vi.advanceTimersByTime(20);
     expect(spy).not.toHaveBeenCalled();
 
-    await timeout(150);
+    vi.advanceTimersByTime(150);
     expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 200 }));
   });
 
-  it.skipIf(!document.hasFocus())('can handle multiple subscriptions on same element', async () => {
+  it('can handle multiple subscriptions on same element', async () => {
     subscribe(true);
 
     const spy2: Mock<(dim: ElementDimensions) => void> = vi.fn();
@@ -109,13 +91,13 @@ describe('ResizeObserverService', () => {
       .observe(component.theDiv().nativeElement, 50, true)
       .subscribe(dim => spy2(dim));
 
-    await timeout(20);
+    vi.advanceTimersByTime(20);
     expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
     expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
 
-    detectSizeChange(200, 100);
+    await page.viewport(200, 100);
 
-    await timeout(150);
+    vi.advanceTimersByTime(150);
     expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
     expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
 
