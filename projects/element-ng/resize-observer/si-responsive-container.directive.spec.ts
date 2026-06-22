@@ -2,28 +2,25 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { page } from 'vitest/browser';
 
 import { SiResponsiveContainerDirective } from './index';
-import {
-  MockResizeObserver,
-  mockResizeObserver,
-  restoreResizeObserver
-} from './testing/resize-observer.mock';
 
 @Component({
   imports: [SiResponsiveContainerDirective],
   template: `
     <div
       siResponsiveContainer
-      style="width: 100px"
+      class="vh-100 w-100"
       [resizeThrottle]="10"
       [style.width.px]="width()"
     >
       Testli
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly width = signal(100);
@@ -31,37 +28,32 @@ class TestHostComponent {
 
 describe('SiResponsiveContainerDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
   let element: HTMLElement;
 
-  beforeEach(() => {
-    mockResizeObserver();
+  beforeEach(async () => {
+    await page.viewport(100, 100);
     fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
     element = fixture.nativeElement;
   });
 
-  afterEach(() => restoreResizeObserver());
-
-  const testSize = async (size: number, clazz: string): Promise<void> => {
+  const testSize = async (size: string | number, clazz: string | number): Promise<void> => {
     vi.useFakeTimers();
-    component.width.set(size);
-    fixture.detectChanges();
-    MockResizeObserver.triggerResize({});
+    await page.viewport(parseInt(size as string, 10), 100);
 
     vi.advanceTimersByTime(100);
-    fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(element.querySelector<HTMLElement>('div')!).toHaveClass(clazz);
+    expect(element.querySelector<HTMLElement>('div')!).toHaveClass(clazz.toString());
     vi.useRealTimers();
   };
 
-  it('sets correct si-container-* class', async () => {
-    await testSize(100, 'si-container-xs');
-    await testSize(580, 'si-container-sm');
-    await testSize(780, 'si-container-md');
-    await testSize(1000, 'si-container-lg');
-    await testSize(1200, 'si-container-xl');
+  it.for([
+    [100, 'si-container-xs'],
+    [580, 'si-container-sm'],
+    [780, 'si-container-md'],
+    [1000, 'si-container-lg'],
+    [1200, 'si-container-xl']
+  ])('width %i sets %s class', async ([size, expected]) => {
+    await testSize(size, expected);
   });
 });
