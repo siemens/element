@@ -1,0 +1,179 @@
+<div class="p-6">
+  <div class="position-relative w-100 border p-6">
+    <div class="row">
+      <div class="col mb-6">
+        <button
+          si-action-card
+          type="button"
+          class="card-size"
+          selectable
+          disabled
+          heading="Natural Gas Usage"
+          (selectedChange)="onCardSelect($event, 'card1')"
+        >
+          <p class="card-body card-text" body>
+            Some quick example text to build on the card title and make up the bulk of the card's
+            content.
+          </p>
+        </button>
+      </div>
+      <div class="col mb-6">
+        <button
+          si-action-card
+          type="button"
+          class="card-size"
+          selectable
+          heading="FS20"
+          (selectedChange)="onCardSelect($event, 'card2')"
+        >
+          <si-icon headerIcon icon="element-fire" class="icon me-3" />
+          <div body class="card-body card-text">
+            <p class="ms-9">Too much wood is burning in the hot summer.</p>
+            <div class="d-flex">
+              <si-icon icon="element-fire-sensor" class="icon me-3" />
+              <p>Use Siemens sensors to detect fire and save the planet.</p>
+            </div>
+          </div>
+        </button>
+      </div>
+      <div class="col mb-6">
+        <button
+          #card
+          si-action-card
+          type="button"
+          class="card-size"
+          selectable
+          heading="Overflows"
+          (selectedChange)="onCardSelect($event, 'card3')"
+        >
+          <div body class="card-body card-text overflow-auto" tabindex="0">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec ornare nunc,
+            quis feugiat ex. Vivamus mollis nisi at dapibus vehicula. Curabitur dui ante, interdum
+            pharetra hendrerit vel, efficitur in erat. Phasellus porttitor molestie orci, vel
+            consectetur ipsum commodo eget. Pellentesque ac gravida mi, id vehicula purus. Sed
+            egestas nisl est, eget faucibus velit hendrerit vulputate. Aenean et pretium enim, in
+            facilisis est. Nam luctus felis ut auctor sollicitudin. Donec elementum nec lorem vitae
+            scelerisque. Mauris elementum metus diam, sit amet ornare mi rhoncus sit amet. Nulla
+            semper scelerisque molestie. Cras et purus et nisi interdum maximus sed et leo. Mauris
+            bibendum hendrerit nunc, sed malesuada augue.
+            <br /><br />
+            Ut porttitor quam in lacinia sodales. Cras pellentesque feugiat sem, non tincidunt
+            mauris mollis vitae. Praesent eleifend condimentum nisi. Quisque fringilla feugiat
+            ornare. Nunc interdum lacinia felis. Duis molestie metus velit, a vestibulum eros
+            blandit in. Donec ut erat posuere, ornare elit a, gravida magna. Pellentesque porta
+            lacinia nisi eget bibendum. Nulla facilisi. Vestibulum fermentum ligula vitae mattis
+            placerat. Nunc quis enim nec urna vehicula cursus id vel sem.
+            <br /><br />
+            Nunc luctus facilisis aliquam. Quisque vehicula imperdiet mauris, nec consectetur erat.
+            Integer ullamcorper finibus lectus, eu faucibus nunc scelerisque id. Pellentesque in
+            massa convallis, commodo turpis et, egestas sem. Sed in iaculis velit. Nam volutpat
+            magna ac justo accumsan venenatis. Duis semper posuere magna vitae tincidunt. Nulla id
+            faucibus ipsum. Morbi a orci in elit malesuada laoreet sed ac massa. Pellentesque
+            habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+            Maecenas sit amet massa lorem. Quisque mollis dui nec ipsum sollicitudin commodo.
+            <br /><br />
+            Donec pulvinar enim a erat maximus tempor. Maecenas ultrices gravida rutrum. Vivamus
+            ornare leo id quam tincidunt iaculis. Aenean eget neque a augue faucibus pharetra et
+            quis velit. Nulla facilisi. Vivamus massa nisl, consectetur et vehicula id, varius quis
+            nulla. Aliquam bibendum interdum erat, vitae rutrum dui dapibus ac.
+            <br /><br />
+            Ut suscipit sodales arcu. Vivamus lacinia, augue et efficitur tincidunt, ligula sem
+            iaculis odio, ac tincidunt ligula ex quis erat. Donec laoreet imperdiet arcu. Orci
+            varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec
+            ultricies orci magna, eu consequat ex viverra rhoncus. Aliquam sodales eu urna et
+            finibus. Vivamus fermentum turpis et dictum lobortis. Suspendisse pulvinar mauris ac leo
+            interdum posuere. Integer porttitor augue laoreet, luctus erat vitae, varius purus.
+          </div>
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col mb-6">
+        <button
+          #card
+          si-action-card
+          type="button"
+          class="card-size"
+          heading="Overflows"
+          selectable
+          imgSrc="assets/images/beach.jpg"
+          imgDir="vertical"
+          imgAlt="Beach in Greece"
+          imgObjectFit="cover"
+          (selectedChange)="onCardSelect($event, 'card4')"
+        >
+          <div body class="card-body card-text overflow-auto" tabindex="0">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec ornare nunc,
+            quis feugiat ex. Vivamus mollis nisi at dapibus vehicula. Curabitur dui ante, interdum
+            pharetra hendrerit vel, efficitur in erat. Phasellus porttitor molestie orci, vel
+            consectetur ipsum commodo eget. Pellentesque ac gravida mi, id vehicula purus. Sed
+            egestas nisl est, eget faucibus velit hendrerit vulputate. Aenean et pretium enim, in
+            facilisis est. Nam luctus felis ut auctor sollicitudin. Donec elementum nec lorem vitae
+            scelerisque. Mauris elementum metus diam, sit amet ornare mi rhoncus sit amet. Nulla
+            semper scelerisque molestie. Cras et purus et nisi interdum maximus sed et leo. Mauris
+            bibendum hendrerit nunc, sed malesuada augue.
+            <br /><br />
+            Ut porttitor quam in lacinia sodales. Cras pellentesque feugiat sem, non tincidunt
+            mauris mollis vitae. Praesent eleifend condimentum nisi. Quisque fringilla feugiat
+            ornare. Nunc interdum lacinia felis. Duis molestie metus velit, a vestibulum eros
+            blandit in. Donec ut erat posuere, ornare elit a, gravida magna. Pellentesque porta
+            lacinia nisi eget bibendum. Nulla facilisi. Vestibulum fermentum ligula vitae mattis
+            placerat. Nunc quis enim nec urna vehicula cursus id vel sem.
+            <br /><br />
+            Nunc luctus facilisis aliquam. Quisque vehicula imperdiet mauris, nec consectetur erat.
+            Integer ullamcorper finibus lectus, eu faucibus nunc scelerisque id. Pellentesque in
+            massa convallis, commodo turpis et, egestas sem. Sed in iaculis velit. Nam volutpat
+            magna ac justo accumsan venenatis. Duis semper posuere magna vitae tincidunt. Nulla id
+            faucibus ipsum. Morbi a orci in elit malesuada laoreet sed ac massa. Pellentesque
+            habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+            Maecenas sit amet massa lorem. Quisque mollis dui nec ipsum sollicitudin commodo.
+            <br /><br />
+            Donec pulvinar enim a erat maximus tempor. Maecenas ultrices gravida rutrum. Vivamus
+            ornare leo id quam tincidunt iaculis. Aenean eget neque a augue faucibus pharetra et
+            quis velit. Nulla facilisi. Vivamus massa nisl, consectetur et vehicula id, varius quis
+            nulla. Aliquam bibendum interdum erat, vitae rutrum dui dapibus ac.
+            <br /><br />
+            Ut suscipit sodales arcu. Vivamus lacinia, augue et efficitur tincidunt, ligula sem
+            iaculis odio, ac tincidunt ligula ex quis erat. Donec laoreet imperdiet arcu. Orci
+            varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec
+            ultricies orci magna, eu consequat ex viverra rhoncus. Aliquam sodales eu urna et
+            finibus. Vivamus fermentum turpis et dictum lobortis. Suspendisse pulvinar mauris ac leo
+            interdum posuere. Integer porttitor augue laoreet, luctus erat vitae, varius purus.
+          </div>
+        </button>
+      </div>
+
+      <div class="col mb-6">
+        <button
+          si-action-card
+          type="button"
+          class="card-size accent-caution"
+          selectable
+          heading="Caution accent"
+          (selectedChange)="onCardSelect($event, 'card5')"
+        >
+          <p class="card-body card-text" body>
+            Some quick example text to build on the card title and make up the bulk of the card's
+            content.
+          </p>
+        </button>
+      </div>
+
+      <div class="col mb-6">
+        <button
+          si-action-card
+          type="button"
+          class="card-size accent-info"
+          selectable
+          heading="Info accent"
+          (selectedChange)="onCardSelect($event, 'card6')"
+        >
+          <p class="card-body card-text" body>
+            Some quick example text to build on the card title and make up the bulk of the card's
+            content.
+          </p>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
