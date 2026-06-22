@@ -5,7 +5,8 @@
 import { PercentPipe, TitleCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+// eslint-disable-next-line no-restricted-imports
+import { TranslatePipe } from '@ngx-translate/core';
 import {
   SelectItem,
   SiSelectActionDirective,
@@ -34,7 +35,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiSelectOptionTemplateDirective,
     SiSelectGroupTemplateDirective,
     TitleCasePipe,
-    TranslateModule
+    TranslatePipe
   ],
   templateUrl: './si-select.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

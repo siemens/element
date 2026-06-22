@@ -13,7 +13,8 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+// eslint-disable-next-line no-restricted-imports
+import { TranslatePipe } from '@ngx-translate/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import {
   DateRange,
@@ -96,7 +97,7 @@ export const noEconomy: ValidatorFn = control => {
     SiPhoneNumberInputComponent,
     SiSelectModule,
     SiTimepickerComponent,
-    TranslateModule
+    TranslatePipe
   ],
   templateUrl: './si-form.html',
   providers: [JsonPipe],

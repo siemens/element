@@ -6,7 +6,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { SelectItem, SiSelectModule } from '@siemens/element-ng/select';
 
 import { SiSelectHarness } from '../testing/si-select.harness';
@@ -48,13 +48,10 @@ describe('SiSelectMultiValueDirective', () => {
   let component: TestComponent;
   let selectHarness: SiSelectHarness;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [SiSelectModule, ReactiveFormsModule, TranslateModule.forRoot(), TestComponent]
-    }).compileComponents();
-  });
-
   beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      providers: [provideTranslateService()]
+    }).compileComponents();
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     selectHarness = await TestbedHarnessEnvironment.loader(fixture).getHarness(SiSelectHarness);

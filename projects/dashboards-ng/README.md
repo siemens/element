@@ -150,7 +150,7 @@ export function createTranslateLoader(_httpBackend: HttpBackend) {
 
 ...
 
-TranslateModule.forRoot({
+provideTranslateService({
   loader: {
     provide: TranslateLoader,
     useFactory: (createTranslateLoader),
