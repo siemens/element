@@ -2,13 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiTourService } from './si-tour.service';
 
 @Component({
-  template: `<div class="h-10">Test</div>`
+  template: `<div class="h-10">Test</div>`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly tourService = inject(SiTourService);

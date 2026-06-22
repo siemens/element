@@ -4,7 +4,7 @@
  */
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
 
@@ -30,7 +30,8 @@ interface TabData {
 
 @Component({
   selector: 'si-tab-route',
-  template: `Content by routing`
+  template: `Content by routing`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class SiTabRouteComponent {}
 
@@ -54,7 +55,8 @@ class SiTabRouteComponent {}
         </si-tabset>
       }
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 class TestComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
@@ -101,7 +103,8 @@ class TestComponent {
         </si-tabset>
       }
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestRoutingComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
@@ -453,7 +456,8 @@ describe('SiTabset with portal content', () => {
 
         <si-tab-portal [tabset]="tabset" />
       </div>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
   })
   class TestPortalContentComponent {
     protected readonly tabsObject = signal<
