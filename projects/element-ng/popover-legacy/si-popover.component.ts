@@ -4,14 +4,24 @@
  */
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, ElementRef, inject, input, OnInit, signal, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  input,
+  OnInit,
+  signal,
+  TemplateRef
+} from '@angular/core';
 import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'si-popover',
   imports: [NgTemplateOutlet, SiIconComponent],
-  templateUrl: './si-popover.component.html'
+  templateUrl: './si-popover.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class PopoverComponent implements OnInit {
   readonly popover = input<string | TemplateRef<any>>();

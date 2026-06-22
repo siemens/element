@@ -5,6 +5,7 @@
 import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { page, userEvent } from 'vitest/browser';
 
 import { SiPopoverDirective } from './si-popover.directive';
 
@@ -16,7 +17,8 @@ const generateKeyEvent = (key: string): KeyboardEvent => {
 
 @Component({
   imports: [SiPopoverDirective],
-  template: ` <button type="button" siPopover="test popover content">Test</button> `
+  template: `<button type="button" siPopover="test popover content">Test</button>`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HostComponent {
   readonly popoverOverlay = viewChild(SiPopoverDirective);
@@ -25,14 +27,18 @@ export class HostComponent {
 @Component({
   imports: [SiPopoverDirective],
   template: `
-    <button type="button" [siPopover]="popoverTemplate"> Test with custom template </button>
+    <button type="button" [siPopover]="popoverTemplate">Test with custom template</button>
     <ng-template #popoverTemplate>
       <div class="popover-content">
-        <input type="text" id="input-1" />
+        <label>
+          Input
+          <input class="form-control" type="text" id="input-1" />
+        </label>
         <button type="button" id="button-1">Button 1</button>
       </div>
     </ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomTemplateHostComponent {}
 
@@ -40,35 +46,24 @@ describe('SiPopoverNextDirective', () => {
   let fixture: ComponentFixture<HostComponent>;
   let wrapperComponent: HostComponent;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [HostComponent, CustomTemplateHostComponent]
-    }).compileComponents();
-  });
-
   beforeEach(() => {
     fixture = TestBed.createComponent(HostComponent);
     wrapperComponent = fixture.componentInstance;
   });
 
   it('should open/close on click', async () => {
-    vi.useFakeTimers({ shouldAdvanceTime: true });
-    fixture.detectChanges();
-
-    fixture.nativeElement.querySelector('button').click();
-    vi.advanceTimersByTime(10);
     await fixture.whenStable();
+    const toggleButton = page.getByRole('button', { name: 'Test' });
+    await userEvent.click(toggleButton);
 
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
     expect(popover).toHaveTextContent('test popover content');
 
     // Closes on button click
-    fixture.nativeElement.querySelector('button').click();
-    await fixture.whenStable();
+    await userEvent.click(toggleButton);
 
     expect(document.querySelector('.popover')).not.toBeInTheDocument();
-    vi.useRealTimers();
   });
 
   it('should not emit hidden event if popover overlay is closed', () => {
@@ -78,12 +73,10 @@ describe('SiPopoverNextDirective', () => {
   });
 
   it('should close on ESC press', async () => {
-    vi.useFakeTimers({ shouldAdvanceTime: true });
-    fixture.detectChanges();
-
-    fixture.nativeElement.querySelector('button').click();
-    vi.advanceTimersByTime(10);
     await fixture.whenStable();
+    const toggleButton = page.getByRole('button', { name: 'Test' });
+    await userEvent.click(toggleButton);
+
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
     expect(popover).toHaveTextContent('test popover content');
@@ -92,15 +85,11 @@ describe('SiPopoverNextDirective', () => {
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).not.toBeInTheDocument();
-    vi.useRealTimers();
   });
 
   it('should close on outside click', async () => {
-    vi.useFakeTimers({ shouldAdvanceTime: true });
-    fixture.detectChanges();
-
-    fixture.nativeElement.querySelector('button').click();
-    vi.advanceTimersByTime(10);
+    await fixture.whenStable();
+    await userEvent.click(page.getByRole('button', { name: 'Test' }));
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
@@ -110,14 +99,13 @@ describe('SiPopoverNextDirective', () => {
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).not.toBeInTheDocument();
-    vi.useRealTimers();
   });
 
   it('should not close if click starts on the popover', async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('button').click();
+    await userEvent.click(page.getByRole('button', { name: 'Test' }));
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
@@ -136,7 +124,7 @@ describe('SiPopoverNextDirective', () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('button').click();
+    await userEvent.click(page.getByRole('button', { name: 'Test' }));
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
@@ -155,7 +143,7 @@ describe('SiPopoverNextDirective', () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('button').click();
+    await userEvent.click(page.getByRole('button', { name: 'Test' }));
     await fixture.whenStable();
 
     const popover = document.querySelector('.popover')!;
@@ -182,7 +170,7 @@ describe('with custom template', () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('button').click();
+    await userEvent.click(page.getByRole('button', { name: 'Test with custom template' }));
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
@@ -190,20 +178,19 @@ describe('with custom template', () => {
     vi.advanceTimersByTime(10);
     await fixture.whenStable();
 
-    expect(document.activeElement).toBe(document.querySelector('#input-1'));
+    await expect.element(page.getByRole('textbox', { name: 'Input' })).toHaveFocus();
     vi.useRealTimers();
   });
 });
 
 describe('with scrollStrategy', () => {
   let fixture: ComponentFixture<ScrollStrategyHostComponent>;
-  let button: HTMLButtonElement;
 
   @Component({
     imports: [SiPopoverDirective],
-    template: `<button type="button" siPopover="test" [siPopoverScrollStrategy]="scrollStrategy()"
-      >Test</button
-    >`,
+    template: `<button type="button" siPopover="test" [siPopoverScrollStrategy]="scrollStrategy()">
+      Test
+    </button>`,
     changeDetection: ChangeDetectionStrategy.OnPush
   })
   class ScrollStrategyHostComponent {
@@ -212,18 +199,15 @@ describe('with scrollStrategy', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ScrollStrategyHostComponent);
-    button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
     fixture.detectChanges();
   });
 
   it('should close popover on scroll when custom close scroll strategy is provided', async () => {
     const overlay = TestBed.inject(Overlay);
     fixture.componentInstance.scrollStrategy.set(overlay.scrollStrategies.close());
-    fixture.detectChanges();
-
-    button.click();
     await fixture.whenStable();
 
+    await userEvent.click(page.getByRole('button', { name: 'Test' }));
     expect(document.querySelector('.popover')).toBeInTheDocument();
 
     document.dispatchEvent(new Event('scroll', { bubbles: true }));
