@@ -5,7 +5,7 @@
 import { expect, test } from '../../support/test-helpers';
 
 test.describe('si-action-card', () => {
-  const example = 'si-card/si-action-card';
+  const example = 'si-card/si-action-card-variations';
 
   test(example, async ({ page, si }) => {
     await si.visitExample(example, false);
@@ -26,7 +26,7 @@ test.describe('si-action-card', () => {
     await si.runVisualAndA11yTests();
 
     const anotherCard = page.getByRole('button', {
-      name: 'Natural Gas Usage'
+      name: 'Natural gas usage'
     });
 
     await anotherCard.hover();
