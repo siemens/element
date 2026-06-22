@@ -16,7 +16,7 @@
     "@angular/router": "22.0.0",
     "@ngx-formly/bootstrap": "6.3.12",
     "@ngx-formly/core": "6.3.12",
-    "@ngx-translate/core": "17.0.0",
+    "@ngx-translate/core": "18.0.0",
     "@siemens/charts-ng": "49.11.0",
     "@siemens/dashboards-ng": "49.11.0",
     "@siemens/element-ng": "49.11.0",

@@ -42,7 +42,7 @@ export class SampleComponent {
   private translate = inject(TranslateService);
   private themeService = inject(SiThemeService);
   private currentTheme = this.themeService.resolvedColorScheme;
-  private currentLanguage = (this.translate.currentLang || this.translate.getBrowserLang()) ?? 'en';
+  private currentLanguage = this.translate.currentLang() ?? this.translate.getBrowserLang() ?? 'en';
 
   accountItems: MenuItem[] = [
     { title: 'APP.NAV.LANGUAGE', icon: 'element-language', items: this.languageItems },

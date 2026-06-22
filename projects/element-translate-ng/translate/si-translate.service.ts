@@ -37,7 +37,7 @@ export abstract class SiTranslateService {
   /**
    * The currently used language.
    */
-  abstract get currentLanguage(): string | undefined;
+  abstract currentLanguage: string | null;
 
   /**
    * Sets a new language to be used. If needed, loads the language file.

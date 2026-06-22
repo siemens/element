@@ -23,7 +23,7 @@
   "peerDependencies": {
     "@angular/common": "22",
     "@angular/core": "22",
-    "@ngx-translate/core": "16 - 17"
+    "@ngx-translate/core": "17 - 18"
   },
   "peerDependenciesMeta": {
     "@ngx-translate/core": {

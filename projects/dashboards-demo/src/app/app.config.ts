@@ -2,10 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { HttpBackend, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
-import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import {
   Config,
   provideDashboardToolbarItems,
@@ -17,14 +18,10 @@ import {
   provideMissingTranslationHandlerForElement,
   provideNgxTranslateForElement
 } from '@siemens/element-translate-ng/ngx-translate';
-import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 
 import { AppWidgetIdProvider } from './app-widget-id-provider';
 import { AppWidgetStorage } from './app-widget-storage';
 import { routes } from './app.routes';
-
-export const createTranslateLoader = (http: HttpBackend): MultiTranslateHttpLoader =>
-  new MultiTranslateHttpLoader(http, ['./assets/i18n/', './assets/i18n/dashboards-ng/']);
 
 const config: Config = {
   grid: {
@@ -42,11 +39,9 @@ export const appConfig: ApplicationConfig = {
     { provide: SI_WIDGET_ID_PROVIDER, useClass: AppWidgetIdProvider },
     provideTranslateService({
       missingTranslationHandler: provideMissingTranslationHandlerForElement(),
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpBackend]
-      }
+      loader: provideTranslateHttpLoader({
+        resources: ['./assets/i18n/', './assets/i18n/dashboards-ng/']
+      })
     }),
     provideHttpClient(withInterceptorsFromDi()),
     provideNgxTranslateForElement(),

@@ -135,7 +135,7 @@ describe('SiLocaleService', () => {
     });
     service = TestBed.inject(SiLocaleService);
     const translate = TestBed.inject(TranslateService);
-    expect(translate.getDefaultLang()).toBe('fr');
+    expect(translate.getFallbackLang()).toBe('fr');
   });
 
   it('should use browser language, when part of available languages and no language is stored', () => {

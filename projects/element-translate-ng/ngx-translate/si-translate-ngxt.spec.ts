@@ -62,8 +62,7 @@ describe('SiTranslateNgxT', () => {
         imports: [SiTranslateNgxTModule, HostComponent],
         providers: [
           provideTranslateService({
-            defaultLanguage: 'test',
-            useDefaultLang: true,
+            fallbackLang: 'test',
             missingTranslationHandler: provideMissingTranslationHandlerForElement(),
             loader: {
               provide: TranslateLoader,
@@ -111,8 +110,7 @@ describe('SiTranslateNgxT', () => {
         imports: [SiTranslateNgxTModule],
         providers: [
           provideTranslateService({
-            defaultLanguage: 'test',
-            useDefaultLang: true,
+            fallbackLang: 'test',
             missingTranslationHandler: provideMissingTranslationHandlerForElement(),
             loader: {
               provide: TranslateLoader,
@@ -251,8 +249,7 @@ describe('SiTranslateNgxT', () => {
         imports: [SiTranslateNgxTModule],
         providers: [
           provideTranslateService({
-            defaultLanguage: 'test',
-            useDefaultLang: true,
+            fallbackLang: 'test',
             loader: {
               provide: TranslateLoader,
               useValue: {
@@ -279,8 +276,7 @@ describe('SiTranslateNgxT', () => {
         providers: [
           provideNgxTranslateForElement(),
           provideTranslateService({
-            defaultLanguage: 'test',
-            useDefaultLang: true,
+            fallbackLang: 'test',
             missingTranslationHandler: provideMissingTranslationHandlerForElement({
               provide: MissingTranslationHandler,
               useClass: MissingTranslation

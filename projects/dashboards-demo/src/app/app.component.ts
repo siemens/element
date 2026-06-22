@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.translate.setDefaultLang('en');
+    this.translate.setFallbackLang('en');
     this.translate.use(this.translate.getBrowserLang() ?? 'en');
   }
 
