@@ -76,13 +76,13 @@ describe('SiLanguageSwitcherComponent', () => {
 
   it('changes the language when selecting an option', () => {
     fixture.detectChanges();
-    expect(ngxTranslate.currentLang).toBe('en');
+    expect(ngxTranslate.currentLang()).toBe('en');
 
     const select = fixture.nativeElement.querySelector('select');
     select.options[1].selected = true;
     select.dispatchEvent(new Event('change'));
 
-    expect(ngxTranslate.currentLang).toBe('de');
+    expect(ngxTranslate.currentLang()).toBe('de');
   });
 
   it('uses the provided available languages', () => {
@@ -122,13 +122,13 @@ describe('SiLanguageSwitcherComponent', () => {
 
     it('does not trigger translation on language change', () => {
       fixture.detectChanges();
-      expect(ngxTranslate.currentLang).toBe('en');
+      expect(ngxTranslate.currentLang()).toBe('en');
 
       const select = fixture.nativeElement.querySelector('select');
       select.options[1].selected = true;
       select.dispatchEvent(new Event('change'));
 
-      expect(ngxTranslate.currentLang).toBe('en');
+      expect(ngxTranslate.currentLang()).toBe('en');
     });
   });
 });

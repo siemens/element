@@ -115,10 +115,11 @@ export class SiLocaleService {
     let initialLocale;
     const browserCultureLang = getBrowserCultureLanguage();
     const browserLang = getBrowserLanguage();
+    const currentLanguage = this.translate.currentLanguage;
     if (this.hasLocale(savedLocale)) {
       initialLocale = savedLocale!;
-    } else if (this.translate.currentLanguage) {
-      initialLocale = this.translate.currentLanguage;
+    } else if (currentLanguage) {
+      initialLocale = currentLanguage;
     } else if (this.hasLocale(browserCultureLang)) {
       initialLocale = browserCultureLang!;
     } else if (this.hasLocale(browserLang)) {
