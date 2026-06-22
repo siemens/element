@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 import { IconCategory } from '../icon.service';
 import { AppIconContainerComponent } from './app-icon-container/app-icon-container.component';
@@ -11,7 +11,8 @@ import { AppIconContainerComponent } from './app-icon-container/app-icon-contain
   selector: 'app-section',
   imports: [AppIconContainerComponent],
   templateUrl: './app-section.component.html',
-  styleUrl: './app-section.component.scss'
+  styleUrl: './app-section.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class AppSectionComponent {
   readonly category = input.required<IconCategory>();

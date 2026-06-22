@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, HostBinding, inject, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, inject, viewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { setDeviceMode, setDirectionRtl, setRootFontSize } from '../../helpers/utils';
@@ -22,7 +22,8 @@ import { SiLivePreviewComponent } from '../si-live-preview/si-live-preview.compo
   selector: 'si-example-viewer',
   imports: [SiLivePreviewComponent, SiLivePreviewRendererComponent],
   templateUrl: './si-example-viewer.component.html',
-  styleUrl: './si-example-viewer.component.scss'
+  styleUrl: './si-example-viewer.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiExampleViewerComponent {
   private router = inject(Router);

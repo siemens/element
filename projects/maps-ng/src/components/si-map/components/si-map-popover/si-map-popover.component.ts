@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   signal,
@@ -26,7 +27,8 @@ export interface RenderOptions {
   selector: 'si-map-popover',
   imports: [SiMapPopoverTemplateDirective, SiMapPopoverClusterTemplateDirective],
   templateUrl: './si-map-popover.component.html',
-  styleUrl: './si-map-popover.component.scss'
+  styleUrl: './si-map-popover.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiMapPopoverComponent {
   private readonly elementRef = viewChild.required<ElementRef>('popover');

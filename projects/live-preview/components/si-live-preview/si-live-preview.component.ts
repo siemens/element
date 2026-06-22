@@ -6,6 +6,7 @@ import { KeyValuePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -38,7 +39,8 @@ import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.
   selector: 'si-live-preview',
   imports: [KeyValuePipe, FormsModule, SiLivePreviewIframeComponent, SiStackblitzButtonDirective],
   templateUrl: './si-live-preview.component.html',
-  styleUrls: ['./si-live-preview.component.scss', './si-live-preview-codeflask.scss']
+  styleUrls: ['./si-live-preview.component.scss', './si-live-preview-codeflask.scss'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges {
   private config = inject(SI_LIVE_PREVIEW_CONFIG);

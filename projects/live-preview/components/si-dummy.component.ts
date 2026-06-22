@@ -2,12 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'si-dummy',
-  template: `<div class="ion-padding"> Content with path '{{ path }}'</div>`
+  template: `<div class="ion-padding"> Content with path '{{ path }}'</div>`,
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiDummyComponent {
   path = '';

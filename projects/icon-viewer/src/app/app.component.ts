@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   effect,
@@ -25,6 +26,7 @@ import { IconCategory, IconService, IconSet } from './icon.service';
   imports: [AppMenuComponent, AppSectionComponent, AppSidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     '[class.dark-theme]': 'isDarkTheme()',
     '[style.--base-size]': 'baseSize()',
