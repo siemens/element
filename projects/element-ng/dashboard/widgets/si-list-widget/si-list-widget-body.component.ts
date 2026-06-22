@@ -2,7 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, computed, input, model, OnChanges } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  model,
+  OnChanges
+} from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Link } from '@siemens/element-ng/link';
@@ -30,6 +38,7 @@ export type SortOrder = 'ASC' | 'DSC';
   imports: [SiListWidgetItemComponent, SiSearchBarComponent, SiTranslatePipe, FormsModule],
   templateUrl: './si-list-widget-body.component.html',
   styleUrl: './si-list-widget-body.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: { class: '' }
 })
 export class SiListWidgetBodyComponent

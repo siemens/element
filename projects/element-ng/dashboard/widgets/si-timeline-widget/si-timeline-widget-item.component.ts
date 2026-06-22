@@ -4,7 +4,14 @@
  */
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import { Component, inject, input, OnChanges, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  OnChanges,
+  OnInit
+} from '@angular/core';
 import { ActivatedRoute, NavigationExtras, RouterLink } from '@angular/router';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuModule } from '@siemens/element-ng/menu';
@@ -114,6 +121,7 @@ export interface SiTimelineWidgetItem {
   imports: [SiIconComponent, SiTranslatePipe, A11yModule, RouterLink, SiMenuModule, CdkMenuTrigger],
   templateUrl: './si-timeline-widget-item.component.html',
   styleUrl: './si-timeline-widget-item.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     role: 'listitem'
   }

@@ -2,7 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, computed, input, model, OnChanges } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  model,
+  OnChanges
+} from '@angular/core';
 import { elementRight2, elementSortDown, elementSortUp } from '@siemens/element-icons';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { AccentLineType } from '@siemens/element-ng/common';
@@ -29,6 +37,7 @@ import { SiListWidgetItem } from './si-list-widget-item.component';
     SiTranslatePipe
   ],
   templateUrl: './si-list-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: { class: 'si-list-widget' }
 })
 export class SiListWidgetComponent

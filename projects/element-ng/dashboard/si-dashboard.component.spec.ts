@@ -111,7 +111,7 @@ describe('SiDashboardComponent', () => {
 
       component.cardComponents().at(-1)!.restore();
       expect(expandSpy).toHaveBeenCalled();
-      expect(component.cardComponents().at(-1)!.hide).toBe(false);
+      expect(component.cardComponents().at(-1)!.hide()).toBe(false);
     });
 
     it('should not call expand multiple times after initCards re-subscriptions', async () => {

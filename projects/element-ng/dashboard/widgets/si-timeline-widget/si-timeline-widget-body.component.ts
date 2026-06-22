@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 import { SiWidgetBaseDirective } from '../si-widget-base.directive';
 import {
@@ -14,7 +14,8 @@ import {
   selector: 'si-timeline-widget-body',
   imports: [SiTimelineWidgetItemComponent],
   templateUrl: './si-timeline-widget-body.component.html',
-  styleUrl: './si-timeline-widget-body.component.scss'
+  styleUrl: './si-timeline-widget-body.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiTimelineWidgetBodyComponent extends SiWidgetBaseDirective<SiTimelineWidgetItem[]> {
   /**

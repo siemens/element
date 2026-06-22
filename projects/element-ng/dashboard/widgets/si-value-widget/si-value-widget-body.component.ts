@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit } from '@angular/core';
 import { EntityStatusType } from '@siemens/element-ng/common';
 import { SiIconComponent, SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -15,7 +15,8 @@ import { SiWidgetBaseDirective } from '../si-widget-base.directive';
 @Component({
   selector: 'si-value-widget-body',
   imports: [SiIconComponent, SiStatusIconComponent, SiTranslatePipe],
-  templateUrl: './si-value-widget-body.component.html'
+  templateUrl: './si-value-widget-body.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiValueWidgetBodyComponent
   extends SiWidgetBaseDirective<TranslatableString>
