@@ -17,7 +17,8 @@ import {
   TemplateRef,
   viewChild,
   DOCUMENT,
-  computed
+  computed,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
 import { SiIconComponent } from '@siemens/element-ng/icon';
@@ -29,6 +30,7 @@ import { SiPopoverDirective } from './si-popover.directive';
   selector: 'si-popover',
   imports: [NgTemplateOutlet, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-popover.component.html',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     '[id]': 'this.popoverDirective().popoverId'
   }
