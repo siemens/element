@@ -115,6 +115,13 @@ class EmptyComponent {}
           </button>
         </si-navbar-vertical-next-items>
       }
+      @if (showPinnedItems()) {
+        <si-navbar-vertical-next-items>
+          <a si-navbar-vertical-next-item routerLink="pinned-item" routerLinkActive [pinned]="true">
+            pinned-item
+          </a>
+        </si-navbar-vertical-next-items>
+      }
     </si-navbar-vertical-next>
 
     <ng-template #flyoutGroup>
@@ -167,6 +174,7 @@ class TestHostComponent {
   readonly showDeclarativeFlyoutGroup = signal(false);
   readonly showDeclarativeNavigationGroup = signal(false);
   readonly showDeclarativeStateGroups = signal(false);
+  readonly showPinnedItems = signal(false);
 
   searchEvent(event: string): void {}
 }
@@ -192,7 +200,8 @@ describe('SiNavbarVerticalNext', () => {
               { path: 'sub-item-2/sub-path', component: EmptyComponent }
             ]
           },
-          { path: 'somewhere-else', component: EmptyComponent }
+          { path: 'somewhere-else', component: EmptyComponent },
+          { path: 'pinned-item', component: EmptyComponent }
         ]),
         { provide: BreakpointObserver, useExisting: BreakpointObserverMock }
       ]
@@ -501,6 +510,79 @@ describe('SiNavbarVerticalNext', () => {
         const flyoutMenu = document.querySelector(`#${flyoutId} .dropdown-menu`);
         expect(flyoutMenu).toBeInTheDocument();
         expect(flyoutMenu!.textContent).toContain('sub-item1');
+      });
+    });
+
+    describe('pinned items', () => {
+      beforeEach(() => {
+        component.collapsed.set(true);
+        component.showPinnedItems.set(true);
+      });
+
+      it('should render pinned item in chip slot when collapsed', async () => {
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        const chipWrapper = host.querySelector('.chip') as HTMLElement;
+        expect(chipWrapper).not.toHaveAttribute('inert');
+        const pinnedLink = page
+          .elementLocator(chipWrapper)
+          .getByRole('link', { name: 'pinned-item' });
+        await expect.element(pinnedLink).toBeVisible();
+        expect(pinnedLink.element()).toHaveClass('is-pinned-chip');
+      });
+
+      it('should not render pinned items in chip slot when expanded', async () => {
+        component.collapsed.set(false);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        const chipWrapper = host.querySelector('.chip') as HTMLElement;
+        // Chip container still renders because pinnedItems.length > 0, but is inert
+        expect(chipWrapper).not.toBeNull();
+        expect(chipWrapper).toHaveAttribute('inert', '');
+        // No items teleported into chip slot when chipMode is inactive
+        expect(chipWrapper.querySelectorAll('a, button')).toHaveLength(0);
+      });
+
+      it('should render both pinned and active items in chip slot', async () => {
+        await TestBed.inject(Router).navigate(['/item-1/sub-item-1']);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        const chipWrapper = host.querySelector('.chip') as HTMLElement;
+        const pinnedLink = page
+          .elementLocator(chipWrapper)
+          .getByRole('link', { name: 'pinned-item' });
+        const activeButton = page
+          .elementLocator(chipWrapper)
+          .getByRole('button', { name: 'item1' });
+        await expect.element(pinnedLink).toBeVisible();
+        await expect.element(activeButton).toBeVisible();
+        // pinned-item is not active here, so it keeps is-pinned-chip
+        expect(pinnedLink.element()).toHaveClass('is-pinned-chip');
+        // item1 is the active chip
+        expect(activeButton.element()).toHaveClass('is-chip');
+        expect(activeButton.element()).not.toHaveClass('is-pinned-chip');
+      });
+
+      it('should render pinned active item only once in chip slot', async () => {
+        await TestBed.inject(Router).navigate(['/pinned-item']);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        const chipWrapper = host.querySelector('.chip') as HTMLElement;
+        expect(chipWrapper.querySelectorAll('.is-chip')).toHaveLength(1);
+      });
+
+      it('should not render pinned items in chip slot when textOnly is true', async () => {
+        component.textOnly.set(true);
+        await fixture.whenStable();
+
+        const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
+        // pinnedItems is empty in textOnly mode; chip container only renders when there
+        // are pinned or active items, so it must not be present here.
+        expect(host.querySelector('.chip')).toBeNull();
       });
     });
   });

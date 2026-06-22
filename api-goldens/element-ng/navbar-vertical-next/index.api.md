@@ -65,6 +65,7 @@ export class SiNavbarVerticalNextHeaderComponent {
 
 // @public (undocumented)
 export class SiNavbarVerticalNextItemComponent implements OnInit {
+    constructor();
     readonly active: _angular_core.Signal<boolean>;
     readonly activeOverride: _angular_core.InputSignal<boolean | undefined>;
     readonly badge: _angular_core.InputSignal<string | number | undefined>;
@@ -73,6 +74,7 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     readonly group: SiNavbarVerticalNextGroupTriggerDirective | null;
     readonly hideBadgeWhenCollapsed: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
+    readonly pinned: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
 // @public

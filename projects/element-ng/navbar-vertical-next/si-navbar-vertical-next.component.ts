@@ -176,6 +176,15 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
    */
   readonly activeItem = computed(() => this.items().find(item => item.isActiveRootItem()));
 
+  /** All root items with `pinned: true`. Each gets a stable portal outlet in the chip slot;
+   * the active pinned item stays in this list and is styled as the active chip via `isActiveRootItem`.
+   * Excluded in `textOnly` mode as there are no icons to show icon-only chips.
+   * @internal
+   * */
+  readonly pinnedItems = computed(() =>
+    this.items().filter(item => item.pinned() && item.isRootItem && !this.textOnly())
+  );
+
   /** `true` when the active item's portal should occupy the chip slot.
    * @internal
    */

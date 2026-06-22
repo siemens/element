@@ -8,15 +8,19 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
+  EffectCleanupRegisterFn,
   ElementRef,
   inject,
   input,
-  OnInit
+  OnInit,
+  viewChild
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLinkActive } from '@angular/router';
 import { elementDown2, elementRight2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTooltipDirective, SiTooltipService } from '@siemens/element-ng/tooltip';
 import { EMPTY, Observable } from 'rxjs';
 
 import { SiNavbarVerticalNextGroupTriggerDirective } from './si-navbar-vertical-next-group-trigger.directive';
@@ -29,14 +33,17 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   imports: [SiIconComponent],
   templateUrl: './si-navbar-vertical-next-item.component.html',
   styleUrl: './si-navbar-vertical-next-item.component.scss',
+  providers: [SiTooltipService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.focus-inside]': '!chipMode() || !!parent',
     '[class.navbar-vertical-item]': '!isChip()',
     '[class.active]': 'showActive()',
     '[class.is-chip]': 'isChip()',
+    '[class.is-pinned-chip]': 'isPinnedChip()',
     '[class.btn]': 'isChip()',
     '[class.btn-primary-ghost]': 'isChip()',
+    '[class.btn-icon]': 'isPinnedChip()',
     '[class.hide-badge-collapsed]': 'hideBadgeWhenCollapsed()',
     '(click)': 'triggered()'
   }
@@ -63,6 +70,16 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
   /** Override the active state. Useful for action items. */
   readonly activeOverride = input<boolean>();
 
+  /**
+   * When `true`, the item is always shown in the inline-collapse chip slot
+   * alongside the active item, regardless of which route is active.
+   *
+   * At screen widths less than or equal to `sm` only the active item is shown.
+   *
+   * @defaultValue false
+   */
+  readonly pinned = input(false, { transform: booleanAttribute });
+
   protected readonly navbar = inject(SI_NAVBAR_VERTICAL_NEXT);
   protected readonly parent = inject(SiNavbarVerticalNextItemComponent, {
     skipSelf: true,
@@ -84,6 +101,21 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
 
   /** @internal */
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
+  /** @internal */
+  private readonly tooltipService = inject(SiTooltipService);
+
+  /** @internal */
+  private readonly existingTooltip = inject(SiTooltipDirective, {
+    optional: true,
+    host: true
+  });
+
+  /** Template reference to the projected label container. Used as the tooltip source
+   * so the tooltip text mirrors the projected content.
+   * @internal
+   */
+  private readonly itemTitle = viewChild.required<ElementRef<HTMLElement>>('itemTitle');
 
   /** DOM portal relocated into the chip slot when collapsed.
    * @internal
@@ -165,10 +197,29 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
    */
   readonly isActiveRootItem = computed(() => !this.parent && this.isOnActiveRoute());
 
+  /** `true` when this is a root-level item (no parent item).
+   * @internal
+   */
+  readonly isRootItem = !this.parent;
+
+  /** `true` when this item is pinned and currently in the chip slot.
+   * @internal
+   */
+  readonly isPinnedChip = computed(
+    () =>
+      this.navbar.chipMode() &&
+      this.pinned() &&
+      this.isRootItem &&
+      !this.isActiveRootItem() &&
+      !this.navbar.textOnly()
+  );
+
   /** `true` when this item is currently rendered as a chip in the inline-collapse bar.
    * @internal
    */
-  readonly isChip = computed(() => this.navbar.chipPortalAttached() && this.isActiveRootItem());
+  readonly isChip = computed(
+    () => (this.navbar.chipPortalAttached() && this.isActiveRootItem()) || this.isPinnedChip()
+  );
 
   ngOnInit(): void {
     if (this.group && this.active()) {
@@ -176,10 +227,34 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     }
   }
 
+  constructor() {
+    effect(onCleanup => this.setupTooltip(onCleanup));
+  }
+
   protected triggered(): void {
     this.parent?.group?.hideFlyout();
     if (!this.group) {
       this.navbar.itemTriggered();
     }
+  }
+
+  private setupTooltip(onCleanup: EffectCleanupRegisterFn): void {
+    if (!this.isPinnedChip()) {
+      return;
+    }
+    const hasActiveTooltip =
+      !!this.existingTooltip &&
+      !this.existingTooltip.isDisabled() &&
+      !!this.existingTooltip.siTooltip();
+    if (hasActiveTooltip) {
+      return;
+    }
+    const tooltipRef = this.tooltipService.createTooltip({
+      element: this.elementRef,
+      placement: 'bottom',
+      tooltip: this.itemTitle,
+      tooltipContext: () => undefined
+    });
+    onCleanup(() => tooltipRef.destroy());
   }
 }

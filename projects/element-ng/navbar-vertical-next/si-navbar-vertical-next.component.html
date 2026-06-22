@@ -24,15 +24,21 @@
         </button>
       </div>
     </div>
-    @if (inlineCollapse() && activeItem(); as item) {
+    @let activeItem = this.activeItem();
+    @if (inlineCollapse() && (pinnedItems().length > 0 || activeItem)) {
       <div
         class="chip"
         [class.chip-visible]="collapsed()"
         [attr.inert]="collapsed() ? null : ''"
         [attr.aria-hidden]="collapsed() ? null : 'true'"
       >
-        @if (chipPortalAttached()) {
-          <ng-container [cdkPortalOutlet]="item.hostPortal" />
+        @if (chipMode()) {
+          @for (pinnedItem of pinnedItems(); track pinnedItem) {
+            <ng-container [cdkPortalOutlet]="pinnedItem.hostPortal" />
+          }
+        }
+        @if (chipPortalAttached() && activeItem && !activeItem.pinned()) {
+          <ng-container [cdkPortalOutlet]="activeItem.hostPortal" />
         }
       </div>
       <ng-container #flyoutAnchorHost />

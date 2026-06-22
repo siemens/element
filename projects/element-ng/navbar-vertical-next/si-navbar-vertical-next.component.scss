@@ -213,6 +213,9 @@ nav {
     position: fixed;
     z-index: 0;
     inset-block-start: $toggle-parked-block-start;
+    // Flex row so multiple items (pinned + active) sit side-by-side.
+    display: flex;
+    align-items: stretch;
     // Cap the chip width so long labels truncate via `.item-title.text-truncate`
     // instead of overflowing the viewport. Reserves space for the toggle slot
     // on the start and an equal end-gutter so the chip never butts the edge.
@@ -239,6 +242,7 @@ nav {
         #{$toggle-parked-inline-start} + #{$toggle-size} + #{$segmented-gap}
       );
       opacity: 1;
+      gap: $segmented-gap;
     }
   }
 

@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/all-variables' as variables;
 @use '@siemens/element-theme/src/styles/bootstrap/mixins/badge-text';
 @use '@siemens/element-theme/src/styles/bootstrap/mixins/visually-hidden';
 
@@ -138,10 +138,39 @@
 }
 
 // Within the chip slot: fuse the left edge with the toggle button
-// (segmented control) and fill the wrapper so the label can truncate.
+// (segmented control). The active chip grows to fill remaining space.
 :host-context(.chip).is-chip {
   border-start-start-radius: 0;
   border-end-start-radius: 0;
-  inline-size: 100%;
+  flex: 1;
   min-inline-size: 0;
+
+  &:focus-visible {
+    z-index: variables.$zindex-vertical-nav + 1;
+  }
+}
+
+// Pinned chips are icon-only: hide the label when an icon is present.
+// Using visually-hidden (not display:none) preserves the text as the
+// accessible name of the host <a>/<button> for screen readers.
+// The adjacent-sibling selector means items without an icon still show text.
+:host(.is-pinned-chip) si-icon + .item-title {
+  @include visually-hidden.visually-hidden();
+}
+
+// Pinned chips: also flush the right edge (the active chip follows).
+// They are auto-sized so each only consumes as much space as its label.
+:host-context(.chip).is-pinned-chip {
+  flex: none; // override the flex: 1 from .is-chip
+}
+
+:host-context(.chip).is-chip:not(:last-child) {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+@include variables.media-breakpoint-down(sm) {
+  :host-context(.chip).is-pinned-chip {
+    display: none;
+  }
 }

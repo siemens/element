@@ -4,6 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SiTooltipDirective, SiTooltipService } from '@siemens/element-ng/tooltip';
 
 import { SiNavbarVerticalNextItemComponent } from './si-navbar-vertical-next-item.component';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
@@ -290,6 +291,141 @@ describe('SiNavbarVerticalNextItemComponent', () => {
       badgeTestFixture.detectChanges();
       linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
       expect(linkElement).not.toHaveClass('hide-badge-collapsed');
+    });
+  });
+
+  describe('pinned input', () => {
+    @Component({
+      imports: [SiNavbarVerticalNextItemComponent],
+      template: `<a
+        si-navbar-vertical-next-item
+        [pinned]="pinned()"
+        [activeOverride]="activeOverride()"
+      >
+        Pinned Test Item
+      </a>`
+    })
+    class TestHostWithPinnedComponent {
+      readonly pinned = signal(false);
+      readonly activeOverride = signal<boolean | undefined>(undefined);
+    }
+
+    @Component({
+      imports: [SiNavbarVerticalNextItemComponent, SiTooltipDirective],
+      template: `<a si-navbar-vertical-next-item [pinned]="pinned()" [siTooltip]="tooltipText()">
+        Pinned Test Item
+      </a>`
+    })
+    class TestHostWithPinnedAndConsumerTooltipComponent {
+      readonly pinned = signal(false);
+      readonly tooltipText = signal('Consumer tooltip');
+    }
+
+    let pinnedFixture: ComponentFixture<TestHostWithPinnedComponent>;
+    let pinnedComponent: TestHostWithPinnedComponent;
+
+    beforeEach(async () => {
+      TestBed.resetTestingModule();
+      mockNavbar.chipMode.set(false);
+      mockNavbar.chipPortalAttached.set(false);
+      await TestBed.configureTestingModule({
+        providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useValue: mockNavbar }]
+      }).compileComponents();
+
+      pinnedFixture = TestBed.createComponent(TestHostWithPinnedComponent);
+      pinnedComponent = pinnedFixture.componentInstance;
+      pinnedFixture.detectChanges();
+    });
+
+    afterEach(() => vi.restoreAllMocks());
+
+    it('should not add is-pinned-chip class when chipMode is false', async () => {
+      pinnedComponent.pinned.set(true);
+      await pinnedFixture.whenStable();
+
+      const link = pinnedFixture.nativeElement.querySelector('a');
+      expect(link).not.toHaveClass('is-pinned-chip');
+      expect(link).not.toHaveClass('is-chip');
+    });
+
+    it('should add is-pinned-chip class when chipMode is true and item is not active', async () => {
+      mockNavbar.chipMode.set(true);
+      pinnedComponent.pinned.set(true);
+      await pinnedFixture.whenStable();
+
+      const link = pinnedFixture.nativeElement.querySelector('a');
+      expect(link).toHaveClass('is-pinned-chip');
+      expect(link).toHaveClass('is-chip');
+    });
+
+    it('should not add is-pinned-chip class when chipMode is true but item is active', async () => {
+      mockNavbar.chipMode.set(true);
+      pinnedComponent.pinned.set(true);
+      pinnedComponent.activeOverride.set(true);
+      await pinnedFixture.whenStable();
+
+      const link = pinnedFixture.nativeElement.querySelector('a');
+      expect(link).not.toHaveClass('is-pinned-chip');
+    });
+
+    it('should not add is-pinned-chip class when item is not pinned', async () => {
+      mockNavbar.chipMode.set(true);
+      pinnedComponent.pinned.set(false);
+      await pinnedFixture.whenStable();
+
+      const link = pinnedFixture.nativeElement.querySelector('a');
+      expect(link).not.toHaveClass('is-pinned-chip');
+    });
+
+    it('should not add is-pinned-chip class when textOnly is true', async () => {
+      mockNavbar.chipMode.set(true);
+      mockNavbar.textOnly.set(true);
+      pinnedComponent.pinned.set(true);
+      await pinnedFixture.whenStable();
+
+      const link = pinnedFixture.nativeElement.querySelector('a');
+      expect(link).not.toHaveClass('is-pinned-chip');
+      expect(link).not.toHaveClass('is-chip');
+    });
+
+    it('should attach a tooltip with the projected label when item becomes a pinned chip', async () => {
+      const createTooltipSpy = vi
+        .spyOn(SiTooltipService.prototype, 'createTooltip')
+        .mockImplementation(() => ({ destroy: vi.fn() }));
+
+      mockNavbar.chipMode.set(true);
+      pinnedComponent.pinned.set(true);
+      await pinnedFixture.whenStable();
+
+      expect(createTooltipSpy).toHaveBeenCalledTimes(1);
+      const config = createTooltipSpy.mock.calls[0][0];
+      expect(config).toMatchObject({ placement: 'bottom' });
+
+      const tooltipSource = config.tooltip() as { nativeElement: HTMLElement };
+      expect(tooltipSource.nativeElement.textContent?.trim()).toBe('Pinned Test Item');
+    });
+
+    it('should not attach an auto-tooltip when consumer applies an active [siTooltip]', async () => {
+      const createTooltipSpy = vi
+        .spyOn(SiTooltipService.prototype, 'createTooltip')
+        .mockImplementation(() => ({ destroy: vi.fn() }));
+
+      const consumerFixture = TestBed.createComponent(
+        TestHostWithPinnedAndConsumerTooltipComponent
+      );
+      consumerFixture.detectChanges();
+
+      mockNavbar.chipMode.set(true);
+      consumerFixture.componentInstance.pinned.set(true);
+      await consumerFixture.whenStable();
+
+      // The consumer's SiTooltipDirective also calls createTooltip (with `placement: 'auto'`).
+      // Verify the component did not add its own tooltip on top by checking no call
+      // used the component's `placement: 'bottom'`.
+      const autoTooltipCall = createTooltipSpy.mock.calls.find(
+        ([config]) => config.placement === 'bottom'
+      );
+      expect(autoTooltipCall).toBeUndefined();
     });
   });
 });
