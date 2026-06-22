@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { IconService } from '../icon.service';
@@ -12,7 +12,8 @@ import { IconService } from '../icon.service';
   selector: 'app-menu',
   imports: [NgTemplateOutlet, FormsModule],
   templateUrl: './app-menu.component.html',
-  styleUrl: './app-menu.component.scss'
+  styleUrl: './app-menu.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class AppMenuComponent {
   // Signal outputs

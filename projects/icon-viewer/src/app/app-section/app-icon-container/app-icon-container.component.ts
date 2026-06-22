@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
 
 import { Icon } from '../../icon.service';
 
@@ -11,6 +11,7 @@ import { Icon } from '../../icon.service';
   imports: [],
   templateUrl: './app-icon-container.component.html',
   styleUrl: './app-icon-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     '(click)': 'copyIconName()'
   }

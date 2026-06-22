@@ -3,7 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -26,7 +33,8 @@ interface TreeItem {
   selector: 'si-example-overview',
   imports: [AsyncPipe, ReactiveFormsModule, RouterLink, RouterLinkActive, SiLivePreviewComponent],
   templateUrl: './si-example-overview.component.html',
-  styleUrl: './si-example-overview.component.scss'
+  styleUrl: './si-example-overview.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiExampleOverviewComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);

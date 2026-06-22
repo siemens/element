@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   DestroyRef,
@@ -32,7 +33,8 @@ import { availableDevices, Device } from './devices';
   selector: 'si-live-preview-iframe',
   imports: [FormsModule, SiLivePreviewQrComponent],
   templateUrl: './si-live-preview-iframe.component.html',
-  styleUrl: './si-live-preview-iframe.component.scss'
+  styleUrl: './si-live-preview-iframe.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
   readonly previewIframe = viewChild<ElementRef>('previewIframe');
