@@ -2,7 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, computed, input } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input
+} from '@angular/core';
 import { elementRight2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
@@ -18,6 +24,7 @@ import { SiWidgetBaseDirective } from '../si-widget-base.directive';
   selector: 'si-link-widget',
   imports: [SiIconComponent, SiLinkDirective, SiTranslatePipe],
   templateUrl: './si-link-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: { class: 'si-link-widget' }
 })
 export class SiLinkWidgetComponent extends SiWidgetBaseDirective<Link[]> {

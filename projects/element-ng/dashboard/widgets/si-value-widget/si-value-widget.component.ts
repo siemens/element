@@ -2,7 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, computed, input } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input
+} from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import {
   AccentLineType,
@@ -31,7 +37,8 @@ import { SiValueWidgetBodyComponent } from './si-value-widget-body.component';
 @Component({
   selector: 'si-value-widget',
   imports: [SiCardComponent, SiLinkDirective, SiTranslatePipe, SiValueWidgetBodyComponent],
-  templateUrl: './si-value-widget.component.html'
+  templateUrl: './si-value-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiValueWidgetComponent {
   /**

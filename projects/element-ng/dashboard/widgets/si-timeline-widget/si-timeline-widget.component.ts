@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, input, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, OnChanges } from '@angular/core';
 import { elementRight2 } from '@siemens/element-icons';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { AccentLineType, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
@@ -25,7 +25,8 @@ import { SiTimelineWidgetItem } from './si-timeline-widget-item.component';
     SiTranslatePipe,
     SiIconComponent
   ],
-  templateUrl: './si-timeline-widget.component.html'
+  templateUrl: './si-timeline-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiTimelineWidgetComponent
   extends SiWidgetBaseDirective<SiTimelineWidgetItem[]>

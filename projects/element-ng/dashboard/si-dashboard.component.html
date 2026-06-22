@@ -18,14 +18,17 @@
     #dashboardFrame
     class="si-layout-fixed-height si-dashboard-content ps-2 pt-2 ms-n2 mt-n2"
     [class.sticky]="sticky()"
-    [style.padding-inline-end.px]="dashboardFrameEndPadding"
+    [style.padding-inline-end.px]="dashboardFrameEndPadding()"
   >
-    <div class="si-layout-fixed-height" [class.d-none]="isExpanded">
+    <div class="si-layout-fixed-height" [class.d-none]="isExpandedSignal()">
       <div #dashboard class="si-layout-fixed-height fix-si-layout-fixed-height">
         <ng-content select="[dashboard]" />
       </div>
     </div>
-    <div class="position-relative flex-grow-1 flex-shrink-1 mb-6" [class.d-none]="!isExpanded">
+    <div
+      class="position-relative flex-grow-1 flex-shrink-1 mb-6"
+      [class.d-none]="!isExpandedSignal()"
+    >
       <ng-container #expandedPortalOutlet cdkPortalOutlet />
     </div>
   </div>
