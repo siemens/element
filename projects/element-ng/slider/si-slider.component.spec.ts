@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -22,7 +22,8 @@ import { SiSliderComponent } from './si-slider.component';
       display: block;
       width: 300px;
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class HostComponent {
   readonly value = signal<number | undefined>(10);
@@ -36,7 +37,8 @@ class HostComponent {
   imports: [FormsModule, ReactiveFormsModule, SiSliderComponent],
   template: `<form [formGroup]="form">
     <si-slider formControlName="slider" />
-  </form>`
+  </form>`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormHostComponent {
   readonly form: FormGroup;

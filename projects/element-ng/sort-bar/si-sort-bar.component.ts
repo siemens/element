@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { HttpParams } from '@angular/common/http';
-import { Component, input, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit, output } from '@angular/core';
 import { elementSortDown, elementSortUp } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -22,7 +22,8 @@ export interface SortCriteria {
   selector: 'si-sort-bar',
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-sort-bar.component.html',
-  styleUrl: './si-sort-bar.component.scss'
+  styleUrl: './si-sort-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiSortBarComponent implements OnInit {
   /**

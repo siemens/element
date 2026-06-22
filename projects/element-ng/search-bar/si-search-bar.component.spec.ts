@@ -2,7 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inputBinding, outputBinding, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inputBinding,
+  outputBinding,
+  signal,
+  viewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { userEvent } from 'vitest/browser';
@@ -26,7 +33,8 @@ describe('SiSearchBarComponent', () => {
         [formControl]="search"
         [debounceTime]="debounceTime()"
         [prohibitedCharacters]="prohibitedCharacters()"
-      />`
+      />`,
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestComponent {
       readonly placeholder = signal('Placeholder');

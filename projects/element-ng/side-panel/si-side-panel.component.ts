@@ -6,6 +6,7 @@ import { CdkPortalOutlet, Portal, PortalModule } from '@angular/cdk/portal';
 import { isPlatformBrowser } from '@angular/common';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -44,6 +45,7 @@ import { SidePanelMode, SidePanelSize } from './side-panel.model';
   imports: [PortalModule],
   templateUrl: './si-side-panel.component.html',
   styleUrl: './si-side-panel.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     class: 'si-layout-inner',
     '[class.enable-mobile]': 'enableMobile()',

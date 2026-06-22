@@ -19,7 +19,8 @@ describe('SiTooltipDirective', () => {
       imports: [SiTooltipModule],
       template: `<button type="button" [siTooltip]="tooltipText()" [isDisabled]="isDisabled()">
         Test
-      </button>`
+      </button>`,
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {
       readonly isDisabled = signal(false);
@@ -134,7 +135,8 @@ describe('SiTooltipDirective', () => {
       template: `<button type="button" [siTooltip]="template" [tooltipContext]="tooltipContext()">
           Test
         </button>
-        <ng-template #template let-tooltip="tooltip">Template content {{ tooltip }}</ng-template>`
+        <ng-template #template let-tooltip="tooltip">Template content {{ tooltip }}</ng-template>`,
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {
       readonly tooltipContext = signal<Record<string, unknown>>({});

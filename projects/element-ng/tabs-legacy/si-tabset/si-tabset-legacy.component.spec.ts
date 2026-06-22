@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -28,7 +28,8 @@ import { SiTabsetLegacyComponent } from './si-tabset-legacy.component';
     .tab-wrapper {
       width: 200px;
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import { Component, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiSidePanelService } from './si-side-panel.service';
@@ -14,7 +14,8 @@ import { SiSidePanelService } from './si-side-panel.service';
   template: `<ng-template #helpPanel cdkPortal>
       <h3>Help Panel</h3>
     </ng-template>
-    <div>Test Mock Component</div>`
+    <div>Test Mock Component</div>`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class MockComponent {
   readonly helpPanel = viewChild.required<CdkPortal, CdkPortal>('helpPanel', { read: CdkPortal });
