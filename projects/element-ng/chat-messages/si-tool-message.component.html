@@ -1,83 +1,152 @@
 <si-chat-message alignment="start" actionsPosition="bottom" [loading]="false">
-  <div class="tool-trace">
-    <div class="tool-trace-marker">
-      <div class="tool-marker-icon">
-        @if (toolIcon() === 'record-filled') {
-          <span class="tool-marker-dot" aria-hidden="true"></span>
-        } @else if (toolIcon()) {
-          <si-icon class="icon" [icon]="toolIcon()" />
+  <div
+    class="tool-trace"
+    [class.tool-trace-single]="hasSingleSection()"
+    [class.tool-trace-single-opened]="singleSectionManuallyToggled() && singleSectionOpened()"
+  >
+    @if (hasSingleSection()) {
+      <button
+        type="button"
+        class="tool-trace-marker tool-trace-marker-toggle"
+        [attr.aria-expanded]="singleSectionOpened()"
+        [attr.aria-controls]="singleSectionContentId()"
+        (click)="toggleSingleSection()"
+      >
+        <div class="tool-marker-icon">
+          @if (getLoadingState()) {
+            <si-loading-spinner class="tool-marker-spinner" aria-hidden="true" />
+          } @else {
+            <span class="tool-marker-symbol" aria-hidden="true">
+              @if (toolIcon() === false) {
+                <span class="tool-marker-dot"></span>
+              } @else if (getToolIcon(); as icon) {
+                <si-icon class="icon" [icon]="icon" />
+              }
+            </span>
+            <si-icon
+              class="tool-marker-toggle-icon icon"
+              icon="element-down-2"
+              aria-hidden="true"
+            />
+          }
+        </div>
+
+        @if (name()) {
+          <span class="tool-name">{{ name() | translate }}</span>
+        }
+      </button>
+
+      @if (hasBodyContent()) {
+        <div
+          class="tool-section-content tool-section-content-top"
+          [id]="singleSectionContentId()"
+          [attr.hidden]="!singleSectionOpened() ? '' : undefined"
+        >
+          @if (hasInputArguments()) {
+            @if (contentFormatter()) {
+              <div #formattedInputContent class="tool-data-formatted markdown-content"></div>
+            } @else {
+              <pre class="tool-data"><code>{{ formatData(getInputValue()) }}</code></pre>
+            }
+          } @else if (hasOutput() && !getLoadingState()) {
+            @if (contentFormatter()) {
+              <div #formattedOutputContent class="tool-data-formatted markdown-content"></div>
+            } @else {
+              <pre class="tool-data"><code>{{ formatData(getOutputValue()) }}</code></pre>
+            }
+          }
+        </div>
+      }
+    } @else {
+      <div class="tool-trace-marker">
+        <div class="tool-marker-icon">
+          @if (getLoadingState()) {
+            <si-loading-spinner class="tool-marker-spinner" aria-hidden="true" />
+          } @else if (toolIcon() === false) {
+            <span class="tool-marker-dot" aria-hidden="true"></span>
+          } @else if (getToolIcon(); as icon) {
+            <si-icon class="icon" [icon]="icon" />
+          }
+        </div>
+
+        @if (name()) {
+          <div class="tool-name">{{ name() | translate }}</div>
         }
       </div>
 
-      @if (name()) {
-        <div class="tool-name">{{ name() | translate }}</div>
-      }
-    </div>
+      @if (hasBodyContent()) {
+        <div class="tool-trace-body">
+          <div class="tool-message-content">
+            @if (hasInputArguments()) {
+              <section class="tool-section">
+                <button
+                  type="button"
+                  class="tool-section-toggle"
+                  [attr.aria-expanded]="inputArgumentsOpened()"
+                  [attr.aria-controls]="inputArgumentsContentId"
+                  (click)="toggleInputArguments()"
+                >
+                  <si-icon
+                    class="tool-section-caret icon"
+                    icon="element-down-2"
+                    aria-hidden="true"
+                  />
+                  <span>{{ inputArgumentsLabel() | translate }}</span>
+                </button>
 
-    @if (hasBodyContent()) {
-      <div class="tool-trace-body">
-        <div class="tool-message-content">
-          @if (hasInputArguments()) {
-            <section class="tool-section">
-              <button
-                type="button"
-                class="tool-section-toggle"
-                [attr.aria-expanded]="inputArgumentsOpened()"
-                [attr.aria-controls]="inputArgumentsContentId"
-                (click)="toggleInputArguments()"
-              >
-                <si-icon class="tool-section-caret icon" icon="element-down-2" aria-hidden="true" />
-                <span>{{ inputArgumentsLabel() | translate }}</span>
-              </button>
+                <div
+                  class="tool-section-content"
+                  [id]="inputArgumentsContentId"
+                  [attr.hidden]="!inputArgumentsOpened() ? '' : undefined"
+                >
+                  @if (contentFormatter()) {
+                    <div #formattedInputContent class="tool-data-formatted markdown-content"></div>
+                  } @else {
+                    <pre class="tool-data"><code>{{ formatData(getInputValue()) }}</code></pre>
+                  }
+                </div>
+              </section>
+            }
 
-              <div
-                class="tool-section-content"
-                [id]="inputArgumentsContentId"
-                [attr.hidden]="!inputArgumentsOpened() ? '' : undefined"
-              >
-                @if (contentFormatter()) {
-                  <div #formattedInputContent class="tool-data-formatted markdown-content"></div>
-                } @else {
-                  <pre class="tool-data"><code>{{ formatData(inputArguments()) }}</code></pre>
-                }
+            @if (hasOutput() && !getLoadingState()) {
+              <section class="tool-section">
+                <button
+                  type="button"
+                  class="tool-section-toggle"
+                  [attr.aria-expanded]="outputOpened()"
+                  [attr.aria-controls]="outputContentId"
+                  (click)="toggleOutput()"
+                >
+                  <si-icon
+                    class="tool-section-caret icon"
+                    icon="element-down-2"
+                    aria-hidden="true"
+                  />
+                  <span>{{ outputLabel() | translate }}</span>
+                </button>
+
+                <div
+                  class="tool-section-content"
+                  [id]="outputContentId"
+                  [attr.hidden]="!outputOpened() ? '' : undefined"
+                >
+                  @if (contentFormatter()) {
+                    <div #formattedOutputContent class="tool-data-formatted markdown-content"></div>
+                  } @else {
+                    <pre class="tool-data"><code>{{ formatData(getOutputValue()) }}</code></pre>
+                  }
+                </div>
+              </section>
+            }
+
+            @if (getLoadingState()) {
+              <div class="tool-section" aria-hidden="true">
+                <div class="si-skeleton placeholder-lg loading-panel-header"> </div>
               </div>
-            </section>
-          }
-
-          @if (hasOutput() && !getLoadingState()) {
-            <section class="tool-section">
-              <button
-                type="button"
-                class="tool-section-toggle"
-                [attr.aria-expanded]="outputOpened()"
-                [attr.aria-controls]="outputContentId"
-                (click)="toggleOutput()"
-              >
-                <si-icon class="tool-section-caret icon" icon="element-down-2" aria-hidden="true" />
-                <span>{{ outputLabel() | translate }}</span>
-              </button>
-
-              <div
-                class="tool-section-content"
-                [id]="outputContentId"
-                [attr.hidden]="!outputOpened() ? '' : undefined"
-              >
-                @if (contentFormatter()) {
-                  <div #formattedOutputContent class="tool-data-formatted markdown-content"></div>
-                } @else {
-                  <pre class="tool-data"><code>{{ formatData(getOutputValue()) }}</code></pre>
-                }
-              </div>
-            </section>
-          }
-
-          @if (getLoadingState()) {
-            <div class="tool-section" aria-hidden="true">
-              <div class="si-skeleton placeholder-lg loading-panel-header"> </div>
-            </div>
-          }
+            }
+          </div>
         </div>
-      </div>
+      }
     }
   </div>
 </si-chat-message>

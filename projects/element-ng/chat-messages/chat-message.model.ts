@@ -60,7 +60,7 @@ export interface Attachment {
  */
 export interface BaseChatMessage {
   /** Type of message */
-  type: 'user' | 'ai' | 'tool';
+  type: 'user' | 'ai' | 'tool' | 'reasoning';
   /** Message content - can be a string or a Signal<string>, empty string shows loading state */
   content?: string | Signal<string>;
   /** Whether the message is currently loading/being generated - can be a boolean or Signal<boolean> */
@@ -114,6 +114,8 @@ export interface ToolChatMessage extends BaseChatMessage {
   name: string;
   /** Input arguments for the tool call */
   inputArguments?: string | object;
+  /** Input arguments for the tool call. Alias for inputArguments. */
+  input?: string | object;
   /** Label for the input arguments section. */
   inputArgumentsLabel?: TranslatableString;
   /** Output result from the tool call - can be a string/object or Signal\<string | object\>, empty does not show loading state. */
@@ -124,8 +126,27 @@ export interface ToolChatMessage extends BaseChatMessage {
   autoExpandInputArguments?: boolean;
   /** Whether the output section should be expanded by default if it's the latest message (and closed after) */
   autoExpandOutput?: boolean;
-  /** Alternative tool icon, defaults to 'element-maintenance' */
-  icon?: string;
+  /** Alternative tool icon, defaults to 'element-maintenance'. Set to `false` to show a generic dot. */
+  icon?: string | false;
+}
+
+/** AI reasoning display
+ *
+ * @see {@link SiAiChatContainerComponent} for the AI chat container where this is used
+ *
+ * @experimental
+ */
+export interface ReasoningChatMessage extends BaseChatMessage {
+  /** Type of message */
+  type: 'reasoning';
+  /** Optional reasoning title */
+  name?: TranslatableString;
+  /** Reasoning content - can be a string or a Signal<string>. */
+  content: string | Signal<string>;
+  /** Alternative icon, defaults to 'element-light'. Set to `false` to show a generic dot. */
+  icon?: string | false;
+  /** Whether the reasoning section should be expanded by default if it's the latest message (and closed after) */
+  autoExpand?: boolean;
 }
 
 /**
@@ -158,4 +179,9 @@ export interface TemplateChatMessage {
  *
  * @experimental
  */
-export type ChatMessage = UserChatMessage | AiChatMessage | ToolChatMessage | TemplateChatMessage;
+export type ChatMessage =
+  | UserChatMessage
+  | AiChatMessage
+  | ToolChatMessage
+  | ReasoningChatMessage
+  | TemplateChatMessage;

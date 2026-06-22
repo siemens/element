@@ -53,6 +53,7 @@
         @if (message.type === 'tool') {
           <si-tool-message
             [name]="message.name"
+            [input]="message.input"
             [inputArguments]="message.inputArguments"
             [output]="getOutputValue(message.output)"
             [toolIcon]="message.icon ?? 'element-maintenance'"
@@ -61,6 +62,18 @@
             [outputLabel]="message.outputLabel ?? toolOutputLabel()"
             [expandInputArguments]="shouldAutoExpandInputArguments(message)"
             [expandOutput]="shouldAutoExpandOutput(message)"
+            [contentFormatter]="markdownRenderer()"
+          />
+        }
+
+        @if (message.type === 'reasoning') {
+          <si-tool-message
+            [name]="message.name ?? reasoningLabel()"
+            [output]="getContentValue(message.content)"
+            [toolIcon]="message.icon ?? 'element-light'"
+            [loading]="getLoadingState(message.loading, message.content, false, false, true)"
+            [outputLabel]="reasoningLabel()"
+            [expandOutput]="shouldAutoExpandReasoning(message)"
             [contentFormatter]="markdownRenderer()"
           />
         }

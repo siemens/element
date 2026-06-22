@@ -17,6 +17,12 @@ si-chat-message {
   --loading-spinner-size: 1.5em;
 }
 
+:host ::ng-deep si-loading-spinner.tool-marker-spinner.spinner-leave {
+  display: none;
+  opacity: 0;
+  transition: none;
+}
+
 .tool-trace {
   display: flex;
   flex-direction: column;
@@ -31,6 +37,29 @@ si-chat-message {
   min-block-size: map.get(variables.$spacers, 9);
 }
 
+.tool-trace-marker-toggle {
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  text-align: start;
+
+  &:enabled {
+    cursor: pointer;
+  }
+
+  &:hover,
+  &:focus-visible {
+    .tool-marker-symbol {
+      display: none;
+    }
+
+    .tool-marker-toggle-icon {
+      display: inline-flex;
+    }
+  }
+}
+
 .tool-marker-icon {
   display: flex;
   align-items: center;
@@ -42,6 +71,27 @@ si-chat-message {
   .icon {
     font-size: variables.$si-icon-font-size;
   }
+}
+
+.tool-marker-symbol {
+  display: inline-flex;
+}
+
+.tool-marker-toggle-icon {
+  display: none;
+  transition: transform variables.$element-default-transition-duration;
+
+  [aria-expanded='true'] & {
+    transform: rotate(180deg);
+  }
+
+  .tool-trace-single-opened & {
+    display: inline-flex;
+  }
+}
+
+.tool-trace-single-opened .tool-marker-symbol {
+  display: none;
 }
 
 .tool-marker-dot {
@@ -109,6 +159,10 @@ si-chat-message {
   &[hidden] {
     display: none;
   }
+}
+
+.tool-section-content-top {
+  inline-size: 100%;
 }
 
 .tool-name {

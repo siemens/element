@@ -349,6 +349,18 @@ export class SiAiChatContainerComponent {
   );
 
   /**
+   * Label for reasoning messages
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_AI_CHAT_CONTAINER.REASONING:Reasoning`)
+   * ```
+   */
+  readonly reasoningLabel = input<TranslatableString>(
+    t(() => $localize`:@@SI_AI_CHAT_CONTAINER.REASONING:Reasoning`)
+  );
+
+  /**
    * Emitted when a new message is sent
    */
   readonly messageSent = output<{
@@ -438,7 +450,11 @@ export class SiAiChatContainerComponent {
     secondary: MenuItem[];
     version: number;
   } {
-    if (this.isTemplateMessage(message) || message.type === 'tool') {
+    if (
+      this.isTemplateMessage(message) ||
+      message.type === 'tool' ||
+      message.type === 'reasoning'
+    ) {
       return { primary: [], secondary: [], version: 0 };
     }
 
@@ -567,6 +583,7 @@ export class SiAiChatContainerComponent {
     if (!messages || messages.length === 0) return false;
     return messages[messages.length - 1] === message;
   }
+
   private isLatestToolMessage(message: ChatMessage): boolean {
     const messages = this.displayMessages();
     if (!messages || messages.length === 0) return false;
@@ -574,17 +591,17 @@ export class SiAiChatContainerComponent {
     const messageIndex = messages.findIndex(m => m === message);
     if (messageIndex === -1) return false;
 
-    if (messageIndex === messages.length - 1) return true;
+    if (this.isTemplateMessage(message) || message.type !== 'tool') return false;
 
-    if (messageIndex < messages.length - 2) return false;
+    for (let i = messageIndex + 1; i < messages.length; i++) {
+      const next = messages[i];
 
-    const nextMessage = messages[messageIndex + 1];
+      if (this.isTemplateMessage(next)) continue;
 
-    // Auto-expand only applies when an AI response is being generated.
-    // If a user message or another tool message follows, this is no longer the latest tool call.
-    if (!this.isTemplateMessage(nextMessage) && nextMessage.type === 'ai') return true;
+      if (next.type === 'tool' || next.type === 'user') return false;
+    }
 
-    return false;
+    return true;
   }
 
   protected shouldAutoExpandInputArguments(message: ChatMessage): boolean {
@@ -598,6 +615,14 @@ export class SiAiChatContainerComponent {
   protected shouldAutoExpandOutput(message: ChatMessage): boolean {
     if (this.isTemplateMessage(message) || message.type !== 'tool') return false;
     if (!message.autoExpandOutput) {
+      return false;
+    }
+    return this.isLatestToolMessage(message);
+  }
+
+  protected shouldAutoExpandReasoning(message: ChatMessage): boolean {
+    if (this.isTemplateMessage(message) || message.type !== 'reasoning') return false;
+    if (!message.autoExpand) {
       return false;
     }
     return this.isLatestToolMessage(message);
