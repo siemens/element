@@ -11,7 +11,6 @@ import {
   OnDestroy
 } from '@angular/core';
 import { ActivatedRoute, Route, Router, RouterOutlet } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
 import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
 import {
   AlertConfig,
@@ -26,7 +25,7 @@ const loginAlert = signal<AlertConfig | undefined>(undefined);
 
 @Component({
   selector: 'app-two-step-login-wrapper',
-  imports: [SiLoginBasicComponent, TranslateModule],
+  imports: [SiLoginBasicComponent],
   template: `
     <si-login-basic
       usernameLabel="FORM.USERNAME"
@@ -108,7 +107,7 @@ export const ROUTES: Route[] = [
 
 @Component({
   selector: 'app-sample',
-  imports: [SiLandingPageComponent, TranslateModule, RouterOutlet],
+  imports: [SiLandingPageComponent, RouterOutlet],
   templateUrl: './si-landing-page-two-step-login.html',
   providers: [provideExampleRoutes(ROUTES)],
   changeDetection: ChangeDetectionStrategy.OnPush

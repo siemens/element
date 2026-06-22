@@ -10,7 +10,7 @@ import {
   signal,
   viewChild
 } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
 import {
   AlertConfig,
@@ -20,7 +20,7 @@ import {
 
 @Component({
   selector: 'app-sample',
-  imports: [SiLandingPageComponent, TranslateModule, SiLoginSingleSignOnComponent],
+  imports: [SiLandingPageComponent, SiLoginSingleSignOnComponent],
   templateUrl: './si-landing-page-single-sign-on-login.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

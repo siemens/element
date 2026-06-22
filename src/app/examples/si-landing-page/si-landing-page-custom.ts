@@ -4,7 +4,6 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
 import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
 import { AlertConfig, SiLandingPageComponent } from '@siemens/element-ng/landing-page';
 import { SiPasswordToggleModule } from '@siemens/element-ng/password-toggle';
@@ -12,13 +11,7 @@ import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
 
 @Component({
   selector: 'app-sample',
-  imports: [
-    SiLandingPageComponent,
-    SiPasswordToggleModule,
-    TranslateModule,
-    RouterLink,
-    SiSystemBannerComponent
-  ],
+  imports: [SiLandingPageComponent, SiPasswordToggleModule, RouterLink, SiSystemBannerComponent],
   templateUrl: './si-landing-page-custom.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

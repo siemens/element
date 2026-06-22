@@ -4,14 +4,13 @@
  */
 import { Component, DOCUMENT, Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { provideRouter, RouterOutlet } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import {
   MissingTranslationHandler,
   MissingTranslationHandlerParams,
   provideTranslateService,
   TranslateLoader,
-  TranslateModule,
   TranslateService,
   Translation
 } from '@ngx-translate/core';
@@ -60,9 +59,9 @@ describe('SiTranslateNgxT', () => {
   describe('with multiple translation services', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [
-          SiTranslateNgxTModule,
-          TranslateModule.forRoot({
+        imports: [SiTranslateNgxTModule, HostComponent],
+        providers: [
+          provideTranslateService({
             defaultLanguage: 'test',
             useDefaultLang: true,
             missingTranslationHandler: provideMissingTranslationHandlerForElement(),
@@ -78,16 +77,15 @@ describe('SiTranslateNgxT', () => {
               } as TranslateLoader
             }
           }),
-          RouterModule.forRoot([
+          provideRouter([
             {
               path: '',
               loadChildren: () =>
                 import('./si-translate-ngxt.test-module.mock').then(m => m.TestModule)
             }
           ]),
-          HostComponent
-        ],
-        providers: [RootTestService]
+          RootTestService
+        ]
       });
     });
 
@@ -110,9 +108,9 @@ describe('SiTranslateNgxT', () => {
     beforeEach(() => {
       translateLoader$ = new Subject();
       TestBed.configureTestingModule({
-        imports: [
-          SiTranslateNgxTModule,
-          TranslateModule.forRoot({
+        imports: [SiTranslateNgxTModule],
+        providers: [
+          provideTranslateService({
             defaultLanguage: 'test',
             useDefaultLang: true,
             missingTranslationHandler: provideMissingTranslationHandlerForElement(),
@@ -250,9 +248,9 @@ describe('SiTranslateNgxT', () => {
   describe('without missing translation service', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [
-          SiTranslateNgxTModule,
-          TranslateModule.forRoot({
+        imports: [SiTranslateNgxTModule],
+        providers: [
+          provideTranslateService({
             defaultLanguage: 'test',
             useDefaultLang: true,
             loader: {
