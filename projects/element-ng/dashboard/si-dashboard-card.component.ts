@@ -4,6 +4,7 @@
  */
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -27,10 +28,11 @@ import { SiDashboardService } from './si-dashboard.service';
   imports: [SiCardHeaderComponent, SiTranslatePipe],
   templateUrl: './si-dashboard-card.component.html',
   styleUrl: './si-dashboard-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     '[class.elevation-2]': 'isExpanded()',
     '[class.expanded]': 'isExpanded()',
-    '[class.d-none]': 'hide'
+    '[class.d-none]': 'hide()'
   }
 })
 export class SiDashboardCardComponent extends SiCardComponent implements OnDestroy {
@@ -79,7 +81,7 @@ export class SiDashboardCardComponent extends SiCardComponent implements OnDestr
    */
   readonly isExpanded = signal(false);
   /** @internal */
-  hide = false;
+  readonly hide = signal(false);
   /** @internal */
   readonly enableExpandInteractionInternal = signal(false);
   readonly enableExpandInteractionComputed = computed(
