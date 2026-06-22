@@ -364,9 +364,9 @@ export class SiPhoneNumberInputComponent
   private getCountryName(countryCode: string): string {
     // This auto translates the given country name to the selected locale language
     return (
-      new Intl.DisplayNames([this.translate.currentLanguage ?? this.locale], { type: 'region' }).of(
-        countryCode.toUpperCase()
-      ) ?? ''
+      new Intl.DisplayNames([this.translate.currentLanguage ?? this.locale], {
+        type: 'region'
+      }).of(countryCode.toUpperCase()) ?? ''
     );
   }
 
