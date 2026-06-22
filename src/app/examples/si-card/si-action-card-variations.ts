@@ -10,21 +10,16 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [SiActionCardComponent, SiIconModule],
-  templateUrl: './si-action-card.html',
+  templateUrl: './si-action-card-variations.html',
   styles: `
-    .card {
-      inline-size: 100%;
-      block-size: 100%;
+    .card-size {
+      height: 250px;
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  private readonly log = inject(LOG_EVENT);
-
-  protected onCardClick(cardId: string): void {
-    this.log('Card clicked:', cardId);
-  }
+  private log = inject(LOG_EVENT);
 
   protected onCardSelect(state: boolean, cardId: string): void {
     if (state) {
