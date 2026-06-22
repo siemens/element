@@ -30,7 +30,9 @@ describe('SiGridstackWrapperComponent', () => {
   let widgetCatalogMap: WritableSignal<Map<string, Widget>>;
 
   beforeEach(async () => {
-    page.viewport(600, 600);
+    // Use a viewport comfortably above the responsive 1-column breakpoint (576px)
+    // so gridstack does not intermittently collapse the layout to a single column.
+    page.viewport(1024, 768);
     await TestBed.configureTestingModule({
       imports: [TestingModule],
       providers: [SiActionDialogService]
