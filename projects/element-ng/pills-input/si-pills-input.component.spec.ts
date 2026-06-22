@@ -2,26 +2,27 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { userEvent } from 'vitest/browser';
 
 import { SiPillsInputModule } from './si-pills-input.module';
 
 @Component({
   imports: [SiPillsInputModule, FormsModule],
   template: `
-    <si-pills-input [readonly]="readonly" [(ngModel)]="value" />
+    <si-pills-input [readonly]="readonly()" [(ngModel)]="value" />
     <si-pills-input class="csv" siPillsInputCsv [(ngModel)]="csvValue" />
     <si-pills-input class="email" siPillsInputEmail [(ngModel)]="emailValue" />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
-  showVisibilityIcon = true;
-  value: string[] = [];
-  csvValue: string[] = [];
-  emailValue: string[] = [];
-  readonly = false;
+  readonly value = signal<string[]>([]);
+  readonly csvValue = signal<string[]>([]);
+  readonly emailValue = signal<string[]>([]);
+  readonly readonly = signal(false);
 }
 
 describe('SiPillsInputComponent', () => {
@@ -56,159 +57,100 @@ describe('SiPillsInputComponent', () => {
 
   describe('with no input-handler', () => {
     it('should update on enter', async () => {
-      inputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'enter' }));
-      await fixture.whenStable();
-      inputElement.value = 'item-1';
-      inputElement.dispatchEvent(new InputEvent('input'));
-      await fixture.whenStable();
-      inputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'enter' }));
-      await fixture.whenStable();
-      expect(component.value).toEqual(['item-1']);
+      await userEvent.type(inputElement, '{Enter}');
+      await userEvent.type(inputElement, 'item-1{Enter}');
+      expect(component.value()).toEqual(['item-1']);
     });
 
     it('should update on blur', async () => {
-      inputElement.value = 'item-1';
-      inputElement.dispatchEvent(new InputEvent('input'));
-      await fixture.whenStable();
-      inputElement.dispatchEvent(new FocusEvent('blur'));
-      await fixture.whenStable();
-      expect(component.value).toEqual(['item-1']);
+      await userEvent.type(inputElement, 'item-1{Tab}');
+      expect(component.value()).toEqual(['item-1']);
     });
 
     it('should not update on input', async () => {
-      inputElement.value = 'item-1';
-      inputElement.dispatchEvent(new InputEvent('input'));
-      await fixture.whenStable();
-      expect(component.value).toEqual([]);
+      await userEvent.type(inputElement, 'item-1');
+      expect(component.value()).toEqual([]);
     });
 
     it('should update on tag delete', async () => {
-      component.value = ['item-1', 'item-2'];
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      component.value.set(['item-1', 'item-2']);
       await fixture.whenStable();
-      fixture.detectChanges();
+
       componentElement.querySelectorAll<HTMLElement>('.btn-tertiary-ghost')![1].click();
-      expect(component.value).toEqual(['item-1']);
-      fixture.detectChanges();
+      expect(component.value()).toEqual(['item-1']);
       await fixture.whenStable();
       componentElement.querySelector<HTMLElement>('.btn-tertiary-ghost')!.click();
-      expect(component.value).toEqual([]);
+      expect(component.value()).toEqual([]);
     });
 
     it('should edit last tag on backspace', async () => {
-      component.value = ['item-1', 'item-2'];
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      component.value.set(['item-1', 'item-2']);
       await fixture.whenStable();
-      inputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'backspace' }));
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(component.value).toEqual(['item-1']);
+      await userEvent.type(inputElement, '{backspace}');
+
+      expect(component.value()).toEqual(['item-1']);
       expect(inputElement.value).toEqual('item-2');
     });
 
     it('should delete active tag on backspace', async () => {
-      component.value = ['item-1', 'item-2'];
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      component.value.set(['item-1', 'item-2']);
       await fixture.whenStable();
-      componentElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'arrowLeft' }));
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(componentElement.querySelectorAll('si-input-pill')[1]).toHaveClass('active');
+      await userEvent.type(inputElement, '{arrowleft}');
 
-      componentElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'backspace' }));
-      fixture.detectChanges();
-      expect(component.value).toEqual(['item-1']);
+      expect(componentElement.querySelectorAll('si-input-pill')[1]).toHaveClass('active');
+      await userEvent.type(inputElement, '{backspace}');
+      expect(component.value()).toEqual(['item-1']);
     });
   });
 
   describe('with csv input handler', () => {
     it('should update on input with separator', async () => {
-      csvInputElement.value = 'a';
-      csvInputElement.dispatchEvent(new InputEvent('input'));
+      await userEvent.type(csvInputElement, 'a');
+      expect(component.csvValue()).toEqual([]);
+      await userEvent.type(csvInputElement, ',');
       await fixture.whenStable();
-      expect(component.csvValue).toEqual([]);
-      csvInputElement.value = 'a,';
-      csvInputElement.dispatchEvent(new InputEvent('input'));
-      await fixture.whenStable();
-      expect(component.csvValue).toEqual(['a']);
+      expect(component.csvValue()).toEqual(['a']);
     });
 
     it('should not include trailing value after separator on input', async () => {
       csvInputElement.value = 'a, b';
       csvInputElement.dispatchEvent(new InputEvent('input'));
       await fixture.whenStable();
-      expect(component.csvValue).toEqual(['a']);
+      expect(component.csvValue()).toEqual(['a']);
     });
 
     it('should update on enter', async () => {
-      csvInputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'enter' }));
-      await fixture.whenStable();
-      csvInputElement.value = 'a, b,c';
-      csvInputElement.dispatchEvent(new InputEvent('input'));
-      await fixture.whenStable();
-      csvInputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'enter' }));
-      await fixture.whenStable();
-      expect(component.csvValue).toEqual(['a', 'b', 'c']);
+      await userEvent.type(csvInputElement, '{Enter}');
+      await userEvent.type(csvInputElement, 'a, b,c{Enter}');
+      expect(component.csvValue()).toEqual(['a', 'b', 'c']);
     });
 
     it('should update on blur', async () => {
-      vi.useFakeTimers();
-      csvInputElement.value = 'a,b';
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
-      vi.advanceTimersByTime(100);
-      csvInputElement.dispatchEvent(new InputEvent('input'));
-      csvInputElement.dispatchEvent(new FocusEvent('blur'));
-      vi.advanceTimersByTime(500);
-      await fixture.whenStable();
-      vi.useRealTimers();
-      expect(component.csvValue).toEqual(['a', 'b']);
+      await userEvent.type(csvInputElement, 'a, b{Tab}');
+      expect(component.csvValue()).toEqual(['a', 'b']);
     });
   });
 
   describe('with email input handler', () => {
     it('should update on enter', async () => {
-      emailInputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'enter' }));
-      await fixture.whenStable();
-      emailInputElement.value = 'a';
-      emailInputElement.dispatchEvent(new InputEvent('input'));
-      await fixture.whenStable();
-      emailInputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'enter' }));
-      await fixture.whenStable();
-      emailInputElement.value = 'a@b';
-      emailInputElement.dispatchEvent(new InputEvent('input'));
-      await fixture.whenStable();
-      emailInputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'enter' }));
-      await fixture.whenStable();
-      expect(component.emailValue).toEqual(['a@b']);
+      await userEvent.type(emailInputElement, '{Enter}');
+      await userEvent.type(emailInputElement, 'a{Enter}@b{Enter}');
+      expect(component.emailValue()).toEqual(['a@b']);
     });
 
     it('should update on blur', async () => {
-      emailInputElement.value = 'a@b';
-      emailInputElement.dispatchEvent(new InputEvent('input'));
-      await fixture.whenStable();
-      emailInputElement.dispatchEvent(new FocusEvent('blur'));
-      await fixture.whenStable();
-      expect(component.emailValue).toEqual(['a@b']);
+      await userEvent.type(emailInputElement, 'a@b{Tab}');
+      expect(component.emailValue()).toEqual(['a@b']);
     });
 
     it('should update on separator', async () => {
-      emailInputElement.value = 'a@b; b@b;invalid';
-      emailInputElement.dispatchEvent(new InputEvent('input'));
-      await fixture.whenStable();
-      emailInputElement.dispatchEvent(new FocusEvent('blur'));
-      await fixture.whenStable();
-      expect(component.emailValue).toEqual(['a@b', 'b@b']);
+      await userEvent.type(emailInputElement, 'a@b; b@b;invalid{Tab}');
+      expect(component.emailValue()).toEqual(['a@b', 'b@b']);
     });
 
     it('should not remove pills if readonly', async () => {
-      component.value = ['value'];
-      component.readonly = true;
-      fixture.changeDetectorRef.markForCheck();
-      fixture.detectChanges();
+      component.value.set(['value']);
+      component.readonly.set(true);
       await fixture.whenStable();
       fixture.detectChanges();
       componentElement

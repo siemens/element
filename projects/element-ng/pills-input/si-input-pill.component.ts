@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { elementCancel } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
@@ -11,6 +11,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
   imports: [SiIconComponent],
   templateUrl: './si-input-pill.component.html',
   styles: '.btn { cursor: pointer; }',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     class: 'pill pe-0',
     '[class.pe-4]': 'hideClose()'
