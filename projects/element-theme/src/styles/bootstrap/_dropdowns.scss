@@ -126,7 +126,7 @@
   }
 
   // duplicating hover styles from bootstrap. To split them from focus styles. Otherwise hover on focus elements will not work.
-  &:is(:active, .active) {
+  &:is(:active, .active, [data-active='true']) {
     color: var(--element-text-primary);
     background-color: var(--element-base-1-selected);
   }

@@ -50,9 +50,10 @@ import { SiTypeaheadSorting } from './si-typeahead.sorting';
 @Directive({
   selector: '[siTypeahead]',
   host: {
-    class: 'si-typeahead'
+    class: 'si-typeahead',
+    '(keydown)': 'keydown($event)'
   },
-  hostDirectives: [SiAutocompleteDirective],
+  hostDirectives: [{ directive: SiAutocompleteDirective }],
   exportAs: 'si-typeahead'
 })
 export class SiTypeaheadDirective implements OnChanges, OnDestroy {
@@ -294,6 +295,8 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   private $typeahead = new ReplaySubject<TypeaheadArray>(1);
   private componentRef?: ComponentRef<SiTypeaheadComponent>;
   private inputTimer: any;
+  /** @defaultValue false */
+  readonly expanded = signal(false);
 
   private sourceSubscription?: Subscription;
   private matchSorter = new SiTypeaheadSorting();
@@ -441,7 +444,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   }
 
   // Start the input timeout to display the typeahead when the host is focussed or a value is inputted into it.
-  @HostListener('focusin', ['$event'])
+  //@HostListener('focusin', ['$event'])
   @HostListener('input', ['$event'])
   protected onInput(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -451,12 +454,16 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
 
     // Get the value or otherwise textContent of the host element now, because later it could be reset.
     const firstValue = target.value || target.textContent;
+    console.log('firstvalue' + firstValue);
     this.inputTimer ??= setTimeout(() => {
       this.inputTimer = undefined;
       const value = (target.value || target.textContent) ?? firstValue ?? '';
+      
       this.query.set(value);
       this.typeaheadOnInput.emit(value ?? '');
       this.canBeOpen.set(true);
+      //console.log(this.autoCompleteDirective.value());
+      this.autoCompleteDirective?.value.set(value);
     }, this.typeaheadWaitMs());
   }
 
@@ -467,7 +474,14 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
       this.canBeOpen.set(false);
     }
   }
-
+  /**
+   * @defaultValue
+   * ```
+   * inject(SiAutocompleteDirective, { optional: true })
+   * ```
+   */
+  autoCompleteDirective = inject(SiAutocompleteDirective, { optional: true });
+  
   ngOnDestroy(): void {
     this.clearTimer();
     this.sourceSubscription?.unsubscribe();
@@ -509,6 +523,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
 
   // Dynamically create the typeahead component and then set the matches and the query.
   private loadComponent(): void {
+    this.expanded.set(true);
     if (!this.overlayRef?.hasAttached()) {
       this.overlayRef?.dispose();
 
@@ -533,9 +548,11 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     if (this.overlayRef.hasAttached()) {
       return;
     }
-    const typeaheadPortal = new ComponentPortal(SiTypeaheadComponent, null, this.injector);
+    const typeaheadPortal = new ComponentPortal(SiTypeaheadComponent, null, this.injector, null, undefined);
     this.componentRef = this.overlayRef.attach(typeaheadPortal);
     this.typeaheadOpenChange.emit(true);
+    
+    this.autoCompleteDirective?.expanded.set(true);
   }
 
   /**
@@ -621,5 +638,13 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
 
   private escapeRegex(query: string): string {
     return query.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+  }
+
+  keydown(event: KeyboardEvent): void {
+    if (event.target instanceof HTMLInputElement) {
+    if (event.key.length === 1) event.target.value += event.key;
+
+      event.target.dispatchEvent(new Event('input', { bubbles: true }));
+    }
   }
 }

@@ -8,6 +8,7 @@ import {
   computed,
   inject,
   input,
+  model,
   output,
   TemplateRef
 } from '@angular/core';
@@ -33,24 +34,8 @@ import { SelectOption } from '../si-select.types';
     // In readonly mode, the select needs to be announced as a textbox.
     // Otherwise, screen-reader won't announce the readonly state.
     class: 'select focus-none dropdown-toggle d-flex align-items-center ps-4',
-    'aria-autocomplete': 'none',
-    '[attr.role]': 'readonly() ? "textbox": "combobox"',
-    '[attr.aria-haspopup]': 'readonly() ? undefined : "listbox"',
-    '[attr.aria-expanded]': 'readonly() ? undefined : open()',
-    '[attr.aria-controls]': 'readonly() ? undefined : controls()',
-    '[attr.aria-readonly]': 'readonly()',
-    '[attr.aria-labelledby]': 'labeledBy()',
-    '[attr.aria-disabled]': 'selectionStrategy.disabled()',
-    '[attr.tabindex]': 'selectionStrategy.disabled() ? "-1" : "0"',
+    
     '[class.disabled]': 'selectionStrategy.disabled()',
-    '[class.active]': 'open()',
-    '(blur)': 'blur()',
-    '(click)': 'click($event)',
-    '(keydown.arrowDown)': 'click($event)',
-    '(keydown.alt.arrowDown)': 'click($event)',
-    '(keydown.arrowUp)': 'click($event)',
-    '(keydown.enter)': 'click($event)',
-    '(keydown.space)': 'click($event)'
   }
 })
 export class SiSelectInputComponent<T> {
@@ -68,7 +53,7 @@ export class SiSelectInputComponent<T> {
    */
   readonly ariaLabel = input<string | null>(null);
   /** @defaultValue false */
-  readonly open = input(false, { transform: booleanAttribute });
+  readonly open = model(false);
   readonly placeholder = input<TranslatableString>();
   readonly controls = input.required<string>();
   readonly optionTemplate = input<

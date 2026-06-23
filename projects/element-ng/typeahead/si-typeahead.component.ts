@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import {ComboboxPopup, ComboboxWidget} from '@angular/aria/combobox';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
@@ -10,8 +11,7 @@ import {
   ElementRef,
   HostListener,
   inject,
-  viewChild
-} from '@angular/core';
+  signal} from '@angular/core';
 import {
   SiAutocompleteDirective,
   SiAutocompleteListboxDirective,
@@ -34,7 +34,9 @@ import { TypeaheadMatch } from './si-typeahead.model';
     NgTemplateOutlet,
     SiTranslatePipe,
     SiTypeaheadItemTemplateDirective,
-    SiLoadingSpinnerDirective
+    SiLoadingSpinnerDirective,
+    ComboboxPopup,
+    ComboboxWidget
   ],
   templateUrl: './si-typeahead.component.html',
   styleUrl: './si-typeahead.component.scss',
@@ -50,14 +52,14 @@ export class SiTypeaheadComponent implements AfterViewInit {
 
   protected readonly multiselect = computed(() => this.parent.typeaheadMultiSelect());
 
-  private readonly typeaheadElement = viewChild.required('typeahead', {
+  /*private readonly typeaheadElement = viewChild.required('typeahead', {
     read: ElementRef
-  });
+  });*/
 
   protected autocompleteDirective = inject(SiAutocompleteDirective);
 
   ngAfterViewInit(): void {
-    this.setHeight(this.typeaheadElement());
+    //this.setHeight(this.typeaheadElement());
   }
 
   @HostListener('mousedown', ['$event'])
@@ -65,11 +67,14 @@ export class SiTypeaheadComponent implements AfterViewInit {
     event.preventDefault();
   }
 
+  /** @defaultValue [] */
+  readonly selectedMatch = signal<TypeaheadMatch[]>([]);
+
   /*
    * Set the height of the element passed to it (typeahead) if there are items displayed,
    * the number of displayed items changed and it is scrollable.
    */
-  private setHeight(element: ElementRef): void {
+  setHeight(element: ElementRef): void {
     if (this.matches().length) {
       if (
         this.parent.typeaheadScrollable() &&

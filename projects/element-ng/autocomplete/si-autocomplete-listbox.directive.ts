@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
+import { Listbox } from '@angular/aria/listbox';
 import {
   ChangeDetectorRef,
   DestroyRef,
@@ -10,29 +10,35 @@ import {
   inject,
   input,
   OnInit,
-  output,
-  contentChildren,
-  INJECTOR,
-  effect
-} from '@angular/core';
+  output} from '@angular/core';
 
-import { SiAutocompleteOptionDirective } from './si-autocomplete-option.directive';
 import { SiAutocompleteDirective } from './si-autocomplete.directive';
 import { AUTOCOMPLETE_LISTBOX } from './si-autocomplete.model';
 
 @Directive({
   selector: '[siAutocompleteListboxFor]',
   providers: [{ provide: AUTOCOMPLETE_LISTBOX, useExisting: SiAutocompleteListboxDirective }],
-  host: {
+  /*host: {
     role: 'listbox',
     '[id]': 'id()'
+  },*/
+  host: {
+    '(click)': 'listboxClick()'
   },
+  hostDirectives: [{
+    directive: Listbox,
+    inputs: ['id', 'disabled', 'orientation', 'multi', 'wrap', 'softDisabled',
+      'focusMode', 'selectionMode', 'typeaheadDelay', 'readonly', 'tabindex', 'value'
+    ],
+    outputs: ['valueChange']
+  }],
   exportAs: 'siAutocompleteListbox'
 })
 export class SiAutocompleteListboxDirective<T> implements OnInit {
+  /** @defaultValue inject(Listbox) */
+  listbox = inject(Listbox);
   private static idCounter = 0;
 
-  private readonly options = contentChildren(SiAutocompleteOptionDirective, { descendants: true });
 
   /**
    * @defaultValue
@@ -51,27 +57,13 @@ export class SiAutocompleteListboxDirective<T> implements OnInit {
 
   readonly siAutocompleteOptionSubmitted = output<T | undefined>();
 
-  private injector = inject(INJECTOR);
-  private keyManager = new ActiveDescendantKeyManager(this.options, this.injector)
+  /*private keyManager = new ActiveDescendantKeyManager(this.options, this.injector)
     .withWrap(true)
-    .withVerticalOrientation(true);
+    .withVerticalOrientation(true);*/
 
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
-  constructor() {
-    effect(() => {
-      if (this.siAutocompleteDefaultIndex() >= 0 && !this.keyManager.activeItem) {
-        this.setActiveItem();
-      }
-    });
-
-    effect(() => {
-      if (this.options()) {
-        this.setActiveItem();
-      }
-    });
-  }
 
   ngOnInit(): void {
     // For some reason, this is needed sometimes. Otherwise, one may get ExpressionChangedAfterItHasBeenCheckedError.
@@ -84,35 +76,8 @@ export class SiAutocompleteListboxDirective<T> implements OnInit {
     });
   }
 
-  private setActiveItem(): void {
-    queueMicrotask(() => {
-      this.keyManager.setActiveItem(this.siAutocompleteDefaultIndex());
-      this.changeDetectorRef.markForCheck();
-    });
-  }
-
-  /** @internal */
-  onKeydown(event: KeyboardEvent): void {
-    if (event.ctrlKey && event.key === 'Enter') {
-      // [ctrl + enter] should submit and not select an option.
-      // Mainly needed for filtered-search.
-      return;
-    }
-    this.keyManager!.onKeydown(event);
-    if (event.key === 'Enter' && this.keyManager!.activeItem) {
-      this.siAutocompleteOptionSubmitted.emit(this.keyManager!.activeItem.value());
-      // Something was selected. This should prevent everything else from happening, especially submitting the form.
-      event.stopImmediatePropagation();
-    }
-    this.changeDetectorRef.markForCheck();
-  }
-
-  get active(): SiAutocompleteOptionDirective<T> | null {
-    // NOTE: We must not return `this.keyManager.activeItem` here, because its not updating
-    // activeItem reference when options change.
-    if (this.keyManager.activeItemIndex === null) {
-      return null;
-    }
-    return this.options().at(this.keyManager.activeItemIndex) ?? null;
+  listboxClick(): void {
+    this.autocomplete().expanded.set(false);
+    this.autocomplete().value.set(this.listbox.value());
   }
 }

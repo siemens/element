@@ -2,8 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { Combobox, ComboboxPopup, ComboboxWidget } from '@angular/aria/combobox';
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  afterRenderEffect,
   Component,
   computed,
   ElementRef,
@@ -11,6 +13,7 @@ import {
   OnInit,
   Signal,
   signal,
+  untracked,
   viewChild
 } from '@angular/core';
 import { elementSearch } from '@siemens/element-icons';
@@ -22,7 +25,9 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
 import { SiSelectOptionRowComponent } from '../select-option/si-select-option-row.component';
 import { SiSelectGroupTemplateDirective } from '../si-select-group-template.directive';
 import { SiSelectOptionRowTemplateDirective } from '../si-select-option-row-template.directive';
+import { SelectOption } from '../si-select.types';
 import { SiSelectListBase } from './si-select-list.base';
+import { CdkObserveContent } from "@angular/cdk/observers";
 
 @Component({
   selector: 'si-select-list-has-filter',
@@ -35,8 +40,12 @@ import { SiSelectListBase } from './si-select-list.base';
     SiSelectOptionRowTemplateDirective,
     SiTranslatePipe,
     SiAutocompleteModule,
-    SiLoadingSpinnerComponent
-  ],
+    SiLoadingSpinnerComponent,
+    ComboboxWidget,
+    ComboboxPopup,
+    Combobox,
+    CdkObserveContent
+],
   templateUrl: './si-select-list-has-filter.component.html',
   styleUrl: './si-select-list-has-filter.component.scss',
   host: {
@@ -54,6 +63,13 @@ export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> imple
   protected readonly initIndex: Signal<number>;
   protected readonly id = computed(() => `${this.baseId()}-listbox`);
   protected readonly icons = addIcons({ elementSearch });
+  /**
+   * @defaultValue
+   * ```
+   * this.selectOptions.selectedRows() as SelectOption<T>[]
+   * ```
+   */
+  readonly selectedValues = signal<SelectOption<T>[]>(this.selectOptions.selectedRows() as SelectOption<T>[]);
 
   constructor() {
     super();
@@ -68,30 +84,30 @@ export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> imple
     } else {
       this.initIndex = signal(0);
     }
+
+     afterRenderEffect(() => {
+      //if (this.popupExpanded()) {
+        untracked(() => {
+          setTimeout(() => {
+            this.filterInput()?.nativeElement.focus();
+          });
+        });
+      //}
+    });
   }
 
   override ngOnInit(): void {
     super.ngOnInit();
     this.selectOptions.onFilter!();
-    setTimeout(() => this.filterInput().nativeElement.focus());
+    //setTimeout(() => this.filterInput().nativeElement.focus());
   }
 
   protected input(): void {
     this.selectOptions.onFilter!(this.filterInput().nativeElement.value);
   }
 
-  protected select(newValue: T): void {
-    if (this.selectionStrategy.allowMultiple) {
-      if (this.selectionStrategy.arrayValue().includes(newValue)) {
-        this.selectionStrategy.updateFromUser(
-          this.selectionStrategy.arrayValue().filter(value => value !== newValue)
-        );
-      } else {
-        this.selectionStrategy.updateFromUser([...this.selectionStrategy.arrayValue(), newValue]);
-      }
-    } else {
-      this.selectionStrategy.updateFromUser([newValue]);
-    }
+  protected select(): void {
+    this.selectionStrategy.updateFromUser(this.selectedValues().map(option => option.value));
     this.closeOverlayIfSingle();
   }
 }

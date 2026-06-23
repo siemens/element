@@ -70,7 +70,7 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
   public readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
   protected onChange: (_: any) => void = () => {};
   private readonly disabledNgControl = signal(false);
-  private readonly selectOptions = inject<SiSelectOptionsStrategy<T>>(SI_SELECT_OPTIONS_STRATEGY);
+  readonly selectOptions = inject<SiSelectOptionsStrategy<T>>(SI_SELECT_OPTIONS_STRATEGY);
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;

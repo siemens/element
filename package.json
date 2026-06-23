@@ -53,7 +53,7 @@
     "docs:serve:generate": "cross-env DOCS_COMPOSER=true DOCS_COMPOSER_GENERATE=true uv run mkdocs serve",
     "icon-viewer:build-docs": "ng build icon-viewer --configuration=production",
     "icon-viewer:serve": "ng serve icon-viewer",
-    "live-preview:build": "tsc -p projects/live-preview/builders/tsconfig.json && cp projects/live-preview/builders/src/application/schema.json projects/live-preview/builders/dist/application/ && cp projects/live-preview/builders/src/dev-server/schema.json projects/live-preview/builders/dist/dev-server/ && ng build live-preview && cpy LICENSE.md \"./dist/@siemens/live-preview/\"",
+    "live-preview:build": "ng build live-preview && cpy LICENSE.md \"./dist/@siemens/live-preview/\"",
     "prepare": "husky; exit 0",
     "prepare-brand": "cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png docs/_src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png projects/dashboards-demo/src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png projects/dashboards-demo/mfe/src --rename=favicon.png",
     "postversion": "npm run format",
@@ -92,7 +92,7 @@
   "dependencies": {
     "@angular-architects/module-federation": "21.2.2",
     "@angular-architects/native-federation": "22.0.0",
-    "@angular/aria": "^22.0.1",
+    "@angular/aria": "22.0.1",
     "@angular/cdk": "22.0.1",
     "@angular/common": "22.0.1",
     "@angular/core": "22.0.1",
@@ -124,6 +124,7 @@
     "tslib": "2.8.1"
   },
   "devDependencies": {
+    "@angular-builders/custom-esbuild": "22.0.0",
     "@angular-devkit/build-angular": "22.0.1",
     "@angular-devkit/core": "22.0.1",
     "@angular-devkit/schematics": "22.0.1",

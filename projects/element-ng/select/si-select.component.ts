@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { Combobox, ComboboxPopup, ComboboxWidget } from '@angular/aria/combobox';
 import { CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
@@ -27,15 +28,17 @@ import { SiSelectActionsDirective } from './si-select-actions.directive';
 import { SiSelectGroupTemplateDirective } from './si-select-group-template.directive';
 import { SiSelectOptionTemplateDirective } from './si-select-option-template.directive';
 import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
-
 @Component({
   selector: 'si-select',
   imports: [
     OverlayModule,
     SiSelectInputComponent,
     SiSelectListComponent,
-    SiSelectListHasFilterComponent
-  ],
+    SiSelectListHasFilterComponent,
+    ComboboxPopup,
+    Combobox,
+    ComboboxWidget
+],
   templateUrl: './si-select.component.html',
   styleUrl: './si-select.component.scss',
   providers: [{ provide: SI_FORM_ITEM_CONTROL, useExisting: SiSelectComponent }],
@@ -140,7 +143,12 @@ export class SiSelectComponent<T> implements SiFormItemControl {
   readonly errormessageId = input(`${this.id()}-errormessage`);
 
   protected rows: readonly SelectItem<T>[] = [];
-  protected overlayWidth = 0;
+  protected readonly overlayWidth = computed(() => {
+    if (this.isOpen()) {
+      return this.trigger().nativeElement.getBoundingClientRect().width + 2;
+    }
+    return 0;
+  });
   protected readonly selectionStrategy = inject(SiSelectSelectionStrategy<T>);
 
   private backdropClicked = false;
@@ -157,8 +165,8 @@ export class SiSelectComponent<T> implements SiFormItemControl {
     if (this.readonly() || this.selectionStrategy.disabled()) {
       return;
     }
-    this.overlayWidth = this.trigger().nativeElement.getBoundingClientRect().width + 2; // 2px border
-    this.isOpen.set(true);
+    //this.overlayWidth = this.trigger().nativeElement.getBoundingClientRect().width + 2; // 2px border
+    //this.isOpen.set(true);
     this.openChange.emit(true);
   }
 

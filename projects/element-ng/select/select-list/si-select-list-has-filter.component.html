@@ -7,8 +7,10 @@
       class="form-control icon-start border-0 rounded-2 bg-base-0"
       [placeholder]="filterPlaceholder() | translate"
       [id]="baseId() + 'filter-input'"
+      [alwaysExpanded]="true"
       [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
       (input)="input()"
+      (keydown.escape)="closeOverlayAlways()"
     />
     <si-icon
       class="icon text-secondary position-absolute top-0 bottom-0 d-flex align-items-center ps-2"
@@ -19,13 +21,23 @@
     }
   </div>
 </div>
+<ng-template ngComboboxPopup [combobox]="siAutocomplete.combobox">
 <div
+  #listbox="siAutocompleteListbox"
   class="si-select-filtered-items"
   tabindex="-1"
+  ngComboboxWidget
+  selectionMode="explicit"
+  focusMode="activedescendant"
   [siAutocompleteListboxFor]="siAutocomplete"
   [siAutocompleteDefaultIndex]="initIndex()"
   [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
-  (siAutocompleteOptionSubmitted)="select($event)"
+  [activeDescendant]="listbox.listbox.activeDescendant()"
+  [multi]="selectionStrategy.allowMultiple"
+  [softDisabled]="false"
+  [(value)]="selectedValues"
+  (click)="select()"
+  (keydown.enter)="select()"
 >
   @for (item of rows(); track item; let index = $index) {
     @if (item.type === 'group') {
@@ -70,7 +82,7 @@
     <si-select-option-row
       [option]="option"
       [optionTemplate]="optionTemplate()"
-      [siAutocompleteOption]="option.value"
+      [siAutocompleteOption]="option"
       [disabled]="option.disabled"
       [selected]="selectionStrategy.arrayValue().includes(option.value)"
     />
@@ -88,7 +100,7 @@
     />
   </div>
 }
-
+</ng-template>
 <ng-template #defaultGroupTemplate let-group siSelectGroupTemplate>
   {{ group.label | translate }}
 </ng-template>

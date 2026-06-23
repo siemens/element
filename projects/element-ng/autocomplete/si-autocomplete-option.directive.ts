@@ -2,32 +2,29 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Highlightable } from '@angular/cdk/a11y';
+import { Option } from '@angular/aria/listbox';
 import {
   booleanAttribute,
   Directive,
-  ElementRef,
-  HostBinding,
-  HostListener,
-  inject,
   input
 } from '@angular/core';
 
-import { AUTOCOMPLETE_LISTBOX } from './si-autocomplete.model';
 
 @Directive({
   selector: '[siAutocompleteOption]',
-  host: {
+  /*host: {
     role: 'option',
     '[id]': 'id()',
     '[attr.aria-disabled]': 'disabledInput()'
-  },
+  },*/
+  hostDirectives: [{
+    directive: Option,
+    inputs: ['disabled', 'value: siAutocompleteOption', 'id', 'label']
+  }],
   exportAs: 'siAutocompleteOption'
 })
-export class SiAutocompleteOptionDirective<T = unknown> implements Highlightable {
+export class SiAutocompleteOptionDirective<T = unknown> {
   private static idCounter = 0;
-  private element = inject<ElementRef<HTMLElement>>(ElementRef);
-  private parent = inject(AUTOCOMPLETE_LISTBOX);
 
   /**
    * @defaultValue
@@ -47,21 +44,21 @@ export class SiAutocompleteOptionDirective<T = unknown> implements Highlightable
   /** @defaultValue undefined */
   readonly value = input<T>(undefined, { alias: 'siAutocompleteOption' });
 
-  @HostBinding('class.active') protected active?: boolean;
+  //@HostBinding('class.active') protected active?: boolean;
 
-  @HostListener('click')
+  /*@HostListener('click')
   protected click(): void {
     this.parent.siAutocompleteOptionSubmitted.emit(this.value());
-  }
+  }*/
 
   /** @internal */
-  setActiveStyles(): void {
-    this.active = true;
+  /*setActiveStyles(): void {
+    //this.active = true;
     this.element.nativeElement.scrollIntoView({ block: 'nearest' });
-  }
+  }*/
 
   /** @internal */
   setInactiveStyles(): void {
-    this.active = false;
+    //this.active = false;
   }
 }

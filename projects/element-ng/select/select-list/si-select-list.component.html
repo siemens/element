@@ -1,11 +1,18 @@
 <div
-  cdkListbox
+   #listbox="ngListbox"
+        ngListbox
+        ngComboboxWidget
+        focusMode="activedescendant"
+        selectionMode="explicit"
   class="dropdown-menu-scroller focus-none"
+  [tabindex]="-1"
   [id]="baseId() + '-listbox'"
-  [cdkListboxMultiple]="selectionStrategy.allowMultiple"
-  [cdkListboxValue]="selectionStrategy.arrayValue()"
+  [multi]="selectionStrategy.allowMultiple"
+  [softDisabled]="false"
   [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
-  (cdkListboxValueChange)="listBoxValueChange($event)"
+  [activeDescendant]="listbox.activeDescendant()"
+  [(value)]="selectedValues"
+  (valueChange)="listBoxValueChange($event)"
   (click)="closeOverlayIfSingle()"
   (keydown.enter)="closeOverlayIfSingle()"
   (keydown.space)="closeOverlayIfSingle()"
@@ -41,14 +48,15 @@
   }
   <ng-template #optionRowTemplate let-option siSelectOptionRowTemplate>
     <si-select-option-row
-      #cdkOption="cdkOption"
+      #ngOption="ngOption"
+      ngOption
+      [value]="option"
       [option]="option"
       [optionTemplate]="optionTemplate()"
-      [cdkOption]="option.value"
-      [cdkOptionDisabled]="!!option.disabled"
-      [cdkOptionTypeaheadLabel]="(option.typeaheadLabel | translate)!"
-      [class.active]="cdkOption.isActive()"
-      [selected]="cdkOption.isSelected()"
+      [disabled]="option.disabled"
+      [class.active]="ngOption.active()"
+
+      [selected]="ngOption.selected()"
     />
   </ng-template>
 </div>

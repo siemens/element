@@ -8,7 +8,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@siemens/live-preview:application",
+          "builder": "@angular-builders/custom-esbuild:application",
           "options": {
             "plugins": ["projects/live-preview/esbuild-component-loader.mjs"],
             "outputPath": {
