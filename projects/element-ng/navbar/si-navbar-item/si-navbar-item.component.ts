@@ -5,6 +5,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   DoCheck,
   inject,
@@ -39,6 +40,7 @@ import { SiNavbarPrimaryComponent } from '../si-navbar-primary/si-navbar-primary
     SiIconComponent
   ],
   templateUrl: './si-navbar-item.component.html',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: { class: 'd-contents' }
 })
 export class SiNavbarItemComponent implements OnInit, DoCheck, OnDestroy {

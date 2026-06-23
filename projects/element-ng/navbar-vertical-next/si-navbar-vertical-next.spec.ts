@@ -5,7 +5,7 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, Injectable, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injectable, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import {
@@ -49,7 +49,7 @@ class BreakpointObserverMock implements Partial<BreakpointObserver> {
   }
 }
 
-@Component({ template: '' })
+@Component({ template: '', changeDetection: ChangeDetectionStrategy.OnPush })
 class EmptyComponent {}
 
 @Component({
@@ -155,7 +155,8 @@ class EmptyComponent {}
           sub-item2
         </a>
       </si-navbar-vertical-next-group>
-    </ng-template>`
+    </ng-template>`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly textOnly = signal(true);

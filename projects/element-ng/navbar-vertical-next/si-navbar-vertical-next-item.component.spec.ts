@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiNavbarVerticalNextItemComponent } from './si-navbar-vertical-next-item.component';
@@ -18,7 +18,8 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
     [icon]="icon()"
   >
     Test Item
-  </a>`
+  </a>`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly badge = signal<string | number | undefined>(undefined);
@@ -36,7 +37,8 @@ class TestHostComponent {
     [hideBadgeWhenCollapsed]="hideBadgeWhenCollapsed()"
   >
     Test Item
-  </a>`
+  </a>`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostWithBadgeVisibilityComponent {
   readonly badge = signal<string | number | undefined>(undefined);
