@@ -11,20 +11,16 @@
     - /url: "#/viewer/viewer/messages"
     - text: ""
   - button "Help"
-  - button "Jane Smith" [expanded]
-  - group "Jane Smith":
+  - button "Jane Smith" [expanded]: JS
+  - dialog "Jane Smith":
     - text: Jane Smith jane.smith.element@siemens.com Siemens Admin
     - separator
     - button "Company" [expanded]
-    - group "Company":
-      - link "Siemens":
-        - /url: "#/company/siemens"
-      - link "RSS Region A":
-        - /url: "#/company/regionA"
-      - link "RSS Region B":
-        - /url: "#/company/regionB"
-      - link "RSS Region C":
-        - /url: "#/company/regionC"
+    - dialog "Company":
+      - button "Siemens" [pressed]
+      - button "RSS Region A"
+      - button "RSS Region B"
+      - button "RSS Region C"
     - link "Messages 5":
       - /url: "#/messages"
     - link "Profile":

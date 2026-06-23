@@ -9,8 +9,8 @@
     - link "Item 2":
       - /url: "#/viewer/viewer/item2"
   - button "Help"
-  - button "Jane Smith" [expanded]
-  - group "Jane Smith":
+  - button "Jane Smith" [expanded]: JS
+  - dialog "Jane Smith":
     - text: Jane Smith jane.smith@example.org ExampleOrg Admin
     - separator
     - button "Company"
