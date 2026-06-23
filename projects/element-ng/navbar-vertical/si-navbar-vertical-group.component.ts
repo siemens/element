@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkTrapFocus } from '@angular/cdk/a11y';
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLinkActive } from '@angular/router';
 
@@ -27,6 +27,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
     </div>
   }`,
   styleUrl: './si-navbar-vertical-group.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     role: 'group',
     '[id]': 'groupTrigger.groupId',

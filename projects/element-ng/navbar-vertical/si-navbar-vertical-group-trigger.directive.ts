@@ -5,6 +5,7 @@
 import { Overlay } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
+  ChangeDetectionStrategy,
   Component,
   ComponentRef,
   computed,
@@ -34,6 +35,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
 @Component({
   selector: 'si-navbar-flyout-anchor',
   template: '',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: { '[attr.aria-owns]': 'groupId()' }
 })
 class SiNavbarFlyoutAnchorComponent {
