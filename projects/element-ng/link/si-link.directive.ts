@@ -35,6 +35,7 @@ export const SI_LINK_DEFAULT_NAVIGATION_EXTRA = new InjectionToken<NavigationExt
   selector: '[siLink]',
   host: {
     '[attr.href]': 'href()',
+    '[attr.role]': 'role()',
     '[attr.target]': 'target()',
     '[attr.title]': 'title()',
     '[attr.aria-current]': 'isAriaCurrent()',
@@ -62,6 +63,15 @@ export class SiLinkDirective implements DoCheck, OnChanges, OnDestroy {
   protected readonly isAriaCurrent = computed(() =>
     this.active() ? (this.ariaCurrent() ?? 'true') : undefined
   );
+  // An siLink without an href or link acts as a button (e.g. action link or
+  // dropdown trigger), so expose the button role to assistive technologies.
+  protected readonly role = computed(() => {
+    const siLink = this.siLink();
+    if (!siLink) {
+      return undefined;
+    }
+    return !siLink.href && !siLink.link ? 'button' : undefined;
+  });
 
   /** @defaultValue false */
   readonly active = signal(false);

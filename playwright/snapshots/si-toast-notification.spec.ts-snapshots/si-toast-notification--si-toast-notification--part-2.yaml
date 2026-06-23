@@ -12,8 +12,7 @@
 - paragraph: Window opened
 - paragraph: Window in Lab 5 opened on purpose
 - paragraph:
-  - link "Acknowledge":
-    - /url: ""
+  - button "Acknowledge"
 - button "Close"
 - text: Info
 - paragraph: Filter dirty

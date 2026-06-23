@@ -1,21 +1,17 @@
 - img "Building 1"
 - text: Heading
 - button "Toggle"
-- link "Do something":
-  - /url: ""
+- button "Do something"
 - img "Building 2"
 - text: /Heading \d+ kWh Description/
-- link "Do something":
-  - /url: ""
+- button "Do something"
 - img "Beach in Greece"
 - button "Toggle"
 - text: /\d+ kWh Description/
-- link "Do something":
-  - /url: ""
+- button "Do something"
 - img "Building 3"
 - text: /\d+ kWh Description/
-- link "Do something":
-  - /url: ""
+- button "Do something"
 - img "Building 4"
 - text: Heading
 - button "Toggle"

@@ -10,7 +10,8 @@
     - listitem:
       - button "Level 2 with a really long..." [expanded]
       - menu:
-        - menuitem "Level 2 with a really long title"
+        - link "Level 2 with a really long title":
+          - /url: "#/viewer/viewer/root/level1/level2"
     - listitem:
       - link "Level 3":
         - /url: "#/viewer/viewer/root/level1/level2/level3"

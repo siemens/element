@@ -18,9 +18,12 @@
     - listitem:
       - button "..." [expanded]
       - menu:
-        - menuitem "Level 5"
-        - menuitem "Level 6"
-        - menuitem "Level 7"
+        - link "Level 5":
+          - /url: "#/viewer/viewer/root/level1/level2/level3/level4/level5"
+        - link "Level 6":
+          - /url: "#/viewer/viewer/root/level1/level2/level3/level4/level5/level6"
+        - link "Level 7":
+          - /url: "#/viewer/viewer/root/level1/level2/level3/level4/level5/level6/level7"
     - listitem:
       - button "Level 8 thisHasALongNonSepa..."
     - listitem:

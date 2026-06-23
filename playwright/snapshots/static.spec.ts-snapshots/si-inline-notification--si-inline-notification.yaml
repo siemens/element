@@ -7,7 +7,8 @@
 - alert:
   - text: Success
   - strong: Upload
-  - text: Your document has been uploaded to the cloud. Action
+  - text: Your document has been uploaded to the cloud.
+  - button "Action"
 - alert:
   - text: Caution
   - strong: File operation
@@ -15,11 +16,13 @@
 - alert:
   - text: Warning
   - strong: Storage
-  - text: Your storage space is running low. Please consider archiving old files. Action
+  - text: Your storage space is running low. Please consider archiving old files.
+  - button "Action"
 - alert:
   - text: Danger
   - strong: Access
-  - text: You do not have permission to access this resource. Action
+  - text: You do not have permission to access this resource.
+  - button "Action"
 - alert:
   - text: Critical
   - strong: Data Loss

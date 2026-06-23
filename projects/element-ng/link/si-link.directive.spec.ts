@@ -81,6 +81,31 @@ describe('SiLinkDirective', () => {
     expect(anchor.getAttribute('href')).toBeNull();
   });
 
+  it('should set role=button when no href, link or action is provided', async () => {
+    component.link.set({});
+    await fixture.whenStable();
+
+    const anchor = element.querySelector<HTMLAnchorElement>('a')!;
+    expect(anchor.getAttribute('href')).toBeNull();
+    expect(anchor).toHaveAttribute('role', 'button');
+  });
+
+  it('should not set role for an href link', async () => {
+    component.link.set({ href: '/test' });
+    await fixture.whenStable();
+
+    const anchor = element.querySelector<HTMLAnchorElement>('a')!;
+    expect(anchor.getAttribute('role')).toBeNull();
+  });
+
+  it('should not set role for a router link', async () => {
+    component.link.set({ link: '/test' });
+    await fixture.whenStable();
+
+    const anchor = element.querySelector<HTMLAnchorElement>('a')!;
+    expect(anchor.getAttribute('role')).toBeNull();
+  });
+
   it('should set the title attribute from the tooltip', async () => {
     component.link.set({ tooltip: 'tooltip' });
     await fixture.whenStable();

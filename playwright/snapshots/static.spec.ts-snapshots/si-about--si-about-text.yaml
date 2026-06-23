@@ -16,6 +16,5 @@
   - /url: http://www.examples.org
 - link "More information about stuff":
   - /url: http://www.examples.org
-- link "Link with action":
-  - /url: ""
+- button "Link with action"
 - text: License This is a text for some licenses

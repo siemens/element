@@ -2,17 +2,17 @@
 - button "Open menu" [expanded]
 - menu:
   - text: Actions
-  - menuitem "Download as"
-  - menuitem "Clear"
-  - menuitem "Hide"
-  - menuitem "Update"
+  - button "Download as"
+  - button "Clear"
+  - button "Hide"
+  - button "Update"
   - menuitemcheckbox "Be awesome" [checked]
-  - menuitem "Do nothing" [disabled]
-  - menuitem "Disabled menu" [disabled]
-  - menuitem "Menu with disabled children"
+  - button "Do nothing" [disabled]
+  - button "Disabled menu" [disabled]
+  - button "Menu with disabled children"
   - menuitemradio "Beer" [checked]
   - menuitemradio "Whisky"
   - menuitemradio "Gin"
-  - menuitem "Import 5"
-  - menuitem "Export"
-  - menuitem "Save as"
+  - button "Import 5"
+  - button "Export"
+  - button "Save as"
