@@ -7,6 +7,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   afterNextRender,
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   Directive,
@@ -80,6 +81,7 @@ export class SiNavbarVerticalItemGuardDirective {
   templateUrl: './si-navbar-vertical.component.html',
   styleUrl: './si-navbar-vertical.component.scss',
   providers: [{ provide: SI_NAVBAR_VERTICAL, useExisting: SiNavbarVerticalComponent }],
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     class: 'si-layout-inner',
     '[class.nav-collapsed]': 'collapsed()',

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 /**
  * @experimental
@@ -11,6 +11,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'si-navbar-vertical-next-divider',
   template: '',
-  styleUrl: './si-navbar-vertical-next-divider.component.scss'
+  styleUrl: './si-navbar-vertical-next-divider.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiNavbarVerticalNextDividerComponent {}

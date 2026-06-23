@@ -6,6 +6,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   input,
@@ -71,7 +72,8 @@ import { AppItem, AppItemCategory } from './si-navbar-primary.model';
       inline-size: auto;
     }
   `,
-  providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: SiNavbarPrimaryComponent }]
+  providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: SiNavbarPrimaryComponent }],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns {
   /**

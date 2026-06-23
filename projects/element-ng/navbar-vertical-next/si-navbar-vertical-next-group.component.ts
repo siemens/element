@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkTrapFocus } from '@angular/cdk/a11y';
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLinkActive } from '@angular/router';
 
@@ -29,6 +29,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
     </div>
   }`,
   styleUrl: './si-navbar-vertical-next-group.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'group',
     '[id]': 'groupTrigger.groupId',

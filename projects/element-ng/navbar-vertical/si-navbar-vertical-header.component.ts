@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { SiNavbarVerticalDividerComponent } from './si-navbar-vertical-divider.component';
 import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
@@ -20,6 +20,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
     }
   `,
   styleUrl: './si-navbar-vertical-header.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
   host: {
     '[class.collapsed]': 'navbar.collapsed()',
     'animate.enter': 'component-enter'
