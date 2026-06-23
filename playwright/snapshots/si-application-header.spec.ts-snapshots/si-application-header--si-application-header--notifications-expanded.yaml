@@ -8,9 +8,9 @@
     - button "Module 2"
   - button "Tenant 2"
   - button "Notifications" [expanded]
-  - group "Notifications":
+  - dialog "Notifications":
     - button "Message 1"
     - button "Message 2"
   - button /\+\d+ Support/
   - button "Settings"
-  - button "Lars Vegas"
+  - button "Lars Vegas": LV

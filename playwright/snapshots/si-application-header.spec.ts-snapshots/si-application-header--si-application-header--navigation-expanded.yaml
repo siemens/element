@@ -6,7 +6,7 @@
     - link "Module 1":
       - /url: "#/viewer/viewer/m1"
     - button "Module 2" [expanded]
-    - group "Module 2":
+    - dialog "Module 2":
       - link "M2.1":
         - /url: "#/viewer/viewer/m2/1"
       - link "M2.2":
@@ -15,4 +15,4 @@
   - button "Notifications"
   - button /\+\d+ Support/
   - button "Settings"
-  - button "Lars Vegas"
+  - button "Lars Vegas": LV
