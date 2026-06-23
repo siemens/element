@@ -2,10 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {ComboboxWidget} from '@angular/aria/combobox';
+import {Combobox, ComboboxWidget} from '@angular/aria/combobox';
 import { Listbox, Option } from '@angular/aria/listbox';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { afterRenderEffect, Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiSelectOptionRowComponent } from '../select-option/si-select-option-row.component';
@@ -35,6 +35,8 @@ export class SiSelectListComponent<T> extends SiSelectListBase<T> implements OnI
     super.ngOnInit();
     //setTimeout(() => this.listbox().nativeElement.focus());
   }
+
+  readonly listbox = viewChild.required('listbox', { read: Listbox });
 
   protected listBoxValueChange(changeEvent: SelectOption<T>[]): void {
     this.selectionStrategy.updateFromUser(changeEvent.map(option => option.value));

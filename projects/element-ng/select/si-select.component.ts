@@ -5,6 +5,7 @@
 import { Combobox, ComboboxPopup, ComboboxWidget } from '@angular/aria/combobox';
 import { CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import {
+  afterRenderEffect,
   booleanAttribute,
   Component,
   computed,
@@ -159,7 +160,15 @@ export class SiSelectComponent<T> implements SiFormItemControl {
    * @defaultref {@link SiSelectComponent#_hasFilter}
    */
   readonly hasFilter = input(false, { transform: booleanAttribute });
-
+  readonly combobox = viewChild.required(Combobox);
+  readonly siSelectList = viewChild(SiSelectListComponent);
+  constructor() {
+    afterRenderEffect(() => {
+      if (this.combobox()?.expanded() === true) {
+        this.siSelectList()?.listbox()?.scrollActiveItemIntoView();
+      }
+    });
+  }
   /** Opens the `si-select`. */
   open(): void {
     if (this.readonly() || this.selectionStrategy.disabled()) {
