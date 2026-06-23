@@ -1,3 +1,22 @@
+# [49.12.0](https://github.com/siemens/element/compare/v49.11.0...v49.12.0) (2026-06-23)
+
+
+### Features
+
+* **angular:** add support for Angular 22 ([cef398a](https://github.com/siemens/element/commit/cef398ac358d66d992b21fb8a4ce50bff5bfa462))
+* **carousel:** add carousel component ([0a3f82f](https://github.com/siemens/element/commit/0a3f82f13205ec7cf52cce282b06887bd4c04478))
+* **dashboards:** provide widget renderer component ([e051240](https://github.com/siemens/element/commit/e05124026bc2bdd1e6377e9919ec5d18215874f1))
+* **date-range-filter:** add space key support for preset list items ([fa24c27](https://github.com/siemens/element/commit/fa24c27de7130c536fa844f82566076b6b2e28d7))
+
+
+### Bug Fixes
+
+* **chat-messages:** use base-input background in focus state ([e6d566e](https://github.com/siemens/element/commit/e6d566e21303aa368d1d56db9d682974d9dd04a2)), closes [#2176](https://github.com/siemens/element/issues/2176)
+* **empty-state:** render heading as styled span instead of h3 ([3285d00](https://github.com/siemens/element/commit/3285d0000fd1d968a8e362f4806fdf63ff311e95)), closes [#2174](https://github.com/siemens/element/issues/2174)
+* **file-uploader:** use button for click to upload trigger ([711ce15](https://github.com/siemens/element/commit/711ce155e8370289df72f8153e7353f2d8c4b706)), closes [#2173](https://github.com/siemens/element/issues/2173)
+* **pagination:** handle page size zero ([bb18fda](https://github.com/siemens/element/commit/bb18fdaccbc7f538cd6632c343aae7fe26994876))
+* **pills-input:** trim whitespaces when entering a separated list ([91fb65d](https://github.com/siemens/element/commit/91fb65dd63cc5b9169a83749ffff34111cc45aa2))
+
 # [49.11.0](https://github.com/siemens/element/compare/v49.10.0...v49.11.0) (2026-06-17)
 
 
