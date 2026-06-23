@@ -20,6 +20,7 @@ import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'dropdown-item focus-inside',
+    '[attr.aria-pressed]': 'checked() ? "true" : null',
     '(click)': 'click()'
   }
 })

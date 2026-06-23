@@ -26,6 +26,7 @@
         <a
           si-header-dropdown-item
           activeClass="active"
+          [attr.role]="!(item.href || item.link) ? 'button' : undefined"
           [siLink]="item"
           [icon]="item.icon"
           [badge]="item.badgeStyle !== 'dot' ? item.badge : undefined"

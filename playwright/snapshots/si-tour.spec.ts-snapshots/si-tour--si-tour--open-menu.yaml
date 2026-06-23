@@ -6,13 +6,13 @@
     - /url: "#/"
   - heading "Application name" [level=1]
   - button "Help" [expanded]
-  - group "Help":
+  - dialog "Help":
     - button "Help"
     - button "Tour"
     - button "About"
     - link "Corporate Information":
       - /url: http://www.siemens.com/corporate-information
-  - button "Jane Smith"
+  - button "Jane Smith": JS
 - navigation:
   - button "collapse" [expanded]
   - button "Home"
