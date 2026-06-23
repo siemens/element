@@ -1,0 +1,43 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  flex: 1 0 0;
+}
+
+.flat-group-header {
+  display: flex;
+  align-items: center;
+  // `gap` keeps the back button's focus outline (6px wide + 1px offset) clear of the title.
+  gap: map.get(variables.$spacers, 4);
+  // Horizontal padding gives the focus outline clearance against the drawer edge and
+  // visually aligns the back button with the icon position of regular navbar items.
+  padding-inline: map.get(variables.$spacers, 5);
+  color: variables.$element-text-primary;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity variables.element-transition-duration(200ms) ease,
+    transform variables.element-transition-duration(200ms) ease;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  &.flat-group-header-leave {
+    opacity: 0;
+    transform: translateY(-4px);
+    transition-duration: variables.element-transition-duration(150ms);
+  }
+
+  // Keep the flat-group state alive while the mobile drawer is collapsed,
+  // but hide the header so it doesn't bleed out of the 0-width nav.
+  // When the drawer re-opens, the header reappears together with the items.
+  :host-context(.nav-collapsed) & {
+    display: none;
+  }
+}

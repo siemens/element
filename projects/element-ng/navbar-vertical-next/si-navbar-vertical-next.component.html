@@ -43,7 +43,9 @@
       [attr.aria-hidden]="chipMode() ? 'true' : null"
     >
       <ng-content select="si-navbar-vertical-next-search" />
-      <ng-content select="si-navbar-vertical-next-items" />
+      <si-navbar-flat-group [flatMode]="flatMode()">
+        <ng-content select="si-navbar-vertical-next-items" />
+      </si-navbar-flat-group>
       <ng-content select="si-navbar-vertical-next-footer-items" />
     </div>
   </nav>

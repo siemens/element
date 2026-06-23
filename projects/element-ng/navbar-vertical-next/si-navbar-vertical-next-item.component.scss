@@ -86,6 +86,10 @@
   }
 }
 
+:host-context(si-navbar-vertical-next-group.flat-group-active) :host(.navbar-vertical-item) {
+  padding-inline-start: calc(1lh + #{map.get(variables.$spacers, 8)});
+}
+
 :host-context(.dropdown-menu) :host(.navbar-vertical-item) {
   padding-inline-start: 0;
 
@@ -118,6 +122,14 @@
 
 .badge {
   margin-inline: auto 0;
+}
+
+:host-context(.nav-flat-group-open) {
+  display: none;
+}
+
+:host-context(si-navbar-vertical-next-group.flat-group-active) {
+  display: flex;
 }
 
 :host(.is-chip) {

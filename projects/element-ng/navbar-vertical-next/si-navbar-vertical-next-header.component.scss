@@ -53,3 +53,7 @@ $transition-duration: variables.element-transition-duration(0.25s);
     transition-delay: 0s;
   }
 }
+
+:host-context(.nav-flat-group-open) {
+  display: none;
+}

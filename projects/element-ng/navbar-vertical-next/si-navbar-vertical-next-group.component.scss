@@ -30,3 +30,28 @@
   display: block;
   position: static;
 }
+
+:host-context(.nav-flat-group-open) {
+  display: none;
+}
+
+:host(.flat-group-active) {
+  display: block;
+}
+
+.flat-group {
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    opacity variables.element-transition-duration(250ms) ease,
+    transform variables.element-transition-duration(250ms) ease;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  &.group-leave {
+    display: none;
+  }
+}

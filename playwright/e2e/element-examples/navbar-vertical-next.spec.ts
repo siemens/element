@@ -116,29 +116,97 @@ test.describe('navbar vertical next', () => {
     await expect(tooltip).not.toBeVisible();
   });
 
-  test(example + ' mobile collapsed', async ({ page, si }) => {
-    await page.setViewportSize({ width: 570, height: 600 });
-    await si.visitExample(example, false);
+  test.describe('mobile', () => {
+    test.beforeEach(async ({ page, si }) => {
+      await page.setViewportSize({ width: 570, height: 600 });
+      await si.visitExample(example, false);
+    });
 
-    await expect(page.locator('.mobile-drawer')).toBeVisible();
+    test(example + ' collapsed', async ({ page, si }) => {
+      await expect(page.locator('.mobile-drawer')).toBeVisible();
 
-    await si.waitForAllAnimationsToComplete();
-    await si.runVisualAndA11yTests('mobile-collapsed');
-  });
+      await si.waitForAllAnimationsToComplete();
+      await si.runVisualAndA11yTests('mobile-collapsed');
+    });
 
-  test(example + ' mobile expanded', async ({ page, si }) => {
-    await page.setViewportSize({ width: 570, height: 600 });
-    await si.visitExample(example, false);
+    test.describe('flat group', () => {
+      test.beforeEach(async ({ page }) => {
+        // Expand the drawer and open the Documentation flat group.
+        await page.locator('.mobile-drawer > button').click();
+        await expect(page.locator('si-navbar-vertical-next:not(.nav-collapsed)')).toBeVisible();
+        await page.getByRole('button', { name: 'Documentation' }).click();
+        await expect(page.locator('si-navbar-vertical-next.nav-flat-group-open')).toBeVisible();
+        await expect(page.getByRole('button', { name: 'Back' })).toBeVisible();
+      });
 
-    await page.locator('.mobile-drawer > button').click();
-    await expect(page.locator('si-navbar-vertical-next:not(.nav-collapsed)')).toBeVisible();
-    await page.getByText('Documentation').click();
-    await page.getByRole('link', { name: 'Sub item 4' }).click();
-    await expect(page.locator('si-navbar-vertical-next:not(.nav-collapsed)')).toHaveCount(0);
-    await page.locator('.mobile-drawer > button').click();
+      test(example + ' opened', async ({ page, si }) => {
+        // Sub-items of the opened flat group are visible. The trigger button itself
+        // is hidden in flat-group-open state (only the header label + back button show).
+        await expect(page.getByRole('link', { name: 'Sub item 4' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Sub item 5' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Sub item 6' })).toBeVisible();
 
-    await si.waitForAllAnimationsToComplete();
-    await si.runVisualAndA11yTests('mobile-expanded');
+        await si.waitForAllAnimationsToComplete();
+        await si.runVisualAndA11yTests('mobile-flat-group-opened');
+      });
+
+      test(example + ' expanded', async ({ page, si }) => {
+        await expect(page.getByRole('link', { name: 'Sub item 4' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Sub item 5' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Sub item 6' })).toBeVisible();
+
+        // Click Sub item 4: navigates and collapses the drawer on mobile.
+        await page.getByRole('link', { name: 'Sub item 4' }).click();
+        await expect(page).toHaveURL(/subItem4/);
+
+        // Re-open the drawer: the flat group state is preserved and the
+        // active item is highlighted.
+        await page.locator('.mobile-drawer > button').click();
+        await expect(page.locator('si-navbar-vertical-next.nav-flat-group-open')).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Sub item 4' })).toHaveClass(/active/);
+
+        await si.waitForAllAnimationsToComplete();
+        await si.runVisualAndA11yTests('mobile-expanded');
+      });
+
+      test(example + ' back navigation closes the submenu', async ({ page, si }) => {
+        await page.getByRole('button', { name: 'Back' }).click();
+
+        await expect(page.getByRole('button', { name: 'Back' })).toHaveCount(0);
+        await expect(page.locator('si-navbar-vertical-next.nav-flat-group-open')).toHaveCount(0);
+        await expect(page.getByRole('button', { name: 'Documentation' })).toHaveAttribute(
+          'aria-expanded',
+          'false'
+        );
+
+        await si.waitForAllAnimationsToComplete();
+        await si.runVisualAndA11yTests('mobile-flat-group-closed');
+      });
+
+      test(
+        example + ' is preserved across drawer collapse and auto-closes on resize',
+        async ({ page, si }) => {
+          // Collapse the drawer: flat group state is preserved.
+          await page.locator('.mobile-drawer > button').click();
+          await expect(page.locator('si-navbar-vertical-next.nav-collapsed')).toBeVisible();
+
+          // Re-open the drawer: the same flat group is still open.
+          await page.locator('.mobile-drawer > button').click();
+          await expect(page.locator('si-navbar-vertical-next.nav-flat-group-open')).toBeVisible();
+          await expect(page.getByRole('button', { name: 'Back' })).toBeVisible();
+
+          // Resize to desktop: flat group auto-closes and the group falls back to flyout.
+          await page.setViewportSize({ width: 1200, height: 800 });
+          await expect(page.locator('si-navbar-vertical-next.nav-flat-group-open')).toHaveCount(0);
+          await expect(page.getByRole('button', { name: 'Back' })).toHaveCount(0);
+          await page.getByRole('button', { name: 'Documentation' }).click();
+          await expect(page.getByRole('group', { name: 'Documentation' })).toBeVisible();
+
+          await si.waitForAllAnimationsToComplete();
+          await si.runVisualAndA11yTests('mobile-flat-group-resize-out');
+        }
+      );
+    });
   });
 });
 
