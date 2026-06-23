@@ -8,6 +8,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ComponentRef,
+  computed,
   Directive,
   effect,
   ElementRef,
@@ -49,6 +50,7 @@ class SiHeaderAnchorComponent {
     class: 'dropdown-toggle',
     '[id]': 'id',
     '[class.show]': '_isOpen',
+    '[attr.aria-haspopup]': "inline() ? null : 'dialog'",
     '[attr.aria-expanded]': '_isOpen',
     '[attr.aria-controls]': 'ariaControls',
     '(click)': 'click()'
@@ -79,6 +81,12 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
   });
   /** @internal */
   readonly navbar = inject(SI_HEADER_WITH_DROPDOWNS, { optional: true });
+
+  /**
+   * Whether the dropdown is opened inline (mobile) instead of in an overlay (desktop).
+   * Inline dropdowns are simple disclosure groups, while overlay dropdowns are dialogs.
+   */
+  protected readonly inline = computed(() => this.navbar?.inlineDropdown() ?? false);
 
   // we need to create a new injector, so that the parent can be injected properly
   private readonly injector = Injector.create({ parent: inject(Injector), providers: [] });

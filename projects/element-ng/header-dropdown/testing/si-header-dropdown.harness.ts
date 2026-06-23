@@ -18,6 +18,10 @@ export class SiHeaderDropdownHarness extends ComponentHarness {
     return this.host().then(host => host.hasClass('show'));
   }
 
+  async getRole(): Promise<string | null> {
+    return this.host().then(host => host.getAttribute('role'));
+  }
+
   async getItem(item: string): Promise<SiHeaderDropdownItemHarness> {
     return this.locatorFor(SiHeaderDropdownItemHarness.withText(item))();
   }
