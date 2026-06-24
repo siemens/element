@@ -1,7 +1,7 @@
 - tablist:
-  - tab /\d+/ [selected]
-  - tab
-  - tab
-  - tab "1"
-- tabpanel /\d+/:
+  - tab /Reception \d+/ [selected]
+  - tab "Conference"
+  - tab "Lobby"
+  - tab "Pantry 1"
+- tabpanel /Reception \d+/:
   - paragraph: Content for Reception

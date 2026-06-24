@@ -7,6 +7,8 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
+import { page } from '@vitest/browser/context';
 
 import {
   MockResizeObserver,
@@ -21,6 +23,7 @@ import { SiTabsetHarness } from './testing/si-tabset.harness';
 
 interface TabData {
   heading: string;
+  icon?: string;
   closable?: true;
   routerLinkUrl?: string;
   active?: boolean;
@@ -45,6 +48,7 @@ class SiTabRouteComponent {}
             <si-tab
               [active]="tab.active ?? false"
               [heading]="tab.heading"
+              [icon]="tab.icon"
               [closable]="!!tab.closable"
               [style.max-width.px]="tabButtonMaxWidth()"
               [canDeactivate]="tab.canDeactivate"
@@ -187,6 +191,24 @@ describe('SiTabset', () => {
 
     expect(await tabsetHarness.isTabItemActive(0)).toEqual(false);
     expect(await tabsetHarness.isTabItemActive(1)).toEqual(true);
+  });
+
+  it('should show the heading as tooltip for icon tabs', async () => {
+    vi.setTimerTickMode('nextTimerAsync');
+    testComponent.tabs = [{ heading: 'Tab 1', icon: 'element-options' }];
+    await fixture.whenStable();
+
+    const tabButtonLocator = page.getByRole('tab', { name: 'Tab 1' });
+    await expect.element(tabButtonLocator).toBeInTheDocument();
+    const tabButton = await tabButtonLocator.element();
+    expect(tabButton.querySelector('.text-truncate')).toHaveClass('visually-hidden');
+    expect(tabButton.querySelector('.tab-icon')).toBeTruthy();
+
+    tabButton.dispatchEvent(new MouseEvent('mouseenter'));
+    await vi.advanceTimersByTimeAsync(500);
+    await fixture.whenStable();
+
+    await expect.element(page.getByRole('tooltip', { name: 'Tab 1' })).toBeInTheDocument();
   });
 
   it('should remove tab on destroy', async () => {
@@ -572,5 +594,60 @@ describe('SiTabset with portal content', () => {
 
     const portalHarness = await tabsetHarness.getExternalTabPortal();
     expect(await portalHarness!.hasTabPanel()).toBe(false);
+  });
+});
+
+describe('SiTabset with custom tooltip', () => {
+  @Component({
+    imports: [SiTabsetComponent, SiTabComponent, SiTooltipDirective],
+    template: `
+      <si-tabset>
+        <si-tab heading="Tab 1" icon="element-options" [siTooltip]="tooltip()" />
+      </si-tabset>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
+  })
+  class TooltipHostComponent {
+    readonly tooltip = signal('Custom tooltip');
+  }
+
+  let fixture: ComponentFixture<TooltipHostComponent>;
+  let hostComponent: TooltipHostComponent;
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setTimerTickMode('nextTimerAsync');
+    fixture = TestBed.createComponent(TooltipHostComponent);
+    hostComponent = fixture.componentInstance;
+    fixture.autoDetectChanges();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('should not add an own tooltip when an active siTooltip directive is present', async () => {
+    await fixture.whenStable();
+
+    const tabButton = fixture.nativeElement.querySelector('[role="tab"]') as HTMLElement;
+    tabButton.dispatchEvent(new MouseEvent('mouseenter'));
+    await vi.advanceTimersByTimeAsync(500);
+    await fixture.whenStable();
+
+    await expect.element(page.getByRole('tooltip')).toHaveLength(1);
+    await expect.element(page.getByRole('tooltip')).toHaveTextContent('Custom tooltip');
+  });
+
+  it('should fall back to the heading tooltip when the siTooltip directive is empty', async () => {
+    hostComponent.tooltip.set('');
+    await fixture.whenStable();
+
+    const tabButton = fixture.nativeElement.querySelector('[role="tab"]') as HTMLElement;
+    tabButton.dispatchEvent(new MouseEvent('mouseenter'));
+    await vi.advanceTimersByTimeAsync(500);
+    await fixture.whenStable();
+
+    await expect.element(page.getByRole('tooltip')).toHaveLength(1);
+    await expect.element(page.getByRole('tooltip')).toHaveTextContent('Tab 1');
   });
 });
