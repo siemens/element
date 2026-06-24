@@ -35,10 +35,15 @@ import { SiCustomSelectDirective } from './si-custom-select.directive';
   `,
   styleUrl: './si-select-combobox.component.scss',
   host: {
-    class: 'select focus-none dropdown-toggle d-flex align-items-center w-100',
+    class: 'select dropdown-toggle d-flex align-items-center',
     '[attr.id]': 'customSelect.comboboxLabelId()',
     '[class.show]': 'customSelect.isOpen()'
-  }
+  },
+  hostDirectives: [{
+    directive: SiCustomSelectDirective,
+    inputs: ['disabled', 'readonly', 'value'],
+    outputs: ['valueChange']
+  }]
 })
 export class SiSelectComboboxComponent {
   protected readonly icons = addIcons({ elementDown2 });

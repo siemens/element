@@ -18,7 +18,7 @@
  - can extend our autocomplete directive with aria apis
  - can reduce lot of manual aria attribute handling as well as keyboard manager
  - cva is not treated as editable input so might have to add a small workaround for supporting typeahead on si-search-bar
- - 
+ - combobox api doesn't have readonly support
 
 # Listbox
  - same as @angular/cdk/listbox

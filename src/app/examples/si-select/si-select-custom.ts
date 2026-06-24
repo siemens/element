@@ -9,8 +9,7 @@ import { SiFormItemComponent } from '@siemens/element-ng/form';
 import {
   SiCustomSelectDirective,
   SiSelectComboboxComponent,
-  SiSelectComboboxValueComponent,
-  SiSelectDropdownDirective
+  SiSelectComboboxValueComponent
 } from '@siemens/element-ng/select';
 import { SiTreeViewComponent, TreeItem } from '@siemens/element-ng/tree-view';
 
@@ -25,7 +24,6 @@ import { treeItems } from '../si-tree-view/tree-items';
   imports: [
     SiSelectComboboxComponent,
     SiSelectComboboxValueComponent,
-    SiSelectDropdownDirective,
     SiTreeViewComponent
   ],
   template: `
@@ -97,13 +95,13 @@ export class TreeSelectComponent {
   selectItem(item: TreeItem): void {
     if (item.label) {
       this.select.updateValue(item);
-      this.select.close();
+      //this.select.close();
     }
   }
 
   clearSelection(): void {
     this.select.updateValue(undefined);
-    this.select.close();
+    //this.select.close();
   }
 }
 

@@ -2,30 +2,20 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
-import { TemplatePortal } from '@angular/cdk/portal';
-import { isPlatformBrowser } from '@angular/common';
+import { Combobox } from '@angular/aria/combobox';
 import {
   booleanAttribute,
   computed,
-  DestroyRef,
   Directive,
-  ElementRef,
+  effect,
   inject,
   input,
   model,
   output,
-  PLATFORM_ID,
-  signal,
-  ViewContainerRef
+  signal
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { filter, merge, Subject, takeUntil } from 'rxjs';
-
-import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
 
 /**
  * Host directive for building custom selects.
@@ -76,29 +66,20 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
   host: {
     class: 'dropdown',
     '[style.--si-action-icon-offset.rem]': '1.5',
-    role: 'combobox',
     'aria-autocomplete': 'none',
-    '[attr.aria-haspopup]': 'haspopup()',
     '[attr.aria-labelledby]': 'labelledby()',
     '[attr.aria-describedby]': 'errormessageId()',
     '[attr.aria-controls]': 'isOpen() ? dropdownId() : null',
-    '[attr.aria-expanded]': 'isOpen()',
-    '[attr.aria-disabled]': 'disabled()',
     '[attr.id]': 'id()',
-    '[attr.tabindex]': 'disabled() ? "-1" : "0"',
     '[class.disabled]': 'disabled()',
     '[class.pe-none]': 'disabled()',
     '[class.readonly]': 'readonly()',
     '[class.open]': 'isOpen()',
-    '[class.show]': 'isOpen()',
-    '(click)': 'open()',
-    '(keydown.enter)': 'open()',
-    '(keydown.space)': 'open($event)',
-    '(keydown.arrowDown)': 'open($event)',
-    '(keydown.arrowUp)': 'open($event)'
+    '[class.show]': 'isOpen()'
   }
 })
 export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormItemControl {
+  readonly combobox = inject(Combobox);
   private static idCounter = 0;
 
   /**
@@ -141,7 +122,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    *
    * @defaultValue false
    */
-  readonly isOpen = signal(false);
+  readonly isOpen = computed(() => this.combobox.expanded());
 
   /** @internal */
   readonly labelledby = computed(() => `${this.id()}-label ${this.id()}-combobox`);
@@ -151,14 +132,6 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
 
   /** @internal */
   readonly dropdownId = computed(() => this.id() + '-dropdown');
-
-  /**
-   * Value forwarded to the `aria-haspopup` attribute. Reflects the
-   * `contentType` input of the registered {@link SiSelectDropdownDirective},
-   * defaulting to `'listbox'` until a dropdown template is registered.
-   * @internal
-   */
-  readonly haspopup = computed(() => this.dropdownDirective()?.contentType() ?? 'listbox');
 
   /**
    * This ID will be bound to the `aria-describedby` attribute of the select.
@@ -178,33 +151,17 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   private onChange: (_: T | undefined) => void = () => {};
   private readonly disabledByForm = signal(false);
 
-  private readonly overlay = inject(Overlay);
-  private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
-  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
-  private readonly viewContainerRef = inject(ViewContainerRef);
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-
-  private overlayRef?: OverlayRef;
-  private focusTrap?: ConfigurableFocusTrap;
-  private readonly closeOverlay$ = new Subject<void>();
-
-  private readonly dropdownDirective = signal<SiSelectDropdownDirective | undefined>(undefined);
-
   constructor() {
-    this.destroyRef.onDestroy(() => {
-      this.disposeOverlay();
-      this.closeOverlay$.complete();
+    let wasOpen = false;
+    effect(() => {
+      const isOpen = this.isOpen();
+      // Only mark as touched once the user has opened and then closed the
+      // dropdown, not on the initial render where it starts closed.
+      if (wasOpen && !isOpen) {
+        this.onTouched();
+      }
+      wasOpen = isOpen;
     });
-  }
-
-  /**
-   * Registers the dropdown directive. Called by
-   * {@link SiSelectDropdownDirective} when it is initialized.
-   * @internal
-   */
-  registerDropdown(directive: SiSelectDropdownDirective): void {
-    this.dropdownDirective.set(directive);
   }
 
   /**
@@ -214,78 +171,6 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   updateValue(value: T | undefined): void {
     this.value.set(value);
     this.onChange(value);
-  }
-
-  /** Opens the dropdown overlay. */
-  open(event?: Event): void {
-    if (this.disabled() || this.readonly() || this.isOpen() || !this.isBrowser) {
-      return;
-    }
-
-    if (!this.dropdownDirective()) {
-      return;
-    }
-
-    // Prevent default scrolling behavior for Space / ArrowUp / ArrowDown.
-    event?.preventDefault();
-
-    const width = this.elementRef.nativeElement.getBoundingClientRect().width;
-    this.overlayRef = this.overlay.create({
-      positionStrategy: this.overlay
-        .position()
-        .flexibleConnectedTo(this.elementRef)
-        .withPositions([
-          // Preferred: below, aligned to the start edge of the trigger.
-          { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
-          // Below, aligned to the end edge (trigger near the end of the viewport).
-          { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
-          // Above, aligned to the start edge (no space below).
-          { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
-          // Above, aligned to the end edge (no space below, trigger near the end).
-          { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
-          // Below, centered (small screens, trigger in the middle).
-          { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top' },
-          // Above, centered.
-          { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom' }
-        ])
-        .withFlexibleDimensions(true)
-        .withPush(true),
-      hasBackdrop: true,
-      backdropClass: 'cdk-overlay-transparent-backdrop',
-      panelClass: ['dropdown-menu', 'show'],
-      minWidth: width + 2
-    });
-
-    const portal = new TemplatePortal(this.dropdownDirective()!.templateRef, this.viewContainerRef);
-    this.overlayRef.attach(portal);
-    this.overlayRef.overlayElement.id = this.dropdownId();
-
-    this.focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
-    this.focusTrap.focusFirstTabbableElementWhenReady();
-
-    this.isOpen.set(true);
-    this.openChange.emit(true);
-
-    merge(
-      this.overlayRef.backdropClick(),
-      this.overlayRef.keydownEvents().pipe(filter(e => e.key === 'Escape'))
-    )
-      .pipe(takeUntil(this.closeOverlay$), takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.close());
-  }
-
-  /** Closes the dropdown overlay and restores focus. */
-  close(): void {
-    if (!this.isOpen()) {
-      return;
-    }
-    this.isOpen.set(false);
-    this.disposeOverlay();
-    this.openChange.emit(false);
-    this.onTouched();
-    if (this.isBrowser) {
-      this.elementRef.nativeElement.focus();
-    }
   }
 
   /** @internal */
@@ -306,16 +191,5 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   /** @internal */
   setDisabledState(isDisabled: boolean): void {
     this.disabledByForm.set(isDisabled);
-  }
-
-  private disposeOverlay(): void {
-    if (this.overlayRef) {
-      this.closeOverlay$.next();
-      this.focusTrap?.destroy();
-      this.focusTrap = undefined;
-      this.overlayRef.detach();
-      this.overlayRef.dispose();
-      this.overlayRef = undefined;
-    }
   }
 }

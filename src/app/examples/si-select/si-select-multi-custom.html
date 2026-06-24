@@ -1,27 +1,119 @@
 <si-card class="card-outline" heading="Button variant">
   <div class="card-body" body>
-    <app-tree-multi-select
-      class="btn btn-primary-ghost fw-normal w-100"
-      [items]="treeItems"
+    <si-select-combobox
+      #modelCombobox="ngCombobox"
+      ngCombobox
+      class="btn btn-primary-ghost fw-normal text-nowrap"
       [disabled]="disabled"
       [readonly]="readonly"
       [(ngModel)]="selectedLocations"
-    />
+      [(expanded)]="modelPopupExpanded"
+    >
+      <ng-container
+        [ngTemplateOutlet]="valueDisplay"
+        [ngTemplateOutletContext]="{ items: selectedLocations }"
+      />
+    </si-select-combobox>
+
+    <ng-template
+      cdkConnectedOverlayPanelClass="dropdown-menu"
+      [cdkConnectedOverlay]="{origin: modelCombobox.element, usePopover: 'inline', matchWidth: true}"
+      [cdkConnectedOverlayOpen]="modelPopupExpanded()"
+      [cdkConnectedOverlayDisableClose]="true"
+    >
+      <ng-template si-select-dropdown contentType="tree" [combobox]="modelCombobox">
+        <div class="w-100" aria-label="Select locations" ngComboboxWidget>
+          <ng-container
+            [ngTemplateOutlet]="popupBody"
+            [ngTemplateOutletContext]="{
+              pendingItems: modelPendingItems(),
+              onApply: applyModel,
+              onCancel: cancelModel
+            }"
+          />
+        </div>
+      </ng-template>
+    </ng-template>
   </div>
 </si-card>
 
 <si-card class="mt-6" heading="Form-control variant">
   <div class="card-body" body>
     <si-form-item label="Locations (required)">
-      <app-tree-multi-select
-        class="form-control"
-        [items]="treeItems"
+      <si-select-combobox
+        #formCombobox="ngCombobox"
+        ngCombobox
+        class="form-control text-nowrap"
         [readonly]="readonly"
         [formControl]="locationsControl"
-      />
+        [(expanded)]="formPopupExpanded"
+      >
+        <ng-container
+          [ngTemplateOutlet]="valueDisplay"
+          [ngTemplateOutletContext]="{ items: locationsControl.value }"
+        />
+      </si-select-combobox>
+
+      <ng-template
+        cdkConnectedOverlayPanelClass="dropdown-menu"
+        [cdkConnectedOverlay]="{origin: formCombobox.element, usePopover: 'inline', matchWidth: true}"
+        [cdkConnectedOverlayOpen]="formPopupExpanded()"
+        [cdkConnectedOverlayDisableClose]="true"
+      >
+        <ng-template si-select-dropdown contentType="tree" [combobox]="formCombobox">
+          <div class="w-100" aria-label="Select locations" ngComboboxWidget>
+            <ng-container
+              [ngTemplateOutlet]="popupBody"
+              [ngTemplateOutletContext]="{
+                pendingItems: formPendingItems(),
+                onApply: applyForm,
+                onCancel: cancelForm
+              }"
+            />
+          </div>
+        </ng-template>
+      </ng-template>
     </si-form-item>
   </div>
 </si-card>
+
+<ng-template #valueDisplay let-items="items">
+  <div class="d-flex flex-fill overflow-hidden" siAutoCollapsableList>
+    @for (item of items; track item.label) {
+      <si-select-combobox-value class="comma-separated" siAutoCollapsableListItem [icon]="item.icon">
+        {{ item.label }}
+      </si-select-combobox-value>
+    } @empty {
+      <span class="text-secondary">Select locations...</span>
+    }
+    <span
+      #overflow="siAutoCollapsableListOverflowItem"
+      siAutoCollapsableListOverflowItem
+      class="pill py-0 ms-2"
+      >{{ overflow.hiddenItemCount }}+</span
+    >
+  </div>
+</ng-template>
+
+<ng-template
+  #popupBody
+  let-pendingItems="pendingItems"
+  let-onApply="onApply"
+  let-onCancel="onCancel"
+>
+  <si-tree-view
+    class="d-block mt-n4 dropdown-menu-scroller"
+    ariaLabel="Locations"
+    [items]="pendingItems"
+    [enableCheckbox]="true"
+    [inheritChecked]="true"
+    [isVirtualized]="false"
+  />
+  <div class="d-flex gap-5 justify-content-end p-5 pb-2 border-top">
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="onApply()">Apply</button>
+  </div>
+</ng-template>
 
 <div class="card mt-6 e2e-ignore">
   <div class="card-header">Control panel</div>

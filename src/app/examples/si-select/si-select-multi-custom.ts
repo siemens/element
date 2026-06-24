@@ -2,7 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, input, signal } from '@angular/core';
+import { Combobox, ComboboxPopup, ComboboxWidget } from '@angular/aria/combobox';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { NgTemplateOutlet } from '@angular/common';
+import { Component, effect, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   SiAutoCollapsableListDirective,
@@ -12,7 +15,6 @@ import {
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 import {
-  SiCustomSelectDirective,
   SiSelectComboboxComponent,
   SiSelectComboboxValueComponent,
   SiSelectDropdownDirective
@@ -27,134 +29,99 @@ import {
   expandCompactItems
 } from './tree-select-utils';
 
-/**
- * Reusable multi-select tree component with an Apply button.
- * Uses SiCustomSelectDirective as a host directive and checkboxes in the tree view.
- *
- * When all children of a parent are selected only the parent label is shown
- * in the value display instead of every individual leaf.
- */
 @Component({
-  selector: 'app-tree-multi-select',
+  selector: 'app-sample',
   imports: [
     SiAutoCollapsableListDirective,
     SiAutoCollapsableListItemDirective,
     SiAutoCollapsableListOverflowItemDirective,
     SiSelectComboboxComponent,
     SiSelectComboboxValueComponent,
-    SiSelectDropdownDirective,
-    SiTreeViewComponent
-  ],
-  template: `
-    <si-select-combobox class="text-nowrap">
-      <div class="d-flex flex-fill overflow-hidden" siAutoCollapsableList>
-        @if (select.value(); as value) {
-          @for (item of value; track item.label) {
-            <si-select-combobox-value
-              class="comma-separated"
-              siAutoCollapsableListItem
-              [icon]="item.icon"
-            >
-              {{ item.label }}
-            </si-select-combobox-value>
-          } @empty {
-            <span class="text-secondary">Select locations...</span>
-          }
-        } @else {
-          <span class="text-secondary">Select locations...</span>
-        }
-        <span
-          #overflow="siAutoCollapsableListOverflowItem"
-          siAutoCollapsableListOverflowItem
-          class="pill py-0 ms-2"
-          >{{ overflow.hiddenItemCount }}+</span
-        >
-      </div>
-    </si-select-combobox>
-
-    <ng-template si-select-dropdown contentType="dialog">
-      <div role="dialog" aria-label="Select locations">
-        <si-tree-view
-          class="d-block mt-n4 dropdown-menu-scroller"
-          ariaLabel="Locations"
-          [items]="pendingItems()"
-          [enableCheckbox]="true"
-          [inheritChecked]="true"
-          [isVirtualized]="false"
-        />
-        <div class="d-flex gap-5 justify-content-end p-5 pb-2 border-top">
-          <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="apply()">Apply</button>
-        </div>
-      </div>
-    </ng-template>
-  `,
-  hostDirectives: [
-    {
-      directive: SiCustomSelectDirective,
-      inputs: ['disabled', 'readonly', 'value'],
-      outputs: ['valueChange']
-    }
-  ]
-})
-export class TreeMultiSelectComponent {
-  protected readonly select = inject<SiCustomSelectDirective<TreeItem[]>>(SiCustomSelectDirective);
-
-  /** The tree items to display. */
-  readonly items = input.required<TreeItem[]>();
-
-  /** Pending tree items with checkbox state (not yet applied). */
-  protected readonly pendingItems = signal<TreeItem[]>([]);
-
-  constructor() {
-    this.select.openChange.subscribe(open => {
-      if (open) {
-        // Expand any compacted parent-items back to leaf labels so the
-        // tree checkbox state is restored correctly.
-        const compacted = this.select.value() ?? [];
-        const expanded = expandCompactItems(compacted);
-        this.pendingItems.set(cloneTreeWithCheckedState(this.items(), expanded));
-      } else {
-        this.pendingItems.set([]);
-      }
-    });
-  }
-
-  apply(): void {
-    const checkedLeaves = collectCheckedLeaves(this.pendingItems());
-    // Compact items so fully-selected subtrees are replaced by the parent
-    // item (e.g. 'Milano' instead of every individual location).
-    const compacted = compactSelected(this.items(), checkedLeaves);
-    this.select.updateValue(compacted);
-    this.select.close();
-  }
-
-  cancel(): void {
-    this.select.close();
-  }
-}
-
-@Component({
-  selector: 'app-sample',
-  imports: [
-    TreeMultiSelectComponent,
+    SiTreeViewComponent,
+    OverlayModule,
+    ComboboxPopup,
+    Combobox,
+    ComboboxWidget,
+    NgTemplateOutlet,
     FormsModule,
     ReactiveFormsModule,
     SiCardComponent,
-    SiFormItemComponent
+    SiFormItemComponent,
+    SiSelectDropdownDirective
   ],
   templateUrl: './si-select-multi-custom.html',
   host: { class: 'p-5' }
 })
 export class SampleComponent {
-  selectedLocations: TreeItem[] = [];
+  readonly treeItems = treeItems;
   disabled = false;
   readonly = false;
-  readonly treeItems = treeItems;
+
+  /** Selected locations bound via `ngModel` (button variant). */
+  selectedLocations: TreeItem[] = [];
+
+  /** Selected locations bound via reactive `formControl` (form-control variant). */
   readonly locationsControl = new FormControl<TreeItem[]>([], {
     nonNullable: true,
     validators: Validators.required
   });
+
+  /** Open state of each variant's dropdown. */
+  protected readonly modelPopupExpanded = signal(false);
+  protected readonly formPopupExpanded = signal(false);
+
+  /** Pending tree items with checkbox state (not yet applied) per variant. */
+  protected readonly modelPendingItems = signal<TreeItem[]>([]);
+  protected readonly formPendingItems = signal<TreeItem[]>([]);
+
+  constructor() {
+    // When a dropdown opens, expand any compacted parent-items back to leaf
+    // labels so the tree checkbox state is restored correctly.
+    effect(() => {
+      if (this.modelPopupExpanded()) {
+        this.modelPendingItems.set(
+          cloneTreeWithCheckedState(this.treeItems, expandCompactItems(this.selectedLocations))
+        );
+      } else {
+        this.modelPendingItems.set([]);
+      }
+    });
+
+    effect(() => {
+      if (this.formPopupExpanded()) {
+        this.formPendingItems.set(
+          cloneTreeWithCheckedState(
+            this.treeItems,
+            expandCompactItems(this.locationsControl.value)
+          )
+        );
+      } else {
+        this.formPendingItems.set([]);
+      }
+    });
+  }
+
+  protected readonly applyModel = (): void => {
+    // Compact items so fully-selected subtrees are replaced by the parent
+    // item (e.g. 'Milano' instead of every individual location).
+    const checkedLeaves = collectCheckedLeaves(this.modelPendingItems());
+    this.selectedLocations = compactSelected(this.treeItems, checkedLeaves);
+    this.modelPopupExpanded.set(false);
+  };
+
+  protected readonly cancelModel = (): void => {
+    this.modelPopupExpanded.set(false);
+  };
+
+  protected readonly applyForm = (): void => {
+    const checkedLeaves = collectCheckedLeaves(this.formPendingItems());
+    this.locationsControl.setValue(compactSelected(this.treeItems, checkedLeaves));
+    this.formPopupExpanded.set(false);
+  };
+
+  protected readonly cancelForm = (): void => {
+    this.formPopupExpanded.set(false);
+  };
 
   toggleDisabled(disabled: boolean): void {
     if (disabled) {
