@@ -20,13 +20,14 @@
 - Combination of combobox and listbox
 - can extend our autocomplete directive with aria apis
 - can reduce lot of manual aria attribute handling as well as keyboard manager
-- cva is not treated as editable input so might have to add a small workaround for supporting typeahead on si-search-bar
+- cva is not treated as editable input so requires a small workaround for supporting typeahead on si-search-bar (key events gets prevented interanlly in case of cva)
 - combobox api doesn't have readonly support (as per w3c select tags do not have concept of readonly)
 
 # Listbox
 
 - same as @angular/cdk/listbox
 - some additional feature support e.g follow mode selecition
+- usage @ column selection dialog, date-range-filter, widget-catalog
 
 # Menu / Menubar
 
