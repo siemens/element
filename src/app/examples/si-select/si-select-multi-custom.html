@@ -17,7 +17,11 @@
 
     <ng-template
       cdkConnectedOverlayPanelClass="dropdown-menu"
-      [cdkConnectedOverlay]="{origin: modelCombobox.element, usePopover: 'inline', matchWidth: true}"
+      [cdkConnectedOverlay]="{
+        origin: modelCombobox.element,
+        usePopover: 'inline',
+        matchWidth: true
+      }"
       [cdkConnectedOverlayOpen]="modelPopupExpanded()"
       [cdkConnectedOverlayDisableClose]="true"
     >
@@ -56,7 +60,11 @@
 
       <ng-template
         cdkConnectedOverlayPanelClass="dropdown-menu"
-        [cdkConnectedOverlay]="{origin: formCombobox.element, usePopover: 'inline', matchWidth: true}"
+        [cdkConnectedOverlay]="{
+          origin: formCombobox.element,
+          usePopover: 'inline',
+          matchWidth: true
+        }"
         [cdkConnectedOverlayOpen]="formPopupExpanded()"
         [cdkConnectedOverlayDisableClose]="true"
       >
@@ -80,7 +88,11 @@
 <ng-template #valueDisplay let-items="items">
   <div class="d-flex flex-fill overflow-hidden" siAutoCollapsableList>
     @for (item of items; track item.label) {
-      <si-select-combobox-value class="comma-separated" siAutoCollapsableListItem [icon]="item.icon">
+      <si-select-combobox-value
+        class="comma-separated"
+        siAutoCollapsableListItem
+        [icon]="item.icon"
+      >
         {{ item.label }}
       </si-select-combobox-value>
     } @empty {

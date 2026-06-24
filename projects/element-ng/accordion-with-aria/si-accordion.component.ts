@@ -32,10 +32,12 @@ const PANEL_MIN_HEIGHT = 100;
     '[class.full-height]': 'fullHeight()',
     '[class.hcollapsed]': 'collapsed()'
   },
-  hostDirectives: [{
-    directive: AccordionGroup,
-    inputs: ['disabled', 'multiExpandable', 'wrap', 'softDisabled']
-  }]
+  hostDirectives: [
+    {
+      directive: AccordionGroup,
+      inputs: ['disabled', 'multiExpandable', 'wrap', 'softDisabled']
+    }
+  ]
 })
 export class SiAccordionAriaComponent implements AfterContentInit, OnChanges {
   /** @defaultValue true */

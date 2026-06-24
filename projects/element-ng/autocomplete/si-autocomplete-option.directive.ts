@@ -3,12 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Option } from '@angular/aria/listbox';
-import {
-  booleanAttribute,
-  Directive,
-  input
-} from '@angular/core';
-
+import { booleanAttribute, Directive, inject, input } from '@angular/core';
 
 @Directive({
   selector: '[siAutocompleteOption]',
@@ -17,10 +12,12 @@ import {
     '[id]': 'id()',
     '[attr.aria-disabled]': 'disabledInput()'
   },*/
-  hostDirectives: [{
-    directive: Option,
-    inputs: ['disabled', 'value: siAutocompleteOption', 'id', 'label']
-  }],
+  hostDirectives: [
+    {
+      directive: Option,
+      inputs: ['disabled', 'value: siAutocompleteOption', 'id', 'label']
+    }
+  ],
   exportAs: 'siAutocompleteOption'
 })
 export class SiAutocompleteOptionDirective<T = unknown> {

@@ -2,9 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Combobox, ComboboxPopup, ComboboxWidget } from '@angular/aria/combobox';
-import {Listbox, Option} from '@angular/aria/listbox';
-import {OverlayModule} from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -21,8 +18,7 @@ import { SiFilterSettingsComponent } from '../si-filter-settings/si-filter-setti
     SiFilterSettingsComponent,
     SiSearchBarModule,
     FormsModule,
-    SiTypeaheadDirective,
-    Combobox, ComboboxPopup, ComboboxWidget, Listbox, Option, OverlayModule
+    SiTypeaheadDirective
   ],
   templateUrl: './si-typeahead-basic.html'
 })

@@ -33,7 +33,10 @@
   <h4>Using Angular ARIA</h4>
 
   <si-accordion-aria [multiExpandable]="false">
-    <si-collapsible-panel-aria heading="Hey there" (panelToggle)="logEvent('toggle Hey there', $event)">
+    <si-collapsible-panel-aria
+      heading="Hey there"
+      (panelToggle)="logEvent('toggle Hey there', $event)"
+    >
       <div class="p-6"> Here is some content </div>
     </si-collapsible-panel-aria>
     <si-collapsible-panel-aria

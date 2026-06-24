@@ -1,68 +1,66 @@
 <ng-template ngComboboxPopup [combobox]="autocompleteDirective.combobox">
-<!-- Template to be used for every match, can be replaced using an input. -->
-<ng-template #defaultItemTemplate let-match="match" siTypeaheadItemTemplate>
-  @if (multiselect()) {
-    <div class="d-flex pe-4" aria-hidden="true">
-      <span class="form-check-input si-form-checkbox" [class.checked]="match.itemSelected"></span>
-    </div>
-  }
-  @if (match.iconClass) {
-    <si-icon class="icon me-2" [icon]="match.iconClass" />
-  }
-  @for (segment of match.result; track $index) {
-    <span [class.typeahead-match-segment-matching]="segment.isMatching">{{ segment.text }}</span>
-  }
-</ng-template>
+  <!-- Template to be used for every match, can be replaced using an input. -->
+  <ng-template #defaultItemTemplate let-match="match" siTypeaheadItemTemplate>
+    @if (multiselect()) {
+      <div class="d-flex pe-4" aria-hidden="true">
+        <span class="form-check-input si-form-checkbox" [class.checked]="match.itemSelected"></span>
+      </div>
+    }
+    @if (match.iconClass) {
+      <si-icon class="icon me-2" [icon]="match.iconClass" />
+    }
+    @for (segment of match.result; track $index) {
+      <span [class.typeahead-match-segment-matching]="segment.isMatching">{{ segment.text }}</span>
+    }
+  </ng-template>
 
-@let createOption = parent.typeaheadCreateOption();
-
-<!-- Only display the component if there are any matches and set the CSS transform to properly position the typeahead -->
-<ul
-  #typeahead
-  #ngList="siAutocompleteListbox"
-  ngComboboxWidget
-  class="typeahead dropdown-menu"
-  focusMode="activedescendant"
-  selectionMode="explicit"
-  [tabindex]="-1"
-  [activeDescendant]="ngList.listbox.activeDescendant()"
-  [class.empty-loading]="parent.typeaheadLoading() && matches().length === 0"
-  [siLoading]="parent.typeaheadLoading() && matches().length === 0"
-  [initialDelay]="false"
-  [siAutocompleteListboxFor]="autocompleteDirective"
-  [siAutocompleteDefaultIndex]="parent.typeaheadAutoSelectIndex()"
-  [attr.aria-label]="parent.typeaheadAutocompleteListLabel() | translate"
-  [(value)]="selectedMatch"
-  (click)="selectMatch(selectedMatch()[0])"
-  (keydown.enter)="selectMatch(selectedMatch()[0])"
->
-  @if (parent.typeaheadLoading() && matches().length) {
-    <li class="dropdown-item" [siLoading]="true" [initialDelay]="false"></li>
-  }
-  <!-- Loop through every match and bind events, the mousedown prevent default is to prevent the host from losing focus on click -->
-  @for (match of matches(); track $index) {
-    <li
-      #typeaheadMatch
-      class="dropdown-item"
-      [siAutocompleteOption]="match"
-      [attr.aria-label]="match.text"
-    >
-      <!-- Display either a template set as the input or the template above -->
-      <ng-template
-        [ngTemplateOutlet]="parent.typeaheadItemTemplate() || defaultItemTemplate"
-        [ngTemplateOutletContext]="{
-          item: match.option,
-          index: $index,
-          match: match,
-          query: parent.query()
-        }"
-      />
-    </li>
-  }
-  @if (createOption && parent.query().length) {
-    <li class="dropdown-item" [siAutocompleteOption]="undefined">
-      {{ createOption | translate: { query: parent.query() } }}
-    </li>
-  }
-</ul>
+  @let createOption = parent.typeaheadCreateOption();
+  <!-- Only display the component if there are any matches and set the CSS transform to properly position the typeahead -->
+  <ul
+    #typeahead
+    #ngList="siAutocompleteListbox"
+    ngComboboxWidget
+    class="typeahead dropdown-menu"
+    focusMode="activedescendant"
+    selectionMode="explicit"
+    [tabindex]="-1"
+    [activeDescendant]="ngList.listbox.activeDescendant()"
+    [class.empty-loading]="parent.typeaheadLoading() && matches().length === 0"
+    [siLoading]="parent.typeaheadLoading() && matches().length === 0"
+    [initialDelay]="false"
+    [siAutocompleteListboxFor]="autocompleteDirective"
+    [attr.aria-label]="parent.typeaheadAutocompleteListLabel() | translate"
+    [(value)]="selectedMatch"
+    (click)="selectMatch(selectedMatch()[0])"
+    (keydown.enter)="selectMatch(selectedMatch()[0])"
+  >
+    @if (parent.typeaheadLoading() && matches().length) {
+      <li class="dropdown-item" [siLoading]="true" [initialDelay]="false"></li>
+    }
+    <!-- Loop through every match and bind events, the mousedown prevent default is to prevent the host from losing focus on click -->
+    @for (match of matches(); track $index) {
+      <li
+        #typeaheadMatch
+        class="dropdown-item"
+        [siAutocompleteOption]="match"
+        [attr.aria-label]="match.text"
+      >
+        <!-- Display either a template set as the input or the template above -->
+        <ng-template
+          [ngTemplateOutlet]="parent.typeaheadItemTemplate() || defaultItemTemplate"
+          [ngTemplateOutletContext]="{
+            item: match.option,
+            index: $index,
+            match: match,
+            query: parent.query()
+          }"
+        />
+      </li>
+    }
+    @if (createOption && parent.query().length) {
+      <li class="dropdown-item" [siAutocompleteOption]="undefined">
+        {{ createOption | translate: { query: parent.query() } }}
+      </li>
+    }
+  </ul>
 </ng-template>

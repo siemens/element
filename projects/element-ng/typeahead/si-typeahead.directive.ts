@@ -444,7 +444,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   }
 
   // Start the input timeout to display the typeahead when the host is focussed or a value is inputted into it.
-  //@HostListener('focusin', ['$event'])
+  @HostListener('focusin', ['$event'])
   @HostListener('input', ['$event'])
   protected onInput(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -454,11 +454,10 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
 
     // Get the value or otherwise textContent of the host element now, because later it could be reset.
     const firstValue = target.value || target.textContent;
-    console.log('firstvalue' + firstValue);
     this.inputTimer ??= setTimeout(() => {
       this.inputTimer = undefined;
       const value = (target.value || target.textContent) ?? firstValue ?? '';
-      
+
       this.query.set(value);
       this.typeaheadOnInput.emit(value ?? '');
       this.canBeOpen.set(true);
@@ -481,7 +480,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
    * ```
    */
   autoCompleteDirective = inject(SiAutocompleteDirective, { optional: true });
-  
+
   ngOnDestroy(): void {
     this.clearTimer();
     this.sourceSubscription?.unsubscribe();
@@ -548,10 +547,16 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     if (this.overlayRef.hasAttached()) {
       return;
     }
-    const typeaheadPortal = new ComponentPortal(SiTypeaheadComponent, null, this.injector, null, undefined);
+    const typeaheadPortal = new ComponentPortal(
+      SiTypeaheadComponent,
+      null,
+      this.injector,
+      null,
+      undefined
+    );
     this.componentRef = this.overlayRef.attach(typeaheadPortal);
     this.typeaheadOpenChange.emit(true);
-    
+
     this.autoCompleteDirective?.expanded.set(true);
   }
 
@@ -642,7 +647,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
 
   keydown(event: KeyboardEvent): void {
     if (event.target instanceof HTMLInputElement) {
-    if (event.key.length === 1) event.target.value += event.key;
+      if (event.key.length === 1) event.target.value += event.key;
 
       event.target.dispatchEvent(new Event('input', { bubbles: true }));
     }

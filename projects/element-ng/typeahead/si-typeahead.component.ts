@@ -2,16 +2,21 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {ComboboxPopup, ComboboxWidget} from '@angular/aria/combobox';
+import { ComboboxPopup, ComboboxWidget } from '@angular/aria/combobox';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   Component,
   computed,
+  effect,
   ElementRef,
   HostListener,
   inject,
-  signal} from '@angular/core';
+  linkedSignal,
+  signal,
+  viewChild,
+  viewChildren
+} from '@angular/core';
 import {
   SiAutocompleteDirective,
   SiAutocompleteListboxDirective,
@@ -42,7 +47,7 @@ import { TypeaheadMatch } from './si-typeahead.model';
   styleUrl: './si-typeahead.component.scss',
   host: { class: 'w-100' }
 })
-export class SiTypeaheadComponent implements AfterViewInit {
+export class SiTypeaheadComponent {
   protected parent = inject(SiTypeaheadDirective);
   protected readonly matches = computed(() =>
     this.parent.typeaheadOptionsLimit()
@@ -52,14 +57,28 @@ export class SiTypeaheadComponent implements AfterViewInit {
 
   protected readonly multiselect = computed(() => this.parent.typeaheadMultiSelect());
 
-  /*private readonly typeaheadElement = viewChild.required('typeahead', {
+  private readonly typeaheadElement = viewChild('typeahead', {
     read: ElementRef
-  });*/
+  });
+
+  protected readonly options = viewChildren(SiAutocompleteOptionDirective);
 
   protected autocompleteDirective = inject(SiAutocompleteDirective);
 
-  ngAfterViewInit(): void {
-    //this.setHeight(this.typeaheadElement());
+  protected readonly activeDescendant = computed(() => {
+    const activeOption = this.matches()[this.parent.typeaheadAutoSelectIndex() ?? 0];
+    return [activeOption];
+  });
+
+  //protected readonly value = signal([this.matches()[this.pa]]);
+
+  constructor() {
+    effect(() => {
+      const typeaheadElement = this.typeaheadElement();
+      if (typeaheadElement && this.autocompleteDirective.expanded()) {
+        setTimeout(() => this.setHeight(typeaheadElement));
+      }
+    });
   }
 
   @HostListener('mousedown', ['$event'])
@@ -68,7 +87,7 @@ export class SiTypeaheadComponent implements AfterViewInit {
   }
 
   /** @defaultValue [] */
-  readonly selectedMatch = signal<TypeaheadMatch[]>([]);
+  readonly selectedMatch = linkedSignal<TypeaheadMatch[]>(() => this.activeDescendant() || []);
 
   /*
    * Set the height of the element passed to it (typeahead) if there are items displayed,

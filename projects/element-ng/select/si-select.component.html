@@ -11,7 +11,6 @@
   [placeholder]="placeholder()"
   [readonly]="readonly()"
   [attr.aria-describedby]="errormessageId()"
-  
   [(expanded)]="isOpen"
 />
 
@@ -27,30 +26,29 @@
   [cdkConnectedOverlayGrowAfterOpen]="true"
   (backdropClick)="backdropClick()"
   (detach)="close()"
-  
 >
-<ng-template ngComboboxPopup [combobox]="combobox">
-  @if (!hasFilter()) {
-    <si-select-list
-      [baseId]="id()"
-      [optionTemplate]="optionTemplate()"
-      [groupTemplate]="groupTemplate()"
-      [labelledby]="labelledby()"
-      [actionsTemplate]="actionsTemplate()"
-      (closeOverlay)="close()"
-    />
-  } @else {
-    <si-select-list-has-filter
-      ngComboboxWidget
-      [baseId]="id()"
-      [filterPlaceholder]="filterPlaceholder()"
-      [noResultsFoundLabel]="noResultsFoundLabel()"
-      [optionTemplate]="optionTemplate()"
-      [groupTemplate]="groupTemplate()"
-      [labelledby]="labelledby()"
-      [actionsTemplate]="actionsTemplate()"
-      (closeOverlay)="close()"
-    />
-  }
+  <ng-template ngComboboxPopup [combobox]="combobox">
+    @if (!hasFilter()) {
+      <si-select-list
+        [baseId]="id()"
+        [optionTemplate]="optionTemplate()"
+        [groupTemplate]="groupTemplate()"
+        [labelledby]="labelledby()"
+        [actionsTemplate]="actionsTemplate()"
+        (closeOverlay)="close()"
+      />
+    } @else {
+      <si-select-list-has-filter
+        ngComboboxWidget
+        [baseId]="id()"
+        [filterPlaceholder]="filterPlaceholder()"
+        [noResultsFoundLabel]="noResultsFoundLabel()"
+        [optionTemplate]="optionTemplate()"
+        [groupTemplate]="groupTemplate()"
+        [labelledby]="labelledby()"
+        [actionsTemplate]="actionsTemplate()"
+        (closeOverlay)="close()"
+      />
+    }
   </ng-template>
 </ng-template>

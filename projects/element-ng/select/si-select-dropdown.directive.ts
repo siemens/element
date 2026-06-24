@@ -27,10 +27,12 @@ import { SiCustomSelectDirective } from './si-custom-select.directive';
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[si-select-dropdown]',
-  hostDirectives: [{
-    directive: ComboboxPopup,
-    inputs: ['combobox', 'popupType:contentType']
-  }]
+  hostDirectives: [
+    {
+      directive: ComboboxPopup,
+      inputs: ['combobox', 'popupType:contentType']
+    }
+  ]
 })
 export class SiSelectDropdownDirective implements OnDestroy {
   /**
@@ -38,7 +40,7 @@ export class SiSelectDropdownDirective implements OnDestroy {
    * forwarded to the `aria-haspopup` attribute of the combobox host of
    * the parent {@link SiCustomSelectDirective}.
    */
-  readonly contentType = input.required<"listbox" | "tree" | "grid" | "dialog">();
+  readonly contentType = input.required<'listbox' | 'tree' | 'grid' | 'dialog'>();
   private focusTrapFactory = inject(FocusTrapFactory);
   private focusTrap: FocusTrap | undefined;
   private popup = inject(ComboboxPopup);

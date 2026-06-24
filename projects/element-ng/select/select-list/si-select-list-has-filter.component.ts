@@ -11,7 +11,6 @@ import {
   ElementRef,
   input,
   OnInit,
-  Signal,
   signal,
   untracked,
   viewChild
@@ -27,7 +26,6 @@ import { SiSelectGroupTemplateDirective } from '../si-select-group-template.dire
 import { SiSelectOptionRowTemplateDirective } from '../si-select-option-row-template.directive';
 import { SelectOption } from '../si-select.types';
 import { SiSelectListBase } from './si-select-list.base';
-import { CdkObserveContent } from "@angular/cdk/observers";
 
 @Component({
   selector: 'si-select-list-has-filter',
@@ -43,9 +41,8 @@ import { CdkObserveContent } from "@angular/cdk/observers";
     SiLoadingSpinnerComponent,
     ComboboxWidget,
     ComboboxPopup,
-    Combobox,
-    CdkObserveContent
-],
+    Combobox
+  ],
   templateUrl: './si-select-list-has-filter.component.html',
   styleUrl: './si-select-list-has-filter.component.scss',
   host: {
@@ -60,7 +57,6 @@ export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> imple
   readonly noResultsFoundLabel = input.required<TranslatableString>();
 
   protected readonly filterInput = viewChild.required<ElementRef<HTMLInputElement>>('filter');
-  protected readonly initIndex: Signal<number>;
   protected readonly id = computed(() => `${this.baseId()}-listbox`);
   protected readonly icons = addIcons({ elementSearch });
   /**
@@ -69,29 +65,22 @@ export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> imple
    * this.selectOptions.selectedRows() as SelectOption<T>[]
    * ```
    */
-  readonly selectedValues = signal<SelectOption<T>[]>(this.selectOptions.selectedRows() as SelectOption<T>[]);
+  readonly selectedValues = signal<SelectOption<T>[]>(
+    this.selectOptions.selectedRows() as SelectOption<T>[]
+  );
 
   constructor() {
     super();
     if (!this.selectOptions.onFilter) {
       console.error('Missing implementation for `onFilter`');
     }
-    const firstValue = this.selectionStrategy.arrayValue()[0];
-    if (firstValue) {
-      this.initIndex = computed(() =>
-        this.rows().findIndex(row => row.type === 'option' && row.value === firstValue)
-      );
-    } else {
-      this.initIndex = signal(0);
-    }
-
-     afterRenderEffect(() => {
+    afterRenderEffect(() => {
       //if (this.popupExpanded()) {
-        untracked(() => {
-          setTimeout(() => {
-            this.filterInput()?.nativeElement.focus();
-          });
+      untracked(() => {
+        setTimeout(() => {
+          this.filterInput()?.nativeElement.focus();
         });
+      });
       //}
     });
   }

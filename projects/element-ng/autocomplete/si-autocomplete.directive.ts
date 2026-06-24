@@ -16,10 +16,20 @@ import { SiAutocompleteListboxDirective } from './si-autocomplete-listbox.direct
     '[attr.aria-controls]': 'listbox()?.id()',
     '[attr.aria-expanded]': '!!listbox()'
   },*/
-  hostDirectives: [{
-    directive: Combobox,
-    inputs: ['disabled', 'softDisabled', 'alwaysExpanded', 'tabindex', 'expanded', 'value', 'inlineSuggestion']
-  }],
+  hostDirectives: [
+    {
+      directive: Combobox,
+      inputs: [
+        'disabled',
+        'softDisabled',
+        'alwaysExpanded',
+        'tabindex',
+        'expanded',
+        'value',
+        'inlineSuggestion'
+      ]
+    }
+  ],
   exportAs: 'siAutocomplete'
 })
 export class SiAutocompleteDirective<T> {
@@ -30,7 +40,6 @@ export class SiAutocompleteDirective<T> {
   /** @internal */
   readonly listbox = signal<SiAutocompleteListboxDirective<T> | undefined>(undefined);
   readonly combobox = inject(Combobox);
-
 
   constructor() {
     afterRenderEffect(() => {
@@ -44,6 +53,4 @@ export class SiAutocompleteDirective<T> {
   protected keydown(event: KeyboardEvent): void {
     this.listbox()?.onKeydown(event);
   }*/
-
-  
 }

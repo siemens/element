@@ -90,10 +90,7 @@ export class SampleComponent {
     effect(() => {
       if (this.formPopupExpanded()) {
         this.formPendingItems.set(
-          cloneTreeWithCheckedState(
-            this.treeItems,
-            expandCompactItems(this.locationsControl.value)
-          )
+          cloneTreeWithCheckedState(this.treeItems, expandCompactItems(this.locationsControl.value))
         );
       } else {
         this.formPendingItems.set([]);

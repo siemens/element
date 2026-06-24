@@ -34,8 +34,8 @@ import { SelectOption } from '../si-select.types';
     // In readonly mode, the select needs to be announced as a textbox.
     // Otherwise, screen-reader won't announce the readonly state.
     class: 'select focus-none dropdown-toggle d-flex align-items-center ps-4',
-    
-    '[class.disabled]': 'selectionStrategy.disabled()',
+
+    '[class.disabled]': 'selectionStrategy.disabled()'
   }
 })
 export class SiSelectInputComponent<T> {

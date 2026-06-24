@@ -62,7 +62,8 @@ import { SiCollapsiblePanelAriaComponent } from 'projects/element-ng/accordion-w
     SiLaunchpadFactoryComponent,
     SiHeaderLogoDirective,
     FormsModule,
-    SiAccordionAriaComponent, SiCollapsiblePanelAriaComponent
+    SiAccordionAriaComponent,
+    SiCollapsiblePanelAriaComponent
   ],
   templateUrl: './si-fixed-height-layout-side-panel.html'
 })

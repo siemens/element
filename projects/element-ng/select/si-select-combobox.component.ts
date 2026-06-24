@@ -39,11 +39,13 @@ import { SiCustomSelectDirective } from './si-custom-select.directive';
     '[attr.id]': 'customSelect.comboboxLabelId()',
     '[class.show]': 'customSelect.isOpen()'
   },
-  hostDirectives: [{
-    directive: SiCustomSelectDirective,
-    inputs: ['disabled', 'readonly', 'value'],
-    outputs: ['valueChange']
-  }]
+  hostDirectives: [
+    {
+      directive: SiCustomSelectDirective,
+      inputs: ['disabled', 'readonly', 'value'],
+      outputs: ['valueChange']
+    }
+  ]
 })
 export class SiSelectComboboxComponent {
   protected readonly icons = addIcons({ elementDown2 });

@@ -39,7 +39,7 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
     ComboboxPopup,
     Combobox,
     ComboboxWidget
-],
+  ],
   templateUrl: './si-select.component.html',
   styleUrl: './si-select.component.scss',
   providers: [{ provide: SI_FORM_ITEM_CONTROL, useExisting: SiSelectComponent }],

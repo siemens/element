@@ -1,9 +1,9 @@
 <div
-   #listbox="ngListbox"
-        ngListbox
-        ngComboboxWidget
-        focusMode="activedescendant"
-        selectionMode="explicit"
+  #listbox="ngListbox"
+  ngListbox
+  ngComboboxWidget
+  focusMode="activedescendant"
+  selectionMode="explicit"
   class="dropdown-menu-scroller focus-none"
   [tabindex]="-1"
   [id]="baseId() + '-listbox'"
@@ -55,7 +55,6 @@
       [optionTemplate]="optionTemplate()"
       [disabled]="option.disabled"
       [class.active]="ngOption.active()"
-
       [selected]="ngOption.selected()"
     />
   </ng-template>

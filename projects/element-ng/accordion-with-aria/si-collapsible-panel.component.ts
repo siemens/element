@@ -24,10 +24,16 @@ import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { filter } from 'rxjs';
 
-
 @Component({
   selector: 'si-collapsible-panel-aria',
-  imports: [SiIconComponent, SiTranslatePipe, SiTooltipDirective, AccordionTrigger, AccordionPanel, AccordionContent],
+  imports: [
+    SiIconComponent,
+    SiTranslatePipe,
+    SiTooltipDirective,
+    AccordionTrigger,
+    AccordionPanel,
+    AccordionContent
+  ],
   templateUrl: './si-collapsible-panel.component.html',
   styleUrl: './si-collapsible-panel.component.scss',
   host: {

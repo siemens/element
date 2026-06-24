@@ -21,11 +21,7 @@ import { treeItems } from '../si-tree-view/tree-items';
  */
 @Component({
   selector: 'app-tree-select',
-  imports: [
-    SiSelectComboboxComponent,
-    SiSelectComboboxValueComponent,
-    SiTreeViewComponent
-  ],
+  imports: [SiSelectComboboxComponent, SiSelectComboboxValueComponent, SiTreeViewComponent],
   template: `
     <si-select-combobox>
       @if (select.value(); as val) {
