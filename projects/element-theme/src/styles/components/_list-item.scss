@@ -23,11 +23,7 @@ ol:has(.list-item) {
   padding-block: map.get(variables.$spacers, 4);
   padding-inline: map.get(variables.$spacers, 6);
 
-  @include typography.si-font(
-    typography.$si-font-size-body,
-    typography.$si-line-height-body,
-    typography.$si-font-weight-body
-  );
+  @include typography.sdl-font(body);
 
   > * {
     grid-column: 2 / -1;
@@ -58,20 +54,12 @@ ol:has(.list-item) {
     padding-block: map.get(variables.$spacers, 4);
     margin-block-end: 0;
 
-    @include typography.si-font(
-      typography.$si-font-size-h5,
-      typography.$si-line-height-h5,
-      typography.$si-font-weight-h5
-    );
+    @include typography.sdl-font(h5);
 
     &.unread {
       position: relative;
 
-      @include typography.si-font(
-        typography.$si-font-size-h5-bold,
-        typography.$si-line-height-h5-bold,
-        typography.$si-font-weight-h5-bold
-      );
+      @include typography.sdl-font(h5-bold);
 
       &::before {
         content: '';

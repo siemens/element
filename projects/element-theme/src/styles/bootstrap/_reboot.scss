@@ -1,6 +1,5 @@
 @use '../variables/typography';
 @use './variables';
-
 // stylelint-disable declaration-no-important, selector-no-qualifying-type, property-no-vendor-prefix
 
 // Reboot
@@ -41,6 +40,7 @@
 // 4. Change the default tap highlight to be completely transparent in iOS.
 
 // scss-docs-start reboot-body-rules
+// TW: Body mapping
 body {
   margin: 0; // 1
   font-family: var(--#{variables.$variable-prefix}body-font-family);
@@ -82,50 +82,47 @@ hr:not([size]) {
 
 %heading {
   margin-block: 0 variables.$headings-margin-bottom; // 1
-  font-family: variables.$headings-font-family;
-  font-style: variables.$headings-font-style;
-  font-weight: variables.$headings-font-weight;
-  line-height: variables.$headings-line-height;
   color: variables.$headings-color;
 }
 
 h1 {
   @extend %heading;
-  font-size: variables.$h1-font-size;
+  @include typography.sdl-font(h1);
 }
 
 h2 {
   @extend %heading;
-  font-size: variables.$h2-font-size;
+  @include typography.sdl-font(h2);
 }
 
 h3 {
   @extend %heading;
-  font-size: variables.$h3-font-size;
+  @include typography.sdl-font(h3);
 }
 
 h4 {
   @extend %heading;
-  font-size: variables.$h4-font-size;
+  @include typography.sdl-font(h4);
 }
 
 h5 {
   @extend %heading;
-  font-size: variables.$h5-font-size;
+  @include typography.sdl-font(h5);
 }
 
 h6 {
   @extend %heading;
-  font-size: variables.$h6-font-size;
+  @include typography.sdl-font(h6);
 }
 
 // Reset margins on paragraphs
 //
 // Similarly, the top margin on `<p>`s get reset. However, we also reset the
 // bottom margin to use `rem` units instead of `em`.
-
+// TW: Review if this mapoping wors
 p {
   margin-block: 0 variables.$paragraph-margin-bottom;
+  @include typography.sdl-font(body-paragraph);
 }
 
 // Abbreviations

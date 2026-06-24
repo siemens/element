@@ -1,0 +1,350 @@
+// Copy from SDL, do not modify manually
+@use 'sass:map';
+
+$si-typography: (
+  'body': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 400,
+    font-size: 0.875rem,
+    line-height: 1.142857,
+    letter-spacing: 0
+  ),
+  'body-lg': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 400,
+    font-size: 1rem,
+    line-height: 1.25,
+    letter-spacing: 0
+  ),
+  'body-lg-sbold': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 1rem,
+    line-height: 1.25,
+    letter-spacing: 0
+  ),
+  'body-paragraph': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 400,
+    font-size: 0.875rem,
+    line-height: 1.428571,
+    letter-spacing: 0
+  ),
+  'body-paragraph-sbold': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 0.875rem,
+    line-height: 1.428571,
+    letter-spacing: 0
+  ),
+  'body-sbold': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 0.875rem,
+    line-height: 1.142857,
+    letter-spacing: 0
+  ),
+  'body-sm': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 400,
+    font-size: 0.75rem,
+    line-height: 1.333333,
+    letter-spacing: 0
+  ),
+  'body-sm-sbold': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 0.75rem,
+    line-height: 1.333333,
+    letter-spacing: 0
+  ),
+  'code': (
+    font-family: (
+      'JetBrains Mono',
+      monospace
+    ),
+    font-weight: 400,
+    font-size: 0.875rem,
+    line-height: 1.428571,
+    letter-spacing: 0
+  ),
+  'code-lg': (
+    font-family: (
+      'JetBrains Mono',
+      monospace
+    ),
+    font-weight: 400,
+    font-size: 1rem,
+    line-height: 1.25,
+    letter-spacing: 0
+  ),
+  'code-sm': (
+    font-family: (
+      'JetBrains Mono',
+      monospace
+    ),
+    font-weight: 400,
+    font-size: 0.75rem,
+    line-height: 1.333333,
+    letter-spacing: 0
+  ),
+  'display': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 400,
+    font-size: 2rem,
+    line-height: 1.25,
+    letter-spacing: 0
+  ),
+  'display-lg': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 400,
+    font-size: 2.5rem,
+    line-height: 1.3,
+    letter-spacing: 0
+  ),
+  'display-lg-sbold': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 2.5rem,
+    line-height: 1.3,
+    letter-spacing: 0
+  ),
+  'display-sbold': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 2rem,
+    line-height: 1.25,
+    letter-spacing: 0
+  ),
+  'display-xl': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 400,
+    font-size: 3rem,
+    line-height: 1.333333,
+    letter-spacing: 0
+  ),
+  'display-xl-sbold': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 3rem,
+    line-height: 1.333333,
+    letter-spacing: 0
+  ),
+  'display-xxl': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 400,
+    font-size: 3.625rem,
+    line-height: 1.241379,
+    letter-spacing: 0
+  ),
+  'display-xxl-sbold': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 3.625rem,
+    line-height: 1.241379,
+    letter-spacing: 0
+  ),
+  'h1': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 1.75rem,
+    line-height: 1.285714,
+    letter-spacing: 0
+  ),
+  'h2': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 1.5rem,
+    line-height: 1.333333,
+    letter-spacing: 0
+  ),
+  'h3': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 1.25rem,
+    line-height: 1.2,
+    letter-spacing: 0
+  ),
+  'h4': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 1rem,
+    line-height: 1.25,
+    letter-spacing: 0
+  ),
+  'h5': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 0.875rem,
+    line-height: 1.428571,
+    letter-spacing: 0
+  ),
+  'h5-bold': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 700,
+    font-size: 0.875rem,
+    line-height: 1.428571,
+    letter-spacing: 0
+  ),
+  'h6': (
+    font-family: (
+      'SiemensSans Pro VF',
+      'SiemensSans Pro',
+      helvetica,
+      arial,
+      sans-serif
+    ),
+    font-weight: 600,
+    font-size: 0.75rem,
+    line-height: 1.333333,
+    letter-spacing: 0
+  )
+);
+
+/// Apply a typography token by name.
+///
+/// @example scss
+///   .my-heading { @include full-typography(h1); }
+///
+/// @param {String} $name - Typography key (e.g. `body-sm`, `h1`).
+@mixin typography($name) {
+  $config: map.get($si-typography, $name);
+  @if $config == null {
+    @error "Unknown typography token '#{$name}'. Available: #{map.keys($si-typography)}.";
+  }
+  @each $prop, $value in $config {
+    #{$prop}: $value;
+  }
+}

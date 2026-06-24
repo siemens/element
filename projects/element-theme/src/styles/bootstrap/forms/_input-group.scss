@@ -1,4 +1,5 @@
 @use '../variables';
+@use '../../variables/typography';
 
 @use 'sass:string';
 @use 'sass:map';
@@ -49,9 +50,7 @@
   align-items: center;
   padding-block: variables.$input-group-addon-padding-y;
   padding-inline: variables.$input-group-addon-padding-x;
-  font-size: variables.$input-font-size; // Match inputs
-  font-weight: variables.$input-group-addon-font-weight;
-  line-height: variables.$input-line-height;
+  @include typography.sdl-font(variables.$input-font);
   color: variables.$input-group-addon-color;
   text-align: center;
   white-space: nowrap;

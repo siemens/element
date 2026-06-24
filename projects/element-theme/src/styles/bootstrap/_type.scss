@@ -33,11 +33,7 @@
 }
 
 .lead {
-  @include typography.si-font(
-    variables.$lead-font-size,
-    variables.$lead-line-height,
-    variables.$lead-font-weight
-  );
+  @include typography.sdl-font(body-lg);
 }
 
 //
@@ -105,11 +101,7 @@
 h1,
 .h1,
 .si-h1 {
-  @include typography.si-font(
-    typography.$si-font-size-h1,
-    typography.$si-line-height-h1,
-    typography.$si-font-weight-h1
-  );
+  @include typography.sdl-font(h1);
 }
 
 .si-h1-bold {
@@ -123,21 +115,13 @@ h1,
 h2,
 .h2,
 .si-h2 {
-  @include typography.si-font(
-    typography.$si-font-size-h2,
-    typography.$si-line-height-h2,
-    typography.$si-font-weight-h2
-  );
+  @include typography.sdl-font(h2);
 }
 
 h3,
 .h3,
 .si-h3 {
-  @include typography.si-font(
-    typography.$si-font-size-h3,
-    typography.$si-line-height-h3,
-    typography.$si-font-weight-h3
-  );
+  @include typography.sdl-font(h3);
 }
 
 .si-h4-bold {
@@ -151,29 +135,23 @@ h3,
 h4,
 .h4,
 .si-h4 {
-  @include typography.si-font(
-    typography.$si-font-size-h4,
-    typography.$si-line-height-h4,
-    typography.$si-font-weight-h4
-  );
+  @include typography.sdl-font(h4);
 }
 
 .si-h5-bold {
-  @include typography.si-font(
-    typography.$si-font-size-h5-bold,
-    typography.$si-line-height-h5-bold,
-    typography.$si-font-weight-h5-bold
-  );
+  @include typography.sdl-font(h5-bold);
 }
 
 h5,
 .h5,
 .si-h5 {
-  @include typography.si-font(
-    typography.$si-font-size-h5,
-    typography.$si-line-height-h5,
-    typography.$si-font-weight-h5
-  );
+  @include typography.sdl-font(h5);
+}
+
+h6,
+.h6,
+.si-h6 {
+  @include typography.sdl-font(h6);
 }
 
 h6,
@@ -187,19 +165,11 @@ h6,
 }
 
 .si-body-lg {
-  @include typography.si-font(
-    typography.$si-font-size-body-lg,
-    typography.$si-line-height-body-lg,
-    typography.$si-font-weight-body-lg
-  );
+  @include typography.sdl-font(body-lg);
 }
 
 .si-body {
-  @include typography.si-font(
-    typography.$si-font-size-body,
-    typography.$si-line-height-body,
-    typography.$si-font-weight-body
-  );
+  @include typography.sdl-font(body);
 }
 
 .si-body-paragraph {
@@ -228,11 +198,7 @@ h6,
 
 .si-display-xl,
 .display-1 {
-  @include typography.si-font(
-    typography.$si-font-size-display-xl,
-    typography.$si-line-height-display-xl,
-    typography.$si-font-weight-display-xl
-  );
+  @include typography.sdl-font(display-xl);
 }
 
 .si-display-xxl {
@@ -245,29 +211,17 @@ h6,
 
 .si-display-lg,
 .display-2 {
-  @include typography.si-font(
-    typography.$si-font-size-display-lg,
-    typography.$si-line-height-display-lg,
-    typography.$si-font-weight-display-lg
-  );
+  @include typography.sdl-font(display-lg);
 }
 
 .si-display-bold,
 .display-3 {
-  @include typography.si-font(
-    typography.$si-font-size-display-bold,
-    typography.$si-line-height-display-bold,
-    typography.$si-font-weight-display-bold
-  );
+  @include typography.sdl-font(display-sbold);
 }
 
 .si-display,
 .display-4 {
-  @include typography.si-font(
-    typography.$si-font-size-display,
-    typography.$si-line-height-display,
-    typography.$si-font-weight-display
-  );
+  @include typography.sdl-font(display);
 }
 
 .si-code-sm,

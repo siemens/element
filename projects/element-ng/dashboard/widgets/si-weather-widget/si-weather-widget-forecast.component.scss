@@ -6,11 +6,7 @@
 // day range — matches the today min/max sizing.
 .si-weather-widget-forecast-range,
 .si-weather-widget-forecast.si-weather-widget-horizontal .si-weather-widget-forecast-day-range {
-  @include typography.si-font(
-    typography.$si-font-size-body-lg,
-    typography.$si-line-height-body-lg,
-    typography.$si-font-weight-body-lg
-  );
+  @include typography.sdl-font(body-lg);
 }
 
 // Horizontal-day min/max wrapper. The forecast component owns its own copy of

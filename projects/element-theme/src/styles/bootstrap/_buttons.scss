@@ -263,11 +263,7 @@ button {
   --btn-border-color-hover: #{bootstrap-variables.$input-focus-border-color};
   --btn-border-color-active: #{bootstrap-variables.$input-focus-border-color};
 
-  @include typography.si-font(
-    bootstrap-variables.$input-font-size,
-    bootstrap-variables.$input-line-height,
-    bootstrap-variables.$input-font-weight
-  );
+  @include typography.sdl-font(bootstrap-variables.$input-font);
   padding-block: bootstrap-variables.$input-padding-y;
   padding-inline: bootstrap-variables.$input-padding-x;
 
