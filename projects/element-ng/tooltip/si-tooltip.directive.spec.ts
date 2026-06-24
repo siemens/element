@@ -5,11 +5,17 @@
 import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { userEvent } from 'vitest/browser';
 
 import { SiTooltipModule } from './si-tooltip.module';
 
 describe('SiTooltipDirective', () => {
+  // NOTE: Do NOT use `userEvent.hover()` to trigger hover behavior here. In browser
+  // mode it moves the real OS cursor and parks it over the element. Because the
+  // cursor position persists across tests, a button rendered at the same
+  // coordinates in a later test receives a spurious real `mouseenter`, which starts
+  // the hover tooltip timer and makes the focus-based tests flaky. Dispatch a
+  // synthetic `new MouseEvent('mouseenter')` instead (the `:hover` state is mocked
+  // via `button.matches`, so real hover is not needed).
   beforeEach(() => {
     vi.useFakeTimers();
     vi.setTimerTickMode('nextTimerAsync');
@@ -97,7 +103,7 @@ describe('SiTooltipDirective', () => {
 
     it('should cancel the pending hover tooltip on focusout', async () => {
       vi.setTimerTickMode('manual');
-      await userEvent.hover(button);
+      button.dispatchEvent(new MouseEvent('mouseenter'));
       vi.advanceTimersByTime(250);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
@@ -112,7 +118,7 @@ describe('SiTooltipDirective', () => {
     });
 
     it('should hide a hover-visible tooltip on focusout', async () => {
-      await userEvent.hover(button);
+      button.dispatchEvent(new MouseEvent('mouseenter'));
       vi.advanceTimersByTime(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).toBeInTheDocument();
@@ -123,7 +129,7 @@ describe('SiTooltipDirective', () => {
     });
 
     it('should hide the tooltip on touchstart', async () => {
-      await userEvent.hover(button);
+      button.dispatchEvent(new MouseEvent('mouseenter'));
       vi.advanceTimersByTime(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).toBeInTheDocument();
