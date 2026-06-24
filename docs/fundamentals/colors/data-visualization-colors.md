@@ -80,6 +80,15 @@ of the data in a scale such as poor, average, and good.
 
 ### Sequential colors
 
+#### Data avocado
+
+| Value light                                                  | Value dark                                                   | Token                     | Associated color - light         | Associated color - dark          |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------- | -------------------------------- | -------------------------------- |
+| <si-docs-color style="background: #9EC625;"></si-docs-color> | <si-docs-color style="background: #D1E98A;"></si-docs-color> | `$element-data-avocado-1` | `$si-ref-color-data-avocado-400` | `$si-ref-color-data-avocado-200` |
+| <si-docs-color style="background: #637D17;"></si-docs-color> | <si-docs-color style="background: #9EC625;"></si-docs-color> | `$element-data-avocado-2` | `$si-ref-color-data-avocado-500` | `$si-ref-color-data-avocado-400` |
+| <si-docs-color style="background: #435410;"></si-docs-color> | <si-docs-color style="background: #637D17;"></si-docs-color> | `$element-data-avocado-3` | `$si-ref-color-data-avocado-700` | `$si-ref-color-data-avocado-500` |
+| <si-docs-color style="background: #2E3A0A;"></si-docs-color> | <si-docs-color style="background: #435410;"></si-docs-color> | `$element-data-avocado-4` | `$si-ref-color-data-avocado-900` | `$si-ref-color-data-avocado-700` |
+
 #### Data green
 
 | Value light                                                  | Value dark                                                   | Token                   | Associated color - light       | Associated color - dark        |
@@ -107,6 +116,24 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #007082;"></si-docs-color> | <si-docs-color style="background: #00A3AB;"></si-docs-color> | `$element-data-interactive-coral-3` | `$si-ref-color-data-interactive-coral-700` | `$si-ref-color-data-interactive-coral-500` |
 | <si-docs-color style="background: #002949;"></si-docs-color> | <si-docs-color style="background: #007082;"></si-docs-color> | `$element-data-interactive-coral-4` | `$si-ref-color-data-interactive-coral-900` | `$si-ref-color-data-interactive-coral-700` |
 
+#### Data blue
+
+| Value light                                                  | Value dark                                                   | Token                  | Associated color - light      | Associated color - dark       |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------- | ----------------------------- | ----------------------------- |
+| <si-docs-color style="background: #4DD1E7;"></si-docs-color> | <si-docs-color style="background: #80DFED;"></si-docs-color> | `$element-data-blue-1` | `$si-ref-color-data-blue-400` | `$si-ref-color-data-blue-200` |
+| <si-docs-color style="background: #00BEDC;"></si-docs-color> | <si-docs-color style="background: #4DD1E7;"></si-docs-color> | `$element-data-blue-2` | `$si-ref-color-data-blue-500` | `$si-ref-color-data-blue-400` |
+| <si-docs-color style="background: #0087BE;"></si-docs-color> | <si-docs-color style="background: #00BEDC;"></si-docs-color> | `$element-data-blue-3` | `$si-ref-color-data-blue-700` | `$si-ref-color-data-blue-500` |
+| <si-docs-color style="background: #00557C;"></si-docs-color> | <si-docs-color style="background: #0087BE;"></si-docs-color> | `$element-data-blue-4` | `$si-ref-color-data-blue-900` | `$si-ref-color-data-blue-700` |
+
+#### Data royal blue
+
+| Value light                                                  | Value dark                                                   | Token                        | Associated color - light            | Associated color - dark             |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------- | ----------------------------------- | ----------------------------------- |
+| <si-docs-color style="background: #97C7FF;"></si-docs-color> | <si-docs-color style="background: #B2E0FF;"></si-docs-color> | `$element-data-royal-blue-1` | `$si-ref-color-data-royal-blue-400` | `$si-ref-color-data-royal-blue-200` |
+| <si-docs-color style="background: #6895F6;"></si-docs-color> | <si-docs-color style="background: #97C7FF;"></si-docs-color> | `$element-data-royal-blue-2` | `$si-ref-color-data-royal-blue-500` | `$si-ref-color-data-royal-blue-400` |
+| <si-docs-color style="background: #3664C6;"></si-docs-color> | <si-docs-color style="background: #6895F6;"></si-docs-color> | `$element-data-royal-blue-3` | `$si-ref-color-data-royal-blue-700` | `$si-ref-color-data-royal-blue-500` |
+| <si-docs-color style="background: #00237A;"></si-docs-color> | <si-docs-color style="background: #3664C6;"></si-docs-color> | `$element-data-royal-blue-4` | `$si-ref-color-data-royal-blue-900` | `$si-ref-color-data-royal-blue-700` |
+
 #### Data purple
 
 | Value light                                                  | Value dark                                                   | Token                    | Associated color - light        | Associated color - dark         |
@@ -115,6 +142,15 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #805CFF;"></si-docs-color> | <si-docs-color style="background: #A68DFF;"></si-docs-color> | `$element-data-purple-2` | `$si-ref-color-data-purple-500` | `$si-ref-color-data-purple-400` |
 | <si-docs-color style="background: #7353E5;"></si-docs-color> | <si-docs-color style="background: #805CFF;"></si-docs-color> | `$element-data-purple-3` | `$si-ref-color-data-purple-700` | `$si-ref-color-data-purple-500` |
 | <si-docs-color style="background: #553BA3;"></si-docs-color> | <si-docs-color style="background: #7353E5;"></si-docs-color> | `$element-data-purple-4` | `$si-ref-color-data-purple-900` | `$si-ref-color-data-purple-700` |
+
+#### Data orchid
+
+| Value light                                                  | Value dark                                                   | Token                    | Associated color - light        | Associated color - dark         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------ | ------------------------------- | ------------------------------- |
+| <si-docs-color style="background: #B95CC9;"></si-docs-color> | <si-docs-color style="background: #D59CDE;"></si-docs-color> | `$element-data-orchid-1` | `$si-ref-color-data-orchid-400` | `$si-ref-color-data-orchid-200` |
+| <si-docs-color style="background: #A733BC;"></si-docs-color> | <si-docs-color style="background: #B95CC9;"></si-docs-color> | `$element-data-orchid-2` | `$si-ref-color-data-orchid-500` | `$si-ref-color-data-orchid-400` |
+| <si-docs-color style="background: #740089;"></si-docs-color> | <si-docs-color style="background: #A733BC;"></si-docs-color> | `$element-data-orchid-3` | `$si-ref-color-data-orchid-700` | `$si-ref-color-data-orchid-500` |
+| <si-docs-color style="background: #52245C;"></si-docs-color> | <si-docs-color style="background: #740089;"></si-docs-color> | `$element-data-orchid-4` | `$si-ref-color-data-orchid-900` | `$si-ref-color-data-orchid-700` |
 
 #### Data plum
 
@@ -143,6 +179,15 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #E57700;"></si-docs-color> | <si-docs-color style="background: #E57700;"></si-docs-color> | `$element-data-orange-3` | `$si-ref-color-data-orange-500` | `$si-ref-color-data-orange-500` |
 | <si-docs-color style="background: #BC551E;"></si-docs-color> | <si-docs-color style="background: #BC551E;"></si-docs-color> | `$element-data-orange-4` | `$si-ref-color-data-orange-700` | `$si-ref-color-data-orange-700` |
 
+#### Data yellow
+
+| Value light                                                  | Value dark                                                   | Token                    | Associated color - light        | Associated color - dark         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------ | ------------------------------- | ------------------------------- |
+| <si-docs-color style="background: #FFD732;"></si-docs-color> | <si-docs-color style="background: #FFE784;"></si-docs-color> | `$element-data-yellow-1` | `$si-ref-color-data-yellow-400` | `$si-ref-color-data-yellow-200` |
+| <si-docs-color style="background: #E5BD19;"></si-docs-color> | <si-docs-color style="background: #FFD732;"></si-docs-color> | `$element-data-yellow-2` | `$si-ref-color-data-yellow-500` | `$si-ref-color-data-yellow-400` |
+| <si-docs-color style="background: #B28A00;"></si-docs-color> | <si-docs-color style="background: #E5BD19;"></si-docs-color> | `$element-data-yellow-3` | `$si-ref-color-data-yellow-700` | `$si-ref-color-data-yellow-500` |
+| <si-docs-color style="background: #805800;"></si-docs-color> | <si-docs-color style="background: #B28A00;"></si-docs-color> | `$element-data-yellow-4` | `$si-ref-color-data-yellow-900` | `$si-ref-color-data-yellow-700` |
+
 #### Data sand
 
 | Value light                                                  | Value dark                                                   | Token                  | Associated color - light      | Associated color - dark       |
@@ -151,6 +196,15 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #AAAA96;"></si-docs-color> | <si-docs-color style="background: #C5C5B8;"></si-docs-color> | `$element-data-sand-2` | `$si-ref-color-data-sand-500` | `$si-ref-color-data-sand-400` |
 | <si-docs-color style="background: #757563;"></si-docs-color> | <si-docs-color style="background: #AAAA96;"></si-docs-color> | `$element-data-sand-3` | `$si-ref-color-data-sand-700` | `$si-ref-color-data-sand-500` |
 | <si-docs-color style="background: #5E5E4A;"></si-docs-color> | <si-docs-color style="background: #757563;"></si-docs-color> | `$element-data-sand-4` | `$si-ref-color-data-sand-900` | `$si-ref-color-data-sand-700` |
+
+#### Data deep blue
+
+| Value light                                                  | Value dark                                                   | Token                       | Associated color - light           | Associated color - dark            |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | --------------------------- | ---------------------------------- | ---------------------------------- |
+| <si-docs-color style="background: #9999A9;"></si-docs-color> | <si-docs-color style="background: #CCCCD4;"></si-docs-color> | `$element-data-deep-blue-1` | `$si-ref-color-data-deep-blue-400` | `$si-ref-color-data-deep-blue-200` |
+| <si-docs-color style="background: #7D8099;"></si-docs-color> | <si-docs-color style="background: #9999A9;"></si-docs-color> | `$element-data-deep-blue-2` | `$si-ref-color-data-deep-blue-500` | `$si-ref-color-data-deep-blue-400` |
+| <si-docs-color style="background: #4C4C68;"></si-docs-color> | <si-docs-color style="background: #7D8099;"></si-docs-color> | `$element-data-deep-blue-3` | `$si-ref-color-data-deep-blue-700` | `$si-ref-color-data-deep-blue-500` |
+| <si-docs-color style="background: #262648;"></si-docs-color> | <si-docs-color style="background: #4C4C68;"></si-docs-color> | `$element-data-deep-blue-4` | `$si-ref-color-data-deep-blue-900` | `$si-ref-color-data-deep-blue-700` |
 
 ## Color palette ---
 
