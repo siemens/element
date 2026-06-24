@@ -42,7 +42,7 @@ class BrowserTooltipRef {
 
   constructor(
     private config: {
-      describedBy: string;
+      describedBy?: string;
       element: ElementRef;
       injector?: Injector;
       overlay: Overlay;
@@ -191,7 +191,7 @@ export class SiTooltipService {
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   createTooltip(config: {
-    describedBy: string;
+    describedBy?: string;
     element: ElementRef;
     placement: keyof typeof positions;
     injector?: Injector;

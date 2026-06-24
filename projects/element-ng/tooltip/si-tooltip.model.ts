@@ -8,7 +8,7 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 export type SiTooltipContent = TranslatableString | TemplateRef<any> | Type<any> | null | undefined;
 
 export interface SiTooltipConfig {
-  id: string;
+  id?: string;
   tooltip: () => SiTooltipContent;
   tooltipContext: () => unknown;
 }
