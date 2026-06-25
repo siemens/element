@@ -104,7 +104,8 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
         providers: [{ provide: SI_FORM_VALIDATION_TOOLTIP_DATA, useValue: this.errors }]
       }),
       tooltip: () => SiFormValidationTooltipComponent,
-      tooltipContext: () => undefined
+      // Not actually used, but errors in the context triggers a resize if the errors changes.
+      tooltipContext: () => this.errors()
     });
   }
 

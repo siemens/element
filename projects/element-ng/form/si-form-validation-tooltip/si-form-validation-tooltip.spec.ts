@@ -2,10 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { Overlay } from '@angular/cdk/overlay';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { SiFormValidationTooltipHarness } from '../testing/si-form-validation-tooltip.harness';
 import { SiFormValidationTooltipDirective } from './si-form-validation-tooltip.directive';
@@ -79,5 +80,25 @@ describe('SiFormValidationTooltipDirective', () => {
     fixture.componentInstance.control.markAsUntouched();
     await fixture.whenStable();
     expect(await harness.getTooltip()).toBeFalsy();
+  });
+
+  it('should reposition the overlay when the validation errors change while open', async () => {
+    const control = fixture.componentInstance.control;
+    control.addValidators(Validators.minLength(5));
+    const createSpy = vi.spyOn(Overlay.prototype, 'create');
+
+    control.markAsTouched();
+    await fixture.whenStable();
+    await harness.focus();
+    expect(await harness.getTooltip()).toBe('Required');
+
+    const overlayRef = createSpy.mock.results.at(-1)!.value as ReturnType<Overlay['create']>;
+    const repositionSpy = vi.spyOn(overlayRef, 'updatePosition');
+
+    await harness.sendKeys('ab');
+    await fixture.whenStable();
+    expect(await harness.getTooltip()).toBe('Min. 5 characters');
+
+    expect(repositionSpy).toHaveBeenCalled();
   });
 });

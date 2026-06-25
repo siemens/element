@@ -151,7 +151,12 @@ class BrowserTooltipRef {
       return;
     }
 
-    const toolTipPortal = new ComponentPortal(TooltipComponent, undefined, this.config.injector);
+    const injector = Injector.create({
+      parent: this.config.injector,
+      providers: [{ provide: OverlayRef, useValue: overlayRef }]
+    });
+
+    const toolTipPortal = new ComponentPortal(TooltipComponent, undefined, injector);
     const tooltipRef: ComponentRef<TooltipComponent> = overlayRef.attach(toolTipPortal);
 
     const positionStrategy = getPositionStrategy(overlayRef);

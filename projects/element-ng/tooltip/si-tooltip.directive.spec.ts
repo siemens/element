@@ -150,6 +150,22 @@ describe('SiTooltipDirective', () => {
 
       expect(document.querySelector('.tooltip')).toHaveTextContent('updated tooltip');
     });
+
+    it('should reposition the overlay when content changes while open', async () => {
+      const createSpy = vi.spyOn(Overlay.prototype, 'create');
+
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
+      await fixture.whenStable();
+
+      const overlayRef = createSpy.mock.results.at(-1)!.value as ReturnType<Overlay['create']>;
+      const repositionSpy = vi.spyOn(overlayRef, 'updatePosition');
+
+      component.tooltipText.set('a much longer tooltip text that changes the width');
+      await fixture.whenStable();
+
+      expect(repositionSpy).toHaveBeenCalled();
+    });
   });
 
   describe('with template', () => {
