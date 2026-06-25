@@ -7,9 +7,7 @@
         <button
           type="button"
           class="btn ms-auto"
-          [class]="
-            showEditButtonLabelDesktop ? 'btn-secondary' : 'btn-icon btn-tertiary element-edit'
-          "
+          [class]="showEditButtonLabelDesktop ? 'btn-secondary' : 'btn-icon btn-tertiary'"
           [attr.aria-label]="labelEdit | translate"
           [siTooltip]="labelEdit"
           [isDisabled]="showEditButtonLabelDesktop"
@@ -18,6 +16,8 @@
         >
           @if (showEditButtonLabelDesktop) {
             {{ labelEdit | translate }}
+          } @else {
+            <si-icon [icon]="icons.elementEdit" />
           }
         </button>
       }
