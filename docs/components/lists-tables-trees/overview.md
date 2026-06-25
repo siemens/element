@@ -128,6 +128,7 @@ the header and the rows, showing how many items are selected and what actions ar
 
 - Checkboxes are used exclusively for bulk selection, row selection is disabled while bulk edit mode is active.
 - When all checkboxes are deselected, the table returns to its default state.
+- When horizontal space is limited, actions in the summary row should collapse into an overflow menu.
 
 ![Bulk actions](images/table-bulk-actions.png)
 
