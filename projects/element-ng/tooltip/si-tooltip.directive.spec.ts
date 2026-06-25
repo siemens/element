@@ -3,11 +3,19 @@
  * SPDX-License-Identifier: MIT
  */
 import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  signal,
+  viewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { page } from 'vitest/browser';
 
 import { SiTooltipModule } from './si-tooltip.module';
+import { SiTooltipService } from './si-tooltip.service';
 
 describe('SiTooltipDirective', () => {
   // NOTE: Do NOT use `userEvent.hover()` to trigger hover behavior here. In browser
@@ -213,6 +221,73 @@ describe('SiTooltipDirective', () => {
       await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
       await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('with ElementRef', () => {
+    let fixture: ComponentFixture<TestHostComponent>;
+    let component: TestHostComponent;
+    let button: HTMLButtonElement;
+
+    @Component({
+      template: `<button #anchor type="button">Test</button>
+        <div #content>{{ contentText() }}</div>`,
+      providers: [SiTooltipService],
+      changeDetection: ChangeDetectionStrategy.OnPush
+    })
+    class TestHostComponent {
+      readonly contentText = signal('node tooltip');
+      readonly anchor = viewChild.required<ElementRef<HTMLButtonElement>>('anchor');
+      readonly content = viewChild.required<ElementRef<HTMLDivElement>>('content');
+      private readonly tooltipService = inject(SiTooltipService);
+
+      createTooltip(): void {
+        this.tooltipService.createTooltip({
+          element: this.anchor(),
+          placement: 'auto',
+          tooltip: this.content,
+          tooltipContext: () => undefined
+        });
+      }
+    }
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TestHostComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      button = component.anchor().nativeElement;
+      vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
+      component.createTooltip();
+    });
+
+    it('should read the referenced node text content when shown and re-read after updates', async () => {
+      // show tooltip
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
+      await fixture.whenStable();
+
+      // confirm correct content
+      await expect.element(page.getByRole('tooltip', { name: 'node tooltip' })).toBeInTheDocument();
+
+      // hide tooltip
+      button.dispatchEvent(new FocusEvent('focusout'));
+      await vi.advanceTimersByTimeAsync(500);
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+
+      // update dom node text
+      component.contentText.set('updated node tooltip');
+      await fixture.whenStable();
+
+      // show tooltip again
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
+      await fixture.whenStable();
+
+      // confirm updated content
+      await expect
+        .element(page.getByRole('tooltip', { name: 'updated node tooltip' }))
+        .toBeInTheDocument();
     });
   });
 
