@@ -2,9 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { ConnectedOverlayPositionChange, OverlayRef } from '@angular/cdk/overlay';
 import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
 import {
+  afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -34,6 +35,26 @@ export class TooltipComponent {
 
   protected readonly config = inject(SI_TOOLTIP_CONFIG);
   private readonly elementRef = inject(ElementRef);
+  private readonly overlayRef = inject(OverlayRef);
+
+  private lastPositionChange?: ConnectedOverlayPositionChange;
+  private lastAnchor?: ElementRef;
+
+  constructor() {
+    let isFirstRun = true;
+    afterRenderEffect(() => {
+      this.config.tooltip();
+      this.config.tooltipContext();
+      if (isFirstRun) {
+        isFirstRun = false;
+        return;
+      }
+      this.overlayRef.updatePosition();
+      if (this.lastPositionChange) {
+        this.updateTooltipPosition(this.lastPositionChange, this.lastAnchor);
+      }
+    });
+  }
 
   protected readonly tooltipText = computed<string | null>(() => {
     const tooltip = this.config.tooltip();
@@ -52,6 +73,8 @@ export class TooltipComponent {
 
   /** @internal */
   updateTooltipPosition(change: ConnectedOverlayPositionChange, anchor?: ElementRef): void {
+    this.lastPositionChange = change;
+    this.lastAnchor = anchor;
     const arrowClassTooltip = `tooltip-${change.connectionPair.overlayX}-${change.connectionPair.overlayY}`;
     // need two updates as class changes affect the position
     if (arrowClassTooltip !== this.tooltipPositionClass()) {
