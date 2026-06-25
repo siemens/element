@@ -120,6 +120,17 @@ This functionality allows users to hide and reorder columns based on their use c
 
 ![Column management](images/table-column-management.png)
 
+### Bulk actions
+
+Checkboxes let users select multiple items and act on them at once.
+When at least one row is checked, the table enters bulk edit mode and a summary row appears between
+the header and the rows, showing how many items are selected and what actions are available.
+
+- Checkboxes are used exclusively for bulk selection, row selection is disabled while bulk edit mode is active.
+- When all checkboxes are deselected, the table returns to its default state.
+
+![Bulk actions](images/table-bulk-actions.png)
+
 ### Footer
 
 Use the footer to display the total number of entries in the table, for example `125 entries`.
