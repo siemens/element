@@ -44,7 +44,7 @@ export class SiTreeViewItemDirective implements AfterViewInit, OnDestroy {
         this.differ = this.differs.find(value).create((_index, item) => item);
       }
     }
-    this.evaluateDiffer();
+    queueMicrotask(() => this.evaluateDiffer());
 
     this.subscription = this.parent.evaluateForTreeItemsDiffer.subscribe(_ =>
       this.evaluateDiffer()
