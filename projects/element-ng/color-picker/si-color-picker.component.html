@@ -26,38 +26,32 @@
   (backdropClick)="overlayDetach()"
   (detach)="overlayDetach()"
 >
-  <div #colorPaletteRef role="grid" class="colors elevation-1 rounded-2 bg-base-1 p-4 mt-1">
-    <div role="row" class="colors-row gap-4">
-      @for (paint of colorPalette(); track $index) {
-        <div role="gridcell" class="swatch">
-          <input
-            #swatchInput
-            type="radio"
-            name="color"
-            class="btn-check"
-            [id]="paint"
-            [attr.aria-label]="paint"
-            [value]="paint"
-            [checked]="color() === paint"
-            (change)="selectColor(paint)"
-            (keydown.enter)="selectColor(paint)"
-            (keydown.arrowUp)="arrowUp($index, $event)"
-            (keydown.arrowDown)="arrowDown($index, $event)"
-            (keydown.arrowLeft)="arrowLeft($index, $event)"
-            (keydown.arrowRight)="arrowRight($index, $event)"
-            (keydown.tab)="overlayDetach()"
-          />
-          <label
-            class="color-box swatch-label"
-            [attr.for]="paint"
-            [style.background]="'var(--' + paint + ')'"
+  <div
+    #colorPaletteRef
+    ngGrid
+    selectionMode="explicit"
+    colWrap="continuous"
+    class="colors elevation-1 rounded-2 bg-base-1 p-4 mt-1 d-flex flex-column gap-4"
+    [enableSelection]="true"
+    (keydown.tab)="overlayDetach()"
+  >
+    @for (row of colorRows(); track $index) {
+      <div ngGridRow class="colors-row gap-4">
+        @for (paint of row; track paint.value) {
+          <div
+            ngGridCell
+            class="color-box"
+            [attr.aria-label]="paint.value"
+            [style.background]="'var(--' + paint.value + ')'"
+            [(selected)]="paint.selected"
+            (selectedChange)="selectColor(paint.value)"
           >
-            @if (color() === paint) {
+            @if (color() === paint.value) {
               <si-icon class="icon text-inverse p-1" [icon]="icons.elementOk" />
             }
-          </label>
-        </div>
-      }
-    </div>
+          </div>
+        }
+      </div>
+    }
   </div>
 </ng-template>

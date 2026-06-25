@@ -37,7 +37,7 @@
 # Grid
 
 - should be used internally for navigating in 2 dimensional elements
-- launchpad, datepicker, ngx-datatable (in upstream)
+- launchpad, datepicker, color picker ngx-datatable (in upstream)
 
 # Tree
 

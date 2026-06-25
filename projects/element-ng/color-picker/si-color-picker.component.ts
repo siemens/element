@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { Grid, GridCell, GridRow } from '@angular/aria/grid';
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
@@ -11,12 +12,13 @@ import {
   input,
   model,
   signal,
+  untracked,
   viewChild,
-  viewChildren
+  viewChildren,
+  WritableSignal
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { elementOk } from '@siemens/element-icons';
-import { isRTL } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -42,9 +44,25 @@ const defaultDataColors: string[] = [
   'element-data-15',
   'element-data-16'
 ];
+
+/** A single color swatch with its own selection state. */
+interface ColorSwatch {
+  /** The color token, e.g. a CSS variable name without the `--` prefix. */
+  value: string;
+  /** Whether this swatch is currently selected. */
+  selected: WritableSignal<boolean>;
+}
 @Component({
   selector: 'si-color-picker',
-  imports: [SiIconComponent, SiTranslatePipe, CdkConnectedOverlay, CdkOverlayOrigin],
+  imports: [
+    SiIconComponent,
+    SiTranslatePipe,
+    CdkConnectedOverlay,
+    CdkOverlayOrigin,
+    Grid,
+    GridRow,
+    GridCell
+  ],
   templateUrl: './si-color-picker.component.html',
   styleUrl: './si-color-picker.component.scss',
   providers: [
@@ -106,9 +124,9 @@ export class SiColorPickerComponent implements ControlValueAccessor {
 
   private readonly colorInputRef =
     viewChild.required<ElementRef<HTMLInputElement>>('colorInputBox');
-  private readonly swatchInputs = viewChildren<ElementRef<HTMLInputElement>>('swatchInput');
-  private readonly selectedSwatchInput = computed(() =>
-    this.swatchInputs().find(swatchInput => swatchInput.nativeElement.checked)
+  private readonly swatchCells = viewChildren(GridCell);
+  private readonly selectedCell = computed(() =>
+    this.swatchCells().find(cell => cell.selected())
   );
   private readonly disabledNgControl = signal(false);
   private readonly numberOfColumns = 4;
@@ -116,41 +134,25 @@ export class SiColorPickerComponent implements ControlValueAccessor {
   protected readonly isOverlayOpen = signal(false);
   protected readonly icons = addIcons({ elementOk });
 
+  /** The color palette arranged into rows for the grid layout. */
+  protected readonly colorRows = computed(() => {
+    const palette = this.colorPalette();
+    const selectedColor = untracked(this.color);
+    const rows: ColorSwatch[][] = [];
+    for (let i = 0; i < palette.length; i += this.numberOfColumns) {
+      rows.push(
+        palette
+          .slice(i, i + this.numberOfColumns)
+          .map(value => ({ value, selected: signal(value === selectedColor) }))
+      );
+    }
+    return rows;
+  });
+
   protected blur(): void {
     if (!this.autoClose()) {
       this.onTouched();
     }
-  }
-
-  protected arrowDown(index: number, event: Event): void {
-    const nextIndex = index + this.numberOfColumns;
-    this.focusLabel(nextIndex);
-    event.preventDefault();
-  }
-
-  protected arrowUp(index: number, event: Event): void {
-    const prevIndex = index - this.numberOfColumns;
-    this.focusLabel(prevIndex);
-    event.preventDefault();
-  }
-
-  protected arrowLeft(index: number, event: Event): void {
-    const prevIndex = index + (isRTL() ? 1 : -1);
-    this.focusLabel(prevIndex);
-    event.preventDefault();
-  }
-
-  protected arrowRight(index: number, event: Event): void {
-    const prevIndex = index + (isRTL() ? -1 : +1);
-    this.focusLabel(prevIndex);
-    event.preventDefault();
-  }
-
-  private focusLabel(index: number): void {
-    const labels = this.swatchInputs();
-    const totalSwatches = labels.length;
-    const normalizedIndex = (index + totalSwatches) % totalSwatches;
-    labels[normalizedIndex].nativeElement.focus();
   }
 
   protected openOverlay(): void {
@@ -167,7 +169,7 @@ export class SiColorPickerComponent implements ControlValueAccessor {
 
   private focusSelectedColor(): void {
     setTimeout(() => {
-      this.selectedSwatchInput()?.nativeElement.focus();
+      (this.selectedCell() ?? this.swatchCells()[0])?.element.focus();
     });
   }
 
