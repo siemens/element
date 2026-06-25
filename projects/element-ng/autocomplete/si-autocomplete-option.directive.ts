@@ -3,15 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { Option } from '@angular/aria/listbox';
-import { booleanAttribute, Directive, inject, input } from '@angular/core';
+import { booleanAttribute, Directive, input } from '@angular/core';
 
 @Directive({
   selector: '[siAutocompleteOption]',
-  /*host: {
-    role: 'option',
-    '[id]': 'id()',
-    '[attr.aria-disabled]': 'disabledInput()'
-  },*/
   hostDirectives: [
     {
       directive: Option,
@@ -40,22 +35,4 @@ export class SiAutocompleteOptionDirective<T = unknown> {
   }
   /** @defaultValue undefined */
   readonly value = input<T>(undefined, { alias: 'siAutocompleteOption' });
-
-  //@HostBinding('class.active') protected active?: boolean;
-
-  /*@HostListener('click')
-  protected click(): void {
-    this.parent.siAutocompleteOptionSubmitted.emit(this.value());
-  }*/
-
-  /** @internal */
-  /*setActiveStyles(): void {
-    //this.active = true;
-    this.element.nativeElement.scrollIntoView({ block: 'nearest' });
-  }*/
-
-  /** @internal */
-  setInactiveStyles(): void {
-    //this.active = false;
-  }
 }

@@ -3,16 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Listbox } from '@angular/aria/listbox';
-import {
-  ChangeDetectorRef,
-  DestroyRef,
-  Directive,
-  effect,
-  inject,
-  input,
-  OnInit,
-  output
-} from '@angular/core';
+import { afterRenderEffect, Directive, inject, input, output } from '@angular/core';
 
 import { SiAutocompleteDirective } from './si-autocomplete.directive';
 import { AUTOCOMPLETE_LISTBOX } from './si-autocomplete.model';
@@ -20,10 +11,6 @@ import { AUTOCOMPLETE_LISTBOX } from './si-autocomplete.model';
 @Directive({
   selector: '[siAutocompleteListboxFor]',
   providers: [{ provide: AUTOCOMPLETE_LISTBOX, useExisting: SiAutocompleteListboxDirective }],
-  /*host: {
-    role: 'listbox',
-    '[id]': 'id()'
-  },*/
   host: {
     '(click)': 'listboxClick()'
   },
@@ -49,7 +36,7 @@ import { AUTOCOMPLETE_LISTBOX } from './si-autocomplete.model';
   ],
   exportAs: 'siAutocompleteListbox'
 })
-export class SiAutocompleteListboxDirective<T> implements OnInit {
+export class SiAutocompleteListboxDirective<T> {
   /** @defaultValue inject(Listbox) */
   listbox = inject(Listbox);
   private static idCounter = 0;
@@ -68,21 +55,11 @@ export class SiAutocompleteListboxDirective<T> implements OnInit {
 
   readonly siAutocompleteOptionSubmitted = output<T | undefined>();
 
-  /*private keyManager = new ActiveDescendantKeyManager(this.options, this.injector)
-    .withWrap(true)
-    .withVerticalOrientation(true);*/
-
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private destroyRef = inject(DestroyRef);
-
-  ngOnInit(): void {
-    // For some reason, this is needed sometimes. Otherwise, one may get ExpressionChangedAfterItHasBeenCheckedError.
-    queueMicrotask(() => {
-      this.changeDetectorRef.markForCheck();
-      this.autocomplete().listbox.set(this);
-    });
-    this.destroyRef.onDestroy(() => {
-      this.autocomplete().listbox.set(undefined);
+  constructor() {
+    afterRenderEffect(() => {
+      if (this.autocomplete()?.expanded() === true) {
+        this.listbox.scrollActiveItemIntoView();
+      }
     });
   }
 

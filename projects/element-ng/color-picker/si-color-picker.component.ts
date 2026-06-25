@@ -125,9 +125,7 @@ export class SiColorPickerComponent implements ControlValueAccessor {
   private readonly colorInputRef =
     viewChild.required<ElementRef<HTMLInputElement>>('colorInputBox');
   private readonly swatchCells = viewChildren(GridCell);
-  private readonly selectedCell = computed(() =>
-    this.swatchCells().find(cell => cell.selected())
-  );
+  private readonly selectedCell = computed(() => this.swatchCells().find(cell => cell.selected()));
   private readonly disabledNgControl = signal(false);
   private readonly numberOfColumns = 4;
   protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
