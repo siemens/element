@@ -13,8 +13,10 @@ import {
   viewChild
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { elementEdit } from '@siemens/element-icons';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-bar';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
@@ -37,6 +39,7 @@ import { SiGridComponent } from '../grid/si-grid.component';
     SiContentActionBarComponent,
     SiLinkDirective,
     SiLoadingButtonComponent,
+    SiIconComponent,
     RouterLink,
     SiResponsiveContainerDirective,
     SiTranslatePipe,
@@ -49,6 +52,8 @@ import { SiGridComponent } from '../grid/si-grid.component';
   }
 })
 export class SiDashboardToolbarComponent {
+  protected readonly icons = addIcons({ elementEdit });
+
   /**
    * Set primary actions that are in `editable` mode first visible or in
    * the expanded content action bar of the toolbar.

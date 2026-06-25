@@ -9,7 +9,7 @@
   - button "expand"
 - main:
   - heading "Dashboard with a custom library component" [level=2]
-  - button "Edit": 
+  - button "Edit"
   - text: Your own dashboard
   - paragraph: No widgets have been added yet. Start right now and discover the world of widgets.
   - button "Add widget"

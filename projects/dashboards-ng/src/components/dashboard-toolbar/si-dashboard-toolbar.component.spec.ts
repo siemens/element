@@ -4,6 +4,7 @@
  */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { page } from 'vitest/browser';
 
 import { SiDashboardToolbarComponent } from './si-dashboard-toolbar.component';
 
@@ -62,15 +63,19 @@ describe('SiDashboardToolbarComponent', () => {
     expect(component.editable(), 'Save shall not change editable state').toBe(true);
   });
 
-  it('#hideEditButton shall hide the edit button', () => {
+  it('#hideEditButton shall hide the edit button', async () => {
     expect(component.editable()).toBe(false);
-    let editButton = fixture.debugElement.query(By.css('.element-edit'));
-    expect(editButton).not.toBeNull();
-    expect(editButton).toBeDefined();
-    fixture.componentRef.setInput('hideEditButton', true);
-    fixture.detectChanges();
 
-    editButton = fixture.debugElement.query(By.css('.element-edit'));
-    expect(editButton).toBeNull();
+    const editButton = page.getByRole('button', { name: /edit/i });
+    await expect.element(editButton).toBeInTheDocument();
+    expect(editButton.element().querySelector('si-icon')).toHaveAttribute(
+      'data-icon',
+      'elementEdit'
+    );
+
+    fixture.componentRef.setInput('hideEditButton', true);
+    await fixture.whenStable();
+
+    await expect.element(editButton).not.toBeInTheDocument();
   });
 });
