@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-
 import { Tree, callRule } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import { readFileSync } from 'fs';
@@ -158,5 +157,17 @@ describe('to legacy migration', () => {
 
   it('should migrate element classes in inline template', async () => {
     await checkTemplateMigration(['element-class-inline-template.ts']);
+  });
+
+  it('should remove provideIconConfig from a providers array and drop its import', async () => {
+    await checkTemplateMigration(['provide-icon-config.ts']);
+  });
+
+  it('should remove provideIconConfig when it is the sole provider', async () => {
+    await checkTemplateMigration(['provide-icon-config-sole-provider.ts']);
+  });
+
+  it('should remove provideIconConfig but keep other symbols from the same import', async () => {
+    await checkTemplateMigration(['provide-icon-config-mixed-import.ts']);
   });
 });
