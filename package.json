@@ -91,7 +91,7 @@
   ],
   "dependencies": {
     "@angular-architects/module-federation": "21.2.2",
-    "@angular-architects/native-federation": "22.0.1",
+    "@angular-architects/native-federation": "22.0.3",
     "@angular/cdk": "22.0.1",
     "@angular/common": "22.0.1",
     "@angular/core": "22.0.1",
@@ -107,7 +107,7 @@
     "@ngx-translate/core": "16.0.4",
     "@siemens/element-icons": "1.2.0",
     "@siemens/ngx-datatable": "26.2.1",
-    "@softarc/native-federation-node": "^3.3.4",
+    "@softarc/native-federation-orchestrator": "4.4.0",
     "ag-grid-angular": "^35.0.0",
     "ag-grid-community": "^35.0.0",
     "echarts": "6.1.0",

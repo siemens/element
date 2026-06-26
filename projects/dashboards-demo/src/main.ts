@@ -35,15 +35,19 @@ import { environment } from './environments/environment';
      * 4. Register both widget loaders to support mixed federation environments
      */
     const { initFederation } = await import('@angular-architects/native-federation');
-    const { getShared } = await import('@softarc/native-federation-runtime');
 
     const { createInstance } = await import('@module-federation/runtime');
 
     // Step 1: Initialize Native Federation
-    await initFederation();
+    const nfInstance = await initFederation();
 
-    // Step 2: Get shared dependencies for Module Federation interoperability
-    const shared = getShared();
+    // Step 2: Get shared dependencies for Module Federation interoperability.
+    // Import the bridge only after `initFederation()` has installed the import
+    // map, otherwise its transitive Angular imports (e.g. `@angular/common`)
+    // cannot be resolved and bootstrapping fails.
+    const { createGetShared } =
+      await import('@softarc/native-federation-orchestrator/module-federation');
+    const shared = createGetShared(nfInstance.adapters)();
 
     // Step 3: Initialize Module Federation runtime for Webpack-based remotes
     // Note: Consider loading this config dynamically via fetch API for flexibility
