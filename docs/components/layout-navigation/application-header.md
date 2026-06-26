@@ -11,7 +11,13 @@ There are variations of the application header: Standard version and [with launc
 
 ### When to use
 
-If you have up to four primary navigation items
+- To provide a consistent, application-wide shell that anchors branding,
+  identity, and global context across all pages.
+- To expose the application's primary navigation, with up to four top-level
+  navigation items.
+- To give users quick access to global actions and information such as settings,
+  notifications, help, and the user profile.
+- To let users switch between different application contexts via the launchpad.
 
 ## Design ---
 
