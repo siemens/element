@@ -141,11 +141,8 @@ describe(`SiPhotoUploadComponent`, () => {
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     await fixture.whenStable();
-    const modal = document.querySelector('si-modal');
-    expect(modal).toBeInTheDocument();
-    // cannot use vi.useFakeTimers here
-    await new Promise(resolve => setTimeout(resolve, 100)); // Allow cropping lib to process
-    expect(modal?.querySelector('img')).toBeInTheDocument();
+    // expect.poll auto-retries until the cropping lib has decoded the image
+    await expect.poll(() => document.querySelector('si-modal img')).toBeInTheDocument();
   });
 
   it('should apply photo', async () => {
@@ -165,8 +162,9 @@ describe(`SiPhotoUploadComponent`, () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // cannot use vi.useFakeTimers here
-    await new Promise(resolve => setTimeout(resolve, 100)); // Allow cropping lib to process
+    // expect.poll auto-retries until the cropping lib has decoded the image,
+    // so the Apply button produces a cropped result instead of a no-op.
+    await expect.poll(() => document.querySelector('si-modal img')).toBeInTheDocument();
 
     getButton(document.querySelector('si-modal')!, 'Apply').click();
     fixture.detectChanges();
