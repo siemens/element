@@ -10,4 +10,6 @@ export * from './component-property-name.migration.js';
 export * from './element-selector.migration.js';
 export * from './symbol-renaming.migration.js';
 export * from './symbol-removal.migration.js';
+export * from './provider-function-removal.migration.js';
+export * from './import-removal.js';
 export * from './migration.interface.js';

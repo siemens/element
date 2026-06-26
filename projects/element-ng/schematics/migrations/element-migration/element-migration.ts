@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
 import { discoverSourceFiles } from '../../utils/index.js';
@@ -13,6 +12,7 @@ import {
   applyClassMemberReplacementMigration,
   applyComponentPropertyNameMigration,
   applyElementSelectorMigration,
+  applyProviderFunctionRemovalMigration,
   applySymbolRemovalMigration,
   applySymbolRenamingMigration
 } from '../utilities/index.js';
@@ -42,7 +42,8 @@ export const elementMigrationRule = (
         elementSelectorChanges,
         symbolRemovalChanges,
         elementClassChanges,
-        classMemberReplacementChanges
+        classMemberReplacementChanges,
+        providerFunctionRemovalChanges
       } = migrationData;
 
       applyComponentPropertyNameMigration(migrationContext, componentPropertyNameChanges);
@@ -52,6 +53,7 @@ export const elementMigrationRule = (
       applySymbolRemovalMigration(migrationContext, symbolRemovalChanges);
       applyElementClassMigration(migrationContext, elementClassChanges);
       applyClassMemberReplacementMigration(migrationContext, classMemberReplacementChanges);
+      applyProviderFunctionRemovalMigration(migrationContext, providerFunctionRemovalChanges);
 
       tree.commitUpdate(recorder);
     }
