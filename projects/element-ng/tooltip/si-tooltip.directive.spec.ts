@@ -5,6 +5,7 @@
 import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { page } from 'vitest/browser';
 
 import { SiTooltipModule } from './si-tooltip.module';
 
@@ -55,14 +56,13 @@ describe('SiTooltipDirective', () => {
       await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
 
-      expect(document.querySelector('.tooltip')).toBeInTheDocument();
-      expect(document.querySelector('.tooltip')).toHaveTextContent('test tooltip');
+      await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
 
       button.dispatchEvent(new FocusEvent('focusout'));
       await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
 
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
     it('should not show tooltip when disabled', async () => {
@@ -71,34 +71,34 @@ describe('SiTooltipDirective', () => {
 
       button.dispatchEvent(new FocusEvent('focus'));
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
     it('should cancel pending tooltip when disabled while waiting', async () => {
       button.dispatchEvent(new MouseEvent('mouseenter'));
       await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
 
       component.isDisabled.set(true);
       await fixture.whenStable();
 
       await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
     it('should show tooltip on mouse over', async () => {
       button.dispatchEvent(new MouseEvent('mouseenter'));
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
 
       await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
 
       button.dispatchEvent(new MouseEvent('mouseleave'));
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
     it('should cancel the pending hover tooltip on focusout', async () => {
@@ -106,7 +106,7 @@ describe('SiTooltipDirective', () => {
       button.dispatchEvent(new MouseEvent('mouseenter'));
       vi.advanceTimersByTime(250);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
 
       // focusout (e.g. user switched to keyboard navigation) must stop the
       // pending hover timer so the tooltip never appears.
@@ -114,41 +114,41 @@ describe('SiTooltipDirective', () => {
       vi.advanceTimersByTime(500);
       await fixture.whenStable();
 
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
     it('should hide a hover-visible tooltip on focusout', async () => {
       button.dispatchEvent(new MouseEvent('mouseenter'));
       vi.advanceTimersByTime(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
 
       button.dispatchEvent(new Event('focusout'));
 
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
     it('should hide the tooltip on touchstart', async () => {
       button.dispatchEvent(new MouseEvent('mouseenter'));
       vi.advanceTimersByTime(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
 
       button.dispatchEvent(new Event('touchstart'));
 
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
     it('should update tooltip content while open', async () => {
       button.dispatchEvent(new FocusEvent('focus'));
       await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).toHaveTextContent('test tooltip');
+      await expect.element(page.getByRole('tooltip')).toHaveTextContent('test tooltip');
 
       component.tooltipText.set('updated tooltip');
       await fixture.whenStable();
 
-      expect(document.querySelector('.tooltip')).toHaveTextContent('updated tooltip');
+      await expect.element(page.getByRole('tooltip')).toHaveTextContent('updated tooltip');
     });
 
     it('should reposition the overlay when content changes while open', async () => {
@@ -195,11 +195,11 @@ describe('SiTooltipDirective', () => {
       button.dispatchEvent(new FocusEvent('focus'));
       await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).toHaveTextContent('Template content');
+      await expect.element(page.getByRole('tooltip')).toHaveTextContent('Template content');
       button.dispatchEvent(new FocusEvent('focusout'));
       await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
     it('should render the template with context', async () => {
@@ -208,11 +208,11 @@ describe('SiTooltipDirective', () => {
       button.dispatchEvent(new FocusEvent('focus'));
       await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).toHaveTextContent('Template content test');
+      await expect.element(page.getByRole('tooltip')).toHaveTextContent('Template content test');
       button.dispatchEvent(new FocusEvent('focusout'));
       await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
   });
 
@@ -247,13 +247,13 @@ describe('SiTooltipDirective', () => {
       await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
 
-      expect(document.querySelector('.tooltip')).toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip', { name: 'test' })).toBeInTheDocument();
 
       document.dispatchEvent(new Event('scroll', { bubbles: true }));
       await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
 
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
   });
 });
