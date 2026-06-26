@@ -2,13 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-
 import {
   AttributeSelectorInstruction,
   SymbolRenamingInstruction,
   ComponentPropertyNamesInstruction,
   ElementMigrationData,
   ElementSelectorInstruction,
+  ProviderFunctionRemovalInstruction,
   SymbolRemovalInstruction,
   ClassMemberReplacementInstruction,
   ElementClassChangeInstruction
@@ -265,6 +265,13 @@ const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = [
   }
 ];
 
+const PROVIDER_FUNCTION_REMOVALS_MIGRATION: ProviderFunctionRemovalInstruction[] = [
+  {
+    module: /@(siemens)\/element-ng(\/icon)?/,
+    names: ['provideIconConfig']
+  }
+];
+
 /**
  * Stable migration data for testing.
  * This data is frozen and used for testing to ensure test stability.
@@ -276,6 +283,7 @@ export const getElementMigrationTestData = (): ElementMigrationData => ({
   componentPropertyNameChanges: COMPONENT_PROPERTY_NAMES_MIGRATION,
   elementClassChanges: ELEMENT_CLASS_CHANGES_MIGRATION,
   elementSelectorChanges: ELEMENT_SELECTORS_MIGRATION,
+  providerFunctionRemovalChanges: PROVIDER_FUNCTION_REMOVALS_MIGRATION,
   symbolRemovalChanges: SYMBOL_REMOVALS_MIGRATION,
   symbolRenamingChanges: SYMBOL_RENAMING_MIGRATION
 });

@@ -69,6 +69,26 @@ export class TestComponent {
     expect(tree).toBeDefined();
   });
 
+  it('should remove provideIconConfig usage and its import', async () => {
+    const originalContent = `import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
+import { provideIconConfig } from '@siemens/element-ng/icon';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideZonelessChangeDetection(), provideIconConfig({ disableSvgIcons: true })]
+};`;
+
+    addTestFiles(appTree, {
+      '/projects/app/src/app.config.ts': originalContent
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+
+    const modifiedContent = tree.readContent('/projects/app/src/app.config.ts');
+    expect(modifiedContent).not.toContain('provideIconConfig');
+    expect(modifiedContent).not.toContain('@siemens/element-ng/icon');
+    expect(modifiedContent).toContain('providers: [provideZonelessChangeDetection()]');
+  });
+
   it('should pass options to sub-migrations', async () => {
     const customPath = '/custom/path';
     const options = { path: customPath };
