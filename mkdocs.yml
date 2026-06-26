@@ -84,12 +84,12 @@ nav:
       - Value widget:                     'components/dashboards/value-widget.md'
       - Weather widget:                   'components/dashboards/weather-widget.md'
     - Forms & inputs:
+      - Forms:                            'components/forms-inputs/forms.md'
       - Checkbox:                         'components/forms-inputs/checkbox.md'
       - Color picker:                     'components/forms-inputs/color-picker.md'
       - Date & time:                      'components/forms-inputs/datepicker.md'
       - Date range filter:                'components/forms-inputs/date-range-filter.md'
       - File uploader:                    'components/forms-inputs/file-uploader.md'
-      - Forms:                            'components/forms-inputs/forms.md'
       - Input:                            'components/forms-inputs/input.md'
       - IP input:                         'components/forms-inputs/ip-input.md'
       - Language switcher:                'components/forms-inputs/language-switcher.md'
