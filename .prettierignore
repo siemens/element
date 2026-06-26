@@ -19,4 +19,4 @@ docs/_custom_theme/partials/toc.html
 **/schematics/**/files/**
 
 # Intentionally ignored files
-.agents
+.agents/skills/playwright-cli
