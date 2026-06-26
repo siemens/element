@@ -2,42 +2,9 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  InjectionToken,
-  input,
-  Provider
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 
 import { IconService } from './si-icons';
-
-/**
- * Global configuration for icons.
- */
-export interface IconConfig {
-  /**
-   * If true, the si-icon component will always render the icon font instead of the svg.
-   *
-   * @defaultValue false
-   */
-  disableSvgIcons?: boolean;
-}
-
-const ICON_CONFIG = new InjectionToken<IconConfig>('ICON_CONFIG', {
-  providedIn: 'root',
-  factory: () => ({ disableSvgIcons: false })
-});
-
-/**
- * Configure how Element handles icons. Provide only once in your global configuration.
- */
-export const provideIconConfig = (config: IconConfig): Provider => ({
-  provide: ICON_CONFIG,
-  useValue: config
-});
 
 /**
  * Component to render a font or SVG icon depending on the configuration.
@@ -82,11 +49,10 @@ export class SiIconComponent {
    */
   readonly icon = input.required<string>();
 
-  private readonly config = inject(ICON_CONFIG);
   private readonly iconService = inject(IconService);
 
   protected readonly svgIcon = computed(() => {
-    const icon = this.config.disableSvgIcons ? undefined : this.iconService.getIcon(this.icon());
+    const icon = this.iconService.getIcon(this.icon());
     if (!icon) {
       return undefined;
     }
