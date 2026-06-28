@@ -17,7 +17,7 @@
     [attr.aria-labelledby]="id() + '-aria-label ' + id() + '-value'"
     [attr.aria-expanded]="open"
     [options]="countryList()"
-    [value]="selectedCountry"
+    [value]="selectedCountry()"
     [tabindex]="disabled() ? '-1' : '0'"
     [attr.aria-controls]="id() + '-listbox'"
     (valueChange)="countryInput($event)"
@@ -30,12 +30,12 @@
     }}</span>
     <span
       aria-hidden="true"
-      [class]="`fi fi-${(selectedCountry?.isoCode | lowercase) ?? 'xx'}`"
+      [class]="`fi fi-${(selectedCountry()?.isoCode | lowercase) ?? 'xx'}`"
     ></span>
-    @if (selectedCountry) {
+    @if (selectedCountry()) {
       <span class="si-body ms-4" [id]="id() + '-value'">
-        <span class="visually-hidden">{{ selectedCountry.name }}</span>
-        +{{ selectedCountry.countryCode }}
+        <span class="visually-hidden">{{ selectedCountry()!.name }}</span>
+        +{{ selectedCountry()!.countryCode }}
       </span>
     }
     <si-icon class="icon dropdown-caret" [icon]="icons.elementDown2" />
@@ -65,6 +65,11 @@
       {{ option.value.name }} +{{ option.value.countryCode }}
     </ng-template>
   </button>
+  @if (nationalPrefix()) {
+    <span class="national-prefix d-flex align-items-center" aria-hidden="true"
+      >({{ nationalPrefix() }})</span
+    >
+  }
   <input
     #phoneInput
     type="tel"
