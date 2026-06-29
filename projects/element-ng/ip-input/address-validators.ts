@@ -71,4 +71,5 @@ const validateSubnet = (cidr: string): boolean => {
   return subnet > 0 && subnet <= 128;
 };
 
-const matchIpV6 = (ip: string): boolean => !!ip.match(ipV6Regex) && !!URL.parse(`http://[${ip}]`);
+const matchIpV6 = (ip: string): boolean =>
+  (ip === '::' || !!ip.match(ipV6Regex)) && !!URL.parse(`http://[${ip}]`);

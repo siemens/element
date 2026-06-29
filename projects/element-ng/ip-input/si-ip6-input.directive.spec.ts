@@ -74,7 +74,8 @@ describe('SiIp6InputDirective', () => {
     '1::4:5:6:7:8',
     '1:2::4:5:6:7:8',
     '1::3:4:5:6:7:8',
-    '1::8'
+    '1::8',
+    '::' // Unspecified address
   ].forEach(i => {
     it(`should be valid with input ${i}`, () => {
       typeInput(i);
