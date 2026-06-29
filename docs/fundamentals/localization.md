@@ -264,3 +264,51 @@ Note that this hash key will only be appended to the translation based JSON file
 ### Translatable keys in Element
 
 <si-docs-type name="SiTranslatableKeys"></si-docs-type>
+
+### Extracting translatable keys
+
+An important part of the translation tooling is the extraction of translatable keys as a TypeScript
+interface as well as the extraction of a JSON messages file with default translations. This is
+provided by the `@siemens/element-translate-cli` package, which exposes the
+`update-translatable-keys` command. Install it as a dev dependency:
+
+```sh
+npm install --save-dev @siemens/element-translate-cli
+```
+
+The extraction happens on compiled files. I.e. make sure to run the build first. Then, to run these
+extractions:
+
+```sh
+npx update-translatable-keys
+```
+
+By default, this will pick up the configuration from a file `element-translate.conf.json`. To use a
+different config file, pass it as the only argument to the command.
+
+The config file looks like this:
+
+```json
+{
+  "files": "dist/@siemens/**/fesm2022/**/*.mjs",
+  "configs": [
+    {
+      "name": "element",
+      "locationPrefix": "projects/element-ng",
+      "keysFile": "projects/element-ng/translate/si-translatable-keys.interface.ts",
+      "keysInterfaceName": "SiTranslatableKeys",
+      "messagesFile": "dist/@siemens/element-ng/template-i18n.json"
+    }
+  ]
+}
+```
+
+- `files` is a glob pattern for defining the files to scan.
+- `configs` is an array of configs. For mono-repos building multiple libraries, they can be
+  separated into different configs. All keys are required:
+  - `name` is a unique name.
+  - `locationPrefix` defines the path prefix of the source files, important to distinguish between
+    different libraries in a mono-repo.
+  - `keysFile` defines the path of the generated TypeScript interfaces file.
+  - `keysInterfaceName` defines the name of the TypeScript `interface`.
+  - `messagesFile` defines the path of the generated messages JSON file.
