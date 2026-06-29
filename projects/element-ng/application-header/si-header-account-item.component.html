@@ -5,7 +5,7 @@
   [initials]="initials()"
   [imageUrl]="imageUrl()"
 />
-<div class="item-title" aria-hidden="true" [class.d-none]="visuallyHideTitle">
+<div class="item-title" aria-hidden="true" [class.d-none]="visuallyHideTitle()">
   {{ name() }}
 </div>
 @if (badgeValue()) {

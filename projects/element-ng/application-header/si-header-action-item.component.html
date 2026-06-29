@@ -3,7 +3,7 @@
   <span class="badge-text">{{ badgeValue() }}</span>
 }
 <ng-content select="si-avatar" />
-<div class="item-title" [class.visually-hidden]="visuallyHideTitle">
+<div #itemTitle class="item-title" [class.visually-hidden]="visuallyHideTitle()">
   <ng-content />
 </div>
 @if (dropdownTrigger) {
