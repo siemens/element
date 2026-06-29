@@ -181,6 +181,17 @@ const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
     module: /@(siemens|simpl)\/charts-ng/,
     elementSelector: 'si-chart-gauge',
     names: ['numberOfDecimals']
+  },
+  // v50 to v51
+  {
+    module: /@(siemens|simpl)\/element-ng(\/file-uploader)?/,
+    elementSelector: 'si-file-uploader',
+    names: ['uploadTextFileSelect']
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng(\/file-uploader)?/,
+    elementSelector: 'si-file-dropzone',
+    names: ['uploadTextFileSelect']
   }
 ];
 
