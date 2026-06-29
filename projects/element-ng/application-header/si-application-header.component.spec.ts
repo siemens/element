@@ -13,7 +13,9 @@ import {
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { page } from 'vitest/browser';
 
 import { SiLaunchpadFactoryComponent } from './launchpad/si-launchpad-factory.component';
 import { SiApplicationHeaderComponent } from './si-application-header.component';
@@ -328,6 +330,98 @@ describe('SiApplicationHeaderComponent', () => {
       expect(await headerHarness.isCollapsibleActionsOpen()).toBe(true);
       breakpointObserver.observeResult.next({ matches: false, breakpoints: {} });
       expect(await headerHarness.isCollapsibleActionsOpen()).toBe(false);
+    });
+  });
+
+  describe('with icon-only action items', () => {
+    @Component({
+      imports: [
+        SiApplicationHeaderComponent,
+        SiHeaderActionItemComponent,
+        SiHeaderActionsDirective,
+        SiHeaderCollapsibleActionsComponent
+      ],
+      template: `
+        <si-application-header expandBreakpoint="never">
+          <si-header-actions>
+            <si-header-collapsible-actions>
+              <button type="button" si-header-action-item icon="fake-icon">Action 1</button>
+            </si-header-collapsible-actions>
+          </si-header-actions>
+        </si-application-header>
+      `,
+      changeDetection: ChangeDetectionStrategy.OnPush
+    })
+    class TestHostComponent {}
+
+    let fixture: ComponentFixture<TestHostComponent>;
+    let button: HTMLButtonElement;
+
+    beforeEach(async () => {
+      fixture = TestBed.createComponent(TestHostComponent);
+      loader = TestbedHarnessEnvironment.loader(fixture);
+      headerHarness = await loader.getHarness(SiApplicationHeaderHarness);
+      button = fixture.nativeElement.querySelector('button[si-header-action-item]');
+      vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
+      fixture.detectChanges();
+    });
+
+    it('should show a tooltip with the title when only the icon is visible', async () => {
+      button.dispatchEvent(new FocusEvent('focus'));
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip', { name: 'Action 1' })).toBeInTheDocument();
+    });
+
+    it('should not show a tooltip when the title is visible', async () => {
+      await headerHarness.openCollapsibleActions();
+      await fixture.whenStable();
+      button.dispatchEvent(new FocusEvent('focus'));
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('with icon-only action item and custom tooltip', () => {
+    @Component({
+      imports: [
+        SiApplicationHeaderComponent,
+        SiHeaderActionItemComponent,
+        SiHeaderActionsDirective,
+        SiHeaderCollapsibleActionsComponent,
+        SiTooltipDirective
+      ],
+      template: `
+        <si-application-header expandBreakpoint="never">
+          <si-header-actions>
+            <si-header-collapsible-actions>
+              <button type="button" si-header-action-item icon="fake-icon" siTooltip="Custom">
+                Action 1
+              </button>
+            </si-header-collapsible-actions>
+          </si-header-actions>
+        </si-application-header>
+      `,
+      changeDetection: ChangeDetectionStrategy.OnPush
+    })
+    class TestHostComponent {}
+
+    let fixture: ComponentFixture<TestHostComponent>;
+    let button: HTMLButtonElement;
+
+    beforeEach(async () => {
+      fixture = TestBed.createComponent(TestHostComponent);
+      loader = TestbedHarnessEnvironment.loader(fixture);
+      headerHarness = await loader.getHarness(SiApplicationHeaderHarness);
+      button = fixture.nativeElement.querySelector('button[si-header-action-item]');
+      vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
+      fixture.detectChanges();
+    });
+
+    it('should keep the custom tooltip instead of the title', async () => {
+      button.dispatchEvent(new FocusEvent('focus'));
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip', { name: 'Custom' })).toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip', { name: 'Action 1' })).not.toBeInTheDocument();
     });
   });
 
