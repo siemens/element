@@ -61,7 +61,6 @@ export class SiFileDropzoneComponent {
     readonly multiple: _angular_core.InputSignalWithTransform<boolean, unknown>;
     reset(): void;
     readonly uploadDropText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly uploadTextFileSelect: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
 
 // @public
@@ -116,7 +115,6 @@ export class SiFileUploaderComponent {
     readonly uploadConfig: _angular_core.InputSignal<FileUploadConfig>;
     readonly uploadDropText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly uploadingText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly uploadTextFileSelect: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
 
 // @public (undocumented)

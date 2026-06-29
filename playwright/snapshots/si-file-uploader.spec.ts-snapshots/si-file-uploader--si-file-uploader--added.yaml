@@ -1,5 +1,4 @@
-- text: Drop files here or
-- button "click to upload"
+- button "Drop files here or click to upload"
 - text: "/Max\\. [\\d,.]+[bkmBKM]+ upload size\\. Accepted file types: image\\/\\*\\. siemens-healthineers-logo\\.svg [\\d,.]+[bkmBKM]+ 0 %/"
 - progressbar "Uploading"
 - button "Remove"

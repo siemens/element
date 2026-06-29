@@ -22,7 +22,6 @@ describe('SiFileUploaderComponent', () => {
   let showHttpError: WritableSignal<boolean>;
   let autoUpload: WritableSignal<boolean>;
   let accept: WritableSignal<string | undefined>;
-  let uploadTextFileSelect: WritableSignal<TranslatableString>;
   let uploadDropText: WritableSignal<TranslatableString>;
   let clearButtonText: WritableSignal<TranslatableString>;
   let uploadButtonText: WritableSignal<TranslatableString>;
@@ -62,8 +61,7 @@ describe('SiFileUploaderComponent', () => {
     showHttpError = signal(false);
     autoUpload = signal(false);
     accept = signal<string | undefined>(undefined);
-    uploadTextFileSelect = signal<TranslatableString>('click to upload');
-    uploadDropText = signal<TranslatableString>('Drop files here or');
+    uploadDropText = signal<TranslatableString>('Drop files here or click to upload');
     clearButtonText = signal<TranslatableString>('Clear');
     uploadButtonText = signal<TranslatableString>('Upload');
     errorTextFileType = signal<TranslatableString>('Incorrect file type selected');
@@ -90,7 +88,6 @@ describe('SiFileUploaderComponent', () => {
         inputBinding('showHttpError', showHttpError),
         inputBinding('autoUpload', autoUpload),
         inputBinding('accept', accept),
-        inputBinding('uploadTextFileSelect', uploadTextFileSelect),
         inputBinding('uploadDropText', uploadDropText),
         inputBinding('clearButtonText', clearButtonText),
         inputBinding('uploadButtonText', uploadButtonText),
@@ -130,13 +127,11 @@ describe('SiFileUploaderComponent', () => {
     element.querySelector<HTMLButtonElement>('.btn-primary')!.click();
 
   it('should pass text messages to drop zone', async () => {
-    uploadTextFileSelect.set('browse files');
     uploadDropText.set('droppi droppi');
     clearButtonText.set('Reset');
     uploadButtonText.set('Do it');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file')!).toHaveTextContent('browse files');
-    expect(element.querySelector('.drag-and-drop-description')!).toHaveTextContent('droppi droppi');
+    expect(element.querySelector('.select-file')!).toHaveTextContent('droppi droppi');
     expect(getClearButton()).toHaveTextContent('Reset');
     expect(getUploadButton()).toHaveTextContent('Do it');
   });
