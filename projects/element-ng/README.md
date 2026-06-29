@@ -4,8 +4,8 @@
   </a>
 </p>
 
-<h1 align="center">@siemens/live-preview</h1>
+<h1 align="center">@siemens/element-ng</h1>
 
-Element Live Preview renders interactive, editable examples of Element components directly in the browser. It powers the live code samples in the Element documentation and can be embedded in your own pages. Examples can be previewed across themes, locales and frameworks.
+Element is the Angular component library implementing the Siemens Design Language. It offers a comprehensive set of accessible, themeable UI components for building consistent smart-infrastructure applications. The library covers everything from layout and navigation to forms, tables and dialogs.
 
 **Get started, explore components and read the docs at [element.siemens.io](https://element.siemens.io).**

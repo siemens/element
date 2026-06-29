@@ -4,8 +4,8 @@
   </a>
 </p>
 
-<h1 align="center">@siemens/live-preview</h1>
+<h1 align="center">@siemens/element-theme</h1>
 
-Element Live Preview renders interactive, editable examples of Element components directly in the browser. It powers the live code samples in the Element documentation and can be embedded in your own pages. Examples can be previewed across themes, locales and frameworks.
+The Element theme provides the CSS and SCSS that implement the Siemens Design Language. It includes design tokens, typography, color schemes and Bootstrap-based styles with light and dark theme support. Use it standalone or together with the Element Angular components.
 
 **Get started, explore components and read the docs at [element.siemens.io](https://element.siemens.io).**
