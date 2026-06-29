@@ -110,7 +110,6 @@ export interface SiTranslatableKeys {
   'SI_FILE_UPLOADER.DROP'?: string;
   'SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED'?: string;
   'SI_FILE_UPLOADER.ERROR_FILE_TYPE'?: string;
-  'SI_FILE_UPLOADER.FILE_SELECT'?: string;
   'SI_FILE_UPLOADER.MAX_FILE_REACHED'?: string;
   'SI_FILE_UPLOADER.MAX_SIZE'?: string;
   'SI_FILE_UPLOADER.REMOVE'?: string;
