@@ -27,25 +27,16 @@ import { UploadFile } from './si-file-uploader.model';
 })
 export class SiFileDropzoneComponent {
   /**
-   * Text or translation key of the input file selector (is combined with the `uploadTextRest`).
+   * Text or translation key of the drag&drop field.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or click to upload`)
    * ```
    */
-  readonly uploadTextFileSelect = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`)
+  readonly uploadDropText = input(
+    t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or click to upload`)
   );
-  /**
-   * Text or translation key of the drag&drop field (is combined with the `uploadTextFileSelect`).
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`)
-   * ```
-   */
-  readonly uploadDropText = input(t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`));
   /**
    * Text or translation key for max file size.
    *
