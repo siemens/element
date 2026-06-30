@@ -20,7 +20,9 @@ import { SI_STACKBLITZ_CONFIG } from './stackblitz.provider';
 })
 export class SiStackblitzButtonDirective {
   protected readonly config = inject(SI_STACKBLITZ_CONFIG, { optional: true });
-  private readonly exampleTs = httpResource.text(() => `${this.baseUrl()}${this.example()}.ts`);
+  private readonly exampleTs = httpResource.text(() =>
+    this.example() ? `${this.baseUrl()}${this.example()}.ts` : undefined
+  );
   private readonly isExample = computed(() => {
     if (this.exampleTs.hasValue()) {
       const content = this.exampleTs.value();
