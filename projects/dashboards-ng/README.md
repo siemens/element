@@ -75,8 +75,7 @@ the `angular.json` file.
 ```json
 "styles": [
   "src/styles.scss",
-  "node_modules/gridstack/dist/gridstack.css",
-  "node_modules/gridstack/dist/gridstack-extra.css"
+  "node_modules/gridstack/dist/gridstack.css"
 ],
 "allowedCommonJsDependencies": [
   "gridstack"
