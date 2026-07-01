@@ -25,4 +25,13 @@ import { SiWidgetInstanceEditorDialogComponent } from './components/widget-insta
 })
 export class SiDashboardsNgModule {}
 
-export { SiDashboardsNgModule as SimplDashboardsNgModule };
+/**
+ * @deprecated Use {@link SiDashboardsNgModule} instead. The `Simpl` prefix is deprecated and will be removed in v51.
+ */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const SimplDashboardsNgModule = SiDashboardsNgModule;
+
+/**
+ * @deprecated Use {@link SiDashboardsNgModule} instead. The `Simpl` prefix is deprecated and will be removed in v51.
+ */
+export type SimplDashboardsNgModule = SiDashboardsNgModule;
