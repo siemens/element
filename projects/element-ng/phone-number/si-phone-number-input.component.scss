@@ -44,6 +44,17 @@
   }
 }
 
+.national-prefix {
+  color: all-variables.$element-text-secondary;
+  white-space: nowrap;
+  cursor: default;
+  user-select: none;
+}
+
+.disabled .national-prefix {
+  color: all-variables.$element-text-disabled;
+}
+
 .phone-number {
   background-color: transparent;
   inline-size: inherit;

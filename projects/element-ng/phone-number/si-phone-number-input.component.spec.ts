@@ -241,6 +241,55 @@ describe('SiPhoneNumberInputComponent', () => {
     expect(component.form.controls.workPhone.errors).toBeFalsy();
   });
 
+  it('should keep the mobile token visible for numbers that only expose it in international format', async () => {
+    // Argentine mobile numbers carry a `9` after the country code in international
+    // format (`+54 9 11 ...`). The national format hides it as a `15` infix, so the
+    // input must display the international significant number to keep the `9` visible.
+    component.supportedCountries.set(null);
+    await fixture.whenStable();
+    component.form.controls.workPhone.setValue('+5491123456789');
+    await fixture.whenStable();
+
+    expect(component.country()).toBe('AR');
+    expect(inputElement.value).toEqual('9 11 2345-6789');
+  });
+
+  describe('national (trunk) prefix indicator', () => {
+    const getNationalPrefix = (): HTMLElement | null =>
+      element.querySelector<HTMLElement>('.national-prefix');
+
+    beforeEach(async () => {
+      component.supportedCountries.set(null);
+      await fixture.whenStable();
+    });
+
+    it('should show the indicator for numbers with a droppable `0` trunk prefix', async () => {
+      component.form.controls.workPhone.setValue('+4917612345678');
+      await fixture.whenStable();
+      expect(getNationalPrefix()).toHaveTextContent('(0)');
+    });
+
+    it('should not show the indicator for countries without a droppable `0` trunk prefix', async () => {
+      component.form.controls.workPhone.setValue('+12025550173');
+      await fixture.whenStable();
+      expect(getNationalPrefix()).toBeNull();
+    });
+
+    it('should show the indicator for an Argentine landline', async () => {
+      component.form.controls.workPhone.setValue('+541143211234');
+      await fixture.whenStable();
+      expect(getNationalPrefix()).toHaveTextContent('(0)');
+    });
+
+    it('should not show the indicator for an Argentine mobile', async () => {
+      // The international `9` mobile token and the domestic `0 … 15` marker are different
+      // encodings, so `+54 (0) 9 …` would be misleading.
+      component.form.controls.workPhone.setValue('+5491123456789');
+      await fixture.whenStable();
+      expect(getNationalPrefix()).toBeNull();
+    });
+  });
+
   describe('with control disabled', () => {
     let phoneInput: HTMLElement;
 
