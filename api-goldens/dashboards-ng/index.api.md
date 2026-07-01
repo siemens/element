@@ -168,10 +168,8 @@ export const SI_WIDGET_ID_PROVIDER: InjectionToken<SiWidgetIdProvider>;
 export const SI_WIDGET_STORE: InjectionToken<SiWidgetStorage>;
 
 // @public (undocumented)
-class SiDashboardsNgModule {
+export class SiDashboardsNgModule {
 }
-export { SiDashboardsNgModule }
-export { SiDashboardsNgModule as SimplDashboardsNgModule }
 
 // @public
 export class SiDefaultWidgetStorage extends SiWidgetStorage {
@@ -237,6 +235,12 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
     readonly widgetInstanceEdit: _angular_core.OutputEmitterRef<WidgetConfig>;
     readonly widgetInstanceEditorDialogComponent: _angular_core.InputSignal<Type<SiWidgetInstanceEditorDialogComponent> | undefined>;
 }
+
+// @public @deprecated (undocumented)
+export const SimplDashboardsNgModule: typeof SiDashboardsNgModule;
+
+// @public @deprecated (undocumented)
+export type SimplDashboardsNgModule = SiDashboardsNgModule;
 
 // @public
 export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnInit {
