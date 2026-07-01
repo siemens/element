@@ -324,11 +324,6 @@ export class SiPhoneNumberInputComponent
     this.countryFocused.set(false);
     this.onTouched();
     this.writeValueToInput();
-    this.valueChange.emit({
-      country: this.selectedCountry(),
-      phoneNumber: this.formatPhoneNumber(PhoneNumberFormat.INTERNATIONAL),
-      isValid: this.isValidNumber
-    });
   }
 
   protected countryInput(num: CountryInfo): void {
@@ -460,6 +455,12 @@ export class SiPhoneNumberInputComponent
     } else {
       this.onChange('');
     }
+
+    this.valueChange.emit({
+      country: this.selectedCountry(),
+      phoneNumber: this.formatPhoneNumber(PhoneNumberFormat.INTERNATIONAL),
+      isValid: this.isValidNumber
+    });
   }
 
   private writeTextToInput(value?: string): void {

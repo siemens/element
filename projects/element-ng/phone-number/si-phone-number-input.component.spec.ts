@@ -132,11 +132,14 @@ describe('SiPhoneNumberInputComponent', () => {
 
   it('should show valid status on valid phone entry', async () => {
     await userEvent.type(inputElement, '30123456');
-    await userEvent.tab();
 
-    // Validate both the form control validity and also the final control value
+    // valueChange emits together with the form control model update on input, without needing blur
     expect(component.form.valid).toBe(true);
     expect(component.form.controls.workPhone.value).toEqual('+49 30 123456');
+    expect(component.currentValue).toMatchObject({
+      phoneNumber: '+49 30 123456',
+      isValid: true
+    });
   });
 
   it('should update the country code and phone number on setting it from the form control', async () => {
