@@ -220,7 +220,6 @@ export class SiPhoneNumberInputComponent
     () => this.supportedCountries() ?? this.phoneUtil.getSupportedRegions()
   );
   private readonly disabledNgControl = signal(false);
-  private isValidNumber = true;
   private readonly phoneNumber = signal<PhoneNumber | undefined>(undefined, {
     equal: (a, b) => {
       if (!a || !b) {
@@ -228,6 +227,27 @@ export class SiPhoneNumberInputComponent
       }
       return this.phoneUtil.isNumberMatch(a, b) === PhoneNumberUtil.MatchType.EXACT_MATCH;
     }
+  });
+  private readonly rawValue = signal('');
+  protected readonly validationErrors = computed<ValidationErrors | null>(() => {
+    if (!this.rawValue()) {
+      return null;
+    }
+
+    const phoneNumber = this.phoneNumber();
+    if (!phoneNumber || !this.phoneUtil.isValidNumber(phoneNumber)) {
+      return {
+        invalidPhoneNumberFormat: true
+      };
+    }
+
+    if (!this.countryList().some(c => c.value.isoCode === this.selectedCountry()?.isoCode)) {
+      return {
+        notSupportedPhoneNumberCountry: true
+      };
+    }
+
+    return null;
   });
   private onChange: (val: string) => void = () => {};
   private onTouched: () => void = () => {};
@@ -271,30 +291,12 @@ export class SiPhoneNumberInputComponent
 
   /** @internal */
   validate(control: AbstractControl): ValidationErrors | null {
-    if (!this.phoneInput().nativeElement.value) {
-      return null;
-    }
-
-    this.isValidNumber = false;
-    const phoneNumber = this.phoneNumber();
-    if (!phoneNumber || !this.phoneUtil.isValidNumber(phoneNumber)) {
-      return {
-        invalidPhoneNumberFormat: true
-      };
-    }
-
-    if (!this.countryList().some(c => c.value.isoCode === this.selectedCountry()!.isoCode)) {
-      return {
-        notSupportedPhoneNumberCountry: true
-      };
-    }
-
-    this.isValidNumber = true;
-    return null;
+    return this.validationErrors();
   }
 
   protected input(): void {
     const rawNumber = this.phoneInput().nativeElement.value;
+    this.rawValue.set(rawNumber);
     const phoneNumber = this.parseNumber(rawNumber);
     this.phoneNumber.set(phoneNumber);
 
@@ -459,12 +461,13 @@ export class SiPhoneNumberInputComponent
     this.valueChange.emit({
       country: this.selectedCountry(),
       phoneNumber: this.formatPhoneNumber(PhoneNumberFormat.INTERNATIONAL),
-      isValid: this.isValidNumber
+      isValid: !this.validationErrors()
     });
   }
 
   private writeTextToInput(value?: string): void {
     this.phoneInput().nativeElement.value = value ?? '';
+    this.rawValue.set(value ?? '');
   }
   /**
    * Format and update input text or clear input text if the input value is undefined.
