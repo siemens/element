@@ -17,7 +17,7 @@
     [attr.aria-labelledby]="id() + '-aria-label ' + id() + '-value'"
     [attr.aria-expanded]="open"
     [options]="countryList()"
-    [value]="selectedCountry"
+    [value]="selectedCountry()"
     [tabindex]="disabled() ? '-1' : '0'"
     [attr.aria-controls]="id() + '-listbox'"
     (valueChange)="countryInput($event)"
@@ -30,9 +30,9 @@
     }}</span>
     <span
       aria-hidden="true"
-      [class]="`fi fi-${(selectedCountry?.isoCode | lowercase) ?? 'xx'}`"
+      [class]="`fi fi-${(selectedCountry()?.isoCode | lowercase) ?? 'xx'}`"
     ></span>
-    @if (selectedCountry) {
+    @if (selectedCountry(); as selectedCountry) {
       <span class="si-body ms-4" [id]="id() + '-value'">
         <span class="visually-hidden">{{ selectedCountry.name }}</span>
         +{{ selectedCountry.countryCode }}

@@ -191,7 +191,7 @@ export class SiPhoneNumberInputComponent
   readonly errormessageId = input(`${this.id()}-errormessage`);
 
   protected readonly phoneInput = viewChild.required<ElementRef<HTMLInputElement>>('phoneInput');
-  protected selectedCountry?: CountryInfo;
+  protected readonly selectedCountry = signal<CountryInfo | undefined>(undefined);
   protected placeholder = '';
   protected readonly countryFocused = signal(false);
   protected open = false;
@@ -221,7 +221,14 @@ export class SiPhoneNumberInputComponent
   );
   private readonly disabledNgControl = signal(false);
   private isValidNumber = true;
-  private phoneNumber?: PhoneNumber;
+  private readonly phoneNumber = signal<PhoneNumber | undefined>(undefined, {
+    equal: (a, b) => {
+      if (!a || !b) {
+        return !a && !b;
+      }
+      return this.phoneUtil.isNumberMatch(a, b) === PhoneNumberUtil.MatchType.EXACT_MATCH;
+    }
+  });
   private onChange: (val: string) => void = () => {};
   private onTouched: () => void = () => {};
 
@@ -233,8 +240,9 @@ export class SiPhoneNumberInputComponent
 
   /** @internal */
   writeValue(value: string | undefined): void {
-    this.phoneNumber = this.parseNumber(value);
-    if (this.phoneNumber) {
+    const phoneNumber = this.parseNumber(value);
+    this.phoneNumber.set(phoneNumber);
+    if (phoneNumber) {
       this.writeValueToInput();
       this.country.set(this.getRegionCode());
     } else {
@@ -268,13 +276,14 @@ export class SiPhoneNumberInputComponent
     }
 
     this.isValidNumber = false;
-    if (!this.phoneNumber || !this.phoneUtil.isValidNumber(this.phoneNumber)) {
+    const phoneNumber = this.phoneNumber();
+    if (!phoneNumber || !this.phoneUtil.isValidNumber(phoneNumber)) {
       return {
         invalidPhoneNumberFormat: true
       };
     }
 
-    if (!this.countryList().some(c => c.value.isoCode === this.selectedCountry!.isoCode)) {
+    if (!this.countryList().some(c => c.value.isoCode === this.selectedCountry()!.isoCode)) {
       return {
         notSupportedPhoneNumberCountry: true
       };
@@ -286,9 +295,10 @@ export class SiPhoneNumberInputComponent
 
   protected input(): void {
     const rawNumber = this.phoneInput().nativeElement.value;
-    this.phoneNumber = this.parseNumber(rawNumber);
+    const phoneNumber = this.parseNumber(rawNumber);
+    this.phoneNumber.set(phoneNumber);
 
-    if (this.phoneNumber) {
+    if (phoneNumber) {
       const regionCode = this.getRegionCode();
       let countryInfo = this.countryList().find(
         country => regionCode === country.value.isoCode
@@ -296,15 +306,15 @@ export class SiPhoneNumberInputComponent
       if (!countryInfo && regionCode) {
         countryInfo = {
           name: this.getCountryName(regionCode),
-          countryCode: this.phoneNumber.getCountryCode()!,
+          countryCode: phoneNumber.getCountryCode()!,
           isoCode: regionCode
         };
       }
-      if (countryInfo && this.selectedCountry?.isoCode !== countryInfo.isoCode) {
-        this.selectedCountry = countryInfo;
+      if (countryInfo && this.selectedCountry()?.isoCode !== countryInfo.isoCode) {
+        this.selectedCountry.set(countryInfo);
       }
     } else if (rawNumber.trim().startsWith('+')) {
-      this.selectedCountry = undefined;
+      this.selectedCountry.set(undefined);
     }
 
     this.handleChange();
@@ -315,14 +325,14 @@ export class SiPhoneNumberInputComponent
     this.onTouched();
     this.writeValueToInput();
     this.valueChange.emit({
-      country: this.selectedCountry,
+      country: this.selectedCountry(),
       phoneNumber: this.formatPhoneNumber(PhoneNumberFormat.INTERNATIONAL),
       isValid: this.isValidNumber
     });
   }
 
   protected countryInput(num: CountryInfo): void {
-    this.selectedCountry = num;
+    this.selectedCountry.set(num);
     this.updatePlaceholder();
     this.refreshValueAfterCountryChange();
     this.handleChange();
@@ -342,19 +352,19 @@ export class SiPhoneNumberInputComponent
 
   private writeCountry(): void {
     const currentCountry = this.country()!;
-    this.selectedCountry = this.countryList().find(
-      country => country.value.isoCode === currentCountry
-    )?.value;
-    if (!this.selectedCountry) {
+    this.selectedCountry.set(
+      this.countryList().find(country => country.value.isoCode === currentCountry)?.value
+    );
+    if (!this.selectedCountry()) {
       const countryCode = this.phoneUtil.getCountryCodeForRegion(
         currentCountry ?? this.defaultCountry() ?? 'XX'
       );
       if (countryCode) {
-        this.selectedCountry = {
+        this.selectedCountry.set({
           isoCode: currentCountry,
           countryCode,
           name: this.getCountryName(currentCountry)
-        };
+        });
       }
     }
     this.updatePlaceholder();
@@ -371,10 +381,11 @@ export class SiPhoneNumberInputComponent
   }
 
   private updatePlaceholder(): void {
-    if (this.selectedCountry) {
+    const selectedCountry = this.selectedCountry();
+    if (selectedCountry) {
       this.placeholder = this.phoneUtil
         .format(
-          this.phoneUtil.getExampleNumber(this.selectedCountry.isoCode),
+          this.phoneUtil.getExampleNumber(selectedCountry.isoCode),
           PhoneNumberFormat.NATIONAL
         )
         .replace(/^0/, '');
@@ -385,7 +396,7 @@ export class SiPhoneNumberInputComponent
     try {
       let regionCodeForParsing: string | undefined;
       if (!rawNumber?.trim().startsWith('+')) {
-        regionCodeForParsing = this.selectedCountry?.isoCode;
+        regionCodeForParsing = this.selectedCountry()?.isoCode;
       }
       return this.phoneUtil.parse(rawNumber, regionCodeForParsing);
     } catch (e) {
@@ -399,49 +410,52 @@ export class SiPhoneNumberInputComponent
    * This Method fakes a complete number to force PhoneUtil returning a proper region code.
    */
   private getRegionCode(): string | undefined {
-    if (this.phoneNumber) {
-      const regionCode = this.phoneUtil.getRegionCodeForNumber(this.phoneNumber);
+    const phoneNumber = this.phoneNumber();
+    if (phoneNumber) {
+      const regionCode = this.phoneUtil.getRegionCodeForNumber(phoneNumber);
       if (regionCode) {
         return regionCode;
       }
 
-      const nationalNumber = this.phoneNumber.getNationalNumber() + '';
+      const nationalNumber = phoneNumber.getNationalNumber() + '';
       if (
         // USA, CANADA, ...
-        (this.phoneNumber.getCountryCode() === 1 && nationalNumber.length >= 3) ||
+        (phoneNumber.getCountryCode() === 1 && nationalNumber.length >= 3) ||
         // UK, ...
-        (this.phoneNumber.getCountryCode() === 44 && nationalNumber.length >= 4)
+        (phoneNumber.getCountryCode() === 44 && nationalNumber.length >= 4)
       ) {
         return this.phoneUtil.getRegionCodeForNumber(
           this.phoneUtil.parse(
             '+' +
-              this.phoneNumber.getCountryCode() +
+              phoneNumber.getCountryCode() +
               nationalNumber +
               new Array(10 - nationalNumber.length).fill(5).join('')
           )
         );
       }
 
-      return this.phoneUtil.getRegionCodeForCountryCode(this.phoneNumber.getCountryCode()!);
+      return this.phoneUtil.getRegionCodeForCountryCode(phoneNumber.getCountryCode()!);
     }
 
     return undefined;
   }
 
   private formatPhoneNumber(format: PhoneNumberFormat): string | undefined {
-    if (this.phoneNumber) {
-      return this.phoneUtil.format(this.phoneNumber, format);
+    const phoneNumber = this.phoneNumber();
+    if (phoneNumber) {
+      return this.phoneUtil.format(phoneNumber, format);
     }
 
     return undefined;
   }
 
   private handleChange(): void {
-    if (this.selectedCountry && this.country() !== this.selectedCountry?.isoCode) {
-      this.country.set(this.selectedCountry?.isoCode);
+    const selectedCountry = this.selectedCountry();
+    if (selectedCountry && this.country() !== selectedCountry.isoCode) {
+      this.country.set(selectedCountry.isoCode);
     }
 
-    if (this.phoneNumber) {
+    if (this.phoneNumber()) {
       this.onChange(this.formatPhoneNumber(PhoneNumberFormat.INTERNATIONAL)!);
     } else {
       this.onChange('');
@@ -455,14 +469,23 @@ export class SiPhoneNumberInputComponent
    * Format and update input text or clear input text if the input value is undefined.
    */
   private writeValueToInput(): void {
-    if (this.phoneNumber) {
+    if (this.phoneNumber()) {
       this.writeTextToInput(this.formatPhoneNumber(PhoneNumberFormat.NATIONAL)!.replace(/^0/, ''));
     }
   }
 
   private refreshValueAfterCountryChange(): void {
-    if (this.selectedCountry) {
-      this.phoneNumber?.setCountryCode(this.selectedCountry?.countryCode);
+    const selectedCountry = this.selectedCountry();
+    if (selectedCountry) {
+      this.phoneNumber.update(current => {
+        if (!current) {
+          return undefined;
+        }
+        // TODO: Remove any once https://github.com/DefinitelyTyped/DefinitelyTyped/pull/75189 is merged/released
+        const phoneNumber = (current as any)?.clone();
+        phoneNumber.setCountryCode(selectedCountry.countryCode);
+        return phoneNumber;
+      });
       this.writeValueToInput();
     }
   }
