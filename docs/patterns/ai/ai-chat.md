@@ -22,6 +22,7 @@ AI chat is useful when users describe tasks in their own words and expect struct
 - Keep the conversation focused, avoid unnecessary messages.
 - Place the AI in a clearly defined visual space.
 - Output can be styled as needed using the [typography system](../../fundamentals/typography.md).
+- Use [follow-up prompts](../../components/chat-messages/chat-input.md#follow-up-prompts) after AI responses to help users continue the conversation without formulating the next message from scratch.
 
 ## Design ---
 

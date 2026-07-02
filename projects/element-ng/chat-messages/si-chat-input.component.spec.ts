@@ -44,6 +44,8 @@ describe('SiChatInputComponent', () => {
   let sendSpy = vi.fn();
   let interruptSpy = vi.fn();
   let fileErrorSpy = vi.fn();
+  let followUpPrompts: WritableSignal<string[]>;
+  let followUpPromptSelectedSpy = vi.fn();
 
   beforeEach(() => {
     value = signal('');
@@ -63,6 +65,8 @@ describe('SiChatInputComponent', () => {
     sendSpy = vi.fn();
     interruptSpy = vi.fn();
     fileErrorSpy = vi.fn();
+    followUpPrompts = signal<string[]>([]);
+    followUpPromptSelectedSpy = vi.fn();
 
     fixture = TestBed.createComponent(TestComponent, {
       bindings: [
@@ -82,7 +86,9 @@ describe('SiChatInputComponent', () => {
         inputBinding('sendButtonIcon', sendButtonIcon),
         outputBinding('send', sendSpy),
         outputBinding('interrupt', interruptSpy),
-        outputBinding('fileError', fileErrorSpy)
+        outputBinding('fileError', fileErrorSpy),
+        inputBinding('followUpPrompts', followUpPrompts),
+        outputBinding('followUpPromptSelected', followUpPromptSelectedSpy)
       ]
     });
     debugElement = fixture.debugElement;
@@ -520,5 +526,78 @@ describe('SiChatInputComponent', () => {
     const interruptButton = debugElement.query(By.css('button[aria-label="Interrupt"]'));
     expect(interruptButton).toBeTruthy();
     expect(interruptButton.query(By.css('[data-icon="elementStopFilled"]'))).toBeTruthy();
+  });
+
+  describe('follow-up prompts', () => {
+    it('should not render follow-up prompts section when prompts are empty', async () => {
+      followUpPrompts.set([]);
+      await fixture.whenStable();
+
+      const promptsContainer = debugElement.query(By.css('.follow-up-prompts'));
+      expect(promptsContainer).toBeFalsy();
+    });
+
+    it('should render follow-up prompt buttons when prompts are provided', async () => {
+      followUpPrompts.set(['Tell me more', 'Give an example']);
+      await fixture.whenStable();
+
+      const promptButtons = debugElement.queryAll(By.css('.follow-up-prompts button'));
+      expect(promptButtons).toHaveLength(2);
+      expect(promptButtons[0].nativeElement).toHaveTextContent('Tell me more');
+      expect(promptButtons[1].nativeElement).toHaveTextContent('Give an example');
+    });
+
+    it('should emit followUpPromptSelected with the prompt text when a prompt is clicked', async () => {
+      followUpPrompts.set(['Tell me more']);
+      await fixture.whenStable();
+
+      const promptButton = debugElement.query(By.css('.follow-up-prompts button'));
+      promptButton.nativeElement.click();
+      await fixture.whenStable();
+
+      expect(followUpPromptSelectedSpy).toHaveBeenCalledWith('Tell me more');
+    });
+
+    it('should not set value when a prompt is clicked (delegates to consumer)', async () => {
+      followUpPrompts.set(['Tell me more']);
+      value.set('');
+      await fixture.whenStable();
+
+      const promptButton = debugElement.query(By.css('.follow-up-prompts button'));
+      promptButton.nativeElement.click();
+      await fixture.whenStable();
+
+      expect(value()).toBe('');
+    });
+
+    it('should disable follow-up prompt buttons when disabled', async () => {
+      followUpPrompts.set(['Tell me more']);
+      disabled.set(true);
+      await fixture.whenStable();
+
+      const promptButton = debugElement.query(By.css('.follow-up-prompts button'));
+      expect(promptButton.nativeElement).toBeDisabled();
+    });
+
+    it('should disable follow-up prompt buttons when sending', async () => {
+      followUpPrompts.set(['Tell me more']);
+      sending.set(true);
+      await fixture.whenStable();
+
+      const promptButton = debugElement.query(By.css('.follow-up-prompts button'));
+      expect(promptButton.nativeElement).toBeDisabled();
+    });
+
+    it('should focus the textarea after selecting a follow-up prompt', async () => {
+      followUpPrompts.set(['Tell me more']);
+      await fixture.whenStable();
+
+      const focusSpy = vi.spyOn(component, 'focus');
+      const promptButton = debugElement.query(By.css('.follow-up-prompts button'));
+      promptButton.nativeElement.click();
+      await fixture.whenStable();
+
+      expect(focusSpy).toHaveBeenCalled();
+    });
   });
 });
