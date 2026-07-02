@@ -168,10 +168,10 @@ jobs:
             fi
             mkdir -p playwright/snapshots
             echo "Starting fresh snapshot generation..."
-            pnpm exec playwright test --update-snapshots=all
+            pnpx playwright test --update-snapshots=all
           else
             echo "Updating only changed snapshots..."
-            pnpm exec playwright test --update-snapshots=changed
+            pnpx playwright test --update-snapshots=changed
           fi
 
           # Verify that snapshots were generated
