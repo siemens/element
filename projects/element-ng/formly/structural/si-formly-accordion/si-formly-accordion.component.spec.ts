@@ -6,12 +6,13 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { SiFormlyModule } from '@siemens/element-ng/formly';
+import { FormlyFieldConfig, provideFormlyCore } from '@ngx-formly/core';
+
+import { SiFormlyComponent } from '../../si-formly.component';
 
 @Component({
   selector: 'si-formly-test',
-  imports: [SiFormlyModule],
+  imports: [SiFormlyComponent],
   template: `
     <si-formly
       class="si-layout-fixed-height"
@@ -94,6 +95,9 @@ describe('formly accordion type', () => {
   let fixture: ComponentFixture<FormlyTestComponent>;
 
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideFormlyCore()]
+    });
     fixture = TestBed.createComponent(FormlyTestComponent);
   });
 

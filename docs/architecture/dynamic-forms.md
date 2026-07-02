@@ -4,6 +4,17 @@
 Element supports dynamic forms using [Angular Formly](https://formly.dev/)
 which allows to generate forms from JSON data.
 
+!!! info "Formly version"
+
+    The `@siemens/element-ng/formly` package is based on Angular Formly v7.1.
+    If you are still using Formly v6, use `@siemens/element-ng/formly-legacy` instead.
+
+!!! warning "Migrate from `formly-legacy`"
+
+    `@siemens/element-ng/formly-legacy` (Formly v6) is deprecated and support
+    will be dropped in a future release. Migrate to `@siemens/element-ng/formly`
+    (Formly v7.1) as soon as possible.
+
 ## Code ---
 
 ### Usage
@@ -14,42 +25,37 @@ which allows to generate forms from JSON data.
     - [@ngx-formly/bootstrap](https://www.npmjs.com/package/@ngx-formly/bootstrap)
 
 ```ts
-import { SiFormlyModule } from '@siemens/element-ng/formly';
+import { SiFormlyComponent } from '@siemens/element-ng/formly';
 
-@NgModule({
-  imports: [SiFormlyModule, ...]
+@Component({
+  imports: [SiFormlyComponent, ...]
 })
 ```
 
 ### Standalone support
 
-Formly does not provide standalone support yet [see also](https://formly.dev/docs/guide/faq#formly-standalone-components-support).
-
-However, starting from Element v46.5.0 you can use the workaround
-provided in [comment](https://github.com/ngx-formly/ngx-formly/issues/3721#issuecomment-1602401526).
-
-Include `SiFormlyModule` in your app configuration to register your custom types/validators/wrappers.
+`SiFormlyComponent` is a standalone component. Import it directly into your
+component's `imports` and register any custom types/validators/wrappers via
+`provideFormlyCore` in your app configuration.
 
 ```ts
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { SiFormlyModule } from '@siemens/element-ng/formly';
+import { ApplicationConfig } from '@angular/core';
+import { provideFormlyCore } from '@ngx-formly/core';
 
 const config: ApplicationConfig = {
   providers: [
-    importProvidersFrom(
-      SiFormlyModule.forRoot({
-        // optionally you can add following configurations
-        types: [
-          // register your custom types here
-        ],
-        validators: [
-          // register your custom validators here
-        ],
-        wrappers: [
-          // register your custom wrapper here
-        ]
-      })
-    )
+    provideFormlyCore({
+      // optionally you can add following configurations
+      types: [
+        // register your custom types here
+      ],
+      validators: [
+        // register your custom validators here
+      ],
+      wrappers: [
+        // register your custom wrapper here
+      ]
+    })
   ]
 }
 ```
