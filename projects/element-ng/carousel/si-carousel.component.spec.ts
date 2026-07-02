@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { page, userEvent } from '@vitest/browser/context';
+import { page, userEvent } from 'vitest/browser';
 
 import { SiCarouselItemDirective } from './si-carousel-item.directive';
 import { SiCarouselComponent } from './si-carousel.component';

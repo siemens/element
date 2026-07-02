@@ -66,6 +66,10 @@ strictPeerDependencies: false
 overrides:
   '@microsoft/api-extractor>typescript': $typescript
   '@siemens/element-theme': 'workspace:*'
+  echarts: 6.1.0
+  zrender: 6.1.0
+  '@module-federation/enhanced': 2.5.1
+  '@module-federation/runtime': 2.5.1
 
 allowBuilds:
   '@parcel/watcher': true
