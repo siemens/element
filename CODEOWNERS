@@ -29,6 +29,7 @@ api-goldens/element-ng/threshold/ @siemens/siemens-element-owners @dr-itz
 api-goldens/element-ng/tour/ @siemens/siemens-element-owners @dr-itz
 api-goldens/element-ng/typeahead/ @siemens/siemens-element-owners @spliffone
 
+.agents/ @siemens/siemens-element-owners @siemens/siemens-element-members
 playwright/ @siemens/siemens-element-owners @siemens/siemens-element-members
 docs/ @siemens/siemens-element-owners @siemens/siemens-element-members
 src/ @siemens/siemens-element-owners @siemens/siemens-element-members
