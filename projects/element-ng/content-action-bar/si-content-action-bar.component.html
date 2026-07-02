@@ -26,7 +26,7 @@
                 si-menu-item
                 [attr.data-id]="primaryAction.id"
                 [attr.aria-label]="primaryAction.label | translate"
-                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : ''"
+                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : (primaryAction.tooltip ?? '' | translate)"
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
                 [disabled]="primaryAction.disabled || disabled()"
@@ -45,7 +45,7 @@
                 si-menu-item-checkbox
                 [attr.data-id]="primaryAction.id"
                 [attr.aria-label]="primaryAction.label | translate"
-                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : ''"
+                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : (primaryAction.tooltip ?? '' | translate)"
                 [checked]="primaryAction.checked"
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
@@ -66,7 +66,7 @@
                 si-menu-item
                 [attr.data-id]="primaryAction.id"
                 [attr.aria-label]="primaryAction.label | translate"
-                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : ''"
+                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : (primaryAction.tooltip ?? '' | translate)"
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
                 [disabled]="primaryAction.disabled || disabled()"
@@ -88,7 +88,7 @@
                 si-menu-item
                 [attr.data-id]="primaryAction.id"
                 [attr.aria-label]="primaryAction.label | translate"
-                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : ''"
+                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : (primaryAction.tooltip ?? '' | translate)"
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
                 [disabled]="primaryAction.disabled || disabled()"
@@ -114,7 +114,7 @@
                 si-menu-item
                 [attr.data-id]="primaryAction.id"
                 [attr.aria-label]="primaryAction.label | translate"
-                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : ''"
+                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : (primaryAction.tooltip ?? '' | translate)"
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
                 [disabled]="primaryAction.disabled || disabled()"
