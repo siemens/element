@@ -54,6 +54,7 @@ export class SiTourComponent implements OnDestroy {
   private elementRef: ElementRef<HTMLElement> = inject(ElementRef);
   private subscription?: Subscription;
   private prevFocus: Element | null = null;
+  private lastPositionChange: PositionChange | undefined;
 
   private readonly focusTrap = viewChild<CdkTrapFocus>('focusTrap');
   private document = inject(DOCUMENT);
@@ -70,6 +71,9 @@ export class SiTourComponent implements OnDestroy {
     });
     this.subscription.add(
       this.tourToken.positionChange.subscribe(update => this.updatePosition(update))
+    );
+    this.subscription.add(
+      this.tourToken.sizeChange.subscribe(() => this.updatePosition(this.lastPositionChange))
     );
   }
 
@@ -110,6 +114,7 @@ export class SiTourComponent implements OnDestroy {
   }
 
   private updatePosition(update: PositionChange | undefined): void {
+    this.lastPositionChange = update;
     if (!update) {
       this.positionClass.set('');
       this.arrowPos.set(undefined);
