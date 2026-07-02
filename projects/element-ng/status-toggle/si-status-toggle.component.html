@@ -15,7 +15,9 @@
     [style.inset-inline-start]="draggablePosition()"
     [style.width.%]="100 / itemsValue.length"
   >
-    <div class="visible-toggle-draggable"></div>
+    @if (selectedIndex() !== undefined) {
+      <div class="visible-toggle-draggable"></div>
+    }
   </div>
 
   @let selIndexValue = selectedIndex();
