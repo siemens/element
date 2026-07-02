@@ -4,7 +4,7 @@
   - link "Siemens logo":
     - /url: "#/"
   - heading "Navbar vertical" [level=1]
-  - button "Jane Smith"
+  - button "Jane Smith": JS
 - navigation:
   - button "expand"
   - button "Search..."

@@ -54,11 +54,11 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
+   * t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search…`)
    * ```
    */
   readonly searchPlaceholder = input(
-    t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
+    t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search…`)
   );
   /**
    * Emits when the catalog is `closed`, either by canceling or by adding or saving
@@ -121,7 +121,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
     () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.DISCARD:Discard`
   );
   protected labelWidgetCatalogList = t(
-    () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.WIDGET_CATALOG_LIST:Widget catalog list`
+    () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.WIDGET_CATALOG_LIST:Widget catalog`
   );
 
   protected readonly showAddButton = computed(() =>

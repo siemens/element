@@ -1,5 +1,5 @@
 - text: Heading
-- button "Toggle"
+- button "Show actions"
 - list:
   - listitem
   - listitem
@@ -27,7 +27,7 @@
   - listitem: Caution 3 hours ago Caution
   - listitem: Danger 4 hours ago Danger
 - text: Heading
-- button "Toggle"
+- button "Show actions"
 - list:
   - listitem
   - listitem

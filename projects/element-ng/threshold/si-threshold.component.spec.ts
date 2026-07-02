@@ -150,7 +150,7 @@ describe('SiThresholdComponent', () => {
     vi.spyOn(component, 'thresholdStepsChange');
 
     await fixture.whenStable();
-    const remove2 = element.querySelectorAll<HTMLElement>('[aria-label="Delete step"]')[1];
+    const remove2 = element.querySelectorAll<HTMLElement>('[aria-label="Remove step"]')[1];
     await userEvent.click(remove2);
     await fixture.whenStable();
 
@@ -165,7 +165,7 @@ describe('SiThresholdComponent', () => {
     await fixture.whenStable();
 
     expect(element.querySelectorAll<HTMLElement>('[aria-label="Add step"]')).toHaveLength(0);
-    expect(element.querySelectorAll<HTMLElement>('[aria-label="Delete step"]')).toHaveLength(0);
+    expect(element.querySelectorAll<HTMLElement>('[aria-label="Remove step"]')).toHaveLength(0);
   });
 
   it('should limit max. number of steps', async () => {
@@ -247,7 +247,7 @@ describe('SiThresholdComponent', () => {
 
     it('should hide add and delete buttons', () => {
       expect(element.querySelectorAll('[aria-label="Add step"]')).toHaveLength(0);
-      expect(element.querySelectorAll('[aria-label="Delete step"]')).toHaveLength(0);
+      expect(element.querySelectorAll('[aria-label="Remove step"]')).toHaveLength(0);
     });
 
     it('should show readonly text inputs instead of number inputs', () => {

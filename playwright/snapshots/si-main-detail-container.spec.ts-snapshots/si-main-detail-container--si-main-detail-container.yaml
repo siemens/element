@@ -1,6 +1,6 @@
 - heading "Main-Detail Container Example" [level=2]
 - textbox "Search"
-- button "Toggle"
+- button "Show actions"
 - table:
   - rowgroup:
     - row "Name Role Company":
@@ -37,7 +37,7 @@
       - cell "Engineer"
       - cell "Great Company 1"
 - text: Details
-- button "Toggle"
+- button "Show actions"
 - text: No entity selected.
 - separator
 - text: Settings

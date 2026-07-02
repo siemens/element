@@ -12,7 +12,7 @@
   - button "Good response"
   - button "Bad response"
   - button "Copy response"
-  - button "More actions"
+  - button "Additional actions"
 - paragraph: Perfect! What should I focus on first
 - paragraph: I also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?
 - group:
@@ -22,7 +22,7 @@
   - button "Good response"
   - button "Bad response"
   - button "Copy response"
-  - button "More actions"
+  - button "Additional actions"
 - alert: Info AI responses are for demonstration purposes.
 - group:
   - text: requirements.pdf
@@ -33,7 +33,7 @@
 - textbox "Chat message input":
   - /placeholder: Enter a command, question or topic...
 - group:
-  - button "More actions"
+  - button "Additional actions"
   - button "Show Welcome Screen"
 - button "Send"
 - text: The content is AI generated. Always verify the information for accuracy.

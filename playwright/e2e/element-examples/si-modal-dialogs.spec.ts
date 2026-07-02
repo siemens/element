@@ -74,7 +74,7 @@ test.describe('si-modal-dialogs', () => {
     await page.mouse.up();
 
     await page.getByRole('option', { name: 'Row 8' }).press('Enter');
-    await expect(page.getByRole('textbox', { name: 'Rename column' })).toBeFocused();
+    await expect(page.getByRole('textbox', { name: 'Rename element' })).toBeFocused();
     await page.keyboard.type(' M');
     await page.getByRole('option', { name: 'Row 8' }).press('Enter');
     await page.getByRole('option', { name: 'Row 8' }).press('Space');

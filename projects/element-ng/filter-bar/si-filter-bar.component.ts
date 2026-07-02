@@ -91,11 +91,11 @@ export class SiFilterBarComponent {
    * Custom text for the collapsed filters.
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION:+ {{count}} filters`)
+   * t(() => $localize`:@@SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION:+ {{count}} criteria`)
    * ```
    */
   readonly collapsedFiltersDescription = input(
-    t(() => $localize`:@@SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION:+ {{count}} filters`)
+    t(() => $localize`:@@SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION:+ {{count}} criteria`)
   );
 
   /**

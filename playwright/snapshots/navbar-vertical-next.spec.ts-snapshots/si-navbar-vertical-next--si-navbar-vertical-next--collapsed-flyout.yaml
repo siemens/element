@@ -31,3 +31,5 @@
   - text: Content with path 'subItem2' Control panel
   - checkbox "Always flyout"
   - text: Always flyout
+  - checkbox "Inline collapse"
+  - text: Inline collapse

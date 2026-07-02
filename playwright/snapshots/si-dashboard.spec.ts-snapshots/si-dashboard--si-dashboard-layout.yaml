@@ -6,7 +6,7 @@
     - /url: "#/"
   - heading "Smart Buildings" [level=1]
   - button "API"
-  - button "Jane Smith"
+  - button "Jane Smith": JS
 - navigation:
   - button "collapse" [expanded]
   - button "Home"
@@ -48,7 +48,7 @@
   - menubar:
     - menuitem "Expand"
   - text: Daily requirements at work Contributions
-  - button "Toggle"
+  - button "Show actions"
   - text: /\d+ bits Valuable bits commited to main\./
   - link "Do something":
     - /url: ""
