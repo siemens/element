@@ -1,0 +1,43 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+// Inline source chip — appears embedded in AI message text.
+// Height is fixed at 20px to match the AI message line-height and avoid disrupting text flow.
+:host {
+  display: inline-flex;
+  align-items: center;
+  block-size: 20px;
+  padding-inline: map.get(variables.$spacers, 3); // 6px
+  gap: map.get(variables.$spacers, 1); // 2px
+  border: 1px solid variables.$element-ui-3;
+  border-radius: map.get(variables.$spacers, 6); // pill shape
+  color: variables.$element-text-secondary;
+  font-size: variables.$si-font-size-caption;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+
+  &:hover {
+    background: variables.$element-base-1-hover;
+  }
+
+  &.active,
+  &:active {
+    background: variables.$element-base-1-selected;
+    color: variables.$element-text-primary;
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  align-self: center;
+  font-size: 16px;
+}
+
+// Source label — truncates after 24 characters to keep the pill compact.
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-inline-size: 24ch;
+}

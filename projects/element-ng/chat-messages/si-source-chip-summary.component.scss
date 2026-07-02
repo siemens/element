@@ -1,0 +1,44 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+// Summary source chip — appears at the end of the AI message alongside the action buttons.
+:host {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  block-size: 24px;
+  padding-inline-start: map.get(variables.$spacers, 3); // 6px (icon side)
+  padding-inline-end: map.get(variables.$spacers, 4); // 8px (label side)
+  gap: map.get(variables.$spacers, 1); // 2px
+  border: 1px solid variables.$element-ui-3;
+  border-radius: map.get(variables.$spacers, 6); // pill shape
+  color: variables.$element-text-secondary;
+  font-size: variables.$si-font-size-caption;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover {
+    background: variables.$element-base-1-hover;
+  }
+
+  &.active,
+  &:active {
+    background: variables.$element-base-1-selected;
+    color: variables.$element-text-primary;
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  align-self: center;
+  font-size: 16px;
+}
+
+// Source label — truncates after 24 characters.
+// Use the actual source name (e.g. "Nielsen Norman Group"), never hardcode.
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-inline-size: 24ch;
+}

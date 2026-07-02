@@ -59,7 +59,11 @@ import { SiChatMessageComponent } from './si-chat-message.component';
 })
 export class SiAiMessageComponent {
   protected readonly formattedContent = viewChild<ElementRef<HTMLDivElement>>('formattedContent');
+  protected readonly inlineContent = viewChild<ElementRef<HTMLElement>>('inlineContent');
   protected readonly icons = addIcons({ elementOptionsVertical });
+
+  private inlineNodes: Node[] = [];
+  private chipSpacer: HTMLElement | null = null;
 
   /**
    * The AI-generated message content
@@ -88,6 +92,18 @@ export class SiAiMessageComponent {
       const formatter = this.contentFormatter();
       const contentValue = this.content();
       const container = this.formattedContent()?.nativeElement;
+      const inlineEl = this.inlineContent()?.nativeElement;
+
+      // Move inline chips back to their staging span before any innerHTML clear,
+      // so they survive the DOM reset regardless of where they currently live.
+      if (inlineEl && this.inlineNodes.length > 0) {
+        this.chipSpacer?.remove();
+        this.inlineNodes.forEach(node => {
+          if (node.parentNode !== inlineEl) {
+            inlineEl.appendChild(node);
+          }
+        });
+      }
 
       if (container && contentValue) {
         if (formatter) {
@@ -99,6 +115,31 @@ export class SiAiMessageComponent {
             this.textContent.set(undefined);
             container.innerHTML = '';
             container.appendChild(formatted);
+
+            if (inlineEl) {
+              // Collect projected element nodes on the first Node render.
+              if (this.inlineNodes.length === 0) {
+                this.inlineNodes = Array.from(inlineEl.childNodes).filter(
+                  n => n.nodeType === Node.ELEMENT_NODE
+                );
+              }
+              // Move chips to the end of the last paragraph in the rendered content.
+              if (this.inlineNodes.length > 0) {
+                const allPs = container.querySelectorAll('p');
+                const target = allPs.length > 0 ? allPs[allPs.length - 1] : container;
+                // Prepend a 6px inline-block spacer. Because it is a separate DOM node it
+                // stays on the previous line when the chip wraps, so the chip starts at
+                // position 0 rather than carrying a 6px indent onto the new line.
+                if (!this.chipSpacer) {
+                  const spacer = document.createElement('span');
+                  spacer.style.cssText = 'display:inline-block;width:6px';
+                  spacer.setAttribute('aria-hidden', 'true');
+                  this.chipSpacer = spacer;
+                }
+                target.appendChild(this.chipSpacer);
+                this.inlineNodes.forEach(node => target.appendChild(node));
+              }
+            }
           }
         } else {
           this.textContent.set(contentValue);

@@ -1,5 +1,23 @@
-<div class="si-layout-fixed-height w-100 h-100">
-  <si-chat-container #chatContainer colorVariant="base-0">
+<div class="d-flex flex-column si-layout-fixed-height w-100 h-100">
+  <div class="d-flex gap-2 p-3 border-bottom">
+    <button
+      type="button"
+      class="btn btn-secondary btn-sm"
+      [class.active]="!showSummary()"
+      (click)="showSummary.set(false)"
+    >
+      Inline sources
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary btn-sm"
+      [class.active]="showSummary()"
+      (click)="showSummary.set(true)"
+    >
+      Summary sources
+    </button>
+  </div>
+  <si-chat-container #chatContainer colorVariant="base-0" class="flex-grow-1">
     @for (message of messages(); track message) {
       @if (message.type === 'user') {
         <si-user-message
@@ -11,12 +29,42 @@
         />
       }
       @if (message.type === 'ai') {
-        <si-ai-message
-          [content]="message.content"
-          [actions]="getMessagePrimaryActions(message)"
-          [secondaryActions]="getMessageSecondaryActions(message)"
-          [contentFormatter]="markdownRenderer"
-        />
+        @if (!showSummary()) {
+          <si-ai-message
+            [content]="message.content"
+            [actions]="getMessagePrimaryActions(message)"
+            [secondaryActions]="getMessageSecondaryActions(message)"
+            [contentFormatter]="markdownRenderer"
+          >
+            @if (message.citations?.length) {
+              <si-source-chip-inline
+                [label]="message.citations![0].title"
+                [count]="message.citations!.length - 1"
+                [siPopover]="sourceTpl"
+                [siPopoverContext]="{ $implicit: message.citations }"
+                siPopoverPlacement="bottom"
+                (chipClicked)="logEvent('Inline chip clicked: ' + message.citations![0].title)"
+              />
+            }
+          </si-ai-message>
+        } @else {
+          <si-ai-message
+            [content]="message.content"
+            [actions]="getMessagePrimaryActions(message)"
+            [secondaryActions]="getMessageSecondaryActions(message)"
+            [contentFormatter]="markdownRenderer"
+          >
+            @if (message.citations?.length) {
+              <si-source-chip-summary
+                siAiMessageAction
+                [siPopover]="sourceTpl"
+                [siPopoverContext]="{ $implicit: message.citations }"
+                siPopoverPlacement="bottom"
+                (chipClicked)="logEvent('Summary chip clicked')"
+              />
+            }
+          </si-ai-message>
+        }
       }
       @if (message.type === 'custom') {
         <si-chat-message alignment="start" actionsPosition="bottom">
@@ -94,6 +142,21 @@
     </si-chat-input>
   </si-chat-container>
 </div>
+
+<ng-template #sourceTpl let-sources>
+  <si-popover-body>
+    @for (source of sources; track source.title; let i = $index; let last = $last) {
+      @if (sources.length > 1) {
+        <div class="si-body-2 text-secondary mb-1">{{ i + 1 }}/{{ sources.length }}</div>
+      }
+      <a class="si-body-2 fw-bold" [href]="source.url" target="_blank" rel="noopener noreferrer">{{ source.title }}</a>
+      <div class="si-body-2 mt-1">{{ source.excerpt }}</div>
+      @if (!last) {
+        <hr class="my-3" />
+      }
+    }
+  </si-popover-body>
+</ng-template>
 
 <ng-template #modalTemplate let-modalRef="modalRef" let-attachment="attachment">
   <div class="modal-header">

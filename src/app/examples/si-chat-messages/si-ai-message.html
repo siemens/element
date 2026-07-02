@@ -1,4 +1,23 @@
 <div class="p-2">
+  <div class="d-flex gap-2 mb-4">
+    <button
+      type="button"
+      class="btn btn-secondary btn-sm"
+      [class.active]="!showSummary()"
+      (click)="showSummary.set(false)"
+    >
+      Inline sources
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary btn-sm"
+      [class.active]="showSummary()"
+      (click)="showSummary.set(true)"
+    >
+      Summary sources
+    </button>
+  </div>
+
   <si-ai-message
     actionParam="message-1"
     [content]="content"
@@ -6,9 +25,45 @@
     [actions]="actions"
     [secondaryActions]="secondaryActions"
     [loading]="false"
-  />
+  >
+    @if (!showSummary()) {
+      <p class="mb-0 mt-2">
+        Smart building automation reduces energy use by up to 30%, while industrial
+        efficiency gains are well-documented in literature.<si-source-chip-inline
+          [label]="exampleSources[0].title"
+          [count]="exampleSources.length - 1"
+          [siPopover]="sourceTpl"
+          [siPopoverContext]="{ $implicit: exampleSources }"
+          siPopoverPlacement="bottom"
+          (chipClicked)="logEvent('Inline chip clicked: ' + exampleSources[0].title)"
+        /></p>
+    } @else {
+      <si-source-chip-summary
+        siAiMessageAction
+        [siPopover]="sourceTpl"
+        [siPopoverContext]="{ $implicit: exampleSources }"
+        siPopoverPlacement="bottom"
+        (chipClicked)="logEvent('Summary chip clicked')"
+      />
+    }
+  </si-ai-message>
 
   <div class="mt-5">
     <si-ai-message [loading]="true" />
   </div>
 </div>
+
+<ng-template #sourceTpl let-sources>
+  <si-popover-body>
+    @for (source of sources; track source.title; let i = $index; let last = $last) {
+      @if (sources.length > 1) {
+        <div class="si-body-2 text-secondary mb-1">{{ i + 1 }}/{{ sources.length }}</div>
+      }
+      <a class="si-body-2 fw-bold" [href]="source.url" target="_blank" rel="noopener noreferrer">{{ source.title }}</a>
+      <div class="si-body-2 mt-1">{{ source.excerpt }}</div>
+      @if (!last) {
+        <hr class="my-3" />
+      }
+    }
+  </si-popover-body>
+</ng-template>
