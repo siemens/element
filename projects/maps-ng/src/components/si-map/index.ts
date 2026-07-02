@@ -7,3 +7,4 @@ export * from './models/index';
 export * from './services/map.service';
 export * from './si-map.module';
 export * from './si-map.component';
+export * from './shared/themes/railway-style';

@@ -369,10 +369,9 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
       return;
     }
 
-    if (changes.groupColors) {
-      this.mapService.setTheme(this.groupColors());
-      // refresh the style of points-layer to reflect the color changes.
-      this.refreshLayersStyle([POINTS_LAYER]);
+    if (changes.groupColors || changes.styleJson) {
+      const dark = document.documentElement.classList.contains('app--dark');
+      this.setTheme(dark);
     }
 
     if (changes.points) {
@@ -417,7 +416,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
     });
 
     const dark = document.documentElement.classList.contains('app--dark');
-    this.setTheme(dark, this.maptilerKey());
+    this.setTheme(dark);
 
     setTimeout(() => this.fixCenter());
   }
@@ -437,11 +436,15 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
 
   @HostListener('window:theme-switch', ['$event'])
   onThemeSwitchInternal(event: Event): void {
-    this.setTheme((event as CustomEvent).detail.dark, this.maptilerKey());
+    // Ignore the theme changes when styleJson is used since the style define the colors.
+    if (this.styleJson()) {
+      return;
+    }
+    this.setTheme((event as CustomEvent).detail.dark);
   }
 
   onThemeSwitch(dark: boolean): void {
-    this.setTheme(dark, this.maptilerKey());
+    this.setTheme(dark);
   }
 
   private removePixelRatioListener = (): void => {};
@@ -585,13 +588,8 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
     });
 
     this.mapService.setZoomCallback(() => this.map?.getView().getZoom());
-
-    this.mapService.setTheme(this.groupColors()); // Set theme before adding layers.
-
-    const styleJsonValue = this.styleJson();
-    if (styleJsonValue) {
-      this.setMapStyle(undefined, undefined, styleJsonValue);
-    }
+    const dark = document.documentElement.classList.contains('app--dark');
+    this.setTheme(dark);
 
     this.setGeoJsonLayer();
 
@@ -686,11 +684,18 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
     }
   }
 
-  private setTheme(dark: boolean, maptilerKey?: string): void {
-    if (maptilerKey && (this.darkTheme === undefined || this.darkTheme !== dark)) {
-      this.setMapStyle(dark, maptilerKey);
-      this.darkTheme = dark;
+  private setTheme(dark: boolean): void {
+    // The styleJson has a higher priority than the internal theme styles.
+    const style = this.styleJson();
+    if (style) {
+      this.setMapStyle(undefined, undefined, style);
+    } else {
+      const maptilerKey = this.maptilerKey();
+      if (maptilerKey && (this.darkTheme === undefined || this.darkTheme !== dark)) {
+        this.setMapStyle(dark, maptilerKey);
+      }
     }
+    this.darkTheme = dark;
     this.mapService.setTheme(this.groupColors());
     // reload the style to reflect the theme changes.
     this.refreshLayersStyle([POINTS_LAYER, GEOJSON_LAYER]);
@@ -717,22 +722,22 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
    * @param key - the api key for the maptiler styleJSON
    * @param styleJSON - a preexisting styleJSON as url with key already provided
    */
-  setMapStyle(dark?: boolean, key?: string, styleJSON?: string): void {
+  setMapStyle(dark?: boolean, key?: string, styleJSON?: string | any): void {
     if (!this.map) {
       return;
     }
 
-    if (styleJSON) {
-      this.ngZone.runOutsideAngular(() => applyMapboxStyle(this.map!, styleJSON));
-    } else if (key) {
-      const layers = this.map.getLayers().getArray() as Layer[];
-      layers.forEach((layer: Layer) => {
-        if (layer.get('mapbox-source')) {
-          this.map!.removeLayer(layer);
-        }
-      });
-      this.mapboxStyles(styleJson(key, dark));
+    if (!styleJSON && !key) {
+      return;
     }
+    styleJSON ??= styleJson(key!, dark);
+    const layers = this.map.getLayers().getArray() as Layer[];
+    for (const layer of layers) {
+      if (layer.get('mapbox-source') || layer.get('mapbox-layers')) {
+        this.map!.removeLayer(layer);
+      }
+    }
+    this.mapboxStyles(styleJSON);
   }
 
   /**
