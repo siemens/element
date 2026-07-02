@@ -84,15 +84,16 @@ export class SiAttachmentListComponent {
   readonly removable = input(false, { transform: booleanAttribute });
 
   /**
-   * Label for remove attachment button
+   * Label for remove attachment button.
+   * The attachment name is available with `{{attachment}}`.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT:Remove attachment`)
+   * t(() => $localize`:@@SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT:Remove {{attachment}}`)
    * ```
    */
   readonly removeLabel = input(
-    t(() => $localize`:@@SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT:Remove attachment`)
+    t(() => $localize`:@@SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT:Remove {{attachment}}`)
   );
 
   /**

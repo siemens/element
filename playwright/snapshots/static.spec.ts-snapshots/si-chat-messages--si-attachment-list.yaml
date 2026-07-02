@@ -1,18 +1,18 @@
 - group:
   - button "quarterly-report.xlsx"
-  - button "Remove attachment quarterly-report.xlsx"
+  - button "Remove attachment"
 - group:
   - button "screenshot.png"
-  - button "Remove attachment screenshot.png"
+  - button "Remove attachment"
 - group:
   - button "very-long-filename-that-demonstrates-text-truncation-behavior.pdf"
-  - button "Remove attachment very-long-filename-that-demonstrates-text-truncation-behavior.pdf"
+  - button "Remove attachment"
 - group:
   - button "data.csv"
-  - button "Remove attachment data.csv"
+  - button "Remove attachment"
 - group:
   - button "audio.mp3"
-  - button "Remove attachment audio.mp3"
+  - button "Remove attachment"
 - group:
   - button "final-report.docx"
 - group:
