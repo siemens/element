@@ -79,4 +79,32 @@ export class TestComponent {
     // Verify the schematic ran with custom options
     // In a real scenario, you'd verify the migration respected the path option
   });
+
+  it('should run migration-v51 successfully', async () => {
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    expect(tree).toBeDefined();
+  });
+
+  it('should remove uploadTextFileSelect from file uploader components in v51', async () => {
+    const originalContent = `import { Component } from '@angular/core';
+import { SiFileUploaderComponent } from '@siemens/element-ng/file-uploader';
+
+@Component({
+  selector: 'app-test',
+  imports: [SiFileUploaderComponent],
+  template: \`<si-file-uploader uploadTextFileSelect="Select file" [maxFileSize]="5000000"></si-file-uploader>\`
+})
+export class TestComponent {}`;
+
+    addTestFiles(appTree, {
+      '/projects/app/src/test.component.ts': originalContent
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+
+    expect(tree).toBeDefined();
+    const modifiedContent = tree.readContent('/projects/app/src/test.component.ts');
+    expect(modifiedContent).not.toContain('uploadTextFileSelect');
+    expect(modifiedContent).toContain('[maxFileSize]="5000000"');
+  });
 });

@@ -24,5 +24,16 @@ export const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
     module: /@(siemens|simpl)\/element-ng/,
     elementSelector: 'si-landing-page',
     names: ['registerNowIntroText']
+  },
+  // v49 to v51
+  {
+    module: /@(siemens|simpl)\/element-ng(\/file-uploader)?/,
+    elementSelector: 'si-file-uploader',
+    names: ['uploadTextFileSelect']
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng(\/file-uploader)?/,
+    elementSelector: 'si-file-dropzone',
+    names: ['uploadTextFileSelect']
   }
 ];

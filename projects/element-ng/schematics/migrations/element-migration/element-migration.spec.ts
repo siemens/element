@@ -159,4 +159,8 @@ describe('to legacy migration', () => {
   it('should migrate element classes in inline template', async () => {
     await checkTemplateMigration(['element-class-inline-template.ts']);
   });
+
+  it('should remove uploadTextFileSelect from file uploader components', async () => {
+    await checkTemplateMigration(['file-uploader-inline-template.ts']);
+  });
 });

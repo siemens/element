@@ -13,7 +13,6 @@ describe('SiFileDropzoneComponent', () => {
   let element: HTMLElement;
   let maxFileSize: WritableSignal<number | undefined>;
   let accept: WritableSignal<string | undefined>;
-  let uploadTextFileSelect: WritableSignal<TranslatableString>;
   let uploadDropText: WritableSignal<TranslatableString>;
   let errorTextFileType: WritableSignal<TranslatableString>;
   let errorTextFileMaxSize: WritableSignal<TranslatableString>;
@@ -27,8 +26,7 @@ describe('SiFileDropzoneComponent', () => {
   beforeEach(() => {
     maxFileSize = signal<number | undefined>(undefined);
     accept = signal<string | undefined>(undefined);
-    uploadTextFileSelect = signal<TranslatableString>('click to upload');
-    uploadDropText = signal<TranslatableString>('Drop files here or');
+    uploadDropText = signal<TranslatableString>('Drop files here or click to upload');
     errorTextFileType = signal<TranslatableString>('Incorrect file type selected');
     errorTextFileMaxSize = signal<TranslatableString>('File exceeds allowed maximum size');
     directoryUpload = signal(false);
@@ -38,7 +36,6 @@ describe('SiFileDropzoneComponent', () => {
       bindings: [
         inputBinding('maxFileSize', maxFileSize),
         inputBinding('accept', accept),
-        inputBinding('uploadTextFileSelect', uploadTextFileSelect),
         inputBinding('uploadDropText', uploadDropText),
         inputBinding('errorTextFileType', errorTextFileType),
         inputBinding('errorTextFileMaxSize', errorTextFileMaxSize),
@@ -121,14 +118,6 @@ describe('SiFileDropzoneComponent', () => {
       remove: () => false
     };
   };
-
-  it('should contain set upload text to file selecting', async () => {
-    uploadTextFileSelect.set('browse files');
-    uploadDropText.set('droppi droppi');
-    await fixture.whenStable();
-    expect(element.querySelector('.select-file')!).toHaveTextContent('browse files');
-    expect(element.querySelector('.drag-and-drop-description')!).toHaveTextContent('droppi droppi');
-  });
 
   it('should highlight the drop area when dragging something over it', async () => {
     await fixture.whenStable();
