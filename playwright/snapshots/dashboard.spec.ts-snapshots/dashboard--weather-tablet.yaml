@@ -31,14 +31,19 @@
     - menuitem "Print"
     - menuitem "Expand"
     - menuitem "Toggle"
+  - application "Chart"
   - text: Pie Chart
   - menubar:
     - menuitem "Expand"
-  - text: Full Speed Line Chart
+  - application "Chart"
+  - text: Full Speed
+  - application "Chart"
+  - text: Line Chart
   - menubar:
     - menuitem "Print"
     - menuitem "Expand"
     - menuitem "Toggle"
+  - application "Chart"
   - text: List Widget
   - menubar:
     - menuitem "Sort descending"
