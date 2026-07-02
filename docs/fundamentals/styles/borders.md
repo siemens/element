@@ -50,8 +50,27 @@ Customize the radius using the following utils:
 
 > **Note:** Since `rounded-2` is the default shape for _Element_, it is possible to use the shorthand `rounded` CSS class.
 
+## AI gradient borders
+
+Add a 1px gradient border to any element using the AI border utility classes.
+The gradient border is rendered via a masked pseudo-element and works with both opaque and transparent backgrounds.
+
+| Class                   | Description                                |
+| ----------------------- | ------------------------------------------ |
+| `.border-horizontal-ai` | Horizontal (left-to-right) gradient border |
+| `.border-vertical-ai`   | Vertical (top-to-bottom) gradient border   |
+
+The element must have a `border-radius` set for the gradient to follow the rounded shape.
+
+```html
+<span class="badge border-horizontal-ai">AI generated</span>
+<div class="card border-vertical-ai">...</div>
+```
+
 ## Examples
 
 <si-docs-component example="borders/borders" height="300"></si-docs-component>
 
 <si-docs-component example="shapes/shapes" height="300"></si-docs-component>
+
+<si-docs-component example="ai-border/ai-border" height="300"></si-docs-component>
