@@ -22,8 +22,23 @@
       datasourceTemplate: "docker"
     }
   ],
+  postUpdateOptions: ["npmDedupe"],
   rebaseWhen: "conflicted",
   packageRules: [
+    {
+      description: ["Track only Node.js LTS releases in .nvmrc (even major = LTS)"],
+      matchManagers: ["node"],
+      allowedVersions: "/^(\\d*[02468])\\./"
+    },
+    {
+      description: [
+        "Track Node.js LTS in engines.node, bumping the range floor on each LTS release"
+      ],
+      matchDepTypes: ["engines", "devDependencies"],
+      matchPackageNames: ["node", "@types/node"],
+      allowedVersions: "/^(\\d*[02468])\\./",
+      rangeStrategy: "bump"
+    },
     {
       groupName: "Siemens lint dependencies",
       description: ["Update Siemens lint packages together"],
