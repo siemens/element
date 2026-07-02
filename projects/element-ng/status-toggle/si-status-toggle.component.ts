@@ -16,7 +16,8 @@ import {
   output,
   signal,
   SimpleChanges,
-  viewChild
+  viewChild,
+  viewChildren
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { isRTL, listenGlobal } from '@siemens/element-ng/common';
@@ -38,7 +39,10 @@ import { StatusToggleItem } from './status-toggle.model';
       multi: true
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    role: 'toolbar'
+  }
 })
 export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, OnDestroy, OnChanges {
   /** List of status items. */
@@ -56,6 +60,7 @@ export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, On
 
   private readonly containerElement = viewChild.required<ElementRef>('container');
   private readonly draggableElement = viewChild.required<ElementRef>('draggable');
+  private readonly itemElements = viewChildren<ElementRef<HTMLElement>>('items');
 
   private boundingX = 0;
   private x0 = 0;
@@ -66,6 +71,7 @@ export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, On
   private readonly internalDisabled = signal(false);
 
   protected readonly selectedIndex = signal<number | undefined>(undefined);
+  protected readonly focusedIndex = signal(0);
   protected readonly draggablePosition = signal('');
   protected readonly animated = signal(false);
   protected readonly isDisabled = computed(() => this.disabled() || this.internalDisabled());
@@ -80,6 +86,12 @@ export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, On
     const selectedIndex = this.items().findIndex(v => v.value === this.value());
     if (selectedIndex >= 0) {
       this.selectItem(selectedIndex, false, false);
+    }
+    // If nothing ended up selected (no match, or matched item is disabled),
+    // ensure focusedIndex points to the first reachable (non-disabled) item
+    if (this.selectedIndex() === undefined) {
+      const firstEnabled = this.items().findIndex(item => !item.disabled);
+      this.focusedIndex.set(Math.max(0, firstEnabled));
     }
   }
 
@@ -212,7 +224,12 @@ export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, On
       this.value.set(value.value);
       this.animated.set(animated);
       this.selectedIndex.set(index);
+      this.focusedIndex.set(index);
       this.draggablePosition.set(`${(100 / values.length) * index}%`);
+
+      if (emit) {
+        this.itemElements()[index]?.nativeElement.focus();
+      }
 
       if (emit && index !== prevIndex) {
         if (this.onChange) {
@@ -223,6 +240,20 @@ export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, On
       if (emit) {
         this.itemClick.emit(this.value()!);
       }
+    }
+  }
+
+  protected navigateFocus(event: Event, fromIndex: number, direction: 1 | -1): void {
+    event.preventDefault();
+    const items = this.items();
+    const step = isRTL() ? -direction : direction;
+    let targetIndex = (fromIndex + step + items.length) % items.length;
+    while (targetIndex !== fromIndex && items[targetIndex].disabled) {
+      targetIndex = (targetIndex + step + items.length) % items.length;
+    }
+    if (!items[targetIndex].disabled) {
+      this.focusedIndex.set(targetIndex);
+      this.itemElements()[targetIndex].nativeElement.focus();
     }
   }
 }
