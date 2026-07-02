@@ -1,3 +1,5 @@
+- button "Inline sources"
+- button "Summary sources"
 - group:
   - button "data-analysis.py"
 - group:
@@ -8,6 +10,9 @@
   - button "Export message"
 - paragraph: I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
 - paragraph: Let me examine the structure and provide guidance.
+- paragraph:
+  - text: I'll start by reviewing the column types and any potential schema inconsistencies in your dataset. This will help us plan the most efficient analysis pipeline.
+  - button "Python Docs"
 - group:
   - button "Good response"
   - button "Bad response"
@@ -17,7 +22,11 @@
 - paragraph: I also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?
 - group:
   - button "Export message"
-- paragraph: Great question! When analyzing large datasets, it's crucial to focus on...
+- paragraph: Great question! When analyzing large datasets, it's crucial to focus on memory-efficient data loading and vectorized operations.
+- paragraph: Avoid row-by-row iteration and prefer bulk transformations using libraries like pandas or polars.
+- paragraph:
+  - text: Additionally, profiling your pipeline early will reveal bottlenecks before they become costly in production.
+  - button "Performance Guide +1"
 - group:
   - button "Good response"
   - button "Bad response"
