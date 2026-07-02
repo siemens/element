@@ -1,7 +1,17 @@
 @if (showBackdrop()) {
   <div class="modal-backdrop" animate.leave="backdrop-leave" (click)="toggleSidePanel()"></div>
 }
-<div #sidePanel class="side-panel focus-none" tabindex="-1">
+<div #content class="main-content si-layout-inner">
+  <ng-content />
+</div>
+<div
+  #sidePanel
+  class="side-panel focus-none"
+  tabindex="-1"
+  [cdkTrapFocus]="shouldTrapFocus()"
+  [cdkTrapFocusAutoCapture]="shouldTrapFocus()"
+  [attr.inert]="sidePanelInert() ? '' : null"
+>
   <div class="inner" [class.d-none]="showTempContent()">
     <ng-content select="si-side-panel-content, element-side-panel-content" />
     <ng-container #portalOutlet cdkPortalOutlet />
@@ -9,7 +19,4 @@
   <div class="inner" [class.d-none]="!showTempContent()">
     <ng-container #tmpPortalOutlet cdkPortalOutlet />
   </div>
-</div>
-<div #content class="main-content si-layout-inner">
-  <ng-content />
 </div>

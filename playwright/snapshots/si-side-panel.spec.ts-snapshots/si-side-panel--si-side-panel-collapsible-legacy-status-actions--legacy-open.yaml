@@ -1,21 +1,3 @@
-- paragraph: Cooling coil
-- menubar:
-  - menuitem "Path"
-  - menuitem "Edit"
-  - menuitem "Toggle"
-- button "Enter fullscreen"
-- button "Toggle"
-- link "Out of Service":
-  - /url: ""
-- link "Event source active, ack":
-  - /url: ""
-- textbox "Search..."
-- button "Properties 5" [expanded]
-- region "Properties 5": And here we have some content
-- button "Documents"
-- region "Documents"
-- button "Graphics"
-- region "Graphics"
 - banner:
   - link "Siemens logo":
     - /url: "#/"
@@ -58,3 +40,21 @@
   - text: Expanded width for complex forms and content.
   - code: "Extended (Responsive):"
   - text: Adaptive width scaling from mobile full-width to desktop 912px max.
+- paragraph: Cooling coil
+- menubar:
+  - menuitem "Path"
+  - menuitem "Edit"
+  - menuitem "Toggle"
+- button "Enter fullscreen"
+- button "Toggle" [expanded]
+- link "Out of Service":
+  - /url: ""
+- link "Event source active, ack":
+  - /url: ""
+- textbox "Search..."
+- button "Properties 5" [expanded]
+- region "Properties 5": And here we have some content
+- button "Documents"
+- region "Documents"
+- button "Graphics"
+- region "Graphics"
