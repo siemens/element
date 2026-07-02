@@ -45,7 +45,7 @@
         <button
           type="button"
           class="btn btn-tertiary-ghost btn-sm btn-icon expand-button flex-shrink-0 ms-auto align-self-center focus-inside m-2"
-          [attr.aria-label]="(removeLabel() | translate) + ' ' + attachment.name"
+          [attr.aria-label]="removeLabel() | translate: { attachment: attachment.name }"
           (click)="remove.emit(attachment); $event.stopPropagation()"
         >
           <si-icon class="icon" [icon]="icons.elementStateClose" />
