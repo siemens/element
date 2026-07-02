@@ -36,9 +36,12 @@
         <div #handle class="thumb-handle" [style.inset-inline-start.%]="indicatorPos()">
           <div
             class="thumb"
-            tabindex="0"
             role="slider"
+            [attr.tabindex]="disabled() ? -1 : 0"
+            [attr.aria-disabled]="disabled()"
             [attr.aria-label]="sliderLabel() | translate"
+            [attr.aria-valuemin]="min()"
+            [attr.aria-valuemax]="max()"
             [attr.aria-valuenow]="sliderValue()"
             [attr.aria-describedby]="errormessageId()"
             [class.dragging]="isDragging"
@@ -83,3 +86,5 @@
     </div>
   </div>
 }
+
+<span class="visually-hidden" aria-live="polite">{{ sliderValue() }}</span>
