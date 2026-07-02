@@ -14,6 +14,7 @@ import {
   SiUIStateService,
   UIStateStorage
 } from '@siemens/element-ng/common';
+import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { page, userEvent } from 'vitest/browser';
@@ -43,9 +44,13 @@ class SynchronousMockStore implements UIStateStorage {
 @Injectable({ providedIn: 'root' })
 class BreakpointObserverMock implements Partial<BreakpointObserver> {
   readonly isSmall = new BehaviorSubject<boolean>(false);
+  readonly isMobile = new BehaviorSubject<boolean>(false);
 
-  observe(): Observable<BreakpointState> {
-    return this.isSmall.pipe(map(matches => ({ matches, breakpoints: {} })));
+  observe(value: string | readonly string[]): Observable<BreakpointState> {
+    const query = Array.isArray(value) ? value[0] : (value as string);
+    const source =
+      query === `(max-width: ${BOOTSTRAP_BREAKPOINTS.smMinimum}px)` ? this.isMobile : this.isSmall;
+    return source.pipe(map(matches => ({ matches, breakpoints: {} })));
   }
 }
 
@@ -303,6 +308,146 @@ describe('SiNavbarVerticalNext', () => {
       [subItem1, subItem2] = await item.getChildren();
       expect(await subItem1.isActive()).toBe(false);
       expect(await subItem2.isActive()).toBe(true);
+    });
+
+    describe('flat group (mobile)', () => {
+      const enableMobile = async (): Promise<void> => {
+        const breakpointObserver = TestBed.inject(BreakpointObserverMock);
+        breakpointObserver.isMobile.next(true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+      };
+
+      it('should toggle nav-flat-group-open class only on mobile screens', async () => {
+        component.showDeclarativeFlyoutGroup.set(true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const navbarHost = fixture.nativeElement.querySelector('si-navbar-vertical-next');
+        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(false);
+
+        await enableMobile();
+
+        const item = await harness.findItemByLabel('item-1');
+        await item.click();
+        await fixture.whenStable();
+        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(true);
+      });
+
+      it('should open and close a flat group when triggering a group on mobile', async () => {
+        component.showDeclarativeFlyoutGroup.set(true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        await enableMobile();
+
+        const navbarHost = fixture.nativeElement.querySelector('si-navbar-vertical-next');
+        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(false);
+
+        const item = await harness.findItemByLabel('item-1');
+        await item.click();
+        await fixture.whenStable();
+
+        const backBtn = fixture.nativeElement.querySelector('[aria-label="Back"]');
+        expect(backBtn).toBeTruthy();
+        const chip = fixture.nativeElement.querySelector('.flat-group-header');
+        expect(chip.textContent).toContain('item-1');
+        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(true);
+
+        backBtn.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeFalsy();
+        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(false);
+      });
+
+      it('should render the projected sub-items inside the flat group', async () => {
+        component.showDeclarativeNavigationGroup.set(true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        await enableMobile();
+
+        const item = await harness.findItemByLabel('item1');
+        await item.click();
+        await fixture.whenStable();
+
+        const flatGroup = fixture.nativeElement.querySelector('si-navbar-flat-group');
+        expect(flatGroup).toBeTruthy();
+        const subItems = flatGroup.querySelectorAll('.navbar-vertical-item .item-title');
+        expect(subItems).toHaveLength(2);
+        expect(subItems[0].textContent.trim()).toBe('sub-item1');
+        expect(subItems[1].textContent.trim()).toBe('sub-item2');
+      });
+
+      it('should close the flat group when leaving mobile breakpoint', async () => {
+        component.showDeclarativeFlyoutGroup.set(true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        await enableMobile();
+
+        const item = await harness.findItemByLabel('item-1');
+        await item.click();
+        await fixture.whenStable();
+        expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeTruthy();
+
+        const breakpointObserver = TestBed.inject(BreakpointObserverMock);
+        breakpointObserver.isMobile.next(false);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeFalsy();
+        const navbarHost = fixture.nativeElement.querySelector('si-navbar-vertical-next');
+        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(false);
+      });
+
+      it('should preserve the flat group state across collapse/expand on mobile', async () => {
+        component.showDeclarativeFlyoutGroup.set(true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        await enableMobile();
+
+        const item = await harness.findItemByLabel('item-1');
+        await item.click();
+        await fixture.whenStable();
+        expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeTruthy();
+
+        // Collapse the drawer on mobile — the open flat group must be preserved.
+        component.collapsed.set(true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const navbarHost = fixture.nativeElement.querySelector('si-navbar-vertical-next');
+        expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeTruthy();
+        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(true);
+
+        // Re-expand the drawer — same flat group is still visible.
+        component.collapsed.set(false);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeTruthy();
+        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(true);
+      });
+
+      it('should close the flat group when the trigger item is removed while open', async () => {
+        component.showDeclarativeFlyoutGroup.set(true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        await enableMobile();
+
+        const item = await harness.findItemByLabel('item-1');
+        await item.click();
+        await fixture.whenStable();
+        expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeTruthy();
+
+        component.showDeclarativeFlyoutGroup.set(false);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeFalsy();
+        const navbarHost = fixture.nativeElement.querySelector('si-navbar-vertical-next');
+        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(false);
+      });
     });
 
     it('should re-expand the active group when switching back from flyout to inline mode', async () => {

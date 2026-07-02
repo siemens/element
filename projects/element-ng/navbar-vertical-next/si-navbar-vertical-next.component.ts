@@ -35,6 +35,7 @@ import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
+import { SiNavbarFlatGroupComponent } from './si-navbar-flat-group.component';
 import { SiNavbarVerticalNextItemComponent } from './si-navbar-vertical-next-item.component';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
@@ -47,7 +48,13 @@ interface UIState {
 /** @experimental */
 @Component({
   selector: 'si-navbar-vertical-next',
-  imports: [PortalModule, SiIconComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
+  imports: [
+    PortalModule,
+    SiIconComponent,
+    SiNavbarFlatGroupComponent,
+    SiSkipLinkTargetDirective,
+    SiTranslatePipe
+  ],
   templateUrl: './si-navbar-vertical-next.component.html',
   styleUrl: './si-navbar-vertical-next.component.scss',
   providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useExisting: SiNavbarVerticalNextComponent }],
@@ -58,6 +65,7 @@ interface UIState {
     '[class.nav-text-only]': 'textOnly()',
     '[class.nav-inline-collapse]': 'inlineCollapse()',
     '[class.visible]': 'visible()',
+    '[class.nav-flat-group-open]': 'flatGroup()?.flatGroupOpen()',
     '[class.ready]': 'ready()'
   }
 })
@@ -159,6 +167,26 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   protected readonly ready = signal(false);
   protected readonly smallScreen = signal(false);
 
+  /** `true` when viewport width is at or below the {@link BOOTSTRAP_BREAKPOINTS.smMinimum} (576px) breakpoint. */
+  private readonly mobileScreen = signal(false);
+
+  /**
+   * `true` when triggering a group should open the mobile flat group
+   * instead of inline/flyout. Tied to the mobile breakpoint only — collapsing the
+   * drawer on mobile must not reset the open flat group, so this stays `true`
+   * regardless of `collapsed`.
+   * @internal
+   */
+  readonly flatMode = computed(() => this.mobileScreen());
+
+  /**
+   * @internal
+   * Reference to the inner flat-group shell. Consumers (items, groups,
+   * triggers) read flat-group state through this getter because content
+   * projection breaks element-injector inheritance. Undefined until the
+   * navbar's own view is initialized.
+   */
+  readonly flatGroup = viewChild(SiNavbarFlatGroupComponent);
   /** Stable ViewContainerRef inside <nav>, used to host flyout anchors when the chip DomPortal moves a trigger outside the nav.
    * @internal
    */
@@ -219,6 +247,11 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
         this.collapsed.set(matches || this.preferCollapse);
         this.smallScreen.set(matches);
       });
+
+    this.breakpointObserver
+      .observe(`(max-width: ${BOOTSTRAP_BREAKPOINTS.smMinimum}px)`)
+      .pipe(takeUntilDestroyed())
+      .subscribe(({ matches }) => this.mobileScreen.set(matches));
   }
 
   ngOnChanges(changes: SimpleChanges<this>): void {
