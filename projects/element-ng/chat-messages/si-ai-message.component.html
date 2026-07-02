@@ -4,9 +4,11 @@
     @if (content) {
       <span class="text-pre-wrap">{{ content }}</span>
     } @else {
-      <div #formattedContent> </div>
+      <div #formattedContent class="si-ai-message-content"> </div>
     }
   }
+
+  <span #inlineContent><ng-content /></span>
 
   @if (actions().length > 0 || secondaryActions().length > 0) {
     <div class="btn-group ai-message-actions" role="group" siChatMessageAction>
@@ -37,6 +39,8 @@
           <si-menu-factory [items]="secondaryActions()" [actionParam]="actionParam()" />
         </ng-template>
       }
+
+      <ng-content select="[siAiMessageAction]" />
     </div>
   }
 </si-chat-message>

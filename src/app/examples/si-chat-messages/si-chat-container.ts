@@ -35,9 +35,12 @@ import {
   SiAttachmentListComponent,
   Attachment,
   SiAiWelcomeScreenComponent,
+  SiSourceChipInlineComponent,
+  SiSourceChipSummaryComponent,
   PromptCategory,
   PromptSuggestion
 } from '@siemens/element-ng/chat-messages';
+import { SiPopoverBodyDirective, SiPopoverDirective } from '@siemens/element-ng/popover';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
@@ -49,11 +52,18 @@ import { MenuItem } from '@siemens/element-ng/menu';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
+interface SiAiSource {
+  title: string;
+  excerpt: string;
+  url: string;
+}
+
 interface ChatMessage {
   type: 'user' | 'ai' | 'custom';
   content: string;
   attachments?: Attachment[];
   actions?: MessageAction[];
+  citations?: SiAiSource[];
 }
 
 @Component({
@@ -69,19 +79,25 @@ interface ChatMessage {
     SiMarkdownRendererComponent,
     SiChatMessageActionDirective,
     SiAttachmentListComponent,
-    SiAiWelcomeScreenComponent
+    SiAiWelcomeScreenComponent,
+    SiSourceChipInlineComponent,
+    SiSourceChipSummaryComponent,
+    SiPopoverDirective,
+    SiPopoverBodyDirective
   ],
   templateUrl: './si-chat-container.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  private logEvent = inject(LOG_EVENT);
+  protected logEvent = inject(LOG_EVENT);
   private readonly modalTemplate = viewChild<TemplateRef<any>>('modalTemplate');
   private sanitizer = inject(DomSanitizer);
   private readonly toastService = inject(SiToastNotificationService);
   private readonly chatContainer = viewChild<SiChatContainerComponent>(SiChatContainerComponent);
 
   protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
+
+  readonly showSummary = signal(false);
 
   protected readonly icons = addIcons({
     elementUser,
@@ -173,8 +189,18 @@ export class SampleComponent {
       type: 'ai',
       content: `I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
 
-  Let me examine the structure and provide guidance.`,
-      actions: this.aiActions
+  Let me examine the structure and provide guidance.
+
+  I'll start by reviewing the column types and any potential schema inconsistencies in your dataset. This will help us plan the most efficient analysis pipeline.`,
+      actions: this.aiActions,
+      citations: [
+        {
+          title: 'Python Docs',
+          excerpt:
+            'Python is a versatile, high-level programming language ideal for scripting, data analysis, and automation.',
+          url: 'https://docs.python.org'
+        }
+      ]
     },
     {
       type: 'user',
@@ -191,8 +217,26 @@ export class SampleComponent {
     },
     {
       type: 'ai',
-      content: "Great question! When analyzing large datasets, it's crucial to focus on...",
-      actions: this.aiActions
+      content: `Great question! When analyzing large datasets, it's crucial to focus on memory-efficient data loading and vectorized operations.
+
+  Avoid row-by-row iteration and prefer bulk transformations using libraries like pandas or polars.
+
+  Additionally, profiling your pipeline early will reveal bottlenecks before they become costly in production.`,
+      actions: this.aiActions,
+      citations: [
+        {
+          title: 'Performance Guide',
+          excerpt:
+            'Use chunked processing and vectorized operations to handle million-row datasets efficiently in Python.',
+          url: 'https://pandas.pydata.org/docs/user_guide/scale.html'
+        },
+        {
+          title: 'Dataset Best Practices',
+          excerpt:
+            'Normalize column types and remove duplicates early in the pipeline to avoid performance bottlenecks downstream.',
+          url: 'https://docs.python.org/3/library/csv.html'
+        }
+      ]
     }
   ]);
 
