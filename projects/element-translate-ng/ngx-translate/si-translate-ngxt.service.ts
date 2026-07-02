@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { isDevMode } from '@angular/core';
+import { isDevMode, isSignal } from '@angular/core';
 import { MissingTranslationHandler, TranslateService } from '@ngx-translate/core';
 import { SiTranslateService, TranslationResult } from '@siemens/element-translate-ng/translate';
 import { merge, Observable, of } from 'rxjs';
@@ -39,8 +39,10 @@ export class SiTranslateNgxTService extends SiTranslateService {
     ).pipe(map(() => {}));
   }
 
-  override get currentLanguage(): string | undefined {
-    return this.ngxTranslateService.currentLang;
+  override get currentLanguage(): string | null {
+    return isSignal(this.ngxTranslateService.currentLang)
+      ? this.ngxTranslateService.currentLang()
+      : this.ngxTranslateService.currentLang;
   }
 
   override get availableLanguages(): readonly string[] {
@@ -57,12 +59,12 @@ export class SiTranslateNgxTService extends SiTranslateService {
   }
 
   override getDefaultLanguage(): string | null {
-    return this.ngxTranslateService.getDefaultLang();
+    return this.ngxTranslateService.getFallbackLang();
   }
 
   override setDefaultLanguage(lang: string): void {
     this.setDocumentLanguage(lang);
-    this.ngxTranslateService.setDefaultLang(lang);
+    this.ngxTranslateService.setFallbackLang(lang);
   }
 
   override translate<T extends string | string[]>(
