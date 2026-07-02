@@ -1,7 +1,7 @@
 # Carousel
 
 The **carousel** displays a set of related content in a horizontal row,
-allowing users to cycle through them automatically or with controls.
+supporting to cycle through them automatically or manually by the user with navigation controls.
 
 ## Usage ---
 
@@ -15,7 +15,8 @@ and each item follows a consistent structure (e.g., same card layout, similar co
 - To surface multiple related items.
 - When content can be browsed one page at a time without losing context.
 - When space is limited and showing all items at once would overwhelm the layout.
-- In unattended display contexts (monitors, presentation screens) using slideshow mode with auto-play.
+- In unattended display contexts (e.g., monitors, presentation screens) using
+  slideshow mode with auto-play.
 
 ### Best practices
 
@@ -46,8 +47,8 @@ What goes inside that slot (one card, three cards, a grid, images) can be define
 
 ### Auto-play
 
-When auto-play is enabled, the carousel advances to the next slide after a configurable interval.
-A play/pause button is shown alongside the navigation controls so users can stop or resume at any time.
+When auto-play is enabled, the carousel advances to the next slide after a configurable interval. A play/pause button is shown alongside the navigation controls so
+users can pause or resume at any time.
 
 Auto-play works in both carousel and slideshow modes.
 

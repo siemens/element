@@ -67,6 +67,17 @@ describe('SiHeaderDropdown', () => {
       expect(await trigger1Harness.isDesktop()).toBe(true);
     });
 
+    it('should expose the trigger as opening a dialog popup', async () => {
+      expect(await trigger1Harness.getAriaHaspopup()).toBe('dialog');
+    });
+
+    it('should declare the open dropdown as a dialog', async () => {
+      await trigger1Harness.toggle();
+
+      const dropdown = await trigger1Harness.getDropdown();
+      expect(await dropdown.getRole()).toBe('dialog');
+    });
+
     it('should close all on outside click', async () => {
       await trigger1Harness.toggle();
       const trigger2Harness = await trigger1Harness
@@ -137,6 +148,17 @@ describe('SiHeaderDropdown', () => {
 
       expect(await trigger1Harness.isOpen()).toBe(true);
       expect(await trigger1Harness.isDesktop()).toBe(false);
+    });
+
+    it('should not expose a popup on the trigger', async () => {
+      expect(await trigger1Harness.getAriaHaspopup()).toBeNull();
+    });
+
+    it('should declare the open dropdown as a group', async () => {
+      await trigger1Harness.toggle();
+
+      const dropdown = await trigger1Harness.getDropdown();
+      expect(await dropdown.getRole()).toBe('group');
     });
 
     it('should close only current on toggle click', async () => {

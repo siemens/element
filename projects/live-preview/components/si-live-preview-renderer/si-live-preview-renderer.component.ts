@@ -288,9 +288,52 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
           ann.template = this.template;
           this.compiledTemplate = this.template;
           compileComponent(this.dynamicComponent, ann);
+          this.reuseResolvedScopeOfOriginalComponent();
         }
       }
     }
+  }
+
+  /**
+   * When the host application is built with AOT, the Angular compiler tree-shakes the
+   * `ɵɵsetNgModuleScope` calls (because `ngJitMode` is `false`). As a result, NgModules that are
+   * compiled from source expose no `imports`/`exports` scope on their `ɵmod` at runtime.
+   *
+   * Re-compiling the edited example via JIT (`compileComponent`) therefore cannot resolve the
+   * directives and pipes that are exported through such an imported NgModule. A common symptom is
+   * a missing value accessor for a form control component used with `ngModel`, which throws
+   * `NG01203`.
+   *
+   * The originally (AOT-)compiled component already carries the fully resolved scope in its
+   * component definition. Reusing its directive and pipe defs on the recompiled component restores
+   * the complete scope without depending on runtime NgModule metadata.
+   */
+  private reuseResolvedScopeOfOriginalComponent(): void {
+    const originalDef = this.componentTsSampleComponent?.['ɵcmp'];
+    const recompiledDef = this.dynamicComponent?.['ɵcmp'];
+    if (!originalDef || !recompiledDef) {
+      return;
+    }
+
+    if (originalDef.directiveDefs) {
+      recompiledDef.directiveDefs = this.mergeDefs(
+        recompiledDef.directiveDefs,
+        originalDef.directiveDefs
+      );
+    }
+    if (originalDef.pipeDefs) {
+      recompiledDef.pipeDefs = this.mergeDefs(recompiledDef.pipeDefs, originalDef.pipeDefs);
+    }
+  }
+
+  /** Merges two (possibly lazy) Ivy def lists into a single deduplicated factory. */
+  private mergeDefs(
+    recompiled: unknown[] | (() => unknown[]) | null | undefined,
+    original: unknown[] | (() => unknown[]) | null | undefined
+  ): () => unknown[] {
+    const resolve = (defs: unknown[] | (() => unknown[]) | null | undefined): unknown[] =>
+      typeof defs === 'function' ? defs() : (defs ?? []);
+    return () => [...new Set([...resolve(recompiled), ...resolve(original)])];
   }
 
   private getAnnotation(obj: any, type: any): any {

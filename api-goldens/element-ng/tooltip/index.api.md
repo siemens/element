@@ -8,7 +8,6 @@ import { ElementRef } from '@angular/core';
 import * as i0 from '@angular/core';
 import { Injector } from '@angular/core';
 import { OnDestroy } from '@angular/core';
-import { OverlayRef } from '@angular/cdk/overlay';
 import { positions } from '@siemens/element-ng/common';
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import { TemplateRef } from '@angular/core';
@@ -17,6 +16,7 @@ import { Type } from '@angular/core';
 
 // @public (undocumented)
 export class SiTooltipDirective implements OnDestroy {
+    constructor();
     readonly isDisabled: i0.InputSignalWithTransform<boolean, unknown>;
     readonly placement: i0.InputSignal<"auto" | "start" | "end" | "top" | "bottom">;
     readonly siTooltip: i0.InputSignal<TemplateRef<any> | TranslatableString>;

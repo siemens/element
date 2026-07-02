@@ -5,13 +5,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-// eslint-disable-next-line no-restricted-imports
-import { TranslatePipe } from '@ngx-translate/core';
+import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { PhoneDetails, SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
 
 @Component({
   selector: 'app-sample',
-  imports: [CommonModule, SiPhoneNumberInputComponent, ReactiveFormsModule, TranslatePipe],
+  imports: [CommonModule, SiPhoneNumberInputComponent, ReactiveFormsModule, SiFormItemComponent],
   templateUrl: './si-phone-number-input.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

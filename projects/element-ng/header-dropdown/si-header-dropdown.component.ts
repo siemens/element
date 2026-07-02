@@ -20,7 +20,7 @@ import { SI_HEADER_DROPDOWN_OPTIONS } from './si-header.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'dropdown-menu position-static',
-    role: 'group',
+    '[attr.role]': "trigger.isOverlay ? 'dialog' : 'group'",
     '[id]': 'trigger.ariaControls',
     '[attr.aria-labelledby]': 'trigger.id',
     '[class.show]': 'trigger.isOpen',

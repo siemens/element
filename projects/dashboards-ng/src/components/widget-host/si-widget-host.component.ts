@@ -39,7 +39,7 @@ import {
   SiTranslatePipe,
   t
 } from '@siemens/element-translate-ng/translate';
-import { GridItemHTMLElement, GridStackNode } from 'gridstack';
+import { GridStack, GridItemHTMLElement, GridStackNode } from 'gridstack';
 import { first } from 'rxjs';
 
 import {
@@ -67,12 +67,14 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   private readonly destroyRef = inject(DestroyRef);
   private readonly translateService = injectSiTranslateService();
   private readonly liveAnnouncer = inject(LiveAnnouncer);
-  private readonly elementRef = inject<ElementRef<GridItemHTMLElement>>(ElementRef).nativeElement;
+  /** @internal */
+  readonly elementRef = inject<ElementRef<GridItemHTMLElement>>(ElementRef).nativeElement;
 
   /** @defaultValue false */
   readonly keyboardActive = signal(false);
 
   readonly widgetConfig = input.required<WidgetConfig>();
+  readonly grid = input<GridStack>();
 
   /**
    * The component factory for this widget's type.
@@ -192,6 +194,20 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.widgetConfig) {
+      const options = {
+        ...this.widgetConfig(),
+        w: this.widgetConfig().width,
+        h: this.widgetConfig().height,
+        x: this.widgetConfig().x,
+        y: this.widgetConfig().y,
+        minW: this.widgetConfig().minWidth,
+        minH: this.widgetConfig().minHeight
+      };
+      if (!changes.widgetConfig.firstChange) {
+        this.grid()?.update(this.elementRef, options);
+      } else {
+        this.grid()?.makeWidget(this.elementRef, options);
+      }
       if (this.widgetRef) {
         if (isSignal(this.widgetRef.instance.config)) {
           this.widgetRef.setInput('config', this.widgetConfig());

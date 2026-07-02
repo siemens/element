@@ -23,4 +23,8 @@ if (deployLatest) {
   payload.unshift({ version: '', title: `${numericTitle}.x` });
 }
 
+// The development docs (built from the main branch) are always available and
+// listed on top of the version selector.
+payload.unshift({ version: 'development', title: 'Development' });
+
 writeFileSync('versions.json', JSON.stringify(payload, null, 2));
