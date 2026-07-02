@@ -27,14 +27,6 @@ export const addIcons: <T extends string>(icons: Record<T, string>) => Record<T,
 export const elementCheckedImageShape = "data:image/svg+xml;base64,PHN2ZyBpZD0iSWNvbiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+CiAgPHRpdGxlPm9rPC90aXRsZT4KICA8cGF0aCBkPSJNMzc5LjUxLDE1Ni43NmwtMTczLDE3My03NC03NGExMiwxMiwwLDEsMC0xNywxN2w4Mi41LDgyLjVhMTIsMTIsMCwwLDAsMTcsMGwxODEuNS0xODEuNWExMiwxMiwwLDAsMC0xNy0xN1oiLz4KPC9zdmc+Cg==";
 
 // @public
-export interface IconConfig {
-    disableSvgIcons?: boolean;
-}
-
-// @public
-export const provideIconConfig: (config: IconConfig) => Provider;
-
-// @public
 export class SiIconComponent {
     readonly icon: _angular_core.InputSignal<string>;
 }
