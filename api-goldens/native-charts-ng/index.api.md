@@ -7,7 +7,7 @@
 import * as i0 from '@angular/core';
 import * as i1 from '@siemens/native-charts-ng/gauge';
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 class SiNativeChartsNgModule {
 }
 export { SiNativeChartsNgModule }
