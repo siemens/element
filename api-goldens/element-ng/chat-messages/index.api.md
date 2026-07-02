@@ -56,15 +56,28 @@ export interface PromptSuggestion {
 }
 
 // @public
+export class SiAiMessageActionDirective {
+}
+
+// @public
 export class SiAiMessageComponent {
     constructor();
     readonly actionParam: _angular_core.InputSignal<unknown>;
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
+    readonly chipClicked: _angular_core.OutputEmitterRef<void>;
     readonly content: _angular_core.InputSignal<string>;
     readonly contentFormatter: _angular_core.InputSignal<((text: string) => string | Node) | undefined>;
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
-    readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly sources: _angular_core.InputSignal<SiAiSource[]>;
+}
+
+// @public
+export interface SiAiSource {
+    excerpt: string;
+    title: string;
+    url: string;
 }
 
 // @public

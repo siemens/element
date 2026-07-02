@@ -5,20 +5,28 @@
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
+  computed,
+  contentChildren,
   effect,
-  input,
-  viewChild,
   ElementRef,
+  input,
+  output,
   signal,
-  ChangeDetectionStrategy
+  viewChild
 } from '@angular/core';
 import { elementOptionsVertical } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
+import { SiPopoverBodyDirective, SiPopoverDirective } from '@siemens/element-ng/popover';
+import { SiSummaryChipComponent } from '@siemens/element-ng/summary-chip';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 
 import { MessageAction } from './message-action.model';
+import { SiAiMessageActionDirective } from './si-ai-message-action.directive';
+import { SiAiSource } from './si-ai-source.model';
 import { SiChatMessageActionDirective } from './si-chat-message-action.directive';
 import { SiChatMessageComponent } from './si-chat-message.component';
 
@@ -51,6 +59,9 @@ import { SiChatMessageComponent } from './si-chat-message.component';
     SiIconComponent,
     SiMenuFactoryComponent,
     SiChatMessageActionDirective,
+    SiPopoverBodyDirective,
+    SiPopoverDirective,
+    SiSummaryChipComponent,
     SiTranslatePipe
   ],
   templateUrl: './si-ai-message.component.html',
@@ -59,7 +70,18 @@ import { SiChatMessageComponent } from './si-chat-message.component';
 })
 export class SiAiMessageComponent {
   protected readonly formattedContent = viewChild<ElementRef<HTMLDivElement>>('formattedContent');
+  protected readonly inlineContent = viewChild<ElementRef<HTMLElement>>('inlineContent');
   protected readonly icons = addIcons({ elementOptionsVertical });
+  protected readonly aiMessageActions = contentChildren(SiAiMessageActionDirective);
+
+  private inlineNodes: Node[] = [];
+
+  protected readonly inlineChipLabel = computed(() => {
+    const sources = this.sources();
+    const title = sources[0]?.title ?? '';
+    const count = sources.length - 1;
+    return (count > 0 ? `${title} +${count}` : title) as TranslatableString;
+  });
 
   /**
    * The AI-generated message content
@@ -88,6 +110,17 @@ export class SiAiMessageComponent {
       const formatter = this.contentFormatter();
       const contentValue = this.content();
       const container = this.formattedContent()?.nativeElement;
+      const inlineEl = this.inlineContent()?.nativeElement;
+
+      // Move inline chip back to its staging span before any innerHTML clear,
+      // so it survives the DOM reset regardless of where it currently lives.
+      if (inlineEl && this.inlineNodes.length > 0) {
+        this.inlineNodes.forEach(node => {
+          if (node.parentNode !== inlineEl) {
+            inlineEl.appendChild(node);
+          }
+        });
+      }
 
       if (container && contentValue) {
         if (formatter) {
@@ -99,6 +132,19 @@ export class SiAiMessageComponent {
             this.textContent.set(undefined);
             container.innerHTML = '';
             container.appendChild(formatted);
+
+            if (inlineEl) {
+              // Always re-collect so dynamic chip updates (e.g. during streaming) are picked up.
+              this.inlineNodes = Array.from(inlineEl.childNodes).filter(
+                n => n.nodeType === Node.ELEMENT_NODE
+              );
+              if (this.inlineNodes.length > 0) {
+                const paragraphs = container.querySelectorAll('p');
+                const target =
+                  paragraphs.length > 0 ? paragraphs[paragraphs.length - 1] : container;
+                this.inlineNodes.forEach(node => target.appendChild(node));
+              }
+            }
           }
         } else {
           this.textContent.set(contentValue);
@@ -128,6 +174,16 @@ export class SiAiMessageComponent {
 
   /** Parameter to pass to action handlers */
   readonly actionParam = input();
+
+  /**
+   * Cited sources to display as an inline chip at the end of the message body.
+   * When non-empty a {@link SiSourceChipInlineComponent} is rendered inside the message.
+   * @defaultValue []
+   */
+  readonly sources = input<SiAiSource[]>([]);
+
+  /** Emitted when the inline sources chip is clicked. */
+  readonly chipClicked = output<void>();
 
   /**
    * More actions button aria label

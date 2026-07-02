@@ -4,6 +4,8 @@
 
 :host {
   display: block;
+  font-size: variables.$si-font-size-body-lg;
+  line-height: 20px;
 }
 
 si-chat-message {
@@ -18,7 +20,45 @@ si-chat-message {
   margin-block-start: map.get(variables.$spacers, 5) - map.get(variables.$spacers, 2);
 }
 
+// Remove bottom margin from the last paragraph of markdown-rendered content so that
+// any element projected via <ng-content> (e.g. inline source chips) follows without an extra gap.
+:host ::ng-deep .si-ai-message-content > :last-child {
+  margin-block-end: 0;
+}
+
 // Loading spinner size adjustment (inherited from generic component)
 :host ::ng-deep si-loading-spinner {
   --loading-spinner-size: 1.5em;
+}
+
+// Inline source chip — sits embedded in AI message text at 16px height.
+// The class is applied directly to si-summary-chip's host element.
+// stylelint-disable selector-pseudo-element-no-unknown
+:host ::ng-deep si-summary-chip.si-inline-source-chip {
+  vertical-align: middle;
+  margin-inline-start: 6px;
+
+  .chip {
+    block-size: 16px;
+    padding-block: 0;
+    font-size: 12px;
+    line-height: 1;
+
+    .icon-stack {
+      margin-block: 0;
+      font-size: 12px;
+    }
+  }
+
+  // stylelint-disable declaration-no-important
+  // The global .si-body utility sets font-size: 0.875rem (14px) and line-height
+  // which win after the chip is relocated into markdown DOM — !important required.
+  .si-body {
+    font-size: 12px !important;
+    line-height: 1 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-inline-size: 24ch;
+    white-space: nowrap;
+  }
 }
