@@ -21,6 +21,7 @@ api-goldens/live-preview/ @siemens/siemens-element-owners @dr-itz @chintankavath
 api-goldens/element-ng/data-range-filter/ @siemens/siemens-element-owners @dr-itz @spliffone
 api-goldens/element-ng/datepicker/ @siemens/siemens-element-owners @dr-itz @spliffone
 api-goldens/element-ng/filtered-search/ @siemens/siemens-element-owners @chintankavathia @spliffone
+api-goldens/element-ng/form/ @siemens/siemens-element-owners @spliffone
 api-goldens/element-ng/formly/ @siemens/siemens-element-owners @chintankavathia
 api-goldens/element-ng/ip-input/ @siemens/siemens-element-owners @spliffone
 api-goldens/element-ng/landing-page/ @siemens/siemens-element-owners @dauriamarco
