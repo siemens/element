@@ -6,9 +6,5 @@
       - columnheader "Role"
       - columnheader "Company"
       - columnheader "Age"
-  - rowgroup
-  - rowgroup
-  - rowgroup
-  - rowgroup
-  - text: No data to display
-  - paragraph: There are currently no rows to display in this table.
+- text: No data to display
+- paragraph: There are currently no rows to display in this table.
