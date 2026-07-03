@@ -82,20 +82,22 @@ Run `npm run schematics:test` (uses Vitest). Config: `projects/element-ng/vitest
 
 ### E2E Tests
 
-E2E tests require Docker and a running dev server. They are executed via `./e2e-local.sh`.
+Use `./e2e-local.sh` to run e2e test. If you run a specific test always include the '--project=...' in addition.
+Always check if the DEV server is already running before starting.
 
 ```shell
-# 1. Start the dev server (in one terminal)
+# 1. Start the dev server, port 4200
 npm run start -- --allowed-hosts true --host 0.0.0.0
 
-# 2. For dashboards tests, also start dashboards artifacts
-npm run dashboards-demo:build-and-run-all      # webpack
-npm run dashboards-demo:build-and-run-all:esm   # ESM
+# 2. Only if running dashboards test:
+npm run dashboards-demo:build-and-run-all       # webpack, port 4201
+npm run dashboards-demo:build-and-run-all:esm   # ESM, port 4204
 
-# 3. Run e2e tests (in another terminal)
+# 3. Run e2e tests
 ./e2e-local.sh                                          # run all
-./e2e-local.sh run '--project=dashboards-demo/*'        # specific project
-./e2e-local.sh run '--project=dashboards-demo-esm/*'    # ESM project
+./e2e-local.sh run '--project=element-examples/*'       # examples project
+./e2e-local.sh run '--project=dashboards-demo/*'        # dashboards-webpack project
+./e2e-local.sh run '--project=dashboards-demo-esm/*'    # dashboards-esm project
 ./e2e-local.sh vrt                                      # visual regression only
 ./e2e-local.sh a11y                                     # accessibility only
 
@@ -106,9 +108,6 @@ npm run dashboards-demo:build-and-run-all:esm   # ESM
 
 # Run specific static test
 PLAYWRIGHT_staticTest=buttons/buttons:badges/badges ./e2e-local.sh run static
-
-# Use Podman instead of Docker (Linux)
-DOCKER=podman ./e2e-local.sh
 ```
 
 ## State Management
