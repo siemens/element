@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-/* eslint-disable @angular-eslint/prefer-output-emitter-ref */
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -11,18 +10,17 @@ import {
   computed,
   ContentChildren,
   ElementRef,
-  EventEmitter,
   inject,
   Input,
   NgZone,
   OnChanges,
-  Output,
   QueryList,
   signal,
   Signal,
   SimpleChanges,
   DOCUMENT,
-  DestroyRef
+  DestroyRef,
+  output
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -85,7 +83,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
    */
   @Input() stateId?: string;
 
-  @Output() readonly sizesChange = new EventEmitter<number[]>();
+  readonly sizesChange = output<number[]>();
 
   @WebComponentContentChildren(SiSplitPartComponent)
   @ContentChildren(SiSplitPartComponent)

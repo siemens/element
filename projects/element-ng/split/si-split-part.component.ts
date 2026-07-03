@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-/* eslint-disable @angular-eslint/prefer-output-emitter-ref */
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
@@ -10,12 +9,11 @@ import {
   Component,
   computed,
   ElementRef,
-  EventEmitter,
   inject,
   Input,
   numberAttribute,
   OnChanges,
-  Output,
+  output,
   signal,
   SimpleChanges,
   TemplateRef
@@ -133,8 +131,8 @@ export class SiSplitPartComponent implements OnChanges {
    */
   @Input({ transform: booleanAttribute }) collapseOthers = false;
 
-  @Output() readonly collapseChanged = new EventEmitter<boolean>();
-  @Output() readonly stateChange = new EventEmitter<PartState>();
+  readonly collapseChanged = output<boolean>();
+  readonly stateChange = output<PartState>();
 
   /** @internal */
   index = 0;
