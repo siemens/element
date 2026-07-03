@@ -1,0 +1,26 @@
+- heading "Signal form" [level=2]
+- text: Name*
+- textbox "Name*"
+- text: Description
+- textbox "Description"
+- text: Day of birth*
+- textbox "Day of birth*"
+- text: Arrival
+- textbox "Arrival"
+- text: Departure
+- textbox "Departure"
+- text: Class of service
+- combobox "Class of service":
+  - option "First class" [selected]
+  - option "Business"
+  - option "Economy"
+- text: Fellow passengers
+- spinbutton "Fellow passengers": "0"
+- checkbox "I confirm that I accept all and everything*"
+- text: I confirm that I accept all and everything*
+- checkbox "I confirm that I do not care about my privacy"
+- text: I confirm that I do not care about my privacy
+- button "Cancel"
+- button "Save"
+- heading "Debugging" [level=2]
+- paragraph: "Validation status: INVALID"

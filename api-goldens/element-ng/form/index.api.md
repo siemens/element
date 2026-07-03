@@ -9,6 +9,7 @@ import { AfterContentChecked } from '@angular/core';
 import { AfterContentInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
 import * as _angular_forms from '@angular/forms';
+import * as _angular_forms_signals from '@angular/forms/signals';
 import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -21,11 +22,15 @@ import { OnInit } from '@angular/core';
 import { Provider } from '@angular/core';
 import { RequiredValidator } from '@angular/forms';
 import { Signal } from '@angular/core';
+import { SignalFormsConfig } from '@angular/forms/signals';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
 export const provideFormValidationErrorMapper: (mapper: SiFormValidationErrorMapper) => Provider;
+
+// @public
+export const provideSiFormFieldConfig: (config?: SignalFormsConfig) => Provider[];
 
 // @public
 export const SI_FORM_ITEM_CONTROL: InjectionToken<SiFormItemControl>;
@@ -45,6 +50,12 @@ export class SiFormContainerComponent<TControl extends {
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     get userInteractedWithForm(): boolean;
     get validFormContainerMessage(): boolean;
+}
+
+// @public
+export class SiFormFieldComponent {
+    constructor();
+    readonly label: _angular_core.InputSignal<TranslatableString>;
 }
 
 // @public (undocumented)

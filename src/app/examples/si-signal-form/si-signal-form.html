@@ -1,0 +1,78 @@
+<div class="container-fluid">
+  <div class="row gy-5">
+    <div class="col-12 col-md">
+      <h2>Signal form</h2>
+      <div class="card">
+        <div class="card-body">
+          <form [formRoot]="form">
+            <si-form-field label="Name">
+              <input type="text" class="form-control" [formField]="form.name" />
+            </si-form-field>
+
+            <si-form-field label="Description">
+              <input type="text" class="form-control" [formField]="form.description" />
+            </si-form-field>
+
+            <si-form-field label="Day of birth">
+              <input type="date" class="form-control" [formField]="form.birthday" />
+            </si-form-field>
+
+            <si-form-field label="Arrival">
+              <input type="time" class="form-control" [formField]="form.arrival" />
+            </si-form-field>
+
+            <si-form-field label="Departure">
+              <input type="time" class="form-control" [formField]="form.departure" />
+            </si-form-field>
+
+            <si-form-field label="Class of service">
+              <select class="form-select" [formField]="form.serviceClass">
+                <option value="first">First class</option>
+                <option value="business">Business</option>
+                <option value="economy">Economy</option>
+              </select>
+            </si-form-field>
+
+            <si-form-field label="Fellow passengers">
+              <input type="number" class="form-control" [formField]="form.fellowPassengers" />
+            </si-form-field>
+
+            <si-form-field label="I confirm that I accept all and everything">
+              <input type="checkbox" class="form-check-input" [formField]="form.termsAccepted" />
+            </si-form-field>
+
+            <si-form-field label="I confirm that I do not care about my privacy">
+              <input type="checkbox" class="form-check-input" [formField]="form.privacyDeclined" />
+            </si-form-field>
+
+            <div class="mt-6">
+              <button type="button" class="btn btn-secondary me-6" (click)="cancel()">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md e2e-ignore">
+      <h2>Debugging</h2>
+      <p>Validation status: {{ form().valid() ? 'VALID' : 'INVALID' }}</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Model</th>
+            <th scope="col">Submitted</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="white-space: pre-wrap">{{ model() | json }}</td>
+            <td style="white-space: pre-wrap">{{ (submitted() | json) ?? 'undefined' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
