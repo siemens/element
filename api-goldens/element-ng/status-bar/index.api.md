@@ -31,13 +31,12 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
     readonly allOkText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly blink: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly blinkPulse: _angular_core.InputSignal<Observable<boolean> | undefined>;
-    readonly collapseButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly compact: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly expandButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly items: _angular_core.InputSignal<StatusBarItem[]>;
     readonly muteButton: _angular_core.InputSignal<boolean | undefined>;
     readonly muteButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly muteToggle: _angular_core.OutputEmitterRef<void>;
+    readonly toggleButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
 
 // @public (undocumented)

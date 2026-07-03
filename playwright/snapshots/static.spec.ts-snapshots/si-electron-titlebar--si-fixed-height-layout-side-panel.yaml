@@ -11,7 +11,7 @@
   - heading "Application name" [level=1]
   - button "Layout"
   - button "Help"
-  - button "Jane Smith"
+  - button "Jane Smith": JS
 - navigation:
   - button "collapse" [expanded]
   - button "Home"
@@ -28,7 +28,7 @@
   - button "Documents"
   - button "Graphics"
   - text: /4 Emergency \d+ Trouble \d+ Success/
-  - button "Expand"
+  - button "Toggle"
   - heading "Here is a title" [level=2]
   - text: A nice list of things
   - button "Toggle"

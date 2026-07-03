@@ -93,7 +93,7 @@
       <button
         type="button"
         class="collapse-expand text-center p-0 focus-force"
-        [attr.aria-label]="(expanded() ? collapseButtonText() : expandButtonText()) | translate"
+        [attr.aria-label]="toggleButtonText() | translate"
         [attr.aria-expanded]="!!expanded()"
         [attr.aria-controls]="statusId"
         [class.expanded]="expanded() === 2"

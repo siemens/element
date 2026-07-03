@@ -122,23 +122,15 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
    */
   readonly blinkPulse = input<Observable<boolean>>();
   /**
-   * Text for the navbar expand button. Required for a11y
+   * Text for the toggle button that expands/collapses the status bar. Required for a11y.
+   * The expanded/collapsed state is communicated separately via `aria-expanded`.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_STATUS_BAR.EXPAND:Expand`)
+   * t(() => $localize`:@@SI_STATUS_BAR.TOGGLE:Toggle`)
    * ```
    */
-  readonly expandButtonText = input(t(() => $localize`:@@SI_STATUS_BAR.EXPAND:Expand`));
-  /**
-   * Text for the navbar collapse button. Required for a11y
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_STATUS_BAR.COLLAPSE:Collapse`)
-   * ```
-   */
-  readonly collapseButtonText = input(t(() => $localize`:@@SI_STATUS_BAR.COLLAPSE:Collapse`));
+  readonly toggleButtonText = input(t(() => $localize`:@@SI_STATUS_BAR.TOGGLE:Toggle`));
 
   /**
    * Emitted when the mute toggle button is clicked
