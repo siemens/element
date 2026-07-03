@@ -73,7 +73,9 @@ export class SiSplitPartComponent implements OnChanges {
     // (undocumented)
     get expanded(): boolean;
     // (undocumented)
-    headerTemplate?: TemplateRef<any>;
+    headerTemplate?: TemplateRef<{
+        $implicit: SiSplitPartComponent;
+    }>;
     heading: TranslatableString;
     minSize: number;
     // (undocumented)
