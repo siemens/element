@@ -2,25 +2,26 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+/* eslint-disable @angular-eslint/prefer-output-emitter-ref */
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   ElementRef,
+  EventEmitter,
   inject,
-  input,
-  linkedSignal,
+  Input,
   numberAttribute,
-  output,
+  OnChanges,
+  Output,
   signal,
-  TemplateRef,
-  untracked
+  SimpleChanges,
+  TemplateRef
 } from '@angular/core';
-import { elementDoubleRight } from '@siemens/element-icons';
-import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-split.interfaces';
 
@@ -29,56 +30,51 @@ import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-spl
   imports: [NgTemplateOutlet, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-split-part.component.html',
   styleUrl: './si-split-part.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default,
+  // Signals cannot be used directly with @HostBinding. See: https://github.com/angular/angular/issues/53888#issuecomment-1888935225
+  // Having every binding here for consistency.
   host: {
     '[class.is-collapsed]': 'collapsedState()',
-    '[class.collapse-start]': 'collapseDirectionState() === "start"',
+    '[class.collapse-start]': 'collapseDirection === "start"',
     '[style.grid-area]': '"p-" + this.index'
   }
 })
-export class SiSplitPartComponent {
-  protected readonly icons = addIcons({ elementDoubleRight });
+export class SiSplitPartComponent implements OnChanges {
+  /** @defaultValue [] */
+  @Input() actions: Action[] = [];
   /**
-   * Action buttons displayed in the split part header.
-   *
-   * @defaultValue []
-   */
-  readonly actions = input<Action[]>([]);
-  /**
-   * Defines which direction the split part collapses to.
-   *
    * @defaultValue 'start'
    */
-  readonly collapseDirection = input<CollapseTo>('start');
+  @Input() collapseDirection: CollapseTo = 'start';
 
   /**
    * Sets the icon class that is used in the buttons of split parts to
    * collapse and uncollapse the parts.
+   *
+   * @defaultValue 'element-double-right'
    */
-  readonly collapseIconClass = input<string | undefined>();
+  @Input() collapseIconClass = 'element-double-right';
 
   /**
    * Collapse only to the given min size.
    *
    * @defaultValue false
    */
-  readonly collapseToMinSize = input(false, { transform: booleanAttribute });
+  @Input({ transform: booleanAttribute }) collapseToMinSize = false;
 
-  /**
-   * Custom template for the split part header. The template receives the component instance as implicit context.
-   */
-  readonly headerTemplate = input<TemplateRef<{ $implicit: SiSplitPartComponent }>>();
+  @Input() headerTemplate?: TemplateRef<{ $implicit: SiSplitPartComponent }>;
 
   /**
    * Sets the title of the split part header.
    */
-  readonly heading = input<TranslatableString>();
+  @Input() heading!: TranslatableString;
 
   /**
    * Minimum size in px.
    *
    * @defaultValue 0
    */
-  readonly minSize = input(0, { transform: numberAttribute });
+  @Input({ transform: numberAttribute }) minSize = 0;
 
   /**
    * When a split part is collapsed, the content gets hidden but it will
@@ -88,7 +84,7 @@ export class SiSplitPartComponent {
    *
    * @defaultValue false
    */
-  readonly removeContentOnCollapse = input(false, { transform: booleanAttribute });
+  @Input({ transform: booleanAttribute }) removeContentOnCollapse = false;
 
   /**
    * Defines the behavior of the split part during scaling.
@@ -96,44 +92,37 @@ export class SiSplitPartComponent {
    *
    * @defaultValue 'auto'
    */
-  readonly scale = input<Scale>('auto');
+  @Input() scale: Scale = 'auto';
 
   /**
    * Defines if the collapse button of a split part is displayed. Default value is true.
    *
    * @defaultValue true
    */
-  readonly showCollapseButton = input(true, { transform: booleanAttribute });
+  @Input({ transform: booleanAttribute }) showCollapseButton = true;
 
   /**
    * Defines if the header of the split part is visible. Default is true.
    *
    * @defaultValue true
    */
-  readonly showHeader = input(true, { transform: booleanAttribute });
+  @Input({ transform: booleanAttribute }) showHeader = true;
   /**
    * Aria label for collapse button. Needed for a11y
    *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_SPLIT.COLLAPSE_LABEL:Collapse`)
-   * ```
+   * @defaultValue 'collapse'
    */
-  readonly collapseLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_SPLIT.COLLAPSE_LABEL:Collapse`)
-  );
+  @Input() collapseLabel: TranslatableString = 'collapse';
   /**
    * An optional stateId to uniquely identify a component instance.
    * Required for persistence of ui state.
    */
-  readonly stateId = input<string>();
+  @Input() stateId?: string;
 
   /**
    * Expanded size in px.
-   *
-   * @defaultValue undefined
    */
-  readonly size = input<number | undefined, unknown>(undefined, { transform: numberAttribute });
+  @Input({ transform: numberAttribute }) size?: number;
 
   /**
    * This toggles the behavior when collapsing this split part.
@@ -142,44 +131,26 @@ export class SiSplitPartComponent {
    *
    * @defaultValue false
    */
-  readonly collapseOthers = input(false, { transform: booleanAttribute });
+  @Input({ transform: booleanAttribute }) collapseOthers = false;
 
-  /**
-   * Sets the initial expanded or collapsed state of the split part.
-   *
-   * @defaultValue true
-   */
-  readonly expanded = input(true, { transform: booleanAttribute });
-
-  readonly collapseChanged = output<boolean>();
-  readonly stateChange = output<PartState>();
+  @Output() readonly collapseChanged = new EventEmitter<boolean>();
+  @Output() readonly stateChange = new EventEmitter<PartState>();
 
   /** @internal */
   index = 0;
   /** @internal */
-  readonly before = signal<SiSplitPartComponent | undefined>(undefined);
+  before?: SiSplitPartComponent;
   /** @internal */
-  readonly after = signal<SiSplitPartComponent | undefined>(undefined);
+  after?: SiSplitPartComponent;
 
   /** @internal */
   readonly fractionalSize = signal<number | undefined>(undefined);
 
   /** @internal */
-  readonly collapsedSize = computed(() => (this.collapseToMinSize() ? (this.minSize() ?? 40) : 40));
+  readonly collapsedSize = signal(0);
 
-  /**
-   * Internal, mutable collapsed state. Initialized from the {@link expanded} input but can be
-   * overwritten while toggling, cascading to sibling parts or restoring the persisted ui state.
-   * @internal
-   */
-  readonly collapsedState = linkedSignal(() => !this.expanded());
-
-  /**
-   * Internal, mutable collapse direction. Initialized from the {@link collapseDirection}
-   * input but can be overwritten while cascading collapse state to sibling parts.
-   * @internal
-   */
-  readonly collapseDirectionState = linkedSignal(() => this.collapseDirection());
+  /** @internal */
+  readonly collapsedState = signal(false);
 
   /**
    * Get collapsed state.
@@ -190,7 +161,7 @@ export class SiSplitPartComponent {
   }
 
   /** @internal */
-  readonly expandedSize = linkedSignal(() => this.size());
+  readonly expandedSize = signal<number | undefined>(undefined);
 
   /** @internal */
   readonly actualSize = computed(() => {
@@ -208,8 +179,7 @@ export class SiSplitPartComponent {
     if (!this.collapsedState()) {
       return this as SiSplitPartComponent;
     }
-    const after = this.after();
-    const nextExpanded: SiSplitPartComponent = after ? after.nextExpandedAfter() : this;
+    const nextExpanded: SiSplitPartComponent = this.after ? this.after.nextExpandedAfter() : this;
 
     return nextExpanded;
   });
@@ -220,16 +190,28 @@ export class SiSplitPartComponent {
     $implicit: this
   };
 
-  constructor() {
-    effect(() => {
-      this.expanded();
-      untracked(() => {
-        if (this.collapseOthers()) {
-          this.before()?.refreshCollapseToStart();
-          this.after()?.refreshCollapsedToEnd();
-        }
-      });
-    });
+  /** @defaultValue true */
+  @Input({ transform: booleanAttribute }) set expanded(value: boolean) {
+    this.collapsedState.set(!value);
+    if (this.collapseOthers) {
+      this.before?.refreshCollapseToStart();
+      this.after?.refreshCollapsedToEnd();
+    }
+  }
+  get expanded(): boolean {
+    return !this.collapsedState();
+  }
+
+  ngOnChanges(changes: SimpleChanges<this>): void {
+    if (changes.collapseToMinSize && this.collapseToMinSize) {
+      this.collapsedSize.set(this.minSize ?? 40);
+    } else {
+      this.collapsedSize.set(40); // 40px is default size of the header
+    }
+
+    if (changes.size) {
+      this.expandedSize.set(this.size);
+    }
   }
 
   /** @internal */
@@ -249,30 +231,28 @@ export class SiSplitPartComponent {
    */
   toggleCollapse(): void {
     this.collapsedState.update(v => !v);
-    if (this.collapseOthers()) {
-      this.before()?.refreshCollapseToStart();
-      this.after()?.refreshCollapsedToEnd();
+    if (this.collapseOthers) {
+      this.before?.refreshCollapseToStart();
+      this.after?.refreshCollapsedToEnd();
     }
     this.collapseChanged.emit(this.collapsedState());
-    this.stateChange.emit({ expanded: !this.collapsedState(), size: this.actualSize() });
+    this.stateChange.emit({ expanded: this.expanded, size: this.actualSize() });
     this.saveUIState();
   }
 
   private refreshCollapsedToEnd(): void {
-    const before = this.before();
-    if (before?.collapsedState() && before.collapseDirectionState() === 'end') {
+    if (this.before?.collapsedState() && this.before.collapseDirection === 'end') {
       this.collapsedState.set(true);
-      this.collapseDirectionState.set('end');
-      this.after()?.refreshCollapsedToEnd();
+      this.collapseDirection = 'end';
+      this.after?.refreshCollapsedToEnd();
     }
   }
 
   private refreshCollapseToStart(): void {
-    const after = this.after();
-    if (after?.collapsedState() && after.collapseDirectionState() === 'start') {
+    if (this.after?.collapsedState() && this.after.collapseDirection === 'start') {
       this.collapsedState.set(true);
-      this.collapseDirectionState.set('start');
-      this.before()?.refreshCollapseToStart();
+      this.collapseDirection = 'start';
+      this.before?.refreshCollapseToStart();
     }
   }
 }
