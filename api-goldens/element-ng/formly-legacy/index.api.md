@@ -7,6 +7,7 @@
 import { AbstractControl } from '@angular/forms';
 import { AfterContentChecked } from '@angular/core';
 import { AfterContentInit } from '@angular/core';
+import * as _angular_forms_signals from '@angular/forms/signals';
 import { ConfigOption } from '@ngx-formly/core';
 import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
@@ -29,6 +30,7 @@ import { OnInit } from '@angular/core';
 import { Provider } from '@angular/core';
 import { RequiredValidator } from '@angular/forms';
 import { Signal } from '@angular/core';
+import { SignalFormsConfig } from '@angular/forms/signals';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 

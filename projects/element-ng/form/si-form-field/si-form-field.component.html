@@ -1,0 +1,30 @@
+@if (!isFormCheck()) {
+  <ng-container [ngTemplateOutlet]="labelTemplate" />
+}
+<div class="form-item-content">
+  <ng-content />
+  @if (isFormCheck()) {
+    <ng-container [ngTemplateOutlet]="labelTemplate" />
+  }
+  <ng-container [ngTemplateOutlet]="feedbackTemplate" />
+</div>
+
+<ng-template #labelTemplate>
+  <label
+    [for]="controlId()"
+    [class.form-label]="!isFormCheck()"
+    [class.form-check-label]="isFormCheck()"
+    [class.required]="required()"
+    >{{ label() | translate }}</label
+  >
+</ng-template>
+
+<ng-template #feedbackTemplate>
+  <div class="invalid-feedback" [class.d-block]="errors().length" [attr.id]="errormessageId()">
+    @for (error of errors(); track $index) {
+      <div>
+        {{ error.message | translate }}
+      </div>
+    }
+  </div>
+</ng-template>
