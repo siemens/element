@@ -2,13 +2,14 @@
   <span class="visually-hidden" [id]="baseId() + '-aria-label'">{{ ariaLabel() }}</span>
 }
 <div
-  class="d-flex align-items-center flex-fill overflow-hidden"
+  class="d-flex align-items-center flex-fill overflow-hidden h-100"
   [id]="baseId() + '-content'"
   [siAutoCollapsableList]="selectionStrategy.allowMultiple && selectedRows().length > 1"
 >
   @for (activeOption of selectedRows(); track activeOption) {
     @if (activeOption) {
       <si-select-option
+        class="h-100"
         siAutoCollapsableListItem
         [option]="activeOption"
         [optionTemplate]="optionTemplate()"
