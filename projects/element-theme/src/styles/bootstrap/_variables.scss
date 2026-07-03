@@ -451,7 +451,7 @@ $dropdown-divider-margin-y: 4px !default;
 $dropdown-box-shadow: elevation.$element-elevation-2 !default;
 $dropdown-link-color: semantic-tokens.$element-text-primary !default;
 $dropdown-link-disabled-color: semantic-tokens.$element-text-disabled !default;
-$dropdown-item-padding-y: map.get(spacers.$spacers, 4);
+$dropdown-item-padding-y: map.get(spacers.$spacers, 3);
 $dropdown-item-padding-x: map.get(spacers.$spacers, 5);
 $dropdown-header-color: semantic-tokens.$element-text-primary !default;
 
