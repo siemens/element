@@ -5,9 +5,9 @@
 ```ts
 
 import { AfterViewInit } from '@angular/core';
+import * as _angular_core from '@angular/core';
 import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
-import * as i0 from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { Route } from '@angular/router';
@@ -19,29 +19,27 @@ import { ViewContainerRef } from '@angular/core';
 // @public (undocumented)
 export class SiLivePreviewWebComponent implements OnChanges {
     // (undocumented)
-    config: SiLivePreviewConfig;
+    readonly config: _angular_core.InputSignal<SiLivePreviewConfig | undefined>;
     // (undocumented)
-    exampleUrl: string;
+    readonly exampleUrl: _angular_core.InputSignal<string>;
     // (undocumented)
-    readonly inProgress: i0.OutputEmitterRef<boolean>;
+    readonly inProgress: _angular_core.OutputEmitterRef<boolean>;
     // (undocumented)
     loadHTMLFromCodeTemplate(code: string): void;
     // (undocumented)
-    loadJs: boolean;
+    readonly loadJs: _angular_core.InputSignal<boolean>;
     // (undocumented)
-    loadReact: boolean;
+    readonly loadReact: _angular_core.InputSignal<boolean>;
     // (undocumented)
     loadReactFromCodeTemplate(code: string): void;
     // (undocumented)
-    loadVue: boolean;
+    readonly loadVue: _angular_core.InputSignal<boolean>;
     // (undocumented)
     loadVueFromCodeTemplate(code: string): void;
     // (undocumented)
-    renderingDone: boolean;
+    readonly root: _angular_core.Signal<ElementRef<any>>;
     // (undocumented)
-    readonly root: i0.Signal<ElementRef<any>>;
-    // (undocumented)
-    webcomponentTemplateCode: string;
+    readonly webcomponentTemplateCode: _angular_core.InputSignal<string>;
 }
 
 // @public
