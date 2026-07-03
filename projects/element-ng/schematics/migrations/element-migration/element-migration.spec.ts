@@ -21,7 +21,7 @@ const collectionPath = buildRelativeFromFile('../../migration.json');
 describe('to legacy migration', () => {
   let runner: SchematicTestRunner;
   let appTree: Tree;
-  const name = 'migration-v49';
+  const name = 'migration-v51';
 
   beforeEach(async () => {
     runner = new SchematicTestRunner(name, collectionPath);
@@ -44,7 +44,7 @@ describe('to legacy migration', () => {
 
     const migrationData = getElementMigrationTestData();
     const context = runner.engine.createContext(
-      runner.engine.createSchematic('migration-v49', runner.engine.createCollection(collectionPath))
+      runner.engine.createSchematic('migration-v51', runner.engine.createCollection(collectionPath))
     );
 
     // Run elementMigrationRule directly with test data

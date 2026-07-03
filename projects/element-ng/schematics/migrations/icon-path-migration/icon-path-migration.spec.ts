@@ -49,7 +49,7 @@ describe('icon-path-migration', () => {
     });
 
     const context = runner.engine.createContext(
-      runner.engine.createSchematic('migration-v49', runner.engine.createCollection(collectionPath))
+      runner.engine.createSchematic('migration-v51', runner.engine.createCollection(collectionPath))
     );
 
     const tree = await callRule(
@@ -102,7 +102,7 @@ describe('icon-path-migration', () => {
     });
 
     const context = runner.engine.createContext(
-      runner.engine.createSchematic('migration-v49', runner.engine.createCollection(collectionPath))
+      runner.engine.createSchematic('migration-v51', runner.engine.createCollection(collectionPath))
     );
 
     const tree = await callRule(
