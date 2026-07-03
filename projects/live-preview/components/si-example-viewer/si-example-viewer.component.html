@@ -1,26 +1,26 @@
 <div class="wrapper">
-  @if (!exampleUrl && !template) {
+  @if (!exampleUrl() && !template()) {
     <p class="text-info" style="margin: 1em">
       No example specified. Head to
       <strong><a href="#/overview">/overview</a></strong>
       for a list of them.
     </p>
   }
-  @if ((template || reactTemplate || vueTemplate || jsTemplate) && mode === 'editor') {
+  @if ((template() || reactTemplate() || vueTemplate() || jsTemplate()) && mode() === 'editor') {
     <p class="text-info" style="margin: 1em">
       This is an adopted example built from the URL. Head to
       <strong><a href="#/overview">/overview</a></strong> for a list of examples.
     </p>
   }
-  @if (tabs.length > 1) {
+  @if (tabs().length > 1) {
     <div class="tab-wrapper">
       <div role="tablist" class="nav lp-tabs">
-        @for (tab of tabs; track $index) {
+        @for (tab of tabs(); track $index) {
           <button
             type="button"
             role="tab"
             class="tab-item tab-link focus-inside"
-            [class.tab-active]="activeTabIndex === $index"
+            [class.tab-active]="activeTabIndex() === $index"
             (click)="activateTab($index)"
             (keydown.enter)="activateTab($index)"
           >
@@ -32,24 +32,24 @@
   }
 </div>
 
-@if (mode !== 'editor') {
+@if (mode() !== 'editor') {
   <si-live-preview-renderer
     #renderer
-    [exampleUrl]="baseUrl + exampleUrl"
-    [dataId]="dataId"
-    [template]="template"
+    [exampleUrl]="baseUrl + exampleUrl()"
+    [dataId]="dataId()"
+    [template]="template()"
   />
 } @else {
   <si-live-preview
     [ticketBaseUrl]="ticketBaseUrl"
     [baseUrl]="baseUrl"
-    [example]="exampleUrl"
-    [template]="template"
-    [templateReact]="reactTemplate"
-    [templateVue]="vueTemplate"
-    [templateJs]="jsTemplate"
-    [theme]="theme"
-    [locale]="locale"
-    [isRTL]="isRTL"
+    [example]="exampleUrl()"
+    [template]="template()"
+    [templateReact]="reactTemplate()"
+    [templateVue]="vueTemplate()"
+    [templateJs]="jsTemplate()"
+    [theme]="theme()"
+    [locale]="locale()"
+    [isRTL]="isRTL()"
   />
 }
