@@ -110,6 +110,13 @@ else
     playwright \
     test \
     $UPDATE_ARGS \
-    "$@" \
-  || npx playwright show-report playwright/results/preview
+    "$@"
+  STATUS=$?
+  # Only serve the HTML report on failure for interactive users. Agents set the
+  # AGENT env var; serving the report would block them since it starts a
+  # long-running web server.
+  if [ $STATUS -ne 0 ] && [ x"$AGENT" = "x" ]; then
+    npx playwright show-report playwright/results/preview
+  fi
+  exit $STATUS
 fi
