@@ -4,8 +4,13 @@
 
 ```ts
 
+import { AfterContentInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { OnChanges } from '@angular/core';
+import { QueryList } from '@angular/core';
 import { Signal } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -34,14 +39,17 @@ export interface PartState {
 export type Scale = 'none' | 'auto';
 
 // @public (undocumented)
-export class SiSplitComponent {
-    constructor();
-    readonly gutterSize: _angular_core.InputSignal<number>;
-    readonly orientation: _angular_core.InputSignal<SplitOrientation>;
-    readonly sizes: _angular_core.InputSignal<number[]>;
+export class SiSplitComponent implements AfterContentInit, OnChanges {
     // (undocumented)
-    readonly sizesChange: _angular_core.OutputEmitterRef<number[]>;
-    readonly stateId: _angular_core.InputSignal<string | undefined>;
+    gutterSize: number;
+    // (undocumented)
+    get orientation(): SplitOrientation;
+    set orientation(value: SplitOrientation);
+    // (undocumented)
+    sizes: number[];
+    // (undocumented)
+    readonly sizesChange: EventEmitter<number[]>;
+    stateId?: string;
 }
 
 // @public (undocumented)
@@ -49,31 +57,51 @@ export class SiSplitModule {
 }
 
 // @public (undocumented)
-export class SiSplitPartComponent {
-    constructor();
-    readonly actions: _angular_core.InputSignal<Action[]>;
+export class SiSplitPartComponent implements OnChanges {
     // (undocumented)
-    readonly collapseChanged: _angular_core.OutputEmitterRef<boolean>;
+    actions: Action[];
+    // (undocumented)
+    readonly collapseChanged: EventEmitter<boolean>;
     get collapsed(): boolean;
-    readonly collapseDirection: _angular_core.InputSignal<CollapseTo>;
-    readonly collapseIconClass: _angular_core.InputSignal<string | undefined>;
-    readonly collapseLabel: _angular_core.InputSignal<TranslatableString>;
-    readonly collapseOthers: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly collapseToMinSize: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly expanded: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly headerTemplate: _angular_core.InputSignal<TemplateRef<{
-        $implicit: SiSplitPartComponent;
-    }> | undefined>;
-    readonly heading: _angular_core.InputSignal<TranslatableString | undefined>;
-    readonly minSize: _angular_core.InputSignalWithTransform<number, unknown>;
-    readonly removeContentOnCollapse: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly scale: _angular_core.InputSignal<Scale>;
-    readonly showCollapseButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly showHeader: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly size: _angular_core.InputSignalWithTransform<number | undefined, unknown>;
     // (undocumented)
-    readonly stateChange: _angular_core.OutputEmitterRef<PartState>;
-    readonly stateId: _angular_core.InputSignal<string | undefined>;
+    collapseDirection: CollapseTo;
+    collapseIconClass: string;
+    collapseLabel: TranslatableString;
+    collapseOthers: boolean;
+    collapseToMinSize: boolean;
+    set expanded(value: boolean);
+    // (undocumented)
+    get expanded(): boolean;
+    // (undocumented)
+    headerTemplate?: TemplateRef<{
+        $implicit: SiSplitPartComponent;
+    }>;
+    heading: TranslatableString;
+    minSize: number;
+    // (undocumented)
+    static ngAcceptInputType_collapseOthers: unknown;
+    // (undocumented)
+    static ngAcceptInputType_collapseToMinSize: unknown;
+    // (undocumented)
+    static ngAcceptInputType_expanded: unknown;
+    // (undocumented)
+    static ngAcceptInputType_minSize: unknown;
+    // (undocumented)
+    static ngAcceptInputType_removeContentOnCollapse: unknown;
+    // (undocumented)
+    static ngAcceptInputType_showCollapseButton: unknown;
+    // (undocumented)
+    static ngAcceptInputType_showHeader: unknown;
+    // (undocumented)
+    static ngAcceptInputType_size: unknown;
+    removeContentOnCollapse: boolean;
+    scale: Scale;
+    showCollapseButton: boolean;
+    showHeader: boolean;
+    size?: number;
+    // (undocumented)
+    readonly stateChange: EventEmitter<PartState>;
+    stateId?: string;
     toggleCollapse(): void;
 }
 
