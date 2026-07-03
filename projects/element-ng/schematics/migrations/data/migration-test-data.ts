@@ -118,7 +118,7 @@ const ELEMENT_SELECTORS_MIGRATION: ElementSelectorInstruction[] = [
   { replace: 'si-icon-next', replaceWith: 'si-icon' },
   { replace: 'si-tabset-next', replaceWith: 'si-tabset' },
   { replace: 'si-tab-next', replaceWith: 'si-tab' },
-  // v48 to v49
+  // v49 to v51
   {
     replace: 'si-unauthorized-page',
     replaceWith: 'si-info-page',
@@ -192,7 +192,7 @@ const COMPONENT_PROPERTY_NAMES_MIGRATION: ComponentPropertyNamesInstruction[] = 
     propertyMappings: [{ replace: '(toggle)', replaceWith: '(panelToggle)' }]
   },
   // Input name changes
-  // v48 to v49
+  // v49 to v51
   {
     module: /@(siemens|simpl)\/element-ng/,
     elementSelector: 'si-filtered-search',
