@@ -7,7 +7,6 @@
       - columnheader "Role"
       - columnheader "Company"
       - columnheader "Age"
-  - rowgroup:
     - row /0 Max Meier 0 Engineer Great Company 0 \d+/:
       - gridcell "0"
       - gridcell "Max Meier 0"
@@ -128,14 +127,13 @@
       - gridcell "Analyst"
       - gridcell "Great Company 4"
       - gridcell /\d+/
-  - rowgroup
-  - rowgroup
-  - rowgroup
 - text: "Page Size:"
-- combobox "Page Size"
+- combobox "Page Size": /\d+/
 - text: /1 to \d+ of \d+/
 - button "First Page" [disabled]
 - button "Previous Page" [disabled]
-- text: Page 1 of 5
+- text: Page
+- spinbutton "Page number, 1 of 5"
+- text: of 5
 - button "Next Page"
 - button "Last Page"
