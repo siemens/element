@@ -1,0 +1,23 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/all-variables';
+
+:host {
+  margin-block-end: map.get(all-variables.$spacers, 5);
+}
+
+:host(:not(.form-check)) {
+  display: flex;
+  flex-direction: column;
+
+  .form-item-content {
+    flex-grow: 1;
+  }
+}
+
+.form-label:empty {
+  display: none;
+}
+
+:host(.form-check:not(.form-check-inline)) {
+  display: block;
+}
