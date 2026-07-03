@@ -27,7 +27,7 @@ test.describe('ag-grid-infinite', () => {
     await expect(page.locator('.ag-skeleton-effect')).toHaveCount(0, { timeout: 10000 });
 
     // Scroll to the bottom to trigger infinite loading
-    const gridBody = page.locator('.ag-body-viewport');
+    const gridBody = page.locator('.ag-grid-viewport');
     const initialRowCount = await page.locator('.ag-row').count();
 
     await gridBody.evaluate(el => {

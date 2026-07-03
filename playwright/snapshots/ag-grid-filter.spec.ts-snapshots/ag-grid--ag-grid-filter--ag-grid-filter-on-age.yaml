@@ -14,14 +14,13 @@
         - button "Open Filter Menu"
       - gridcell
       - gridcell "Open Filter Menu":
-        - spinbutton "Age Filter Input"
+        - spinbutton "Age Filter Input": /\d+/
         - button "Open Filter Menu"
       - gridcell
       - gridcell "Open calendar Open Filter Menu":
         - textbox
         - button "Open calendar"
         - button "Open Filter Menu"
-  - rowgroup:
     - row /3 Max Meier 3 Designer \d+ years Great Company 3 \d+-\d+-\d+/:
       - gridcell "3"
       - gridcell "Max Meier 3"
@@ -43,6 +42,3 @@
       - gridcell /\d+ years/
       - gridcell "Great Company 1"
       - gridcell /\d+-\d+-\d+/
-  - rowgroup
-  - rowgroup
-  - rowgroup

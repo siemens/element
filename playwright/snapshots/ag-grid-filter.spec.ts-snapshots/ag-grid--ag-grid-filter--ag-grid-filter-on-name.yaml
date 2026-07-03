@@ -10,7 +10,7 @@
     - row "Max Meier 1 Open Filter Menu Open Filter Menu Open calendar Open Filter Menu":
       - gridcell
       - gridcell "Max Meier 1 Open Filter Menu":
-        - textbox "Name Filter Input"
+        - textbox "Name Filter Input": Max Meier 1
         - button "Open Filter Menu"
       - gridcell
       - gridcell "Open Filter Menu":
@@ -21,7 +21,6 @@
         - textbox
         - button "Open calendar"
         - button "Open Filter Menu"
-  - rowgroup:
     - row /1 Max Meier 1 Installer \d+ years Great Company 1 \d+-\d+-\d+/:
       - gridcell "1"
       - gridcell "Max Meier 1"
@@ -99,6 +98,3 @@
       - gridcell /\d+ years/
       - gridcell "Great Company 4"
       - gridcell /\d+-\d+-\d+/
-  - rowgroup
-  - rowgroup
-  - rowgroup

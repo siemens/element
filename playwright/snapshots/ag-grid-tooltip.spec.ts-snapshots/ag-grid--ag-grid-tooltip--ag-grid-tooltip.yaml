@@ -8,7 +8,6 @@
       - columnheader "Role"
       - columnheader "Age"
       - columnheader "Company"
-  - rowgroup:
     - row /Press Space to toggle row selection \(unchecked\) 0 Max Meier 0 Engineer \d+ years Great Company 0/:
       - gridcell "Press Space to toggle row selection (unchecked)":
         - checkbox "Press Space to toggle row selection (unchecked)"
@@ -129,6 +128,3 @@
       - gridcell "Analyst"
       - gridcell /\d+ years/
       - gridcell "Great Company 4"
-  - rowgroup
-  - rowgroup
-  - rowgroup
