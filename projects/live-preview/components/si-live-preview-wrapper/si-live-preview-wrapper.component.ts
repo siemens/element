@@ -7,9 +7,9 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostListener,
   inject,
   NgZone,
+  signal,
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -35,18 +35,21 @@ const filterTargets = ['_self', '_top', '_parent', ''];
   imports: [SiLivePreviewRendererComponent],
   templateUrl: './si-live-preview-wrapper.component.html',
   styles: 'si-live-preview-renderer { flex: 1;}',
-  changeDetection: ChangeDetectionStrategy.Eager
+  changeDetection: ChangeDetectionStrategy.Eager,
+  host: {
+    '(click)': 'onClick($event)'
+  }
 })
 export class SiLivePreviewWrapperComponent {
-  readonly renderer = viewChild.required<SiLivePreviewRendererComponent>('renderer');
-  readonly webcomponentRenderer = viewChild.required<ElementRef>('webcomponentRenderer');
+  private readonly renderer = viewChild.required<SiLivePreviewRendererComponent>('renderer');
+  private readonly webcomponentRenderer = viewChild.required<ElementRef>('webcomponentRenderer');
 
-  exampleUrl!: string;
-  template = '';
-  loadReact = false;
-  loadVue = false;
-  loadJs = false;
-  webcomponentTemplateCode = '';
+  protected readonly exampleUrl = signal('');
+  protected readonly template = signal('');
+  protected readonly loadReact = signal(false);
+  protected readonly loadVue = signal(false);
+  protected readonly loadJs = signal(false);
+  protected readonly webcomponentTemplateCode = signal('');
   private isMobile = false;
   private theme!: ThemeType;
   private isRTL = false;
@@ -55,13 +58,15 @@ export class SiLivePreviewWrapperComponent {
   private rootFontSize?: number | 'initial';
   private initialUrl: string;
 
-  private config = inject(SI_LIVE_PREVIEW_CONFIG);
-  private themeApi = inject(SiLivePreviewThemeApi, { optional: true });
-  private localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
-  private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
-  private ngZone = inject(NgZone);
-  private webcomponentService = inject(SiLivePreviewWebComponentService, { optional: true });
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  private readonly themeApi = inject(SiLivePreviewThemeApi, { optional: true });
+  private readonly localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
+  private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
+  private readonly ngZone = inject(NgZone);
+  private readonly webcomponentService = inject(SiLivePreviewWebComponentService, {
+    optional: true
+  });
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.themeApi
@@ -105,12 +110,12 @@ export class SiLivePreviewWrapperComponent {
   }
 
   private onMessageInZone(event: MessageEvent): void {
-    this.exampleUrl = event.data.exampleUrl;
-    this.template = event.data.template;
-    this.loadReact = event.data.loadReact;
-    this.loadVue = event.data.loadVue;
-    this.loadJs = event.data.loadJs;
-    this.webcomponentTemplateCode = event.data.reactVueTemplate;
+    this.exampleUrl.set(event.data.exampleUrl);
+    this.template.set(event.data.template);
+    this.loadReact.set(event.data.loadReact);
+    this.loadVue.set(event.data.loadVue);
+    this.loadJs.set(event.data.loadJs);
+    this.webcomponentTemplateCode.set(event.data.reactVueTemplate);
 
     if (this.theme !== event.data.theme) {
       this.setTheme(event.data.theme);
@@ -144,15 +149,15 @@ export class SiLivePreviewWrapperComponent {
     }
 
     const webcomponentRenderer = this.webcomponentRenderer();
-    if (webcomponentRenderer && (this.loadReact || this.loadVue || this.loadJs)) {
+    if (webcomponentRenderer && (this.loadReact() || this.loadVue() || this.loadJs())) {
       this.webcomponentService?.injectComponent(
         webcomponentRenderer,
         {
-          exampleUrl: this.exampleUrl,
-          loadReact: this.loadReact,
-          loadJs: this.loadJs,
-          webcomponentTemplateCode: this.webcomponentTemplateCode,
-          loadVue: this.loadVue,
+          exampleUrl: this.exampleUrl(),
+          loadReact: this.loadReact(),
+          loadJs: this.loadJs(),
+          webcomponentTemplateCode: this.webcomponentTemplateCode(),
+          loadVue: this.loadVue(),
           config: this.config
         },
         {
@@ -164,7 +169,7 @@ export class SiLivePreviewWrapperComponent {
     }
   }
 
-  @HostListener('click', ['$event']) onClick(event: MouseEvent): void {
+  onClick(event: MouseEvent): void {
     const target = event?.target as HTMLElement;
     if (target?.tagName === 'A' && !event.defaultPrevented) {
       // for normal link: ok if it starts with the proper route, else open in a new window

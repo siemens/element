@@ -6,11 +6,10 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  Input,
-  OnChanges,
+  computed,
+  input,
   OnDestroy,
-  output,
-  SimpleChanges
+  output
 } from '@angular/core';
 import qrcode from 'qrcode-generator';
 
@@ -20,21 +19,26 @@ import qrcode from 'qrcode-generator';
   styleUrl: './si-live-preview-qr.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager
 })
-export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy, OnChanges {
-  @Input() url?: string;
-  @Input() urlShort?: string;
+export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy {
+  readonly url = input<string>();
+  readonly urlShort = input<string>();
   readonly closed = output<void>();
 
-  qrImg = '';
-  qrShort = false;
+  readonly qrImg = computed<string | null>(() => {
+    const url = this.url();
+    const urlShort = this.urlShort();
+    if (!url || !urlShort) {
+      return null;
+    }
+    const qr = qrcode(0, 'L');
+    qr.addData(this.qrShort() ? urlShort : url);
+    qr.make();
+    return qr.createImgTag(2);
+  });
+
+  readonly qrShort = computed(() => (this.url()?.length ?? 0) > 2953);
 
   private unlisten?: () => void;
-
-  ngOnChanges(changes: SimpleChanges<this>): void {
-    if (changes.url && changes.urlShort) {
-      this.generateQr();
-    }
-  }
 
   ngAfterViewInit(): void {
     const listener = (): void => this.closed.emit();
@@ -46,14 +50,5 @@ export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy, OnCha
     if (this.unlisten) {
       this.unlisten();
     }
-  }
-
-  private generateQr(): void {
-    this.qrShort = (this.url?.length ?? 0) > 2953;
-    const url = this.qrShort ? this.urlShort! : this.url!;
-    const qr = qrcode(0, 'L');
-    qr.addData(url);
-    qr.make();
-    this.qrImg = qr.createImgTag(2);
   }
 }

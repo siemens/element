@@ -1,38 +1,39 @@
-<div class="example" [class.fullscreen]="exampleFullscreen" [class.is-mobile]="isMobile">
+@let active = activeTab();
+<div class="example" [class.fullscreen]="exampleFullscreen()" [class.is-mobile]="isMobile">
   <div class="preview-iframe" [class.is-mobile]="isMobile">
     <si-live-preview-iframe
-      [template]="template"
-      [baseUrl]="baseUrl"
-      [exampleUrl]="example ?? ''"
+      [template]="template()"
+      [baseUrl]="baseUrl()"
+      [exampleUrl]="example() ?? ''"
       [ticketLinkBug]="ticketLinkBug"
       [ticketLinkFeature]="ticketLinkFeature"
-      [isFullscreen]="isFullscreen"
-      [theme]="theme"
-      [locale]="locale"
-      [rootFontSize]="rootFontSize"
-      [isRTL]="isRTL"
-      [loadReact]="loadReact"
-      [loadVue]="loadVue"
-      [loadJs]="loadJs"
+      [isFullscreen]="isFullscreen()"
+      [theme]="theme()"
+      [locale]="locale()"
+      [rootFontSize]="rootFontSize()"
+      [isRTL]="isRTL()"
+      [loadReact]="loadReact()"
+      [loadVue]="loadVue()"
+      [loadJs]="loadJs()"
       [reactVueTemplate]="
-        activeTab === 'react' ? templateReact : activeTab === 'vue' ? templateVue : templateJs
+        active === 'react' ? templateReact() : active === 'vue' ? templateVue() : templateJs()
       "
       (templateFromComponent)="templateFromComponent($event)"
       (logClear)="logClear(true)"
       (logMessage)="logEvent($event)"
-      (logRenderingError)="renderingError = $event"
+      (logRenderingError)="renderingError.set($event)"
       (inProgress)="handleInProgressEvent($event)"
       (themeChange)="themeChange($event)"
       (localeChange)="changeLocale($event)"
     />
-    @if (inProgress) {
+    @if (inProgress()) {
       <div class="progress-container">
         <div class="progress-inner">
           <div class="progress-dots"></div>
         </div>
       </div>
     }
-    @if (isFullscreen) {
+    @if (isFullscreen()) {
       <div class="buttons">
         <button
           type="button"
@@ -52,16 +53,16 @@
   </div>
 </div>
 
-<div class="code" [class.is-mobile]="isMobile" [class.is-collapsed]="editorCollapsed">
+<div class="code" [class.is-mobile]="isMobile" [class.is-collapsed]="editorCollapsed()">
   <div class="collapse-wrapper">
     <div role="tablist" class="nav lp-tabs">
-      @if (showEditor && (activeTab === 'template' || activeTab === 'typescript')) {
+      @if (showEditor() && (active === 'template' || active === 'typescript')) {
         <button
           type="button"
           role="tab"
           class="tab-item tab-link focus-inside"
           id="templateEditorTab"
-          [class.tab-active]="activeTab === 'template'"
+          [class.tab-active]="active === 'template'"
           (click)="activateTab('template')"
         >
           Template
@@ -71,7 +72,7 @@
           role="tab"
           class="tab-item tab-link focus-inside"
           id="typescriptEditorTab"
-          [class.tab-active]="activeTab === 'typescript'"
+          [class.tab-active]="active === 'typescript'"
           (click)="activateTab('typescript')"
         >
           Typescript
@@ -79,11 +80,11 @@
       }
     </div>
     @if (!isMobile) {
-      <div class="collapse-button" [class.is-collapsed]="editorCollapsed">
+      <div class="collapse-button" [class.is-collapsed]="editorCollapsed()">
         <button
           type="button"
-          [attr.title]="editorCollapsed ? 'Show editor' : 'Hide editor'"
-          [attr.aria-label]="editorCollapsed ? 'Show editor' : 'Hide editor'"
+          [attr.title]="editorCollapsed() ? 'Show editor' : 'Hide editor'"
+          [attr.aria-label]="editorCollapsed() ? 'Show editor' : 'Hide editor'"
           (click)="toggleCollapse()"
         >
           <svg class="collapse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -101,9 +102,9 @@
     }
   </div>
 
-  @if (allowFullscreen && !isFullscreen) {
+  @if (allowFullscreen && !isFullscreen()) {
     <div class="buttons">
-      @if (webcomponents && showEditor && frameworks.size > 1) {
+      @if (webcomponents && showEditor() && frameworks.size > 1) {
         <select
           aria-label="Select framework"
           class="btn-command locale-selection"
@@ -133,7 +134,7 @@
           }
         </select>
       }
-      @if (!!localeApi && showEditor) {
+      @if (!!localeApi && showEditor()) {
         <select
           name="selectLocale"
           aria-label="Select locale"
@@ -142,7 +143,7 @@
           (change)="localeSelectionChanged($event.target)"
         >
           @for (aLocale of availableLocales; track $index) {
-            <option [value]="aLocale" [selected]="locale === aLocale">
+            <option [value]="aLocale" [selected]="locale() === aLocale">
               {{ aLocale }}
             </option>
           }
@@ -152,21 +153,23 @@
         <button
           type="button"
           class="btn-command rtl-selection"
-          [title]="isRTL ? 'Right-to-left layout' : 'Left-to-right layout'"
-          [attr.aria-label]="isRTL ? 'Right-to-left layout' : 'Left-to-right layout'"
+          [title]="isRTL() ? 'Right-to-left layout' : 'Left-to-right layout'"
+          [attr.aria-label]="isRTL() ? 'Right-to-left layout' : 'Left-to-right layout'"
           (click)="toggleRTL()"
         >
-          {{ isRTL ? 'RTL' : 'LTR' }}
+          {{ isRTL() ? 'RTL' : 'LTR' }}
         </button>
       }
-      @if (!isMobile && !showEditor && (renderingError || (logMessages.length && newMsgs))) {
+      @if (
+        !isMobile && !showEditor() && (renderingError() || (logMessages().length && newMsgs()))
+      ) {
         <button
           type="button"
           class="btn-command"
           title="Show console"
           aria-label="Show console"
-          [class.alert]="renderingError"
-          [class.info]="logMessages.length"
+          [class.alert]="renderingError()"
+          [class.info]="logMessages().length"
           (click)="toggleCollapse()"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -185,14 +188,7 @@
           aria-label="Toggle theme"
           (click)="toggleTheme()"
         >
-          @if (theme === 'light') {
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              <path
-                d="M360.07,147.88a12,12,0,0,0,5.89-21.1,168.05,168.05,0,0,0-214.71,0C80,186,70.19,292.1,129.38,363.35a166.9,166.9,0,0,0,113.77,59.93q7.9.74,15.75.73A166.74,166.74,0,0,0,366,385.22a12,12,0,0,0-5.89-21.1,109.33,109.33,0,0,1,0-216.24ZM244.43,275.77A133.48,133.48,0,0,0,330,381.08,144.11,144.11,0,0,1,147.84,348C97.1,287,105.51,196,166.58,145.24A144.08,144.08,0,0,1,330,130.94C272,152.38,234.91,212.29,244.43,275.77Z"
-              />
-            </svg>
-          }
-          @if (theme === 'dark') {
+          @if (theme() === 'dark') {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
               <path
                 d="M256,349.82A93.82,93.82,0,1,0,162.18,256,93.93,93.93,0,0,0,256,349.82Zm0-163.64A69.82,69.82,0,1,1,186.18,256,69.9,69.9,0,0,1,256,186.18Z"
@@ -216,10 +212,16 @@
                 d="M360.07,163.93a12,12,0,0,0,8.49-3.52l23.23-23.23a12,12,0,1,0-17-17l-23.23,23.23a12,12,0,0,0,8.48,20.49Z"
               />
             </svg>
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path
+                d="M360.07,147.88a12,12,0,0,0,5.89-21.1,168.05,168.05,0,0,0-214.71,0C80,186,70.19,292.1,129.38,363.35a166.9,166.9,0,0,0,113.77,59.93q7.9.74,15.75.73A166.74,166.74,0,0,0,366,385.22a12,12,0,0,0-5.89-21.1,109.33,109.33,0,0,1,0-216.24ZM244.43,275.77A133.48,133.48,0,0,0,330,381.08,144.11,144.11,0,0,1,147.84,348C97.1,287,105.51,196,166.58,145.24A144.08,144.08,0,0,1,330,130.94C272,152.38,234.91,212.29,244.43,275.77Z"
+              />
+            </svg>
           }
         </button>
       }
-      @if (!isMobile && showEditor) {
+      @if (!isMobile && showEditor()) {
         <button
           type="button"
           class="btn-command"
@@ -234,7 +236,7 @@
           </svg>
         </button>
       }
-      @if (showEditor) {
+      @if (showEditor()) {
         <button
           type="button"
           class="btn-command"
@@ -253,9 +255,9 @@
         siStackblitz
         class="btn-command"
         type="button"
-        [baseUrl]="baseUrl"
+        [baseUrl]="baseUrl()"
         [framework]="selectedFramework"
-        [example]="example"
+        [example]="example()"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
           <path
@@ -268,11 +270,11 @@
   <div class="tab-content" [class.is-mobile]="isMobile">
     <fieldset
       class="tab-pane"
-      [class.tab-active]="activeTab === 'template'"
+      [class.tab-active]="active === 'template'"
       [class.is-mobile]="isMobile"
-      [disabled]="editorCollapsed"
+      [disabled]="editorCollapsed()"
     >
-      <div class="buttons" [class.show-copied]="showCopied">
+      <div class="buttons" [class.show-copied]="showCopied()">
         @if (!isMobile) {
           <button
             type="button"
@@ -333,11 +335,11 @@
     </fieldset>
     <fieldset
       class="tab-pane"
-      [class.tab-active]="activeTab === 'typescript'"
+      [class.tab-active]="active === 'typescript'"
       [class.is-mobile]="isMobile"
-      [disabled]="editorCollapsed"
+      [disabled]="editorCollapsed()"
     >
-      <div class="buttons" [class.show-copied]="showCopied">
+      <div class="buttons" [class.show-copied]="showCopied()">
         <span class="readonly-label">read-only</span>
         @if (allowCopy) {
           <button
@@ -363,11 +365,11 @@
     </fieldset>
     <fieldset
       class="tab-pane"
-      [class.tab-active]="activeTab === 'react' || activeTab === 'vue' || activeTab === 'js'"
+      [class.tab-active]="active === 'react' || active === 'vue' || active === 'js'"
       [class.is-mobile]="isMobile"
-      [disabled]="editorCollapsed"
+      [disabled]="editorCollapsed()"
     >
-      <div class="buttons" [class.show-copied]="showCopied">
+      <div class="buttons" [class.show-copied]="showCopied()">
         @if (allowCopy) {
           <button
             type="button"
@@ -409,9 +411,9 @@
       <label for="reactVueEditor">React and Vue code editor</label>
       <fieldset #codeReactVue class="codeflask-editor"></fieldset>
     </fieldset>
-    <div class="console" [hidden]="!renderingError && !logMessages.length">
+    <div class="console" [hidden]="!renderingError() && !logMessages().length">
       <div class="buttons">
-        @if (logMessages.length) {
+        @if (logMessages().length) {
           <button
             type="button"
             class="btn-command btn-clear"
@@ -430,14 +432,14 @@
         }
       </div>
       <div #consoleContainer class="scroller">
-        @if (renderingError) {
+        @if (renderingError()) {
           <pre
             class="alert-danger"
-          ><code class="bg-none">{{ renderingError.toString() }}</code></pre>
+          ><code class="bg-none">{{ renderingError().toString() }}</code></pre>
         }
-        @if (!renderingError && logMessages.length) {
+        @if (!renderingError() && logMessages().length) {
           <ul>
-            @for (msg of logMessages; track $index) {
+            @for (msg of logMessages(); track $index) {
               <li>{{ msg }}</li>
             }
           </ul>
