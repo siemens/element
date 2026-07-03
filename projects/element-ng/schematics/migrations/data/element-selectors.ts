@@ -11,14 +11,4 @@ export interface ElementSelectorInstruction {
   defaultAttributes?: { name: string; value: string }[];
 }
 
-export const ELEMENT_SELECTORS_MIGRATION: ElementSelectorInstruction[] = [
-  // v48 to v49
-  {
-    replace: 'si-unauthorized-page',
-    replaceWith: 'si-info-page',
-    defaultAttributes: [
-      { name: 'icon', value: 'element-warning-filled' },
-      { name: 'iconColor', value: 'status-warning' }
-    ]
-  }
-];
+export const ELEMENT_SELECTORS_MIGRATION: ElementSelectorInstruction[] = [];

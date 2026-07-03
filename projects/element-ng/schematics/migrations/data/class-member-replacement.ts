@@ -17,22 +17,4 @@ export interface ClassMemberReplacementInstruction {
   }[];
 }
 
-export const CLASS_MEMBER_REPLACEMENTS_MIGRATION: ClassMemberReplacementInstruction[] = [
-  {
-    module: /@(siemens|simpl)\/element-ng(\/resize-observer)?/,
-    typeNames: ['SiResponsiveContainerDirective'],
-    propertyReplacements: [
-      { property: 'isXs', replacement: '${expression}.xs()' },
-      { property: 'isSm', replacement: '${expression}.sm()' },
-      { property: 'isMd', replacement: '${expression}.md()' },
-      { property: 'isLg', replacement: '${expression}.lg()' },
-      { property: 'isXl', replacement: '${expression}.xl()' },
-      { property: 'isXxl', replacement: '${expression}.xxl()' }
-    ]
-  },
-  {
-    module: /@(siemens|simpl)\/element-ng(\/modal)?/,
-    typeNames: ['ModalOptions'],
-    propertyReplacements: [{ property: 'initialState', replacement: '${expression}.inputValues' }]
-  }
-];
+export const CLASS_MEMBER_REPLACEMENTS_MIGRATION: ClassMemberReplacementInstruction[] = [];

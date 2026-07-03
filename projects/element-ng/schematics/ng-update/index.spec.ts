@@ -22,7 +22,7 @@ describe('ng-update migration', () => {
   });
 
   it('should run migration successfully', async () => {
-    const tree = await runner.runSchematic('migration-v49', {}, appTree);
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
     expect(tree).toBeDefined();
   });
 
@@ -30,11 +30,11 @@ describe('ng-update migration', () => {
     const logSpy = vi.fn();
     runner.logger.subscribe(logSpy);
 
-    await runner.runSchematic('migration-v49', {}, appTree);
+    await runner.runSchematic('migration-v51', {}, appTree);
 
     expect(logSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        message: expect.stringContaining('Starting update from version 48 to 49')
+        message: expect.stringContaining('Starting update from version 49 to 51')
       })
     );
   });
@@ -54,7 +54,7 @@ export class TestComponent {
       '/projects/app/src/test.component.ts': originalContent
     });
 
-    const tree = await runner.runSchematic('migration-v49', {}, appTree);
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
 
     expect(tree).toBeDefined();
     expect(tree.exists('/projects/app/src/test.component.ts')).toBe(true);
@@ -65,7 +65,7 @@ export class TestComponent {
   it('should handle empty project gracefully', async () => {
     const emptyTree = await createTestApp(runner, { style: 'scss' });
 
-    const tree = await runner.runSchematic('migration-v49', {}, emptyTree);
+    const tree = await runner.runSchematic('migration-v51', {}, emptyTree);
     expect(tree).toBeDefined();
   });
 
@@ -73,7 +73,7 @@ export class TestComponent {
     const customPath = '/custom/path';
     const options = { path: customPath };
 
-    const tree = await runner.runSchematic('migration-v49', options, appTree);
+    const tree = await runner.runSchematic('migration-v51', options, appTree);
     expect(tree).toBeDefined();
 
     // Verify the schematic ran with custom options
