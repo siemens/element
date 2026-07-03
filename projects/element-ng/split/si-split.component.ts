@@ -21,8 +21,10 @@ import {
   signal,
   Signal,
   SimpleChanges,
-  DOCUMENT
+  DOCUMENT,
+  DestroyRef
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   isRTL,
   SI_UI_STATE_SERVICE,
@@ -97,17 +99,18 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
   // eslint-disable-next-line
   protected gridTemplateAreas: Signal<string> = signal('');
 
-  private elementRef = inject(ElementRef<HTMLElement>);
-  private ngZone = inject(NgZone);
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private document = inject(DOCUMENT);
-  private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly ngZone = inject(NgZone);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly document = inject(DOCUMENT);
+  private readonly uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
+  private readonly destroyRef = inject(DestroyRef);
   // New parts won't be measured, so we need this to scale up their fractional size to the expanded size.
   // Using 10, as the sum of all fractional sizes is 1, so we need to scale them up as fr-values should be >= 1.
   private fractionalSizeToExpandedSizeFactor = 10;
 
   ngOnChanges(changes: SimpleChanges<this>): void {
-    if (changes.sizes && !changes.sizes.firstChange) {
+    if (changes.sizes && !changes.sizes.firstChange && this.parts) {
       this.sizes.forEach((size, index) => {
         const part = this.parts.get(index);
         if (part) {
@@ -146,7 +149,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
 
       this.alignRelativeSizes();
       this.updateFractionalSizeToExpandSizeFactor();
-      this.restoreFormUIState();
+      this.restoreFromUIState();
 
       const gridTemplate = computed(() =>
         this.parts
@@ -234,7 +237,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
     const beforeFrSum = refParts.reduce((a, b) => a + (b.expandedSize() ?? b.fractionalSize()!), 0);
     this.parts.forEach(part => part.refreshSizePx(this.orientation));
     const afterFrSum = refParts.reduce((a, b) => a + b.expandedSize()!, 0);
-    const beforeToAfterFactor = afterFrSum / beforeFrSum;
+    const beforeToAfterFactor = beforeFrSum > 0 ? afterFrSum / beforeFrSum : 1;
     this.parts
       .filter(
         part =>
@@ -264,7 +267,8 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
         .pipe(
           takeUntil(
             merge(fromEvent(this.document, 'mouseup'), fromEvent(this.document, 'touchend'))
-          )
+          ),
+          takeUntilDestroyed(this.destroyRef)
         )
         .subscribe({
           next: move => {
@@ -350,7 +354,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
     this.uiStateService.save(this.stateId, state);
   }
 
-  private restoreFormUIState(): void {
+  private restoreFromUIState(): void {
     if (!this.stateId || !this.uiStateService) {
       return;
     }

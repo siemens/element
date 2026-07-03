@@ -62,7 +62,7 @@ export class SiSplitPartComponent implements OnChanges {
    */
   @Input({ transform: booleanAttribute }) collapseToMinSize = false;
 
-  @Input() headerTemplate?: TemplateRef<any>;
+  @Input() headerTemplate?: TemplateRef<{ $implicit: SiSplitPartComponent }>;
 
   /**
    * Sets the title of the split part header.
@@ -184,7 +184,7 @@ export class SiSplitPartComponent implements OnChanges {
     return nextExpanded;
   });
 
-  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
   protected headerContext: { $implicit: SiSplitPartComponent } = {
     $implicit: this
