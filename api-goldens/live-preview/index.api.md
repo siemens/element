@@ -6,9 +6,9 @@
 
 import { ActivatedRoute } from '@angular/router';
 import { AfterViewInit } from '@angular/core';
+import * as _angular_core from '@angular/core';
 import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
-import * as i0 from '@angular/core';
 import * as i1 from '@angular/router';
 import { InjectionToken } from '@angular/core';
 import { ModuleWithProviders } from '@angular/core';
@@ -82,44 +82,6 @@ export class SiExampleViewerComponent {
     constructor();
     // (undocumented)
     activateTab(index: number): void;
-    // (undocumented)
-    activeTabIndex: number;
-    // (undocumented)
-    baseUrl: string;
-    // (undocumented)
-    dataId: string;
-    // (undocumented)
-    exampleUrl: string;
-    // (undocumented)
-    get hasTabs(): boolean;
-    // (undocumented)
-    get hasTabsMobile(): boolean;
-    // (undocumented)
-    isRTL: boolean;
-    // (undocumented)
-    jsTemplate: string;
-    // (undocumented)
-    locale?: string;
-    // (undocumented)
-    mode: string;
-    // (undocumented)
-    reactTemplate: string;
-    // (undocumented)
-    readonly renderer: i0.Signal<SiLivePreviewRendererComponent>;
-    // (undocumented)
-    tabs: {
-        heading: string;
-        base: string;
-        example: string;
-    }[];
-    // (undocumented)
-    template: string;
-    // (undocumented)
-    theme: string;
-    // (undocumented)
-    ticketBaseUrl: string;
-    // (undocumented)
-    vueTemplate: string;
 }
 
 // @public (undocumented)
@@ -128,23 +90,15 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     // (undocumented)
     activateTab(tab: string): void;
     // (undocumented)
-    activeTab: string;
+    readonly availableLocales: string[];
     // (undocumented)
-    allowCopy: boolean;
-    // (undocumented)
-    allowFullscreen: boolean;
-    // (undocumented)
-    availableLocales: string[];
-    // (undocumented)
-    baseUrl: string;
+    readonly baseUrl: _angular_core.InputSignal<string>;
     // (undocumented)
     changeFramework(framework: string): void;
     // (undocumented)
-    changeLocale(locale: string): void;
+    changeLocale(locale: string | null | undefined): void;
     // (undocumented)
     checkWebComponentsAvailable(): void;
-    // (undocumented)
-    readonly consoleElem: i0.Signal<ElementRef<any>>;
     // (undocumented)
     copyCode(): void;
     // (undocumented)
@@ -152,33 +106,13 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     // (undocumented)
     createLink(): void;
     // (undocumented)
-    editorCollapsed: boolean;
-    // (undocumented)
-    example?: string | null;
-    // (undocumented)
-    exampleFullscreen: boolean;
-    // (undocumented)
-    frameworks: Map<string, string>;
+    readonly example: _angular_core.InputSignal<string | null | undefined>;
     // (undocumented)
     handleInProgressEvent(inProgress: boolean): void;
     // (undocumented)
-    inProgress: boolean;
+    readonly isRTL: _angular_core.ModelSignal<boolean>;
     // (undocumented)
-    isFullscreen: boolean;
-    // (undocumented)
-    isMobile: boolean;
-    // (undocumented)
-    isRTL: boolean;
-    // (undocumented)
-    loadJs: boolean;
-    // (undocumented)
-    loadReact: boolean;
-    // (undocumented)
-    loadVue: boolean;
-    // (undocumented)
-    locale?: string;
-    // (undocumented)
-    localeApi: SiLivePreviewLocaleApi | null;
+    readonly locale: _angular_core.ModelSignal<string | null | undefined>;
     // (undocumented)
     localeSelectionChanged(target: EventTarget | null): void;
     // (undocumented)
@@ -186,53 +120,25 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     // (undocumented)
     logEvent(msg: string): void;
     // (undocumented)
-    logMessages: string[];
-    // (undocumented)
-    newMsgs: boolean;
-    // (undocumented)
-    onFullscreenChange(): void;
-    // (undocumented)
     openTab(): void;
-    // (undocumented)
-    readonly reactVueElem: i0.Signal<ElementRef<any>>;
-    // (undocumented)
-    renderingError: any;
     // (undocumented)
     rfsSelectionChanges(value: string): void;
     // (undocumented)
-    rootFontSize: number | 'initial';
-    // (undocumented)
-    rootFontSizes: number[];
-    // (undocumented)
-    rtlSwitcher: boolean | undefined;
-    // (undocumented)
-    selectedFramework: string;
-    // (undocumented)
-    showCopied: boolean;
-    // (undocumented)
-    showEditor: boolean;
-    // (undocumented)
-    switcherEnabled: boolean | undefined;
-    // (undocumented)
-    template: string;
-    // (undocumented)
-    readonly templateElem: i0.Signal<ElementRef<any>>;
+    readonly template: _angular_core.ModelSignal<string>;
     // (undocumented)
     templateFromComponent(template?: string): void;
     // (undocumented)
-    templateJs: string;
+    readonly templateJs: _angular_core.ModelSignal<string>;
     // (undocumented)
-    templateReact: string;
+    readonly templateReact: _angular_core.ModelSignal<string>;
     // (undocumented)
-    templateTs: string;
+    readonly templateVue: _angular_core.ModelSignal<string>;
     // (undocumented)
-    templateVue: string;
-    // (undocumented)
-    theme: string;
+    readonly theme: _angular_core.ModelSignal<string>;
     // (undocumented)
     themeChange(theme: string): void;
     // (undocumented)
-    ticketBaseUrl: string;
+    readonly ticketBaseUrl: _angular_core.InputSignal<string>;
     // (undocumented)
     ticketLinkBug: string;
     // (undocumented)
@@ -245,10 +151,6 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     toggleRTL(): void;
     // (undocumented)
     toggleTheme(): void;
-    // (undocumented)
-    readonly typescriptElem: i0.Signal<ElementRef<any>>;
-    // (undocumented)
-    webcomponents: boolean | undefined;
 }
 
 // @public
@@ -280,59 +182,56 @@ export interface SiLivePreviewConfig {
 }
 
 // @public (undocumented)
-export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
+export class SiLivePreviewIframeComponent implements OnInit {
+    constructor();
     // (undocumented)
-    baseUrl: string;
+    readonly baseUrl: _angular_core.InputSignal<string>;
     // (undocumented)
     deviceChanged(): void;
     // (undocumented)
-    exampleUrl: string;
+    readonly exampleUrl: _angular_core.InputSignal<string>;
     // (undocumented)
-    iFrameHeight?: string;
+    readonly iFrameHeight: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
-    iFrameWidth?: string;
+    readonly iFrameWidth: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
-    readonly inProgress: i0.OutputEmitterRef<boolean>;
+    readonly inProgress: _angular_core.OutputEmitterRef<boolean>;
     // (undocumented)
-    isFullscreen: boolean;
+    readonly isFullscreen: _angular_core.InputSignal<boolean>;
     // (undocumented)
-    isRTL?: boolean;
+    readonly isRTL: _angular_core.InputSignal<boolean | undefined>;
     // (undocumented)
-    loadJs?: boolean;
+    readonly loadJs: _angular_core.InputSignal<boolean | undefined>;
     // (undocumented)
-    loadReact?: boolean;
+    readonly loadReact: _angular_core.InputSignal<boolean | undefined>;
     // (undocumented)
-    loadVue?: boolean;
+    readonly loadVue: _angular_core.InputSignal<boolean | undefined>;
     // (undocumented)
-    locale?: string;
+    readonly locale: _angular_core.ModelSignal<string | null | undefined>;
     // (undocumented)
-    readonly localeChange: i0.OutputEmitterRef<string>;
+    readonly logClear: _angular_core.OutputEmitterRef<void>;
     // (undocumented)
-    readonly logClear: i0.OutputEmitterRef<void>;
+    readonly logMessage: _angular_core.OutputEmitterRef<string>;
     // (undocumented)
-    readonly logMessage: i0.OutputEmitterRef<string>;
-    // (undocumented)
-    readonly logRenderingError: i0.OutputEmitterRef<any>;
+    readonly logRenderingError: _angular_core.OutputEmitterRef<any>;
     // (undocumented)
     openQrMenu(): void;
     // (undocumented)
-    readonly previewIframe: i0.Signal<ElementRef<any> | undefined>;
+    readonly previewIframe: _angular_core.Signal<ElementRef<any> | undefined>;
     // (undocumented)
-    reactVueTemplate?: string;
+    readonly reactVueTemplate: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
-    rootFontSize: number | 'initial';
+    readonly rootFontSize: _angular_core.InputSignal<number | "initial">;
     // (undocumented)
-    template: string;
+    readonly template: _angular_core.InputSignal<string>;
     // (undocumented)
-    readonly templateFromComponent: i0.OutputEmitterRef<string | undefined>;
+    readonly templateFromComponent: _angular_core.OutputEmitterRef<string | undefined>;
     // (undocumented)
-    theme: string;
+    readonly theme: _angular_core.ModelSignal<string>;
     // (undocumented)
-    readonly themeChange: i0.OutputEmitterRef<string>;
+    readonly ticketLinkBug: _angular_core.InputSignal<string>;
     // (undocumented)
-    ticketLinkBug: string;
-    // (undocumented)
-    ticketLinkFeature: string;
+    readonly ticketLinkFeature: _angular_core.InputSignal<string>;
     // (undocumented)
     toggleLandscape(): void;
     // (undocumented)
@@ -366,47 +265,46 @@ export { SiLivePreviewModule }
 export { SiLivePreviewModule as SimplLivePreviewModule }
 
 // @public (undocumented)
-export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy {
     // (undocumented)
-    readonly closed: i0.OutputEmitterRef<void>;
+    readonly closed: _angular_core.OutputEmitterRef<void>;
     // (undocumented)
-    qrImg: string;
+    readonly qrImg: _angular_core.Signal<string | null>;
     // (undocumented)
-    qrShort: boolean;
+    readonly qrShort: _angular_core.Signal<boolean>;
     // (undocumented)
-    url?: string;
+    readonly url: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
-    urlShort?: string;
+    readonly urlShort: _angular_core.InputSignal<string | undefined>;
 }
 
 // @public (undocumented)
-export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
+export class SiLivePreviewRendererComponent implements OnDestroy {
+    constructor();
     // (undocumented)
-    dataId: string;
+    readonly dataId: _angular_core.InputSignal<string>;
     // (undocumented)
-    exampleUrl: string;
+    readonly exampleUrl: _angular_core.InputSignal<string>;
     // (undocumented)
-    readonly inProgress: i0.OutputEmitterRef<boolean>;
+    readonly inProgress: _angular_core.OutputEmitterRef<boolean>;
     // (undocumented)
-    readonly logClear: i0.OutputEmitterRef<void>;
+    readonly logClear: _angular_core.OutputEmitterRef<void>;
     // (undocumented)
-    readonly logMessage: i0.OutputEmitterRef<string>;
+    readonly logMessage: _angular_core.OutputEmitterRef<string>;
     // (undocumented)
-    readonly logRenderingError: i0.OutputEmitterRef<any>;
+    readonly logRenderingError: _angular_core.OutputEmitterRef<any>;
     // (undocumented)
-    readonly react: i0.Signal<ElementRef<any>>;
+    readonly react: _angular_core.Signal<ElementRef<any>>;
     // (undocumented)
     recompile(): void;
     // (undocumented)
-    readonly renderedExample: i0.Signal<ViewContainerRef>;
+    readonly renderedExample: _angular_core.Signal<ViewContainerRef>;
     // (undocumented)
-    renderingDone: boolean;
+    readonly supportsLandscapeMode: _angular_core.OutputEmitterRef<boolean>;
     // (undocumented)
-    readonly supportsLandscapeMode: i0.OutputEmitterRef<boolean>;
+    readonly template: _angular_core.InputSignal<string>;
     // (undocumented)
-    template: string;
-    // (undocumented)
-    readonly templateFromComponent: i0.OutputEmitterRef<string | undefined>;
+    readonly templateFromComponent: _angular_core.OutputEmitterRef<string | undefined>;
 }
 
 // @public (undocumented)
@@ -418,11 +316,11 @@ export { SiLivePreviewRoutingModule as SimplLivePreviewRoutingModule }
 // @public
 export abstract class SiLivePreviewRuntimeComponent implements AfterViewInit, DoCheck, OnDestroy {
     // (undocumented)
-    readonly component: i0.InputSignal<Type<unknown>>;
+    readonly component: _angular_core.InputSignal<Type<unknown>>;
     // (undocumented)
-    readonly ready: i0.OutputEmitterRef<void>;
+    readonly ready: _angular_core.OutputEmitterRef<void>;
     // (undocumented)
-    readonly renderingError: i0.OutputEmitterRef<Error>;
+    readonly renderingError: _angular_core.OutputEmitterRef<Error>;
 }
 
 // @public (undocumented)
@@ -445,25 +343,9 @@ export abstract class SiLivePreviewWebComponentService {
 export class SiLivePreviewWrapperComponent {
     constructor();
     // (undocumented)
-    exampleUrl: string;
-    // (undocumented)
-    loadJs: boolean;
-    // (undocumented)
-    loadReact: boolean;
-    // (undocumented)
-    loadVue: boolean;
-    // (undocumented)
     onClick(event: MouseEvent): void;
     // (undocumented)
-    readonly renderer: i0.Signal<SiLivePreviewRendererComponent>;
-    // (undocumented)
     sendMessage(type: string, message?: any): void;
-    // (undocumented)
-    template: string;
-    // (undocumented)
-    readonly webcomponentRenderer: i0.Signal<ElementRef<any>>;
-    // (undocumented)
-    webcomponentTemplateCode: string;
 }
 
 // @public
