@@ -4,9 +4,8 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
 
 import { SiHeaderDropdownItemComponent } from './si-header-dropdown-item.component';
 import { SiHeaderDropdownTriggerDirective } from './si-header-dropdown-trigger.directive';
@@ -40,10 +39,11 @@ import { SiHeaderDropdownTriggerHarness } from './testing/si-header-dropdown-tri
       </si-header-dropdown>
     </ng-template>
   `,
-  providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: TestHostComponent }]
+  providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: TestHostComponent }],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent implements HeaderWithDropdowns {
-  inlineDropdown = new BehaviorSubject(false);
+  readonly inlineDropdown = signal(false);
   readonly trigger1 = viewChild.required('trigger1', { read: SiHeaderDropdownTriggerDirective });
   readonly trigger2 = viewChild.required('trigger2', { read: SiHeaderDropdownTriggerDirective });
 }
@@ -65,6 +65,17 @@ describe('SiHeaderDropdown', () => {
 
       expect(await trigger1Harness.isOpen()).toBe(true);
       expect(await trigger1Harness.isDesktop()).toBe(true);
+    });
+
+    it('should expose the trigger as opening a dialog popup', async () => {
+      expect(await trigger1Harness.getAriaHaspopup()).toBe('dialog');
+    });
+
+    it('should declare the open dropdown as a dialog', async () => {
+      await trigger1Harness.toggle();
+
+      const dropdown = await trigger1Harness.getDropdown();
+      expect(await dropdown.getRole()).toBe('dialog');
     });
 
     it('should close all on outside click', async () => {
@@ -95,7 +106,7 @@ describe('SiHeaderDropdown', () => {
     it('should close on resize', async () => {
       await trigger1Harness.toggle();
       expect(await trigger1Harness.isOpen()).toBe(true);
-      fixture.componentInstance.inlineDropdown.next(false);
+      fixture.componentInstance.inlineDropdown.set(true);
       expect(await trigger1Harness.isOpen()).toBe(false);
     });
 
@@ -130,13 +141,24 @@ describe('SiHeaderDropdown', () => {
   });
 
   describe('in mobile mode', () => {
-    beforeEach(() => fixture.componentInstance.inlineDropdown.next(true));
+    beforeEach(() => fixture.componentInstance.inlineDropdown.set(true));
 
     it('should open inline in mobile view', async () => {
       await trigger1Harness.toggle();
 
       expect(await trigger1Harness.isOpen()).toBe(true);
       expect(await trigger1Harness.isDesktop()).toBe(false);
+    });
+
+    it('should not expose a popup on the trigger', async () => {
+      expect(await trigger1Harness.getAriaHaspopup()).toBeNull();
+    });
+
+    it('should declare the open dropdown as a group', async () => {
+      await trigger1Harness.toggle();
+
+      const dropdown = await trigger1Harness.getDropdown();
+      expect(await dropdown.getRole()).toBe('group');
     });
 
     it('should close only current on toggle click', async () => {
@@ -155,7 +177,7 @@ describe('SiHeaderDropdown', () => {
     it('should close on resize', async () => {
       await trigger1Harness.toggle();
       expect(await trigger1Harness.isOpen()).toBe(true);
-      fixture.componentInstance.inlineDropdown.next(true);
+      fixture.componentInstance.inlineDropdown.set(false);
       expect(await trigger1Harness.isOpen()).toBe(false);
     });
 

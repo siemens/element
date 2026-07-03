@@ -5,13 +5,14 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
+  ChangeDetectionStrategy,
   Component,
   ComponentRef,
+  computed,
   Directive,
+  effect,
   ElementRef,
   EmbeddedViewRef,
-  HostBinding,
-  HostListener,
   inject,
   Injector,
   input,
@@ -20,14 +21,19 @@ import {
   OnInit,
   output,
   TemplateRef,
+  untracked,
   ViewContainerRef
 } from '@angular/core';
-import { of, Subject } from 'rxjs';
-import { filter, skip, take, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, take, takeUntil } from 'rxjs/operators';
 
 import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
 
-@Component({ template: '', host: { '[attr.aria-owns]': 'ariaOwns()' } })
+@Component({
+  template: '',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  host: { '[attr.aria-owns]': 'ariaOwns()' }
+})
 class SiHeaderAnchorComponent {
   readonly ariaOwns = input<string>();
 }
@@ -41,7 +47,13 @@ class SiHeaderAnchorComponent {
 @Directive({
   selector: '[siHeaderDropdownTriggerFor]',
   host: {
-    class: 'dropdown-toggle'
+    class: 'dropdown-toggle',
+    '[id]': 'id',
+    '[class.show]': '_isOpen',
+    '[attr.aria-haspopup]': "inline() ? null : 'dialog'",
+    '[attr.aria-expanded]': '_isOpen',
+    '[attr.aria-controls]': 'ariaControls',
+    '(click)': 'click()'
   },
   exportAs: 'siHeaderDropdownTrigger'
 })
@@ -70,6 +82,12 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
   /** @internal */
   readonly navbar = inject(SI_HEADER_WITH_DROPDOWNS, { optional: true });
 
+  /**
+   * Whether the dropdown is opened inline (mobile) instead of in an overlay (desktop).
+   * Inline dropdowns are simple disclosure groups, while overlay dropdowns are dialogs.
+   */
+  protected readonly inline = computed(() => this.navbar?.inlineDropdown() ?? false);
+
   // we need to create a new injector, so that the parent can be injected properly
   private readonly injector = Injector.create({ parent: inject(Injector), providers: [] });
   private viewRef?: EmbeddedViewRef<unknown>;
@@ -83,17 +101,26 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
   private destroying = false;
 
   /** @internal */
-  @HostBinding('id') readonly id =
-    `si-navbar-dropdown-trigger-${SiHeaderDropdownTriggerDirective.idCounter++}`;
+  readonly id = `si-navbar-dropdown-trigger-${SiHeaderDropdownTriggerDirective.idCounter++}`;
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  @HostBinding('class.show') @HostBinding('attr.aria-expanded') protected _isOpen = false;
+  protected _isOpen = false;
 
   /** @internal */
-  @HostBinding('attr.aria-controls') readonly ariaControls =
-    `si-navbar-dropdown-${SiHeaderDropdownTriggerDirective.idCounter}`;
+  readonly ariaControls = `si-navbar-dropdown-${SiHeaderDropdownTriggerDirective.idCounter}`;
 
   private headerAnchorComponentRef?: ComponentRef<SiHeaderAnchorComponent>;
+
+  constructor() {
+    effect(() => {
+      const inline = this.navbar?.inlineDropdown() ?? false;
+      untracked(() => {
+        if (this._isOpen && inline === this.isOverlay) {
+          this.close();
+        }
+      });
+    });
+  }
 
   /** Whether the dropdown is open. */
   get isOpen(): boolean {
@@ -128,15 +155,10 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
       return;
     }
 
-    (this.navbar?.inlineDropdown ?? of(false)).pipe(take(1)).subscribe(inline => {
-      this._isOpen = true;
-      if (!inline) {
-        this.attachDropdownOverlay();
-      }
-      this.navbar?.inlineDropdown
-        ?.pipe(skip(1), takeUntil(this.dropdownClose))
-        .subscribe(() => this.close());
-    });
+    this._isOpen = true;
+    if (!(this.navbar?.inlineDropdown() ?? false)) {
+      this.attachDropdownOverlay();
+    }
 
     if (this.parent) {
       this.parent.openSubmenu = this;
@@ -190,7 +212,6 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
     }
   }
 
-  @HostListener('click')
   protected click(): void {
     if (this._isOpen) {
       this.close();

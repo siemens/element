@@ -54,6 +54,7 @@ $filtered-search-criteria-margin: map.get(variables.$spacers, 2);
   border-start-end-radius: 4px;
   margin-block: 0;
   margin-inline: 1px 0;
+  aspect-ratio: auto;
   block-size: auto;
   inline-size: auto;
   padding-inline: map.get(

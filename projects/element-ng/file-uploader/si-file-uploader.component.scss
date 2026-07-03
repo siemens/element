@@ -24,7 +24,10 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  block-size: map.get(variables.$spacers, 8) + map.get(variables.$spacers, 9);
+}
+
+.progress-value {
+  inset-block-start: -1lh;
 }
 
 .file {

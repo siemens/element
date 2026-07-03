@@ -126,7 +126,7 @@ describe('SiFileDropzoneComponent', () => {
     uploadTextFileSelect.set('browse files');
     uploadDropText.set('droppi droppi');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file span')!).toHaveTextContent('browse files');
+    expect(element.querySelector('.select-file')!).toHaveTextContent('browse files');
     expect(element.querySelector('.drag-and-drop-description')!).toHaveTextContent('droppi droppi');
   });
 
@@ -150,7 +150,7 @@ describe('SiFileDropzoneComponent', () => {
     dropFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.PNG']));
     await fixture.whenStable();
     const files = getFiles();
-    expect(files.length).toBe(2);
+    expect(files).toHaveLength(2);
     expect(files[0].fileName).toBe('first.png');
     expect(files[0].size).toBe('1.17KB');
     expect(files[0].status).toBe('added');
@@ -167,7 +167,7 @@ describe('SiFileDropzoneComponent', () => {
     await fixture.whenStable();
 
     const files = getFiles();
-    expect(files.length).toBe(2);
+    expect(files).toHaveLength(2);
     expect(files[0].fileName).toBe('first.png');
     expect(files[0].status).toBe('added');
     expect(files[1].fileName).toBe('second.PNG');
@@ -177,7 +177,7 @@ describe('SiFileDropzoneComponent', () => {
   it('should allow one to define accepted mime types', async () => {
     accept.set('image/*');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file input')!).toHaveAttribute(
+    expect(element.querySelector('.select-file ~ input')!).toHaveAttribute(
       'accept',
       expect.stringContaining('image/*')
     );
@@ -259,14 +259,15 @@ describe('SiFileDropzoneComponent', () => {
   });
 
   it('should reject files that exceeds "maxFileSize" parameter', async () => {
-    maxFileSize.set(1000);
-    errorTextFileMaxSize.set('File exceeds allowed maximum size');
+    maxFileSize.set(1024);
+    errorTextFileMaxSize.set('File exceeds allowed maximum size of {{maxFileSize}}');
     await fixture.whenStable();
     dropFiles(createFileListWithFileSizeOf1200Bytes(['notMatching.fmwr']));
     await fixture.whenStable();
     const files = getFiles();
     expect(files[0].status).toBe('invalid');
-    expect(files[0].errorText).toBe('File exceeds allowed maximum size');
+    expect(files[0].errorText).toBe('File exceeds allowed maximum size of {{maxFileSize}}');
+    expect(files[0].errorParams).toEqual({ maxFileSize: '1KB' });
   });
 
   it('should accept files that less than or equal to "maxFileSize" parameter', async () => {
@@ -302,7 +303,7 @@ describe('SiFileDropzoneComponent', () => {
 
     expect(filesAddedSpy).toHaveBeenCalled();
     const files = getFiles();
-    expect(files.length).toBe(2);
+    expect(files).toHaveLength(2);
     expect(files[0].fileName).toBe('file.txt');
     expect(files[1].fileName).toBe('newFile.txt');
   });

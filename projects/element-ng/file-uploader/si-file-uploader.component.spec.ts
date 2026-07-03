@@ -135,7 +135,7 @@ describe('SiFileUploaderComponent', () => {
     clearButtonText.set('Reset');
     uploadButtonText.set('Do it');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file span')!).toHaveTextContent('browse files');
+    expect(element.querySelector('.select-file')!).toHaveTextContent('browse files');
     expect(element.querySelector('.drag-and-drop-description')!).toHaveTextContent('droppi droppi');
     expect(getClearButton()).toHaveTextContent('Reset');
     expect(getUploadButton()).toHaveTextContent('Do it');
@@ -145,7 +145,7 @@ describe('SiFileUploaderComponent', () => {
     accept.set('.png');
     await handleFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.png']));
     const files = getFiles();
-    expect(files.length).toBe(2);
+    expect(files).toHaveLength(2);
     expect(files[0]).toHaveTextContent('first.png');
     expect(files[0]).toHaveTextContent('1.17KB');
     expect(files[1]).toHaveTextContent('second.png');
@@ -157,24 +157,24 @@ describe('SiFileUploaderComponent', () => {
     await handleFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.png']));
     await handleFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.png']));
     const files = getFiles();
-    expect(files.length).toBe(2);
+    expect(files).toHaveLength(2);
   });
 
   it('should provide option to remove selected file', async () => {
     accept.set('.png');
     await handleFiles(createFileList(['first.png', 'second.png']));
 
-    expect(getFiles().length).toBe(2);
+    expect(getFiles()).toHaveLength(2);
     deleteButton().click();
     await fixture.whenStable();
 
-    expect(getFiles().length).toBe(1);
+    expect(getFiles()).toHaveLength(1);
   });
 
   it('should allow one to define accepted mime types', async () => {
     accept.set('image/*');
     await fixture.whenStable();
-    expect(element.querySelector('.select-file input')!).toHaveAttribute(
+    expect(element.querySelector('.select-file ~ input')!).toHaveAttribute(
       'accept',
       expect.stringContaining('image/*')
     );
@@ -236,10 +236,10 @@ describe('SiFileUploaderComponent', () => {
   });
 
   it('should reject files that exceeds "maxFileSize" parameter', async () => {
-    maxFileSize.set(1000);
-    errorTextFileMaxSize.set('File exceeds allowed maximum size');
+    maxFileSize.set(1024);
+    errorTextFileMaxSize.set('File exceeds allowed maximum size of {{maxFileSize}}');
     await handleFiles(createFileListWithFileSizeOf1200Bytes(['notMatching.fmwr']));
-    expect(getError()!).toHaveTextContent('File exceeds allowed maximum size');
+    expect(getError()!).toHaveTextContent('File exceeds allowed maximum size of 1KB');
   });
 
   it('should accept files that less than or equal to "maxFileSize" parameter', async () => {
@@ -255,7 +255,7 @@ describe('SiFileUploaderComponent', () => {
     maxFilesReachedText.set('Max number of files reached');
     await handleFiles(createFileList(['file1.png', 'file2.png']));
     const files = getFiles();
-    expect(files.length).toBe(2);
+    expect(files).toHaveLength(2);
     expect(files[0]!).toHaveTextContent('file1.png');
     expect(files[1]!).toHaveTextContent('file2.png');
     expect(element.querySelector('si-inline-notification')).not.toBeInTheDocument();
@@ -267,7 +267,7 @@ describe('SiFileUploaderComponent', () => {
     maxFilesReachedText.set('Max number of files reached');
     await handleFiles(createFileList(['file1.png', 'file2.png', 'file3.png']));
     const files = getFiles();
-    expect(files.length).toBe(2);
+    expect(files).toHaveLength(2);
     expect(files[0]!).toHaveTextContent('file1.png');
     expect(files[1]!).toHaveTextContent('file2.png');
     expect(element.querySelector('si-inline-notification')!).toHaveTextContent(
@@ -278,12 +278,12 @@ describe('SiFileUploaderComponent', () => {
 
   it('should clear all files with clear button', async () => {
     await handleFiles(createFileList(['file1.png', 'file2.png', 'file3.png']));
-    expect(element.querySelectorAll<HTMLElement>('.file').length).toBe(3);
+    expect(element.querySelectorAll<HTMLElement>('.file')).toHaveLength(3);
 
     element.querySelector<HTMLButtonElement>('.btn-secondary')!.click();
     await fixture.whenStable();
 
-    expect(getFiles().length).toBe(0);
+    expect(getFiles()).toHaveLength(0);
     expect(getError()).not.toBeInTheDocument();
     expect(getClearButton()).toBeDisabled();
     expect(getUploadButton()).toBeDisabled();
@@ -447,7 +447,7 @@ describe('SiFileUploaderComponent', () => {
     );
     expect(vi.mocked(uploadCompletedSpy).mock.calls[0][0].error).toBeUndefined();
 
-    expect(getFiles().length).toBe(0);
+    expect(getFiles()).toHaveLength(0);
     vi.useRealTimers();
   });
 
@@ -467,7 +467,7 @@ describe('SiFileUploaderComponent', () => {
 
     await handleFiles(createFileList(['matching.fmwr']));
 
-    expect(getFiles().length).toBe(1);
+    expect(getFiles()).toHaveLength(1);
     expect(getUploadButton()).toBeEnabled();
   });
 

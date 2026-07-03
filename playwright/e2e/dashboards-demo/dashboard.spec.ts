@@ -142,7 +142,7 @@ test.describe('dashboard', () => {
     await si.runVisualAndA11yTests('contact-widget');
   });
 
-  test(example + 'delete', async ({ page, si }) => {
+  test(example + ' delete', async ({ page, si }) => {
     await si.visitExample(example, undefined);
     await expect(page.getByLabel('Edit')).toBeVisible();
     const editBtn = page.getByLabel('Edit');
@@ -151,6 +151,7 @@ test.describe('dashboard', () => {
     await pieChart.getByLabel('Remove').click();
     await page.waitForTimeout(100);
     await expect(page.locator('si-delete-confirmation-dialog')).toBeVisible();
+    await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('delete-confirmation-dialog');
 
     const deleteBtn = page.locator('si-delete-confirmation-dialog').getByText('Remove', {
@@ -160,6 +161,7 @@ test.describe('dashboard', () => {
     await expect(page.locator('.modal-backdrop')).not.toBeVisible();
     await expect(page.getByText('Pie Chart', { exact: true })).not.toBeVisible();
 
+    await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('delete');
   });
 
@@ -268,7 +270,8 @@ test.describe('dashboard', () => {
 
     // Cancel the edit
     await page.getByText('Cancel', { exact: true }).click();
-    await expect(page.getByLabel('Edit')).toBeVisible();
+    // count 1: the dashboard edit button is visible, all c-a-b edit buttons are hidden
+    await expect(page.getByLabel('Edit')).toHaveCount(1);
 
     // Scroll the widgets container to top before verifying positions
     await page.locator('.si-dashboard-content').evaluate(el => el.scrollTo(0, 0));
@@ -279,6 +282,88 @@ test.describe('dashboard', () => {
         expectedBox
       );
     }
+  });
+
+  test(example + ' web-component note widget', async ({ page, si }) => {
+    await si.visitExample(example, undefined);
+    await openWidgetCatalog(page);
+
+    const noteWidget = page.getByRole('option', {
+      name: 'Note (web-component)'
+    });
+    await expect(noteWidget).toBeVisible();
+    await noteWidget.click();
+
+    const next = page.getByText('Next', { exact: true });
+    await next.click();
+
+    const addBtn = page.getByText('Add', { exact: true });
+    await expect(addBtn).toBeVisible();
+    await expect(addBtn).not.toBeDisabled();
+    await addBtn.click();
+
+    const widgetHost = page.locator('si-widget-host', { hasText: 'Note (web-component)' });
+    await expect(widgetHost).toBeVisible();
+    await widgetHost.scrollIntoViewIfNeeded();
+
+    await si.runVisualAndA11yTests('web-component-note-widget');
+  });
+
+  test(example + ' weather widget preplaced', async ({ page, si }) => {
+    await si.visitExample(example, undefined);
+    const weatherHost = page.locator('si-widget-host', { hasText: 'Weather' }).first();
+    await weatherHost.scrollIntoViewIfNeeded();
+    await expect(weatherHost.locator('.si-weather-widget-temperature')).toBeVisible();
+    await si.runVisualAndA11yTests('weather-preplaced');
+  });
+
+  test(example + ' weather widget tablet', async ({ page, si }) => {
+    await page.setViewportSize({ width: 768, height: 1600 });
+    await si.visitExample(example, false);
+    const weatherHost = page.locator('si-widget-host', { hasText: 'Weather' }).first();
+    await weatherHost.scrollIntoViewIfNeeded();
+    await expect(weatherHost.locator('.si-weather-widget-temperature')).toBeVisible();
+    await si.runVisualAndA11yTests('weather-tablet');
+  });
+
+  test(example + ' weather widget editor', async ({ page, si }) => {
+    await si.visitExample(example, undefined);
+    await openWidgetCatalog(page);
+
+    const weatherOption = page.getByRole('option', {
+      name: /Weather/i
+    });
+    await expect(weatherOption).toBeVisible();
+    await weatherOption.click();
+
+    const next = page.getByText('Next', { exact: true });
+    await next.click();
+    // Wait for the editor's live preview to render the today block.
+    await expect(page.locator('.si-weather-widget-temperature').first()).toBeAttached();
+    // And for the Add button (only present once the editor wizard is ready).
+    await expect(page.getByText('Add', { exact: true })).toBeVisible();
+    await si.runVisualAndA11yTests('weather-editor');
+
+    const locationInput = page.getByRole('textbox', { name: /^Location/ });
+    await expect(locationInput).toBeVisible();
+    await locationInput.fill('Munich');
+
+    const temperatureInput = page.getByRole('textbox', { name: 'Temperature', exact: true });
+    await temperatureInput.fill('19°');
+
+    const addBtn = page.getByText('Add', { exact: true });
+    await expect(addBtn).not.toBeDisabled();
+    await addBtn.click();
+
+    // Confirm the new weather instance landed on the dashboard with the
+    // user-supplied temperature.
+    const newWeatherHost = page
+      .locator('si-widget-host')
+      .filter({ has: page.locator('.si-weather-widget-temperature', { hasText: '19°' }) })
+      .first();
+    await newWeatherHost.scrollIntoViewIfNeeded();
+    await expect(newWeatherHost).toBeVisible();
+    await si.runVisualAndA11yTests('weather-added');
   });
 
   const openWidgetCatalog = async (page: Page): Promise<void> => {

@@ -5,7 +5,7 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { Link } from '@siemens/element-ng/link';
+import { NavigationExtras } from '@angular/router';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public

@@ -4,11 +4,13 @@
   - text: Can you help me with this
   - strong: code snippet
   - text: "? I'm getting an error when I run it."
-- button "Copy"
-- button "Edit"
-- button "More actions"
+- group:
+  - button "Copy"
+  - button "Edit"
+  - button "More actions"
 - text: JD Thanks for the help! That worked perfectly.
-- button "Copy"
-- button "Edit"
+- group:
+  - button "Copy"
+  - button "Edit"
 - group: error-log.txt
 - group: screenshot.png

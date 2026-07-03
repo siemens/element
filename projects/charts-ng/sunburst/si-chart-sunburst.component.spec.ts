@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, SimpleChange, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { SunburstSeriesOption } from '@siemens/charts-ng/common';
 
@@ -17,7 +17,8 @@ import { SiChartSunburstComponent } from './si-chart-sunburst.component';
       [title]="title"
       [subTitle]="subTitle"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestHostComponent {
   readonly chartSunburstComponent = viewChild.required(SiChartSunburstComponent);
@@ -125,6 +126,6 @@ describe('SiChartSunburstComponent', () => {
     const fixture = TestBed.createComponent(SiChartSunburstComponent);
     const component = fixture.debugElement.componentInstance;
     fixture.detectChanges();
-    expect(component.chart.getOption().series.length).toBe(0);
+    expect(component.chart.getOption().series).toHaveLength(0);
   });
 });

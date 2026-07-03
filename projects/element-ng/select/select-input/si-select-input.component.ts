@@ -7,7 +7,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  HostListener,
   inject,
   input,
   output,
@@ -46,7 +45,14 @@ import { SelectOption } from '../si-select.types';
     '[attr.aria-disabled]': 'selectionStrategy.disabled()',
     '[attr.tabindex]': 'selectionStrategy.disabled() ? "-1" : "0"',
     '[class.disabled]': 'selectionStrategy.disabled()',
-    '[class.active]': 'open()'
+    '[class.active]': 'open()',
+    '(blur)': 'blur()',
+    '(click)': 'click($event)',
+    '(keydown.arrowDown)': 'click($event)',
+    '(keydown.alt.arrowDown)': 'click($event)',
+    '(keydown.arrowUp)': 'click($event)',
+    '(keydown.enter)': 'click($event)',
+    '(keydown.space)': 'click($event)'
   }
 })
 export class SiSelectInputComponent<T> {
@@ -85,19 +91,12 @@ export class SiSelectInputComponent<T> {
   protected readonly labeledBy = computed(() => `${this.baseId()}-aria-label ${this.labelledby()}`);
   protected readonly icons = addIcons({ elementDown2 });
 
-  @HostListener('blur')
   protected blur(): void {
     if (!this.open()) {
       this.selectionStrategy.onTouched();
     }
   }
 
-  @HostListener('click')
-  @HostListener('keydown.arrowDown', ['$event'])
-  @HostListener('keydown.alt.arrowDown', ['$event'])
-  @HostListener('keydown.arrowUp', ['$event'])
-  @HostListener('keydown.enter')
-  @HostListener('keydown.space')
   protected click(event?: Event): void {
     event?.preventDefault();
     this.openListbox.emit();

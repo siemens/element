@@ -4,6 +4,7 @@
  */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { page } from 'vitest/browser';
 
 import { SiDashboardToolbarComponent } from './si-dashboard-toolbar.component';
 
@@ -30,14 +31,14 @@ describe('SiDashboardToolbarComponent', () => {
 
     expect(component.editable()).toBe(true);
     const buttons = fixture.debugElement.queryAll(By.css('button'));
-    expect(buttons.length).toBe(2);
+    expect(buttons).toHaveLength(2);
   });
 
   it('#onCancel() shall cancel editable mode', async () => {
     fixture.componentRef.setInput('editable', true);
     fixture.detectChanges();
     const buttons = fixture.debugElement.queryAll(By.css('button'));
-    expect(buttons.length).toBe(2);
+    expect(buttons).toHaveLength(2);
     expect(buttons[0].nativeElement.textContent).toContain('Cancel');
 
     buttons[0].triggerEventHandler('click', null);
@@ -51,7 +52,7 @@ describe('SiDashboardToolbarComponent', () => {
     fixture.componentRef.setInput('editable', true);
     fixture.detectChanges();
     const buttons = fixture.debugElement.queryAll(By.css('button'));
-    expect(buttons.length).toBe(2);
+    expect(buttons).toHaveLength(2);
     const loadingButton = fixture.debugElement.query(By.css('si-loading-button'));
     expect(buttons[1].nativeElement.textContent).toContain('Save');
 
@@ -62,15 +63,19 @@ describe('SiDashboardToolbarComponent', () => {
     expect(component.editable(), 'Save shall not change editable state').toBe(true);
   });
 
-  it('#hideEditButton shall hide the edit button', () => {
+  it('#hideEditButton shall hide the edit button', async () => {
     expect(component.editable()).toBe(false);
-    let editButton = fixture.debugElement.query(By.css('.element-edit'));
-    expect(editButton).not.toBeNull();
-    expect(editButton).toBeDefined();
-    fixture.componentRef.setInput('hideEditButton', true);
-    fixture.detectChanges();
 
-    editButton = fixture.debugElement.query(By.css('.element-edit'));
-    expect(editButton).toBeNull();
+    const editButton = page.getByRole('button', { name: /edit/i });
+    await expect.element(editButton).toBeInTheDocument();
+    expect(editButton.element().querySelector('si-icon')).toHaveAttribute(
+      'data-icon',
+      'elementEdit'
+    );
+
+    fixture.componentRef.setInput('hideEditButton', true);
+    await fixture.whenStable();
+
+    await expect.element(editButton).not.toBeInTheDocument();
   });
 });

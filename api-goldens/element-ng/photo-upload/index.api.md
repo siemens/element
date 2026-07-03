@@ -5,17 +5,32 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
+import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import { ElementRef } from '@angular/core';
-import * as i1 from '@siemens/element-ng/avatar';
+import { EnvironmentInjector } from '@angular/core';
+import { FlexibleConnectedPositionStrategy } from '@angular/cdk/overlay';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { ImageCropperComponent } from 'ngx-image-cropper';
-import { ModalRef } from '@siemens/element-ng/modal';
+import { InjectionToken } from '@angular/core';
+import { Injector } from '@angular/core';
+import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
+import { Overlay } from '@angular/cdk/overlay';
+import { OverlayRef } from '@angular/cdk/overlay';
+import { PositionStrategy } from '@angular/cdk/overlay';
+import { Provider } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
+import * as rxjs from 'rxjs';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import { SimpleChanges } from '@angular/core';
+import { StaticProvider } from '@angular/core';
+import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { Type } from '@angular/core';
 
 // @public (undocumented)
 export class SiImageCropperStyleComponent {

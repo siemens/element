@@ -2,12 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   ComponentRef,
   computed,
   DestroyRef,
+  ElementRef,
   EnvironmentInjector,
   inject,
   Injector,
@@ -16,6 +19,7 @@ import {
   OnChanges,
   OnInit,
   output,
+  signal,
   SimpleChanges,
   TemplateRef,
   viewChild,
@@ -30,29 +34,52 @@ import type { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
 import { MenuItem } from '@siemens/element-ng/menu';
-import { t } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe,
+  t
+} from '@siemens/element-translate-ng/translate';
+import { GridStack, GridItemHTMLElement, GridStackNode } from 'gridstack';
+import { first } from 'rxjs';
 
-import { WidgetConfig, WidgetConfigEvent, WidgetInstance } from '../../model/widgets.model';
-import { SiGridService } from '../../services/si-grid.service';
+import {
+  WidgetComponentFactory,
+  WidgetConfig,
+  WidgetConfigEvent,
+  WidgetInstance
+} from '../../model/widgets.model';
 import { setupWidgetInstance } from '../../widget-loader';
 
 @Component({
   selector: 'si-widget-host',
-  imports: [SiDashboardCardComponent, NgTemplateOutlet],
+  imports: [SiDashboardCardComponent, NgTemplateOutlet, SiTranslatePipe],
   templateUrl: './si-widget-host.component.html',
   styleUrl: './si-widget-host.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'grid-stack-item'
   }
 })
 export class SiWidgetHostComponent implements OnInit, OnChanges {
   private readonly siModal = inject(SiActionDialogService);
-  private readonly gridService = inject(SiGridService);
   private readonly injector = inject(Injector);
   private readonly envInjector = inject(EnvironmentInjector);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly translateService = injectSiTranslateService();
+  private readonly liveAnnouncer = inject(LiveAnnouncer);
+  /** @internal */
+  readonly elementRef = inject<ElementRef<GridItemHTMLElement>>(ElementRef).nativeElement;
+
+  /** @defaultValue false */
+  readonly keyboardActive = signal(false);
 
   readonly widgetConfig = input.required<WidgetConfig>();
+  readonly grid = input<GridStack>();
+
+  /**
+   * The component factory for this widget's type.
+   */
+  readonly componentFactory = input<WidgetComponentFactory>();
 
   /**
    * Sets the widget host into editable mode.
@@ -63,6 +90,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
 
   readonly remove = output<string>();
   readonly edit = output<WidgetConfig>();
+  readonly gridEvent = output<Event>();
 
   readonly card = viewChild.required<SiDashboardCardComponent>('card');
 
@@ -85,19 +113,39 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   protected labelDialogCancel = t(
     () => $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.CANCEL:Cancel`
   );
+  private a11yWidgetMovedMessage = t(
+    () => $localize`:@@DASHBOARD.WIDGET.A11Y.MOVED:Widget moved to column {{column}}, row {{row}}.`
+  );
+  private a11yWidgetResizedMessage = t(
+    () =>
+      $localize`:@@DASHBOARD.WIDGET.A11Y.RESIZED:Widget resized to {{columns}} columns wide, {{rows}} rows tall.`
+  );
+  private a11yWidgetActivatedMessage = t(
+    () =>
+      $localize`:@@DASHBOARD.WIDGET.A11Y.ACTIVATED:Widget activated. Use arrow keys to move, Shift+arrow keys to resize, Escape to exit.`
+  );
+  private a11yWidgetDeactivatedMessage = t(
+    () => $localize`:@@DASHBOARD.WIDGET.A11Y.DEACTIVATED:Widget deactivated.`
+  );
+  protected a11yWidgetDescription = t(
+    () =>
+      $localize`:@@DASHBOARD.WIDGET.A11Y.DESCRIPTION:Press Enter or Space to activate. Then use arrow keys to move, Shift+arrow keys to resize, Escape to exit.`
+  );
 
   widgetInstance?: WidgetInstance;
   widgetRef?: ComponentRef<WidgetInstance>;
   /** @defaultValue [] */
-  primaryActions: (MenuItemLegacy | ContentActionBarMainItem)[] = [];
+  protected readonly primaryActions = signal<(MenuItemLegacy | ContentActionBarMainItem)[]>([]);
   /** @defaultValue [] */
-  secondaryActions: (MenuItemLegacy | MenuItem)[] = [];
+  protected readonly secondaryActions = signal<(MenuItemLegacy | MenuItem)[]>([]);
   /** @defaultValue 'expanded' */
-  actionBarViewType: ViewType = 'expanded';
+  protected readonly actionBarViewType = signal<ViewType>('expanded');
   /** @defaultValue [] */
-  editablePrimaryActions: (MenuItemLegacy | ContentActionBarMainItem)[] = [];
+  private readonly editablePrimaryActions = signal<(MenuItemLegacy | ContentActionBarMainItem)[]>(
+    []
+  );
   /** @defaultValue [] */
-  editableSecondaryActions: (MenuItemLegacy | MenuItem)[] = [];
+  private readonly editableSecondaryActions = signal<(MenuItemLegacy | MenuItem)[]>([]);
 
   /**
    * @defaultValue
@@ -111,7 +159,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
    * }
    * ```
    */
-  editAction: ContentActionBarMainItem = {
+  private readonly editAction: ContentActionBarMainItem = {
     type: 'action',
     label: this.labelEdit,
     icon: 'element-edit',
@@ -137,7 +185,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
     iconOnly: true,
     action: () => this.onRemove()
   };
-  protected widgetInstanceFooter?: TemplateRef<unknown>;
+  protected readonly widgetInstanceFooter = signal<TemplateRef<unknown> | undefined>(undefined);
 
   protected readonly accentLine = computed(() => {
     const { accentLine } = this.widgetConfig();
@@ -146,6 +194,20 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.widgetConfig) {
+      const options = {
+        ...this.widgetConfig(),
+        w: this.widgetConfig().width,
+        h: this.widgetConfig().height,
+        x: this.widgetConfig().x,
+        y: this.widgetConfig().y,
+        minW: this.widgetConfig().minWidth,
+        minH: this.widgetConfig().minHeight
+      };
+      if (!changes.widgetConfig.firstChange) {
+        this.grid()?.update(this.elementRef, options);
+      } else {
+        this.grid()?.makeWidget(this.elementRef, options);
+      }
       if (this.widgetRef) {
         if (isSignal(this.widgetRef.instance.config)) {
           this.widgetRef.setInput('config', this.widgetConfig());
@@ -164,11 +226,156 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
     this.attachWidgetInstance();
   }
 
+  protected onToggleActive(event: Event): void {
+    if (!this.editable() || event.target !== event.currentTarget) {
+      return;
+    }
+    event.preventDefault();
+    const active = !this.keyboardActive();
+    this.keyboardActive.set(active);
+    this.announceTranslated(
+      active ? this.a11yWidgetActivatedMessage : this.a11yWidgetDeactivatedMessage,
+      {}
+    );
+  }
+
+  protected onDeactivate(event: Event): void {
+    if (!this.keyboardActive()) {
+      return;
+    }
+    event.preventDefault();
+    this.keyboardActive.set(false);
+    this.announceTranslated(this.a11yWidgetDeactivatedMessage, {});
+  }
+
+  protected onFocusOut(): void {
+    if (this.keyboardActive()) {
+      this.keyboardActive.set(false);
+    }
+  }
+
+  protected onArrowKey(event: Event): void {
+    if (!this.keyboardActive()) {
+      return;
+    }
+
+    const el = this.elementRef;
+    const node = el?.gridstackNode;
+    if (!node?.grid) {
+      return;
+    }
+
+    const keyEvent = event as KeyboardEvent;
+    if (keyEvent.shiftKey) {
+      this.handleResize(keyEvent, node);
+    } else {
+      this.handleMove(keyEvent, node);
+    }
+  }
+
+  private handleResize(event: KeyboardEvent, node: GridStackNode): void {
+    const el = this.elementRef;
+    let { w, h } = node;
+    switch (event.key) {
+      case 'ArrowRight':
+        w = (w ?? 1) + 1;
+        break;
+      case 'ArrowLeft':
+        w = Math.max(node.minW ?? 1, (w ?? 1) - 1);
+        break;
+      case 'ArrowDown':
+        h = (h ?? 1) + 1;
+        break;
+      case 'ArrowUp':
+        h = Math.max(node.minH ?? 1, (h ?? 1) - 1);
+        break;
+      default:
+        return;
+    }
+    if (w === node.w && h === node.h) {
+      return;
+    }
+    event.preventDefault();
+    const grid = node.grid;
+    grid!.update(el, { w, h });
+    this.gridEvent.emit(new Event('resizestop'));
+    this.announceTranslated(this.a11yWidgetResizedMessage, { columns: w, rows: h });
+  }
+
+  private handleMove(event: KeyboardEvent, node: GridStackNode): void {
+    const el = this.elementRef;
+    const { x, y } = node;
+    const grid = node.grid;
+    let newX = x ?? 0;
+    let newY = y ?? 0;
+
+    switch (event.key) {
+      case 'ArrowRight':
+        do {
+          newX++;
+          grid!.update(el, { x: newX, y });
+        } while (node.x === x && newX < grid!.getColumn());
+        break;
+      case 'ArrowLeft':
+        if (newX <= 0) {
+          break;
+        }
+        do {
+          newX--;
+          grid!.update(el, { x: newX, y });
+        } while (node.x === x && newX > 0);
+        break;
+      case 'ArrowDown':
+        do {
+          newY++;
+          grid!.update(el, { x, y: newY });
+        } while (node.y === y && newY < grid!.getRow());
+        break;
+      case 'ArrowUp':
+        if (newY <= 0) {
+          break;
+        }
+        do {
+          newY--;
+          grid!.update(el, { x, y: newY });
+        } while (node.y === y && newY > 0);
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    this.gridEvent.emit(new Event('dragstop'));
+    this.scrollIntoViewAfterTransition(el);
+    this.announceTranslated(this.a11yWidgetMovedMessage, {
+      column: (node.x ?? 0) + 1,
+      row: (node.y ?? 0) + 1
+    });
+  }
+
+  private scrollIntoViewAfterTransition(el: HTMLElement): void {
+    const onEnd = (): void => {
+      el.removeEventListener('transitionend', onEnd);
+      el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    };
+    el.addEventListener('transitionend', onEnd, { once: true });
+  }
+
+  private announce(message: string): void {
+    this.liveAnnouncer.announce(message, 'assertive');
+  }
+
+  private announceTranslated(message: string, params: Record<string, unknown>): void {
+    this.translateService
+      .translateAsync(message, params)
+      .pipe(first())
+      .subscribe(msg => this.announce(msg));
+  }
+
   private attachWidgetInstance(): void {
-    const widget = this.gridService.getWidget(this.widgetConfig().widgetId);
-    if (widget) {
+    const componentFactory = this.componentFactory();
+    if (componentFactory) {
       setupWidgetInstance(
-        widget.componentFactory,
+        componentFactory,
         this.widgetHost(),
         this.injector,
         this.envInjector
@@ -189,7 +396,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
           } else {
             this.widgetInstance.config = this.widgetConfig();
           }
-          this.widgetInstanceFooter = this.widgetInstance.footer;
+          this.widgetInstanceFooter.set(this.widgetInstance.footer);
           this.setupEditable(this.editable());
         },
         error: error => console.error('Error: ', error)
@@ -200,6 +407,9 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   }
 
   setupEditable(editable: boolean, widgetConfig?: WidgetConfigEvent): void {
+    if (!editable) {
+      this.keyboardActive.set(false);
+    }
     widgetConfig ??= {
       primaryActions: this.widgetInstance?.primaryActions,
       secondaryActions: this.widgetInstance?.secondaryActions,
@@ -207,31 +417,34 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
       secondaryEditActions: this.widgetInstance?.secondaryEditActions
     };
     if (editable) {
-      this.editablePrimaryActions = [];
+      this.editablePrimaryActions.set([]);
       if (this.isEditable()) {
-        this.editablePrimaryActions.push(this.editAction);
+        this.editablePrimaryActions.set([...this.editablePrimaryActions(), this.editAction]);
       }
       if (!this.widgetConfig().isNotRemovable) {
-        this.editablePrimaryActions.push(this.removeAction);
+        this.editablePrimaryActions.set([...this.editablePrimaryActions(), this.removeAction]);
       }
       if (widgetConfig.primaryEditActions) {
-        this.primaryActions = [...widgetConfig.primaryEditActions, ...this.editablePrimaryActions];
+        this.primaryActions.set([
+          ...widgetConfig.primaryEditActions,
+          ...this.editablePrimaryActions()
+        ]);
       } else {
-        this.primaryActions = this.editablePrimaryActions;
+        this.primaryActions.set(this.editablePrimaryActions());
       }
       if (widgetConfig.secondaryEditActions) {
-        this.secondaryActions = [
+        this.secondaryActions.set([
           ...widgetConfig.secondaryEditActions,
-          ...this.editableSecondaryActions
-        ];
+          ...this.editableSecondaryActions()
+        ]);
       } else {
-        this.secondaryActions = this.editableSecondaryActions;
+        this.secondaryActions.set(this.editableSecondaryActions());
       }
-      this.actionBarViewType = 'expanded';
+      this.actionBarViewType.set('expanded');
     } else {
-      this.actionBarViewType = this.widgetConfig().actionBarViewType ?? 'expanded';
-      this.primaryActions = widgetConfig.primaryActions ?? [];
-      this.secondaryActions = widgetConfig.secondaryActions ?? [];
+      this.actionBarViewType.set(this.widgetConfig().actionBarViewType ?? 'expanded');
+      this.primaryActions.set(widgetConfig.primaryActions ?? []);
+      this.secondaryActions.set(widgetConfig.secondaryActions ?? []);
     }
 
     if (this.widgetInstance?.editable !== undefined) {
@@ -256,10 +469,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
 
   private isEditable(): boolean {
     const widgetConfig = this.widgetConfig();
-    return (
-      !widgetConfig.immutable &&
-      !!this.gridService.getWidget(widgetConfig.widgetId)?.componentFactory?.editorComponentName
-    );
+    return !widgetConfig.immutable && !!this.componentFactory()?.editorComponentName;
   }
 
   onEdit(): void {

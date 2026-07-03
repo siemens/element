@@ -13,7 +13,6 @@ import * as i1 from '@angular/router';
 import { OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RouterLinkActive } from '@angular/router';
-import * as _siemens_element_ng_tabs from '@siemens/element-ng/tabs';
 import { Signal } from '@angular/core';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';

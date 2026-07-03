@@ -5,12 +5,13 @@
 import { Overlay } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
+  ChangeDetectionStrategy,
   Component,
   ComponentRef,
   computed,
   Directive,
+  effect,
   EmbeddedViewRef,
-  HostListener,
   inject,
   Injector,
   input,
@@ -34,6 +35,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
 @Component({
   selector: 'si-navbar-flyout-anchor',
   template: '',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { '[attr.aria-owns]': 'groupId()' }
 })
 class SiNavbarFlyoutAnchorComponent {
@@ -47,7 +49,8 @@ class SiNavbarFlyoutAnchorComponent {
     '[id]': 'id',
     '[class.show]': 'expanded()',
     '[attr.aria-controls]': 'groupId',
-    '[attr.aria-expanded]': 'expanded()'
+    '[attr.aria-expanded]': 'expanded()',
+    '(click)': 'triggered()'
   }
 })
 export class SiNavbarVerticalGroupTriggerDirective implements OnInit {
@@ -95,6 +98,26 @@ export class SiNavbarVerticalGroupTriggerDirective implements OnInit {
       new TemplatePortal(this.groupTemplate(), this.viewContainer, this.groupData(), this.injector)
   );
 
+  constructor() {
+    effect(() => {
+      const data = this.groupData();
+      const view = this.groupView;
+      if (data && view && !view.destroyed) {
+        const context = view.context as {
+          item?: NavbarVerticalItem;
+          group: NavbarVerticalItemGroup;
+        };
+        if (context) {
+          context.group = data.group;
+          if (data.item !== undefined) {
+            context.item = data.item;
+          }
+          view.detectChanges();
+        }
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.attachInline();
   }
@@ -111,7 +134,7 @@ export class SiNavbarVerticalGroupTriggerDirective implements OnInit {
     }
   }
 
-  @HostListener('click') protected triggered(): void {
+  protected triggered(): void {
     if (this.navbar.collapsed()) {
       this.toggleFlyout();
     } else {

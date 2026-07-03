@@ -23,7 +23,7 @@ test.describe('navbar vertical next', () => {
   test(example + ' collapsed', async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.getByLabel('collapse', { exact: true }).click();
+    await page.getByLabel('Toggle', { exact: true }).click();
     await page.getByRole('button', { name: 'User management' }).click();
     await expect(page.getByRole('group', { name: 'User management' })).toBeVisible();
     await page.getByRole('link', { name: 'Sub item 2' }).click();
@@ -34,10 +34,66 @@ test.describe('navbar vertical next', () => {
     await si.runVisualAndA11yTests('collapsed-flyout');
   });
 
+  test(example + ' always flyout toggle', async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.getByRole('button', { name: 'User management' }).click();
+    await expect(page.getByRole('group', { name: 'User management' })).toBeVisible();
+
+    await page.getByRole('checkbox', { name: 'Always flyout' }).check();
+    await expect(page.getByRole('button', { name: 'User management' })).not.toHaveClass(/show/);
+    await expect(page.getByRole('button', { name: 'User management' })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
+
+    await page.getByRole('button', { name: 'User management' }).click();
+    await expect(page.getByRole('group', { name: 'User management' })).toBeVisible();
+
+    await si.waitForAllAnimationsToComplete();
+    await si.runVisualAndA11yTests('always-flyout');
+  });
+
+  test(example + ' inline collapse toggle', async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.getByRole('checkbox', { name: 'Inline collapse' }).check();
+
+    await page.getByLabel('Toggle', { exact: true }).click();
+    await expect(page.getByLabel('Toggle', { exact: true })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
+    await expect(page.locator('.nav-content')).toHaveAttribute('inert', '');
+
+    await si.waitForAllAnimationsToComplete();
+    await si.runVisualAndA11yTests('inline-collapse');
+  });
+
+  test(example + ' inline collapse chip opens sub-menu', async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.getByRole('checkbox', { name: 'Inline collapse' }).check();
+    await page.getByRole('button', { name: 'User management' }).click();
+    await page.getByRole('link', { name: 'Sub item', exact: true }).click();
+    await page.getByLabel('Toggle', { exact: true }).click();
+    await si.waitForAllAnimationsToComplete();
+
+    const chip = page.getByRole('button', { name: 'User management' });
+    await expect(chip).toBeVisible();
+    await chip.click();
+
+    await expect(page.getByRole('group', { name: 'User management' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Sub item', exact: true })).toBeVisible();
+
+    await si.waitForAllAnimationsToComplete();
+    await si.runVisualAndA11yTests('inline-collapse-chip-submenu');
+  });
+
   test.skip('it should show tooltip only on keyboard interaction', async ({ page, si }) => {
     await si.visitExample(example);
-    await page.getByLabel('collapse', { exact: true }).click();
-    await expect(page.getByLabel('expand', { exact: true })).toBeVisible();
+    await page.getByLabel('Toggle', { exact: true }).click();
+    await expect(page.getByLabel('Toggle', { exact: true })).toBeVisible();
     await si.waitForAllAnimationsToComplete();
     const userManagement = page.getByRole('button', { name: 'User management' });
     const tooltip = page.getByRole('tooltip', { name: 'User management' });
@@ -105,7 +161,7 @@ test.describe('navbar vertical next badges', () => {
   test(example + ' collapsed', async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.getByLabel('collapse', { exact: true }).click();
+    await page.getByLabel('Toggle', { exact: true }).click();
     await page.getByRole('button', { name: 'Group with badges' }).click();
     await expect(page.getByRole('group', { name: 'Group with badges' })).toBeVisible();
     await page.getByRole('link', { name: 'Sub item info' }).click();

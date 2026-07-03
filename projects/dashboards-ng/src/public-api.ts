@@ -6,6 +6,7 @@ export * from './components/flexible-dashboard/si-flexible-dashboard.component';
 export * from './components/grid/si-grid.component';
 export * from './components/widget-catalog/si-widget-catalog.component';
 export * from './components/widget-instance-editor-dialog/si-widget-instance-editor-dialog.component';
+export * from './components/widget-renderer/si-widget-renderer.component';
 
 export * from './model/configuration';
 export * from './model/gridstack.model';

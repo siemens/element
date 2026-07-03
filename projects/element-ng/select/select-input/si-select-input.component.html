@@ -20,12 +20,14 @@
   }
   @if (selectionStrategy.allowMultiple) {
     <div #overflowItem="siAutoCollapsableListOverflowItem" siAutoCollapsableListOverflowItem>
-      <div class="overflow-item"> {{ overflowItem.hiddenItemCount }}+</div>
+      <div class="pill py-0 ms-2"> {{ overflowItem.hiddenItemCount }}+</div>
     </div>
   }
 </div>
-<si-icon
-  class="dropdown-caret icon flip-rtl ps-1 py-1 m-0"
-  [class.text-muted]="readonly()"
-  [icon]="icons.elementDown2"
-/>
+<div class="form-control-actions">
+  <si-icon
+    class="dropdown-caret icon flip-rtl ps-0 m-0"
+    [class.text-muted]="readonly()"
+    [icon]="icons.elementDown2"
+  />
+</div>

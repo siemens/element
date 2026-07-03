@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
@@ -32,7 +32,8 @@ import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './ind
       display: block;
       width: 1200px;
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestHostComponent {
   readonly steps = signal<string[]>([]);
@@ -95,7 +96,7 @@ describe('SiWizardComponent', () => {
 
     it('should generate a link with a heading for each step', () => {
       const steps = element.querySelectorAll('.step');
-      expect(steps.length).toBe(3);
+      expect(steps).toHaveLength(3);
       for (let i = 0; i < steps.length; i++) {
         expect(steps[i].querySelector<HTMLElement>('.title')).toHaveTextContent(
           hostComponent.steps()[i]
@@ -358,7 +359,7 @@ describe('SiWizardComponent', () => {
       hostComponent.steps.set([]);
       await fixture.whenStable();
       const steps = element.querySelectorAll('.step');
-      expect(steps.length).toBe(0);
+      expect(steps).toHaveLength(0);
       vi.useFakeTimers();
       setTimeout(() => {
         hostComponent.generateSteps(3);
@@ -368,7 +369,7 @@ describe('SiWizardComponent', () => {
 
       await fixture.whenStable();
       const updatedSteps = element.querySelectorAll('.step');
-      expect(updatedSteps.length).toBe(3);
+      expect(updatedSteps).toHaveLength(3);
       vi.useRealTimers();
     });
   });

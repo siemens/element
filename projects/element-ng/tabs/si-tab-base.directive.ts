@@ -20,6 +20,7 @@ import {
 } from '@angular/core';
 import { elementCancel } from '@siemens/element-icons';
 import { addIcons } from '@siemens/element-ng/icon';
+import { SiTooltipDirective, SiTooltipService, TooltipRef } from '@siemens/element-ng/tooltip';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SI_TABSET } from './si-tabs-tokens';
@@ -90,6 +91,9 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
 
   private static tabCounter = 0;
   private indexBeforeClose = -1;
+  private readonly tooltipService = inject(SiTooltipService);
+  private readonly existingTooltip = inject(SiTooltipDirective, { optional: true });
+  private tooltipRef?: TooltipRef;
 
   /** @internal */
   tabId = `${SiTabBaseDirective.tabCounter++}`;
@@ -98,6 +102,8 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
   private readonly index = computed(() => this.tabset.tabPanels().indexOf(this));
 
   constructor() {
+    this.setupIconTooltip();
+
     // Update the focusKeyManager if a tab is added that is active or if the tab is set active by the app.
     // This effect should not run, if active was already applied to the focusKeyManager.
     effect(() => {
@@ -107,6 +113,32 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
         if (active && this.tabset.focusKeyManager.activeItem !== this) {
           this.tabset.focusKeyManager.updateActiveItem(this.index());
         }
+      });
+    });
+  }
+
+  private setupIconTooltip(): void {
+    effect(onCleanup => {
+      const icon = this.icon();
+      // Only add an automatic tooltip if the consumer has not already applied an
+      // active `siTooltip` directive (i.e. one that is not disabled and has a tooltip).
+      const hasActiveTooltip =
+        !!this.existingTooltip &&
+        !this.existingTooltip.isDisabled() &&
+        !!this.existingTooltip.siTooltip();
+
+      if (icon && !hasActiveTooltip) {
+        this.tooltipRef = this.tooltipService.createTooltip({
+          element: this.tabButton,
+          placement: 'auto',
+          tooltip: () => this.heading(),
+          tooltipContext: () => undefined
+        });
+      }
+
+      onCleanup(() => {
+        this.tooltipRef?.destroy();
+        this.tooltipRef = undefined;
       });
     });
   }

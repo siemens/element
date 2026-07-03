@@ -803,6 +803,6 @@ export const maxDate = (first?: Date, second?: Date): Date | undefined => {
  * Indicate whether the time use the 12-hour format
  */
 export const is12HourFormat = (locale: string, config: DatepickerInputConfig): boolean => {
-  const dateFormat = getDatepickerFormat(locale, config, true);
+  const dateFormat = getDatepickerFormat(locale, { ...config, disabledTime: false }, true);
   return dateFormat?.includes('a') ?? false;
 };

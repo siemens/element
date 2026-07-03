@@ -27,7 +27,7 @@ describe('SiDashboardService', () => {
     const card = {} as SiDashboardCardComponent;
     service.register(card);
     const cards = await firstValueFrom(service.cards$);
-    expect(cards.length).toBe(1);
+    expect(cards).toHaveLength(1);
     expect(cards[0]).toBe(card);
   });
 
@@ -38,7 +38,7 @@ describe('SiDashboardService', () => {
     service.register(card2);
     service.unregister(card1);
     const cards = await firstValueFrom(service.cards$);
-    expect(cards.length).toBe(1);
+    expect(cards).toHaveLength(1);
     expect(cards[0]).toBe(card2);
   });
 });

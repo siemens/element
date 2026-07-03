@@ -2,8 +2,16 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, inject, input, output, TemplateRef } from '@angular/core';
-import { elementDelete, elementDocument } from '@siemens/element-icons';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  output,
+  TemplateRef
+} from '@angular/core';
+import { elementStateClose, elementDocument } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiModalService } from '@siemens/element-ng/modal';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -50,11 +58,12 @@ export interface Attachment {
   selector: 'si-attachment-list',
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-attachment-list.component.html',
-  styleUrl: './si-attachment-list.component.scss'
+  styleUrl: './si-attachment-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiAttachmentListComponent {
   protected modalService = inject(SiModalService);
-  protected readonly icons = addIcons({ elementDelete, elementDocument });
+  protected readonly icons = addIcons({ elementStateClose, elementDocument });
 
   /**
    * List of attachments to display
@@ -75,15 +84,16 @@ export class SiAttachmentListComponent {
   readonly removable = input(false, { transform: booleanAttribute });
 
   /**
-   * Label for remove attachment button
+   * Label for remove attachment button.
+   * The attachment name is available with `{{attachment}}`.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT:Remove attachment`)
+   * t(() => $localize`:@@SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT:Remove {{attachment}}`)
    * ```
    */
   readonly removeLabel = input(
-    t(() => $localize`:@@SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT:Remove attachment`)
+    t(() => $localize`:@@SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT:Remove {{attachment}}`)
   );
 
   /**

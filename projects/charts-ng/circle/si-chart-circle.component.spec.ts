@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, SimpleChange, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiChartCircleComponent } from './si-chart-circle.component';
@@ -18,7 +18,8 @@ import { CircleChartSeries } from './si-chart-circle.interface';
       [title]="title"
       [subTitle]="subTitle"
     />
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestHostComponent {
   readonly chartCircleComponent = viewChild.required(SiChartCircleComponent);
@@ -111,6 +112,6 @@ describe('SiChartCircleComponent', () => {
     const component = fixture.debugElement.componentInstance;
     fixture.detectChanges();
 
-    expect(component.chart.getOption().series.length).toEqual(0);
+    expect(component.chart.getOption().series).toHaveLength(0);
   });
 });

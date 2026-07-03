@@ -27,9 +27,10 @@
 
   <si-navbar-vertical-next
     stateId="navbar-vertical-next-without-icons"
-    navbarCollapseButtonText="collapse"
-    navbarExpandButtonText="expand"
+    toggleButtonText="Toggle"
     [textOnly]="true"
+    [alwaysFlyout]="alwaysFlyout"
+    [inlineCollapse]="inlineCollapse"
   >
     <si-navbar-vertical-next-items>
       <button
@@ -55,19 +56,38 @@
       <a si-navbar-vertical-next-item routerLink="coverage" routerLinkActive> Test Coverage </a>
     </si-navbar-vertical-next-items>
     <si-navbar-vertical-next-footer-items>
-      <a si-navbar-vertical-next-item routerLink="settings" routerLinkActive> Settings </a>
+      <a si-navbar-vertical-next-item routerLink="configuration" routerLinkActive>
+        Configuration
+      </a>
     </si-navbar-vertical-next-footer-items>
     <div class="si-layout-main-padding">
       <div class="si-layout-header">
         <h2 class="si-layout-title si-layout-top-element">Here is a title</h2>
       </div>
       Here goes the content
+      <div class="card p-5 mt-8 e2e-ignore">
+        <div class="card-header">Control panel</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-auto">
+              <si-form-item label="Always flyout">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="alwaysFlyout" />
+              </si-form-item>
+            </div>
+            <div class="col-sm-auto">
+              <si-form-item label="Inline collapse">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="inlineCollapse" />
+              </si-form-item>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </si-navbar-vertical-next>
 </div>
 
 <ng-template #home>
-  <si-navbar-vertical-next-group>
+  <si-navbar-vertical-next-group routerLinkActive>
     <a si-navbar-vertical-next-item routerLink="subItem" routerLinkActive> Sub Item </a>
     <a si-navbar-vertical-next-item routerLink="subItem2" routerLinkActive> Sub Item 2 </a>
     <a si-navbar-vertical-next-item routerLink="subItem3" routerLinkActive> Sub Item 3 </a>
@@ -75,7 +95,7 @@
 </ng-template>
 
 <ng-template #documentation>
-  <si-navbar-vertical-next-group>
+  <si-navbar-vertical-next-group routerLinkActive>
     <a si-navbar-vertical-next-item routerLink="subItem4" routerLinkActive> Sub Item 4 </a>
     <a si-navbar-vertical-next-item routerLink="subItem5" routerLinkActive> Sub Item 5 </a>
     <a si-navbar-vertical-next-item routerLink="subItem6" routerLinkActive> Sub Item 6 </a>

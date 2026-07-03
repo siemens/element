@@ -7,17 +7,18 @@
     - link "Item 2":
       - /url: "#/viewer/viewer/item2"
   - button "Help"
-  - button "Jane Smith"
-- paragraph: Switch applications
-- paragraph: Access all your apps
-- button "Close launchpad"
-- link "Assets":
-  - /url: .
-- link "Water":
-  - /url: .
-- link "Rocket":
-  - /url: .
-- link "Statistics":
-  - /url: .
-- link "Add more":
-  - /url: https://example.org
+  - button "Jane Smith": JS
+- dialog "Launchpad":
+  - paragraph: Switch applications
+  - paragraph: Access all your apps
+  - button "Close launchpad"
+  - link "Assets":
+    - /url: .
+  - link "Water":
+    - /url: .
+  - link "Rocket":
+    - /url: .
+  - link "Statistics":
+    - /url: .
+  - link "Add more":
+    - /url: https://example.org

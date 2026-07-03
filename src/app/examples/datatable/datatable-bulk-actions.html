@@ -1,0 +1,86 @@
+<div class="p-5 clearfix si-layout-fixed-height h-100">
+  <ngx-datatable
+    class="table-element si-layout-fixed-height"
+    siDatatableInteraction
+    columnMode="force"
+    [class.bulk-actions-mode]="checked().size > 0"
+    [selectionType]="checked().size > 0 ? undefined : 'single'"
+    [summaryHeight]="tableConfig.rowHeightSmall"
+    [rows]="rows()"
+    [columns]="columns"
+    [rowHeight]="tableConfig.rowHeightSmall"
+    [scrollbarV]="true"
+    [footerHeight]="0"
+    [(selected)]="selected"
+  >
+    @if (checked().size > 0) {
+      <ng-template ngx-datatable-summary-row>
+        <div
+          class="d-flex align-items-center justify-content-between flex-grow-1"
+          siAutoCollapsableList
+          [style.height.px]="tableConfig.rowHeightSmall"
+        >
+          <div class="text-secondary text-nowrap fw-normal" siAutoCollapsableListItem
+            >{{ checked().size }} of {{ rows().length }} selected</div
+          >
+
+          <button
+            type="button"
+            class="btn btn-icon btn-tertiary"
+            aria-label="Actions"
+            siAutoCollapsableListOverflowItem
+            [cdkMenuTriggerFor]="allActionsMenu"
+          >
+            <si-icon [icon]="icons.elementOptionsVertical" />
+          </button>
+
+          <div class="d-flex gap-2" siAutoCollapsableListItem>
+            <button
+              type="button"
+              class="btn btn-tertiary dropdown-toggle"
+              [class.show]="statusMenuOpen()"
+              [cdkMenuTriggerFor]="statusMenu"
+              (cdkMenuOpened)="statusMenuOpen.set(true)"
+              (cdkMenuClosed)="statusMenuOpen.set(false)"
+            >
+              Change status
+              <i aria-hidden="true" class="dropdown-caret icon element-down-2"></i>
+            </button>
+            <button type="button" class="btn btn-tertiary" (click)="delete()"> Delete </button>
+            <button type="button" class="btn btn-tertiary" (click)="export()"> Export </button>
+          </div>
+        </div>
+      </ng-template>
+    }
+  </ngx-datatable>
+</div>
+
+<ng-template #checkboxHeaderTmpl>
+  <input
+    type="checkbox"
+    class="form-check-input"
+    aria-label="Select all"
+    [checked]="allChecked()"
+    [indeterminate]="someChecked()"
+    (change)="toggleAll()"
+  />
+</ng-template>
+
+<ng-template #checkboxCellTmpl let-row="row">
+  <input
+    type="checkbox"
+    class="form-check-input"
+    [attr.aria-label]="'Select ' + row.name"
+    [checked]="checked().has(row.id)"
+    (click)="$event.stopPropagation()"
+    (change)="toggleRow(row)"
+  />
+</ng-template>
+
+<ng-template #allActionsMenu>
+  <si-menu-factory [items]="allActions" />
+</ng-template>
+
+<ng-template #statusMenu>
+  <si-menu-factory [items]="statusMenuItems" />
+</ng-template>

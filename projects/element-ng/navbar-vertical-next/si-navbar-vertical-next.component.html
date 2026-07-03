@@ -10,27 +10,46 @@
     [class.text-only]="textOnly()"
   >
     <div class="collapse-toggle ms-auto">
-      <div class="mobile-drawer focus-inside navbar-vertical-no-collapse">
+      <div class="mobile-drawer focus-inside">
         <button
           type="button"
-          class="btn btn-icon btn-tertiary-ghost"
-          [attr.aria-label]="
-            (collapsed() ? navbarExpandButtonText() : navbarCollapseButtonText()) | translate
-          "
+          class="btn btn-icon toggle-button"
+          [class.btn-primary-ghost]="chipMode()"
+          [class.btn-tertiary-ghost]="!chipMode()"
+          [attr.aria-label]="toggleButtonText() | translate"
           [attr.aria-expanded]="!collapsed()"
           (click)="toggleCollapse()"
         >
-          <si-icon
-            class="flip-rtl"
-            [icon]="collapsed() ? icons.elementDoubleRight : icons.elementDoubleLeft"
-          />
+          <si-icon class="flip-rtl" [icon]="toggleIcon()" />
         </button>
       </div>
     </div>
-    <ng-content select="si-navbar-vertical-next-search" />
-    <ng-content select="si-navbar-vertical-next-items" />
-    <ng-content select="si-navbar-vertical-next-footer-items" />
+    @if (inlineCollapse() && activeItem(); as item) {
+      <div
+        class="chip"
+        [class.chip-visible]="collapsed()"
+        [attr.inert]="collapsed() ? null : ''"
+        [attr.aria-hidden]="collapsed() ? null : 'true'"
+      >
+        @if (chipPortalAttached()) {
+          <ng-container [cdkPortalOutlet]="item.hostPortal" />
+        }
+      </div>
+      <ng-container #flyoutAnchorHost />
+    }
+    <div
+      class="nav-content"
+      [attr.inert]="chipMode() ? '' : null"
+      [attr.aria-hidden]="chipMode() ? 'true' : null"
+    >
+      <ng-content select="si-navbar-vertical-next-search" />
+      <ng-content select="si-navbar-vertical-next-items" />
+      <ng-content select="si-navbar-vertical-next-footer-items" />
+    </div>
   </nav>
+  @if (inlineCollapse()) {
+    <div class="toggle-placeholder" aria-hidden="true"></div>
+  }
 }
 <main
   class="si-layout-inner focus-none"

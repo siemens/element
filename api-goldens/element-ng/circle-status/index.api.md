@@ -5,12 +5,10 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { EntityStatusType } from '@siemens/element-ng/common';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
-import { StatusIcon } from '@siemens/element-ng/common';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
@@ -23,7 +21,7 @@ export class SiCircleStatusComponent implements OnChanges, OnDestroy {
     readonly eventIcon: _angular_core.InputSignal<string | undefined>;
     readonly eventOut: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
-    readonly size: _angular_core.InputSignal<"regular" | "small">;
+    readonly size: _angular_core.InputSignal<"small" | "regular">;
     readonly status: _angular_core.InputSignal<EntityStatusType | undefined>;
 }
 

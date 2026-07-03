@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ChangeDetectionStrategy,
   Component,
   input,
   model,
@@ -38,7 +39,8 @@ let widgetConfig: Omit<WidgetConfig, 'id'>;
 @Component({
   selector: 'si-widget-catalog',
   imports: [TestingModule, SiLoadingSpinnerModule],
-  template: ''
+  template: '',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiWidgetCatalogMockComponent extends SiWidgetCatalogComponent implements OnInit {
   static staticClosed: OutputEmitterRef<Omit<WidgetConfig, 'id'> | undefined> | undefined =
@@ -54,7 +56,8 @@ export class SiWidgetCatalogMockComponent extends SiWidgetCatalogComponent imple
 @Component({
   selector: 'si-dashboard-toolbar',
   imports: [TestingModule, SiLoadingSpinnerModule],
-  template: ''
+  template: '',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiDashboardToolbarStubComponent {
   readonly primaryEditActions = input<MenuItem[]>([]);
@@ -70,7 +73,8 @@ export class SiDashboardToolbarStubComponent {
 @Component({
   selector: 'si-grid',
   imports: [TestingModule, SiLoadingSpinnerModule],
-  template: ''
+  template: '',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class GridComponent {
   readonly gridConfig = input<GridConfig>();
@@ -143,19 +147,19 @@ describe('SiFlexibleDashboardComponent', () => {
         zip(component.primaryEditActions$, component.secondaryEditActions$)
       );
 
-      expect(primaryMenuItems.length).toBe(2);
+      expect(primaryMenuItems).toHaveLength(2);
       const action = (primaryMenuItems[1] as MenuItem).action as () => void;
       action();
       expect(actionCounter).toBe(1);
 
-      expect(secondaryMenuItems.length).toBe(2);
+      expect(secondaryMenuItems).toHaveLength(2);
     });
 
     it('#hideAddWidgetInstanceButton should remove the addWidgetInstanceAction action', () => {
-      expect(component.primaryEditActions$.value.length).toBe(2);
+      expect(component.primaryEditActions$.value).toHaveLength(2);
       fixture.componentRef.setInput('hideAddWidgetInstanceButton', true);
       fixture.detectChanges();
-      expect(component.primaryEditActions$.value.length).toBe(1);
+      expect(component.primaryEditActions$.value).toHaveLength(1);
     });
 
     it('showWidgetCatalog() should show a widget catalog and add the widget config added to the grid', async () => {
@@ -265,7 +269,7 @@ describe('SiFlexibleDashboardComponent', () => {
 
       fixture.detectChanges();
       const menuItems = await firstValueFrom(component.primaryEditActions$);
-      expect(menuItems.length).toBe(2);
+      expect(menuItems).toHaveLength(2);
       const action = (menuItems[1] as DashboardToolbarItemAction).action as () => void;
       action();
       expect(actionCounter).toBe(1);
@@ -284,7 +288,7 @@ describe('SiFlexibleDashboardComponent', () => {
       ]);
       fixture.detectChanges();
       const menuItems = await firstValueFrom(component.primaryEditActions$);
-      expect(menuItems.length).toBe(3);
+      expect(menuItems).toHaveLength(3);
       const action = (menuItems[1] as DashboardToolbarItemAction).action as () => void;
       action();
       expect(actionCounter).toBe(1);

@@ -6,7 +6,9 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
+  computed,
   input,
   OnChanges,
   output,
@@ -38,7 +40,6 @@ import {
 } from '@siemens/element-ng/header-dropdown';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
-import { defer } from 'rxjs';
 
 import { AccountItem } from '../account.model';
 import { AppItem, AppItemCategory } from './si-navbar-primary.model';
@@ -71,7 +72,8 @@ import { AppItem, AppItemCategory } from './si-navbar-primary.model';
       inline-size: auto;
     }
   `,
-  providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: SiNavbarPrimaryComponent }]
+  providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: SiNavbarPrimaryComponent }],
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns {
   /**
@@ -277,8 +279,7 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
   protected active?: MenuItem;
 
   /** @internal */
-  // defer is required as header is not available at the time of creation.`
-  readonly inlineDropdown = defer(() => this.header().inlineDropdown);
+  readonly inlineDropdown = computed(() => this.header().inlineDropdown());
 
   /** @internal */
   onDropdownItemTriggered(): void {

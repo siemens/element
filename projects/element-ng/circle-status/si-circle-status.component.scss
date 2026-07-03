@@ -1,9 +1,12 @@
+@use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
-$si-circle-status-size-regular: 2.5rem;
+$si-circle-status-size-regular: calc(variables.$si-icon-font-size + 20px);
 $si-circle-status-indicator-size-regular: variables.$si-icon-font-size;
 $si-circle-status-bullet-size-regular: 0.625rem;
-$si-circle-status-size-small: 2rem;
+$si-circle-status-size-small: calc(
+  variables.$si-icon-font-size + 2 * map.get(variables.$spacers, 3)
+);
 $si-circle-status-indicator-size-small: 1rem;
 $si-circle-status-bullet-size-small: 0.5rem;
 

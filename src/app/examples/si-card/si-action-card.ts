@@ -12,14 +12,20 @@ import { LOG_EVENT } from '@siemens/live-preview';
   imports: [SiActionCardComponent, SiIconModule],
   templateUrl: './si-action-card.html',
   styles: `
-    .card-size {
-      height: 250px;
+    .card {
+      inline-size: 100%;
+      block-size: 100%;
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  private log = inject(LOG_EVENT);
+  private readonly log = inject(LOG_EVENT);
+
+  protected onCardClick(cardId: string): void {
+    this.log('Card clicked:', cardId);
+  }
+
   protected onCardSelect(state: boolean, cardId: string): void {
     if (state) {
       this.log('Card selected:', cardId);

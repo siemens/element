@@ -3,6 +3,7 @@
 // Auto-generated file. Run 'npx update-translatable-keys' to update.
 
 export interface SiTranslatableKeys {
+  'SI_ABOUT.LOGO_ALT'?: string;
   'SI_AI_MESSAGE.SECONDARY_ACTIONS'?: string;
   'SI_ALERT_DIALOG.OK'?: string;
   'SI_APPLICATION_HEADER.LAUNCHPAD'?: string;
@@ -10,6 +11,14 @@ export interface SiTranslatableKeys {
   'SI_APPLICATION_HEADER.TOGGLE_NAVIGATION'?: string;
   'SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT'?: string;
   'SI_BREADCRUMB'?: string;
+  'SI_BREADCRUMB_ROUTER_LABEL'?: string;
+  'SI_CAROUSEL.NEXT'?: string;
+  'SI_CAROUSEL.PAUSE'?: string;
+  'SI_CAROUSEL.PLAY'?: string;
+  'SI_CAROUSEL.PREVIOUS'?: string;
+  'SI_CAROUSEL.ROLE_DESCRIPTION'?: string;
+  'SI_CAROUSEL.SLIDE_PAGE'?: string;
+  'SI_CAROUSEL.SLIDE_ROLE_DESCRIPTION'?: string;
   'SI_CHANGE_PASSWORD.BACK'?: string;
   'SI_CHANGE_PASSWORD.CHANGE'?: string;
   'SI_CHANGE_PASSWORD.CHANGE_FACTORY_PASSWORD'?: string;
@@ -23,6 +32,7 @@ export interface SiTranslatableKeys {
   'SI_CHAT_INPUT.PLACEHOLDER'?: string;
   'SI_CHAT_INPUT.SECONDARY_ACTIONS'?: string;
   'SI_CHAT_INPUT.SEND'?: string;
+  'SI_COLOR_PICKER.SELECTED_LABEL'?: string;
   'SI_COLUMN_SELECTION_DIALOG.CANCEL'?: string;
   'SI_COLUMN_SELECTION_DIALOG.HIDDEN'?: string;
   'SI_COLUMN_SELECTION_DIALOG.ITEM_MOVED'?: string;
@@ -72,6 +82,7 @@ export interface SiTranslatableKeys {
   'SI_DATE_RANGE_FILTER.REF_POINT'?: string;
   'SI_DATE_RANGE_FILTER.SEARCH'?: string;
   'SI_DATE_RANGE_FILTER.SELECT_RANGE_END'?: string;
+  'SI_DATE_RANGE_FILTER.SELECT_RANGE_LABEL'?: string;
   'SI_DATE_RANGE_FILTER.TO'?: string;
   'SI_DATE_RANGE_FILTER.TODAY'?: string;
   'SI_DATE_RANGE_FILTER.UNIT'?: string;
@@ -181,6 +192,7 @@ export interface SiTranslatableKeys {
   'SI_NAVBAR_VERTICAL.SEARCH_PLACEHOLDER'?: string;
   'SI_NAVBAR_VERTICAL.SKIP_LINK.MAIN_LABEL'?: string;
   'SI_NAVBAR_VERTICAL.SKIP_LINK.NAVIGATION_LABEL'?: string;
+  'SI_NAVBAR_VERTICAL.TOGGLE'?: string;
   'SI_PAGINATION.BACK'?: string;
   'SI_PAGINATION.FORWARD'?: string;
   'SI_PAGINATION.NAV_LABEL'?: string;
@@ -233,6 +245,9 @@ export interface SiTranslatableKeys {
   'SI_TREE_VIEW.EXPAND_ALL'?: string;
   'SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL'?: string;
   'SI_USER_MESSAGE.SECONDARY_ACTIONS'?: string;
+  'SI_WEATHER_WIDGET.FORECAST_LABEL'?: string;
+  'SI_WEATHER_WIDGET.ILLUSTRATION_ALT'?: string;
+  'SI_WEATHER_WIDGET.METRICS_LABEL'?: string;
   'SI_WIZARD.BACK'?: string;
   'SI_WIZARD.CANCEL'?: string;
   'SI_WIZARD.COMPLETED'?: string;

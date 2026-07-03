@@ -22,6 +22,7 @@
   :host {
     font-weight: all-variables.$si-font-weight-normal;
     padding-block: map.get(all-variables.$spacers, 2) - 1px;
+    padding-inline-end: var(--si-input-padding-inline-end);
   }
 }
 
@@ -37,15 +38,4 @@
 
 si-select-option + si-select-option::before {
   content: ',\00a0 ';
-}
-
-.overflow-item {
-  border-radius: all-variables.$element-radius-3;
-  background: all-variables.$element-base-0;
-  margin-inline-start: map.get(all-variables.$spacers, 2);
-  padding-inline: map.get(all-variables.$spacers, 4);
-}
-
-.dropdown-caret {
-  transform: translateX(var(--si-feedback-icon-offset, 0));
 }

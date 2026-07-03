@@ -36,7 +36,7 @@ $toast-timer-height: 2px;
   pointer-events: all;
   overflow: hidden;
   min-inline-size: $toast-min-width;
-  max-inline-size: calc(100vw - #{$toast-window-margin} * 2);
+  max-inline-size: calc(100vi - #{$toast-window-margin} * 2);
 
   @include all-variables.media-breakpoint-up(md) {
     max-inline-size: $toast-max-width;

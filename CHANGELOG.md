@@ -1,3 +1,139 @@
+# [49.13.0](https://github.com/siemens/element/compare/v49.12.0...v49.13.0) (2026-07-02)
+
+
+### Features
+
+* add sequential color tokens avocado, blue, royal blue, and yellow ([86f911a](https://github.com/siemens/element/commit/86f911a4bea537700bcea4b8a310f576fecff907))
+* **application-header:** show tooltip on icon-only header items ([39a0ae5](https://github.com/siemens/element/commit/39a0ae5493622e2f707c57e75623c9d4d7bddbb3))
+* **tabs:** show tooltip in icon mode ([bdf3a77](https://github.com/siemens/element/commit/bdf3a778b8e96d564a7e0c6e96a973d8b6152d87))
+
+
+### Bug Fixes
+
+* **header-dropdown:** expose aria-pressed on checked dropdown items ([30b84f7](https://github.com/siemens/element/commit/30b84f73a5be95dfbd46dea4faac629bba12ffcc)), closes [#2153](https://github.com/siemens/element/issues/2153)
+* **header-dropdown:** expose role and aria-haspopup based on overlay mode ([999a8fd](https://github.com/siemens/element/commit/999a8fde30a2d2453a0680bd141782361c13ce06)), closes [#2153](https://github.com/siemens/element/issues/2153)
+* **ip-input:** allow IPv6 unspecified address ([b200ce2](https://github.com/siemens/element/commit/b200ce288d15f0a749ed45f3e6ea303b59cff914)), closes [#2183](https://github.com/siemens/element/issues/2183)
+* **live-preview:** preserve NgModule scope when recompiling edited examples ([f1b59ca](https://github.com/siemens/element/commit/f1b59ca160168e85880aee9fce0a948dd9c87333))
+* **live-preview:** skip stackblitz source fetch when no example is set ([dbba53e](https://github.com/siemens/element/commit/dbba53e71456e30ca2fff45ca0b2047496735d3d))
+* **phone-number:** emit valueChange together with form control update ([b78ab82](https://github.com/siemens/element/commit/b78ab8291fdd5ab02378f7e8a6f73d3b25f87bc8))
+* **phone-number:** make country dropdown grow if needed ([324823c](https://github.com/siemens/element/commit/324823cf4e98f171aad9eab912d40153944d729a))
+* restore flex-grow-1 wrapper for main-detail-container layout ([1d2da3b](https://github.com/siemens/element/commit/1d2da3b9249cc23eae89a42ccbfd8a4e42f7a5b1))
+* **tooltip:** reposition overlay when content changes dynamically ([b370c1b](https://github.com/siemens/element/commit/b370c1b26d5f006121c3baf05f9f593e8d3998f9)), closes [#2219](https://github.com/siemens/element/issues/2219)
+* **tree-view:** fix ExpressionChangedAfterItHasBeenCheckedError ([663041e](https://github.com/siemens/element/commit/663041e0934dc7cbf1cb25e97259603711e8643d)), closes [#2227](https://github.com/siemens/element/issues/2227)
+
+
+### DEPRECATIONS
+
+* **dashboards:** The `SimplDashboardsNgModule` should no longer be used. Use
+  `SiDashboardsNgModule` instead. The `Simpl` prefix is deprecated and will be
+  removed in v51.
+
+# [49.12.0](https://github.com/siemens/element/compare/v49.11.0...v49.12.0) (2026-06-23)
+
+
+### Features
+
+* **angular:** add support for Angular 22 ([cef398a](https://github.com/siemens/element/commit/cef398ac358d66d992b21fb8a4ce50bff5bfa462))
+* **carousel:** add carousel component ([0a3f82f](https://github.com/siemens/element/commit/0a3f82f13205ec7cf52cce282b06887bd4c04478))
+* **dashboards:** provide widget renderer component ([e051240](https://github.com/siemens/element/commit/e05124026bc2bdd1e6377e9919ec5d18215874f1))
+* **date-range-filter:** add space key support for preset list items ([fa24c27](https://github.com/siemens/element/commit/fa24c27de7130c536fa844f82566076b6b2e28d7))
+
+
+### Bug Fixes
+
+* **chat-messages:** use base-input background in focus state ([e6d566e](https://github.com/siemens/element/commit/e6d566e21303aa368d1d56db9d682974d9dd04a2)), closes [#2176](https://github.com/siemens/element/issues/2176)
+* **empty-state:** render heading as styled span instead of h3 ([3285d00](https://github.com/siemens/element/commit/3285d0000fd1d968a8e362f4806fdf63ff311e95)), closes [#2174](https://github.com/siemens/element/issues/2174)
+* **file-uploader:** use button for click to upload trigger ([711ce15](https://github.com/siemens/element/commit/711ce155e8370289df72f8153e7353f2d8c4b706)), closes [#2173](https://github.com/siemens/element/issues/2173)
+* **pagination:** handle page size zero ([bb18fda](https://github.com/siemens/element/commit/bb18fdaccbc7f538cd6632c343aae7fe26994876))
+* **pills-input:** trim whitespaces when entering a separated list ([91fb65d](https://github.com/siemens/element/commit/91fb65dd63cc5b9169a83749ffff34111cc45aa2))
+
+# [49.11.0](https://github.com/siemens/element/compare/v49.10.0...v49.11.0) (2026-06-17)
+
+
+### Features
+
+* **about:** add translatable logoAlt input to SiAboutComponent ([11f6747](https://github.com/siemens/element/commit/11f67475e815059b836931d72a86eb8439355d30))
+* **dashboards-ng:** add keyboard support for moving and resizing widgets ([dbe8b32](https://github.com/siemens/element/commit/dbe8b32e2c3072b2d3e55025aa5c4a19025ee99c))
+* **navbar-vertical-next:** add inline collapse mode ([255c7d3](https://github.com/siemens/element/commit/255c7d30745fbb525ca70879b768b7ba784dbf22)), closes [#1945](https://github.com/siemens/element/issues/1945)
+
+
+### Bug Fixes
+
+* **application-header:** declare launchpad as `role="dialog"` ([e94135b](https://github.com/siemens/element/commit/e94135bcbe2263f67a8e60cab3ca892e41ee400c)), closes [#2152](https://github.com/siemens/element/issues/2152)
+* **datatable:** no hover and min inline size on summary row with templates ([deb539d](https://github.com/siemens/element/commit/deb539d2f3d2366ee7e01372b100f6bdaf26422e))
+* **date-range-filter:** show a label instead of ? when range is not defined ([2903cec](https://github.com/siemens/element/commit/2903cec2a54861e04cb617e002e64b95e2410d0b))
+* **datepicker:** keep AM/PM input visible after re-enabling time ([c89dd98](https://github.com/siemens/element/commit/c89dd98376f78c68c1d76a5c8d4faca0d4b61753))
+* **drag-drop:** support cdkDropListHasAnchor placeholder styling ([fbb121b](https://github.com/siemens/element/commit/fbb121b4830f992898cb9e8f3cc53927a42104b9))
+* **filtered-search:** prevent free-text input from collapsing with multiple criteria ([acc6be5](https://github.com/siemens/element/commit/acc6be5ce775a7cebe2441025fe108f9ec4d32b0))
+* **form:** correct misleading validation messages for date/time bounds ([8f7f481](https://github.com/siemens/element/commit/8f7f4815eb4146efd47f8703e81d669c6b2589c6))
+* **forms:** maintain hover/focus state with sibling form-control-actions ([5bfaff9](https://github.com/siemens/element/commit/5bfaff9dd98ea12a329f7fd3073a5944e39701fb))
+* **landing-page:** remove footer only scrolling ([d538b4b](https://github.com/siemens/element/commit/d538b4b7bf551214234f155082554010bb179b76)), closes [#2151](https://github.com/siemens/element/issues/2151)
+* **navbar-vertical:** dynamically update group content when data changes ([26fb653](https://github.com/siemens/element/commit/26fb653f30af856e75bbed02d369714992b0bd03))
+* **si-map-tooltip:** replace three dots with ellipsis character ([b101c6e](https://github.com/siemens/element/commit/b101c6e1ea7a85b9a2b8118e554c719cc7229496))
+* **theme:** make .btn-close always round ([37bda5d](https://github.com/siemens/element/commit/37bda5d63d052442b8a95c30c6693eca95005cfa))
+
+# [49.10.0](https://github.com/siemens/element/compare/v49.9.0...v49.10.0) (2026-06-02)
+
+
+### Features
+
+* **chat-messages:** update components to latest design specs ([364fe8e](https://github.com/siemens/element/commit/364fe8e79d9027b4cb60ef7a542e1ccf50983d17))
+* **dashboard:** add weather widget ([d1e8281](https://github.com/siemens/element/commit/d1e828149d7c4955aaf993e816f71d2087081aab))
+* **navbar-vertical-next:** add inline collapse mode ([349c889](https://github.com/siemens/element/commit/349c88964e156025d93c988d9f8a549c5510c4b8)), closes [#1945](https://github.com/siemens/element/issues/1945)
+
+
+### Bug Fixes
+
+* **color-picker:** pass color as interpolation param to aria-label translation ([95424a2](https://github.com/siemens/element/commit/95424a23fc9ec4967c6c62a5c8c4c42575967805))
+* **dashboard:** respect showLoadingIndicator input when auto-loading is disabled ([1e855e4](https://github.com/siemens/element/commit/1e855e4ad5f22fadea8e103317ca252348834833))
+* **navbar-vertical-next:** make flyout sub-item styling consistent in all flyout modes ([27ffa33](https://github.com/siemens/element/commit/27ffa3320c50e485c186acf4aa00c149b580d773))
+
+# [49.9.0](https://github.com/siemens/element/compare/v49.8.0...v49.9.0) (2026-05-20)
+
+
+### Features
+
+* **breadcrumb-router:** make ariaLabel type TranslatableString ([9cb6f87](https://github.com/siemens/element/commit/9cb6f874443b8a9150e8192a9b46d5595a2f065d))
+* **navbar-vertical-next:** add alwaysFlyout mode for groups ([d627796](https://github.com/siemens/element/commit/d627796a36dced43175f3da6e547aeeeaf4b5419)), closes [#1944](https://github.com/siemens/element/issues/1944)
+* **select:** support constructions of custom select ([f1279ba](https://github.com/siemens/element/commit/f1279ba4f9629db7cafa86ba69b92a9f271c0c9f)), closes [#1840](https://github.com/siemens/element/issues/1840)
+
+
+### Bug Fixes
+
+* **dashboard:** correct heading input type to TranslatableString ([e34a867](https://github.com/siemens/element/commit/e34a867c54cb3042e024cfb831f98bf28c473da1))
+* **navbar-vertical:** prevent initial animation ([af31e36](https://github.com/siemens/element/commit/af31e3674ae577af48d9392553dcfeb77550036b))
+* **side-panel:** fix position of legacy status action dot with increased RFS ([720c733](https://github.com/siemens/element/commit/720c73328d1fa510fabe1d865f94c91b169bafde))
+* **theme:** ensure the input line-height is consistent between browsers ([1336e45](https://github.com/siemens/element/commit/1336e45bb5c59431c4336197475fa89471e68355)), closes [#2031](https://github.com/siemens/element/issues/2031)
+* **theme:** make .badge-text center aligned ([33764a1](https://github.com/siemens/element/commit/33764a1a333656f88b6ac53eb8a427799f830c2a))
+
+# [49.8.0](https://github.com/siemens/element/compare/v49.7.0...v49.8.0) (2026-05-08)
+
+
+### Features
+
+* **ag-grid:** update sorting icons ([0909157](https://github.com/siemens/element/commit/09091570294c3e3cd7ce0ea9f279f677dd60b1a5)), closes [#2009](https://github.com/siemens/element/issues/2009)
+* **dashboards-ng:** add translation support for widget name, description, and heading ([eb3e07b](https://github.com/siemens/element/commit/eb3e07b28e1138230311d91198baabba05ebb903))
+* **file-uploader:** show max file size in error message for exceeded file size ([9642f3e](https://github.com/siemens/element/commit/9642f3e7bbd0db6f88df5fff637ce195d98be7b7)), closes [#2008](https://github.com/siemens/element/issues/2008)
+* **form-control:** introduce `.form-control-actions` wrapper ([436c998](https://github.com/siemens/element/commit/436c99893568f359be0d728b070864c22965f7a0))
+* **popover:** add `scrollStrategy` input ([d642809](https://github.com/siemens/element/commit/d64280946b1036e7c5c196dfadef973e81f8c7b8))
+* **search-bar:** add maxlength input to limit search input length ([6d42511](https://github.com/siemens/element/commit/6d425115b9c7e26f065cb88884e4ddeb9fcceed2))
+* **tooltip:** add `scrollStrategy` input ([fac50c9](https://github.com/siemens/element/commit/fac50c9a1a6af166f6c9210a51e6d8c612a69113))
+
+
+### Bug Fixes
+
+* **a11y:** add space key activation for summary chip and widget ([3c9bb11](https://github.com/siemens/element/commit/3c9bb11fd188a08a37ff72b2032097e94fe5b306))
+* **datepicker:** remove focus ring on date-range input when calendar ([50ddddb](https://github.com/siemens/element/commit/50ddddbacb5bcc3eefaab98eba3caafa676eefdd))
+* **datepicker:** use correct spacing between calendar button and ([3d08006](https://github.com/siemens/element/commit/3d0800601971ca14602758ba9caa9045ecbe0dfe))
+* **filtered-search:** emit event when search text is cleared ([630cf29](https://github.com/siemens/element/commit/630cf29e5c78297b8adaa6f7e64527d7fb9c3b3b)), closes [#1980](https://github.com/siemens/element/issues/1980)
+* **filtered-search:** focus ring not visible in case of empty option value ([1c2a627](https://github.com/siemens/element/commit/1c2a62734cfdb4596ca07f75dc7fc818f809ec09))
+* **forms:** invalid controls should always have a red border ([7649734](https://github.com/siemens/element/commit/7649734a7910961f4b999090bcef4f9e7191e0f4))
+* **navbar-primary:** align translation defaults with launchpad ([46c727b](https://github.com/siemens/element/commit/46c727b48ef164d5a00c229bcd22eb87eb204f8a))
+* **navbar-vertical-next:** replace expand/collapse button texts with single toggleButtonText ([18d9d04](https://github.com/siemens/element/commit/18d9d04e8ff9d11e9383a99661f41f085fb5e990)), closes [#2003](https://github.com/siemens/element/issues/2003)
+* **number-input:** use correct spacing icons ([60bc1c1](https://github.com/siemens/element/commit/60bc1c1f613b54f78b7fb6325ed6196b890de1a6))
+* **select:** align position of dropdown arrow ([e27d7eb](https://github.com/siemens/element/commit/e27d7eb033423f93bab723104bccbe3ca48f4071))
+* **status-bar:** a11y fix for collapse button ([d465032](https://github.com/siemens/element/commit/d46503279d972e88020f7c3150874ebb1460d899))
+
 # [49.7.0](https://github.com/siemens/element/compare/v49.6.0...v49.7.0) (2026-04-28)
 
 
@@ -1080,11 +1216,13 @@
   
   Replace `INgxDatatableConfig` imports with `NgxDatatableConfig` from @siemens/ngx-datatable:
   
+  ```ts
   // Before
   import { INgxDatatableConfig } from '@siemens/element-ng/datatable';
   
   // After
   import { NgxDatatableConfig } from '@siemens/ngx-datatable';
+  ```
 
 # [48.0.0](https://github.com/siemens/element/compare/v47.8.0...v48.0.0) (2025-08-26)
 
@@ -1185,6 +1323,14 @@
 
 * **accordion:** Removed `SiAccordionComponent.colorVariant` input without any replacement.
 * **action-modal:** Removed `AlertDialogResult`, `EditDiscardDialogResult`, `ConfirmationDialogResult` and `DeleteConfirmationDialogResult` as const objects. Use them only as type.
+* **action-modal:** Removed deprecated methods:
+  
+  - `SiActionDialogService.showAlertDialog`
+  - `SiActionDialogService.showConfirmationDialog`
+  - `SiActionDialogService.showEditDiscardDialog`
+  - `SiActionDialogService.showDeleteConfirmationDialog`
+  
+  Use `SiActionDialogService.showActionDialog` instead.
 * **angular:** Angular 20+ is required.
   Follow the Angular update guide to update your app: <https://angular.dev/update-guide?v=19.0-20.0>
 * **charts-ng:** The `@siemens/charts-ng` package now requires ECharts version 6.0.0 or higher. Please update your dependencies accordingly. For details on ECharts 6, see: https://github.com/apache/echarts/releases/tag/6.0.0
@@ -1209,14 +1355,7 @@
 * **form:** Removed deprecated `SiFormContainerComponent.getValidationErrors` method.
   
   Use the built-in mechanism of the `si-form-item` to show validation errors.
-  See: https://element.siemens.io/components/forms-inputs/forms/#error-messages* **action-modal:** Removed deprecated methods:
-  
-  - `SiActionDialogService.showAlertDialog`
-  - `SiActionDialogService.showConfirmationDialog`
-  - `SiActionDialogService.showEditDiscardDialog`
-  - `SiActionDialogService.showDeleteConfirmationDialog`
-  
-  Use `SiActionDialogService.showActionDialog` instead.
+  See: https://element.siemens.io/components/forms-inputs/forms/#error-messages  
 * **form:** Removed `SiFormItemComponent.inputId` and `SiFormItemComponent.readonly` inputs without any replacement.
 * **form:** Removed `siFormItemControl` directive.
   

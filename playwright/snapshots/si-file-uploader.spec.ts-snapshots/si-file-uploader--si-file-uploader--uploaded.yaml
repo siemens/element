@@ -1,4 +1,6 @@
-- text: "/Drop files here or click to upload Max\\. [\\d,.]+[bkmBKM]+ upload size\\. Accepted file types: image\\/\\*\\. siemens-healthineers-logo\\.svg [\\d,.]+[bkmBKM]+ Danger Upload failed/"
+- text: Drop files here or
+- button "click to upload"
+- text: "/Max\\. [\\d,.]+[bkmBKM]+ upload size\\. Accepted file types: image\\/\\*\\. siemens-healthineers-logo\\.svg [\\d,.]+[bkmBKM]+ Danger Upload failed/"
 - button "Upload"
 - button "Remove"
 - text: /simpl-44x44\.png [\d,.]+[bkmBKM]+ \d+ %/
@@ -17,9 +19,9 @@
 - text: Auto-upload mode
 - checkbox "Upload directory"
 - text: Upload directory Max. files
-- spinbutton "Max. files"
+- spinbutton "Max. files": /\d+/
 - text: Max. concurrent uploads
-- spinbutton "Max. concurrent uploads"
+- spinbutton "Max. concurrent uploads": "3"
 - text: Demo settings
 - checkbox "Upload shall fail"
 - text: Upload shall fail

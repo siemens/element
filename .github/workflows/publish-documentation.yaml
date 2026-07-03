@@ -39,3 +39,29 @@ jobs:
         with:
           path: 'dist/design'
       - uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5
+
+  # Publishes the documentation built from main to the "development" path of the
+  # versioned S3 bucket (https://element.siemens.io/development/) and refreshes
+  # versions.json so the "Development" entry stays on top of the version selector.
+  publish-development-documentation:
+    runs-on: ubuntu-24.04
+    needs:
+      - build-and-test
+    permissions:
+      id-token: write
+    env:
+      VERSIONED_BUCKET_NAME: simpl-element-release
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: pages
+          path: pages
+      - uses: aws-actions/configure-aws-credentials@e7f100cf4c008499ea8adda475de1042d6975c7b # v6.2.0
+        with:
+          role-to-assume: arn:aws:iam::974483672234:role/simpl-element-release
+          role-session-name: element-development-docs
+          aws-region: eu-west-1
+      - run: >-
+          tools/release/publish-development-docs.sh
+          "${{ env.VERSIONED_BUCKET_NAME }}"

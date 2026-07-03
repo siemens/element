@@ -1,7 +1,7 @@
 {
   "name": "@siemens/element-ng",
   "description": "Element Angular component library, implementing the Siemens Design Language",
-  "version": "49.7.0",
+  "version": "49.13.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -38,16 +38,16 @@
     "migrations": "./schematics/migration.json"
   },
   "peerDependencies": {
-    "@angular/cdk": "21",
-    "@angular/common": "21",
-    "@angular/core": "21",
-    "@angular/forms": "21",
-    "@angular/router": "21",
+    "@angular/cdk": "22",
+    "@angular/common": "22",
+    "@angular/core": "22",
+    "@angular/forms": "22",
+    "@angular/router": "22",
     "@ngx-formly/bootstrap": "^6.2.2",
     "@ngx-formly/core": "^6.2.2",
     "@siemens/element-icons": "1",
-    "@siemens/element-translate-ng": "49.7.0",
-    "@siemens/element-theme": "49.7.0",
+    "@siemens/element-translate-ng": "49.13.0",
+    "@siemens/element-theme": "49.13.0",
     "@siemens/ngx-datatable": "22 - 26",
     "ag-grid-community": "^34.3.1 || ^35.0.0",
     "flag-icons": "^7.3.2",

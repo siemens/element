@@ -6,6 +6,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTooltipService } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { startWith } from 'rxjs/operators';
 
@@ -30,7 +31,7 @@ import { SiTabBaseDirective } from './si-tab-base.directive';
   imports: [SiIconComponent, SiTranslatePipe, SiTabBadgeComponent],
   templateUrl: './si-tab.component.html',
   styleUrl: './si-tab.component.scss',
-  providers: [{ provide: SiTabBaseDirective, useExisting: SiTabLinkComponent }],
+  providers: [SiTooltipService, { provide: SiTabBaseDirective, useExisting: SiTabLinkComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [
     {

@@ -23,7 +23,7 @@
           @if (message.attachments) {
             <si-attachment-list [attachments]="message.attachments" />
           }
-          <si-icon class="icon" icon="element-user" />
+          <si-icon class="icon" [icon]="icons.elementUser" />
           <si-markdown-renderer [text]="message.content" />
           @for (action of message.actions; track $index) {
             <button

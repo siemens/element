@@ -117,7 +117,7 @@ class SiTestHelpers {
     }
   }
 
-  public async visitExample(name: string, autoScaleViewport = true): Promise<void> {
+  public async visitExample(name: string, autoScaleViewport = false): Promise<void> {
     await test.step(
       'visitExample: ' + name,
       async () => {
@@ -173,6 +173,7 @@ class SiTestHelpers {
       skipAriaSnapshot?: boolean;
       maxDiffPixels?: number;
       snapshotDelay?: number;
+      fullPage?: boolean;
     }
   ): Promise<void> {
     const example = this.getExampleName() ?? this.testInfo.title;
@@ -181,33 +182,35 @@ class SiTestHelpers {
     await test.step(
       'runVisualAndA11yTests: ' + testName,
       async () => {
-        if (this.testInfo.project.metadata.isA11y) {
+        try {
+          // force animations off for both A11y and VRT
           await this.enableDisableAnimations(this.page, false);
-          const rules = (options?.axeRulesSet ?? [])
-            .filter(
-              item =>
-                typeof item === 'string' || (typeof item === 'object' && item?.enabled === true)
-            )
-            .map(item => (typeof item === 'object' ? item.id : item));
 
-          if (
-            !!process.env.PLAYWRIGHT_a11y_all &&
-            process.env.PLAYWRIGHT_a11y_all.toLocaleLowerCase() !== 'false'
-          ) {
-            // Only use global disabled rules.
-            axeRulesSet = [];
-          }
+          if (this.testInfo.project.metadata.isA11y) {
+            const rules = (options?.axeRulesSet ?? [])
+              .filter(
+                item =>
+                  typeof item === 'string' || (typeof item === 'object' && item?.enabled === true)
+              )
+              .map(item => (typeof item === 'object' ? item.id : item));
 
-          const disabledRules = [
-            'landmark-one-main',
-            'page-has-heading-one',
-            'region',
-            ...axeRulesSet
-              .filter(item => typeof item === 'object' && item?.enabled === false)
-              .map(item => (typeof item === 'object' ? item.id : item))
-          ];
-          let axeResults: axe.AxeResults;
-          try {
+            if (
+              !!process.env.PLAYWRIGHT_a11y_all &&
+              process.env.PLAYWRIGHT_a11y_all.toLocaleLowerCase() !== 'false'
+            ) {
+              // Only use global disabled rules.
+              axeRulesSet = [];
+            }
+
+            const disabledRules = [
+              'landmark-one-main',
+              'page-has-heading-one',
+              'region',
+              ...axeRulesSet
+                .filter(item => typeof item === 'object' && item?.enabled === false)
+                .map(item => (typeof item === 'object' ? item.id : item))
+            ];
+            let axeResults: axe.AxeResults;
             if (rules.length) {
               axeResults = (await new AxeBuilder({ page: this.page })
                 // Excluding .header-logo is a temporary workaround as axe does not accept alt text in content style
@@ -226,26 +229,28 @@ class SiTestHelpers {
                 .disableRules(disabledRules)
                 .analyze()) as axe.AxeResults;
             }
-          } finally {
-            await this.enableDisableAnimations(this.page, true);
+            await expectNoA11yViolations(this.testInfo, axeResults.violations, testName);
           }
-          await expectNoA11yViolations(this.testInfo, axeResults.violations, testName);
-        }
-        if (this.testInfo.project.metadata.isVrt) {
-          try {
-            await this.showHideIgnores(this.page, false, options?.snapshotDelay);
-            await expect(this.page).toHaveScreenshot(testName + '.png', {
-              maxDiffPixels: options?.maxDiffPixels
-            });
-          } finally {
-            await this.showHideIgnores(this.page, true);
-          }
+          if (this.testInfo.project.metadata.isVrt) {
+            try {
+              await this.waitForAllAnimationsToComplete();
+              await this.showHideIgnores(this.page, false, options?.snapshotDelay);
+              await expect(this.page).toHaveScreenshot(testName + '.png', {
+                maxDiffPixels: options?.maxDiffPixels,
+                fullPage: options?.fullPage ?? true
+              });
+            } finally {
+              await this.showHideIgnores(this.page, true);
+            }
 
-          if (!options?.skipAriaSnapshot && !this.testInfo.project.metadata.skipAriaSnapshot) {
-            await expect(this.page.locator('body')).toMatchAriaSnapshot({
-              name: testName + '.yaml'
-            });
+            if (!options?.skipAriaSnapshot && !this.testInfo.project.metadata.skipAriaSnapshot) {
+              await expect(this.page.locator('body')).toMatchAriaSnapshot({
+                name: testName + '.yaml'
+              });
+            }
           }
+        } finally {
+          await this.enableDisableAnimations(this.page, true);
         }
       },
       { box: true }

@@ -7,7 +7,6 @@
 import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { OnInit } from '@angular/core';
-import { SiFormItemControl } from '@siemens/element-ng/form';
 import { Signal } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 

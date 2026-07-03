@@ -21,6 +21,10 @@ export class SiHeaderDropdownTriggerHarness extends ComponentHarness {
     return this.host().then(host => host.text());
   }
 
+  async getAriaHaspopup(): Promise<string | null> {
+    return this.host().then(host => host.getAttribute('aria-haspopup'));
+  }
+
   async toggle(): Promise<void> {
     return this.host().then(host => host.click());
   }

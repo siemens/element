@@ -58,11 +58,11 @@ $transition: opacity 0.15s linear;
   }
 
   &.rpanel-size--extended {
-    --rpanel-size: 100vw;
+    --rpanel-size: 100vi;
   }
 
   &.rpanel-fullscreen-overlay {
-    --rpanel-width-fullscreen: 100vw;
+    --rpanel-width-fullscreen: 100vi;
   }
 
   &.rpanel-mode--over {
@@ -114,7 +114,7 @@ $transition: opacity 0.15s linear;
 
       .side-panel,
       .side-panel > .inner {
-        inline-size: 100vw;
+        inline-size: 100vi;
       }
     }
   }

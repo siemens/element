@@ -5,9 +5,6 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { DatepickerConfig } from '@siemens/element-ng/datepicker';
-import { DatepickerInputConfig } from '@siemens/element-ng/datepicker';
-import { DateRange } from '@siemens/element-ng/datepicker';
 import { OnChanges } from '@angular/core';
 import { PipeTransform } from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
@@ -105,6 +102,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
     readonly refLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly reverseInputFields: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly selectRangeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly showApplyButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly todayLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly toLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;

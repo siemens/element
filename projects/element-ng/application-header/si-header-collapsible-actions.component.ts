@@ -17,8 +17,6 @@ import { elementOptionsVertical } from '@siemens/element-icons';
 import { SI_HEADER_DROPDOWN_OPTIONS } from '@siemens/element-ng/header-dropdown';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
-import { Subscription } from 'rxjs';
-import { skip, takeUntil } from 'rxjs/operators';
 
 import { SiApplicationHeaderComponent } from './si-application-header.component';
 
@@ -61,11 +59,9 @@ export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
   private readonly focusTrap = viewChild.required(CdkTrapFocus);
   private header = inject(SiApplicationHeaderComponent);
   private closeMobileSub = this.header.closeMobileMenus.subscribe(() => this.closeMobile());
-  private inlineChangeSubscription?: Subscription;
 
   ngOnDestroy(): void {
     this.closeMobileSub.unsubscribe();
-    this.inlineChangeSubscription?.unsubscribe();
   }
 
   protected toggleMobileExpanded(): void {
@@ -86,9 +82,6 @@ export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
       this.header.closeMobileMenus.next();
       this.header.dropdownOpened();
       this.mobileExpanded.set(true);
-      this.inlineChangeSubscription = this.header.inlineDropdown
-        .pipe(skip(1), takeUntil(this.header.closeMobileMenus))
-        .subscribe(() => this.header.closeMobileMenus.next());
       this.focusTrap().focusTrap.focusFirstTabbableElementWhenReady();
     }
   }

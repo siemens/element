@@ -1,0 +1,6 @@
+si-widget-host ::ng-deep .grid-stack-item-content {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  min-block-size: 0;
+  padding: 0 !important; // stylelint-disable-line declaration-no-important
+}

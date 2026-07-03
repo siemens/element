@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkTrapFocus } from '@angular/cdk/a11y';
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLinkActive } from '@angular/router';
 
@@ -15,6 +15,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   selector: 'si-navbar-vertical-next-group',
   imports: [CdkTrapFocus],
   template: `@if (visible()) {
+    @let flyout = groupTrigger.flyout();
     <div
       animate.leave="group-leave"
       [class.inline-group]="!flyout"
@@ -28,6 +29,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
     </div>
   }`,
   styleUrl: './si-navbar-vertical-next-group.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'group',
     '[id]': 'groupTrigger.groupId',
@@ -41,11 +43,8 @@ export class SiNavbarVerticalNextGroupComponent {
   protected readonly groupTrigger = inject(SiNavbarVerticalNextGroupTriggerDirective);
   private readonly routerLinkActive = inject(RouterLinkActive, { optional: true });
 
-  // Store initial value, as the mode for an instance never changes.
-  protected flyout = this.groupTrigger.flyout();
-
   protected readonly visible = computed(() => {
-    return this.flyout || (!this.navbar.collapsed() && this.groupTrigger.expanded());
+    return this.groupTrigger.flyout() || (!this.navbar.collapsed() && this.groupTrigger.expanded());
   });
 
   constructor() {

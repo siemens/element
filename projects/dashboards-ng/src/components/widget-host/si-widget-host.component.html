@@ -24,26 +24,45 @@
     #card
     class="h-100 dragging-card"
     [class]="accentLine()"
+    [class.elevation-2]="keyboardActive()"
+    [class.si-widget-keyboard-active]="keyboardActive()"
+    [attr.tabindex]="editable() ? 0 : null"
+    [attr.role]="editable() ? 'application' : null"
+    [attr.aria-roledescription]="editable() ? 'widget' : null"
+    [attr.aria-label]="editable() ? widgetConfig().heading : null"
+    [attr.aria-description]="editable() ? (a11yWidgetDescription | translate) : null"
     [expandText]="labelExpand"
     [restoreText]="labelRestore"
     [heading]="widgetConfig().heading"
-    [primaryActions]="primaryActions"
-    [secondaryActions]="secondaryActions"
-    [actionBarViewType]="actionBarViewType"
+    [primaryActions]="primaryActions()"
+    [secondaryActions]="secondaryActions()"
+    [actionBarViewType]="actionBarViewType()"
     [enableExpandInteraction]="widgetConfig().expandable"
     [imgAlt]="widgetConfig().image?.alt"
     [imgDir]="widgetConfig().image?.dir"
     [imgObjectFit]="widgetConfig().image?.objectFit"
     [imgObjectPosition]="widgetConfig().image?.objectPosition"
     [imgSrc]="widgetConfig().image?.src"
+    (keydown.enter)="onToggleActive($event)"
+    (keydown.space)="onToggleActive($event)"
+    (keydown.escape)="onDeactivate($event)"
+    (keydown.arrowRight)="onArrowKey($event)"
+    (keydown.arrowLeft)="onArrowKey($event)"
+    (keydown.arrowUp)="onArrowKey($event)"
+    (keydown.arrowDown)="onArrowKey($event)"
+    (keydown.shift.arrowRight)="onArrowKey($event)"
+    (keydown.shift.arrowLeft)="onArrowKey($event)"
+    (keydown.shift.arrowUp)="onArrowKey($event)"
+    (keydown.shift.arrowDown)="onArrowKey($event)"
+    (focusout)="onFocusOut()"
   >
     <div class="card-body overflow-auto" body>
       <ng-container #widgetHost />
     </div>
-
-    @if (widgetInstanceFooter) {
+    @let footer = widgetInstanceFooter();
+    @if (footer) {
       <div class="card-footer" footer>
-        <ng-container *ngTemplateOutlet="widgetInstanceFooter" />
+        <ng-container *ngTemplateOutlet="footer" />
       </div>
     }
   </si-dashboard-card>

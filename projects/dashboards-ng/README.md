@@ -75,8 +75,7 @@ the `angular.json` file.
 ```json
 "styles": [
   "src/styles.scss",
-  "node_modules/gridstack/dist/gridstack.css",
-  "node_modules/gridstack/dist/gridstack-extra.css"
+  "node_modules/gridstack/dist/gridstack.css"
 ],
 "allowedCommonJsDependencies": [
   "gridstack"
@@ -120,7 +119,7 @@ The correct approach is to use the full page height as explained at
 
 ### Translations
 
-The dashboards comes with a couple of components with i18n support.
+The dashboard comes with a couple of components with i18n support.
 The library uses translation keys in the components and ships English
 and German (`en.json`, `de.json`) translations for demonstration. The
 files are located at the folder `node_modules/@siemens/dashboards-ng/assets/i18n/`
@@ -150,7 +149,7 @@ export function createTranslateLoader(_httpBackend: HttpBackend) {
 
 ...
 
-TranslateModule.forRoot({
+provideTranslateService({
   loader: {
     provide: TranslateLoader,
     useFactory: (createTranslateLoader),

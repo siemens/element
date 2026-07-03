@@ -97,4 +97,26 @@ Direct [Link](https://element.siemens.io/dashboards-demo/#/dashboard) to dashboa
 
 <si-docs-api component="SiWidgetInstanceEditorDialogComponent" package="@siemens/dashboards-ng"></si-docs-api>
 
+### Widget renderer
+
+The `SiWidgetRendererComponent` is a presentational (dumb) component that renders
+a single widget instance from a `WidgetConfig`, without the surrounding dashboard
+or grid infrastructure. It takes the exact `Widget` definition to render and
+delegates the actual rendering to the widget host.
+
+Use it to display an individual widget outside of a flexible dashboard, for example
+in kiosk mode or within a custom layout such as a carousel. The component is a
+self-contained widget cell that can be placed anywhere a single widget needs to be
+shown.
+
+It requires two inputs: the `widgetConfig` describing the widget instance to render
+and the matching `widget` definition. The `widget` must match the config's `widgetId`.
+
+```html
+<!-- Render a single widget instance -->
+<si-widget-renderer [widgetConfig]="widgetConfig" [widget]="widget" />
+```
+
+<si-docs-api component="SiWidgetRendererComponent" package="@siemens/dashboards-ng"></si-docs-api>
+
 <si-docs-types></si-docs-types>

@@ -5,12 +5,13 @@
 ```ts
 
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { BreadcrumbItem } from '@siemens/element-ng/breadcrumb';
 import * as i0 from '@angular/core';
 import { InjectionToken } from '@angular/core';
+import { NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
@@ -35,7 +36,7 @@ export interface SiBreadcrumbResolverService {
 
 // @public (undocumented)
 export class SiBreadcrumbRouterComponent implements OnInit, OnDestroy {
-    readonly ariaLabel: i0.InputSignal<string>;
+    readonly ariaLabel: i0.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
 
 // @public (undocumented)

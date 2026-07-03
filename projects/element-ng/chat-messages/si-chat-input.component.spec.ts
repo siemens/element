@@ -15,6 +15,7 @@ import { By } from '@angular/platform-browser';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { page } from 'vitest/browser';
 
 import { MessageAction } from './message-action.model';
 import {
@@ -315,7 +316,7 @@ describe('SiChatInputComponent', () => {
 
     (component as any).removeAttachment(testAttachments[0]);
 
-    expect(attachments().length).toBe(1);
+    expect(attachments()).toHaveLength(1);
     expect(attachments()[0].name).toBe('file2.txt');
   });
 
@@ -331,7 +332,7 @@ describe('SiChatInputComponent', () => {
 
     (component as any).onFilesAdded(uploadFiles);
 
-    expect(attachments().length).toBe(1);
+    expect(attachments()).toHaveLength(1);
     expect(attachments()[0].name).toBe('test.txt');
     expect(attachments()[0].file).toBe(mockFile);
   });
@@ -352,7 +353,7 @@ describe('SiChatInputComponent', () => {
 
     (component as any).onFilesAdded(uploadFiles);
 
-    expect(attachments().length).toBe(1);
+    expect(attachments()).toHaveLength(1);
     expect(attachments()[0].name).toBe('test1.txt');
   });
 
@@ -489,9 +490,10 @@ describe('SiChatInputComponent', () => {
     ]);
     await fixture.whenStable();
 
-    const actionButtons = fixture.nativeElement.querySelectorAll('[siChatMessageAction] button');
-    expect(actionButtons.length).toBe(1);
-    expect(actionButtons[0]).toHaveAttribute('aria-label', 'Attach');
+    const menuTrigger = page.getByRole('button', { name: 'More actions' });
+    await menuTrigger.click();
+
+    await expect.element(page.getByRole('menuitem', { name: 'Attach' })).toBeVisible();
   });
 
   it('should have focus method', async () => {

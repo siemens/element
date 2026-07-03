@@ -86,7 +86,7 @@ describe('formly tabset type', () => {
     expect(tabsContainer).toBeTruthy();
     const tabs = tabsContainer.queryAll(By.css('si-tab'));
     expect(tabs).toBeTruthy();
-    expect(tabs.length).toEqual(3);
+    expect(tabs).toHaveLength(3);
 
     const activeTabContent = tabsContainer.query(By.css('.tab-content'));
     expect(activeTabContent).toBeTruthy();

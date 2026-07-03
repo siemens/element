@@ -2,15 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  HostListener,
-  inject,
-  input,
-  OnInit
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit } from '@angular/core';
 import { RouterLinkActive } from '@angular/router';
 import { elementDown2 } from '@siemens/element-icons';
 import { MenuItem } from '@siemens/element-ng/common';
@@ -44,7 +36,8 @@ type NavbarVerticalItemInteractive =
     '[class.dropdown-item]': 'this.parent?.group?.flyout()',
     '[class.navbar-vertical-item]': '!this.parent?.group?.flyout()',
     '[class.active]': 'active',
-    '[class.hide-badge-collapsed]': 'hideBadgeCollapsed()'
+    '[class.hide-badge-collapsed]': 'hideBadgeCollapsed()',
+    '(click)': 'triggered()'
   }
 })
 export class SiNavbarVerticalItemComponent implements OnInit {
@@ -101,7 +94,7 @@ export class SiNavbarVerticalItemComponent implements OnInit {
     }
   }
 
-  @HostListener('click') protected triggered(): void {
+  protected triggered(): void {
     const item = this.item();
     if (item.type === 'action') {
       item.action(item);

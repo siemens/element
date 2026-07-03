@@ -1,10 +1,8 @@
 @use 'sass:map';
-@use 'sass:math';
 
 @use '@siemens/element-theme/src/styles/variables';
 
 $filter-pill-height: map.get(variables.$spacers, 9);
-$filter-pill-gap: map.get(variables.$spacers, 4);
 
 :host {
   --filter-pill-background-color: #{variables.$element-base-1};
@@ -15,8 +13,7 @@ $filter-pill-gap: map.get(variables.$spacers, 4);
 }
 
 .pill {
-  margin-inline-start: $filter-pill-gap;
-  background: var(--filter-pill-background-color);
+  margin-inline-start: var(--filter-pill-gap, #{map.get(variables.$spacers, 4)});
 }
 
 .wrapper {

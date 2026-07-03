@@ -383,7 +383,7 @@ describe('SiDateRangeFilterComponent', () => {
 
       expect(document.querySelector('.preset-select')).toBeTruthy();
       const presets = presetItems();
-      expect(presets.length).toBe(1);
+      expect(presets).toHaveLength(1);
     });
   });
 

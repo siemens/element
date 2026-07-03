@@ -143,6 +143,9 @@ export const provideDashboardToolbarItems: (toolbarItems?: {
     secondary?: DashboardToolbarItem[];
 }) => Provider;
 
+// @public
+export const provideSiDashboardsTranslatableOverrides: (values: SiTranslatableKeys) => Provider;
+
 // @public (undocumented)
 export type SetupComponentFn = <T>(factory: WidgetComponentFactory, componentName: string, host: ViewContainerRef, injector: Injector, envInjector: EnvironmentInjector) => Observable<ComponentRef<T>>;
 
@@ -168,10 +171,8 @@ export const SI_WIDGET_ID_PROVIDER: InjectionToken<SiWidgetIdProvider>;
 export const SI_WIDGET_STORE: InjectionToken<SiWidgetStorage>;
 
 // @public (undocumented)
-class SiDashboardsNgModule {
+export class SiDashboardsNgModule {
 }
-export { SiDashboardsNgModule }
-export { SiDashboardsNgModule as SimplDashboardsNgModule }
 
 // @public
 export class SiDefaultWidgetStorage extends SiWidgetStorage {
@@ -238,6 +239,12 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
     readonly widgetInstanceEditorDialogComponent: _angular_core.InputSignal<Type<SiWidgetInstanceEditorDialogComponent> | undefined>;
 }
 
+// @public @deprecated (undocumented)
+export const SimplDashboardsNgModule: typeof SiDashboardsNgModule;
+
+// @public @deprecated (undocumented)
+export type SimplDashboardsNgModule = SiDashboardsNgModule;
+
 // @public
 export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnInit {
     readonly closed: _angular_core.OutputEmitterRef<Omit<WidgetConfig, "id"> | undefined>;
@@ -261,6 +268,12 @@ export class SiWidgetInstanceEditorDialogComponent extends SiWidgetEditorBase im
     readonly editorSetupCompleted: _angular_core.OutputEmitterRef<void>;
     readonly widget: _angular_core.InputSignal<Widget>;
     readonly widgetConfig: _angular_core.ModelSignal<WidgetConfig>;
+}
+
+// @public
+export class SiWidgetRendererComponent {
+    readonly widget: _angular_core.InputSignal<Widget>;
+    readonly widgetConfig: _angular_core.InputSignal<WidgetConfig>;
 }
 
 // @public
@@ -288,10 +301,10 @@ export type WebComponent = CommonFactoryFields & {
 export interface Widget {
     componentFactory: WidgetComponentFactory;
     defaults?: Pick<WidgetConfig, 'width' | 'height' | 'minWidth' | 'minHeight' | 'heading' | 'expandable' | 'immutable' | 'image' | 'accentLine'>;
-    description?: string;
+    description?: TranslatableString;
     iconClass?: string;
     id: string;
-    name: string;
+    name: TranslatableString;
     payload?: any;
     version?: string;
 }
@@ -308,7 +321,7 @@ export interface WidgetConfig {
     // (undocumented)
     actionBarViewType?: ViewType;
     expandable?: boolean;
-    heading?: string;
+    heading?: TranslatableString;
     height?: number;
     id: string;
     image?: WidgetImage;
@@ -388,9 +401,6 @@ export interface WidgetInstanceEditorWizardState {
 
 // @public
 export type WidgetPositionConfig = Pick<WidgetConfig, 'id' | 'x' | 'y' | 'width' | 'height'>;
-
-
-export * from "@siemens/dashboards-ng/translate";
 
 // (No @packageDocumentation comment for this package)
 

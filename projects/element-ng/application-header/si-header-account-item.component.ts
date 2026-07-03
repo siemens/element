@@ -5,6 +5,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SiAvatarComponent } from '@siemens/element-ng/avatar';
 import { SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTooltipService } from '@siemens/element-ng/tooltip';
 
 import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.directive';
 
@@ -15,6 +16,7 @@ import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.di
   imports: [SiAvatarComponent, SiIconComponent],
   templateUrl: './si-header-account-item.component.html',
   styleUrl: './si-header-account-item.component.scss',
+  providers: [SiTooltipService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'header-item focus-inside px-4 py-0',
@@ -28,4 +30,6 @@ export class SiHeaderAccountItemComponent extends SiHeaderActionIconItemBase {
   readonly initials = input<string>();
   /** URL to an image which should be shown instead of the initials. */
   readonly imageUrl = input<string>();
+
+  protected readonly itemTitle = this.name;
 }

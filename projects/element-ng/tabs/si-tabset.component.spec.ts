@@ -4,9 +4,11 @@
  */
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
+import { page } from '@vitest/browser/context';
 
 import {
   MockResizeObserver,
@@ -21,16 +23,17 @@ import { SiTabsetHarness } from './testing/si-tabset.harness';
 
 interface TabData {
   heading: string;
+  icon?: string;
   closable?: true;
   routerLinkUrl?: string;
-  active?: boolean;
   canDeactivate?: () => boolean;
   canActivate?: () => boolean;
 }
 
 @Component({
   selector: 'si-tab-route',
-  template: `Content by routing`
+  template: `Content by routing`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class SiTabRouteComponent {}
 
@@ -42,8 +45,9 @@ class SiTabRouteComponent {}
         <si-tabset>
           @for (tab of tabsObject(); track tab) {
             <si-tab
-              [active]="tab.active ?? false"
+              [active]="activeTab() === $index"
               [heading]="tab.heading"
+              [icon]="tab.icon"
               [closable]="!!tab.closable"
               [style.max-width.px]="tabButtonMaxWidth()"
               [canDeactivate]="tab.canDeactivate"
@@ -54,13 +58,14 @@ class SiTabRouteComponent {}
         </si-tabset>
       }
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
   readonly wrapperWidth = signal(200);
   protected readonly tabsObject = signal<TabData[]>([]);
-
+  readonly activeTab = signal<number | null>(null);
   set tabs(value: (TabData | string)[]) {
     this.tabsObject.set(
       value.map(tab => {
@@ -101,7 +106,8 @@ class TestComponent {
         </si-tabset>
       }
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestRoutingComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
@@ -157,7 +163,8 @@ describe('SiTabset', () => {
     const tabs = await tabsetHarness.getTabItemsLength();
     expect(tabs).toEqual(0);
 
-    testComponent.tabs = [{ heading: 'test', active: true }];
+    testComponent.tabs = [{ heading: 'test' }];
+    testComponent.activeTab.set(0);
     fixture.detectChanges();
 
     const updatedTabs = await tabsetHarness.getTabItemsLength();
@@ -168,7 +175,8 @@ describe('SiTabset', () => {
   });
 
   it('should be possible to add a few tabs to the tabComponent', async () => {
-    testComponent.tabs = [{ heading: '1', active: true }, '2', '3'];
+    testComponent.tabs = ['1', '2', '3'];
+    testComponent.activeTab.set(0);
     fixture.detectChanges();
     expect(await tabsetHarness.isTabItemActive(0)).toBe(true);
     expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
@@ -186,6 +194,24 @@ describe('SiTabset', () => {
     expect(await tabsetHarness.isTabItemActive(1)).toEqual(true);
   });
 
+  it('should show the heading as tooltip for icon tabs', async () => {
+    vi.setTimerTickMode('nextTimerAsync');
+    testComponent.tabs = [{ heading: 'Tab 1', icon: 'element-options' }];
+    await fixture.whenStable();
+
+    const tabButtonLocator = page.getByRole('tab', { name: 'Tab 1' });
+    await expect.element(tabButtonLocator).toBeInTheDocument();
+    const tabButton = await tabButtonLocator.element();
+    expect(tabButton.querySelector('.text-truncate')).toHaveClass('visually-hidden');
+    expect(tabButton.querySelector('.tab-icon')).toBeTruthy();
+
+    tabButton.dispatchEvent(new MouseEvent('mouseenter'));
+    await vi.advanceTimersByTimeAsync(500);
+    await fixture.whenStable();
+
+    await expect.element(page.getByRole('tooltip', { name: 'Tab 1' })).toBeInTheDocument();
+  });
+
   it('should remove tab on destroy', async () => {
     testComponent.tabs = ['1', '2', '3'];
     fixture.detectChanges();
@@ -196,7 +222,8 @@ describe('SiTabset', () => {
   });
 
   it('should handle focus correctly', async () => {
-    testComponent.tabs = [{ heading: '1', active: true }, '2', '3'];
+    testComponent.tabs = [{ heading: '1' }, '2', '3'];
+    testComponent.activeTab.set(0);
     testComponent.wrapperWidth.set(300);
     detectSizeChange();
     vi.advanceTimersByTime(10);
@@ -258,18 +285,17 @@ describe('SiTabset', () => {
 
   it('should always scroll active tab into view', async () => {
     testComponent.tabButtonMaxWidth.set(90);
-    const tabs = [
+    testComponent.tabs = [
       { heading: 'Tab 1' },
       { heading: 'Tab 2' },
       { heading: 'Tab 3' },
       { heading: 'Tab 4' },
       { heading: 'Tab 5' },
       { heading: 'Tab 6' },
-      { heading: 'Tab 7', active: true }
+      { heading: 'Tab 7' }
     ];
-    testComponent.tabs = tabs;
+    testComponent.activeTab.set(6);
     vi.advanceTimersByTime(100);
-    fixture.changeDetectorRef.markForCheck();
     detectSizeChange();
     testComponent.wrapperWidth.set(300);
     detectSizeChange();
@@ -278,10 +304,7 @@ describe('SiTabset', () => {
     expect(await tabsetHarness.getOptionsMenuButton()).toBeDefined();
     expect(await tabsetHarness.isTabVisible(6)).toBe(true);
     expect(await tabsetHarness.isTabVisible(0)).toBe(false);
-
-    tabs[0].active = true;
-    tabs[6].active = false;
-    fixture.changeDetectorRef.markForCheck();
+    testComponent.activeTab.set(0);
     // need to tick twice to allow for scrollIntoView to complete
     vi.advanceTimersByTime(0);
     detectSizeChange();
@@ -309,7 +332,6 @@ describe('SiTabset', () => {
     testComponent.tabs = ['1', '2', '3', '4', '5'];
     testComponent.wrapperWidth.set(200);
     detectSizeChange();
-    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(await tabsetHarness.isTabVisible(4)).toBe(false);
     (await tabsetHarness.getOptionsMenuButton())?.click();
@@ -332,7 +354,6 @@ describe('SiTabset', () => {
       '2',
       '3'
     ];
-    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
     expect(await tabsetHarness.isTabVisible(2)).toBe(false);
@@ -351,15 +372,17 @@ describe('SiTabset', () => {
   it('should mark active tab as focussable after delayed adding', async () => {
     testComponent.tabs = [];
     fixture.detectChanges();
-    testComponent.tabs = ['1', { heading: '2', active: true }, '3'];
+    testComponent.tabs = ['1', { heading: '2' }, '3'];
+    testComponent.activeTab.set(1);
     expect(await tabsetHarness.isTabFocussable(1)).toBe(true);
   });
 
   it('should not change active if canDeactivate returns false', async () => {
     testComponent.tabs = [
-      { heading: '1', active: true },
+      { heading: '1' },
       { heading: '2', closable: true, canDeactivate: () => false }
     ];
+    testComponent.activeTab.set(0);
     fixture.detectChanges();
     expect(await tabsetHarness.isTabItemActive(0)).toBe(true);
     expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
@@ -377,9 +400,10 @@ describe('SiTabset', () => {
 
   it('should not change active if canActivate returns false', async () => {
     testComponent.tabs = [
-      { heading: '1', active: true },
+      { heading: '1' },
       { heading: '2', closable: true, canActivate: () => false }
     ];
+    testComponent.activeTab.set(0);
     fixture.detectChanges();
     expect(await tabsetHarness.isTabItemActive(0)).toBe(true);
     expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
@@ -440,9 +464,9 @@ describe('SiTabset with portal content', () => {
     template: `
       <div class="tab-wrapper">
         <si-tabset #tabset>
-          @for (tab of tabsObject(); track tab) {
+          @for (tab of tabs(); track tab) {
             <si-tab
-              [active]="tab.active ?? false"
+              [active]="activeTab() === $index"
               [heading]="tab.heading"
               [disabled]="!!tab.disabled"
             >
@@ -453,17 +477,14 @@ describe('SiTabset with portal content', () => {
 
         <si-tab-portal [tabset]="tabset" />
       </div>
-    `
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
   })
   class TestPortalContentComponent {
-    protected readonly tabsObject = signal<
+    readonly tabs = signal<
       { heading: string; content: string; active?: boolean; disabled?: boolean }[]
     >([]);
-
-    set tabs(value: { heading: string; content: string; active?: boolean; disabled?: boolean }[]) {
-      this.tabsObject.set(value);
-    }
-
+    readonly activeTab = signal<number | null>(null);
     readonly tabSet = viewChild.required(SiTabsetComponent);
   }
 
@@ -480,10 +501,11 @@ describe('SiTabset with portal content', () => {
   });
 
   it('should not render tabpanel inside the tabset', async () => {
-    testComponent.tabs = [
-      { heading: '1', content: 'Content 1', active: true },
+    testComponent.tabs.set([
+      { heading: '1', content: 'Content 1' },
       { heading: '2', content: 'Content 2' }
-    ];
+    ]);
+    testComponent.activeTab.set(0);
     fixture.detectChanges();
 
     const internalTabpanel = fixture.nativeElement.querySelector('si-tabset [role="tabpanel"]');
@@ -491,10 +513,11 @@ describe('SiTabset with portal content', () => {
   });
 
   it('should render active tab content via the portal', async () => {
-    testComponent.tabs = [
-      { heading: '1', content: 'Content 1', active: true },
+    testComponent.tabs.set([
+      { heading: '1', content: 'Content 1' },
       { heading: '2', content: 'Content 2' }
-    ];
+    ]);
+    testComponent.activeTab.set(0);
     fixture.detectChanges();
 
     const portalHarness = await tabsetHarness.getExternalTabPortal();
@@ -503,10 +526,11 @@ describe('SiTabset with portal content', () => {
   });
 
   it('should set correct role="tabpanel" on portal content', async () => {
-    testComponent.tabs = [
-      { heading: '1', content: 'Content 1', active: true },
+    testComponent.tabs.set([
+      { heading: '1', content: 'Content 1' },
       { heading: '2', content: 'Content 2' }
-    ];
+    ]);
+    testComponent.activeTab.set(0);
     fixture.detectChanges();
 
     const portalHarness = await tabsetHarness.getExternalTabPortal();
@@ -515,10 +539,11 @@ describe('SiTabset with portal content', () => {
   });
 
   it('should link tabpanel aria-labelledby to the active tab id', async () => {
-    testComponent.tabs = [
-      { heading: '1', content: 'Content 1', active: true },
+    testComponent.tabs.set([
+      { heading: '1', content: 'Content 1' },
       { heading: '2', content: 'Content 2' }
-    ];
+    ]);
+    testComponent.activeTab.set(0);
     fixture.detectChanges();
 
     const portalHarness = await tabsetHarness.getExternalTabPortal();
@@ -527,10 +552,11 @@ describe('SiTabset with portal content', () => {
   });
 
   it('should set tabpanel id matching the active tab aria-controls', async () => {
-    testComponent.tabs = [
-      { heading: '1', content: 'Content 1', active: true },
+    testComponent.tabs.set([
+      { heading: '1', content: 'Content 1' },
       { heading: '2', content: 'Content 2' }
-    ];
+    ]);
+    testComponent.activeTab.set(0);
     fixture.detectChanges();
 
     const portalHarness = await tabsetHarness.getExternalTabPortal();
@@ -539,10 +565,11 @@ describe('SiTabset with portal content', () => {
   });
 
   it('should update content and ARIA attributes when switching tabs', async () => {
-    testComponent.tabs = [
-      { heading: '1', content: 'Content 1', active: true },
+    testComponent.tabs.set([
+      { heading: '1', content: 'Content 1' },
       { heading: '2', content: 'Content 2' }
-    ];
+    ]);
+    testComponent.activeTab.set(0);
     fixture.detectChanges();
 
     // Click second tab
@@ -560,13 +587,68 @@ describe('SiTabset with portal content', () => {
   });
 
   it('should not render tabpanel when no tab is active', async () => {
-    testComponent.tabs = [
+    testComponent.tabs.set([
       { heading: '1', content: 'Content 1' },
       { heading: '2', content: 'Content 2' }
-    ];
+    ]);
     fixture.detectChanges();
 
     const portalHarness = await tabsetHarness.getExternalTabPortal();
     expect(await portalHarness!.hasTabPanel()).toBe(false);
+  });
+});
+
+describe('SiTabset with custom tooltip', () => {
+  @Component({
+    imports: [SiTabsetComponent, SiTabComponent, SiTooltipDirective],
+    template: `
+      <si-tabset>
+        <si-tab heading="Tab 1" icon="element-options" [siTooltip]="tooltip()" />
+      </si-tabset>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
+  })
+  class TooltipHostComponent {
+    readonly tooltip = signal('Custom tooltip');
+  }
+
+  let fixture: ComponentFixture<TooltipHostComponent>;
+  let hostComponent: TooltipHostComponent;
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setTimerTickMode('nextTimerAsync');
+    fixture = TestBed.createComponent(TooltipHostComponent);
+    hostComponent = fixture.componentInstance;
+    fixture.autoDetectChanges();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('should not add an own tooltip when an active siTooltip directive is present', async () => {
+    await fixture.whenStable();
+
+    const tabButton = fixture.nativeElement.querySelector('[role="tab"]') as HTMLElement;
+    tabButton.dispatchEvent(new MouseEvent('mouseenter'));
+    await vi.advanceTimersByTimeAsync(500);
+    await fixture.whenStable();
+
+    await expect.element(page.getByRole('tooltip')).toHaveLength(1);
+    await expect.element(page.getByRole('tooltip')).toHaveTextContent('Custom tooltip');
+  });
+
+  it('should fall back to the heading tooltip when the siTooltip directive is empty', async () => {
+    hostComponent.tooltip.set('');
+    await fixture.whenStable();
+
+    const tabButton = fixture.nativeElement.querySelector('[role="tab"]') as HTMLElement;
+    tabButton.dispatchEvent(new MouseEvent('mouseenter'));
+    await vi.advanceTimersByTimeAsync(500);
+    await fixture.whenStable();
+
+    await expect.element(page.getByRole('tooltip')).toHaveLength(1);
+    await expect.element(page.getByRole('tooltip')).toHaveTextContent('Tab 1');
   });
 });

@@ -6,17 +6,17 @@
 
 import { ActivatedRoute } from '@angular/router';
 import * as _angular_core from '@angular/core';
-import { HeaderWithDropdowns } from '@siemens/element-ng/header-dropdown';
+import { ConnectedPosition } from '@angular/cdk/overlay';
+import { ElementRef } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 import { Injector } from '@angular/core';
 import { IsActiveMatchOptions } from '@angular/router';
 import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import * as rxjs from 'rxjs';
-import * as _siemens_element_ng_application_header from '@siemens/element-ng/application-header';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
-import { SiHeaderDropdownTriggerDirective } from '@siemens/element-ng/header-dropdown';
+import { Signal } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
@@ -78,6 +78,7 @@ export class SiAccountDetailsComponent {
 
 // @public
 export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDestroy {
+    constructor();
     readonly expandBreakpoint: _angular_core.InputSignal<"sm" | "md" | "lg" | "xl" | "xxl" | "never">;
     // (undocumented)
     readonly launchpad: _angular_core.InputSignal<TemplateRef<void> | undefined>;

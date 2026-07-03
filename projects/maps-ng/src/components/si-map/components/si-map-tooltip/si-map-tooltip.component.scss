@@ -16,7 +16,7 @@
     content: '';
     position: absolute;
     inset-block-start: -(map.get(variables.$spacers, 2));
-    left: 50%; // stylelint-disable-line liberty/use-logical-spec
+    left: 50%; // stylelint-disable-line property-layout-mappings
     transform: translate(-50%, 0%) rotate(45deg);
     block-size: map.get(variables.$spacers, 4);
     inline-size: map.get(variables.$spacers, 4);

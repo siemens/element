@@ -15,18 +15,21 @@
     (clicked)="changeVisibleYearRange(1)"
   />
 </div>
-<table class="px-9 mt-6" role="grid">
-  <tbody
-    si-calendar-body
-    [focusedDate]="focusedDate()"
-    [compareAdapter]="compareAdapter"
-    [startDate]="startDate()"
-    [endDate]="endDate()"
-    [enableRangeSelection]="isRangeSelection()"
-    [previewRange]="previewRange()"
-    [rows]="yearCells"
-    (selectedValueChange)="emitSelectedValue($event)"
-    (keydown)="calendarBodyKeyDown($event)"
-  >
-  </tbody>
-</table>
+<div class="calendar-table">
+  <table class="px-9" role="grid">
+    <tbody
+      si-calendar-body
+      [focusedDate]="focusedDate()"
+      [compareAdapter]="compareAdapter"
+      [startDate]="startDate()"
+      [endDate]="endDate()"
+      [enableRangeSelection]="isRangeSelection()"
+      [previewRange]="previewRange()"
+      [rows]="yearCells"
+      (selectedValueChange)="emitSelectedValue($event)"
+      (keydown)="calendarBodyKeyDown($event)"
+    >
+    </tbody>
+  </table>
+</div>
+<div class="footer"></div>

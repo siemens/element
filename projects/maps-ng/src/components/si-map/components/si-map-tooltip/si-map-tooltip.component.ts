@@ -2,17 +2,25 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, inject, input, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  input,
+  signal,
+  viewChild
+} from '@angular/core';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { TOOLTIP_FEATURES_TO_DISPLAY } from '../../models/constants';
 
 @Component({
   selector: 'si-map-tooltip',
-
   imports: [SiTranslatePipe],
   templateUrl: './si-map-tooltip.component.html',
-  styleUrl: './si-map-tooltip.component.scss'
+  styleUrl: './si-map-tooltip.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiMapTooltipComponent {
   protected readonly content = viewChild.required<ElementRef>('content');
@@ -75,7 +83,7 @@ export class SiMapTooltipComponent {
 
   private getLabelSnippet(label: string): string {
     if (this.maxLabelLength() != -1 && label.length > this.maxLabelLength()) {
-      return `<div>${label.substring(0, this.maxLabelLength())}...</div>`;
+      return `<div>${label.substring(0, this.maxLabelLength())}…</div>`;
     } else {
       return `<div>${label}</div>`;
     }

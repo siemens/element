@@ -4,6 +4,7 @@
  */
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -18,7 +19,11 @@ import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe,
+  t
+} from '@siemens/element-translate-ng/translate';
 
 import { createWidgetConfig, Widget, WidgetConfig } from '../../model/widgets.model';
 import { SiWidgetEditorBase } from '../si-widget-editor-base';
@@ -40,7 +45,8 @@ import { SiWidgetEditorBase } from '../si-widget-editor-base';
     CdkOption
   ],
   templateUrl: './si-widget-catalog.component.html',
-  styleUrl: './si-widget-catalog.component.scss'
+  styleUrl: './si-widget-catalog.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnInit {
   /**
@@ -91,6 +97,8 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   private readonly hasEditor = computed(
     () => !!this.selected()?.componentFactory.editorComponentName
   );
+
+  private readonly translateService = injectSiTranslateService();
 
   protected labelCancel = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.CANCEL:Cancel`);
   protected labelPrevious = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.PREVIOUS:Previous`);
@@ -158,9 +166,11 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
       this.filteredWidgetCatalog = this.widgetCatalog;
     } else {
       this.searchTerm = searchTerm;
-      this.filteredWidgetCatalog = this.widgetCatalog.filter(wd =>
-        wd.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
-      );
+      const term = searchTerm.trim().toLowerCase();
+      this.filteredWidgetCatalog = this.widgetCatalog.filter(wd => {
+        const name = this.translateService.translateSync(wd.name);
+        return name.toLowerCase().includes(term);
+      });
     }
     if (this.filteredWidgetCatalog.length > 0) {
       this.selectWidget(this.filteredWidgetCatalog[0]);

@@ -5,12 +5,14 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  afterNextRender,
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
   computed,
   Directive,
-  HostBinding,
   inject,
+  Injector,
   input,
   model,
   OnChanges,
@@ -79,11 +81,13 @@ export class SiNavbarVerticalItemGuardDirective {
   templateUrl: './si-navbar-vertical.component.html',
   styleUrl: './si-navbar-vertical.component.scss',
   providers: [{ provide: SI_NAVBAR_VERTICAL, useExisting: SiNavbarVerticalComponent }],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'si-layout-inner',
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
-    '[class.visible]': 'visible()'
+    '[class.visible]': 'visible()',
+    '[class.ready]': 'ready()'
   }
 })
 export class SiNavbarVerticalComponent implements OnChanges, OnInit {
@@ -208,11 +212,9 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
 
   private readonly searchBar = viewChild.required(SiSearchBarComponent);
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
-  // Is required to prevent the navbar from running the padding animation on creation.
-  @HostBinding('class.ready') protected readonly ready = true;
-
   private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
   private breakpointObserver = inject(BreakpointObserver);
+  private injector = inject(Injector);
   private readonly navbarItems = viewChildren(SiNavbarVerticalItemComponent);
   private readonly navbarItemsLegacy = viewChildren(SiNavbarVerticalItemLegacyComponent);
   private readonly itemsToComponents = computed(
@@ -225,6 +227,7 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
       )
   );
 
+  protected readonly ready = signal(false);
   protected readonly smallScreen = signal(false);
   protected readonly uiStateExpandedItems = signal<Record<string, boolean>>({});
 
@@ -256,7 +259,10 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
           this.collapsed.set(this.smallScreen() ? this.collapsed() : this.preferCollapse);
           this.uiStateExpandedItems.set(uiState.expandedItems);
         }
+        afterNextRender(() => this.ready.set(true), { injector: this.injector });
       });
+    } else {
+      this.ready.set(true);
     }
   }
 

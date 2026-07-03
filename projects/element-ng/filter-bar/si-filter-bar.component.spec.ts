@@ -235,10 +235,10 @@ describe('SiFilterBarComponent', () => {
     fixture.detectChanges();
     await timeout(200);
     fixture.detectChanges();
-    expect(filters().length).toEqual(5);
+    expect(filters()).toHaveLength(5);
     removeButtons().at(-1)!.click();
 
-    expect(filters().length).toEqual(3);
+    expect(filters()).toHaveLength(3);
   });
 
   it('should not display too many filters when responsive is enabled', async () => {

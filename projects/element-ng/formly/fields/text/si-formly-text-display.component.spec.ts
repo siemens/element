@@ -10,7 +10,7 @@ import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
-} from '@siemens/element-ng/translate';
+} from '@siemens/element-translate-ng/translate';
 import type { Mock } from 'vitest';
 
 import { SiFormlyTextDisplayComponent } from './si-formly-text-display.component';
@@ -183,7 +183,8 @@ describe('formly text-display-type', () => {
     expect(inputField.nativeElement.textContent).toBeDefined();
     expect(inputField.nativeElement).toHaveTextContent('thisIsASuffix');
   });
-  it('should render a suffix without value', () => {
+
+  it('should render a suffix without value (nested path)', () => {
     component.fields.set([
       {
         key: 'name',

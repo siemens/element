@@ -2,7 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnInit, output, OutputEmitterRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  output,
+  OutputEmitterRef
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
@@ -25,7 +31,8 @@ import { SiGridComponent } from './si-grid.component';
 @Component({
   selector: 'si-widget-editor-dialog',
   imports: [TestingModule, SiLoadingSpinnerModule],
-  template: ''
+  template: '',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiWidgetEditorDialogMockComponent
   extends SiWidgetInstanceEditorDialogComponent
@@ -130,7 +137,7 @@ describe('SiGridComponent', () => {
 
     const savedWidgets = [...component.persistedWidgetInstances];
     component.addWidgetInstance({ widgetId: 'id' });
-    expect(component.visibleWidgetInstances$.value.length).toBe(savedWidgets.length + 1);
+    expect(component.visibleWidgetInstances$.value).toHaveLength(savedWidgets.length + 1);
 
     // Simulate grid modification so restoreSavedState actually restores
     fixture.debugElement
@@ -150,7 +157,7 @@ describe('SiGridComponent', () => {
 
     const savedWidgets = [...component.persistedWidgetInstances];
     component.addWidgetInstance({ widgetId: 'id' });
-    expect(component.visibleWidgetInstances$.value.length).toBe(savedWidgets.length + 1);
+    expect(component.visibleWidgetInstances$.value).toHaveLength(savedWidgets.length + 1);
 
     // Simulate grid modification so restoreSavedState actually restores
     fixture.debugElement
@@ -169,7 +176,7 @@ describe('SiGridComponent', () => {
     component.addWidgetInstance({ widgetId: 'id' });
 
     const widgets = component.visibleWidgetInstances$.value;
-    expect(widgets.length).toBe(2);
+    expect(widgets).toHaveLength(2);
     expect(widgets[0].widgetId).toBe('id');
     expect(widgets[1].widgetId).toBe('id');
     expect(widgets[0].id).toBeDefined();
@@ -180,11 +187,11 @@ describe('SiGridComponent', () => {
   it('#removeWidget() shall remove WidgetConfig from visible widgets', async () => {
     component.addWidgetInstance({ widgetId: 'id' });
     component.addWidgetInstance({ widgetId: 'id' });
-    expect(component.visibleWidgetInstances$.value.length).toBe(2);
+    expect(component.visibleWidgetInstances$.value).toHaveLength(2);
 
     const widget1 = component.visibleWidgetInstances$.value[0];
     component.removeWidgetInstance(widget1.id);
-    expect(component.visibleWidgetInstances$.value.length).toBe(1);
+    expect(component.visibleWidgetInstances$.value).toHaveLength(1);
   });
 
   describe('#editWidgetInstance()', () => {
@@ -315,7 +322,7 @@ describe('SiGridComponent with custom id resolver', () => {
     component.addWidgetInstance({ widgetId: 'id' });
 
     const preSaveWidgets = component.visibleWidgetInstances$.value;
-    expect(preSaveWidgets.length).toBe(1);
+    expect(preSaveWidgets).toHaveLength(1);
     expect(preSaveWidgets[0].widgetId).toBe('id');
     expect(preSaveWidgets[0].id).toBeDefined();
     expect(preSaveWidgets[0].id).toBe('custom-id-default');

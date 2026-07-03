@@ -3,26 +3,39 @@
  * SPDX-License-Identifier: MIT
  */
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { PortalModule } from '@angular/cdk/portal';
 import {
+  afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  computed,
+  contentChildren,
   inject,
+  Injector,
   input,
   model,
   OnChanges,
   OnInit,
   signal,
-  SimpleChanges
+  SimpleChanges,
+  viewChild,
+  ViewContainerRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { elementDoubleLeft, elementDoubleRight } from '@siemens/element-icons';
+import {
+  elementDoubleLeft,
+  elementDoubleRight,
+  elementLayoutPane2,
+  elementLayoutPane2Right
+} from '@siemens/element-icons';
 import { SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
+import { SiNavbarVerticalNextItemComponent } from './si-navbar-vertical-next-item.component';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
 /** @experimental */
@@ -34,7 +47,7 @@ interface UIState {
 /** @experimental */
 @Component({
   selector: 'si-navbar-vertical-next',
-  imports: [SiIconComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
+  imports: [PortalModule, SiIconComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
   templateUrl: './si-navbar-vertical-next.component.html',
   styleUrl: './si-navbar-vertical-next.component.scss',
   providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useExisting: SiNavbarVerticalNextComponent }],
@@ -43,11 +56,19 @@ interface UIState {
     class: 'si-layout-inner ready',
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
-    '[class.visible]': 'visible()'
+    '[class.nav-inline-collapse]': 'inlineCollapse()',
+    '[class.visible]': 'visible()',
+    '[class.ready]': 'ready()'
   }
 })
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
-  protected readonly icons = addIcons({ elementDoubleLeft, elementDoubleRight });
+  protected readonly icons = addIcons({
+    elementDoubleLeft,
+    elementDoubleRight,
+    elementLayoutPane2,
+    elementLayoutPane2Right
+  });
+
   /**
    * Whether the navbar-vertical is collapsed.
    *
@@ -63,6 +84,25 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   readonly textOnly = input(false, { transform: booleanAttribute });
 
   /**
+   * Enables an alternative inline-collapse behavior.
+   *
+   * When collapsed, nav content becomes inert while the toggle remains
+   * available in the page flow.
+   *
+   * @defaultValue false
+   */
+  readonly inlineCollapse = input(false, { transform: booleanAttribute });
+
+  /**
+   * When `true`, item-groups always open as a transient flyout panel adjacent to the
+   * trigger, regardless of whether the navbar is collapsed or expanded.
+   * Flyouts open and close on click.
+   *
+   * @defaultValue false
+   */
+  readonly alwaysFlyout = input(false, { transform: booleanAttribute });
+
+  /**
    * List of vertical navigation items
    *
    * @deprecated Use the template-based declarative API with content projection instead. Use `<si-navbar-vertical-next-items>` and
@@ -73,26 +113,15 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   readonly visible = input(true, { transform: booleanAttribute });
 
   /**
-   * Text for the navbar expand button. Required for a11y
+   * Text for the navbar toggle button used as `aria-label`.
+   * The expanded state is communicated via `aria-expanded`.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.EXPAND:Expand`)
+   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.TOGGLE:Toggle`)
    * ```
    */
-  readonly navbarExpandButtonText = input(t(() => $localize`:@@SI_NAVBAR_VERTICAL.EXPAND:Expand`));
-
-  /**
-   * Text for the navbar collapse button. Required for a11y
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.COLLAPSE:Collapse`)
-   * ```
-   */
-  readonly navbarCollapseButtonText = input(
-    t(() => $localize`:@@SI_NAVBAR_VERTICAL.COLLAPSE:Collapse`)
-  );
+  readonly toggleButtonText = input(t(() => $localize`:@@SI_NAVBAR_VERTICAL.TOGGLE:Toggle`));
 
   /**
    * An optional stateId to uniquely identify a component instance.
@@ -125,8 +154,34 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   );
   private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
   private breakpointObserver = inject(BreakpointObserver);
+  private injector = inject(Injector);
 
+  protected readonly ready = signal(false);
   protected readonly smallScreen = signal(false);
+
+  /** Stable ViewContainerRef inside <nav>, used to host flyout anchors when the chip DomPortal moves a trigger outside the nav.
+   * @internal
+   */
+  readonly flyoutAnchorHost = viewChild('flyoutAnchorHost', { read: ViewContainerRef });
+
+  /** All projected nav items, including descendants inside group templates.
+   * @internal
+   */
+  private readonly items = contentChildren(SiNavbarVerticalNextItemComponent, {
+    descendants: true
+  });
+
+  /** The active root-level item; group triggers resolve for nested routes.
+   * @internal
+   */
+  readonly activeItem = computed(() => this.items().find(item => item.isActiveRootItem()));
+
+  /** `true` when the active item's portal should occupy the chip slot.
+   * @internal
+   */
+  readonly chipPortalAttached = computed(
+    () => this.inlineCollapse() && this.collapsed() && !!this.activeItem()
+  );
 
   /**
    * @defaultValue
@@ -138,6 +193,23 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
 
   // Indicates if the user prefers a collapsed navbar. Relevant for resizing.
   private preferCollapse = false;
+
+  protected readonly toggleIcon = computed(() => {
+    if (this.inlineCollapse()) {
+      return this.collapsed() ? this.icons.elementLayoutPane2 : this.icons.elementLayoutPane2Right;
+    }
+    return this.collapsed() ? this.icons.elementDoubleRight : this.icons.elementDoubleLeft;
+  });
+
+  /** `true` when inline-collapse is active and the nav is collapsed.
+   * @internal
+   */
+  readonly chipMode = computed(() => this.inlineCollapse() && this.collapsed());
+
+  /** `true` when groups should render as flyout overlays.
+   * @internal
+   */
+  readonly flyoutMode = computed(() => this.alwaysFlyout() || this.collapsed());
 
   constructor() {
     this.breakpointObserver
@@ -166,7 +238,10 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
             this.uiStateExpandedItems.set(uiState.expandedItems);
           }
         }
+        afterNextRender(() => this.ready.set(true), { injector: this.injector });
       });
+    } else {
+      this.ready.set(true);
     }
   }
 

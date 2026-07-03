@@ -5,7 +5,7 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, Injectable, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injectable, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import {
@@ -42,7 +42,7 @@ class BreakpointObserverMock implements Partial<BreakpointObserver> {
   }
 }
 
-@Component({ template: '' })
+@Component({ template: '', changeDetection: ChangeDetectionStrategy.OnPush })
 class EmptyComponent {}
 
 @Component({
@@ -56,7 +56,8 @@ class EmptyComponent {}
     [searchDebounceTime]="0"
     (searchEvent)="searchEvent($event)"
     (itemsChange)="itemsChange($event)"
-  />`
+  />`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly items = signal<(MenuItem | NavbarVerticalItem)[]>([
@@ -254,6 +255,40 @@ describe('SiNavbarVertical', () => {
       [subItem1, subItem2] = await toggle.getChildren();
       expect(await subItem1.isActive()).toBe(false);
       expect(await subItem2.isActive()).toBe(true);
+    });
+
+    it('should update group content', async () => {
+      const groupItem = signal({
+        type: 'group' as const,
+        label: 'test-group',
+        expanded: true,
+        children: [{ type: 'router-link' as const, label: 'child-1', routerLink: '/item-1' }]
+      });
+
+      component.items.set([groupItem()]);
+      await fixture.whenStable();
+
+      let groupTrigger = await harness.findItemByLabel('test-group');
+      let children = await groupTrigger.getChildren();
+      expect(children).toHaveLength(1);
+      expect(await children[0].getLabel()).toBe('child-1');
+
+      groupItem.update(item => ({
+        ...item,
+        expanded: true,
+        children: [
+          { type: 'router-link' as const, label: 'child-1', routerLink: '/item-1' },
+          { type: 'router-link' as const, label: 'child-2', routerLink: '/item-2' }
+        ]
+      }));
+      component.items.set([groupItem()]);
+      await fixture.whenStable();
+
+      groupTrigger = await harness.findItemByLabel('test-group');
+      children = await groupTrigger.getChildren();
+      expect(children).toHaveLength(2);
+      expect(await children[0].getLabel()).toBe('child-1');
+      expect(await children[1].getLabel()).toBe('child-2');
     });
   });
 

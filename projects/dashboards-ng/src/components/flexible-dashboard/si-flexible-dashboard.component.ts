@@ -4,6 +4,7 @@
  */
 import { AsyncPipe } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -55,7 +56,8 @@ type ViewState = 'dashboard' | 'catalog' | 'editor';
   selector: 'si-flexible-dashboard',
   imports: [SiDashboardComponent, SiDashboardToolbarComponent, SiGridComponent, AsyncPipe],
   templateUrl: './si-flexible-dashboard.component.html',
-  styleUrl: './si-flexible-dashboard.component.scss'
+  styleUrl: './si-flexible-dashboard.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestroy {
   /**
@@ -195,7 +197,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
   ]);
   /**
    * The secondary action menu items shown in the edit mode of the dashboard. When all menu items are more than
-   * three, they will be places in the secondary menu of the content action bar.
+   * three, they will be placed in the secondary menu of the content action bar.
    */
   readonly secondaryEditActions$ = new BehaviorSubject<(MenuItem | DashboardToolbarItem)[]>([]);
 

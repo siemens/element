@@ -26,7 +26,7 @@ export abstract class SiPillsInputPatternBase {
     value: string,
     trigger: SiPillsInputValueHandlerTrigger
   ): SiPillsInputValueParseResult | undefined {
-    const segments = value.split(this.separatorRegex());
+    const segments = value.split(this.separatorRegex()).map(s => s.trim());
     const itemRegex = this.validationRegex?.();
     if (segments.length) {
       const newValue = trigger === 'input' ? segments.pop()! : '';

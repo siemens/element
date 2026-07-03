@@ -2,14 +2,16 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, NgModule } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+// eslint-disable-next-line no-restricted-imports
+import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 @Component({
-  imports: [TranslateModule],
-  template: `{{ 'KEY-1' | translate }}`
+  imports: [TranslatePipe],
+  template: `{{ 'KEY-1' | translate }}`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestComponent {}
 

@@ -89,14 +89,14 @@ describe('formly grid  type', () => {
     expect(container).toBeTruthy();
     const rows = container.queryAll(By.css('.row'));
     expect(rows).toBeTruthy();
-    expect(rows.length).toEqual(2);
+    expect(rows).toHaveLength(2);
     let row = rows[0];
     let cols = row.queryAll(By.css('.col'));
     expect(cols).toBeTruthy();
-    expect(cols.length).toEqual(2);
+    expect(cols).toHaveLength(2);
     let fields = cols[0].queryAll(By.css('formly-field'));
     expect(fields).toBeTruthy();
-    expect(fields.length).toEqual(2);
+    expect(fields).toHaveLength(2);
     let f: HTMLElement = fields[0].query(By.css('h1')).nativeElement;
     expect(f).toHaveTextContent('r1c1a');
     f = fields[1].query(By.css('h1')).nativeElement;
@@ -104,17 +104,17 @@ describe('formly grid  type', () => {
 
     fields = cols[1].queryAll(By.css('formly-field'));
     expect(fields).toBeTruthy();
-    expect(fields.length).toEqual(1);
+    expect(fields).toHaveLength(1);
     f = fields[0].query(By.css('h1')).nativeElement;
     expect(f).toHaveTextContent('r1c2');
 
     row = rows[1];
     cols = row.queryAll(By.css('.col'));
     expect(cols).toBeTruthy();
-    expect(cols.length).toEqual(1);
+    expect(cols).toHaveLength(1);
     fields = cols[0].queryAll(By.css('formly-field'));
     expect(fields).toBeTruthy();
-    expect(fields.length).toEqual(3);
+    expect(fields).toHaveLength(3);
     expect(fields[0].query(By.css('h1')).nativeElement).toHaveTextContent('r2c1a');
     expect(fields[1].query(By.css('h1')).nativeElement).toHaveTextContent('r2c1b');
     expect(fields[2].query(By.css('h1')).nativeElement).toHaveTextContent('r2c1c');
@@ -173,14 +173,14 @@ describe('formly grid  type', () => {
     expect(container).toBeTruthy();
     const rows = container.queryAll(By.css('.alt-row'));
     expect(rows).toBeTruthy();
-    expect(rows.length).toEqual(2);
+    expect(rows).toHaveLength(2);
     let row = rows[0];
     let cols = row.queryAll(By.css('.alt-col'));
     expect(cols).toBeTruthy();
-    expect(cols.length).toEqual(2);
+    expect(cols).toHaveLength(2);
     let fields = cols[0].queryAll(By.css('formly-field'));
     expect(fields).toBeTruthy();
-    expect(fields.length).toEqual(2);
+    expect(fields).toHaveLength(2);
     let f: HTMLElement = fields[0].query(By.css('h1')).nativeElement;
     expect(f).toHaveTextContent('r1c1a');
     f = fields[1].query(By.css('h1')).nativeElement;
@@ -188,17 +188,17 @@ describe('formly grid  type', () => {
 
     fields = cols[1].queryAll(By.css('formly-field'));
     expect(fields).toBeTruthy();
-    expect(fields.length).toEqual(1);
+    expect(fields).toHaveLength(1);
     f = fields[0].query(By.css('h1')).nativeElement;
     expect(f).toHaveTextContent('r1c2');
 
     row = rows[1];
     cols = row.queryAll(By.css('.col'));
     expect(cols).toBeTruthy();
-    expect(cols.length).toEqual(1);
+    expect(cols).toHaveLength(1);
     fields = cols[0].queryAll(By.css('formly-field'));
     expect(fields).toBeTruthy();
-    expect(fields.length).toEqual(3);
+    expect(fields).toHaveLength(3);
     expect(fields[0].query(By.css('h1')).nativeElement).toHaveTextContent('r2c1a');
     expect(fields[1].query(By.css('h1')).nativeElement).toHaveTextContent('r2c1b');
     expect(fields[2].query(By.css('h1')).nativeElement).toHaveTextContent('r2c1c');

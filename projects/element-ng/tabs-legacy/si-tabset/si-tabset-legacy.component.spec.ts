@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -28,7 +28,8 @@ import { SiTabsetLegacyComponent } from './si-tabset-legacy.component';
     .tab-wrapper {
       width: 200px;
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
@@ -196,26 +197,25 @@ describe('SiTabset', () => {
     expect(preventDefault).toHaveBeenCalledTimes(3);
   });
 
-  it('should handle focus correctly', async () => {
+  it.skipIf(!document.hasFocus())('should handle focus correctly', async () => {
     testComponent.tabs = ['1', '2', '3'];
     fixture.detectChanges();
     await fixture.whenStable();
-    if (document.hasFocus()) {
-      getElement(0).focus();
-      await fixture.whenStable();
-      expect(getElement(0).getAttribute('tabindex')).toEqual('-1');
-      focusNext();
-      expect(document.activeElement).toBe(getElement(1));
-      focusPrevious();
-      expect(document.activeElement).toBe(getElement(0));
-    }
+    getElement(0).focus();
+    await fixture.whenStable();
+    expect(getElement(0).getAttribute('tabindex')).toEqual('-1');
+    focusNext();
+    expect(document.activeElement).toBe(getElement(1));
+    focusPrevious();
+    expect(document.activeElement).toBe(getElement(0));
   });
 
-  it('should restore focus to active element when blurred', async () => {
-    testComponent.tabs = ['1', '2'];
-    fixture.detectChanges();
-    await fixture.whenStable();
-    if (document.hasFocus()) {
+  it.skipIf(!document.hasFocus())(
+    'should restore focus to active element when blurred',
+    async () => {
+      testComponent.tabs = ['1', '2'];
+      fixture.detectChanges();
+      await fixture.whenStable();
       getElement(0).focus();
       vi.advanceTimersByTime(500);
       await fixture.whenStable();
@@ -229,7 +229,7 @@ describe('SiTabset', () => {
 
       expect(getElement(0).getAttribute('tabindex')).toBe('0');
     }
-  });
+  );
 
   it('should use defined tabButtonMaxWidth value', async () => {
     testComponent.tabButtonMaxWidth.set(110);

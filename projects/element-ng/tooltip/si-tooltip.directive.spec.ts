@@ -2,12 +2,38 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal } from '@angular/core';
+import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  signal,
+  viewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { page } from 'vitest/browser';
 
 import { SiTooltipModule } from './si-tooltip.module';
+import { SiTooltipService } from './si-tooltip.service';
 
 describe('SiTooltipDirective', () => {
+  // NOTE: Do NOT use `userEvent.hover()` to trigger hover behavior here. In browser
+  // mode it moves the real OS cursor and parks it over the element. Because the
+  // cursor position persists across tests, a button rendered at the same
+  // coordinates in a later test receives a spurious real `mouseenter`, which starts
+  // the hover tooltip timer and makes the focus-based tests flaky. Dispatch a
+  // synthetic `new MouseEvent('mouseenter')` instead (the `:hover` state is mocked
+  // via `button.matches`, so real hover is not needed).
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setTimerTickMode('nextTimerAsync');
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   describe('with text', () => {
     let fixture: ComponentFixture<TestHostComponent>;
     let component: TestHostComponent;
@@ -17,7 +43,8 @@ describe('SiTooltipDirective', () => {
       imports: [SiTooltipModule],
       template: `<button type="button" [siTooltip]="tooltipText()" [isDisabled]="isDisabled()">
         Test
-      </button>`
+      </button>`,
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {
       readonly isDisabled = signal(false);
@@ -25,64 +52,127 @@ describe('SiTooltipDirective', () => {
     }
 
     beforeEach(() => {
-      vi.useFakeTimers();
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
-      vi.spyOn(button, 'matches').mockReturnValue(true);
+      vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
       fixture.detectChanges();
-    });
-
-    afterEach(() => {
-      vi.useRealTimers();
     });
 
     it('should open on focus', async () => {
-      button.dispatchEvent(new Event('focus'));
-      // Focus should be immediate (no delay) but still need to tick for setTimeout(0)
-      vi.advanceTimersByTime(0);
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
 
-      expect(document.querySelector('.tooltip')).toBeInTheDocument();
-      expect(document.querySelector('.tooltip')).toHaveTextContent('test tooltip');
+      await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
 
-      button.dispatchEvent(new Event('focusout'));
-      vi.advanceTimersByTime(500);
+      button.dispatchEvent(new FocusEvent('focusout'));
+      await vi.advanceTimersByTimeAsync(500);
+      await fixture.whenStable();
 
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
-    it('should not show tooltip when disabled', () => {
+    it('should not show tooltip when disabled', async () => {
       component.isDisabled.set(true);
-      fixture.detectChanges();
+      await fixture.whenStable();
 
-      button.dispatchEvent(new Event('focus'));
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      button.dispatchEvent(new FocusEvent('focus'));
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+    });
+
+    it('should cancel pending tooltip when disabled while waiting', async () => {
+      button.dispatchEvent(new MouseEvent('mouseenter'));
+      await vi.advanceTimersByTimeAsync(0);
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+
+      component.isDisabled.set(true);
+      await fixture.whenStable();
+
+      await vi.advanceTimersByTimeAsync(500);
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
     it('should show tooltip on mouse over', async () => {
       button.dispatchEvent(new MouseEvent('mouseenter'));
-      // hover should have 500ms delay
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
 
-      vi.advanceTimersByTime(500);
+      await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
 
       button.dispatchEvent(new MouseEvent('mouseleave'));
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+    });
+
+    it('should cancel the pending hover tooltip on focusout', async () => {
+      vi.setTimerTickMode('manual');
+      button.dispatchEvent(new MouseEvent('mouseenter'));
+      vi.advanceTimersByTime(250);
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+
+      // focusout (e.g. user switched to keyboard navigation) must stop the
+      // pending hover timer so the tooltip never appears.
+      button.dispatchEvent(new Event('focusout'));
+      vi.advanceTimersByTime(500);
+      await fixture.whenStable();
+
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+    });
+
+    it('should hide a hover-visible tooltip on focusout', async () => {
+      button.dispatchEvent(new MouseEvent('mouseenter'));
+      vi.advanceTimersByTime(500);
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
+
+      button.dispatchEvent(new Event('focusout'));
+
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+    });
+
+    it('should hide the tooltip on touchstart', async () => {
+      button.dispatchEvent(new MouseEvent('mouseenter'));
+      vi.advanceTimersByTime(500);
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
+
+      button.dispatchEvent(new Event('touchstart'));
+
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
     it('should update tooltip content while open', async () => {
-      button.dispatchEvent(new Event('focus'));
-      vi.advanceTimersByTime(0);
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).toHaveTextContent('test tooltip');
+      await expect.element(page.getByRole('tooltip')).toHaveTextContent('test tooltip');
 
       component.tooltipText.set('updated tooltip');
-      fixture.detectChanges();
+      await fixture.whenStable();
 
-      expect(document.querySelector('.tooltip')).toHaveTextContent('updated tooltip');
+      await expect.element(page.getByRole('tooltip')).toHaveTextContent('updated tooltip');
+    });
+
+    it('should reposition the overlay when content changes while open', async () => {
+      const createSpy = vi.spyOn(Overlay.prototype, 'create');
+
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
+      await fixture.whenStable();
+
+      const overlayRef = createSpy.mock.results.at(-1)!.value as ReturnType<Overlay['create']>;
+      const repositionSpy = vi.spyOn(overlayRef, 'updatePosition');
+
+      component.tooltipText.set('a much longer tooltip text that changes the width');
+      await fixture.whenStable();
+
+      expect(repositionSpy).toHaveBeenCalled();
     });
   });
 
@@ -95,46 +185,150 @@ describe('SiTooltipDirective', () => {
       template: `<button type="button" [siTooltip]="template" [tooltipContext]="tooltipContext()">
           Test
         </button>
-        <ng-template #template let-tooltip="tooltip">Template content {{ tooltip }}</ng-template>`
+        <ng-template #template let-tooltip="tooltip">Template content {{ tooltip }}</ng-template>`,
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {
       readonly tooltipContext = signal<Record<string, unknown>>({});
     }
 
     beforeEach(() => {
-      vi.useFakeTimers();
       fixture = TestBed.createComponent(TestHostComponent);
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
-      vi.spyOn(button, 'matches').mockReturnValue(true);
+      vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
       fixture.detectChanges();
     });
 
-    afterEach(() => {
-      vi.useRealTimers();
-    });
-
     it('should render the template', async () => {
-      button.dispatchEvent(new Event('focus'));
-      vi.advanceTimersByTime(500);
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).toHaveTextContent('Template content');
-      button.dispatchEvent(new Event('focusout'));
-      vi.advanceTimersByTime(500);
+      await expect.element(page.getByRole('tooltip')).toHaveTextContent('Template content');
+      button.dispatchEvent(new FocusEvent('focusout'));
+      await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
     it('should render the template with context', async () => {
       fixture.componentInstance.tooltipContext.set({ tooltip: 'test' });
+      await fixture.whenStable();
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(500);
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip')).toHaveTextContent('Template content test');
+      button.dispatchEvent(new FocusEvent('focusout'));
+      await vi.advanceTimersByTimeAsync(500);
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('with ElementRef', () => {
+    let fixture: ComponentFixture<TestHostComponent>;
+    let component: TestHostComponent;
+    let button: HTMLButtonElement;
+
+    @Component({
+      template: `<button #anchor type="button">Test</button>
+        <div #content>{{ contentText() }}</div>`,
+      providers: [SiTooltipService],
+      changeDetection: ChangeDetectionStrategy.OnPush
+    })
+    class TestHostComponent {
+      readonly contentText = signal('node tooltip');
+      readonly anchor = viewChild.required<ElementRef<HTMLButtonElement>>('anchor');
+      readonly content = viewChild.required<ElementRef<HTMLDivElement>>('content');
+      private readonly tooltipService = inject(SiTooltipService);
+
+      createTooltip(): void {
+        this.tooltipService.createTooltip({
+          element: this.anchor(),
+          placement: 'auto',
+          tooltip: this.content,
+          tooltipContext: () => undefined
+        });
+      }
+    }
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TestHostComponent);
+      component = fixture.componentInstance;
       fixture.detectChanges();
-      button.dispatchEvent(new Event('focus'));
-      vi.advanceTimersByTime(500);
+      button = component.anchor().nativeElement;
+      vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
+      component.createTooltip();
+    });
+
+    it('should read the referenced node text content when shown and re-read after updates', async () => {
+      // show tooltip
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).toHaveTextContent('Template content test');
-      button.dispatchEvent(new Event('focusout'));
-      vi.advanceTimersByTime(500);
+
+      // confirm correct content
+      await expect.element(page.getByRole('tooltip', { name: 'node tooltip' })).toBeInTheDocument();
+
+      // hide tooltip
+      button.dispatchEvent(new FocusEvent('focusout'));
+      await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
-      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+
+      // update dom node text
+      component.contentText.set('updated node tooltip');
+      await fixture.whenStable();
+
+      // show tooltip again
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
+      await fixture.whenStable();
+
+      // confirm updated content
+      await expect
+        .element(page.getByRole('tooltip', { name: 'updated node tooltip' }))
+        .toBeInTheDocument();
+    });
+  });
+
+  describe('with scrollStrategy', () => {
+    let fixture: ComponentFixture<TestHostComponent>;
+    let button: HTMLButtonElement;
+
+    @Component({
+      imports: [SiTooltipModule],
+      template: `<button type="button" siTooltip="test" [tooltipScrollStrategy]="scrollStrategy()"
+        >Test</button
+      >`,
+      changeDetection: ChangeDetectionStrategy.OnPush
+    })
+    class TestHostComponent {
+      readonly scrollStrategy = signal<ScrollStrategy | undefined>(undefined);
+    }
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TestHostComponent);
+      button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+      vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
+      fixture.detectChanges();
+    });
+
+    it('should close tooltip on scroll when custom close scroll strategy is provided', async () => {
+      const overlay = TestBed.inject(Overlay);
+      fixture.componentInstance.scrollStrategy.set(overlay.scrollStrategies.close());
+      await fixture.whenStable();
+
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
+      await fixture.whenStable();
+
+      await expect.element(page.getByRole('tooltip', { name: 'test' })).toBeInTheDocument();
+
+      document.dispatchEvent(new Event('scroll', { bubbles: true }));
+      await vi.advanceTimersByTimeAsync(0);
+      await fixture.whenStable();
+
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
   });
 });

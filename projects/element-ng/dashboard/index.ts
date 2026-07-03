@@ -15,3 +15,7 @@ export * from './widgets/si-timeline-widget/si-timeline-widget-body.component';
 export * from './widgets/si-timeline-widget/si-timeline-widget-item.component';
 export * from './widgets/si-value-widget/si-value-widget-body.component';
 export * from './widgets/si-value-widget/si-value-widget.component';
+export * from './widgets/si-weather-widget/si-weather-icon.resolver';
+export * from './widgets/si-weather-widget/si-weather-widget-body.component';
+export * from './widgets/si-weather-widget/si-weather-widget.component';
+export * from './widgets/si-weather-widget/si-weather-widget.types';
