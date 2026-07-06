@@ -3,26 +3,23 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  AfterContentInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
-  ContentChildren,
+  contentChildren,
   ElementRef,
   inject,
-  Input,
+  input,
   NgZone,
-  OnChanges,
-  QueryList,
   signal,
   Signal,
-  SimpleChanges,
   DOCUMENT,
   DestroyRef,
-  output
+  output,
+  effect,
+  untracked
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import {
   isRTL,
   SI_UI_STATE_SERVICE,
@@ -50,52 +47,91 @@ interface SplitPartState {
   selector: 'si-split',
   templateUrl: './si-split.component.html',
   styleUrl: './si-split.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  // Signals cannot be used directly with @HostBinding. See: https://github.com/angular/angular/issues/53888#issuecomment-1888935225
   host: {
-    '[class]': '_orientation()',
+    '[class]': 'orientation()',
     '[style.grid-template-rows]': 'gridTemplateRows()',
     '[style.grid-template-columns]': 'gridTemplateColumns()',
     '[style.grid-template-areas]': 'gridTemplateAreas()'
   }
 })
-export class SiSplitComponent implements AfterContentInit, OnChanges {
-  /** @defaultValue 16 */
-  @Input() gutterSize = 16;
+export class SiSplitComponent {
+  /**
+   * Size of the gutter (divider) between split parts in pixels.
+   *
+   * @defaultValue 16
+   */
+  readonly gutterSize = input(16);
 
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  protected readonly _orientation = signal<SplitOrientation>('horizontal');
+  /**
+   * Defines the split layout direction.
+   *
+   * @defaultValue 'horizontal'
+   */
+  readonly orientation = input<SplitOrientation>('horizontal');
 
-  get orientation(): SplitOrientation {
-    return this._orientation();
-  }
-
-  @Input() set orientation(value: SplitOrientation) {
-    this._orientation.set(value);
-  }
-
-  /** @defaultValue [] */
-  @Input() sizes: number[] = [];
+  /**
+   * Initial relative sizes of the split parts as fractional values.
+   *
+   * @defaultValue []
+   */
+  // eslint-disable-next-line @angular-eslint/prefer-signal-model
+  readonly sizes = input<number[]>([]);
 
   /**
    * An optional stateId to uniquely identify a component instance.
    * Required for persistence of ui state.
    */
-  @Input() stateId?: string;
+  readonly stateId = input<string>();
 
   readonly sizesChange = output<number[]>();
 
   @WebComponentContentChildren(SiSplitPartComponent)
-  @ContentChildren(SiSplitPartComponent)
-  protected parts!: QueryList<SiSplitPartComponent>;
-  protected gutters: Gutter[] = [];
+  protected readonly parts = contentChildren(SiSplitPartComponent);
+  protected readonly gutters = signal<Gutter[]>([]);
 
-  // eslint-disable-next-line
-  protected gridTemplateRows: Signal<string> = signal('');
-  // eslint-disable-next-line
-  protected gridTemplateColumns: Signal<string> = signal('');
-  // eslint-disable-next-line
-  protected gridTemplateAreas: Signal<string> = signal('');
+  private readonly gridTemplate = computed(() => {
+    if (!this.initialized()) {
+      return '';
+    }
+    return this.parts()
+      .map(part =>
+        part.collapsedState()
+          ? part.collapseToMinSize()
+            ? `${part.minSize()}px`
+            : 'min-content'
+          : part.actualSize()
+            ? part.scale() === 'auto'
+              ? `minmax(${part.minSize()}px, ${part.actualSize()}fr)`
+              : `minmax(${part.minSize()}px, ${part.actualSize()}px)`
+            : `minmax(${part.minSize()}px, ${
+                part.fractionalSize()! * this.fractionalSizeToExpandedSizeFactor()
+              }fr)`
+      )
+      .join(' min-content ');
+  });
+
+  protected readonly gridTemplateRows = computed(() =>
+    this.orientation() === 'vertical' ? this.gridTemplate() : '1fr'
+  );
+
+  protected readonly gridTemplateColumns = computed(() =>
+    this.orientation() === 'horizontal' ? this.gridTemplate() : '1fr'
+  );
+
+  protected readonly gridTemplateAreas = computed(() => {
+    if (!this.initialized()) {
+      return '';
+    }
+    const areaNames = this.parts()
+      .map((part, index) => [`p-${index}`, part.after() ? `g-${index}` : []])
+      .flat(2) as string[];
+
+    if (this.orientation() === 'horizontal') {
+      return `"${areaNames.join(' ')}"`;
+    } else {
+      return `"${areaNames.join('" "')}"`;
+    }
+  });
 
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly ngZone = inject(NgZone);
@@ -105,93 +141,68 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
   private readonly destroyRef = inject(DestroyRef);
   // New parts won't be measured, so we need this to scale up their fractional size to the expanded size.
   // Using 10, as the sum of all fractional sizes is 1, so we need to scale them up as fr-values should be >= 1.
-  private fractionalSizeToExpandedSizeFactor = 10;
+  private readonly fractionalSizeToExpandedSizeFactor = signal(10);
+  private readonly initialized = signal(false);
 
-  ngOnChanges(changes: SimpleChanges<this>): void {
-    if (changes.sizes && !changes.sizes.firstChange && this.parts) {
-      this.sizes.forEach((size, index) => {
-        const part = this.parts.get(index);
-        if (part) {
-          part.fractionalSize.set(size);
-          part.expandedSize.set(undefined);
+  constructor() {
+    effect(() => {
+      const sizes = this.sizes();
+      untracked(() => {
+        if (!this.initialized()) {
+          return;
         }
+        sizes.forEach((size, index) => {
+          const part = this.parts()[index];
+          if (part) {
+            part.fractionalSize.set(size);
+            part.expandedSize.set(undefined);
+          }
+        });
+        this.alignRelativeSizes();
       });
-      this.alignRelativeSizes();
-    }
+    });
+
+    toObservable(this.parts)
+      .pipe(observeOn(asapScheduler), takeUntilDestroyed())
+      .subscribe(() => this.setupParts());
   }
 
-  ngAfterContentInit(): void {
-    this.parts.changes.pipe(observeOn(asapScheduler)).subscribe(() => {
-      this.changeDetectorRef.markForCheck();
-      this.gutters = [];
+  private setupParts(): void {
+    this.initialized.set(true);
+    const gutters: Gutter[] = [];
 
-      for (let index = 0; index < this.parts.length; index++) {
-        const component = this.parts.get(index)!;
-        component.index = index;
-        component.after = this.parts.get(index + 1);
-        component.before = this.parts.get(index - 1);
-        component.fractionalSize.set(this.sizes[index]);
-        component.saveUIState = () => this.saveUIState();
+    const parts = this.parts();
+    for (let index = 0; index < parts.length; index++) {
+      const component = parts[index];
+      component.index = index;
+      component.after.set(parts[index + 1]);
+      component.before.set(parts[index - 1]);
+      component.fractionalSize.set(this.sizes()[index]);
+      component.saveUIState = () => this.saveUIState();
 
-        if (component.after) {
-          this.gutters.push({
-            before: component,
-            after: this.parts.get(index + 1)!,
-            visible: computed(() => {
-              const afterPart = component.after!.nextExpandedAfter();
-              return !afterPart.collapsedState() && !component.collapsedState();
-            })
-          });
-        }
+      if (component.after()) {
+        gutters.push({
+          before: component,
+          after: parts[index + 1]!,
+          visible: computed(() => {
+            const afterPart = component.after()!.nextExpandedAfter();
+            return !afterPart.collapsedState() && !component.collapsedState();
+          })
+        });
       }
+    }
+    this.gutters.set(gutters);
 
-      this.alignRelativeSizes();
-      this.updateFractionalSizeToExpandSizeFactor();
-      this.restoreFromUIState();
-
-      const gridTemplate = computed(() =>
-        this.parts
-          .map(part =>
-            part.collapsedState()
-              ? part.collapseToMinSize
-                ? `${part.minSize}px`
-                : 'min-content'
-              : part.actualSize()
-                ? part.scale === 'auto'
-                  ? `minmax(${part.minSize}px, ${part.actualSize()}fr)`
-                  : `minmax(${part.minSize}px, ${part.actualSize()}px)`
-                : `minmax(${part.minSize}px, ${
-                    part.fractionalSize()! * this.fractionalSizeToExpandedSizeFactor
-                  }fr)`
-          )
-          .join(' min-content ')
-      );
-
-      this.gridTemplateRows = computed(() =>
-        this._orientation() === 'vertical' ? gridTemplate() : '1fr'
-      );
-      this.gridTemplateColumns = computed(() =>
-        this._orientation() === 'horizontal' ? gridTemplate() : '1fr'
-      );
-      this.gridTemplateAreas = computed(() => {
-        const areaNames = this.parts
-          .map((part, index) => [`p-${index}`, part.after ? `g-${index}` : []])
-          .flat(2) as string[];
-
-        if (this._orientation() === 'horizontal') {
-          return `"${areaNames.join(' ')}"`;
-        } else {
-          return `"${areaNames.join('" "')}"`;
-        }
-      });
-      setTimeout(() => this.refreshAllPartSizes());
-    });
-    this.parts.notifyOnChanges();
+    this.alignRelativeSizes();
+    this.updateFractionalSizeToExpandSizeFactor();
+    this.restoreFromUIState();
+    setTimeout(() => this.refreshAllPartSizes());
   }
 
   private alignRelativeSizes(): void {
-    const requestedNoSize = this.parts.filter(part => !part.size && !part.fractionalSize());
-    const requestedRelSize = this.parts.filter(part => part.fractionalSize() && !part.size);
+    const parts = this.parts();
+    const requestedNoSize = parts.filter(part => !part.size() && !part.fractionalSize());
+    const requestedRelSize = parts.filter(part => part.fractionalSize() && !part.size());
 
     if (requestedRelSize.length) {
       const totalRequestedRelSize = requestedRelSize.reduce((a, b) => a + b.fractionalSize()!, 0);
@@ -212,34 +223,36 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
     let previousScalableFractionalSum = 0;
     let previousScalableExpandedSizeSum = 0;
 
-    for (let index = 0; index < this.parts.length; index++) {
-      const component = this.parts.get(index)!;
-      if (component.scale === 'auto' && component.expandedSize() !== undefined) {
+    for (const component of this.parts()) {
+      if (component.scale() === 'auto' && component.expandedSize() !== undefined) {
         previousScalableExpandedSizeSum += component.expandedSize()!;
         previousScalableFractionalSum += component.fractionalSize()!;
       }
     }
 
-    this.fractionalSizeToExpandedSizeFactor = previousScalableFractionalSum
-      ? previousScalableExpandedSizeSum / previousScalableFractionalSum
-      : 10;
+    this.fractionalSizeToExpandedSizeFactor.set(
+      previousScalableFractionalSum
+        ? previousScalableExpandedSizeSum / previousScalableFractionalSum
+        : 10
+    );
   }
 
   private refreshAllPartSizes(): void {
-    const refParts = this.parts.filter(
+    const parts = this.parts();
+    const refParts = parts.filter(
       part =>
         !part.collapsedState() &&
-        part.scale === 'auto' &&
+        part.scale() === 'auto' &&
         (part.expandedSize() || part.fractionalSize())
     );
     const beforeFrSum = refParts.reduce((a, b) => a + (b.expandedSize() ?? b.fractionalSize()!), 0);
-    this.parts.forEach(part => part.refreshSizePx(this.orientation));
+    parts.forEach(part => part.refreshSizePx(this.orientation()));
     const afterFrSum = refParts.reduce((a, b) => a + b.expandedSize()!, 0);
     const beforeToAfterFactor = beforeFrSum > 0 ? afterFrSum / beforeFrSum : 1;
-    this.parts
+    parts
       .filter(
         part =>
-          part.collapsedState() && (part.scale === 'auto' || part.expandedSize() === undefined)
+          part.collapsedState() && (part.scale() === 'auto' || part.expandedSize() === undefined)
       )
       .forEach(part =>
         part.expandedSize.update(prev => (prev ?? part.fractionalSize()!) * beforeToAfterFactor)
@@ -255,8 +268,8 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
     let appliedDelta = 0;
     const rtl = isRTL();
     const startPosition = this.getPosition(event);
-    const minDelta = -1 * (beforeSize - gutter.before.minSize);
-    const maxDelta = afterSize - afterPart.minSize;
+    const minDelta = -1 * (beforeSize - gutter.before.minSize());
+    const maxDelta = afterSize - afterPart.minSize();
     const containerSize = this.measureContainerSize();
     event.preventDefault(); // prevents text-selection
 
@@ -271,7 +284,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
         .subscribe({
           next: move => {
             let delta = this.getPosition(move) - startPosition;
-            if (rtl && this.orientation === 'horizontal') {
+            if (rtl && this.orientation() === 'horizontal') {
               delta *= -1;
             }
 
@@ -291,7 +304,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
             appliedDelta += delta;
             gutter.before.expandedSize.set(beforeSize);
             afterPart.expandedSize.set(afterSize);
-            if (this.orientation === 'vertical') {
+            if (this.orientation() === 'vertical') {
               this.elementRef.nativeElement.style.setProperty(
                 'grid-template-rows',
                 this.gridTemplateRows()
@@ -304,7 +317,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
             }
             this.ngZone.run(() =>
               this.sizesChange.emit(
-                this.parts.map(part => (part.actualSize() * 100) / containerSize)
+                this.parts().map(part => (part.actualSize() * 100) / containerSize)
               )
             );
           },
@@ -315,7 +328,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
 
   private measureContainerSize(): number {
     const rect = this.elementRef.nativeElement.getBoundingClientRect();
-    if (this._orientation() === 'vertical') {
+    if (this.orientation() === 'vertical') {
       return rect.height;
     } else {
       return rect.width;
@@ -324,24 +337,26 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
 
   private getPosition(event: Event): number {
     const positionObject = (event as TouchEvent).touches?.[0] ?? (event as MouseEvent);
-    return this.orientation === 'horizontal'
+    return this.orientation() === 'horizontal'
       ? (positionObject.clientX ?? 0)
       : (positionObject.clientY ?? 0);
   }
 
   private saveUIState(): void {
-    if (!this.stateId || !this.uiStateService) {
+    const stateId = this.stateId();
+    if (!stateId || !this.uiStateService) {
       return;
     }
 
     const containerSize = this.measureContainerSize();
-    const state = this.parts.reduce(
+    const state = this.parts().reduce(
       (partState, part) => {
-        if (part.stateId) {
-          partState[part.stateId] = {
+        const partStateId = part.stateId();
+        if (partStateId) {
+          partState[partStateId] = {
             size: ((part.expandedSize() ?? 0) * 100) / containerSize,
-            initialSize: this.sizes[part.index],
-            expanded: part.expanded
+            initialSize: this.sizes()[part.index],
+            expanded: !part.collapsedState()
           };
         }
         return partState;
@@ -349,23 +364,24 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
       {} as Record<string, SplitPartState>
     );
 
-    this.uiStateService.save(this.stateId, state);
+    this.uiStateService.save(stateId, state);
   }
 
   private restoreFromUIState(): void {
-    if (!this.stateId || !this.uiStateService) {
+    const stateId = this.stateId();
+    if (!stateId || !this.uiStateService) {
       return;
     }
 
-    this.uiStateService.load<Record<string, SplitPartState>>(this.stateId).then(uiState => {
+    this.uiStateService.load<Record<string, SplitPartState>>(stateId).then(uiState => {
       if (!uiState) {
         return;
       }
 
-      this.parts
-        .filter(part => part.stateId)
-        .map(part => ({ part, state: uiState[part.stateId!] }))
-        .filter(({ part, state }) => this.sizes[part.index] === state?.initialSize)
+      this.parts()
+        .filter(part => part.stateId())
+        .map(part => ({ part, state: uiState[part.stateId()!] }))
+        .filter(({ part, state }) => this.sizes()[part.index] === state?.initialSize)
         .forEach(({ part, state }) => {
           part.expandedSize.set(undefined);
           part.fractionalSize.set(state?.size);
