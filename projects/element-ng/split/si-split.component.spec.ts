@@ -7,14 +7,14 @@ import {
   Component,
   ElementRef,
   Injectable,
-  TemplateRef,
+  signal,
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideSiUiState, SI_UI_STATE_SERVICE, UIStateStorage } from '@siemens/element-ng/common';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 
-import { Action, CollapseTo, PartState, Scale, SiSplitModule, SplitOrientation } from './index';
+import { runOnPushChangeDetection } from '../test-helpers';
+import { CollapseTo, PartState, Scale, SiSplitModule, SplitOrientation } from './index';
 import { SiSplitPartComponent } from './si-split-part.component';
 import { SiSplitComponent as TestComponent } from './si-split.component';
 
@@ -35,31 +35,30 @@ class SynchronousMockStore implements UIStateStorage {
   template: `
     <div
       style="position: relative;"
-      [style.width]="containerWidth + 'px'"
-      [style.height]="containerHeight + 'px'"
+      [style.width.px]="containerWidth()"
+      [style.height.px]="containerHeight()"
     >
       <si-split
         style="width: 100%; height: 100%;"
         stateId="split-test"
-        [orientation]="orientation"
-        [sizes]="sizes"
-        [gutterSize]="gutterSize"
+        [orientation]="orientation()"
+        [sizes]="sizes()"
+        [gutterSize]="gutterSize()"
       >
         <si-split-part
           #splitPart1
           stateId="one"
-          [actions]="actions1"
-          [collapseDirection]="collapseDirection1"
-          [collapseIconClass]="collapseIconClass1"
-          [collapseToMinSize]="collapseToMinSize1"
-          [headerTemplate]="headerTemplate1"
-          [heading]="heading1"
-          [minSize]="minSize1"
-          [removeContentOnCollapse]="removeContentOnCollapse1"
-          [scale]="scale1"
-          [showCollapseButton]="showCollapseButton1"
-          [showHeader]="showHeader1"
-          [collapseLabel]="collapseLabel1"
+          collapseDirection="start"
+          collapseIconClass="element-command-arrow"
+          collapseLabel="collapse"
+          heading="part 1"
+          removeContentOnCollapse="false"
+          showCollapseButton="true"
+          showHeader="true"
+          [actions]="[]"
+          [collapseToMinSize]="collapseToMinSize1()"
+          [minSize]="minSize1()"
+          [scale]="scale1()"
           (collapseChanged)="collapseChanged1($event)"
           (stateChange)="stateChange1($event)"
         >
@@ -68,19 +67,18 @@ class SynchronousMockStore implements UIStateStorage {
         <si-split-part
           #splitPart2
           stateId="two"
-          [actions]="actions2"
-          [collapseDirection]="collapseDirection2"
-          [collapseIconClass]="collapseIconClass2"
-          [collapseToMinSize]="collapseToMinSize2"
-          [headerTemplate]="headerTemplate2"
-          [heading]="heading2"
-          [minSize]="minSize2"
-          [removeContentOnCollapse]="removeContentOnCollapse2"
-          [scale]="scale2"
-          [showCollapseButton]="showCollapseButton2"
-          [showHeader]="showHeader2"
-          [collapseLabel]="collapseLabel2"
-          [collapseOthers]="collapseOthers2"
+          collapseIconClass="element-command-arrow"
+          collapseLabel="collapse"
+          heading="part 2"
+          removeContentOnCollapse="false"
+          showCollapseButton="true"
+          showHeader="true"
+          [actions]="[]"
+          [collapseDirection]="collapseDirection2()"
+          [collapseToMinSize]="false"
+          [minSize]="0"
+          [scale]="scale2()"
+          [collapseOthers]="collapseOthers2()"
           (collapseChanged)="collapseChanged2($event)"
           (stateChange)="stateChange2($event)"
         >
@@ -88,19 +86,18 @@ class SynchronousMockStore implements UIStateStorage {
         </si-split-part>
         <si-split-part
           #splitPart3
+          collapseLabel="collapse"
+          collapseIconClass="element-command-arrow"
+          heading="part 3"
+          removeContentOnCollapse="false"
           stateId="three"
-          [actions]="actions3"
-          [collapseDirection]="collapseDirection3"
-          [collapseIconClass]="collapseIconClass3"
-          [collapseToMinSize]="collapseToMinSize3"
-          [headerTemplate]="headerTemplate3"
-          [heading]="heading3"
-          [minSize]="minSize3"
-          [removeContentOnCollapse]="removeContentOnCollapse3"
-          [scale]="scale3"
-          [showCollapseButton]="showCollapseButton3"
-          [showHeader]="showHeader3"
-          [collapseLabel]="collapseLabel3"
+          showCollapseButton="true"
+          showHeader="true"
+          [actions]="[]"
+          [collapseDirection]="collapseDirection3()"
+          [collapseToMinSize]="false"
+          [minSize]="minSize3()"
+          [scale]="scale3()"
           (collapseChanged)="collapseChanged3($event)"
           (stateChange)="stateChange3($event)"
         >
@@ -114,58 +111,28 @@ class SynchronousMockStore implements UIStateStorage {
 class WrapperComponent {
   readonly split = viewChild.required(TestComponent);
   readonly splitPart = viewChild.required<SiSplitPartComponent>('splitPart1');
-  containerWidth = 532;
-  containerHeight = 532;
+  readonly containerWidth = signal(532);
+  readonly containerHeight = signal(532);
   readonly splitElement = viewChild.required(TestComponent, { read: ElementRef });
-  orientation: SplitOrientation = 'horizontal';
-  sizes: number[] = [];
-  gutterSize = 16;
+  readonly orientation = signal<SplitOrientation>('horizontal');
+  readonly sizes = signal<number[]>([]);
+  readonly gutterSize = signal(16);
   readonly splitPart1 = viewChild.required('splitPart1', { read: ElementRef });
-  actions1: Action[] = [];
-  collapseDirection1: CollapseTo = 'start';
-  collapseIconClass1 = 'element-command-arrow';
-  collapseToMinSize1 = false;
-  headerStatusColor1?: string;
-  headerStatusIconClass1?: string;
-  headerTemplate1?: TemplateRef<any>;
-  heading1 = '';
-  minSize1 = 0;
-  removeContentOnCollapse1 = false;
-  scale1: Scale = 'auto';
-  showCollapseButton1 = true;
-  showHeader1 = true;
-  collapseLabel1 = 'collapse';
+  readonly collapseToMinSize1 = signal(false);
+  readonly minSize1 = signal(0);
+  readonly scale1 = signal<Scale>('auto');
+  readonly splitPart2 = viewChild.required('splitPart2', { read: ElementRef });
+  readonly collapseDirection2 = signal<CollapseTo>('start');
+  readonly scale2 = signal<Scale>('auto');
+  readonly splitPart3 = viewChild.required('splitPart3', { read: ElementRef });
+  readonly collapseDirection3 = signal<CollapseTo>('start');
+  readonly minSize3 = signal(0);
+  readonly scale3 = signal<Scale>('auto');
+  readonly collapseOthers2 = signal(true);
   collapseChanged1 = (event: boolean): void => {};
   stateChange1 = (event: PartState): void => {};
-  readonly splitPart2 = viewChild.required('splitPart2', { read: ElementRef });
-  actions2: Action[] = [];
-  collapseDirection2: CollapseTo = 'start';
-  collapseIconClass2 = 'element-command-arrow';
-  collapseToMinSize2 = false;
-  headerTemplate2?: TemplateRef<any>;
-  heading2 = '';
-  minSize2 = 0;
-  removeContentOnCollapse2 = false;
-  scale2: Scale = 'auto';
-  showCollapseButton2 = true;
-  showHeader2 = true;
-  collapseLabel2 = 'collapse';
   collapseChanged2 = (event: boolean): void => {};
   stateChange2 = (event: PartState): void => {};
-  readonly splitPart3 = viewChild.required('splitPart3', { read: ElementRef });
-  actions3: Action[] = [];
-  collapseDirection3: CollapseTo = 'start';
-  collapseIconClass3 = 'element-command-arrow';
-  collapseToMinSize3 = false;
-  headerTemplate3?: TemplateRef<any>;
-  heading3 = '';
-  minSize3 = 0;
-  removeContentOnCollapse3 = false;
-  scale3: Scale = 'auto';
-  showCollapseButton3 = true;
-  showHeader3 = true;
-  collapseLabel3 = 'collapse';
-  collapseOthers2 = true;
   collapseChanged3 = (event: boolean): void => {};
   stateChange3 = (event: PartState): void => {};
 
@@ -182,7 +149,7 @@ class WrapperComponent {
   }
 
   private measureSize(element: ElementRef<HTMLElement>): number {
-    if (this.orientation === 'horizontal') {
+    if (this.orientation() === 'horizontal') {
       return element.nativeElement.getBoundingClientRect().width;
     } else {
       return element.nativeElement.getBoundingClientRect().height;
@@ -360,13 +327,12 @@ describe('SiSplitComponent', () => {
     describe('without SiUIStateService', () => {
       setup();
 
-      beforeEach(() => {
+      beforeEach(async () => {
         fixture = TestBed.createComponent(WrapperComponent);
-        fixture.detectChanges();
         wrapperComponent = fixture.componentInstance;
         element = fixture.nativeElement;
-        wrapperComponent.split().sizes = [20, 60, 20];
-        fixture.detectChanges();
+        wrapperComponent.sizes.set([20, 60, 20]);
+        await fixture.whenStable();
       });
 
       it('should create and set inputs', () => {
@@ -387,13 +353,12 @@ describe('SiSplitComponent', () => {
       setup(true);
 
       describe('but no persisted state', () => {
-        beforeEach(() => {
+        beforeEach(async () => {
           fixture = TestBed.createComponent(WrapperComponent);
-          fixture.detectChanges();
           wrapperComponent = fixture.componentInstance;
           element = fixture.nativeElement;
-          wrapperComponent.split().sizes = [20, 60, 20];
-          fixture.detectChanges();
+          wrapperComponent.sizes.set([20, 60, 20]);
+          await fixture.whenStable();
         });
 
         it('should create with ui state service', () => {
@@ -434,9 +399,9 @@ describe('SiSplitComponent', () => {
 
           fixture = TestBed.createComponent(WrapperComponent);
           wrapperComponent = fixture.componentInstance;
-          wrapperComponent.sizes = [20, 60, 20];
+          wrapperComponent.sizes.set([20, 60, 20]);
           // We need this here to run checks after async tasks completed.
-          fixture.autoDetectChanges(true);
+          fixture.autoDetectChanges();
           element = fixture.nativeElement;
         });
 
@@ -472,11 +437,10 @@ describe('SiSplitComponent', () => {
 
     describe('in horizontal orientation', () => {
       it('should display with set sizes and gutter size', async () => {
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.gutterSize = 32;
-        wrapperComponent.containerWidth = 564;
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
@@ -484,18 +448,17 @@ describe('SiSplitComponent', () => {
       });
 
       it('should display with set sizes and gutter size while respecting min size after resize', async () => {
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.gutterSize = 32;
-        wrapperComponent.containerWidth = 564;
-        wrapperComponent.minSize3 = 175;
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        wrapperComponent.minSize3.set(175);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(186, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(139, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(175, 0);
 
-        wrapperComponent.containerWidth = 1064;
+        wrapperComponent.containerWidth.set(1064);
         await runOnPushChangeDetection(fixture);
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(400, 0);
@@ -504,38 +467,36 @@ describe('SiSplitComponent', () => {
       });
 
       it('should display with set sizes and gutter size while keeping size with scale none after resize', async () => {
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.gutterSize = 32;
-        wrapperComponent.containerWidth = 564;
-        wrapperComponent.scale3 = 'none';
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        wrapperComponent.scale3.set('none');
+        await fixture.whenStable();
         await new Promise(resolve => setTimeout(resolve));
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
 
-        wrapperComponent.containerWidth = 1064;
-        await runOnPushChangeDetection(fixture);
+        wrapperComponent.containerWidth.set(1064);
+        await fixture.whenStable();
         expect(wrapperComponent.measureSize1()).toBeCloseTo(486, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(364, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
       });
 
       it('should collapse part on click if enabled', async () => {
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.gutterSize = 32;
-        wrapperComponent.containerWidth = 564;
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
 
         partElement1.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(40, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(246, 0);
@@ -543,13 +504,12 @@ describe('SiSplitComponent', () => {
       });
 
       it('should collapse part to min size on click if set', async () => {
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.gutterSize = 32;
-        wrapperComponent.containerWidth = 564;
-        wrapperComponent.collapseToMinSize1 = true;
-        wrapperComponent.minSize1 = 50;
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        wrapperComponent.collapseToMinSize1.set(true);
+        wrapperComponent.minSize1.set(50);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
@@ -564,19 +524,18 @@ describe('SiSplitComponent', () => {
       });
 
       it('should switch to vertical orientation', async () => {
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.gutterSize = 32;
-        wrapperComponent.containerWidth = 564;
-        wrapperComponent.containerHeight = 564;
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        wrapperComponent.containerHeight.set(564);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
 
-        wrapperComponent.orientation = 'vertical';
-        await runOnPushChangeDetection(fixture);
+        wrapperComponent.orientation.set('vertical');
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
@@ -584,11 +543,10 @@ describe('SiSplitComponent', () => {
       });
 
       it('should display with set sizes and gutter size and resize on drag', async () => {
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.gutterSize = 32;
-        wrapperComponent.containerWidth = 564;
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
@@ -602,11 +560,10 @@ describe('SiSplitComponent', () => {
       });
 
       it('should display with set sizes and gutter size and not resize on incorrect drag', async () => {
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.gutterSize = 32;
-        wrapperComponent.containerWidth = 564;
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
@@ -629,22 +586,21 @@ describe('SiSplitComponent', () => {
       });
 
       it('should display with set sizes and gutter size and resize to min size on drag', async () => {
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.gutterSize = 32;
-        wrapperComponent.containerWidth = 564;
-        wrapperComponent.minSize3 = 100;
-        wrapperComponent.scale1 = 'none';
-        wrapperComponent.scale2 = 'auto';
-        wrapperComponent.scale3 = 'none';
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        wrapperComponent.minSize3.set(100);
+        wrapperComponent.scale1.set('none');
+        wrapperComponent.scale2.set('auto');
+        wrapperComponent.scale3.set('none');
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
 
         dragFromElementToElement(getSplitGuttersElements(1), 50, 50, partElement3, 50, 50);
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(200, 0);
@@ -653,11 +609,10 @@ describe('SiSplitComponent', () => {
 
       if ('TouchEvent' in window) {
         it('should display with set sizes and gutter size and resize on touch drag', async () => {
-          wrapperComponent.sizes = [40, 30, 30];
-          wrapperComponent.containerWidth = 564;
-          wrapperComponent.gutterSize = 32;
-          await runOnPushChangeDetection(fixture);
-          fixture.detectChanges();
+          wrapperComponent.sizes.set([40, 30, 30]);
+          wrapperComponent.containerWidth.set(564);
+          wrapperComponent.gutterSize.set(32);
+          await fixture.whenStable();
 
           expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
           expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
@@ -672,18 +627,17 @@ describe('SiSplitComponent', () => {
       }
 
       it('should display with set sizes and gutter size after changes', async () => {
-        wrapperComponent.sizes = [20, 60, 20];
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.sizes.set([20, 60, 20]);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(100, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(300, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(100, 0);
 
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.gutterSize = 32;
-        wrapperComponent.containerWidth = 564;
-        await runOnPushChangeDetection(fixture);
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
@@ -691,21 +645,20 @@ describe('SiSplitComponent', () => {
       });
 
       it('should collapse all to the same side on click', async () => {
-        wrapperComponent.orientation = 'horizontal';
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.gutterSize = 32;
-        wrapperComponent.containerWidth = 564;
-        wrapperComponent.collapseDirection2 = 'end';
-        wrapperComponent.collapseDirection3 = 'end';
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.orientation.set('horizontal');
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        wrapperComponent.collapseDirection2.set('end');
+        wrapperComponent.collapseDirection3.set('end');
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
 
         partElement2.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(484, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(40, 0);
@@ -713,22 +666,21 @@ describe('SiSplitComponent', () => {
       });
 
       it('should only collapse split part if collapseOthers2 is false', async () => {
-        wrapperComponent.orientation = 'horizontal';
-        wrapperComponent.sizes = [40, 20, 40];
-        wrapperComponent.gutterSize = 32;
-        wrapperComponent.containerWidth = 564;
-        wrapperComponent.collapseDirection2 = 'end';
-        wrapperComponent.collapseDirection3 = 'end';
-        wrapperComponent.collapseOthers2 = false;
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.orientation.set('horizontal');
+        wrapperComponent.sizes.set([40, 20, 40]);
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        wrapperComponent.collapseDirection2.set('end');
+        wrapperComponent.collapseDirection3.set('end');
+        wrapperComponent.collapseOthers2.set(false);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(100, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(200, 0);
 
         partElement2.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(246, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(40, 0);
@@ -738,10 +690,9 @@ describe('SiSplitComponent', () => {
 
     describe('in vertical orientation', () => {
       it('should display with set sizes and gutter size', async () => {
-        wrapperComponent.orientation = 'vertical';
-        wrapperComponent.sizes = [40, 30, 30];
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.orientation.set('vertical');
+        wrapperComponent.sizes.set([40, 30, 30]);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
@@ -749,17 +700,16 @@ describe('SiSplitComponent', () => {
       });
 
       it('should switch to horizontal orientation', async () => {
-        wrapperComponent.orientation = 'vertical';
-        wrapperComponent.sizes = [40, 30, 30];
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.orientation.set('vertical');
+        wrapperComponent.sizes.set([40, 30, 30]);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
 
-        wrapperComponent.orientation = 'horizontal';
-        await runOnPushChangeDetection(fixture);
+        wrapperComponent.orientation.set('horizontal');
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
@@ -767,10 +717,9 @@ describe('SiSplitComponent', () => {
       });
 
       it('should display with set sizes and gutter size and resize on drag', async () => {
-        wrapperComponent.orientation = 'vertical';
-        wrapperComponent.sizes = [40, 30, 30];
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.orientation.set('vertical');
+        wrapperComponent.sizes.set([40, 30, 30]);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
@@ -785,10 +734,9 @@ describe('SiSplitComponent', () => {
 
       if ('TouchEvent' in window) {
         it('should display with set sizes and gutter size and resize on touch drag', async () => {
-          wrapperComponent.orientation = 'vertical';
-          wrapperComponent.sizes = [40, 30, 30];
-          await runOnPushChangeDetection(fixture);
-          fixture.detectChanges();
+          wrapperComponent.orientation.set('vertical');
+          wrapperComponent.sizes.set([40, 30, 30]);
+          await fixture.whenStable();
 
           expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
           expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
@@ -803,21 +751,20 @@ describe('SiSplitComponent', () => {
       }
 
       it('should display with set sizes and gutter size and resize to min size on drag', async () => {
-        wrapperComponent.orientation = 'vertical';
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.minSize1 = 100;
-        wrapperComponent.scale1 = 'none';
-        wrapperComponent.scale2 = 'auto';
-        wrapperComponent.scale3 = 'none';
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.orientation.set('vertical');
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.minSize1.set(100);
+        wrapperComponent.scale1.set('none');
+        wrapperComponent.scale2.set('auto');
+        wrapperComponent.scale3.set('none');
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
 
         dragFromElementToElement(getSplitGuttersElements(0), 50, 50, partElement1, 50, 50);
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(100, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(250, 0);
@@ -825,20 +772,19 @@ describe('SiSplitComponent', () => {
       });
 
       it('should display with set sizes and gutter size after changes with scale none', async () => {
-        wrapperComponent.orientation = 'vertical';
-        wrapperComponent.sizes = [20, 60, 20];
-        wrapperComponent.scale1 = 'none';
-        wrapperComponent.scale2 = 'none';
-        wrapperComponent.scale3 = 'none';
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.orientation.set('vertical');
+        wrapperComponent.sizes.set([20, 60, 20]);
+        wrapperComponent.scale1.set('none');
+        wrapperComponent.scale2.set('none');
+        wrapperComponent.scale3.set('none');
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(100, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(300, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(100, 0);
 
-        wrapperComponent.sizes = [40, 30, 30];
-        await runOnPushChangeDetection(fixture);
+        wrapperComponent.sizes.set([40, 30, 30]);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
@@ -846,17 +792,16 @@ describe('SiSplitComponent', () => {
       });
 
       it('should collapse all to the same side on click', async () => {
-        wrapperComponent.orientation = 'vertical';
-        wrapperComponent.sizes = [40, 30, 30];
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.orientation.set('vertical');
+        wrapperComponent.sizes.set([40, 30, 30]);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
 
         partElement2.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(40, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(40, 0);
@@ -864,25 +809,24 @@ describe('SiSplitComponent', () => {
       });
 
       it('should switch to horizontal orientation after collapsed part on click', async () => {
-        wrapperComponent.orientation = 'vertical';
-        wrapperComponent.sizes = [40, 30, 30];
-        wrapperComponent.collapseDirection3 = 'end';
-        await runOnPushChangeDetection(fixture);
-        fixture.detectChanges();
+        wrapperComponent.orientation.set('vertical');
+        wrapperComponent.sizes.set([40, 30, 30]);
+        wrapperComponent.collapseDirection3.set('end');
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
 
         partElement3.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(272, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(204, 0);
         expect(wrapperComponent.measureSize3()).toBeCloseTo(40, 0);
 
-        wrapperComponent.orientation = 'horizontal';
-        await runOnPushChangeDetection(fixture);
+        wrapperComponent.orientation.set('horizontal');
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(272, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(204, 0);
