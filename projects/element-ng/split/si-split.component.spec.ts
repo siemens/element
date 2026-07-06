@@ -12,8 +12,8 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideSiUiState, SI_UI_STATE_SERVICE, UIStateStorage } from '@siemens/element-ng/common';
+import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 
-import { runOnPushChangeDetection } from '../test-helpers';
 import { CollapseTo, PartState, Scale, SiSplitModule, SplitOrientation } from './index';
 import { SiSplitPartComponent } from './si-split-part.component';
 import { SiSplitComponent as TestComponent } from './si-split.component';
@@ -343,9 +343,9 @@ describe('SiSplitComponent', () => {
         expect(split).toContain('Test 2');
         expect(split).toContain('Test 3');
 
-        expect(wrapperComponent.split().sizes).toBeDefined();
-        expect(wrapperComponent.split().sizes).toEqual([20, 60, 20]);
-        expect(wrapperComponent.split().orientation).toEqual('horizontal');
+        expect(wrapperComponent.split().sizes()).toBeDefined();
+        expect(wrapperComponent.split().sizes()).toEqual([20, 60, 20]);
+        expect(wrapperComponent.split().orientation()).toEqual('horizontal');
       });
     });
 
@@ -369,9 +369,9 @@ describe('SiSplitComponent', () => {
           expect(split).toContain('Test 2');
           expect(split).toContain('Test 3');
 
-          expect(wrapperComponent.split().sizes).toBeDefined();
-          expect(wrapperComponent.split().sizes).toEqual([20, 60, 20]);
-          expect(wrapperComponent.split().orientation).toEqual('horizontal');
+          expect(wrapperComponent.split().sizes()).toBeDefined();
+          expect(wrapperComponent.split().sizes()).toEqual([20, 60, 20]);
+          expect(wrapperComponent.split().orientation()).toEqual('horizontal');
         });
 
         it('should save ui state', async () => {
@@ -412,7 +412,7 @@ describe('SiSplitComponent', () => {
           expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
           expect(wrapperComponent.measureSize2()).toBeCloseTo(200, 0);
           expect(wrapperComponent.measureSize3()).toBeCloseTo(100, 0);
-          expect(wrapperComponent.split().orientation).toEqual('horizontal');
+          expect(wrapperComponent.split().orientation()).toEqual('horizontal');
         });
       });
     });
@@ -516,7 +516,7 @@ describe('SiSplitComponent', () => {
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
 
         partElement1.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(50, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(241, 0);
