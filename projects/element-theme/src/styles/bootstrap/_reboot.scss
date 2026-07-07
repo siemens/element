@@ -26,10 +26,6 @@
 // null by default, thus nothing is generated.
 
 :root {
-  @if variables.$font-size-root != null {
-    font-size: var(--#{variables.$variable-prefix}root-font-size);
-  }
-
   @if variables.$enable-smooth-scroll {
     @media (prefers-reduced-motion: no-preference) {
       scroll-behavior: smooth;

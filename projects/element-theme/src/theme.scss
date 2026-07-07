@@ -1,8 +1,15 @@
 $element-theme-default: null !default;
 $element-themes: null !default;
 
+// Defines the default root font size. Change to 'none' at some point.
+$element-root-font-size: 16px !default;
+
 $_theme-default: 'element';
 $_themes: () !default;
+
+@use 'styles/root-font-size' with (
+  $element-root-font-size: $element-root-font-size
+);
 
 // Load Bootstrap
 @use 'styles/bootstrap';
@@ -41,11 +48,4 @@ $_themes: () !default;
 html,
 body {
   block-size: 100%;
-}
-
-// Define what 1rem actually means. Everything here assumes 16px.
-// When the whole thing is properly done, carefully mixing (r)em and px values,
-// this can be removed to allow the user's setting.
-html {
-  font-size: 16px;
 }

@@ -1,0 +1,29 @@
+$element-root-font-size: initial !default;
+
+html {
+  // defines the default with low specificity, i.e. easy overridable with :root
+  --element-root-font-size: #{$element-root-font-size};
+}
+
+:root {
+  font-size: var(--element-root-font-size);
+}
+
+// pre-defined root font size helper classes that can be applied to <html> tag
+
+// use browser-defined root font size
+.rfs-none {
+  --element-root-font-size: initial;
+}
+
+.rfs-16 {
+  --element-root-font-size: 16px;
+}
+
+.rfs-20 {
+  --element-root-font-size: 20px;
+}
+
+.rfs-24 {
+  --element-root-font-size: 24px;
+}
