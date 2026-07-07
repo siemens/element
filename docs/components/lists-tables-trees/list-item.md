@@ -71,7 +71,7 @@ Icons may be added when they improve recognition.
 The metadata does not include an intrinsic overflow behavior.
 How overflow is handled should change according to the layout constraints and information priorities.
 
-![List item metada](images/list-item-metadata.png)
+![List item metadata](images/list-item-metadata.png)
 
 ## Code ---
 
