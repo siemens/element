@@ -29,18 +29,18 @@ In addition, an English word can have multiple meanings and be translated into o
 
 ### LTR (Left-to-Right)
 
-LTR refers to languages (e.g., English, German, French, Spanish) and scripts that are written and read from left to right.
+LTR refers to languages (e.g. English, German, French, Spanish) and scripts that are written and read from left to right.
 
 ### RTL (Right-to-Left)
 
-RTL refers to languages (e.g., Arabic, Hebrew, Persian) and writing systems that are written and read from right to left.
+RTL refers to languages (e.g. Arabic, Hebrew, Persian) and writing systems that are written and read from right to left.
 
 Because of these differences, it's important for UX writers to consider that often the entire user interface must be mirrored, which imposes significant demands on [internationalization](#internationalization-i18n).
 
-## UX Writing ---
+## Writing ---
 
 UX writers are the text experts in the product development team and therefore ideal ambassadors for internationalization.
-They need to be aware of the challenges of localization and understand how they can support UX designers in creating localization-friendly designs (e.g., [space for translation](#manage-space-for-translations)).
+They need to be aware of the challenges of localization and understand how they can support UX designers in creating localization-friendly designs (e.g. [space for translation](#manage-space-for-translations)).
 This page gives recommendations on how UX writers can support localization teams and translators to minimize internationalization challenges.
 
 ### Consider translation
@@ -52,19 +52,19 @@ It is also unclear whether “complete” is an adjective or a verb.
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-- `Delete the template for tool instance IDs`
+- "Delete template for tool instance IDs"
 
 </div>
 <div class="donts" markdown>
 
-- `Delete complete tool instance ID naming`
+- "Delete complete tool instance ID naming"
 
 </div>
 </div>
 
 User interface texts are stand-alone, short, and to the point, but they provide little to no context on their own. Thus, translators and AI can only produce a reliable translation if the terms are
 
-- [Predominant](#terms-in-various-uses)
+- [Predominant](#consider-that-terms-are-used-in-different-ways)
 - [Precise](#use-domain-terminology)
 - [Unambiguous](#avoid-misunderstandings)
 
@@ -72,14 +72,14 @@ User interface texts are stand-alone, short, and to the point, but they provide 
 
 ### Handover UX writing specifications
 
-The handover documentation to development must include the UX writing specifications (e.g., [placeholder names](#define-named-placeholders) or [grouping of texts](#grouping-of-texts)) as a basis for [implementing internationalization](#code).
+The handover documentation to development must include the UX writing specifications (e.g. [placeholder names](#define-named-placeholders) or [grouping of texts](#grouping-of-texts)) as a basis for [implementing internationalization](#code).
 
 <!-- markdownlint-enable MD051 -->
 
 ### Use domain terminology
 
 - The terms are defined by experts (physicists, engineers, lawyers, etc.) from universities and various global companies specializing in specific domains.
-- Standardization bodies (e.g., [ISO](https://iso.org), [EN](https://cen.eu), [UL](https://ul.com), [IEC](https://iec.ch)) are the people responsible for standardizing common terms.
+- Standardization bodies (e.g. [ISO](https://iso.org), [EN](https://cen.eu), [UL](https://ul.com), [IEC](https://iec.ch)) are the people responsible for standardizing common terms.
 - UX writers should avoid terms from quasi-industrial standards until they have been harmonized with official standardization bodies and are generally accepted.
 
 Common language serves multiple purposes:
@@ -96,9 +96,9 @@ Use the terminology database of domain to maintain a common language.
 UX writers should request terms from the terminology maintainers of the domain if the term is not yet defined (via terminology databases if available).
 Then UX writers should review the UI texts together with domain experts, and ensure that translations are done by translators with domain knowledge.
 
-!!! info "Meaning of the term `title`"
+!!! info "Meaning of the term title"
 
-    A subset of meanings of `title`:
+    A subset of meanings of "title":
 
     - predominant meaning: an appellation of dignity, honor, distinction, or preeminence attached to a person or family by virtue of rank, office, precedent, privilege, attainment, or lands
     - descriptive name : [appellation](https://www.merriam-webster.com/dictionary/appellation)
@@ -137,14 +137,14 @@ In addition, the alternative term substantially increases the probability of cor
 Avoid possible causes of misunderstandings by
 
 - grouping the texts by use cases
-- only using the [predominant meaning](#terms-in-various-uses) of the term
+- only using the [predominant meaning](#consider-that-terms-are-used-in-different-ways) of the term
 - annotating texts with a description (if supported by translation framework and file format)
 
 #### Group texts
 
 Translators translate texts individually.
 In order to understand the context and maintain consistency, it is necessary to have related texts close together.
-Related texts can be brought together by grouping texts based on use cases (e.g., My account → Theme selection) along with meaningful (key) names.
+Related texts can be brought together by grouping texts based on use cases (e.g. My account → Theme selection) along with meaningful (key) names.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
@@ -161,7 +161,7 @@ Related texts can be brought together by grouping texts based on use cases (e.g.
 - `LEGAL.ABOUT:` About
 - `LEGAL.IMPRINT:` Corporate Information
 - `LEGAL.PRIVACY_POLICY:` Privacy Notice
-- `LEGAL.VERSION:` Version `{{version}}`
+- `LEGAL.VERSION:` Version {{version}}
 
 </div>
 <div class="donts" markdown>
@@ -178,7 +178,7 @@ Related texts can be brought together by grouping texts based on use cases (e.g.
 - `PRIVACY_POLICY:` Privacy Notice
 - `SETTINGS:` Settings
 - `THEME:` Theme
-- `VERSION:` Version `{{version}}`
+- `VERSION:` Version {{version}}
 
 </div>
 </div>
@@ -215,9 +215,9 @@ The exact length of a translation cannot be predicted.
 Some generally accepted rules of thumb:
 
 - Short texts (1-10 characters)  
-  These can often increase by 200-300%. (E.g., `EN:`"On" → `DE:`"Eingeschaltet")
+  These can often increase by 200-300%. (e.g. EN:"On" → DE:"Eingeschaltet")
 - Medium texts (11-20 characters)  
-  Expect an increase of 100-200%. (E.g., `EN:`"Withdraw request" → `DE:`"Anfrage zurückziehen")
+  Expect an increase of 100-200%. (e.g. EN:"Withdraw request" → DE:"Anfrage zurückziehen")
 - Longer texts (21-50 characters)  
   Expect an increase of 50-100%.
 - Very Long texts (50+ characters)  
@@ -335,21 +335,21 @@ Keep sentences as one unit with placeholders.
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-- EN: `Select site {site} of {company}?`
-- DE: `Standort {site} von {company} auswählen?`
+- EN: "Select site {site} of {company}?"
+- DE: "Standort {site} von {company} auswählen?"
 
 </div>
 <div class="donts" markdown>
 
-- EN: `Select site ` + `{site}` + `of` + `{company}` + `?`
-- DE: `Standort auswählen ` + `{site}` + `von` + `{company}` + `?`
+- EN: "Select site " `+` `{site}` + " of" `+` `{company}` `+` "?"
+- DE: "Standort auswählen " `+` `{site}` `+` " von " `+` `{company}` + "?"
 
 </div>
 </div>
 
 <!-- markdownlint-enable MD038 -->
 
-Note: The verb (`EN:`"select" / `DE:`"auswählen") is at the beginning of the sentence in English but at the end in German.
+Note: The verb (EN:"select" / DE:"auswählen") is at the beginning of the sentence in English but at the end in German.
 
 ### Define named placeholders
 
@@ -358,12 +358,12 @@ Keep sentences understandable even with placeholders.
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-- `Reactivating site {name} within activation period: {startDate} – {endDate}`
+- "Reactivating site {name} within activation period: {startDate} – {endDate}"
 
 </div>
 <div class="donts" markdown>
 
-- `Reactivating site {1} within activation period: {2} – {3}`
+- "Reactivating site {1} within activation period: {2} – {3}"
 
 </div>
 </div>
@@ -378,13 +378,13 @@ Use locale-aware formatting (see [Code tab](#code)), and avoid creating UI text 
 <div class="dos" markdown>
 
 - Use the localization framework (see [Code tab](#code))
-- Use [placeholders](#define-understandable-placeholders) in text: `Saved on {date}`
+- Use [placeholders](#define-understandable-placeholders) in text: "Saved on {date}"
 
 </div>
 <div class="donts" markdown>
 
-- `02/03/2026` (ambiguous)
-- `1,234` in all languages (ambiguous, less or greater than 2?)
+- "02/03/2026" (ambiguous)
+- "1,234" in all languages (ambiguous, less or greater than 2?)
 
 </div>
 </div>
@@ -398,13 +398,13 @@ It is important to consider these different rules early in the UX writing and im
 
 !!! info "Pluralization examples"
 
-    Pluralization of the `English` term «apple»:
+    Pluralization of the English term «apple»:
 
     - 0: «I own no apple.»
     - 1: «I own one apple.»
     - n: «I own four apples.»
 
-    Pluralization of the `Polish` term «Plik» (`English`: «file»):
+    Pluralization of the Polish term «Plik» (English: «file»):
 
     - 1 plik
     - 2, 3, 4 pliki
@@ -435,19 +435,19 @@ The [plural rules specification from the Unicode Common Locale Data Repository (
 
 #### Use localization to handle pluralization
 
-Pluralization cannot be handled by product code or writing style. Use localization (e.g., ICU or framework plural rules) instead.
+Pluralization cannot be handled by product code or writing style. Use localization (e.g. ICU or framework plural rules) instead.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-- `Delete {count} rows?`
-- `Delete {rowName}?`
+- "Delete {count} rows?"
+- "Delete {rowName}?"
 
 </div>
 <div class="donts" markdown>
 
-- `Delete {count} row(s)?`
-- if (count == 1) {`1 row`} else {`{count} rows`}
+- "Delete {count} row(s)?"
+- `if (count == 1) {`"1 row"`} else {`"{count} rows"`}`
 
 </div>
 </div>
