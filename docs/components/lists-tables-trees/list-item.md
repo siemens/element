@@ -39,8 +39,7 @@ The list item can be **read-only** or **support interactions**.
 
 ![List item anatomy](images/list-item-anatomy.png)
 
-> 1\. Indicator, 2. Timestamp, 3. Heading, 4. Description, 5. Primary action
-  6. Metadata, 7. Quick actions
+> 1\. Indicator, 2. Timestamp, 3. Heading, 4. Description, 5. Primary action, 6. Metadata, 7. Quick actions
 
 With the exception of the heading, all items are optional.
 
