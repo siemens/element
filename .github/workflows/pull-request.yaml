@@ -42,7 +42,7 @@ jobs:
         with:
           name: coverage-reports
           path: coverage-reports
-      - uses: aws-actions/configure-aws-credentials@e7f100cf4c008499ea8adda475de1042d6975c7b # v6.2.0
+      - uses: aws-actions/configure-aws-credentials@254c19bd240aabef8777f48595e9d2d7b972184b # v6.2.1
         with:
           role-to-assume: arn:aws:iam::974483672234:role/simpl-element-preview
           role-session-name: element-preview
@@ -78,7 +78,7 @@ jobs:
           <!-- preview-links:end -->
           EOF
       - name: Update PR description block
-        uses: nefrob/pr-description@4dcc9f3ad5ec06b2a197c5f8f93db5e69d2fdca7 # v1.2.0
+        uses: nefrob/pr-description@30859d560129561327a48ec569ec3b6aa62dd2c9 # v1.3.0
         with:
           token: ${{ github.token }}
           content: pr-preview-description.md

@@ -76,11 +76,7 @@ export interface DeleteConfirmationDialog extends ActionDialogBase<DeleteConfirm
 
 /** All possible action dialogs. */
 export type ActionDialog =
-  | AlertDialog
-  | ConfirmationDialog
-  | EditDiscardDialog
-  | DeleteConfirmationDialog
-  | never;
+  AlertDialog | ConfirmationDialog | EditDiscardDialog | DeleteConfirmationDialog | never;
 
 /** Returns the return value type for the given action dialog type */
 export type ActionDialogReturnType<T extends ActionDialogBase<any>> = T extends AlertDialog

@@ -314,15 +314,13 @@ export class SiChatInputComponent implements AfterViewInit {
           } satisfies MenuItem
         ]
       : []),
-    ...this.actions().map(
-      (a): MenuItem => ({
-        type: 'action' as const,
-        label: a.label,
-        icon: a.icon,
-        disabled: a.disabled,
-        action: (param: unknown) => a.action(param, a)
-      })
-    ),
+    ...this.actions().map((a): MenuItem => ({
+      type: 'action' as const,
+      label: a.label,
+      icon: a.icon,
+      disabled: a.disabled,
+      action: (param: unknown) => a.action(param, a)
+    })),
     ...this.secondaryActions()
   ]);
 

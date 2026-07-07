@@ -64,10 +64,7 @@ export interface TimelineWidgetMenu {
 
 /** Union type for all possible action items in the timeline widget. */
 export type TimelineWidgetItemAction =
-  | TimelineWidgetActionButton
-  | TimeLineWidgetLink
-  | TimeLineWidgetRouterLink
-  | TimelineWidgetMenu;
+  TimelineWidgetActionButton | TimeLineWidgetLink | TimeLineWidgetRouterLink | TimelineWidgetMenu;
 
 /**
  * Represents an item in the timeline widget.

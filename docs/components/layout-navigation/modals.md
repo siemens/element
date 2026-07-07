@@ -102,9 +102,7 @@ export class SampleComponent {
   private modalRef?: SiModalRef;
 
   openModal(): void {
-    this.modalRef = this.modalService.show(template, {
-      /* Options go here. */
-    });
+    this.modalRef = this.modalService.show(template, {/* Options go here. */});
   }
 }
 ```
