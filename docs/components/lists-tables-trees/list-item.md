@@ -27,13 +27,10 @@ The list item can be **read-only** or **support interactions**.
 - To construct the [notification pattern](../../patterns/notifications.md).
 - To construct the chat history pattern.
 - When content needs to be shown as a repeatable, scannable row.
-  For complex data, use a [table](../lists-tables-trees/overview.md).
-- Keep structure consistent across all list items in the same list.
 
 ### Best practices
 
-- When content needs to be shown as a repeatable, scannable row.
-  For complex data, use a [table](../lists-tables-trees/overview.md).
+- For complex data, use a [table](../lists-tables-trees/overview.md) instead of a list.
 - Keep structure consistent across all list items in the same list.
 
 ## Design ---
