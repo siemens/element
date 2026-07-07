@@ -14,6 +14,12 @@ ol:has(.list-item) {
 .list-item {
   display: grid;
   grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'timestamp timestamp'
+    'title action'
+    'description description'
+    'metadata metadata'
+    'quick-actions quick-actions';
   padding-block: map.get(variables.$spacers, 4);
   padding-inline: map.get(variables.$spacers, 6);
 
@@ -28,12 +34,13 @@ ol:has(.list-item) {
   }
 
   .list-item-timestamp {
+    grid-area: timestamp;
     color: variables.$element-text-secondary;
     margin-block-end: 0;
   }
 
   .list-item-title {
-    grid-column: 1;
+    grid-area: title;
     padding-block: map.get(variables.$spacers, 4);
     margin-block-end: 0;
 
@@ -67,15 +74,17 @@ ol:has(.list-item) {
   }
 
   .list-item-primary-action {
-    grid-column: 2;
+    grid-area: action;
     align-self: center;
   }
 
   .list-item-description {
+    grid-area: description;
     margin-block-end: map.get(variables.$spacers, 4);
   }
 
   .list-item-metadata {
+    grid-area: metadata;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -100,6 +109,7 @@ ol:has(.list-item) {
   }
 
   .list-item-quick-actions {
+    grid-area: quick-actions;
     display: flex;
     gap: map.get(variables.$spacers, 4);
   }
