@@ -11,13 +11,7 @@ import { SiCustomSelectDirective } from './si-custom-select.directive';
  * combobox host of a custom select.
  */
 export type SiSelectDropdownContentType =
-  | 'false'
-  | 'true'
-  | 'menu'
-  | 'listbox'
-  | 'tree'
-  | 'grid'
-  | 'dialog';
+  'false' | 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
 
 /**
  * Structural directive marking the dropdown template for custom selects
