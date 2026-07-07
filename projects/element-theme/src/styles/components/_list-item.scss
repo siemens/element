@@ -13,13 +13,13 @@ ol:has(.list-item) {
 
 .list-item {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr auto;
   grid-template-areas:
-    'timestamp timestamp'
-    'title action'
-    'description description'
-    'metadata metadata'
-    'quick-actions quick-actions';
+    '.         timestamp     timestamp'
+    'indicator title         action'
+    '.         description   description'
+    '.         metadata      metadata'
+    '.         quick-actions quick-actions';
   padding-block: map.get(variables.$spacers, 4);
   padding-inline: map.get(variables.$spacers, 6);
 
@@ -30,7 +30,21 @@ ol:has(.list-item) {
   );
 
   > * {
-    grid-column: 1 / -1;
+    grid-column: 2 / -1;
+  }
+
+  .list-item-indicator {
+    grid-area: indicator;
+    display: flex;
+    align-self: center;
+    align-items: center;
+    // This restricts the height on purpose.
+    // Content taller than the title remains centered and overflows on both sides.
+    max-block-size: calc(
+      #{typography.$si-line-height-h5 * typography.$si-font-size-h5} +
+        #{map.get(variables.$spacers, 4) * 2}
+    );
+    margin-inline-end: map.get(variables.$spacers, 4);
   }
 
   .list-item-timestamp {
