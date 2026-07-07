@@ -5,6 +5,25 @@
       <div class="card">
         <div class="card-body">
           <form [formRoot]="form">
+            <si-form-fieldset label="Role" inline>
+              <si-form-field label="Engineer">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  value="engineer"
+                  [formField]="form.role"
+                />
+              </si-form-field>
+              <si-form-field label="Installer">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  value="installer"
+                  [formField]="form.role"
+                />
+              </si-form-field>
+            </si-form-fieldset>
+
             <si-form-field label="Name">
               <input type="text" class="form-control" [formField]="form.name" />
             </si-form-field>

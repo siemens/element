@@ -6,7 +6,9 @@
   @if (isFormCheck()) {
     <ng-container [ngTemplateOutlet]="labelTemplate" />
   }
-  <ng-container [ngTemplateOutlet]="feedbackTemplate" />
+  @if (!isPartOfRadioGroup()) {
+    <ng-container [ngTemplateOutlet]="feedbackTemplate" />
+  }
 </div>
 
 <ng-template #labelTemplate>
@@ -14,7 +16,7 @@
     [for]="controlId()"
     [class.form-label]="!isFormCheck()"
     [class.form-check-label]="isFormCheck()"
-    [class.required]="required()"
+    [class.required]="required() && !isPartOfRadioGroup()"
     >{{ label() | translate }}</label
   >
 </ng-template>

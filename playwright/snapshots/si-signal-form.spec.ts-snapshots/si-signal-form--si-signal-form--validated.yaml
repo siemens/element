@@ -1,4 +1,10 @@
 - heading "Signal form" [level=2]
+- group "Role*":
+  - text: ""
+  - radio "Engineer"
+  - text: Engineer
+  - radio "Installer"
+  - text: Installer Role required
 - text: Name*
 - textbox "Name*" [invalid]
 - text: Minimum 3 characters Name must start with an uppercase letter Description

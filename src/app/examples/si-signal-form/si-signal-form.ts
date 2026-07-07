@@ -13,7 +13,13 @@ import {
   pattern,
   required
 } from '@angular/forms/signals';
-import { provideSiFormFieldConfig, SiFormFieldComponent } from '@siemens/element-ng/form';
+import {
+  provideSiFormFieldConfig,
+  SiFormFieldComponent,
+  SiFormFieldsetComponent
+} from '@siemens/element-ng/form';
+
+export type Role = 'engineer' | 'installer';
 
 export interface TravelRequest {
   name: string;
@@ -22,6 +28,7 @@ export interface TravelRequest {
   arrival: string;
   departure: string;
   serviceClass: string;
+  role: Role | '';
   fellowPassengers: number;
   termsAccepted: boolean;
   privacyDeclined: boolean;
@@ -34,6 +41,7 @@ const emptyRequest: TravelRequest = {
   arrival: '',
   departure: '',
   serviceClass: 'first',
+  role: '',
   fellowPassengers: 0,
   termsAccepted: false,
   privacyDeclined: false
@@ -41,7 +49,7 @@ const emptyRequest: TravelRequest = {
 
 @Component({
   selector: 'app-sample',
-  imports: [JsonPipe, FormField, FormRoot, SiFormFieldComponent],
+  imports: [JsonPipe, FormField, FormRoot, SiFormFieldComponent, SiFormFieldsetComponent],
   templateUrl: './si-signal-form.html',
   providers: [provideSiFormFieldConfig()],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -61,6 +69,7 @@ export class SampleComponent {
         message: 'Name must start with an uppercase letter'
       });
       required(path.birthday, { message: 'Day of birth required' });
+      required(path.role, { message: 'Role required' });
       min(path.fellowPassengers, 2, { message: 'Minimum 2' });
       required(path.termsAccepted, {
         message: 'Accept terms before joining'

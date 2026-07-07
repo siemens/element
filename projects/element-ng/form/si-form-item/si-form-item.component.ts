@@ -31,6 +31,7 @@ import {
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiFormFieldsetComponent } from '../form-fieldset/si-form-fieldset.component';
+import { SiFormFieldsetControl } from '../form-fieldset/si-form-fieldset.control';
 import { SiFormContainerComponent } from '../si-form-container/si-form-container.component';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '../si-form-item.control';
 import { SiFormValidationErrorMapper } from '../si-form-validation-error.model';
@@ -59,7 +60,13 @@ export interface SiFormError {
   }
 })
 export class SiFormItemComponent
-  implements AfterContentInit, AfterContentChecked, OnChanges, OnInit, OnDestroy
+  implements
+    AfterContentInit,
+    AfterContentChecked,
+    OnChanges,
+    OnInit,
+    OnDestroy,
+    SiFormFieldsetControl
 {
   /**
    * The label to be displayed in the form item.
@@ -110,6 +117,9 @@ export class SiFormItemComponent
   /** @internal */
   readonly errors = signal<SiFormError[]>([]);
 
+  /** @internal */
+  readonly touched = signal(false);
+
   protected fieldset = inject(SiFormFieldsetComponent, { optional: true });
   protected container = inject(SiFormContainerComponent, { optional: true });
 
@@ -159,6 +169,9 @@ export class SiFormItemComponent
   /** @internal */
   readonly required = computed(() => this.requiredInput() || this.hasRequiredValidator());
 
+  /** @internal */
+  readonly control = computed(() => this.ngControl()?.control);
+
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.formErrorMapper) {
       this.updateValidationMessages();
@@ -166,7 +179,7 @@ export class SiFormItemComponent
   }
 
   ngOnInit(): void {
-    this.fieldset?.registerFormItem(this);
+    this.fieldset?.registerControl(this);
   }
 
   ngAfterContentInit(): void {
@@ -180,10 +193,11 @@ export class SiFormItemComponent
   ngAfterContentChecked(): void {
     this.updateRequiredState();
     this.updateValidationMessages();
+    this.touched.set(!!this.ngControl()?.touched);
   }
 
   ngOnDestroy(): void {
-    this.fieldset?.unregisterFormItem(this);
+    this.fieldset?.unregisterControl(this);
   }
 
   private updateRequiredState(): void {

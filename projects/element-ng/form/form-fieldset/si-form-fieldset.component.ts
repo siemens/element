@@ -7,13 +7,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  DoCheck,
   input,
   signal
 } from '@angular/core';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { SiFormItemComponent } from '../si-form-item/si-form-item.component';
+import { SiFormFieldsetControl } from './si-form-fieldset.control';
 
 @Component({
   selector: 'si-form-fieldset',
@@ -28,7 +27,7 @@ import { SiFormItemComponent } from '../si-form-item/si-form-item.component';
     '[attr.aria-labelledby]': 'labelId'
   }
 })
-export class SiFormFieldsetComponent implements DoCheck {
+export class SiFormFieldsetComponent {
   private static labelIdCounter = 0;
 
   /** The label for the entire fieldset. */
@@ -51,26 +50,23 @@ export class SiFormFieldsetComponent implements DoCheck {
    */
   readonly inline = input(false, { transform: booleanAttribute });
 
-  private readonly formItems = signal<SiFormItemComponent[]>([]);
+  private readonly formItems = signal<SiFormFieldsetControl[]>([]);
 
   /** @internal */
   readonly hasOnlyRadios = computed(() => {
     // Check if the fieldset only contains radio buttons.
-    // We can safely assume that, if all items have the same control name and if there are at least 2 items.
+    // We can safely assume that, if all items reference the same control and if there are at least 2 items.
     const items = this.formItems();
     if (items.length > 1) {
-      const first = items[0];
-      return items.every(item => item.ngControl()?.name === first.ngControl()?.name);
+      const first = items[0].control();
+      return first != null && items.every(item => item.control() === first);
     }
 
     return false;
   });
 
-  protected readonly errors = computed(() =>
-    // All errors should be the same for radios, so we just take the first.
-    this.hasOnlyRadios() ? this.formItems()[0].errors() : []
-  );
-  protected readonly touched = signal(false);
+  protected readonly errors = computed(() => this.formItems()[0].errors());
+  protected readonly touched = computed(() => this.formItems().some(item => item.touched()));
   protected readonly isRequired = computed(
     () =>
       this.required() || (this.hasOnlyRadios() && this.formItems().every(item => item.required()))
@@ -78,17 +74,13 @@ export class SiFormFieldsetComponent implements DoCheck {
 
   protected readonly labelId = `__si-form-fieldset-label-${SiFormFieldsetComponent.labelIdCounter++}`;
 
-  ngDoCheck(): void {
-    this.touched.set(this.formItems().some(item => item.ngControl()?.touched));
-  }
-
   /** @internal */
-  registerFormItem(item: SiFormItemComponent): void {
+  registerControl(item: SiFormFieldsetControl): void {
     this.formItems.update(items => [...items, item]);
   }
 
   /** @internal */
-  unregisterFormItem(item: SiFormItemComponent): void {
+  unregisterControl(item: SiFormFieldsetControl): void {
     this.formItems.update(items => items.filter(i => i !== item));
   }
 }

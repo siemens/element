@@ -5,6 +5,10 @@
   margin-block-end: map.get(all-variables.$spacers, 5);
 }
 
+:host-context(si-form-fieldset) {
+  margin-block-end: 0;
+}
+
 :host(:not(.form-check)) {
   display: flex;
   flex-direction: column;

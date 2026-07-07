@@ -13,10 +13,13 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+import { form, FormField, required } from '@angular/forms/signals';
 import type { Mock } from 'vitest';
+import { page } from 'vitest/browser';
 
 import { SiFormFieldsetComponent } from './form-fieldset/si-form-fieldset.component';
 import { SiFormContainerComponent } from './si-form-container/si-form-container.component';
+import { SiFormFieldComponent } from './si-form-field/si-form-field.component';
 import { SiFormItemComponent } from './si-form-item/si-form-item.component';
 import { provideFormValidationErrorMapper } from './si-form-validation-error.provider';
 import { SiFormModule } from './si-form.module';
@@ -273,6 +276,51 @@ describe('SiForm', () => {
       fixture.detectChanges();
       expect(emailMapperSpy).toHaveBeenCalled();
       expect(await field.getErrorMessages()).toEqual(['email-true']);
+    });
+  });
+
+  describe('with fieldset containing signal form fields', () => {
+    @Component({
+      imports: [SiFormFieldsetComponent, SiFormFieldComponent, FormField],
+      template: `
+        <si-form-fieldset label="Choose">
+          <si-form-field label="Option 1">
+            <input type="radio" class="form-check-input" value="a" [formField]="form.choice" />
+          </si-form-field>
+          <si-form-field label="Option 2">
+            <input type="radio" class="form-check-input" value="b" [formField]="form.choice" />
+          </si-form-field>
+        </si-form-fieldset>
+      `,
+      changeDetection: ChangeDetectionStrategy.OnPush
+    })
+    class TestHostComponent {
+      readonly model = signal({ choice: '' });
+      readonly form = form(this.model, path => {
+        required(path.choice, { message: 'A choice is required' });
+      });
+    }
+
+    let fixture: ComponentFixture<TestHostComponent>;
+
+    const fieldset = page.getByRole('group', { name: 'Choose' });
+    const fieldsetLabel = page.getByText('Choose');
+    const errorMessage = fieldset.getByText('A choice is required');
+
+    beforeEach(async () => {
+      fixture = TestBed.createComponent(TestHostComponent);
+      await fixture.whenStable();
+    });
+
+    it('should group error messages from the form fields onto the fieldset', async () => {
+      fixture.componentInstance.form().markAsTouched();
+      await fixture.whenStable();
+
+      await expect.element(errorMessage).toBeVisible();
+    });
+
+    it('should only have a required indicator on the fieldset', async () => {
+      await expect.element(fieldsetLabel).toHaveClass('required');
     });
   });
 
