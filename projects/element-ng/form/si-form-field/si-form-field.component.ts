@@ -3,10 +3,20 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, computed, contentChild, effect, inject, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  contentChild,
+  DestroyRef,
+  effect,
+  inject,
+  input
+} from '@angular/core';
 import { FormField } from '@angular/forms/signals';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
+import { SiFormFieldsetComponent } from '../form-fieldset/si-form-fieldset.component';
+import { SiFormFieldsetControl } from '../form-fieldset/si-form-fieldset.control';
 import { SiFormValidationErrorService } from '../si-form-validation-error.service';
 
 /**
@@ -26,11 +36,12 @@ import { SiFormValidationErrorService } from '../si-form-validation-error.servic
   templateUrl: './si-form-field.component.html',
   styleUrl: './si-form-field.component.scss',
   host: {
-    '[class.required]': 'required()',
-    '[class.form-check]': 'isFormCheck()'
+    '[class.required]': 'required() && !isPartOfRadioGroup()',
+    '[class.form-check]': 'isFormCheck()',
+    '[class.form-check-inline]': 'fieldset?.inline()'
   }
 })
-export class SiFormFieldComponent {
+export class SiFormFieldComponent implements SiFormFieldsetControl {
   private static idCounter = 0;
 
   /**
@@ -40,6 +51,8 @@ export class SiFormFieldComponent {
   readonly label = input.required<TranslatableString>();
 
   private readonly formField = contentChild.required(FormField);
+
+  protected readonly fieldset = inject(SiFormFieldsetComponent, { optional: true });
 
   private readonly validationErrorService = inject(SiFormValidationErrorService);
 
@@ -57,14 +70,24 @@ export class SiFormFieldComponent {
 
   private readonly fieldState = computed(() => this.formField().state());
 
-  protected readonly required = computed(() => this.fieldState().required());
+  /** @internal */
+  readonly control = computed(() => this.fieldState().fieldTree);
+
+  /** @internal */
+  readonly required = computed(() => this.fieldState().required());
 
   private readonly invalid = computed(() => {
     const state = this.fieldState();
     return state.touched() && state.invalid();
   });
 
-  protected readonly errors = computed(() => {
+  /** @internal */
+  readonly touched = computed(() => this.fieldState().touched());
+
+  protected readonly isPartOfRadioGroup = computed(() => this.fieldset?.hasOnlyRadios() ?? false);
+
+  /** @internal */
+  readonly errors = computed(() => {
     const state = this.fieldState();
     if (!state.touched()) {
       return [];
@@ -74,6 +97,11 @@ export class SiFormFieldComponent {
   });
 
   constructor() {
+    if (this.fieldset) {
+      this.fieldset.registerControl(this);
+      inject(DestroyRef).onDestroy(() => this.fieldset!.unregisterControl(this));
+    }
+
     effect(() => this.syncControlId());
     effect(() => this.syncErrorDescription());
     effect(() => this.syncInvalidState());

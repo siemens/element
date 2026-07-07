@@ -1,4 +1,10 @@
 - heading "Signal form" [level=2]
+- group "Role*":
+  - text: ""
+  - radio "Engineer"
+  - text: Engineer
+  - radio "Installer"
+  - text: Installer
 - text: Name*
 - textbox "Name*"
 - text: Description
