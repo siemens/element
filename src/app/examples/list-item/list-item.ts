@@ -8,22 +8,36 @@ import {
   elementArchive,
   elementCheckboxChecked,
   elementDelete,
-  elementDocument
+  elementDocument,
+  elementPlant
 } from '@siemens/element-icons';
-import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiMenuFactoryComponent, type MenuItem } from '@siemens/element-ng/menu';
+import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
+import { addIcons, SiIconComponent, SiStatusIconComponent } from '@siemens/element-ng/icon';
+import { type MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiIconComponent, SiMenuFactoryComponent, CdkMenuTrigger],
+  imports: [
+    SiIconComponent,
+    SiMenuFactoryComponent,
+    SiCircleStatusComponent,
+    CdkMenuTrigger,
+    SiStatusIconComponent
+  ],
   templateUrl: './list-item.html',
   host: { class: 'p-5' }
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
 
-  icons = addIcons({ elementCheckboxChecked, elementArchive, elementDelete, elementDocument });
+  icons = addIcons({
+    elementCheckboxChecked,
+    elementArchive,
+    elementDelete,
+    elementDocument,
+    elementPlant
+  });
 
   items: MenuItem[] = [
     { type: 'action', label: 'View details', action: () => this.logEvent('View details') },
