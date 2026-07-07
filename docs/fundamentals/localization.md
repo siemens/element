@@ -8,17 +8,17 @@ Internationalization is the process of designing and developing a product for lo
 
 ### Internationalization (i18n)
 
-Internationalization (sometimes abbreviated as i18n) is the entire process of designing and developing a product that can be adapted to different languages and regions.
+Internationalization (i18n) is the process of designing and developing a product that adapts to different languages and regions.
 It is the foundation for high-quality and efficient [localization](#localization-l10n).
 
 ### Localization (l10n)
 
-Localization (sometimes abbreviated as l10n) is the process of adapting a product to the language and cultural norms of a specific target market so that it feels natural to local users. This goes beyond [simple translation](#translation) and includes script direction ([LTR](#ltr-left-to-right)/[RTL](#rtl-right-to-left)), formatting numbers, times, dates, and addresses, and adapting illustrations.
+Localization (l10n) is the process of adapting a product to the language and cultural norms of a specific target market so that it feels natural to local users. This goes beyond [simple translation](#translation) and includes script direction ([LTR](#ltr-left-to-right)/[RTL](#rtl-right-to-left)), formatting numbers, times, dates and addresses, and adapting illustrations.
 Localization requires an [internationalized](#internationalization-i18n) product and must be performed for each target market.
 
 #### Localization example
 
-This example shows how values, dates, and times should be displayed after the product has been localized.
+This example shows how values, dates and times should be displayed after the product has been localized.
 <si-docs-component example="si-localization/si-localization" height="650"></si-docs-component>
 
 ### Translation
@@ -45,7 +45,7 @@ This page gives recommendations on how UX writers can support localization teams
 
 ### Consider translation
 
-Translation-friendly texts should be created by UX writers thinking like a translator and asking the question: “Is the text understandable without the visual context?”.
+Create translation-friendly texts while thinking like a translator and asking the question: “Is the text understandable without the visual context?”.
 In the example below, UX writers should ask themselves whether a tool instance is being deleted or whether something is being named.
 It is also unclear whether “complete” is an adjective or a verb.
 
@@ -85,7 +85,7 @@ The handover documentation to development must include the UX writing specificat
 Common language serves multiple purposes:
 
 - Clarity of communication, common understanding between people and companies
-- Applicability across multiple systems/tools/hardware, etc.
+- Applicability across multiple systems, tools, hardware, etc.
 - Openness to third parties, breaking up of silos
 - Foundation for artificial intelligence
 
@@ -100,12 +100,12 @@ Then UX writers should review the UI texts together with domain experts, and ens
 
     A subset of meanings of "title":
 
-    - predominant meaning: an appellation of dignity, honor, distinction, or preeminence attached to a person or family by virtue of rank, office, precedent, privilege, attainment, or lands
-    - descriptive name : [appellation](https://www.merriam-webster.com/dictionary/appellation)
-    - a person holding a title especially of nobility
-    - a similar distinguishing name of a musical composition or a work of art
-    - all the elements constituting legal ownership
-    - a descriptive or general heading (as of a chapter in a book)
+    - Predominant meaning: An appellation of dignity, honor, distinction, or preeminence attached to a person or family by virtue of rank, office, precedent, privilege, attainment or lands
+    - Descriptive name: [Appellation](https://www.merriam-webster.com/dictionary/appellation)
+    - A person holding a title especially of nobility
+    - A similar distinguishing name of a musical composition or a work of art
+    - All the elements constituting legal ownership
+    - A descriptive or general heading (as of a chapter in a book)
 
     See [Merriam Webster](https://www.merriam-webster.com/dictionary/title) for details
 
@@ -185,7 +185,7 @@ Related texts can be brought together by grouping texts based on use cases (e.g.
 
 ### Manage space for translations
 
-Design user interfaces by following these steps to ensure that translations have space in the user interface.
+Follow these steps to ensure that translations have enough space in the user interface:
 
 1. Design UI by prioritizing flexible layouts, identify areas with limited text space, and always allocate more space than you think you'll need.
 1. Write English texts, keeping conciseness in mind from the start.
