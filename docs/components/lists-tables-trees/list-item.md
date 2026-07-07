@@ -16,7 +16,7 @@ and can be used in different containers depending on the context. For example:
 - With [side panels](../layout-navigation/side-panel.md),
   used when the list is part of the application frame, or contextual to the current page.
 - With [list groups](../lists-tables-trees/list-group.md),
-  to represent a single-column layout that behaves like a simplified table..
+  to represent a single-column layout that behaves like a simplified table.
 
 The list item can be **read-only** or **support interactions**.
 
