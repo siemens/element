@@ -20,11 +20,9 @@
 @use '@simpl/brand/dist/element-theme-siemens-brand-dark' as brand-dark;
 
 @use '@siemens/element-theme/src/theme' with (
+  // $element-root-font-size: initial,
   $element-theme-default: 'siemens-brand',
-  $element-themes: (
-    'siemens-brand',
-    'element'
-  )
+  $element-themes: ('siemens-brand', 'element')
 );
 
 @use '@siemens/element-icons/dist/style/siemens-element-icons';
