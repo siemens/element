@@ -1,4 +1,8 @@
-<div class="grid-stack">
+<div
+  class="grid-stack"
+  [attr.role]="editable() ? null : 'list'"
+  [attr.aria-label]="editable() ? null : (a11yWidgetsListLabel | translate)"
+>
   @if (grid) {
     @for (item of widgetConfigs(); track item.id) {
       <si-widget-host

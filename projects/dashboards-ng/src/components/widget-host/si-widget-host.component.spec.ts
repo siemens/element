@@ -234,6 +234,20 @@ describe('SiWidgetHostComponent', () => {
       expect(cardEl.getAttribute('tabindex')).toBeNull();
     });
 
+    it('should expose the host as a labeled list item when not editable', () => {
+      fixture.componentRef.setInput('editable', false);
+      fixture.detectChanges();
+      expect(hostEl.getAttribute('role')).toBe('listitem');
+      expect(hostEl.getAttribute('aria-roledescription')).toBe('widget');
+      expect(hostEl.getAttribute('aria-label')).toBe('Test');
+    });
+
+    it('should not expose list item semantics on the host when editable', () => {
+      expect(hostEl.getAttribute('role')).toBeNull();
+      expect(hostEl.getAttribute('aria-roledescription')).toBeNull();
+      expect(hostEl.getAttribute('aria-label')).toBeNull();
+    });
+
     it('should activate keyboard mode on Enter', () => {
       cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
       expect(component.keyboardActive()).toBe(true);
