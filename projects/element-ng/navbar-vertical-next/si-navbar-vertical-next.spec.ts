@@ -324,14 +324,14 @@ describe('SiNavbarVerticalNext', () => {
         await fixture.whenStable();
 
         const navbarHost = fixture.nativeElement.querySelector('si-navbar-vertical-next');
-        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(false);
+        expect(navbarHost).not.toHaveClass('nav-flat-group-open');
 
         await enableMobile();
 
         const item = await harness.findItemByLabel('item-1');
         await item.click();
         await fixture.whenStable();
-        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(true);
+        expect(navbarHost).toHaveClass('nav-flat-group-open');
       });
 
       it('should open and close a flat group when triggering a group on mobile', async () => {
@@ -341,7 +341,7 @@ describe('SiNavbarVerticalNext', () => {
         await enableMobile();
 
         const navbarHost = fixture.nativeElement.querySelector('si-navbar-vertical-next');
-        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(false);
+        expect(navbarHost).not.toHaveClass('nav-flat-group-open');
 
         const item = await harness.findItemByLabel('item-1');
         await item.click();
@@ -351,14 +351,14 @@ describe('SiNavbarVerticalNext', () => {
         expect(backBtn).toBeTruthy();
         const chip = fixture.nativeElement.querySelector('.flat-group-header');
         expect(chip.textContent).toContain('item-1');
-        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(true);
+        expect(navbarHost).toHaveClass('nav-flat-group-open');
 
         backBtn.click();
         fixture.detectChanges();
         await fixture.whenStable();
 
         expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeFalsy();
-        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(false);
+        expect(navbarHost).not.toHaveClass('nav-flat-group-open');
       });
 
       it('should render the projected sub-items inside the flat group', async () => {
@@ -397,7 +397,7 @@ describe('SiNavbarVerticalNext', () => {
 
         expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeFalsy();
         const navbarHost = fixture.nativeElement.querySelector('si-navbar-vertical-next');
-        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(false);
+        expect(navbarHost).not.toHaveClass('nav-flat-group-open');
       });
 
       it('should preserve the flat group state across collapse/expand on mobile', async () => {
@@ -418,7 +418,7 @@ describe('SiNavbarVerticalNext', () => {
 
         const navbarHost = fixture.nativeElement.querySelector('si-navbar-vertical-next');
         expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeTruthy();
-        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(true);
+        expect(navbarHost).toHaveClass('nav-flat-group-open');
 
         // Re-expand the drawer — same flat group is still visible.
         component.collapsed.set(false);
@@ -426,7 +426,7 @@ describe('SiNavbarVerticalNext', () => {
         await fixture.whenStable();
 
         expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeTruthy();
-        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(true);
+        expect(navbarHost).toHaveClass('nav-flat-group-open');
       });
 
       it('should close the flat group when the trigger item is removed while open', async () => {
@@ -446,7 +446,7 @@ describe('SiNavbarVerticalNext', () => {
 
         expect(fixture.nativeElement.querySelector('[aria-label="Back"]')).toBeFalsy();
         const navbarHost = fixture.nativeElement.querySelector('si-navbar-vertical-next');
-        expect(navbarHost.classList.contains('nav-flat-group-open')).toBe(false);
+        expect(navbarHost).not.toHaveClass('nav-flat-group-open');
       });
     });
 
