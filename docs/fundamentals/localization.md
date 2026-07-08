@@ -170,7 +170,7 @@ import { provideSiTranslatableOverrides } from '@siemens/element-ng/translate';
 @NgModule({
   providers: [
     provideSiTranslatableOverrides({
-      'SI-TOAST.CLOSE': 'MY-CUSTOM-CLOSE'
+      'SI_TOAST.CLOSE': 'MY_CUSTOM_CLOSE'
     })
   ]
 })
