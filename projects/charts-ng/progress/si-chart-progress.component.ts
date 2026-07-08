@@ -39,7 +39,7 @@ export class SiChartProgressComponent extends SiChartBaseComponent {
   private itemGap!: number;
 
   // base radius of an item
-  private baseRadius = 98;
+  private readonly baseRadius = 98;
 
   private sizeFactor!: number;
 

@@ -25,7 +25,7 @@ import { SiMenuItemBase } from './si-menu-item-base.directive';
   ]
 })
 export class SiMenuItemCheckboxComponent extends SiMenuItemBase {
-  private cdkMenuItemCheckbox = inject(CdkMenuItemCheckbox);
+  private readonly cdkMenuItemCheckbox = inject(CdkMenuItemCheckbox);
   protected readonly icons = addIcons({ elementOk });
   protected readonly hideCheckmark = inject(CDK_MENU).orientation === 'horizontal';
 

@@ -33,9 +33,9 @@ export class SiChartProgressBarComponent extends SiChartBaseComponent {
   /** Used to display the label in inline or above the progress-bar. */
   readonly labelPosition = input<string>();
 
-  private maxValue = 100;
-  private xAxisConfig: ChartXAxis = { type: 'value', max: this.maxValue };
-  private yAxis: ChartYAxis = {
+  private readonly maxValue = 100;
+  private readonly xAxisConfig: ChartXAxis = { type: 'value', max: this.maxValue };
+  private readonly yAxis: ChartYAxis = {
     type: 'category',
     data: [],
     axisLabel: {

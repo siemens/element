@@ -55,8 +55,8 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
   `
 })
 class OverviewComponent {
-  private activatedRoute = inject(ActivatedRoute);
-  private dataService = inject(DataService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly dataService = inject(DataService);
 
   selectedEntity = this.activatedRoute.paramMap.pipe(
     map(params => parseInt(params.get('id')!)),
@@ -170,7 +170,7 @@ class EmptyComponent {}
 export class SampleComponent implements AfterViewInit {
   logEvent = inject(LOG_EVENT);
 
-  private dataService = inject(DataService);
+  private readonly dataService = inject(DataService);
 
   /**
    * List details
@@ -211,9 +211,9 @@ export class SampleComponent implements AfterViewInit {
   totalElements = 0;
   searchTerm?: string;
 
-  private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   ngAfterViewInit(): void {
     this.router

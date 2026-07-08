@@ -10,7 +10,7 @@ import { inject, Injectable, DOCUMENT } from '@angular/core';
  */
 @Injectable({ providedIn: 'root' })
 export class ScrollbarHelper {
-  private document = inject(DOCUMENT);
+  private readonly document = inject(DOCUMENT);
 
   /**
    * The width of the scrollbar.

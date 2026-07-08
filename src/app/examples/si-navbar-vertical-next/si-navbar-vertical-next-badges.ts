@@ -55,8 +55,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
-  private activeRoute = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly activeRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   logEvent = inject(LOG_EVENT);
 
   alwaysFlyout = false;

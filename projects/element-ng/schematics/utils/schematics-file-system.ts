@@ -9,7 +9,7 @@ import { relative } from 'path/posix';
 
 export class SchematicsFileSystem {
   private readonly basePath = normalize(process.cwd());
-  constructor(private tree: Tree) {}
+  constructor(private readonly tree: Tree) {}
 
   readonly readText = (path: string): string => {
     return this.tree.readText(normalize(relative(this.basePath, path)));

@@ -68,11 +68,11 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
   private templateModified = false;
   private rendererInProgress = false;
 
-  private config = inject(SI_LIVE_PREVIEW_CONFIG);
-  private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
-  private ngZone = inject(NgZone);
-  private destroyRef = inject(DestroyRef);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
+  private readonly ngZone = inject(NgZone);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   @HostBinding('class.is-mobile') protected isMobile = this.internalConfig.isMobile;
 

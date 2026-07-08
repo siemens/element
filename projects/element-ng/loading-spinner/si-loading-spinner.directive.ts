@@ -53,16 +53,16 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
    */
   readonly initialDelay = input(true, { transform: booleanAttribute });
 
-  private el = inject(ElementRef);
+  private readonly el = inject(ElementRef);
   private readonly viewRef = inject(ViewContainerRef);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   private sub?: Subscription;
-  private progressSubject = new BehaviorSubject(false);
-  private off$ = this.progressSubject.pipe(filter(val => !val));
-  private on$ = this.progressSubject.pipe(filter(val => val));
+  private readonly progressSubject = new BehaviorSubject(false);
+  private readonly off$ = this.progressSubject.pipe(filter(val => !val));
+  private readonly on$ = this.progressSubject.pipe(filter(val => val));
   private readonly initialWaitTime = computed(() => (this.initialDelay() ? 500 : 0));
-  private minSpinTime = 500;
+  private readonly minSpinTime = 500;
   private portalOutlet?: DomPortalOutlet;
   private readonly compPortal = new ComponentPortal(SiLoadingSpinnerComponent, this.viewRef);
   private compPortalRef: ComponentRef<SiLoadingSpinnerComponent> | null = null;

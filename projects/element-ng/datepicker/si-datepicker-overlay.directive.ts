@@ -80,7 +80,7 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
 
   private overlayRef?: OverlayRef;
   private datepickerRef?: ComponentRef<SiDatepickerOverlayComponent>;
-  private autoCloseSelection = new Subject<void>();
+  private readonly autoCloseSelection = new Subject<void>();
   /** Guard for siDatepickerClose event emitter to make sure the cause is emitter just once */
   private ignoreClose = false;
   private readonly overlay = inject(Overlay);

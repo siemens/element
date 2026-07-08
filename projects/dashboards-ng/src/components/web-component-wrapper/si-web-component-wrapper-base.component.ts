@@ -37,8 +37,8 @@ export abstract class SiWebComponentWrapperBaseComponent<
 
   protected webComponent?: HTMLElement & T;
 
-  private renderer2 = inject(Renderer2);
-  private document = inject(DOCUMENT);
+  private readonly renderer2 = inject(Renderer2);
+  private readonly document = inject(DOCUMENT);
 
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.config && this.webComponent) {

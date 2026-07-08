@@ -224,9 +224,11 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
   });
 
   private readonly viewState = signal<ViewState>('dashboard');
-  private widgetStorage = inject(SI_WIDGET_STORE);
-  private hideAddWidgetInstanceButton$ = new BehaviorSubject(this.hideAddWidgetInstanceButton());
-  private dashboardId$ = new Subject<string | undefined>();
+  private readonly widgetStorage = inject(SI_WIDGET_STORE);
+  private readonly hideAddWidgetInstanceButton$ = new BehaviorSubject(
+    this.hideAddWidgetInstanceButton()
+  );
+  private readonly dashboardId$ = new Subject<string | undefined>();
   private readonly toolbar = viewChild.required<SiDashboardToolbarComponent>('toolbar');
   private readonly globalEditActions = inject(SI_DASHBOARD_TOOLBAR_ITEMS, { optional: true }) ?? {
     primary: [],

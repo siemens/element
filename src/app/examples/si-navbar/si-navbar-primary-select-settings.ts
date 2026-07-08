@@ -39,10 +39,11 @@ export class SampleComponent {
     { id: 'dark', title: 'THEME_EDITOR.COLOR_SCHEMES.DARK', action: () => this.switchTheme('dark') }
   ];
 
-  private translate = inject(TranslateService);
-  private themeService = inject(SiThemeService);
+  private readonly translate = inject(TranslateService);
+  private readonly themeService = inject(SiThemeService);
   private currentTheme = this.themeService.resolvedColorScheme;
-  private currentLanguage = this.translate.currentLang() ?? this.translate.getBrowserLang() ?? 'en';
+  private readonly currentLanguage =
+    this.translate.currentLang() ?? this.translate.getBrowserLang() ?? 'en';
 
   accountItems: MenuItem[] = [
     { title: 'APP.NAV.LANGUAGE', icon: 'element-language', items: this.languageItems },

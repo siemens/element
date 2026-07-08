@@ -75,9 +75,9 @@ interface ChatMessage {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  private logEvent = inject(LOG_EVENT);
+  private readonly logEvent = inject(LOG_EVENT);
   private readonly modalTemplate = viewChild<TemplateRef<any>>('modalTemplate');
-  private sanitizer = inject(DomSanitizer);
+  private readonly sanitizer = inject(DomSanitizer);
   private readonly toastService = inject(SiToastNotificationService);
   private readonly chatContainer = viewChild<SiChatContainerComponent>(SiChatContainerComponent);
 

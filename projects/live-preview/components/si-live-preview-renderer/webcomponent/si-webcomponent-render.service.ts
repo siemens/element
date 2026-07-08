@@ -25,10 +25,10 @@ export class SiWebComponentRenderService
   implements OnDestroy
 {
   private componentRef!: ComponentRef<SiLivePreviewWebComponent>;
-  private componentMirror = reflectComponentType(SiLivePreviewWebComponent);
-  private appRef = inject(ApplicationRef);
-  private injector = inject(Injector);
-  private environmentInjector = inject(EnvironmentInjector);
+  private readonly componentMirror = reflectComponentType(SiLivePreviewWebComponent);
+  private readonly appRef = inject(ApplicationRef);
+  private readonly injector = inject(Injector);
+  private readonly environmentInjector = inject(EnvironmentInjector);
   private outputSubscription: OutputRefSubscription | null = null;
 
   injectComponent(element: ElementRef, inputs: any, outputs: any): void {

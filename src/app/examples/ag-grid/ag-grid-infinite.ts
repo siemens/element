@@ -38,7 +38,7 @@ import { TableData, TableDataService } from '../../mocks/table-data.mock';
   }
 })
 export class SampleComponent {
-  private logEvent = inject(LOG_EVENT);
+  private readonly logEvent = inject(LOG_EVENT);
   private readonly tableDataService = inject(TableDataService);
   private allData: TableData[] = [];
 

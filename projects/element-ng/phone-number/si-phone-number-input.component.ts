@@ -87,11 +87,11 @@ export class SiPhoneNumberInputComponent
 {
   private static idCounter = 0;
 
-  private phoneUtil = PhoneNumberUtil.getInstance();
-  private translate = injectSiTranslateService();
-  private locale = inject(LOCALE_ID).toString();
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly phoneUtil = PhoneNumberUtil.getInstance();
+  private readonly translate = injectSiTranslateService();
+  private readonly locale = inject(LOCALE_ID).toString();
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
   /**
    * Unique identifier.

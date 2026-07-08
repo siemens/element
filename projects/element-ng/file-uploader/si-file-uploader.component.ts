@@ -342,7 +342,7 @@ export class SiFileUploaderComponent {
   protected readonly maxFilesReached = signal(false);
 
   private readonly dropZone = viewChild.required<SiFileDropzoneComponent>('dropZone');
-  private http? = inject(HttpClient, { optional: true });
+  private readonly http? = inject(HttpClient, { optional: true });
 
   constructor() {
     effect(() => {

@@ -68,12 +68,14 @@ export class SiLinkDirective implements DoCheck, OnChanges, OnDestroy {
 
   private readonly destroyer = new Subject<void>();
 
-  private router = inject(Router, { optional: true });
-  private activatedRoute = inject(ActivatedRoute, { optional: true });
-  private locationStrategy = inject(LocationStrategy, { optional: true });
-  private translateService = injectSiTranslateService();
-  private actionService = inject(SiLinkActionService, { optional: true });
-  private defaultNavigationExtra = inject(SI_LINK_DEFAULT_NAVIGATION_EXTRA, { optional: true });
+  private readonly router = inject(Router, { optional: true });
+  private readonly activatedRoute = inject(ActivatedRoute, { optional: true });
+  private readonly locationStrategy = inject(LocationStrategy, { optional: true });
+  private readonly translateService = injectSiTranslateService();
+  private readonly actionService = inject(SiLinkActionService, { optional: true });
+  private readonly defaultNavigationExtra = inject(SI_LINK_DEFAULT_NAVIGATION_EXTRA, {
+    optional: true
+  });
 
   private get urlTree(): UrlTree {
     const link = this.siLink()!.link;

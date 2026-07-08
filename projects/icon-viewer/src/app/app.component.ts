@@ -99,7 +99,7 @@ export class AppRootComponent implements OnInit {
   display = '';
 
   readonly menu = viewChild(AppMenuComponent, { read: ElementRef });
-  private loadedFiles: string[] = [];
+  private readonly loadedFiles: string[] = [];
 
   readonly displayIconSetName = computed(() => this.fontService.iconSet()?.name ?? '');
 

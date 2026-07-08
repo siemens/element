@@ -54,7 +54,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
   private scrollTimeout: ReturnType<typeof setTimeout> | undefined;
   private lastScrollTime = 0;
   private pendingScroll = false;
-  private scrollDebounceMs = 7; // ~144fps
+  private readonly scrollDebounceMs = 7; // ~144fps
   private resizeObserver: ResizeObserver | undefined;
   private contentObserver: MutationObserver | undefined;
 

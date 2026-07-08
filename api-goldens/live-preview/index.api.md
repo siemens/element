@@ -61,7 +61,7 @@ export const SI_STACKBLITZ_CONFIG: InjectionToken<StackblitzConfig>;
 export class SiDummyComponent {
     constructor();
     // (undocumented)
-    activeRoute: ActivatedRoute;
+    readonly activeRoute: ActivatedRoute;
     // (undocumented)
     path: string;
 }

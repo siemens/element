@@ -24,8 +24,8 @@ import {
 export class SiHeaderLogoDirective implements OnInit {
   protected readonly logoText = signal<string | undefined>(undefined);
 
-  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
-  private injector = inject(Injector);
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly injector = inject(Injector);
 
   ngOnInit(): void {
     this.updateLogoText();

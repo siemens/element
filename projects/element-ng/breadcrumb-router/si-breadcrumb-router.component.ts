@@ -39,10 +39,10 @@ export class SiBreadcrumbRouterComponent implements OnInit, OnDestroy {
   protected readonly items = signal<BreadcrumbItem[]>([]);
 
   private readonly currentCalcUrl = signal<string | undefined>(undefined);
-  private nextRoute = new Subject<void>();
-  private resolverService = inject(SI_BREADCRUMB_RESOLVER_SERVICE);
-  private route? = inject(ActivatedRoute, { optional: true });
-  private router? = inject(Router, { optional: true });
+  private readonly nextRoute = new Subject<void>();
+  private readonly resolverService = inject(SI_BREADCRUMB_RESOLVER_SERVICE);
+  private readonly route? = inject(ActivatedRoute, { optional: true });
+  private readonly router? = inject(Router, { optional: true });
   private routerSubscription?: Subscription;
 
   ngOnInit(): void {

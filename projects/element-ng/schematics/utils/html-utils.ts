@@ -49,7 +49,7 @@ const parseTemplate = (template: string): ParseTreeResult => {
 };
 
 class ElementCollector extends RecursiveVisitor {
-  private filter: (node: Element) => boolean;
+  private readonly filter: (node: Element) => boolean;
   /**
    * All elements which match the filter
    *
@@ -71,7 +71,7 @@ class ElementCollector extends RecursiveVisitor {
 }
 
 class AttributeCollector extends RecursiveVisitor {
-  private filter: (node: Attribute) => boolean;
+  private readonly filter: (node: Attribute) => boolean;
   /**
    * All attributes which match the filter
    *

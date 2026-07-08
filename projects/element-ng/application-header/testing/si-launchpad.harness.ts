@@ -10,7 +10,7 @@ import { SiLaunchpadCategoryHarness } from './si-launchpad-category.harness';
 export class SiLaunchpadHarness extends ComponentHarness {
   static readonly hostSelector = 'si-launchpad-factory';
 
-  private toggleButton = this.locatorForOptional('.dropdown-toggle');
+  private readonly toggleButton = this.locatorForOptional('.dropdown-toggle');
 
   async getCategory(name: string): Promise<SiLaunchpadCategoryHarness> {
     return this.locatorFor(SiLaunchpadCategoryHarness.withName(name))();

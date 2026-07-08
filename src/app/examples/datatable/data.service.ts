@@ -72,7 +72,7 @@ export class CorporateEmployee {
 @Injectable()
 export class DataService {
   totalElements = 10000;
-  private elements: CorporateEmployee[] = [];
+  private readonly elements: CorporateEmployee[] = [];
 
   constructor() {
     for (let index = 0; index < this.totalElements; index++) {

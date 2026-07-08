@@ -43,8 +43,8 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 })
 export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private resizeSubs?: Subscription;
-  private elementRef = inject(ElementRef);
-  private resizeObserver = inject(ResizeObserverService);
+  private readonly elementRef = inject(ElementRef);
+  private readonly resizeObserver = inject(ResizeObserverService);
   private readonly listDetailsContainer = viewChild.required<ElementRef>('listDetailsContainer');
   protected readonly animationsGloballyDisabled = areAnimationsDisabled();
 

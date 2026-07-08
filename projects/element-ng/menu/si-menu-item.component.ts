@@ -24,7 +24,7 @@ import { SiMenuItemBase } from './si-menu-item-base.directive';
   ]
 })
 export class SiMenuItemComponent extends SiMenuItemBase {
-  private menuTrigger = inject(CdkMenuTrigger, { optional: true, self: true });
+  private readonly menuTrigger = inject(CdkMenuTrigger, { optional: true, self: true });
   protected readonly icons = addIcons({ elementRight2 });
   protected get hasSubmenu(): boolean {
     return !!this.menuTrigger?.menuTemplateRef;

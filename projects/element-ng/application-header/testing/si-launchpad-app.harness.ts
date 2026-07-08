@@ -13,8 +13,8 @@ export class SiLaunchpadAppHarness extends ComponentHarness {
     );
   }
 
-  private name = this.locatorFor('[app-name]');
-  private favorite = this.locatorFor('.favorite-icon');
+  private readonly name = this.locatorFor('[app-name]');
+  private readonly favorite = this.locatorFor('.favorite-icon');
 
   async getName(): Promise<string> {
     return this.name().then(name => name.text());

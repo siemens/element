@@ -19,7 +19,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  private log = inject(LOG_EVENT);
+  private readonly log = inject(LOG_EVENT);
 
   protected onCardSelect(state: boolean, cardId: string): void {
     if (state) {

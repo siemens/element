@@ -57,8 +57,10 @@ export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
 
   private readonly toggle = viewChild.required<ElementRef<HTMLDivElement>>('toggle');
   private readonly focusTrap = viewChild.required(CdkTrapFocus);
-  private header = inject(SiApplicationHeaderComponent);
-  private closeMobileSub = this.header.closeMobileMenus.subscribe(() => this.closeMobile());
+  private readonly header = inject(SiApplicationHeaderComponent);
+  private readonly closeMobileSub = this.header.closeMobileMenus.subscribe(() =>
+    this.closeMobile()
+  );
 
   ngOnDestroy(): void {
     this.closeMobileSub.unsubscribe();

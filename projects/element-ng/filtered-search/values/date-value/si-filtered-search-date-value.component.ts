@@ -37,7 +37,7 @@ import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiFilteredSearchDateValueComponent extends SiFilteredSearchValueBase {
-  private locale = inject(LOCALE_ID).toString();
+  private readonly locale = inject(LOCALE_ID).toString();
 
   protected override readonly valueInput = viewChild<ElementRef<HTMLInputElement>>('valueInput');
   private readonly datepickerOverlay = viewChild(SiDatepickerOverlayDirective);

@@ -34,7 +34,7 @@ const unwrapSignalOrValue = <T>(valueOrSignal: T | Signal<T>): T => {
   exportAs: 'si-datatable-interaction'
 })
 export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
-  private table = inject(DatatableComponent, { self: true });
+  private readonly table = inject(DatatableComponent, { self: true });
   /**
    * Automatically select every row or cell that is navigated trough.
    * Is ignored unless `selectionType` is `single` or `cell`.
@@ -43,7 +43,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
    */
   readonly datatableInteractionAutoSelect = input(false, { transform: booleanAttribute });
 
-  private element: HTMLElement = inject(ElementRef).nativeElement;
+  private readonly element: HTMLElement = inject(ElementRef).nativeElement;
   private tableBody?: HTMLElement;
 
   private autoSelectTimeout: any;

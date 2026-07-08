@@ -198,7 +198,7 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
    * Sending the resize event after resize need to wait until resize is done.
    */
   private readonly resizeEventDelay = 500;
-  private resizeEvent = new Subject<void>();
+  private readonly resizeEvent = new Subject<void>();
   private openingOrClosing = false;
   private previousContentDimensions: ElementDimensions = { width: 0, height: 0 };
   private isCollapsedInternal = false; // same as the other one, except w/o timeout for animation

@@ -6,7 +6,7 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 
 export class SiFormlyTranslateExtension {
-  private translate = injectSiTranslateService();
+  private readonly translate = injectSiTranslateService();
   prePopulate(field: FormlyFieldConfig): void {
     const to = field.props ?? {};
     if (to.translate === false || to._translated) {

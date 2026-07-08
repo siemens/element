@@ -74,16 +74,16 @@ import {
   }
 })
 export class SiTreeViewItemComponent implements OnInit, AfterViewInit, FocusableOption, DoCheck {
-  private element = inject(ElementRef);
-  private siTreeViewService = inject(SiTreeViewService);
-  private cdRef = inject(ChangeDetectorRef);
-  private destroyRef = inject(DestroyRef);
+  private readonly element = inject(ElementRef);
+  private readonly siTreeViewService = inject(SiTreeViewService);
+  private readonly cdRef = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
   protected treeItemContext = inject(TREE_ITEM_CONTEXT);
   protected treeViewComponent = this.treeItemContext.parent;
   /** @internal */
   treeItem: TreeItem = this.treeItemContext.record.item;
-  private scrollIntoView: Subject<TreeItem> = this.treeViewComponent.scrollChildIntoView;
-  private childrenLoaded: Subject<TreeItem> = this.treeViewComponent.childrenLoaded;
+  private readonly scrollIntoView: Subject<TreeItem> = this.treeViewComponent.scrollChildIntoView;
+  private readonly childrenLoaded: Subject<TreeItem> = this.treeViewComponent.childrenLoaded;
 
   protected templates = this.treeViewComponent.templates;
 
@@ -104,7 +104,7 @@ export class SiTreeViewItemComponent implements OnInit, AfterViewInit, Focusable
   protected icons = this.treeViewComponent.computedIcons;
 
   private savedElement: ElementRef | undefined;
-  private indentLevel = this.treeItem.level ?? 0;
+  private readonly indentLevel = this.treeItem.level ?? 0;
   private nextSiblingElement!: HTMLElement;
   protected readonly menuTrigger = viewChild(CdkMenuTrigger);
 

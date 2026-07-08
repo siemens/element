@@ -41,7 +41,7 @@ class BrowserTooltipRef {
   private positionSubscription?: Subscription;
 
   constructor(
-    private config: {
+    private readonly config: {
       describedBy?: string;
       element: ElementRef;
       injector?: Injector;
@@ -192,8 +192,8 @@ class BrowserTooltipRef {
 // We cannot provide this in root, as people may override the cdk overlay creation.
 @Injectable()
 export class SiTooltipService {
-  private overlay = inject(Overlay);
-  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly overlay = inject(Overlay);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   createTooltip(config: {
     describedBy?: string;

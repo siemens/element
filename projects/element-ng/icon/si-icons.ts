@@ -67,7 +67,7 @@ const getIcon = (key: string): string | undefined => registeredIcons.get(key)?.c
 
 @Injectable({ providedIn: 'root' })
 export class IconService {
-  private themeService = inject(SiThemeService);
+  private readonly themeService = inject(SiThemeService);
 
   getIcon(name: string): string | undefined {
     const camelCaseName = this.kebabToCamelCase(name);

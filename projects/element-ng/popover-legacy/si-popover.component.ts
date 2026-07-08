@@ -36,7 +36,7 @@ export class PopoverComponent implements OnInit {
   protected readonly arrowPos = signal<OverlayArrowPosition | undefined>(undefined);
   protected popoverTemplate: TemplateRef<any> | null = null;
 
-  private elementRef = inject(ElementRef);
+  private readonly elementRef = inject(ElementRef);
 
   ngOnInit(): void {
     const popover = this.popover();

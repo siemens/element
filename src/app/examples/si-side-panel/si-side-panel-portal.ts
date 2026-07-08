@@ -56,7 +56,7 @@ export class SampleComponent implements OnDestroy {
   readonly content1 = viewChild.required('content1', { read: CdkPortal });
   readonly content2 = viewChild.required('content2', { read: CdkPortal });
 
-  private sidePanelService = inject(SiSidePanelService);
+  private readonly sidePanelService = inject(SiSidePanelService);
 
   ngOnDestroy(): void {
     this.sidePanelService.setSidePanelContent(undefined);

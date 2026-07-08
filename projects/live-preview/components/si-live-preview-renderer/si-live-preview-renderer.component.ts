@@ -106,8 +106,8 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
   private compiledTemplate?: string;
 
   // eslint-disable-next-line @typescript-eslint/no-deprecated
-  private compiler = inject(Compiler);
-  private injector = Injector.create({
+  private readonly compiler = inject(Compiler);
+  private readonly injector = Injector.create({
     parent: inject(Injector),
     providers: [
       {
@@ -116,13 +116,13 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
       }
     ]
   });
-  private envInjector = inject(EnvironmentInjector);
-  private rendererFactory = inject(DomRendererFactory2);
-  private config = inject(SI_LIVE_PREVIEW_CONFIG);
-  private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
-  private activatedRoute = inject(ActivatedRoute);
-  private defaultRoutes = this.activatedRoute.routeConfig?.children ?? [];
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly envInjector = inject(EnvironmentInjector);
+  private readonly rendererFactory = inject(DomRendererFactory2);
+  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly defaultRoutes = this.activatedRoute.routeConfig?.children ?? [];
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.exampleUrl?.currentValue) {
@@ -358,10 +358,10 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
       jit: true
     })
     class AbstractRuntimeComponent implements DoCheck, AfterViewInit, OnDestroy {
-      private changeDetector = inject(ChangeDetectorRef);
+      private readonly changeDetector = inject(ChangeDetectorRef);
       // NOTE: This must be @ViewChild and not signal query as signal query doesn't work with jit
       @ViewChild('container', { read: ViewContainerRef })
-      private container!: ViewContainerRef;
+      private readonly container!: ViewContainerRef;
       private childRouteBackup: Routes | undefined;
 
       logEvent(...msg: any[]): void {

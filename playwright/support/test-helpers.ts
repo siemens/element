@@ -77,8 +77,8 @@ class SiTestHelpers {
   private showHideTag: ElementHandle<Node> | undefined;
 
   constructor(
-    private page: Page,
-    private testInfo: TestInfo
+    private readonly page: Page,
+    private readonly testInfo: TestInfo
   ) {}
 
   /**

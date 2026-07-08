@@ -37,7 +37,7 @@ import { SiCardHeaderComponent } from './si-card-header.component';
 })
 export class SiActionCardComponent extends SiCardBaseDirective {
   private static idCounter = 0;
-  private id = `__si-action-card-${SiActionCardComponent.idCounter++}`;
+  private readonly id = `__si-action-card-${SiActionCardComponent.idCounter++}`;
   /**
    * Makes whole card selectable.
    *

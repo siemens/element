@@ -212,9 +212,9 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
 
   private readonly searchBar = viewChild.required(SiSearchBarComponent);
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
-  private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
-  private breakpointObserver = inject(BreakpointObserver);
-  private injector = inject(Injector);
+  private readonly uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
+  private readonly breakpointObserver = inject(BreakpointObserver);
+  private readonly injector = inject(Injector);
   private readonly navbarItems = viewChildren(SiNavbarVerticalItemComponent);
   private readonly navbarItemsLegacy = viewChildren(SiNavbarVerticalItemLegacyComponent);
   private readonly itemsToComponents = computed(

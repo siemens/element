@@ -12,8 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SiDummyComponent {
   path = '';
-  activeRoute = inject(ActivatedRoute);
-  private cdRef = inject(ChangeDetectorRef);
+  readonly activeRoute = inject(ActivatedRoute);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.activeRoute.url.subscribe(url => {

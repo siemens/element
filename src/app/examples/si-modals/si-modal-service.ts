@@ -27,9 +27,9 @@ export class SampleComponent implements OnDestroy {
   private ref?: ModalRef<unknown>;
   private parentRef?: ModalRef<unknown>;
 
-  private logEvent = inject(LOG_EVENT);
-  private modalService = inject(SiModalService);
-  private injector = inject(Injector);
+  private readonly logEvent = inject(LOG_EVENT);
+  private readonly modalService = inject(SiModalService);
+  private readonly injector = inject(Injector);
 
   ngOnDestroy(): void {
     this.ref?.detach();

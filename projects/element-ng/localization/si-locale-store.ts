@@ -12,7 +12,7 @@ export abstract class SiLocaleStore {
 export const SI_LOCALE_LOCAL_STORAGE_KEY = 'lang';
 
 export class SiDefaultLocaleStore extends SiLocaleStore {
-  constructor(private isBrowser: boolean) {
+  constructor(private readonly isBrowser: boolean) {
     super();
   }
 

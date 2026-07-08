@@ -20,9 +20,9 @@ export class DashboardFiltersComponent implements OnInit {
   readonly days = days;
   readonly severity = severity;
 
-  private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
-  private destroyRef = inject(DestroyRef);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly dataService = inject(DataService);
+  private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     const formControls = {

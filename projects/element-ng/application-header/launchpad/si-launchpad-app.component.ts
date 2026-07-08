@@ -58,7 +58,7 @@ export class SiLaunchpadAppComponent {
 
   protected readonly icons = addIcons({ elementExport, elementFavorites, elementFavoritesFilled });
 
-  private header = inject(SiApplicationHeaderComponent);
+  private readonly header = inject(SiApplicationHeaderComponent);
 
   @HostListener('keydown.space', ['$event'])
   protected favoriteClicked(event: Event): void {

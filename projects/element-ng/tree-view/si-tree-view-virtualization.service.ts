@@ -63,8 +63,8 @@ export class SiTreeViewVirtualizationService {
   private listItemsPerVirtPage: number[] = [];
   private groupItemsPerVirtPage: number[] = [];
 
-  private siTreeViewService = inject(SiTreeViewService);
-  private siTreeViewItemHeightService = inject(SiTreeViewItemHeightService);
+  private readonly siTreeViewService = inject(SiTreeViewService);
+  private readonly siTreeViewItemHeightService = inject(SiTreeViewItemHeightService);
 
   /**
    * Returns the virtualized items.

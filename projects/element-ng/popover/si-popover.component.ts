@@ -52,8 +52,8 @@ export class PopoverComponent implements OnInit, OnDestroy {
   protected popoverTemplate: TemplateRef<any> | null = null;
   protected injector = inject(Injector);
 
-  private elementRef = inject(ElementRef);
-  private focusTrapFactory = inject(ConfigurableFocusTrapFactory);
+  private readonly elementRef = inject(ElementRef);
+  private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
   private focusTrap?: ConfigurableFocusTrap;
   private readonly previouslyActiveElement = inject(DOCUMENT).activeElement;
 

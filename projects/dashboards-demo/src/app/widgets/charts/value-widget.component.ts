@@ -40,8 +40,8 @@ export class ValueWidgetComponent implements OnInit, WidgetInstance {
   @ViewChild('footer', { static: true }) footer?: TemplateRef<unknown>;
   protected link?: Link = { href: 'https://github.com/siemens/element/issues' };
 
-  private dataService = inject(DataService);
-  private destroyRef = inject(DestroyRef);
+  private readonly dataService = inject(DataService);
+  private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     (

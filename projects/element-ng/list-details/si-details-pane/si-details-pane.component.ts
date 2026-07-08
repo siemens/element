@@ -36,7 +36,7 @@ export class SiDetailsPaneComponent {
 
   private readonly routerOutlet = contentChild(RouterOutlet);
   private subscription?: Subscription;
-  private destroyer = inject(DestroyRef);
+  private readonly destroyer = inject(DestroyRef);
   /** @internal */
   readonly isRouterBased = computed(() => !!this.routerOutlet());
 

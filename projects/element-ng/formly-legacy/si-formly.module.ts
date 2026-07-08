@@ -36,8 +36,8 @@ import { SiFormlyComponent } from './si-formly.component';
   exports: [SiFormlyComponent]
 })
 export class SiFormlyModule {
-  private config = inject(FormlyConfig);
-  private configs = inject(FORMLY_CONFIG, { optional: true });
+  private readonly config = inject(FormlyConfig);
+  private readonly configs = inject(FORMLY_CONFIG, { optional: true });
 
   static forRoot(formlyConfig: ConfigOption = {}): ModuleWithProviders<SiFormlyModule> {
     return {

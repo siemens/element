@@ -14,7 +14,6 @@ import {
 } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL } from '@siemens/element-ng/form';
-import { Subscription } from 'rxjs';
 
 import { is12HourFormat } from './date-time-helper';
 import { SiDateInputDirective } from './si-date-input.directive';
@@ -57,11 +56,6 @@ export class SiDatepickerDirective extends SiDateInputDirective implements After
    */
   readonly autoClose = input(false, { transform: booleanAttribute });
 
-  /**
-   * During focus on close the datepicker will not show since we recover the focus on element.
-   * The focus on close is only relevant when the directive is configured without a calendar button.
-   */
-  private overlaySubscriptions?: Subscription[];
   private externalTrigger?: ElementRef<HTMLElement>;
   private readonly overlayToggle = inject(SiDatepickerOverlayDirective);
 
@@ -136,8 +130,6 @@ export class SiDatepickerDirective extends SiDateInputDirective implements After
   }
 
   private subscribeDateChanges(overlay?: ComponentRef<SiDatepickerOverlayComponent>): void {
-    this.overlaySubscriptions?.forEach(s => s.unsubscribe());
-
     overlay?.instance.date.subscribe(d => this.onDateChanged(d));
     overlay?.instance.disabledTimeChange.subscribe(d => this.onDisabledTime(d));
   }

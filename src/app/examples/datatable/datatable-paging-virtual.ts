@@ -29,8 +29,8 @@ export class SampleComponent {
 
   isLoading = 0;
 
-  private dataService = inject(DataService);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly dataService = inject(DataService);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   onSelect(event: CorporateEmployee[]): void {
     this.logEvent(event);

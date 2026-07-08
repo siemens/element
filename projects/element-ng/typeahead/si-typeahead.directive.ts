@@ -287,20 +287,20 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   get typeaheadOpen(): boolean {
     return !!this.componentRef;
   }
-  private overlay = inject(Overlay);
-  private elementRef = inject<ElementRef<HTMLInputElement>>(ElementRef);
-  private injector = inject(Injector);
+  private readonly overlay = inject(Overlay);
+  private readonly elementRef = inject<ElementRef<HTMLInputElement>>(ElementRef);
+  private readonly injector = inject(Injector);
 
-  private $typeahead = new ReplaySubject<TypeaheadArray>(1);
+  private readonly $typeahead = new ReplaySubject<TypeaheadArray>(1);
   private componentRef?: ComponentRef<SiTypeaheadComponent>;
   private inputTimer: any;
 
   private sourceSubscription?: Subscription;
-  private matchSorter = new SiTypeaheadSorting();
+  private readonly matchSorter = new SiTypeaheadSorting();
 
   private overlayRef?: OverlayRef;
 
-  private loadingSubscription?: Subscription;
+  private readonly loadingSubscription?: Subscription;
 
   /**
    * Indicates whether the typeahead is currently loading.

@@ -52,11 +52,13 @@ export class SiAccordionComponent implements AfterContentInit, OnChanges {
 
   private readonly panels = contentChildren(SiCollapsiblePanelComponent);
   private responsive = false;
-  private destroyer = inject(DestroyRef);
-  private service = inject(SiAccordionService);
-  private resizeObserver = inject(ResizeObserverService);
-  private element = inject(ElementRef);
-  private accordionHCollapseService = inject(SiAccordionHCollapseService, { optional: true });
+  private readonly destroyer = inject(DestroyRef);
+  private readonly service = inject(SiAccordionService);
+  private readonly resizeObserver = inject(ResizeObserverService);
+  private readonly element = inject(ElementRef);
+  private readonly accordionHCollapseService = inject(SiAccordionHCollapseService, {
+    optional: true
+  });
 
   ngOnChanges(): void {
     this.service.fullHeight.set(this.fullHeight() && !this.responsive);

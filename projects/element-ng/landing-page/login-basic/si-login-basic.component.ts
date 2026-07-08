@@ -147,7 +147,7 @@ export class SiLoginBasicComponent implements OnInit {
    */
   readonly login = output<UsernamePassword>();
 
-  private destroyRef = inject(DestroyRef);
+  private readonly destroyRef = inject(DestroyRef);
   protected readonly secondStepVisible = signal(false);
   protected readonly loadingNext = signal(false);
 

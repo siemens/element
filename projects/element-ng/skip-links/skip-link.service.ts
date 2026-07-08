@@ -20,10 +20,10 @@ import { SiSkipLinksComponent } from './si-skip-links.component';
 })
 export class SkipLinkService {
   private skipLinksComponentRef?: ComponentRef<SiSkipLinksComponent>;
-  private appRef = inject(ApplicationRef);
-  private environmentInjector = inject(EnvironmentInjector);
-  private document = inject(DOCUMENT);
-  private registeredTargets: SiSkipLinkTargetDirective[] = [];
+  private readonly appRef = inject(ApplicationRef);
+  private readonly environmentInjector = inject(EnvironmentInjector);
+  private readonly document = inject(DOCUMENT);
+  private readonly registeredTargets: SiSkipLinkTargetDirective[] = [];
 
   registerLink(skipLink: SiSkipLinkTargetDirective): void {
     if (!this.skipLinksComponentRef) {

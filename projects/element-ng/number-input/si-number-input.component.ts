@@ -66,7 +66,7 @@ export class SiNumberInputComponent
   implements OnChanges, ControlValueAccessor, Validator, SiFormItemControl
 {
   private static idCounter = 0;
-  private static formatValidator: ValidatorFn = control => {
+  private static readonly formatValidator: ValidatorFn = control => {
     if (control.value != null && isNaN(control.value)) {
       return { numberFormat: true };
     }
@@ -173,9 +173,9 @@ export class SiNumberInputComponent
   });
   protected readonly icons = addIcons({ elementMinus, elementPlus });
   private internalValue?: number;
-  private autoUpdate$ = timer(400, 80);
+  private readonly autoUpdate$ = timer(400, 80);
   private autoUpdateSubs?: Subscription;
-  private changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.value) {

@@ -37,15 +37,15 @@ interface TreeItem {
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiExampleOverviewComponent implements OnInit, OnDestroy {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private title = inject(Title);
-  private config = inject(SI_LIVE_PREVIEW_CONFIG);
-  private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly title = inject(Title);
+  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private componentList: string[] = [];
-  private darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  private mediaQueryListener = (): void => this.toggleDark(this.darkMediaQuery.matches);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  private readonly mediaQueryListener = (): void => this.toggleDark(this.darkMediaQuery.matches);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   protected activeExampleRoute!: Observable<string>;
   protected tree: TreeItem[] = [];

@@ -22,10 +22,10 @@ import { cloneColumnData, headerData } from './column-dialog.data';
 })
 export class SampleComponent implements OnInit, OnDestroy {
   private subscription?: Subscription;
-  private logEvent = inject(LOG_EVENT);
-  private siModal = inject(SiActionDialogService);
-  private siColumnModal = inject(SiColumnSelectionDialogService);
-  private translate = inject(TranslateService);
+  private readonly logEvent = inject(LOG_EVENT);
+  private readonly siModal = inject(SiActionDialogService);
+  private readonly siColumnModal = inject(SiColumnSelectionDialogService);
+  private readonly translate = inject(TranslateService);
   protected columns = cloneColumnData(headerData);
 
   ngOnInit(): void {

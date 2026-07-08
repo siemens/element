@@ -73,9 +73,9 @@ export class SiLocaleService {
   readonly localePackageLoaded$ = new ReplaySubject<void>(1);
 
   private _nextLocale!: string;
-  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-  private translate = injectSiTranslateService();
-  private localeStore =
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly translate = injectSiTranslateService();
+  private readonly localeStore =
     inject(SiLocaleStore, { optional: true }) ?? new SiDefaultLocaleStore(this.isBrowser);
   /**
    * The config for the local service.

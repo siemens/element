@@ -86,8 +86,8 @@ export class SampleComponent implements OnInit {
   rows = new Array<CorporateEmployee>();
   isLoading = 0;
 
-  private dataService = inject(DataService);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly dataService = inject(DataService);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     // timeout needed to work in the iFrame in the docs

@@ -23,7 +23,7 @@ import { SiListDetailsComponent } from '../si-list-details.component';
 })
 export class SiListPaneComponent {
   protected parent = inject(SiListDetailsComponent);
-  private element: ElementRef<HTMLElement> = inject(ElementRef);
+  private readonly element: ElementRef<HTMLElement> = inject(ElementRef);
 
   constructor() {
     this.parent.transferFocusToList

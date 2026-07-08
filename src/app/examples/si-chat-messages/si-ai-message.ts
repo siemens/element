@@ -26,7 +26,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
-  private sanitizer = inject(DomSanitizer);
+  private readonly sanitizer = inject(DomSanitizer);
 
   protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
 

@@ -41,10 +41,10 @@ interface QueueEntry {
   providedIn: 'root'
 })
 export class ResizeObserverService {
-  private listeners = new Map<Element, Listener>();
-  private resizeObserver?: ResizeObserver;
-  private timerQueue = new Map<number, QueueEntry[]>();
-  private zone = inject(NgZone);
+  private readonly listeners = new Map<Element, Listener>();
+  private readonly resizeObserver?: ResizeObserver;
+  private readonly timerQueue = new Map<number, QueueEntry[]>();
+  private readonly zone = inject(NgZone);
 
   constructor() {
     const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));

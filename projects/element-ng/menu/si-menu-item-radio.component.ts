@@ -25,7 +25,7 @@ import { SiMenuItemBase } from './si-menu-item-base.directive';
   ]
 })
 export class SiMenuItemRadioComponent extends SiMenuItemBase {
-  private cdkMenuItemRadio = inject(CdkMenuItemRadio);
+  private readonly cdkMenuItemRadio = inject(CdkMenuItemRadio);
   protected readonly icons = addIcons({ elementRecordFilled });
   protected get checked(): boolean {
     return this.cdkMenuItemRadio.checked;

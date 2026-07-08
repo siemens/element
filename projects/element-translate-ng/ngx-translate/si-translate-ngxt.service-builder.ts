@@ -19,7 +19,7 @@ import { SiTranslateNgxTService } from './si-translate-ngxt.service';
  */
 @Injectable()
 export class SiTranslateNgxTServiceBuilder extends SiTranslateServiceBuilder {
-  private serviceCache = new Map<TranslateService, SiTranslateNgxTService>();
+  private readonly serviceCache = new Map<TranslateService, SiTranslateNgxTService>();
 
   buildService(injector: Injector): SiTranslateService {
     // Get instance of NGX Translate via injector instance of the current scope (see isolated mode)

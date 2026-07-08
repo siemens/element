@@ -23,7 +23,7 @@ export class SiContentActionBarHarness extends ComponentHarness {
   private readonly getForcedMobileToggle = this.locatorForOptional(
     ':scope > button[si-content-action-bar-toggle]:last-child'
   );
-  private collapsibleListItem = this.locatorFor('[siAutoCollapsableListItem]');
+  private readonly collapsibleListItem = this.locatorFor('[siAutoCollapsableListItem]');
 
   private async getMobileToggle(): Promise<TestElement | null> {
     const [forced, mobile] = await parallel(() => [

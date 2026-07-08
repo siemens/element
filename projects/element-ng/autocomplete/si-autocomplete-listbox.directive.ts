@@ -51,13 +51,13 @@ export class SiAutocompleteListboxDirective<T> implements OnInit {
 
   readonly siAutocompleteOptionSubmitted = output<T | undefined>();
 
-  private injector = inject(INJECTOR);
-  private keyManager = new ActiveDescendantKeyManager(this.options, this.injector)
+  private readonly injector = inject(INJECTOR);
+  private readonly keyManager = new ActiveDescendantKeyManager(this.options, this.injector)
     .withWrap(true)
     .withVerticalOrientation(true);
 
-  private changeDetectorRef = inject(ChangeDetectorRef);
-  private destroyRef = inject(DestroyRef);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
     effect(() => {

@@ -23,7 +23,7 @@ export interface SiCalendarCellHarnessFilters extends BaseHarnessFilters {
 export class SiCalendarCellHarness extends ComponentHarness {
   static hostSelector = '.si-calendar-cell';
 
-  private content = this.locatorFor('.si-calendar-date-cell');
+  private readonly content = this.locatorFor('.si-calendar-date-cell');
 
   static with(options: SiCalendarCellHarnessFilters = {}): HarnessPredicate<SiCalendarCellHarness> {
     return new HarnessPredicate(SiCalendarCellHarness, options)

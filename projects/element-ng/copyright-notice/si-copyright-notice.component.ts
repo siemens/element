@@ -13,7 +13,7 @@ import { CopyrightDetails, SI_COPYRIGHT_DETAILS } from './si-copyright-notice';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiCopyrightNoticeComponent {
-  private globalCopyrightInfo: CopyrightDetails | null = inject(SI_COPYRIGHT_DETAILS, {
+  private readonly globalCopyrightInfo: CopyrightDetails | null = inject(SI_COPYRIGHT_DETAILS, {
     optional: true
   });
   /**

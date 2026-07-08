@@ -386,15 +386,15 @@ export class SiTreeViewComponent
   private domChangeObserver?: MutationObserver;
   private scroll$!: Observable<Event>;
 
-  private element = inject(ElementRef);
-  private siTreeViewService = inject(SiTreeViewService);
-  private siTreeViewConverterService = inject(SiTreeViewConverterService);
-  private siTreeViewVirtualizationService = inject(SiTreeViewVirtualizationService);
-  private siTreeViewItemHeightService = inject(SiTreeViewItemHeightService);
-  private cdRef = inject(ChangeDetectorRef);
-  private resizeObserver = inject(ResizeObserverService);
-  private injector = inject(INJECTOR);
-  private destroyRef = inject(DestroyRef);
+  private readonly element = inject(ElementRef);
+  private readonly siTreeViewService = inject(SiTreeViewService);
+  private readonly siTreeViewConverterService = inject(SiTreeViewConverterService);
+  private readonly siTreeViewVirtualizationService = inject(SiTreeViewVirtualizationService);
+  private readonly siTreeViewItemHeightService = inject(SiTreeViewItemHeightService);
+  private readonly cdRef = inject(ChangeDetectorRef);
+  private readonly resizeObserver = inject(ResizeObserverService);
+  private readonly injector = inject(INJECTOR);
+  private readonly destroyRef = inject(DestroyRef);
   /**
    * Create a virtual root node so there is just a single root node. This makes sure the tree
    * can be fully traversed starting from any node. This is needed e.g. for recursively

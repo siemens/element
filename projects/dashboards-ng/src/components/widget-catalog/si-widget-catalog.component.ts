@@ -150,7 +150,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
     }
   });
 
-  private dialogService = inject(SiActionDialogService);
+  private readonly dialogService = inject(SiActionDialogService);
   private readonly widgetCdkListbox = viewChild(CdkListbox<Widget>);
 
   ngOnInit(): void {

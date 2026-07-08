@@ -277,7 +277,7 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   protected activeTheme: any;
   protected autoZoomUpdate = true;
 
-  private prevAxisPointer: any = {};
+  private readonly prevAxisPointer: any = {};
   private lastValidDataZoom: any = {};
   private presetDataZoomRange?: DataZoomRange;
   private dataZoomSetupDone = false;

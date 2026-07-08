@@ -21,7 +21,7 @@ import { Country, CountryService } from './country.service';
 
 @Injectable({ providedIn: 'root' })
 class CountryOptionSource implements SelectOptionSource<string> {
-  private countryService = inject(CountryService);
+  private readonly countryService = inject(CountryService);
 
   getOptionsForValues(keys: string[]): Observable<SelectOption<string>[]> {
     return this.countryService

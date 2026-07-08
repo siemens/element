@@ -6,7 +6,7 @@
 import { expect } from 'vitest';
 
 export class CalendarTestHelper {
-  constructor(private element: HTMLElement) {}
+  constructor(private readonly element: HTMLElement) {}
 
   queryAsArray(query: string): HTMLElement[] {
     return Array.from(this.element.querySelectorAll(query)) as HTMLElement[];

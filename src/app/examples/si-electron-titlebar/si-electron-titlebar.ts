@@ -15,7 +15,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  private _location = inject(Location);
+  private readonly _location = inject(Location);
 
   logEvent = inject(LOG_EVENT);
   // zoom levels of possible zoom % | index 5 = the default (100%)

@@ -43,10 +43,10 @@ import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges {
-  private config = inject(SI_LIVE_PREVIEW_CONFIG);
-  private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
-  private self = inject(ElementRef);
-  private http = inject(HttpClient);
+  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
+  private readonly self = inject(ElementRef);
+  private readonly http = inject(HttpClient);
   public localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
 
   readonly templateElem = viewChild.required<ElementRef>('codeTemplate');
@@ -98,7 +98,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   showEditor = !this.editorCollapsed;
   newMsgs = false;
 
-  private compileSubject = new Subject<string>();
+  private readonly compileSubject = new Subject<string>();
 
   private templateModified = false;
   private skipInitialLoad = false;
@@ -112,8 +112,8 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   private vueLoaded = false;
   private jsLoaded = false;
   private delayClearTimer: any;
-  private webcomponentsList: string[] = [];
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly webcomponentsList: string[] = [];
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.compileSubject

@@ -37,7 +37,7 @@ export class SiTreeViewConverterService {
    */
   itemsTotal = 0;
 
-  private siTreeViewService = inject(SiTreeViewService);
+  private readonly siTreeViewService = inject(SiTreeViewService);
 
   /**
    * Flattens the tree handed over as parameter.

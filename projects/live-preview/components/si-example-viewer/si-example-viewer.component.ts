@@ -26,12 +26,12 @@ import { SiLivePreviewComponent } from '../si-live-preview/si-live-preview.compo
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiExampleViewerComponent {
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
-  private config = inject(SI_LIVE_PREVIEW_CONFIG);
-  private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
-  private themeApi = inject(SiLivePreviewThemeApi, { optional: true });
-  private localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
+  private readonly themeApi = inject(SiLivePreviewThemeApi, { optional: true });
+  private readonly localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
 
   readonly renderer = viewChild.required<SiLivePreviewRendererComponent>('renderer');
 
