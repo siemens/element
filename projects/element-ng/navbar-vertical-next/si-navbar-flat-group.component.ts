@@ -37,6 +37,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
           role="heading"
           aria-level="2"
           class="item-title text-truncate si-h5"
+          [id]="openFlatGroupId() + '-heading'"
           [cdkPortalOutlet]="labelPortal"
         ></span>
       </div>

@@ -8,7 +8,7 @@
   - button "Toggle" [expanded]
   - button "Back"
   - heading "Documentation" [level=2]
-  - group "":
+  - group "Documentation":
     - link "Sub item 4":
       - /url: "#/viewer/viewer/subItem4"
     - link "Sub item 5":

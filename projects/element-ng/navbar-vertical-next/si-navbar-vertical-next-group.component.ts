@@ -44,7 +44,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   host: {
     'role': 'group',
     '[id]': 'groupTrigger.groupId',
-    '[attr.aria-labelledby]': 'groupTrigger.id',
+    '[attr.aria-labelledby]': 'groupTrigger.flatGroupActive() ? groupTrigger.groupId + "-heading" : groupTrigger.id',
     'animate.enter': 'component-enter',
     '[class.flat-group-active]': 'groupTrigger.flatGroupActive()',
     '(keydown.escape)': 'close()'
