@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, computed, contentChild, effect, input } from '@angular/core';
+import { Component, computed, contentChild, effect, inject, input } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+
+import { SiFormValidationErrorService } from '../si-form-validation-error.service';
 
 /**
  * Constructs a full form field including error messages, labels and aria-* attributes.
@@ -39,6 +41,8 @@ export class SiFormFieldComponent {
 
   private readonly formField = contentChild.required(FormField);
 
+  private readonly validationErrorService = inject(SiFormValidationErrorService);
+
   private readonly generatedId = `__si-form-field-${SiFormFieldComponent.idCounter++}`;
 
   /** The id of the connected control, used for the label's `for` attribute. */
@@ -65,7 +69,8 @@ export class SiFormFieldComponent {
     if (!state.touched()) {
       return [];
     }
-    return state.errors().filter(error => !!error.message);
+
+    return this.validationErrorService.resolveFormFieldErrors(state);
   });
 
   constructor() {
