@@ -15,7 +15,7 @@ echarts.use([SunburstChart]);
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../common/si-chart-base.component.html',
   styleUrl: '../common/si-chart-base.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiChartSunburstComponent extends SiChartBaseComponent {
   /** The series for the chart. */

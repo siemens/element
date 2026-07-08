@@ -40,7 +40,7 @@ import { SiNavbarPrimaryComponent } from '../si-navbar-primary/si-navbar-primary
     SiIconComponent
   ],
   templateUrl: './si-navbar-item.component.html',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'd-contents' }
 })
 export class SiNavbarItemComponent implements OnInit, DoCheck, OnDestroy {

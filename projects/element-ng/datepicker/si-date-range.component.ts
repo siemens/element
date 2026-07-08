@@ -77,7 +77,7 @@ import { DatepickerInputConfig, DateRange } from './si-datepicker.model';
       useExisting: SiDateRangeComponent
     }
   ],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'form-control d-flex align-items-center',
     role: 'group',

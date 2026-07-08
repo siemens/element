@@ -368,7 +368,7 @@ The strategy is intentionally minimal: the host directive owns state, focus,
 keyboard handling and form integration, while applications retain full
 control over what is rendered in the trigger and in the dropdown. The same
 component can therefore be styled either as a `form-control` (inside an
-`si-form-item`, with validation) or as a button (`btn btn-primary-ghost`) by
+`si-form-item`, with validation) or as a button (`btn btn-ghost`) by
 applying the corresponding class on the host element.
 
 A custom select component typically applies `SiCustomSelectDirective` as a

@@ -6,10 +6,11 @@
 
 import * as _angular_core from '@angular/core';
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
-import * as i1 from '@siemens/element-ng/autocomplete';
+import { Highlightable } from '@angular/cdk/a11y';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';

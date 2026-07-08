@@ -34,7 +34,7 @@ interface TreeItem {
   imports: [AsyncPipe, ReactiveFormsModule, RouterLink, RouterLinkActive, SiLivePreviewComponent],
   templateUrl: './si-example-overview.component.html',
   styleUrl: './si-example-overview.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiExampleOverviewComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);

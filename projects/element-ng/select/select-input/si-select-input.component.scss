@@ -3,11 +3,9 @@
 
 :host {
   cursor: pointer;
-  font-weight: all-variables.$si-font-weight-h5;
   min-inline-size: 72px;
   block-size: 100%;
   color: all-variables.$element-text-primary;
-  padding-block: all-variables.$input-padding-y;
   padding-inline-end: calc(
     #{map.get(all-variables.$spacers, 2) - all-variables.$input-border-width} +
       var(--si-feedback-icon-offset, 0px)
@@ -20,19 +18,8 @@
 
 :host-context(.form-control) {
   :host {
-    font-weight: all-variables.$si-font-weight-normal;
     padding-block: map.get(all-variables.$spacers, 2) - 1px;
     padding-inline-end: var(--si-input-padding-inline-end);
-  }
-}
-
-:host-context(.dropdown:not(.form-control)) :host:not(.disabled) {
-  &:hover {
-    background: all-variables.$element-base-1-hover;
-  }
-
-  &.active {
-    background: all-variables.$element-base-1-selected;
   }
 }
 

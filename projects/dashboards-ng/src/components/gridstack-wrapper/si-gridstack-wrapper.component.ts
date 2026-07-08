@@ -43,7 +43,7 @@ export interface GridWrapperEvent {
   imports: [SiWidgetHostComponent],
   templateUrl: './si-gridstack-wrapper.component.html',
   styleUrl: './si-gridstack-wrapper.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiGridstackWrapperComponent implements OnInit, OnChanges {
   /**

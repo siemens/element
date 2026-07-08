@@ -64,10 +64,7 @@ export interface TimelineWidgetMenu {
 
 /** Union type for all possible action items in the timeline widget. */
 export type TimelineWidgetItemAction =
-  | TimelineWidgetActionButton
-  | TimeLineWidgetLink
-  | TimeLineWidgetRouterLink
-  | TimelineWidgetMenu;
+  TimelineWidgetActionButton | TimeLineWidgetLink | TimeLineWidgetRouterLink | TimelineWidgetMenu;
 
 /**
  * Represents an item in the timeline widget.
@@ -121,7 +118,7 @@ export interface SiTimelineWidgetItem {
   imports: [SiIconComponent, SiTranslatePipe, A11yModule, RouterLink, SiMenuModule, CdkMenuTrigger],
   templateUrl: './si-timeline-widget-item.component.html',
   styleUrl: './si-timeline-widget-item.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     role: 'listitem'
   }

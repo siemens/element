@@ -14,15 +14,15 @@ export interface SymbolRemovalInstruction {
 }
 
 export const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
-  // v48 to v49
+  // v49 to v51
   {
-    module: /@(siemens|simpl)\/maps-ng/,
-    elementSelector: 'si-map',
-    names: ['onResize']
+    module: /@siemens\/element-ng\/file-uploader/,
+    elementSelector: 'si-file-uploader',
+    names: ['uploadTextFileSelect']
   },
   {
-    module: /@(siemens|simpl)\/element-ng/,
-    elementSelector: 'si-landing-page',
-    names: ['registerNowIntroText']
+    module: /@siemens\/element-ng\/file-uploader/,
+    elementSelector: 'si-file-dropzone',
+    names: ['uploadTextFileSelect']
   }
 ];

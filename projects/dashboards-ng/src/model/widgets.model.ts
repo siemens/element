@@ -46,10 +46,7 @@ export interface Widget {
 
 /** Factory type that is either a {@link WidgetComponentTypeFactory}, {@link FederatedModule}, {@link FederatedBridgeModule} or {@link WebComponent}. */
 export type WidgetComponentFactory =
-  | WidgetComponentTypeFactory
-  | FederatedModule
-  | WebComponent
-  | FederatedBridgeModule;
+  WidgetComponentTypeFactory | FederatedModule | WebComponent | FederatedBridgeModule;
 
 type CommonFactoryFields = {
   componentName: string;
@@ -234,9 +231,7 @@ export interface WidgetInstanceEditor {
    * dashboard.
    */
   config:
-    | WidgetConfig
-    | Omit<WidgetConfig, 'id'>
-    | InputSignal<WidgetConfig | Omit<WidgetConfig, 'id'>>;
+    WidgetConfig | Omit<WidgetConfig, 'id'> | InputSignal<WidgetConfig | Omit<WidgetConfig, 'id'>>;
   /**
    * Optionally, emit updated widget configuration using an event emitter.
    */
@@ -248,8 +243,7 @@ export interface WidgetInstanceEditor {
    * Optionally, inform the hosting component about widget configuration status changes.
    */
   statusChanges?:
-    | Subject<Partial<WidgetConfigStatus>>
-    | OutputEmitterRef<Partial<WidgetConfigStatus>>;
+    Subject<Partial<WidgetConfigStatus>> | OutputEmitterRef<Partial<WidgetConfigStatus>>;
 }
 
 /**
@@ -280,8 +274,7 @@ export interface WidgetInstanceEditorWizard extends WidgetInstanceEditor {
    *  Emit changes as needed during the user interaction with the editor.
    */
   stateChange?:
-    | Subject<WidgetInstanceEditorWizardState>
-    | OutputEmitterRef<WidgetInstanceEditorWizardState>;
+    Subject<WidgetInstanceEditorWizardState> | OutputEmitterRef<WidgetInstanceEditorWizardState>;
   /**
    *  Is invoked from the next button. Display next page as consequence.
    *  For web components, implementing `next()` requires adding an event listener
@@ -377,9 +370,7 @@ export const createWidgetConfig = (widget: Widget): Omit<WidgetConfig, 'id'> => 
  * We take it over into this file to prevent adding a hard dependency.
  */
 export type LoadRemoteModuleOptions =
-  | LoadRemoteModuleScriptOptions
-  | LoadRemoteModuleEsmOptions
-  | LoadRemoteModuleManifestOptions;
+  LoadRemoteModuleScriptOptions | LoadRemoteModuleEsmOptions | LoadRemoteModuleManifestOptions;
 
 /**
  * Definition is based on `@module-federation/enhanced` loadRemote options.

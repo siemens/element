@@ -93,6 +93,4 @@ export type NavbarVerticalItem =
 
 /** Union type for all items that can be wrapped in a group. */
 export type NavbarVerticalSubItem =
-  | NavbarVerticalItemRouterLink
-  | NavbarVerticalItemLink
-  | NavbarVerticalItemAction;
+  NavbarVerticalItemRouterLink | NavbarVerticalItemLink | NavbarVerticalItemAction;

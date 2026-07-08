@@ -13,9 +13,5 @@ import {
 export type ViewType = 'collapsible' | 'expanded' | 'mobile';
 
 export type ContentActionBarMainItem = (
-  | MenuItemAction
-  | MenuItemCheckbox
-  | MenuItemLink
-  | MenuItemRouterLink
-  | MenuItemGroup
+  MenuItemAction | MenuItemCheckbox | MenuItemLink | MenuItemRouterLink | MenuItemGroup
 ) & { iconOnly?: boolean };

@@ -255,15 +255,16 @@ export class SiChatInputComponent implements AfterViewInit {
   );
 
   /**
-   * Remove attachment aria label prefix
+   * Remove attachment aria label.
+   * The attachment name is available with `{{attachment}}`.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT:Remove attachment`)
+   * t(() => $localize`:@@SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT:Remove {{attachment}}`)
    * ```
    */
   readonly removeAttachmentLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT:Remove attachment`)
+    t(() => $localize`:@@SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT:Remove {{attachment}}`)
   );
 
   /**
@@ -313,15 +314,13 @@ export class SiChatInputComponent implements AfterViewInit {
           } satisfies MenuItem
         ]
       : []),
-    ...this.actions().map(
-      (a): MenuItem => ({
-        type: 'action' as const,
-        label: a.label,
-        icon: a.icon,
-        disabled: a.disabled,
-        action: (param: unknown) => a.action(param, a)
-      })
-    ),
+    ...this.actions().map((a): MenuItem => ({
+      type: 'action' as const,
+      label: a.label,
+      icon: a.icon,
+      disabled: a.disabled,
+      action: (param: unknown) => a.action(param, a)
+    })),
     ...this.secondaryActions()
   ]);
 

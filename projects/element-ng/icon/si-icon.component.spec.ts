@@ -7,7 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiThemeService } from '@siemens/element-ng/theme';
 
-import { provideIconConfig, SiIconComponent } from './si-icon.component';
+import { SiIconComponent } from './si-icon.component';
 import { addIcons, IconService } from './si-icons';
 
 // It seems like the debug element is not able to query the SVGs.
@@ -41,9 +41,6 @@ describe('SiSvgIconComponent', () => {
 
     describe('with enabled svg icons', () => {
       beforeEach(async () => {
-        TestBed.configureTestingModule({
-          providers: [provideIconConfig({ disableSvgIcons: false })]
-        });
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -107,24 +104,6 @@ describe('SiSvgIconComponent', () => {
           fixture.detectChanges();
           expect(getIconHostStyle()).toContain('svg-oem');
         });
-      });
-    });
-
-    describe('with disabled svg icons', () => {
-      beforeEach(() => {
-        TestBed.configureTestingModule({
-          providers: [provideIconConfig({ disableSvgIcons: true })]
-        });
-        fixture = TestBed.createComponent(TestHostComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-      });
-
-      it('should always use the icon-font', () => {
-        component.icon.set('element-svg');
-        fixture.detectChanges();
-        expect(getIconHostStyle()).toBe('');
-        expect(fixture.debugElement.query(By.css('.element-svg'))).toBeTruthy();
       });
     });
   });

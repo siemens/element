@@ -14,10 +14,6 @@
     }
   },
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true,
     "compilationMode": "partial"
   },
   "include": ["./**/*.ts"],

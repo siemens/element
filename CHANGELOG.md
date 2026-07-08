@@ -1,3 +1,33 @@
+# [49.13.0](https://github.com/siemens/element/compare/v49.12.0...v49.13.0) (2026-07-02)
+
+
+### Features
+
+* add sequential color tokens avocado, blue, royal blue, and yellow ([86f911a](https://github.com/siemens/element/commit/86f911a4bea537700bcea4b8a310f576fecff907))
+* **application-header:** show tooltip on icon-only header items ([39a0ae5](https://github.com/siemens/element/commit/39a0ae5493622e2f707c57e75623c9d4d7bddbb3))
+* **tabs:** show tooltip in icon mode ([bdf3a77](https://github.com/siemens/element/commit/bdf3a778b8e96d564a7e0c6e96a973d8b6152d87))
+
+
+### Bug Fixes
+
+* **header-dropdown:** expose aria-pressed on checked dropdown items ([30b84f7](https://github.com/siemens/element/commit/30b84f73a5be95dfbd46dea4faac629bba12ffcc)), closes [#2153](https://github.com/siemens/element/issues/2153)
+* **header-dropdown:** expose role and aria-haspopup based on overlay mode ([999a8fd](https://github.com/siemens/element/commit/999a8fde30a2d2453a0680bd141782361c13ce06)), closes [#2153](https://github.com/siemens/element/issues/2153)
+* **ip-input:** allow IPv6 unspecified address ([b200ce2](https://github.com/siemens/element/commit/b200ce288d15f0a749ed45f3e6ea303b59cff914)), closes [#2183](https://github.com/siemens/element/issues/2183)
+* **live-preview:** preserve NgModule scope when recompiling edited examples ([f1b59ca](https://github.com/siemens/element/commit/f1b59ca160168e85880aee9fce0a948dd9c87333))
+* **live-preview:** skip stackblitz source fetch when no example is set ([dbba53e](https://github.com/siemens/element/commit/dbba53e71456e30ca2fff45ca0b2047496735d3d))
+* **phone-number:** emit valueChange together with form control update ([b78ab82](https://github.com/siemens/element/commit/b78ab8291fdd5ab02378f7e8a6f73d3b25f87bc8))
+* **phone-number:** make country dropdown grow if needed ([324823c](https://github.com/siemens/element/commit/324823cf4e98f171aad9eab912d40153944d729a))
+* restore flex-grow-1 wrapper for main-detail-container layout ([1d2da3b](https://github.com/siemens/element/commit/1d2da3b9249cc23eae89a42ccbfd8a4e42f7a5b1))
+* **tooltip:** reposition overlay when content changes dynamically ([b370c1b](https://github.com/siemens/element/commit/b370c1b26d5f006121c3baf05f9f593e8d3998f9)), closes [#2219](https://github.com/siemens/element/issues/2219)
+* **tree-view:** fix ExpressionChangedAfterItHasBeenCheckedError ([663041e](https://github.com/siemens/element/commit/663041e0934dc7cbf1cb25e97259603711e8643d)), closes [#2227](https://github.com/siemens/element/issues/2227)
+
+
+### DEPRECATIONS
+
+* **dashboards:** The `SimplDashboardsNgModule` should no longer be used. Use
+  `SiDashboardsNgModule` instead. The `Simpl` prefix is deprecated and will be
+  removed in v51.
+
 # [49.12.0](https://github.com/siemens/element/compare/v49.11.0...v49.12.0) (2026-06-23)
 
 

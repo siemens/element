@@ -20,13 +20,13 @@
   padding-inline: variables.$badge-padding-x;
   margin-block: 0;
   margin-inline: map.get(spacers.$spacers, 4);
-  line-height: 1.25rem;
+  line-height: variables.$badge-line-height;
   flex-shrink: 0;
   font-size: typography.$si-font-size-body;
   font-weight: typography.$si-font-weight-body;
   max-inline-size: 24.5ch;
   // Make min-inline-size equal the badge height to create a circular badge when there's only one character.
-  min-inline-size: calc(1.25rem + 2 * #{variables.$badge-padding-y}); // 1.75rem = same as height
+  min-inline-size: variables.$badge-height;
   text-overflow: ellipsis;
   overflow: hidden;
   text-align: center;

@@ -45,14 +45,7 @@ export interface MapPointMetaData {
 // Note: keep in sync with @siemens/element-ng: ExtendedStatusType | 'default' | 'unknown;
 // this doesn't use the Element type to be independent of element (for mobile)
 export type MarkerStatusType =
-  | 'success'
-  | 'info'
-  | 'warning'
-  | 'danger'
-  | 'caution'
-  | 'critical'
-  | 'default'
-  | 'unknown';
+  'success' | 'info' | 'warning' | 'danger' | 'caution' | 'critical' | 'default' | 'unknown';
 
 export interface LabelOptions {
   /**

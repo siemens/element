@@ -30,7 +30,7 @@ import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-spl
   imports: [NgTemplateOutlet, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-split-part.component.html',
   styleUrl: './si-split-part.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   // Signals cannot be used directly with @HostBinding. See: https://github.com/angular/angular/issues/53888#issuecomment-1888935225
   // Having every binding here for consistency.
   host: {
@@ -62,7 +62,7 @@ export class SiSplitPartComponent implements OnChanges {
    */
   @Input({ transform: booleanAttribute }) collapseToMinSize = false;
 
-  @Input() headerTemplate?: TemplateRef<any>;
+  @Input() headerTemplate?: TemplateRef<{ $implicit: SiSplitPartComponent }>;
 
   /**
    * Sets the title of the split part header.
@@ -184,7 +184,7 @@ export class SiSplitPartComponent implements OnChanges {
     return nextExpanded;
   });
 
-  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
   protected headerContext: { $implicit: SiSplitPartComponent } = {
     $implicit: this

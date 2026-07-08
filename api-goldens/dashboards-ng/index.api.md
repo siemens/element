@@ -143,6 +143,9 @@ export const provideDashboardToolbarItems: (toolbarItems?: {
     secondary?: DashboardToolbarItem[];
 }) => Provider;
 
+// @public
+export const provideSiDashboardsTranslatableOverrides: (values: SiTranslatableKeys) => Provider;
+
 // @public (undocumented)
 export type SetupComponentFn = <T>(factory: WidgetComponentFactory, componentName: string, host: ViewContainerRef, injector: Injector, envInjector: EnvironmentInjector) => Observable<ComponentRef<T>>;
 
@@ -398,9 +401,6 @@ export interface WidgetInstanceEditorWizardState {
 
 // @public
 export type WidgetPositionConfig = Pick<WidgetConfig, 'id' | 'x' | 'y' | 'width' | 'height'>;
-
-
-export * from "@siemens/dashboards-ng/translate";
 
 // (No @packageDocumentation comment for this package)
 

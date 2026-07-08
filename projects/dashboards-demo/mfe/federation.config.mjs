@@ -1,6 +1,5 @@
-const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');
-
-module.exports = withNativeFederation({
+import { withNativeFederation, shareAll } from '@angular-architects/native-federation/config';
+export default withNativeFederation({
   name: 'mfe',
   exposes: {
     './Download': './projects/dashboards-demo/mfe/src/app/download.component.ts',

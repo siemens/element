@@ -10,9 +10,9 @@ import { elementMigrationRule } from '../migrations/element-migration/element-mi
 import { iconPathMigrationRule } from '../migrations/icon-path-migration/index.js';
 import { missingTranslateMigrationRule } from '../migrations/ngx-translate/index.js';
 
-export const migrateToV49 = (): Rule => {
+export const migrateToV51 = (): Rule => {
   return (tree: Tree, context: SchematicContext) => {
-    context.logger.info('🚀 Starting update from version 48 to 49...');
+    context.logger.info('🚀 Starting update from version 49 to 51...');
     const migrationData: ElementMigrationData = getElementMigrationData();
     const options = { path: '/' };
     return chain([

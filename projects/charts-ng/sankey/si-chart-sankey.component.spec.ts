@@ -18,7 +18,7 @@ import { SiChartSankeyComponent } from './si-chart-sankey.component';
       [subTitle]="subTitle"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestHostComponent {
   readonly chartSankeyComponent = viewChild.required(SiChartSankeyComponent);

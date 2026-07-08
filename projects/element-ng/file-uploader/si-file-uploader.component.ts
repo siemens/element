@@ -91,29 +91,20 @@ interface ExtUploadFile extends UploadFile {
   ],
   templateUrl: './si-file-uploader.component.html',
   styleUrl: './si-file-uploader.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFileUploaderComponent {
-  /**
-   * Text of the link to open the file select dialog (follows `uploadDropText`).
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`)
-   * ```
-   */
-  readonly uploadTextFileSelect = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`)
-  );
   /**
    * Text instructing a user to drop the files inside the dropzone.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or click to upload`)
    * ```
    */
-  readonly uploadDropText = input(t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`));
+  readonly uploadDropText = input(
+    t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or click to upload`)
+  );
   /**
    * Text to describe the maximum file size.
    *

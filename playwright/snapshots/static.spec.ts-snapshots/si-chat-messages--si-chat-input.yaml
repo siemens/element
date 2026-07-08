@@ -1,9 +1,9 @@
 - group:
   - text: project-spec.pdf
-  - button "Remove attachment project-spec.pdf"
+  - button "Remove project-spec.pdf"
 - group:
   - text: mockup.png
-  - button "Remove attachment mockup.png"
+  - button "Remove mockup.png"
 - textbox "Chat message input":
   - /placeholder: Enter a command, question or topic...
 - group:

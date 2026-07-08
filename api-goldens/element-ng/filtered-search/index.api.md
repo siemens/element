@@ -5,8 +5,6 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { BackgroundColorVariant } from '@siemens/element-ng/common';
-import { DatepickerInputConfig } from '@siemens/element-ng/datepicker';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { OnInit } from '@angular/core';
@@ -15,7 +13,7 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
 export interface CriterionDefinition {
-    datepickerConfig?: DatepickerInputConfig;
+    datepickerConfig?: Omit<DatepickerInputConfig, 'enableDateRange' | 'enableTwoMonthDateRange'>;
     label?: TranslatableString;
     multiSelect?: boolean;
     name: string;

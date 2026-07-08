@@ -7,10 +7,8 @@
 >
   <si-icon class="mb-6 si-display-bold" [icon]="icons.elementUpload" />
   <span class="drag-and-drop-description si-h5 d-flex">
-    <span>{{ uploadDropText() | translate }}</span>
-    &nbsp;
     <button type="button" class="select-file si-h5 mb-0" (click)="triggerFileSelect()">
-      {{ uploadTextFileSelect() | translate }}
+      {{ uploadDropText() | translate }}
     </button>
     <input
       #fileInput

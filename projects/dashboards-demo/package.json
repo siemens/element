@@ -1,6 +1,6 @@
 {
   "name": "@siemens/dashboards-demo",
-  "version": "49.12.0",
+  "version": "49.13.0",
   "description": "Siemens Dashboards demo",
   "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
@@ -14,7 +14,7 @@
   "homepage": "https://github.com/siemens/element",
   "bugs": "https://github.com/siemens/element/issues/new",
   "dependencies": {
-    "ngx-translate-multi-http-loader": "20.0.0"
+    "@ngx-translate/http-loader": "18.0.0"
   },
   "devDependencies": {
     "ngx-build-plus": "20.0.0"

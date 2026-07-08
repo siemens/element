@@ -28,7 +28,7 @@ echarts.use([GaugeChart]);
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../common/si-chart-base.component.html',
   styleUrl: '../common/si-chart-base.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiChartGaugeComponent extends SiChartBaseComponent implements OnChanges {
   /** @defaultValue 0 */

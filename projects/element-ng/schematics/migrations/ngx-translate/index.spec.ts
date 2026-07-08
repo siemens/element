@@ -18,7 +18,7 @@ const collectionPath = buildRelativeFromFile('../../migration.json');
 describe('missing translate migration', () => {
   let runner: SchematicTestRunner;
   let appTree: Tree;
-  const name = 'migration-v49';
+  const name = 'migration-v51';
 
   beforeEach(async () => {
     runner = new SchematicTestRunner(name, collectionPath);
@@ -31,7 +31,7 @@ describe('missing translate migration', () => {
   ): Promise<void> => {
     addTestFiles(appTree, original);
 
-    const tree = await runner.runSchematic('migration-v49', { path: 'projects/app/src' }, appTree);
+    const tree = await runner.runSchematic('migration-v51', { path: 'projects/app/src' }, appTree);
 
     for (const [fileName, expectedContent] of Object.entries(expected)) {
       const actual = tree.readText(fileName);

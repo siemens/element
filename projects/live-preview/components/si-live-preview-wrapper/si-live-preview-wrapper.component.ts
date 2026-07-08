@@ -35,7 +35,7 @@ const filterTargets = ['_self', '_top', '_parent', ''];
   imports: [SiLivePreviewRendererComponent],
   templateUrl: './si-live-preview-wrapper.component.html',
   styles: 'si-live-preview-renderer { flex: 1;}',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiLivePreviewWrapperComponent {
   readonly renderer = viewChild.required<SiLivePreviewRendererComponent>('renderer');

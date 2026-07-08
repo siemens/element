@@ -2,12 +2,12 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-
 import { ATTRIBUTE_SELECTORS_MIGRATION } from './attribute-selectors.js';
 import { CLASS_MEMBER_REPLACEMENTS_MIGRATION } from './class-member-replacement.js';
 import { COMPONENT_PROPERTY_NAMES_MIGRATION } from './component-property-names.js';
 import { ELEMENT_CLASS_CHANGES_MIGRATION } from './element-class-changes.js';
 import { ELEMENT_SELECTORS_MIGRATION } from './element-selectors.js';
+import { PROVIDER_FUNCTION_REMOVALS_MIGRATION } from './provider-function-removals.js';
 import { SYMBOL_REMOVALS_MIGRATION } from './symbol-removals.js';
 import { SYMBOL_RENAMING_MIGRATION } from './symbol-renaming.js';
 
@@ -17,6 +17,7 @@ export type ElementMigrationData = {
   componentPropertyNameChanges: typeof COMPONENT_PROPERTY_NAMES_MIGRATION;
   elementClassChanges: typeof ELEMENT_CLASS_CHANGES_MIGRATION;
   elementSelectorChanges: typeof ELEMENT_SELECTORS_MIGRATION;
+  providerFunctionRemovalChanges: typeof PROVIDER_FUNCTION_REMOVALS_MIGRATION;
   symbolRemovalChanges: typeof SYMBOL_REMOVALS_MIGRATION;
   symbolRenamingChanges: typeof SYMBOL_RENAMING_MIGRATION;
 };
@@ -27,6 +28,7 @@ export const getElementMigrationData = (): ElementMigrationData => ({
   componentPropertyNameChanges: COMPONENT_PROPERTY_NAMES_MIGRATION,
   elementClassChanges: ELEMENT_CLASS_CHANGES_MIGRATION,
   elementSelectorChanges: ELEMENT_SELECTORS_MIGRATION,
+  providerFunctionRemovalChanges: PROVIDER_FUNCTION_REMOVALS_MIGRATION,
   symbolRemovalChanges: SYMBOL_REMOVALS_MIGRATION,
   symbolRenamingChanges: SYMBOL_RENAMING_MIGRATION
 });

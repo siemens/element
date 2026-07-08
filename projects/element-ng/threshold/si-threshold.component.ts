@@ -57,7 +57,7 @@ export interface ThresholdStep {
   ],
   templateUrl: './si-threshold.component.html',
   styleUrl: './si-threshold.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class.add-remove]': 'canAddRemoveSteps()',
     '[class.horizontal]': 'horizontalLayout()',

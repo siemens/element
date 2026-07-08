@@ -13,6 +13,6 @@ import { SiValidationErrorIdPipe } from '../../utils';
   selector: 'si-formly-date-range',
   imports: [ReactiveFormsModule, FormlyModule, SiDateRangeComponent, SiValidationErrorIdPipe],
   templateUrl: './si-formly-date-range.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlyDateRangeComponent extends FieldType<FieldTypeConfig> {}

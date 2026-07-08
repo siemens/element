@@ -5,9 +5,9 @@
 ```ts
 
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { BreadcrumbItem } from '@siemens/element-ng/breadcrumb';
 import * as i0 from '@angular/core';
 import { InjectionToken } from '@angular/core';
+import { NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';

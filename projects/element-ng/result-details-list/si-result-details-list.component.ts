@@ -21,7 +21,7 @@ import { ResultDetailStep } from './si-result-details-list.datamodel';
   imports: [SiLoadingSpinnerComponent, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-result-details-list.component.html',
   styleUrl: './si-result-details-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiResultDetailsListComponent {
   /**

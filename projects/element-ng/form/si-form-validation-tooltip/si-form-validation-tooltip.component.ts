@@ -19,7 +19,7 @@ export const SI_FORM_VALIDATION_TOOLTIP_DATA = new InjectionToken<Signal<SiFormE
       <div>{{ error.message | translate: error.params }}</div>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     'class': 'd-flex flex-column gap-2 text-start'
   }

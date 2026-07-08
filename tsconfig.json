@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "ignoreDeprecations": "6.0",
     "types": [],
     "sourceMap": true,
     "esModuleInterop": true,
@@ -40,7 +41,12 @@
     "strictInjectionParameters": true,
     "typeCheckHostBindings": true,
     "strictTemplates": true,
-    "strictNullChecks": true
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
   },
   "files": [],
   "references": [

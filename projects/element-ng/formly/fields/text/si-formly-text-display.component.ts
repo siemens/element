@@ -13,7 +13,7 @@ import { getFieldValue, getKeyPath } from '../../utils';
   selector: 'si-formly-text-display',
   imports: [FormlyModule, ReactiveFormsModule, SiTranslatePipe],
   templateUrl: './si-formly-text-display.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiFormlyTextDisplayComponent extends FieldType<FieldTypeConfig> {
   protected get value(): any {

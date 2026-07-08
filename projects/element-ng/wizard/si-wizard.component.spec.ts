@@ -33,7 +33,7 @@ import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './ind
       width: 1200px;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestHostComponent {
   readonly steps = signal<string[]>([]);

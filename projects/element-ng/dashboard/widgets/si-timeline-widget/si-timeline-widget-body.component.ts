@@ -15,7 +15,7 @@ import {
   imports: [SiTimelineWidgetItemComponent],
   templateUrl: './si-timeline-widget-body.component.html',
   styleUrl: './si-timeline-widget-body.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiTimelineWidgetBodyComponent extends SiWidgetBaseDirective<SiTimelineWidgetItem[]> {
   /**

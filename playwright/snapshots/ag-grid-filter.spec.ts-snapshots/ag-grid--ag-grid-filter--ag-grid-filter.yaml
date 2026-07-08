@@ -21,7 +21,6 @@
         - textbox
         - button "Open calendar"
         - button "Open Filter Menu"
-  - rowgroup:
     - row /0 Max Meier 0 Engineer \d+ years Great Company 0 \d+-\d+-\d+/:
       - gridcell "0"
       - gridcell "Max Meier 0"
@@ -183,6 +182,3 @@
       - gridcell /\d+ years/
       - gridcell "Great Company 2"
       - gridcell /\d+-\d+-\d+/
-  - rowgroup
-  - rowgroup
-  - rowgroup

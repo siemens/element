@@ -18,7 +18,7 @@ import { SiChartSunburstComponent } from './si-chart-sunburst.component';
       [subTitle]="subTitle"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestHostComponent {
   readonly chartSunburstComponent = viewChild.required(SiChartSunburstComponent);

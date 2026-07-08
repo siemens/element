@@ -15,7 +15,7 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
   imports: [CdkMenuTrigger, SiMenuFactoryComponent, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-electron-titlebar.component.html',
   styleUrl: './si-electron-titlebar.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiElectrontitlebarComponent {
   /**

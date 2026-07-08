@@ -29,7 +29,7 @@ import { SiTabsetLegacyComponent } from './si-tabset-legacy.component';
       width: 200px;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 class TestComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);

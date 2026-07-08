@@ -32,7 +32,7 @@ import { SiPopoverDirective } from '@siemens/element-ng/popover';
     <si-icon [icon]="icons.elementHelp" />
   `,
   styleUrl: './si-help-button.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   hostDirectives: [
     {
       directive: SiPopoverDirective,

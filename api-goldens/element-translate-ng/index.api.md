@@ -4,11 +4,52 @@
 
 ```ts
 
+import { EnvironmentProviders } from '@angular/core';
+import * as i0 from '@angular/core';
+import { InjectionToken } from '@angular/core';
+import { Injector } from '@angular/core';
+import { Observable } from 'rxjs';
+import { OnDestroy } from '@angular/core';
+import { PipeTransform } from '@angular/core';
+import { Provider } from '@angular/core';
 
-export * from "@siemens/element-translate-ng/angular-localize";
-export * from "@siemens/element-translate-ng/ngx-translate";
-export * from "@siemens/element-translate-ng/translate";
-export * from "@siemens/element-translate-ng/translate-types";
+// @public (undocumented)
+export const getBrowserCultureLanguage: () => string | undefined;
+
+// @public (undocumented)
+export const getBrowserLanguage: () => string | undefined;
+
+// @public (undocumented)
+export const injectSiTranslateService: () => SiTranslateService;
+
+// @public
+export const provideMissingTranslationHandlerForElement: (missingTranslationHandlerProvider?: Provider) => Provider;
+
+// @public
+export const provideMockTranslateServiceBuilder: (buildService: (injector: Injector) => SiTranslateService) => Provider;
+
+// @public
+export const provideNgLocalizeForElement: () => (EnvironmentProviders | Provider)[];
+
+// @public
+export const provideNgxTranslateForElement: () => (EnvironmentProviders | Provider)[];
+
+// @public
+export const SI_TRANSLATABLE_VALUES: InjectionToken<Record<string, string>[]>;
+
+// @public
+export class SiTranslateNgLocalizeModule {
+}
+
+// @public
+export class SiTranslateNgxTModule {
+}
+
+// @public
+export type TranslatableString = string & Translatable;
+
+// @public (undocumented)
+export type TranslationResult<T> = T extends string ? string : Record<string, string>;
 
 // (No @packageDocumentation comment for this package)
 
