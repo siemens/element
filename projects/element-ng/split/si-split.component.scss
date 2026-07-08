@@ -1,6 +1,6 @@
 @use '@siemens/element-theme/src/styles/variables';
 
-$handle-size: 6px;
+$handle-size: 2px;
 $handle-length: 40px;
 
 :host {
@@ -12,7 +12,7 @@ $handle-length: 40px;
 .si-split-gutter {
   flex: 0 0 auto;
   background: variables.$element-base-0;
-  cursor: ew-resize;
+  cursor: col-resize;
 
   &::before {
     display: block;
@@ -25,12 +25,11 @@ $handle-length: 40px;
     inline-size: $handle-size;
     block-size: $handle-length;
     background: variables.$element-ui-2;
-    border-radius: $handle-size * 0.5;
   }
 
   :host(.vertical) > & {
     inline-size: auto;
-    cursor: ns-resize;
+    cursor: row-resize;
 
     &::before {
       transform: rotate(90deg);
