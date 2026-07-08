@@ -7,7 +7,7 @@
 - navigation:
   - button "Toggle" [expanded]
   - button "Back"
-  - text: Documentation
+  - heading "Documentation" [level=2]
   - group "":
     - link "Sub item 4":
       - /url: "#/viewer/viewer/subItem4"

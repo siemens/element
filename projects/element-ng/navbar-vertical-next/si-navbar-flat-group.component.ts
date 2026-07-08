@@ -33,7 +33,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
         >
           <si-icon class="flip-rtl" [icon]="icons.elementLeft2" />
         </button>
-        <span class="item-title text-truncate si-h5" [cdkPortalOutlet]="labelPortal"></span>
+        <span role="heading" aria-level="2" class="item-title text-truncate si-h5" [cdkPortalOutlet]="labelPortal"></span>
       </div>
     }
     <ng-content />`,
