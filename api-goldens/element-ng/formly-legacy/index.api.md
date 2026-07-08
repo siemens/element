@@ -7,7 +7,6 @@
 import { AbstractControl } from '@angular/forms';
 import { AfterContentChecked } from '@angular/core';
 import { AfterContentInit } from '@angular/core';
-import * as _angular_forms_signals from '@angular/forms/signals';
 import { ConfigOption } from '@ngx-formly/core';
 import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';

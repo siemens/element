@@ -23,7 +23,7 @@
   <div class="invalid-feedback" [class.d-block]="errors().length" [attr.id]="errormessageId()">
     @for (error of errors(); track $index) {
       <div>
-        {{ error.message | translate }}
+        {{ error.message ?? error.key | translate: error.params }}
       </div>
     }
   </div>
