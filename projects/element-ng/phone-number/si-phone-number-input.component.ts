@@ -192,7 +192,16 @@ export class SiPhoneNumberInputComponent
 
   protected readonly phoneInput = viewChild.required<ElementRef<HTMLInputElement>>('phoneInput');
   protected readonly selectedCountry = signal<CountryInfo | undefined>(undefined);
-  protected placeholder = '';
+  protected readonly placeholder = computed(() => {
+    const selectedCountry = this.selectedCountry();
+    if (!selectedCountry) {
+      return '';
+    }
+
+    return this.phoneUtil
+      .format(this.phoneUtil.getExampleNumber(selectedCountry.isoCode), PhoneNumberFormat.NATIONAL)
+      .replace(/^0/, '');
+  });
   protected readonly countryFocused = signal(false);
   protected open = false;
   protected overlayWidth = 0;
@@ -328,7 +337,6 @@ export class SiPhoneNumberInputComponent
 
   protected countryInput(num: CountryInfo): void {
     this.selectedCountry.set(num);
-    this.updatePlaceholder();
     this.refreshValueAfterCountryChange();
     this.handleChange();
   }
@@ -362,7 +370,6 @@ export class SiPhoneNumberInputComponent
         });
       }
     }
-    this.updatePlaceholder();
     this.refreshValueAfterCountryChange();
   }
 
@@ -373,18 +380,6 @@ export class SiPhoneNumberInputComponent
         type: 'region'
       }).of(countryCode.toUpperCase()) ?? ''
     );
-  }
-
-  private updatePlaceholder(): void {
-    const selectedCountry = this.selectedCountry();
-    if (selectedCountry) {
-      this.placeholder = this.phoneUtil
-        .format(
-          this.phoneUtil.getExampleNumber(selectedCountry.isoCode),
-          PhoneNumberFormat.NATIONAL
-        )
-        .replace(/^0/, '');
-    }
   }
 
   private parseNumber(rawNumber: string | undefined): PhoneNumber | undefined {
