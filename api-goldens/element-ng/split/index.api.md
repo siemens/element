@@ -6,7 +6,6 @@
 
 import { AfterContentInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
-import { EventEmitter } from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { QueryList } from '@angular/core';
 import { Signal } from '@angular/core';
@@ -48,7 +47,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
     // (undocumented)
     sizes: number[];
     // (undocumented)
-    readonly sizesChange: EventEmitter<number[]>;
+    readonly sizesChange: _angular_core.OutputEmitterRef<number[]>;
     stateId?: string;
 }
 
@@ -61,7 +60,7 @@ export class SiSplitPartComponent implements OnChanges {
     // (undocumented)
     actions: Action[];
     // (undocumented)
-    readonly collapseChanged: EventEmitter<boolean>;
+    readonly collapseChanged: _angular_core.OutputEmitterRef<boolean>;
     get collapsed(): boolean;
     // (undocumented)
     collapseDirection: CollapseTo;
@@ -100,7 +99,7 @@ export class SiSplitPartComponent implements OnChanges {
     showHeader: boolean;
     size?: number;
     // (undocumented)
-    readonly stateChange: EventEmitter<PartState>;
+    readonly stateChange: _angular_core.OutputEmitterRef<PartState>;
     stateId?: string;
     toggleCollapse(): void;
 }
