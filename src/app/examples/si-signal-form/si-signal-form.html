@@ -22,10 +22,24 @@
                   [formField]="form.role"
                 />
               </si-form-field>
+              <button
+                si-help-button
+                type="button"
+                siHelpTitle="More information"
+                siHelpContent="A role must be selected."
+                >More information about the role</button
+              >
             </si-form-fieldset>
 
             <si-form-field label="Name">
               <input type="text" class="form-control" [formField]="form.name" />
+              <button
+                si-help-button
+                type="button"
+                siHelpTitle="More information"
+                siHelpContent="Full name must start with an uppercase letter and be at least 3 characters long."
+                >More information about the name</button
+              >
             </si-form-field>
 
             <si-form-field label="Description">
@@ -58,6 +72,13 @@
 
             <si-form-field label="I confirm that I accept all and everything">
               <input type="checkbox" class="form-check-input" [formField]="form.termsAccepted" />
+              <button
+                si-help-button
+                type="button"
+                siHelpTitle="More information"
+                siHelpContent="Acceptance of terms and conditions is required to join."
+                >More information about the terms</button
+              >
             </si-form-field>
 
             <si-form-field label="I confirm that I do not care about my privacy">

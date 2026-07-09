@@ -20,6 +20,7 @@ import {
 } from '@siemens/element-ng/form';
 
 export type Role = 'engineer' | 'installer';
+import { SiHelpButtonComponent } from '@siemens/element-ng/help-button';
 
 export interface TravelRequest {
   name: string;
@@ -49,7 +50,14 @@ const emptyRequest: TravelRequest = {
 
 @Component({
   selector: 'app-sample',
-  imports: [JsonPipe, FormField, FormRoot, SiFormFieldComponent, SiFormFieldsetComponent],
+  imports: [
+    JsonPipe,
+    FormField,
+    FormRoot,
+    SiFormFieldComponent,
+    SiFormFieldsetComponent,
+    SiHelpButtonComponent
+  ],
   templateUrl: './si-signal-form.html',
   providers: [provideSiFormFieldConfig()],
   changeDetection: ChangeDetectionStrategy.OnPush,

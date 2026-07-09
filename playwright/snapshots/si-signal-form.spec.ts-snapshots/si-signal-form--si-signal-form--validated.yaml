@@ -1,11 +1,13 @@
 - heading "Signal form" [level=2]
 - group "Role*":
   - text: ""
+  - button "More information about the role"
   - radio "Engineer"
   - text: Engineer
   - radio "Installer"
   - text: Installer Role required
 - text: Name*
+- button "More information about the name"
 - textbox "Name*" [invalid]
 - text: Minimum 3 characters Name must start with an uppercase letter Description
 - textbox "Description"
@@ -24,10 +26,21 @@
 - spinbutton "Fellow passengers" [invalid]: "0"
 - text: Minimum 2
 - checkbox "I confirm that I accept all and everything*" [invalid]
-- text: I confirm that I accept all and everything* Accept terms before joining
+- text: I confirm that I accept all and everything*
+- button "More information about the terms"
+- text: Accept terms before joining
 - checkbox "I confirm that I do not care about my privacy"
 - text: I confirm that I do not care about my privacy
 - button "Cancel"
 - button "Save"
 - heading "Debugging" [level=2]
 - paragraph: "Validation status: INVALID"
+- table:
+  - rowgroup:
+    - row "Model Submitted":
+      - columnheader "Model"
+      - columnheader "Submitted"
+  - rowgroup:
+    - 'row "{ \"name\": \"a\", \"description\": \"\", \"birthday\": \"\", \"arrival\": \"\", \"departure\": \"\", \"serviceClass\": \"first\", \"role\": \"\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false } undefined"':
+      - 'cell "{ \"name\": \"a\", \"description\": \"\", \"birthday\": \"\", \"arrival\": \"\", \"departure\": \"\", \"serviceClass\": \"first\", \"role\": \"\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false }"'
+      - cell "undefined"
