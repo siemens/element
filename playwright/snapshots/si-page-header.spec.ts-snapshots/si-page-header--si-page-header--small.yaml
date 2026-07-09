@@ -9,7 +9,7 @@
   - button "Expand"
 - main:
   - text: /\d+ Not clickable/
-  - button "Expand"
+  - button "Toggle"
   - navigation "Breadcrumbs":
     - list:
       - listitem:

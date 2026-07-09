@@ -185,7 +185,7 @@
   "optionalDependencies": {
     "@siemens-ux/design-tokens": "^0.5.0",
     "@simpl/brand": "3.3.0",
-    "@simpl/docs-composer": "11.16.10"
+    "@simpl/docs-composer": "12.0.0"
   },
   "overrides": {
     "@microsoft/api-extractor": {

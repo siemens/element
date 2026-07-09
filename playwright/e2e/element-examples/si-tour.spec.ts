@@ -11,22 +11,26 @@ test.describe('si-tour', () => {
     const nextClick = (): Promise<any> =>
       page.locator('si-tour button', { hasText: 'Next' }).click();
 
+    const waitForTourStep = async (): Promise<void> => {
+      await expect(page.locator('si-tour .tour-content.show')).toBeVisible();
+    };
+
     await si.visitExample(example);
-    await expect(page.locator('.tour-content')).toBeVisible();
+    await waitForTourStep();
     await si.runVisualAndA11yTests('first-step');
 
     await nextClick();
-    await expect(page.locator('.tour-content')).toBeVisible();
+    await waitForTourStep();
     await si.runVisualAndA11yTests('second-step');
 
     await nextClick();
     await nextClick();
     await nextClick();
     await nextClick();
-    await expect(page.locator('.tour-content')).toBeVisible();
+    await waitForTourStep();
     await si.runVisualAndA11yTests('open-menu');
     await nextClick();
-    await expect(page.locator('.tour-content')).toBeVisible();
+    await waitForTourStep();
     await si.runVisualAndA11yTests('last-step');
   });
 });

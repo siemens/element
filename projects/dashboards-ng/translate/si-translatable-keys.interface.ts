@@ -3,6 +3,7 @@
 // Auto-generated file. Run 'npx update-translatable-keys' to update.
 
 export interface SiTranslatableKeys {
+  'DASHBOARD.A11Y.WIDGETS_LIST'?: string;
   'DASHBOARD.ADD_WIDGET'?: string;
   'DASHBOARD.CANCEL'?: string;
   'DASHBOARD.EDIT'?: string;

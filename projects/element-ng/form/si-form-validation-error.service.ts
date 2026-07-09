@@ -4,6 +4,7 @@
  */
 import { inject, Injectable } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
+import type { FieldState } from '@angular/forms/signals';
 import { t } from '@siemens/element-translate-ng/translate';
 
 import { SiFormError } from './si-form-item/si-form-item.component';
@@ -107,6 +108,24 @@ export class SiFormValidationErrorService {
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private errorMapper: SiFormValidationErrorMapper) {}
+
+  /**
+   * Resolves validation errors for Angular signal forms.
+   *
+   * If the validation error has no message associated, the resolution flow of {@link resolveErrors} is followed.
+   *
+   * @param state - the fieldState of the formfield.
+   */
+  resolveFormFieldErrors(state: FieldState<any>): SiFormError[] {
+    return state.errors().map(error => {
+      const { message, kind, ...params } = error;
+      if (!message) {
+        return this.resolveError(kind, state.name(), params);
+      } else {
+        return { message, key: kind, params };
+      }
+    });
+  }
 
   /**
    * Resolves the provided form errors to a list of {@link SiFormError}.

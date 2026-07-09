@@ -81,6 +81,17 @@ describe('SiGridstackWrapperComponent', () => {
 
       expect(fixture.debugElement.queryAll(By.css('si-widget-host'))).toHaveLength(2);
     });
+
+    it('should group widgets as a labeled list when not editable', async () => {
+      await createComponent(
+        [TEST_WIDGET_CONFIG_0, TEST_WIDGET_CONFIG_1],
+        new Map([[TEST_WIDGET.id, TEST_WIDGET]])
+      );
+
+      const gridStack = fixture.nativeElement.querySelector('.grid-stack');
+      expect(gridStack.getAttribute('role')).toBe('list');
+      expect(gridStack.getAttribute('aria-label')).toBe('Dashboard widgets');
+    });
   });
 
   describe('updating grid items', () => {
