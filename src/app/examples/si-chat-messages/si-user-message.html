@@ -1,8 +1,10 @@
 <div class="p-4">
-  <si-user-message
+  <si-chat-message
     actionParam="message-1"
+    flow="outgoing"
+    actionPlacement="bottom"
     [content]="content"
-    [contentFormatter]="markdownRenderer"
+    [markdown]="true"
     [attachments]="attachments"
     [actions]="actions"
   />

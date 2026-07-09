@@ -5,11 +5,10 @@
 import type { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 
 /**
- * Actions for messages representing an action with icon, label (for accessibility), and handler, for use within {@link SiAiMessageComponent} and {@link SiUserMessageComponent}.
+ * Actions for messages representing an action with icon, label (for accessibility), and handler.
  * Only the icon will be displayed.
  *
- * @see {@link SiAiMessageComponent} for the AI message
- * @see {@link SiUserMessageComponent} for thee user message
+ * @see {@link SiChatMessageComponent} for message display and actions rendering
  *
  * @experimental
  */
@@ -26,4 +25,31 @@ export interface MessageAction {
   action: (actionParam: any, source: this) => void;
   /** Whether the menu item is disabled. */
   disabled?: boolean;
+}
+
+/**
+ * Source metadata for content references.
+ * Rendering is reserved for a follow-up implementation.
+ *
+ * @experimental
+ */
+export interface Source {
+  id: string;
+  label?: string;
+  url?: string;
+}
+
+/**
+ * Structured content block for future message rendering.
+ *
+ * Initial rendering support focuses on string content. Block rendering is reserved
+ * for a follow-up implementation.
+ *
+ * @experimental
+ */
+export interface ContentBlock {
+  type: 'text' | 'chart' | 'map';
+  text?: string;
+  data?: unknown;
+  sources?: Source[];
 }

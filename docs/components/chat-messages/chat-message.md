@@ -7,14 +7,15 @@ The **chat message** represents an individual message in a conversational interf
 The chat message displays conversational content exchanged between participants.
 It helps users follow the dialogue and distinguish who sent each message.
 
-There are two variants:
+Use one component and configure it by flow and optional variant:
 
-- **User message:** represents the message sent by the user
-- **AI message:** represents the automated or system-generated response
+- **Outgoing flow:** represents the message sent by the current user
+- **Incoming flow:** represents messages from peers, AI, or system events
+- **AI variant:** optional visual style for incoming assistant responses
 
-### User message
+### Outgoing message
 
-Displayed as a text bubble, the **user message** visually represents the user’s contribution to a conversation.
+Displayed as a text bubble, the **outgoing message** visually represents the current user’s contribution to a conversation.
 It may support contextual actions such as copy, edit, or delete.
 
 Use it in chat interfaces where user input is shown as part of a dialogue,
@@ -22,9 +23,9 @@ or in conversation histories and transcripts.
 
 ![User message](images/user-message.png)
 
-### AI message
+### Incoming AI message
 
-The **AI message** visually distinguishes automated responses from user input.
+The **incoming AI message** visually distinguishes automated responses from user input.
 It can include optional actions or related content relevant to the user.
 
 Use it to display AI-generated content in chat interfaces,
@@ -78,19 +79,15 @@ The text reflows to fit the available space while preserving hierarchy and align
 
 ## Code ---
 
-<si-docs-component example="si-chat-messages/si-user-message"></si-docs-component>
+<si-docs-component example="si-chat-messages/si-chat-message"></si-docs-component>
 
-<si-docs-api component="SiUserMessageComponent"></si-docs-api>
-
-<si-docs-component example="si-chat-messages/si-ai-message"></si-docs-component>
-
-<si-docs-api component="SiAiMessageComponent"></si-docs-api>
+<si-docs-api component="SiChatMessageComponent"></si-docs-api>
 
 ### Base chat message
 
-Use these base components to build custom chat message interfaces.
+Use projection slots and message inputs to build custom chat message interfaces.
 
-The **si-chat-message** component is a wrapper component, it has slots for different parts of a chat message.
+The **si-chat-message** component supports slots for different parts of a chat message.
 
 The slots are:
 

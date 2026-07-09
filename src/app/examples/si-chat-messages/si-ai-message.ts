@@ -7,12 +7,17 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {
   elementBookmark,
   elementCopy,
+  elementOptionsVertical,
   elementRefresh,
   elementShare,
   elementThumbsDown,
   elementThumbsUp
 } from '@siemens/element-icons';
-import { MessageAction, SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
+import {
+  MARKDOWN_RENDERER,
+  MessageAction,
+  SiChatMessageComponent
+} from '@siemens/element-ng/chat-messages';
 import { addIcons } from '@siemens/element-ng/icon';
 import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { MenuItemAction } from '@siemens/element-ng/menu';
@@ -20,15 +25,19 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiAiMessageComponent],
+  imports: [SiChatMessageComponent],
   templateUrl: './si-ai-message.html',
+  providers: [
+    {
+      provide: MARKDOWN_RENDERER,
+      useFactory: (sanitizer: DomSanitizer) => getMarkdownRenderer(sanitizer),
+      deps: [DomSanitizer]
+    }
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
-  private sanitizer = inject(DomSanitizer);
-
-  protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
 
   protected readonly icons = addIcons({
     elementThumbsUp,
@@ -36,7 +45,8 @@ export class SampleComponent {
     elementCopy,
     elementRefresh,
     elementBookmark,
-    elementShare
+    elementShare,
+    elementOptionsVertical
   });
 
   content = `Here's a **simple response** with basic formatting.

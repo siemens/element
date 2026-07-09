@@ -9,6 +9,7 @@ import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { EnvironmentInjector } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 import { Injector } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -19,8 +20,8 @@ import * as _siemens_element_translate_ng_translate from '@siemens/element-trans
 import { StaticProvider } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
-import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
-import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
 
 // @public
 export interface Attachment {
@@ -36,35 +37,41 @@ export interface ChatInputAttachment extends Attachment {
 }
 
 // @public
+export interface ContentBlock {
+    // (undocumented)
+    data?: unknown;
+    // (undocumented)
+    sources?: Source[];
+    // (undocumented)
+    text?: string;
+    // (undocumented)
+    type: 'text' | 'chart' | 'map';
+}
+
+// @public
+export const MARKDOWN_RENDERER: InjectionToken<MarkdownRenderer>;
+
+// @public
+export type MarkdownRenderer = (text: string) => Node;
+
+// @public
 export interface MessageAction {
     action: (actionParam: any, source: this) => void;
     disabled?: boolean;
     icon: string;
-    label: TranslatableString;
+    label: TranslatableString_2;
 }
 
 // @public (undocumented)
 export interface PromptCategory {
     // (undocumented)
-    label: TranslatableString_2;
+    label: TranslatableString;
 }
 
 // @public (undocumented)
 export interface PromptSuggestion {
     // (undocumented)
-    text: TranslatableString_2;
-}
-
-// @public
-export class SiAiMessageComponent {
-    constructor();
-    readonly actionParam: _angular_core.InputSignal<unknown>;
-    readonly actions: _angular_core.InputSignal<MessageAction[]>;
-    readonly content: _angular_core.InputSignal<string>;
-    readonly contentFormatter: _angular_core.InputSignal<((text: string) => string | Node) | undefined>;
-    readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
-    readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    text: TranslatableString;
 }
 
 // @public
@@ -104,29 +111,29 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly actionParam: _angular_core.InputSignal<any>;
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
     readonly allowAttachments: _angular_core.InputSignal<boolean>;
-    readonly attachFileLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly attachFileLabel: _angular_core.InputSignal<TranslatableString>;
     readonly attachments: _angular_core.ModelSignal<ChatInputAttachment[]>;
     readonly autoFocus: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly disclaimer: _angular_core.InputSignal<TranslatableString_2 | undefined>;
+    readonly disclaimer: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly fileError: _angular_core.OutputEmitterRef<FileUploadError>;
     focus(): void;
     readonly interrupt: _angular_core.OutputEmitterRef<void>;
-    readonly interruptButtonLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly interruptButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly interruptible: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly label: _angular_core.InputSignal<string>;
     readonly maxFileSize: _angular_core.InputSignal<number>;
     readonly maxLength: _angular_core.InputSignal<number | undefined>;
-    readonly placeholder: _angular_core.InputSignal<TranslatableString_2>;
-    readonly removeAttachmentLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly placeholder: _angular_core.InputSignal<TranslatableString>;
+    readonly removeAttachmentLabel: _angular_core.InputSignal<TranslatableString>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
-    readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString>;
     readonly send: _angular_core.OutputEmitterRef<{
         content: string;
         attachments: ChatInputAttachment[];
     }>;
     readonly sendButtonIcon: _angular_core.InputSignal<string>;
-    readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly value: _angular_core.ModelSignal<string>;
 }
@@ -140,22 +147,45 @@ export class SiChatMessageActionDirective {
 }
 
 // @public
-export class SiChatMessageComponent {
-    readonly actionsPosition: _angular_core.InputSignal<"bottom" | "side">;
-    readonly alignment: _angular_core.InputSignal<"start" | "end">;
-    readonly loading: _angular_core.InputSignal<boolean>;
+export class SiChatMessageBodyDirective {
+    // (undocumented)
+    readonly templateRef: TemplateRef<any>;
 }
 
 // @public
-export class SiUserMessageComponent {
+export class SiChatMessageComponent {
     constructor();
-    readonly actionParam: _angular_core.InputSignal<any>;
+    readonly actionParam: _angular_core.InputSignal<unknown>;
+    readonly actionPlacement: _angular_core.InputSignal<"bottom" | "side">;
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
+    readonly alignment: _angular_core.InputSignal<"start" | "end" | "center" | undefined>;
     readonly attachments: _angular_core.InputSignal<Attachment[]>;
-    readonly content: _angular_core.InputSignal<string>;
-    readonly contentFormatter: _angular_core.InputSignal<((text: string) => string | Node) | undefined>;
+    readonly cancelLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly content: _angular_core.ModelSignal<string | ContentBlock[]>;
+    readonly editable: _angular_core.InputSignal<boolean>;
+    readonly edited: _angular_core.InputSignal<boolean>;
+    readonly editedLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly editing: _angular_core.ModelSignal<boolean>;
+    readonly editTextareaLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly flow: _angular_core.InputSignal<"incoming" | "outgoing">;
+    readonly loading: _angular_core.InputSignal<boolean>;
+    readonly markdown: _angular_core.InputSignal<boolean>;
+    readonly messageVariant: _angular_core.InputSignal<string>;
+    readonly revealOnHover: _angular_core.InputSignal<boolean | undefined>;
+    readonly saveLabel: _angular_core.InputSignal<TranslatableString>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
-    readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly streaming: _angular_core.InputSignal<boolean>;
+}
+
+// @public
+export interface Source {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    url?: string;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -4,25 +4,39 @@
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { elementCopy, elementDelete, elementEdit, elementExport } from '@siemens/element-icons';
 import {
-  SiUserMessageComponent,
+  MARKDOWN_RENDERER,
+  SiChatMessageComponent,
   Attachment,
   MessageAction
 } from '@siemens/element-ng/chat-messages';
+import { addIcons } from '@siemens/element-ng/icon';
 import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiUserMessageComponent],
+  imports: [SiChatMessageComponent],
   templateUrl: './si-user-message.html',
+  providers: [
+    {
+      provide: MARKDOWN_RENDERER,
+      useFactory: (sanitizer: DomSanitizer) => getMarkdownRenderer(sanitizer),
+      deps: [DomSanitizer]
+    }
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
-  private sanitizer = inject(DomSanitizer);
 
-  protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
+  protected readonly icons = addIcons({
+    elementEdit,
+    elementExport,
+    elementCopy,
+    elementDelete
+  });
 
   content = `Can you help me with this **code snippet**?
 
@@ -42,17 +56,17 @@ I'm getting an error when I run it.`;
   actions: MessageAction[] = [
     {
       label: 'Edit message',
-      icon: 'element-edit',
+      icon: this.icons.elementEdit,
       action: (messageId: string) => this.logEvent(`Edit message ${messageId}`)
     },
     {
       label: 'Copy message',
-      icon: 'element-export',
+      icon: this.icons.elementExport,
       action: (messageId: string) => this.logEvent(`Copy message ${messageId}`)
     },
     {
       label: 'Delete message',
-      icon: 'element-delete',
+      icon: this.icons.elementDelete,
       action: (messageId: string) => this.logEvent(`Delete message ${messageId}`)
     }
   ];

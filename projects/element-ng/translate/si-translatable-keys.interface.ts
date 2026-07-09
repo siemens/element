@@ -4,7 +4,6 @@
 
 export interface SiTranslatableKeys {
   'SI_ABOUT.LOGO_ALT'?: string;
-  'SI_AI_MESSAGE.SECONDARY_ACTIONS'?: string;
   'SI_ALERT_DIALOG.OK'?: string;
   'SI_APPLICATION_HEADER.LAUNCHPAD'?: string;
   'SI_APPLICATION_HEADER.TOGGLE_ACTIONS'?: string;
@@ -32,6 +31,11 @@ export interface SiTranslatableKeys {
   'SI_CHAT_INPUT.PLACEHOLDER'?: string;
   'SI_CHAT_INPUT.SECONDARY_ACTIONS'?: string;
   'SI_CHAT_INPUT.SEND'?: string;
+  'SI_CHAT_MESSAGE.CANCEL'?: string;
+  'SI_CHAT_MESSAGE.EDITED'?: string;
+  'SI_CHAT_MESSAGE.EDIT_TEXTAREA'?: string;
+  'SI_CHAT_MESSAGE.SAVE'?: string;
+  'SI_CHAT_MESSAGE.SECONDARY_ACTIONS'?: string;
   'SI_COLOR_PICKER.SELECTED_LABEL'?: string;
   'SI_COLUMN_SELECTION_DIALOG.CANCEL'?: string;
   'SI_COLUMN_SELECTION_DIALOG.HIDDEN'?: string;
@@ -241,7 +245,6 @@ export interface SiTranslatableKeys {
   'SI_TREE_VIEW.COLLAPSE_ALL'?: string;
   'SI_TREE_VIEW.EXPAND_ALL'?: string;
   'SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL'?: string;
-  'SI_USER_MESSAGE.SECONDARY_ACTIONS'?: string;
   'SI_WEATHER_WIDGET.FORECAST_LABEL'?: string;
   'SI_WEATHER_WIDGET.ILLUSTRATION_ALT'?: string;
   'SI_WEATHER_WIDGET.METRICS_LABEL'?: string;

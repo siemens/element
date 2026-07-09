@@ -2,24 +2,29 @@
   <si-chat-container #chatContainer colorVariant="base-0">
     @for (message of messages(); track message) {
       @if (message.type === 'user') {
-        <si-user-message
+        <si-chat-message
+          flow="outgoing"
+          actionPlacement="bottom"
           [content]="message.content"
+          [markdown]="true"
           [actions]="getMessagePrimaryActions(message)"
           [secondaryActions]="getMessageSecondaryActions(message)"
           [attachments]="message.attachments ?? []"
-          [contentFormatter]="markdownRenderer"
         />
       }
       @if (message.type === 'ai') {
-        <si-ai-message
+        <si-chat-message
+          flow="incoming"
+          messageVariant="ai"
+          actionPlacement="bottom"
           [content]="message.content"
+          [markdown]="true"
           [actions]="getMessagePrimaryActions(message)"
           [secondaryActions]="getMessageSecondaryActions(message)"
-          [contentFormatter]="markdownRenderer"
         />
       }
       @if (message.type === 'custom') {
-        <si-chat-message alignment="start" actionsPosition="bottom">
+        <si-chat-message alignment="start" actionPlacement="bottom">
           @if (message.attachments) {
             <si-attachment-list [attachments]="message.attachments" />
           }
@@ -53,7 +58,7 @@
     @if (
       loading() && (messages().length === 0 || messages()[messages().length - 1].type !== 'ai')
     ) {
-      <si-ai-message content="" [loading]="true" />
+      <si-chat-message flow="incoming" messageVariant="ai" [loading]="true" />
     }
 
     @if (!firstMessageSent() && messages().length) {

@@ -2,44 +2,38 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import {
   elementBookmark,
   elementDelete,
   elementEdit,
   elementExport,
-  elementOptionsVertical,
   elementUser
 } from '@siemens/element-icons';
 import { SiAvatarComponent } from '@siemens/element-ng/avatar';
 import {
+  MARKDOWN_RENDERER,
   SiChatMessageComponent,
-  SiAttachmentListComponent,
   Attachment,
-  SiChatMessageActionDirective,
   MessageAction
 } from '@siemens/element-ng/chat-messages';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-renderer';
-import { MenuItemAction, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
+import { MenuItemAction } from '@siemens/element-ng/menu';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [
-    CdkMenuTrigger,
-    SiChatMessageComponent,
-    SiMarkdownRendererComponent,
-    SiIconComponent,
-    SiAvatarComponent,
-    SiAttachmentListComponent,
-    SiChatMessageActionDirective,
-    SiMenuFactoryComponent,
-    SiTranslatePipe
-  ],
+  imports: [SiChatMessageComponent, SiIconComponent, SiAvatarComponent],
   templateUrl: './si-chat-message.html',
+  providers: [
+    {
+      provide: MARKDOWN_RENDERER,
+      useFactory: (sanitizer: DomSanitizer) => getMarkdownRenderer(sanitizer),
+      deps: [DomSanitizer]
+    }
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
@@ -47,7 +41,6 @@ export class SampleComponent {
 
   protected readonly icons = addIcons({
     elementUser,
-    elementOptionsVertical,
     elementExport,
     elementEdit,
     elementBookmark,
@@ -82,14 +75,5 @@ export class SampleComponent {
     }
   ];
 
-  attachments: Attachment[] = [
-    {
-      name: 'error-log.txt'
-    },
-    {
-      name: 'screenshot.png'
-    }
-  ];
-
-  readonly secondaryActionsLabel = 'More actions';
+  attachments: Attachment[] = [{ name: 'error-log.txt' }, { name: 'screenshot.png' }];
 }

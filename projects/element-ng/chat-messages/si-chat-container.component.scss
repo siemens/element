@@ -47,11 +47,10 @@
   padding-inline: map.get(variables.$spacers, 4);
   // Ensure the messages can still be seen on very short screens
   min-block-size: 5rem;
-  gap: map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4);
+  gap: 0;
 
-  // Padding is included here, cancel out the gap on the messages container
-  ::ng-deep si-user-message:not(.last) {
-    margin-block-end: -1 * (map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4));
+  ::ng-deep si-chat-message.has-visible-action-bar + si-chat-message {
+    margin-block-start: map.get(variables.$spacers, 8);
   }
 
   ::ng-deep &:not(:has(si-ai-welcome-screen)) {

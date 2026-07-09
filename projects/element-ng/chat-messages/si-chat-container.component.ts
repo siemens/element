@@ -29,9 +29,7 @@ import {
  *
  * @see {@link SiChatInputComponent} for the chat input wrapper component
  * @see {@link SiChatContainerInputDirective} for other input controls to slot in
- * @see {@link SiAiMessageComponent} for AI messages to slot in
- * @see {@link SiUserMessageComponent} for user messages (in AI chats) to slot in
- * @see {@link SiChatMessageComponent} for the chat message wrapper component to slot in other messages
+ * @see {@link SiChatMessageComponent} for chat messages to slot in
  *
  * @experimental
  */

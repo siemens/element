@@ -24,9 +24,8 @@ import {
   elementUser
 } from '@siemens/element-icons';
 import {
+  MARKDOWN_RENDERER,
   SiChatContainerComponent,
-  SiAiMessageComponent,
-  SiUserMessageComponent,
   SiChatInputComponent,
   SiChatMessageComponent,
   ChatInputAttachment,
@@ -60,8 +59,6 @@ interface ChatMessage {
   selector: 'app-sample',
   imports: [
     SiChatContainerComponent,
-    SiAiMessageComponent,
-    SiUserMessageComponent,
     SiInlineNotificationComponent,
     SiChatInputComponent,
     SiChatMessageComponent,
@@ -72,16 +69,20 @@ interface ChatMessage {
     SiAiWelcomeScreenComponent
   ],
   templateUrl: './si-chat-container.html',
+  providers: [
+    {
+      provide: MARKDOWN_RENDERER,
+      useFactory: (sanitizer: DomSanitizer) => getMarkdownRenderer(sanitizer),
+      deps: [DomSanitizer]
+    }
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   private logEvent = inject(LOG_EVENT);
   private readonly modalTemplate = viewChild<TemplateRef<any>>('modalTemplate');
-  private sanitizer = inject(DomSanitizer);
   private readonly toastService = inject(SiToastNotificationService);
   private readonly chatContainer = viewChild<SiChatContainerComponent>(SiChatContainerComponent);
-
-  protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
 
   protected readonly icons = addIcons({
     elementUser,
@@ -163,7 +164,7 @@ export class SampleComponent {
       actions: [
         {
           label: 'Export message',
-          icon: this.icons.elementExport,
+          icon: 'element-export',
           action: (message: ChatMessage) =>
             this.logEvent(`Export user message ${message.content.slice(0, 20)}...`)
         }
@@ -183,7 +184,7 @@ export class SampleComponent {
       actions: [
         {
           label: 'Export message',
-          icon: this.icons.elementExport,
+          icon: 'element-export',
           action: (_message: ChatMessage) =>
             this.logEvent(`Export user message ${_message.content.slice(0, 20)}...`)
         }
@@ -296,7 +297,7 @@ export class SampleComponent {
         actions: [
           {
             label: 'Export message',
-            icon: this.icons.elementExport,
+            icon: 'element-export',
             action: () => this.logEvent('Export user message')
           }
         ],

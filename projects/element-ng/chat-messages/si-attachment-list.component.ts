@@ -9,10 +9,10 @@ import { SiModalService } from '@siemens/element-ng/modal';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 /**
- * Attachment item interface for file attachments in chat messages, used by {@link SiAttachmentListComponent} and inside {@link SiUserMessageComponent} as well as {@link SiChatInputComponent}.
+ * Attachment item interface for file attachments in chat messages, used by {@link SiAttachmentListComponent}, {@link SiChatMessageComponent} and {@link SiChatInputComponent}.
  *
  * @see {@link SiAttachmentListComponent} for the attachment list component
- * @see {@link SiUserMessageComponent} for the user message
+ * @see {@link SiChatMessageComponent} for chat message display
  * @see {@link SiChatInputComponent} for the chat input component
  *
  * @experimental
@@ -36,10 +36,9 @@ export interface Attachment {
  * - Optional preview modal for attachments
  * - Optional remove functionality for editable messages
  *
- * The component is included within {@link SiUserMessageComponent}, {@link SiAiMessageComponent} and {@link SiChatInputComponent} but can also be used inside custom chat messages with {@link SiChatMessageComponent}
+ * The component is included within {@link SiChatMessageComponent} and {@link SiChatInputComponent}.
  *
- * @see {@link SiUserMessageComponent} for user message display
- * @see {@link SiAiMessageComponent} for AI message display
+ * @see {@link SiChatMessageComponent} for message display
  * @see {@link SiChatMessageComponent} for custom chat message display
  * @see {@link SiChatInputComponent} for chat input with attachment support
  * @see {@link Attachment} for attachment data structure

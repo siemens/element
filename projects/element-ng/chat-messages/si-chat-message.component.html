@@ -1,18 +1,38 @@
-<!--- Flex-row if alignment start, flex-row-reverse if alignment end, flex-column if mobile -->
-<div class="d-flex si-body-2 chat-message-container" [class.start]="alignment() === 'start'">
-  <div class="avatar-wrapper flex-shrink-0" [class.end]="alignment() === 'end'">
+<!-- Flex-row if alignment start, flex-row-reverse if alignment end, flex-column if mobile -->
+<div
+  class="d-flex si-body-2 chat-message-container"
+  [class.start]="resolvedAlignment() === 'start'"
+  [class.center]="resolvedAlignment() === 'center'"
+  [class.end]="resolvedAlignment() === 'end'"
+>
+  <div
+    class="avatar-wrapper flex-shrink-0"
+    [class.end]="resolvedAlignment() === 'end'"
+    [class.center]="resolvedAlignment() === 'center'"
+  >
     <ng-content select="si-icon,si-avatar,img" />
   </div>
 
   <div class="d-flex flex-column flex-grow-1 w-100">
-    <div class="attachment-slot" [class.align-self-end]="alignment() === 'end'">
-      <ng-content select="si-attachment-list,si-badge" />
-    </div>
+    @if (hasAttachments()) {
+      <div
+        class="attachment-slot"
+        [class.align-self-end]="resolvedAlignment() === 'end'"
+        [class.align-self-center]="resolvedAlignment() === 'center'"
+      >
+        <si-attachment-list
+          [attachments]="attachments()"
+          [alignment]="resolvedAlignment() === 'end' ? 'end' : 'start'"
+          [removable]="false"
+        />
+      </div>
+    }
 
     @if (loading()) {
       <div
         class="message-wrapper rounded-3 w-75 text-break loading-message-bubble mb-2"
-        [class.align-self-end]="alignment() === 'end'"
+        [class.align-self-end]="resolvedAlignment() === 'end'"
+        [class.align-self-center]="resolvedAlignment() === 'center'"
       >
         <div class="d-flex flex-column w-100 gap-2">
           <div class="si-skeleton skeleton-line skeleton-line-full"></div>
@@ -20,36 +40,115 @@
         </div>
       </div>
     } @else {
-      <!-- Flex-column if actions bottom, flex-row/flex-row-reverse if actions start -->
+      <!-- Flex-column if actions bottom, flex-row/flex-row-reverse if actions side -->
       <div
         class="message-wrapper mw-0 d-flex mb-2"
-        [class.start]="alignment() === 'start'"
-        [class.end]="alignment() === 'end'"
-        [class.flex-column]="actionsPosition() === 'bottom'"
-        [class.flex-row]="actionsPosition() === 'side' && alignment() === 'start'"
-        [class.flex-row-reverse]="actionsPosition() === 'side' && alignment() === 'end'"
-        [class.align-items-start]="actionsPosition() === 'side'"
-        [class.align-items-end]="actionsPosition() === 'bottom' && alignment() === 'end'"
-        [class.justify-content-end]="alignment() === 'end' && actionsPosition() === 'bottom'"
-        [class.justify-content-start]="alignment() === 'start' && actionsPosition() === 'bottom'"
+        [class.start]="resolvedAlignment() === 'start'"
+        [class.center]="resolvedAlignment() === 'center'"
+        [class.end]="resolvedAlignment() === 'end'"
+        [class.flex-column]="actionPlacement() === 'bottom'"
+        [class.flex-row]="actionPlacement() === 'side' && resolvedAlignment() !== 'end'"
+        [class.flex-row-reverse]="actionPlacement() === 'side' && resolvedAlignment() === 'end'"
+        [class.align-items-start]="actionPlacement() === 'side'"
+        [class.align-items-end]="actionPlacement() === 'bottom' && resolvedAlignment() === 'end'"
+        [class.align-items-center]="
+          actionPlacement() === 'bottom' && resolvedAlignment() === 'center'
+        "
+        [class.justify-content-end]="
+          resolvedAlignment() === 'end' && actionPlacement() === 'bottom'
+        "
+        [class.justify-content-center]="
+          resolvedAlignment() === 'center' && actionPlacement() === 'bottom'
+        "
+        [class.justify-content-start]="
+          resolvedAlignment() === 'start' && actionPlacement() === 'bottom'
+        "
       >
         <div
           class="rounded-3 text-break message-bubble"
-          [class.end]="alignment() === 'end' && actionsPosition() === 'bottom'"
+          [class.end]="resolvedAlignment() === 'end' && actionPlacement() === 'bottom'"
+          [class.center]="resolvedAlignment() === 'center' && actionPlacement() === 'bottom'"
         >
-          <ng-content />
+          @if (isEditingActive()) {
+            <textarea
+              class="form-control"
+              rows="4"
+              [value]="editValue()"
+              [attr.aria-label]="editTextareaLabel() | translate"
+              (input)="onEditInput($event)"
+            ></textarea>
+            <div class="edit-actions d-flex gap-2 mt-3 justify-content-end">
+              <button type="button" class="btn btn-secondary btn-sm" (click)="onCancelEdit()">
+                {{ cancelLabel() | translate }}
+              </button>
+              <button type="button" class="btn btn-primary btn-sm" (click)="onSaveEdit()">
+                {{ saveLabel() | translate }}
+              </button>
+            </div>
+          } @else {
+            @if (bodyTemplate(); as body) {
+              <ng-container [ngTemplateOutlet]="body.templateRef" />
+            } @else if (showFormattedContent()) {
+              <div #formattedContent></div>
+            } @else if (hasStringContent()) {
+              <span class="text-pre-wrap">{{ textContent() }}</span>
+            } @else {
+              <ng-content />
+            }
+
+            @if (streaming()) {
+              <span class="streaming-cursor" aria-hidden="true"></span>
+            }
+
+            @if (edited()) {
+              <div class="edited-indicator text-secondary mt-2">{{
+                editedLabel() | translate
+              }}</div>
+            }
+          }
         </div>
 
-        <div
-          class="actions-wrapper d-flex gap-4"
-          [class.ms-3]="actionsPosition() === 'side' && alignment() === 'start'"
-          [class.me-3]="actionsPosition() === 'side' && alignment() === 'end'"
-          [class.mt-2]="actionsPosition() === 'bottom'"
-          [class.actions-horizontal]="actionsPosition() !== 'bottom'"
-          [class.align-self-start]="actionsPosition() === 'side'"
-        >
-          <ng-content select="[siChatMessageAction]" />
-        </div>
+        @if (hasActions() && !loading() && !isEditingActive()) {
+          <div
+            class="actions-wrapper d-flex gap-4"
+            [class.ms-3]="actionPlacement() === 'side' && resolvedAlignment() !== 'end'"
+            [class.me-3]="actionPlacement() === 'side' && resolvedAlignment() === 'end'"
+            [class.mt-3]="actionPlacement() === 'bottom' && messageVariant() !== 'ai'"
+            [class.mt-5]="actionPlacement() === 'bottom' && messageVariant() === 'ai'"
+            [class.actions-horizontal]="actionPlacement() !== 'bottom'"
+            [class.align-self-start]="actionPlacement() === 'side'"
+          >
+            <div class="btn-group" role="group">
+              @for (action of actions(); track $index) {
+                <button
+                  type="button"
+                  class="btn btn-tertiary-ghost btn-icon"
+                  [disabled]="action.disabled"
+                  [attr.aria-label]="action.label | translate"
+                  (click)="action.action(actionParam(), action)"
+                >
+                  <si-icon [icon]="action.icon" />
+                </button>
+              }
+
+              @if (secondaryActions().length > 0) {
+                <button
+                  type="button"
+                  class="btn btn-tertiary-ghost btn-icon"
+                  [cdkMenuTriggerFor]="secondaryActionsMenu"
+                  [attr.aria-label]="secondaryActionsLabel() | translate"
+                  [attr.title]="secondaryActionsLabel() | translate"
+                >
+                  <si-icon [icon]="icons.elementOptionsVertical" />
+                </button>
+
+                <ng-template #secondaryActionsMenu>
+                  <si-menu-factory [items]="secondaryActions()" [actionParam]="actionParam()" />
+                </ng-template>
+              }
+            </div>
+          </div>
+        }
       </div>
     }
   </div>
