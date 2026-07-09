@@ -1,8 +1,8 @@
 # List item
 
 The **list item** is the building block used to compose lists.
-Each item represents a single row of content and can contain a heading,
-description, timestamp, metadata, indicators, and actions.
+Each item represents a single row of content and is flexible to support
+different content type.
 
 ## Usage ---
 
@@ -10,7 +10,7 @@ List items are designed to be flexible
 and can be used in different containers depending on the context. For example:
 
 - With [cards](../layout-navigation/cards.md)
-  to stack related information together in a compact space.
+  to stack related information together in a compact space, use filled or outline version.
 - With [popovers](../status-notifications/popover.md)
   to show items inside a floating container.
 - With [side panels](../layout-navigation/side-panel.md),
@@ -37,11 +37,20 @@ The list item can be **read-only** or **support interactions**.
 
 ### Anatomy
 
+The following is an example of the most common layout.
+
 ![List item anatomy](images/list-item-anatomy.png)
 
 > 1\. Indicator, 2. Timestamp, 3. Heading, 4. Description, 5. Primary action, 6. Metadata, 7. Quick actions
 
-With the exception of the heading, all items are optional.
+The anatomy above is a default example, but every slot can be swapped for a different control depending on the interaction the list needs to support. For example:
+
+- Add checkboxes to support multi-select and bulk actions,
+  or radio buttons for single-select.
+- Add a drag handle to support manual reordering.
+- Replace the heading text with an input to support inline editing.
+
+![List item content](images/list-item-content.png)
 
 ### Indicator
 
@@ -55,11 +64,18 @@ It also supports an unread state, typically used for
 
 ### Actions
 
-The list item supports a primary action aligned with the heading, or quick
-actions placed below the description. 
-Actions can use any button style needed. When there are too many to show inline, condense them into an overflow menu.
+The list item supports two distinct action slots:
 
-![List item actions](images/list-item-actions.png)
+The primary action is most directly tied to the item's purpose.
+Works best as a single action, though it can hold more.
+
+![List item action](images/list-item-primary-action.png)
+
+Quick actions are usually for operations performed on the item itself, such as pinning, archiving, sharing, or deleting. Works best when several need to be exposed at once.
+
+![List item quick actions](images/list-item-quick-actions.png)
+
+Use a menu when there are more than three or four.
 
 ### Metadata
 
