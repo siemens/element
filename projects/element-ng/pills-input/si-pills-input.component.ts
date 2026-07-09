@@ -9,7 +9,6 @@ import {
   Component,
   computed,
   ElementRef,
-  HostListener,
   inject,
   input,
   OnInit,
@@ -55,7 +54,12 @@ import {
     '[attr.tabindex]': 'tabindex()',
     '[attr.aria-activedescendant]': 'activeDescendant()',
     '[attr.aria-labelledby]': 'labelledby()',
-    '[attr.aria-describedby]': 'errormessageId()'
+    '[attr.aria-describedby]': 'errormessageId()',
+    '(click)': 'click()',
+    '(keydown.arrowLeft)': 'arrowLeft()',
+    '(keydown.arrowRight)': 'arrowRight()',
+    '(keydown.backspace)': 'delete()',
+    '(keydown.delete)': 'delete()'
   }
 })
 export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFormItemControl {
@@ -164,7 +168,6 @@ export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFo
     this.rebuildValue(this.inputValue, 'input');
   }
 
-  @HostListener('click')
   protected click(): void {
     this.inputElement()?.nativeElement.focus();
   }
@@ -218,7 +221,7 @@ export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFo
     }
   }
 
-  @HostListener('keydown.arrowLeft') protected arrowLeft(): void {
+  protected arrowLeft(): void {
     const activePillIndex = this.activePillIndex();
     const count = this.pills().length;
     if (activePillIndex !== undefined) {
@@ -229,7 +232,7 @@ export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFo
     }
   }
 
-  @HostListener('keydown.arrowRight') protected arrowRight(): void {
+  protected arrowRight(): void {
     const activePillIndex = this.activePillIndex();
     if (activePillIndex !== undefined) {
       this.activePillIndex.set(activePillIndex + 1);
@@ -241,8 +244,6 @@ export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFo
     }
   }
 
-  @HostListener('keydown.backspace')
-  @HostListener('keydown.delete')
   protected delete(): void {
     const activePillIndex = this.activePillIndex();
     const count = this.pills().length;
