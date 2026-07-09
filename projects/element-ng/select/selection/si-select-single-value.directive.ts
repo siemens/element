@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { Directive, model } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { SiSelectSelectionStrategy } from './si-select-selection-strategy';
 
@@ -23,14 +22,7 @@ import { SiSelectSelectionStrategy } from './si-select-selection-strategy';
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'si-select:not([multi])',
-  providers: [
-    { provide: SiSelectSelectionStrategy, useExisting: SiSelectSingleValueDirective },
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: SiSelectSingleValueDirective,
-      multi: true
-    }
-  ]
+  providers: [{ provide: SiSelectSelectionStrategy, useExisting: SiSelectSingleValueDirective }]
 })
 export class SiSelectSingleValueDirective<T> extends SiSelectSelectionStrategy<T, T | undefined> {
   /**
@@ -39,7 +31,6 @@ export class SiSelectSingleValueDirective<T> extends SiSelectSelectionStrategy<T
    */
   override allowMultiple = false;
 
-  /** @defaultValue [] */
   override readonly value = model<T>();
 
   protected toArrayValue(value: T | undefined): readonly T[] {

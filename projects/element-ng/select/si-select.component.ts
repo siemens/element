@@ -171,7 +171,7 @@ export class SiSelectComponent<T> implements SiFormItemControl {
       this.trigger().nativeElement.focus();
     } else {
       this.backdropClicked = false;
-      this.selectionStrategy.onTouched();
+      this.selectionStrategy.touch.emit();
     }
     this.openChange.emit(false);
   }

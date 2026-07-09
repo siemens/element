@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { Directive, model } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { SiSelectSelectionStrategy } from './si-select-selection-strategy';
 
@@ -23,14 +22,7 @@ import { SiSelectSelectionStrategy } from './si-select-selection-strategy';
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'si-select[multi]',
-  providers: [
-    { provide: SiSelectSelectionStrategy, useExisting: SiSelectMultiValueDirective },
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: SiSelectMultiValueDirective,
-      multi: true
-    }
-  ]
+  providers: [{ provide: SiSelectSelectionStrategy, useExisting: SiSelectMultiValueDirective }]
 })
 export class SiSelectMultiValueDirective<T> extends SiSelectSelectionStrategy<T, T[]> {
   /**

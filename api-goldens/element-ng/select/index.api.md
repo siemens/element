@@ -9,6 +9,7 @@ import { ConfigurableFocusTrap } from '@angular/cdk/a11y';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { ControlValueAccessor } from '@angular/forms';
 import { ElementRef } from '@angular/core';
+import { FormValueControl } from '@angular/forms/signals';
 import { InputSignal } from '@angular/core';
 import { ModelSignal } from '@angular/core';
 import { Observable } from 'rxjs';
