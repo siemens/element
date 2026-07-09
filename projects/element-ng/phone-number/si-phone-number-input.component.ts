@@ -337,8 +337,8 @@ export class SiPhoneNumberInputComponent
     this.writeValueToInput();
   }
 
-  protected countryInput(num: CountryInfo): void {
-    this.country.set(num.isoCode);
+  protected countryInput(num: CountryInfo | undefined): void {
+    this.country.set(num?.isoCode);
     this.refreshValueAfterCountryChange();
     this.handleChange();
   }
