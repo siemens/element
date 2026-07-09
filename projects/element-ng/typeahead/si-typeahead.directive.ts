@@ -17,7 +17,6 @@ import {
   Directive,
   effect,
   ElementRef,
-  HostListener,
   inject,
   Injector,
   input,
@@ -50,7 +49,11 @@ import { SiTypeaheadSorting } from './si-typeahead.sorting';
 @Directive({
   selector: '[siTypeahead]',
   host: {
-    class: 'si-typeahead'
+    class: 'si-typeahead',
+    '(focusout)': 'onBlur()',
+    '(focusin)': 'onInput($event)',
+    '(input)': 'onInput($event)',
+    '(keydown.escape)': 'onKeydownEscape()'
   },
   hostDirectives: [SiAutocompleteDirective],
   exportAs: 'si-typeahead'
@@ -434,15 +437,12 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   }
 
   // Clear the current input timeout (if set) and remove the component when the focus of the host is lost.
-  @HostListener('focusout')
   protected onBlur(): void {
     this.clearTimer();
     this.canBeOpen.set(false);
   }
 
   // Start the input timeout to display the typeahead when the host is focussed or a value is inputted into it.
-  @HostListener('focusin', ['$event'])
-  @HostListener('input', ['$event'])
   protected onInput(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (!target) {
@@ -460,7 +460,6 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     }, this.typeaheadWaitMs());
   }
 
-  @HostListener('keydown.escape')
   protected onKeydownEscape(): void {
     if (this.typeaheadCloseOnEsc()) {
       this.clearTimer();
