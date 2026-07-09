@@ -27,6 +27,14 @@ import { SiFormValidationErrorService } from '../si-form-validation-error.servic
  * ```html
  * <si-form-field label="Name">
  *   <input class="form-control" [formField]="form.name" />
+ *
+ *   <!-- Optional help button -->
+ *   <button
+ *     si-help-button
+ *     type="button"
+ *     siHelpTitle="Help for name"
+ *     siHelpContent="The context help description"
+ *   >More information about the name</button>
  * </si-form-field>
  * ```
  */
