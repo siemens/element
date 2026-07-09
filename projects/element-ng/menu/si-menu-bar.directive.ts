@@ -16,7 +16,7 @@ import { Directive, inject, input } from '@angular/core';
   hostDirectives: [CdkMenuBar, CdkTargetMenuAim]
 })
 export class SiMenuBarDirective {
-  private menuBar = inject(CdkMenuBar, { self: true });
+  private readonly menuBar = inject(CdkMenuBar, { self: true });
 
   protected get tabIndex(): 0 | -1 | null {
     return this.disabled() ? -1 : this.menuBar._getTabIndex();

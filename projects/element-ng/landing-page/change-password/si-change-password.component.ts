@@ -189,7 +189,7 @@ export class SiChangePasswordComponent implements OnInit, OnDestroy {
   });
   protected passwordPolicyContentTemplate: TemplateRef<any> | null = null;
 
-  private destroyRef = inject(DestroyRef);
+  private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     this.landingPage?.isFullHeightSection.set(true);

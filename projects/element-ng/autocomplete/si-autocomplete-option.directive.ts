@@ -20,8 +20,8 @@ import { AUTOCOMPLETE_LISTBOX } from './si-autocomplete.model';
 })
 export class SiAutocompleteOptionDirective<T = unknown> implements Highlightable {
   private static idCounter = 0;
-  private element = inject<ElementRef<HTMLElement>>(ElementRef);
-  private parent = inject(AUTOCOMPLETE_LISTBOX);
+  private readonly element = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly parent = inject(AUTOCOMPLETE_LISTBOX);
 
   /**
    * @defaultValue

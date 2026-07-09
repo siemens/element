@@ -16,7 +16,7 @@ import { SiTranslateNgLocalizeService } from './si-translate-ng-localize.service
  */
 @Injectable()
 export class SiTranslateNgLocalizeServiceBuilder extends SiTranslateServiceBuilder {
-  private siTranslateNgService = inject(SiTranslateNgLocalizeService);
+  private readonly siTranslateNgService = inject(SiTranslateNgLocalizeService);
 
   override buildService(): SiTranslateService {
     return this.siTranslateNgService;

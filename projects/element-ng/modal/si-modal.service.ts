@@ -87,9 +87,9 @@ class ModalRefImpl<T = never, CT = void> extends ModalRef<T, CT> {
 export class SiModalService {
   private modalsCount = 0;
   private readonly overlay = inject(Overlay);
-  private appRef = inject(ApplicationRef);
-  private injector = inject(Injector);
-  private environmentInjector = inject(EnvironmentInjector);
+  private readonly appRef = inject(ApplicationRef);
+  private readonly injector = inject(Injector);
+  private readonly environmentInjector = inject(EnvironmentInjector);
 
   /**
    * Shows a modal with the given content and configuration.

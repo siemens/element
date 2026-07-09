@@ -118,9 +118,9 @@ export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
   readonly hidden = output<void>();
 
   private overlayref?: OverlayRef;
-  private overlay = inject(Overlay);
-  private elementRef = inject(ElementRef);
-  private destroyer = new Subject<void>();
+  private readonly overlay = inject(Overlay);
+  private readonly elementRef = inject(ElementRef);
+  private readonly destroyer = new Subject<void>();
 
   ngOnInit(): void {
     if (this.isOpen()) {

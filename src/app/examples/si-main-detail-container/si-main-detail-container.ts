@@ -49,8 +49,8 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
-  private dataService = inject(DataService);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly dataService = inject(DataService);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   /**
    * Main detail container

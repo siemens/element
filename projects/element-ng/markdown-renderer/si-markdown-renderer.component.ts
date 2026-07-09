@@ -24,9 +24,9 @@ import { getMarkdownRenderer } from './markdown-renderer';
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiMarkdownRendererComponent {
-  private sanitizer = inject(DomSanitizer);
-  private hostElement = inject(ElementRef<HTMLElement>);
-  private markdownRenderer = getMarkdownRenderer(this.sanitizer);
+  private readonly sanitizer = inject(DomSanitizer);
+  private readonly hostElement = inject(ElementRef<HTMLElement>);
+  private readonly markdownRenderer = getMarkdownRenderer(this.sanitizer);
 
   /**
    * The markdown text to transform and display

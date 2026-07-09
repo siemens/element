@@ -46,12 +46,12 @@ import {
 export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
   private static idCounter = 0;
 
-  private tooltipService = inject(SiTooltipService);
-  private formValidationService = inject(SiFormValidationErrorService);
-  private formContainer = inject(SiFormContainerComponent, { optional: true });
+  private readonly tooltipService = inject(SiTooltipService);
+  private readonly formValidationService = inject(SiFormValidationErrorService);
+  private readonly formContainer = inject(SiFormContainerComponent, { optional: true });
   readonly formErrorMapper = input<SiFormValidationErrorMapper>();
-  private ngControl = inject(NgControl);
-  private elementRef = inject(ElementRef);
+  private readonly ngControl = inject(NgControl);
+  private readonly elementRef = inject(ElementRef);
 
   private tooltipRef?: TooltipRef;
   private readonly errors = signal<SiFormError[]>([]);

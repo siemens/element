@@ -47,21 +47,23 @@ export class SiLivePreviewWrapperComponent {
   loadVue = false;
   loadJs = false;
   webcomponentTemplateCode = '';
-  private isMobile = false;
+  private readonly isMobile: boolean = false;
   private theme!: ThemeType;
   private isRTL = false;
   private mode!: string;
   private locale?: string;
   private rootFontSize?: number | 'initial';
-  private initialUrl: string;
+  private readonly initialUrl: string;
 
-  private config = inject(SI_LIVE_PREVIEW_CONFIG);
-  private themeApi = inject(SiLivePreviewThemeApi, { optional: true });
-  private localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
-  private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
-  private ngZone = inject(NgZone);
-  private webcomponentService = inject(SiLivePreviewWebComponentService, { optional: true });
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  private readonly themeApi = inject(SiLivePreviewThemeApi, { optional: true });
+  private readonly localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
+  private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
+  private readonly ngZone = inject(NgZone);
+  private readonly webcomponentService = inject(SiLivePreviewWebComponentService, {
+    optional: true
+  });
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.themeApi

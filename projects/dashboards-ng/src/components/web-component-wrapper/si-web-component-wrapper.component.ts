@@ -44,7 +44,7 @@ export class SiWebComponentWrapperComponent
 
   configChange = new EventEmitter<WidgetConfigEvent>();
 
-  private webComponentEventListener = (event: CustomEventInit<WidgetConfigEvent>): void =>
+  private readonly webComponentEventListener = (event: CustomEventInit<WidgetConfigEvent>): void =>
     event.detail && this.configChanged(event.detail);
 
   override ngAfterViewInit(): void {

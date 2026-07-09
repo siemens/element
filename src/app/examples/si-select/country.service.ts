@@ -13,9 +13,9 @@ export interface Country {
 
 @Injectable({ providedIn: 'root' })
 export class CountryService {
-  private locale = inject(LOCALE_ID);
+  private readonly locale = inject(LOCALE_ID);
 
-  private countries = this.buildCountryOptions();
+  private readonly countries = this.buildCountryOptions();
 
   private buildCountryOptions(): Country[] {
     const countryName = new Intl.DisplayNames([this.locale], { type: 'region' });

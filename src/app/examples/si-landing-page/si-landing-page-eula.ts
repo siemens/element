@@ -47,7 +47,7 @@ const loginAlert = signal<AlertConfig | undefined>(undefined);
 })
 export class AppLoginBasicComponent {
   logEvent = inject(LOG_EVENT);
-  private activeRoute = inject(ActivatedRoute);
+  private readonly activeRoute = inject(ActivatedRoute);
   readonly router = inject(Router);
   readonly loading = signal<boolean>(false);
 
@@ -159,7 +159,7 @@ export class AppLoginBasicComponent {
   `
 })
 export class AppEulaComponent {
-  private activeRoute = inject(ActivatedRoute);
+  private readonly activeRoute = inject(ActivatedRoute);
   readonly router = inject(Router);
   logEvent = inject(LOG_EVENT);
 
@@ -191,7 +191,7 @@ export const ROUTES: Route[] = [
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit, OnDestroy {
-  private activeRoute = inject(ActivatedRoute);
+  private readonly activeRoute = inject(ActivatedRoute);
   readonly router = inject(Router);
   readonly loginAlert = loginAlert;
 

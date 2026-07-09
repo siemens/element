@@ -16,7 +16,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
   host: { class: 'p-5' }
 })
 export class SampleComponent {
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
   logEvent = inject(LOG_EVENT);
   stepIsValid = true;

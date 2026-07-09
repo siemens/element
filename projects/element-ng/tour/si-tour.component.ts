@@ -51,13 +51,13 @@ export class SiTourComponent implements OnDestroy {
   protected ariaLabelClose = t(() => $localize`:@@SI_TOUR.CLOSE:Close`);
   protected progressText = t(() => $localize`:@@SI_TOUR.PROGRESS: {{step}} of {{total}}`);
 
-  private elementRef: ElementRef<HTMLElement> = inject(ElementRef);
-  private subscription?: Subscription;
+  private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
+  private readonly subscription?: Subscription;
   private prevFocus: Element | null = null;
   private lastPositionChange: PositionChange | undefined;
 
   private readonly focusTrap = viewChild<CdkTrapFocus>('focusTrap');
-  private document = inject(DOCUMENT);
+  private readonly document = inject(DOCUMENT);
 
   constructor() {
     this.subscription = this.tourToken.currentStep.subscribe(step => {

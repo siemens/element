@@ -36,8 +36,8 @@ import { Directive, ElementRef, inject, DOCUMENT } from '@angular/core';
   providers: [{ provide: OverlayContainer, useExisting: SiShadowRootDirective }, Overlay]
 })
 export class SiShadowRootDirective extends OverlayContainer {
-  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
-  private document = inject(DOCUMENT);
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly document = inject(DOCUMENT);
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   protected override _createContainer(): void {

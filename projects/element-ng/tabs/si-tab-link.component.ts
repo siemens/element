@@ -40,7 +40,7 @@ import { SiTabBaseDirective } from './si-tab-base.directive';
   ]
 })
 export class SiTabLinkComponent extends SiTabBaseDirective {
-  private router = inject(Router);
+  private readonly router = inject(Router);
   /** @internal */
   routerLink = inject(RouterLink, { self: true });
   protected routerLinkActive = inject(RouterLinkActive, { self: true });

@@ -25,7 +25,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
-  private translate = inject(TranslateService);
+  private readonly translate = inject(TranslateService);
   readonly loginSingleSignOn = viewChild.required(SiLoginSingleSignOnComponent);
   readonly loginAlert = signal<AlertConfig | undefined>(undefined);
 

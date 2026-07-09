@@ -15,7 +15,7 @@ import { SiTranslateServiceBuilder } from './si-translate.service-builder';
  */
 @Injectable({ providedIn: 'root' })
 export class SiNoTranslateServiceBuilder extends SiTranslateServiceBuilder {
-  private siNoTranslateService = inject(SiNoTranslateService);
+  private readonly siNoTranslateService = inject(SiNoTranslateService);
 
   override buildService(): SiTranslateService {
     return this.siNoTranslateService;

@@ -32,10 +32,10 @@ export class SiWebComponentEditorWrapperComponent
    */
   statusChangesHandler?: (statusChanges: Partial<WidgetConfigStatus>) => void;
 
-  private webComponentEventListener = (event: CustomEventInit<WidgetConfig>): void =>
+  private readonly webComponentEventListener = (event: CustomEventInit<WidgetConfig>): void =>
     event.detail && this.configChange.next(event.detail);
 
-  private webComponentStateChangeListener = (
+  private readonly webComponentStateChangeListener = (
     event: CustomEventInit<WidgetInstanceEditorWizardState>
   ): void => {
     if (event.detail) {
@@ -43,7 +43,7 @@ export class SiWebComponentEditorWrapperComponent
       this.stateChange.next(event.detail);
     }
   };
-  private webComponentStatusChangesListener = (
+  private readonly webComponentStatusChangesListener = (
     event: CustomEventInit<Partial<WidgetConfigStatus>>
   ): void => {
     if (event.detail) {

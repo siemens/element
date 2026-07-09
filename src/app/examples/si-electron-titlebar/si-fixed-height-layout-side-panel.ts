@@ -181,7 +181,7 @@ export class SampleComponent implements OnDestroy {
 
   shouldBlink = !navigator.webdriver;
 
-  private sidePanelService = inject(SiSidePanelService);
+  private readonly sidePanelService = inject(SiSidePanelService);
 
   ngOnDestroy(): void {
     this.sidePanelService.hideTemporaryContent();

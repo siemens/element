@@ -67,13 +67,13 @@ export class RoutedDashboardPageComponent implements OnInit {
 
   protected dashboardId?: string;
 
-  appStateService = inject(AppStateService);
-  private route = inject(ActivatedRoute);
+  readonly appStateService = inject(AppStateService);
+  private readonly route = inject(ActivatedRoute);
 
   protected readonly primaryActions = signal<DashboardToolbarItem[]>([]);
   protected readonly secondaryActions = signal<DashboardToolbarItem[]>([]);
-  private widgetStore = inject<AppWidgetStorage>(SI_WIDGET_STORE);
-  private destroyRef = inject(DestroyRef);
+  private readonly widgetStore = inject<AppWidgetStorage>(SI_WIDGET_STORE);
+  private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {

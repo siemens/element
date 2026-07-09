@@ -30,7 +30,7 @@ import { NoteWidgetComponent } from './note-widget/note-widget.component';
   bootstrap: []
 })
 export class AppModule implements DoBootstrap {
-  private injector = inject(Injector);
+  private readonly injector = inject(Injector);
 
   ngDoBootstrap(): void {
     customElements.define(

@@ -95,7 +95,7 @@ export class SampleComponent implements OnDestroy {
 
   logEvent = inject(LOG_EVENT);
 
-  private sidePanelService = inject(SiSidePanelService);
+  private readonly sidePanelService = inject(SiSidePanelService);
 
   ngOnDestroy(): void {
     this.sidePanelService.hideTemporaryContent();

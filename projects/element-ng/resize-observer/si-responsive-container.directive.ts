@@ -60,8 +60,8 @@ export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
 
   private subs?: Subscription;
 
-  private element = inject(ElementRef);
-  private service = inject(ResizeObserverService);
+  private readonly element = inject(ElementRef);
+  private readonly service = inject(ResizeObserverService);
 
   ngOnInit(): void {
     this.subs = this.service

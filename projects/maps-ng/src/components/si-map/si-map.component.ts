@@ -359,7 +359,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
     this.zoomToDefaultLabel = translations[this.zoomToDefaultLabel];
   }
   // this is to filter out non-data layers for performance of `forEachFeatureAtPixel()`
-  private layerFilter = (layer: Layer<any>): boolean => {
+  private readonly layerFilter = (layer: Layer<any>): boolean => {
     const name = layer.get(LAYER_NAME);
     return name === POINTS_LAYER || name === GEOJSON_LAYER;
   };

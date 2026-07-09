@@ -69,14 +69,14 @@ const mulberry32 = (seed: number) => () => {
 export class SampleComponent implements OnInit, OnDestroy {
   readonly trendChart = viewChild.required<SiChartCartesianComponent>('trendChart');
 
-  private fullData: CartesianChartData = [];
-  private lowresData: CartesianChartData = [];
+  private readonly fullData: CartesianChartData = [];
+  private readonly lowresData: CartesianChartData = [];
   private data: CartesianChartData = [];
   private zoomed = false;
   private liveUpdateTimer: any = 0;
   private liveUpdateIndex = 0;
   private liveUpdateSum = 0;
-  private rand: () => number;
+  private readonly rand: () => number;
 
   constructor() {
     this.rand = mulberry32(10000);

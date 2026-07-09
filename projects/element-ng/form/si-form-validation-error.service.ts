@@ -107,7 +107,7 @@ export class SiFormValidationErrorService {
   });
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(private errorMapper: SiFormValidationErrorMapper) {}
+  constructor(private readonly errorMapper: SiFormValidationErrorMapper) {}
 
   /**
    * Resolves validation errors for Angular signal forms.

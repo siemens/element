@@ -33,9 +33,9 @@ import { TableData, TableDataService } from '../../mocks/table-data.mock';
   }
 })
 export class SampleComponent {
-  private destroyRef = inject(DestroyRef);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly tableDataService = inject(TableDataService);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly cdRef = inject(ChangeDetectorRef);
   rowData: TableData[] = Array.from({ length: 10 }, () => ({})) as TableData[];
 
   defaultColDef: ColDef<TableData> = {

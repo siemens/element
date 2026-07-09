@@ -119,8 +119,8 @@ export class SiFileUploadDirective {
   readonly fileError = output<FileUploadError>();
 
   private readonly elementRef = inject(ElementRef<HTMLInputElement>);
-  private locale = inject(LOCALE_ID).toString();
-  private numberFormat = new Intl.NumberFormat(this.locale, { maximumFractionDigits: 2 });
+  private readonly locale = inject(LOCALE_ID).toString();
+  private readonly numberFormat = new Intl.NumberFormat(this.locale, { maximumFractionDigits: 2 });
 
   protected onInputChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement;

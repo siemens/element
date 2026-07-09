@@ -119,18 +119,18 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
   protected labelDialogCancel = t(
     () => $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.CANCEL:Cancel`
   );
-  private a11yWidgetMovedMessage = t(
+  private readonly a11yWidgetMovedMessage = t(
     () => $localize`:@@DASHBOARD.WIDGET.A11Y.MOVED:Widget moved to column {{column}}, row {{row}}.`
   );
-  private a11yWidgetResizedMessage = t(
+  private readonly a11yWidgetResizedMessage = t(
     () =>
       $localize`:@@DASHBOARD.WIDGET.A11Y.RESIZED:Widget resized to {{columns}} columns wide, {{rows}} rows tall.`
   );
-  private a11yWidgetActivatedMessage = t(
+  private readonly a11yWidgetActivatedMessage = t(
     () =>
       $localize`:@@DASHBOARD.WIDGET.A11Y.ACTIVATED:Widget activated. Use arrow keys to move, Shift+arrow keys to resize, Escape to exit.`
   );
-  private a11yWidgetDeactivatedMessage = t(
+  private readonly a11yWidgetDeactivatedMessage = t(
     () => $localize`:@@DASHBOARD.WIDGET.A11Y.DEACTIVATED:Widget deactivated.`
   );
   protected a11yWidgetDescription = t(

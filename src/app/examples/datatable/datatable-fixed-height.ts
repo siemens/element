@@ -42,8 +42,8 @@ export class SampleComponent implements OnDestroy {
   isLoading = false;
   subscription?: Subscription;
 
-  private dataService = inject(DataService);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly dataService = inject(DataService);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.page.size = Math.floor(

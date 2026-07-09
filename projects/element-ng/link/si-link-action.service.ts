@@ -9,7 +9,7 @@ import { Link, LinkAction } from './link.model';
 
 @Injectable()
 export class SiLinkActionService {
-  private actionSubject = new Subject<LinkAction>();
+  private readonly actionSubject = new Subject<LinkAction>();
 
   /**
    * Observable which emits the link and param to run the action on.

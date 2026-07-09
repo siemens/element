@@ -32,7 +32,7 @@ export class GaugeComponent implements OnInit, WidgetInstance {
 
   data?: Observable<number>;
 
-  private dataService = inject(DataService);
+  private readonly dataService = inject(DataService);
 
   ngOnInit(): void {
     this.data = (this.dataService as any)[this.config().payload.datasourceId]();

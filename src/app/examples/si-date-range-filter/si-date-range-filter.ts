@@ -32,7 +32,7 @@ const ONE_DAY = 60 * 60 * 24 * 1000;
 export class SampleComponent implements OnInit {
   protected logEvent = inject(LOG_EVENT);
   protected service = inject(SiDateRangeCalculationService);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   protected enableTimeSelection = false;
   protected inputMode = false;

@@ -35,7 +35,7 @@ export class SiToastNotificationComponent {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);
   readonly toast = input.required<SiToast>();
 
-  private closeAriaLabelDefault = t(() => $localize`:@@SI_TOAST.CLOSE:Close`);
+  private readonly closeAriaLabelDefault = t(() => $localize`:@@SI_TOAST.CLOSE:Close`);
   protected readonly closeAriaLabel = computed(
     () => this.toast().closeAriaLabel ?? this.closeAriaLabelDefault
   );

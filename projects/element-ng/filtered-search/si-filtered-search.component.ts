@@ -325,7 +325,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
 
   protected readonly icons = addIcons({ elementCancel, elementSearch });
   /** Used to debounce the Search emissions */
-  private searchEmitQueue = new Subject<SearchCriteria | undefined>();
+  private readonly searchEmitQueue = new Subject<SearchCriteria | undefined>();
   private readonly destroyRef = inject(DestroyRef);
   private readonly translateService = injectSiTranslateService();
   private readonly locale = inject(LOCALE_ID).toString();

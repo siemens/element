@@ -62,7 +62,7 @@ export const SI_UI_STATE_SERVICE = new InjectionToken<SiUIStateService>('si.ui-s
  */
 @Injectable()
 class SiUIStateService {
-  private storage = inject(SI_UI_STATE_STORAGE);
+  private readonly storage = inject(SI_UI_STATE_STORAGE);
 
   /**
    * Saves the provided state in the storage.

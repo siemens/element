@@ -88,7 +88,7 @@ const localeConfig: SiLocaleConfig = {
 
 @Injectable()
 class LivePreviewLocaleApiService extends SiLivePreviewLocaleApi {
-  private localeService = inject(SiLocaleService);
+  private readonly localeService = inject(SiLocaleService);
 
   setLocale(locale: string): void {
     this.localeService.locale = locale;

@@ -17,7 +17,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 export class SampleComponent implements OnDestroy {
   logEvent = inject(LOG_EVENT);
 
-  private toastNotificationService = inject(SiToastNotificationService);
+  private readonly toastNotificationService = inject(SiToastNotificationService);
 
   ngOnDestroy(): void {
     this.hideAll();

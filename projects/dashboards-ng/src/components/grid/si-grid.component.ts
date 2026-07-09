@@ -47,9 +47,9 @@ import { SiWidgetInstanceEditorDialogComponent } from '../widget-instance-editor
 })
 export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
   private storeSubscription?: Subscription;
-  private modalService = inject(SiModalService);
-  private widgetStorage = inject(SI_WIDGET_STORE);
-  private widgetIdProvider = inject(SI_WIDGET_ID_PROVIDER);
+  private readonly modalService = inject(SiModalService);
+  private readonly widgetStorage = inject(SI_WIDGET_STORE);
+  private readonly widgetIdProvider = inject(SI_WIDGET_ID_PROVIDER);
 
   /**
    * Configuration options for a grid instance. Default is the optional

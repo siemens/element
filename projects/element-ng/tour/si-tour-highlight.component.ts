@@ -14,7 +14,7 @@ import { SI_TOUR_TOKEN } from './si-tour-token.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiTourHighlightComponent {
-  private tourToken = inject(SI_TOUR_TOKEN);
+  private readonly tourToken = inject(SI_TOUR_TOKEN);
   private anchor?: ElementRef;
   protected readonly dim = signal({ top: 0, left: 0, width: 0, height: 0 });
 

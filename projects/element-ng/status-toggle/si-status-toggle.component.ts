@@ -62,7 +62,7 @@ export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, On
   private offset0 = 0;
   private onChange?: (value: string | number) => void;
   private onTouched?: () => void;
-  private unlistenDragEvents: (() => void)[] = [];
+  private readonly unlistenDragEvents: (() => void)[] = [];
   private readonly internalDisabled = signal(false);
 
   protected readonly selectedIndex = signal<number | undefined>(undefined);

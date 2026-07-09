@@ -23,7 +23,7 @@ export class SiThemeService {
    * The current color scheme. (e.g. light or dark).
    */
   private _resolvedColorScheme: ThemeType | undefined = 'light';
-  private resolvedColorSchemeSub = new ReplaySubject<keyof ThemeColorSchemes>(1);
+  private readonly resolvedColorSchemeSub = new ReplaySubject<keyof ThemeColorSchemes>(1);
   /**
    * Emits events when the color scheme changes.
    *
@@ -41,7 +41,7 @@ export class SiThemeService {
    * All available theme names, including element theme name.
    */
   private _themeNames: string[] = [ELEMENT_THEME_NAME];
-  private themeNamesSub = new ReplaySubject<string[]>(1);
+  private readonly themeNamesSub = new ReplaySubject<string[]>(1);
   /**
    * Emits events when the list of available theme names changes.
    *
@@ -77,16 +77,16 @@ export class SiThemeService {
    */
   readonly themeIcons = signal<Record<string, string>>({});
 
-  private themes: Map<string, Theme> = new Map();
-  private darkMediaQuery?: MediaQueryList;
-  private mediaQueryListener?: () => void;
-  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly themes: Map<string, Theme> = new Map();
+  private readonly darkMediaQuery?: MediaQueryList;
+  private readonly mediaQueryListener?: () => void;
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private previewTheme?: Theme;
 
-  private themeStore =
+  private readonly themeStore =
     inject(SiThemeStore, { optional: true }) ?? new SiDefaultThemeStore(this.isBrowser);
-  private meta = inject(Meta);
-  private document = inject(DOCUMENT);
+  private readonly meta = inject(Meta);
+  private readonly document = inject(DOCUMENT);
 
   constructor() {
     this.resolvedColorScheme$.subscribe(scheme => (this._resolvedColorScheme = scheme));

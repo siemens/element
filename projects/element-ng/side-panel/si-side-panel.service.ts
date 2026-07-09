@@ -11,11 +11,11 @@ import { BehaviorSubject, EMPTY, Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class SiSidePanelService {
-  private contentSubject = new BehaviorSubject<Portal<any> | undefined>(undefined);
+  private readonly contentSubject = new BehaviorSubject<Portal<any> | undefined>(undefined);
   /** @internal */
   readonly content$ = this.contentSubject.asObservable();
 
-  private openSubject = new BehaviorSubject<boolean>(false);
+  private readonly openSubject = new BehaviorSubject<boolean>(false);
   /**
    * Emits on side panel is open or close.
    *
@@ -23,7 +23,7 @@ export class SiSidePanelService {
    */
   readonly isOpen$ = this.openSubject.asObservable();
 
-  private tempContentSubject = new BehaviorSubject<Portal<any> | undefined>(undefined);
+  private readonly tempContentSubject = new BehaviorSubject<Portal<any> | undefined>(undefined);
   /** @internal */
   readonly tempContent$ = this.tempContentSubject.asObservable();
 
@@ -34,7 +34,7 @@ export class SiSidePanelService {
   /** @internal */
   readonly collapsible = signal(false);
 
-  private fullscreenSubject = new BehaviorSubject<boolean>(false);
+  private readonly fullscreenSubject = new BehaviorSubject<boolean>(false);
   /**
    * Emits when fullscreen overlay mode is toggled.
    */

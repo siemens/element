@@ -30,8 +30,8 @@ import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
 export class SampleComponent {
   tableConfig = SI_DATATABLE_CONFIG;
   rows: any[] = [];
-  private siColumnModal = inject(SiColumnSelectionDialogService);
-  private logEvent = inject(LOG_EVENT);
+  private readonly siColumnModal = inject(SiColumnSelectionDialogService);
+  private readonly logEvent = inject(LOG_EVENT);
   columns: TableColumn[] = [
     { name: 'First name', prop: 'firstname', width: 100 },
     { name: 'Last name', prop: 'lastname', width: 100 },
@@ -76,10 +76,10 @@ export class SampleComponent {
     }
   ];
 
-  private originalModalColumns = this.modalColumns.map(col => ({ ...col }));
-  private originalColumns = this.columns.map(col => ({ ...col }));
-  private destroyer = inject(DestroyRef);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly originalModalColumns = this.modalColumns.map(col => ({ ...col }));
+  private readonly originalColumns = this.columns.map(col => ({ ...col }));
+  private readonly destroyer = inject(DestroyRef);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     for (let i = 1; i <= 250; i++) {

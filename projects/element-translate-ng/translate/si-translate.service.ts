@@ -30,7 +30,7 @@ export const getBrowserLanguage = (): string | undefined =>
 @Injectable()
 export abstract class SiTranslateService {
   protected translationChange$: Observable<void> = NEVER;
-  private documentRef: Document = inject(DOCUMENT);
+  private readonly documentRef: Document = inject(DOCUMENT);
 
   prevent$LocalizeInit?: boolean;
 

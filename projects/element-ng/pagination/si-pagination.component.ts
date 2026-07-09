@@ -14,7 +14,7 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiPaginationComponent {
-  private static maxItems = 7;
+  private static readonly maxItems = 7;
 
   /**
    * The total number of pages.

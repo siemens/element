@@ -37,6 +37,7 @@ export const tsConfig = defineConfig({
     'vitest/prefer-each': 'error',
     'vitest/prefer-comparison-matcher': 'error',
     '@typescript-eslint/no-unused-vars': ['off'],
+    '@typescript-eslint/prefer-readonly': 'error',
     '@angular-eslint/directive-selector': [
       'error',
       {

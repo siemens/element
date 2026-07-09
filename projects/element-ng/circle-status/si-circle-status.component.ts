@@ -110,7 +110,7 @@ export class SiCircleStatusComponent implements OnChanges, OnDestroy {
 
   private readonly bg = viewChild.required<ElementRef>('bg');
 
-  private blinkService = inject(BlinkService);
+  private readonly blinkService = inject(BlinkService);
 
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (this.blinkService && changes.blink) {

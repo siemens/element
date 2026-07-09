@@ -129,7 +129,7 @@ export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
   private readonly innerTabContainer =
     viewChild.required<ElementRef<HTMLDivElement>>('innerTabContainer');
   private readonly tabs = viewChildren<ElementRef<HTMLButtonElement>>('tabElement');
-  private changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   ngAfterViewInit(): void {
     this.initialized = true;

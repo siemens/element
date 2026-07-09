@@ -18,7 +18,7 @@ export interface FontStyleOverride {
 export class TextMeasureService {
   private measureCanvas?: CanvasRenderingContext2D;
   private defaultFont?: string;
-  private document = inject(DOCUMENT);
+  private readonly document = inject(DOCUMENT);
   /** Measure text width in pixel. */
   measureText(text: string, fontRef?: HTMLElement | string, overrides?: FontStyleOverride): number {
     this.ensureCanvas();

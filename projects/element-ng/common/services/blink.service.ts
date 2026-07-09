@@ -20,10 +20,10 @@ import {
  */
 @Injectable({ providedIn: 'root' })
 export class BlinkService {
-  private pause$ = new BehaviorSubject<boolean>(false);
+  private readonly pause$ = new BehaviorSubject<boolean>(false);
 
-  private off$ = this.pause$.pipe(filter(v => v));
-  private on$ = this.pause$.pipe(filter(v => !v));
+  private readonly off$ = this.pause$.pipe(filter(v => v));
+  private readonly on$ = this.pause$.pipe(filter(v => !v));
 
   /**
    * Blink pulse. Subscribe to it to toggle `on` CSS class when true, `off` CSS class when `false`.

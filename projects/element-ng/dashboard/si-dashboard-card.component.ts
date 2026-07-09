@@ -179,7 +179,7 @@ export class SiDashboardCardComponent extends SiCardComponent implements OnDestr
   private readonly hasContentBarActions = computed(() => {
     return this.primaryActions()?.length > 0 || this.secondaryActions()?.length > 0;
   });
-  private dashboardService = inject(SiDashboardService, { optional: true });
+  private readonly dashboardService = inject(SiDashboardService, { optional: true });
 
   constructor() {
     super();

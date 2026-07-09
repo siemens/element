@@ -78,9 +78,9 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
 
   private readonly navigationToggle = viewChild<ElementRef<HTMLDivElement>>('navigationToggle');
   private readonly focusTrap = viewChild.required(CdkTrapFocus);
-  private breakpointObserver = inject(BreakpointObserver);
+  private readonly breakpointObserver = inject(BreakpointObserver);
   private openDropdown?: SiHeaderDropdownTriggerDirective;
-  private closeMobileSub = this.closeMobileMenus.subscribe(() => {
+  private readonly closeMobileSub = this.closeMobileMenus.subscribe(() => {
     this.closeMobileNavigation();
     this.closeLaunchpad();
   });

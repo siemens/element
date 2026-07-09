@@ -77,7 +77,7 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
    * Used if not set by user.
    */
   private computedGap = 0;
-  private injector = inject(INJECTOR);
+  private readonly injector = inject(INJECTOR);
 
   ngAfterViewInit(): void {
     if (this.siAutoCollapsableList()) {

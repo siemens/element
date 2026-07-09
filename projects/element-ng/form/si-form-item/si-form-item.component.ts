@@ -146,8 +146,8 @@ export class SiFormItemComponent
     () => this.fieldControlQuery() ?? this.fieldControlNative()
   );
 
-  private validationErrorService = inject(SiFormValidationErrorService);
-  private requiredTestControl = new FormControl('');
+  private readonly validationErrorService = inject(SiFormValidationErrorService);
+  private readonly requiredTestControl = new FormControl('');
   private validator?: ValidatorFn | null;
   private previousErrors?: ValidationErrors | null;
   private readonly hasRequiredValidator = signal(false);

@@ -246,7 +246,7 @@ export class SiCarouselComponent {
   private readonly pageControl = viewChild<ElementRef<HTMLElement>>('pageControl');
   private readonly playPauseBtn = viewChild<ElementRef<HTMLElement>>('playPauseBtn');
   private readonly translateService = injectSiTranslateService();
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     effect(onCleanup => {

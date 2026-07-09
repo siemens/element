@@ -16,7 +16,7 @@ import { SiMissingTranslateService } from './si-missing-translate.service';
  * @internal
  */
 export class SiTranslateNgxTService extends SiTranslateService {
-  private ngxTranslateService: TranslateService;
+  private readonly ngxTranslateService: TranslateService;
   private readonly fallbackTranslations?: SiMissingTranslateService;
 
   constructor(

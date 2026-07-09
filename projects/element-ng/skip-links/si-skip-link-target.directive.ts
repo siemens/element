@@ -20,8 +20,8 @@ export class SiSkipLinkTargetDirective implements OnInit, OnDestroy {
    */
   readonly name = input.required<TranslatableString>({ alias: 'siSkipLinkTarget' });
 
-  private skipLinkService = inject(SkipLinkService);
-  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly skipLinkService = inject(SkipLinkService);
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
   ngOnInit(): void {
     this.skipLinkService.registerLink(this);

@@ -21,20 +21,20 @@ import { TourOptions, TourStep } from './si-tour.model';
 
 @Injectable({ providedIn: 'root' })
 export class SiTourService {
-  private injector = inject(Injector);
-  private resizeObserver = inject(ResizeObserverService);
-  private overlay = inject(Overlay);
-  private outsideClickDispatcher = inject(OverlayOutsideClickDispatcher);
+  private readonly injector = inject(Injector);
+  private readonly resizeObserver = inject(ResizeObserverService);
+  private readonly overlay = inject(Overlay);
+  private readonly outsideClickDispatcher = inject(OverlayOutsideClickDispatcher);
   private overlayRefHighlight?: OverlayRef;
   private overlayRef?: OverlayRef;
   private portal?: ComponentPortal<SiTourComponent>;
 
-  private options: TourOptions = {};
+  private readonly options: TourOptions = {};
   private steps: TourStep[] = [];
   private currentStepIndex = -1;
   private currentStep?: TourStep;
   private active = false;
-  private tourToken: TourToken = {
+  private readonly tourToken: TourToken = {
     currentStep: new Subject(),
     blocked: signal(false),
     positionChange: new Subject(),
@@ -43,7 +43,7 @@ export class SiTourService {
   };
   private positionChangeSub?: Subscription;
   private resizeSub?: Subscription;
-  private document = inject(DOCUMENT);
+  private readonly document = inject(DOCUMENT);
 
   constructor() {
     this.tourToken.control.subscribe(action => this.controlAction(action));

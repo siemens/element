@@ -63,8 +63,8 @@ export class SiTooltipDirective implements OnDestroy {
   protected describedBy = `__tooltip_${SiTooltipDirective.idCounter++}`;
 
   private tooltipRef?: TooltipRef;
-  private tooltipService = inject(SiTooltipService);
-  private elementRef = inject(ElementRef);
+  private readonly tooltipService = inject(SiTooltipService);
+  private readonly elementRef = inject(ElementRef);
 
   constructor() {
     effect(() => {

@@ -21,7 +21,7 @@ export class CircleComponent implements OnInit, WidgetInstance {
   readonly config = input.required<WidgetConfig>();
   data!: Observable<CircleChartSeries[]>;
 
-  private dataService = inject(DataService);
+  private readonly dataService = inject(DataService);
 
   ngOnInit(): void {
     this.data = (this.dataService as any)[this.config().payload.datasourceId]();

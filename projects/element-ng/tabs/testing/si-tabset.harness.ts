@@ -9,19 +9,21 @@ import { SiTabPortalHarness } from './si-tab-portal.harness';
 
 export class SiTabsetHarness extends ComponentHarness {
   static hostSelector = '.tab-wrapper';
-  private tabset = this.locatorForOptional('si-tabset');
-  private tabItems = this.locatorForAll('si-tab');
-  private tabButtons = this.locatorForAll('[role="tab"]');
-  private activeTabButton = this.locatorFor('[role="tab"][aria-selected="true"]');
-  private optionsMenuButton = this.locatorForOptional(
+  private readonly tabset = this.locatorForOptional('si-tabset');
+  private readonly tabItems = this.locatorForAll('si-tab');
+  private readonly tabButtons = this.locatorForAll('[role="tab"]');
+  private readonly activeTabButton = this.locatorFor('[role="tab"][aria-selected="true"]');
+  private readonly optionsMenuButton = this.locatorForOptional(
     'button[role="button"][aria-haspopup="menu"]'
   );
-  private tabScrollList = this.locatorFor('div.tab-container-buttonbar-list');
-  private tabContent = this.locatorFor('div.tab-content:not([hidden])');
-  private externalTabPortal = this.locatorForOptional(SiTabPortalHarness);
-  private activeMenuItem = this.documentRootLocatorFactory().locatorFor('[role="menuitem"].active');
-  private menuItems = this.documentRootLocatorFactory().locatorForAll('[role="menuitem"]');
-  private tabScrollWrapper = this.locatorFor('[role="tablist"]');
+  private readonly tabScrollList = this.locatorFor('div.tab-container-buttonbar-list');
+  private readonly tabContent = this.locatorFor('div.tab-content:not([hidden])');
+  private readonly externalTabPortal = this.locatorForOptional(SiTabPortalHarness);
+  private readonly activeMenuItem = this.documentRootLocatorFactory().locatorFor(
+    '[role="menuitem"].active'
+  );
+  private readonly menuItems = this.documentRootLocatorFactory().locatorForAll('[role="menuitem"]');
+  private readonly tabScrollWrapper = this.locatorFor('[role="tablist"]');
 
   async getTabItemsLength(): Promise<number> {
     return (await this.tabItems()).length;

@@ -15,7 +15,7 @@ import { SiSelectSelectedItemHarness } from './si-select-selected-item.harness';
 export class SiSelectHarness extends ComponentHarness {
   static hostSelector = 'si-select';
   readonly getSelectedItems = this.locatorForAll(SiSelectSelectedItemHarness);
-  private getSelectElement = this.locatorFor('.select');
+  private readonly getSelectElement = this.locatorFor('.select');
 
   /**
    * Clicks one or multiple items by their index. In the case of multi-select, this will toggle the selection state.

@@ -25,7 +25,7 @@ import { StatesService } from './states.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  private statesService = inject(StatesService);
+  private readonly statesService = inject(StatesService);
 
   variant: BackgroundColorVariant = 'base-1';
   disable = false;

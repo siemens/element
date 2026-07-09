@@ -109,9 +109,9 @@ export class SiPopoverDirective implements OnDestroy {
   protected readonly isOpen = signal<boolean>(false);
 
   private overlayref?: OverlayRef;
-  private overlay = inject(Overlay);
-  private elementRef = inject(ElementRef);
-  private destroyer = new Subject<void>();
+  private readonly overlay = inject(Overlay);
+  private readonly elementRef = inject(ElementRef);
+  private readonly destroyer = new Subject<void>();
 
   ngOnDestroy(): void {
     this.overlayref?.dispose();

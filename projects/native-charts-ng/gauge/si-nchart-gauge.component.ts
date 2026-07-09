@@ -202,7 +202,7 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
   protected valignMiddle = false;
   protected internalSegments: InternalGaugeSegment[] = [];
 
-  private locale = inject(LOCALE_ID).toString();
+  private readonly locale = inject(LOCALE_ID).toString();
   private numberFormat = new Intl.NumberFormat(this.locale, { maximumFractionDigits: 2 });
   private axisNumberFormat = new Intl.NumberFormat(this.locale, {
     minimumFractionDigits: this.axisNumberOfDecimals(),

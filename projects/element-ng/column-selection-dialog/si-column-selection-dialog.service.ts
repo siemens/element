@@ -19,7 +19,7 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class SiColumnSelectionDialogService {
-  private modalService = inject(SiModalService);
+  private readonly modalService = inject(SiModalService);
 
   /**
    * Opens a column selection dialog.

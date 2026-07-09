@@ -153,7 +153,7 @@ export class SampleComponent implements AfterViewInit, OnDestroy {
 
   startTour = (): void => this.tourService.start();
 
-  private tourService = inject(SiTourService);
+  private readonly tourService = inject(SiTourService);
 
   constructor() {
     const steps = this.getSteps();
@@ -168,7 +168,7 @@ export class SampleComponent implements AfterViewInit, OnDestroy {
     this.tourService.complete();
   }
 
-  private timeout = async (ms?: number): Promise<void> =>
+  private readonly timeout = async (ms?: number): Promise<void> =>
     new Promise(resolve => setTimeout(resolve, ms));
 
   private getSteps(): TourStep[] {

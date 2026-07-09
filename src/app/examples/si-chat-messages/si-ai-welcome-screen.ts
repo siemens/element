@@ -16,7 +16,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
   templateUrl: './si-ai-welcome-screen.html'
 })
 export class SampleComponent {
-  private logEvent = inject(LOG_EVENT);
+  private readonly logEvent = inject(LOG_EVENT);
 
   readonly promptCategories: PromptCategory[] = [
     { label: 'All prompts' },

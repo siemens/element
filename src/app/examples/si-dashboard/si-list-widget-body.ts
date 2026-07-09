@@ -87,7 +87,7 @@ export class SampleComponent {
   link: Link = { title: 'Home', 'link': '/' };
   actionLink: Link = { title: 'Print', 'action': () => alert('This is an action link') };
 
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     setTimeout(() => {

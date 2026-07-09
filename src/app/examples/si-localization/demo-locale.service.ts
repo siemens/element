@@ -16,7 +16,7 @@ export const appLoadFactory = (service: DemoLocaleService) => () =>
 })
 export class DemoLocaleService extends SiLocaleStore {
   private static _locale = 'en';
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
 
   get locale(): string {
     return DemoLocaleService._locale;

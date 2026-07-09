@@ -11,7 +11,7 @@ import { BreadcrumbRouterLink, SiBreadcrumbResolverService } from './si-breadcru
 
 @Injectable({ providedIn: 'root' })
 export class SiBreadcrumbDefaultResolverService implements SiBreadcrumbResolverService {
-  private locale = inject(LOCALE_ID).toString();
+  private readonly locale = inject(LOCALE_ID).toString();
 
   /**
    * Method which resolves the route and creates the breadcrumb items from it.

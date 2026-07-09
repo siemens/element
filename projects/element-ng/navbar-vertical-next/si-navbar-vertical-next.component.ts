@@ -152,9 +152,9 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   readonly skipLinkMainContentLabel = input(
     t(() => $localize`:@@SI_NAVBAR_VERTICAL.SKIP_LINK.MAIN_LABEL:Main content`)
   );
-  private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
-  private breakpointObserver = inject(BreakpointObserver);
-  private injector = inject(Injector);
+  private readonly uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
+  private readonly breakpointObserver = inject(BreakpointObserver);
+  private readonly injector = inject(Injector);
 
   protected readonly ready = signal(false);
   protected readonly smallScreen = signal(false);

@@ -178,17 +178,17 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
   protected readonly icons = addIcons({ elementMinus, elementPlus });
   protected isDragging = false;
 
-  private autoUpdate$ = timer(400, 80); // 250
+  private readonly autoUpdate$ = timer(400, 80); // 250
   private autoUpdateSubs?: Subscription;
   private rtl = false;
 
-  private unlistenDragEvents: (() => void)[] = [];
+  private readonly unlistenDragEvents: (() => void)[] = [];
 
   private onTouchedCallback: () => void = () => {};
   private onChangeCallback: (val: any) => void = () => {};
 
-  private zone = inject(NgZone);
-  private changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly zone = inject(NgZone);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   private incrementValue(): void {
     this.value.set(this.normalizeValue(this.sliderValue()! + this.step()));

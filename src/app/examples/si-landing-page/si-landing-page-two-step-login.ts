@@ -113,8 +113,8 @@ export const ROUTES: Route[] = [
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit, OnDestroy {
-  private activeRoute = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly activeRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   readonly loginAlert = loginAlert;
 
   copyrightDetails: CopyrightDetails = {

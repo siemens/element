@@ -25,7 +25,7 @@ export const restoreResizeObserver = (): void => {
  */
 export class MockResizeObserver {
   static instance: MockResizeObserver;
-  private callback: ResizeObserverCallback;
+  private readonly callback: ResizeObserverCallback;
   /** @defaultValue [] */
   observed: [Element, ResizeObserverOptions | undefined][] = [];
 

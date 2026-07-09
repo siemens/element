@@ -33,8 +33,8 @@ export class SampleComponent {
   temp: CorporateEmployee[] = [];
   isLoading = 0;
 
-  private dataService = inject(DataService);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly dataService = inject(DataService);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.fetchData({ offset: 0, pageSize: 50 });

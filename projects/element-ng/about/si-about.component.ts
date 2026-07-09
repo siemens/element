@@ -38,8 +38,8 @@ import { ApiInfo, LicenseInfo } from './si-about-data.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiAboutComponent implements OnInit {
-  private http = inject(HttpClient);
-  private sanitizer = inject(DomSanitizer);
+  private readonly http = inject(HttpClient);
+  private readonly sanitizer = inject(DomSanitizer);
 
   /**
    * Alt text for the application logo. Supports `{{appName}}` placeholder for interpolation.

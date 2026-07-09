@@ -327,7 +327,7 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
    * Holds the time as date object that is presented by this control.
    */
   private time?: Date;
-  private periodDefaults: string[];
+  private readonly periodDefaults: string[];
 
   constructor() {
     this.periodDefaults = getLocaleDayPeriods(

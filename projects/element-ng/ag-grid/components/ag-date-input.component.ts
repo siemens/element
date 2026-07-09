@@ -30,7 +30,7 @@ import { IDateComp, IDateParams } from 'ag-grid-community';
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AgDateInputComponent implements IDateComp, OnDestroy {
-  private elementRef = inject(ElementRef);
+  private readonly elementRef = inject(ElementRef);
 
   /**
    * The selected date value.

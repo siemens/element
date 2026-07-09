@@ -146,8 +146,8 @@ export class SiContentActionBarComponent implements AfterViewInit {
   protected readonly expanded = linkedSignal(() => this.viewType() === 'expanded');
   protected parentElement?: HTMLElement | null;
 
-  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
-  private menuActionService = inject(SiMenuActionService, { optional: true });
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly menuActionService = inject(SiMenuActionService, { optional: true });
 
   ngAfterViewInit(): void {
     setTimeout(() => {

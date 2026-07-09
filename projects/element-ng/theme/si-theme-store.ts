@@ -71,7 +71,7 @@ export interface ThemeStorage {
 }
 
 export class SiDefaultThemeStore extends SiThemeStore {
-  private isBrowser: boolean;
+  private readonly isBrowser: boolean;
 
   constructor(isBrowser: boolean) {
     super();

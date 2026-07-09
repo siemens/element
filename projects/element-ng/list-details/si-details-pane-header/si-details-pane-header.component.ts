@@ -34,7 +34,7 @@ import { SiListDetailsComponent } from '../si-list-details.component';
 export class SiDetailsPaneHeaderComponent {
   protected readonly icons = addIcons({ elementBack });
 
-  private parent = inject(SiListDetailsComponent);
+  private readonly parent = inject(SiListDetailsComponent);
 
   /**
    * Optional title to be displayed.
@@ -68,9 +68,9 @@ export class SiDetailsPaneHeaderComponent {
    */
   readonly backButtonUrl = input('../');
 
-  private isRouterBased = inject(SiDetailsPaneComponent).isRouterBased;
-  private router = inject(Router, { optional: true });
-  private activatedRoute = inject(ActivatedRoute, { optional: true });
+  private readonly isRouterBased = inject(SiDetailsPaneComponent).isRouterBased;
+  private readonly router = inject(Router, { optional: true });
+  private readonly activatedRoute = inject(ActivatedRoute, { optional: true });
 
   private readonly backButton = viewChild<ElementRef<HTMLElement>>('backButton');
 

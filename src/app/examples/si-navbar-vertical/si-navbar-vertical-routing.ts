@@ -134,8 +134,8 @@ export class SampleComponent implements OnInit {
     }
   ];
 
-  private activeRoute = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly activeRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
     this.router.navigate(['home'], { relativeTo: this.activeRoute });

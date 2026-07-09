@@ -18,7 +18,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
   }
 })
 export class SampleComponent {
-  private log = inject(LOG_EVENT);
+  private readonly log = inject(LOG_EVENT);
   readonly disabledHelp = new FormControl(false);
 
   solve(): void {

@@ -60,7 +60,7 @@ export class SampleComponent implements OnInit, OnDestroy {
     { title: 'Items 2', action: () => alert('Item 2') }
   ];
 
-  private destroy = new Subject<boolean>();
+  private readonly destroy = new Subject<boolean>();
 
   constructor() {
     for (let i = 1; i <= 250; i++) {

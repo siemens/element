@@ -15,7 +15,7 @@ import { SiThemeService, ThemeType } from '@siemens/element-ng/theme';
 export class SampleComponent {
   theme: ThemeType = 'light';
 
-  private themeService = inject(SiThemeService);
+  private readonly themeService = inject(SiThemeService);
 
   applyThemeType(): void {
     this.themeService.applyThemeType(this.theme);

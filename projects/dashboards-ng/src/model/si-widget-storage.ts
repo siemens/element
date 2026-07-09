@@ -99,7 +99,7 @@ export const DEFAULT_WIDGET_STORAGE_TOKEN = new InjectionToken<Storage>(
 export class SiDefaultWidgetStorage extends SiWidgetStorage {
   storage: Storage;
 
-  private map = new Map<string, BehaviorSubject<WidgetConfig[]>>();
+  private readonly map = new Map<string, BehaviorSubject<WidgetConfig[]>>();
   private widgets?: BehaviorSubject<WidgetConfig[]>;
 
   constructor() {

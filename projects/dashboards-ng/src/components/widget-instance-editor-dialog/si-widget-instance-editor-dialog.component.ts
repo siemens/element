@@ -103,7 +103,7 @@ export class SiWidgetInstanceEditorDialogComponent extends SiWidgetEditorBase im
     () => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.CANCEL:Cancel`
   );
 
-  private dialogService = inject(SiActionDialogService);
+  private readonly dialogService = inject(SiActionDialogService);
 
   ngOnInit(): void {
     this.loadWidgetEditor(this.widget().componentFactory, this.editorHost()).subscribe(

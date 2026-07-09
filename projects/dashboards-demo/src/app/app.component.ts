@@ -42,9 +42,9 @@ export class AppComponent implements OnInit {
   collapsed = false;
   theme: ThemeType = 'light';
 
-  private translate = inject(TranslateService);
-  private themeService = inject(SiThemeService);
-  private route = inject(ActivatedRoute);
+  private readonly translate = inject(TranslateService);
+  private readonly themeService = inject(SiThemeService);
+  private readonly route = inject(ActivatedRoute);
 
   constructor() {
     this.route.queryParams.subscribe(params => {

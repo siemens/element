@@ -67,9 +67,10 @@ const generateErrorMessages = (
 };
 
 class PlaywrightAxeReporter implements Reporter {
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly
   private isA11y = true;
-  private outputFile?: string;
-  private htmlOutputDir?: string;
+  private readonly outputFile?: string;
+  private readonly htmlOutputDir?: string;
 
   private tests?: TestCase[];
 

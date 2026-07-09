@@ -29,7 +29,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 })
 export class SampleComponent implements OnInit {
   logEvent = inject(LOG_EVENT);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   simplActionLink: Link = {
     title: 'Do something',

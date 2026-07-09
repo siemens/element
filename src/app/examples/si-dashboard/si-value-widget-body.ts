@@ -26,7 +26,7 @@ import { Link, SiLinkDirective } from '@siemens/element-ng/link';
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   simplActionLink: Link = {
     title: 'Do something',

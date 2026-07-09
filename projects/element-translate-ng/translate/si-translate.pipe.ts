@@ -25,8 +25,8 @@ export class SiTranslatePipe implements PipeTransform, OnDestroy {
   private lastKeyParams?: string;
   private value = '';
   private subscription?: Subscription;
-  private siTranslateService = injectSiTranslateService();
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly siTranslateService = injectSiTranslateService();
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   /**
    * Method which is called on any data passed to the pipe.

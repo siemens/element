@@ -33,7 +33,7 @@ export class SiToastNotificationService implements OnDestroy {
     return this.activeToastsSignal();
   }
 
-  private token: ToastToken = {
+  private readonly token: ToastToken = {
     toasts: this.activeToastsSignal,
     pause: toast => this.pauseToastNotification(toast),
     resume: toast => this.resumeToastNotification(toast)
@@ -43,10 +43,10 @@ export class SiToastNotificationService implements OnDestroy {
   private componentRef?: ComponentRef<SiToastNotificationDrawerComponent>;
   private overlayRef?: OverlayRef;
 
-  private injector = inject(Injector);
-  private overlay = inject(Overlay);
-  private toastTimeoutMap = new Map<SiToast, any>();
-  private toastTimerDefaults = new Map<
+  private readonly injector = inject(Injector);
+  private readonly overlay = inject(Overlay);
+  private readonly toastTimeoutMap = new Map<SiToast, any>();
+  private readonly toastTimerDefaults = new Map<
     SiToast,
     { pendingTimeout: number; initializeTime: number }
   >();

@@ -9,9 +9,9 @@ import Select, { SelectEvent } from 'ol/interaction/Select';
 import { StyleLike } from 'ol/style/Style';
 
 export class SelectCluster extends Select {
-  private zoomOnClick: () => boolean;
-  private maxZoom: () => number;
-  private fitClusterPadding: () => number[];
+  private readonly zoomOnClick: () => boolean;
+  private readonly maxZoom: () => number;
+  private readonly fitClusterPadding: () => number[];
 
   constructor(options: {
     fitClusterPadding: () => number[];

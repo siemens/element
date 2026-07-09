@@ -86,8 +86,8 @@ export class SampleComponent implements OnInit {
     }
   ];
 
-  private activeRoute = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly activeRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   logEvent = inject(LOG_EVENT);
 
   ngOnInit(): void {

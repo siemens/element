@@ -27,11 +27,11 @@ import { SI_TREE_VIEW } from '../si-tree-view.token';
   selector: '[siTreeViewItem]'
 })
 export class SiTreeViewItemDirective implements AfterViewInit, OnDestroy {
-  private templateRef = inject(TemplateRef);
-  private viewContainerRef = inject(ViewContainerRef);
-  private parent = inject(SI_TREE_VIEW);
-  private differs = inject(IterableDiffers);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly templateRef = inject(TemplateRef);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly parent = inject(SI_TREE_VIEW);
+  private readonly differs = inject(IterableDiffers);
+  private readonly cdRef = inject(ChangeDetectorRef);
   private differ: IterableDiffer<TreeItem> | null = null;
   private subscription!: OutputRefSubscription;
   private itemsVirtualizedDirty = true;

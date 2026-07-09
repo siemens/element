@@ -18,7 +18,7 @@ import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
 export class SampleComponent implements OnDestroy {
   private ref?: ModalRef<unknown>;
 
-  private modalService = inject(SiModalService);
+  private readonly modalService = inject(SiModalService);
   protected date = new Date('2022-03-12');
 
   ngOnDestroy(): void {

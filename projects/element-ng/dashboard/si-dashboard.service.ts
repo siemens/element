@@ -9,7 +9,7 @@ import { SiDashboardCardComponent } from './si-dashboard-card.component';
 
 @Injectable()
 export class SiDashboardService {
-  private cards = new BehaviorSubject<SiDashboardCardComponent[]>([]);
+  private readonly cards = new BehaviorSubject<SiDashboardCardComponent[]>([]);
   /**
    * Subject containing the current dashboard cards as a list.
    *

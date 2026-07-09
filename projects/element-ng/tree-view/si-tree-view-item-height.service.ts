@@ -36,7 +36,7 @@ export class SiTreeViewItemHeightService {
    */
   readonly itemHeightChange = new EventEmitter<number>();
 
-  private siTreeViewService = inject(SiTreeViewService);
+  private readonly siTreeViewService = inject(SiTreeViewService);
 
   /**
    * Updates the height of a list item, if an appropriate item is in the DOM.

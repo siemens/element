@@ -20,7 +20,7 @@ export abstract class SiHeaderActionItemBase implements OnInit {
   protected collapsibleActions = inject(SiHeaderCollapsibleActionsComponent, { optional: true });
   protected readonly icons = addIcons({ elementDown2 });
 
-  private header = inject(SiApplicationHeaderComponent);
+  private readonly header = inject(SiApplicationHeaderComponent);
 
   ngOnInit(): void {
     if (this.dropdownTrigger) {

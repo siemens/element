@@ -46,7 +46,7 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAccessor, OnChanges {
   private readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('inputRef');
-  private debouncer = new Subject<string>();
+  private readonly debouncer = new Subject<string>();
   private readonly disabledNgControl = signal(false);
 
   /**

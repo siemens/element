@@ -107,8 +107,8 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
   private readonly breadcrumbElement = viewChild.required<ElementRef>('breadcrumb');
   private readonly breadcrumbElements = viewChildren<ElementRef>('breadcrumbItem');
 
-  private changeDetector = inject(ChangeDetectorRef);
-  private translate = injectSiTranslateService();
+  private readonly changeDetector = inject(ChangeDetectorRef);
+  private readonly translate = injectSiTranslateService();
 
   ngOnChanges(): void {
     // Reprocess items on every change and on init

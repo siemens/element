@@ -22,7 +22,7 @@ import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-render
 export class SampleComponent implements OnInit {
   private readonly http = inject(HttpClient);
   readonly markdownText = signal<string>('');
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.http.get('assets/sample-markdown.md', { responseType: 'text' }).subscribe(text => {

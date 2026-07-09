@@ -56,7 +56,7 @@ export class CustomCatalogPageComponent {
     }
   ];
 
-  private widgetStore = inject<AppWidgetStorage>(SI_WIDGET_STORE);
+  private readonly widgetStore = inject<AppWidgetStorage>(SI_WIDGET_STORE);
 
   onEditableChange(editable: boolean): void {
     this.emptyText = editable ? EMPTY_TEXT_EDIT : EMPTY_TEXT;

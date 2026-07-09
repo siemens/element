@@ -36,8 +36,8 @@ export class SiSelectLazyOptionsDirective<T> implements SiSelectOptionsStrategy<
 
   readonly optionSource = input.required<SelectOptionSource<T>>();
 
-  private valueChange = new Subject<void>();
-  private filterChange = new Subject<string | undefined>();
+  private readonly valueChange = new Subject<void>();
+  private readonly filterChange = new Subject<string | undefined>();
 
   constructor() {
     this.filterChange

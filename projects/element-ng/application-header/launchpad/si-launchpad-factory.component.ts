@@ -138,7 +138,7 @@ export class SiLaunchpadFactoryComponent {
   protected readonly hasFavorites = computed(() => this.favorites().length > 0);
   protected readonly icons = addIcons({ elementDown2, elementCancel });
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
-  private header = inject(SiApplicationHeaderComponent);
+  private readonly header = inject(SiApplicationHeaderComponent);
 
   protected closeLaunchpad(): void {
     this.header.closeLaunchpad();

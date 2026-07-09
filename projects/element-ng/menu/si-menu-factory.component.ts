@@ -44,8 +44,8 @@ export class SiMenuFactoryComponent {
   readonly items = input<readonly (MenuItemLegacy | MenuItem)[]>();
   readonly actionParam = input();
 
-  private linkActionService = inject(SiLinkActionService, { optional: true });
-  private menuActionService = inject(SiMenuActionService, { optional: true });
+  private readonly linkActionService = inject(SiLinkActionService, { optional: true });
+  private readonly menuActionService = inject(SiMenuActionService, { optional: true });
 
   protected isNewItemStyle(item: MenuItemLegacy | MenuItem): item is MenuItem {
     return 'label' in item || item.type === 'divider' || item.type === 'radio-group';

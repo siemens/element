@@ -22,9 +22,9 @@ export class SiHeaderItemHarness extends SiHeaderDropdownTriggerHarness {
     );
   }
 
-  private title = this.locatorFor('.item-title');
-  private badgeDot = this.locatorForOptional('.badge-dot');
-  private badgeText = this.locatorForOptional('.badge-text');
+  private readonly title = this.locatorFor('.item-title');
+  private readonly badgeDot = this.locatorForOptional('.badge-dot');
+  private readonly badgeText = this.locatorForOptional('.badge-text');
 
   override async getText(): Promise<string> {
     const title = await this.title();

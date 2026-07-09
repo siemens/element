@@ -99,12 +99,12 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
   private dashboardFrameDimensions?: ElementDimensions;
   private dashboardDimensions?: ElementDimensions;
 
-  private scroller = inject(ViewportScroller);
-  private dashboardService = inject(SiDashboardService);
-  private resizeObserver = inject(ResizeObserverService);
-  private scrollbarHelper = inject(ScrollbarHelper);
-  private cdRef = inject(ChangeDetectorRef);
-  private document = inject(DOCUMENT);
+  private readonly scroller = inject(ViewportScroller);
+  private readonly dashboardService = inject(SiDashboardService);
+  private readonly resizeObserver = inject(ResizeObserverService);
+  private readonly scrollbarHelper = inject(ScrollbarHelper);
+  private readonly cdRef = inject(ChangeDetectorRef);
+  private readonly document = inject(DOCUMENT);
   private readonly hideMenubarInternal = signal(false);
 
   constructor() {

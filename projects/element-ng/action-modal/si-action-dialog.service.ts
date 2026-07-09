@@ -37,7 +37,7 @@ const ACTION_DIALOG_DEFAULT_CLOSE_VALUE: Record<ActionDialog['type'], string> = 
  */
 @Injectable({ providedIn: 'root' })
 export class SiActionDialogService {
-  private modalService = inject(SiModalService);
+  private readonly modalService = inject(SiModalService);
 
   /**
    * Shows an action dialog
