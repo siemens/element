@@ -9,7 +9,6 @@ import {
   Component,
   computed,
   ElementRef,
-  HostListener,
   inject,
   viewChild
 } from '@angular/core';
@@ -40,7 +39,7 @@ import { TypeaheadMatch } from './si-typeahead.model';
   templateUrl: './si-typeahead.component.html',
   styleUrl: './si-typeahead.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'w-100' }
+  host: { class: 'w-100', '(mousedown)': '$event.preventDefault()' }
 })
 export class SiTypeaheadComponent implements AfterViewInit {
   protected parent = inject(SiTypeaheadDirective);
@@ -60,11 +59,6 @@ export class SiTypeaheadComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.setHeight(this.typeaheadElement());
-  }
-
-  @HostListener('mousedown', ['$event'])
-  protected onMouseDown(event: Event): void {
-    event.preventDefault();
   }
 
   /*
