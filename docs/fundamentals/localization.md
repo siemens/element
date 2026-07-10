@@ -190,8 +190,8 @@ Follow these steps to ensure that translations have enough space in the user int
 1. Write English texts, keeping conciseness in mind from the start.
 1. Determine reasonable limits and provide it to the translation management.
 1. Request translations
-1. Test every screen with translated texts  
-   Revisit the UI design or the original texts if a translator cannot convey the meaning within the limit.
+1. Test every screen with translated texts in languages known for their long translations (German, Finish, Greek and some Slavic languages).
+1. Revisit the UI design or the original texts if a translator cannot convey the meaning within the limit.
 
 Fixing UI issues caused by long translations late in the development cycle is expensive and time-consuming.
 
@@ -207,9 +207,6 @@ Always design with translation in mind, assuming text will grow.
   Different languages require different amounts of space, which makes it difficult to maintain a consistent look and feel.
 
 Keeping these differences in length for translations in mind supports the whole design team to create localization-friendly designs.
-
-#### Make space for translation
-
 The exact length of a translation cannot be predicted.
 Some generally accepted rules of thumb:
 
@@ -217,8 +214,6 @@ Some generally accepted rules of thumb:
 - Medium texts (11-20 characters) typically increase by 100-200% (e.g. EN: "Withdraw request" → DE: "Anfrage zurückziehen").
 - Longer texts (21-50 characters) typically increase by 50-100%.
 - Very long texts (50+ characters) typically increase by 30-50% but sometimes decrease than the original.
-
-Consider German, Finnish, Greek, and some Slavic languages, which are known for their long translations.
 
 #### Limit space if required
 
