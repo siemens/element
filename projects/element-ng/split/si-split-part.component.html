@@ -33,7 +33,7 @@
   </div>
 }
 
-@if (headerTemplate) {
+@if (headerTemplate; as headerTemplate) {
   <ng-container *ngTemplateOutlet="headerTemplate; context: headerContext" />
 }
 
