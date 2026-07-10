@@ -70,7 +70,6 @@ export * from './shadow-root';
 export * from './side-panel';
 export * from './skip-links';
 export * from './slider';
-export * from './sort-bar';
 export * from './split';
 export * from './status-bar';
 export * from './status-counter';
