@@ -24,8 +24,7 @@ This example shows how values, dates and times should be displayed after the pro
 ### Translation
 
 Translation is the central linguistic component of [localization](#localization-l10n), whereby the tone must be adapted to local requirements and the meaning must be conveyed accurately.
-It is important for UX writers to consider that languages differ not only in terms of word order, plural rules, and punctuation, but an English word can have multiple meanings and be translated into other languages using completely different words.
-In addition, an English word can have multiple meanings and be translated into other languages using different words.
+Languages differ not only in terms of word order, plural rules and punctuation, but an English word can have multiple meanings and be translated into other languages using completely different words.
 
 ### LTR (Left-to-Right)
 
@@ -214,14 +213,10 @@ Keeping these differences in length for translations in mind supports the whole 
 The exact length of a translation cannot be predicted.
 Some generally accepted rules of thumb:
 
-- Short texts (1-10 characters)  
-  These can often increase by 200-300%. (e.g. EN:"On" → DE:"Eingeschaltet")
-- Medium texts (11-20 characters)  
-  Expect an increase of 100-200%. (e.g. EN:"Withdraw request" → DE:"Anfrage zurückziehen")
-- Longer texts (21-50 characters)  
-  Expect an increase of 50-100%.
-- Very Long texts (50+ characters)  
-  Depending on the conciseness of the language, the paragraphs can be 30-50% longer, but sometimes also shorter than the original.
+- Short texts (1-10 characters) typically increase by 200-300% (e.g. EN: "On" → DE: "Eingeschaltet").
+- Medium texts (11-20 characters) typically increase by 100-200% (e.g. EN: "Withdraw request" → DE: "Anfrage zurückziehen").
+- Longer texts (21-50 characters) typically increase by 50-100%.
+- Very long texts (50+ characters) typically increase by 30-50% but sometimes decrease than the original.
 
 Consider German, Finnish, Greek, and some Slavic languages, which are known for their long translations.
 
