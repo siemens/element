@@ -37,8 +37,6 @@ export interface ElementDimensions {
 // @public
 export class ResizeObserverService {
     constructor();
-    // @deprecated
-    _checkAll(): void;
     observe(element: Element, throttle: number, emitInitial?: boolean, emitImmediate?: boolean): Observable<ElementDimensions>;
 }
 
