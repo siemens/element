@@ -9,7 +9,6 @@ export * from './si-header-collapsible-actions.component';
 export * from './si-header-action-item.component';
 export * from './si-header-account-item.component';
 export * from './si-header-selection-item.component';
-export * from './si-header-siemens-logo.component';
 export * from './si-header-logo.directive';
 export * from './si-header-actions.directive';
 export * from './si-header-brand.directive';

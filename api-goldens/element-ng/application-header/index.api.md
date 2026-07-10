@@ -129,10 +129,6 @@ export class SiHeaderSelectionItemComponent extends SiHeaderActionItemBase {
     readonly open: _angular_core.InputSignal<boolean>;
 }
 
-// @public @deprecated
-export class SiHeaderSiemensLogoComponent extends SiHeaderLogoDirective {
-}
-
 // @public (undocumented)
 export class SiLaunchpadFactoryComponent {
     readonly apps: _angular_core.InputSignal<App[] | AppCategory[]>;
