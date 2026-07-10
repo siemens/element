@@ -328,8 +328,6 @@ export class SiDateInputDirective implements ControlValueAccessor, OnChanges, Va
 export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
     constructor();
     readonly calendarWeekLabel: _angular_core.InputSignal<TranslatableString>;
-    // @deprecated
-    readonly calenderWeekLabel: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly config: _angular_core.ModelSignal<DatepickerConfig>;
     readonly date: _angular_core.ModelSignal<Date | undefined>;
     readonly dateRange: _angular_core.ModelSignal<DateRange | undefined>;

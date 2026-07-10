@@ -136,16 +136,6 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   /**
    * Aria label for week number column
    *
-   * @deprecated Use `calendarWeekLabel` instead.
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_DATEPICKER.CALENDAR_WEEK_LABEL:Calendar week`)
-   * ```
-   */
-  readonly calenderWeekLabel = input<TranslatableString>();
-  /**
-   * Aria label for week number column
-   *
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_DATEPICKER.CALENDAR_WEEK_LABEL:Calendar week`)
@@ -153,9 +143,6 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    */
   readonly calendarWeekLabel = input<TranslatableString>(
     t(() => $localize`:@@SI_DATEPICKER.CALENDAR_WEEK_LABEL:Calendar week`)
-  );
-  protected readonly derivedWeekLabel = computed(
-    () => this.calenderWeekLabel() ?? this.calendarWeekLabel()
   );
   /**
    * Enable/disable 12H mode in timepicker. Defaults to locale
