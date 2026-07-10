@@ -16,7 +16,8 @@
       "@siemens/dashboards-ng": ["dist/@siemens/dashboards-ng"],
       "@siemens/dashboards-ng/*": ["dist/@siemens/dashboards-ng/*"],
       "@siemens/maps-ng": ["dist/@siemens/maps-ng"],
-      "@siemens/maps-ng/*": ["dist/@siemens/maps-ng/*"]
+      "@siemens/maps-ng/*": ["dist/@siemens/maps-ng/*"],
+      "@siemens/map-styles/*": ["dist/@siemens/map-styles/*"]
     },
     "useDefineForClassFields": true
   },

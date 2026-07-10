@@ -15,7 +15,7 @@
     [disabled]="disabled()"
     [class.readonly]="readonly()"
     [attr.aria-labelledby]="id() + '-aria-label ' + id() + '-value'"
-    [attr.aria-expanded]="open"
+    [attr.aria-expanded]="open()"
     [options]="countryList()"
     [value]="selectedCountry()"
     [tabindex]="disabled() ? '-1' : '0'"
@@ -45,7 +45,7 @@
       cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
       [cdkConnectedOverlayHasBackdrop]="true"
       [cdkConnectedOverlayOrigin]="trigger"
-      [cdkConnectedOverlayOpen]="open"
+      [cdkConnectedOverlayOpen]="open()"
       [cdkConnectedOverlayFlexibleDimensions]="true"
       [cdkConnectedOverlayOffsetX]="-1"
       [cdkConnectedOverlayMinWidth]="overlayWidth"
@@ -69,12 +69,13 @@
     #phoneInput
     type="tel"
     class="ms-4 border-0 p-0 focus-none shadow-none flex-grow-1 phone-number"
+    [value]="phoneInputValue()"
     [attr.aria-label]="phoneNumberAriaLabel() | translate"
     [attr.aria-describedby]="errormessageId()"
-    [placeholder]="placeholder"
+    [placeholder]="placeholder()"
     [disabled]="disabled()"
     [readonly]="readonly()"
-    (input)="input()"
+    (input)="input($event)"
     (blur)="blur()"
   />
 </div>

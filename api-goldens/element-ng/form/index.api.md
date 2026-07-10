@@ -9,6 +9,7 @@ import { AfterContentChecked } from '@angular/core';
 import { AfterContentInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
 import * as _angular_forms from '@angular/forms';
+import * as _angular_forms_signals from '@angular/forms/signals';
 import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -52,13 +53,13 @@ export class SiFormContainerComponent<TControl extends {
 }
 
 // @public
-export class SiFormFieldComponent {
+export class SiFormFieldComponent implements SiFormFieldsetControl {
     constructor();
     readonly label: _angular_core.InputSignal<TranslatableString>;
 }
 
 // @public (undocumented)
-export class SiFormFieldsetComponent implements DoCheck {
+export class SiFormFieldsetComponent {
     readonly inline: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly label: _angular_core.InputSignal<TranslatableString>;
     readonly labelWidth: _angular_core.InputSignal<string | undefined>;
@@ -66,7 +67,7 @@ export class SiFormFieldsetComponent implements DoCheck {
 }
 
 // @public (undocumented)
-export class SiFormItemComponent implements AfterContentInit, AfterContentChecked, OnChanges, OnInit, OnDestroy {
+export class SiFormItemComponent implements AfterContentInit, AfterContentChecked, OnChanges, OnInit, OnDestroy, SiFormFieldsetControl {
     readonly disableErrorPrinting: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     readonly formErrorMapper: _angular_core.InputSignal<SiFormValidationErrorMapper | undefined>;
