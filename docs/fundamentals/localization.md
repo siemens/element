@@ -488,6 +488,7 @@ the inputs changes. This means they do not re-render when the `LOCALE_ID` change
 
 We recommend to follow the same behavior as users changes to locales are seldom. As a consequence we need to reload the web application on locale changes.
 
+<si-docs-component example="si-localization/si-localization" height="650"></si-docs-component>
 ### Locales in Element
 
 Element provides the service `SiLocaleService` to set the current locale like `en`, `fr` or a
