@@ -1,6 +1,6 @@
 - text: Filters
 - button "edit"
-- button "collapse"
+- button "Collapse"
 - paragraph: "Split Part #1"
 - text: Details
 - button "edit"

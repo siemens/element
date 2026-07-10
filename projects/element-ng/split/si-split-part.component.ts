@@ -18,8 +18,9 @@ import {
   TemplateRef,
   untracked
 } from '@angular/core';
-import { SiIconComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { elementDoubleRight } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-split.interfaces';
 
@@ -35,6 +36,7 @@ import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-spl
   }
 })
 export class SiSplitPartComponent {
+  protected readonly icons = addIcons({ elementDoubleRight });
   /**
    * Action buttons displayed in the split part header.
    *
@@ -51,10 +53,8 @@ export class SiSplitPartComponent {
   /**
    * Sets the icon class that is used in the buttons of split parts to
    * collapse and uncollapse the parts.
-   *
-   * @defaultValue 'element-double-right'
    */
-  readonly collapseIconClass = input('element-double-right');
+  readonly collapseIconClass = input<string | undefined>();
 
   /**
    * Collapse only to the given min size.
@@ -114,9 +114,14 @@ export class SiSplitPartComponent {
   /**
    * Aria label for collapse button. Needed for a11y
    *
-   * @defaultValue 'collapse'
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_SPLIT.COLLAPSE_LABEL:Collapse`)
+   * ```
    */
-  readonly collapseLabel = input<TranslatableString>('collapse');
+  readonly collapseLabel = input<TranslatableString>(
+    t(() => $localize`:@@SI_SPLIT.COLLAPSE_LABEL:Collapse`)
+  );
   /**
    * An optional stateId to uniquely identify a component instance.
    * Required for persistence of ui state.
