@@ -409,8 +409,6 @@ Header dropdowns should only be used in headers. In other areas, use the [SiMenu
 
 <si-docs-api directive="SiHeaderBrandDirective"></si-docs-api>
 
-<si-docs-api component="SiHeaderSiemensLogoComponent"></si-docs-api>
-
 <si-docs-api component="SiHeaderNavigationComponent"></si-docs-api>
 
 <si-docs-api component="SiHeaderNavigationItemComponent"></si-docs-api>
