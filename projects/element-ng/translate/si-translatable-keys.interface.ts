@@ -224,7 +224,6 @@ export interface SiTranslatableKeys {
   'SI_SLIDER.DECREMENT'?: string;
   'SI_SLIDER.INCREMENT'?: string;
   'SI_SLIDER.LABEL'?: string;
-  'SI_SORT_BAR.TITLE'?: string;
   'SI_STATUS_BAR.ALL_OK'?: string;
   'SI_STATUS_BAR.MUTE'?: string;
   'SI_STATUS_BAR.TOGGLE'?: string;
