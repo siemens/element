@@ -13,7 +13,7 @@ import {
 import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
-  selector: 'si-status-counter, si-icon-status',
+  selector: 'si-status-counter',
   imports: [SiIconComponent],
   templateUrl: './si-status-counter.component.html',
   styleUrl: './si-status-counter.component.scss',
