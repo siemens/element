@@ -77,9 +77,22 @@ The handover documentation to development must include the UX writing specificat
 
 ### Use domain terminology
 
-- The terms are defined by experts (physicists, engineers, lawyers, etc.) from universities and various global companies specializing in specific domains.
-- Standardization bodies (e.g. [ISO](https://iso.org), [EN](https://cen.eu), [UL](https://ul.com), [IEC](https://iec.ch)) are the people responsible for standardizing common terms.
-- UX writers should avoid terms from quasi-industrial standards until they have been harmonized with official standardization bodies and are generally accepted.
+Use terms from standardization bodies (e.g. [ISO](https://iso.org), [EN](https://cen.eu), [UL](https://ul.com), [IEC](https://iec.ch)) or experts from universities and global specialized companies, but avoid terms from quasi-industrial standards.
+
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- "Economy"
+
+</div>
+<div class="donts" markdown>
+
+- "Standby"
+
+</div>
+</div>
+
+Note: The [Commission Regulation (EU) 2023/826](https://eur-lex.europa.eu/eli/reg/2023/826/oj?uri=CELEX:32023R0826) specifies the maximum power consumed by a device (e.g., 0.5 W) in order to use the term “standby".
 
 Common language serves multiple purposes:
 
