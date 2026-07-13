@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { Widget, WidgetConfig } from '../../model/widgets.model';
 import { SiWidgetHostComponent } from '../widget-host/si-widget-host.component';
@@ -30,8 +30,7 @@ import { SiWidgetHostComponent } from '../widget-host/si-widget-host.component';
   selector: 'si-widget-renderer',
   imports: [SiWidgetHostComponent],
   templateUrl: './si-widget-renderer.component.html',
-  styleUrl: './si-widget-renderer.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-widget-renderer.component.scss'
 })
 export class SiWidgetRendererComponent {
   /** The configuration of the widget instance to render. */
