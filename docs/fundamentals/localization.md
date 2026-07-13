@@ -332,7 +332,7 @@ Keep sentences as one unit with placeholders.
 <div class="donts" markdown>
 
 - EN: "Select site " `+` `{site}` `+` " of " `+` `{company}` `+` "?"
-- DE: "Standort auswählen " `+` `{site}` `+` " von " `+` `{company}` + "?"
+- DE: "Standort auswählen " `+` `{site}` `+` " von " `+` `{company}` `+` "?"
 
 </div>
 </div>
