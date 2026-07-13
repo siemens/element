@@ -2,6 +2,7 @@
 - link "Jump to Navigation"
 - banner:
   - heading "Siemens Dashboards" [level=1]
+  - button "English"
   - button "Toggle theme"
 - navigation:
   - button "expand"
