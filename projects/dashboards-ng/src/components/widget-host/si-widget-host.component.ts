@@ -5,7 +5,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   ComponentRef,
   computed,
@@ -55,7 +54,6 @@ import { setupWidgetInstance } from '../../widget-loader';
   imports: [SiDashboardCardComponent, NgTemplateOutlet, SiTranslatePipe],
   templateUrl: './si-widget-host.component.html',
   styleUrl: './si-widget-host.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'grid-stack-item',
     // In non-edit mode, expose each widget as a labeled list item so screen

@@ -4,7 +4,6 @@
  */
 import { isPlatformBrowser } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   afterNextRender,
   Component,
   computed,
@@ -43,8 +42,7 @@ export interface GridWrapperEvent {
   selector: 'si-gridstack-wrapper',
   imports: [SiWidgetHostComponent, SiTranslatePipe],
   templateUrl: './si-gridstack-wrapper.component.html',
-  styleUrl: './si-gridstack-wrapper.component.scss',
-  changeDetection: ChangeDetectionStrategy.Eager
+  styleUrl: './si-gridstack-wrapper.component.scss'
 })
 export class SiGridstackWrapperComponent implements OnInit, OnChanges {
   /**

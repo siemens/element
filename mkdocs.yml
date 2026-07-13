@@ -138,7 +138,6 @@ nav:
     - Search, filter & sort:
       - Overview:                         'components/sorting-filtering/index.md'
       - Search bar:                       'components/sorting-filtering/search-bar.md'
-      - Sort bar:                         'components/sorting-filtering/sort-bar.md'
       - Typeahead:                        'components/sorting-filtering/typeahead.md'
       - Filter bar:                       'components/sorting-filtering/filter-bar.md'
       - Filter pills:                     'components/sorting-filtering/filter-pills.md'
