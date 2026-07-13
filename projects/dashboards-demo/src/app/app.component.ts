@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
 
   collapsed = false;
   theme: ThemeType = 'light';
+  readonly currentLang = signal('en');
 
   private translate = inject(TranslateService);
   private themeService = inject(SiThemeService);
@@ -61,7 +62,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.translate.setFallbackLang('en');
-    this.translate.use(this.translate.getBrowserLang() ?? 'en');
+    const browserLang = this.translate.getBrowserLang() ?? 'en';
+    const lang = browserLang.startsWith('de') ? 'de' : 'en';
+    this.currentLang.set(lang);
+    this.translate.use(lang);
   }
 
   toggleDark(): void {
@@ -72,5 +76,11 @@ export class AppComponent implements OnInit {
       this.theme = 'light';
       this.themeService.applyThemeType(this.theme);
     }
+  }
+
+  switchLanguage(): void {
+    const newLang = this.currentLang() === 'en' ? 'de' : 'en';
+    this.currentLang.set(newLang);
+    this.translate.use(newLang);
   }
 }
