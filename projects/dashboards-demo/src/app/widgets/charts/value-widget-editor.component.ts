@@ -12,11 +12,7 @@ import {
   WidgetInstanceEditor
 } from '@siemens/dashboards-ng';
 import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
-import {
-  SiFormContainerComponent,
-  SiFormFieldsetComponent,
-  SiFormItemComponent
-} from '@siemens/element-ng/form';
+import { SiFormFieldsetComponent, SiFormItemComponent } from '@siemens/element-ng/form';
 import {
   SelectOption,
   SiSelectComponent,
@@ -31,7 +27,6 @@ import { ValueWidgetComponent } from './value-widget.component';
   imports: [
     ReactiveFormsModule,
     SiDashboardCardComponent,
-    SiFormContainerComponent,
     SiFormFieldsetComponent,
     SiFormItemComponent,
     SiSelectComponent,
@@ -58,70 +53,61 @@ import { ValueWidgetComponent } from './value-widget.component';
         </si-dashboard-card>
       </div>
       <div class="col-6 ps-4">
-        <form class="d-flex h-100" [formGroup]="form" (ngSubmit)="save()">
-          <si-form-container
-            #formContainer
-            disableContainerBreakpoints
-            labelWidth="140px"
-            [form]="form"
-          >
-            <div si-form-container-content>
-              <si-form-item label="Heading">
+        <form [formGroup]="form" (ngSubmit)="save()">
+          <si-form-item label="Heading">
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              formControlName="heading"
+              required
+              minlength="3"
+            />
+          </si-form-item>
+          <div formGroupName="image">
+            <si-form-item label="Source URL">
+              <input type="text" id="src" class="form-control" formControlName="src" />
+            </si-form-item>
+            <si-form-item label="Alt">
+              <input type="text" id="alt" class="form-control" formControlName="alt" />
+            </si-form-item>
+            <si-form-fieldset label="Direction" inline>
+              <si-form-item label="Horizontal" class="form-check form-check-inline">
                 <input
-                  type="text"
-                  id="name"
-                  class="form-control"
-                  formControlName="heading"
-                  required
-                  minlength="3"
+                  type="radio"
+                  formControlName="dir"
+                  value="horizontal"
+                  id="dir-horizontal"
+                  class="form-check-input"
                 />
               </si-form-item>
-              <div formGroupName="image">
-                <si-form-item label="Source URL">
-                  <input type="text" id="src" class="form-control" formControlName="src" />
-                </si-form-item>
-                <si-form-item label="Alt">
-                  <input type="text" id="alt" class="form-control" formControlName="alt" />
-                </si-form-item>
-                <si-form-fieldset label="Direction" inline>
-                  <si-form-item label="Horizontal" class="form-check form-check-inline">
-                    <input
-                      type="radio"
-                      formControlName="dir"
-                      value="horizontal"
-                      id="dir-horizontal"
-                      class="form-check-input"
-                    />
-                  </si-form-item>
-                  <si-form-item label="Vertical" class="form-check form-check-inline">
-                    <input
-                      type="radio"
-                      formControlName="dir"
-                      value="vertical"
-                      id="dir-vertical"
-                      class="form-check-input"
-                    />
-                  </si-form-item>
-                </si-form-fieldset>
-                <si-form-item label="Object Fit">
-                  <si-select
-                    class="form-control"
-                    formControlName="objectFit"
-                    id="objectFit"
-                    [options]="optionsList"
-                  />
-                </si-form-item>
-                <si-form-item label="Object Position">
-                  <input
-                    type="text"
-                    id="objectPosition"
-                    class="form-control"
-                    formControlName="objectPosition"
-                  />
-                </si-form-item>
-              </div>
-            </div>
-          </si-form-container>
+              <si-form-item label="Vertical" class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  formControlName="dir"
+                  value="vertical"
+                  id="dir-vertical"
+                  class="form-check-input"
+                />
+              </si-form-item>
+            </si-form-fieldset>
+            <si-form-item label="Object Fit">
+              <si-select
+                class="form-control"
+                formControlName="objectFit"
+                id="objectFit"
+                [options]="optionsList"
+              />
+            </si-form-item>
+            <si-form-item label="Object Position">
+              <input
+                type="text"
+                id="objectPosition"
+                class="form-control"
+                formControlName="objectPosition"
+              />
+            </si-form-item>
+          </div>
         </form>
       </div>
     </div>

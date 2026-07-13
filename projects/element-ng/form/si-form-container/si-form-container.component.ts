@@ -25,6 +25,43 @@ export interface SiFormValidationError {
   errorParams?: any;
 }
 
+/**
+ * @deprecated This component should no longer be used.
+ *
+ * When providing a form wide error mapper, use the {@link provideFormValidationErrorMapper}.
+ * ```ts
+ * import { provideFormValidationErrorMapper } form '@siemens/element-ng/forms'
+ *
+ * @Component({
+ *   template: `<form>...</form>`
+ *   providers: [provideFormValidationErrorMapper({
+ *     'name.required': 'CUSTOM_REQUIRED_ERROR'
+ *   })]
+ * })
+ * class MyFormComponent {}
+ * ```
+ *
+ * When using the column layout, use the `form-col-layout` classes.
+ *
+ * ```html
+ * <!-- Responsive column layout -->
+ * <form class="responsive-form-col-layout">...</form>
+ * <!-- Always column layout -->
+ * <form class="form-col-layout">...</form>
+ * ```
+ *
+ * For a custom breakpoint use the SCSS mixin:
+ *
+ * ```scss
+ * @use '@siemens/element-theme/src/styles/bootstrap/mixins/form-layout';
+ *
+ * // Custom responsive breakpoint
+ * .custom-form-col-layout {
+ *   // Above 400px the column layout is used
+ *   @include form-layout.responsive-form-col-layout(400px);
+ * }
+ * ```
+ */
 @Component({
   selector: 'si-form-container',
   imports: [NgTemplateOutlet, SiResponsiveContainerDirective],

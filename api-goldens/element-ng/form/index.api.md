@@ -35,7 +35,7 @@ export const provideSiFormFieldConfig: (config?: SignalFormsConfig) => Provider[
 // @public
 export const SI_FORM_ITEM_CONTROL: InjectionToken<SiFormItemControl>;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export class SiFormContainerComponent<TControl extends {
     [K in keyof TControl]: AbstractControl;
 }> {

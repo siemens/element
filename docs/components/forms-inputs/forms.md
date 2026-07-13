@@ -294,7 +294,30 @@ renders the validation feedback icon on its leading edge. It can be used in two 
    </div>
    ```
 
-### Si-Form-Container
+### Column layout
+
+Forms can switch to a column layout where labels are displayed next to the input.
+Apply the respective classes directly on the `form` to enable the column layout.
+
+`responsive-form-col-layout` switches to the column mode only above `48ch`,
+`form-col-layout` switches screensize independent to the column layout.
+
+```html
+<form class="responsive-form-col-layout"> ... </form>
+```
+
+To customize the breakpoint, use the `responsive-form-col-layout` mixin within your component that holds the form:
+
+```scss
+@use '@siemens/element-theme/src/styles/bootstrap/mixins/form-layout';
+
+:host {
+  // Above 400px the column layout is used
+  @include form-layout.responsive-form-col-layout(400px);
+}
+```
+
+### Si-Form-Container (deprecated)
 
 The `si-form-container` is an optional wrapper around a form.
 It provides additional responsive behavior for switching labels dependent

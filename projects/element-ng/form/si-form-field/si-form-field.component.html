@@ -1,5 +1,8 @@
 @if (!isFormCheck()) {
   <ng-container [ngTemplateOutlet]="labelTemplate" />
+} @else if (!fieldset) {
+  <!-- Empty spacer so the control aligns with the label column in form-col-layout. -->
+  <div class="form-label"></div>
 }
 <div class="form-item-content">
   <ng-content />
