@@ -252,7 +252,9 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
     readonly closed: _angular_core.OutputEmitterRef<Omit<WidgetConfig, "id">[] | undefined>;
     readonly multiSelect: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    // @deprecated
     widgetCatalog: Widget[];
+    readonly widgetList: _angular_core.WritableSignal<Widget[]>;
 }
 
 // @public
