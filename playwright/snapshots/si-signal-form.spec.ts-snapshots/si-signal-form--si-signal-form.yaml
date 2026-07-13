@@ -38,3 +38,12 @@
 - button "Save"
 - heading "Debugging" [level=2]
 - paragraph: "Validation status: INVALID"
+- table:
+  - rowgroup:
+    - row "Model Submitted":
+      - columnheader "Model"
+      - columnheader "Submitted"
+  - rowgroup:
+    - 'row "{ \"name\": \"\", \"description\": \"\", \"phoneNumber\": \"\", \"birthday\": \"\", \"arrival\": \"\", \"departure\": \"\", \"serviceClass\": \"first\", \"role\": \"\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false } undefined"':
+      - 'cell "{ \"name\": \"\", \"description\": \"\", \"phoneNumber\": \"\", \"birthday\": \"\", \"arrival\": \"\", \"departure\": \"\", \"serviceClass\": \"first\", \"role\": \"\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false }"'
+      - cell "undefined"

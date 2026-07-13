@@ -16,24 +16,24 @@
   - combobox /Select Country Switzerland \+\d+/
   - textbox "Enter phone number":
     - /placeholder: 21 234 56 78
-    - text: ""
+    - text: "5"
 - text: Invalid phone number Day of birth*
 - textbox "Day of birth*"
 - button "Open calendar"
 - text: Required Travel Date*
 - group "Travel Date*":
   - textbox "Start date"
-  - text: ""
+  - text: "-"
   - textbox "End date"
   - button "Open calendar"
 - text: Travel date is required. Arrival
 - group "Arrival":
   - textbox "Hours":
     - /placeholder: hh
-    - text: ""
+    - text: /\d+/
   - textbox "Minutes":
     - /placeholder: mm
-    - text: ""
+    - text: /\d+/
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
@@ -41,17 +41,17 @@
 - group "Departure":
   - textbox "Hours":
     - /placeholder: hh
-    - text: ""
+    - text: /\d+/
   - textbox "Minutes":
     - /placeholder: mm
-    - text: ""
+    - text: /\d+/
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
 - text: The departure time must be after arrival. Class of service
-- combobox "Class of service"
+- combobox "Class of service": Economy
 - text: You deserve better! Fellow passengers
-- spinbutton "Fellow passengers"
+- spinbutton "Fellow passengers": "0"
 - text: Min. 2
 - group "Accept terms":
   - text: ""
