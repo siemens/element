@@ -9,6 +9,13 @@
       <button
         type="button"
         si-header-action-item
+        icon="element-language"
+        (click)="switchLanguage()"
+        >{{ currentLang() === 'en' ? 'English' : 'Deutsch' }}</button
+      >
+      <button
+        type="button"
+        si-header-action-item
         [icon]="theme === 'dark' ? 'element-sun' : 'element-economy'"
         (click)="toggleDark()"
         >Toggle theme</button
