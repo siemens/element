@@ -89,6 +89,57 @@ export const appConfig: ApplicationConfig = {
     expect(modifiedContent).toContain('providers: [provideZonelessChangeDetection()]');
   });
 
+  it('should move literal split sizes to inline split parts', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split [sizes]="[20, 60, 20]">
+  <si-split-part>Left</si-split-part>
+  <si-split-part>Center</si-split-part>
+  <si-split-part>Right</si-split-part>
+</si-split>\`
+})
+export class SplitComponent {}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const modifiedContent = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(modifiedContent).not.toContain('[sizes]');
+    expect(modifiedContent).toContain('<si-split-part size="20" unit="fr">Left</si-split-part>');
+    expect(modifiedContent).toContain('<si-split-part size="60" unit="fr">Center</si-split-part>');
+    expect(modifiedContent).toContain('<si-split-part size="20" unit="fr">Right</si-split-part>');
+  });
+
+  it('should move expression split sizes to external split parts', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  templateUrl: './split.component.html'
+})
+export class SplitComponent {}`,
+      '/projects/app/src/split.component.html': `<si-split [sizes]="panelSizes">
+  <si-split-part>Left</si-split-part>
+  <si-split-part>Right</si-split-part>
+</si-split>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
+
+    expect(modifiedContent).not.toContain('[sizes]');
+    expect(modifiedContent).toContain(
+      '<si-split-part [size]="panelSizes[0]" unit="fr">Left</si-split-part>'
+    );
+    expect(modifiedContent).toContain(
+      '<si-split-part [size]="panelSizes[1]" unit="fr">Right</si-split-part>'
+    );
+  });
+
   it('should pass options to sub-migrations', async () => {
     const customPath = '/custom/path';
     const options = { path: customPath };
@@ -98,5 +149,115 @@ export const appConfig: ApplicationConfig = {
 
     // Verify the schematic ran with custom options
     // In a real scenario, you'd verify the migration respected the path option
+  });
+
+  it('should add unit="px" to a split part with a literal size but no unit (inline template)', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split>
+  <si-split-part size="300">Left</si-split-part>
+  <si-split-part size="200">Right</si-split-part>
+</si-split>\`
+})
+export class SplitComponent {}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const modifiedContent = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(modifiedContent).toContain('<si-split-part size="300" unit="px">Left</si-split-part>');
+    expect(modifiedContent).toContain('<si-split-part size="200" unit="px">Right</si-split-part>');
+  });
+
+  it('should add unit="px" to a split part with a bound size but no unit (external template)', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  templateUrl: './split.component.html'
+})
+export class SplitComponent {}`,
+      '/projects/app/src/split.component.html': `<si-split>
+  <si-split-part [size]="leftSize">Left</si-split-part>
+  <si-split-part [size]="rightSize">Right</si-split-part>
+</si-split>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
+
+    expect(modifiedContent).toContain(
+      '<si-split-part [size]="leftSize" unit="px">Left</si-split-part>'
+    );
+    expect(modifiedContent).toContain(
+      '<si-split-part [size]="rightSize" unit="px">Right</si-split-part>'
+    );
+  });
+
+  it('should not add unit="px" when unit is already present', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.html': `<si-split>
+  <si-split-part size="20" unit="fr">Left</si-split-part>
+  <si-split-part [size]="rightSize" [unit]="unitVal">Right</si-split-part>
+</si-split>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
+
+    expect(modifiedContent).toContain('<si-split-part size="20" unit="fr">Left</si-split-part>');
+    expect(modifiedContent).toContain(
+      '<si-split-part [size]="rightSize" [unit]="unitVal">Right</si-split-part>'
+    );
+  });
+
+  it('should add unit="fr" when converting [sizes] and not duplicate with unit="px"', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  templateUrl: './split.component.html'
+})
+export class SplitComponent {}`,
+      '/projects/app/src/split.component.html': `<si-split [sizes]="[30, 70]">
+  <si-split-part>Left</si-split-part>
+  <si-split-part>Right</si-split-part>
+</si-split>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
+
+    expect(modifiedContent).not.toContain('[sizes]');
+    expect(modifiedContent).toContain('<si-split-part size="30" unit="fr">Left</si-split-part>');
+    expect(modifiedContent).toContain('<si-split-part size="70" unit="fr">Right</si-split-part>');
+    expect(modifiedContent).not.toContain('unit="px"');
+  });
+
+  it('should add unit="px" to a self-closing split part with a size but no unit', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  templateUrl: './split.component.html'
+})
+export class SplitComponent {}`,
+      '/projects/app/src/split.component.html': `<si-split>
+  <si-split-part size="400" heading="Left" />
+  <si-split-part size="200" heading="Right" />
+</si-split>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
+
+    expect(modifiedContent).toContain('<si-split-part size="400" heading="Left"  unit="px"/>');
+    expect(modifiedContent).toContain('<si-split-part size="200" heading="Right"  unit="px"/>');
   });
 });
