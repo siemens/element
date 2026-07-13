@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, output } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import { SiWidgetCatalogComponent, Widget, WidgetConfig } from '@siemens/dashboards-ng';
 import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -18,7 +18,7 @@ import { HELLO_DESCRIPTOR } from '../../widgets/hello-widget/widget-descriptors'
 export class CustomWidgetCatalogComponent extends SiWidgetCatalogComponent {
   override readonly closed = output<Omit<WidgetConfig, 'id'> | undefined>();
 
-  override widgetCatalog: Widget[] = [];
+  override readonly widgetList = signal<Widget[]>([]);
 
   myDescriptor = HELLO_DESCRIPTOR;
 
