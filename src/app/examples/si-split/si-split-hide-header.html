@@ -1,8 +1,10 @@
-<si-split orientation="horizontal" style="height: 500px" [sizes]="[30, 70]">
+<si-split orientation="horizontal" style="height: 500px">
   <si-split-part
     heading="Filters"
     collapseDirection="start"
     class="bg-base-1"
+    size="30"
+    unit="fr"
     [actions]="[{ iconClass: 'element-edit', click: logEvent, tooltip: 'edit' }]"
     [minSize]="150"
   >
@@ -11,14 +13,18 @@
 
   <si-split-part
     heading="Details"
+    size="70"
+    unit="fr"
     [showCollapseButton]="false"
     [actions]="[{ iconClass: 'element-edit', click: logEvent, tooltip: 'edit' }]"
   >
-    <si-split orientation="vertical" [sizes]="[60, 40]">
+    <si-split orientation="vertical">
       <si-split-part
         heading="Upper"
         collapseDirection="start"
         class="bg-base-1"
+        size="60"
+        unit="fr"
         [showHeader]="false"
       >
         <p class="p-4 text-secondary">Split Part #2</p>
@@ -27,6 +33,8 @@
         heading="Lower"
         collapseDirection="start"
         class="bg-base-1"
+        size="40"
+        unit="fr"
         [showHeader]="false"
       >
         <p class="p-4 text-secondary">Split Part #3</p>

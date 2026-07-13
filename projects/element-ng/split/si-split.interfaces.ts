@@ -5,6 +5,7 @@
 /** */
 type CollapseTo = 'start' | 'end';
 type SplitOrientation = 'horizontal' | 'vertical';
+type SplitUnit = 'px' | 'fr';
 
 type Scale = 'none' | 'auto';
 
@@ -19,4 +20,4 @@ interface PartState {
   size?: number;
 }
 
-export type { Action, CollapseTo, PartState, Scale, SplitOrientation };
+export type { Action, CollapseTo, PartState, Scale, SplitOrientation, SplitUnit };

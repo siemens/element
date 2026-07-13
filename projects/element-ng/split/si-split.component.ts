@@ -15,9 +15,7 @@ import {
   Signal,
   DOCUMENT,
   DestroyRef,
-  output,
-  effect,
-  untracked
+  output
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import {
@@ -29,7 +27,7 @@ import { asapScheduler, fromEvent, merge } from 'rxjs';
 import { observeOn, takeUntil } from 'rxjs/operators';
 
 import { SiSplitPartComponent } from './si-split-part.component';
-import { SplitOrientation } from './si-split.interfaces';
+import { SplitOrientation, SplitUnit } from './si-split.interfaces';
 
 interface Gutter {
   before: SiSplitPartComponent;
@@ -40,6 +38,7 @@ interface Gutter {
 interface SplitPartState {
   size: number;
   initialSize: number;
+  initialUnit: SplitUnit;
   expanded: boolean;
 }
 
@@ -70,14 +69,6 @@ export class SiSplitComponent {
   readonly orientation = input<SplitOrientation>('horizontal');
 
   /**
-   * Initial relative sizes of the split parts as fractional values.
-   *
-   * @defaultValue []
-   */
-  // eslint-disable-next-line @angular-eslint/prefer-signal-model
-  readonly sizes = input<number[]>([]);
-
-  /**
    * An optional stateId to uniquely identify a component instance.
    * Required for persistence of ui state.
    */
@@ -99,12 +90,12 @@ export class SiSplitComponent {
           ? part.collapseToMinSize()
             ? `${part.minSize()}px`
             : 'min-content'
-          : part.actualSize()
-            ? part.scale() === 'auto'
-              ? `minmax(${part.minSize()}px, ${part.actualSize()}fr)`
-              : `minmax(${part.minSize()}px, ${part.actualSize()}px)`
+          : this.configuredUnit(part) === 'px'
+            ? `minmax(${part.minSize()}px, ${part.expandedSize() ?? part.size()}px)`
             : `minmax(${part.minSize()}px, ${
-                part.fractionalSize()! * this.fractionalSizeToExpandedSizeFactor()
+                part.expandedSize() === undefined
+                  ? part.fractionalSize()! * this.fractionalSizeToExpandedSizeFactor()
+                  : part.fractionalSize()!
               }fr)`
       )
       .join(' min-content ');
@@ -139,29 +130,25 @@ export class SiSplitComponent {
   private readonly document = inject(DOCUMENT);
   private readonly uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
   private readonly destroyRef = inject(DestroyRef);
-  // New parts won't be measured, so we need this to scale up their fractional size to the expanded size.
-  // Using 10, as the sum of all fractional sizes is 1, so we need to scale them up as fr-values should be >= 1.
-  private readonly fractionalSizeToExpandedSizeFactor = signal(10);
+  // Existing fr parts are measured in pixels after layout or dragging, so their fr weights become
+  // pixel-derived. A newly added fr part has not been measured yet and still has its configured
+  // weight. This factor converts that configured weight into the same scale until it is measured.
+  // It is the ratio of measured expanded sizes to configured weights of visible measured fr parts.
+  private readonly fractionalSizeToExpandedSizeFactor = computed(() => {
+    const measuredParts = this.parts().filter(
+      part =>
+        !part.collapsedState() &&
+        this.configuredUnit(part) === 'fr' &&
+        part.expandedSize() !== undefined
+    );
+    const configuredSizeSum = measuredParts.reduce((sum, part) => sum + part.size(), 0);
+    const expandedSizeSum = measuredParts.reduce((sum, part) => sum + part.expandedSize()!, 0);
+
+    return configuredSizeSum ? expandedSizeSum / configuredSizeSum : 1;
+  });
   private readonly initialized = signal(false);
 
   constructor() {
-    effect(() => {
-      const sizes = this.sizes();
-      untracked(() => {
-        if (!this.initialized()) {
-          return;
-        }
-        sizes.forEach((size, index) => {
-          const part = this.parts()[index];
-          if (part) {
-            part.fractionalSize.set(size);
-            part.expandedSize.set(undefined);
-          }
-        });
-        this.alignRelativeSizes();
-      });
-    });
-
     toObservable(this.parts)
       .pipe(observeOn(asapScheduler), takeUntilDestroyed())
       .subscribe(() => this.setupParts());
@@ -177,7 +164,6 @@ export class SiSplitComponent {
       component.index = index;
       component.after.set(parts[index + 1]);
       component.before.set(parts[index - 1]);
-      component.fractionalSize.set(this.sizes()[index]);
       component.saveUIState = () => this.saveUIState();
 
       if (component.after()) {
@@ -193,70 +179,21 @@ export class SiSplitComponent {
     }
     this.gutters.set(gutters);
 
-    this.alignRelativeSizes();
-    this.updateFractionalSizeToExpandSizeFactor();
     this.restoreFromUIState();
     setTimeout(() => this.refreshAllPartSizes());
   }
 
-  private alignRelativeSizes(): void {
-    const parts = this.parts();
-    const requestedNoSize = parts.filter(part => !part.size() && !part.fractionalSize());
-    const requestedRelSize = parts.filter(part => part.fractionalSize() && !part.size());
-
-    if (requestedRelSize.length) {
-      const totalRequestedRelSize = requestedRelSize.reduce((a, b) => a + b.fractionalSize()!, 0);
-      const averageRelSize = totalRequestedRelSize / requestedRelSize.length;
-      const totalAssignedRelSize = totalRequestedRelSize + requestedNoSize.length * averageRelSize;
-      requestedNoSize.forEach(part =>
-        part.fractionalSize.set(averageRelSize / totalAssignedRelSize)
-      );
-      requestedRelSize.forEach(part =>
-        part.fractionalSize.set(part.fractionalSize()! / totalAssignedRelSize)
-      );
-    } else {
-      requestedNoSize.forEach(part => part.fractionalSize.set(1 / requestedNoSize.length));
-    }
-  }
-
-  private updateFractionalSizeToExpandSizeFactor(): void {
-    let previousScalableFractionalSum = 0;
-    let previousScalableExpandedSizeSum = 0;
-
-    for (const component of this.parts()) {
-      if (component.scale() === 'auto' && component.expandedSize() !== undefined) {
-        previousScalableExpandedSizeSum += component.expandedSize()!;
-        previousScalableFractionalSum += component.fractionalSize()!;
-      }
-    }
-
-    this.fractionalSizeToExpandedSizeFactor.set(
-      previousScalableFractionalSum
-        ? previousScalableExpandedSizeSum / previousScalableFractionalSum
-        : 10
-    );
+  private configuredUnit(part: SiSplitPartComponent): SplitUnit {
+    return part.unit() ?? 'px';
   }
 
   private refreshAllPartSizes(): void {
-    const parts = this.parts();
-    const refParts = parts.filter(
-      part =>
-        !part.collapsedState() &&
-        part.scale() === 'auto' &&
-        (part.expandedSize() || part.fractionalSize())
-    );
-    const beforeFrSum = refParts.reduce((a, b) => a + (b.expandedSize() ?? b.fractionalSize()!), 0);
-    parts.forEach(part => part.refreshSizePx(this.orientation()));
-    const afterFrSum = refParts.reduce((a, b) => a + b.expandedSize()!, 0);
-    const beforeToAfterFactor = beforeFrSum > 0 ? afterFrSum / beforeFrSum : 1;
-    parts
-      .filter(
-        part =>
-          part.collapsedState() && (part.scale() === 'auto' || part.expandedSize() === undefined)
-      )
-      .forEach(part =>
-        part.expandedSize.update(prev => (prev ?? part.fractionalSize()!) * beforeToAfterFactor)
-      );
+    this.parts().forEach(part => {
+      part.refreshSizePx(this.orientation());
+      if (!part.collapsedState() && this.configuredUnit(part) === 'fr') {
+        part.fractionalSize.set(part.expandedSize()!);
+      }
+    });
   }
 
   protected resizeStart(gutter: Gutter, event: Event): void {
@@ -304,6 +241,12 @@ export class SiSplitComponent {
             appliedDelta += delta;
             gutter.before.expandedSize.set(beforeSize);
             afterPart.expandedSize.set(afterSize);
+            if (gutter.before.unit() === 'fr') {
+              gutter.before.fractionalSize.set(beforeSize);
+            }
+            if (afterPart.unit() === 'fr') {
+              afterPart.fractionalSize.set(afterSize);
+            }
             if (this.orientation() === 'vertical') {
               this.elementRef.nativeElement.style.setProperty(
                 'grid-template-rows',
@@ -348,14 +291,15 @@ export class SiSplitComponent {
       return;
     }
 
-    const containerSize = this.measureContainerSize();
     const state = this.parts().reduce(
       (partState, part) => {
         const partStateId = part.stateId();
         if (partStateId) {
+          const unit = this.configuredUnit(part);
           partState[partStateId] = {
-            size: ((part.expandedSize() ?? 0) * 100) / containerSize,
-            initialSize: this.sizes()[part.index],
+            size: unit === 'px' ? part.expandedSize()! : part.fractionalSize()!,
+            initialSize: part.size(),
+            initialUnit: this.configuredUnit(part),
             expanded: !part.collapsedState()
           };
         }
@@ -381,11 +325,19 @@ export class SiSplitComponent {
       this.parts()
         .filter(part => part.stateId())
         .map(part => ({ part, state: uiState[part.stateId()!] }))
-        .filter(({ part, state }) => this.sizes()[part.index] === state?.initialSize)
+        .filter(
+          (item): item is { part: SiSplitPartComponent; state: SplitPartState } =>
+            !!item.state &&
+            item.state.initialSize === item.part.size() &&
+            item.state.initialUnit === this.configuredUnit(item.part)
+        )
         .forEach(({ part, state }) => {
-          part.expandedSize.set(undefined);
-          part.fractionalSize.set(state?.size);
-          part.collapsedState.set(!(state?.expanded ?? true));
+          if (this.configuredUnit(part) === 'px') {
+            part.expandedSize.set(state.size);
+          } else {
+            part.fractionalSize.set(state.size);
+          }
+          part.collapsedState.set(!state.expanded);
         });
       setTimeout(() => this.refreshAllPartSizes());
     });

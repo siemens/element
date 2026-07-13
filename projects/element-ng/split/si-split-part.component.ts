@@ -21,7 +21,14 @@ import {
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-split.interfaces';
+import {
+  Action,
+  CollapseTo,
+  PartState,
+  Scale,
+  SplitOrientation,
+  SplitUnit
+} from './si-split.interfaces';
 
 @Component({
   selector: 'si-split-part',
@@ -124,11 +131,14 @@ export class SiSplitPartComponent {
   readonly stateId = input<string>();
 
   /**
-   * Expanded size in px.
-   *
-   * @defaultValue undefined
+   * Expanded size. Uses px when {@link unit} is omitted.
    */
-  readonly size = input<number | undefined, unknown>(undefined, { transform: numberAttribute });
+  readonly size = input.required<number, number | string>({ transform: numberAttribute });
+
+  /**
+   * Unit for the configured {@link size}. When omitted, configured sizes are interpreted as px.
+   */
+  readonly unit = input<SplitUnit>();
 
   /**
    * This toggles the behavior when collapsing this split part.
@@ -157,7 +167,7 @@ export class SiSplitPartComponent {
   readonly after = signal<SiSplitPartComponent | undefined>(undefined);
 
   /** @internal */
-  readonly fractionalSize = signal<number | undefined>(undefined);
+  readonly fractionalSize = linkedSignal(() => (this.unit() === 'fr' ? this.size() : undefined));
 
   /** @internal */
   readonly collapsedSize = computed(() => (this.collapseToMinSize() ? (this.minSize() ?? 40) : 40));
@@ -185,7 +195,10 @@ export class SiSplitPartComponent {
   }
 
   /** @internal */
-  readonly expandedSize = linkedSignal(() => this.size());
+  readonly expandedSize = linkedSignal({
+    source: () => ({ size: this.size(), unit: this.unit() }),
+    computation: source => (source.unit === 'fr' ? undefined : source.size)
+  });
 
   /** @internal */
   readonly actualSize = computed(() => {
