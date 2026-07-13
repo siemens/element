@@ -22,7 +22,7 @@
 - text: Travel Date*
 - group "Travel Date*":
   - textbox "Start date"
-  - text: ""
+  - text: "-"
   - textbox "End date"
   - button "Open calendar"
 - text: Arrival
@@ -44,9 +44,9 @@
     - option "AM" [selected]
     - option "PM"
 - text: Class of service
-- combobox "Class of service"
+- combobox "Class of service": First class
 - text: Fellow passengers
-- spinbutton "Fellow passengers"
+- spinbutton "Fellow passengers": "0"
 - group "Accept terms":
   - text: ""
   - checkbox "I confirm that I accept all and everything.*"

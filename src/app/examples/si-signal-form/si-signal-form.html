@@ -4,7 +4,7 @@
       <h2>Signal form</h2>
       <div class="card">
         <div class="card-body">
-          <form [formRoot]="form">
+          <form class="responsive-form-col-layout" [formRoot]="form">
             <si-form-fieldset label="Role" inline>
               <si-form-field label="Engineer">
                 <input
@@ -96,7 +96,7 @@
               <input type="checkbox" class="form-check-input" [formField]="form.privacyDeclined" />
             </si-form-field>
 
-            <div class="mt-6">
+            <div class="d-flex justify-content-end mt-6">
               <button type="button" class="btn btn-secondary me-6" (click)="cancel()">
                 Cancel
               </button>
