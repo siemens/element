@@ -46,7 +46,8 @@ import { SiFormValidationErrorService } from '../si-form-validation-error.servic
   host: {
     '[class.required]': 'required() && !isPartOfRadioGroup()',
     '[class.form-check]': 'isFormCheck()',
-    '[class.form-check-inline]': 'fieldset?.inline()'
+    '[class.form-check-inline]': 'fieldset?.inline()',
+    '[class.si-form-input]': '!fieldset'
   }
 })
 export class SiFormFieldComponent implements SiFormFieldsetControl {

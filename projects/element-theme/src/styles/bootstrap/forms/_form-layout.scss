@@ -1,0 +1,10 @@
+@use '../mixins/form-layout';
+
+.form-col-layout {
+  @include form-layout.form-col-layout;
+}
+
+/* Default responsive layout. */
+.responsive-form-col-layout {
+  @include form-layout.responsive-form-col-layout(48ch);
+}
