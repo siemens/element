@@ -5,13 +5,21 @@
 import { Overlay, OverlayRef, ScrollStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { isPlatformBrowser } from '@angular/common';
-import { ComponentRef, ElementRef, inject, Injectable, Injector, PLATFORM_ID } from '@angular/core';
+import {
+  ComponentRef,
+  ElementRef,
+  inject,
+  Injectable,
+  Injector,
+  inputBinding,
+  PLATFORM_ID
+} from '@angular/core';
 import { getOverlay, getPositionStrategy, positions } from '@siemens/element-ng/common';
 import { fromEvent, Subject, Subscription, timer } from 'rxjs';
 import { delayWhen, filter, takeUntil } from 'rxjs/operators';
 
 import { TooltipComponent } from './si-tooltip.component';
-import { SI_TOOLTIP_CONFIG, SiTooltipContent } from './si-tooltip.model';
+import { SiTooltipContent } from './si-tooltip.model';
 
 /** @internal */
 interface TooltipRef {
@@ -156,7 +164,11 @@ class BrowserTooltipRef {
       providers: [{ provide: OverlayRef, useValue: overlayRef }]
     });
 
-    const toolTipPortal = new ComponentPortal(TooltipComponent, undefined, injector);
+    const toolTipPortal = new ComponentPortal(TooltipComponent, undefined, injector, undefined, [
+      inputBinding('id', () => this.config.describedBy),
+      inputBinding('tooltip', this.config.tooltip),
+      inputBinding('tooltipContext', this.config.tooltipContext)
+    ]);
     const tooltipRef: ComponentRef<TooltipComponent> = overlayRef.attach(toolTipPortal);
 
     const positionStrategy = getPositionStrategy(overlayRef);
@@ -208,23 +220,8 @@ export class SiTooltipService {
       return new NoopTooltipRef();
     }
 
-    const injector = Injector.create({
-      parent: config.injector,
-      providers: [
-        {
-          provide: SI_TOOLTIP_CONFIG,
-          useValue: {
-            id: config.describedBy,
-            tooltip: config.tooltip,
-            tooltipContext: config.tooltipContext
-          }
-        }
-      ]
-    });
-
     return new BrowserTooltipRef({
       ...config,
-      injector,
       overlay: this.overlay
     });
   }
