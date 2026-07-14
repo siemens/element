@@ -1,0 +1,34 @@
+<button
+  #chipButton
+  type="button"
+  class="chip btn btn-ghost"
+  aria-haspopup="true"
+  [class.chip-visible]="navbar.collapsed()"
+  [attr.inert]="navbar.collapsed() ? null : ''"
+  [attr.aria-hidden]="navbar.collapsed() ? null : 'true'"
+  [attr.aria-expanded]="open()"
+  [attr.aria-controls]="open() ? menuId : null"
+  (click)="toggle()"
+>
+  @let item = navbar.activeItem();
+  @if (item?.icon(); as chipIcon) {
+    <si-icon class="icon" [icon]="chipIcon" />
+  }
+  @if (item?.label(); as label) {
+    <span class="chip-label text-truncate">{{ label }}</span>
+  }
+</button>
+<ng-template #chipMenuTemplate>
+  <div
+    class="chip-menu-panel dropdown-menu"
+    [id]="menuId"
+    [cdkTrapFocus]="true"
+    [cdkTrapFocusAutoCapture]="true"
+    (keydown.escape)="close()"
+  >
+    @let items = navbar.itemsComponent();
+    @if (items) {
+      <ng-container [cdkPortalOutlet]="items.hostPortal" />
+    }
+  </div>
+</ng-template>

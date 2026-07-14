@@ -53,8 +53,8 @@ describe('SiNavbarVerticalNextItemComponent', () => {
     textOnly: signal(false),
     alwaysFlyout: signal(false),
     inlineCollapse: signal(false),
-    chipPortalAttached: signal(false),
     chipMode: signal(false),
+    chipMenuOpen: signal(false),
     itemTriggered: vi.fn()
   };
 

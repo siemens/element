@@ -40,6 +40,10 @@ $transition-duration: variables.element-transition-duration(0.25s);
     opacity: 0;
     transition: opacity $transition-duration ease-in;
   }
+
+  :host.chip-mode & {
+    transition: none;
+  }
 }
 
 .divider {

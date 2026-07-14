@@ -4,6 +4,7 @@
  */
 export * from './si-navbar-vertical-next-items.component';
 export * from './si-navbar-vertical-next.component';
+export * from './si-navbar-vertical-next-chip-menu.component';
 export * from './si-navbar-vertical-next-divider.component';
 export * from './si-navbar-vertical-next-footer-items.component';
 export * from './si-navbar-vertical-next-group-trigger.directive';

@@ -4,6 +4,7 @@
  */
 import { NgModule } from '@angular/core';
 
+import { SiNavbarVerticalNextChipMenuComponent } from './si-navbar-vertical-next-chip-menu.component';
 import { SiNavbarVerticalNextDividerComponent } from './si-navbar-vertical-next-divider.component';
 import { SiNavbarVerticalNextFooterItemsComponent } from './si-navbar-vertical-next-footer-items.component';
 import { SiNavbarVerticalNextGroupTriggerDirective } from './si-navbar-vertical-next-group-trigger.directive';
@@ -18,6 +19,7 @@ import { SiNavbarVerticalNextComponent } from './si-navbar-vertical-next.compone
 @NgModule({
   imports: [
     SiNavbarVerticalNextComponent,
+    SiNavbarVerticalNextChipMenuComponent,
     SiNavbarVerticalNextDividerComponent,
     SiNavbarVerticalNextFooterItemsComponent,
     SiNavbarVerticalNextGroupComponent,
@@ -29,6 +31,7 @@ import { SiNavbarVerticalNextComponent } from './si-navbar-vertical-next.compone
   ],
   exports: [
     SiNavbarVerticalNextComponent,
+    SiNavbarVerticalNextChipMenuComponent,
     SiNavbarVerticalNextDividerComponent,
     SiNavbarVerticalNextFooterItemsComponent,
     SiNavbarVerticalNextGroupComponent,

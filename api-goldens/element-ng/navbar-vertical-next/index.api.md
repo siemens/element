@@ -11,7 +11,11 @@ import { OnInit } from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';
-import { ViewContainerRef } from '@angular/core';
+
+// @public
+export class SiNavbarVerticalNextChipMenuComponent {
+    constructor();
+}
 
 // @public (undocumented)
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {

@@ -2,11 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ConnectionPositionPair,
-  FlexibleConnectedPositionStrategy,
-  Overlay
-} from '@angular/cdk/overlay';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
   Component,
@@ -30,10 +26,9 @@ import { Subscription } from 'rxjs';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
 /**
- * Using this component, to anchor the flyout inside the navbar within the a11y tree.
- * Otherwise, without aria-owns, screen reader will announce the leaving of the navbar when moving to the flyout.
- * Aria-owns cannot be put directly on the trigger
- * as chrome will include the flyout children in the a11y label of the trigger.
+ * Empty host component that carries `aria-owns` for a group flyout. Placed
+ * next to the trigger button so the flyout appears as a sibling of the button
+ * in the accessibility tree.
  * @experimental
  */
 @Component({
@@ -51,7 +46,7 @@ class SiNavbarFlyoutAnchorComponent {
   host: {
     class: 'dropdown-toggle',
     '[id]': 'id',
-    '[class.show]': 'expanded()',
+    '[class.show]': '!flyoutMode() && expanded()',
     '[attr.aria-controls]': 'groupId',
     '[attr.aria-expanded]': 'flyoutMode() ? flyout() : expanded()',
     '(click)': 'triggered()'
@@ -125,9 +120,13 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
   private readonly overlay = inject(Overlay);
   private readonly destroyRef = inject(DestroyRef);
   private readonly injector = Injector.create({ parent: inject(Injector), providers: [] });
-  private readonly overlayRef = this.overlay.create({
-    positionStrategy: this.buildPositionStrategy(this.navbar.chipMode())
-  });
+  /** Lazily created so its overlay pane is appended to the CDK overlay
+   * container after any already-open overlays (e.g. the chip menu). This
+   * keeps the flyout's DOM — and therefore its position in the a11y tree —
+   * after the trigger button's container in Playwright's aria snapshot.
+   * @internal
+   */
+  private overlayRef?: OverlayRef;
   private groupView?: EmbeddedViewRef<unknown>;
   private flyoutAnchorComponentRef?: ComponentRef<SiNavbarFlyoutAnchorComponent>;
   private readonly templatePortal = computed(
@@ -147,27 +146,9 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
     });
 
     this.destroyRef.onDestroy(() => {
-      this.overlayRef.detach();
-      this.overlayRef.dispose();
+      this.overlayRef?.detach();
+      this.overlayRef?.dispose();
     });
-  }
-
-  /** @internal */
-  private buildPositionStrategy(chipMode: boolean): FlexibleConnectedPositionStrategy {
-    const positions: ConnectionPositionPair[] = chipMode
-      ? [
-          { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
-          { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' }
-        ]
-      : [
-          { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top' },
-          { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
-        ];
-
-    return this.overlay
-      .position()
-      .flexibleConnectedTo(this.viewContainer.element)
-      .withPositions(positions);
   }
 
   /** @internal */
@@ -197,7 +178,7 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
   }
 
   private attachInline(): void {
-    this.overlayRef.detach();
+    this.overlayRef?.detach();
     this.groupView?.destroy();
     this.groupView = this.viewContainer.createEmbeddedView(this.groupTemplate(), undefined, {
       injector: this.injector
@@ -205,13 +186,27 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
   }
 
   private attachFlyout(): void {
-    this.overlayRef.updatePositionStrategy(this.buildPositionStrategy(this.navbar.chipMode()));
     this.groupView?.destroy();
+    // Lazily create the overlay ref so its pane is appended to the CDK
+    // container after any earlier-opened overlays (e.g. the chip menu).
+    this.overlayRef ??= this.overlay.create({
+      positionStrategy: this.overlay
+        .position()
+        .flexibleConnectedTo(this.viewContainer.element)
+        .withPositions([
+          { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top' },
+          { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
+        ])
+    });
     this.groupView = this.overlayRef.attach(this.templatePortal());
-    // In chip mode the trigger's DOM is outside <nav> via DomPortal; use the
-    // navbar's in-nav anchor host so aria-owns stays within the navigation landmark.
-    const anchorHost = this.navbar.flyoutAnchorHost() ?? this.viewContainer;
-    this.flyoutAnchorComponentRef = anchorHost.createComponent(SiNavbarFlyoutAnchorComponent);
+    // Anchor sits next to the trigger button (via `viewContainer`) and carries
+    // `aria-owns` for the flyout. This keeps the flyout as a sibling of the
+    // trigger in the a11y tree, in whichever container the trigger lives —
+    // inside `<nav>` when collapsed, or inside the chip menu panel when the
+    // items are portalled there.
+    this.flyoutAnchorComponentRef = this.viewContainer.createComponent(
+      SiNavbarFlyoutAnchorComponent
+    );
     this.flyoutAnchorComponentRef.setInput('groupId', this.groupId);
     this.flyoutOutsideClickSubscription = this.overlayRef
       .outsidePointerEvents()
