@@ -37,28 +37,37 @@
         type="button"
         si-navbar-vertical-next-item
         stateId="home"
+        label="Home"
         [siNavbarVerticalNextGroupTriggerFor]="home"
-      >
-        Home
-      </button>
+      ></button>
       <button
         type="button"
         si-navbar-vertical-next-item
         stateId="documentation"
+        label="Documentation"
         [siNavbarVerticalNextGroupTriggerFor]="documentation"
-      >
-        Documentation
-      </button>
+      ></button>
       <si-navbar-vertical-next-header>All the rest</si-navbar-vertical-next-header>
-      <a si-navbar-vertical-next-item routerLink="energy" routerLinkActive>
-        Energy &amp; Operations
-      </a>
-      <a si-navbar-vertical-next-item routerLink="coverage" routerLinkActive> Test Coverage </a>
+      <a
+        si-navbar-vertical-next-item
+        routerLink="energy"
+        routerLinkActive
+        label="Energy &amp; Operations"
+      ></a>
+      <a
+        si-navbar-vertical-next-item
+        routerLink="coverage"
+        routerLinkActive
+        label="Test Coverage"
+      ></a>
     </si-navbar-vertical-next-items>
     <si-navbar-vertical-next-footer-items>
-      <a si-navbar-vertical-next-item routerLink="configuration" routerLinkActive>
-        Configuration
-      </a>
+      <a
+        si-navbar-vertical-next-item
+        routerLink="configuration"
+        routerLinkActive
+        label="Configuration"
+      ></a>
     </si-navbar-vertical-next-footer-items>
     <div class="si-layout-main-padding">
       <div class="si-layout-header">
@@ -88,16 +97,16 @@
 
 <ng-template #home>
   <si-navbar-vertical-next-group routerLinkActive>
-    <a si-navbar-vertical-next-item routerLink="subItem" routerLinkActive> Sub Item </a>
-    <a si-navbar-vertical-next-item routerLink="subItem2" routerLinkActive> Sub Item 2 </a>
-    <a si-navbar-vertical-next-item routerLink="subItem3" routerLinkActive> Sub Item 3 </a>
+    <a si-navbar-vertical-next-item routerLink="subItem" routerLinkActive label="Sub Item"></a>
+    <a si-navbar-vertical-next-item routerLink="subItem2" routerLinkActive label="Sub Item 2"></a>
+    <a si-navbar-vertical-next-item routerLink="subItem3" routerLinkActive label="Sub Item 3"></a>
   </si-navbar-vertical-next-group>
 </ng-template>
 
 <ng-template #documentation>
   <si-navbar-vertical-next-group routerLinkActive>
-    <a si-navbar-vertical-next-item routerLink="subItem4" routerLinkActive> Sub Item 4 </a>
-    <a si-navbar-vertical-next-item routerLink="subItem5" routerLinkActive> Sub Item 5 </a>
-    <a si-navbar-vertical-next-item routerLink="subItem6" routerLinkActive> Sub Item 6 </a>
+    <a si-navbar-vertical-next-item routerLink="subItem4" routerLinkActive label="Sub Item 4"></a>
+    <a si-navbar-vertical-next-item routerLink="subItem5" routerLinkActive label="Sub Item 5"></a>
+    <a si-navbar-vertical-next-item routerLink="subItem6" routerLinkActive label="Sub Item 6"></a>
   </si-navbar-vertical-next-group>
 </ng-template>

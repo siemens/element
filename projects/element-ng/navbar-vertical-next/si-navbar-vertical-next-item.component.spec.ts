@@ -12,13 +12,13 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   imports: [SiNavbarVerticalNextItemComponent],
   template: `<a
     si-navbar-vertical-next-item
+    label="Test Item"
+    aria-label="Test Item"
     [badge]="badge()"
     [badgeColor]="badgeColor()"
     [hideBadgeWhenCollapsed]="hideBadgeWhenCollapsed()"
     [icon]="icon()"
-  >
-    Test Item
-  </a>`
+  ></a>`
 })
 class TestHostComponent {
   readonly badge = signal<string | number | undefined>(undefined);
@@ -31,12 +31,12 @@ class TestHostComponent {
   imports: [SiNavbarVerticalNextItemComponent],
   template: `<a
     si-navbar-vertical-next-item
+    label="Test Item"
+    aria-label="Test Item"
     [badge]="badge()"
     [badgeColor]="badgeColor()"
     [hideBadgeWhenCollapsed]="hideBadgeWhenCollapsed()"
-  >
-    Test Item
-  </a>`
+  ></a>`
 })
 class TestHostWithBadgeVisibilityComponent {
   readonly badge = signal<string | number | undefined>(undefined);

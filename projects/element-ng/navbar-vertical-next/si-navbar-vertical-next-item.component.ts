@@ -2,16 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  booleanAttribute,
-  Component,
-  computed,
-  ElementRef,
-  inject,
-  input,
-  OnInit,
-  viewChild
-} from '@angular/core';
+import { booleanAttribute, Component, computed, inject, input, OnInit } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLinkActive } from '@angular/router';
 import { elementDown2, elementRight2 } from '@siemens/element-icons';
@@ -81,15 +72,12 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
    */
   readonly chipMode = this.navbar.chipMode;
 
-  private readonly itemTitleEl = viewChild.required<ElementRef<HTMLElement>>('itemTitleEl');
-
   /**
-   * Text label of this item, derived from the projected `<ng-content>`.
-   * Consumed by the chip button to mirror the active item's label without
-   * duplicating markup.
+   * Text label of this item.
+   * Consumed by the chip button to mirror the active item's label when collapsed.
    * @internal
    */
-  readonly label = computed(() => this.itemTitleEl().nativeElement.textContent?.trim() ?? '');
+  readonly label = input<string | undefined>();
 
   /**
    * Determines if the badge contains text-only content (not numeric)

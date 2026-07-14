@@ -2,9 +2,7 @@
 @if (icon) {
   <si-icon class="icon-lg" [icon]="icon" />
 }
-<div #itemTitleEl class="item-title text-truncate si-h5">
-  <ng-content />
-</div>
+<div class="item-title text-truncate si-h5">{{ label() }}</div>
 @if (!navbar.textOnly() && formattedBadge()) {
   @let badgeColor = this.badgeColor();
   <span
