@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
+import { Component, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ChartXAxis, ChartYAxis, EChartOption } from '@siemens/charts-ng/common';
 
@@ -21,8 +21,7 @@ import { CartesianChartSeries } from './si-chart-cartesian.interfaces';
     [showLegend]="showLegend"
     [title]="title"
     [subTitle]="subTitle"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class TestHostComponent {
   readonly chartCartesianComponent = viewChild.required(SiChartCartesianComponent);

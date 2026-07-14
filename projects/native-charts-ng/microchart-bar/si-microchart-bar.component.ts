@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 export interface MicrochartBarSeries {
   /* Series values */
@@ -27,8 +27,7 @@ interface SeriesInternal {
 
 @Component({
   selector: 'si-microchart-bar',
-  templateUrl: './si-microchart-bar.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-microchart-bar.component.html'
 })
 export class SiMicrochartBarComponent {
   /** @defaultValue 64 */

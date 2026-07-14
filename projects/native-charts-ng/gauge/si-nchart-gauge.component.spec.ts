@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { userEvent } from 'vitest/browser';
 
@@ -30,8 +30,7 @@ import { GaugeSegment, GaugeSeries, SiNChartGaugeComponent } from './si-nchart-g
       [maxNumberOfDecimals]="maxNumberOfDecimals()"
       [axisNumberOfDecimals]="axisNumberOfDecimals()"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestHostComponent {
   readonly gauge = viewChild.required(SiNChartGaugeComponent);

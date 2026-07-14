@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
+import { Component, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiChartGaugeComponent } from './si-chart-gauge.component';
@@ -16,8 +16,7 @@ import { SiChartGaugeComponent } from './si-chart-gauge.component';
     [value]="value"
     [title]="title"
     [subTitle]="subTitle"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class TestHostComponent {
   readonly chartGaugeComponent = viewChild.required(SiChartGaugeComponent);

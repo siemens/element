@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
+import { Component, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiChartProgressBarComponent } from './si-chart-progress-bar.component';
@@ -17,8 +17,7 @@ import { ProgressBarChartSeries } from './si-chart-progress-bar.interface';
     [title]="title"
     [subTitle]="subTitle"
     [labelPosition]="labelPosition"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class TestHostComponent {
   readonly chartProgressBarComponent = viewChild.required(SiChartProgressBarComponent);

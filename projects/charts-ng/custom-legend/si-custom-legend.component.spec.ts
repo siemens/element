@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiCustomLegendComponent } from './si-custom-legend.component';
@@ -14,8 +14,7 @@ import { CustomLegend, CustomLegendItem } from './si-custom-legend.interface';
     [title]="title"
     [subTitle]="subTitle"
     [customLegend]="customLegend"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class TestHostComponent {
   customLegend?: CustomLegend;
