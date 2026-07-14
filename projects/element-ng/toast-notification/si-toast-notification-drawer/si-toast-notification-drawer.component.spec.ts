@@ -2,10 +2,9 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { signal, WritableSignal } from '@angular/core';
+import { inputBinding, outputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SI_TOAST_TOKEN } from '../si-toast-token.model';
 import { SiToast } from '../si-toast.model';
 import { SiToastNotificationDrawerComponent } from './si-toast-notification-drawer.component';
 
@@ -16,19 +15,13 @@ describe('SiToastNotificationDrawerComponent', () => {
 
   beforeEach(() => {
     toasts = signal([]);
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: SI_TOAST_TOKEN,
-          useValue: {
-            toasts,
-            pause: () => {},
-            resume: () => {}
-          }
-        }
+    fixture = TestBed.createComponent(SiToastNotificationDrawerComponent, {
+      bindings: [
+        inputBinding('toasts', toasts),
+        outputBinding('toastPaused', () => {}),
+        outputBinding('toastResumed', () => {})
       ]
     });
-    fixture = TestBed.createComponent(SiToastNotificationDrawerComponent);
     element = fixture.nativeElement;
   });
 
