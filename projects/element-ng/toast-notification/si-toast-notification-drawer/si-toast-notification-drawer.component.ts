@@ -2,11 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { areAnimationsDisabled } from '@siemens/element-ng/common';
 
 import { SiToastNotificationComponent } from '../si-toast-notification/si-toast-notification.component';
-import { SI_TOAST_TOKEN } from '../si-toast-token.model';
+import { SiToast } from '../si-toast.model';
 
 @Component({
   selector: 'si-toast-notification-drawer',
@@ -19,6 +19,9 @@ import { SI_TOAST_TOKEN } from '../si-toast-token.model';
   }
 })
 export class SiToastNotificationDrawerComponent {
-  protected readonly token = inject(SI_TOAST_TOKEN);
+  readonly toasts = input.required<SiToast[]>();
+  readonly toastPaused = output<SiToast>();
+  readonly toastResumed = output<SiToast>();
+
   protected animationsDisabled = areAnimationsDisabled();
 }
