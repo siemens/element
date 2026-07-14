@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -13,8 +13,7 @@ import { SiFormlyIpInputComponent } from './si-formly-ip-input.component';
 @Component({
   selector: 'si-formly-test',
   imports: [FormlyModule],
-  template: `<formly-form [form]="form" [fields]="fields()" [model]="model()" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `<formly-form [form]="form" [fields]="fields()" [model]="model()" />`
 })
 class FormlyTestComponent {
   readonly form = new FormRecord({});

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
 import { ModalRef } from '@siemens/element-ng/modal';
@@ -15,8 +15,7 @@ import { ConfirmationDialogResult } from '../si-action-dialog.types';
 @Component({
   selector: 'si-confirmation-dialog',
   imports: [AsyncPipe, SiIconComponent, SiTranslatePipe, SiLoadingButtonComponent],
-  templateUrl: './si-confirmation-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-confirmation-dialog.component.html'
 })
 export class SiConfirmationDialogComponent {
   readonly titleId = input<string>();

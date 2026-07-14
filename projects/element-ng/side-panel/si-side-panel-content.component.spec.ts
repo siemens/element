@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiSidePanelModule } from './si-side-panel.module';
@@ -17,8 +17,7 @@ import { SidePanelDisplayMode, SidePanelNavigateConfig } from './side-panel.mode
       [displayMode]="displayMode()"
       [navigateConfig]="navigateConfig"
     />
-  </si-side-panel>`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  </si-side-panel>`
 })
 class TestHostComponent {
   readonly displayMode = signal<SidePanelDisplayMode | undefined>(undefined);

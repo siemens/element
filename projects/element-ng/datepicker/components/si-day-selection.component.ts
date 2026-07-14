@@ -5,7 +5,6 @@
 import { DatePipe } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -48,7 +47,6 @@ import { SiInitialFocusComponent } from './si-initial-focus.component';
   selector: 'si-day-selection',
   imports: [DatePipe, SiCalendarBodyComponent, SiCalendarDirectionButtonComponent, SiTranslatePipe],
   templateUrl: './si-day-selection.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'd-flex flex-column gap-6'
   }

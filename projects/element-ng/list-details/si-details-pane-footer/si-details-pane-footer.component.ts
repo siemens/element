@@ -2,13 +2,12 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'si-details-pane-footer',
   imports: [],
   templateUrl: './si-details-pane-footer.component.html',
-  styleUrl: './si-details-pane-footer.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-details-pane-footer.component.scss'
 })
 export class SiDetailsPaneFooterComponent {}

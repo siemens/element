@@ -6,7 +6,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   inject,
@@ -64,8 +63,7 @@ let idCounter = 1;
     SiTranslatePipe
   ],
   templateUrl: './si-status-bar.component.html',
-  styleUrl: './si-status-bar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-status-bar.component.scss'
 })
 export class SiStatusBarComponent implements OnDestroy, OnChanges {
   private static readonly minNumberOfItems = 2;

@@ -4,7 +4,6 @@
  */
 import { DatePipe } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -33,8 +32,7 @@ import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
   styleUrl: './si-filtered-search-date-value.component.scss',
   providers: [
     { provide: SiFilteredSearchValueBase, useExisting: SiFilteredSearchDateValueComponent }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 export class SiFilteredSearchDateValueComponent extends SiFilteredSearchValueBase {
   private locale = inject(LOCALE_ID).toString();

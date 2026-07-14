@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input
-} from '@angular/core';
+import { booleanAttribute, Component, computed, input } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { AccentLineType } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
@@ -44,7 +38,6 @@ import { SiWeatherWidgetData, SiWeatherWidgetLayout } from './si-weather-widget.
   selector: 'si-weather-widget',
   imports: [SiCardComponent, SiWeatherWidgetBodyComponent],
   templateUrl: './si-weather-widget.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'si-weather-widget' }
 })
 export class SiWeatherWidgetComponent {

@@ -4,7 +4,6 @@
  */
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -40,7 +39,6 @@ import { SiSelectListBase } from './si-select-list.base';
   ],
   templateUrl: './si-select-list-has-filter.component.html',
   styleUrl: './si-select-list-has-filter.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'pt-0',
     '[attr.id]': 'id()'

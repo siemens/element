@@ -5,7 +5,6 @@
 import { CdkMonitorFocus, FocusOrigin } from '@angular/cdk/a11y';
 import {
   afterNextRender,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -47,8 +46,7 @@ import { SiFilteredSearchTypeaheadComponent } from './values/typeahead/si-filter
     SiIconComponent
   ],
   templateUrl: './si-filtered-search-value.component.html',
-  styleUrl: './si-filtered-search-value.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-filtered-search-value.component.scss'
 })
 export class SiFilteredSearchValueComponent implements OnInit {
   private readonly injector = inject(Injector);

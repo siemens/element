@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiNavbarVerticalItemComponent } from './si-navbar-vertical-item.component';
@@ -11,8 +11,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
 
 @Component({
   imports: [SiNavbarVerticalItemComponent],
-  template: `<a class="navbar-vertical-item" [si-navbar-vertical-item]="item()"> Test Item </a>`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `<a class="navbar-vertical-item" [si-navbar-vertical-item]="item()"> Test Item </a>`
 })
 class TestHostComponent {
   readonly item = signal<NavbarVerticalItemLink>({
@@ -24,8 +23,7 @@ class TestHostComponent {
 
 @Component({
   imports: [SiNavbarVerticalItemComponent],
-  template: `<a class="navbar-vertical-item" [si-navbar-vertical-item]="item()"> Test Item </a> `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `<a class="navbar-vertical-item" [si-navbar-vertical-item]="item()"> Test Item </a> `
 })
 class TestHostWithBadgeVisibilityComponent {
   readonly item = signal<NavbarVerticalItemLink>({

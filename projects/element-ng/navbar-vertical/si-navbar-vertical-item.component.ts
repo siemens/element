@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit } from '@angular/core';
+import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { RouterLinkActive } from '@angular/router';
 import { elementDown2 } from '@siemens/element-icons';
 import { MenuItem } from '@siemens/element-ng/common';
@@ -30,7 +30,6 @@ type NavbarVerticalItemInteractive =
   imports: [SiIconComponent],
   templateUrl: './si-navbar-vertical-item.component.html',
   styleUrl: './si-navbar-vertical-item.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'class': 'focus-inside',
     '[class.dropdown-item]': 'this.parent?.group?.flyout()',

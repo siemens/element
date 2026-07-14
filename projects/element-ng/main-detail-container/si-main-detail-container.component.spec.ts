@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, DebugElement, signal, viewChild } from '@angular/core';
+import { Component, DebugElement, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
@@ -37,8 +37,7 @@ import { SiMainDetailContainerComponent } from './si-main-detail-container.compo
       <span slot="detailActions">detail-action</span>
       <span slot="details">details</span>
     </si-main-detail-container>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class WrapperComponent {
   readonly mainDetail = viewChild.required(SiMainDetailContainerComponent);

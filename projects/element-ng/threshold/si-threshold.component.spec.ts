@@ -4,7 +4,7 @@
  */
 import { HarnessLoader, parallel } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectOption } from '@siemens/element-ng/select';
 import { SiSelectHarness } from '@siemens/element-ng/select/testing';
@@ -33,8 +33,7 @@ import { SiThresholdComponent, ThresholdStep } from './index';
       (validChange)="valid.set($event)"
       (thresholdStepsChange)="thresholdStepsChange($event)"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestHostComponent {
   readonly options = signal<SelectOption<string>[]>(undefined!);

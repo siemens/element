@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  ChangeDetectionStrategy,
   Component,
   inject,
   inputBinding,
@@ -27,8 +26,7 @@ import { SiNumberInputComponent } from './si-number-input.component';
       [min]="min()"
       [max]="max()"
     />
-  </form>`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  </form>`
 })
 class FormHostComponent {
   readonly required = signal(false);
@@ -40,8 +38,7 @@ class FormHostComponent {
 
 @Component({
   imports: [SiNumberInputComponent],
-  template: ` <si-number-input min="some text" max="100" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: ` <si-number-input min="some text" max="100" />`
 })
 class AttributeComponent {
   readonly siNumberInput = viewChild.required(SiNumberInputComponent);

@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import {
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -29,8 +28,7 @@ import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
   styleUrl: './si-filtered-search-typeahead.component.scss',
   providers: [
     { provide: SiFilteredSearchValueBase, useExisting: SiFilteredSearchTypeaheadComponent }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 export class SiFilteredSearchTypeaheadComponent
   extends SiFilteredSearchOptionValueBase

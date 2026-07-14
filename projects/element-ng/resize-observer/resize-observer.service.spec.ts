@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angular/core';
+import { Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subscription } from 'rxjs';
 import { Mock } from 'vitest';
@@ -11,8 +11,7 @@ import { page } from 'vitest/browser';
 import { ElementDimensions, ResizeObserverService } from './resize-observer.service';
 
 @Component({
-  template: `<div #theDiv class="w-100 vh-100">Testli</div>`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `<div #theDiv class="w-100 vh-100">Testli</div>`
 })
 class TestHostComponent {
   readonly theDiv = viewChild.required<ElementRef>('theDiv');

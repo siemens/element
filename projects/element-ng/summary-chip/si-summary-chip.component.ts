@@ -2,15 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  input,
-  model
-} from '@angular/core';
+import { booleanAttribute, Component, computed, inject, input, model } from '@angular/core';
 import { ExtendedStatusType } from '@siemens/element-ng/common';
 import { SiIconComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -19,8 +11,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
   selector: 'si-summary-chip',
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-summary-chip.component.html',
-  styleUrl: './si-summary-chip.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-summary-chip.component.scss'
 })
 export class SiSummaryChipComponent {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);

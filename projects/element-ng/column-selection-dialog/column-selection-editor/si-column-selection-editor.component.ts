@@ -5,7 +5,6 @@
 import { CdkDragHandle } from '@angular/cdk/drag-drop';
 import { CdkOption } from '@angular/cdk/listbox';
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   HostListener,
@@ -28,7 +27,6 @@ import { Column } from '../si-column-selection-dialog.types';
       cursor: text;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'd-block my-4 mx-1 rounded-2 elevation-1'
   }

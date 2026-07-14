@@ -5,7 +5,6 @@
 import {
   AfterContentInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   contentChildren,
@@ -29,7 +28,6 @@ const PANEL_MIN_HEIGHT = 100;
   template: '<div><ng-content /></div>',
   styleUrl: './si-accordion.component.scss',
   providers: [SiAccordionService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.full-height]': 'fullHeight()',
     '[class.hcollapsed]': 'collapsed()'

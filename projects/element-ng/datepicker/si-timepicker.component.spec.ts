@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -22,8 +22,7 @@ import { SiTimepickerComponent as TestComponent } from './index';
       [showMeridian]="showMeridian()"
       (inputCompleted)="onInputCompleted()"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class WrapperComponent {
   readonly picker = viewChild.required<TestComponent>(TestComponent);

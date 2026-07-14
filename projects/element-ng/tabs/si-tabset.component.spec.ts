@@ -32,8 +32,7 @@ interface TabData {
 
 @Component({
   selector: 'si-tab-route',
-  template: `Content by routing`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `Content by routing`
 })
 class SiTabRouteComponent {}
 
@@ -106,8 +105,7 @@ class TestComponent {
         </si-tabset>
       }
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestRoutingComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
@@ -477,8 +475,7 @@ describe('SiTabset with portal content', () => {
 
         <si-tab-portal [tabset]="tabset" />
       </div>
-    `,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    `
   })
   class TestPortalContentComponent {
     readonly tabs = signal<
@@ -605,8 +602,7 @@ describe('SiTabset with custom tooltip', () => {
       <si-tabset>
         <si-tab heading="Tab 1" icon="element-options" [siTooltip]="tooltip()" />
       </si-tabset>
-    `,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    `
   })
   class TooltipHostComponent {
     readonly tooltip = signal('Custom tooltip');

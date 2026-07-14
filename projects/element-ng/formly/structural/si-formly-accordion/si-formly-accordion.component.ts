@@ -2,15 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FieldType, FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 
 @Component({
   selector: 'si-formly-accordion',
   imports: [SiCollapsiblePanelComponent, FormlyModule, SiAccordionComponent],
-  templateUrl: './si-formly-accordion.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-formly-accordion.component.html'
 })
 export class SiFormlyAccordionComponent extends FieldType implements AfterViewInit {
   protected panelToggle(toggle: boolean, fieldGroup: FormlyFieldConfig): void {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { booleanAttribute, Component, inject, input } from '@angular/core';
 import { elementCancel } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
@@ -16,8 +16,7 @@ import { EditDiscardDialogResult } from '../si-action-dialog.types';
 @Component({
   selector: 'si-edit-discard-dialog',
   imports: [AsyncPipe, SiIconComponent, SiTranslatePipe, SiLoadingButtonComponent],
-  templateUrl: './si-edit-discard-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-edit-discard-dialog.component.html'
 })
 export class SiEditDiscardDialogComponent {
   readonly titleId = input<string>();

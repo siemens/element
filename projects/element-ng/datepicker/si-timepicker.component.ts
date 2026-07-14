@@ -13,7 +13,6 @@ import {
 } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   effect,
@@ -87,7 +86,6 @@ const dateWithTime = (base: Date, time: Date): Date =>
       useExisting: SiTimepickerComponent
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'group',
     class: 'form-custom-control',

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal, viewChild, viewChildren } from '@angular/core';
+import { Component, signal, viewChild, viewChildren } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ElementDimensions, ResizeObserverService } from '@siemens/element-ng/resize-observer';
@@ -37,8 +37,7 @@ import { SiDashboardCardComponent, SiDashboardComponent } from './index';
         }
       </ng-container>
     </si-dashboard>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class WrapperComponent {
   readonly dashboard = viewChild.required(SiDashboardComponent);

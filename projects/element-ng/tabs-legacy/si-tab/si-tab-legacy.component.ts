@@ -5,7 +5,6 @@
 /* eslint-disable @angular-eslint/prefer-output-emitter-ref */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   HostBinding,
@@ -26,7 +25,6 @@ import { SiTabsetLegacyComponent } from '../si-tabset/index';
 @Component({
   selector: 'si-tab-legacy',
   template: '<ng-content />',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'tabpanel'
   }

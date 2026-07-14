@@ -5,7 +5,6 @@
 import { CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   contentChild,
@@ -40,7 +39,6 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
   templateUrl: './si-select.component.html',
   styleUrl: './si-select.component.scss',
   providers: [{ provide: SI_FORM_ITEM_CONTROL, useExisting: SiSelectComponent }],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'dropdown',
     '[class.readonly]': 'readonly()',

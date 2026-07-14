@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DatepickerInputConfig, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
@@ -23,8 +23,7 @@ import { CalendarTestHelper, enterValue } from './testing/test-helper';
         [readonly]="readonly()"
       />
     </si-calendar-button>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class WrapperComponent {
   readonly config = signal<DatepickerInputConfig>({});
