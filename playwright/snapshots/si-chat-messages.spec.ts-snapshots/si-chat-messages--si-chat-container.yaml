@@ -1,3 +1,4 @@
+- button "Summary sources"
 - group:
   - button "data-analysis.py"
 - group:
@@ -8,28 +9,33 @@
   - button "Export message"
 - paragraph: I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
 - paragraph: Let me examine the structure and provide guidance.
+- paragraph: I'll start by reviewing the column types and any potential schema inconsistencies in your dataset. This will help us plan the most efficient analysis pipeline.
 - group:
   - button "Good response"
   - button "Bad response"
   - button "Copy response"
   - button "More actions"
+  - checkbox "Sources" [checked]
 - paragraph: Perfect! What should I focus on first
 - paragraph: I also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?
 - group:
   - button "Export message"
-- paragraph: Great question! When analyzing large datasets, it's crucial to focus on...
+- paragraph: Great question! When analyzing large datasets, it's crucial to focus on memory-efficient data loading and vectorized operations.
+- paragraph: Avoid row-by-row iteration and prefer bulk transformations using libraries like pandas or polars.
+- paragraph: Additionally, profiling your pipeline early will reveal bottlenecks before they become costly in production.
 - group:
   - button "Good response"
   - button "Bad response"
   - button "Copy response"
   - button "More actions"
+  - checkbox "Sources"
 - alert: Info AI responses are for demonstration purposes.
 - group:
   - text: requirements.pdf
-  - button "Remove attachment requirements.pdf"
+  - button "Remove requirements.pdf"
 - group:
   - text: mockup.png
-  - button "Remove attachment mockup.png"
+  - button "Remove mockup.png"
 - textbox "Chat message input":
   - /placeholder: Enter a command, question or topic...
 - group:
@@ -37,3 +43,10 @@
   - button "Show Welcome Screen"
 - button "Send"
 - text: The content is AI generated. Always verify the information for accuracy.
+- dialog:
+  - list:
+    - listitem:
+      - link "Python Docs Python is a versatile, high-level programming language ideal for scripting, data analysis, and automation.":
+        - /url: https://docs.python.org
+        - text: ""
+        - paragraph: Python is a versatile, high-level programming language ideal for scripting, data analysis, and automation.

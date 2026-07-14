@@ -1,0 +1,31 @@
+- button "Summary sources"
+- paragraph:
+  - text: Here's a
+  - strong: simple response
+  - text: with basic formatting.
+- paragraph:
+  - text: You can use
+  - code: inline code
+  - text: "and create lists:"
+- list:
+  - listitem: First item
+  - listitem: Second item
+- paragraph: /Smart building automation reduces energy use by up to \d+%, while industrial efficiency gains are well-documented in literature\./
+- group:
+  - button "Good response"
+  - button "Bad response"
+  - button "Copy response"
+  - button "More actions"
+  - checkbox "Sources" [checked]
+- dialog:
+  - list:
+    - listitem:
+      - link /Energy Report \d+ Smart building automation systems can reduce energy consumption by \d+–\d+% through optimized HVAC, lighting, and occupancy scheduling\./:
+        - /url: https://www.iea.org/reports/energy-efficiency-2024
+        - text: ""
+        - paragraph: /Smart building automation systems can reduce energy consumption by \d+–\d+% through optimized HVAC, lighting, and occupancy scheduling\./
+    - listitem:
+      - link "Siemens White Paper Industrial efficiency gains from automation and digitalization are documented across manufacturing, energy, and infrastructure sectors.":
+        - /url: https://www.siemens.com/global/en/home/company/topic-areas/smart-infrastructure.html
+        - text: ""
+        - paragraph: Industrial efficiency gains from automation and digitalization are documented across manufacturing, energy, and infrastructure sectors.

@@ -1,5 +1,15 @@
-<div class="si-layout-fixed-height w-100 h-100">
-  <si-chat-container #chatContainer colorVariant="base-0">
+<div class="d-flex flex-column si-layout-fixed-height w-100 h-100">
+  <div class="d-flex gap-2 p-3 border-bottom">
+    <button
+      type="button"
+      class="btn btn-secondary btn-sm"
+      [class.active]="showSummary()"
+      (click)="showSummary.update(v => !v)"
+    >
+      Summary sources
+    </button>
+  </div>
+  <si-chat-container #chatContainer colorVariant="base-0" class="flex-grow-1">
     @for (message of messages(); track message) {
       @if (message.type === 'user') {
         <si-user-message
@@ -16,7 +26,21 @@
           [actions]="getMessagePrimaryActions(message)"
           [secondaryActions]="getMessageSecondaryActions(message)"
           [contentFormatter]="markdownRenderer"
-        />
+          [sources]="showSummary() ? [] : (message.citations ?? [])"
+          (chipClicked)="logEvent('Inline chip clicked: ' + (message.citations?.[0]?.title ?? ''))"
+        >
+          @if (showSummary() && message.citations?.length) {
+            <si-summary-chip
+              siAiMessageAction
+              siPopoverPlacement="bottom"
+              icon="element-global"
+              label="Sources"
+              [siPopover]="summarySourcesTpl"
+              [siPopoverContext]="{ $implicit: message.citations }"
+              (click)="logEvent('Summary chip clicked')"
+            />
+          }
+        </si-ai-message>
       }
       @if (message.type === 'custom') {
         <si-chat-message alignment="start" actionsPosition="bottom">
@@ -93,6 +117,25 @@
       }
     </si-chat-input>
   </si-chat-container>
+  <ng-template #summarySourcesTpl let-srcs>
+    <si-popover-body>
+      <ul class="list-unstyled m-0">
+        @for (source of srcs; track source.url) {
+          <li>
+            <a
+              class="list-item list-item-action"
+              target="_blank"
+              rel="noopener noreferrer"
+              [href]="source.url"
+            >
+              <span class="list-item-title">{{ source.title }}</span>
+              <p class="list-item-description">{{ source.excerpt }}</p>
+            </a>
+          </li>
+        }
+      </ul>
+    </si-popover-body>
+  </ng-template>
 </div>
 
 <ng-template #modalTemplate let-modalRef="modalRef" let-attachment="attachment">

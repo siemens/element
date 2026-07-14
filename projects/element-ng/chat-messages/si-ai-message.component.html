@@ -4,11 +4,44 @@
     @if (content) {
       <span class="text-pre-wrap">{{ content }}</span>
     } @else {
-      <div #formattedContent> </div>
+      <div #formattedContent class="si-ai-message-content"> </div>
     }
   }
 
-  @if (actions().length > 0 || secondaryActions().length > 0) {
+  <span #inlineContent>
+    <si-summary-chip
+      class="si-inline-source-chip"
+      siPopoverPlacement="bottom"
+      [label]="inlineChipLabel()"
+      [style.display]="sources().length > 0 ? 'inline-flex' : 'none'"
+      [selected]="false"
+      [siPopover]="inlineSourcesTpl"
+      [siPopoverContext]="{ $implicit: sources() }"
+      (click)="chipClicked.emit()"
+    />
+  </span>
+
+  <ng-template #inlineSourcesTpl let-srcs>
+    <si-popover-body>
+      <ul class="list-unstyled m-0">
+        @for (source of srcs; track source.url) {
+          <li>
+            <a
+              class="list-item list-item-action"
+              target="_blank"
+              rel="noopener noreferrer"
+              [href]="source.url"
+            >
+              <span class="list-item-title">{{ source.title }}</span>
+              <p class="list-item-description">{{ source.excerpt }}</p>
+            </a>
+          </li>
+        }
+      </ul>
+    </si-popover-body>
+  </ng-template>
+
+  @if (actions().length > 0 || secondaryActions().length > 0 || aiMessageActions().length > 0) {
     <div class="btn-group ai-message-actions" role="group" siChatMessageAction>
       @for (action of actions(); track $index) {
         <button
@@ -37,6 +70,8 @@
           <si-menu-factory [items]="secondaryActions()" [actionParam]="actionParam()" />
         </ng-template>
       }
+
+      <ng-content select="[siAiMessageAction]" />
     </div>
   }
 </si-chat-message>

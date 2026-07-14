@@ -32,6 +32,19 @@ or to provide system-driven assistance, explanations, or follow-up actions.
 
 ![AI message](images/ai-message.png)
 
+#### Source citations
+
+AI messages can optionally surface the sources that informed a response.
+Two presentation styles are available:
+
+- **Inline source chip:** appears at the end of the message body, embedded in the text flow.
+  Pass the `sources` input to `si-ai-message` and it renders automatically.
+  Shows the title of the first cited source, with a `+N` suffix when multiple sources are present.
+- **Summary source chip:** appears in the actions row below the message.
+  Use a standard `si-summary-chip` and place it there with the `siAiMessageAction` directive.
+
+Both open a popover that lists all cited sources with their title, excerpt, and a link.
+
 ### Best practices
 
 - Allow user interaction (feedback, retry, copy) when appropriate.
@@ -68,6 +81,20 @@ When **actions** are present, they’re always positioned below the text area.
 Is possible to display up to 4 actions inline; any additional actions will be collapsed into a menu.
 
 ![AI message actions](images/ai-message-actions.png)
+
+#### Source chip
+
+The **inline source chip** sits at the end of the last paragraph of the AI message body.
+It renders as a compact pill with the first source's title.
+When more than one source is cited, a `+N` count is appended.
+
+For the **summary** style, place a standard `si-summary-chip` in the actions row using the
+`siAiMessageAction` directive. A globe icon and a "Sources" label are the recommended defaults.
+
+Both open a popover on click that lists each source with its title, a short excerpt,
+and a link that opens in a new tab.
+Only one style should be shown at a time: use the inline chip while the response is
+being streamed, and switch to the summary chip once streaming is complete.
 
 ### Responsive behavior
 
@@ -107,6 +134,18 @@ The slots are:
 <si-docs-component example="si-chat-messages/si-attachment-list"></si-docs-component>
 
 <si-docs-api component="SiAttachmentListComponent"></si-docs-api>
+
+### Source chips
+
+> **Note:** The source chip components are currently experimental and may undergo changes in future releases.
+
+Pass the `sources` input directly to `si-ai-message` to render the inline chip automatically.
+To show a summary chip in the actions row, project a `si-summary-chip` using the `siAiMessageAction` directive
+and connect a popover template to it.
+
+<si-docs-api component="SiSourceChipInlineComponent"></si-docs-api>
+
+<si-docs-api component="SiAiMessageActionDirective"></si-docs-api>
 
 ### Markdown renderer
 

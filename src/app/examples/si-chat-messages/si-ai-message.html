@@ -1,4 +1,35 @@
 <div class="p-2">
+  <div class="d-flex gap-2 mb-4">
+    <button
+      type="button"
+      class="btn btn-secondary btn-sm"
+      [class.active]="showSummary()"
+      (click)="showSummary.update(v => !v)"
+    >
+      Summary sources
+    </button>
+  </div>
+
+  <ng-template #summarySourcesTpl let-srcs>
+    <si-popover-body>
+      <ul class="list-unstyled m-0">
+        @for (source of srcs; track source.url) {
+          <li>
+            <a
+              class="list-item list-item-action"
+              target="_blank"
+              rel="noopener noreferrer"
+              [href]="source.url"
+            >
+              <span class="list-item-title">{{ source.title }}</span>
+              <p class="list-item-description">{{ source.excerpt }}</p>
+            </a>
+          </li>
+        }
+      </ul>
+    </si-popover-body>
+  </ng-template>
+
   <si-ai-message
     actionParam="message-1"
     [content]="content"
@@ -6,7 +37,21 @@
     [actions]="actions"
     [secondaryActions]="secondaryActions"
     [loading]="false"
-  />
+    [sources]="showSummary() ? [] : exampleSources"
+    (chipClicked)="logEvent('Inline chip clicked: ' + exampleSources[0].title)"
+  >
+    @if (showSummary()) {
+      <si-summary-chip
+        siAiMessageAction
+        siPopoverPlacement="bottom"
+        icon="element-global"
+        label="Sources"
+        [siPopover]="summarySourcesTpl"
+        [siPopoverContext]="{ $implicit: exampleSources }"
+        (click)="logEvent('Summary chip clicked')"
+      />
+    }
+  </si-ai-message>
 
   <div class="mt-5">
     <si-ai-message [loading]="true" />

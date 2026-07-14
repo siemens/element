@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   elementBookmark,
@@ -12,15 +12,27 @@ import {
   elementThumbsDown,
   elementThumbsUp
 } from '@siemens/element-icons';
-import { MessageAction, SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
+import {
+  MessageAction,
+  SiAiMessageActionDirective,
+  SiAiMessageComponent
+} from '@siemens/element-ng/chat-messages';
 import { addIcons } from '@siemens/element-ng/icon';
 import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { MenuItemAction } from '@siemens/element-ng/menu';
+import { SiPopoverBodyDirective, SiPopoverDirective } from '@siemens/element-ng/popover';
+import { SiSummaryChipComponent } from '@siemens/element-ng/summary-chip';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiAiMessageComponent],
+  imports: [
+    SiAiMessageComponent,
+    SiAiMessageActionDirective,
+    SiPopoverBodyDirective,
+    SiPopoverDirective,
+    SiSummaryChipComponent
+  ],
   templateUrl: './si-ai-message.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -28,7 +40,24 @@ export class SampleComponent {
   logEvent = inject(LOG_EVENT);
   private sanitizer = inject(DomSanitizer);
 
+  readonly showSummary = signal(false);
+
   protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
+
+  protected readonly exampleSources = [
+    {
+      title: 'Energy Report 2024',
+      excerpt:
+        'Smart building automation systems can reduce energy consumption by 20–30% through optimized HVAC, lighting, and occupancy scheduling.',
+      url: 'https://www.iea.org/reports/energy-efficiency-2024'
+    },
+    {
+      title: 'Siemens White Paper',
+      excerpt:
+        'Industrial efficiency gains from automation and digitalization are documented across manufacturing, energy, and infrastructure sectors.',
+      url: 'https://www.siemens.com/global/en/home/company/topic-areas/smart-infrastructure.html'
+    }
+  ];
 
   protected readonly icons = addIcons({
     elementThumbsUp,
@@ -44,7 +73,9 @@ export class SampleComponent {
 You can use \`inline code\` and create lists:
 
 - First item
-- Second item`;
+- Second item
+
+Smart building automation reduces energy use by up to 30%, while industrial efficiency gains are well-documented in literature.`;
 
   actions: MessageAction[] = [
     {
