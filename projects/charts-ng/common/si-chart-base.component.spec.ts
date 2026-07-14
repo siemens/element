@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { echarts, EChartOption } from '@siemens/charts-ng/common';
 import { LineChart } from 'echarts/charts';
@@ -17,8 +17,7 @@ echarts.use([LineChart, GridComponent]);
 
 @Component({
   imports: [SiChartBaseComponent],
-  template: `<si-chart-base style="inline-size: 300px; block-size: 300px" [options]="options" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `<si-chart-base style="inline-size: 300px; block-size: 300px" [options]="options" />`
 })
 class TestHostComponent {
   readonly chartComponent = viewChild.required(SiChartBaseComponent);
