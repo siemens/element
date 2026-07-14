@@ -43,6 +43,7 @@ $duration: variables.element-transition-duration(0.2s);
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 svg {
