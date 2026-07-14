@@ -84,6 +84,10 @@ export class TooltipComponent {
       : null;
   });
 
+  protected readonly tooltipComponentInputs = computed(
+    () => this.config.tooltipContext() as Record<string, unknown> | undefined
+  );
+
   /** @internal */
   updateTooltipPosition(change: ConnectedOverlayPositionChange, anchor?: ElementRef): void {
     this.lastPositionChange = change;

@@ -18,7 +18,10 @@
         [ngTemplateOutletContext]="config.tooltipContext()"
       />
     } @else if (tooltipComponent()) {
-      <ng-container [ngComponentOutlet]="tooltipComponent()!" />
+      <ng-container
+        [ngComponentOutlet]="tooltipComponent()!"
+        [ngComponentOutletInputs]="tooltipComponentInputs()"
+      />
     }
   </div>
 </div>

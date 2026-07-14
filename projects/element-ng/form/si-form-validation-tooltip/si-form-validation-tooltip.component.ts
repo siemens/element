@@ -2,14 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, InjectionToken, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiFormError } from '../si-form-item/si-form-item.component';
-
-export const SI_FORM_VALIDATION_TOOLTIP_DATA = new InjectionToken<Signal<SiFormError[]>>(
-  'SiFormValidationTooltipData'
-);
 
 @Component({
   selector: 'si-form-validation-tooltip',
@@ -25,5 +21,10 @@ export const SI_FORM_VALIDATION_TOOLTIP_DATA = new InjectionToken<Signal<SiFormE
   }
 })
 export class SiFormValidationTooltipComponent {
-  protected errors = inject(SI_FORM_VALIDATION_TOOLTIP_DATA);
+  /**
+   * The validation errors to display.
+   *
+   * @defaultValue []
+   */
+  readonly errors = input<SiFormError[]>([]);
 }

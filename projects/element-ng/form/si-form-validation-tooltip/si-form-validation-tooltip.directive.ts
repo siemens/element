@@ -2,16 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  Directive,
-  DoCheck,
-  ElementRef,
-  inject,
-  Injector,
-  input,
-  OnDestroy,
-  signal
-} from '@angular/core';
+import { Directive, DoCheck, ElementRef, inject, input, OnDestroy, signal } from '@angular/core';
 import { NgControl, ValidationErrors } from '@angular/forms';
 import { SiTooltipService, TooltipRef } from '@siemens/element-ng/tooltip';
 
@@ -19,10 +10,7 @@ import { SiFormContainerComponent } from '../si-form-container/si-form-container
 import { SiFormError } from '../si-form-item/si-form-item.component';
 import { SiFormValidationErrorMapper } from '../si-form-validation-error.model';
 import { SiFormValidationErrorService } from '../si-form-validation-error.service';
-import {
-  SI_FORM_VALIDATION_TOOLTIP_DATA,
-  SiFormValidationTooltipComponent
-} from './si-form-validation-tooltip.component';
+import { SiFormValidationTooltipComponent } from './si-form-validation-tooltip.component';
 
 /**
  * Directive to show a tooltip with validation errors of a form control.
@@ -100,12 +88,8 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
       placement: 'auto',
       element: this.elementRef,
       describedBy: this.describedBy,
-      injector: Injector.create({
-        providers: [{ provide: SI_FORM_VALIDATION_TOOLTIP_DATA, useValue: this.errors }]
-      }),
       tooltip: () => SiFormValidationTooltipComponent,
-      // Not actually used, but errors in the context triggers a resize if the errors changes.
-      tooltipContext: () => this.errors()
+      tooltipContext: () => ({ errors: this.errors() })
     });
   }
 
