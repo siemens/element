@@ -224,13 +224,13 @@ test.describe('dashboard', () => {
     await si.visitExample(example, undefined);
     await expect(page.getByRole('heading', { name: 'Sample Dashboard' })).toBeVisible();
 
-    // Record original bounding boxes of all widgets keyed by item-id
+    // Record original bounding boxes of all widgets keyed by gs-id
     const widgets = page.locator('si-widget-host');
     const count = await widgets.count();
     const originalBoxes: Record<string, { x: number; y: number }> = {};
     for (let i = 0; i < count; i++) {
       const widget = widgets.nth(i);
-      const itemId = await widget.getAttribute('item-id');
+      const itemId = await widget.getAttribute('gs-id');
       expect(itemId).toBeTruthy();
       const box = await widget.boundingBox();
       expect(box).toBeTruthy();
@@ -278,7 +278,7 @@ test.describe('dashboard', () => {
 
     // Verify all widgets returned to their original positions
     for (const [itemId, expectedBox] of Object.entries(originalBoxes)) {
-      await expect(page.locator(`si-widget-host[item-id="${itemId}"]`)).toHaveBoundingBox(
+      await expect(page.locator(`si-widget-host[gs-id="${itemId}"]`)).toHaveBoundingBox(
         expectedBox
       );
     }
