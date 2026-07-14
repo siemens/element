@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -22,8 +22,7 @@ type ForecastLayout = 'vertical' | 'horizontal';
   selector: 'si-weather-widget-forecast',
   imports: [SiIconComponent, SiTranslatePipe, SiWeatherWidgetIllustrationComponent],
   templateUrl: './si-weather-widget-forecast.component.html',
-  styleUrl: './si-weather-widget-forecast.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-weather-widget-forecast.component.scss'
 })
 export class SiWeatherWidgetForecastComponent {
   readonly forecast = input.required<SiWeatherWidgetForecast>();

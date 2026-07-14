@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '@angular/core';
+import { Component, ElementRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { SI_TOUR_TOKEN } from './si-tour-token.model';
@@ -10,8 +10,7 @@ import { SI_TOUR_TOKEN } from './si-tour-token.model';
 @Component({
   selector: 'si-tour-highlight',
   templateUrl: './si-tour-highlight.component.html',
-  styleUrl: './si-tour-highlight.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-tour-highlight.component.scss'
 })
 export class SiTourHighlightComponent {
   private tourToken = inject(SI_TOUR_TOKEN);

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { STATUS_ICON } from '@siemens/element-ng/common';
 import { Subject } from 'rxjs';
@@ -13,8 +13,7 @@ import { SiToastNotificationComponent } from './si-toast-notification.component'
 
 @Component({
   imports: [SiToastNotificationComponent],
-  template: `<si-toast-notification [toast]="toast()" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `<si-toast-notification [toast]="toast()" />`
 })
 class TestHostComponent {
   readonly siToastComponent = viewChild.required(SiToastNotificationComponent);

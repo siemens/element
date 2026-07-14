@@ -4,7 +4,7 @@
  */
 import { Overlay } from '@angular/cdk/overlay';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -14,8 +14,7 @@ import { SiFormValidationTooltipDirective } from './si-form-validation-tooltip.d
 describe('SiFormValidationTooltipDirective', () => {
   @Component({
     imports: [SiFormValidationTooltipDirective, ReactiveFormsModule],
-    template: `<input siFormValidationTooltip required [formControl]="control" />`,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    template: `<input siFormValidationTooltip required [formControl]="control" />`
   })
   class TestHostComponent {
     control = new FormControl('');

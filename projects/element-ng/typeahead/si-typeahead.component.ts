@@ -3,15 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  ElementRef,
-  inject,
-  viewChild
-} from '@angular/core';
+import { AfterViewInit, Component, computed, ElementRef, inject, viewChild } from '@angular/core';
 import {
   SiAutocompleteDirective,
   SiAutocompleteListboxDirective,
@@ -38,7 +30,6 @@ import { TypeaheadMatch } from './si-typeahead.model';
   ],
   templateUrl: './si-typeahead.component.html',
   styleUrl: './si-typeahead.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'w-100', '(mousedown)': '$event.preventDefault()' }
 })
 export class SiTypeaheadComponent implements AfterViewInit {

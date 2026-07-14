@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { elementDown2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
@@ -34,7 +34,6 @@ import { SiCustomSelectDirective } from './si-custom-select.directive';
     </div>
   `,
   styleUrl: './si-select-combobox.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'select focus-none dropdown-toggle d-flex align-items-center w-100',
     '[attr.id]': 'customSelect.comboboxLabelId()',

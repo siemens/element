@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
@@ -25,8 +25,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
         </div>
       }
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class SiAccountDetailsComponent {
   /** The user's full name. */

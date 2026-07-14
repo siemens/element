@@ -7,7 +7,6 @@ import {
   AfterContentChecked,
   AfterContentInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   contentChild,
@@ -50,7 +49,6 @@ export interface SiFormError {
   imports: [SiTranslatePipe, NgTemplateOutlet],
   templateUrl: './si-form-item.component.html',
   styleUrl: '../si-form.shared.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.required]': 'required()',
     '[style.--si-form-label-width]': 'labelWidthCssVar()',

@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  output
-} from '@angular/core';
+import { booleanAttribute, Component, computed, input, output } from '@angular/core';
 import { elementLeft2, elementRight2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
@@ -18,8 +11,7 @@ export type Direction = 'left' | 'right';
 @Component({
   selector: 'si-calendar-direction-button',
   imports: [SiIconComponent],
-  templateUrl: './si-calendar-direction-button.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-calendar-direction-button.component.html'
 })
 export class SiCalendarDirectionButtonComponent {
   readonly ariaLabel = input.required<string>();

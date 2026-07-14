@@ -4,7 +4,7 @@
  */
 import { CdkListbox, CdkOption, ListboxValueChangeEvent } from '@angular/cdk/listbox';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, viewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, viewChild } from '@angular/core';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiSelectOptionRowComponent } from '../select-option/si-select-option-row.component';
@@ -23,8 +23,7 @@ import { SiSelectListBase } from './si-select-list.base';
     SiSelectGroupTemplateDirective,
     SiSelectOptionRowComponent
   ],
-  templateUrl: './si-select-list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-select-list.component.html'
 })
 export class SiSelectListComponent<T> extends SiSelectListBase<T> implements OnInit {
   private readonly listbox = viewChild.required<CdkListbox, ElementRef<HTMLUListElement>>(

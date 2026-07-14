@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   FormControl,
@@ -27,8 +27,7 @@ const rgbToHex = (rgb: string): string => {
     <si-password-toggle #toggle [showVisibilityIcon]="showVisibilityIcon()">
       <input [attr.type]="toggle.inputType" />
     </si-password-toggle>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestHostComponent {
   readonly showVisibilityIcon = input(true);
@@ -42,8 +41,7 @@ class TestHostComponent {
         <input class="form-control" formControlName="input" />
       </si-password-toggle>
     </form>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class FormHostComponent {
   readonly form = new FormGroup({

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule, CdkTrapFocus } from '@angular/cdk/a11y';
-import { ChangeDetectionStrategy, Component, inject, viewChild, DOCUMENT } from '@angular/core';
+import { Component, inject, viewChild, DOCUMENT } from '@angular/core';
 
 import { SiHeaderDropdownTriggerDirective } from './si-header-dropdown-trigger.directive';
 import { SI_HEADER_DROPDOWN_OPTIONS } from './si-header.model';
@@ -17,7 +17,6 @@ import { SI_HEADER_DROPDOWN_OPTIONS } from './si-header.model';
   imports: [A11yModule],
   templateUrl: './si-header-dropdown.component.html',
   styles: ':host.sub-menu {min-inline-size: 200px}',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'dropdown-menu position-static',
     '[attr.role]': "trigger.isOverlay ? 'dialog' : 'group'",

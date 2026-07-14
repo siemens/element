@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
-import { ChangeDetectionStrategy, Component, ErrorHandler, signal } from '@angular/core';
+import { Component, ErrorHandler, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -29,8 +29,7 @@ import { SiAutocompleteDirective } from './si-autocomplete.directive';
         }
       </div>
     }
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestHostComponent {
   readonly showList = signal(false);

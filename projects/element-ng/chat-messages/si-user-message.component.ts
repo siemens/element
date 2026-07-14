@@ -3,16 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import {
-  Component,
-  effect,
-  input,
-  viewChild,
-  ElementRef,
-  computed,
-  signal,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, effect, input, viewChild, ElementRef, computed, signal } from '@angular/core';
 import { elementOptionsVertical } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
@@ -57,8 +48,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
     SiTranslatePipe
   ],
   templateUrl: './si-user-message.component.html',
-  styleUrl: './si-user-message.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-user-message.component.scss'
 })
 export class SiUserMessageComponent {
   protected readonly formattedContent = viewChild<ElementRef<HTMLDivElement>>('formattedContent');

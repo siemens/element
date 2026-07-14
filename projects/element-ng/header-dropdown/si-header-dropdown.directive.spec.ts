@@ -4,7 +4,7 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiHeaderDropdownItemComponent } from './si-header-dropdown-item.component';
@@ -39,8 +39,7 @@ import { SiHeaderDropdownTriggerHarness } from './testing/si-header-dropdown-tri
       </si-header-dropdown>
     </ng-template>
   `,
-  providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: TestHostComponent }],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: TestHostComponent }]
 })
 class TestHostComponent implements HeaderWithDropdowns {
   readonly inlineDropdown = signal(false);

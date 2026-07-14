@@ -5,7 +5,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -43,7 +42,6 @@ import { timer } from 'rxjs';
   ],
   templateUrl: './si-main-detail-container.component.html',
   styleUrl: './si-main-detail-container.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'si-layout-inner',
     '[class.animate]': 'animate()',

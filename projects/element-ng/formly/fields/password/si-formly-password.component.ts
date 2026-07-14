@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
 import {
@@ -22,8 +22,7 @@ import { SiValidationErrorIdPipe } from '../../utils';
     SiPasswordStrengthDirective,
     SiValidationErrorIdPipe
   ],
-  templateUrl: './si-formly-password.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-formly-password.component.html'
 })
 export class SiFormlyPasswordComponent extends FieldType<FieldTypeConfig> {
   /*

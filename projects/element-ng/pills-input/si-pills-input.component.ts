@@ -4,7 +4,6 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -41,7 +40,6 @@ import {
       useExisting: SiPillsInputComponent
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'form-control',
     role: 'listbox',

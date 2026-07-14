@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, DebugElement, signal, viewChild } from '@angular/core';
+import { Component, DebugElement, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -19,8 +19,7 @@ import { SiIp4InputDirective } from './si-ip4-input.directive';
     [cidr]="cidr()"
     [ngModel]="address()"
     (ngModelChange)="address.set($event)"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class WrapperComponent {
   readonly validation = viewChild.required<NgControl>('validation');

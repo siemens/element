@@ -2,15 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  output,
-  viewChild
-} from '@angular/core';
+import { booleanAttribute, Component, computed, input, output, viewChild } from '@angular/core';
 import { elementUpload } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -22,8 +14,7 @@ import { UploadFile } from './si-file-uploader.model';
   selector: 'si-file-dropzone',
   imports: [SiIconComponent, SiTranslatePipe, SiFileUploadDirective],
   templateUrl: './si-file-dropzone.component.html',
-  styleUrl: './si-file-dropzone.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-file-dropzone.component.scss'
 })
 export class SiFileDropzoneComponent {
   /**

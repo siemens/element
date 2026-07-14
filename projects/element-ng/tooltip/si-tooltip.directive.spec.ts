@@ -3,14 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  inject,
-  signal,
-  viewChild
-} from '@angular/core';
+import { Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { page } from 'vitest/browser';
 
@@ -43,8 +36,7 @@ describe('SiTooltipDirective', () => {
       imports: [SiTooltipModule],
       template: `<button type="button" [siTooltip]="tooltipText()" [isDisabled]="isDisabled()">
         Test
-      </button>`,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      </button>`
     })
     class TestHostComponent {
       readonly isDisabled = signal(false);
@@ -185,8 +177,7 @@ describe('SiTooltipDirective', () => {
       template: `<button type="button" [siTooltip]="template" [tooltipContext]="tooltipContext()">
           Test
         </button>
-        <ng-template #template let-tooltip="tooltip">Template content {{ tooltip }}</ng-template>`,
-      changeDetection: ChangeDetectionStrategy.OnPush
+        <ng-template #template let-tooltip="tooltip">Template content {{ tooltip }}</ng-template>`
     })
     class TestHostComponent {
       readonly tooltipContext = signal<Record<string, unknown>>({});
@@ -232,8 +223,7 @@ describe('SiTooltipDirective', () => {
     @Component({
       template: `<button #anchor type="button">Test</button>
         <div #content>{{ contentText() }}</div>`,
-      providers: [SiTooltipService],
-      changeDetection: ChangeDetectionStrategy.OnPush
+      providers: [SiTooltipService]
     })
     class TestHostComponent {
       readonly contentText = signal('node tooltip');
@@ -299,8 +289,7 @@ describe('SiTooltipDirective', () => {
       imports: [SiTooltipModule],
       template: `<button type="button" siTooltip="test" [tooltipScrollStrategy]="scrollStrategy()"
         >Test</button
-      >`,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      >`
     })
     class TestHostComponent {
       readonly scrollStrategy = signal<ScrollStrategy | undefined>(undefined);

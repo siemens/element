@@ -5,7 +5,6 @@
 import { DomPortal } from '@angular/cdk/portal';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -29,7 +28,6 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   imports: [SiIconComponent],
   templateUrl: './si-navbar-vertical-next-item.component.html',
   styleUrl: './si-navbar-vertical-next-item.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.focus-inside]': '!chipMode() || !!parent',
     '[class.navbar-vertical-item]': '!isChip()',

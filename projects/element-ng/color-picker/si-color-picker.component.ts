@@ -5,7 +5,6 @@
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -54,8 +53,7 @@ const defaultDataColors: string[] = [
       useExisting: SiColorPickerComponent,
       multi: true
     }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 export class SiColorPickerComponent implements ControlValueAccessor {
   // eslint-disable-next-line defaultValue/tsdoc-defaultValue-annotation

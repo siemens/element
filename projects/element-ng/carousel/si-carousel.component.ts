@@ -4,7 +4,6 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -94,7 +93,6 @@ const SCROLL_STALL_THRESHOLD = 0.25;
   imports: [SiTranslatePipe, SiResizeObserverDirective, SiIconComponent],
   templateUrl: './si-carousel.component.html',
   styleUrl: './si-carousel.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.role]': 'ariaRole()',
     '[attr.aria-roledescription]': 'translatedCarouselRoleDescription()',

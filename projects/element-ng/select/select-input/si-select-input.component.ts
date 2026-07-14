@@ -4,7 +4,6 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -30,7 +29,6 @@ import { SelectOption } from '../si-select.types';
   imports: [SiAutoCollapsableListModule, SiIconComponent, SiSelectOptionComponent, SiTranslatePipe],
   templateUrl: './si-select-input.component.html',
   styleUrl: './si-select-input.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     // In readonly mode, the select needs to be announced as a textbox.
     // Otherwise, screen-reader won't announce the readonly state.

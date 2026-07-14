@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, ComponentRef, viewChild } from '@angular/core';
+import { Component, ComponentRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -10,8 +10,7 @@ import { SiColorPickerComponent as TestComponent } from './index';
 
 @Component({
   imports: [ReactiveFormsModule, TestComponent],
-  template: `<si-color-picker [formControl]="colorPickerControl" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `<si-color-picker [formControl]="colorPickerControl" />`
 })
 class FormHostComponent {
   readonly colorPickerComp = viewChild.required(TestComponent);

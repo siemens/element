@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 /**
  * Skeleton loading state for the `<si-weather-widget-body>`. Not exported from
@@ -22,7 +22,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       </div>
     </div>
   `,
-  styleUrl: './si-weather-widget-skeleton.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-weather-widget-skeleton.component.scss'
 })
 export class SiWeatherWidgetSkeletonComponent {}

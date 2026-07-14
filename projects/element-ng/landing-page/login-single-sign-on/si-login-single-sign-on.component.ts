@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 /**
@@ -23,8 +23,7 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 @Component({
   selector: 'si-login-single-sign-on',
   imports: [SiTranslatePipe],
-  templateUrl: './si-login-single-sign-on.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-login-single-sign-on.component.html'
 })
 export class SiLoginSingleSignOnComponent {
   /**
