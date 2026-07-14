@@ -10,9 +10,10 @@ import {
   inject,
   Injectable,
   Injector,
+  inputBinding,
   OnDestroy,
+  outputBinding,
   PLATFORM_ID,
-  Provider,
   signal
 } from '@angular/core';
 import { isRTL, StatusType } from '@siemens/element-ng/common';
@@ -21,7 +22,6 @@ import { SiNoTranslateService, SiTranslateService } from '@siemens/element-trans
 import { Subject } from 'rxjs';
 
 import { SiToastNotificationDrawerComponent } from './si-toast-notification-drawer/si-toast-notification-drawer.component';
-import { SI_TOAST_TOKEN, ToastToken } from './si-toast-token.model';
 import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from './si-toast.model';
 
 @Injectable({ providedIn: 'root' })
@@ -33,11 +33,6 @@ export class SiToastNotificationService implements OnDestroy {
     return this.activeToastsSignal();
   }
 
-  private token: ToastToken = {
-    toasts: this.activeToastsSignal,
-    pause: toast => this.pauseToastNotification(toast),
-    resume: toast => this.resumeToastNotification(toast)
-  };
   private readonly maxToasts = 3;
 
   private componentRef?: ComponentRef<SiToastNotificationDrawerComponent>;
@@ -170,18 +165,26 @@ export class SiToastNotificationService implements OnDestroy {
     const portal = new ComponentPortal(
       SiToastNotificationDrawerComponent,
       null,
-      this.buildInjector()
+      this.buildInjector(),
+      undefined,
+      [
+        inputBinding('toasts', this.activeToastsSignal),
+        outputBinding('toastPaused', (toast: SiToast) => this.pauseToastNotification(toast)),
+        outputBinding('toastResumed', (toast: SiToast) => this.resumeToastNotification(toast))
+      ]
     );
     this.componentRef = this.overlayRef.attach(portal);
   }
 
   private buildInjector(): Injector {
-    const providers: Provider[] = [{ provide: SI_TOAST_TOKEN, useValue: this.token }];
-    if (!this.injector.get(SiTranslateService, null)) {
-      // TODO remove once translation must be defined at application start
-      // Notification service is provided in 'root'. If no translation is defined, SiNoTranslateService is not provided
-      providers.push({ provide: SiTranslateService, useClass: SiNoTranslateService, deps: [] });
+    if (this.injector.get(SiTranslateService, null)) {
+      return this.injector;
     }
-    return Injector.create({ providers, parent: this.injector });
+    // TODO remove once translation must be defined at application start
+    // Notification service is provided in 'root'. If no translation is defined, SiNoTranslateService is not provided
+    return Injector.create({
+      providers: [{ provide: SiTranslateService, useClass: SiNoTranslateService, deps: [] }],
+      parent: this.injector
+    });
   }
 }

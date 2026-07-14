@@ -1,10 +1,10 @@
-@for (toast of token.toasts(); track toast) {
+@for (toast of toasts(); track toast) {
   <si-toast-notification
     class="position-relative"
     animate.enter="toast-enter"
     animate.leave="toast-leave"
     [toast]="toast"
-    (paused)="token.pause(toast)"
-    (resumed)="token.resume(toast)"
+    (paused)="toastPaused.emit(toast)"
+    (resumed)="toastResumed.emit(toast)"
   />
 }
