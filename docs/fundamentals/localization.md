@@ -4,7 +4,9 @@
 
 Internationalization is the process of designing and developing a product for localization into specific languages and regions.
 
-## Introduction ---
+## Terms ---
+
+The following key terms are important for everyone involved in the localization process.
 
 ### Internationalization (i18n)
 
@@ -34,13 +36,11 @@ LTR refers to languages (e.g. English, German, French, Spanish) and scripts that
 
 RTL refers to languages (e.g. Arabic, Hebrew, Persian) and writing systems that are written and read from right to left.
 
-Because of these differences, it's important for UX writers to consider that often the entire user interface must be mirrored, which imposes significant demands on [internationalization](#internationalization-i18n).
+Because of these differences, it's important to consider that often the entire user interface must be mirrored, which imposes significant demands on [internationalization](#internationalization-i18n).
 
 ## Writing ---
 
-UX writers are the text experts in the product development team and therefore ideal ambassadors for internationalization.
-They need to be aware of the challenges of localization and understand how they can support UX designers in creating localization-friendly designs (e.g. [space for translation](#manage-space-for-translations)).
-This page gives recommendations on how UX writers can support localization teams and translators to minimize internationalization challenges.
+UX writers are the text experts in the product development team and therefore should understand localization. This page gives recommendations on how UX writers can support localization teams and translators to minimize internationalization challenges.
 
 ### Consider translation
 
