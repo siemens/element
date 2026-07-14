@@ -4,14 +4,23 @@ import { commitTypes, releaseRules } from './tools/semantic-release/config.js';
 const skipCommits = process.env.SKIP_COMMIT === 'true';
 
 const pnpmPackageRoots = [
+  '',
   'projects/element-ng',
+  'dist/@spike-rabbit/element-ng',
   'projects/element-translate-ng',
+  'dist/@spike-rabbit//element-translate-ng',
   'projects/live-preview',
+  'dist/@spike-rabbit/live-preview',
   'projects/charts-ng',
+  'dist/@spike-rabbit/charts-ng',
   'projects/native-charts-ng',
+  'dist/@spike-rabbit/native-charts-ng',
   'projects/dashboards-ng',
+  'dist/@spike-rabbit/dashboards-ng',
   'projects/maps-ng',
+  'dist/@spike-rabbit/maps-ng',
   'projects/map-styles',
+  'dist/@spike-rabbit/map-styles',
   'projects/element-theme',
   'projects/element-translate-cli'
 ];
@@ -57,22 +66,16 @@ export default {
     ...(skipCommits ? [] : ['@semantic-release/changelog']),
     // Packages to be pushed
     ...pnpmPackageRoots.map(pkgRoot => [
-      '@anolilab/semantic-release-pnpm',
+      '@semantic-release/npm',
       {
-        pkgRoot
-      }
-    ]),
-    // Root package.json only needs version update
-    [
-      '@anolilab/semantic-release-pnpm',
-      {
+        pkgRoot: pkgRoot,
         npmPublish: false
       }
-    ],
+    ]),
     [
-      './tools/semantic-release/sync-dist-package-versions.js',
+      '@semantic-release/exec',
       {
-        pkgRoots: pnpmPackageRoots
+        publishCmd: 'pnpm publish --recursive --no-git-checks --registry=https://npmjs.org'
       }
     ],
     ...(skipCommits
