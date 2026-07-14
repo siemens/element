@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 export interface MicrochartProgressSeries {
   /** Value in percent */
@@ -19,7 +19,6 @@ export interface MicrochartProgressSeries {
   selector: 'si-microchart-progress',
   templateUrl: './si-microchart-progress.component.html',
   styleUrl: './si-microchart-progress.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'progressbar',
     '[attr.aria-valuenow]': 'series().valuePercent',

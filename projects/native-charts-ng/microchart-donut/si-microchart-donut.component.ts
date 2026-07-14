@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  numberAttribute
-} from '@angular/core';
+import { Component, computed, input, numberAttribute } from '@angular/core';
 import { Coordinate, makeArc, valueToRelativeAngle } from '@siemens/native-charts-ng/utils';
 
 /**
@@ -36,8 +30,7 @@ interface InternalSeries {
 @Component({
   selector: 'si-microchart-donut',
   templateUrl: './si-microchart-donut.component.html',
-  styleUrl: './si-microchart-donut.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-microchart-donut.component.scss'
 })
 export class SiMicrochartDonutComponent {
   /**
