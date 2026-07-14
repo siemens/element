@@ -255,19 +255,6 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
    */
   readonly fitGeoJsonPadding = input<number[]>([20, 20, 20, 20]);
   /**
-   * Cutoff text for tooltips, when cluster combines more than 4 features
-   *
-   * @deprecated Use `SiMapTooltipComponent` instead to set the `moreText` input e.g. `<si-map ...><si-map-tooltip [moreText]="'KEY_MORE'" /></si-map>`.
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_MAPS.TOOLTIP_MORE_TEXT:and {{length}} more...`)
-   * ```
-   */
-  readonly moreText = input(
-    t(() => $localize`:@@SI_MAPS.TOOLTIP_MORE_TEXT:and {{length}} more...`)
-  );
-  /**
    * Show multiple worlds, including points that cross the 180th meridian.
    *
    * @defaultValue true
