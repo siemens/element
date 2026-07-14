@@ -175,7 +175,7 @@ export interface WidgetConfig {
    */
   minWidth?: number;
   /**
-   * maximum height allowed during resize/creation (default?: undefined = un-constrained)
+   * minimum height allowed during resize/creation (default?: undefined = un-constrained)
    */
   minHeight?: number;
   /**
