@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import {
   ContentActionBarMainItem,
@@ -23,7 +23,6 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
   imports: [SiContentActionBarComponent, SiTranslatePipe],
   templateUrl: './si-card-header.component.html',
   styleUrl: './si-card-header.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'card-header d-flex justify-content-between'
   }

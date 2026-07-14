@@ -4,7 +4,6 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   DestroyRef,
@@ -53,7 +52,6 @@ import { UsernamePassword, UsernameValidationPayload } from '../si-landing-page.
   ],
   templateUrl: './si-login-basic.component.html',
   styleUrl: './si-login-basic.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'animate.enter': 'component-enter'
   }

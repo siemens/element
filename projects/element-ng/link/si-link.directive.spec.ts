@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import {
@@ -24,8 +24,7 @@ import { SI_LINK_DEFAULT_NAVIGATION_EXTRA, SiLinkDirective } from './si-link.dir
     (activeChange)="activeChange($event)"
   >
     Testli
-  </a>`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  </a>`
 })
 class TestHostComponent {
   readonly link = signal<Link | undefined>({});
@@ -35,8 +34,7 @@ class TestHostComponent {
 
 @Component({
   selector: 'si-empty',
-  template: `empty`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `empty`
 })
 class SiEmptyComponent {}
 

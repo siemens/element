@@ -2,20 +2,12 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  output,
-  signal
-} from '@angular/core';
+import { booleanAttribute, Component, input, output, signal } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-wizard-step',
-  templateUrl: './si-wizard-step.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-wizard-step.component.html'
 })
 export class SiWizardStepComponent {
   /** @defaultValue '' */

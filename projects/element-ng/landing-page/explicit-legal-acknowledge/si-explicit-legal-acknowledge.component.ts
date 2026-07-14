@@ -2,15 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  Component,
-  inject,
-  input,
-  OnInit,
-  output,
-  OnDestroy,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, inject, input, OnInit, output, OnDestroy } from '@angular/core';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiLandingPageComponent } from '../si-landing-page.component';
@@ -44,8 +36,7 @@ import { SiLandingPageComponent } from '../si-landing-page.component';
 @Component({
   selector: 'si-explicit-legal-acknowledge',
   imports: [SiTranslatePipe],
-  templateUrl: './si-explicit-legal-acknowledge.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-explicit-legal-acknowledge.component.html'
 })
 export class SiExplicitLegalAcknowledgeComponent implements OnInit, OnDestroy {
   /**

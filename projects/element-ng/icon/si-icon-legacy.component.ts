@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 /**
@@ -45,8 +45,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
   selector: 'si-icon-legacy',
   imports: [SiTranslatePipe],
   templateUrl: './si-icon-legacy.component.html',
-  styles: ':host, span { line-height: 1; }',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styles: ':host, span { line-height: 1; }'
 })
 export class SiIconLegacyComponent {
   /** Icon token, see {@link https://element.siemens.io/icons/element} */

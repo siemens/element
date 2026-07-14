@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  input,
-  output,
-  viewChild
-} from '@angular/core';
+import { Component, inject, input, output, viewChild } from '@angular/core';
 import { elementSearch } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
@@ -22,8 +15,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   selector: 'si-navbar-vertical-next-search',
   imports: [SiIconComponent, SiSearchBarComponent, SiTranslatePipe],
   templateUrl: './si-navbar-vertical-next-search.component.html',
-  styleUrl: './si-navbar-vertical-next-search.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-navbar-vertical-next-search.component.scss'
 })
 export class SiNavbarVerticalNextSearchComponent {
   protected readonly icons = addIcons({ elementSearch });

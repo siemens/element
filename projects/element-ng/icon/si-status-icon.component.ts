@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { EntityStatusType } from '@siemens/element-ng/common';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
@@ -20,7 +20,6 @@ import { STATUS_ICON_CONFIG } from './status-icon';
       <span class="visually-hidden">{{ iconValue.ariaLabel | translate }}</span>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'icon-stack' }
 })
 export class SiStatusIconComponent {

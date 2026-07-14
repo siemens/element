@@ -2,21 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ApplicationRef,
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  TemplateRef,
-  viewChild
-} from '@angular/core';
+import { ApplicationRef, Component, input, TemplateRef, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiModalService } from './si-modal.service';
 
 @Component({
-  template: '<div>test component-{{inputProp()}}</div>',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: '<div>test component-{{inputProp()}}</div>'
 })
 class DialogComponent {
   readonly inputProp = input<string>();
@@ -27,8 +19,7 @@ class DialogComponent {
     <ng-template #ref>
       <div>test template</div>
     </ng-template>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class DialogTemplateComponent {
   readonly templateRef = viewChild.required<TemplateRef<any>>('ref');

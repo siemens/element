@@ -11,8 +11,7 @@ import {
   TemplateRef,
   OnDestroy,
   inject,
-  DestroyRef,
-  ChangeDetectionStrategy
+  DestroyRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -58,8 +57,7 @@ import { ChangePassword } from '../si-landing-page.model';
     SiPasswordStrengthComponent,
     SiPasswordStrengthDirective
   ],
-  templateUrl: './si-change-password.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-change-password.component.html'
 })
 export class SiChangePasswordComponent implements OnInit, OnDestroy {
   private static idCounter = 0;

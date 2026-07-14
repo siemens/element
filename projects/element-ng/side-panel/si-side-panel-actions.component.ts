@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 /**
  * Creates an actions container for the side-panel.
@@ -30,7 +30,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 @Component({
   selector: 'si-side-panel-actions',
   template: '<ng-content />',
-  styleUrl: './si-side-panel-actions.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-side-panel-actions.component.scss'
 })
 export class SiSidePanelActionsComponent {}

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import { ChangeDetectionStrategy, Component, signal, SimpleChange, viewChild } from '@angular/core';
+import { Component, signal, SimpleChange, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 
@@ -27,8 +27,7 @@ import { SidePanelMode } from './side-panel.model';
       <si-side-panel-content heading="side-panel">
         <div class="dynamic-content">Different content</div>
       </si-side-panel-content>
-    </ng-template> `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    </ng-template> `
 })
 class TestHostComponent {
   readonly sidePanel = viewChild.required(SiSidePanelComponent);

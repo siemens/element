@@ -5,7 +5,6 @@
 import { A11yModule } from '@angular/cdk/a11y';
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   inject,
@@ -21,7 +20,6 @@ import { ModalRef } from './modalref';
   selector: 'si-modal',
   imports: [A11yModule],
   templateUrl: './si-modal.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[style.--element-animations-enabled]': 'modalRef.data.animated === false ? 0 : null',
     '(mousedown)': 'clickStarted($event)',

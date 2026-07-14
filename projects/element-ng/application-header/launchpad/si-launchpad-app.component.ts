@@ -2,15 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  HostListener,
-  inject,
-  input,
-  model
-} from '@angular/core';
+import { booleanAttribute, Component, HostListener, inject, input, model } from '@angular/core';
 import { elementExport, elementFavorites, elementFavoritesFilled } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -23,7 +15,6 @@ import { SiApplicationHeaderComponent } from '../si-application-header.component
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-launchpad-app.component.html',
   styleUrl: './si-launchpad-app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'focus-inside',
     '[class.active]': 'active()',

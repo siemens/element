@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  model
-} from '@angular/core';
+import { booleanAttribute, Component, computed, input, model } from '@angular/core';
 import { ExtendedStatusType, STATUS_ICON } from '@siemens/element-ng/common';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -18,8 +11,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
   selector: 'si-summary-widget',
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-summary-widget.component.html',
-  styleUrl: './si-summary-widget.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-summary-widget.component.scss'
 })
 export class SiSummaryWidgetComponent {
   /** Status. Alternatively, use {@link icon} and {@link color}. */

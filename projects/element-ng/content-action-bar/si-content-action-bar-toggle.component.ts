@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
@@ -11,7 +11,6 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
   imports: [SiIconComponent],
   templateUrl: './si-content-action-bar-toggle.component.html',
   styleUrl: '../menu/si-menu-item.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'dropdown-item flex-grow-0 focus-inside' }
 })
 export class SiContentActionBarToggleComponent {

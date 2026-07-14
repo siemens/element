@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  TemplateRef
-} from '@angular/core';
+import { booleanAttribute, Component, input, TemplateRef } from '@angular/core';
 import { elementOk } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
@@ -20,7 +14,6 @@ import { SelectOption } from '../si-select.types';
   imports: [SiIconComponent, SiSelectOptionComponent],
   templateUrl: './si-select-option-row.component.html',
   styleUrl: './si-select-option-row.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'dropdown-item focus-none pe-4 gap-4',
     '[class.disabled]': '!!this.option().disabled',

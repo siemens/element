@@ -14,7 +14,6 @@ import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import { CdkScrollableModule } from '@angular/cdk/scrolling';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   inject,
@@ -58,8 +57,7 @@ const dragConfig = {
   ],
   templateUrl: './si-column-selection-dialog.component.html',
   styleUrl: './si-column-selection-dialog.component.scss',
-  providers: [{ provide: CDK_DRAG_CONFIG, useValue: dragConfig }],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [{ provide: CDK_DRAG_CONFIG, useValue: dragConfig }]
 })
 export class SiColumnSelectionDialogComponent implements OnInit {
   readonly titleId = input<string>();

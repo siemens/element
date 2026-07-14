@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  signal
-} from '@angular/core';
+import { booleanAttribute, Component, computed, input, signal } from '@angular/core';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiFormFieldsetControl } from './si-form-fieldset.control';
@@ -19,7 +12,6 @@ import { SiFormFieldsetControl } from './si-form-fieldset.control';
   imports: [SiTranslatePipe],
   templateUrl: './si-form-fieldset.component.html',
   styleUrl: '../si-form.shared.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'group',
     class: 'si-form-input',

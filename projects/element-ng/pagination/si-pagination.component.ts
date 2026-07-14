@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
+import { Component, computed, input, model } from '@angular/core';
 import { elementLeft3, elementRight3 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -10,8 +10,7 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 @Component({
   selector: 'si-pagination',
   imports: [SiIconComponent, SiTranslatePipe],
-  templateUrl: './si-pagination.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-pagination.component.html'
 })
 export class SiPaginationComponent {
   private static maxItems = 7;

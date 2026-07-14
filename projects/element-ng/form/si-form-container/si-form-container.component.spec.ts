@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectorRef, Component, inject, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
@@ -31,8 +25,7 @@ interface TestForm {
       [form]="form"
       [errorCodeTranslateKeyMap]="customErrorMapper"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class TestHostComponent {
   cdRef = inject(ChangeDetectorRef);
@@ -53,8 +46,7 @@ export class TestHostComponent {
         <div si-form-container-content style="block-size: 10px"></div>
       </si-form-container>
     </si-form-container>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestHostWithNestingComponent {
   form = new FormGroup({});

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import {
@@ -18,8 +18,7 @@ import { IsoLanguageValue, SiLanguageSwitcherComponent } from './index';
     [translationKey]="translationKey"
     [languageSwitcherLabel]="languageSwitcherLabel"
     [availableLanguages]="availableLanguages"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class TestHostComponent {
   availableLanguages: string[] | IsoLanguageValue[] = [

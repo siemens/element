@@ -5,7 +5,6 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
 import {
   AfterContentInit,
-  ChangeDetectionStrategy,
   Component,
   contentChild,
   DestroyRef,
@@ -59,7 +58,6 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
       </button>
     </div>`,
   styleUrl: './si-calendar-button.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'd-inline-block position-relative form-control-wrapper'
   }

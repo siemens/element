@@ -5,7 +5,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -33,7 +32,6 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
   imports: [NgTemplateOutlet, SiSplitComponent, SiSplitPartComponent],
   templateUrl: './si-list-details.component.html',
   styleUrl: './si-list-details.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'si-layout-inner list-details-layout d-flex flex-column',
     '[class.animations-disabled]': 'animationsGloballyDisabled',

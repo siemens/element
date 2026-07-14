@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { elementRight2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
@@ -14,7 +14,6 @@ import { SiMenuItemBase } from './si-menu-item-base.directive';
   imports: [SiIconComponent],
   templateUrl: './si-menu-item.component.html',
   styleUrl: './si-menu-item.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [
     {
       directive: CdkMenuItem,

@@ -3,14 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { OverlayContainer } from '@angular/cdk/overlay';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  inputBinding,
-  signal,
-  twoWayBinding
-} from '@angular/core';
+import { Component, inject, inputBinding, signal, twoWayBinding } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL } from '@siemens/element-ng/form';
@@ -33,7 +26,6 @@ import { SiSelectDropdownDirective } from './si-select-dropdown.directive';
       }
     </ng-template>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [
     {
       directive: SiCustomSelectDirective,
@@ -54,8 +46,7 @@ class SiTestSelectComponent {
 
 @Component({
   imports: [SiTestSelectComponent, ReactiveFormsModule],
-  template: `<si-test-select [formControl]="control" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `<si-test-select [formControl]="control" />`
 })
 class FormHostComponent {
   readonly control = new FormControl<string | undefined>(undefined);
@@ -111,7 +102,6 @@ describe('SiCustomSelectDirective', () => {
           <si-select-combobox>{{ select.value() ?? 'Pick...' }}</si-select-combobox>
           <ng-template si-select-dropdown contentType="tree" />
         `,
-        changeDetection: ChangeDetectionStrategy.OnPush,
         hostDirectives: [SiCustomSelectDirective]
       })
       class TreeSelectComponent {

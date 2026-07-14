@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -14,8 +14,7 @@ import { SiFormItemComponent } from './si-form-item.component';
     <si-form-item [label]="label()!">
       <input type="text" id="name" class="form-control" />
     </si-form-item>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class TestHostComponent {
   readonly formItem = viewChild.required(SiFormItemComponent);

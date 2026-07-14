@@ -5,7 +5,7 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, Injectable } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   SiHeaderDropdownComponent,
@@ -90,8 +90,7 @@ describe('SiApplicationHeaderComponent', () => {
             <si-header-dropdown-item>DItem 2</si-header-dropdown-item>
           </si-header-dropdown>
         </ng-template>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {}
 
@@ -211,8 +210,7 @@ describe('SiApplicationHeaderComponent', () => {
             </si-header-collapsible-actions>
           </si-header-actions>
         </si-application-header>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {
       bade1?: number | boolean;
@@ -289,8 +287,7 @@ describe('SiApplicationHeaderComponent', () => {
             <si-header-collapsible-actions />
           </si-header-actions>
         </si-application-header>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {}
 
@@ -349,8 +346,7 @@ describe('SiApplicationHeaderComponent', () => {
             </si-header-collapsible-actions>
           </si-header-actions>
         </si-application-header>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {}
 
@@ -400,8 +396,7 @@ describe('SiApplicationHeaderComponent', () => {
             </si-header-collapsible-actions>
           </si-header-actions>
         </si-application-header>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {}
 
@@ -439,8 +434,7 @@ describe('SiApplicationHeaderComponent', () => {
         <ng-template #launchpad>
           <si-launchpad-factory [apps]="[]" />
         </ng-template>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {}
 

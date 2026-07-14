@@ -9,7 +9,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -75,7 +74,6 @@ export class PresetMatchFilterPipe implements PipeTransform {
   ],
   templateUrl: './si-date-range-filter.component.html',
   styleUrl: './si-date-range-filter.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.mobile]': 'smallScreen'
   }

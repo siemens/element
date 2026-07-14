@@ -4,7 +4,6 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   input,
@@ -37,8 +36,7 @@ interface OffsetOption extends SelectOption<string> {
     SiSelectSimpleOptionsDirective
   ],
   templateUrl: './si-relative-date.component.html',
-  styleUrl: './si-relative-date.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-relative-date.component.scss'
 })
 export class SiRelativeDateComponent implements OnChanges {
   /** @defaultValue 0 */

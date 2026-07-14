@@ -2,12 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'si-list-pane-header',
   templateUrl: './si-list-pane-header.component.html',
-  styleUrl: './si-list-pane-header.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-list-pane-header.component.scss'
 })
 export class SiListPaneHeaderComponent {}

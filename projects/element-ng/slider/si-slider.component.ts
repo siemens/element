@@ -4,7 +4,6 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -42,7 +41,6 @@ import { Subscription, timer } from 'rxjs';
       useExisting: SiSliderComponent
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'group',
     '[class.disabled]': 'disabled()',

@@ -4,7 +4,6 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -55,7 +54,6 @@ import { Subscription, timer } from 'rxjs';
       useExisting: SiNumberInputComponent
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.show-step-buttons]': 'showButtons()',
     '[class.disabled]': 'disabled()',

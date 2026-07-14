@@ -6,7 +6,6 @@
 import {
   AfterViewInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChildren,
@@ -56,8 +55,7 @@ const SCROLL_INCREMENT = 55;
   selector: 'si-tabset-legacy',
   imports: [SiIconComponent, SiResizeObserverDirective, SiTranslatePipe],
   templateUrl: './si-tabset-legacy.component.html',
-  styleUrl: './si-tabset-legacy.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-tabset-legacy.component.scss'
 })
 export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
   /**

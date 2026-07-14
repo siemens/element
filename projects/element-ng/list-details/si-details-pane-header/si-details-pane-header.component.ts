@@ -4,7 +4,6 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   inject,
@@ -26,7 +25,6 @@ import { SiListDetailsComponent } from '../si-list-details.component';
   imports: [SiTranslatePipe, SiIconComponent],
   templateUrl: './si-details-pane-header.component.html',
   styleUrl: './si-details-pane-header.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'nav nav-tabs' // To allow nav-link styling.
   }

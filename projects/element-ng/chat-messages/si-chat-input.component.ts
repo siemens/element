@@ -6,7 +6,6 @@ import { CdkMenuTrigger } from '@angular/cdk/menu';
 import {
   AfterViewInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -90,8 +89,7 @@ export interface ChatInputAttachment extends Attachment {
     SiFileUploadDirective
   ],
   templateUrl: './si-chat-input.component.html',
-  styleUrl: './si-chat-input.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-chat-input.component.scss'
 })
 export class SiChatInputComponent implements AfterViewInit {
   private static idCounter = 0;

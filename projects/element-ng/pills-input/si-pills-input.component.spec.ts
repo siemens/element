@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { userEvent } from 'vitest/browser';
@@ -15,8 +15,7 @@ import { SiPillsInputModule } from './si-pills-input.module';
     <si-pills-input [readonly]="readonly()" [(ngModel)]="value" />
     <si-pills-input class="csv" siPillsInputCsv [(ngModel)]="csvValue" />
     <si-pills-input class="email" siPillsInputEmail [(ngModel)]="emailValue" />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestHostComponent {
   readonly value = signal<string[]>([]);

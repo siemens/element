@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angular/core';
+import { Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
@@ -36,8 +36,7 @@ const passwordStrengthValue: PasswordPolicy = {
         (passwordStrengthChanged)="passwordStrengthChangedFunc($event)"
       />
     </si-password-strength>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class WrapperComponent {
   readonly passwordStrength = viewChild.required<TestComponent, ElementRef<TestComponent>>(

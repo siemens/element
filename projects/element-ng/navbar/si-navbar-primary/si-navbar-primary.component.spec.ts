@@ -4,7 +4,7 @@
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { provideLocationMocks } from '@angular/common/testing';
-import { ChangeDetectionStrategy, Component, HostBinding, viewChild } from '@angular/core';
+import { Component, HostBinding, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { SiApplicationHeaderHarness } from '@siemens/element-ng/application-header/testing/si-application-header.harness';
@@ -23,8 +23,7 @@ const categorizedAppItems: AppItemCategory[] = [
 
 @Component({
   imports: [SiNavbarPrimaryComponent],
-  template: ` <si-navbar-primary [appItems]="appItems" [appCategoryItems]="categorizedAppItems" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: ` <si-navbar-primary [appItems]="appItems" [appCategoryItems]="categorizedAppItems" />`
 })
 export class TestHostComponent {
   readonly component = viewChild.required(TestComponent);

@@ -4,7 +4,7 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { userEvent } from 'vitest/browser';
 
@@ -23,8 +23,7 @@ import { CalendarTestHelper, enterValue, generateKeyEvent } from './testing/test
     [date]="date()"
     (dateChange)="date.set($event); changedDate = $event"
     (dateRangeChange)="rangeChanged($event)"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class TestHostComponent {
   readonly datePicker = viewChild.required(SiDatepickerComponent);

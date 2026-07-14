@@ -4,7 +4,7 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -32,8 +32,7 @@ const endInput = (element: HTMLElement): HTMLInputElement =>
     [autoClose]="autoClose()"
     [formControl]="dateRange"
     (siDatepickerRangeChange)="rangeChanged($event)"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class WrapperComponent {
   dateRange = new FormControl<DateRange | null>(null);
@@ -234,8 +233,7 @@ describe('SiDateRangeComponent', () => {
   imports: [SiDatepickerModule, FormsModule, ReactiveFormsModule, TestComponent],
   template: `<form [formGroup]="form">
     <si-date-range formControlName="dateRange" [siDatepickerConfig]="config()" />
-  </form>`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  </form>`
 })
 class FormWrapperComponent {
   form = new FormGroup({

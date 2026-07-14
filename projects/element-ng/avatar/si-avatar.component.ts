@@ -2,15 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  inject,
-  input,
-  numberAttribute
-} from '@angular/core';
+import { Component, computed, effect, inject, input, numberAttribute } from '@angular/core';
 import { EntityStatusType } from '@siemens/element-ng/common';
 import { SiIconComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -24,7 +16,6 @@ export type AvatarSize = 'tiny' | 'xsmall' | 'small' | 'regular' | 'large' | 'xl
   imports: [SiIconComponent],
   templateUrl: './si-avatar.component.html',
   styleUrl: './si-avatar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class]': 'size()'
   },

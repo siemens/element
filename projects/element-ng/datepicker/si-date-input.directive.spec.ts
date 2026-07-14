@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
 
@@ -24,8 +24,7 @@ import { dispatchEvents, enterValue } from './testing/test-helper';
     [siDatepickerConfig]="config()"
     [ngModel]="date"
     (ngModelChange)="onModelChange($event)"
-  />`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  />`
 })
 class WrapperComponent {
   readonly siDateInput = viewChild.required<ElementRef>('siDateInput');

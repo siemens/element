@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiThemeService } from '@siemens/element-ng/theme';
@@ -26,8 +26,7 @@ describe('SiSvgIconComponent', () => {
 
     @Component({
       imports: [SiIconComponent],
-      template: ` <si-icon [icon]="icon()" />`,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      template: ` <si-icon [icon]="icon()" />`
     })
     class TestHostComponent {
       readonly icon = signal<string>('element-user');
@@ -112,8 +111,7 @@ describe('SiSvgIconComponent', () => {
     @Component({
       selector: 'si-icon-1-test',
       imports: [SiIconComponent],
-      template: `<si-icon [icon]="icons.elementSvg" />`,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      template: `<si-icon [icon]="icons.elementSvg" />`
     })
     class IconTest1Component {
       readonly icons = addIcons({
@@ -124,8 +122,7 @@ describe('SiSvgIconComponent', () => {
     @Component({
       selector: 'si-icon-2-test',
       imports: [SiIconComponent],
-      template: `<si-icon [icon]="icons.elementSvg" />`,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      template: `<si-icon [icon]="icons.elementSvg" />`
     })
     class IconTest2Component {
       icons = addIcons({
@@ -141,8 +138,7 @@ describe('SiSvgIconComponent', () => {
         }
         @if (show2()) {
           <si-icon-2-test />
-        }`,
-      changeDetection: ChangeDetectionStrategy.OnPush
+        }`
     })
     class TestHostComponent {
       readonly show1 = signal(false);

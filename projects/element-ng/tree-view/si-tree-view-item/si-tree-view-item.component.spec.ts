@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, DebugElement, signal, viewChild } from '@angular/core';
+import { Component, DebugElement, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -40,8 +40,7 @@ import { SiTreeViewItemDirective } from './si-tree-view-item.directive';
         <si-tree-view-item cdkDrag />
       </ng-template>
     </si-tree-view>
-  </div>`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  </div>`
 })
 class WrapperComponent {
   readonly treeOneList = viewChild.required('treeOne', { read: CdkDropList });

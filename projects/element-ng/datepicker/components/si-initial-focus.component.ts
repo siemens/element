@@ -5,7 +5,6 @@
 import {
   AfterViewInit,
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   input,
   model,
@@ -20,8 +19,7 @@ import { Cell, SiCalendarBodyComponent } from './si-calendar-body.component';
  * Helper directive to set the initial focus to the calendar body cell.
  */
 @Component({
-  template: '',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: ''
 })
 export class SiInitialFocusComponent implements AfterViewInit {
   /** The cell which has the mouse hover. */

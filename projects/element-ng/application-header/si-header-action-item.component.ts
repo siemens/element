@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, ElementRef, input, viewChild } from '@angular/core';
+import { Component, ElementRef, input, viewChild } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTooltipService } from '@siemens/element-ng/tooltip';
 
@@ -15,7 +15,6 @@ import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.di
   imports: [SiIconComponent],
   templateUrl: './si-header-action-item.component.html',
   providers: [SiTooltipService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'header-item focus-inside',
     '[class.dropdown-toggle]': '!!dropdownTrigger'

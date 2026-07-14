@@ -4,7 +4,6 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -26,8 +25,7 @@ import { Observable, Subscription } from 'rxjs';
   selector: 'si-circle-status',
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-circle-status.component.html',
-  styleUrl: './si-circle-status.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-circle-status.component.scss'
 })
 export class SiCircleStatusComponent implements OnChanges, OnDestroy {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);

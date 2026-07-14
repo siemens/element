@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { provideTranslateService } from '@ngx-translate/core';
@@ -21,8 +21,7 @@ import { SiSelectHarness } from '../testing/si-select.harness';
       [formControl]="control"
       (valueChange)="valueChange($event)"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestComponent {
   options: SelectItem<string>[] = [

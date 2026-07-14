@@ -2,15 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-progressbar',
   imports: [SiTranslatePipe],
   templateUrl: './si-progressbar.component.html',
-  styleUrl: './si-progressbar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-progressbar.component.scss'
 })
 export class SiProgressbarComponent {
   /**

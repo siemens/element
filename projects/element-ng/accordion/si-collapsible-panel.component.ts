@@ -4,7 +4,6 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -33,7 +32,6 @@ let controlIdCounter = 1;
   imports: [SiIconComponent, SiTranslatePipe, SiTooltipDirective],
   templateUrl: './si-collapsible-panel.component.html',
   styleUrl: './si-collapsible-panel.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class]': 'colorVariant()',
     '[class.opened]': 'opened()',

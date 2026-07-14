@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 
 import { IconService } from './si-icons';
 
@@ -19,7 +19,6 @@ import { IconService } from './si-icons';
   selector: 'si-icon',
   template: ` <div aria-hidden="true" [class]="svgIcon() ? 'svg-element-icon' : fontIcon()"></div>`,
   styleUrl: './si-icon.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.data-icon]': 'icon()',
     '[style.--svg-element-icon]': 'svgIcon()'

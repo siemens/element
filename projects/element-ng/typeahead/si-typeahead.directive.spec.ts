@@ -5,7 +5,7 @@
 import { DOWN_ARROW, ENTER } from '@angular/cdk/keycodes';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, signal, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, of, Subject, throwError } from 'rxjs';
@@ -52,8 +52,7 @@ const testItems = ['test', 'item'];
       (ngModelChange)="onModelChange($event)"
       (typeaheadOnCreateOption)="onCreateOption($event)"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class WrapperComponent {
   readonly items = signal<Typeahead>(testItems);

@@ -3,15 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule } from '@angular/cdk/a11y';
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  input,
-  output
-} from '@angular/core';
+import { booleanAttribute, Component, computed, inject, input, output } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { elementCancel, elementDown2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
@@ -39,8 +31,7 @@ export interface FavoriteChangeEvent {
     RouterLink
   ],
   templateUrl: './si-launchpad-factory.component.html',
-  styleUrl: './si-launchpad-factory.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-launchpad-factory.component.scss'
 })
 export class SiLaunchpadFactoryComponent {
   /**

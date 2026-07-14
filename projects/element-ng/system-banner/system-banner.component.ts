@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { ExtendedStatusType } from '@siemens/element-ng/common';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -15,7 +15,6 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
   imports: [SiTranslatePipe],
   templateUrl: './system-banner.component.html',
   styleUrl: './system-banner.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class]': 'bannerClass()'
   }

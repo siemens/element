@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { page, userEvent } from 'vitest/browser';
 
@@ -14,8 +14,7 @@ import { SiPopoverLegacyDirective } from './si-popover-legacy.directive';
     <button type="button" siPopoverLegacy="test popover content" [triggers]="triggers()">
       Test
     </button>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class TestHostComponent {
   readonly triggers = signal('click');

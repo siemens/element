@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { page, userEvent } from 'vitest/browser';
 
@@ -17,8 +17,7 @@ const generateKeyEvent = (key: string): KeyboardEvent => {
 
 @Component({
   imports: [SiPopoverDirective],
-  template: `<button type="button" siPopover="test popover content">Test</button>`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `<button type="button" siPopover="test popover content">Test</button>`
 })
 export class HostComponent {
   readonly popoverOverlay = viewChild(SiPopoverDirective);
@@ -37,8 +36,7 @@ export class HostComponent {
         <button type="button" id="button-1">Button 1</button>
       </div>
     </ng-template>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class CustomTemplateHostComponent {}
 
@@ -190,8 +188,7 @@ describe('with scrollStrategy', () => {
     imports: [SiPopoverDirective],
     template: `<button type="button" siPopover="test" [siPopoverScrollStrategy]="scrollStrategy()">
       Test
-    </button>`,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    </button>`
   })
   class ScrollStrategyHostComponent {
     readonly scrollStrategy = signal<ScrollStrategy | undefined>(undefined);

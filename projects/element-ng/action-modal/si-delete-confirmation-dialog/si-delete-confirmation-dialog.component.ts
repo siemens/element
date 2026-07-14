@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { elementCancel } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
@@ -16,8 +16,7 @@ import { DeleteConfirmationDialogResult } from '../si-action-dialog.types';
 @Component({
   selector: 'si-delete-confirmation-dialog',
   imports: [AsyncPipe, SiIconComponent, SiTranslatePipe, SiLoadingButtonComponent],
-  templateUrl: './si-delete-confirmation-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-delete-confirmation-dialog.component.html'
 })
 export class SiDeleteConfirmationDialogComponent {
   readonly titleId = input<string>();

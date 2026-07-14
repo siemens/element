@@ -4,15 +4,7 @@
  */
 import { NgTemplateOutlet } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  input,
-  OnInit,
-  signal
-} from '@angular/core';
+import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { elementDocument } from '@siemens/element-icons';
 import { SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
@@ -34,8 +26,7 @@ import { ApiInfo, LicenseInfo } from './si-about-data.model';
     SiTranslatePipe
   ],
   templateUrl: './si-about.component.html',
-  styleUrl: './si-about.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-about.component.scss'
 })
 export class SiAboutComponent implements OnInit {
   private http = inject(HttpClient);

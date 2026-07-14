@@ -2,15 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 
 import { CopyrightDetails, SI_COPYRIGHT_DETAILS } from './si-copyright-notice';
 
 @Component({
   selector: 'si-copyright-notice',
   templateUrl: './si-copyright-notice.component.html',
-  styleUrl: './si-copyright-notice.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-copyright-notice.component.scss'
 })
 export class SiCopyrightNoticeComponent {
   private globalCopyrightInfo: CopyrightDetails | null = inject(SI_COPYRIGHT_DETAILS, {

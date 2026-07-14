@@ -4,7 +4,7 @@
  */
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -31,8 +31,7 @@ const OPTIONS_LIST_NEXT: SelectOption<number>[] = [
     <form [formGroup]="form">
       <si-select #select formControlName="input" [options]="options" />
     </form>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class FormHostComponent {
   readonly form = new FormGroup({
@@ -54,8 +53,7 @@ class FormHostComponent {
       [hasFilter]="hasFilter()"
       [(value)]="value"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestHostComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
@@ -79,8 +77,7 @@ class TestHostComponent {
       [hasFilter]="hasFilter()"
       [(value)]="value"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestHostNumberComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
@@ -108,8 +105,7 @@ class TestHostNumberComponent {
       [(value)]="values"
       (valueChange)="selectionChanged($event)"
     />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestHostMultiComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
@@ -147,8 +143,7 @@ class TestHostMultiComponent {
         </button>
       </ng-template>
     </si-select>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 class TestHostCustomActionComponent {
   readonly options = signal<SelectOption<string>[] | undefined>(OPTIONS_LIST);

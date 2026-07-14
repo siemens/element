@@ -4,7 +4,7 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   FormControl,
@@ -73,8 +73,7 @@ describe('SiForm', () => {
             </si-form-item>
           </form>
         </si-form-container>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {
       form = new FormGroup({
@@ -160,8 +159,7 @@ describe('SiForm', () => {
             <input formControlName="input" />
           </si-form-item>
         </form>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {
       form = new FormGroup({
@@ -210,8 +208,7 @@ describe('SiForm', () => {
             <input name="value" [required]="required()" [(ngModel)]="value" />
           </si-form-item>
         </form>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {
       readonly value = signal('');
@@ -246,8 +243,7 @@ describe('SiForm', () => {
         <si-form-item label="Input">
           <input type="text" id="email" class="form-control" [formControl]="email" />
         </si-form-item>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {
       readonly email = new FormControl('email', [Validators.email]);
@@ -291,8 +287,7 @@ describe('SiForm', () => {
             <input type="radio" class="form-check-input" value="b" [formField]="form.choice" />
           </si-form-field>
         </si-form-fieldset>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {
       readonly model = signal({ choice: '' });
@@ -331,8 +326,7 @@ describe('SiForm', () => {
         <si-form-item label="Normal">
           <input type="checkbox" class="form-check-input" [formControl]="normal" />
         </si-form-item>
-      `,
-      changeDetection: ChangeDetectionStrategy.OnPush
+      `
     })
     class TestHostComponent {
       normal = new FormControl(true);
