@@ -11,13 +11,14 @@ import {
   computed,
   ElementRef,
   inject,
+  input,
   signal,
   TemplateRef
 } from '@angular/core';
 import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
-import { SI_TOOLTIP_CONFIG } from './si-tooltip.model';
+import { SiTooltipContent } from './si-tooltip.model';
 
 @Component({
   selector: 'si-tooltip',
@@ -30,10 +31,15 @@ import { SI_TOOLTIP_CONFIG } from './si-tooltip.model';
   }
 })
 export class TooltipComponent {
+  readonly id = input<string>();
+
+  readonly tooltip = input<SiTooltipContent>();
+
+  readonly tooltipContext = input<unknown>();
+
   protected readonly tooltipPositionClass = signal('');
   protected readonly arrowPos = signal<OverlayArrowPosition | undefined>(undefined);
 
-  protected readonly config = inject(SI_TOOLTIP_CONFIG);
   private readonly elementRef = inject(ElementRef);
   private readonly overlayRef = inject(OverlayRef);
 
@@ -43,8 +49,8 @@ export class TooltipComponent {
   constructor() {
     let isFirstRun = true;
     afterRenderEffect(() => {
-      this.config.tooltip();
-      this.config.tooltipContext();
+      this.tooltip();
+      this.tooltipContext();
       if (isFirstRun) {
         isFirstRun = false;
         return;
@@ -57,7 +63,7 @@ export class TooltipComponent {
   }
 
   protected readonly tooltipText = computed<string | null>(() => {
-    const tooltip = this.config.tooltip();
+    const tooltip = this.tooltip();
     if (typeof tooltip === 'string') {
       return tooltip;
     }
@@ -71,12 +77,12 @@ export class TooltipComponent {
   });
 
   protected readonly tooltipTemplate = computed<TemplateRef<any> | null>(() => {
-    const tooltip = this.config.tooltip();
+    const tooltip = this.tooltip();
     return tooltip instanceof TemplateRef ? tooltip : null;
   });
 
   protected readonly tooltipComponent = computed(() => {
-    const tooltip = this.config.tooltip();
+    const tooltip = this.tooltip();
     return !(tooltip instanceof TemplateRef) &&
       !(tooltip instanceof ElementRef) &&
       typeof tooltip !== 'string'
