@@ -17,8 +17,6 @@ export const DEFAULT_FEATURE_CLICK_ZOOM = 15;
 export const DEFAULT_CLUSTER_CLICK_ZOOM = 15;
 export const DEFAULT_GLOBAL_ZOOM = 5;
 export const DEFAULT_CLUSTER_DISTANCE = 40;
-/** @deprecated will be removed in favour of individual inputs. */
-export const DEFAULT_FIT_PADDING = [20, 20, 20, 20];
 
 /** Updates the amount of buildings to be shown in a cluster tooltip after hovering over it */
 export const TOOLTIP_FEATURES_TO_DISPLAY = 4;
