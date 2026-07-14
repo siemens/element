@@ -8,10 +8,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
+  effect,
   ElementRef,
   inject,
   input,
-  OnInit
+  OnInit,
+  untracked,
+  viewChild
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLinkActive } from '@angular/router';
@@ -95,6 +99,16 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
    */
   readonly chipMode = computed(() => this.navbar.chipMode());
 
+  /** Label element of this item. Reused as the chip label in flat-group mode. */
+  private readonly labelContentEl = viewChild.required<ElementRef<HTMLElement>>('labelContent');
+
+  /**
+   * @internal
+   * Portal of the item's label, rendered inside the flat-group header
+   * when this item's group is open.
+   */
+  readonly labelPortal = computed(() => new DomPortal(this.labelContentEl()));
+
   /**
    * Determines if the badge contains text-only content (not numeric)
    */
@@ -131,6 +145,13 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     }
     return badge.toString();
   });
+
+  /** Caret icon for the group: right when collapsed/flyout/flat, down when expanded inline. */
+  protected readonly toggleIcon = computed(() =>
+    this.navbar.alwaysFlyout() || this.navbar.flatMode()
+      ? this.icons.elementRight2
+      : this.icons.elementDown2
+  );
 
   /** Active via override or router link — excludes group state.
    * @internal
@@ -176,10 +197,34 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     }
   }
 
+  constructor() {
+    // Publish the label portal to the flat-group shell while this item's group is open.
+    effect(() => {
+      const flat = this.navbar.flatGroup();
+      if (!flat || !this.group) return;
+      if (flat.openFlatGroupId() === this.group.groupId) {
+        const portal = this.labelPortal();
+        untracked(() => flat.activeFlatLabelPortal.set(portal));
+      }
+    });
+
+    inject(DestroyRef).onDestroy(() => {
+      const flat = this.navbar.flatGroup();
+      if (flat && this.group && flat.openFlatGroupId() === this.group.groupId) {
+        flat.closeFlatGroup();
+      }
+    });
+  }
+
   protected triggered(): void {
     this.parent?.group?.hideFlyout();
     if (!this.group) {
       this.navbar.itemTriggered();
     }
+  }
+
+  /** @internal */
+  focus(): void {
+    this.elementRef.nativeElement.focus();
   }
 }

@@ -54,6 +54,8 @@ describe('SiNavbarVerticalNextItemComponent', () => {
     collapsed: signal(false),
     textOnly: signal(false),
     alwaysFlyout: signal(false),
+    flatMode: signal(false),
+    flatGroup: signal(undefined),
     inlineCollapse: signal(false),
     chipPortalAttached: signal(false),
     chipMode: signal(false),
@@ -64,6 +66,8 @@ describe('SiNavbarVerticalNextItemComponent', () => {
     mockNavbar.collapsed.set(false);
     mockNavbar.textOnly.set(false);
     mockNavbar.alwaysFlyout.set(false);
+    mockNavbar.flatMode.set(false);
+
     mockNavbar.inlineCollapse.set(false);
     await TestBed.configureTestingModule({
       providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useValue: mockNavbar }]

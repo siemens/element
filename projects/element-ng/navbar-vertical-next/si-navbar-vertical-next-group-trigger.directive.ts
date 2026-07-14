@@ -16,6 +16,7 @@ import {
   DestroyRef,
   Directive,
   effect,
+  ElementRef,
   EmbeddedViewRef,
   inject,
   Injector,
@@ -53,9 +54,9 @@ class SiNavbarFlyoutAnchorComponent {
   host: {
     class: 'dropdown-toggle',
     '[id]': 'id',
-    '[class.show]': 'expanded()',
+    '[class.show]': 'navbar.flatMode() ? flatGroupActive() : expanded()',
     '[attr.aria-controls]': 'groupId',
-    '[attr.aria-expanded]': 'flyoutMode() ? flyout() : expanded()',
+    '[attr.aria-expanded]': 'ariaExpanded()',
     '(click)': 'triggered()'
   }
 })
@@ -110,6 +111,31 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
     computation: () => false
   });
 
+  /** `true` when this group is currently rendered as a mobile flat group.
+   * @internal
+   */
+  readonly flatGroupActive = computed(
+    () => this.navbar.flatMode() && this.navbar.flatGroup()?.openFlatGroupId() === this.groupId
+  );
+
+  /**
+   * Whether the group is currently revealed to the user, taking the active
+   * rendering mode into account. Used for `aria-expanded`.
+   * @internal
+   */
+  readonly ariaExpanded = computed(() => {
+    if (this.navbar.flatMode()) {
+      return this.flatGroupActive();
+    }
+    if (this.flyoutMode()) {
+      return this.flyout();
+    }
+    return this.expanded();
+  });
+
+  /**
+   * Whether the open flyout overlay currently contains the active route.
+   * Reset together with `flyout` so it never lingers across mode changes.
   /** `true` when this group contains the active route. Set by the group component.
    * @internal
    */
@@ -124,6 +150,7 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
 
   private flyoutOutsideClickSubscription?: Subscription;
   private readonly viewContainer = inject(ViewContainerRef);
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly overlay = inject(Overlay);
   private readonly destroyRef = inject(DestroyRef);
   private readonly injector = Injector.create({ parent: inject(Injector), providers: [] });
@@ -180,8 +207,16 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
     this.attachInline();
   }
 
+  /** @internal */
+  focus(): void {
+    this.elementRef.nativeElement.focus();
+  }
+
   protected triggered(): void {
-    if (this.flyoutMode()) {
+    if (this.navbar.flatMode()) {
+      const flat = this.navbar.flatGroup();
+      flat?.openFlatGroupId.set(this.flatGroupActive() ? undefined : this.groupId);
+    } else if (this.flyoutMode()) {
       this.toggleFlyout();
     } else {
       this.expanded.set(!this.expanded());
