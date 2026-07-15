@@ -61,6 +61,12 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
   /** Override the active state. Useful for action items. */
   readonly activeOverride = input<boolean>();
 
+  /**
+   * Text label of this item.
+   * Consumed by the chip button to mirror the active item's label when collapsed.
+   */
+  readonly label = input<string | undefined>();
+
   protected readonly navbar = inject(SI_NAVBAR_VERTICAL_NEXT);
   protected readonly parent = inject(SiNavbarVerticalNextItemComponent, {
     skipSelf: true,

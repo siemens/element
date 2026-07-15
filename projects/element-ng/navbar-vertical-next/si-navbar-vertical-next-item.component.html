@@ -2,9 +2,7 @@
 @if (icon) {
   <si-icon [class]="isChip() ? 'icon' : 'icon-lg'" [icon]="icon" />
 }
-<div class="item-title text-truncate si-h5">
-  <ng-content />
-</div>
+<div class="item-title text-truncate si-h5">{{ label() }}</div>
 @if (!isChip() && !navbar.textOnly() && formattedBadge()) {
   @let badgeColor = this.badgeColor();
   <span

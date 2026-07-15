@@ -151,6 +151,7 @@ export const templateConfig = defineConfig({
           'innerHtml',
           'innerHTML',
           'innerText',
+          'label',
           'outerHTML',
           'title',
           'si-tab'
