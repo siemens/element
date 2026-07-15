@@ -61,13 +61,13 @@ catalog:
 
 overrides:
   '@microsoft/api-extractor>typescript': 'catalog:'
-  '@module-federation/enhanced': 2.6.0
-  '@module-federation/runtime': 2.6.0
+  '@module-federation/enhanced': 2.7.0
+  '@module-federation/runtime': 2.7.0
   '@ngx-formly/bootstrap': 7.1.0
   '@ngx-formly/core': 7.1.0
   '@siemens/element-theme': 'workspace:*'
   '@siemens/ngx-datatable': 26.2.1
-  '@softarc/native-federation-orchestrator': 4.4.1
+  '@softarc/native-federation-orchestrator': 4.5.0
   ag-grid-angular: 36.0.0
   ag-grid-community: 36.0.0
   echarts: 6.1.0

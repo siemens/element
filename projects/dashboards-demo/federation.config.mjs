@@ -1,10 +1,15 @@
-import { withNativeFederation, shareAll } from '@angular-architects/native-federation/config';
+import { withNativeFederation, share } from '@angular-architects/native-federation/config';
 export default withNativeFederation({
   name: 'dashboards-demo-esm',
 
-  shared: {
-    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' })
-  },
+  shared: share({
+    '@angular/core': { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+    '@angular/common': { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+    '@angular/router': { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+    '@angular/forms': { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+    'rxjs': { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+    'gridstack': { singleton: true, strictVersion: true, requiredVersion: 'auto' }
+  }),
 
   // Don't share any mapped paths - bundle them into the app instead
   sharedMappings: [],

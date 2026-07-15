@@ -20,7 +20,7 @@
   "type": "module",
   "peerDependencies": {
     "@angular-architects/module-federation": "^21.0.0",
-    "@angular-architects/native-federation": "^22.0.0",
+    "@angular-architects/native-federation": "^22.0.5",
     "@angular/common": "22",
     "@angular/core": "22",
     "@module-federation/enhanced": "^2.0.0",
