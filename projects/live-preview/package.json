@@ -34,7 +34,7 @@
   "peerDependencies": {
     "@angular/common": "22",
     "@angular/core": "22",
-    "@babel/standalone": "8.0.3",
+    "@babel/standalone": "8.0.4",
     "react": "18 || 19",
     "react-dom": "18 || 19",
     "vue": "3",
