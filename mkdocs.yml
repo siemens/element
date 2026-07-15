@@ -243,7 +243,7 @@ extra:
       value: 'https://github.com/siemens/element'
     - name: 'Siemens Xcelerator Developer Portal'
       value: 'https://developer.siemens.com/'
-  page_license_text: Except where otherwise noted, content on this site is licensed under <a href="https://github.com/siemens/element/blob/main/LICENSE.md">MIT License</a>.
+  page_license_text: Except where otherwise noted, content on this site is licensed under <a href="https://github.com/siemens/element/blob/main/LICENSE">MIT License</a>.
 
 markdown_extensions:
   - attr_list
