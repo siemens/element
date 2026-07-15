@@ -20,10 +20,9 @@
         routerLinkActive
         icon="element-home"
         badge="Text"
+        label="Home"
         [hideBadgeWhenCollapsed]="true"
-      >
-        Home
-      </a>
+      ></a>
       <si-navbar-vertical-next-header>Badge Examples</si-navbar-vertical-next-header>
       <a
         si-navbar-vertical-next-item
@@ -32,28 +31,25 @@
         icon="element-info"
         badge="Info"
         badgeColor="info-emphasis"
-      >
-        Text badge
-      </a>
+        label="Text badge"
+      ></a>
       <button
         type="button"
         si-navbar-vertical-next-item
         icon="element-user-group"
         badgeColor="critical-emphasis"
         stateId="group-with-badges"
+        label="Group with badges"
         [badge]="6"
         [siNavbarVerticalNextGroupTriggerFor]="groupWithBadges"
-      >
-        Group with badges
-      </button>
+      ></button>
       <button
         type="button"
         si-navbar-vertical-next-item
         icon="element-special-object"
+        label="Group item"
         [siNavbarVerticalNextGroupTriggerFor]="groupItem"
-      >
-        Group item
-      </button>
+      ></button>
       <si-navbar-vertical-next-divider />
       <a
         si-navbar-vertical-next-item
@@ -61,20 +57,18 @@
         routerLinkActive
         icon="element-checked"
         badgeColor="success"
+        label="Subtle badge"
         [badge]="5"
-      >
-        Subtle badge
-      </a>
+      ></a>
       <a
         si-navbar-vertical-next-item
         routerLink="danger"
         routerLinkActive
         icon="element-warning"
         badgeColor="danger-emphasis"
+        label="Danger emphasis badge"
         [badge]="100"
-      >
-        Danger emphasis badge
-      </a>
+      ></a>
     </si-navbar-vertical-next-items>
     <si-navbar-vertical-next-footer-items>
       <a
@@ -82,9 +76,8 @@
         routerLink="configuration"
         routerLinkActive
         icon="element-parameter"
-      >
-        Configuration
-      </a>
+        label="Configuration"
+      ></a>
     </si-navbar-vertical-next-footer-items>
 
     <div class="si-layout-main-padding">
@@ -120,35 +113,32 @@
       routerLink="sub-badge-1"
       routerLinkActive
       badgeColor="critical-emphasis"
+      label="Sub item critical"
       [badge]="1"
-    >
-      Sub item critical
-    </a>
+    ></a>
     <a
       si-navbar-vertical-next-item
       routerLink="sub-badge-2"
       routerLinkActive
       badgeColor="info"
+      label="Sub item info"
       [badge]="2"
-    >
-      Sub item info
-    </a>
+    ></a>
     <a
       si-navbar-vertical-next-item
       routerLink="sub-badge-3"
       routerLinkActive
       badgeColor="warning"
+      label="Sub item warning"
       [badge]="3"
-    >
-      Sub item warning
-    </a>
+    ></a>
   </si-navbar-vertical-next-group>
 </ng-template>
 
 <ng-template #groupItem>
   <si-navbar-vertical-next-group routerLinkActive>
-    <a si-navbar-vertical-next-item routerLink="sub-badge-4" routerLinkActive> Sub item </a>
-    <a si-navbar-vertical-next-item routerLink="sub-badge-5" routerLinkActive> Sub item </a>
-    <a si-navbar-vertical-next-item routerLink="sub-badge-6" routerLinkActive> Sub item </a>
+    <a si-navbar-vertical-next-item routerLink="sub-badge-4" routerLinkActive label="Sub item"></a>
+    <a si-navbar-vertical-next-item routerLink="sub-badge-5" routerLinkActive label="Sub item"></a>
+    <a si-navbar-vertical-next-item routerLink="sub-badge-6" routerLinkActive label="Sub item"></a>
   </si-navbar-vertical-next-group>
 </ng-template>
