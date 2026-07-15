@@ -27,6 +27,11 @@ export class SiTooltipDirective {
 export class SiTooltipModule {
 }
 
+// @public
+export class SiTooltipOverflowDirective {
+    constructor();
+}
+
 // (No @packageDocumentation comment for this package)
 
 ```
