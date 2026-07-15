@@ -44,4 +44,4 @@ Run `pnpm run native-charts:test` to perform the unit tests via [Vitest](https:/
 
 Code and documentation Copyright (c) Siemens 2016 - 2026
 
-MIT, see [LICENSE.md](LICENSE.md).
+MIT, see [LICENSE](LICENSE).

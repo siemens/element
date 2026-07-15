@@ -61,4 +61,4 @@ unless explicitly mentioned.
 
 Copyright (c) Siemens 2016 - 2026
 
-MIT, see [LICENSE.md](LICENSE.md).
+MIT, see [LICENSE](LICENSE).

@@ -2,7 +2,7 @@
   "name": "@siemens/dashboards-demo",
   "version": "49.13.0",
   "description": "Siemens Dashboards demo",
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "SEE LICENSE IN LICENSE",
   "private": true,
   "repository": {
     "type": "git",

@@ -45,7 +45,6 @@ jobs:
         run: |
           BEFORE_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           echo "before_tag=$BEFORE_TAG" >> $GITHUB_OUTPUT
-      - run: pnpm run release:copy-license
       - run: pnpm exec semantic-release
         env:
           SKIP_COMMIT: ${{ github.ref_name == 'next' && 'true' || '' }}
