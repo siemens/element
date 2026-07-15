@@ -28,7 +28,10 @@ interface SeriesInternal {
 @Component({
   selector: 'si-microchart-bar',
   templateUrl: './si-microchart-bar.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    role: 'img'
+  }
 })
 export class SiMicrochartBarComponent {
   /** @defaultValue 64 */
