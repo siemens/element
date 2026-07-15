@@ -58,14 +58,11 @@ Localized interfaces must work with different text lengths and different reading
 design options such as flexible growing areas, line wrapping, or fixed layouts with scrollbars,
 and plan enough space for longer translations.
 
-#### LTR (Left-to-Right)
+#### LTR & RTL
 
-LTR refers to languages and scripts that are written and read from left to right.
+LTR (Left-to-Right) refers to languages and scripts that are written and read from left to right.
 
-#### RTL (Right-to-Left)
-
-RTL refers to languages and writing systems that are written and read from right to left.
-
+RTL (Right-to-Left) refers to languages and writing systems that are written and read from right to left.
 RTL can require mirrored navigation, icon direction, alignment, and interaction patterns.
 
 Element support:
