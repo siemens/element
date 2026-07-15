@@ -16,7 +16,7 @@
   "engines": {
     "node": "^24.0.0",
     "yarn": "Please use NPM to install dependencies",
-    "npm": "11"
+    "npm": "12"
   },
   "commitlint": {
     "extends": [
