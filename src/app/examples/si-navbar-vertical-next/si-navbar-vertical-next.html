@@ -14,47 +14,51 @@
   >
     <si-navbar-vertical-next-search placeholder="Search..." />
     <si-navbar-vertical-next-items>
-      <a si-navbar-vertical-next-item routerLink="home" routerLinkActive icon="element-home">
-        Home
-      </a>
+      <a
+        si-navbar-vertical-next-item
+        routerLink="home"
+        routerLinkActive
+        icon="element-home"
+        label="Home"
+      ></a>
       <si-navbar-vertical-next-header>Modules</si-navbar-vertical-next-header>
-      <a si-navbar-vertical-next-item routerLink="energy" routerLinkActive icon="element-trend">
-        Energy &amp; sustainability
-      </a>
+      <a
+        si-navbar-vertical-next-item
+        routerLink="energy"
+        routerLinkActive
+        icon="element-trend"
+        label="Energy &amp; sustainability"
+      ></a>
       <button
         type="button"
         si-navbar-vertical-next-item
         icon="element-user-group"
+        label="User management"
         [siNavbarVerticalNextGroupTriggerFor]="userManagement"
-      >
-        User management
-      </button>
+      ></button>
       <a
         si-navbar-vertical-next-item
         routerLink="coverage"
         routerLinkActive
         icon="element-diagnostic"
-      >
-        Test coverage
-      </a>
+        label="Test coverage"
+      ></a>
       <si-navbar-vertical-next-divider />
       <button
         type="button"
         si-navbar-vertical-next-item
         icon="element-document"
         stateId="documentation"
+        label="Documentation"
         [siNavbarVerticalNextGroupTriggerFor]="documentation"
-      >
-        Documentation
-      </button>
+      ></button>
       <button
         type="button"
         si-navbar-vertical-next-item
         icon="element-warning"
+        label="Action"
         (click)="logEvent('Callback for action called')"
-      >
-        Action
-      </button>
+      ></button>
     </si-navbar-vertical-next-items>
     <si-navbar-vertical-next-footer-items>
       <a
@@ -62,9 +66,8 @@
         routerLink="configuration"
         routerLinkActive
         icon="element-parameter"
-      >
-        Configuration
-      </a>
+        label="Configuration"
+      ></a>
     </si-navbar-vertical-next-footer-items>
 
     <div class="si-layout-main-padding">
@@ -95,16 +98,16 @@
 
 <ng-template #userManagement>
   <si-navbar-vertical-next-group routerLinkActive>
-    <a si-navbar-vertical-next-item routerLink="subItem" routerLinkActive> Sub item </a>
-    <a si-navbar-vertical-next-item routerLink="subItem2" routerLinkActive> Sub item 2 </a>
-    <a si-navbar-vertical-next-item routerLink="subItem3" routerLinkActive> Sub item 3 </a>
+    <a si-navbar-vertical-next-item routerLink="subItem" routerLinkActive label="Sub item"></a>
+    <a si-navbar-vertical-next-item routerLink="subItem2" routerLinkActive label="Sub item 2"></a>
+    <a si-navbar-vertical-next-item routerLink="subItem3" routerLinkActive label="Sub item 3"></a>
   </si-navbar-vertical-next-group>
 </ng-template>
 
 <ng-template #documentation>
   <si-navbar-vertical-next-group routerLinkActive>
-    <a si-navbar-vertical-next-item routerLink="subItem4" routerLinkActive> Sub item 4 </a>
-    <a si-navbar-vertical-next-item routerLink="subItem5" routerLinkActive> Sub item 5 </a>
-    <a si-navbar-vertical-next-item routerLink="subItem6" routerLinkActive> Sub item 6 </a>
+    <a si-navbar-vertical-next-item routerLink="subItem4" routerLinkActive label="Sub item 4"></a>
+    <a si-navbar-vertical-next-item routerLink="subItem5" routerLinkActive label="Sub item 5"></a>
+    <a si-navbar-vertical-next-item routerLink="subItem6" routerLinkActive label="Sub item 6"></a>
   </si-navbar-vertical-next-group>
 </ng-template>

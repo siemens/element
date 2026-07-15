@@ -76,9 +76,9 @@ class EmptyComponent {}
           <button
             type="button"
             si-navbar-vertical-next-item
+            label="item-1"
             [siNavbarVerticalNextGroupTriggerFor]="flyoutGroup"
           >
-            item-1
           </button>
         </si-navbar-vertical-next-items>
       }
@@ -88,9 +88,9 @@ class EmptyComponent {}
           <button
             type="button"
             si-navbar-vertical-next-item
+            label="item1"
             [siNavbarVerticalNextGroupTriggerFor]="navigationGroup"
           >
-            item1
           </button>
         </si-navbar-vertical-next-items>
       }
@@ -101,14 +101,15 @@ class EmptyComponent {}
             type="button"
             si-navbar-vertical-next-item
             stateId="item1"
+            label="item1"
             [siNavbarVerticalNextGroupTriggerFor]="stateGroupOne"
           >
-            item1
           </button>
           <button
             type="button"
             si-navbar-vertical-next-item
             stateId="item2"
+            label="item2"
             [siNavbarVerticalNextGroupTriggerFor]="stateGroupTwo"
           >
             item2
@@ -119,8 +120,12 @@ class EmptyComponent {}
 
     <ng-template #flyoutGroup>
       <si-navbar-vertical-next-group>
-        <a si-navbar-vertical-next-item routerLink="item-1/sub-item-1" routerLinkActive>
-          sub-item1
+        <a
+          si-navbar-vertical-next-item
+          label="sub-item1"
+          routerLink="item-1/sub-item-1"
+          routerLinkActive
+        >
         </a>
       </si-navbar-vertical-next-group>
     </ng-template>
@@ -131,28 +136,40 @@ class EmptyComponent {}
           si-navbar-vertical-next-item
           routerLink="item-1/sub-item-1"
           routerLinkActive
+          label="sub-item1"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          sub-item1
         </a>
-        <a si-navbar-vertical-next-item routerLink="item-1/sub-item-2" routerLinkActive>
-          sub-item2
+        <a
+          si-navbar-vertical-next-item
+          label="sub-item2"
+          routerLink="item-1/sub-item-2"
+          routerLinkActive
+        >
         </a>
       </si-navbar-vertical-next-group>
     </ng-template>
 
     <ng-template #stateGroupOne>
       <si-navbar-vertical-next-group>
-        <a si-navbar-vertical-next-item routerLink="item-1/sub-item-1" routerLinkActive>
-          sub-item1
+        <a
+          si-navbar-vertical-next-item
+          label="sub-item1"
+          routerLink="item-1/sub-item-1"
+          routerLinkActive
+        >
         </a>
       </si-navbar-vertical-next-group>
     </ng-template>
 
     <ng-template #stateGroupTwo>
       <si-navbar-vertical-next-group>
-        <a si-navbar-vertical-next-item routerLink="item-1/sub-item-2" routerLinkActive>
-          sub-item2
+        <a
+          si-navbar-vertical-next-item
+          label="sub-item2"
+          routerLink="item-1/sub-item-2"
+          routerLinkActive
+        >
         </a>
       </si-navbar-vertical-next-group>
     </ng-template>`
