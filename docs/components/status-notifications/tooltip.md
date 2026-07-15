@@ -99,19 +99,36 @@ For information that needs detailed explanation, use [popovers](../status-notifi
 
 ## Code ---
 
-### Usage
+Element supports several ways to show tooltips depending on the use case, but all share the following constraints:
 
-Use `siTooltip` directive to display the tooltip.
+- **Display Triggers:** Tooltips appear on element hover or keyboard focus.
+- **No Interactive Content:** Interactive elements (links, buttons, inputs) are not permitted inside a tooltip.
+- **Need Interactivity?** Use a [popover](popover.md) component instead of a tooltip.
 
-```ts
-import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
+## Standard tooltip
 
-@Component({
-  imports: [SiTooltipDirective, ...]
-})
-```
+Use the `siTooltip` directive when you need to show supplementary information.
+It must be on an interactive element like a button or link.
+Otherwise, it cannot be reached by keyboard user.
+It is using `aria-describe` to expose its content to screen reader.
 
 <si-docs-component example="si-tooltip/si-tooltip"></si-docs-component>
+
+## Tooltip for text overflow
+
+Use the `siTooltipOverflow` directive to display an element's full text content in a tooltip only when the text is visually truncated.
+The directive uses the host element’s text as the tooltip content, so no separate
+tooltip text is needed.
+
+!!! note "Automatic text truncation"
+
+    The directive automatically applies the `text-truncate` class to the host element.
+    You do not need to add this class manually.
+
+Apply the directive to an interactive, keyboard-focusable element with a constrained
+width so its text can overflow.
+
+<si-docs-component example="si-tooltip/si-tooltip-overflow"></si-docs-component>
 
 <si-docs-api directive="SiTooltipDirective"></si-docs-api>
 

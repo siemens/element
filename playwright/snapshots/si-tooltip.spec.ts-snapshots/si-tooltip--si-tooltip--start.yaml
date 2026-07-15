@@ -18,9 +18,10 @@
   - button "Start"
   - button "End"
 - heading "Other examples" [level=4]
-- button "A long time ago in a galaxy far, far away..."
 - tablist:
-  - tab
-  - tab
-  - tab
+  - tab "Favorites" [selected]
+  - tab "Notifications"
+  - tab "Settings"
+- tabpanel "Favorites":
+  - paragraph: Favorites content
 - tooltip "Start"
