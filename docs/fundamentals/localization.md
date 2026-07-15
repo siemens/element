@@ -2,41 +2,122 @@
 
 # Localization
 
-Internationalization is the process of designing and developing a product for localization into specific languages and regions.
+Localization (l10n) is the adaptation of a product or content for a specific language, locale,
+region, or market. It ensures the final result looks and feels native to the target audience.
 
-## Terms ---
+## Introduction ---
 
-The following key terms are important for everyone involved in the localization process.
+Localization adapts a product to a specific language, region, and culture. It includes
+translation, formats, visual conventions, legal requirements, and user expectations.
 
-### Internationalization (i18n)
+### Example
 
-Internationalization (i18n) is the process of designing and developing a product that adapts to different languages and regions.
-It is the foundation for high-quality and efficient [localization](#localization-l10n).
-
-### Localization (l10n)
-
-Localization (l10n) is the process of adapting a product to the language and cultural norms of a specific target market so that it feels natural to local users. This goes beyond [simple translation](#translation) and includes script direction ([LTR](#ltr-left-to-right)/[RTL](#rtl-right-to-left)), formatting numbers, times, dates and addresses, and adapting illustrations.
-Localization requires an [internationalized](#internationalization-i18n) product and must be performed for each target market.
-
-#### Localization example
-
-This example shows how values, dates and times should be displayed after the product has been localized.
+This example shows how localized language, dates, times, numbers, and currencies can appear in
+the user interface.
 <si-docs-component example="si-localization/si-localization" height="650"></si-docs-component>
 
-### Translation
+### Language and tone
 
-Translation is the central linguistic component of [localization](#localization-l10n), whereby the tone must be adapted to local requirements and the meaning must be conveyed accurately.
-Languages differ not only in terms of word order, plural rules and punctuation, but an English word can have multiple meanings and be translated into other languages using completely different words.
+Language and tone must be clear, accurate, and appropriate for the target audience. Good
+localization preserves meaning, not just words, and must also account for plural rules and
+punctuation. For writing guidance, see the [UX text style guide](ux-text-style-guide/index.md).
 
-### LTR (Left-to-Right)
+Element support:
 
-LTR refers to languages (e.g. English, German, French, Spanish) and scripts that are written and read from left to right.
+- Supports translatable strings and integration with translation frameworks.
+- Supports fallback text for missing translations.
+- Does not define tone or wording. Product writing guidance is defined in the
+  [UX text style guide](ux-text-style-guide/index.md).
 
-### RTL (Right-to-Left)
+### Imagery and colors
 
-RTL refers to languages (e.g. Arabic, Hebrew, Persian) and writing systems that are written and read from right to left.
+Images, symbols, and colors can have different meanings across markets. Review them for cultural
+fit and local expectations.
 
-Because of these differences, it's important to consider that often the entire user interface must be mirrored, which imposes significant demands on [internationalization](#internationalization-i18n).
+Element support:
+
+- No specific localization feature for imagery or color choice.
+- Product teams must validate visuals and semantics per market.
+
+### Currency, date, time, measurement, and measurement system formats
+
+Users expect values to follow local conventions. This includes currencies, dates, times, numbers,
+units, and measurement systems such as °C/°F, km/mi, or kg/lb.
+
+Element support:
+
+- Supports locale-aware formatting for dates, times, numbers, percentages, and currencies.
+- Supports locale selection and persistence via `SiLocaleService`.
+- Supports translated unit labels in components where units are shown.
+- Does not convert measurement systems automatically. Applications must decide which units to use
+  and when to convert them.
+
+### User experience and design
+
+Localized interfaces must work with different text lengths and different reading directions. Use
+design options such as flexible growing areas, line wrapping, or fixed layouts with scrollbars,
+and plan enough space for longer translations.
+
+#### LTR (Left-to-Right)
+
+LTR refers to languages and scripts that are written and read from left to right.
+
+#### RTL (Right-to-Left)
+
+RTL refers to languages and writing systems that are written and read from right to left.
+
+RTL can require mirrored navigation, icon direction, alignment, and interaction patterns.
+
+Element support:
+
+- Supports RTL-aware behavior in components and overlays.
+- Provides dynamic directionality support for Angular CDK integrations.
+- Does not automatically solve text expansion. Layouts still need to be designed for it.
+
+### Payment methods
+
+Payment expectations differ by country, including preferred methods, flows, and trust signals.
+
+Element support:
+
+- No payment-specific localization support.
+- Payment flows and local methods must be implemented by the application.
+
+### Legal and Safety
+
+Legal notices, safety texts, consent flows, and compliance content may vary by market and
+jurisdiction.
+
+Element support:
+
+- Localization infrastructure can translate this content.
+- Provides legal-related components and patterns such as the [About](../components/pages/about.md)
+  page, [Footer](../components/layout-navigation/footer.md),
+  [Copyright Notice](../components/status-notifications/copyright-notice.md), and explicit legal
+  acknowledge on the [Landing page](../components/pages/landing-page.md).
+- Market-specific legal and safety requirements, compliance logic, and legal services must be
+  managed by the application.
+
+### Customer support
+
+Support channels, contact details, hours, and escalation paths often differ by country or
+language.
+
+Element support:
+
+- Localization infrastructure can translate support-related user interface text.
+- Local support processes and content must be provided by the application.
+
+### Localization (l10n) vs. Internationalization (i18n)
+
+Internationalization (i18n) is the technical preparation that makes localization possible without
+code changes. Typical activities include separating translatable text from code, enabling
+locale-aware formatting, supporting plural rules, and preparing layouts for text expansion and
+RTL.
+
+Localization (l10n) is the adaptation of content and behavior for a specific market, language, or
+region. Typical activities include translation, terminology review, adapting formats and units,
+checking imagery and legal content, and validating the user experience for the target audience.
 
 ## Writing ---
 
