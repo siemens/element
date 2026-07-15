@@ -4,7 +4,7 @@
  */
 import { afterNextRender, Component, ElementRef, viewChild } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { SiTabsetComponent, SiTabComponent } from '@siemens/element-ng/tabs';
+import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 
 @Component({
