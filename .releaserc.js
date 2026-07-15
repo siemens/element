@@ -78,7 +78,8 @@ export default {
       '@semantic-release/exec',
       {
         verifyConditionsCmd: 'pnpm publish --recursive --no-git-checks --dry-run',
-        publishCmd: 'pnpm publish --recursive --no-git-checks'
+        publishCmd:
+          'pnpm publish --recursive --no-git-checks ${nextRelease.channel ? "--tag " + nextRelease.channel : ""}'
       }
     ],
     ...(skipCommits
