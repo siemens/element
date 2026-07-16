@@ -99,10 +99,16 @@
 .content-motion {
   display: grid;
   grid-template-rows: 1fr;
-  transition: grid-template-rows variables.$element-default-transition-duration;
 
-  @starting-style {
-    grid-template-rows: 0fr;
+  &.content-enter,
+  &.content-leave {
+    transition: grid-template-rows variables.$element-default-transition-duration;
+  }
+
+  &.content-enter {
+    @starting-style {
+      grid-template-rows: 0fr;
+    }
   }
 
   &.content-leave {
