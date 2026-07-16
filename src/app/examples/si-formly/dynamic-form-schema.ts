@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormRecord } from '@angular/forms';
 import { SiFormModule } from '@siemens/element-ng/form';
 import { SiFormlyComponent } from '@siemens/element-ng/formly';
@@ -17,8 +17,7 @@ export interface Person {
 @Component({
   selector: 'app-sample',
   imports: [SiFormModule, SiFormlyComponent],
-  templateUrl: './dynamic-form-schema.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './dynamic-form-schema.html'
 })
 export class SampleComponent {
   formGroup = new FormRecord({});

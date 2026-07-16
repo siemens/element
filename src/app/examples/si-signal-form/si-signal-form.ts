@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   form,
   FormField,
@@ -60,7 +60,6 @@ const emptyRequest: TravelRequest = {
   ],
   templateUrl: './si-signal-form.html',
   providers: [provideSiFormFieldConfig()],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

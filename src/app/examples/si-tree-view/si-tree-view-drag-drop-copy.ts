@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkDrag, CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   reorderTreeItem,
   SiTreeViewComponent,
@@ -91,7 +91,6 @@ const siteConfiguration: TreeItem[] = [
   selector: 'app-sample',
   imports: [SiTreeViewComponent, SiTreeViewItemComponent, SiTreeViewItemDirective, DragDropModule],
   templateUrl: './si-tree-view-drag-drop-copy.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 // NOTE: This example is to demonstrate CDK drag drop API capabilities with SiTreeViewItemNextComponent

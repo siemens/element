@@ -2,11 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './card-images.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './card-images.html'
 })
 export class SampleComponent {}

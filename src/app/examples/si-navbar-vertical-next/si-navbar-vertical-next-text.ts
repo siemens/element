@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
@@ -49,8 +49,7 @@ import {
     RouterLinkActive,
     SiHeaderLogoDirective
   ],
-  templateUrl: './si-navbar-vertical-next-text.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-navbar-vertical-next-text.html'
 })
 export class SampleComponent {
   alwaysFlyout = false;

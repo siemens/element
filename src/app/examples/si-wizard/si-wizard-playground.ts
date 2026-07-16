@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-  signal,
-  viewChild
-} from '@angular/core';
+import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
@@ -25,8 +18,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiWizardComponent,
     SiWizardStepComponent
   ],
-  templateUrl: './si-wizard-playground.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-wizard-playground.html'
 })
 export class SampleComponent implements OnInit {
   protected readonly logEvent = inject(LOG_EVENT);

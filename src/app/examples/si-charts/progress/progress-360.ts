@@ -2,15 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { ProgressChartSeries, SiChartProgressComponent } from '@siemens/charts-ng/progress';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 
 @Component({
   selector: 'app-sample',
   imports: [SiChartProgressComponent, SiResizeObserverDirective],
-  templateUrl: './chart.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './chart.html'
 })
 export class SampleComponent {
   chartData = {

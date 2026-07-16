@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { DecimalPipe, NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 import { SiChartCircleComponent } from '@siemens/charts-ng/circle';
@@ -63,8 +63,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiLaunchpadFactoryComponent,
     SiHeaderLogoDirective
   ],
-  templateUrl: './si-dashboard-layout.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-dashboard-layout.html'
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

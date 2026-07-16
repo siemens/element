@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { EChartOption, SankeySeriesOption } from '@siemens/charts-ng/common';
 import { SiChartSankeyComponent } from '@siemens/charts-ng/sankey';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
@@ -11,7 +11,6 @@ import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
   selector: 'app-sample',
   imports: [SiChartSankeyComponent, SiResizeObserverDirective],
   templateUrl: './sankey.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(window:theme-switch)': 'onThemeSwitch()'
   }

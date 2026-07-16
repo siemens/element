@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, input, viewChild } from '@angular/core';
+import { Component, inject, input, viewChild } from '@angular/core';
 import { elementGoTo } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -32,8 +32,7 @@ import { environment } from 'src/environments/environment';
         </div>
       }
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class CustomClusterPopoverComponent {
   readonly logEvent = inject(LOG_EVENT);

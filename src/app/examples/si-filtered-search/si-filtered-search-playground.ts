@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SearchCriteria, SiFilteredSearchComponent } from '@siemens/element-ng/filtered-search';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
@@ -17,8 +17,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiFormItemComponent,
     SiNumberInputComponent
   ],
-  templateUrl: './si-filtered-search-playground.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-filtered-search-playground.html'
 })
 export class SampleComponent implements OnInit {
   // injected by the live-previewer

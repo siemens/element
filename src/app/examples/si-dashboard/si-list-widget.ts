@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { SiListWidgetComponent, SiListWidgetItem } from '@siemens/element-ng/dashboard';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { Link } from '@siemens/element-ng/link';
@@ -11,7 +11,6 @@ import { Link } from '@siemens/element-ng/link';
   selector: 'app-sample',
   imports: [SiEmptyStateComponent, SiListWidgetComponent],
   templateUrl: './si-list-widget.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

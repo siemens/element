@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
@@ -13,7 +13,6 @@ import { SiThresholdComponent, ThresholdStep } from '@siemens/element-ng/thresho
   selector: 'app-sample',
   imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent, SiThresholdComponent],
   templateUrl: './si-threshold.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

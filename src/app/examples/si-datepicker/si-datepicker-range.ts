@@ -3,14 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { DateRange, SiDatepickerComponent } from '@siemens/element-ng/datepicker';
 
 @Component({
   selector: 'app-sample',
   imports: [CommonModule, SiDatepickerComponent],
   templateUrl: './si-datepicker-range.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

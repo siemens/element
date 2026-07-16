@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
 import { AlertConfig, SiLandingPageComponent } from '@siemens/element-ng/landing-page';
@@ -12,8 +12,7 @@ import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
 @Component({
   selector: 'app-sample',
   imports: [SiLandingPageComponent, SiPasswordToggleModule, RouterLink, SiSystemBannerComponent],
-  templateUrl: './si-landing-page-custom.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-landing-page-custom.html'
 })
 export class SampleComponent {
   announcement: AlertConfig = {

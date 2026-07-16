@@ -2,15 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
   imports: [SiCardComponent],
-  templateUrl: './card-group.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './card-group.html'
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

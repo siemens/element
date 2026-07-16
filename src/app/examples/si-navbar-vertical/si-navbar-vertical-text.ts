@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   SiApplicationHeaderComponent,
@@ -30,8 +30,7 @@ import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-
     RouterLink,
     SiHeaderLogoDirective
   ],
-  templateUrl: './si-navbar-vertical-text.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-navbar-vertical-text.html'
 })
 export class SampleComponent {
   menuItems: NavbarVerticalItem[] = [

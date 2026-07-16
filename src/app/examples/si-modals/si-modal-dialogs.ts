@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActionDialog, SiActionDialogService } from '@siemens/element-ng/action-modal';
 import {
@@ -17,7 +17,6 @@ import { cloneColumnData, headerData } from './column-dialog.data';
 @Component({
   selector: 'app-sample',
   templateUrl: './si-modal-dialogs.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit, OnDestroy {

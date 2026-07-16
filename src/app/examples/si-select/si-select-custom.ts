@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
@@ -61,7 +61,6 @@ import { treeItems } from '../si-tree-view/tree-items';
       </div>
     </ng-template>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [
     {
       directive: SiCustomSelectDirective,
@@ -129,7 +128,6 @@ const applySelectionState = (items: TreeItem[], selected: string | undefined): v
     SiFormItemComponent
   ],
   templateUrl: './si-select-custom.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

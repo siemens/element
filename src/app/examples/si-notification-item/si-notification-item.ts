@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /* eslint-disable @typescript-eslint/no-deprecated */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiAvatarComponent } from '@siemens/element-ng/avatar';
 import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
@@ -30,7 +30,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiStatusIconComponent
   ],
   templateUrl: './si-notification-item.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
@@ -12,8 +12,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [SiDashboardCardComponent, SiPhotoUploadComponent, FormsModule],
-  templateUrl: './si-photo-upload.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-photo-upload.html'
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

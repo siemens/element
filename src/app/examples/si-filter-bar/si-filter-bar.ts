@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Filter, SiFilterBarComponent } from '@siemens/element-ng/filter-bar';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -10,7 +10,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
   selector: 'app-sample',
   imports: [SiFilterBarComponent],
   templateUrl: './si-filter-bar.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

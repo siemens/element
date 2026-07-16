@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { SiCarouselComponent, SiCarouselItemDirective } from '@siemens/element-ng/carousel';
@@ -28,8 +28,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
       block-size: 100%;
       min-block-size: 175px;
     }
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class SampleComponent {
   private readonly logEvent = inject(LOG_EVENT);

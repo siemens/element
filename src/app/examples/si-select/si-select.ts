@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { PercentPipe, TitleCasePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 // eslint-disable-next-line no-restricted-imports
 import { TranslatePipe } from '@ngx-translate/core';
@@ -38,7 +38,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
     TranslatePipe
   ],
   templateUrl: './si-select.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

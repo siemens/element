@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { CartesianChartSeries, SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 import { ChartXAxis, ChartYAxis } from '@siemens/charts-ng/common';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
@@ -14,8 +14,7 @@ const point = (): number => Math.round(Math.random() * 100);
 @Component({
   selector: 'app-sample',
   imports: [SiChartCartesianComponent, SiResizeObserverDirective],
-  templateUrl: './chart.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './chart.html'
 })
 export class SampleComponent extends ChartBase {
   chartData: ChartData = {

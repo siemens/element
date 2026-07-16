@@ -2,15 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  signal,
-  TemplateRef,
-  viewChild
-} from '@angular/core';
+import { Component, computed, inject, signal, TemplateRef, viewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   elementBookmark,
@@ -71,8 +63,7 @@ interface ChatMessage {
     SiAttachmentListComponent,
     SiAiWelcomeScreenComponent
   ],
-  templateUrl: './si-chat-container.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-chat-container.html'
 })
 export class SampleComponent {
   private logEvent = inject(LOG_EVENT);

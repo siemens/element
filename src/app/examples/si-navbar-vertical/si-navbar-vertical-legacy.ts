@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /* eslint-disable @typescript-eslint/no-deprecated */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiNavbarModule } from '@siemens/element-ng/navbar';
 import { NavbarVerticalItem, SiNavbarVerticalModule } from '@siemens/element-ng/navbar-vertical';
@@ -12,8 +12,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [SiNavbarModule, SiNavbarVerticalModule],
-  templateUrl: './si-navbar-vertical-legacy.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-navbar-vertical-legacy.html'
 })
 export class SampleComponent {
   menuItems: MenuItem[] = [

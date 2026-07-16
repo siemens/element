@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import {
@@ -41,8 +41,7 @@ import { SiStatusBarComponent, StatusBarItem } from '@siemens/element-ng/status-
     SiStatusBarComponent,
     SiHeaderLogoDirective
   ],
-  templateUrl: './si-page-header.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-page-header.html'
 })
 export class SampleComponent {
   readonly breadcrumbItems: BreadcrumbItem[] = [

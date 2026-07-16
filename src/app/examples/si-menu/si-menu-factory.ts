@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkContextMenuTrigger, CdkMenuTrigger } from '@angular/cdk/menu';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   MenuItemCheckbox,
   MenuItem,
@@ -14,8 +14,7 @@ import {
 @Component({
   selector: 'app-sample',
   imports: [CdkContextMenuTrigger, CdkMenuTrigger, SiMenuFactoryComponent],
-  templateUrl: './si-menu-factory.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-menu-factory.html'
 })
 export class SampleComponent {
   items: MenuItem[] = [

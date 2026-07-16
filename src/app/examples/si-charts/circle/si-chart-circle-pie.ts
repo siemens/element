@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { SiChartCircleComponent } from '@siemens/charts-ng/circle';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 
@@ -10,7 +10,6 @@ import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
   selector: 'app-sample',
   imports: [SiChartCircleComponent, SiResizeObserverDirective],
   templateUrl: './si-chart-circle-pie.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {}

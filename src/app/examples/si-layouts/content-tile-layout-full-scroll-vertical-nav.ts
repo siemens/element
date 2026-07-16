@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import {
@@ -55,8 +55,7 @@ import { delay, of } from 'rxjs';
     AsyncPipe,
     SiHeaderLogoDirective
   ],
-  templateUrl: './content-tile-layout-full-scroll-vertical-nav.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './content-tile-layout-full-scroll-vertical-nav.html'
 })
 export class SampleComponent {
   collapsed = true;

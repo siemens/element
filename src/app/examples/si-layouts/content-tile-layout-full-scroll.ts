@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   SiAccountDetailsComponent,
@@ -35,8 +35,7 @@ import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
     SiHeaderBrandDirective,
     SiHeaderLogoDirective
   ],
-  templateUrl: './content-tile-layout-full-scroll.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './content-tile-layout-full-scroll.html'
 })
 export class SampleComponent {
   menuItems: NavbarVerticalItem[] = [

@@ -4,7 +4,7 @@
  */
 /* eslint-disable @typescript-eslint/no-deprecated */
 import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from '@siemens/element-ng/common';
@@ -14,8 +14,7 @@ import { SiThemeService, ThemeType } from '@siemens/element-ng/theme';
 @Component({
   selector: 'app-sample',
   imports: [SiNavbarModule, JsonPipe],
-  templateUrl: './si-navbar-primary-select-settings.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-navbar-primary-select-settings.html'
 })
 export class SampleComponent {
   private readonly availableLanguages = ['en', 'de', 'fr'];

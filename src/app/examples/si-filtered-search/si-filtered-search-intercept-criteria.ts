@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import {
   DisplayedCriteriaEventArgs,
@@ -15,8 +15,7 @@ import { SiFilterSettingsComponent } from '../si-filter-settings/si-filter-setti
 @Component({
   selector: 'app-sample',
   imports: [SiFilterSettingsComponent, SiFilteredSearchComponent],
-  templateUrl: './si-filtered-search-intercept-criteria.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-filtered-search-intercept-criteria.html'
 })
 export class SampleComponent {
   variant: BackgroundColorVariant = 'base-1';

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiChartCircleComponent } from '@siemens/charts-ng/circle';
 import {
@@ -48,8 +48,7 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
     SiHeaderLogoDirective
   ],
   templateUrl: './content-1-2-layout-full-scroll.html',
-  providers: [DataService],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [DataService]
 })
 export class SampleComponent {
   menuItems: NavbarVerticalItem[] = [

@@ -3,14 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-  TemplateRef,
-  viewChild
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, viewChild } from '@angular/core';
 import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
 import { StatusType } from '@siemens/element-ng/common';
 import { SiDatatableModule } from '@siemens/element-ng/datatable';
@@ -38,8 +31,7 @@ import { Subject } from 'rxjs';
     CdkMenuTrigger
   ],
   templateUrl: './datatable-responsive.html',
-  styleUrl: './datatable.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './datatable.scss'
 })
 export class SampleComponent implements OnInit, OnDestroy {
   readonly statusCellTempl = viewChild.required<TemplateRef<any>>('statusCellTempl');

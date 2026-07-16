@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, viewChild } from '@angular/core';
+import { Component, inject, OnDestroy, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import {
@@ -38,8 +38,7 @@ import {
     SiHeaderActionsDirective,
     SiHeaderActionItemComponent
   ],
-  templateUrl: './si-side-panel-portal.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-side-panel-portal.html'
 })
 export class SampleComponent implements OnDestroy {
   mode: SidePanelMode = 'over';

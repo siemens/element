@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SiImageCropperStyleComponent } from '@siemens/element-ng/photo-upload';
 import { LOG_EVENT } from '@siemens/live-preview';
 import { ImageCropperComponent, ImageCroppedEvent } from 'ngx-image-cropper';
@@ -11,7 +11,6 @@ import { ImageCropperComponent, ImageCroppedEvent } from 'ngx-image-cropper';
   selector: 'app-sample',
   imports: [ImageCropperComponent, SiImageCropperStyleComponent],
   templateUrl: './image-cropping.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { 'class': 'p-5' }
 })
 export class SampleComponent {

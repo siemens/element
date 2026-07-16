@@ -3,15 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  OnInit,
-  signal,
-  TemplateRef,
-  viewChild
-} from '@angular/core';
+import { Component, computed, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { elementDown2, elementOptionsVertical } from '@siemens/element-icons';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
@@ -41,8 +33,7 @@ interface Employee {
     FormsModule,
     SiAutoCollapsableListModule
   ],
-  templateUrl: './datatable-bulk-actions.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './datatable-bulk-actions.html'
 })
 export class SampleComponent implements OnInit {
   protected readonly icons = addIcons({ elementDown2, elementOptionsVertical });

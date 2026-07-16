@@ -2,16 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  OnInit,
-  signal,
-  TemplateRef,
-  viewChild
-} from '@angular/core';
+import { Component, computed, effect, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
 import {
   SiApplicationHeaderComponent,
   SiHeaderBrandDirective
@@ -42,8 +33,7 @@ interface Employee {
     SiSidePanelComponent,
     SiSidePanelContentComponent
   ],
-  templateUrl: './datatable-bulk-actions-side-panel.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './datatable-bulk-actions-side-panel.html'
 })
 export class SampleComponent implements OnInit {
   protected readonly tableConfig = SI_DATATABLE_CONFIG;

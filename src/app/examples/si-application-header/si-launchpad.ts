@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import {
@@ -26,8 +26,7 @@ import { SiFormItemComponent } from '@siemens/element-ng/form';
     FormsModule,
     SiFormItemComponent
   ],
-  templateUrl: './si-launchpad.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-launchpad.html'
 })
 export class SampleComponent {
   readonly enableFavorites = signal(true);

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormRecord } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { SiFormModule } from '@siemens/element-ng/form';
@@ -12,8 +12,7 @@ import { SiFormlyComponent } from '@siemens/element-ng/formly';
 @Component({
   selector: 'app-sample',
   imports: [CommonModule, SiFormModule, SiFormlyComponent],
-  templateUrl: './si-dynamic-form-array.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-dynamic-form-array.html'
 })
 export class SampleComponent {
   form = new FormRecord({});
