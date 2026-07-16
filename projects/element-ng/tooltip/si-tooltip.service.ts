@@ -7,7 +7,9 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { isPlatformBrowser } from '@angular/common';
 import {
   ComponentRef,
+  effect,
   ElementRef,
+  EffectRef,
   inject,
   Injectable,
   Injector,
@@ -47,6 +49,7 @@ class BrowserTooltipRef {
   private isHovered = false;
   private overlayRef?: OverlayRef;
   private positionSubscription?: Subscription;
+  private canShowEffect?: EffectRef;
 
   constructor(
     private config: {
@@ -55,12 +58,23 @@ class BrowserTooltipRef {
       injector?: Injector;
       overlay: Overlay;
       placement: keyof typeof positions;
+      canShow?: () => boolean;
       scrollStrategy?: () => ScrollStrategy | undefined;
       tooltip: () => SiTooltipContent;
       tooltipContext: () => unknown;
     }
   ) {
     const nativeElement = this.config.element.nativeElement;
+
+    if (this.config.canShow) {
+      this.canShowEffect = effect(() => {
+        if (!this.config.canShow!()) {
+          this.isFocused = false;
+          this.isHovered = false;
+          this.hide();
+        }
+      });
+    }
 
     fromEvent(nativeElement, 'focus')
       .pipe(
@@ -154,6 +168,10 @@ class BrowserTooltipRef {
   }
 
   private show(): void {
+    if (this.config.canShow && !this.config.canShow()) {
+      return;
+    }
+
     const overlayRef = this.getOrCreateOverlay();
     if (overlayRef.hasAttached()) {
       return;
@@ -189,6 +207,7 @@ class BrowserTooltipRef {
   destroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    this.canShowEffect?.destroy();
     this.overlayRef?.dispose();
     this.positionSubscription?.unsubscribe();
   }
@@ -212,6 +231,7 @@ export class SiTooltipService {
     element: ElementRef;
     placement: keyof typeof positions;
     injector?: Injector;
+    canShow?: () => boolean;
     tooltip: () => SiTooltipContent;
     tooltipContext: () => unknown;
     scrollStrategy?: () => ScrollStrategy | undefined;
