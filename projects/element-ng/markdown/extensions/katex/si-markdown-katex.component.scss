@@ -1,0 +1,3 @@
+@use 'katex/src/styles/katex' with (
+  $font-folder: 'katex/dist/fonts'
+);

@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
     "lib": ["es2024", "dom", "esnext.disposable"],
+    "noUnusedLocals": false,
     "types": [
       "vitest/globals",
       "vitest/browser",

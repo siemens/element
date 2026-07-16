@@ -1,0 +1,18 @@
+<ng-content />
+
+@let templates = control.templates();
+@for (child of children(); track $index) {
+  <ng-container
+    [ngTemplateOutlet]="templates.get(child.type) ?? defaultTemplate"
+    [ngTemplateOutletContext]="{ $implicit: child, parent: node() }"
+  />
+}
+
+<ng-template #defaultTemplate let-child>
+  @if (control.debug()) {
+    <div class="markdown-unkown-node-type text-danger">
+      Node type not implemented: <b>{{ child.type }}</b>
+      <pre class="mt-1">{{ child | json }}</pre>
+    </div>
+  }
+</ng-template>

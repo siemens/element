@@ -1,6 +1,5 @@
-@use '../variables';
-
 @use 'sass:map';
+@use '../variables';
 
 .markdown-content {
   max-inline-size: 100%;
@@ -13,8 +12,7 @@
     font-weight: variables.$si-font-weight-semibold;
   }
 
-  ul,
-  ol {
+  :is(ul, ol) {
     max-inline-size: 100%;
     overflow-wrap: break-word;
 
@@ -33,11 +31,24 @@
     overflow-wrap: break-word;
   }
 
+  .task-list-item {
+    list-style: none;
+
+    .form-check-input {
+      margin-inline-start: calc(-1rem - map.get(variables.$spacers, 2));
+      margin-inline-end: map.get(variables.$spacers, 2);
+      vertical-align: text-bottom;
+      pointer-events: none;
+    }
+  }
+
   pre {
     code {
+      color: inherit;
       background-color: transparent;
       padding-block: 0;
       padding-inline: 0;
+      border: 0;
       border-radius: 0;
     }
 
@@ -72,24 +83,26 @@
   table {
     inline-size: max-content;
     max-inline-size: 100%;
-    // stylelint-disable-next-line declaration-no-important
-    margin-block-start: map.get(variables.$spacers, 6) !important;
-    // stylelint-disable-next-line declaration-no-important
-    margin-block-end: 0 !important;
-    overflow: auto;
-    display: block;
+    align-self: stretch;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    display: table;
+    table-layout: auto;
     white-space: nowrap;
 
-    ul,
-    ol {
+    :is(ul, ol) {
       // stylelint-disable-next-line declaration-no-important
       padding-inline-start: map.get(variables.$spacers, 6) !important;
+    }
+
+    td:last-child,
+    th:last-child {
+      inline-size: 100%;
     }
   }
 
   table td,
   table th {
-    max-inline-size: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
 

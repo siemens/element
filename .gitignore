@@ -59,6 +59,10 @@ __pycache__
 .DS_Store
 Thumbs.db
 
+# Vitest
+__screenshots__/
+/.vitest-attachments/
+
 # Playwright
 /playwright/results/
 /playwright/.cache/
