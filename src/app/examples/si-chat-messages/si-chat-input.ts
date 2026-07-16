@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   SiChatInputComponent,
   MessageAction,
@@ -17,8 +17,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [SiChatInputComponent, SiIconComponent],
-  templateUrl: './si-chat-input.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-chat-input.html'
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   elementBookmark,
   elementDelete,
@@ -39,8 +39,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiMenuFactoryComponent,
     SiTranslatePipe
   ],
-  templateUrl: './si-chat-message.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-chat-message.html'
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

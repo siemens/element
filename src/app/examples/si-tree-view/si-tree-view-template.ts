@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   SiTreeViewComponent,
   SiTreeViewItemComponent,
@@ -14,7 +14,6 @@ import {
   selector: 'app-sample',
   imports: [SiTreeViewComponent, SiTreeViewItemComponent, SiTreeViewItemDirective],
   templateUrl: './si-tree-view-template.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

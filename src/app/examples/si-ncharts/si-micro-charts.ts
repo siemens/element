@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import {
   MicrochartBarSeries,
@@ -31,7 +31,6 @@ import {
     SiIconComponent
   ],
   templateUrl: './si-micro-charts.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'p-5'
   }

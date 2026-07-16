@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  AfterViewInit,
-  Component,
-  inject,
-  OnDestroy
-} from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import {
@@ -56,8 +50,7 @@ import { SiTourService, TourStep } from '@siemens/element-ng/tour';
     SiLaunchpadFactoryComponent,
     SiHeaderLogoDirective
   ],
-  templateUrl: './si-tour.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-tour.html'
 })
 export class SampleComponent implements AfterViewInit, OnDestroy {
   breadcrumbItems: BreadcrumbItem[] = [

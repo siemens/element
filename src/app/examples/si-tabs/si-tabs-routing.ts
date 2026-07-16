@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, AfterViewInit, Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTabsetComponent, SiTabLinkComponent } from '@siemens/element-ng/tabs';
@@ -11,8 +11,7 @@ import { provideExampleRoutes } from '@siemens/live-preview';
 // Dummy components to be used in the router outlet for the example
 @Component({
   selector: 'app-home',
-  template: `<div class="p-5">This is the home page</div>`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `<div class="p-5">This is the home page</div>`
 })
 export class HomeComponent {}
 

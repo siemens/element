@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import {
   SiApplicationHeaderComponent,
@@ -22,8 +22,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     RouterOutlet,
     SiHeaderLogoDirective
   ],
-  templateUrl: './si-navbar-vertical.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-navbar-vertical.html'
 })
 export class SampleComponent implements OnInit {
   menuItems: NavbarVerticalItem[] = [

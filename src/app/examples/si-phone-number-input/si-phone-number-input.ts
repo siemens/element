@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { PhoneDetails, SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
@@ -11,8 +11,7 @@ import { PhoneDetails, SiPhoneNumberInputComponent } from '@siemens/element-ng/p
 @Component({
   selector: 'app-sample',
   imports: [CommonModule, SiPhoneNumberInputComponent, ReactiveFormsModule, SiFormItemComponent],
-  templateUrl: './si-phone-number-input.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-phone-number-input.html'
 })
 export class SampleComponent {
   lastEventValue!: PhoneDetails;

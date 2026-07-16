@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal, WritableSignal } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiTimepickerComponent } from '@siemens/element-ng/datepicker';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
@@ -11,8 +11,7 @@ import { SiFormItemComponent } from '@siemens/element-ng/form';
 @Component({
   selector: 'app-sample',
   imports: [CommonModule, SiTimepickerComponent, FormsModule, SiFormItemComponent],
-  templateUrl: './si-timepicker.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-timepicker.html'
 })
 export class SampleComponent {
   readonly min = signal<Date | undefined>(new Date('2022-01-10T06:00:00.000Z'));

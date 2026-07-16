@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-  signal,
-  viewChild
-} from '@angular/core';
+import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
 import {
@@ -21,8 +14,7 @@ import {
 @Component({
   selector: 'app-sample',
   imports: [SiLandingPageComponent, SiLoginSingleSignOnComponent],
-  templateUrl: './si-landing-page-single-sign-on-login.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-landing-page-single-sign-on-login.html'
 })
 export class SampleComponent implements OnInit {
   private translate = inject(TranslateService);

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   SiWeatherCondition,
@@ -107,7 +107,6 @@ const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   selector: 'app-sample',
   imports: [FormsModule, SiWeatherWidgetComponent],
   templateUrl: './si-weather-widget-configurable.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {
