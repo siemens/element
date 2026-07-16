@@ -56,7 +56,8 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
 
   protected readonly describedBy = `__si-form-validation-tooltip-${SiFormValidationTooltipDirective.idCounter++}`;
   private readonly errors = signal<SiFormError[]>([]);
-  private readonly canShowTooltip = computed(() => this.errors().length > 0 && !!this.ngControl.touched);
+  private readonly touched = signal(false);
+  private readonly canShowTooltip = computed(() => this.errors().length > 0 && this.touched());
   private readonly tooltipRef = this.tooltipService.createTooltip({
     placement: () => 'auto',
     element: this.elementRef,
@@ -66,18 +67,17 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
     }),
     canShow: this.canShowTooltip,
     tooltip: () => SiFormValidationTooltipComponent,
-    tooltipContext: () => this.errors()
+    // Not actually used, but errors in the context triggers a resize if the errors changes.
+    tooltipContext: this.errors
   });
   private currentErrors: ValidationErrors | null = null;
-  private touched: boolean | null = null;
 
   ngDoCheck(): void {
     const nextErrors = this.ngControl.errors;
-    const nextTouched = this.ngControl.touched;
+    this.touched.set(!!this.ngControl.touched);
 
-    if (this.currentErrors !== nextErrors || this.touched !== nextTouched) {
+    if (this.currentErrors !== nextErrors) {
       this.currentErrors = nextErrors;
-      this.touched = nextTouched;
       this.updateErrors();
     }
   }
