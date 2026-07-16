@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Config, SiFlexibleDashboardComponent, Widget } from '@siemens/dashboards-ng';
 
 import { AppStateService } from '../../app-state.service';
@@ -29,8 +29,7 @@ import {
       <app-dashboard-filters menubar filters-slot />
     </si-flexible-dashboard>
   `,
-  styleUrl: './fixed-widgets-dashboard.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './fixed-widgets-dashboard.component.scss'
 })
 export class FixedWidgetsDashboardPageComponent {
   appStateService = inject(AppStateService);
