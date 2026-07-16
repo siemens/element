@@ -68,7 +68,7 @@ export class SiTooltipDirective implements OnDestroy {
   private readonly tooltipRef = this.tooltipService.createTooltip({
     describedBy: this.describedBy,
     element: this.elementRef,
-    placement: this.placement(),
+    placement: this.placement,
     canShow: this.canShow,
     tooltip: this.siTooltip,
     tooltipContext: this.tooltipContext,

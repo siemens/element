@@ -65,7 +65,7 @@ export abstract class SiHeaderActionIconItemBase
     if (this.visuallyHideTitle() && !hasActiveTooltip) {
       const tooltipRef = this.tooltipService.createTooltip({
         element: this.elementRef,
-        placement: 'auto',
+        placement: () => 'auto',
         tooltip: this.itemTitle,
         tooltipContext: () => undefined
       });
