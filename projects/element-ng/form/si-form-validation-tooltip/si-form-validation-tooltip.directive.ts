@@ -97,7 +97,7 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
 
   private createTooltip(): void {
     this.tooltipRef ??= this.tooltipService.createTooltip({
-      placement: 'auto',
+      placement: () => 'auto',
       element: this.elementRef,
       describedBy: this.describedBy,
       injector: Injector.create({
