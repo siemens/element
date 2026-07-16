@@ -47,6 +47,7 @@ export * from './list-details';
 export * from './loading-spinner';
 export * from './localization';
 export * from './main-detail-container';
+export * from './markdown';
 export * from './menu';
 export * from './modal';
 export * from './navbar';

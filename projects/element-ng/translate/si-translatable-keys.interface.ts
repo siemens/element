@@ -209,6 +209,8 @@ export interface SiTranslatableKeys {
   'SI_MAP.WINDOWS_HELP'?: string;
   'SI_MAP.ZOOM_IN'?: string;
   'SI_MAP.ZOOM_OUT'?: string;
+  'SI_MARKDOWN.COPIED_CODE'?: string;
+  'SI_MARKDOWN.COPY_CODE'?: string;
   'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;
   'SI_NAVBAR.TOGGLE_NAVIGATION'?: string;
   'SI_NAVBAR_VERTICAL.COLLAPSE'?: string;
