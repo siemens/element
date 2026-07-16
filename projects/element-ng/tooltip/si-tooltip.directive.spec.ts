@@ -74,6 +74,18 @@ describe('SiTooltipDirective', () => {
       await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
+    it('should hide a visible tooltip when disabled', async () => {
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
+
+      component.isDisabled.set(true);
+      await fixture.whenStable();
+
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+    });
+
     it('should cancel pending tooltip when disabled while waiting', async () => {
       button.dispatchEvent(new MouseEvent('mouseenter'));
       await vi.advanceTimersByTimeAsync(0);
