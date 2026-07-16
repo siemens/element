@@ -112,9 +112,7 @@ h1,
   );
 }
 
-.si-h1-bold,
-// @deprecated Will be removed in a future major version, use `.si-h1-bold` instead.
-.si-h1-black {
+.si-h1-bold {
   @include typography.si-font(
     typography.$si-font-size-h1-bold,
     typography.$si-line-height-h1-bold,
@@ -142,9 +140,7 @@ h3,
   );
 }
 
-.si-h4-bold,
-// @deprecated Will be removed in a future major version, use `.si-h4-bold` instead.
-.si-title-1-bold {
+.si-h4-bold {
   @include typography.si-font(
     typography.$si-font-size-h4-bold,
     typography.$si-line-height-h4-bold,
@@ -154,9 +150,7 @@ h3,
 
 h4,
 .h4,
-.si-h4,
-// @deprecated Will be removed in a future major version, use `.si-h4` instead.
-.si-title-1 {
+.si-h4 {
   @include typography.si-font(
     typography.$si-font-size-h4,
     typography.$si-line-height-h4,
@@ -164,9 +158,7 @@ h4,
   );
 }
 
-.si-h5-bold,
-// @deprecated Will be removed in a future major version, use `.si-h5-bold` instead.
-.si-title-2-bold {
+.si-h5-bold {
   @include typography.si-font(
     typography.$si-font-size-h5-bold,
     typography.$si-line-height-h5-bold,
@@ -178,9 +170,7 @@ h5,
 h6,
 .h5,
 .h6,
-.si-h5,
-// @deprecated Will be removed in a future major version, use `.si-h5` instead.
-.si-title-2 {
+.si-h5 {
   @include typography.si-font(
     typography.$si-font-size-h5,
     typography.$si-line-height-h5,
@@ -188,9 +178,7 @@ h6,
   );
 }
 
-.si-body-lg,
-// @deprecated Will be removed in a future major version, use `.si-body-lg` instead.
-.si-body-1 {
+.si-body-lg {
   @include typography.si-font(
     typography.$si-font-size-body-lg,
     typography.$si-line-height-body-lg,
@@ -198,9 +186,7 @@ h6,
   );
 }
 
-.si-body,
-// @deprecated Will be removed in a future major version, use `.si-body` instead.
-.si-body-2 {
+.si-body {
   @include typography.si-font(
     typography.$si-font-size-body,
     typography.$si-line-height-body,
@@ -217,9 +203,7 @@ h6,
 }
 
 .si-display-xl,
-.display-1,
-// @deprecated Will be removed in a future major version, use `.si-display-xl` instead.
-.si-display-1 {
+.display-1 {
   @include typography.si-font(
     typography.$si-font-size-display-xl,
     typography.$si-line-height-display-xl,
@@ -228,9 +212,7 @@ h6,
 }
 
 .si-display-lg,
-.display-2,
-// @deprecated Will be removed in a future major version, use `.si-display-lg` instead.
-.si-display-2 {
+.display-2 {
   @include typography.si-font(
     typography.$si-font-size-display-lg,
     typography.$si-line-height-display-lg,
@@ -239,9 +221,7 @@ h6,
 }
 
 .si-display-bold,
-.display-3,
-// @deprecated Will be removed in a future major version, use `.si-display-bold` instead.
-.si-display-3 {
+.display-3 {
   @include typography.si-font(
     typography.$si-font-size-display-bold,
     typography.$si-line-height-display-bold,
@@ -250,9 +230,7 @@ h6,
 }
 
 .si-display,
-.display-4,
-// @deprecated Will be removed in a future major version, use `.si-display` instead.
-.si-display-4 {
+.display-4 {
   @include typography.si-font(
     typography.$si-font-size-display,
     typography.$si-line-height-display,

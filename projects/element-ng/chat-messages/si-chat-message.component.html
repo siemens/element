@@ -1,5 +1,5 @@
 <!--- Flex-row if alignment start, flex-row-reverse if alignment end, flex-column if mobile -->
-<div class="d-flex si-body-2 chat-message-container" [class.start]="alignment() === 'start'">
+<div class="d-flex si-body chat-message-container" [class.start]="alignment() === 'start'">
   <div class="avatar-wrapper flex-shrink-0" [class.end]="alignment() === 'end'">
     <ng-content select="si-icon,si-avatar,img" />
   </div>
