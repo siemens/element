@@ -2,14 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { SiAboutComponent } from '@siemens/element-ng/about';
 
 @Component({
   selector: 'app-sample',
   imports: [SiAboutComponent],
-  templateUrl: './si-about-text-api.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-about-text-api.html'
 })
 export class SampleComponent {
   licenseIntro = `Provide a disclaimer here about the third-party software

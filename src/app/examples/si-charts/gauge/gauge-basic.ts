@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, OnDestroy, viewChild } from '@angular/core';
+import { Component, OnDestroy, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiChartGaugeComponent } from '@siemens/charts-ng/gauge';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
@@ -11,8 +11,7 @@ import { interval, Subscription } from 'rxjs';
 @Component({
   selector: 'app-sample',
   imports: [FormsModule, SiChartGaugeComponent, SiResizeObserverDirective],
-  templateUrl: './chart.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './chart.html'
 })
 export class SampleComponent implements OnDestroy {
   chartData = {

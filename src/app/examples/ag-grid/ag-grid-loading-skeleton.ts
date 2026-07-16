@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  inject
-} from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
@@ -27,7 +21,6 @@ import { TableData, TableDataService } from '../../mocks/table-data.mock';
     [paginationPageSize]="20"
     (gridReady)="onGridReady()"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'p-5'
   }

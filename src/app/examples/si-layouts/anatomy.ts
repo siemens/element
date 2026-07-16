@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import {
@@ -62,8 +62,7 @@ import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
     SiSystemBannerComponent,
     SiHeaderLogoDirective
   ],
-  templateUrl: './anatomy.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './anatomy.html'
 })
 export class SampleComponent {
   breadcrumbItems: BreadcrumbItem[] = [

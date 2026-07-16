@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { JsonPipe, KeyValuePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   DatepickerInputConfig,
@@ -25,8 +25,7 @@ import { filter, map } from 'rxjs/operators';
     SiDateRangeComponent,
     SiFormItemComponent
   ],
-  templateUrl: './si-date-range-playground.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-date-range-playground.html'
 })
 export class SampleComponent implements OnInit {
   readonly logEvent = inject(LOG_EVENT);

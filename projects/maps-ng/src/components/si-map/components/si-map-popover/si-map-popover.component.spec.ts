@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MapPointMetaData } from '../../models';
@@ -10,8 +10,7 @@ import { SiMapPopoverComponent } from './si-map-popover.component';
 
 @Component({
   selector: 'si-mock-popover',
-  template: '<p>Mocking custom popover component</p>',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: '<p>Mocking custom popover component</p>'
 })
 class MockCustomPopoverComponent {
   readonly mapPoint = input<MapPointMetaData>();

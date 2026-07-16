@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-  signal,
-  OnDestroy
-} from '@angular/core';
+import { Component, inject, OnInit, signal, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Route, Router, RouterOutlet } from '@angular/router';
 import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
 import {
@@ -187,8 +180,7 @@ export const ROUTES: Route[] = [
   selector: 'app-sample',
   imports: [SiLandingPageComponent, RouterOutlet],
   templateUrl: './si-landing-page-eula.html',
-  providers: [provideExampleRoutes(ROUTES)],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [provideExampleRoutes(ROUTES)]
 })
 export class SampleComponent implements OnInit, OnDestroy {
   private activeRoute = inject(ActivatedRoute);

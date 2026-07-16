@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /* eslint-disable  @typescript-eslint/no-deprecated */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   SiTabDeselectionEvent,
@@ -26,7 +26,6 @@ interface TabModel {
   selector: 'app-sample',
   imports: [SiTabLegacyComponent, SiTabsetLegacyComponent, FormsModule],
   templateUrl: './si-tabs-legacy.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

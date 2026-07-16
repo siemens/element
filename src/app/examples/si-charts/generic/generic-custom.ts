@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { SiChartComponent } from '@siemens/charts-ng/chart';
 import { EChartOption } from '@siemens/charts-ng/common';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
@@ -10,8 +10,7 @@ import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 @Component({
   selector: 'app-sample',
   imports: [SiChartComponent, SiResizeObserverDirective],
-  templateUrl: './chart.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './chart.html'
 })
 export class SampleComponent {
   chartColors: EChartOption = {};

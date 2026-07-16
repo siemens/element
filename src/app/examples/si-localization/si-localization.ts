@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 // eslint-disable-next-line no-restricted-imports
 import { TranslatePipe } from '@ngx-translate/core';
@@ -25,7 +25,6 @@ export const DATE_PATTERN_ENABLE = 'date-pattern.enable';
     TranslatePipe
   ],
   templateUrl: './si-localization.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

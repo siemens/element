@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { StatusType } from '@siemens/element-ng/common';
 import { Link } from '@siemens/element-ng/link';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
@@ -11,7 +11,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   templateUrl: './si-toast-notification.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnDestroy {

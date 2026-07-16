@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router, RouterLink, RouterOutlet } from '@angular/router';
 import {
   SiApplicationHeaderComponent,
@@ -98,8 +98,7 @@ export const ROUTES: Route[] = [
     SiBreadcrumbRouterComponent
   ],
   templateUrl: './si-navbar-vertical-routing.html',
-  providers: [provideExampleRoutes(ROUTES)],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [provideExampleRoutes(ROUTES)]
 })
 export class SampleComponent implements OnInit {
   menuItems: NavbarVerticalItem[] = [

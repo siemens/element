@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  OnInit
-} from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { SiLinkWidgetComponent } from '@siemens/element-ng/dashboard';
@@ -26,7 +20,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
       height: 400px;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {
