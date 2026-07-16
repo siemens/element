@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 
@@ -19,7 +19,6 @@ import { TableData, TableDataService } from '../../mocks/table-data.mock';
     [rowDragManaged]="true"
     (gridReady)="onGridReady()"
   /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'p-5'
   }

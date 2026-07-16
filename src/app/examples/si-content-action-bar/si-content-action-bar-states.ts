@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent,
@@ -14,7 +14,6 @@ import { MenuItem } from '@siemens/element-ng/menu';
   selector: 'app-sample',
   imports: [SiContentActionBarComponent],
   templateUrl: './si-content-action-bar-states.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

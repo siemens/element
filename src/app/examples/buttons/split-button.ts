@@ -3,15 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiMenuModule } from '@siemens/element-ng/menu';
 
 @Component({
   selector: 'app-sample',
   imports: [SiMenuModule, CdkMenuTrigger, SiIconComponent],
-  templateUrl: './split-button.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './split-button.html'
 })
 export class SampleComponent {
   splitOpen1 = false;

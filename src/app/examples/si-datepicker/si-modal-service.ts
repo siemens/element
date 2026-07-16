@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, TemplateRef } from '@angular/core';
+import { Component, inject, OnDestroy, TemplateRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiDatepickerDirective, SiCalendarButtonComponent } from '@siemens/element-ng/datepicker';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
@@ -12,7 +12,6 @@ import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
   selector: 'app-sample',
   imports: [FormsModule, SiDatepickerDirective, SiCalendarButtonComponent, SiFormItemComponent],
   templateUrl: './si-modal-service.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnDestroy {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { runsInElectron, SiElectrontitlebarComponent } from '@siemens/element-ng/electron-titlebar';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -11,8 +11,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [SiElectrontitlebarComponent],
-  templateUrl: './si-electron-titlebar.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-electron-titlebar.html'
 })
 export class SampleComponent {
   private _location = inject(Location);

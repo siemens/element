@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, inject, LOCALE_ID, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   DatepickerInputConfig,
@@ -24,8 +24,7 @@ import { filter, map } from 'rxjs/operators';
     SiCalendarButtonComponent,
     SiFormItemComponent
   ],
-  templateUrl: './si-datepicker-input-playground.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-datepicker-input-playground.html'
 })
 export class SampleComponent implements OnInit {
   readonly logEvent = inject(LOG_EVENT);

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { SiIp4InputDirective, SiIp6InputDirective } from '@siemens/element-ng/ip-input';
@@ -17,8 +17,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiIp6InputDirective,
     SiFormItemComponent
   ],
-  templateUrl: './si-ip-input.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-ip-input.html'
 })
 export class SampleComponent {
   protected readonly logEvent = inject(LOG_EVENT);

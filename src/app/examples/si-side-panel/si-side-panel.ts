@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
@@ -41,8 +41,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiHeaderActionsDirective,
     SiHeaderActionItemComponent
   ],
-  templateUrl: './si-side-panel.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-side-panel.html'
 })
 export class SampleComponent {
   readonly collapsed = signal(true);

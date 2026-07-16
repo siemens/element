@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, Injectable } from '@angular/core';
+import { Component, inject, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 import {
@@ -59,7 +59,6 @@ class CountryOptionSource implements SelectOptionSource<string> {
   ],
   templateUrl: './si-select-lazy-load.html',
   styles: 'si-select { max-inline-size: 300px}',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

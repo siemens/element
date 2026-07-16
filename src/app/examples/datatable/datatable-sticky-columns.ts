@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, viewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, viewChild } from '@angular/core';
 import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
 import { StatusType } from '@siemens/element-ng/common';
 import { SiDatatableModule } from '@siemens/element-ng/datatable';
@@ -13,8 +13,7 @@ import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
   selector: 'app-sample',
   imports: [NgxDatatableModule, SiDatatableModule, SiPaginationComponent, SiCircleStatusModule],
   templateUrl: './datatable-sticky-columns.html',
-  styleUrl: './datatable.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './datatable.scss'
 })
 export class SampleComponent implements OnInit {
   readonly statusCellTempl = viewChild.required<TemplateRef<any>>('statusCellTempl');

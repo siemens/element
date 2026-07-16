@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, viewChild } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { SiFilteredSearchComponent } from '@siemens/element-ng/filtered-search';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -12,8 +12,7 @@ import { SiFilterSettingsComponent } from '../si-filter-settings/si-filter-setti
 @Component({
   selector: 'app-sample',
   imports: [SiFilterSettingsComponent, SiFilteredSearchComponent],
-  templateUrl: './si-filtered-search-basic.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-filtered-search-basic.html'
 })
 export class SampleComponent {
   readonly search = viewChild.required<SiFilteredSearchComponent>('search');

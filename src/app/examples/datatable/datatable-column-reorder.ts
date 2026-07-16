@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  inject
-} from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   Column,
@@ -24,8 +18,7 @@ import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
   selector: 'app-sample',
   imports: [NgxDatatableModule, SiDatatableModule, SiResizeObserverModule],
   templateUrl: './datatable-column-reorder.html',
-  styleUrl: './datatable.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './datatable.scss'
 })
 export class SampleComponent {
   tableConfig = SI_DATATABLE_CONFIG;

@@ -10,7 +10,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import { CdkContextMenuTrigger, CdkMenuModule } from '@angular/cdk/menu';
-import { ChangeDetectionStrategy, Component, signal, viewChildren } from '@angular/core';
+import { Component, signal, viewChildren } from '@angular/core';
 import { SiMenuModule } from '@siemens/element-ng/menu';
 
 @Component({
@@ -23,8 +23,7 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
     CdkContextMenuTrigger,
     CdkMenuModule
   ],
-  templateUrl: './drag-drop.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './drag-drop.html'
 })
 export class SampleComponent {
   protected listOne = [

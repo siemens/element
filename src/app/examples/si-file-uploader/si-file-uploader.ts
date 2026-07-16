@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { HttpHeaders } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FileUploadConfig, SiFileUploaderComponent } from '@siemens/element-ng/file-uploader';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
@@ -16,7 +16,6 @@ import { FileUploadInterceptor } from './file-upload-interceptor';
   selector: 'app-sample',
   imports: [FormsModule, SiFileUploaderComponent, SiFormItemComponent, SiNumberInputComponent],
   templateUrl: './si-file-uploader.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   ContentActionBarMainItem,
@@ -35,8 +35,7 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
   ],
   templateUrl: './si-main-detail-container-block.html',
   styleUrl: './si-main-detail-container-block.scss',
-  providers: [DataService],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [DataService]
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
