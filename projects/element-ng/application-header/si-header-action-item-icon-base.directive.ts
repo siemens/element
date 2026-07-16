@@ -5,12 +5,11 @@
 import {
   computed,
   Directive,
-  effect,
-  EffectCleanupRegisterFn,
   ElementRef,
   inject,
   input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Signal,
   SimpleChanges
@@ -26,7 +25,7 @@ import { SiHeaderActionItemBase } from './si-header-action-item.base';
 @Directive({})
 export abstract class SiHeaderActionIconItemBase
   extends SiHeaderActionItemBase
-  implements OnChanges, OnInit
+  implements OnChanges, OnDestroy, OnInit
 {
   /**
    * Adds a badge to the header item.
@@ -41,6 +40,18 @@ export abstract class SiHeaderActionIconItemBase
   private readonly tooltipService = inject(SiTooltipService);
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly existingTooltip = inject(SiTooltipDirective, { optional: true, host: true });
+  private readonly canShowTooltip = computed(
+    () =>
+      this.visuallyHideTitle() &&
+      (!this.existingTooltip || this.existingTooltip.isDisabled() || !this.existingTooltip.siTooltip())
+  );
+  private readonly tooltipRef = this.tooltipService.createTooltip({
+    element: this.elementRef,
+    placement: () => 'auto',
+    canShow: this.canShowTooltip,
+    tooltip: () => this.itemTitle(),
+    tooltipContext: () => undefined
+  });
 
   protected readonly badgeDot = computed(() =>
     typeof this.badge() === 'boolean' ? (this.badge() as boolean) : false
@@ -52,25 +63,8 @@ export abstract class SiHeaderActionIconItemBase
       : undefined;
   });
 
-  constructor() {
-    super();
-    effect(onCleanup => this.setupTooltip(onCleanup));
-  }
-
-  private setupTooltip(onCleanup: EffectCleanupRegisterFn): void {
-    const hasActiveTooltip =
-      !!this.existingTooltip &&
-      !this.existingTooltip.isDisabled() &&
-      !!this.existingTooltip.siTooltip();
-    if (this.visuallyHideTitle() && !hasActiveTooltip) {
-      const tooltipRef = this.tooltipService.createTooltip({
-        element: this.elementRef,
-        placement: () => 'auto',
-        tooltip: this.itemTitle,
-        tooltipContext: () => undefined
-      });
-      onCleanup(() => tooltipRef.destroy());
-    }
+  ngOnDestroy(): void {
+    this.tooltipRef.destroy();
   }
 
   ngOnChanges(changes: SimpleChanges<this>): void {

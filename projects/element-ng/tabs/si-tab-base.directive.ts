@@ -20,7 +20,7 @@ import {
 } from '@angular/core';
 import { elementCancel } from '@siemens/element-icons';
 import { addIcons } from '@siemens/element-ng/icon';
-import { SiTooltipDirective, SiTooltipService, TooltipRef } from '@siemens/element-ng/tooltip';
+import { SiTooltipDirective, SiTooltipService } from '@siemens/element-ng/tooltip';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SI_TABSET } from './si-tabs-tokens';
@@ -93,7 +93,18 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
   private indexBeforeClose = -1;
   private readonly tooltipService = inject(SiTooltipService);
   private readonly existingTooltip = inject(SiTooltipDirective, { optional: true });
-  private tooltipRef?: TooltipRef;
+  private readonly canShowTooltip = computed(
+    () =>
+      !!this.icon() &&
+      (!this.existingTooltip || this.existingTooltip.isDisabled() || !this.existingTooltip.siTooltip())
+  );
+  private readonly tooltipRef = this.tooltipService.createTooltip({
+    element: this.tabButton,
+    placement: () => 'auto',
+    canShow: this.canShowTooltip,
+    tooltip: () => this.heading(),
+    tooltipContext: () => undefined
+  });
 
   /** @internal */
   tabId = `${SiTabBaseDirective.tabCounter++}`;
@@ -102,8 +113,6 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
   private readonly index = computed(() => this.tabset.tabPanels().indexOf(this));
 
   constructor() {
-    this.setupIconTooltip();
-
     // Update the focusKeyManager if a tab is added that is active or if the tab is set active by the app.
     // This effect should not run, if active was already applied to the focusKeyManager.
     effect(() => {
@@ -117,33 +126,8 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
     });
   }
 
-  private setupIconTooltip(): void {
-    effect(onCleanup => {
-      const icon = this.icon();
-      // Only add an automatic tooltip if the consumer has not already applied an
-      // active `siTooltip` directive (i.e. one that is not disabled and has a tooltip).
-      const hasActiveTooltip =
-        !!this.existingTooltip &&
-        !this.existingTooltip.isDisabled() &&
-        !!this.existingTooltip.siTooltip();
-
-      if (icon && !hasActiveTooltip) {
-        this.tooltipRef = this.tooltipService.createTooltip({
-          element: this.tabButton,
-          placement: () => 'auto',
-          tooltip: () => this.heading(),
-          tooltipContext: () => undefined
-        });
-      }
-
-      onCleanup(() => {
-        this.tooltipRef?.destroy();
-        this.tooltipRef = undefined;
-      });
-    });
-  }
-
   ngOnDestroy(): void {
+    this.tooltipRef.destroy();
     if (this.indexBeforeClose >= 0) {
       this.tabset.removedTabByUser(this.indexBeforeClose, this.active());
     }
