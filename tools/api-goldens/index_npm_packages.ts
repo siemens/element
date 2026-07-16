@@ -44,7 +44,10 @@ export async function main(
   const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8')) as PackageJson;
   const entryPoints = findEntryPointsWithinNpmPackage(npmPackageDir, packageJson);
   const worker = new Piscina<Parameters<typeof testApiGolden>, string>({
-    filename: path.resolve(__dirname, './test_api_report.ts')
+    filename: path.resolve(__dirname, './test_api_report.ts'),
+    maxThreads: process.env.API_GOLDENS_WORKERS
+      ? parseInt(process.env.API_GOLDENS_WORKERS, 10)
+      : 4
   });
 
   const processEntryPoint = async (subpath: string, typesEntryPointPath: string) => {
