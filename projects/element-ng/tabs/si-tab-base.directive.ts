@@ -102,7 +102,7 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
     element: this.tabButton,
     placement: () => 'auto',
     canShow: this.canShowTooltip,
-    tooltip: () => this.heading(),
+    tooltip: this.heading,
     tooltipContext: () => undefined
   });
 
