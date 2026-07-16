@@ -1,0 +1,9 @@
+<ng-content />
+
+@let templates = control.templates();
+@for (child of children(); track $index) {
+  <ng-container
+    [ngTemplateOutlet]="templates.get(child.type) ?? templates.get('__default-template')"
+    [ngTemplateOutletContext]="{ $implicit: child, parent: node() }"
+  />
+}
