@@ -16,7 +16,7 @@ import {
 import { positions } from '@siemens/element-ng/common';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { SiTooltipService, TooltipRef } from './si-tooltip.service';
+import { SiTooltipService } from './si-tooltip.service';
 
 @Directive({
   selector: '[siTooltip]',
@@ -65,7 +65,7 @@ export class SiTooltipDirective implements OnDestroy {
   private readonly canShow = computed(() => !!this.siTooltip() && !this.isDisabled());
   private readonly tooltipService = inject(SiTooltipService);
   private readonly elementRef = inject(ElementRef);
-  private readonly tooltipRef: TooltipRef = this.tooltipService.createTooltip({
+  private readonly tooltipRef = this.tooltipService.createTooltip({
     describedBy: this.describedBy,
     element: this.elementRef,
     placement: this.placement(),
