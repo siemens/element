@@ -122,6 +122,12 @@ export const tsConfig = defineConfig({
       {
         selector: 'TSTypeReference:not([typeArguments]) > Identifier[name="SimpleChanges"]',
         message: 'Use SimpleChanges<this> instead of plain SimpleChanges'
+      },
+      {
+        selector:
+          'Property[key.name="changeDetection"] :matches(Identifier[name="OnPush"], Literal[value="OnPush"])',
+        message:
+          'Do not explicitly set changeDetection: ChangeDetectionStrategy.OnPush. OnPush is the default in Angular v22+'
       }
     ]
   }

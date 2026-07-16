@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  Injectable
-} from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Injectable } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of } from 'rxjs';
@@ -20,8 +14,7 @@ import { provideMockTranslateServiceBuilder } from './testing/si-translate.mock-
 
 @Component({
   imports: [SiTranslatePipe],
-  template: `{{ toTranslateKey | translate: params }}`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `{{ toTranslateKey | translate: params }}`
 })
 class TestComponent {
   toTranslateKey = t(() => $localize`:@@KEY:Test {{value}}`);
