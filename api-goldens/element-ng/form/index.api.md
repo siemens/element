@@ -166,7 +166,8 @@ export interface SiFormValidationErrorMapper {
 }
 
 // @public
-export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
+export class SiFormValidationTooltipDirective implements DoCheck {
+    constructor();
     // (undocumented)
     readonly formErrorMapper: _angular_core.InputSignal<SiFormValidationErrorMapper | undefined>;
 }

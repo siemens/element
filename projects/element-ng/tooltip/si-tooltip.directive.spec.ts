@@ -3,7 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
-import { Component, ElementRef, inject, Injector, runInInjectionContext, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  Injector,
+  runInInjectionContext,
+  signal,
+  viewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { page } from 'vitest/browser';
 

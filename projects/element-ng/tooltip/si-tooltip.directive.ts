@@ -10,7 +10,6 @@ import {
   ElementRef,
   inject,
   input,
-  OnDestroy,
   TemplateRef
 } from '@angular/core';
 import { positions } from '@siemens/element-ng/common';
@@ -25,7 +24,7 @@ import { SiTooltipService } from './si-tooltip.service';
     '[attr.aria-describedby]': 'isDisabled() ? null : describedBy'
   }
 })
-export class SiTooltipDirective implements OnDestroy {
+export class SiTooltipDirective {
   private static idCounter = 0;
 
   /**
@@ -65,17 +64,16 @@ export class SiTooltipDirective implements OnDestroy {
   private readonly canShow = computed(() => !!this.siTooltip() && !this.isDisabled());
   private readonly tooltipService = inject(SiTooltipService);
   private readonly elementRef = inject(ElementRef);
-  private readonly tooltipRef = this.tooltipService.createTooltip({
-    describedBy: this.describedBy,
-    element: this.elementRef,
-    placement: this.placement,
-    canShow: this.canShow,
-    tooltip: this.siTooltip,
-    tooltipContext: this.tooltipContext,
-    scrollStrategy: this.tooltipScrollStrategy
-  });
 
-  ngOnDestroy(): void {
-    this.tooltipRef.destroy();
+  constructor() {
+    this.tooltipService.createTooltip({
+      describedBy: this.describedBy,
+      element: this.elementRef,
+      placement: this.placement,
+      canShow: this.canShow,
+      tooltip: this.siTooltip,
+      tooltipContext: this.tooltipContext,
+      scrollStrategy: this.tooltipScrollStrategy
+    });
   }
 }
