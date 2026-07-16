@@ -37,7 +37,8 @@ let controlIdCounter = 1;
     '[class.opened]': 'opened()',
     '[class.hcollapsed]': 'hcollapsed()',
     '[class.full-height]': 'fullHeight()',
-    '[style.--element-animations-enabled]': 'disableAnimation() ? "0" : undefined'
+    '[class.disable-animations]': 'disableAnimation()',
+    'animate.enter': 'disable-animations'
   }
 })
 export class SiCollapsiblePanelComponent {

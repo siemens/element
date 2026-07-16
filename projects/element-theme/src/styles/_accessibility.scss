@@ -2,6 +2,10 @@
   --element-animations-enabled: 1;
 }
 
+.disable-animations {
+  --element-animations-enabled: 0;
+}
+
 @media (prefers-reduced-motion) {
   :root {
     --element-animations-enabled: 0;

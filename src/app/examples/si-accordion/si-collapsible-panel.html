@@ -15,4 +15,16 @@
     <span si-panel-heading>Heading via content projection</span>
     Nothing to see here
   </si-collapsible-panel>
+
+  <h4 class="mt-8">Initially opened panel in tabs</h4>
+  <si-tabset>
+    <si-tab heading="First tab">
+      <p class="p-6">Initially opened panel in second tab</p>
+    </si-tab>
+    <si-tab heading="Initially opened panel" [active]="true">
+      <si-collapsible-panel heading="Initially opened" contentCssClasses="p-6" [opened]="true">
+        No animation on initial render
+      </si-collapsible-panel>
+    </si-tab>
+  </si-tabset>
 </div>
