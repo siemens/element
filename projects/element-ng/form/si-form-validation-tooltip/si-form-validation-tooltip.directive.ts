@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  computed,
   Directive,
   DoCheck,
   ElementRef,
@@ -13,7 +14,7 @@ import {
   signal
 } from '@angular/core';
 import { NgControl, ValidationErrors } from '@angular/forms';
-import { SiTooltipService, TooltipRef } from '@siemens/element-ng/tooltip';
+import { SiTooltipService } from '@siemens/element-ng/tooltip';
 
 import { SiFormContainerComponent } from '../si-form-container/si-form-container.component';
 import { SiFormError } from '../si-form-item/si-form-item.component';
@@ -53,11 +54,22 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
   private ngControl = inject(NgControl);
   private elementRef = inject(ElementRef);
 
-  private tooltipRef?: TooltipRef;
+  protected readonly describedBy = `__si-form-validation-tooltip-${SiFormValidationTooltipDirective.idCounter++}`;
   private readonly errors = signal<SiFormError[]>([]);
+  private readonly canShowTooltip = computed(() => this.errors().length > 0 && !!this.ngControl.touched);
+  private readonly tooltipRef = this.tooltipService.createTooltip({
+    placement: () => 'auto',
+    element: this.elementRef,
+    describedBy: this.describedBy,
+    injector: Injector.create({
+      providers: [{ provide: SI_FORM_VALIDATION_TOOLTIP_DATA, useValue: this.errors }]
+    }),
+    canShow: this.canShowTooltip,
+    tooltip: () => SiFormValidationTooltipComponent,
+    tooltipContext: () => this.errors()
+  });
   private currentErrors: ValidationErrors | null = null;
   private touched: boolean | null = null;
-  protected readonly describedBy = `__si-form-validation-tooltip-${SiFormValidationTooltipDirective.idCounter++}`;
 
   ngDoCheck(): void {
     const nextErrors = this.ngControl.errors;
@@ -71,7 +83,7 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
   }
 
   ngOnDestroy(): void {
-    this.destroyTooltip();
+    this.tooltipRef.destroy();
   }
 
   private updateErrors(): void {
@@ -84,33 +96,6 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
       )
       .filter(error => !!error.message);
 
-    const shouldShow = errors.length > 0 && !!this.ngControl.touched;
-
-    if (shouldShow) {
-      this.createTooltip();
-    } else {
-      this.destroyTooltip();
-    }
-
     this.errors.set(errors);
-  }
-
-  private createTooltip(): void {
-    this.tooltipRef ??= this.tooltipService.createTooltip({
-      placement: () => 'auto',
-      element: this.elementRef,
-      describedBy: this.describedBy,
-      injector: Injector.create({
-        providers: [{ provide: SI_FORM_VALIDATION_TOOLTIP_DATA, useValue: this.errors }]
-      }),
-      tooltip: () => SiFormValidationTooltipComponent,
-      // Not actually used, but errors in the context triggers a resize if the errors changes.
-      tooltipContext: () => this.errors()
-    });
-  }
-
-  private destroyTooltip(): void {
-    this.tooltipRef?.destroy();
-    this.tooltipRef = undefined;
   }
 }
