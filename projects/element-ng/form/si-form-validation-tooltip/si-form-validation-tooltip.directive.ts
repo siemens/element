@@ -10,7 +10,6 @@ import {
   inject,
   Injector,
   input,
-  OnDestroy,
   signal
 } from '@angular/core';
 import { NgControl, ValidationErrors } from '@angular/forms';
@@ -44,7 +43,7 @@ import {
     '[attr.aria-describedby]': 'describedBy'
   }
 })
-export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
+export class SiFormValidationTooltipDirective implements DoCheck {
   private static idCounter = 0;
 
   private tooltipService = inject(SiTooltipService);
@@ -58,19 +57,22 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
   private readonly errors = signal<SiFormError[]>([]);
   private readonly touched = signal(false);
   private readonly canShowTooltip = computed(() => this.errors().length > 0 && this.touched());
-  private readonly tooltipRef = this.tooltipService.createTooltip({
-    placement: () => 'auto',
-    element: this.elementRef,
-    describedBy: this.describedBy,
-    injector: Injector.create({
-      providers: [{ provide: SI_FORM_VALIDATION_TOOLTIP_DATA, useValue: this.errors }]
-    }),
-    canShow: this.canShowTooltip,
-    tooltip: () => SiFormValidationTooltipComponent,
-    // Not actually used, but errors in the context triggers a resize if the errors changes.
-    tooltipContext: this.errors
-  });
   private currentErrors: ValidationErrors | null = null;
+
+  constructor() {
+    this.tooltipService.createTooltip({
+      placement: () => 'auto',
+      element: this.elementRef,
+      describedBy: this.describedBy,
+      injector: Injector.create({
+        providers: [{ provide: SI_FORM_VALIDATION_TOOLTIP_DATA, useValue: this.errors }]
+      }),
+      canShow: this.canShowTooltip,
+      tooltip: () => SiFormValidationTooltipComponent,
+      // Not actually used, but errors in the context triggers a resize if the errors changes.
+      tooltipContext: this.errors
+    });
+  }
 
   ngDoCheck(): void {
     const nextErrors = this.ngControl.errors;
@@ -80,10 +82,6 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
       this.currentErrors = nextErrors;
       this.updateErrors();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.tooltipRef.destroy();
   }
 
   private updateErrors(): void {

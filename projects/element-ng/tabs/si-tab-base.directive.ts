@@ -96,16 +96,10 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
   private readonly canShowTooltip = computed(
     () =>
       !!this.icon() &&
-      (!this.existingTooltip || this.existingTooltip.isDisabled() || !this.existingTooltip.siTooltip())
+      (!this.existingTooltip ||
+        this.existingTooltip.isDisabled() ||
+        !this.existingTooltip.siTooltip())
   );
-  private readonly tooltipRef = this.tooltipService.createTooltip({
-    element: this.tabButton,
-    placement: () => 'auto',
-    canShow: this.canShowTooltip,
-    tooltip: this.heading,
-    tooltipContext: () => undefined
-  });
-
   /** @internal */
   tabId = `${SiTabBaseDirective.tabCounter++}`;
   protected readonly icons = addIcons({ elementCancel });
@@ -113,6 +107,14 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
   private readonly index = computed(() => this.tabset.tabPanels().indexOf(this));
 
   constructor() {
+    this.tooltipService.createTooltip({
+      element: this.tabButton,
+      placement: () => 'auto',
+      canShow: this.canShowTooltip,
+      tooltip: this.heading,
+      tooltipContext: () => undefined
+    });
+
     // Update the focusKeyManager if a tab is added that is active or if the tab is set active by the app.
     // This effect should not run, if active was already applied to the focusKeyManager.
     effect(() => {
@@ -127,7 +129,6 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
   }
 
   ngOnDestroy(): void {
-    this.tooltipRef.destroy();
     if (this.indexBeforeClose >= 0) {
       this.tabset.removedTabByUser(this.indexBeforeClose, this.active());
     }

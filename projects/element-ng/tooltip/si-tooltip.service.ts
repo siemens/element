@@ -7,6 +7,7 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { isPlatformBrowser } from '@angular/common';
 import {
   ComponentRef,
+  DestroyRef,
   effect,
   ElementRef,
   EffectRef,
@@ -16,7 +17,12 @@ import {
   inputBinding,
   PLATFORM_ID
 } from '@angular/core';
-import { getOverlay, getOverlayPositions, getPositionStrategy, positions } from '@siemens/element-ng/common';
+import {
+  getOverlay,
+  getOverlayPositions,
+  getPositionStrategy,
+  positions
+} from '@siemens/element-ng/common';
 import { fromEvent, Subject, Subscription, timer } from 'rxjs';
 import { delayWhen, filter, takeUntil } from 'rxjs/operators';
 
@@ -44,6 +50,7 @@ class NoopTooltipRef {
  * @internal
  */
 class BrowserTooltipRef {
+  private readonly destroyRef = inject(DestroyRef);
   private readonly destroy$ = new Subject<void>();
   private isFocused = false;
   private isHovered = false;
@@ -66,6 +73,7 @@ class BrowserTooltipRef {
     }
   ) {
     const nativeElement = this.config.element.nativeElement;
+    this.destroyRef.onDestroy(() => this.destroy());
 
     if (this.config.canShow) {
       this.canShowEffect = effect(() => this.updateCanShow());
@@ -105,9 +113,7 @@ class BrowserTooltipRef {
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.onTouchStart());
 
-    if (!this.config.canShow) {
-      this.showForCurrentInteraction();
-    }
+    this.showForCurrentInteraction();
   }
 
   private updateCanShow(): void {
