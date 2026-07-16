@@ -1,0 +1,33 @@
+<div class="d-flex align-items-center mb-6">
+  <span class="code-language fw-bold">
+    {{ languageToDisplay() }}
+  </span>
+  <div class="ms-auto">
+    @if (copied()) {
+      <div class="btn text-secondary copied">
+        <si-icon class="icon" icon="elementOk" />
+        {{ labelCopied | translate }}
+      </div>
+    } @else {
+      <button type="button" class="btn btn-tertiary" (click)="copy()">
+        <si-icon class="icon" icon="elementCopy" />
+        {{ labelCopy | translate }}
+      </button>
+    }
+  </div>
+</div>
+
+@let hl = highlighter();
+@if (hl) {
+  <ng-container
+    [ngComponentOutlet]="hl.component"
+    [ngComponentOutletInputs]="{
+      code: code(),
+      language: language(),
+      options: hl.options,
+      updateLanguage
+    }"
+  />
+} @else {
+  <pre class="border-0 m-0 p-0"><code>{{ code() }}</code></pre>
+}
