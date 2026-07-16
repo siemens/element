@@ -5,8 +5,8 @@
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
+  computed,
   Directive,
-  effect,
   ElementRef,
   inject,
   input,
@@ -62,32 +62,20 @@ export class SiTooltipDirective implements OnDestroy {
 
   protected describedBy = `__tooltip_${SiTooltipDirective.idCounter++}`;
 
-  private tooltipRef?: TooltipRef;
-  private tooltipService = inject(SiTooltipService);
-  private elementRef = inject(ElementRef);
-
-  constructor() {
-    effect(() => {
-      const tooltip = this.siTooltip();
-      const disabled = this.isDisabled();
-
-      if (tooltip && !disabled) {
-        this.tooltipRef ??= this.tooltipService.createTooltip({
-          describedBy: this.describedBy,
-          element: this.elementRef,
-          placement: this.placement(),
-          tooltip: this.siTooltip,
-          tooltipContext: this.tooltipContext,
-          scrollStrategy: this.tooltipScrollStrategy
-        });
-      } else if (this.tooltipRef) {
-        this.tooltipRef.destroy();
-        this.tooltipRef = undefined;
-      }
-    });
-  }
+  private readonly canShow = computed(() => !!this.siTooltip() && !this.isDisabled());
+  private readonly tooltipService = inject(SiTooltipService);
+  private readonly elementRef = inject(ElementRef);
+  private readonly tooltipRef: TooltipRef = this.tooltipService.createTooltip({
+    describedBy: this.describedBy,
+    element: this.elementRef,
+    placement: this.placement(),
+    canShow: this.canShow,
+    tooltip: this.siTooltip,
+    tooltipContext: this.tooltipContext,
+    scrollStrategy: this.tooltipScrollStrategy
+  });
 
   ngOnDestroy(): void {
-    this.tooltipRef?.destroy();
+    this.tooltipRef.destroy();
   }
 }
