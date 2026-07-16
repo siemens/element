@@ -10,11 +10,10 @@ import {
   input,
   OnChanges,
   OnDestroy,
-  OnInit,
   Signal,
   SimpleChanges
 } from '@angular/core';
-import { SiTooltipDirective, SiTooltipService } from '@siemens/element-ng/tooltip';
+import { SiTooltipDirective, SiTooltipService, TooltipRef } from '@siemens/element-ng/tooltip';
 
 import { SiHeaderActionItemBase } from './si-header-action-item.base';
 
@@ -25,7 +24,7 @@ import { SiHeaderActionItemBase } from './si-header-action-item.base';
 @Directive({})
 export abstract class SiHeaderActionIconItemBase
   extends SiHeaderActionItemBase
-  implements OnChanges, OnDestroy, OnInit
+  implements OnChanges, OnDestroy
 {
   /**
    * Adds a badge to the header item.
@@ -45,10 +44,11 @@ export abstract class SiHeaderActionIconItemBase
       this.visuallyHideTitle() &&
       (!this.existingTooltip || this.existingTooltip.isDisabled() || !this.existingTooltip.siTooltip())
   );
-  private readonly tooltipRef = this.tooltipService.createTooltip({
+  private readonly tooltipRef: TooltipRef = this.tooltipService.createTooltip({
     element: this.elementRef,
     placement: () => 'auto',
     canShow: this.canShowTooltip,
+    // Subclass field initializers run after this base constructor. So we cannot directly pass `this.itemTitle`.
     tooltip: () => this.itemTitle(),
     tooltipContext: () => undefined
   });
