@@ -9,11 +9,10 @@ import {
   inject,
   input,
   OnChanges,
-  OnDestroy,
   Signal,
   SimpleChanges
 } from '@angular/core';
-import { SiTooltipDirective, SiTooltipService, TooltipRef } from '@siemens/element-ng/tooltip';
+import { SiTooltipDirective, SiTooltipService } from '@siemens/element-ng/tooltip';
 
 import { SiHeaderActionItemBase } from './si-header-action-item.base';
 
@@ -24,7 +23,7 @@ import { SiHeaderActionItemBase } from './si-header-action-item.base';
 @Directive({})
 export abstract class SiHeaderActionIconItemBase
   extends SiHeaderActionItemBase
-  implements OnChanges, OnDestroy
+  implements OnChanges
 {
   /**
    * Adds a badge to the header item.
@@ -42,16 +41,10 @@ export abstract class SiHeaderActionIconItemBase
   private readonly canShowTooltip = computed(
     () =>
       this.visuallyHideTitle() &&
-      (!this.existingTooltip || this.existingTooltip.isDisabled() || !this.existingTooltip.siTooltip())
+      (!this.existingTooltip ||
+        this.existingTooltip.isDisabled() ||
+        !this.existingTooltip.siTooltip())
   );
-  private readonly tooltipRef: TooltipRef = this.tooltipService.createTooltip({
-    element: this.elementRef,
-    placement: () => 'auto',
-    canShow: this.canShowTooltip,
-    // Subclass field initializers run after this base constructor. So we cannot directly pass `this.itemTitle`.
-    tooltip: () => this.itemTitle(),
-    tooltipContext: () => undefined
-  });
 
   protected readonly badgeDot = computed(() =>
     typeof this.badge() === 'boolean' ? (this.badge() as boolean) : false
@@ -63,8 +56,16 @@ export abstract class SiHeaderActionIconItemBase
       : undefined;
   });
 
-  ngOnDestroy(): void {
-    this.tooltipRef.destroy();
+  constructor() {
+    super();
+    this.tooltipService.createTooltip({
+      element: this.elementRef,
+      placement: () => 'auto',
+      canShow: this.canShowTooltip,
+      // Subclass field initializers run after this base constructor. So we cannot directly pass `this.itemTitle`.
+      tooltip: () => this.itemTitle(),
+      tooltipContext: () => undefined
+    });
   }
 
   ngOnChanges(changes: SimpleChanges<this>): void {
