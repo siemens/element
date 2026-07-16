@@ -1,0 +1,90 @@
+<div class="d-flex flex-column h-100">
+  <si-accordion>
+    <si-collapsible-panel
+      heading="Options"
+      contentCssClasses="px-6 pb-5 pt-4 d-flex gap-5 align-items-end"
+    >
+      <si-form-item label="Use Highlight.js" class="mb-0 py-4">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="useHighlightJs" />
+      </si-form-item>
+      <si-form-item label="Auto-detect language" class="mb-0 py-4">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [disabled]="!useHighlightJs()"
+          [(ngModel)]="autoDetectLang"
+        />
+      </si-form-item>
+      <si-form-item label="Use KaTeX" class="mb-0 py-4">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="useKatex" />
+      </si-form-item>
+      <si-form-item label="Use Mermaid" class="mb-0 py-4">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="useMermaid" />
+      </si-form-item>
+      <si-form-item label="Support Gemojis" class="mb-0 py-4">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="useGemojis" />
+      </si-form-item>
+      <si-form-item label="Debug" class="mb-0 py-4">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="debug" />
+      </si-form-item>
+    </si-collapsible-panel>
+    <si-collapsible-panel
+      heading="Streaming"
+      contentCssClasses="px-6 pb-5 pt-4 d-flex gap-5 align-items-end"
+    >
+      <si-form-item label="Iteration delay (ms)" class="mb-0">
+        <si-number-input
+          class="form-control"
+          [min]="1"
+          [max]="100"
+          [step]="1"
+          [(ngModel)]="streamIterationDelay"
+        />
+      </si-form-item>
+      <si-form-item label="Chars per iteration" class="mb-0">
+        <si-number-input
+          class="form-control"
+          [min]="1"
+          [max]="100"
+          [step]="1"
+          [(ngModel)]="streamCharsPerIteration"
+        />
+      </si-form-item>
+      <si-form-item label="Keep scroll at bottom" class="mb-0 py-4">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="keepScrollBottom" />
+      </si-form-item>
+
+      @if (streaming()) {
+        <button type="button" class="btn btn-secondary" (click)="stop()">Stop streaming</button>
+      } @else {
+        <button type="button" class="btn btn-secondary" (click)="start()">Start streaming</button>
+      }
+    </si-collapsible-panel>
+  </si-accordion>
+
+  <div class="flex-fill d-flex">
+    <div class="col-6 p-4">
+      <textarea
+        class="w-100 h-100 form-control"
+        style="resize: none"
+        [readonly]="streaming()"
+        [(ngModel)]="markdownText"
+        (ngModelChange)="updateRenderer()"
+      ></textarea>
+    </div>
+    <div class="col-6 d-flex flex-column">
+      <div
+        class="d-flex p-4 overflow-auto"
+        style="flex: 1 1 0"
+        [class.flex-column-reverse]="keepScrollBottom()"
+      >
+        <si-markdown
+          class="flex-fill"
+          [markdown]="markdownTextForRenderer()"
+          [options]="markdownOptions()"
+          [debug]="debug()"
+        />
+      </div>
+    </div>
+  </div>
+</div>
