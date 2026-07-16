@@ -130,7 +130,7 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
       if (icon && !hasActiveTooltip) {
         this.tooltipRef = this.tooltipService.createTooltip({
           element: this.tabButton,
-          placement: 'auto',
+          placement: () => 'auto',
           tooltip: () => this.heading(),
           tooltipContext: () => undefined
         });

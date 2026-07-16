@@ -16,7 +16,7 @@ import {
   inputBinding,
   PLATFORM_ID
 } from '@angular/core';
-import { getOverlay, getPositionStrategy, positions } from '@siemens/element-ng/common';
+import { getOverlay, getOverlayPositions, getPositionStrategy, positions } from '@siemens/element-ng/common';
 import { fromEvent, Subject, Subscription, timer } from 'rxjs';
 import { delayWhen, filter, takeUntil } from 'rxjs/operators';
 
@@ -50,14 +50,16 @@ class BrowserTooltipRef {
   private overlayRef?: OverlayRef;
   private positionSubscription?: Subscription;
   private canShowEffect?: EffectRef;
+  private placementEffect?: EffectRef;
 
   constructor(
+    private injector: Injector,
     private config: {
       describedBy?: string;
       element: ElementRef;
       injector?: Injector;
       overlay: Overlay;
-      placement: keyof typeof positions;
+      placement: () => keyof typeof positions;
       canShow?: () => boolean;
       scrollStrategy?: () => ScrollStrategy | undefined;
       tooltip: () => SiTooltipContent;
@@ -67,14 +69,21 @@ class BrowserTooltipRef {
     const nativeElement = this.config.element.nativeElement;
 
     if (this.config.canShow) {
-      this.canShowEffect = effect(() => {
-        if (!this.config.canShow!()) {
-          this.isFocused = false;
-          this.isHovered = false;
-          this.hide();
-        }
-      });
+      this.canShowEffect = effect(
+        () => {
+          if (!this.config.canShow!()) {
+            this.isFocused = false;
+            this.isHovered = false;
+            this.hide();
+          }
+        },
+        { injector: this.injector }
+      );
     }
+
+    this.placementEffect = effect(() => this.updatePlacement(this.config.placement()), {
+      injector: this.injector
+    });
 
     fromEvent(nativeElement, 'focus')
       .pipe(
@@ -159,7 +168,7 @@ class BrowserTooltipRef {
       this.config.element,
       this.config.overlay,
       false,
-      this.config.placement,
+      this.getPlacement(),
       false,
       true,
       this.config.scrollStrategy?.()
@@ -196,6 +205,18 @@ class BrowserTooltipRef {
     );
   }
 
+  private getPlacement(): keyof typeof positions {
+    return this.config.placement();
+  }
+
+  private updatePlacement(placement: keyof typeof positions): void {
+    const positionStrategy = this.overlayRef && getPositionStrategy(this.overlayRef);
+    if (positionStrategy) {
+      positionStrategy.withPositions(getOverlayPositions(this.config.element, placement));
+      this.overlayRef?.updatePosition();
+    }
+  }
+
   private hide(): void {
     if (this.isFocused || this.isHovered) {
       return;
@@ -208,6 +229,7 @@ class BrowserTooltipRef {
     this.destroy$.next();
     this.destroy$.complete();
     this.canShowEffect?.destroy();
+    this.placementEffect?.destroy();
     this.overlayRef?.dispose();
     this.positionSubscription?.unsubscribe();
   }
@@ -224,12 +246,13 @@ class BrowserTooltipRef {
 @Injectable()
 export class SiTooltipService {
   private overlay = inject(Overlay);
+  private injector = inject(Injector);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   createTooltip(config: {
     describedBy?: string;
     element: ElementRef;
-    placement: keyof typeof positions;
+    placement: () => keyof typeof positions;
     injector?: Injector;
     canShow?: () => boolean;
     tooltip: () => SiTooltipContent;
@@ -240,7 +263,7 @@ export class SiTooltipService {
       return new NoopTooltipRef();
     }
 
-    return new BrowserTooltipRef({
+    return new BrowserTooltipRef(this.injector, {
       ...config,
       overlay: this.overlay
     });

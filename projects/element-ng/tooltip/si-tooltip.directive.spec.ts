@@ -246,7 +246,7 @@ describe('SiTooltipDirective', () => {
       createTooltip(): void {
         this.tooltipService.createTooltip({
           element: this.anchor(),
-          placement: 'auto',
+          placement: () => 'auto',
           tooltip: this.content,
           tooltipContext: () => undefined
         });
