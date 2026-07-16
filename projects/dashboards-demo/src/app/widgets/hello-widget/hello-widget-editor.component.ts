@@ -2,14 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, model, output } from '@angular/core';
+import { Component, model, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { WidgetConfig, WidgetConfigStatus, WidgetInstanceEditor } from '@siemens/dashboards-ng';
 @Component({
   selector: 'app-hello-widget-editor',
   imports: [FormsModule],
-  templateUrl: './hello-widget-editor.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './hello-widget-editor.component.html'
 })
 export class HelloWidgetEditorComponent implements WidgetInstanceEditor {
   readonly config = model.required<WidgetConfig | Omit<WidgetConfig, 'id'>>();

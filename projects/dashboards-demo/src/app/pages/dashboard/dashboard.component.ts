@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SiFlexibleDashboardComponent, Widget } from '@siemens/dashboards-ng';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { environment } from 'projects/dashboards-demo/src/environments/environment';
@@ -27,8 +27,7 @@ import { WEATHER_WIDGET } from '../../widgets/weather';
   selector: 'app-dashboard',
   imports: [SiFlexibleDashboardComponent, DashboardFiltersComponent, SiEmptyStateComponent],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './dashboard.component.scss'
 })
 export class DashboardPageComponent {
   appStateService = inject(AppStateService);

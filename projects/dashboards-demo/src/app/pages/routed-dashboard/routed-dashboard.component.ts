@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  inject,
-  OnInit,
-  signal
-} from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -36,8 +29,7 @@ import { HELLO_DESCRIPTOR } from '../../widgets/hello-widget/widget-descriptors'
   selector: 'app-routed-dashboard',
   imports: [SiFlexibleDashboardComponent, DashboardFiltersComponent, SiEmptyStateComponent],
   templateUrl: './routed-dashboard.component.html',
-  styleUrl: './routed-dashboard.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './routed-dashboard.component.scss'
 })
 export class RoutedDashboardPageComponent implements OnInit {
   widgetCatalog: Widget[] = [

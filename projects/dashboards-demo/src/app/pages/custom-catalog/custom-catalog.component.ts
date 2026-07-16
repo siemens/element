@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   DashboardToolbarItem,
   SI_WIDGET_STORE,
@@ -25,8 +25,7 @@ const EMPTY_TEXT_EDIT = 'Use the widget catalog to add widgets.';
   selector: 'app-custom-catalog',
   imports: [SiFlexibleDashboardComponent, SiEmptyStateComponent],
   templateUrl: './custom-catalog.component.html',
-  styleUrl: './custom-catalog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './custom-catalog.component.scss'
 })
 export class CustomCatalogPageComponent {
   appStateService = inject(AppStateService);

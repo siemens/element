@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { SiWeatherWidgetBodyComponent, SiWeatherWidgetData } from '@siemens/element-ng/dashboard';
 
@@ -23,7 +23,6 @@ import {
       [value]="weatherValue()"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'h-100 w-100 d-block' }
 })
 export class WeatherWidgetComponent implements WidgetInstance {

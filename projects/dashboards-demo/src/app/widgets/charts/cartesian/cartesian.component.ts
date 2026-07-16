@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
@@ -22,8 +22,7 @@ export interface WidgetChartCartesianConfig {
 @Component({
   selector: 'app-cartesian',
   imports: [SiChartCartesianComponent, SiResizeObserverDirective, AsyncPipe],
-  templateUrl: './cartesian.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './cartesian.component.html'
 })
 export class CartesianComponent implements OnInit, WidgetInstance {
   readonly config = input.required<WidgetConfig>();

@@ -4,7 +4,6 @@
  */
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   inject,
@@ -32,8 +31,7 @@ import { SiFormItemComponent } from '@siemens/element-ng/form';
     SiCalendarButtonComponent,
     SiDatepickerDirective
   ],
-  templateUrl: './contact-widget-editor.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './contact-widget-editor.component.html'
 })
 export class ContactWidgetEditorComponent
   implements WidgetInstanceEditorWizard, OnInit, AfterViewInit

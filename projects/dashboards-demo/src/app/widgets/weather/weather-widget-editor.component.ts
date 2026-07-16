@@ -2,15 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  inject,
-  model,
-  OnInit,
-  output
-} from '@angular/core';
+import { Component, DestroyRef, inject, model, OnInit, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { WidgetConfig, WidgetConfigStatus, WidgetInstanceEditor } from '@siemens/dashboards-ng';
@@ -161,8 +153,7 @@ interface WeatherFormShape {
         </form>
       </div>
     </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class WeatherWidgetEditorComponent implements WidgetInstanceEditor, OnInit {
   readonly config = model.required<WidgetConfig | Omit<WidgetConfig, 'id'>>();
