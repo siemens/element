@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 // eslint-disable-next-line no-restricted-imports
 import { provideChildTranslateService, TranslateLoader, TranslatePipe } from '@ngx-translate/core';
@@ -10,8 +10,7 @@ import { of } from 'rxjs';
 
 @Component({
   imports: [TranslatePipe],
-  template: `{{ 'KEY-1' | translate }}`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  template: `{{ 'KEY-1' | translate }}`
 })
 class TestComponent {}
 
