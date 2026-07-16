@@ -110,7 +110,6 @@ const ATTRIBUTE_SELECTORS_MIGRATION: AttributeSelectorInstruction[] = [
 
 const ELEMENT_SELECTORS_MIGRATION: ElementSelectorInstruction[] = [
   // current to legacy
-  { replace: 'si-icon', replaceWith: 'si-icon-legacy' },
   { replace: 'si-tabset', replaceWith: 'si-tabset-legacy' },
   { replace: 'si-tab', replaceWith: 'si-tab-legacy' },
 
