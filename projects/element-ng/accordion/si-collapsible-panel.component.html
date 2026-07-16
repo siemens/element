@@ -54,7 +54,7 @@
   [class.full-height]="fullHeight()"
 >
   @if (opened()) {
-    <div class="content-motion" animate.leave="content-leave">
+    <div class="content-motion" animate.enter="content-enter" animate.leave="content-leave">
       <div class="overflow-hidden">
         <div [class]="contentCssClasses()">
           <ng-content />
