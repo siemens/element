@@ -83,14 +83,6 @@ describe('to legacy migration', () => {
     await checkTemplateMigration(['tab-inline-template.ts']);
   });
 
-  it('should migrate siPopover used in a template', async () => {
-    await checkTemplateMigration(['popover-template.ts', 'popover-template.html']);
-  });
-
-  it('should migrate siPopover used in an inline template', async () => {
-    await checkTemplateMigration(['popover-inline-template.ts']);
-  });
-
   it('should remove the deprecated api from accordion', async () => {
     await checkTemplateMigration(['accordion-inline-template.ts']);
   });

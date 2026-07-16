@@ -59,7 +59,6 @@ export * from './password-toggle';
 export * from './phone-number';
 export * from './photo-upload';
 export * from './pills-input';
-export * from './popover-legacy';
 export * from './popover';
 export * from './progressbar';
 export * from './resize-observer';
