@@ -53,7 +53,6 @@ class BrowserTooltipRef {
   private placementEffect?: EffectRef;
 
   constructor(
-    private injector: Injector,
     private config: {
       describedBy?: string;
       element: ElementRef;
@@ -69,21 +68,10 @@ class BrowserTooltipRef {
     const nativeElement = this.config.element.nativeElement;
 
     if (this.config.canShow) {
-      this.canShowEffect = effect(
-        () => {
-          if (!this.config.canShow!()) {
-            this.isFocused = false;
-            this.isHovered = false;
-            this.hide();
-          }
-        },
-        { injector: this.injector }
-      );
+      this.canShowEffect = effect(() => this.updateCanShow());
     }
 
-    this.placementEffect = effect(() => this.updatePlacement(this.config.placement()), {
-      injector: this.injector
-    });
+    this.placementEffect = effect(() => this.updatePlacement(this.config.placement()));
 
     fromEvent(nativeElement, 'focus')
       .pipe(
@@ -117,11 +105,27 @@ class BrowserTooltipRef {
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.onTouchStart());
 
-    // The tooltip may be created lazily, after the element is already focused or
-    // hovered (e.g. when validation errors appear on blur while the pointer still
-    // hovers the element). In that case the initial `focus`/`mouseenter` was
-    // missed, so show the tooltip immediately based on the live `:focus-visible`
-    // and `:hover` state.
+    if (!this.config.canShow) {
+      this.showForCurrentInteraction();
+    }
+  }
+
+  private updateCanShow(): void {
+    if (!this.config.canShow!()) {
+      this.isFocused = false;
+      this.isHovered = false;
+      this.hide();
+      return;
+    }
+
+    this.showForCurrentInteraction();
+  }
+
+  private showForCurrentInteraction(): void {
+    const nativeElement = this.config.element.nativeElement;
+    // The tooltip may become eligible after the element is already focused or
+    // hovered (e.g. validation errors appear on blur while the pointer still
+    // hovers the element). In that case show it based on the live interaction state.
     if (nativeElement === document.activeElement && nativeElement.matches(':focus-visible')) {
       this.isFocused = true;
       this.show();
@@ -246,7 +250,6 @@ class BrowserTooltipRef {
 @Injectable()
 export class SiTooltipService {
   private overlay = inject(Overlay);
-  private injector = inject(Injector);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   createTooltip(config: {
@@ -263,7 +266,7 @@ export class SiTooltipService {
       return new NoopTooltipRef();
     }
 
-    return new BrowserTooltipRef(this.injector, {
+    return new BrowserTooltipRef({
       ...config,
       overlay: this.overlay
     });

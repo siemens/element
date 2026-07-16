@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
-import { Component, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, Injector, runInInjectionContext, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { page } from 'vitest/browser';
 
@@ -242,14 +242,17 @@ describe('SiTooltipDirective', () => {
       readonly anchor = viewChild.required<ElementRef<HTMLButtonElement>>('anchor');
       readonly content = viewChild.required<ElementRef<HTMLDivElement>>('content');
       private readonly tooltipService = inject(SiTooltipService);
+      private readonly injector = inject(Injector);
 
       createTooltip(): void {
-        this.tooltipService.createTooltip({
-          element: this.anchor(),
-          placement: () => 'auto',
-          tooltip: this.content,
-          tooltipContext: () => undefined
-        });
+        runInInjectionContext(this.injector, () =>
+          this.tooltipService.createTooltip({
+            element: this.anchor(),
+            placement: () => 'auto',
+            tooltip: this.content,
+            tooltipContext: () => undefined
+          })
+        );
       }
     }
 
