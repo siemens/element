@@ -145,14 +145,6 @@ User interface texts are stand-alone, short, and to the point, but they provide 
 - [Precise](#use-domain-terminology)
 - [Unambiguous](#avoid-misunderstandings)
 
-<!-- markdownlint-disable MD051 -->
-
-### Handover UX writing specifications
-
-The handover documentation to development must include the UX writing specifications (e.g. [placeholder names](#define-named-placeholders) or [grouping of texts](#grouping-of-texts)) as a basis for [implementing internationalization](#code).
-
-<!-- markdownlint-enable MD051 -->
-
 ### Use domain terminology
 
 Use terms from standardization bodies (e.g. [ISO](https://iso.org), [EN](https://cen.eu), [UL](https://ul.com), [IEC](https://iec.ch)) or experts from universities and global specialized companies, but avoid terms from quasi-industrial standards.
@@ -226,52 +218,37 @@ In addition, the alternative term substantially increases the probability of cor
 
 Avoid possible causes of misunderstandings by
 
-- grouping the texts by use cases
+- [grouping the texts](#group-texts) by use cases
 - only using the [predominant meaning](#consider-that-terms-are-used-in-different-ways) of the term
 - annotating texts with a description (if supported by translation framework and file format)
 
-#### Group texts
+### Avoid directional terms on UI
 
-Translators translate texts individually.
-In order to understand the context and maintain consistency, it is necessary to have related texts close together.
-Related texts can be brought together by grouping texts based on use cases (e.g. My account → Theme selection) along with meaningful (key) names.
+<!-- markdownlint-disable MD051 -->
+
+Directional terms might be incorrect if the user interface is mirrored for [RTL languages](#ltr-rtl).
+Use direction agnostic texts instead.
+
+<!-- markdownlint-enable MD051 -->
+
+<!-- markdownlint-disable MD038 -->
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-- `ACCOUNT.LOGOUT.CANCEL:` Cancel
-- `ACCOUNT.LOGOUT.HEADING:` Log out
-- `ACCOUNT.LOGOUT.LOG_OUT_NOW:` Log out now?
-- `ACCOUNT.LOGOUT.LOGGING_OUT:` Logging out…
-- `ACCOUNT.SETTINGS.HEADING:` Settings
-- `ACCOUNT.SETTINGS.THEME:` Theme
-- `ACCOUNT.SETTINGS.THEME_OPTIONS.AUTO:` Auto
-- `ACCOUNT.SETTINGS.THEME_OPTIONS.DARK:` Dark
-- `ACCOUNT.SETTINGS.THEME_OPTIONS.LIGHT:` Light
-- `LEGAL.ABOUT:` About
-- `LEGAL.IMPRINT:` Corporate Information
-- `LEGAL.PRIVACY_POLICY:` Privacy Notice
-- `LEGAL.VERSION:` Version {{version}}
+- Site pane
+- Vertical navigation
 
 </div>
 <div class="donts" markdown>
 
-- `ABOUT:` About
-- `AUTO:` Auto
-- `CANCEL:` Cancel
-- `DARK:` Dark
-- `IMPRINT:` Corporate Information
-- `LIGHT:` Light
-- `LOG_OUT_NOW:` Log out now?
-- `LOGGING_OUT:` Logging out…
-- `LOGOUT:` Log out
-- `PRIVACY_POLICY:` Privacy Notice
-- `SETTINGS:` Settings
-- `THEME:` Theme
-- `VERSION:` Version {{version}}
+- Right pane
+- Left navigation
 
 </div>
 </div>
+
+<!-- markdownlint-enable MD038 -->
 
 ### Manage space for translations
 
@@ -317,94 +294,93 @@ The following UI elements may require text length restrictions, measured in eith
 - Table headers
 - Input field labels
 
-### Reuse texts
+### Consider pluralization rules
 
-Before writing a new text, check whether one with the exact same meaning already exists.
+Each language has its own grammatical rules that specify how texts containing numbers must be presented.
+It is important to consider these different rules early in the UX writing and implementation process to ensure that the product can be localized correctly.
 
-<div class="dos-and-donts" markdown>
-<div class="dos" markdown>
+!!! info "Pluralization examples"
 
-- `COMMON.SAVE:` Save
+    Pluralization of the English term «apple»:
 
-</div>
-<div class="donts" markdown>
+    - 0: «I own no apple.»
+    - 1: «I own one apple.»
+    - n: «I own four apples.»
 
-- `USERS.EDIT_USER.SAVE:` Save
-- `DEVICES.EDIT_DEVICE.SAVE:` Save
+    Pluralization of the Polish term «Plik» (English: «file»):
 
-</div>
-</div>
+    - 1 plik
+    - 2, 3, 4 pliki
+    - 5-21 plików
+    - 22-24 pliki
+    - 25-31 plików
 
-Reusing the same instance of text has the following advantages:
+#### Use localization to handle pluralization
 
-- reduces the volume sent to translators and lowers cost.
-- increases the efficiency of product development and maintenance.
-- keeps translation unique in every supported language.
-- helps identifying duplicated functionality.
-
-However, be careful when changing approved, reused texts to ensure that their meaning is preserved.
-
-### Consider different contexts
-
-An English text may require different translations in different contexts.
-In such cases, a separate text must be created.
-If in doubt, create a separate text for each use, even if the English text appears to be identical.
-
-<!-- markdownlint-disable MD038 -->
+Pluralization cannot be handled by product code or writing style. Use localization (e.g. ICU or framework plural rules) instead.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-- `COMMON.CANCEL:` "Cancel" for processes only
-- Translation to German: "Abbrechen"
-- Add `CONTRACT.CANCEL:` "Cancel" for contracts
-- Translation to German: "Stornieren"
+- "Delete {count} rows?"
+- "Delete {rowName}?"
 
 </div>
 <div class="donts" markdown>
 
-- `CANCEL:` "Cancel" in context of process and contract
-- Translation to German: "Abbrechen" or "Stornieren"?
+- "Delete {count} row(s)?"
+- `if (count == 1) {`"1 row"`} else {`"{count} rows"`}`
 
 </div>
 </div>
 
-<!-- markdownlint-enable MD038 -->
+#### Consider different linguistic rules
 
-### Use translation libraries
+Depending on the language there might be up to 6 forms. The following language specific variability exists:
 
-Packages based on the [Unicode CLDR](https://cldr.unicode.org/) like `@angular/common` and built-in runtime objects like `Intl` provide complete and high quality translations for:
+| Forms | Grammatical rules                                                                                                   | Languages      |
+| :---: | ------------------------------------------------------------------------------------------------------------------- | -------------- |
+|   1   | No distinction between the singular and plural form                                                                 | e.g. Japanese  |
+|   2   | Singular used for one only                                                                                          | e.g. English   |
+|   2   | Singular used for zero and one                                                                                      | e.g. French    |
+|   3   | Special case for zero                                                                                               | Latvian        |
+|   3   | Special cases for one and two                                                                                       | Gaelic (Irish) |
+|   3   | Special case for numbers ending in `00` or `[2-9][0-9]`                                                             | Romanian       |
+|   3   | Special case for numbers ending in `1[2-9]`                                                                         | Lithuanian     |
+|   3   | Special cases for numbers ending in `1` and `2`, `3`, `4`, except those ending in `1[1-4]`                          | e.g. Russian   |
+|   3   | Special cases for `1` and `2`, `3`, `4`                                                                             | e.g. Czech     |
+|   3   | Special case for one and some numbers ending in `2`, `3`, or `4`                                                    | Polish         |
+|   4   | Special case for one and all numbers ending in `02`, `03`, or `04`                                                  | Slovenian      |
+|   6   | Special cases for one, two, all numbers ending in `02`, `03`, … `10`, all numbers ending in `11` … `99`, and others | Arabic         |
 
-- language and script names
-- countries and regions
-- currencies
-- months, weekdays and time zones
+The [plural rules specification from the Unicode Common Locale Data Repository (CLDR)](https://cldr.unicode.org/index/cldr-spec/plural-rules) contains a detailed linguistic analysis.
 
-Use these sources to avoid superfluous translation efforts.
+### Provide user-friendly language selection
 
-### Avoid directional terms on UI
-
-Directional terms might be incorrect if the user interface is mirrored for [RTL languages](#rtl-right-to-left).
-Use direction agnostic texts instead.
-
-<!-- markdownlint-disable MD038 -->
+Provide each language name in the target language for the language switcher.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-- Site pane
-- Vertical navigation
+- English
+- Deutsch
+- Français
+- Italiano
+- Ελληνικά
+- 中文
 
 </div>
 <div class="donts" markdown>
 
-- Right pane
-- Left navigation
+- 英语
+- 德语
+- 法语
+- 意大利语
+- 希腊
+- 中文
 
 </div>
 </div>
-
-<!-- markdownlint-enable MD038 -->
 
 ### Avoid text concatenations
 
@@ -459,7 +435,7 @@ Use locale-aware formatting (see [Code tab](#code)), and avoid creating UI text 
 <div class="dos" markdown>
 
 - Use the localization framework (see [Code tab](#code))
-- Use [placeholders](#define-understandable-placeholders) in text: "Saved on {date}"
+- Use [placeholders](#define-named-placeholders) in text: "Saved on {date}"
 
 </div>
 <div class="donts" markdown>
@@ -470,95 +446,122 @@ Use locale-aware formatting (see [Code tab](#code)), and avoid creating UI text 
 </div>
 </div>
 
-<!-- markdownlint-enable MD051 -->
+### Provide UX writing specifications
 
-### Consider pluralization rules
+Providing project-specific UX writing specifications helps developers [group texts by use cases](#group-texts) and determine when a text can be [reused](#reuse-texts) or whether [a specific context needs to be taken into account](#consider-different-contexts).
+[Non-concatenated texts](#avoid-text-concatenations) with [readable placeholder names](#define-named-placeholders), combined with translation [translation libraries](#use-translation-libraries), enable efficient, high-quality localization.
 
-Each language has its own grammatical rules that specify how texts containing numbers must be presented.
-It is important to consider these different rules early in the UX writing and implementation process to ensure that the product can be localized correctly.
+#### Group texts
 
-!!! info "Pluralization examples"
-
-    Pluralization of the English term «apple»:
-
-    - 0: «I own no apple.»
-    - 1: «I own one apple.»
-    - n: «I own four apples.»
-
-    Pluralization of the Polish term «Plik» (English: «file»):
-
-    - 1 plik
-    - 2, 3, 4 pliki
-    - 5-21 plików
-    - 22-24 pliki
-    - 25-31 plików
-
-#### Consider different linguistic rules
-
-Depending on the language there might be up to 6 forms. The following language specific variability exists:
-
-| Forms | Grammatical rules                                                                                                   | Languages      |
-| :---: | ------------------------------------------------------------------------------------------------------------------- | -------------- |
-|   1   | No distinction between the singular and plural form                                                                 | e.g. Japanese  |
-|   2   | Singular used for one only                                                                                          | e.g. English   |
-|   2   | Singular used for zero and one                                                                                      | e.g. French    |
-|   3   | Special case for zero                                                                                               | Latvian        |
-|   3   | Special cases for one and two                                                                                       | Gaelic (Irish) |
-|   3   | Special case for numbers ending in `00` or `[2-9][0-9]`                                                             | Romanian       |
-|   3   | Special case for numbers ending in `1[2-9]`                                                                         | Lithuanian     |
-|   3   | Special cases for numbers ending in `1` and `2`, `3`, `4`, except those ending in `1[1-4]`                          | e.g. Russian   |
-|   3   | Special cases for `1` and `2`, `3`, `4`                                                                             | e.g. Czech     |
-|   3   | Special case for one and some numbers ending in `2`, `3`, or `4`                                                    | Polish         |
-|   4   | Special case for one and all numbers ending in `02`, `03`, or `04`                                                  | Slovenian      |
-|   6   | Special cases for one, two, all numbers ending in `02`, `03`, … `10`, all numbers ending in `11` … `99`, and others | Arabic         |
-
-The [plural rules specification from the Unicode Common Locale Data Repository (CLDR)](https://cldr.unicode.org/index/cldr-spec/plural-rules) contains a detailed linguistic analysis.
-
-#### Use localization to handle pluralization
-
-Pluralization cannot be handled by product code or writing style. Use localization (e.g. ICU or framework plural rules) instead.
+Translators translate texts individually.
+In order to understand the context and maintain consistency, it is necessary to have related texts close together.
+Related texts can be brought together by grouping texts based on use cases (e.g. My account → Theme selection) along with meaningful (key) names.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-- "Delete {count} rows?"
-- "Delete {rowName}?"
+- `ACCOUNT.LOGOUT.CANCEL:` Cancel
+- `ACCOUNT.LOGOUT.HEADING:` Log out
+- `ACCOUNT.LOGOUT.LOG_OUT_NOW:` Log out now?
+- `ACCOUNT.LOGOUT.LOGGING_OUT:` Logging out…
+- `ACCOUNT.SETTINGS.HEADING:` Settings
+- `ACCOUNT.SETTINGS.THEME:` Theme
+- `ACCOUNT.SETTINGS.THEME_OPTIONS.AUTO:` Auto
+- `ACCOUNT.SETTINGS.THEME_OPTIONS.DARK:` Dark
+- `ACCOUNT.SETTINGS.THEME_OPTIONS.LIGHT:` Light
+- `LEGAL.ABOUT:` About
+- `LEGAL.IMPRINT:` Corporate Information
+- `LEGAL.PRIVACY_POLICY:` Privacy Notice
+- `LEGAL.VERSION:` Version {{version}}
 
 </div>
 <div class="donts" markdown>
 
-- "Delete {count} row(s)?"
-- `if (count == 1) {`"1 row"`} else {`"{count} rows"`}`
+- `ABOUT:` About
+- `AUTO:` Auto
+- `CANCEL:` Cancel
+- `DARK:` Dark
+- `IMPRINT:` Corporate Information
+- `LIGHT:` Light
+- `LOG_OUT_NOW:` Log out now?
+- `LOGGING_OUT:` Logging out…
+- `LOGOUT:` Log out
+- `PRIVACY_POLICY:` Privacy Notice
+- `SETTINGS:` Settings
+- `THEME:` Theme
+- `VERSION:` Version {{version}}
 
 </div>
 </div>
 
-### Provide user-friendly language selection
+#### Reuse texts
 
-Provide each language name in the target language for the language switcher.
+Before writing a new text, check whether one with the exact same meaning already exists.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-- English
-- Deutsch
-- Français
-- Italiano
-- Ελληνικά
-- 中文
+- `COMMON.SAVE:` Save
 
 </div>
 <div class="donts" markdown>
 
-- 英语
-- 德语
-- 法语
-- 意大利语
-- 希腊
-- 中文
+- `USERS.EDIT_USER.SAVE:` Save
+- `DEVICES.EDIT_DEVICE.SAVE:` Save
 
 </div>
 </div>
+
+Reusing the same instance of text has the following advantages:
+
+- reduces the volume sent to translators and lowers cost.
+- increases the efficiency of product development and maintenance.
+- keeps translation unique in every supported language.
+- helps identifying duplicated functionality.
+
+However, be careful when changing approved, reused texts to ensure that their meaning is preserved.
+
+#### Consider different contexts
+
+An English text may require different translations in different contexts.
+In such cases, a separate text must be created.
+If in doubt, create a separate text for each use, even if the English text appears to be identical.
+
+<!-- markdownlint-disable MD038 -->
+
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- `COMMON.CANCEL:` "Cancel" for processes only
+- Translation to German: "Abbrechen"
+- Add `CONTRACT.CANCEL:` "Cancel" for contracts
+- Translation to German: "Stornieren"
+
+</div>
+<div class="donts" markdown>
+
+- `CANCEL:` "Cancel" in context of process and contract
+- Translation to German: "Abbrechen" or "Stornieren"?
+
+</div>
+</div>
+
+<!-- markdownlint-enable MD038 -->
+
+#### Use translation libraries
+
+Packages based on the [Unicode CLDR](https://cldr.unicode.org/) like `@angular/common` and built-in runtime objects like `Intl` provide complete and high quality translations for:
+
+- language and script names
+- countries and regions
+- currencies
+- months, weekdays and time zones
+
+Use these sources to avoid superfluous translation efforts.
+
+!!! info "Element Design System"
+
+    Element provides pretranslated texts for the components exclusively available for Siemens employees and partners, and can be accessed [here](https://simpl.code.siemens.io/simpl/development/language-packs).
 
 ## Code ---
 
