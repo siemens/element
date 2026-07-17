@@ -46,6 +46,17 @@
               <input type="text" class="form-control" [formField]="form.description" />
             </si-form-field>
 
+            <si-form-field label="Phone number">
+              <si-phone-number-input
+                class="form-control"
+                defaultCountry="CH"
+                placeholderForSearch="Search"
+                selectCountryAriaLabel="Select country"
+                [formField]="form.phoneNumber"
+                [supportedCountries]="['AU', 'CH', 'DE', 'FK', 'IN', 'US']"
+              />
+            </si-form-field>
+
             <si-form-field label="Day of birth">
               <input type="date" class="form-control" [formField]="form.birthday" />
             </si-form-field>
