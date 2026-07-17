@@ -7,7 +7,6 @@ import {
   Component,
   computed,
   ElementRef,
-  HostListener,
   input,
   numberAttribute,
   OnChanges,
@@ -39,7 +38,8 @@ import { debounceTime } from 'rxjs/operators';
     }
   ],
   host: {
-    '[class.readonly]': 'readonly()'
+    '[class.readonly]': 'readonly()',
+    '(focus)': 'focus()'
   }
 })
 export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAccessor, OnChanges {
@@ -189,7 +189,6 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
   }
 
   /** @internal */
-  @HostListener('focus')
   focus(): void {
     this.inputRef().nativeElement.focus();
   }
