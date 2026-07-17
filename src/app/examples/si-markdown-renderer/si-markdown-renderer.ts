@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
+import { httpResource } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-renderer';
 
 @Component({
@@ -11,15 +11,6 @@ import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-render
   imports: [SiMarkdownRendererComponent],
   templateUrl: './si-markdown-renderer.html'
 })
-export class SampleComponent implements OnInit {
-  private readonly http = inject(HttpClient);
-  readonly markdownText = signal<string>('');
-  private cdRef = inject(ChangeDetectorRef);
-
-  ngOnInit(): void {
-    this.http.get('assets/sample-markdown.md', { responseType: 'text' }).subscribe(text => {
-      this.markdownText.set(text);
-      this.cdRef.markForCheck();
-    });
-  }
+export class SampleComponent {
+  readonly markdownText = httpResource.text(() => 'assets/sample-markdown.md');
 }
