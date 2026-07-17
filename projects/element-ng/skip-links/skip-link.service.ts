@@ -9,7 +9,9 @@ import {
   EnvironmentInjector,
   inject,
   Injectable,
-  DOCUMENT
+  DOCUMENT,
+  signal,
+  inputBinding
 } from '@angular/core';
 
 import { SiSkipLinkTargetDirective } from './si-skip-link-target.directive';
@@ -23,25 +25,19 @@ export class SkipLinkService {
   private appRef = inject(ApplicationRef);
   private environmentInjector = inject(EnvironmentInjector);
   private document = inject(DOCUMENT);
-  private registeredTargets: SiSkipLinkTargetDirective[] = [];
+  private readonly registeredTargets = signal<SiSkipLinkTargetDirective[]>([]);
 
   registerLink(skipLink: SiSkipLinkTargetDirective): void {
     if (!this.skipLinksComponentRef) {
       this.createSkipLinksComponent();
     }
-
-    this.registeredTargets.push(skipLink);
-    this.skipLinksComponentRef!.setInput('skipLinks', this.registeredTargets);
-    this.skipLinksComponentRef!.changeDetectorRef.markForCheck();
+    this.registeredTargets.update(targets => [...targets, skipLink]);
   }
 
   unregisterLink(skipLink: SiSkipLinkTargetDirective): void {
-    this.registeredTargets.splice(this.registeredTargets.indexOf(skipLink), 1);
+    this.registeredTargets.update(targets => targets.filter(t => t !== skipLink));
 
-    if (this.registeredTargets.length && this.skipLinksComponentRef) {
-      this.skipLinksComponentRef.setInput('skipLinks', this.registeredTargets);
-      this.skipLinksComponentRef.changeDetectorRef.markForCheck();
-    } else {
+    if (!this.registeredTargets().length && this.skipLinksComponentRef) {
       this.skipLinksComponentRef?.destroy();
       this.skipLinksComponentRef = undefined;
     }
@@ -49,7 +45,8 @@ export class SkipLinkService {
 
   private createSkipLinksComponent(): void {
     this.skipLinksComponentRef = createComponent(SiSkipLinksComponent, {
-      environmentInjector: this.environmentInjector
+      environmentInjector: this.environmentInjector,
+      bindings: [inputBinding('skipLinks', this.registeredTargets)]
     });
 
     this.appRef.attachView(this.skipLinksComponentRef.hostView);
