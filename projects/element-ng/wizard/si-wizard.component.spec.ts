@@ -23,7 +23,12 @@ import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './ind
       [verticalMaxSize]="verticalMaxSize()"
     >
       @for (step of steps(); track step) {
-        <si-wizard-step [heading]="step" />
+        <si-wizard-step [heading]="step">
+          @if ($index === 1 && showStepAction()) {
+            <button type="button" tabindex="-1">Skipped action</button>
+            <button type="button" class="step-action">Step action</button>
+          }
+        </si-wizard-step>
       }
     </si-wizard>
   `,
@@ -44,6 +49,7 @@ class TestHostComponent {
   readonly verticalLayout = signal(false);
   readonly verticalMinSize = signal<string | undefined>(undefined);
   readonly verticalMaxSize = signal<string | undefined>(undefined);
+  readonly showStepAction = signal(true);
   readonly wizard = viewChild.required(TestComponent);
 
   constructor() {
@@ -165,6 +171,10 @@ describe('SiWizardComponent', () => {
       );
     });
 
+    it('should focus the first interactive element in the next step', () => {
+      expect(document.activeElement).toBe(element.querySelector<HTMLElement>('.step-action'));
+    });
+
     describe('when back button is clicked', () => {
       beforeEach(async () => {
         element.querySelector<HTMLElement>('.back')!.click();
@@ -269,6 +279,16 @@ describe('SiWizardComponent', () => {
       await fixture.whenStable();
       expect(element.querySelector<HTMLElement>('[aria-label="Cancel"]')).toBeInTheDocument();
     });
+  });
+
+  it('should focus the next button when the next step has no interactive elements', async () => {
+    hostComponent.showStepAction.set(false);
+    await fixture.whenStable();
+
+    element.querySelector<HTMLElement>('.next')!.click();
+    await fixture.whenStable();
+
+    expect(document.activeElement).toBe(element.querySelector<HTMLElement>('.next button'));
   });
 
   it('should calculate visible items', async () => {

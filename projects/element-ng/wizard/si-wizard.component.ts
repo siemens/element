@@ -2,14 +2,17 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { FocusTrapFactory } from '@angular/cdk/a11y';
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  afterNextRender,
   booleanAttribute,
   Component,
   computed,
   contentChildren,
   ElementRef,
   inject,
+  Injector,
   input,
   linkedSignal,
   output,
@@ -75,8 +78,11 @@ export class SiWizardComponent {
   private static readonly stepPadding = 32;
   private readonly translateService = injectSiTranslateService();
   private readonly textMeasureService = inject(TextMeasureService);
+  private readonly focusTrapFactory = inject(FocusTrapFactory);
+  private readonly injector = inject(Injector);
 
   protected readonly containerSteps = viewChild<ElementRef<HTMLDivElement>>('containerSteps');
+  protected readonly nextButton = viewChild<ElementRef<HTMLButtonElement>>('nextButton');
 
   /**
    * Description of back button.
@@ -354,6 +360,7 @@ export class SiWizardComponent {
       this.currentStep?.next.emit();
       if (this.currentStep?.isNextNavigable()) {
         this.activate(nextStep);
+        this.focusStepContent();
       }
     }
   }
@@ -401,6 +408,30 @@ export class SiWizardComponent {
     step.isActive.set(true);
     this._currentStep.set(step);
     this._index.set(this.steps().indexOf(step));
+  }
+
+  private focusStepContent(): void {
+    afterNextRender(
+      async () => {
+        const stepElement = this.currentStep?.elementRef.nativeElement as HTMLElement | undefined;
+        if (!stepElement) {
+          this.nextButton()?.nativeElement.focus();
+          return;
+        }
+
+        // A little abuse, we only use the focus trap to focus the first tabable element.
+        const focusTrap = this.focusTrapFactory.create(stepElement);
+        try {
+          const focused = await focusTrap.focusFirstTabbableElementWhenReady();
+          if (!focused) {
+            this.nextButton()?.nativeElement.focus();
+          }
+        } finally {
+          focusTrap.destroy();
+        }
+      },
+      { injector: this.injector }
+    );
   }
 
   private measureMaxTextWidth(texts: string[]): number {
