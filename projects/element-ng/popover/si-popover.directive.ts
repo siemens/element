@@ -9,7 +9,6 @@ import {
   computed,
   Directive,
   ElementRef,
-  HostListener,
   inject,
   input,
   OnDestroy,
@@ -27,7 +26,8 @@ import { PopoverComponent } from './si-popover.component';
   selector: '[siPopover]',
   host: {
     '[attr.aria-expanded]': 'isOpen()',
-    '[attr.aria-controls]': 'popoverId'
+    '[attr.aria-controls]': 'popoverId',
+    '(click)': 'onClick()'
   },
   exportAs: 'si-popover'
 })
@@ -96,9 +96,9 @@ export class SiPopoverDirective implements OnDestroy {
   readonly scrollStrategy = input<ScrollStrategy>(undefined, { alias: 'siPopoverScrollStrategy' });
 
   /**
-   * Emits an event when the popover is shown/hidden
+   * Emits `true` when the popover is shown, `false` when the popover is hidden.
    */
-  readonly visibilityChange = output<void>({ alias: 'siPopoverVisibilityChange' });
+  readonly visibilityChange = output<boolean>({ alias: 'siPopoverVisibilityChange' });
 
   /** @internal */
   readonly popoverCounter = SiPopoverDirective.idCounter++;
@@ -155,7 +155,7 @@ export class SiPopoverDirective implements OnDestroy {
       .subscribe(change => popoverRef.instance.updateArrow(change, this.elementRef));
 
     this.isOpen.set(true);
-    this.visibilityChange.emit();
+    this.visibilityChange.emit(true);
   }
 
   /**
@@ -165,7 +165,7 @@ export class SiPopoverDirective implements OnDestroy {
     if (this.overlayref?.hasAttached()) {
       this.overlayref?.detach();
       this.isOpen.set(false);
-      this.visibilityChange.emit();
+      this.visibilityChange.emit(false);
       this.destroyer.next();
     }
   }
@@ -177,7 +177,6 @@ export class SiPopoverDirective implements OnDestroy {
     this.overlayref?.updatePosition();
   }
 
-  @HostListener('click')
   protected onClick(): void {
     if (this.overlayref?.hasAttached()) {
       this.hide();
