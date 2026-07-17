@@ -2,13 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 import { LOG_EVENT } from '@siemens/live-preview';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
+import { forkJoin } from 'rxjs';
 
-import { CorporateEmployee, DataService, PageRequest } from './data.service';
+import { CorporateEmployee, DataService, PagedData, PageRequest } from './data.service';
 
 @Component({
   selector: 'app-sample',
@@ -21,15 +23,45 @@ export class SampleComponent {
   logEvent = inject(LOG_EVENT);
 
   tableConfig = SI_DATATABLE_CONFIG;
-  totalElements = 0;
-  pageNumber = 0;
-
-  rows: CorporateEmployee[] = [];
-
-  isLoading = 0;
+  readonly pageNumber = signal(0);
 
   private dataService = inject(DataService);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly pageRequest = signal<PageRequest | undefined>(undefined);
+
+  readonly dataResource = rxResource({
+    params: () => this.pageRequest(),
+    stream: ({ params }) => {
+      const requests = [
+        params.offset > 0 ? { ...params, offset: params.offset - 1 } : undefined,
+        params,
+        { ...params, offset: params.offset + 1 }
+      ].filter(request => request !== undefined);
+      return forkJoin(requests.map(request => this.dataService.getResults(request)));
+    }
+  });
+  private readonly loadedData = linkedSignal<
+    PagedData<CorporateEmployee>[] | undefined,
+    { rows: CorporateEmployee[]; totalElements: number }
+  >({
+    source: this.dataResource.value,
+    computation: (pagedDataPages, previous) => {
+      if (!pagedDataPages) {
+        return previous?.value ?? { rows: [], totalElements: 0 };
+      }
+
+      const rows = previous?.value.rows.slice() ?? [];
+      for (const pagedData of pagedDataPages) {
+        const start = pagedData.page.pageNumber * pagedData.page.size;
+        if (rows.length <= start) {
+          rows.length = start + 1;
+        }
+        rows.splice(start, pagedData.page.size, ...pagedData.data);
+      }
+      return { rows, totalElements: pagedDataPages[0]?.page.totalElements ?? 0 };
+    }
+  });
+  readonly totalElements = computed(() => this.loadedData().totalElements);
+  readonly rows = computed(() => this.loadedData().rows);
 
   onSelect(event: CorporateEmployee[]): void {
     this.logEvent(event);
@@ -37,32 +69,16 @@ export class SampleComponent {
 
   setPage(pageRequest: PageRequest): void {
     // current page number is determined by last call to setPage
-    this.pageNumber = pageRequest.offset;
+    this.pageNumber.set(pageRequest.offset);
 
-    // counter of pages loading
-    this.isLoading++;
+    const currentRequest = this.pageRequest();
+    if (
+      currentRequest?.offset === pageRequest.offset &&
+      currentRequest.pageSize === pageRequest.pageSize
+    ) {
+      return;
+    }
 
-    this.dataService.getResults(pageRequest).subscribe(pagedData => {
-      // update total count
-      this.totalElements = pagedData.page.totalElements;
-
-      // calc starting index
-      const start = pagedData.page.pageNumber * pagedData.page.size;
-
-      // copy existing data
-      const rows = this.rows.slice();
-
-      // insert new rows into new position
-      if (rows.length <= start) {
-        rows.length = start + 1;
-      }
-      rows.splice(start, pagedData.page.size, ...pagedData.data);
-
-      // set rows to our new rows
-      this.rows = rows;
-
-      this.isLoading--;
-      this.cdRef.markForCheck();
-    });
+    this.pageRequest.set(pageRequest);
   }
 }

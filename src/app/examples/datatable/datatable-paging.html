@@ -4,7 +4,7 @@
     class="table-element"
     siDatatableInteraction
     columnMode="force"
-    [rows]="rows"
+    [rows]="rows()"
     [columns]="[
       { name: 'Name', sortable: false },
       { name: 'Role', sortable: false },
@@ -12,10 +12,10 @@
     ]"
     [rowHeight]="tableConfig.rowHeightSmall"
     [externalPaging]="true"
-    [ghostLoadingIndicator]="isLoading"
-    [count]="page.totalElements"
-    [offset]="page.pageNumber"
-    [limit]="page.size"
+    [ghostLoadingIndicator]="dataResource.isLoading()"
+    [count]="page().totalElements"
+    [offset]="page().pageNumber"
+    [limit]="page().size"
     (page)="setPage($event)"
   >
     <ngx-datatable-footer>
@@ -24,9 +24,9 @@
           class="ms-auto"
           forwardButtonText="forward"
           backButtonText="back"
-          [currentPage]="page.pageNumber + 1"
-          [totalRowCount]="page.totalElements"
-          [pageSize]="page.size"
+          [currentPage]="page().pageNumber + 1"
+          [totalRowCount]="page().totalElements"
+          [pageSize]="page().size"
           (currentPageChange)="table.onFooterPage({ page: $event })"
         />
       </ng-template>

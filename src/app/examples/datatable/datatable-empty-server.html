@@ -1,4 +1,5 @@
 <div class="p-5 clearfix">
+  @let rows = dataResource.value().data;
   <ngx-datatable
     #table
     class="table-element"
@@ -16,7 +17,7 @@
     [count]="0"
     [offset]="0"
     [limit]="10"
-    [ghostLoadingIndicator]="!!isLoading"
+    [ghostLoadingIndicator]="dataResource.isLoading()"
   >
     <si-empty-state empty-content icon="element-technical-operator" heading="No data to display" />
   </ngx-datatable>

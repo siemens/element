@@ -2,13 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectorRef, Component, inject, OnDestroy, viewChild } from '@angular/core';
+import { Component, computed, inject, signal, viewChild } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
-import { Subscription } from 'rxjs';
 
-import { CorporateEmployee, DataService, PageRequest } from './data.service';
+import { DataService, PageRequest } from './data.service';
 
 @Component({
   selector: 'app-sample',
@@ -17,45 +17,33 @@ import { CorporateEmployee, DataService, PageRequest } from './data.service';
   styleUrl: './datatable.scss',
   providers: [DataService]
 })
-export class SampleComponent implements OnDestroy {
+export class SampleComponent {
   readonly table = viewChild(DatatableComponent);
 
   tableConfig = SI_DATATABLE_CONFIG;
 
-  rows: CorporateEmployee[] = [].constructor(5);
   offset = 0;
 
-  isLoading = false;
-
-  private subscription?: Subscription;
   private dataService = inject(DataService);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly pageRequest = signal<PageRequest>({ offset: 0, pageSize: 50 });
 
-  constructor() {
-    this.fetchData({ offset: 0, pageSize: 50 });
-  }
+  readonly dataResource = rxResource({
+    params: () => this.pageRequest(),
+    stream: ({ params }) => this.dataService.getResults(params)
+  });
 
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-  }
+  readonly rows = computed(() => {
+    const data = this.dataResource.value();
+    return data?.data ?? [].constructor(5);
+  });
 
   fetchData(pageRequest: PageRequest): void {
-    this.isLoading = true;
-    // Need some rows to display ghosts
-    if (this.rows.length === 0) {
-      this.rows = [].constructor(5);
-    }
     const table = this.table();
     if (table) {
       // Whenever the filter changes, always go back to the first page
       this.offset = 0;
     }
-    this.subscription?.unsubscribe();
-    this.subscription = this.dataService.getResults(pageRequest).subscribe(data => {
-      this.rows = data.data;
-      this.isLoading = false;
-      this.cdRef.markForCheck();
-    });
+    this.pageRequest.set(pageRequest);
   }
 
   updateFilter(event: any): void {
