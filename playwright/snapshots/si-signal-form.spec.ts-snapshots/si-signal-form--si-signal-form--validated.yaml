@@ -11,6 +11,11 @@
 - textbox "Name*" [invalid]
 - text: Minimum 3 characters Name must start with an uppercase letter Description
 - textbox "Description"
+- text: Phone number
+- group:
+  - combobox /Select country Switzerland \+\d+/
+  - textbox "Enter phone number":
+    - /placeholder: 21 234 56 78
 - text: Day of birth*
 - textbox "Day of birth*" [invalid]
 - text: Day of birth required Arrival
@@ -41,6 +46,6 @@
       - columnheader "Model"
       - columnheader "Submitted"
   - rowgroup:
-    - 'row "{ \"name\": \"a\", \"description\": \"\", \"birthday\": \"\", \"arrival\": \"\", \"departure\": \"\", \"serviceClass\": \"first\", \"role\": \"\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false } undefined"':
-      - 'cell "{ \"name\": \"a\", \"description\": \"\", \"birthday\": \"\", \"arrival\": \"\", \"departure\": \"\", \"serviceClass\": \"first\", \"role\": \"\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false }"'
+    - 'row "{ \"name\": \"a\", \"description\": \"\", \"phoneNumber\": \"\", \"birthday\": \"\", \"arrival\": \"\", \"departure\": \"\", \"serviceClass\": \"first\", \"role\": \"\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false } undefined"':
+      - 'cell "{ \"name\": \"a\", \"description\": \"\", \"phoneNumber\": \"\", \"birthday\": \"\", \"arrival\": \"\", \"departure\": \"\", \"serviceClass\": \"first\", \"role\": \"\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false }"'
       - cell "undefined"
