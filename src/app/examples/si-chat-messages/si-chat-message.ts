@@ -21,17 +21,19 @@ import {
   MessageAction
 } from '@siemens/element-ng/chat-messages';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-renderer';
+import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
 import { MenuItemAction, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { LOG_EVENT } from '@siemens/live-preview';
+
+import { markdownOptions } from './markdown-options';
 
 @Component({
   selector: 'app-sample',
   imports: [
     CdkMenuTrigger,
     SiChatMessageComponent,
-    SiMarkdownRendererComponent,
+    SiMarkdownComponent,
     SiIconComponent,
     SiAvatarComponent,
     SiAttachmentListComponent,
@@ -43,6 +45,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
+
+  protected markdownOptions = markdownOptions;
 
   protected readonly icons = addIcons({
     elementUser,
