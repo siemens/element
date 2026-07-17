@@ -6,10 +6,12 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
 import { By } from '@angular/platform-browser';
 import { page, userEvent } from 'vitest/browser';
 
 import { PhoneDetails, SiPhoneNumberInputComponent } from '.';
+import { provideSiFormFieldConfig, SiFormFieldComponent } from '../form';
 import { SiSelectFilterListHarness } from '../select/testing/si-select-filter-list.harness';
 
 @Component({
@@ -289,5 +291,41 @@ describe('SiPhoneNumberInputComponent', () => {
       const displaySelectedCountry = document.querySelector('.dropdown-menu') as HTMLElement;
       expect(displaySelectedCountry).not.toBeInTheDocument();
     });
+  });
+});
+
+describe('SiPhoneNumberInputComponent with a signal form field', () => {
+  @Component({
+    imports: [FormField, SiFormFieldComponent, SiPhoneNumberInputComponent],
+    template: `
+      <si-form-field label="Phone number">
+        <si-phone-number-input
+          class="form-control"
+          defaultCountry="DE"
+          [formField]="phoneForm.phoneNumber"
+        />
+      </si-form-field>
+    `,
+    providers: [provideSiFormFieldConfig()]
+  })
+  class SignalFormWrapperComponent {
+    readonly model = signal({ phoneNumber: '' });
+    readonly phoneForm = form(this.model);
+  }
+
+  it('should display invalid phone errors', async () => {
+    const fixture = TestBed.createComponent(SignalFormWrapperComponent);
+    await fixture.whenStable();
+
+    const phoneInput = fixture.nativeElement.querySelector(
+      'input.phone-number'
+    ) as HTMLInputElement;
+    await userEvent.type(phoneInput, 'a');
+    await userEvent.tab();
+    await fixture.whenStable();
+
+    expect(fixture.nativeElement.querySelector('.invalid-feedback')).toHaveTextContent(
+      'Invalid phone number'
+    );
   });
 });

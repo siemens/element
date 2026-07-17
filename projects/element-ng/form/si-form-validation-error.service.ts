@@ -118,13 +118,20 @@ export class SiFormValidationErrorService {
    */
   resolveFormFieldErrors(state: FieldState<any>): SiFormError[] {
     return state.errors().map(error => {
-      const { message, kind, ...params } = error;
+      const { message, kind, fieldTree, formField, ...rawErrorParams } = error;
+      const errorParams = this.getErrorParams(rawErrorParams);
       if (!message) {
-        return this.resolveError(kind, state.name(), params);
+        return this.resolveError(kind, state.name(), errorParams);
       } else {
-        return { message, key: kind, params };
+        return { message, key: kind, params: errorParams };
       }
     });
+  }
+
+  /** Returns legacy reactive-form parameters stored in `context`, or the signal-form error. */
+  private getErrorParams(error: object): unknown {
+    const { context } = error as { context?: unknown };
+    return context ?? error;
   }
 
   /**

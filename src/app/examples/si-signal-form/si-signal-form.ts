@@ -18,6 +18,7 @@ import {
   SiFormFieldComponent,
   SiFormFieldsetComponent
 } from '@siemens/element-ng/form';
+import { SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
 
 export type Role = 'engineer' | 'installer';
 import { SiHelpButtonComponent } from '@siemens/element-ng/help-button';
@@ -25,6 +26,7 @@ import { SiHelpButtonComponent } from '@siemens/element-ng/help-button';
 export interface TravelRequest {
   name: string;
   description: string;
+  phoneNumber: string;
   birthday: string;
   arrival: string;
   departure: string;
@@ -38,6 +40,7 @@ export interface TravelRequest {
 const emptyRequest: TravelRequest = {
   name: '',
   description: '',
+  phoneNumber: '',
   birthday: '',
   arrival: '',
   departure: '',
@@ -56,7 +59,8 @@ const emptyRequest: TravelRequest = {
     FormRoot,
     SiFormFieldComponent,
     SiFormFieldsetComponent,
-    SiHelpButtonComponent
+    SiHelpButtonComponent,
+    SiPhoneNumberInputComponent
   ],
   templateUrl: './si-signal-form.html',
   providers: [provideSiFormFieldConfig()],
