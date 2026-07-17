@@ -36,7 +36,7 @@ export class SiPopoverDirective implements OnDestroy {
     readonly siPopover: _angular_core.InputSignal<TranslatableString | TemplateRef<unknown> | undefined>;
     readonly title: _angular_core.InputSignal<TranslatableString | undefined>;
     updatePosition(): void;
-    readonly visibilityChange: _angular_core.OutputEmitterRef<void>;
+    readonly visibilityChange: _angular_core.OutputEmitterRef<boolean>;
 }
 
 // @public (undocumented)
