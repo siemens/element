@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, computed, inject, signal, TemplateRef, viewChild } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import {
   elementBookmark,
   elementCopy,
@@ -33,13 +32,12 @@ import {
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
-import {
-  getMarkdownRenderer,
-  SiMarkdownRendererComponent
-} from '@siemens/element-ng/markdown-renderer';
+import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
+
+import { markdownOptions } from './markdown-options';
 
 interface ChatMessage {
   type: 'user' | 'ai' | 'custom';
@@ -58,7 +56,7 @@ interface ChatMessage {
     SiChatInputComponent,
     SiChatMessageComponent,
     SiIconComponent,
-    SiMarkdownRendererComponent,
+    SiMarkdownComponent,
     SiChatMessageActionDirective,
     SiAttachmentListComponent,
     SiAiWelcomeScreenComponent
@@ -68,11 +66,10 @@ interface ChatMessage {
 export class SampleComponent {
   private logEvent = inject(LOG_EVENT);
   private readonly modalTemplate = viewChild<TemplateRef<any>>('modalTemplate');
-  private sanitizer = inject(DomSanitizer);
   private readonly toastService = inject(SiToastNotificationService);
   private readonly chatContainer = viewChild<SiChatContainerComponent>(SiChatContainerComponent);
 
-  protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
+  protected markdownOptions = markdownOptions;
 
   protected readonly icons = addIcons({
     elementUser,

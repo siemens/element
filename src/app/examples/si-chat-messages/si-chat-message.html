@@ -2,8 +2,9 @@
   <si-chat-message alignment="start" actionsPosition="bottom">
     <si-attachment-list [attachments]="attachments" />
     <si-icon class="icon" [icon]="icons.elementUser" />
-    <si-markdown-renderer
-      text="Can you help me with this **code snippet**? I'm getting an error when I run it."
+    <si-markdown
+      markdown="Can you help me with this **code snippet**? I'm getting an error when I run it."
+      [options]="markdownOptions"
     />
     <div class="btn-group" role="group" siChatMessageAction>
       @for (action of actions; track $index) {

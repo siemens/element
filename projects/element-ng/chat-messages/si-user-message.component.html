@@ -10,6 +10,8 @@
     } @else {
       <div #formattedContent> </div>
     }
+  } @else {
+    <ng-content />
   }
   @if (actions().length > 0 || secondaryActions().length > 0) {
     <div class="btn-group user-message-actions" role="group" siChatMessageAction>

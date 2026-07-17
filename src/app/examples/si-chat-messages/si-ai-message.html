@@ -1,12 +1,12 @@
 <div class="p-2">
   <si-ai-message
     actionParam="message-1"
-    [content]="content"
-    [contentFormatter]="markdownRenderer"
     [actions]="actions"
     [secondaryActions]="secondaryActions"
     [loading]="false"
-  />
+  >
+    <si-markdown [markdown]="content" [options]="markdownOptions" />
+  </si-ai-message>
 
   <div class="mt-5">
     <si-ai-message [loading]="true" />
