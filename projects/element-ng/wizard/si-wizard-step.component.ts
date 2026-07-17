@@ -6,6 +6,8 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
+  inject,
   input,
   output,
   signal
@@ -18,7 +20,13 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiWizardStepComponent {
-  /** @defaultValue '' */
+  /** @internal */
+  readonly elementRef = inject(ElementRef<HTMLElement>);
+  /**
+   * Heading displayed for the wizard step.
+   *
+   * @defaultValue ''
+   */
   readonly heading = input<TranslatableString>('');
   /** @defaultValue true */
   readonly isValid = input(true, { transform: booleanAttribute });
