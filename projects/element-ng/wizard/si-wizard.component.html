@@ -156,6 +156,7 @@
         </button>
 
         <button
+          #nextButton
           type="button"
           class="btn btn-primary"
           [attr.aria-label]="nextText() | translate"
@@ -171,6 +172,7 @@
       @if (!hideSave()) {
         @if (index === steps().length - 1) {
           <button
+            #saveButton
             type="button"
             class="btn btn-primary save"
             [class.end]="hideNavigation()"
@@ -206,6 +208,7 @@
     @if (!hideNavigation()) {
       <div class="next" [class.invisible]="index === steps().length - 1" (click)="next(1)">
         <button
+          #nextButton
           type="button"
           class="btn btn-primary btn-circle mb-2"
           [disabled]="!currentStep?.isValid()"
@@ -229,6 +232,7 @@
     <div [class.center-save]="!verticalLayout() && inlineNavigation()">
       @if (index === steps().length - 1) {
         <button
+          #saveButton
           type="button"
           class="btn btn-primary save"
           [disabled]="!currentStep?.isValid() || !currentStep?.isNextNavigable()"
