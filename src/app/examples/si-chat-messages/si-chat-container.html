@@ -3,20 +3,20 @@
     @for (message of messages(); track message) {
       @if (message.type === 'user') {
         <si-user-message
-          [content]="message.content"
           [actions]="getMessagePrimaryActions(message)"
           [secondaryActions]="getMessageSecondaryActions(message)"
           [attachments]="message.attachments ?? []"
-          [contentFormatter]="markdownRenderer"
-        />
+        >
+          <si-markdown [markdown]="message.content" [options]="markdownOptions" />
+        </si-user-message>
       }
       @if (message.type === 'ai') {
         <si-ai-message
-          [content]="message.content"
           [actions]="getMessagePrimaryActions(message)"
           [secondaryActions]="getMessageSecondaryActions(message)"
-          [contentFormatter]="markdownRenderer"
-        />
+        >
+          <si-markdown [markdown]="message.content" [options]="markdownOptions" />
+        </si-ai-message>
       }
       @if (message.type === 'custom') {
         <si-chat-message alignment="start" actionsPosition="bottom">
@@ -24,7 +24,7 @@
             <si-attachment-list [attachments]="message.attachments" />
           }
           <si-icon class="icon" [icon]="icons.elementUser" />
-          <si-markdown-renderer [text]="message.content" />
+          <si-markdown [markdown]="message.content" [options]="markdownOptions" />
           @for (action of message.actions; track $index) {
             <button
               type="button"
