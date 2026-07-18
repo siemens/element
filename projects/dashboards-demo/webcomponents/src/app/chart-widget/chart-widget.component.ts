@@ -10,8 +10,9 @@ import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
-import { CartesianChartData } from 'projects/dashboards-demo/src/app/widgets/charts/data.service';
 import { Observable, of } from 'rxjs';
+
+import { CartesianChartData } from '../../../../src/app/widgets/charts/data.service';
 
 export interface WidgetChartCartesianConfig {
   stacked: boolean;
