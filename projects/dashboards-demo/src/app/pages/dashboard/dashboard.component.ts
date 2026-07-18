@@ -5,8 +5,8 @@
 import { Component, inject } from '@angular/core';
 import { SiFlexibleDashboardComponent, Widget } from '@siemens/dashboards-ng';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { environment } from 'projects/dashboards-demo/src/environments/environment';
 
+import { environment } from '../../../environments/environment';
 import { AppStateService } from '../../app-state.service';
 import { DashboardFiltersComponent } from '../../components/dashboard-filters/dashboard-filters.component';
 import {

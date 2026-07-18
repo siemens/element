@@ -4,7 +4,8 @@
  */
 import { Type } from '@angular/core';
 import { Widget, WidgetConfig } from '@siemens/dashboards-ng';
-import * as testWidgetModule from 'projects/dashboards-ng/test/test-widget/index';
+
+import * as testWidgetModule from './index';
 
 const loaderFunction = (name: string): Promise<any> => {
   if (name === 'TestWidgetComponent' || name === 'TestWidgetEditorComponent') {

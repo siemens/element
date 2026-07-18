@@ -8,9 +8,10 @@ import { FeatureLike } from 'ol/Feature';
 import { fromLonLat } from 'ol/proj';
 import { Fill, Stroke, Style } from 'ol/style';
 import { StyleFunction } from 'ol/style/Style';
-import { shapes } from 'src/app/mocks/custom-shape-style';
-import { mockGeoJson } from 'src/app/mocks/geojson.mock';
-import { environment } from 'src/environments/environment';
+
+import { environment } from '../../../environments/environment';
+import { shapes } from '../../mocks/custom-shape-style';
+import { mockGeoJson } from '../../mocks/geojson.mock';
 
 interface MapPointCustom extends MapPointMetaData {
   floorId: string;
