@@ -11,10 +11,10 @@ import Point from 'ol/geom/Point';
 import { Layer, Vector as VectorLayer } from 'ol/layer';
 import RenderFeature from 'ol/render/Feature';
 import { Cluster, Vector as VectorSource } from 'ol/source';
-import { mockGeoJson } from 'src/app/mocks/geojson.mock';
-import { mockPoints, singlePoint } from 'src/app/mocks/points.mock';
 
 import { SiMapComponent, SiMapPopoverComponent, SiMapTooltipComponent } from '.';
+import { mockGeoJson } from '../../../../../src/app/mocks/geojson.mock';
+import { mockPoints, singlePoint } from '../../../../../src/app/mocks/points.mock';
 import { MapService } from './services/map.service';
 
 const mockFeature = new Feature({
