@@ -10,6 +10,7 @@ const livePreviewComponentLoader = {
       const root = url.searchParams.get('root');
       const examples = url.searchParams.get('examples');
       const webcomponents = url.searchParams.get('webcomponents');
+      const rel = url.searchParams.get('rel');
 
       if (!root) {
         throw 'config error: need to pass "root" (path)';
@@ -18,7 +19,7 @@ const livePreviewComponentLoader = {
       return {
         namespace: 'live-preview-component-loader',
         path: args.path,
-        pluginData: { root, webcomponents, examples }
+        pluginData: { root, webcomponents: webcomponents === 'true', examples, rel: rel === 'true' }
       };
     });
 
@@ -27,19 +28,22 @@ const livePreviewComponentLoader = {
         filter: /(@siemens|@simpl)\/live-preview\/component-loader.*/,
         namespace: 'live-preview-component-loader'
       },
-      async ({ pluginData: { root, webcomponents, examples } }) => {
+      async ({ pluginData: { root, webcomponents, examples, rel } }) => {
         const watchDirs = [root];
 
         let code = 'export default { load: function (path) { switch (path) {';
         const files = [];
         const webcomponentsFiles = [];
-        for await (const file of globIterate(
-          path.posix.join(root, examples.replace(/\.ts$/, '.{ts,tsx,vue,js}')),
-          { posix: true } // needed for windows
-        )) {
+        const glob = path.posix.join(root, examples.replace(/\.ts$/, '.{ts,tsx,vue,js}'));
+        const rootNormalized = path.normalize(root);
+        // posix: true needed for windows
+        for await (const file of globIterate(glob, { posix: true })) {
           if (file.endsWith('.ts')) {
-            const fileName = file.replace(new RegExp('^' + root + '/'), '').replace(/\.ts$/, '');
-            code += `case '${fileName}': return import('${file.replace(/\.ts$/, '')}');`;
+            const fileName = file
+              .replace(new RegExp('^' + rootNormalized + '/'), '')
+              .replace(/\.ts$/, '');
+            let importFileName = rel ? `./${fileName}` : file.replace(/\.ts$/, '');
+            code += `case '${fileName}': return import('${importFileName}');`;
             files.push(fileName);
           } else {
             webcomponentsFiles.push(file.replace(root + '/', '').replace(/\.(tsx|vue|js)$/, ''));
