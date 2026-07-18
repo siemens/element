@@ -5,7 +5,7 @@
     "declaration": true,
     "inlineSources": true,
     "paths": {
-      "@siemens/element-translate-ng/*": ["projects/element-translate-ng/*"]
+      "@siemens/element-translate-ng/*": ["./*"]
     }
   },
   "angularCompilerOptions": {
