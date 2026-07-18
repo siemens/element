@@ -5,8 +5,9 @@
 import { Component, viewChild } from '@angular/core';
 import { MapPoint, OverlayNativeProperties, SiMapComponent } from '@siemens/maps-ng';
 import { FullScreen } from 'ol/control';
-import { mockPoints } from 'src/app/mocks/points.mock';
-import { environment } from 'src/environments/environment';
+
+import { environment } from '../../../environments/environment';
+import { mockPoints } from '../../mocks/points.mock';
 
 @Component({
   selector: 'app-sample',

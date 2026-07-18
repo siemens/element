@@ -13,9 +13,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
-import { TEST_WIDGET } from 'projects/dashboards-ng/test/test-widget/test-widget';
 import type { Mock } from 'vitest';
 
+import { TEST_WIDGET } from '../../../test/test-widget/test-widget';
 import { TestingModule } from '../../../test/testing.module';
 import { SI_DASHBOARD_CONFIGURATION } from '../../model/configuration';
 import { SI_WIDGET_ID_PROVIDER } from '../../model/si-widget-id-provider';
