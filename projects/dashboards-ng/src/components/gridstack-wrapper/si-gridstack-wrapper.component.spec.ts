@@ -8,16 +8,16 @@ import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
+import { firstValueFrom, take, toArray } from 'rxjs';
+import { page } from 'vitest/browser';
+
 import {
   TEST_WIDGET,
   TEST_WIDGET_CONFIG_0,
   TEST_WIDGET_CONFIG_1,
   TEST_WIDGET_CONFIG_2,
   TEST_WIDGET_CONFIGS
-} from 'projects/dashboards-ng/test/test-widget/test-widget';
-import { firstValueFrom, take, toArray } from 'rxjs';
-import { page } from 'vitest/browser';
-
+} from '../../../test/test-widget/test-widget';
 import { TestingModule } from '../../../test/testing.module';
 import { Widget, WidgetConfig } from '../../model/widgets.model';
 import { SiWidgetHostComponent } from '../widget-host/si-widget-host.component';
