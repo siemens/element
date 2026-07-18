@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "rootDir": "./",
     "ignoreDeprecations": "6.0",
     "types": [],
     "sourceMap": true,
@@ -20,21 +20,21 @@
     "allowUmdGlobalAccess": true,
     "isolatedModules": true,
     "paths": {
-      "@siemens/element-ng": ["projects/element-ng/public-api.ts"],
-      "@siemens/element-ng/*": ["projects/element-ng/*/index.ts"],
-      "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng"],
-      "@siemens/element-translate-ng/*": ["dist/@siemens/element-translate-ng/*"],
-      "@siemens/live-preview": ["projects/live-preview/public-api.ts"],
-      "@siemens/live-preview/*": ["projects/live-preview/*/index.ts"],
-      "@siemens/charts-ng": ["projects/charts-ng/public-api.ts"],
-      "@siemens/charts-ng/*": ["projects/charts-ng/*/index.ts"],
-      "@siemens/native-charts-ng": ["projects/native-charts-ng/public-api.ts"],
-      "@siemens/native-charts-ng/*": ["projects/native-charts-ng/*/index.ts"],
-      "@siemens/dashboards-ng": ["projects/dashboards-ng/src/public-api.ts"],
-      "@siemens/dashboards-ng/*": ["projects/dashboards-ng/*/index.ts"],
-      "@siemens/maps-ng": ["projects/maps-ng/src/public-api.ts"],
-      "@siemens/maps-ng/*": ["projects/maps-ng/*/index.ts"],
-      "@siemens/map-styles/*": ["projects/map-styles/*/index.ts"]
+      "@siemens/element-ng": ["./projects/element-ng/public-api.ts"],
+      "@siemens/element-ng/*": ["./projects/element-ng/*/index.ts"],
+      "@siemens/element-translate-ng": ["./dist/@siemens/element-translate-ng"],
+      "@siemens/element-translate-ng/*": ["./dist/@siemens/element-translate-ng/*"],
+      "@siemens/live-preview": ["./projects/live-preview/public-api.ts"],
+      "@siemens/live-preview/*": ["./projects/live-preview/*/index.ts"],
+      "@siemens/charts-ng": ["./projects/charts-ng/public-api.ts"],
+      "@siemens/charts-ng/*": ["./projects/charts-ng/*/index.ts"],
+      "@siemens/native-charts-ng": ["./projects/native-charts-ng/public-api.ts"],
+      "@siemens/native-charts-ng/*": ["./projects/native-charts-ng/*/index.ts"],
+      "@siemens/dashboards-ng": ["./projects/dashboards-ng/src/public-api.ts"],
+      "@siemens/dashboards-ng/*": ["./projects/dashboards-ng/*/index.ts"],
+      "@siemens/maps-ng": ["./projects/maps-ng/src/public-api.ts"],
+      "@siemens/maps-ng/*": ["./projects/maps-ng/*/index.ts"],
+      "@siemens/map-styles/*": ["./projects/map-styles/*/index.ts"]
     }
   },
   "angularCompilerOptions": {

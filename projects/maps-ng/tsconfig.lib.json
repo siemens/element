@@ -6,10 +6,8 @@
     "inlineSources": true,
     "types": ["@siemens/element-translate-ng/localize-types"],
     "paths": {
-      "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng"],
-      "@siemens/element-translate-ng/*": ["dist/@siemens/element-translate-ng/*"],
-      "@siemens/maps-ng/*": ["projects/maps-ng/*/index.ts"],
-      "@siemens/map-styles/*": ["dist/@siemens/map-styles/*"]
+      "@siemens/maps-ng/*": ["./*/index.ts"],
+      "@siemens/map-styles/*": ["../../dist/@siemens/map-styles/*"]
     }
   },
   "angularCompilerOptions": {
@@ -19,5 +17,5 @@
     "enableResourceInlining": true
   },
   "include": ["./**/*.ts"],
-  "exclude": ["**/*.spec.ts"]
+  "exclude": ["./**/*.spec.ts"]
 }
