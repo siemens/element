@@ -10,6 +10,8 @@ HTTP error pages are full-page messages for request failures such as missing pag
 They are built with the [info page](../components/pages/info-page.md) component
 as the base layout.
 
+![HTTP error pages](images/http-error-pages.png)
+
 ### When to use
 
 - When navigation to a page fails because the requested resource is unavailable or blocked.
@@ -27,6 +29,8 @@ as the base layout.
 
 ### Anatomy
 
+![HTTP error pages anatomy](images/http-error-pages-anatomy.png)
+
 1. **Heading**: State the problem in a short, human-readable way with the error code.
 3. **Description (optional)**: Briefly explain what happened or what could have caused it.
 4. **Actions (optional)**: Offer a relevant escape path or recovery action.
@@ -35,6 +39,8 @@ as the base layout.
 
 There are five predefined illustrations mapped to different error codes.
 Use the error code list to determine which illustration belongs to which code.
+
+![HTTP error pages illustrations](images/http-error-pages-illustrations.png)
 
 | Illustration | Use for | Meaning | Mapped codes |
 | --- | --- | --- | --- |
@@ -48,6 +54,5 @@ Use the error code list to determine which illustration belongs to which code.
 - For less common errors that do not have dedicated UX writing copy, use the error code together
   with the official HTTP status title from the
   [IANA HTTP status code registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
-
 
 ## Code ---
