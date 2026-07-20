@@ -13,4 +13,5 @@ and includes common writing errors to avoid.
 - [Inappropriate terms](inappropriate-terms.md)
 - [Best practices](best-practices.md)
 - [Errors, warnings and notifications](error-messages.md)
+- [Error pages](error-pages.md)
 - [Dialogs and buttons](dialogs-and-buttons.md)

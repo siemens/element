@@ -63,6 +63,7 @@ nav:
       - Inappropriate terms:                'fundamentals/ux-text-style-guide/inappropriate-terms.md'
       - Best practices:                     'fundamentals/ux-text-style-guide/best-practices.md'
       - Errors, warnings and notifications: 'fundamentals/ux-text-style-guide/error-messages.md'
+      - Error pages:                        'fundamentals/ux-text-style-guide/error-pages.md'
       - Dialogs and buttons:                'fundamentals/ux-text-style-guide/dialogs-and-buttons.md'
   - Components:
     - Overview:                           'components/index.md'
