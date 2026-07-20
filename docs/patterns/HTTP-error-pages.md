@@ -42,13 +42,13 @@ There are five predefined illustrations mapped to different error codes.
 
 ![HTTP error pages illustrations](images/http-error-pages-illustrations.png)
 
-| Illustration | Use for | Meaning | Mapped codes |
-| --- | --- | --- | --- |
-| **Document** | Request errors and unsupported requests | The request cannot be processed in its current form. | `400`, `405`, `406`, `409`, `411`<br>`412`, `413`, `414`, `415`, `417`<br>`421`, `422`, `428`, `431` |
-| **Lock** | Authentication and access restrictions | The user must sign in, does not have access, or the resource is restricted. | `401`, `403`, `407`<br>`423`, `451`, `511` |
-| **Magnifier** | Missing resources | The page or resource cannot be found or is no longer available. | `404`, `410` |
-| **Hourglass** | Timeout and temporary availability issues | The service is busy, delayed, or temporarily unavailable. | `408`, `425`, `429`, `504` |
-| **Plug** | Server and backend failures | The application or an upstream service failed unexpectedly. | `500`, `501`, `502`, `503`<br>`505`, `506`, `507`, `508`, `510` |
+| Illustration  | Use for                                   | Meaning                                                                     | Mapped codes                                                                                         |
+| ------------- | ----------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **Document**  | Request errors and unsupported requests   | The request cannot be processed in its current form.                        | `400`, `405`, `406`, `409`, `411`<br>`412`, `413`, `414`, `415`, `417`<br>`421`, `422`, `428`, `431` |
+| **Lock**      | Authentication and access restrictions    | The user must sign in, does not have access, or the resource is restricted. | `401`, `403`, `407`<br>`423`, `451`, `511`                                                           |
+| **Magnifier** | Missing resources                         | The page or resource cannot be found or is no longer available.             | `404`, `410`                                                                                         |
+| **Hourglass** | Timeout and temporary availability issues | The service is busy, delayed, or temporarily unavailable.                   | `408`, `425`, `429`, `504`                                                                           |
+| **Plug**      | Server and backend failures               | The application or an upstream service failed unexpectedly.                 | `500`, `501`, `502`, `503`<br>`505`, `506`, `507`, `508`, `510`                                      |
 
 - Dedicated [UX writing copy](../fundamentals/ux-text-style-guide/error-pages.md) already exists for common error types.
 - For less common errors that do not have dedicated UX writing copy, use the error code together
