@@ -1,11 +1,11 @@
 # HTTP error pages
 
-**HTTP error pages** explain why a page or resource cannot
-be shown and guide users to a meaningful next step.
+**HTTP error pages** explain why request failed and guide users to a meaningful next step.
 
 ## Usage ---
 
-HTTP error pages are full-page messages for request failures such as missing pages, missing permissions, or server errors.
+HTTP error pages are full-page messages for request failures such as missing pages,
+missing permissions, or server errors.
 
 They are built with the [info page](../components/pages/info-page.md) component
 as the base layout.
@@ -31,14 +31,14 @@ as the base layout.
 
 ![HTTP error pages anatomy](images/http-error-pages-anatomy.png)
 
-1. **Heading**: State the problem in a short, human-readable way with the error code.
+1. **Illustration**
+2. **Heading**: State the problem in a short, human-readable way with the error code.
 3. **Description (optional)**: Briefly explain what happened or what could have caused it.
 4. **Actions (optional)**: Offer a relevant escape path or recovery action.
 
 ### Visual guidance
 
 There are five predefined illustrations mapped to different error codes.
-Use the error code list to determine which illustration belongs to which code.
 
 ![HTTP error pages illustrations](images/http-error-pages-illustrations.png)
 
@@ -48,9 +48,9 @@ Use the error code list to determine which illustration belongs to which code.
 | **Lock** | Authentication and access restrictions | The user must sign in, does not have access, or the resource is restricted. | `401`, `403`, `407`<br>`423`, `451`, `511` |
 | **Magnifier** | Missing resources | The page or resource cannot be found or is no longer available. | `404`, `410` |
 | **Hourglass** | Timeout and temporary availability issues | The service is busy, delayed, or temporarily unavailable. | `408`, `425`, `429`, `504` |
-| **Plus** | Server and backend failures | The application or an upstream service failed unexpectedly. | `500`, `501`, `502`, `503`<br>`505`, `506`, `507`, `508`, `510` |
+| **Plug** | Server and backend failures | The application or an upstream service failed unexpectedly. | `500`, `501`, `502`, `503`<br>`505`, `506`, `507`, `508`, `510` |
 
-- Dedicated [UX writing copy](https://ix.siemens.io/docs/guidelines/language/messaging/error-pages) already exists for common error types.
+- Dedicated [UX writing copy](../fundamentals/ux-text-style-guide/error-pages.md) already exists for common error types.
 - For less common errors that do not have dedicated UX writing copy, use the error code together
   with the official HTTP status title from the
   [IANA HTTP status code registry](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
