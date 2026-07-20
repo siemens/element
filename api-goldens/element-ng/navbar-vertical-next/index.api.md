@@ -4,14 +4,19 @@
 
 ```ts
 
+import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
+import { ConnectedPosition } from '@angular/cdk/overlay';
 import { DomPortal } from '@angular/cdk/portal';
 import { OnChanges } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';
-import { ViewContainerRef } from '@angular/core';
+
+// @public
+export class SiNavbarVerticalNextChipMenuComponent {
+}
 
 // @public (undocumented)
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {

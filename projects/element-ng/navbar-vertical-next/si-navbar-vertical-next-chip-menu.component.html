@@ -1,0 +1,42 @@
+@let item = navbar.activeItem();
+<button
+  #chipOrigin="cdkOverlayOrigin"
+  cdkOverlayOrigin
+  type="button"
+  class="chip btn btn-ghost"
+  aria-haspopup="dialog"
+  [attr.aria-expanded]="open()"
+  [attr.aria-controls]="open() ? menuId : null"
+  (click)="toggle()"
+>
+  @if (item?.icon(); as chipIcon) {
+    <si-icon class="icon" [icon]="chipIcon" />
+  }
+  @if (item?.label(); as label) {
+    <span class="chip-label text-truncate" [id]="menuLabelId">{{ label }}</span>
+  }
+</button>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="chipOrigin"
+  [cdkConnectedOverlayOpen]="open()"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+  (overlayOutsideClick)="onOutsideClick($event)"
+>
+  <div
+    class="chip-menu-panel dropdown-menu"
+    role="dialog"
+    aria-modal="true"
+    cdkTrapFocus
+    cdkTrapFocusAutoCapture
+    [id]="menuId"
+    [attr.aria-labelledby]="item?.label() ? menuLabelId : null"
+    (keydown.escape)="close()"
+  >
+    @let items = navbar.itemsComponent();
+    @if (items) {
+      <ng-container [cdkPortalOutlet]="items.hostPortal" />
+    }
+  </div>
+</ng-template>

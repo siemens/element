@@ -1,0 +1,51 @@
+/**
+ * Copyright (c) Siemens 2016 - 2026
+ * SPDX-License-Identifier: MIT
+ */
+@use '@siemens/element-theme/src/styles/all-variables';
+@use './si-navbar-vertical-next-layout' as layout;
+
+:host {
+  display: contents;
+}
+
+.chip {
+  position: fixed;
+  z-index: 0;
+  inset-block-start: layout.$toggle-parked-block-start;
+  inset-inline-start: calc(
+    #{layout.$toggle-parked-inline-start} + #{layout.$toggle-size} + #{layout.$segmented-gap}
+  );
+  max-inline-size: calc(
+    100vi - (2 * #{layout.$toggle-parked-inline-start}) - #{layout.$toggle-size} -
+      #{layout.$segmented-gap}
+  );
+  block-size: layout.$toggle-size;
+  min-inline-size: 0;
+  justify-content: flex-start;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  opacity: 1;
+  transition:
+    inset-inline-start layout.$vertical-nav-transition-duration ease,
+    opacity layout.$vertical-nav-transition-duration ease;
+
+  @starting-style {
+    inset-inline-start: layout.$toggle-parked-inline-start;
+    opacity: 0;
+  }
+
+  &:focus-visible {
+    z-index: all-variables.$zindex-vertical-nav + 1;
+  }
+
+  .chip-label {
+    font-weight: normal;
+  }
+}
+
+.chip-menu-panel {
+  display: block;
+  position: static;
+  margin: 0;
+}

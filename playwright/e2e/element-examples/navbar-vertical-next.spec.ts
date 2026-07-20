@@ -14,7 +14,7 @@ test.describe('navbar vertical next', () => {
     await page.getByRole('button', { name: 'Documentation' }).click();
     await page.getByRole('link', { name: 'Sub item 4' }).click();
     await expect(page.getByRole('link', { name: 'Sub item 4' })).toHaveClass(/active/);
-    await page.locator('.si-layout-main-padding').click(); // to move focus
+    await page.getByRole('main').click(); // to move focus
 
     await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests();
@@ -64,7 +64,7 @@ test.describe('navbar vertical next', () => {
       'aria-expanded',
       'false'
     );
-    await expect(page.locator('.nav-content')).toHaveAttribute('inert', '');
+    await expect(page.getByRole('button', { name: 'User management' })).toBeHidden();
 
     await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('inline-collapse');
@@ -79,15 +79,50 @@ test.describe('navbar vertical next', () => {
     await page.getByLabel('Toggle', { exact: true }).click();
     await si.waitForAllAnimationsToComplete();
 
-    const chip = page.getByRole('button', { name: 'User management' });
+    const chip = page.locator('button[aria-haspopup="true"]');
     await expect(chip).toBeVisible();
     await chip.click();
+    await expect(chip).toHaveAttribute('aria-expanded', 'true');
 
-    await expect(page.getByRole('group', { name: 'User management' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Sub item', exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'User management' }).last().click();
+    await expect(page.getByRole('link', { name: 'Sub item 2', exact: true })).toBeVisible();
 
     await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('inline-collapse-chip-submenu');
+  });
+
+  test(example + ' inline collapse chip closes on leaf click', async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.getByRole('checkbox', { name: 'Inline collapse' }).check();
+    await page.getByRole('button', { name: 'User management' }).click();
+    await page.getByRole('link', { name: 'Sub item', exact: true }).click();
+    await page.getByLabel('Toggle', { exact: true }).click();
+    await si.waitForAllAnimationsToComplete();
+
+    const chip = page.locator('button[aria-haspopup="true"]');
+    await chip.click();
+    await expect(chip).toHaveAttribute('aria-expanded', 'true');
+
+    await page.getByRole('button', { name: 'User management' }).last().click();
+    await page.getByRole('link', { name: 'Sub item 2', exact: true }).click();
+    await expect(chip).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  test(example + ' inline collapse chip closes on Escape', async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.getByRole('checkbox', { name: 'Inline collapse' }).check();
+    await page.getByRole('button', { name: 'User management' }).click();
+    await page.getByRole('link', { name: 'Sub item', exact: true }).click();
+    await page.getByLabel('Toggle', { exact: true }).click();
+
+    const chip = page.locator('button[aria-haspopup="true"]');
+    await chip.click();
+    await expect(chip).toHaveAttribute('aria-expanded', 'true');
+
+    await page.keyboard.press('Escape');
+    await expect(chip).toHaveAttribute('aria-expanded', 'false');
   });
 
   test.skip('it should show tooltip only on keyboard interaction', async ({ page, si }) => {
@@ -120,7 +155,7 @@ test.describe('navbar vertical next', () => {
     await page.setViewportSize({ width: 570, height: 600 });
     await si.visitExample(example, false);
 
-    await expect(page.locator('.mobile-drawer')).toBeVisible();
+    await expect(page.getByLabel('Toggle', { exact: true })).toBeVisible();
 
     await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('mobile-collapsed');
@@ -130,12 +165,18 @@ test.describe('navbar vertical next', () => {
     await page.setViewportSize({ width: 570, height: 600 });
     await si.visitExample(example, false);
 
-    await page.locator('.mobile-drawer > button').click();
-    await expect(page.locator('si-navbar-vertical-next:not(.nav-collapsed)')).toBeVisible();
+    await page.getByLabel('Toggle', { exact: true }).click();
+    await expect(page.getByLabel('Toggle', { exact: true })).toHaveAttribute(
+      'aria-expanded',
+      'true'
+    );
     await page.getByText('Documentation').click();
     await page.getByRole('link', { name: 'Sub item 4' }).click();
-    await expect(page.locator('si-navbar-vertical-next:not(.nav-collapsed)')).toHaveCount(0);
-    await page.locator('.mobile-drawer > button').click();
+    await expect(page.getByLabel('Toggle', { exact: true })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
+    await page.getByLabel('Toggle', { exact: true }).click();
 
     await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('mobile-expanded');
@@ -152,7 +193,7 @@ test.describe('navbar vertical next badges', () => {
     await page.getByRole('button', { name: 'Group with badges' }).click();
     await page.getByRole('link', { name: 'Sub item critical' }).click();
     await expect(page.getByRole('link', { name: 'Sub item critical' })).toHaveClass(/active/);
-    await page.locator('.si-layout-main-padding').click(); // to move focus
+    await page.getByRole('main').click(); // to move focus
 
     await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests();
