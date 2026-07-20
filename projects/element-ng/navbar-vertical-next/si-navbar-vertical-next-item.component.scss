@@ -94,7 +94,7 @@
   }
 }
 
-:host-context(.nav-collapsed):not(.is-chip) {
+:host-context(.nav-collapsed) {
   .badge {
     position: absolute;
     inset-block-start: map.get(variables.$spacers, 2);
@@ -118,30 +118,4 @@
 
 .badge {
   margin-inline: auto 0;
-}
-
-:host(.is-chip) {
-  // Suppress the left-bar active indicator; `aria-current="page"` carries
-  // the active role in the chip.
-  &.active::after {
-    display: none;
-  }
-
-  // Dropdown caret not needed in the chip — the flyout opens on click.
-  .dropdown-caret {
-    display: none;
-  }
-
-  .item-title {
-    font-weight: normal;
-  }
-}
-
-// Within the chip slot: fuse the left edge with the toggle button
-// (segmented control) and fill the wrapper so the label can truncate.
-:host-context(.chip).is-chip {
-  border-start-start-radius: 0;
-  border-end-start-radius: 0;
-  inline-size: 100%;
-  min-inline-size: 0;
 }

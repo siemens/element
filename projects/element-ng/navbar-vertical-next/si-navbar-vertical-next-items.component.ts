@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { DomPortal } from '@angular/cdk/portal';
+import { Component, ElementRef, inject } from '@angular/core';
 
 /**
  * Content slot for navbar items inside `si-navbar-vertical-next`.
@@ -14,4 +15,11 @@ import { Component } from '@angular/core';
   template: '<ng-content />',
   styleUrl: './si-navbar-vertical-next-items.component.scss'
 })
-export class SiNavbarVerticalNextItemsComponent {}
+export class SiNavbarVerticalNextItemsComponent {
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
+  /** DOM portal that relocates the whole items container into the chip menu overlay.
+   * @internal
+   */
+  readonly hostPortal = new DomPortal(this.elementRef.nativeElement);
+}
