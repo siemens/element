@@ -192,6 +192,7 @@ nav:
     - Notifications:                      'patterns/notifications.md'
     - Filter:                             'patterns/filter.md'
     - Help:                               'patterns/help.md'
+    - HTTP error pages:                   'patterns/http-error-pages.md'
     - AI:
       - Overview:                         'patterns/ai/overview.md'
       - AI chat:                          'patterns/ai/ai-chat.md'
