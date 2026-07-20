@@ -24,18 +24,8 @@
         </button>
       </div>
     </div>
-    @if (inlineCollapse() && activeItem(); as item) {
-      <div
-        class="chip"
-        [class.chip-visible]="collapsed()"
-        [attr.inert]="collapsed() ? null : ''"
-        [attr.aria-hidden]="collapsed() ? null : 'true'"
-      >
-        @if (chipPortalAttached()) {
-          <ng-container [cdkPortalOutlet]="item.hostPortal" />
-        }
-      </div>
-      <ng-container #flyoutAnchorHost />
+    @if (hasVisibleChip()) {
+      <si-navbar-vertical-next-chip-menu />
     }
     <div
       class="nav-content"

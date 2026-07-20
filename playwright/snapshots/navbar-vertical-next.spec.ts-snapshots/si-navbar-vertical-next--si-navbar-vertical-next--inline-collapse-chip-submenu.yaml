@@ -7,13 +7,6 @@
 - navigation:
   - button "Toggle"
   - button "User management" [expanded]
-  - group "User management":
-    - link "Sub item":
-      - /url: "#/viewer/viewer/subItem"
-    - link "Sub item 2":
-      - /url: "#/viewer/viewer/subItem2"
-    - link "Sub item 3":
-      - /url: "#/viewer/viewer/subItem3"
 - main:
   - heading "Here is a title" [level=2]
   - text: Content with path 'subItem' Control panel
@@ -21,3 +14,21 @@
   - text: Always flyout
   - checkbox "Inline collapse" [checked]
   - text: Inline collapse
+- group "User management":
+  - link "Sub item":
+    - /url: "#/viewer/viewer/subItem"
+  - link "Sub item 2":
+    - /url: "#/viewer/viewer/subItem2"
+  - link "Sub item 3":
+    - /url: "#/viewer/viewer/subItem3"
+- link "Home":
+  - /url: "#/viewer/viewer/home"
+- text: Modules
+- link "Energy & sustainability":
+  - /url: "#/viewer/viewer/energy"
+- button "User management" [expanded]
+- link "Test coverage":
+  - /url: "#/viewer/viewer/coverage"
+- button "Documentation"
+- group "Documentation"
+- button "Action"

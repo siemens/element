@@ -12,7 +12,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   selector: 'si-navbar-vertical-next-header',
   imports: [SiNavbarVerticalNextDividerComponent],
   template: `
-    @if (!navbar.collapsed()) {
+    @if (!navbar.collapsed() || navbar.chipMenuOpen()) {
       <div class="title si-h5 text-secondary text-truncate p-5" animate.leave="title-leave">
         <ng-content />
       </div>
@@ -22,7 +22,8 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   `,
   styleUrl: './si-navbar-vertical-next-header.component.scss',
   host: {
-    '[class.collapsed]': 'navbar.collapsed()',
+    '[class.collapsed]': 'navbar.collapsed() && !navbar.chipMenuOpen()',
+    '[class.chip-mode]': 'navbar.chipMode()',
     'animate.enter': 'component-enter'
   }
 })

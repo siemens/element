@@ -2,16 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DomPortal } from '@angular/cdk/portal';
-import {
-  booleanAttribute,
-  Component,
-  computed,
-  ElementRef,
-  inject,
-  input,
-  OnInit
-} from '@angular/core';
+import { booleanAttribute, Component, computed, inject, input, OnInit } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLinkActive } from '@angular/router';
 import { elementDown2, elementRight2 } from '@siemens/element-icons';
@@ -29,12 +20,8 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   templateUrl: './si-navbar-vertical-next-item.component.html',
   styleUrl: './si-navbar-vertical-next-item.component.scss',
   host: {
-    '[class.focus-inside]': '!chipMode() || !!parent',
-    '[class.navbar-vertical-item]': '!isChip()',
+    class: 'navbar-vertical-item focus-inside',
     '[class.active]': 'showActive()',
-    '[class.is-chip]': 'isChip()',
-    '[class.btn]': 'isChip()',
-    '[class.btn-ghost]': 'isChip()',
     '[class.hide-badge-collapsed]': 'hideBadgeWhenCollapsed()',
     '(click)': 'triggered()'
   }
@@ -86,18 +73,10 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     { initialValue: this.routerLinkActive?.isActive ?? false }
   );
 
-  /** @internal */
-  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
-
-  /** DOM portal relocated into the chip slot when collapsed.
+  /** `true` when the navbar is in chip mode (inline-collapse active and collapsed).
    * @internal
    */
-  readonly hostPortal = new DomPortal(this.elementRef.nativeElement);
-
-  /** Signal mirror of the navbar's chip mode. `true` when inline-collapse is active and the navbar is collapsed.
-   * @internal
-   */
-  readonly chipMode = computed(() => this.navbar.chipMode());
+  readonly chipMode = this.navbar.chipMode;
 
   /**
    * Determines if the badge contains text-only content (not numeric)
@@ -109,14 +88,18 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
 
   /** `true` when the `active` CSS class should be applied to this item.
    *
-   * In chip mode, root-level items use `is-chip` styling instead of `active`, so the
-   * class is suppressed unless the item is a sub-item (`parent` is set) or it is a
-   * group trigger whose flyout is currently open.
-   * Outside chip mode the value equals `active()`.
+   * In chip mode the root-level items are hidden inside the collapsed nav until
+   * the user opens the chip menu, so their active state is suppressed to avoid
+   * flashing when the menu closes. Sub-items and open group triggers always
+   * reflect activity. While the chip menu is open, root-level active items must
+   * be highlighted so the user can locate the current page in the overlay.
    * @internal
    */
   protected readonly showActive = computed(() => {
     if (this.chipMode()) {
+      if (this.navbar.chipMenuOpen()) {
+        return this.active();
+      }
       return (!!this.parent || this.group?.flyout()) && this.active();
     }
     return this.active();
@@ -168,11 +151,6 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
    * @internal
    */
   readonly isActiveRootItem = computed(() => !this.parent && this.isOnActiveRoute());
-
-  /** `true` when this item is currently rendered as a chip in the inline-collapse bar.
-   * @internal
-   */
-  readonly isChip = computed(() => this.navbar.chipPortalAttached() && this.isActiveRootItem());
 
   ngOnInit(): void {
     if (this.group && this.active()) {
