@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD033 MD046 -->
+<!-- markdownlint-disable MD033 MD046 MD024 MD007 -->
 
 # Localization
 
@@ -20,37 +20,33 @@ the user interface.
 
 Language and tone must be clear, accurate, and appropriate for the target audience. Good
 localization preserves meaning, not just words, and must also account for plural rules and
-punctuation. For writing guidance, see the [UX text style guide](ux-text-style-guide/index.md).
+punctuation.
 
-Element support:
+#### Best practice
 
-- Supports translatable strings and integration with translation frameworks.
-- Supports fallback text for missing translations.
-- Does not define tone or wording. Product writing guidance is defined in the
-  [UX text style guide](ux-text-style-guide/index.md).
+- Support translatable strings and integration with translation frameworks.
+- Support fallback text for missing translations.
+- Use the [UX Writing Guidelines](ux-text-style-guide/index.md) for tone or wording.
 
 ### Imagery and colors
 
 Images, symbols, and colors can have different meanings across markets. Review them for cultural
 fit and local expectations.
 
-Element support:
+#### Best practice
 
-- No specific localization feature for imagery or color choice.
-- Product teams must validate visuals and semantics per market.
+- Validate visuals and semantics per market.
 
 ### Currency, date, time, measurement, and measurement system formats
 
 Users expect values to follow local conventions. This includes currencies, dates, times, numbers,
 units, and measurement systems such as °C/°F, km/mi, or kg/lb.
 
-Element support:
+#### Best practice
 
-- Supports locale-aware formatting for dates, times, numbers, percentages, and currencies.
-- Supports locale selection and persistence via `SiLocaleService`.
-- Supports translated unit labels in components where units are shown.
-- Does not convert measurement systems automatically. Applications must decide which units to use
-  and when to convert them.
+- Use locale-aware formatting for dates, times, numbers, percentages, and currencies.
+- Allow users locale selection and persistence, e.g. via the `SiLocaleService`.
+- Use translated unit labels in components where units are shown.
 
 ### User experience and design
 
@@ -65,45 +61,36 @@ LTR (Left-to-Right) refers to languages and scripts that are written and read fr
 RTL (Right-to-Left) refers to languages and writing systems that are written and read from right to left.
 RTL can require mirrored navigation, icon direction, alignment, and interaction patterns.
 
-Element support:
+#### Best practice
 
-- Supports RTL-aware behavior in components and overlays.
-- Provides dynamic directionality support for Angular CDK integrations.
-- Does not automatically solve text expansion. Layouts still need to be designed for it.
+- Support RTL-aware behavior in components and overlays.
+- Provide dynamic directionality support for Angular CDK integrations.
+- Layout and design with variable text length in mind.
 
 ### Payment methods
 
 Payment expectations differ by country, including preferred methods, flows, and trust signals.
-
-Element support:
-
-- No payment-specific localization support.
-- Payment flows and local methods must be implemented by the application.
 
 ### Legal and Safety
 
 Legal notices, safety texts, consent flows, and compliance content may vary by market and
 jurisdiction.
 
-Element support:
+#### Best practice
 
-- Localization infrastructure can translate this content.
-- Provides legal-related components and patterns such as the [About](../components/pages/about.md)
-  page, [Footer](../components/layout-navigation/footer.md),
-  [Copyright Notice](../components/status-notifications/copyright-notice.md), and explicit legal
-  acknowledge on the [Landing page](../components/pages/landing-page.md).
-- Market-specific legal and safety requirements, compliance logic, and legal services must be
-  managed by the application.
+- Request local lawers to provide tailored legal artifacts for relevant markets and regions.
+- Manage market-specific legal and safety requirements, compliance logic, and legal services in your application.
+- Legal-related components and patterns
+
+    - [About page](../components/pages/about.md)
+    - [Footer](../components/layout-navigation/footer.md)
+    - [Copyright Notice](../components/status-notifications/copyright-notice.md)
+    - [Landing page](../components/pages/landing-page.md)
 
 ### Customer support
 
 Support channels, contact details, hours, and escalation paths often differ by country or
 language.
-
-Element support:
-
-- Localization infrastructure can translate support-related user interface text.
-- Local support processes and content must be provided by the application.
 
 ### Localization (l10n) vs. Internationalization (i18n)
 
