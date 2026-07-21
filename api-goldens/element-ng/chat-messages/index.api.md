@@ -65,6 +65,8 @@ export class SiAiMessageComponent {
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly sourceClicked: _angular_core.OutputEmitterRef<SourceReference>;
+    readonly sources: _angular_core.InputSignal<SourceReference[] | undefined>;
 }
 
 // @public
