@@ -11,7 +11,7 @@ If the necessity or clarity of an icon is uncertain, it is better to omit it.
 
 ![Icons](images/icons.png)
 
-Visit the [common actions](../fundamentals/ux-text-style-guide/frequent-app-functions.md/#common-actions) for further
+Visit the [common actions](../fundamentals/ux-text-style-guide/frequent-app-functions.md#common-actions) for further
 definitions of a common icon usage.
 
 Icons are available in three predefined sizes.
