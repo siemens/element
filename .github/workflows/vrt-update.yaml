@@ -28,6 +28,10 @@ on:
         required: false
         default: false
         type: boolean
+    secrets:
+      SIEMENS_NPM_TOKEN:
+        description: 'Token for the private Siemens npm registry'
+        required: false
 
 jobs:
   vrt-update:
@@ -155,7 +159,11 @@ jobs:
           path: dist
           run-id: ${{ steps.get-workflow.outputs.workflow-run-id }}
           github-token: ${{ github.token }}
-      # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
+      - name: Set up registry authentication
+        if: env.SIEMENS_NPM_TOKEN != ''
+        run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
+        env:
+          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: pnpm install
 
       - name: Update VRTs
