@@ -1,6 +1,6 @@
 # HTTP error pages
 
-**HTTP error pages** explain why request failed and guide users to a meaningful next step.
+**HTTP error pages** explain why a request failed and guide users to a meaningful next step.
 
 ## Usage ---
 
@@ -19,10 +19,10 @@ as the base layout.
 
 ### Best practices
 
-- Do not use it for transient background failures that can be communicated with
+- Do not use them for transient background failures that can be communicated with
   [inline notifications](../components/status-notifications/inline-notification.md) or
   [toast notifications](../components/status-notifications/toast-notification.md).
-- Codes can be remapped deliberately when necessary, for example showing a
+- Codes can be remapped deliberately (on server side) when necessary, for example showing a
   404 page for a 403 error to avoid revealing that a restricted resource exists.
 
 ## Design ---
