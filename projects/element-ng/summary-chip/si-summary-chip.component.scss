@@ -4,8 +4,10 @@
 .chip {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-inline-size: calc(1lh + 2 * map.get(variables.$spacers, 4));
   border: 1px solid variables.$element-ui-3;
-  border-radius: map.get(variables.$spacers, 6);
+  border-radius: 1rem;
   padding-block: (map.get(variables.$spacers, 4) - 1px);
   padding-inline: map.get(variables.$spacers, 4);
   gap: map.get(variables.$spacers, 2);
