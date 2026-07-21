@@ -7,7 +7,6 @@ import {
   computed,
   Directive,
   ElementRef,
-  HostListener,
   inject,
   input,
   Renderer2,
@@ -42,7 +41,9 @@ export interface AddrInputEvent {
   ],
   host: {
     '[id]': 'id()',
-    '[disabled]': 'disabled() || null'
+    '[disabled]': 'disabled() || null',
+    '(input)': 'onInput($event)',
+    '(blur)': 'onBlur()'
   }
 })
 export abstract class SiIpInputDirective {
@@ -95,7 +96,6 @@ export abstract class SiIpInputDirective {
     this.renderer.setProperty(this.inputEl, 'value', value ?? '');
   }
 
-  @HostListener('input', ['$event'])
   protected onInput(e: Event): void {
     const el = e.target as HTMLInputElement;
     const selStart = el.selectionStart ?? 0;
@@ -112,8 +112,7 @@ export abstract class SiIpInputDirective {
     this.onChange(this.value);
   }
   /** @internal */
-  @HostListener('blur')
-  protected blur(): void {
+  protected onBlur(): void {
     this.leaveInput();
     this.onTouched();
   }
