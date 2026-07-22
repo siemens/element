@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectorRef, Component, inject, viewChild } from '@angular/core';
+import { Component, computed, inject, signal, viewChild } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
@@ -21,36 +22,37 @@ export class SampleComponent {
 
   tableConfig = SI_DATATABLE_CONFIG;
 
-  rows: CorporateEmployee[] = [].constructor(5);
   offset = 0;
-  temp: CorporateEmployee[] = [];
-  isLoading = 0;
 
   private dataService = inject(DataService);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly pageRequest = signal<PageRequest>({ offset: 0, pageSize: 50 });
+  private readonly filterValue = signal<string>('');
 
-  constructor() {
-    this.fetchData({ offset: 0, pageSize: 50 });
-  }
+  readonly dataResource = rxResource({
+    params: () => this.pageRequest(),
+    stream: ({ params }) => this.dataService.getResults(params)
+  });
+
+  readonly rows = computed(() => {
+    const data = this.dataResource.value();
+    const allRows: CorporateEmployee[] = data?.data ?? [].constructor(5);
+    const filter = this.filterValue().toLowerCase();
+
+    if (!filter) {
+      return allRows;
+    }
+
+    // filter our data
+    return allRows.filter(e => e.name.toLowerCase().includes(filter));
+  });
 
   fetchData(pageRequest: PageRequest): void {
-    this.isLoading++;
-    this.dataService.getResults(pageRequest).subscribe(data => {
-      this.temp = [...data.data];
-      this.rows = data.data;
-      this.isLoading--;
-      this.cdRef.markForCheck();
-    });
+    this.pageRequest.set(pageRequest);
   }
 
   updateFilter(event: any): void {
     const val = event.target.value.toLowerCase();
-
-    // filter our data
-    const temp = this.temp.filter(e => e.name.toLowerCase().includes(val) || !val);
-
-    // update the rows
-    this.rows = temp;
+    this.filterValue.set(val);
 
     // Whenever the filter changes, always go back to the first page
     this.offset = 0;

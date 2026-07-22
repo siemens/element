@@ -2,13 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, linkedSignal, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiPaginationComponent } from '@siemens/element-ng/pagination';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
-import { Subscription } from 'rxjs';
 
 import { CorporateEmployee, DataService, Page, PageRequest } from './data.service';
 
@@ -25,43 +25,46 @@ import { CorporateEmployee, DataService, Page, PageRequest } from './data.servic
   styleUrl: './datatable.scss',
   providers: [DataService]
 })
-export class SampleComponent implements OnDestroy {
+export class SampleComponent {
   tableConfig = SI_DATATABLE_CONFIG;
   tableSize = 500;
 
-  page = new Page();
-  rows = new Array<CorporateEmployee>();
-
-  isLoading = false;
-  subscription?: Subscription;
-
   private dataService = inject(DataService);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly initialPage = Object.assign(new Page(), { size: this.calculatePageSize() });
+  private readonly pageRequest = signal<PageRequest | undefined>(undefined);
 
-  constructor() {
-    this.page.size = Math.floor(
-      (this.tableSize - this.tableConfig.headerHeight - this.tableConfig.footerHeight) /
-        this.tableConfig.rowHeightSmall
-    );
-  }
+  readonly dataResource = rxResource({
+    params: () => this.pageRequest(),
+    stream: ({ params }) => this.dataService.getResults(params)
+  });
 
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-  }
+  readonly page = linkedSignal<Page | undefined, Page>({
+    source: () => this.dataResource.value()?.page,
+    computation: (page, previous) => page ?? previous?.value ?? this.initialPage
+  });
+  readonly rows = linkedSignal<CorporateEmployee[] | undefined, CorporateEmployee[]>({
+    source: () => this.dataResource.value()?.data,
+    computation: (rows, previous) => rows ?? previous?.value ?? []
+  });
 
   setPage(pageRequest: PageRequest): void {
-    this.subscription?.unsubscribe();
-    this.isLoading = true;
-    this.subscription = this.dataService.getResults(pageRequest).subscribe(pagedData => {
-      this.page = pagedData.page;
-      this.rows = pagedData.data;
-      this.isLoading = false;
-      this.cdRef.markForCheck();
-    });
+    const currentRequest = this.pageRequest();
+    if (
+      currentRequest?.offset === pageRequest.offset &&
+      currentRequest.pageSize === pageRequest.pageSize
+    ) {
+      return;
+    }
+
+    this.pageRequest.set(pageRequest);
   }
 
   onTableSizeChange(): void {
-    this.page.size = Math.floor(
+    this.page.update(page => Object.assign(new Page(), page, { size: this.calculatePageSize() }));
+  }
+
+  private calculatePageSize(): number {
+    return Math.floor(
       (this.tableSize - this.tableConfig.headerHeight - this.tableConfig.footerHeight) /
         this.tableConfig.rowHeightSmall
     );

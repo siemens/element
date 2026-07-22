@@ -7,7 +7,7 @@
         siDatatableInteraction
         columnMode="force"
         [style.height]="tableSize + 'px'"
-        [rows]="rows"
+        [rows]="rows()"
         [columns]="[
           { name: 'Name', sortable: false },
           { name: 'Role', sortable: false },
@@ -16,19 +16,19 @@
         [footerHeight]="0"
         [rowHeight]="tableConfig.rowHeightSmall"
         [externalPaging]="true"
-        [ghostLoadingIndicator]="isLoading"
-        [count]="page.totalElements"
-        [offset]="page.pageNumber"
-        [limit]="page.size"
+        [ghostLoadingIndicator]="dataResource.isLoading()"
+        [count]="page().totalElements"
+        [offset]="page().pageNumber"
+        [limit]="page().size"
         (page)="setPage($event)"
       />
       <si-pagination
         class="mt-2 float-end"
         forwardButtonText="forward"
         backButtonText="back"
-        [currentPage]="page.pageNumber + 1"
-        [totalRowCount]="page.totalElements"
-        [pageSize]="page.size"
+        [currentPage]="page().pageNumber + 1"
+        [totalRowCount]="page().totalElements"
+        [pageSize]="page().size"
         (currentPageChange)="table.onFooterPage({ page: $event })"
       />
     </div>
