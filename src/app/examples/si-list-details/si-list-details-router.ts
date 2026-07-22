@@ -215,8 +215,7 @@ export class SampleComponent implements AfterViewInit {
       .then(() => this.router.navigate(['.'], { relativeTo: this.activatedRoute }));
   }
 
-  datatableOnSelect(items: CorporateEmployee[]): void {
-    this.selectedEntities = [...items];
+  datatableOnSelect(): void {
     this.selectedEntity = this.selectedEntities[0];
     this.detailsActive = true;
     this.logEvent(this.selectedEntities);

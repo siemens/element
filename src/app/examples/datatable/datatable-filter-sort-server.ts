@@ -5,7 +5,7 @@
 import { ChangeDetectorRef, Component, inject, OnDestroy, viewChild } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
+import { DatatableComponent, NgxDatatableModule, SortPropDir } from '@siemens/ngx-datatable';
 import { Subscription } from 'rxjs';
 
 import { CorporateEmployee, DataService, PageRequest } from './data.service';
@@ -62,8 +62,7 @@ export class SampleComponent implements OnDestroy {
     const val = event.target.value.toLowerCase();
     this.fetchData({ offset: 0, pageSize: 50, filter: val });
   }
-  onSort(event: any): void {
-    const sort = event.sorts[0];
-    this.fetchData({ offset: 0, pageSize: 50, sort });
+  onSort(sorts: SortPropDir[]): void {
+    this.fetchData({ offset: 0, pageSize: 50, sort: sorts[0] });
   }
 }

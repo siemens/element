@@ -152,8 +152,7 @@ export class SampleComponent {
     this.logEvent('Save');
   }
 
-  datatableOnSelect(items: CorporateEmployee[]): void {
-    this.selectedEntities = [...items];
+  datatableOnSelect(): void {
     this.selectedEntity = this.selectedEntities[0];
     this.detailsActive = true;
     this.logEvent(this.selectedEntities);
