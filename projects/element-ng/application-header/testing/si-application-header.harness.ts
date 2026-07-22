@@ -10,10 +10,10 @@ import { SiLaunchpadHarness } from './si-launchpad.harness';
 export class SiApplicationHeaderHarness extends ComponentHarness {
   static hostSelector = 'si-application-header';
 
-  private navigationToggle = this.locatorFor('[aria-label="Toggle navigation"]');
-  private collapsibleActionsToggle = this.locatorFor('[aria-label="Toggle actions"]');
+  private navigationToggle = this.locatorFor('[aria-label="Show navigation"]');
+  private collapsibleActionsToggle = this.locatorFor('[aria-label="Show actions"]');
   private collapsibleActionsBadge = this.locatorForOptional(
-    '[aria-label="Toggle actions"] .badge-dot'
+    '[aria-label="Show actions"] .badge-dot'
   );
   private launchpadToggle = this.locatorForOptional('[aria-label="Launchpad"]');
   private backdrop = this.locatorForOptional('.modal-backdrop');

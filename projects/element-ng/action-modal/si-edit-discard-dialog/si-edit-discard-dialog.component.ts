@@ -28,9 +28,7 @@ export class SiEditDiscardDialogComponent {
    * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.MESSAGE:Save changes?`)
    * ```
    */
-  readonly message = input(
-    t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.MESSAGE:Save changes?`)
-  );
+  readonly message = input(t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.MESSAGE:Save changes?`));
   /**
    * @defaultValue
    * ```
