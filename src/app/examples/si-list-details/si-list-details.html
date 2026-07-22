@@ -68,10 +68,10 @@
           [externalSorting]="true"
           [count]="totalElements"
           [offset]="pageNumber"
-          [selected]="selectedEntities"
           [datatableInteractionAutoSelect]="container.hasLargeSize()"
+          [(selected)]="selectedEntities"
           (page)="setPage($event)"
-          (select)="datatableOnSelect($event.selected)"
+          (selectedChange)="datatableOnSelect()"
           (siResizeObserver)="table.recalculate()"
         >
           <si-empty-state empty-content icon="element-users" heading="No users to display" />
