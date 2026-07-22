@@ -165,6 +165,7 @@ nav:
     - Chat & messages:
       - Chat input:                       'components/chat-messages/chat-input.md'
       - Chat message:                     'components/chat-messages/chat-message.md'
+      - Markdown:                         'components/chat-messages/markdown.md'
     - Charts:
       - Overview:                         'components/charts/index.md'
       - Bar chart:                        'components/charts/bar-chart.md'

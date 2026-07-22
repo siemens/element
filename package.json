@@ -197,6 +197,6 @@
   },
   "overrides": {
     "@microsoft/api-extractor>typescript": "catalog:",
-    "@simpl/brand>@siemens/element-theme": "urce theme\""
+    "@simpl/brand>@siemens/element-theme": "workspace:*"
   }
 }
