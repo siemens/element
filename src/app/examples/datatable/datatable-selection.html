@@ -29,9 +29,8 @@
         [footerHeight]="0"
         [virtualization]="false"
         [scrollbarV]="true"
-        [selected]="selected"
         [datatableInteractionAutoSelect]="true"
-        (select)="selected = $event.selected"
+        [(selected)]="selected"
       />
     </div>
     <div class="col-sm p-5">

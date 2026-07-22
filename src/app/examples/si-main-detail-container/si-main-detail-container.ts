@@ -108,8 +108,7 @@ export class SampleComponent {
   ];
   private readonly table = viewChild.required(DatatableComponent);
 
-  datatableOnSelect(items: CorporateEmployee[]): void {
-    this.selectedEntities = [...items];
+  datatableOnSelect(): void {
     this.selectedEntity = this.selectedEntities[0];
     this.detailsActive = true;
     this.logEvent(this.selectedEntities);
