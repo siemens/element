@@ -1,0 +1,51 @@
+@use 'sass:map';
+@use '../../variables/spacers';
+@use '../variables';
+
+$form-col-layout-label-width: 16ch !default;
+
+/* Turns every inner form-field into a column layout */
+@mixin form-col-layout {
+  .si-form-input:not(.form-check),
+  .si-form-input.form-check:not(.form-check-inline) {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    column-gap: map.get(spacers.$spacers, 6);
+
+    > .form-label {
+      flex: 0 0 var(--si-form-label-width, #{$form-col-layout-label-width});
+      max-inline-size: var(--si-form-label-width, #{$form-col-layout-label-width});
+      align-self: start;
+      padding-block: variables.$input-padding-y + variables.$input-border-width;
+      line-height: variables.$input-line-height;
+
+      &:empty {
+        display: block;
+      }
+    }
+
+    > :not(.form-label) {
+      flex: 1 1 auto;
+      min-inline-size: 0;
+    }
+  }
+
+  .si-form-input.form-check:not(.form-check-inline) {
+    padding-inline-start: 0;
+
+    .form-check-input {
+      margin-inline-start: 0;
+      margin-inline-end: map.get(spacers.$spacers, 4);
+    }
+  }
+}
+
+/* Turns every inner form-field into a column layout above a min-width. */
+@mixin responsive-form-col-layout($min-width) {
+  container-type: inline-size;
+
+  @container (min-width: #{$min-width}) {
+    @include form-col-layout;
+  }
+}
