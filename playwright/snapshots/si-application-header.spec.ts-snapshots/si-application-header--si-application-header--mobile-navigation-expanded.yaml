@@ -1,5 +1,5 @@
 - banner:
-  - button "Toggle navigation" [expanded]
+  - button "Show navigation" [expanded]
   - heading "My application" [level=1]
   - navigation "Main navigation":
     - link "Module 1":
@@ -11,5 +11,5 @@
       - link "M2.2":
         - /url: "#/viewer/viewer/m2/2"
   - button "Notifications"
-  - button "Toggle actions"
-  - button "Lars Vegas"
+  - button "Show actions"
+  - button "Lars Vegas": LV

@@ -3,7 +3,7 @@
   - link "Siemens logo":
     - /url: "#/"
 - dialog "Launchpad":
-  - paragraph: Switch applications
+  - paragraph: Switch app
   - button "Close launchpad"
   - text: Favorites
   - link "Assets System name":
@@ -23,17 +23,17 @@
     - /url: "#/viewer/viewer/stats"
   - link "Rocket System name":
     - /url: .
-  - link "This is a really long name External application System name":
+  - link "This is a really long name Open in new tab System name":
     - /url: .
     - text: This is a really long name System name
-  - link "App name 1 External application System name":
+  - link "App name 1 Open in new tab System name":
     - /url: .
     - text: App name 1 System name
   - link "App name 2 System name":
     - /url: .
   - link "App name 3 System name":
     - /url: .
-  - link "This is a really long name External application System name":
+  - link "This is a really long name Open in new tab System name":
     - /url: .
     - text: This is a really long name System name
   - link "App name 4 System name":

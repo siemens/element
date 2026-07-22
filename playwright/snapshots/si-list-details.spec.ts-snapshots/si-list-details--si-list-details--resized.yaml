@@ -2,9 +2,9 @@
 - button "Options"
 - text: "/Date : \\d+-\\d+-\\d+/"
 - button "Remove"
-- text: + 1 filters
+- text: + 1 criteria
 - button "Remove"
-- button "Filters"
+- button "Filters": 
 - table:
   - rowgroup:
     - row "Name Role Company":

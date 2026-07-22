@@ -1,42 +1,42 @@
 - button "Add step"
 - combobox "Status": Status Unhealthy
-- button "Delete step"
-- spinbutton "Threshold value"
+- button "Remove step"
+- spinbutton "Threshold value": /\d+/
 - text: °C
 - button "Add step"
 - combobox "Status": Status Poor
-- button "Delete step"
-- spinbutton "Threshold value"
+- button "Remove step"
+- spinbutton "Threshold value": /\d+/
 - text: °C
 - button "Add step"
 - combobox "Status": Status Average
-- button "Delete step"
-- spinbutton "Threshold value"
+- button "Remove step"
+- spinbutton "Threshold value": /\d+/
 - text: °C
 - button "Add step"
 - combobox "Status": Status Good
-- button "Delete step"
-- spinbutton "Threshold value"
+- button "Remove step"
+- spinbutton "Threshold value": /\d+/
 - text: °C
 - button "Add step"
 - combobox "Status": Status Very good
-- button "Delete step"
-- spinbutton "Threshold value"
+- button "Remove step"
+- spinbutton "Threshold value": /\d+/
 - text: °C
 - button "Add step"
 - combobox "Status": Status Good
-- button "Delete step"
-- spinbutton "Threshold value"
+- button "Remove step"
+- spinbutton "Threshold value": /\d+/
 - text: °C
 - button "Add step"
 - combobox "Status": Status Average
-- button "Delete step"
-- spinbutton "Threshold value"
+- button "Remove step"
+- spinbutton "Threshold value": /\d+/
 - text: °C
 - button "Add step"
 - combobox "Status": Status Poor
-- button "Delete step"
-- spinbutton "Threshold value"
+- button "Remove step"
+- spinbutton "Threshold value": /\d+/
 - text: °C
 - button "Add step"
 - combobox "Status": Status Unhealthy
@@ -57,12 +57,12 @@
 - text: Can wrap
 - checkbox "Use alias for step values"
 - text: Use alias for step values Max. steps
-- spinbutton "Max. steps"
+- spinbutton "Max. steps": /\d+/
 - text: Min. value
-- spinbutton "Min. value"
+- spinbutton "Min. value": /-\d+/
 - text: Max. value
-- spinbutton "Max. value"
+- spinbutton "Max. value": /\d+/
 - text: Step size
-- spinbutton "Step size"
+- spinbutton "Step size": "1"
 - text: Unit
-- textbox "Unit"
+- textbox "Unit": °C
