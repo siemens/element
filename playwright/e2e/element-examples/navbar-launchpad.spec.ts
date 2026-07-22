@@ -38,7 +38,7 @@ test.describe('navbar launchpad', () => {
     await si.visitExample(example, false);
 
     await expect(page.getByText('Application Name')).toBeVisible();
-    const toggler = page.getByLabel('Toggle navigation');
+    const toggler = page.getByLabel('Show navigation');
     await toggler.click();
     await expect(page.getByText('Item 1')).toBeVisible();
 

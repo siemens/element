@@ -399,7 +399,9 @@ describe('SiChatInputComponent', () => {
     await fixture.whenStable();
 
     expect(
-      debugElement.query(By.css('button[aria-label="Interrupt"] [data-icon="elementStopFilled"]'))
+      debugElement.query(
+        By.css('button[aria-label="Stop processing"] [data-icon="elementStopFilled"]')
+      )
     ).toBeTruthy();
   });
 
@@ -410,7 +412,7 @@ describe('SiChatInputComponent', () => {
     const button = debugElement.query(By.css('button'));
     expect(button.nativeElement).toHaveAttribute(
       'aria-label',
-      expect.stringContaining('Interrupt')
+      expect.stringContaining('Stop processing')
     );
   });
 
@@ -490,7 +492,7 @@ describe('SiChatInputComponent', () => {
     ]);
     await fixture.whenStable();
 
-    const menuTrigger = page.getByRole('button', { name: 'More actions' });
+    const menuTrigger = page.getByRole('button', { name: 'Additional actions' });
     await menuTrigger.click();
 
     await expect.element(page.getByRole('menuitem', { name: 'Attach' })).toBeVisible();
@@ -517,7 +519,7 @@ describe('SiChatInputComponent', () => {
     await fixture.whenStable();
 
     expect((component as any).showInterruptButton()).toBe(true);
-    const interruptButton = debugElement.query(By.css('button[aria-label="Interrupt"]'));
+    const interruptButton = debugElement.query(By.css('button[aria-label="Stop processing"]'));
     expect(interruptButton).toBeTruthy();
     expect(interruptButton.query(By.css('[data-icon="elementStopFilled"]'))).toBeTruthy();
   });

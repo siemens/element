@@ -25,12 +25,12 @@ test.describe('application-header', () => {
   test('on a small screen', async ({ page, si }) => {
     await si.visitExample(example);
     await page.setViewportSize({ width: 312, height: 660 });
-    await page.getByLabel('Toggle navigation').click();
+    await page.getByLabel('Show navigation').click();
     await page.getByText('Module 2').click();
     await si.runVisualAndA11yTests('mobile navigation expanded');
     await page.getByText('Notifications').click();
     await si.runVisualAndA11yTests('mobile notifications expanded');
-    await page.getByLabel('Toggle actions').click();
+    await page.getByLabel('Show actions').click();
     await page.getByText('Support').click();
     await si.runVisualAndA11yTests('mobile collapsible actions expanded');
     await page.getByRole('button', { name: 'Lars Vegas' }).click();
