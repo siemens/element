@@ -6,7 +6,7 @@
     - /url: "#/"
   - heading "Application name" [level=1]
   - button "Help"
-  - button "Jane Smith"
+  - button "Jane Smith": JS
 - navigation:
   - button "collapse" [expanded]
   - button "Home"
@@ -23,7 +23,7 @@
   - button "Documents"
   - button "Graphics"
   - text: /4 Security \d+ Update \d+ Information/
-  - navigation "Breadcrumbs":
+  - navigation "Breadcrumb navigation":
     - list:
       - listitem:
         - link "Root":

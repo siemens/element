@@ -1,6 +1,6 @@
 - banner:
-  - button "Toggle navigation"
+  - button "Show navigation"
   - heading "My application" [level=1]
   - button "Notifications"
-  - button "Toggle actions"
-  - button "Lars Vegas"
+  - button "Show actions"
+  - button "Lars Vegas": LV

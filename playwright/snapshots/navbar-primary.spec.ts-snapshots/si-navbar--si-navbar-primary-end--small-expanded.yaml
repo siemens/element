@@ -1,7 +1,7 @@
 - banner:
-  - button "Toggle navigation"
+  - button "Show navigation"
   - heading "Navbar primary end" [level=1]
-  - button "Toggle actions" [expanded]
+  - button "Show actions" [expanded]
   - link "Messages":
     - /url: "#/viewer/viewer/messages"
     - text: ""
@@ -13,4 +13,4 @@
       - /url: "#/viewer/viewer/about"
     - link "Corporate Information":
       - /url: http://www.siemens.com/corporate-information
-  - button "Jane Smith"
+  - button "Jane Smith": JS

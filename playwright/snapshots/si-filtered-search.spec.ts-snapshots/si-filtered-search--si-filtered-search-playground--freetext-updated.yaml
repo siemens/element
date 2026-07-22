@@ -4,7 +4,7 @@
 - button "clear"
 - combobox "search" [expanded]
 - button "clear"
-- button "Submit search"
+- button "Apply search criteria"
 - text: Control panel
 - checkbox "Disabled"
 - text: Disabled
@@ -22,13 +22,13 @@
 - text: Exclusive criteria
 - checkbox "Disable free text pills"
 - text: Disable free text pills Search debounce time
-- spinbutton "Search debounce time"
+- spinbutton "Search debounce time": "0"
 - text: Number of visible options
-- spinbutton "Number of visible options"
+- spinbutton "Number of visible options": /\d+/
 - text: Max criteria
-- spinbutton "Max criteria"
+- spinbutton "Max criteria": "4"
 - text: Max options (0 means unlimited)
-- spinbutton "Max options (0 means unlimited)"
+- spinbutton "Max options (0 means unlimited)": /\d+/
 - text: Search criteria input
 - textbox "Search criteria input":
   - /placeholder: "Enter and assign search criteria as JSON e.g. { \"criterias\": [], \"value\": \"test\" }"

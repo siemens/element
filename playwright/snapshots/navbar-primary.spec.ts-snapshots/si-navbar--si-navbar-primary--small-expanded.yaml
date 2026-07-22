@@ -1,5 +1,5 @@
 - banner:
-  - button "Toggle navigation" [expanded]
+  - button "Show navigation" [expanded]
   - heading "Navbar primary" [level=1]
   - navigation "Header main":
     - link "item 1":
@@ -13,4 +13,4 @@
       - link "sub-item 3":
         - /url: "#/viewer/viewer/subitem3"
   - button "Help"
-  - button "Sandipan Chakraborty"
+  - button "Sandipan Chakraborty": SC

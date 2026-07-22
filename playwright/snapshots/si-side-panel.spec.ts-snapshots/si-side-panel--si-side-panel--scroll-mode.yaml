@@ -1,5 +1,5 @@
 - paragraph: Title
-- button "Enter fullscreen"
+- button "Full screen"
 - button "Close"
 - button "Hey there" [expanded]
 - region "Hey there": And here we have some content
@@ -15,21 +15,21 @@
 - button "Toggle side panel"
 - group "Size toggle button group":
   - radio "Regular" [checked]
-  - text: ""
+  - text: Regular
   - radio "Wide"
-  - text: ""
+  - text: Wide
   - radio "Extended"
-  - text: ""
+  - text: Extended
 - group "Display mode toggle button group":
   - radio "Overlay" [checked]
-  - text: ""
+  - text: Overlay
   - radio "Navigate"
-  - text: ""
+  - text: Navigate
 - group "Mode toggle button group":
   - radio "Over"
-  - text: ""
+  - text: Over
   - radio "Scroll" [checked]
-  - text: ""
+  - text: Scroll
 - separator
 - heading "Modes and sizes" [level=2]
 - paragraph:
