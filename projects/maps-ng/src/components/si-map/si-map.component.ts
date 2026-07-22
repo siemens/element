@@ -1102,7 +1102,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
   }
 
   private setPopOver(feature: Feature, zoom: boolean | undefined, event: any): void {
-    const extraProperties = feature.getProperties().extraProps;
+    const extraProperties = feature.getProperties().extraProperties;
     const geometry = feature?.getGeometry();
 
     /*If a Point geometry is present on top of a GeoJson layer, and when clicked on the point,
