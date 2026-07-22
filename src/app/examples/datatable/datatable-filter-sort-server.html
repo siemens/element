@@ -22,7 +22,7 @@
     [footerHeight]="0"
     [ghostLoadingIndicator]="isLoading"
     [externalSorting]="true"
-    (sort)="onSort($event)"
+    (sortsChange)="onSort($event)"
   >
     <si-empty-state empty-content icon="element-users" heading="No users to display" />
   </ngx-datatable>

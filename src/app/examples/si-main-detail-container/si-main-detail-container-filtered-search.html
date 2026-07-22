@@ -51,9 +51,9 @@
     [footerHeight]="0"
     [scrollbarV]="true"
     [count]="filteredRows.length"
-    [selected]="selectedEntities"
     [datatableInteractionAutoSelect]="isLarge"
-    (select)="datatableOnSelect($event.selected)"
+    [(selected)]="selectedEntities"
+    (selectedChange)="datatableOnSelect()"
   >
     <si-empty-state empty-content icon="element-users" heading="No users to display" />
   </ngx-datatable>
