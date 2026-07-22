@@ -6,7 +6,7 @@
     - /url: "#/"
   - heading "Smart Buildings" [level=1]
   - button "API"
-  - button "Jane Smith"
+  - button "Jane Smith": JS
 - navigation:
   - button "collapse" [expanded]
   - button "Home"
@@ -38,6 +38,7 @@
   - text: Today's motivation level (without global filter)
   - menubar:
     - menuitem "Expand"
+  - application
   - text: Lorem ipsum
   - paragraph: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at augue ornare, suscipit orci a, dapibus enim. Duis nibh diam, consequat vitae dolor eu, consectetur hendrerit nulla. Nam consectetur consequat suscipit. Nam consectetur pulvinar risus, nec auctor lorem. Sed eget magna quis turpis finibus rhoncus.
   - text: Door access events this week
@@ -47,7 +48,10 @@
   - text: Reasons to remember the name
   - menubar:
     - menuitem "Expand"
-  - text: Daily requirements at work Contributions
+  - application
+  - text: Daily requirements at work
+  - application
+  - text: Contributions
   - button "Toggle"
   - text: /\d+ bits Valuable bits commited to main\./
   - link "Do something":
