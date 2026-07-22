@@ -41,7 +41,7 @@ test.describe('dashboard', () => {
   test(example + 'empty', async ({ page, si }) => {
     await si.visitExample(example, undefined);
     await openWidgetCatalog(page);
-    const search = page.getByPlaceholder('Search widget');
+    const search = page.getByRole('textbox', { name: 'Search…' });
     await expect(search).toBeVisible();
     await search.fill('empty');
     await expect(page.getByText('No widgets available.')).toBeVisible();

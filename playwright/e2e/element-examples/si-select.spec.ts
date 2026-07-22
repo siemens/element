@@ -99,7 +99,7 @@ test.describe('si-select', () => {
     const select = page.getByLabel('Lazy options');
     await expect(select).toContainText('DE - Germany');
     await select.click();
-    await page.getByPlaceholder('Search...').fill('sw');
+    await page.getByPlaceholder('Search…').fill('sw');
     await expect(page.getByText('Switzerland')).toBeVisible();
     await si.runVisualAndA11yTests();
     await page.getByText('Switzerland').click();
