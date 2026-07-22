@@ -133,7 +133,7 @@ describe('SiMapComponent', () => {
       click: (params: any) => {
         spy(params.buildingType);
       },
-      extraProps: { buildingType: 'office' }
+      extraProperties: { buildingType: 'office' }
     });
     component.featureClick(feature);
     expect(component.popoverOverlay.getPosition()).toEqual([1373214.9745276642, 5690661.889241241]);
