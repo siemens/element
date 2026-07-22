@@ -3,11 +3,12 @@
   - menuitem "Path"
   - menuitem "Edit"
   - menuitem "Toggle"
-- button "Enter fullscreen"
-- button "Toggle"
+- button "Full screen"
+- button "Toggle" [expanded]
 - button "Out of Service"
+- button "•" [disabled]
 - button "Event source active, ack"
-- textbox "Search..."
+- textbox "Search…"
 - button "Properties 5" [expanded]
 - region "Properties 5": And here we have some content
 - button "Documents"
@@ -24,21 +25,21 @@
 - button "Close"
 - group "Size toggle button group":
   - radio "Regular" [checked]
-  - text: ""
+  - text: Regular
   - radio "Wide"
-  - text: ""
+  - text: Wide
   - radio "Extended"
-  - text: ""
+  - text: Extended
 - group "Display mode toggle button group":
   - radio "Overlay" [checked]
-  - text: ""
+  - text: Overlay
   - radio "Navigate"
-  - text: ""
+  - text: Navigate
 - group "Mode toggle button group":
   - radio "Over" [checked]
-  - text: ""
+  - text: Over
   - radio "Scroll"
-  - text: ""
+  - text: Scroll
 - separator
 - heading "Collapsible side panel" [level=2]
 - paragraph:

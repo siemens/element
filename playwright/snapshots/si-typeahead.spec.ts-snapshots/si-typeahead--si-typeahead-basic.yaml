@@ -1,7 +1,7 @@
 - text: "Model: \"al\""
 - combobox "States" [expanded]:
-  - textbox "Placeholder"
-  - button "clear"
+  - textbox "Placeholder": al
+  - button "Clear"
 - text: Settings Color Variant
 - combobox "Color Variant":
   - option "base-1" [selected]

@@ -10,9 +10,9 @@
   - button "expand"
 - main:
   - heading "Add widget" [level=2]
-  - textbox "Search widget"
-  - text: Widget catalog list
-  - listbox "Widget catalog list":
+  - textbox "Search…"
+  - text: Widget catalog
+  - listbox "Widget catalog":
     - option "report status none Hello World A dummy widget for testing." [selected]:
       - status "report status none"
       - text: ""
