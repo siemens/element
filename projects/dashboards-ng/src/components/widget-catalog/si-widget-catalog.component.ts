@@ -80,8 +80,17 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
    * dashboard creates the catalog by Angular's `createComponent()` method
    * and sets the available widgets to this attribute.
    *
+   * @deprecated This property will be removed in v52. Use the signal `widgetList` instead.
    * @defaultValue [] */
   widgetCatalog: Widget[] = [];
+
+  /**
+   * Property to provide the available widgets to the catalog. The flexible
+   * dashboard creates the catalog by Angular's `createComponent()` method
+   * and sets the available widgets to this attribute.
+   *
+   * @defaultValue [] */
+  readonly widgetList = signal<Widget[]>([]);
 
   /**
    * Holds the search term from the catalog to be visible when going back
@@ -99,6 +108,12 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   );
 
   private readonly translateService = injectSiTranslateService();
+  /**
+   * TODO: Remove this property in v52. Use the signal `widgetList` instead.
+   */
+  private get widgetCatalogList(): Widget[] {
+    return this.widgetList().length ? this.widgetList() : this.widgetCatalog;
+  }
 
   protected labelCancel = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.CANCEL:Cancel`);
   protected labelPrevious = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.PREVIOUS:Previous`);
@@ -154,20 +169,20 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   private readonly widgetCdkListbox = viewChild(CdkListbox<Widget>);
 
   ngOnInit(): void {
-    this.filteredWidgetCatalog = this.widgetCatalog;
-    if (this.widgetCatalog.length > 0) {
-      this.selectWidget(this.widgetCatalog[0]);
+    this.filteredWidgetCatalog = this.widgetCatalogList;
+    if (this.widgetCatalogList.length > 0) {
+      this.selectWidget(this.widgetCatalogList[0]);
     }
   }
 
   protected onSearch(searchTerm?: string): void {
     if (!searchTerm || searchTerm.trim().length === 0) {
       this.searchTerm = '';
-      this.filteredWidgetCatalog = this.widgetCatalog;
+      this.filteredWidgetCatalog = this.widgetCatalogList;
     } else {
       this.searchTerm = searchTerm;
       const term = searchTerm.trim().toLowerCase();
-      this.filteredWidgetCatalog = this.widgetCatalog.filter(wd => {
+      this.filteredWidgetCatalog = this.widgetCatalogList.filter(wd => {
         const name = this.translateService.translateSync(wd.name);
         return name.toLowerCase().includes(term);
       });
