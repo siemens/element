@@ -1,0 +1,26 @@
+// Temporary workaround to prevent all clients to update to
+// element-ng version 30.6.0 to make the multi click on row
+// selection view as desired. Can be removed later.
+::ng-deep {
+  .datatable-header-cell,
+  .datatable-body-cell {
+    label.datatable-checkbox {
+      display: inline-flex;
+      width: 13px;
+      height: 13px;
+      margin: 0 16px 0 0;
+      position: relative;
+      top: 2px;
+
+      > input {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.list-table {
+  height: 300px;
+  cursor: pointer;
+}
