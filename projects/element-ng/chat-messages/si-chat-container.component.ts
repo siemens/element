@@ -4,9 +4,8 @@
  */
 import { isPlatformBrowser } from '@angular/common';
 import {
-  AfterContentInit,
+  afterNextRender,
   Component,
-  effect,
   ElementRef,
   input,
   OnDestroy,
@@ -44,7 +43,7 @@ import {
     '[class]': 'colorVariant()'
   }
 })
-export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
+export class SiChatContainerComponent implements OnDestroy {
   private readonly messagesContainer = viewChild<ElementRef<HTMLDivElement>>('messagesContainer');
   private readonly platformId = inject(PLATFORM_ID);
 
@@ -55,6 +54,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
   private scrollDebounceMs = 7; // ~144fps
   private resizeObserver: ResizeObserver | undefined;
   private contentObserver: MutationObserver | undefined;
+  private initialScrollDone = false;
 
   /**
    * The color variant to apply to the container.
@@ -71,16 +71,35 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
   });
 
   constructor() {
-    effect(() => {
-      if (this.messagesContainer()) {
+    // Use the phased afterNextRender API: the `read` phase forces a layout read of
+    // scrollHeight against fully committed DOM, the `write` phase performs the
+    // scroll mutation, and the observers are wired up only after that initial
+    // settled scroll. This guarantees a single deterministic scrollTop write per
+    // mount before the live-preview-done class becomes visible, eliminating the
+    // race that produced flaky VRT snapshots.
+    afterNextRender({
+      earlyRead: () => this.messagesContainer()?.nativeElement.scrollHeight,
+      write: scrollHeight => {
+        const el = this.messagesContainer()?.nativeElement;
+        if (el && scrollHeight != null && !this.noAutoScroll()) {
+          el.scrollTop = scrollHeight;
+        }
+        this.initialScrollDone = true;
         this.setupResizeObserver();
         this.setupContentObserver();
+
+        // Web fonts may settle after the initial layout commit and shift the
+        // content height. Re-pin to the bottom once fonts are ready so VRT
+        // screenshots and real users both see the latest message.
+        if (isPlatformBrowser(this.platformId)) {
+          document.fonts.ready.then(() => {
+            if (this.isUserAtBottom) {
+              this.scrollToBottomDuringStreaming();
+            }
+          });
+        }
       }
     });
-  }
-
-  ngAfterContentInit(): void {
-    this.scrollToBottomDuringStreaming();
   }
 
   ngOnDestroy(): void {
@@ -110,6 +129,12 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
   }
 
   private debouncedScrollToBottom(): void {
+    // Skip observer-driven scrolls until the explicit initial scroll has completed.
+    // This prevents racing with the afterNextRender settled scrollTop assignment.
+    if (!this.initialScrollDone) {
+      return;
+    }
+
     const now = Date.now();
     const timeSinceLastScroll = now - this.lastScrollTime;
 

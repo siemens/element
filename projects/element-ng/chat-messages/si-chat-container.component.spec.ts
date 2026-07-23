@@ -163,12 +163,4 @@ describe('SiChatContainerComponent', () => {
     fixture.componentInstance.ngOnDestroy();
     expect(ngOnDestroySpy).toHaveBeenCalled();
   });
-
-  it('should call ngAfterContentInit', () => {
-    const newFixture = TestBed.createComponent(SiChatContainerComponent);
-    const newComponent = newFixture.componentInstance;
-    const ngAfterContentInitSpy = vi.spyOn(newComponent, 'ngAfterContentInit');
-    newComponent.ngAfterContentInit();
-    expect(ngAfterContentInitSpy).toHaveBeenCalled();
-  });
 });
