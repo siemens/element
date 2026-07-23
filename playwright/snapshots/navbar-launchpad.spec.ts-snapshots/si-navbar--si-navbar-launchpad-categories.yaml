@@ -17,7 +17,7 @@
   - text: Favorites
   - link "Water":
     - /url: .
-  - button "Show less"
+  - button "Show more" [expanded]
   - text: Phishing Apps
   - link "Water":
     - /url: .

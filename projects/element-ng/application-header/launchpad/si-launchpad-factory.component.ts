@@ -90,15 +90,8 @@ export class SiLaunchpadFactoryComponent {
    */
   readonly showMoreAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`));
 
-  /**
-   * Title of the show less apps button.
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`)
-   * ```
-   */
-  readonly showLessAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`));
+  /** @deprecated This input no longer has an effect. {@link showMoreAppsText} is shown in all cases. */
+  readonly showLessAppsText = input();
 
   readonly favoriteChange = output<FavoriteChangeEvent>();
 

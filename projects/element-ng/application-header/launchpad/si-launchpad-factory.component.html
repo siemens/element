@@ -93,9 +93,10 @@
           type="button"
           class="btn btn-link btn-show-all dropdown-toggle text-decoration-none"
           [class.show]="showAllApps"
+          [attr.aria-expanded]="showAllApps"
           (click)="showAllApps = !showAllApps"
         >
-          <b>{{ (showAllApps ? showLessAppsText() : showMoreAppsText()) | translate }}</b>
+          <b>{{ showMoreAppsText() | translate }}</b>
           <si-icon class="link-icon dropdown-caret" [icon]="icons.elementDown2" />
         </button>
       }

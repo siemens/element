@@ -137,7 +137,8 @@ export class SiLaunchpadFactoryComponent {
     readonly favoriteAppsText: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     readonly favoriteChange: _angular_core.OutputEmitterRef<FavoriteChangeEvent>;
-    readonly showLessAppsText: _angular_core.InputSignal<TranslatableString>;
+    // @deprecated (undocumented)
+    readonly showLessAppsText: _angular_core.InputSignal<unknown>;
     readonly showMoreAppsText: _angular_core.InputSignal<TranslatableString>;
     readonly subtitleText: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly titleText: _angular_core.InputSignal<TranslatableString>;
