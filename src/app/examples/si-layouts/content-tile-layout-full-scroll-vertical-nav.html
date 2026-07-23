@@ -1,6 +1,6 @@
-<si-side-panel #sidePanel [collapsed]="collapsed" [mode]="mode" [size]="size">
-  <div class="has-navbar-fixed-top" [class.has-system-banner]="(hideSystembanner | async) !== true">
-    @if ((hideSystembanner | async) !== true) {
+<si-side-panel [collapsed]="collapsed()" [mode]="mode()" [size]="size()">
+  <div class="has-navbar-fixed-top" [class.has-system-banner]="hideSystemBanner() !== true">
+    @if (hideSystemBanner() !== true) {
       <si-system-banner
         class="fixed-top"
         message="System maintenance scheduled for 2 AM - 4 AM UTC"
@@ -50,9 +50,9 @@
 
         <div class="si-layout-header">
           <h2 class="si-layout-title">Title describing what page content to expect</h2>
-          <p class="si-layout-subtitle"
-            >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p
-          >
+          <p class="si-layout-subtitle">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          </p>
         </div>
 
         <div class="row mt-8 mb-6">
@@ -63,10 +63,10 @@
                   Toggle side panel
                 </button>
                 <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="toggleMode()">
-                  {{ mode + ' - Mode' }}
+                  {{ `${mode()} - Mode` }}
                 </button>
                 <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="changeSize()">
-                  {{ size + ' - Width' }}
+                  {{ `${size()} - Width` }}
                 </button>
               </div>
             </si-card>
