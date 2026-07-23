@@ -58,7 +58,7 @@
 
     @if (!firstMessageSent() && messages().length) {
       <si-inline-notification
-        class="mb-6 w-100 overflow-hidden"
+        class="mb-4 w-100 overflow-hidden"
         severity="info"
         message="AI responses are for demonstration purposes."
       />
@@ -76,8 +76,10 @@
       [maxFileSize]="5242880"
       [sending]="sending()"
       [interruptible]="loading() && !sending()"
+      [followUpPrompts]="followUpPrompts()"
       [(value)]="inputValue"
       (send)="onMessageSent($event)"
+      (followUpPromptSelected)="followUpPrompts.set([])"
       (interrupt)="onInterrupt()"
       (fileError)="onFileError($event)"
     >

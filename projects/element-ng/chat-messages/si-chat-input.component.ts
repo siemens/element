@@ -4,11 +4,14 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import {
+  afterNextRender,
   AfterViewInit,
   booleanAttribute,
   Component,
   computed,
   ElementRef,
+  inject,
+  Injector,
   input,
   model,
   output,
@@ -278,6 +281,20 @@ export class SiChatInputComponent implements AfterViewInit {
   );
 
   /**
+   * Suggested follow-up prompts to display as pill buttons above the chat input.
+   * When a prompt is selected, its text is inserted into the input field.
+   * Typically populated from AI response data and cleared on send.
+   * @defaultValue []
+   */
+  readonly followUpPrompts = input<string[]>([]);
+
+  /**
+   * Emitted when the user selects a follow-up prompt.
+   * The emitted value is the text of the selected prompt.
+   */
+  readonly followUpPromptSelected = output<string>();
+
+  /**
    * Emitted when the user wants to send a message
    */
   readonly send = output<{
@@ -349,8 +366,24 @@ export class SiChatInputComponent implements AfterViewInit {
 
   protected readonly dragOver = signal(false);
 
+  private readonly injector = inject(Injector);
+
   protected onInputChange(value: string): void {
     this.value.set(value);
+  }
+
+  protected selectFollowUpPrompt(prompt: string): void {
+    this.followUpPromptSelected.emit(prompt);
+    this.focus();
+    afterNextRender(
+      () => {
+        const textarea = this.textInput();
+        if (textarea?.nativeElement) {
+          this.setTextareaHeight(textarea.nativeElement);
+        }
+      },
+      { injector: this.injector }
+    );
   }
 
   protected onSend(): void {

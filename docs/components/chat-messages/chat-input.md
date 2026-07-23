@@ -59,9 +59,32 @@ If multiple attachments are added, they wrap and stack within the input field.
 The input field automatically expands as the user types, up to a set maximum height.
 Beyond that point, scrolling is enabled within the input.
 
+### Follow-up prompts
+
+Follow-up prompts are suggested next actions displayed as pill buttons above the chat input after an AI response.
+They help users continue the conversation without having to formulate the next message from scratch.
+
+- Prompts wrap to multiple lines when labels are long.
+- Selecting a prompt inserts its text into the input field so the user can review or edit before sending.
+- The prompt list is cleared when the user sends a message.
+
 ## Code ---
 
 <si-docs-component example="si-chat-messages/si-chat-input"></si-docs-component>
+
+### Follow-up prompts
+
+Pass a `string[]` to `followUpPrompts` to display suggested prompts above the input.
+When the user clicks a prompt, its text is inserted into the input and `followUpPromptSelected` is emitted.
+Clear the list (set to `[]`) on send and repopulate it after each AI response.
+
+```html
+<si-chat-input
+  [followUpPrompts]="aiResponse?.followUpPrompts ?? []"
+  (followUpPromptSelected)="onFollowUpSelected()"
+  (send)="onSend($event)"
+/>
+```
 
 <si-docs-api component="SiChatInputComponent"></si-docs-api>
 

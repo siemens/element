@@ -111,6 +111,8 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly disclaimer: _angular_core.InputSignal<TranslatableString_2 | undefined>;
     readonly fileError: _angular_core.OutputEmitterRef<FileUploadError>;
     focus(): void;
+    readonly followUpPrompts: _angular_core.InputSignal<string[]>;
+    readonly followUpPromptSelected: _angular_core.OutputEmitterRef<string>;
     readonly interrupt: _angular_core.OutputEmitterRef<void>;
     readonly interruptButtonLabel: _angular_core.InputSignal<TranslatableString_2>;
     readonly interruptible: _angular_core.InputSignalWithTransform<boolean, unknown>;
