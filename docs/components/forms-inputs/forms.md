@@ -77,38 +77,48 @@ The following are important yet repetitive tasks for every form control
 
 - For accessibility, linking a `<label>` to its input using `id`/`for` attributes or aria attributes.
 - the label must be correctly aligned for different types, e.g. text, checkbox, ...
-- Display meaningfull validation error messages on input to guide and support the user.
+- Display meaningful validation error messages on input to guide and support the user.
 - Group related form fields to a fieldset. For example, multiple radio checkbox inputs belong to one input and have one label.
 
 Element provides components to shift repetitive and common tasks from
-the application developers to the framework. The `si-form-item` component
+the application developers to the framework.
+
+We support all Angular form implementations. Choose the Element component depending on the Angular form feature you use:
+
+- Signal forms (`formField`) --> use `si-form-field`
+- Reactive forms (`formControl` / `formControlName`) --> use `si-form-item`
+- Template driven forms (`ngModel`) --> `si-form-item`
+
+Both `si-form-field` and `si-form-item` have a very similar interface and interact the same way with other Element components.
+In the following only `si-form-field` is shown, but `si-form-item` is always usuable the same way.
+
+The `si-form-field` component
 is a wrapper around a form control element that renders the associated label.
 
 ```html
-<si-form-item label="My form item">
-  <input [formControl]="angularControl" class="form-control" />
-</si-form-item>
+<si-form-field label="My form field">
+  <input [formField]="form.field" class="form-control" />
+</si-form-field>
 ```
 
-The `si-form-item` component adds and links a label to the control in compliance to [WCAG v2.2](https://www.w3.org/TR/WCAG22/),
+The `si-form-field` component adds and links a label to the control in compliance to [WCAG v2.2](https://www.w3.org/TR/WCAG22/),
 so that screen readers are able to guide users through the form.
 
-Native controls like `<input>` are only recognized by the `si-form-item` if they are an angular control,
-meaning that they either have a `formControl`, `formControlName` or `ngModel` attached.
-Custom controls of Element (e.g. `si-select`) are automatically recognized by the `si-form-item`.
+Native controls like `<input>` and Element controls like `si-select` are only recognized by the `si-form-field` if they are an Angular form field,
+meaning that they have `[formField]` attached (for `si-form-item`: `[formControl]`, `[formControlName]` or `[ngModel]`).
 
 ### Form feedback
 
 Element form controls should provide user feedback on user input.
-[Angular Forms](https://angular.dev/guide/forms/form-validation) handle
+[Angular Forms](https://angular.dev/guide/forms/signals/validation) handle
 valid and invalid form states automatically. In addition, Element supports
 setting form control states and feedback messages explicitly in the template:
 
 ```html
-<si-form-item label="Warning item">
+<si-form-field label="Warning item">
   <input class="form-control is-warning" />
   <span class="warning-feedback">Attention, this is a Warning!</span>
-</si-form-item>
+</si-form-field>
 ```
 
 These states are available:
@@ -122,7 +132,7 @@ Starting with Element v46, the feedback icon **must not** be added manually.
 
 ### Error messages
 
-`si-form-item` is capable of showing errors from Angular's validation mechanism automatically.
+`si-form-field` is capable of showing errors from Angular's validation mechanism automatically.
 Element has a built-in resolution of standard errors like `required`.
 On top of that, Element supports configuring the resolution mechanism.
 This enables applications to adjust existing messages and add new ones for custom validators.
@@ -167,45 +177,54 @@ import {SiFormModule} from '@siemens/element-ng/form';
 
 #### Local error resolution
 
+For the `si-form-field` use the message property the form schema:
+
+```ts
+this.form = form(this.formModel, schemaPath => {
+  required(schemaPath.field, { message: 'MY.REQUIRED_ERROR' });
+});
+```
+
+For the `si-form-item` use the `formErrorMapper` input:
+
 ```html
-<si-form-item label="Required input" [formErrorMapper]="{required: 'This field is required'}">
+<si-form-item label="Required input" [formErrorMapper]="{required: 'MY.REQUIRED_ERROR'}">
   ...
 </si-form-item>
 ```
 
 ### Required detection
 
-`si-form-item` automatically detects whether a form control is required.
-It does this by checking if Angular's required validator is attached
-or if the control's validation feedback contains `{required: true}`.
+`si-form-field` automatically detects whether a form control is required.
+It does this by checking if Angular's required validator is attached.
 
 To have this check working, make sure that only the standard validators of
 Angular are used.
 
 ### Form fieldset
 
-Use a `si-form-fieldset` to group multiple related `si-form-item`.
+Use a `si-form-fieldset` to group multiple related `si-form-field`.
 This is often required for radio inputs, but works for every other type as well.
 
 ```html
 <si-form-fieldset label="Radion options">
-  <si-form-item label="Radio option A">
+  <si-form-field label="Radio option A">
     <input type="radio" class="form-check-input" />
-  </si-form-item>
-  <si-form-item label="Radio option B">
+  </si-form-field>
+  <si-form-field label="Radio option B">
     <input type="radio" class="form-check-input" />
-  </si-form-item>
+  </si-form-field>
 </si-form-fieldset>
 ```
 
 ### Context help
 
-To provide contextual help within form items, use the `SiHelpButtonComponent`.
-Add the `si-help-button` directive to a button placed inside the form item.
+To provide contextual help within form fields, use the `SiHelpButtonComponent`.
+Add the `si-help-button` directive to a button placed inside the form field.
 This allows you to display additional information or guidance related to the input field.
 
 ```html
-<si-form-item label="Input label">
+<si-form-field label="Input label">
   <button
     si-help-button
     type="button"
@@ -214,12 +233,12 @@ This allows you to display additional information or guidance related to the inp
   >
   </button>
   <input class="form-control" />
-</si-form-item>
+</si-form-field>
 ```
 
 ### Custom controls
 
-`si-form-item` provides an API for being linked to custom controls implemented by an application.
+`si-form-field` provides an API for being linked to custom controls implemented by an application.
 Custom controls must implement the `SiFormItemControl` interface and provide themselves as `SI_FORM_ITEM_CONTROL`:
 
 ```ts
@@ -298,7 +317,7 @@ See also [Dynamic Forms](../../architecture/dynamic-forms.md).
 > Element does not recommend using native markup.
 
 The Element theme includes a few CSS classes that are also internally used by the `si-form-item`.
-Internally, a form item is basically structured like this:
+Internally, a form field is basically structured like this:
 
 ```html
 <div>
