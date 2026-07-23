@@ -70,14 +70,6 @@ const SYMBOL_RENAMING_MIGRATION: SymbolRenamingInstruction[] = [
     toModule: '@siemens/element-ng/tabs'
   },
   {
-    module: /@(siemens|simpl)\/element-ng(\/popover)?/,
-    symbolRenamings: [
-      { replace: 'SiPopoverDirective', replaceWith: 'SiPopoverLegacyDirective' },
-      { replace: 'SiPopoverModule', replaceWith: 'SiPopoverLegacyModule' }
-    ],
-    toModule: '@siemens/element-ng/popover-legacy'
-  },
-  {
     module: /@(siemens|simpl)\/element-ng(\/popover-next)?/,
     symbolRenamings: [
       { replace: 'SiPopoverNextDirective', replaceWith: 'SiPopoverDirective' },
