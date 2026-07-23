@@ -14,7 +14,7 @@
     - /url: "#/viewer/viewer/stats"
   - link "Rocket System name":
     - /url: .
-  - button "Show less"
+  - button "Show more" [expanded]
   - link "Assets System name":
     - /url: .
   - link "Fischbach System name":

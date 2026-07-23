@@ -34,22 +34,26 @@
         type="button"
         class="btn btn-link btn-show-all dropdown-toggle text-decoration-none"
         [class.show]="showAllApps"
+        [attr.aria-expanded]="showAllApps"
+        [attr.aria-controls]="allAppsId"
         (click)="showAllApps = !showAllApps"
       >
-        <b>{{ (showAllApps ? showLessAppsText() : showMoreAppsText()) | translate }}</b>
+        <b>{{ showMoreAppsText() | translate }}</b>
         <si-icon class="link-icon dropdown-caret" [icon]="icons.elementDown2" />
       </button>
     }
 
-    @if (!enableFavorites() || !hasFavorites() || showAllApps) {
-      @for (category of categories(); track category.name) {
-        <si-launchpad-category
-          [class.pt-6]="!!category.name && (hasFavorites() || !$first)"
-          [category]="category"
-          [enableFavorites]="enableFavorites()"
-          (favoriteChange)="toggleFavorite($event)"
-        />
+    <div class="all-apps" [id]="allAppsId">
+      @if (!enableFavorites() || !hasFavorites() || showAllApps) {
+        @for (category of categories(); track category.name) {
+          <si-launchpad-category
+            [class.pt-6]="!!category.name && (hasFavorites() || !$first)"
+            [category]="category"
+            [enableFavorites]="enableFavorites()"
+            (favoriteChange)="toggleFavorite($event)"
+          />
+        }
       }
-    }
+    </div>
   </div>
 </div>

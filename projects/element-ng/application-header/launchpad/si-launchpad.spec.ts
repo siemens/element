@@ -55,8 +55,13 @@ describe('SiLaunchpad', () => {
           }
         ]);
         expect(await harness.hasToggle()).toBe(true);
+        expect(await harness.isExpanded()).toBe(false);
+        const controlledRegionId = await harness.getControlledRegionId();
+        expect(controlledRegionId).not.toBeNull();
+        expect(fixture.nativeElement.querySelector(`#${controlledRegionId}`)).toBeInTheDocument();
         expect(await harness.getCategories()).toHaveLength(1);
         await harness.toggleMore();
+        expect(await harness.isExpanded()).toBe(true);
         expect(await harness.getCategories()).toHaveLength(2);
         expect(await harness.getCategory('C-1').then(category => category.getApps())).toHaveLength(
           2
