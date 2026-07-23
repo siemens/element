@@ -1,0 +1,172 @@
+# Sample Markdown Content
+
+Here's a **comprehensive example** of markdown content with various formatting options.
+
+This is a separate paragraph that demonstrates how double line breaks create proper paragraph spacing.
+
+## Code Examples
+
+You can use inline code like `console.log('Hello World')` or multi-line code blocks:
+
+```javascript
+function calculateSum(a, b) {
+  return a + b;
+}
+
+const result = calculateSum(5, 3);
+console.log(`Result: ${result}`);
+```
+
+Language can be auto-detected:
+
+```
+import cmath
+
+a = 1
+b = 5
+c = 6
+
+# calculate the discriminant
+d = (b**2) - (4*a*c)
+
+# find two solutions
+sol1 = (-b-cmath.sqrt(d))/(2*a)
+sol2 = (-b+cmath.sqrt(d))/(2*a)
+
+print('The solution are {0} and {1}'.format(sol1,sol2))
+```
+
+---
+
+## Formatting Options
+
+Here's a paragraph explaining the formatting options available.
+
+Another paragraph with different formatting elements:
+
+- **Bold text** for emphasis
+- _Italic text_ for subtle emphasis
+- `inline code` for technical terms
+
+## Links
+
+You can include links such as [Element](https://element.siemens.io) for more information, as well as local links like [Internal Page](/#/internal-page).
+
+Links are also automatically detected: https://angular.io
+
+---
+
+## Lists and Bullets
+
+Here are the key features:
+
+- Multi-line code blocks with syntax preservation
+- Bold and italic text formatting
+- Inline code highlighting
+- Bullet point lists
+- Blockquote support
+
+- [ ] Open task-list item
+- [x] Completed task-list item
+- [x] Completed task-list item with uppercase marker
+
+* Or in the alternate format
+* Another bullet point
+  - Nested lists are supported too
+  - Another item in the nested list
+
+This paragraph appears after the list to show proper spacing.
+
+## Ordered Lists
+
+Step-by-step instructions:
+
+1. First, analyze the requirements
+2. Then, implement the solution
+3. Finally, test the implementation
+
+---
+
+> This is a blockquote that demonstrates how quoted text appears in the markdown content component.  
+> And of course it can span multiple lines
+
+This paragraph follows the blockquotes to demonstrate proper paragraph separation.
+
+This is a separate paragraph created by double line breaks.
+
+- Unordered item
+- Another item
+
+Another paragraph between the lists.
+
+1. First ordered item
+2. Second ordered item
+
+Final paragraph to show proper spacing.
+
+---
+
+## Images
+
+Images can be included as follows:
+
+![Building Image](./assets/images/building-1.webp)
+
+---
+
+## Tables
+
+Tables are also supported:
+
+| Feature           | Examples                                                     | Status     | Notes                       |
+| ----------------- | ------------------------------------------------------------ | ---------- | --------------------------- |
+| **Basic content** | Alice Johnson<br>Bob Smith                                   | ✓ Complete | Simple text and line breaks |
+| _Formatting_      | **Bold** and _italic_<br>Plus `code` and<br>`multiline code` | ✓ Complete | Multiple markdown formats   |
+| Lists in cells    | - First item<br>- Second item<br>- Third item                | ✓ Complete | Bullet lists work properly  |
+| Escaped pipes     | grep "text\|pattern"<br>awk '{print \$1\|\$2}'               | ✓ Complete | Use \| for literal pipes    |
+| Line breaks       | Line 1<br>Line 2<br>Line 3                                   | ✓ Complete | Uses `<br>` tags            |
+
+This paragraph appears after the tables to demonstrate proper spacing.
+
+---
+
+## Math Expressions
+
+LaTeX math expressions are supported for mathematical notation.
+
+Inline math can be written like this: $E = mc^2$ or the quadratic formula $x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$.
+
+Display math uses double dollar signs for block equations:
+
+$$
+\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+$$
+
+---
+
+## Mermaid
+
+Mermaid diagrams are supported.
+
+```mermaid
+graph TD
+    A[Enter Chart Definition] --> B(Preview)
+    B --> C{decide}
+    C --> D[Keep]
+    C --> E[Edit Definition]
+    E --> B
+    D --> F[Save Image and Code]
+    F --> B
+```
+
+---
+
+## Gemojis
+
+Look, the moon :new_moon_with_face:
+
+Here's a cat :cat2: meow!
+
+Слава Україні! :ukraine:
+
+This is awesome :+1: :100:

@@ -6,6 +6,8 @@
     } @else {
       <div #formattedContent> </div>
     }
+  } @else {
+    <ng-content />
   }
 
   @if (actions().length > 0 || secondaryActions().length > 0) {

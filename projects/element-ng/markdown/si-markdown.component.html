@@ -1,0 +1,153 @@
+<!-- eslint-disable @angular-eslint/template/elements-content -->
+<!-- eslint-disable @angular-eslint/template/attributes-order -->
+
+@let ast = tree();
+@if (ast) {
+  <si-markdown-fragment [siMarkdownFragment]="ast" />
+}
+
+<ng-template siMarkdownTemplate="heading" let-node>
+  @switch (node.depth) {
+    @case (1) {
+      <h1 [siMarkdownFragment]="node"></h1>
+    }
+    @case (2) {
+      <h2 [siMarkdownFragment]="node"></h2>
+    }
+    @case (3) {
+      <h3 [siMarkdownFragment]="node"></h3>
+    }
+    @case (4) {
+      <h4 [siMarkdownFragment]="node"></h4>
+    }
+    @case (5) {
+      <h5 [siMarkdownFragment]="node"></h5>
+    }
+    @case (6) {
+      <h6 [siMarkdownFragment]="node"></h6>
+    }
+  }
+</ng-template>
+
+<ng-template siMarkdownTemplate="paragraph" let-node>
+  <p [siMarkdownFragment]="node"></p>
+</ng-template>
+
+<ng-template siMarkdownTemplate="blockquote" let-node>
+  <blockquote [siMarkdownFragment]="node"></blockquote>
+</ng-template>
+
+<ng-template siMarkdownTemplate="list" let-node>
+  @if (node.ordered) {
+    <ol [siMarkdownFragment]="node" [start]="node.start"></ol>
+  } @else {
+    <ul [siMarkdownFragment]="node"></ul>
+  }
+</ng-template>
+
+<ng-template siMarkdownTemplate="listItem" let-node let-parent="parent">
+  <li
+    [siMarkdownFragment]="
+      !parent.loose && node.children.length === 1 && node.children[0].children
+        ? node.children[0]
+        : node
+    "
+    [class.task-list-item]="node.checked !== null"
+  >
+    @if (node.checked !== null) {
+      <input
+        type="checkbox"
+        class="form-check-input"
+        tabindex="-1"
+        aria-disabled="true"
+        [checked]="node.checked"
+      />
+    }
+  </li>
+</ng-template>
+
+<ng-template siMarkdownTemplate="link" let-node>
+  <a [href]="node.url" [title]="node.title ?? ''" [siMarkdownFragment]="node"></a>
+</ng-template>
+
+<ng-template siMarkdownTemplate="emphasis" let-node>
+  <em [siMarkdownFragment]="node"></em>
+</ng-template>
+
+<ng-template siMarkdownTemplate="strong" let-node>
+  <strong [siMarkdownFragment]="node"></strong>
+</ng-template>
+
+<ng-template siMarkdownTemplate="delete" let-node>
+  <del [siMarkdownFragment]="node"></del>
+</ng-template>
+
+<ng-template siMarkdownTemplate="table" let-node>
+  <table class="table mb-6">
+    <thead>
+      <tr>
+        @for (cell of node.children[0].children; track $index) {
+          <th [siMarkdownFragment]="cell" [style.text-align]="node.align?.[$index]"> </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of node.children.slice(1); track $index) {
+        <tr>
+          @for (cell of row.children; track $index; let cellIndex = $index) {
+            <td [siMarkdownFragment]="cell" [style.text-align]="node.align?.[cellIndex]"> </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</ng-template>
+
+<ng-template siMarkdownTemplate="text" let-node>
+  <span>{{ node.value }}</span>
+</ng-template>
+
+<ng-template siMarkdownTemplate="image" let-node>
+  <img [src]="node.url" [alt]="node.alt ?? ''" [title]="node.title ?? ''" />
+</ng-template>
+
+<ng-template siMarkdownTemplate="thematicBreak">
+  <hr />
+</ng-template>
+
+<ng-template siMarkdownTemplate="break">
+  <br />
+</ng-template>
+
+<ng-template siMarkdownTemplate="footnotes" let-node>
+  <section class="footnotes" [siMarkdownFragment]="node"></section>
+</ng-template>
+
+<ng-template siMarkdownTemplate="footnoteReference" let-node>
+  <sup class="footnote-ref">
+    <a [href]="'#' + node.identifier">{{ node.label }}</a>
+  </sup>
+</ng-template>
+
+<ng-template siMarkdownTemplate="inlineCode" let-node>
+  <code [class]="`language-${node.lang || 'plain'}`">{{ node.value }}</code>
+</ng-template>
+
+@let conf = config();
+@let codeTypes = conf.codeTypeHandlers;
+@for (handler of conf.typeHandlers; track handler.type) {
+  <ng-template [siMarkdownTemplate]="handler.type" let-node let-parent="parent">
+    @if (handler.type === 'code' && codeTypes.has(node.lang)) {
+      @let specialHandler = codeTypes.get(node.lang)!;
+      <ng-container
+        [ngComponentOutlet]="specialHandler.component"
+        [ngComponentOutletInputs]="{ node, parent, options: specialHandler.options }"
+      />
+    } @else {
+      <ng-container
+        [ngComponentOutlet]="handler.component"
+        [ngComponentOutletInputs]="{ node, parent, options: handler.options }"
+      />
+    }
+  </ng-template>
+}
