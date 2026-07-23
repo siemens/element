@@ -54,7 +54,7 @@ Localized interfaces must work with different text lengths and different reading
 design options such as flexible growing areas, line wrapping, or fixed layouts with scrollbars,
 and plan enough space for longer translations.
 
-#### LTR & RTL
+#### LTR and RTL
 
 LTR (Left-to-Right) refers to languages and scripts that are written and read from left to right.
 
@@ -71,21 +71,20 @@ RTL can require mirrored navigation, icon direction, alignment, and interaction 
 
 Payment expectations differ by country, including preferred methods, flows, and trust signals.
 
-### Legal and Safety
+### Legal and safety
 
 Legal notices, safety texts, consent flows, and compliance content may vary by market and
 jurisdiction.
 
 #### Best practice
 
-- Request local lawers to provide tailored legal artifacts for relevant markets and regions.
+- Request local lawyers to provide tailored legal artifacts for relevant markets and regions.
 - Manage market-specific legal and safety requirements, compliance logic, and legal services in your application.
 - Legal-related components and patterns
-
-    - [About page](../components/pages/about.md)
-    - [Footer](../components/layout-navigation/footer.md)
-    - [Copyright Notice](../components/status-notifications/copyright-notice.md)
-    - [Landing page](../components/pages/landing-page.md)
+  - [About page](../components/pages/about.md)
+  - [Footer](../components/layout-navigation/footer.md)
+  - [Copyright Notice](../components/status-notifications/copyright-notice.md)
+  - [Landing page](../components/pages/landing-page.md)
 
 ### Customer support
 
@@ -245,7 +244,7 @@ Follow these steps to ensure that translations have enough space in the user int
 1. Write English texts, keeping conciseness in mind from the start.
 1. Determine reasonable limits and provide it to the translation management.
 1. Request translations
-1. Test every screen with translated texts in languages known for their long translations (German, Finish, Greek and some Slavic languages).
+1. Test every screen with translated texts in languages known for their long translations (German, Finnish, Greek and some Slavic languages).
 1. Revisit the UI design or the original texts if a translator cannot convey the meaning within the limit.
 
 Fixing UI issues caused by long translations late in the development cycle is expensive and time-consuming.
