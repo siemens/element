@@ -47,7 +47,7 @@
     margin-block-end: map.get(variables.$spacers, 8);
   }
 
-  &.show:has(+ si-launchpad-category.has-title) {
+  &.show:has(+ .all-apps > si-launchpad-category.has-title) {
     margin-block-end: 0;
   }
 }
