@@ -210,12 +210,8 @@ Avoid possible causes of misunderstandings by
 
 ### Avoid directional terms on UI
 
-<!-- markdownlint-disable MD051 -->
-
-Directional terms might be incorrect if the user interface is mirrored for [RTL languages](#ltr-rtl).
+Directional terms might be incorrect if the user interface is mirrored for [RTL languages](#ltr-and-rtl).
 Use direction agnostic texts instead.
-
-<!-- markdownlint-enable MD051 -->
 
 <!-- markdownlint-disable MD038 -->
 
