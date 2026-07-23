@@ -110,7 +110,7 @@ class TestHostNumberComponent {
 class TestHostMultiComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
 
-  readonly values = signal<string[] | undefined>(undefined);
+  readonly values = signal<string[]>([]);
   readonly options = signal<SelectItem<string>[] | undefined>([
     { type: 'option', value: 'good', label: 'Good' },
     { type: 'option', value: 'average', label: 'Average' },
