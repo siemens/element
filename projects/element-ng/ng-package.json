@@ -5,7 +5,8 @@
     "assets",
     "schematics/collection.json",
     "schematics/migration.json",
-    "schematics/**/schema.json"
+    "schematics/**/schema.json",
+    { "glob": "**", "input": "maplibre/styles", "output": "maplibre/styles" }
   ],
   "lib": {
     "entryFile": "public-api.ts"
