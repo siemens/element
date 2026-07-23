@@ -87,8 +87,8 @@
         [expanded]="
           (item.id ? uiStateExpandedItems()[item.id] : undefined) ?? item.expanded ?? false
         "
-        [siTooltip]="item.label | translate"
-        [isDisabled]="!collapsed()"
+        [siTooltip]="(collapsed() ? item.label : (item.tooltip ?? '')) | translate"
+        [isDisabled]="!collapsed() && !item.tooltip"
       >
         {{ item.label | translate }}
       </button>
@@ -99,8 +99,8 @@
         placement="end"
         [si-navbar-vertical-item]="item"
         [activeOverride]="item.active"
-        [siTooltip]="item.label | translate"
-        [isDisabled]="!collapsed()"
+        [siTooltip]="(collapsed() ? item.label : (item.tooltip ?? '')) | translate"
+        [isDisabled]="!collapsed() && !item.tooltip"
       >
         {{ item.label | translate }}
       </button>
@@ -120,8 +120,8 @@
         [preserveFragment]="item.extras?.preserveFragment"
         [skipLocationChange]="item.extras?.skipLocationChange"
         [replaceUrl]="item.extras?.replaceUrl"
-        [siTooltip]="item.label | translate"
-        [isDisabled]="!collapsed()"
+        [siTooltip]="(collapsed() ? item.label : (item.tooltip ?? '')) | translate"
+        [isDisabled]="!collapsed() && !item.tooltip"
       >
         {{ item.label | translate }}
       </a>
@@ -132,8 +132,8 @@
         [si-navbar-vertical-item]="item"
         [href]="item.href"
         [target]="item.target"
-        [siTooltip]="item.label | translate"
-        [isDisabled]="!collapsed()"
+        [siTooltip]="(collapsed() ? item.label : (item.tooltip ?? '')) | translate"
+        [isDisabled]="!collapsed() && !item.tooltip"
       >
         {{ item.label | translate }}
       </a>

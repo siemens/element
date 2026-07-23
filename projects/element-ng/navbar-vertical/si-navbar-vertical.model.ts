@@ -25,6 +25,8 @@ export interface NavbarVerticalItemBase {
    * By default, badges are always visible (both expanded and collapsed).
    */
   hideBadgeWhenCollapsed?: boolean;
+  /** Tooltip that is shown when the user hovers over the menu item. */
+  tooltip?: TranslatableString;
 }
 
 /** Use this type to create a group that can hold multiple items. */

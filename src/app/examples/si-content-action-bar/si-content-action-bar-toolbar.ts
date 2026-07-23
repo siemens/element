@@ -44,8 +44,8 @@ export class SampleComponent {
         { type: 'action', label: 'Previous action 3', action: () => alert('Undo action 3') }
       ]
     },
-    { type: 'action', label: 'Undo', icon: 'element-undo', action: () => alert('Undo') },
-    { type: 'action', label: 'Redo', icon: 'element-redo', action: () => alert('Redo') }
+    { type: 'action', label: 'Undo', icon: 'element-undo', tooltip: 'Undo last change', action: () => alert('Undo') },
+    { type: 'action', label: 'Redo', icon: 'element-redo', tooltip: 'Redo last change', action: () => alert('Redo') }
   ];
 
   primaryActionsIcons: ContentActionBarMainItem[] = [
