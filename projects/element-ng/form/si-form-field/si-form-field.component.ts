@@ -10,13 +10,15 @@ import {
   DestroyRef,
   effect,
   inject,
-  input
+  input,
+  isSignal
 } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiFormFieldsetComponent } from '../form-fieldset/si-form-fieldset.component';
 import { SiFormFieldsetControl } from '../form-fieldset/si-form-fieldset.control';
+import { SI_FORM_ITEM_CONTROL } from '../si-form-item.control';
 import { SiFormValidationErrorService } from '../si-form-validation-error.service';
 
 /**
@@ -44,7 +46,7 @@ import { SiFormValidationErrorService } from '../si-form-validation-error.servic
   templateUrl: './si-form-field.component.html',
   styleUrl: './si-form-field.component.scss',
   host: {
-    '[class.required]': 'required() && !isPartOfRadioGroup()',
+    '[class.required]': 'showRequired()',
     '[class.form-check]': 'isFormCheck()',
     '[class.form-check-inline]': 'fieldset?.inline()'
   }
@@ -59,6 +61,7 @@ export class SiFormFieldComponent implements SiFormFieldsetControl {
   readonly label = input.required<TranslatableString>();
 
   private readonly formField = contentChild.required(FormField);
+  private readonly fieldControl = contentChild(SI_FORM_ITEM_CONTROL, { descendants: true });
 
   protected readonly fieldset = inject(SiFormFieldsetComponent, { optional: true });
 
@@ -67,13 +70,26 @@ export class SiFormFieldComponent implements SiFormFieldsetControl {
   private readonly generatedId = `__si-form-field-${SiFormFieldComponent.idCounter++}`;
 
   /** The id of the connected control, used for the label's `for` attribute. */
-  protected readonly controlId = computed(() => this.formField().element.id || this.generatedId);
+  protected readonly controlId = computed(() => {
+    const id = this.fieldControl()?.id;
+    return (isSignal(id) ? id() : id) ?? (this.formField().element.id || this.generatedId);
+  });
 
-  protected readonly errormessageId = computed(() => `${this.controlId()}-errormessage`);
+  protected readonly errormessageId = computed(() => {
+    const id = this.fieldControl()?.errormessageId;
+    return (isSignal(id) ? id() : id) ?? `${this.controlId()}-errormessage`;
+  });
+
+  protected readonly labelledby = computed(() => {
+    const labelledby = this.fieldControl()?.labelledby;
+    return isSignal(labelledby) ? labelledby() : labelledby;
+  });
 
   /** Whether the connected control is a form-check (checkbox, radio or switch). */
-  protected readonly isFormCheck = computed(() =>
-    this.formField().element.classList.contains('form-check-input')
+  protected readonly isFormCheck = computed(
+    () =>
+      this.fieldControl()?.isFormCheck ??
+      this.formField().element.classList.contains('form-check-input')
   );
 
   private readonly fieldState = computed(() => this.formField().state());
@@ -83,6 +99,9 @@ export class SiFormFieldComponent implements SiFormFieldsetControl {
 
   /** @internal */
   readonly required = computed(() => this.fieldState().required());
+
+  /** @internal  */
+  readonly showRequired = computed(() => this.required() && !this.isPartOfRadioGroup());
 
   private readonly invalid = computed(() => {
     const state = this.fieldState();
