@@ -23,10 +23,6 @@
   - link "Test Coverage":
     - /url: "#/viewer/viewer/coverage"
 - main:
-  - button "Toggle"
-  - button "Properties"
-  - button "Documents"
-  - button "Graphics"
   - text: /4 Emergency \d+ Trouble \d+ Success/
   - button "Toggle"
   - heading "Here is a title" [level=2]
@@ -81,3 +77,7 @@
     - listitem:
       - status "user in status danger"
       - text: Vestibulum at eros
+  - button "Toggle"
+  - button "Properties"
+  - button "Documents"
+  - button "Graphics"

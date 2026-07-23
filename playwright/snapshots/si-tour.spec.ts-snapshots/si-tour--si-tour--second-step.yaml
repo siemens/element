@@ -18,10 +18,6 @@
   - link "Test Coverage":
     - /url: "#/viewer/viewer/coverage"
 - main:
-  - button "Toggle"
-  - button "Properties"
-  - button "Documents"
-  - button "Graphics"
   - text: /4 Security \d+ Update \d+ Information/
   - navigation "Breadcrumbs":
     - list:
@@ -41,6 +37,10 @@
   - textbox "Search"
   - button "Toolbar item"
   - text: Placeholder for the content of the page, using the fixed height layout.
+  - button "Toggle"
+  - button "Properties"
+  - button "Documents"
+  - button "Graphics"
 - text: Status bar Page title Thank you
 - dialog "Page title":
   - text: 2 of 7 Page title

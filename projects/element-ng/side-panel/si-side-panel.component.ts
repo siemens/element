@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { CdkPortalOutlet, Portal, PortalModule } from '@angular/cdk/portal';
 import { isPlatformBrowser } from '@angular/common';
 import {
@@ -42,7 +43,7 @@ import { SidePanelMode, SidePanelSize } from './side-panel.model';
 
 @Component({
   selector: 'si-side-panel',
-  imports: [PortalModule],
+  imports: [CdkTrapFocus, PortalModule],
   templateUrl: './si-side-panel.component.html',
   styleUrl: './si-side-panel.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -164,6 +165,10 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
   });
   protected readonly showBackdrop = computed(
     () => !this.disableBackdrop() && this.isOverMode() && !this.isCollapsed()
+  );
+  protected readonly shouldTrapFocus = computed(() => this.isOverMode() && !this.isCollapsed());
+  protected readonly sidePanelInert = computed(
+    () => this.isOverMode() && this.isCollapsed() && !this.collapsible()
   );
   protected readonly isXs = signal(false);
   protected readonly isSm = signal(false);

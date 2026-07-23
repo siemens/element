@@ -1,11 +1,3 @@
-- paragraph: Title
-- button "Close"
-- button "Hey there" [expanded]
-- region "Hey there": And here we have some content
-- button "Another one"
-- region "Another one"
-- button "Number three"
-- region "Number three"
 - banner:
   - heading "Side panel" [level=1]
   - button "Layout"
@@ -53,3 +45,11 @@
   - text: input.
 - checkbox "disableBackdrop"
 - text: disableBackdrop
+- paragraph: Title
+- button "Close"
+- button "Hey there" [expanded]
+- region "Hey there": And here we have some content
+- button "Another one"
+- region "Another one"
+- button "Number three"
+- region "Number three"

@@ -1,6 +1,5 @@
 - link "Jump to Main content"
 - link "Jump to Navigation"
-- button "Toggle"
 - banner:
   - link "Siemens logo":
     - /url: "#/"
@@ -41,3 +40,4 @@
   - text: Actions
   - checkbox "Toolbar" [checked]
   - text: Toolbar
+- button "Toggle"

@@ -1,9 +1,3 @@
-- button "Toggle"
-- button "Out of Service"
-- button "Event source active, ack"
-- button "Properties"
-- button "Documents"
-- button "Graphics"
 - banner:
   - link "Siemens logo":
     - /url: "#/"
@@ -46,3 +40,10 @@
   - text: Expanded width for complex forms and content.
   - code: "Extended (Responsive):"
   - text: Adaptive width scaling from mobile full-width to desktop 912px max.
+- button "Toggle"
+- button "Properties"
+- button "Documents"
+- button "Graphics"
+- button "Out of Service"
+- button "•" [disabled]
+- button "Event source active, ack"
