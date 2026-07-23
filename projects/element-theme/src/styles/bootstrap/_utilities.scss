@@ -105,3 +105,46 @@ $status-colors: (
     color: #{$value} !important; // stylelint-disable-line declaration-no-important
   }
 }
+
+// AI gradient border utilities.
+// Two filled mask layers with `exclude` compositing subtract the inner area,
+// leaving only a 1px border ring visible. Works with transparent backgrounds.
+@mixin border-ai($angle) {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      $angle,
+      #{semantic-tokens.$element-base-1-selected} -6.48%,
+      #{semantic-tokens.$element-base-1-hover} -0.82%,
+      #{semantic-tokens.$element-ui-0} 49.58%,
+      #{semantic-tokens.$element-base-1-hover} 101.07%,
+      #{semantic-tokens.$element-base-1-selected} 106.73%
+    );
+    mask-image:
+      linear-gradient(
+        #{semantic-tokens.$element-text-primary},
+        #{semantic-tokens.$element-text-primary}
+      ),
+      linear-gradient(
+        #{semantic-tokens.$element-text-primary},
+        #{semantic-tokens.$element-text-primary}
+      );
+    mask-clip: border-box, content-box;
+    mask-composite: exclude;
+    padding: 1px;
+    pointer-events: none;
+  }
+}
+
+.border-horizontal-ai {
+  @include border-ai(90deg);
+}
+
+.border-vertical-ai {
+  @include border-ai(180deg);
+}
