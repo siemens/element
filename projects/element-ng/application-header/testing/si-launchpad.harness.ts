@@ -32,6 +32,16 @@ export class SiLaunchpadHarness extends ComponentHarness {
     return this.toggleButton().then(toggle => !!toggle);
   }
 
+  async isExpanded(): Promise<boolean> {
+    return (await this.toggleButton())!
+      .getAttribute('aria-expanded')
+      .then(value => value === 'true');
+  }
+
+  async getControlledRegionId(): Promise<string | null> {
+    return this.toggleButton().then(toggle => toggle!.getAttribute('aria-controls'));
+  }
+
   async toggleMore(): Promise<void> {
     return this.toggleButton().then(toggle => toggle!.click());
   }
