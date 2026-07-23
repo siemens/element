@@ -80,16 +80,14 @@
 </ng-template>
 
 <ng-template #toggleTemplate let-item="item" let-title="title" siBreadcrumbItemTemplate>
-  <div
-    class="breadcrumb-dropdown-toggle link"
-    role="button"
+  <button
+    type="button"
+    class="btn btn-link"
     aria-haspopup="true"
-    tabindex="0"
     [attr.aria-controls]="controlId + item.level"
     [attr.aria-expanded]="breadcrumbDropdownOpen === item.level"
-    (keydown.enter)="toggleBreadcrumbDropdown(item.level)"
     (click)="toggleBreadcrumbDropdown(item.level)"
-    >{{ title }}...</div
+    >{{ title }}...</button
   >
 </ng-template>
 
