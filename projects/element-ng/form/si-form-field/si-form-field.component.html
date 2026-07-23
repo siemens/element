@@ -17,9 +17,11 @@
     [class.form-label]="!isFormCheck()"
     [class.form-check-label]="isFormCheck()"
   >
-    <label [for]="controlId()" [class.required]="required() && !isPartOfRadioGroup()">{{
-      label() | translate
-    }}</label>
+    @if (labelledby()) {
+      <span [id]="labelledby()" [class.required]="showRequired()">{{ label() | translate }}</span>
+    } @else {
+      <label [for]="controlId()" [class.required]="showRequired()">{{ label() | translate }}</label>
+    }
     <ng-content select="[si-help-button]" />
   </div>
 </ng-template>

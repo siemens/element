@@ -83,6 +83,8 @@ describe('SiFormFieldComponent', () => {
   it('should mark required controls as required', async () => {
     await expect.element(nameField).toBeRequired();
     await expect.element(termsField).toBeRequired();
+    await expect.element(page.getByText('Name', { exact: true })).toHaveClass('required');
+    await expect.element(page.getByText('Terms', { exact: true })).toHaveClass('required');
   });
 
   it('should not mark as invalid if the field is untouched', async () => {

@@ -12,7 +12,7 @@
 - text: Minimum 3 characters Name must start with an uppercase letter Description
 - textbox "Description"
 - text: Phone number
-- group:
+- group "Phone number":
   - combobox /Select country Switzerland \+\d+/
   - textbox "Enter phone number":
     - /placeholder: 21 234 56 78

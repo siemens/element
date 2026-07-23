@@ -1,14 +1,21 @@
 - heading "Signal form" [level=2]
 - group "Role*":
   - text: ""
+  - button "More information about the role"
   - radio "Engineer"
   - text: Engineer
   - radio "Installer"
   - text: Installer
 - text: Name*
+- button "More information about the name"
 - textbox "Name*"
 - text: Description
 - textbox "Description"
+- text: Phone number
+- group "Phone number":
+  - combobox /Select country Switzerland \+\d+/
+  - textbox "Enter phone number":
+    - /placeholder: 21 234 56 78
 - text: Day of birth*
 - textbox "Day of birth*"
 - text: Arrival
@@ -24,6 +31,7 @@
 - spinbutton "Fellow passengers": "0"
 - checkbox "I confirm that I accept all and everything*"
 - text: I confirm that I accept all and everything*
+- button "More information about the terms"
 - checkbox "I confirm that I do not care about my privacy"
 - text: I confirm that I do not care about my privacy
 - button "Cancel"
