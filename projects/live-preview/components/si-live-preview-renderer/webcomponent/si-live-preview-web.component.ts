@@ -6,10 +6,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostBinding,
-  Input,
+  input,
   OnChanges,
   output,
+  signal,
   SimpleChanges,
   viewChild
 } from '@angular/core';
@@ -19,19 +19,22 @@ import { SiLivePreviewConfig } from '../../../interfaces/live-preview-config';
 @Component({
   selector: 'si-live-preview-webcomponent',
   template: '<div #root id="app"></div>',
-  changeDetection: ChangeDetectionStrategy.Eager
+  changeDetection: ChangeDetectionStrategy.Eager,
+  host: {
+    '[class.live-preview-done]': 'renderingDone()'
+  }
 })
 export class SiLivePreviewWebComponent implements OnChanges {
   readonly root = viewChild.required('root', { read: ElementRef });
-  @Input() loadReact = false;
-  @Input() loadVue = false;
-  @Input() loadJs = false;
-  @Input() webcomponentTemplateCode = '';
-  @Input() exampleUrl!: string;
-  @Input() config!: SiLivePreviewConfig;
+  readonly loadReact = input(false);
+  readonly loadVue = input(false);
+  readonly loadJs = input(false);
+  readonly webcomponentTemplateCode = input('');
+  readonly exampleUrl = input('');
+  readonly config = input<SiLivePreviewConfig>();
   readonly inProgress = output<boolean>();
 
-  @HostBinding('class.live-preview-done') renderingDone = false;
+  protected readonly renderingDone = signal(false);
 
   private reactRoot: any;
   private vueRoot: any;
@@ -43,19 +46,19 @@ export class SiLivePreviewWebComponent implements OnChanges {
       changes.loadReact?.currentValue &&
       changes.loadReact?.currentValue !== changes.loadReact?.previousValue
     ) {
-      this.loadReactFromCodeTemplate(this.webcomponentTemplateCode);
+      this.loadReactFromCodeTemplate(this.webcomponentTemplateCode());
     }
     if (
       changes.loadVue?.currentValue &&
       changes.loadVue?.currentValue !== changes.loadVue?.previousValue
     ) {
-      this.loadVueFromCodeTemplate(this.webcomponentTemplateCode);
+      this.loadVueFromCodeTemplate(this.webcomponentTemplateCode());
     }
     if (
       changes.loadJs?.currentValue &&
       changes.loadJs?.currentValue !== changes.loadJs?.previousValue
     ) {
-      this.loadHTMLFromCodeTemplate(this.webcomponentTemplateCode);
+      this.loadHTMLFromCodeTemplate(this.webcomponentTemplateCode());
     }
   }
 
@@ -135,7 +138,7 @@ export class SiLivePreviewWebComponent implements OnChanges {
   }
 
   private setInProgress(inProgress: boolean): void {
-    this.renderingDone = !inProgress;
+    this.renderingDone.set(!inProgress);
     this.inProgress.emit(inProgress);
   }
 

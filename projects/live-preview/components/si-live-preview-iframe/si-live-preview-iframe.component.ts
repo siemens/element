@@ -7,15 +7,16 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
+  effect,
   ElementRef,
-  HostBinding,
   inject,
-  Input,
+  input,
+  linkedSignal,
+  model,
   NgZone,
-  OnChanges,
   OnInit,
   output,
-  SimpleChanges,
+  signal,
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -34,73 +35,77 @@ import { availableDevices, Device } from './devices';
   imports: [FormsModule, SiLivePreviewQrComponent],
   templateUrl: './si-live-preview-iframe.component.html',
   styleUrl: './si-live-preview-iframe.component.scss',
-  changeDetection: ChangeDetectionStrategy.Eager
+  changeDetection: ChangeDetectionStrategy.Eager,
+  host: {
+    '[class.is-mobile]': 'isMobile'
+  }
 })
-export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
+export class SiLivePreviewIframeComponent implements OnInit {
   readonly previewIframe = viewChild<ElementRef>('previewIframe');
 
-  @Input() baseUrl!: string;
-  @Input() exampleUrl!: string;
-  @Input() template!: string;
-  @Input() ticketLinkBug!: string;
-  @Input() ticketLinkFeature!: string;
-  @Input() isFullscreen = false;
-  @Input() iFrameHeight?: string;
-  @Input() iFrameWidth?: string;
-  @Input() theme = 'light';
-  @Input() locale?: string;
-  @Input() rootFontSize: number | 'initial' = 0;
-  @Input() isRTL?: boolean;
-  @Input() loadReact?: boolean;
-  @Input() loadVue?: boolean;
-  @Input() loadJs?: boolean;
-  @Input() reactVueTemplate?: string;
+  readonly baseUrl = input.required<string>();
+  readonly exampleUrl = input.required<string>();
+  readonly template = input.required<string>();
+  readonly ticketLinkBug = input.required<string>();
+  readonly ticketLinkFeature = input.required<string>();
+  readonly isFullscreen = input(false);
+  readonly iFrameHeight = input<string>();
+  readonly iFrameWidth = input<string>();
+  readonly theme = model('light');
+  readonly locale = model<string | null | undefined>();
+  readonly rootFontSize = input<number | 'initial'>(0);
+  readonly isRTL = input<boolean>();
+  readonly loadReact = input<boolean>();
+  readonly loadVue = input<boolean>();
+  readonly loadJs = input<boolean>();
+  readonly reactVueTemplate = input<string>();
 
   readonly templateFromComponent = output<string | undefined>();
   readonly logClear = output<void>();
   readonly logMessage = output<string>();
   readonly logRenderingError = output<any>();
   readonly inProgress = output<boolean>();
-  readonly themeChange = output<string>();
-  readonly localeChange = output<string>();
 
   private originalTemplate = '';
   private templateModified = false;
   private rendererInProgress = false;
 
-  private config = inject(SI_LIVE_PREVIEW_CONFIG);
-  private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
-  private ngZone = inject(NgZone);
-  private destroyRef = inject(DestroyRef);
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
+  private readonly ngZone = inject(NgZone);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
-  @HostBinding('class.is-mobile') protected isMobile = this.internalConfig.isMobile;
+  protected readonly isMobile = this.internalConfig.isMobile;
 
-  protected mode = 'ios';
-  protected landscape = false;
+  /** iframe height, seeded from the {@link iFrameHeight} input and mutable in mobile mode. */
+  protected readonly currentIFrameHeight = linkedSignal(() => this.iFrameHeight());
+  /** iframe width, seeded from the {@link iFrameWidth} input and mutable in mobile mode. */
+  protected readonly currentIFrameWidth = linkedSignal(() => this.iFrameWidth());
 
-  protected switcherEnabled = this.config.themeSwitcher;
+  protected readonly mode = signal('ios');
+  protected readonly landscape = signal(false);
 
-  protected landscapeEnabled = this.config.landscapeToggle;
-  protected supportsLandscape = false;
+  protected readonly switcherEnabled = this.config.themeSwitcher;
 
-  protected availableDevices = availableDevices;
-  protected selectedDevice?: Device;
-  protected showNotch!: boolean;
-  protected showQrMenu = false;
-  protected plainUrl = '';
-  protected plainUrlShort = '';
+  protected readonly landscapeEnabled = this.config.landscapeToggle;
+  protected readonly supportsLandscape = signal(false);
 
-  ngOnChanges(changes: SimpleChanges<this>): void {
-    if (!this.previewIframe()) {
-      return;
-    }
+  protected readonly availableDevices = availableDevices;
+  protected readonly selectedDevice = signal<Device | undefined>(undefined);
+  protected readonly showNotch = signal(false);
+  protected readonly showQrMenu = signal(false);
+  protected readonly plainUrl = signal('');
+  protected readonly plainUrlShort = signal('');
 
-    if (changes.template) {
-      this.templateModified = this.originalTemplate !== this.template;
-    }
-
-    this.sendMessage();
+  constructor() {
+    effect(() => {
+      // recompute on template changes and re-send whenever any rendered input changes
+      this.templateModified = this.originalTemplate !== this.template();
+      if (this.previewIframe()) {
+        this.sendMessage();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -115,19 +120,25 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
 
     if (this.isMobile) {
       const deviceId = localStorage.getItem('si-live-preview-selected-device');
-      this.selectedDevice =
-        this.availableDevices.find(dev => dev.id === deviceId) ?? this.availableDevices[0];
+      this.selectedDevice.set(
+        this.availableDevices.find(dev => dev.id === deviceId) ?? this.availableDevices[0]
+      );
       this.deviceChanged();
     }
   }
 
   deviceChanged(): void {
-    this.selectedDevice ??= this.availableDevices[0];
-    this.iFrameHeight = this.landscape ? this.selectedDevice.width : this.selectedDevice.height;
-    this.iFrameWidth = this.landscape ? this.selectedDevice.height : this.selectedDevice.width;
-    this.showNotch = this.selectedDevice.notch ?? false;
-    this.mode = this.selectedDevice.mode;
-    localStorage.setItem('si-live-preview-selected-device', this.selectedDevice.id);
+    let selectedDevice = this.selectedDevice();
+    if (!selectedDevice) {
+      selectedDevice = this.availableDevices[0];
+      this.selectedDevice.set(selectedDevice);
+    }
+    const landscape = this.landscape();
+    this.currentIFrameHeight.set(landscape ? selectedDevice.width : selectedDevice.height);
+    this.currentIFrameWidth.set(landscape ? selectedDevice.height : selectedDevice.width);
+    this.showNotch.set(selectedDevice.notch ?? false);
+    this.mode.set(selectedDevice.mode);
+    localStorage.setItem('si-live-preview-selected-device', selectedDevice.id);
     this.sendMessage();
   }
 
@@ -145,9 +156,9 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
         this.sendMessage();
         break;
       case 'landscapeMode':
-        this.supportsLandscape = event.data.message;
-        if (!this.supportsLandscape && this.landscape) {
-          this.landscape = false;
+        this.supportsLandscape.set(event.data.message);
+        if (!this.supportsLandscape() && this.landscape()) {
+          this.landscape.set(false);
           this.deviceChanged();
         }
         break;
@@ -176,55 +187,56 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
         this.templateFromComponent.emit(event.data.message);
         break;
       case 'theme':
-        this.theme = event.data.message;
-        this.themeChange.emit(event.data.message);
+        this.theme.set(event.data.message);
         break;
       case 'locale':
-        this.locale = event.data.message;
-        this.localeChange.emit(event.data.message);
+        this.locale.set(event.data.message);
         break;
     }
   }
 
   toggleTheme(): void {
-    this.theme = this.theme === 'dark' ? 'light' : 'dark';
-    this.themeChange.emit(this.theme);
+    this.theme.set(this.theme() === 'dark' ? 'light' : 'dark');
     this.sendMessage();
   }
 
   toggleLandscape(): void {
-    this.landscape = !this.landscape;
-    this.iFrameHeight = this.landscape ? this.selectedDevice?.width : this.selectedDevice?.height;
-    this.iFrameWidth = this.landscape ? this.selectedDevice?.height : this.selectedDevice?.width;
+    const landscape = !this.landscape();
+    this.landscape.set(landscape);
+    const selectedDevice = this.selectedDevice();
+    this.currentIFrameHeight.set(landscape ? selectedDevice?.width : selectedDevice?.height);
+    this.currentIFrameWidth.set(landscape ? selectedDevice?.height : selectedDevice?.width);
     this.sendMessage();
   }
 
   openQrMenu(): void {
-    this.plainUrl = this.createTemplateLink('plain');
-    this.plainUrlShort = this.createTemplateLink('plain', true);
-    this.showQrMenu = true;
+    this.plainUrl.set(this.createTemplateLink('plain'));
+    this.plainUrlShort.set(this.createTemplateLink('plain', true));
+    this.showQrMenu.set(true);
   }
 
   private createTemplateLink(mode: string, skipTemplate = false): string {
     let url = `${window.location.protocol}//${window.location.host}`;
     url += window.location.pathname;
     url += `#/viewer/${mode}?`;
-    url += 'theme=' + this.theme;
-    url += '&mode=' + this.mode;
-    if (this.isRTL) {
+    url += 'theme=' + this.theme();
+    url += '&mode=' + this.mode();
+    if (this.isRTL()) {
       url += '&isRTL=true';
     }
-    if (this.locale) {
-      url += '&locale=' + this.locale;
+    const locale = this.locale();
+    if (locale) {
+      url += '&locale=' + locale;
     }
-    if (this.rootFontSize) {
-      url += '&rfs=' + this.rootFontSize;
+    if (this.rootFontSize()) {
+      url += '&rfs=' + this.rootFontSize();
     }
     if (this.templateModified && !skipTemplate) {
-      url += '&t=' + this.encode(this.template);
+      url += '&t=' + this.encode(this.template());
     }
-    if (this.exampleUrl) {
-      url += '&e=' + this.encode(this.exampleUrl);
+    const exampleUrl = this.exampleUrl();
+    if (exampleUrl) {
+      url += '&e=' + this.encode(exampleUrl);
     }
     return url;
   }
@@ -235,32 +247,34 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
   }
 
   private sendMessage(): void {
+    const landscape = this.landscape();
+    const selectedDevice = this.selectedDevice();
     this.previewIframe()?.nativeElement.contentWindow.postMessage(
       {
         src: 'editor',
-        exampleUrl: this.baseUrl + this.exampleUrl,
-        template: this.template,
-        loadReact: this.loadReact,
-        loadVue: this.loadVue,
-        loadJs: this.loadJs,
-        reactVueTemplate: this.reactVueTemplate,
-        theme: this.theme,
-        locale: this.locale,
-        rootFontSize: this.rootFontSize,
-        isRTL: this.isRTL,
-        mode: this.mode,
-        safeAreaTop: this.landscape
-          ? this.selectedDevice?.safeAreaLandscape?.top
-          : this.selectedDevice?.safeAreaPortrait?.top,
-        safeAreaBottom: this.landscape
-          ? this.selectedDevice?.safeAreaLandscape?.bottom
-          : this.selectedDevice?.safeAreaPortrait?.bottom,
-        safeAreaLeft: this.landscape
-          ? this.selectedDevice?.safeAreaLandscape?.left
-          : this.selectedDevice?.safeAreaPortrait?.left,
-        safeAreaRight: this.landscape
-          ? this.selectedDevice?.safeAreaLandscape?.right
-          : this.selectedDevice?.safeAreaPortrait?.right
+        exampleUrl: this.baseUrl() + this.exampleUrl(),
+        template: this.template(),
+        loadReact: this.loadReact(),
+        loadVue: this.loadVue(),
+        loadJs: this.loadJs(),
+        reactVueTemplate: this.reactVueTemplate(),
+        theme: this.theme(),
+        locale: this.locale(),
+        rootFontSize: this.rootFontSize(),
+        isRTL: this.isRTL(),
+        mode: this.mode(),
+        safeAreaTop: landscape
+          ? selectedDevice?.safeAreaLandscape?.top
+          : selectedDevice?.safeAreaPortrait?.top,
+        safeAreaBottom: landscape
+          ? selectedDevice?.safeAreaLandscape?.bottom
+          : selectedDevice?.safeAreaPortrait?.bottom,
+        safeAreaLeft: landscape
+          ? selectedDevice?.safeAreaLandscape?.left
+          : selectedDevice?.safeAreaPortrait?.left,
+        safeAreaRight: landscape
+          ? selectedDevice?.safeAreaLandscape?.right
+          : selectedDevice?.safeAreaPortrait?.right
       },
       '*'
     );

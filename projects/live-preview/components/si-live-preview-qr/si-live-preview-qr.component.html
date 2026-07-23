@@ -1,9 +1,9 @@
-<div class="qr" [innerHTML]="qrImg"></div>
-@if (qrShort) {
+<div class="qr" [innerHTML]="qrImg()"></div>
+@if (qrShort()) {
   <span>
     <b>Note</b>: not using template, too long for QR
-    <span class="url-len">({{ url?.length }})</span>
+    <span class="url-len">({{ url()?.length }})</span>
   </span>
 }
 <hr />
-<a target="_blank" [href]="url">Open in new tab</a>
+<a target="_blank" [href]="url()">Open in new tab</a>

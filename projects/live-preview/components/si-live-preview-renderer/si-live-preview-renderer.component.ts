@@ -12,23 +12,24 @@ import {
   ComponentRef,
   createNgModule,
   DoCheck,
+  effect,
   ElementRef,
   EnvironmentInjector,
-  HostBinding,
   inject,
+  input,
   Injector,
-  Input,
   NgModule,
   NgModuleRef,
-  OnChanges,
   OnDestroy,
+  output,
   ɵresetCompiledComponents as resetCompiledComponents,
-  SimpleChanges,
+  signal,
+  untracked,
   ViewContainerRef,
   viewChild,
   ViewChild,
-  output,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  afterNextRender
 } from '@angular/core';
 import { ɵDomRendererFactory2 as DomRendererFactory2 } from '@angular/platform-browser';
 import { ActivatedRoute, Routes } from '@angular/router';
@@ -66,23 +67,22 @@ export class DummyAppSampleComponent {}
 @Component({
   selector: 'si-live-preview-renderer',
   template: '<div #renderedExample></div><div #react id="app"></div>',
-  changeDetection: ChangeDetectionStrategy.Eager
+  changeDetection: ChangeDetectionStrategy.Eager,
+  host: {
+    '[class.live-preview-done]': 'renderingDone()',
+    '[attr.data-example]': 'exampleUrl()',
+    '[attr.data-id]': 'dataId()'
+  }
 })
-export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
+export class SiLivePreviewRendererComponent implements OnDestroy {
   readonly renderedExample = viewChild.required('renderedExample', { read: ViewContainerRef });
   readonly react = viewChild.required('react', { read: ElementRef });
 
-  @HostBinding('class.live-preview-done') renderingDone = false;
+  readonly exampleUrl = input.required<string>();
+  readonly dataId = input('');
+  readonly template = input('');
 
-  @HostBinding('attr.data-example')
-  @Input()
-  exampleUrl!: string;
-
-  @HostBinding('attr.data-id')
-  @Input()
-  dataId = '';
-
-  @Input() template = '';
+  protected readonly renderingDone = signal(false);
 
   readonly templateFromComponent = output<string | undefined>();
   readonly logClear = output<void>();
@@ -106,8 +106,8 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
   private compiledTemplate?: string;
 
   // eslint-disable-next-line @typescript-eslint/no-deprecated
-  private compiler = inject(Compiler);
-  private injector = Injector.create({
+  private readonly compiler = inject(Compiler);
+  private readonly injector = Injector.create({
     parent: inject(Injector),
     providers: [
       {
@@ -116,27 +116,34 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
       }
     ]
   });
-  private envInjector = inject(EnvironmentInjector);
-  private rendererFactory = inject(DomRendererFactory2);
-  private config = inject(SI_LIVE_PREVIEW_CONFIG);
-  private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
-  private activatedRoute = inject(ActivatedRoute);
-  private defaultRoutes = this.activatedRoute.routeConfig?.children ?? [];
-  private cdRef = inject(ChangeDetectorRef);
+  private readonly envInjector = inject(EnvironmentInjector);
+  private readonly rendererFactory = inject(DomRendererFactory2);
+  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly defaultRoutes = this.activatedRoute.routeConfig?.children ?? [];
+  private readonly cdRef = inject(ChangeDetectorRef);
 
-  ngOnChanges(changes: SimpleChanges<this>): void {
-    if (changes.exampleUrl?.currentValue) {
-      this.loadFromUrl();
-    }
-    if (changes.template?.currentValue) {
+  constructor() {
+    effect(() => {
+      const url = this.exampleUrl();
+      if (url) {
+        untracked(() => this.loadFromUrl());
+      }
+    });
+
+    effect(() => {
+      const template = this.template();
       // when the initial template is pushed from the renderer to the editor, this.template is
       // initially empty, but later changes to what the renderer has pushed out. In this case
       // don't compile
-      if (this.template !== this.compiledTemplate) {
-        this.setInProgress(true);
-        this.compileWhenReady();
+      if (template && template !== this.compiledTemplate) {
+        untracked(() => {
+          this.setInProgress(true);
+          this.compileWhenReady();
+        });
       }
-    }
+    });
   }
 
   ngOnDestroy(): void {
@@ -180,7 +187,7 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
     this.dynamicComponent = undefined;
     this.componentTsFirstLoad = true;
 
-    this.componentTs = this.config.componentLoader.load(this.exampleUrl);
+    this.componentTs = this.config.componentLoader.load(this.exampleUrl());
     if (this.componentTs) {
       this.setInProgress(true);
       this.componentTs
@@ -189,20 +196,26 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
           this.dynamicComponent = m.SampleComponent;
           this.componentTsSampleModule = m.SampleModule;
           this.compileWhenReady();
-          if (!this.componentTsSampleComponent && !this.template) {
-            setTimeout(() => {
-              this.setInProgress(false);
-              this.cdRef.markForCheck();
-            });
+          if (!this.componentTsSampleComponent && !this.template()) {
+            afterNextRender(
+              () => {
+                this.setInProgress(false);
+                this.cdRef.markForCheck();
+              },
+              { injector: this.injector }
+            );
           }
         })
         .catch(e => {
           this.componentTs = undefined;
           this.logRenderingError.emit(e ? e.toString() : 'Failed loading TS');
-          setTimeout(() => {
-            this.setInProgress(false);
-            this.cdRef.markForCheck();
-          });
+          afterNextRender(
+            () => {
+              this.setInProgress(false);
+              this.cdRef.markForCheck();
+            },
+            { injector: this.injector }
+          );
         });
     } else {
       // set the dummy component
@@ -214,7 +227,7 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
   }
 
   private setInProgress(inProgress: boolean): void {
-    this.renderingDone = !inProgress;
+    this.renderingDone.set(!inProgress);
     this.inProgress.emit(inProgress);
   }
 
@@ -224,11 +237,11 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
         // TS, but code not yet loaded
         return;
       }
-      if (!this.componentTsFirstLoad && !this.template) {
+      if (!this.componentTsFirstLoad && !this.template()) {
         // TS, first load done, template not yet available
         return;
       }
-    } else if (!this.template) {
+    } else if (!this.template()) {
       // no TS, no template
       return;
     }
@@ -277,16 +290,16 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
         const supportsLandscape = ann.providers?.includes(LandscapeSupportService);
         this.supportsLandscapeMode.emit(supportsLandscape);
 
-        if (this.componentTsFirstLoad && !this.template) {
+        if (this.componentTsFirstLoad && !this.template()) {
           // skipping compile on first load
           this.compiledTemplate = ann.template;
           this.templateFromComponent.emit(ann.template);
-        } else if (ann.template !== this.template) {
+        } else if (ann.template !== this.template()) {
           // recompile with new template
           this.componentTsFirstLoad = false;
           this.cloneComponentWithoutIvyStuff();
-          ann.template = this.template;
-          this.compiledTemplate = this.template;
+          ann.template = this.template();
+          this.compiledTemplate = this.template();
           compileComponent(this.dynamicComponent, ann);
           this.reuseResolvedScopeOfOriginalComponent();
         }
