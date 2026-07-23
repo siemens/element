@@ -16,6 +16,7 @@ import {
   INJECTOR,
   input,
   signal,
+  untracked,
   viewChild
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -28,6 +29,7 @@ import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 import { SiTabBadgeComponent } from './si-tab-badge.component';
 import { SiTabBaseDirective } from './si-tab-base.directive';
 import { SiTabLinkComponent } from './si-tab-link.component';
+import { SiTabComponent } from './si-tab.component';
 import { SI_TABSET } from './si-tabs-tokens';
 
 /**
@@ -92,6 +94,30 @@ export class SiTabsetComponent {
   }
 
   constructor() {
+    // Per the ARIA tabs pattern, at least one tab should be active. If the app
+    // does not provide an active tab, activate the first non-disabled content
+    // tab so the tablist stays keyboard reachable.
+    effect(() => {
+      const tabs = this.tabPanels();
+      const hasActiveTab = !!this.activeTab();
+      untracked(() => {
+        if (hasActiveTab) {
+          return;
+        }
+        const tabToActivate = tabs.find(tab => {
+          if (tab.disabledTab()) {
+            return false;
+          }
+          if (tab instanceof SiTabComponent) {
+            const canActivate = tab.canActivate();
+            return canActivate ? canActivate() : true;
+          }
+          return true;
+        });
+        tabToActivate?.selectTab();
+      });
+    });
+
     effect(() => {
       if (this.showMenuButton() && this.activeTab()) {
         // wait for menu button to render on DOM
