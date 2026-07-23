@@ -3,6 +3,7 @@
   heading="Sample Dashboard"
   [widgetCatalog]="widgetCatalog"
   [showEditButtonLabel]="true"
+  [enableMultiSelect]="true"
   (isModified)="appStateService.editable$.next($event)"
 >
   <app-dashboard-filters menubar filters-slot />

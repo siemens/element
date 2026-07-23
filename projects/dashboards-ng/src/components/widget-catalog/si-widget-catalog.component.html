@@ -1,7 +1,7 @@
 <div class="si-layout-fixed-height mb-8 mx-0 overflow-auto px-2 pt-2">
   @if (view() === 'list') {
     <div class="si-layout-fixed-height">
-      <div class="mx-0">
+      <div class="mx-0 d-flex">
         <si-search-bar
           class="w-100"
           colorVariant="base-1"
@@ -20,15 +20,25 @@
             class="si-layout-fixed-height list-group overflow-auto mb-0"
             aria-labelledby="widget-catalog-list-description"
             cdkListbox
-            [cdkListboxValue]="[]"
-            (cdkListboxValueChange)="selectWidget($event.value[0])"
+            [cdkListboxValue]="selectedWidgets()"
+            [cdkListboxMultiple]="enableMultiSelect()"
+            (cdkListboxValueChange)="selectWidgets($event.value)"
           >
             @for (widget of filteredWidgetCatalog; track $index) {
               <li
-                class="list-group-item list-group-item-action d-flex"
+                class="list-group-item d-flex list-group-item-action"
                 [cdkOption]="widget"
-                [class.active]="selected() === widget"
+                [class.active]="selectedWidgets().includes(widget)"
               >
+                @if (enableMultiSelect()) {
+                  <div class="form-check d-flex align-items-center me-5" inert>
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      [checked]="selectedWidgets().includes(widget)"
+                    />
+                  </div>
+                }
                 <si-circle-status class="my-n4 me-5" [icon]="widget.iconClass" />
                 <div class="d-flex flex-column align-items-start align-self-center">
                   <span class="si-h5">{{ widget.name | translate }}</span>

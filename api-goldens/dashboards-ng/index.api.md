@@ -195,6 +195,8 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     readonly dashboard: _angular_core.Signal<SiDashboardComponent>;
     readonly dashboardId: _angular_core.InputSignal<string | undefined>;
     readonly editable: _angular_core.ModelSignal<boolean>;
+    // (undocumented)
+    readonly enableMultiSelect: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly grid: _angular_core.Signal<SiGridComponent>;
     readonly heading: _angular_core.InputSignal<string | undefined>;
     readonly hideAddWidgetInstanceButton: _angular_core.InputSignal<boolean>;
@@ -247,7 +249,10 @@ export type SimplDashboardsNgModule = SiDashboardsNgModule;
 
 // @public
 export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnInit {
-    readonly closed: _angular_core.OutputEmitterRef<Omit<WidgetConfig, "id"> | undefined>;
+    constructor();
+    readonly closed: _angular_core.OutputEmitterRef<Omit<WidgetConfig, "id">[] | undefined>;
+    // (undocumented)
+    readonly enableMultiSelect: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     widgetCatalog: Widget[];
 }
@@ -332,6 +337,7 @@ export interface WidgetConfig {
     minHeight?: number;
     minWidth?: number;
     payload?: any;
+    setupPending?: boolean;
     version?: string;
     widgetId: string;
     width?: number;

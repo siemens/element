@@ -13,50 +13,65 @@
   - textbox "Search widget"
   - text: Widget catalog list
   - listbox "Widget catalog list":
-    - option "report status none Hello World A dummy widget for testing." [selected]:
+    - option "report status none Hello World A dummy widget for testing.":
+      - checkbox
       - status "report status none"
       - text: ""
     - option "user status none Contact Add a contact card to your dashboard.":
+      - checkbox
       - status "user status none"
       - text: ""
     - option "trend status none Line Chart A line chart is a type of chart used to show information that changes over time. Line charts are created by plotting a series of several points and connecting them with a straight line. Line charts are used to track changes over short and long periods.":
+      - checkbox
       - status "trend status none"
       - text: Line Chart A line chart is a type of chart used to show information that changes over time. Line charts are created by plotting a series of several points and connecting them with a straight line. Line charts are used to track changes over short and long periods.
     - option "trend status none Bar Chart This is a bar chart widget.":
+      - checkbox
       - status "trend status none"
       - text: ""
     - option "trend status none Circle Chart This is a cart with a circle.":
+      - checkbox
       - status "trend status none"
       - text: ""
     - option "trend status none Gauge Chart A nice gauge charts":
+      - checkbox
       - status "trend status none"
       - text: ""
     - option "trend status none List Widget Displays a list of items":
+      - checkbox
       - status "trend status none"
       - text: ""
     - option "trend status none Timeline Widget Displays events or steps over a period of time":
+      - checkbox
       - status "trend status none"
       - text: ""
     - option "trend status none Value Widget Displays a single KPI":
+      - checkbox
       - status "trend status none"
       - text: ""
     - option "cloud status none Weather Current weather and multi-day forecast":
+      - checkbox
       - status "cloud status none"
       - text: ""
     - option "status none Note (web-component)":
+      - checkbox
       - status "status none"
       - text: ""
     - option "status none Contact (web-component)":
+      - checkbox
       - status "status none"
       - text: ""
     - option "status none Chart (web-component)":
+      - checkbox
       - status "status none"
       - text: ""
     - option "status none Download (native-federation)":
+      - checkbox
       - status "status none"
       - text: ""
     - option "status none Upload (module-federation on native-federation shell)":
+      - checkbox
       - status "status none"
       - text: ""
   - button "Cancel"
-  - button "Next"
+  - button "Add" [disabled]

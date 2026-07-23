@@ -16,7 +16,7 @@ import { HELLO_DESCRIPTOR } from '../../widgets/hello-widget/widget-descriptors'
   styleUrl: './custom-widget-catalog.component.scss'
 })
 export class CustomWidgetCatalogComponent extends SiWidgetCatalogComponent {
-  override readonly closed = output<Omit<WidgetConfig, 'id'> | undefined>();
+  override readonly closed = output<Omit<WidgetConfig, 'id'>[] | undefined>();
 
   override widgetCatalog: Widget[] = [];
 
@@ -27,7 +27,7 @@ export class CustomWidgetCatalogComponent extends SiWidgetCatalogComponent {
   }
 
   override onAddWidget(): void {
-    const selected = this.selected();
+    const selected = this.selectedWidgets()[0];
     if (selected) {
       const widgetConfig: Omit<WidgetConfig, 'id'> = {
         heading: selected.name,
@@ -37,7 +37,7 @@ export class CustomWidgetCatalogComponent extends SiWidgetCatalogComponent {
         ...selected.defaults,
         payload: { ...selected.payload }
       };
-      this.closed.emit(widgetConfig);
+      this.closed.emit([widgetConfig]);
     }
   }
 

@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, By } from '@angular/platform-browser';
 import {
   DeleteConfirmationDialogResult,
   SiActionDialogService
@@ -82,6 +82,41 @@ describe('SiWidgetHostComponent', () => {
         vi.advanceTimersByTime(0);
         await fixture.whenStable();
         expect(component.widgetHost()).toHaveLength(0);
+        vi.useRealTimers();
+      });
+
+      it('should show configuration placeholder when widget requires configuration', async () => {
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          setupPending: true
+        });
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.widgetHost()).toHaveLength(0);
+        expect(fixture.debugElement.query(By.css('si-empty-state'))).toBeTruthy();
+      });
+
+      it('should attach widget instance after configuration is completed', async () => {
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          setupPending: true
+        });
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(component.widgetHost()).toHaveLength(0);
+
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          setupPending: false
+        });
+        fixture.detectChanges();
+
+        vi.useFakeTimers();
+        vi.advanceTimersByTime(0);
+        await fixture.whenStable();
+        expect(component.widgetHost()).toHaveLength(1);
         vi.useRealTimers();
       });
 

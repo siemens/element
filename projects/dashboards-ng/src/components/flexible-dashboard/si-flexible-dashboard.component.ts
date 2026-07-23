@@ -5,6 +5,7 @@
 import { AsyncPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  booleanAttribute,
   Component,
   computed,
   inject,
@@ -158,6 +159,15 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
   readonly secondaryEditActions = input<DashboardToolbarItem[]>([]);
 
   /**
+   * Option to enable multi-select in the widget catalog.
+   * When enabled, the user can select multiple widgets to add to the dashboard at once.
+   * @defaultValue false
+   * */
+  readonly enableMultiSelect = input(false, {
+    transform: booleanAttribute
+  });
+
+  /**
    * The grid component is the actual container for the widgets.
    */
   readonly grid = viewChild.required<SiGridComponent>('grid');
@@ -277,13 +287,12 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     const componentType = this.widgetCatalogComponent() ?? SiWidgetCatalogComponent;
     const catalogRef = this.catalogHost().createComponent<SiWidgetCatalogComponent>(componentType, {
       bindings: [
+        inputBinding('enableMultiSelect', this.enableMultiSelect),
         inputBinding('searchPlaceholder', this.searchPlaceholder),
-        outputBinding<Omit<WidgetConfig, 'id'> | undefined>('closed', widgetConfig => {
+        outputBinding<Omit<WidgetConfig, 'id'>[] | undefined>('closed', widgetConfigs => {
           this.viewState.set('dashboard');
           this.catalogHost().clear();
-          if (widgetConfig) {
-            this.grid().addWidgetInstance(widgetConfig);
-          }
+          widgetConfigs?.forEach(config => this.grid().addWidgetInstance(config));
         })
       ]
     });
