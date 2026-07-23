@@ -2,8 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Directive } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Directive, model } from '@angular/core';
 
 import { SiSelectSelectionStrategy } from './si-select-selection-strategy';
 
@@ -23,14 +22,7 @@ import { SiSelectSelectionStrategy } from './si-select-selection-strategy';
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'si-select[multi]',
-  providers: [
-    { provide: SiSelectSelectionStrategy, useExisting: SiSelectMultiValueDirective },
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: SiSelectMultiValueDirective,
-      multi: true
-    }
-  ]
+  providers: [{ provide: SiSelectSelectionStrategy, useExisting: SiSelectMultiValueDirective }]
 })
 export class SiSelectMultiValueDirective<T> extends SiSelectSelectionStrategy<T, T[]> {
   /**
@@ -38,6 +30,9 @@ export class SiSelectMultiValueDirective<T> extends SiSelectSelectionStrategy<T,
    * @defaultValue true
    */
   override readonly allowMultiple = true;
+
+  /** @defaultValue [] */
+  override readonly value = model<T[]>([]);
 
   protected fromArrayValue(value: T[]): T[] {
     return value;
