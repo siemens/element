@@ -25,6 +25,13 @@ export interface NavbarVerticalItemBase {
    * By default, badges are always visible (both expanded and collapsed).
    */
   hideBadgeWhenCollapsed?: boolean;
+  /**
+   * **Warning:** Using this property is an indication of weak labels and a violation of UX guidelines.
+   *
+   * The navbar shows automatically a tooltip when collapsed to show only icons.
+   * Setting this property will apply a tooltip in collapsed and expanded mode.
+   */
+  tooltipOverride?: TranslatableString;
 }
 
 /** Use this type to create a group that can hold multiple items. */
