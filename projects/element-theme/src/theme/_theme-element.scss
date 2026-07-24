@@ -44,8 +44,7 @@ $theme-element-light: (
   element-base-critical: data.$color-data-orchid-100,
   element-base-translucent-1: rgba(base.$color-black, 0.3),
   element-base-translucent-2: rgba(base.$color-deep-blue-900, 0.88),
-  // EXPERIMENTAL: Do not use
-  element-base-input-experimental: base.$color-experimental-deep-blue-25,
+  element-base-input: base.$color-experimental-deep-blue-25,
   element-action-primary: base.$color-interactive-blue-500,
   element-action-primary-hover: base.$color-teal,
   element-action-primary-text: base.$color-white,
@@ -250,8 +249,7 @@ $theme-element-dark: (
   element-base-critical: data.$color-data-orchid-700,
   element-base-translucent-1: rgba(base.$color-black, 0.7),
   element-base-translucent-2: rgba(base.$color-white, 0.88),
-  // EXPERIMENTAL: Do not use
-  element-base-input-experimental: base.$color-experimental-deep-blue-850,
+  element-base-input: base.$color-experimental-deep-blue-850,
   element-action-primary: base.$color-interactive-coral,
   element-action-primary-hover: base.$color-bold-green,
   element-action-primary-text: base.$color-deep-blue-900,
