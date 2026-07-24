@@ -1,16 +1,18 @@
-<div class="h-100 d-flex flex-column justify-content-center align-items-center p-6">
+<div class="h-100 d-flex flex-column justify-content-center align-items-center text-center p-6">
   <ng-content select=".si-info-image">
     <si-icon class="icon-size" [class]="iconColor()" [icon]="icon()" />
   </ng-content>
-  <h1 class="my-9">{{ titleText() | translate }}</h1>
+  <h1 class="si-h1-bold si-info-page-title">{{ titleText() | translate }}</h1>
   @if (copyText()) {
-    <h2 class="mb-9">{{ copyText() | translate }}</h2>
+    <h2 class="mt-6 mb-0"> {{ copyText() | translate }} </h2>
   }
   @if (instructions()) {
-    <p class="text-pre-wrap text-center si-body-lg mb-9">{{ instructions() | translate }}</p>
+    <p class="text-pre-wrap si-body-lg mt-6 mb-0">{{ instructions() | translate }}</p>
   }
   @if (link()?.title) {
-    <a class="btn btn-primary" [siLink]="link()">{{ link()?.title | translate }}</a>
+    <a class="btn btn-primary si-info-page-link" [siLink]="link()">
+      {{ link()?.title | translate }}
+    </a>
   }
   <ng-content select=".si-info-actions" />
 </div>
