@@ -21,6 +21,7 @@ import { Signal } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
+import { TrackByFunction } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
 
@@ -205,6 +206,7 @@ export class SiTreeViewComponent implements OnInit, OnChanges, OnDestroy, AfterV
     showTreeItem(item: TreeItem): void;
     readonly singleSelectMode: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly templates: Signal<readonly SiTreeViewItemTemplateDirective[]>;
+    readonly trackBy: _angular_core.InputSignal<TrackByFunction<TreeItem<any>>>;
     readonly treeItemCheckboxClicked: _angular_core.OutputEmitterRef<CheckboxClickEventArgs>;
     readonly treeItemClicked: _angular_core.OutputEmitterRef<TreeItem<any>>;
     readonly treeItemFolderClicked: _angular_core.OutputEmitterRef<FolderStateEventArgs>;
