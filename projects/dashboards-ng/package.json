@@ -27,7 +27,7 @@
     "@module-federation/runtime": "^2.0.0",
     "@siemens/element-ng": "workspace:*",
     "@siemens/element-theme": "workspace:*",
-    "gridstack": "^12.3.3"
+    "gridstack": "^12.3.3 || ^13.0.0"
   },
   "peerDependenciesMeta": {
     "@angular-architects/module-federation": {
