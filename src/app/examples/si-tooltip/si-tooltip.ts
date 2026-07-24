@@ -4,12 +4,18 @@
  */
 import { afterNextRender, Component, ElementRef, viewChild } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { SiTabsetComponent, SiTabComponent } from '@siemens/element-ng/tabs';
-import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
+import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
+import { SiTooltipDirective, SiTooltipOverflowDirective } from '@siemens/element-ng/tooltip';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiIconComponent, SiTooltipDirective, SiTabsetComponent, SiTabComponent],
+  imports: [
+    SiIconComponent,
+    SiTooltipDirective,
+    SiTooltipOverflowDirective,
+    SiTabsetComponent,
+    SiTabComponent
+  ],
   templateUrl: './si-tooltip.html'
 })
 export class SampleComponent {
