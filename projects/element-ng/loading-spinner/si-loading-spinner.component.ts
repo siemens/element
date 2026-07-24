@@ -2,11 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, InjectionToken, input } from '@angular/core';
+import { booleanAttribute, Component, input } from '@angular/core';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
-
-export const LOADING_SPINNER_BLOCKING = new InjectionToken<boolean>('isBlockingSpinner');
-export const LOADING_SPINNER_OVERLAY = new InjectionToken<boolean>('isSpinnerOverlay');
 
 @Component({
   selector: 'si-loading-spinner',
@@ -19,19 +16,17 @@ export const LOADING_SPINNER_OVERLAY = new InjectionToken<boolean>('isSpinnerOve
 })
 export class SiLoadingSpinnerComponent {
   /**
-   * @defaultValue
-   * ```
-   * inject(LOADING_SPINNER_BLOCKING, { optional: true })
-   * ```
+   * @defaultValue false
    */
-  readonly isBlockingSpinner = input(inject(LOADING_SPINNER_BLOCKING, { optional: true }));
+  readonly isBlockingSpinner = input(false, {
+    transform: booleanAttribute
+  });
   /**
-   * @defaultValue
-   * ```
-   * inject(LOADING_SPINNER_OVERLAY, { optional: true })
-   * ```
+   * @defaultValue false
    */
-  readonly isSpinnerOverlay = input(inject(LOADING_SPINNER_OVERLAY, { optional: true }));
+  readonly isSpinnerOverlay = input(false, {
+    transform: booleanAttribute
+  });
   /**
    * Needed for a11y
    *
