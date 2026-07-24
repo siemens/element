@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, signal, TrackByFunction, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -19,6 +19,7 @@ import { LoadChildrenEventArgs, MenuItemsProvider, TreeItem } from './si-tree-vi
     [style]="style()"
     [class.tree-xs]="smallSize()"
     [items]="items()"
+    [trackBy]="trackBy()"
     [enableSelection]="enableSelection()"
     [enableIcon]="enableIcon()"
     [singleSelectMode]="singleSelectMode()"
@@ -67,6 +68,7 @@ class WrapperComponent {
       ]
     }
   ]);
+  readonly trackBy = signal<TrackByFunction<TreeItem>>((_index, item) => item);
   loadChildren = (e: LoadChildrenEventArgs): void => {};
   readonly style = signal('');
   readonly smallSize = signal(false);
@@ -138,6 +140,25 @@ describe('SiTreeViewComponent', () => {
   it('should contain set items', () => {
     const icon = element.querySelector('.si-tree-view-item-icon');
     expect(icon?.getAttribute('data-icon')).toBe('element-project');
+  });
+
+  it('should retain item views when trackBy matches immutable item replacements', async () => {
+    component.trackBy.set((_index, item) => (item.customData as { id: string }).id);
+    component.items.set([
+      { label: 'Original item', customData: { id: 'item-1' } },
+      { label: 'Other item', customData: { id: 'item-2' } }
+    ]);
+    await fixture.whenStable();
+
+    const originalItem = element.querySelector<HTMLElement>('si-tree-view-item')!;
+    component.items.set([
+      { label: 'Updated item', customData: { id: 'item-1' } },
+      { label: 'Other item', customData: { id: 'item-2' } }
+    ]);
+    await fixture.whenStable();
+
+    expect(element.querySelector('si-tree-view-item')).toBe(originalItem);
+    expect(originalItem.innerText).toContain('Updated item');
   });
 
   it('should contain folder state start', async () => {

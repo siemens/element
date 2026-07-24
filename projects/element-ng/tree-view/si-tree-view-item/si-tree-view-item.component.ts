@@ -81,7 +81,10 @@ export class SiTreeViewItemComponent implements OnInit, AfterViewInit, Focusable
   protected treeItemContext = inject(TREE_ITEM_CONTEXT);
   protected treeViewComponent = this.treeItemContext.parent;
   /** @internal */
-  treeItem: TreeItem = this.treeItemContext.record.item;
+  // The differ may replace this item while retaining the component instance.
+  get treeItem(): TreeItem {
+    return this.treeItemContext.record.item;
+  }
   private scrollIntoView: Subject<TreeItem> = this.treeViewComponent.scrollChildIntoView;
   private childrenLoaded: Subject<TreeItem> = this.treeViewComponent.childrenLoaded;
 
