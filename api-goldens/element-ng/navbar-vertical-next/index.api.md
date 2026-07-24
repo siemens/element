@@ -85,10 +85,6 @@ export class SiNavbarVerticalNextItemsComponent {
 }
 
 // @public (undocumented)
-export class SiNavbarVerticalNextModule {
-}
-
-// @public (undocumented)
 export class SiNavbarVerticalNextSearchComponent {
     readonly debounceTime: _angular_core.InputSignal<number>;
     readonly placeholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
