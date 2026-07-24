@@ -1,3 +1,43 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/bootstrap/variables' as bootstrap;
+
+:host {
+  display: block;
+  block-size: 100%;
+  container-type: inline-size;
+}
+
 :host ::ng-deep .icon-size {
   font-size: 96px;
+}
+
+:host ::ng-deep img.si-info-image {
+  inline-size: 260px;
+  block-size: 196px;
+  object-fit: contain;
+}
+
+.si-info-page-title {
+  margin-block-start: 40px;
+  margin-block-end: 0;
+}
+
+.si-info-page-link,
+:host ::ng-deep .si-info-actions {
+  margin-block-start: map.get(variables.$spacers, 9);
+}
+
+:host ::ng-deep .si-info-actions {
+  @container (max-width: #{map.get(bootstrap.$grid-breakpoints, 'sm') - 0.02px}) {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+
+    > * {
+      inline-size: 100%;
+      margin-inline-end: 0;
+    }
+  }
 }
