@@ -6,7 +6,8 @@
     "inlineSources": true,
     "types": ["@siemens/element-translate-ng/localize-types"],
     "paths": {
-      "@siemens/maps-ng/*": ["./*/index.ts"],
+      "@siemens/element-translate-ng": ["../../dist/@siemens/element-translate-ng"],
+      "@siemens/element-translate-ng/*": ["../../dist/@siemens/element-translate-ng/*"],
       "@siemens/map-styles/*": ["../../dist/@siemens/map-styles/*"]
     }
   },
