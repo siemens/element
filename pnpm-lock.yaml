@@ -304,8 +304,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0
       '@simpl/docs-composer':
-        specifier: 12.0.0
-        version: 12.0.0(typescript@6.0.3)
+        specifier: 12.0.2
+        version: 12.0.2(typescript@6.0.3)
 
   projects/charts-ng:
     dependencies:
@@ -3742,8 +3742,8 @@ packages:
     peerDependencies:
       '@siemens/element-theme': workspace:*
 
-  '@simpl/docs-composer@12.0.0':
-    resolution: {integrity: sha1-FF3FyjnBHh0giXrpe7k49dGCe7I=, tarball: https://code.siemens.com/api/v4/projects/732/packages/npm/@simpl/docs-composer/-/@simpl/docs-composer-12.0.0.tgz}
+  '@simpl/docs-composer@12.0.2':
+    resolution: {integrity: sha1-Sa44PD9jGk2zKvzRT5mkPT2LPeI=, tarball: https://code.siemens.com/api/v4/projects/732/packages/npm/@simpl/docs-composer/-/@simpl/docs-composer-12.0.2.tgz}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -3880,9 +3880,6 @@ packages:
 
   '@types/mime@1.3.5':
     resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==, tarball: https://registry.npmjs.org/@types/mime/-/mime-1.3.5.tgz}
-
-  '@types/node@24.13.2':
-    resolution: {integrity: sha512-fRa09kZTgu8o71KFcDjUFuc7F+dEbZYZmkI0mg5YBTRs0yMKjYHsq/c0urDKeDb+D5qVgXOdFcuu+DZPKOITwA==, tarball: https://registry.npmjs.org/@types/node/-/node-24.13.2.tgz}
 
   '@types/node@24.13.3':
     resolution: {integrity: sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==, tarball: https://registry.npmjs.org/@types/node/-/node-24.13.3.tgz}
@@ -7307,10 +7304,6 @@ packages:
 
   postcss@8.5.13:
     resolution: {integrity: sha512-qif0+jGGZoLWdHey3UFHHWP0H7Gbmsk8T5VEqyYFbWqPr1XqvLGBbk/sl8V5exGmcYJklJOhOQq1pV9IcsiFag==, tarball: https://registry.npmjs.org/postcss/-/postcss-8.5.13.tgz}
-    engines: {node: ^10 || ^12 || >=14}
-
-  postcss@8.5.16:
-    resolution: {integrity: sha512-vuwillviilfKZsg0VGj5R/YwwcHx4SLsIOI/7K6mQkWx+l5cUHTjj5g0AasTBcyXsbfTgrwsUNmVUb5xVwyPwg==, tarball: https://registry.npmjs.org/postcss/-/postcss-8.5.16.tgz}
     engines: {node: ^10 || ^12 || >=14}
 
   postcss@8.5.17:
@@ -12238,7 +12231,7 @@ snapshots:
   '@simpl/brand@3.3.0':
     optional: true
 
-  '@simpl/docs-composer@12.0.0(typescript@6.0.3)':
+  '@simpl/docs-composer@12.0.2(typescript@6.0.3)':
     dependencies:
       ajv: 8.17.1
       chalk: 5.6.2
@@ -12418,10 +12411,6 @@ snapshots:
   '@types/json-schema@7.0.15': {}
 
   '@types/mime@1.3.5': {}
-
-  '@types/node@24.13.2':
-    dependencies:
-      undici-types: 7.18.2
 
   '@types/node@24.13.3':
     dependencies:
@@ -15020,7 +15009,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 24.13.2
+      '@types/node': 24.13.3
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -16091,12 +16080,6 @@ snapshots:
       source-map: 0.6.1
 
   postcss@8.5.13:
-    dependencies:
-      nanoid: 3.3.16
-      picocolors: 1.1.1
-      source-map-js: 1.2.1
-
-  postcss@8.5.16:
     dependencies:
       nanoid: 3.3.16
       picocolors: 1.1.1
@@ -17239,7 +17222,7 @@ snapshots:
       esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.5)
       picomatch: 4.0.5
-      postcss: 8.5.16
+      postcss: 8.5.17
       rollup: 4.62.2
       tinyglobby: 0.2.17
     optionalDependencies:
@@ -17257,7 +17240,7 @@ snapshots:
       esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.5)
       picomatch: 4.0.5
-      postcss: 8.5.16
+      postcss: 8.5.17
       rollup: 4.62.2
       tinyglobby: 0.2.17
     optionalDependencies:
@@ -17275,7 +17258,7 @@ snapshots:
       esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.5)
       picomatch: 4.0.5
-      postcss: 8.5.16
+      postcss: 8.5.17
       rollup: 4.62.2
       tinyglobby: 0.2.17
     optionalDependencies:
