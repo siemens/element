@@ -7,7 +7,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideSiUiState, SI_UI_STATE_SERVICE, UIStateStorage } from '@siemens/element-ng/common';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 
-import { CollapseTo, PartState, Scale, SiSplitModule, SplitOrientation, SplitUnit } from './index';
+import {
+  CollapseTo,
+  PartState,
+  Scale,
+  SiSplitModule,
+  SplitOrientation,
+  SplitSize,
+  SplitUnit
+} from './index';
 import { SiSplitPartComponent } from './si-split-part.component';
 import { SiSplitComponent as TestComponent } from './si-split.component';
 
@@ -52,7 +60,6 @@ class SynchronousMockStore implements UIStateStorage {
           [minSize]="minSize1()"
           [scale]="scale1()"
           [size]="size1()"
-          [unit]="unit1()"
           (collapseChanged)="collapseChanged1($event)"
           (stateChange)="stateChange1($event)"
         >
@@ -73,7 +80,6 @@ class SynchronousMockStore implements UIStateStorage {
           [minSize]="0"
           [scale]="scale2()"
           [size]="size2()"
-          [unit]="unit2()"
           [collapseOthers]="collapseOthers2()"
           (collapseChanged)="collapseChanged2($event)"
           (stateChange)="stateChange2($event)"
@@ -96,7 +102,6 @@ class SynchronousMockStore implements UIStateStorage {
             [minSize]="minSize3()"
             [scale]="scale3()"
             [size]="size3()"
-            [unit]="unit3()"
             (collapseChanged)="collapseChanged3($event)"
             (stateChange)="stateChange3($event)"
           >
@@ -119,19 +124,16 @@ class WrapperComponent {
   readonly collapseToMinSize1 = signal(false);
   readonly minSize1 = signal(0);
   readonly scale1 = signal<Scale>('auto');
-  readonly size1 = signal(0);
-  readonly unit1 = signal<SplitUnit | undefined>(undefined);
+  readonly size1 = signal<SplitSize>(0);
   readonly splitPart2 = viewChild.required('splitPart2', { read: ElementRef });
   readonly collapseDirection2 = signal<CollapseTo>('start');
   readonly scale2 = signal<Scale>('auto');
-  readonly size2 = signal(0);
-  readonly unit2 = signal<SplitUnit | undefined>(undefined);
+  readonly size2 = signal<SplitSize>(0);
   readonly splitPart3 = viewChild.required('splitPart3', { read: ElementRef });
   readonly collapseDirection3 = signal<CollapseTo>('start');
   readonly minSize3 = signal(0);
   readonly scale3 = signal<Scale>('auto');
-  readonly size3 = signal(0);
-  readonly unit3 = signal<SplitUnit | undefined>(undefined);
+  readonly size3 = signal<SplitSize>(0);
   readonly showPart3 = signal(true);
   readonly collapseOthers2 = signal(true);
   collapseChanged1 = (event: boolean): void => {};
@@ -154,12 +156,9 @@ class WrapperComponent {
   }
 
   setSizes(sizes: [number, number, number], unit: SplitUnit = 'fr'): void {
-    this.size1.set(sizes[0]);
-    this.size2.set(sizes[1]);
-    this.size3.set(sizes[2]);
-    this.unit1.set(unit);
-    this.unit2.set(unit);
-    this.unit3.set(unit);
+    this.size1.set(unit === 'fr' ? `${sizes[0]}fr` : sizes[0]);
+    this.size2.set(unit === 'fr' ? `${sizes[1]}fr` : sizes[1]);
+    this.size3.set(unit === 'fr' ? `${sizes[2]}fr` : sizes[2]);
   }
 
   private measureSize(element: ElementRef<HTMLElement>): number {
@@ -357,9 +356,9 @@ describe('SiSplitComponent', () => {
         expect(split).toContain('Test 2');
         expect(split).toContain('Test 3');
 
-        expect(wrapperComponent.size1()).toEqual(20);
-        expect(wrapperComponent.size2()).toEqual(60);
-        expect(wrapperComponent.size3()).toEqual(20);
+        expect(wrapperComponent.size1()).toEqual('20fr');
+        expect(wrapperComponent.size2()).toEqual('60fr');
+        expect(wrapperComponent.size3()).toEqual('20fr');
         expect(wrapperComponent.split().orientation()).toEqual('horizontal');
       });
     });
@@ -384,9 +383,9 @@ describe('SiSplitComponent', () => {
           expect(split).toContain('Test 2');
           expect(split).toContain('Test 3');
 
-          expect(wrapperComponent.unit1()).toEqual('fr');
-          expect(wrapperComponent.unit2()).toEqual('fr');
-          expect(wrapperComponent.unit3()).toEqual('fr');
+          expect(wrapperComponent.size1()).toEqual('20fr');
+          expect(wrapperComponent.size2()).toEqual('60fr');
+          expect(wrapperComponent.size3()).toEqual('20fr');
           expect(wrapperComponent.split().orientation()).toEqual('horizontal');
         });
 
@@ -464,6 +463,19 @@ describe('SiSplitComponent', () => {
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
       });
 
+      it('should accept sizes with units', async () => {
+        wrapperComponent.size1.set('200px');
+        wrapperComponent.size2.set('1fr');
+        wrapperComponent.size3.set('1fr');
+        wrapperComponent.gutterSize.set(32);
+        wrapperComponent.containerWidth.set(564);
+        await fixture.whenStable();
+
+        expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
+        expect(wrapperComponent.measureSize2()).toBeCloseTo(150, 0);
+        expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
+      });
+
       it('should preserve fractional sizes when a part is removed and re-added', async () => {
         wrapperComponent.setSizes([40, 30, 30], 'fr');
         wrapperComponent.gutterSize.set(32);
@@ -523,11 +535,8 @@ describe('SiSplitComponent', () => {
 
       it('should use px for configured px sizes and fr for configured fr sizes', async () => {
         wrapperComponent.size1.set(200);
-        wrapperComponent.unit1.set('px');
-        wrapperComponent.size2.set(1);
-        wrapperComponent.unit2.set('fr');
-        wrapperComponent.size3.set(3);
-        wrapperComponent.unit3.set('fr');
+        wrapperComponent.size2.set('1fr');
+        wrapperComponent.size3.set('3fr');
         wrapperComponent.gutterSize.set(32);
         wrapperComponent.containerWidth.set(664);
         await fixture.whenStable();

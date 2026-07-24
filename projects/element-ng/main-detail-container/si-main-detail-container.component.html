@@ -9,8 +9,7 @@
     >
       <si-split-part
         scale="none"
-        unit="fr"
-        [size]="splitSizes[0]"
+        [size]="splitSize(splitSizes[0])"
         [showCollapseButton]="false"
         [showHeader]="false"
         [minSize]="minMainSize()"
@@ -20,8 +19,7 @@
       </si-split-part>
       <si-split-part
         scale="auto"
-        unit="fr"
-        [size]="splitSizes[1]"
+        [size]="splitSize(splitSizes[1])"
         [showCollapseButton]="false"
         [showHeader]="false"
         [minSize]="minDetailSize()"

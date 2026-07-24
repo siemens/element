@@ -68,8 +68,8 @@ const migrateSplitSizes = (template: string, offset: number, recorder: UpdateRec
       }
 
       const sizeAttribute = literalSizes
-        ? ` size="${literalSizes[index]}" unit="fr"`
-        : ` [size]="${getIndexedSizeExpression(sizes.value, index)}" unit="fr"`;
+        ? ` size="${literalSizes[index]}fr"`
+        : ` [size]="${getIndexedSizeExpression(sizes.value, index)} + 'fr'"`;
       const startTag = part.startSourceSpan.toString();
       const insertOffset = part.startSourceSpan.end.offset - (startTag.endsWith('/>') ? 2 : 1);
       recorder.insertLeft(insertOffset + offset, sizeAttribute);

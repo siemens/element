@@ -69,16 +69,19 @@ export class SiSplitPartComponent {
     readonly scale: _angular_core.InputSignal<Scale>;
     readonly showCollapseButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showHeader: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly size: _angular_core.InputSignalWithTransform<number, string | number>;
+    readonly size: _angular_core.ModelSignal<SplitSize>;
+    readonly sizeValue: _angular_core.Signal<number>;
     // (undocumented)
     readonly stateChange: _angular_core.OutputEmitterRef<PartState>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
     toggleCollapse(): void;
-    readonly unit: _angular_core.InputSignal<SplitUnit | undefined>;
 }
 
 // @public (undocumented)
 export type SplitOrientation = 'horizontal' | 'vertical';
+
+// @public (undocumented)
+export type SplitSize = number | `${number}${SplitUnit}`;
 
 // @public (undocumented)
 export type SplitUnit = 'px' | 'fr';

@@ -5,8 +5,7 @@
     collapseDirection="start"
     scale="none"
     class="bg-base-1"
-    size="20"
-    unit="fr"
+    size="20fr"
     [actions]="[
       { iconClass: 'element-edit', click: logEvent, tooltip: 'edit' },
       { iconClass: 'element-delete', click: logEvent, tooltip: 'delete' }
@@ -21,8 +20,7 @@
     stateId="employees"
     scale="auto"
     class="bg-base-1"
-    size="60"
-    unit="fr"
+    size="60fr"
     [showCollapseButton]="false"
   >
     <si-split orientation="vertical" stateId="vertical-split">
@@ -30,8 +28,7 @@
         scale="none"
         stateId="middle-top"
         class="bg-base-1"
-        size="40"
-        unit="fr"
+        size="40fr"
         [showHeader]="false"
         (stateChange)="logEvent(format('middle', $event))"
       >
@@ -41,8 +38,7 @@
         scale="auto"
         stateId="middle-bottom"
         class="bg-base-1"
-        size="60"
-        unit="fr"
+        size="60fr"
         [showHeader]="false"
       >
         <p class="p-4 text-secondary">Split Part #2.2</p>
@@ -56,8 +52,7 @@
     collapseDirection="end"
     scale="none"
     class="bg-base-1"
-    size="20"
-    unit="fr"
+    size="20fr"
     (stateChange)="logEvent(format('right', $event))"
   >
     <p class="p-4 text-secondary">Split Part #3</p>

@@ -3,8 +3,7 @@
     heading="Outer Left"
     collapseDirection="start"
     class="bg-base-1"
-    size="30"
-    unit="fr"
+    size="30fr"
     [actions]="[
       { iconClass: 'element-edit', click: logEvent, tooltip: 'edit' },
       { iconClass: 'element-delete', click: logEvent, tooltip: 'delete' }
@@ -14,31 +13,18 @@
     <p class="p-4 text-secondary">Split Part #1</p>
   </si-split-part>
 
-  <si-split-part
-    heading="Outer Right"
-    collapseDirection="end"
-    class="bg-base-1"
-    size="70"
-    unit="fr"
-  >
+  <si-split-part heading="Outer Right" collapseDirection="end" class="bg-base-1" size="70fr">
     <si-split orientation="vertical">
       <si-split-part
         heading="Inner Top"
         collapseDirection="start"
         class="bg-base-1"
-        size="60"
-        unit="fr"
+        size="60fr"
         [actions]="[{ iconClass: 'element-edit', click: logEvent, tooltip: 'Edit' }]"
       >
         <p class="p-4 text-secondary">Split Part #2</p>
       </si-split-part>
-      <si-split-part
-        heading="Inner Bottom"
-        collapseDirection="end"
-        class="bg-base-1"
-        size="40"
-        unit="fr"
-      >
+      <si-split-part heading="Inner Bottom" collapseDirection="end" class="bg-base-1" size="40fr">
         <p class="p-4 text-secondary">Split Part #3</p>
       </si-split-part>
     </si-split>

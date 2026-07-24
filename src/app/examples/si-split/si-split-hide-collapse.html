@@ -3,21 +3,14 @@
     heading="Filters"
     collapseDirection="start"
     class="bg-base-1"
-    size="20"
-    unit="fr"
+    size="20fr"
     [actions]="[{ iconClass: 'element-edit', click: logEvent, tooltip: 'edit' }]"
     [minSize]="150"
   >
     <p class="p-4 text-secondary">Split Part #1</p>
   </si-split-part>
 
-  <si-split-part
-    heading="Details"
-    class="bg-base-1"
-    size="60"
-    unit="fr"
-    [showCollapseButton]="false"
-  >
+  <si-split-part heading="Details" class="bg-base-1" size="60fr" [showCollapseButton]="false">
     <p class="p-4 text-secondary">Split Part #2</p>
   </si-split-part>
 </si-split>

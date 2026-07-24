@@ -27,7 +27,7 @@ import {
   ElementDimensions,
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
-import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/split';
+import { SiSplitComponent, SiSplitPartComponent, SplitSize } from '@siemens/element-ng/split';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { timer } from 'rxjs';
 
@@ -205,6 +205,8 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
     this.actualMainContainerWidth(),
     100 - this.actualMainContainerWidth()
   ];
+
+  protected readonly splitSize = (size: number): SplitSize => `${size}fr`;
   // The max size to limit the main container in the static flex layout (if less than 50%), otherwise not set.
   protected maxMainSize: string = this.getMaxSize(0);
   // The max size to limit the detail container in the static flex layout (if less than 50%), otherwise not set.

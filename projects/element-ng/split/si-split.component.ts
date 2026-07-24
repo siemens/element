@@ -7,15 +7,15 @@ import {
   Component,
   computed,
   contentChildren,
+  DestroyRef,
+  DOCUMENT,
   ElementRef,
   inject,
   input,
   NgZone,
+  output,
   signal,
-  Signal,
-  DOCUMENT,
-  DestroyRef,
-  output
+  Signal
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import {
@@ -90,12 +90,11 @@ export class SiSplitComponent {
           ? part.collapseToMinSize()
             ? `${part.minSize()}px`
             : 'min-content'
-          : this.configuredUnit(part) === 'px'
-            ? `minmax(${part.minSize()}px, ${part.expandedSize() ?? part.size()}px)`
+          : part.sizeUnit() === 'px'
+            ? `minmax(${part.minSize()}px, ${part.expandedSize() ?? part.sizeValue()}px)`
             : `minmax(${part.minSize()}px, ${
-                part.expandedSize() === undefined
-                  ? part.fractionalSize()! * this.fractionalSizeToExpandedSizeFactor()
-                  : part.fractionalSize()!
+                part.fractionalSize()! *
+                (part.expandedSize() === undefined ? this.fractionalSizeToExpandedSizeFactor() : 1)
               }fr)`
       )
       .join(' min-content ');
@@ -137,11 +136,12 @@ export class SiSplitComponent {
   private readonly fractionalSizeToExpandedSizeFactor = computed(() => {
     const measuredParts = this.parts().filter(
       part =>
-        !part.collapsedState() &&
-        this.configuredUnit(part) === 'fr' &&
-        part.expandedSize() !== undefined
+        !part.collapsedState() && part.sizeUnit() === 'fr' && part.expandedSize() !== undefined
     );
-    const configuredSizeSum = measuredParts.reduce((sum, part) => sum + part.size(), 0);
+    const configuredSizeSum = measuredParts.reduce(
+      (sum, part) => sum + (part.initialFractionalSize() ?? part.sizeValue()),
+      0
+    );
     const expandedSizeSum = measuredParts.reduce((sum, part) => sum + part.expandedSize()!, 0);
 
     return configuredSizeSum ? expandedSizeSum / configuredSizeSum : 1;
@@ -183,14 +183,10 @@ export class SiSplitComponent {
     setTimeout(() => this.refreshAllPartSizes());
   }
 
-  private configuredUnit(part: SiSplitPartComponent): SplitUnit {
-    return part.unit() ?? 'px';
-  }
-
   private refreshAllPartSizes(): void {
     this.parts().forEach(part => {
       part.refreshSizePx(this.orientation());
-      if (!part.collapsedState() && this.configuredUnit(part) === 'fr') {
+      if (!part.collapsedState() && part.sizeUnit() === 'fr') {
         part.fractionalSize.set(part.expandedSize()!);
       }
     });
@@ -241,10 +237,10 @@ export class SiSplitComponent {
             appliedDelta += delta;
             gutter.before.expandedSize.set(beforeSize);
             afterPart.expandedSize.set(afterSize);
-            if (gutter.before.unit() === 'fr') {
+            if (gutter.before.sizeUnit() === 'fr') {
               gutter.before.fractionalSize.set(beforeSize);
             }
-            if (afterPart.unit() === 'fr') {
+            if (afterPart.sizeUnit() === 'fr') {
               afterPart.fractionalSize.set(afterSize);
             }
             if (this.orientation() === 'vertical') {
@@ -264,7 +260,12 @@ export class SiSplitComponent {
               )
             );
           },
-          complete: () => this.saveUIState()
+          complete: () => {
+            this.ngZone.run(() => {
+              this.parts().forEach(part => part.commitValue());
+              this.saveUIState();
+            });
+          }
         });
     });
   }
@@ -295,11 +296,11 @@ export class SiSplitComponent {
       (partState, part) => {
         const partStateId = part.stateId();
         if (partStateId) {
-          const unit = this.configuredUnit(part);
+          const unit = part.sizeUnit();
           partState[partStateId] = {
             size: unit === 'px' ? part.expandedSize()! : part.fractionalSize()!,
-            initialSize: part.size(),
-            initialUnit: this.configuredUnit(part),
+            initialSize: part.sizeValue(),
+            initialUnit: part.sizeUnit(),
             expanded: !part.collapsedState()
           };
         }
@@ -328,11 +329,11 @@ export class SiSplitComponent {
         .filter(
           (item): item is { part: SiSplitPartComponent; state: SplitPartState } =>
             !!item.state &&
-            item.state.initialSize === item.part.size() &&
-            item.state.initialUnit === this.configuredUnit(item.part)
+            item.state.initialSize === item.part.sizeValue() &&
+            item.state.initialUnit === item.part.sizeUnit()
         )
         .forEach(({ part, state }) => {
-          if (this.configuredUnit(part) === 'px') {
+          if (part.sizeUnit() === 'px') {
             part.expandedSize.set(state.size);
           } else {
             part.fractionalSize.set(state.size);

@@ -24,7 +24,7 @@ import {
   ElementDimensions,
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
-import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/split';
+import { SiSplitComponent, SiSplitPartComponent, SplitSize } from '@siemens/element-ng/split';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
 @Component({
@@ -105,9 +105,9 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
    */
   readonly stateId = input<string>();
 
-  protected readonly splitSizes = computed<[number, number]>(() => [
-    this.listWidth(),
-    100 - this.listWidth()
+  protected readonly splitSizes = computed<[SplitSize, SplitSize]>(() => [
+    `${this.listWidth()}fr`,
+    `${100 - this.listWidth()}fr`
   ]);
 
   protected readonly listStateId = computed(() => {

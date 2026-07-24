@@ -108,9 +108,9 @@ export class SplitComponent {}`
     const modifiedContent = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(modifiedContent).not.toContain('[sizes]');
-    expect(modifiedContent).toContain('<si-split-part size="20" unit="fr">Left</si-split-part>');
-    expect(modifiedContent).toContain('<si-split-part size="60" unit="fr">Center</si-split-part>');
-    expect(modifiedContent).toContain('<si-split-part size="20" unit="fr">Right</si-split-part>');
+    expect(modifiedContent).toContain('<si-split-part size="20fr">Left</si-split-part>');
+    expect(modifiedContent).toContain('<si-split-part size="60fr">Center</si-split-part>');
+    expect(modifiedContent).toContain('<si-split-part size="20fr">Right</si-split-part>');
   });
 
   it('should move expression split sizes to external split parts', async () => {
@@ -133,10 +133,10 @@ export class SplitComponent {}`,
 
     expect(modifiedContent).not.toContain('[sizes]');
     expect(modifiedContent).toContain(
-      '<si-split-part [size]="panelSizes[0]" unit="fr">Left</si-split-part>'
+      '<si-split-part [size]="panelSizes[0] + \'fr\'">Left</si-split-part>'
     );
     expect(modifiedContent).toContain(
-      '<si-split-part [size]="panelSizes[1]" unit="fr">Right</si-split-part>'
+      '<si-split-part [size]="panelSizes[1] + \'fr\'">Right</si-split-part>'
     );
   });
 
