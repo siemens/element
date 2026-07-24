@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <si-info-page [titleText]="selectedPage().title" [instructions]="selectedPage().instructions">
+    <img
+      class="si-info-image"
+      style="max-height: 500px; width: 50%"
+      [alt]="selectedPage().illustration.alt"
+      [src]="selectedPage().illustration.src"
+    />
+    @if (selectedPage().actions; as actions) {
+      <div class="si-info-actions">
+        @for (action of actions; track action.title) {
+          <button type="button" class="btn btn-secondary me-6 mb-6" (click)="action.action()">
+            {{ action.title }}
+          </button>
+        }
+      </div>
+    }
+  </si-info-page>
+  <div class="card e2e-ignore">
+    <div class="card-header">Control panel</div>
+    <div class="card-body">
+      <div class="col-sm-3">
+        <si-form-item label="HTTP error codes">
+          <select class="form-select" [(ngModel)]="selectedTitle">
+            @for (errorPage of httpErrorPages; track errorPage.title) {
+              <option [value]="errorPage.title">{{ errorPage.title }}</option>
+            }
+          </select>
+        </si-form-item>
+      </div>
+    </div>
+  </div>
+</div>
