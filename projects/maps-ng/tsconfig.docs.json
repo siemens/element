@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "paths": {
+      "@siemens/element-translate-ng": ["../../dist/@siemens/element-translate-ng"],
+      "@siemens/element-translate-ng/*": ["../../dist/@siemens/element-translate-ng/*"],
+      "@siemens/maps-ng/translate": ["./translate/index.ts"],
+      "@siemens/map-styles/*": ["../../dist/@siemens/map-styles/*"]
+    }
+  },
+  "files": ["./src/public-api.ts"]
+}

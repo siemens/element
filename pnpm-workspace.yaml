@@ -1,12 +1,7 @@
 packages:
   - 'projects/*'
 
-# Links workspace packages into the node_modules of all other packages in the
-# workspace, including for peer dependencies. Without "deep", pnpm only links
-# workspace packages at the root level, which means peer dependencies declared
-# with a plain version range (e.g. "@siemens/element-theme": "49.6.0") would
-# be resolved from the registry instead of the local source.
-linkWorkspacePackages: deep
+autoInstallPeers: false
 
 # When a workspace package satisfies a declared version range, prefer the local
 # source over the published registry copy. This ensures packages such as
@@ -17,61 +12,18 @@ preferWorkspacePackages: true
 # `pnpm publish` writes the README file's content into the published package.json
 embedReadme: true
 
-# Hoist these packages to the root node_modules so they are accessible to all
-# workspace packages without needing to be explicitly declared as dependencies.
-# This matches npm's flat hoisting behaviour for three specific scopes:
-#
-# @siemens/* — workspace-internal packages (element-theme, element-translate-ng,
-#   etc.) are used in SCSS @use imports and TypeScript `types` references by
-#   packages that only declare them as peerDependencies. Under pnpm's strict
-#   isolation those packages would be unreachable without hoisting.
-#
-# @module-federation/* — dashboards-ng imports @module-federation/runtime
-#   directly in TypeScript even though it is only a transitive dependency of the
-#   declared peer @module-federation/enhanced. Hoisting the whole scope avoids
-#   having to pin the transitive package version in every consumer.
-#
-# @types/* — TypeScript declaration packages are transitive deps of many tools
-#   (eslint, webpack, jest, etc.) and are consumed implicitly by the TypeScript
-#   compiler via the `types` field in tsconfig. Hoisting all @types packages to
-#   root node_modules/@types replicates npm's flat-hoisting behaviour for type
-#   declarations and is the standard pnpm recommendation for TypeScript monorepos.
+# Makes internal package type entry points available to compiler configurations.
 publicHoistPattern:
-  - '@angular-architects/*'
   - '@siemens/*'
-  - '@simpl/*'
-  - '@module-federation/*'
-  - '@types/*'
-  # Hoist live-previewer dependencies to run `ng serve`
-  - '@stackblitz/sdk'
-  - codeflask
-  - prismjs
-  - qrcode-generator
-  - react
-  - react-dom
-  - vue
-  - vue3-sfc-loader
 
 # Reusable dependency version ranges referenced via the "catalog:" protocol.
-# The TypeScript version is kept in sync with the root package.json pin so the
-# @microsoft/api-extractor>typescript override below resolves to the same
-# compiler version used across the workspace.
+# Keeps API Extractor aligned with the workspace TypeScript version.
 catalog:
   typescript: 6.0.3
 
 overrides:
   '@microsoft/api-extractor>typescript': 'catalog:'
-  '@module-federation/enhanced': 2.7.0
-  '@module-federation/runtime': 2.7.0
-  '@ngx-formly/bootstrap': 7.1.0
-  '@ngx-formly/core': 7.1.0
-  '@siemens/element-theme': 'workspace:*'
-  '@siemens/ngx-datatable': 26.2.1
-  '@softarc/native-federation-orchestrator': 4.5.0
-  ag-grid-angular: 36.0.0
-  ag-grid-community: 36.0.0
-  echarts: 6.1.0
-  zrender: 6.1.0
+  '@simpl/brand>@siemens/element-theme': 'workspace:*'
 
 allowBuilds:
   '@parcel/watcher': true
