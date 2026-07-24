@@ -38,7 +38,6 @@ export class SiSplitComponent {
     constructor();
     readonly gutterSize: _angular_core.InputSignal<number>;
     readonly orientation: _angular_core.InputSignal<SplitOrientation>;
-    readonly sizes: _angular_core.InputSignal<number[]>;
     // (undocumented)
     readonly sizesChange: _angular_core.OutputEmitterRef<number[]>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
@@ -70,7 +69,8 @@ export class SiSplitPartComponent {
     readonly scale: _angular_core.InputSignal<Scale>;
     readonly showCollapseButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showHeader: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly size: _angular_core.InputSignalWithTransform<number | undefined, unknown>;
+    readonly size: _angular_core.ModelSignal<SplitSize>;
+    readonly sizeValue: _angular_core.Signal<number>;
     // (undocumented)
     readonly stateChange: _angular_core.OutputEmitterRef<PartState>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
@@ -79,6 +79,12 @@ export class SiSplitPartComponent {
 
 // @public (undocumented)
 export type SplitOrientation = 'horizontal' | 'vertical';
+
+// @public (undocumented)
+export type SplitSize = number | `${number}${SplitUnit}`;
+
+// @public (undocumented)
+export type SplitUnit = 'px' | 'fr';
 
 // (No @packageDocumentation comment for this package)
 

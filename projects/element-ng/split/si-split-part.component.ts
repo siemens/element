@@ -12,6 +12,7 @@ import {
   inject,
   input,
   linkedSignal,
+  model,
   numberAttribute,
   output,
   signal,
@@ -22,7 +23,15 @@ import { elementDoubleRight } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-split.interfaces';
+import {
+  Action,
+  CollapseTo,
+  PartState,
+  Scale,
+  SplitOrientation,
+  SplitSize,
+  SplitUnit
+} from './si-split.interfaces';
 
 @Component({
   selector: 'si-split-part',
@@ -129,11 +138,25 @@ export class SiSplitPartComponent {
   readonly stateId = input<string>();
 
   /**
-   * Expanded size in px.
-   *
-   * @defaultValue undefined
+   * Expanded size. Accepts a number, or a number suffixed with `px` or `fr`.
+   * Numbers are interpreted as px.
    */
-  readonly size = input<number | undefined, unknown>(undefined, { transform: numberAttribute });
+  readonly size = model.required<SplitSize>();
+
+  /**
+   * Numeric value of the configured {@link size}.
+   */
+  readonly sizeValue = computed(() => Number.parseFloat(`${this.size()}`));
+
+  /**
+   * Unit of the configured {@link size}.
+   * @internal
+   */
+  readonly sizeUnit = computed<SplitUnit>(() => {
+    const size = this.size();
+    const suffix = typeof size === 'string' ? size.match(/(px|fr)$/)?.[1] : undefined;
+    return (suffix as SplitUnit | undefined) ?? 'px';
+  });
 
   /**
    * This toggles the behavior when collapsing this split part.
@@ -162,7 +185,12 @@ export class SiSplitPartComponent {
   readonly after = signal<SiSplitPartComponent | undefined>(undefined);
 
   /** @internal */
-  readonly fractionalSize = signal<number | undefined>(undefined);
+  readonly fractionalSize = linkedSignal(() =>
+    this.sizeUnit() === 'fr' ? this.sizeValue() : undefined
+  );
+
+  /** @internal */
+  readonly initialFractionalSize = signal<number | undefined>(undefined);
 
   /** @internal */
   readonly collapsedSize = computed(() => (this.collapseToMinSize() ? (this.minSize() ?? 40) : 40));
@@ -190,7 +218,10 @@ export class SiSplitPartComponent {
   }
 
   /** @internal */
-  readonly expandedSize = linkedSignal(() => this.size());
+  readonly expandedSize = linkedSignal({
+    source: () => this.sizeUnit(),
+    computation: unit => (unit === 'fr' ? undefined : this.sizeValue())
+  });
 
   /** @internal */
   readonly actualSize = computed(() => {
@@ -199,6 +230,21 @@ export class SiSplitPartComponent {
     }
     return this.expandedSize() ?? 0;
   });
+
+  /** @internal */
+  commitValue(): void {
+    if (this.collapsedState()) {
+      return;
+    }
+    const value = this.sizeUnit() === 'px' ? this.expandedSize() : this.fractionalSize();
+    if (value !== undefined) {
+      if (this.sizeUnit() === 'fr' && this.initialFractionalSize() === undefined) {
+        this.initialFractionalSize.set(this.sizeValue());
+      }
+      const size = this.size();
+      this.size.set(typeof size === 'string' ? (`${value}${this.sizeUnit()}` as SplitSize) : value);
+    }
+  }
 
   /** @internal */
   saveUIState!: () => void;

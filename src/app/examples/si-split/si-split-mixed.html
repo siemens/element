@@ -1,15 +1,11 @@
-<si-split
-  orientation="horizontal"
-  stateId="split-mixed"
-  style="height: 300px"
-  [sizes]="[20, 60, 20]"
->
+<si-split orientation="horizontal" stateId="split-mixed" style="height: 300px">
   <si-split-part
     heading="Filters"
     stateId="filters"
     collapseDirection="start"
     scale="none"
     class="bg-base-1"
+    size="20fr"
     [actions]="[
       { iconClass: 'element-edit', click: logEvent, tooltip: 'edit' },
       { iconClass: 'element-delete', click: logEvent, tooltip: 'delete' }
@@ -24,19 +20,27 @@
     stateId="employees"
     scale="auto"
     class="bg-base-1"
+    size="60fr"
     [showCollapseButton]="false"
   >
-    <si-split orientation="vertical" stateId="vertical-split" [sizes]="[40, 60]">
+    <si-split orientation="vertical" stateId="vertical-split">
       <si-split-part
         scale="none"
         stateId="middle-top"
         class="bg-base-1"
+        size="40fr"
         [showHeader]="false"
         (stateChange)="logEvent(format('middle', $event))"
       >
         <p class="p-4 text-secondary">Split Part #2.1</p>
       </si-split-part>
-      <si-split-part scale="auto" stateId="middle-bottom" class="bg-base-1" [showHeader]="false">
+      <si-split-part
+        scale="auto"
+        stateId="middle-bottom"
+        class="bg-base-1"
+        size="60fr"
+        [showHeader]="false"
+      >
         <p class="p-4 text-secondary">Split Part #2.2</p>
       </si-split-part>
     </si-split>
@@ -48,6 +52,7 @@
     collapseDirection="end"
     scale="none"
     class="bg-base-1"
+    size="20fr"
     (stateChange)="logEvent(format('right', $event))"
   >
     <p class="p-4 text-secondary">Split Part #3</p>

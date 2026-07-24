@@ -4,25 +4,26 @@
       Toggle details
     </button>
   </div>
-  <si-split class="si-layout-fixed-height" [orientation]="orientation" [sizes]="[20, 60, 20]">
+  <si-split class="si-layout-fixed-height" [orientation]="orientation">
     <si-split-part
       heading="Filters"
       collapseDirection="start"
       class="bg-base-1"
+      size="20fr"
       [actions]="[{ iconClass: 'element-edit', click: logEvent, tooltip: 'edit' }]"
       [minSize]="100"
     >
       <p class="p-4 text-secondary">Split Part #1</p>
     </si-split-part>
 
-    <si-split-part heading="Employees" collapseDirection="start" class="bg-base-1">
+    <si-split-part heading="Employees" collapseDirection="start" class="bg-base-1" size="60fr">
       <div class="si-layout-fixed-height justify-content-center bg-secondary">
         <p class="text-center text-inverse">Split Part with resizable content!</p>
       </div>
     </si-split-part>
 
     @if (showDetails) {
-      <si-split-part heading="Details" collapseDirection="end" class="bg-base-1">
+      <si-split-part heading="Details" collapseDirection="end" class="bg-base-1" size="20fr">
         <p class="p-4 text-secondary">Split Part #3</p>
       </si-split-part>
     }

@@ -5,11 +5,11 @@
       class="w-100 flex-grow-1"
       orientation="horizontal"
       [stateId]="stateId()"
-      [sizes]="splitSizes"
       (sizesChange)="onSplitSizesChange($event)"
     >
       <si-split-part
         scale="none"
+        [size]="splitSize(splitSizes[0])"
         [showCollapseButton]="false"
         [showHeader]="false"
         [minSize]="minMainSize()"
@@ -19,6 +19,7 @@
       </si-split-part>
       <si-split-part
         scale="auto"
+        [size]="splitSize(splitSizes[1])"
         [showCollapseButton]="false"
         [showHeader]="false"
         [minSize]="minDetailSize()"

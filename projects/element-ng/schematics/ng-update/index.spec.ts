@@ -89,6 +89,57 @@ export const appConfig: ApplicationConfig = {
     expect(modifiedContent).toContain('providers: [provideZonelessChangeDetection()]');
   });
 
+  it('should move literal split sizes to inline split parts', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split [sizes]="[20, 60, 20]">
+  <si-split-part>Left</si-split-part>
+  <si-split-part>Center</si-split-part>
+  <si-split-part>Right</si-split-part>
+</si-split>\`
+})
+export class SplitComponent {}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const modifiedContent = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(modifiedContent).not.toContain('[sizes]');
+    expect(modifiedContent).toContain('<si-split-part size="20fr">Left</si-split-part>');
+    expect(modifiedContent).toContain('<si-split-part size="60fr">Center</si-split-part>');
+    expect(modifiedContent).toContain('<si-split-part size="20fr">Right</si-split-part>');
+  });
+
+  it('should move expression split sizes to external split parts', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  templateUrl: './split.component.html'
+})
+export class SplitComponent {}`,
+      '/projects/app/src/split.component.html': `<si-split [sizes]="panelSizes">
+  <si-split-part>Left</si-split-part>
+  <si-split-part>Right</si-split-part>
+</si-split>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
+
+    expect(modifiedContent).not.toContain('[sizes]');
+    expect(modifiedContent).toContain(
+      '<si-split-part [size]="panelSizes[0] + \'fr\'">Left</si-split-part>'
+    );
+    expect(modifiedContent).toContain(
+      '<si-split-part [size]="panelSizes[1] + \'fr\'">Right</si-split-part>'
+    );
+  });
+
   it('should pass options to sub-migrations', async () => {
     const customPath = '/custom/path';
     const options = { path: customPath };
