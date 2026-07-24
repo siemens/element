@@ -156,6 +156,7 @@
         </button>
 
         <button
+          #nextButton
           type="button"
           class="btn btn-primary"
           [attr.aria-label]="nextText() | translate"
@@ -206,6 +207,7 @@
     @if (!hideNavigation()) {
       <div class="next" [class.invisible]="index === steps().length - 1" (click)="next(1)">
         <button
+          #nextButton
           type="button"
           class="btn btn-primary btn-circle mb-2"
           [disabled]="!currentStep?.isValid()"

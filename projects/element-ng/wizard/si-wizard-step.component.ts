@@ -2,7 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, input, output, signal } from '@angular/core';
+import {
+  booleanAttribute,
+  Component,
+  ElementRef,
+  inject,
+  input,
+  output,
+  signal
+} from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
@@ -10,6 +18,8 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
   templateUrl: './si-wizard-step.component.html'
 })
 export class SiWizardStepComponent {
+  /** @internal */
+  readonly elementRef = inject(ElementRef<HTMLElement>);
   /** @defaultValue '' */
   readonly heading = input<TranslatableString>('');
   /** @defaultValue true */
