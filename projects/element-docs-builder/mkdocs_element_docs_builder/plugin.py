@@ -9,7 +9,7 @@ from mkdocs.structure.files import Files, File
 
 from os.path import dirname
 
-from md_extension_element_docs_composer import DocsComposerExtension
+from md_extension_element_docs_composer import DocsComposerExtension, structured_output_path
 
 api_enabled = os.environ.get('DOCS_COMPOSER', 'false') in ('true', '1', 'yes', 'y')
 api_generate = True if os.environ.get('DOCS_COMPOSER_GENERATE', 'false') in ('true', '1', 'yes', 'y') else (
@@ -104,6 +104,7 @@ class ElementDocsBuilderPlugin(BasePlugin):
         docs_composer.saveLLMsTxt(
           self.docs_composer_configuration,
           '.',
+          structured_output_path,
           timeout=1000 * 60 * 1,  # 1 minute timeout
         )
 

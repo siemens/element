@@ -1,1 +1,1 @@
-from .extension import DocsComposerExtension, makeExtension  # noqa: F401
+from .extension import DocsComposerExtension, makeExtension, structured_output_path  # noqa: F401
