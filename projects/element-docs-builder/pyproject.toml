@@ -11,7 +11,11 @@ requires-python = ">=3.11, <4"
 license = "MIT"
 dependencies = [
     "javascript==1!1.2.6",
+    "mkdocs>=1.6.1",
 ]
+
+[project.optional-dependencies]
+zensical = ["zensical>=0.0.50"]
 
 [project.urls]
 Homepage = "https://github.com/siemens/element"
@@ -23,6 +27,7 @@ include = [
   "mkdocs_element_docs_builder/index.mjs",
   "mkdocs_element_docs_builder/package.json",
   "mkdocs_element_docs_builder/plugin.py",
+  "mkdocs_element_docs_builder/compat_zensical.py",
   "mkdocs_element_docs_builder/__init__.py",
   "mkdocs_element_docs_builder/docs-builder.css",
   "mkdocs_element_docs_builder/docs-builder.js",

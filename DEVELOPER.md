@@ -179,7 +179,7 @@ apps then you can disable WSLg which should resolve the issue:
 
 ## Documentation
 
-We use [MkDocs](https://www.mkdocs.org/) to build the documentation.
+We use [Zensical](https://zensical.org/) to build the documentation.
 To have visible example code, run the example application first.
 
 ```shell

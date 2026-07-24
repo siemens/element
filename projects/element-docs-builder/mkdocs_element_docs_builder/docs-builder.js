@@ -2,9 +2,9 @@ let didChange = false;
 const updateComponentPreviewThemes = () => {
   const theme = document.body.getAttribute('data-md-color-scheme');
   for (const iframe of document.getElementsByClassName('component-preview')) {
-    let source = iframe.getAttribute('data-src');
+    let source = iframe.getAttribute('data-preview-url');
     if (!source.includes('theme=')) {
-      source += (source.includes('?') ? '&' : '?') + 'theme=' + theme;
+      source += (source.includes('?') ? '&' : '?') + 'theme=' + encodeURIComponent(theme);
     }
     iframe.src = source;
     iframe.style.opacity = '';

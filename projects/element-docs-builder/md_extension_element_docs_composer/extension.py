@@ -32,11 +32,19 @@ class DocsComposerPreprocessor(Preprocessor):
 
   def run(self, lines):
     if api_enabled:
+      current_file_path = self.extension.current_file_path
+      if not current_file_path:
+        for extension in self.md.registeredExtensions:
+          page = getattr(extension, '_kwargs', {}).get('page')
+          if page is not None and getattr(page, 'path', None):
+            current_file_path = page.path
+            break
+
       source = '\n'.join(lines)
       processed_text: str = self.extension.docs_composer.buildFile(
         self.extension.docs_composer_configuration,
         source,
-        self.extension.current_file_path,
+        current_file_path,
         self.extension.is_serve,
         True,
         'source',
