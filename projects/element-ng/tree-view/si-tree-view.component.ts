@@ -31,6 +31,7 @@ import {
   Signal,
   SimpleChanges,
   TemplateRef,
+  TrackByFunction,
   viewChild,
   viewChildren
 } from '@angular/core';
@@ -225,6 +226,17 @@ export class SiTreeViewComponent
    * @defaultref {@link _items}
    */
   readonly items = input<TreeItem[]>([]);
+
+  /**
+   * Identifies tree items when the items input is replaced. Provide a stable key to retain
+   * rendered item views for immutable data updates.
+   *
+   * @defaultValue
+   * ```
+   * (_index, item) => item
+   * ```
+   */
+  readonly trackBy = input<TrackByFunction<TreeItem>>((_index, item) => item);
 
   /**
    * Sets the tree item to be selected.
