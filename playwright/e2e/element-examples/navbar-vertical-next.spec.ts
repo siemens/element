@@ -79,7 +79,7 @@ test.describe('navbar vertical next', () => {
     await page.getByLabel('Toggle', { exact: true }).click();
     await si.waitForAllAnimationsToComplete();
 
-    const chip = page.locator('button[aria-haspopup="true"]');
+    const chip = page.locator('button[aria-haspopup="dialog"]');
     await expect(chip).toBeVisible();
     await chip.click();
     await expect(chip).toHaveAttribute('aria-expanded', 'true');
@@ -100,7 +100,7 @@ test.describe('navbar vertical next', () => {
     await page.getByLabel('Toggle', { exact: true }).click();
     await si.waitForAllAnimationsToComplete();
 
-    const chip = page.locator('button[aria-haspopup="true"]');
+    const chip = page.locator('button[aria-haspopup="dialog"]');
     await chip.click();
     await expect(chip).toHaveAttribute('aria-expanded', 'true');
 
@@ -117,7 +117,7 @@ test.describe('navbar vertical next', () => {
     await page.getByRole('link', { name: 'Sub item', exact: true }).click();
     await page.getByLabel('Toggle', { exact: true }).click();
 
-    const chip = page.locator('button[aria-haspopup="true"]');
+    const chip = page.locator('button[aria-haspopup="dialog"]');
     await chip.click();
     await expect(chip).toHaveAttribute('aria-expanded', 'true');
 

@@ -21,14 +21,15 @@
     - /url: "#/viewer/viewer/subItem2"
   - link "Sub item 3":
     - /url: "#/viewer/viewer/subItem3"
-- link "Home":
-  - /url: "#/viewer/viewer/home"
-- text: Modules
-- link "Energy & sustainability":
-  - /url: "#/viewer/viewer/energy"
-- button "User management" [expanded]
-- link "Test coverage":
-  - /url: "#/viewer/viewer/coverage"
-- button "Documentation"
-- group "Documentation"
-- button "Action"
+- dialog "User management":
+  - link "Home":
+    - /url: "#/viewer/viewer/home"
+  - text: Modules
+  - link "Energy & sustainability":
+    - /url: "#/viewer/viewer/energy"
+  - button "User management" [expanded]
+  - link "Test coverage":
+    - /url: "#/viewer/viewer/coverage"
+  - button "Documentation"
+  - group "Documentation"
+  - button "Action"
