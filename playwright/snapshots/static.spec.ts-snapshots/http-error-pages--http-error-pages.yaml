@@ -1,0 +1,13 @@
+- img "Not Found"
+- heading /\d+ Not Found/ [level=1]
+- paragraph: We’re not able to find that page. It may have been deleted or moved.
+- button "Search app"
+- button "Go back"
+- text: Control panel HTTP error codes
+- combobox "HTTP error codes":
+  - option /\d+ Not Found/ [selected]
+  - option /\d+ Gateway Timeout/
+  - option /\d+ Unauthorized/
+  - option /\d+ Internal Server Error/
+  - option /\d+ Bad Request/
+  - option "I'm teapot"
