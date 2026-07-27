@@ -38,12 +38,17 @@ import {
   SiLivePreviewRoutingModule,
   provideStackblitzConfig
 } from '@siemens/live-preview';
+import { setWorkerUrl } from 'maplibre-gl';
 import { lastValueFrom, Observable, take } from 'rxjs';
 
 import { BundlerTranslateLoader } from './bundler-translate-loader';
 import { FileUploadInterceptor } from './examples/si-file-uploader/file-upload-interceptor';
 import { CustomWrapperComponent } from './examples/si-formly/dynamic-form-custom-wrapper';
 import { LivePreviewThemeApiService } from './shared/live-preview-theme.api.service';
+
+// Register the maplibre-gl worker script. This is required for maplibre-gl to work properly in a web worker context.
+// see https://github.com/maplibre/ngx-maplibre-gl
+setWorkerUrl(new URL('assets/maplibre/maplibre-gl-worker.mjs', document.baseURI).href);
 
 const componentLoader =
   // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
