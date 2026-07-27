@@ -29,6 +29,7 @@ api-goldens/element-ng/landing-page/ @siemens/siemens-element-owners @dauriamarc
 api-goldens/element-ng/side-panel/ @siemens/siemens-element-owners @ljanner
 api-goldens/element-ng/threshold/ @siemens/siemens-element-owners @dr-itz
 api-goldens/element-ng/tour/ @siemens/siemens-element-owners @dr-itz
+api-goldens/element-ng/tree-view/ @siemens/siemens-element-owners @chintankavathia
 api-goldens/element-ng/typeahead/ @siemens/siemens-element-owners @spliffone
 
 .agents/ @siemens/siemens-element-owners @siemens/siemens-element-members
