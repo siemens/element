@@ -21,8 +21,8 @@
 }
 
 .operator-input {
-  padding-inline: map.get(variables.$spacers, 2);
-  inline-size: calc(1ch + #{2 * map.get(variables.$spacers, 2)});
+  padding-inline: map.get(variables.$spacers-inline, 2);
+  inline-size: calc(1ch + 2 * map.get(variables.$spacers-inline, 2));
 }
 
 input {

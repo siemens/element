@@ -30,28 +30,34 @@
   }
 
   &.tiny {
-    --avatar-size: calc(#{variables.$si-icon-font-size} + #{2 * map.get(variables.$spacers, 1)});
+    --avatar-size: calc(
+      #{variables.$si-icon-font-size} + 2 * #{map.get(variables.$spacers-block, 1)}
+    );
   }
 
   &.xsmall {
-    --avatar-size: calc(#{variables.$si-icon-font-size} + #{2 * map.get(variables.$spacers, 2)});
+    --avatar-size: calc(
+      #{variables.$si-icon-font-size} + 2 * #{map.get(variables.$spacers-block, 2)}
+    );
   }
 
   &.small {
-    --avatar-size: calc(#{variables.$si-icon-font-size} + #{2 * map.get(variables.$spacers, 3)});
+    --avatar-size: calc(
+      #{variables.$si-icon-font-size} + 2 * #{map.get(variables.$spacers-block, 3)}
+    );
   }
 
   &.large {
     --avatar-size: calc(
-      #{variables.$si-icon-font-size} + #{2 *
-        (map.get(variables.$spacers, 6) + map.get(variables.$spacers, 1))}
+      #{variables.$si-icon-font-size} + 2 *
+        (#{map.get(variables.$spacers-block, 6)} + #{map.get(variables.$spacers-block, 1)})
     );
   }
 
   &.xlarge {
     --avatar-size: calc(
-      #{variables.$si-icon-font-size} + #{2 *
-        (map.get(variables.$spacers, 8) + map.get(variables.$spacers, 3))}
+      #{variables.$si-icon-font-size} + 2 *
+        (#{map.get(variables.$spacers-block, 8)} + #{map.get(variables.$spacers-block, 3)})
     );
   }
 }

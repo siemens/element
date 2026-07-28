@@ -8,11 +8,11 @@
 .input-wrapper {
   border-color: variables.$element-ui-4;
   background-color: variables.$element-base-1;
-  padding-block: map.get(variables.$spacers, 5) map.get(variables.$spacers, 4);
-  padding-inline: map.get(variables.$spacers, 5);
+  padding-block: map.get(variables.$spacers-block, 5) map.get(variables.$spacers-block, 4);
+  padding-inline: map.get(variables.$spacers-inline, 5);
   display: flex;
   flex-direction: column;
-  gap: map.get(variables.$spacers, 5);
+  gap: map.get(variables.$spacers-block, 5) map.get(variables.$spacers-inline, 5);
 
   &:hover,
   &:active,

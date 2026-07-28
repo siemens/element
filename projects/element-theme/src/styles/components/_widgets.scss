@@ -28,21 +28,21 @@
 .si-value-widget-unit {
   @extend .si-body-lg;
   display: inline-block;
-  margin-inline-start: map.get(variables.$spacers, 2);
+  margin-inline-start: map.get(variables.$spacers-inline, 2);
 }
 
 .si-value-widget-description {
   display: flex;
   align-items: center;
-  gap: map.get(variables.$spacers, 2);
-  margin-block-start: map.get(variables.$spacers, 2);
+  gap: map.get(variables.$spacers-block, 2) map.get(variables.$spacers-inline, 2);
+  margin-block-start: map.get(variables.$spacers-block, 2);
   min-block-size: variables.$si-icon-font-size;
 }
 
 .si-link-widget {
   display: flex;
   flex-direction: column;
-  gap: map.get(variables.$spacers, 4);
+  gap: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
 }
 
 .si-link-widget-skeleton {

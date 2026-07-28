@@ -4,7 +4,7 @@
 :host {
   display: flex;
   flex-direction: column;
-  gap: map.get(variables.$spacers, 6);
+  gap: map.get(variables.$spacers-block, 6) map.get(variables.$spacers-inline, 6);
   contain: layout;
 
   ::ng-deep {

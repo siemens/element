@@ -149,15 +149,15 @@
 }
 
 .si-tree-view-item-toggle.disabled .si-tree-view-item-icon {
-  inline-size: map.get(variables.$spacers, 8);
+  inline-size: map.get(variables.$spacers-inline, 8);
 }
 
 .si-tree-stretch-center + .si-tree-view-item-toggle-end .si-tree-view-item-icon {
-  margin-inline-start: -1 * map.get(variables.$spacers, 2);
+  margin-inline-start: map.get(variables.$negative-spacers-inline, 2);
 }
 
 .si-tree-view-item-icon {
-  padding-inline-end: map.get(variables.$spacers, 2);
+  padding-inline-end: map.get(variables.$spacers-inline, 2);
 
   &.si-tree-view-item-icon-spacer {
     box-sizing: content-box;
@@ -269,7 +269,7 @@
 }
 
 .input-box {
-  margin-inline: map.get(variables.$spacers, 1) map.get(variables.$spacers, 5);
+  margin-inline: map.get(variables.$spacers-inline, 1) map.get(variables.$spacers-inline, 5);
 }
 
 .form-check-input {

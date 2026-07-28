@@ -8,8 +8,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-inline: map.get(variables.$spacers, 8);
-  padding-block: map.get(variables.$spacers, 9);
+  padding-inline: map.get(variables.$spacers-inline, 8);
+  padding-block: map.get(variables.$spacers-block, 9);
 }
 
 .state-icon {

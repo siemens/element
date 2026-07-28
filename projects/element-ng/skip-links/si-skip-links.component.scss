@@ -5,7 +5,7 @@
   &:focus-within {
     position: absolute;
     z-index: variables.$zindex-modal;
-    inset-block-start: map.get(variables.$spacers, 4);
+    inset-block-start: map.get(variables.$spacers-block, 4);
     inset-inline-start: 50%;
     transform: translateX(-50%);
   }

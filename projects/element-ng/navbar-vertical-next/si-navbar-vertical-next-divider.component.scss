@@ -5,6 +5,6 @@
   display: block;
   block-size: 1px;
   background-color: variables.$element-ui-4;
-  margin-block: map.get(variables.$spacers, 3);
-  margin-inline: map.get(variables.$spacers, 5);
+  margin-block: map.get(variables.$spacers-block, 3);
+  margin-inline: map.get(variables.$spacers-inline, 5);
 }

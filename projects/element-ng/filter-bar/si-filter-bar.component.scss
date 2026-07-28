@@ -2,12 +2,12 @@
 
 @use '@siemens/element-theme/src/styles/all-variables';
 
-$list-header-filter-padding-horizontal: map.get(all-variables.$spacers, 5);
-$list-header-filter-padding-vertical: map.get(all-variables.$spacers, 3);
+$list-header-filter-padding-horizontal: map.get(all-variables.$spacers-inline, 5);
+$list-header-filter-padding-vertical: map.get(all-variables.$spacers-block, 3);
 $filter-bar-background-color: all-variables.$element-base-0;
 
 :host {
-  --filter-pill-gap: #{map.get(all-variables.$spacers, 4)};
+  --filter-pill-gap: #{map.get(all-variables.$spacers-block, 4)};
 }
 
 :host.reset .responsive .list-text {

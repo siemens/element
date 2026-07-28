@@ -7,7 +7,7 @@
   align-items: center;
   border-radius: 0.75rem;
   background: var(--filter-pill-background-color, variables.$element-base-0);
-  padding-inline: map.get(variables.$spacers, 4);
+  padding-inline: map.get(variables.$spacers-inline, 4);
   max-inline-size: 100%;
 
   &.active {
@@ -23,13 +23,13 @@
   }
 
   :is(.name, .value) {
-    padding-block: map.get(variables.$spacers, 2);
+    padding-block: map.get(variables.$spacers-block, 2);
   }
 }
 
 .pill-group {
   display: flex;
-  gap: map.get(variables.$spacers, 1);
+  gap: map.get(variables.$spacers-block, 1) map.get(variables.$spacers-inline, 1);
 
   .pill {
     border-radius: 0;

@@ -2,14 +2,14 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 // width of the date-picker: 8 cells + px-9
-$datepicker-width: calc(#{8 * 2rem} + #{2 * map.get(variables.$spacers, 9)});
+$datepicker-width: calc(#{8 * 2rem} + 2 * map.get(variables.$spacers-inline, 9));
 // calendar: 7 rows × 2rem + 8 border-spacing gaps × 3px (6 between rows + 1 before + 1 after).
 // header: 1rem + py-5 + py-5 + 1px border
 // today: 1rem + py-5 + mt-2
 // gap: 2 * gap-6
 $datepicker-height: calc(
-  16rem + #{8 * 3px + 6 * map.get(variables.$spacers, 5) + 2 * map.get(variables.$spacers, 6) +
-    1px + map.get(variables.$spacers, 2)}
+  16rem + 8 * 3px + 6 * map.get(variables.$spacers-block, 5) + 2 *
+    map.get(variables.$spacers-block, 6) + 1px + map.get(variables.$spacers-block, 2)
 );
 
 :host {
@@ -38,7 +38,7 @@ $datepicker-height: calc(
 
 .preset-select {
   display: flex;
-  inline-size: calc(9.5rem + #{2 * map.get(variables.$spacers, 8)});
+  inline-size: calc(9.5rem + 2 * map.get(variables.$spacers-inline, 8));
   flex-direction: column;
   grid-area: preset;
   background: variables.$element-base-1;

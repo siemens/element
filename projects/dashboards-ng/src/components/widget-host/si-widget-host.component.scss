@@ -47,24 +47,24 @@
     // Overwrite to hide the gridstack.js icon
     background-image: none !important;
     transform: none !important;
-    inset-block-end: map.get(variables.$spacers, 3) !important;
-    inset-inline-end: map.get(variables.$spacers, 3) !important;
+    inset-block-end: map.get(variables.$spacers-block, 3) !important;
+    inset-inline-end: map.get(variables.$spacers-inline, 3) !important;
   }
   /* stylelint-enable declaration-no-important */
 }
 
 .resize-handle {
-  inset-block-end: map.get(variables.$spacers, 3);
+  inset-block-end: map.get(variables.$spacers-block, 3);
   color: variables.$element-ui-2;
   pointer-events: none;
   position: absolute;
-  inset-inline-end: map.get(variables.$spacers, 3);
+  inset-inline-end: map.get(variables.$spacers-inline, 3);
   text-align: center;
   z-index: 10;
 }
 
 .draggable-overlay {
-  inset: map.get(variables.$spacers, 4);
+  inset: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
   position: absolute;
   z-index: 100;
 }

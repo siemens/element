@@ -6,8 +6,10 @@
 $toast-min-width: 250px;
 $toast-max-width: 400px;
 $toast-line-height: 1.125rem;
-$toast-padding: map.get(all-variables.$spacers, 4);
-$toast-window-margin: map.get(all-variables.$spacers, 7);
+$toast-padding-block: map.get(all-variables.$spacers-block, 4);
+$toast-padding-inline: map.get(all-variables.$spacers-inline, 4);
+$toast-window-margin-block: map.get(all-variables.$spacers-block, 7);
+$toast-window-margin-inline: map.get(all-variables.$spacers-inline, 7);
 $toast-timer-height: 2px;
 
 %si-toast-bottom-bar {
@@ -29,21 +31,21 @@ $toast-timer-height: 2px;
   color: all-variables.$element-text-primary;
   background: all-variables.$element-base-3;
   border-radius: all-variables.$element-radius-2;
-  padding-inline: map.get(all-variables.$spacers, 5) $toast-padding;
-  padding-block: $toast-padding;
-  margin-block-end: $toast-window-margin;
+  padding-inline: map.get(all-variables.$spacers-inline, 5) $toast-padding-inline;
+  padding-block: $toast-padding-block;
+  margin-block-end: $toast-window-margin-block;
   font-size: all-variables.$si-font-size-body-lg;
   pointer-events: all;
   overflow: hidden;
   min-inline-size: $toast-min-width;
-  max-inline-size: calc(100vi - #{$toast-window-margin} * 2);
+  max-inline-size: calc(100vi - #{$toast-window-margin-inline} * 2);
 
   @include all-variables.media-breakpoint-up(md) {
     max-inline-size: $toast-max-width;
   }
 
   &.si-toast-auto-close {
-    padding-block-end: $toast-padding + $toast-timer-height;
+    padding-block-end: calc($toast-padding-block + $toast-timer-height);
 
     &::before {
       @extend %si-toast-bottom-bar;

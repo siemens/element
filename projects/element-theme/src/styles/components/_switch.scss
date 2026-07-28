@@ -4,7 +4,7 @@
 
 $si-switch-size: 1.25rem !default;
 $si-switch-inline-size: calc(2 * #{$si-switch-size});
-$si-switch-inline-spacing: calc($si-switch-inline-size + map.get(variables.$spacers, 4));
+$si-switch-inline-spacing: calc($si-switch-inline-size + map.get(variables.$spacers-inline, 4));
 $si-switch-background-off-color: variables.$element-ui-4 !default;
 $si-switch-background-on-color: variables.$element-ui-0 !default;
 $si-switch-background-disabled-color: variables.$element-ui-3 !default;
@@ -16,7 +16,7 @@ $si-switch-transition-length: variables.element-transition-duration(0.4s) !defau
 $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin});
 
 .form-switch {
-  padding-block: map.get(variables.$spacers, 1);
+  padding-block: map.get(variables.$spacers-block, 1);
   padding-inline-start: $si-switch-inline-spacing;
 
   .form-check-input {

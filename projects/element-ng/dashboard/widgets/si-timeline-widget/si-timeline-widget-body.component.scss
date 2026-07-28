@@ -9,7 +9,7 @@
 
 div {
   block-size: 100%;
-  padding-inline: map.get(variables.$spacers, 6) map.get(variables.$spacers, 4);
+  padding-inline: map.get(variables.$spacers-inline, 6) map.get(variables.$spacers-inline, 4);
   overflow-y: auto;
   overflow-x: hidden;
 }

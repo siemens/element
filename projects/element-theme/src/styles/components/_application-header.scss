@@ -80,7 +80,7 @@
 .application-name {
   font-size: typography.$si-font-size-body-lg;
   font-weight: typography.$si-font-weight-body-lg;
-  padding: map.get(spacers.$spacers, 5);
+  padding: map.get(spacers.$spacers-block, 5) map.get(spacers.$spacers-inline, 5);
   margin: 0;
   line-height: normal;
   white-space: nowrap;
@@ -93,7 +93,7 @@
   flex-basis: 100%;
   display: flex;
   flex-flow: column;
-  padding-block: map.get(spacers.$spacers, 4);
+  padding-block: map.get(spacers.$spacers-block, 4);
   border-block-start: 1px solid semantic-tokens.$element-ui-4;
 }
 
@@ -132,7 +132,7 @@
 .header-toggle {
   color: semantic-tokens.$element-text-primary;
   border: 0;
-  padding: map.get(spacers.$spacers, 5);
+  padding: map.get(spacers.$spacers-block, 5) map.get(spacers.$spacers-inline, 5);
   background-color: transparent; // remove default button style
 
   &:is(:hover, .show, :active) {
@@ -152,8 +152,8 @@
   font-size: typography.$si-font-size-h4;
   line-height: typography.$si-line-height-h4;
   font-weight: typography.$si-font-weight-h4;
-  padding-block: map.get(spacers.$spacers, 5);
-  padding-inline: map.get(spacers.$spacers, 5);
+  padding-block: map.get(spacers.$spacers-block, 5);
+  padding-inline: map.get(spacers.$spacers-inline, 5);
   background: none;
   box-shadow: none;
   border: 0;
@@ -163,7 +163,7 @@
     margin-block: -0.125rem;
 
     ~ .item-title {
-      padding-inline-start: map.get(spacers.$spacers, 5);
+      padding-inline-start: map.get(spacers.$spacers-inline, 5);
     }
   }
 
@@ -189,7 +189,7 @@
     background: var(--si-header-item-border);
 
     block-size: 100%;
-    inline-size: map.get(spacers.$spacers, 2);
+    inline-size: map.get(spacers.$spacers-inline, 2);
   }
 
   &.header-selection-item {
@@ -248,7 +248,7 @@
 
         &::after {
           inline-size: 100%;
-          block-size: map.get(spacers.$spacers, 2);
+          block-size: map.get(spacers.$spacers-block, 2);
         }
       }
     }

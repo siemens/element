@@ -55,17 +55,17 @@
     vertical-align: middle;
 
     &:first-child {
-      padding-inline-start: map.get(spacers.$spacers, 6);
+      padding-inline-start: map.get(spacers.$spacers-inline, 6);
     }
 
     &:last-child {
-      padding-inline-end: map.get(spacers.$spacers, 6);
+      padding-inline-end: map.get(spacers.$spacers-inline, 6);
     }
   }
 
   thead {
     border-width: 0;
-    border-block-end: map.get(spacers.$spacers, 2) solid variables.$table-border-color;
+    border-block-end: map.get(spacers.$spacers-block, 2) solid variables.$table-border-color;
 
     th {
       vertical-align: baseline;

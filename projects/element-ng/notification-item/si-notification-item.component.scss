@@ -36,24 +36,24 @@ div:has(.notification-item-content a):hover {
   }
 
   &:has(si-avatar) {
-    margin-inline-end: map.get(variables.$spacers, 6);
+    margin-inline-end: map.get(variables.$spacers-inline, 6);
   }
 
   &:has(si-circle-status) {
-    margin-inline-end: map.get(variables.$spacers, 2);
+    margin-inline-end: map.get(variables.$spacers-inline, 2);
   }
 
   // If si-icon is used for the indicator
   &:not(:has(si-avatar, si-circle-status)):has(si-icon) {
-    margin-inline-end: map.get(variables.$spacers, 4);
+    margin-inline-end: map.get(variables.$spacers-inline, 4);
     // timestamp plus center alignment to heading
-    margin-block-start: calc(1lh + map.get(variables.$spacers, 2));
+    margin-block-start: calc(1lh + map.get(variables.$spacers-block, 2));
   }
 
   &:not(:has(si-avatar, si-circle-status, si-icon)) {
     inline-size: 0;
     // timestamp plus spacer
-    margin-block-start: calc(1lh + map.get(variables.$spacers, 3));
+    margin-block-start: calc(1lh + map.get(variables.$spacers-block, 3));
 
     div {
       // Unread heading block-size
@@ -73,23 +73,25 @@ div:has(.notification-item-content a):hover {
   grid-row: 1 / span 2;
   display: flex;
   align-items: center;
-  margin-inline-start: map.get(variables.$spacers, 4);
+  margin-inline-start: map.get(variables.$spacers-inline, 4);
 }
 
 .notification-item-quick-actions {
   grid-column: 2;
   grid-row: 2;
   display: flex;
-  gap: map.get(variables.$spacers, 4);
-  margin-block-start: map.get(variables.$spacers, 4);
+  gap: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
+  margin-block-start: map.get(variables.$spacers-block, 4);
 }
 
 .dot {
   display: block;
   position: absolute;
-  block-size: map.get(variables.$spacers, 3);
-  inline-size: map.get(variables.$spacers, 3);
+  block-size: map.get(variables.$spacers-block, 3);
+  inline-size: map.get(variables.$spacers-inline, 3);
   border-radius: 50%;
   background-color: variables.$element-ui-1;
-  inset-inline-start: -1 * (map.get(variables.$spacers, 2) + map.get(variables.$spacers, 3));
+  inset-inline-start: calc(
+    map.get(variables.$negative-spacers-inline, 2) + map.get(variables.$negative-spacers-inline, 3)
+  );
 }
