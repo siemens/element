@@ -7,6 +7,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
 
 import {
   DatepickerInputConfig,
@@ -243,6 +244,36 @@ class FormWrapperComponent {
 
   readonly siDateRangeComponent = viewChild.required(SiDateRangeComponent);
 }
+
+@Component({
+  imports: [FormField, SiDateRangeComponent],
+  template: `<si-date-range
+    [formField]="form.dateRange"
+    [siDatepickerConfig]="{ dateFormat: 'dd-MM-yyyy' }"
+  />`
+})
+class SignalFormWrapperComponent {
+  readonly model = signal<{ dateRange: DateRange }>({
+    dateRange: { start: undefined, end: undefined }
+  });
+  readonly form = form(this.model);
+}
+
+describe('SiDateRangeComponent with a signal form field', () => {
+  it('should expose invalid start date format errors', async () => {
+    const fixture = TestBed.createComponent(SignalFormWrapperComponent);
+    await fixture.whenStable();
+
+    enterValue(startInput(fixture.nativeElement), 'INVALID DATE');
+    startInput(fixture.nativeElement).dispatchEvent(new Event('input'));
+    await fixture.whenStable();
+
+    expect(fixture.componentInstance.form.dateRange().errors()).toEqual([
+      expect.objectContaining({ kind: 'invalidStartDateFormat' })
+    ]);
+  });
+});
+
 describe('SiDateRangeComponent within form', () => {
   let fixture: ComponentFixture<FormWrapperComponent>;
   let component: FormWrapperComponent;
