@@ -91,7 +91,7 @@ body cells:
 }
 ```
 
-For the `headerClass` you can use the existing Bootstrap utility class `justify-content-end` to right align the column header.
+For the `headerClass` you can use the existing [flex](../../fundamentals/styles/flex.md) utility class `justify-content-end` to right align the column header.
 For the `cellClass` you have to define your own custom class `text-align-right-cell` and add the following SCSS code
 in your stylesheet:
 
