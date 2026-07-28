@@ -40,7 +40,8 @@ jobs:
         run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: pnpm install
+      # Publishing workspace packages with workspace:* peer dependencies requires pnpm to install those peers.
+      - run: pnpm install --config.auto-install-peers=true
       - id: before_release
         run: |
           BEFORE_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")

@@ -6858,10 +6858,6 @@ packages:
     resolution: {integrity: sha512-qif0+jGGZoLWdHey3UFHHWP0H7Gbmsk8T5VEqyYFbWqPr1XqvLGBbk/sl8V5exGmcYJklJOhOQq1pV9IcsiFag==, tarball: https://registry.npmjs.org/postcss/-/postcss-8.5.13.tgz}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.5.17:
-    resolution: {integrity: sha512-J7EF+8X+CzRPaJPOv9Ck2wNWJvGnnl3PcNPAdGg6GTLjyVpyQ0yATMSXRFRV01BviT/9Gwuc3rjEyJbDJG9a4w==, tarball: https://registry.npmjs.org/postcss/-/postcss-8.5.17.tgz}
-    engines: {node: ^10 || ^12 || >=14}
-
   postcss@8.5.18:
     resolution: {integrity: sha512-xdB1oSLHbz1vRWgCDalrCqEFTWzFlhqFC5tIHLMOSUIjhm3XXQ1qrFy8S/ESr1JYRRXqM3c1QFiMZUJdUTqyMQ==, tarball: https://registry.npmjs.org/postcss/-/postcss-8.5.18.tgz}
     engines: {node: ^10 || ^12 || >=14}
@@ -10404,8 +10400,8 @@ snapshots:
       json-schema-typed: 8.0.2
       pkce-challenge: 5.0.1
       raw-body: 3.0.2
-      zod: 4.4.2
-      zod-to-json-schema: 3.25.2(zod@4.4.2)
+      zod: 4.4.3
+      zod-to-json-schema: 3.25.2(zod@4.4.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -15203,12 +15199,6 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  postcss@8.5.17:
-    dependencies:
-      nanoid: 3.3.16
-      picocolors: 1.1.1
-      source-map-js: 1.2.1
-
   postcss@8.5.18:
     dependencies:
       nanoid: 3.3.16
@@ -16405,7 +16395,7 @@ snapshots:
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.5
-      postcss: 8.5.17
+      postcss: 8.5.18
       rolldown: 1.1.5
       tinyglobby: 0.2.17
     optionalDependencies:
@@ -16757,9 +16747,9 @@ snapshots:
       '@zarrita/storage': 0.2.0
       numcodecs: 0.3.2
 
-  zod-to-json-schema@3.25.2(zod@4.4.2):
+  zod-to-json-schema@3.25.2(zod@4.4.3):
     dependencies:
-      zod: 4.4.2
+      zod: 4.4.3
 
   zod@4.4.2: {}
 
