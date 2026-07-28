@@ -58,27 +58,39 @@
             </si-form-field>
 
             <si-form-field label="Day of birth">
-              <input type="date" class="form-control" [formField]="form.birthday" />
+              <si-calendar-button class="w-100">
+                <input
+                  type="text"
+                  class="w-100 form-control"
+                  autocomplete="off"
+                  siDatepicker
+                  [formField]="form.birthday"
+                />
+              </si-calendar-button>
+            </si-form-field>
+
+            <si-form-field label="Travel date">
+              <si-date-range class="w-100" [formField]="form.travelDate" />
             </si-form-field>
 
             <si-form-field label="Arrival">
-              <input type="time" class="form-control" [formField]="form.arrival" />
+              <si-timepicker [hideLabels]="true" [formField]="form.arrival" />
             </si-form-field>
 
             <si-form-field label="Departure">
-              <input type="time" class="form-control" [formField]="form.departure" />
+              <si-timepicker [hideLabels]="true" [formField]="form.departure" />
             </si-form-field>
 
             <si-form-field label="Class of service">
-              <select class="form-select" [formField]="form.serviceClass">
-                <option value="first">First class</option>
-                <option value="business">Business</option>
-                <option value="economy">Economy</option>
-              </select>
+              <si-select
+                class="form-control"
+                [options]="optionsList"
+                [formField]="form.serviceClass"
+              />
             </si-form-field>
 
             <si-form-field label="Fellow passengers">
-              <input type="number" class="form-control" [formField]="form.fellowPassengers" />
+              <si-number-input class="form-control" [formField]="form.fellowPassengers" />
             </si-form-field>
 
             <si-form-field label="I confirm that I accept all and everything">
