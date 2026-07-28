@@ -17,13 +17,13 @@ $vertical-nav-top-offset: calc(
 );
 
 // Height of the toggle button; the chip must match this to fuse cleanly.
-$toggle-size: calc(1lh + (2 * map.get(all-variables.$spacers, 4)));
+$toggle-size: calc(1lh + (2 * map.get(all-variables.$spacers-block, 4)));
 
 // Position of the parked toggle/chip when the nav is collapsed (in-page slot).
 // Inline-start uses a CSS custom property so it can track `.si-layout-main-padding`
 // across breakpoints (16px below md, 32px from md up).
 $toggle-parked-block-start: calc(
-  #{$vertical-nav-top-offset} + #{map.get(all-variables.$spacers, 6)}
+  #{$vertical-nav-top-offset} + #{map.get(all-variables.$spacers-block, 6)}
 );
 $toggle-parked-inline-start: var(--si-navbar-parked-inline-start);
 

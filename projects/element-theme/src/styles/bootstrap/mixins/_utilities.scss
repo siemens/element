@@ -17,6 +17,7 @@
 
   @each $key, $value in $values {
     $properties: map.get($utility, property);
+    $property-values: map.get($utility, property-values);
 
     // Multiple properties are possible, for example with vertical or horizontal margins or paddings
     @if meta.type-of($properties) == 'string' {
@@ -45,7 +46,9 @@
     // Don't prefix if value key is null (eg. with shadow class)
     $property-class-modifier: '';
     @if ($key) {
-      @if ($property-class == '' and $infix == '') {
+      @if map.get($utility, negative) {
+        $property-class-modifier: '-n' + $key;
+      } @else if ($property-class == '' and $infix == '') {
         $property-class-modifier: $key;
       } @else {
         $property-class-modifier: '-' + $key;
@@ -79,14 +82,22 @@
                 --#{variables.$variable-prefix}#{$local-var}: #{$value};
               }
             }
-            #{$property}: $value $important;
+            @if $property-values {
+              #{$property}: map.get(map.get($property-values, $property), $key) $important;
+            } @else {
+              #{$property}: $value $important;
+            }
           }
         }
 
         @each $pseudo in $state {
           .#{$property-class + $infix + $property-class-modifier}-#{$pseudo}:#{$pseudo} {
             @each $property in $properties {
-              #{$property}: $value $important;
+              @if $property-values {
+                #{$property}: map.get(map.get($property-values, $property), $key) $important;
+              } @else {
+                #{$property}: $value $important;
+              }
             }
           }
         }

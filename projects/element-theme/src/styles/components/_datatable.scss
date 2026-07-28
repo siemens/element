@@ -112,7 +112,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       inline-size: 13px;
       block-size: 13px;
       margin-block: 0;
-      margin-inline: 0 map.get(spacers.$spacers, 6);
+      margin-inline: 0 map.get(spacers.$spacers-inline, 6);
       position: relative;
 
       > input {
@@ -166,11 +166,11 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       }
 
       &:first-child {
-        padding-inline-start: map.get(spacers.$spacers, 5);
+        padding-inline-start: map.get(spacers.$spacers-inline, 5);
       }
 
       &:last-child {
-        padding-inline-end: map.get(spacers.$spacers, 5);
+        padding-inline-end: map.get(spacers.$spacers-inline, 5);
       }
     }
 
@@ -219,7 +219,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
 
     .sort-btn {
       color: $datatable-header-color !important; // stylelint-disable-line declaration-no-important
-      margin-inline-start: map.get(spacers.$spacers, 1);
+      margin-inline-start: map.get(spacers.$spacers-inline, 1);
     }
 
     // Resizable handle
@@ -296,7 +296,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       .datatable-group-cell {
         display: flex;
         align-items: center;
-        padding-inline-start: map.get(spacers.$spacers, 6);
+        padding-inline-start: map.get(spacers.$spacers-inline, 6);
       }
     }
 
@@ -331,8 +331,8 @@ $datatable-ghost-cell-strip-radius: 0 !default;
 
     .datatable-footer-inner {
       background-color: variables.$table-bg;
-      padding-inline-start: map.get(spacers.$spacers, 6);
-      padding-inline-end: map.get(spacers.$spacers, 4);
+      padding-inline-start: map.get(spacers.$spacers-inline, 6);
+      padding-inline-end: map.get(spacers.$spacers-inline, 4);
       position: relative;
 
       &::before {
@@ -358,7 +358,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
   .datatable-tree-button {
     border: 0;
     background: none;
-    margin-inline: map.get(spacers.$spacers, 2);
+    margin-inline: map.get(spacers.$spacers-inline, 2);
     padding: 0;
 
     &[disabled] {

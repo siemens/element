@@ -104,13 +104,15 @@ $container-max-widths: (
 // Set the number of columns and specify the width of the gutters.
 
 $grid-columns: 12 !default;
-$grid-gutter-width: spacers.$spacer !default;
+$grid-gutter-width: map.get(spacers.$spacers-inline, 6) !default;
 $grid-row-columns: 6 !default;
-$gutters: spacers.$spacers !default;
+$gutters-inline: spacers.$spacers-inline !default;
+$gutters-block: spacers.$spacers-block !default;
+$gutters: $gutters-block !default;
 
 // Container padding
 
-$container-padding-x: $grid-gutter-width * 0.5 !default;
+$container-padding-x: calc(#{$grid-gutter-width} * 0.5) !default;
 
 // Components
 //
@@ -195,7 +197,7 @@ $font-sizes: (
   6: $h6-font-size
 ) !default;
 
-$headings-margin-bottom: spacers.$spacer * 0.5 !default;
+$headings-margin-bottom: map.get(spacers.$spacers-block, 4) !default;
 $headings-font-family: null !default;
 $headings-font-style: null !default;
 $headings-font-weight: typography.$si-font-weight-semibold !default;
@@ -214,12 +216,12 @@ $initialism-font-size: $small-font-size !default;
 
 $text-muted: system-tokens.$si-sys-text-disabled !default;
 
-$blockquote-margin-y: spacers.$spacer !default;
+$blockquote-margin-y: map.get(spacers.$spacers-block, 6) !default;
 $blockquote-font-size: typography.$si-font-size-body-lg !default;
 $blockquote-footer-color: system-tokens.$si-sys-text-secondary !default;
 $blockquote-footer-font-size: $small-font-size !default;
 
-$hr-margin-y: spacers.$spacer !default;
+$hr-margin-y: map.get(spacers.$spacers-block, 6) !default;
 $hr-color: system-tokens.$si-sys-border-4 !default;
 $hr-height: $border-width !default;
 $hr-opacity: 1 !default;
@@ -243,10 +245,10 @@ $mark-color: system-tokens.$si-sys-text-on-caution;
 //
 // Customizes the `.table` component with basic values, each used across all table variations.
 
-$table-cell-padding-y: map.get(spacers.$spacers, 4) !default;
-$table-cell-padding-x: map.get(spacers.$spacers, 4) !default;
-$table-cell-padding-y-sm: map.get(spacers.$spacers, 2) !default;
-$table-cell-padding-x-sm: map.get(spacers.$spacers, 4) !default;
+$table-cell-padding-y: map.get(spacers.$spacers-block, 4) !default;
+$table-cell-padding-x: map.get(spacers.$spacers-inline, 4) !default;
+$table-cell-padding-y-sm: map.get(spacers.$spacers-block, 2) !default;
+$table-cell-padding-x-sm: map.get(spacers.$spacers-inline, 4) !default;
 
 $table-cell-vertical-align: top !default;
 
@@ -285,14 +287,14 @@ $table-variants: (
 //
 // For each of Bootstrap's buttons, define text, background, and border color.
 
-$btn-padding-y: map.get(spacers.$spacers, 4);
-$btn-padding-x: map.get(spacers.$spacers, 4);
+$btn-padding-y: map.get(spacers.$spacers-block, 4);
+$btn-padding-x: map.get(spacers.$spacers-inline, 4);
 $btn-font-size: $font-size-base;
 $btn-line-height: $line-height-base;
 $btn-white-space: null !default; // Set to `nowrap` to prevent text wrapping
 
-$btn-padding-y-sm: map.get(spacers.$spacers, 2);
-$btn-padding-y-lg: map.get(spacers.$spacers, 5);
+$btn-padding-y-sm: map.get(spacers.$spacers-block, 2);
+$btn-padding-y-lg: map.get(spacers.$spacers-block, 5);
 
 $btn-link-color: $link-color !default;
 $btn-link-hover-color: $link-hover-color !default;
@@ -312,7 +314,7 @@ $btn-transition:
 // Forms
 // According to figma it should be 2px + line-height: 16px
 // As overriding line-height is not planned by bootstrap, we use 4px + line-height of 14px
-$form-text-margin-top: map.get(spacers.$spacers, 2);
+$form-text-margin-top: map.get(spacers.$spacers-block, 2);
 $form-text-font-size: $small-font-size !default;
 $form-text-font-style: null !default;
 $form-text-font-weight: null !default;
@@ -324,8 +326,10 @@ $form-label-font-style: null !default;
 $form-label-font-weight: null !default;
 $form-label-color: system-tokens.$si-sys-text-secondary !default;
 
-$input-padding-y: (map.get(spacers.$spacers, 4) - 1px); // 8px including 1px border
-$input-padding-x: (map.get(spacers.$spacers, 4) - 1px); // 8px including 1px border
+$input-padding-y-full: map.get(spacers.$spacers-block, 4);
+$input-padding-y: calc(map.get(spacers.$spacers-block, 4) - 1px); // 8px including 1px border
+$input-padding-x-full: map.get(spacers.$spacers-inline, 4);
+$input-padding-x: calc(map.get(spacers.$spacers-inline, 4) - 1px); // 8px including 1px border
 $input-font-family: null !default;
 $input-font-size: $font-size-base;
 $input-font-weight: $font-weight-base;
@@ -355,10 +359,10 @@ $input-plaintext-color: $body-color !default;
 
 $input-height-border: $input-border-width * 2 !default;
 
-$input-height: functions.add(1lh, ($input-padding-y + $input-border-width) * 2) !default;
+$input-height: calc(1lh + ($input-padding-y-full * 2));
 
 // don't derive from $input-height as it generates a nested calc() expression
-$input-height-inner: functions.add($input-line-height, $input-padding-y * 2) !default;
+$input-height-inner: calc($input-line-height + ($input-padding-y-full - 1px) * 2) !default;
 // Wrap in parenthesis: `*` binds tighter than `-`, so without them only the border term gets multiplied.
 // DEPRECATED: Calculate it yourself using $input-height-inner
 $input-height-inner-half: calc((#{$input-height-inner}) * 0.5) !default;
@@ -418,7 +422,7 @@ $form-validation-states: (
 // Navs
 
 $nav-link-padding-y: 10px;
-$nav-link-padding-x: map.get(spacers.$spacers, 8);
+$nav-link-padding-x: map.get(spacers.$spacers-inline, 8);
 $nav-link-font-size: typography.$si-font-size-h4;
 $nav-link-font-weight: typography.$si-font-weight-h4;
 $nav-link-line-height: typography.$si-line-height-h4;
@@ -438,8 +442,8 @@ $nav-tabs-link-active-bg: transparent !default;
 $badge-font-size: typography.$si-font-size-body;
 $badge-font-weight: typography.$si-font-weight-body;
 $badge-color: system-tokens.$si-sys-text-inverse !default;
-$badge-padding-y: map.get(spacers.$spacers, 1);
-$badge-padding-x: map.get(spacers.$spacers, 4);
+$badge-padding-y: map.get(spacers.$spacers-block, 1);
+$badge-padding-x: map.get(spacers.$spacers-inline, 4);
 $badge-border-radius: 0.75rem;
 $badge-dot-size: 0.625rem;
 $badge-line-height: 1.25rem;
@@ -450,7 +454,7 @@ $badge-height: calc($badge-line-height + 2 * $badge-padding-y);
 // Dropdown menu container and contents.
 $dropdown-min-width: 10rem !default;
 $dropdown-padding-x: 0 !default;
-$dropdown-padding-y: map.get(spacers.$spacers, 4) !default;
+$dropdown-padding-y: map.get(spacers.$spacers-block, 4) !default;
 $dropdown-spacer: 0.125rem !default;
 $dropdown-font-size: $font-size-base !default;
 // this is to have room for icon and badges
@@ -463,25 +467,25 @@ $dropdown-divider-margin-y: 4px !default;
 $dropdown-box-shadow: elevation.$element-elevation-2 !default;
 $dropdown-link-color: system-tokens.$si-sys-text-primary !default;
 $dropdown-link-disabled-color: system-tokens.$si-sys-text-disabled !default;
-$dropdown-item-padding-y: map.get(spacers.$spacers, 2);
-$dropdown-item-padding-x: map.get(spacers.$spacers, 5);
+$dropdown-item-padding-y: map.get(spacers.$spacers-block, 2);
+$dropdown-item-padding-x: map.get(spacers.$spacers-inline, 5);
 $dropdown-header-color: system-tokens.$si-sys-text-primary !default;
 
 // Cards
 
-$card-spacer-y: map.get(spacers.$spacers, 6) !default;
-$card-spacer-x: map.get(spacers.$spacers, 6) !default;
-$card-title-spacer-y: map.get(spacers.$spacers, 5) !default;
+$card-spacer-y: map.get(spacers.$spacers-block, 6) !default;
+$card-spacer-x: map.get(spacers.$spacers-inline, 6) !default;
+$card-title-spacer-y: map.get(spacers.$spacers-block, 5) !default;
 $card-border-radius: $border-radius !default;
 $card-inner-border-radius: $card-border-radius;
-$card-cap-padding-y: map.get(spacers.$spacers, 5) !default;
+$card-cap-padding-y: map.get(spacers.$spacers-block, 5) !default;
 $card-cap-padding-x: $card-spacer-x !default;
 $card-cap-bg: system-tokens.$si-sys-background-1 !default;
 $card-cap-color: null !default;
 $card-height: null !default;
 $card-color: null !default;
 $card-bg: system-tokens.$si-sys-background-1 !default;
-$card-img-overlay-padding: spacers.$spacer !default;
+$card-img-overlay-padding: map.get(spacers.$spacers-block, 6) map.get(spacers.$spacers-inline, 6) !default;
 $card-group-margin: $grid-gutter-width !default;
 
 // Tooltips
@@ -492,8 +496,8 @@ $tooltip-color: system-tokens.$si-sys-text-inverse !default;
 $tooltip-bg: system-tokens.$si-sys-background-inverse !default;
 $tooltip-border-radius: semantic-tokens.$element-radius-2 !default;
 $tooltip-opacity: 0.9 !default;
-$tooltip-padding-y: map.get(spacers.$spacers, 4) !default;
-$tooltip-padding-x: map.get(spacers.$spacers, 6) !default;
+$tooltip-padding-y: map.get(spacers.$spacers-block, 4) !default;
+$tooltip-padding-x: map.get(spacers.$spacers-inline, 6) !default;
 $tooltip-margin: 0 !default;
 
 $tooltip-arrow-width: 12px !default;
@@ -516,8 +520,8 @@ $popover-box-shadow: $box-shadow !default;
 
 $popover-header-bg: system-tokens.$si-sys-background-3 !default;
 $popover-header-color: system-tokens.$si-sys-text-accent;
-$popover-header-padding-y: map.get(spacers.$spacers, 5) !default;
-$popover-header-padding-x: map.get(spacers.$spacers, 5) !default;
+$popover-header-padding-y: map.get(spacers.$spacers-block, 5) !default;
+$popover-header-padding-x: map.get(spacers.$spacers-inline, 5) !default;
 
 $popover-body-color: system-tokens.$si-sys-text-primary !default;
 $popover-body-padding-y: $popover-header-padding-y !default;
@@ -532,13 +536,13 @@ $popover-arrow-outer-color: $popover-border-color !default;
 // Modals
 
 // Padding applied to the modal body
-$modal-inner-padding: map.get(spacers.$spacers, 8);
+$modal-inner-padding: map.get(spacers.$spacers-block, 8);
 
 // Margin between elements in footer, must be lower than or equal to 2 * $modal-inner-padding
-$modal-footer-margin-between: map.get(spacers.$spacers, 6);
+$modal-footer-margin-between: map.get(spacers.$spacers-block, 6);
 
-$modal-dialog-margin: map.get(spacers.$spacers, 4);
-$modal-dialog-margin-y-sm-up: map.get(spacers.$spacers, 9);
+$modal-dialog-margin: map.get(spacers.$spacers-block, 4);
+$modal-dialog-margin-y-sm-up: map.get(spacers.$spacers-block, 9);
 
 $modal-title-line-height: typography.$si-line-height-h4 !default;
 
@@ -559,8 +563,8 @@ $modal-header-border-color: $border-color !default;
 $modal-footer-border-color: $modal-header-border-color !default;
 $modal-header-border-width: 0 !default;
 $modal-footer-border-width: 0 !default;
-$modal-header-padding-y: map.get(spacers.$spacers, 5);
-$modal-header-padding-x: map.get(spacers.$spacers, 8);
+$modal-header-padding-y: map.get(spacers.$spacers-block, 5);
+$modal-header-padding-x: map.get(spacers.$spacers-inline, 8);
 
 $modal-sm: 300px !default;
 $modal-md: 500px !default;
@@ -577,12 +581,14 @@ $modal-scale-transform: scale(1.02) !default;
 // Define alert colors, border radius, and padding.
 
 $alert-padding-y: 10px !default;
-$alert-padding-x: map.get(spacers.$spacers, 5) !default;
+$alert-padding-x: map.get(spacers.$spacers-inline, 5) !default;
 $alert-margin-bottom: 0 !default;
 $alert-border-radius: 0 !default;
 $alert-link-font-weight: $font-weight-bold !default;
 $alert-border-width: 0 !default;
-$alert-dismissible-padding-r: $alert-padding-x * 3 !default; // 3x covers width of x plus default padding on either side
+$alert-dismissible-padding-r: calc(
+  $alert-padding-x * 3
+) !default; // 3x covers width of x plus default padding on either side
 
 // Progress bars
 
@@ -604,8 +610,8 @@ $list-group-border-color: $border-color !default;
 $list-group-border-width: $border-width !default;
 $list-group-border-radius: $border-radius !default;
 
-$list-group-item-padding-y: map.get(spacers.$spacers, 4) !default;
-$list-group-item-padding-x: map.get(spacers.$spacers, 6) !default; // 1.25rem !default;
+$list-group-item-padding-y: map.get(spacers.$spacers-block, 4) !default;
+$list-group-item-padding-x: map.get(spacers.$spacers-inline, 6) !default; // 1.25rem !default;
 
 $list-group-hover-bg: system-tokens.$si-sys-background-hover !default;
 $list-group-active-color: $body-color !default;
@@ -640,7 +646,7 @@ $figure-caption-color: system-tokens.$si-sys-text-secondary !default;
 $breadcrumb-font-size: null !default;
 $breadcrumb-padding-y: 0;
 $breadcrumb-padding-x: 0;
-$breadcrumb-item-padding-x: map.get(spacers.$spacers, 5);
+$breadcrumb-item-padding-x: map.get(spacers.$spacers-inline, 5);
 $breadcrumb-margin-bottom: 0;
 $breadcrumb-bg: inherit !default;
 $breadcrumb-divider-color: system-tokens.$si-sys-text-secondary !default;
@@ -655,8 +661,8 @@ $code-font-size: typography.$si-font-size-body !default;
 $code-line-height: typography.$si-line-height-body !default;
 $code-color: system-tokens.$si-sys-text-primary !default;
 $code-background: system-tokens.$si-sys-background-selected !default;
-$code-padding-y: map.get(spacers.$spacers, 1) !default;
-$code-padding-x: map.get(spacers.$spacers, 2) !default;
+$code-padding-y: map.get(spacers.$spacers-block, 1) !default;
+$code-padding-x: map.get(spacers.$spacers-inline, 2) !default;
 $code-border-radius: semantic-tokens.$element-radius-1 !default;
 
 $kbd-padding-y: 0.2rem !default;
@@ -667,8 +673,8 @@ $kbd-bg: system-tokens.$si-sys-background-3 !default;
 $kbd-font-size: $code-font-size !default;
 
 $pre-color: system-tokens.$si-sys-text-primary !default;
-$pre-padding-y: map.get(spacers.$spacers, 4) !default;
-$pre-padding-x: map.get(spacers.$spacers, 4) !default;
+$pre-padding-y: map.get(spacers.$spacers-block, 4) !default;
+$pre-padding-x: map.get(spacers.$spacers-inline, 4) !default;
 $pre-border-color: system-tokens.$si-sys-border-4 !default;
 $pre-border-width: $border-width !default;
 $pre-border-radius: semantic-tokens.$element-radius-1 !default;

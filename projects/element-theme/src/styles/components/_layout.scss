@@ -10,11 +10,11 @@
 }
 
 .si-layout-main-padding {
-  padding-block: map.get(variables.$spacers, 6) 0;
-  padding-inline: map.get(variables.$spacers, 6);
+  padding-block: map.get(variables.$spacers-block, 6) 0;
+  padding-inline: map.get(variables.$spacers-inline, 6);
 
   @include breakpoints.media-breakpoint-up(md) {
-    padding-inline: map.get(variables.$spacers, 9);
+    padding-inline: map.get(variables.$spacers-inline, 9);
   }
 }
 
@@ -25,16 +25,16 @@
 }
 
 .si-layout-status {
-  margin-block-end: map.get(variables.$spacers, 4);
-  margin-block-start: -#{map.get(variables.$spacers, 4)};
+  margin-block-end: map.get(variables.$spacers-block, 4);
+  margin-block-start: map.get(variables.$negative-spacers-block, 4);
 }
 
 .si-layout-breadcrumb {
   display: block;
-  margin-block-end: map.get(variables.$spacers, 4);
+  margin-block-end: map.get(variables.$spacers-block, 4);
 
   &.si-layout-top-element {
-    margin-block-end: map.get(variables.$spacers, 6);
+    margin-block-end: map.get(variables.$spacers-block, 6);
   }
 }
 
@@ -45,7 +45,7 @@
     'title title'
     'subtitle subtitle'
     'actions actions';
-  margin-block-end: map.get(variables.$spacers, 8);
+  margin-block-end: map.get(variables.$spacers-block, 8);
 }
 
 .si-layout-title {
@@ -65,7 +65,7 @@
 
 .si-layout-subtitle {
   grid-area: subtitle;
-  margin-block-start: map.get(variables.$spacers, 4);
+  margin-block-start: map.get(variables.$spacers-block, 4);
   margin-block-end: 0;
   color: variables.$si-sys-text-secondary;
   @include variables.si-font(
@@ -77,13 +77,13 @@
 
 .si-layout-actions {
   grid-area: actions;
-  margin-block-start: map.get(variables.$spacers, 6);
+  margin-block-start: map.get(variables.$spacers-block, 6);
 }
 
 @include breakpoints.media-breakpoint-up(sm) {
   .si-layout-breadcrumb {
     margin-block-end: map.get(
-      variables.$spacers,
+      variables.$spacers-block,
       4
     ) !important; // stylelint-disable-line declaration-no-important
   }
@@ -111,7 +111,7 @@
   .si-layout-status {
     margin-block-start: 0;
     margin-block-end: map.get(
-      variables.$spacers,
+      variables.$spacers-block,
       6
     ) !important; // stylelint-disable-line declaration-no-important
   }

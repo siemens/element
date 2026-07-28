@@ -2,8 +2,9 @@
 
 @use '@siemens/element-theme/src/styles/variables';
 
-$status-bar-padding: map.get(variables.$spacers, 4);
-$status-bar-padding-small: map.get(variables.$spacers, 1);
+$status-bar-padding-block: map.get(variables.$spacers-block, 4);
+$status-bar-padding-inline: map.get(variables.$spacers-inline, 4);
+$status-bar-padding-block-small: map.get(variables.$spacers-block, 1);
 
 $blink-transition-duration: variables.$element-default-transition-duration;
 
@@ -27,7 +28,7 @@ $blink-transition-duration: variables.$element-default-transition-duration;
 }
 
 .status-bar-wrapper {
-  padding-inline: $status-bar-padding;
+  padding-inline: $status-bar-padding-inline;
   background-color: variables.$si-sys-background-1;
 
   > * {
@@ -36,14 +37,14 @@ $blink-transition-duration: variables.$element-default-transition-duration;
 }
 
 .mobile-spacer {
-  margin-block: map.get(variables.$spacers, 2);
+  margin-block: map.get(variables.$spacers-block, 2);
   margin-inline: 0;
   background: variables.$si-sys-background-0;
   block-size: 1px;
 }
 
 .bar-item {
-  margin-block: $status-bar-padding;
+  margin-block: $status-bar-padding-block;
 }
 
 .custom-content {
@@ -56,17 +57,17 @@ $blink-transition-duration: variables.$element-default-transition-duration;
 
 .mute-padding {
   padding-inline-end: calc(
-    1lh + 2 * map.get(variables.$spacers, 5) + map.get(variables.$spacers, 3)
+    1lh + 2 * map.get(variables.$spacers-inline, 5) + map.get(variables.$spacers-inline, 3)
   );
 }
 
 .mobile-mute {
   position: absolute;
-  inset-inline-end: $status-bar-padding;
+  inset-inline-end: $status-bar-padding-inline;
 }
 
 .main-content .mute-button {
-  margin-inline-end: map.get(variables.$spacers, 2);
+  margin-inline-end: map.get(variables.$spacers-inline, 2);
 }
 
 .collapse-expand {
@@ -74,7 +75,7 @@ $blink-transition-duration: variables.$element-default-transition-duration;
   border: 0;
   border-end-start-radius: 2rem;
   border-end-end-radius: 2rem;
-  inline-size: calc(1.5rem + 2 * map.get(variables.$spacers, 4));
+  inline-size: calc(1.5rem + 2 * map.get(variables.$spacers-inline, 4));
   color: variables.$si-sys-text-accent;
   cursor: pointer;
 
@@ -94,7 +95,7 @@ $blink-transition-duration: variables.$element-default-transition-duration;
 
 .compact {
   .bar-item {
-    margin-block: $status-bar-padding-small;
+    margin-block: $status-bar-padding-block-small;
   }
 }
 

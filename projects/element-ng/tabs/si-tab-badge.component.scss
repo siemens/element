@@ -9,7 +9,7 @@
 }
 
 .badge-text {
-  inset-block-start: variables.$nav-link-padding-y * -1 - 1px;
+  inset-block-start: calc(variables.$nav-link-padding-y * -1 - 1px);
   inset-inline-start: 2px;
 }
 
@@ -25,6 +25,6 @@
   }
 
   .badge {
-    margin-inline: 0 - map.get(spacers.$spacers, 3);
+    margin-inline-end: map.get(spacers.$negative-spacers-inline, 3);
   }
 }

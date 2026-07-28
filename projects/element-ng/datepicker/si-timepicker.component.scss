@@ -2,8 +2,6 @@
 @use '@siemens/element-theme/src/styles/bootstrap/variables';
 @use '@siemens/element-theme/src/styles/variables/system-tokens';
 
-$padding: 2 * (variables.$input-padding-x + variables.$input-border-width);
-
 :host {
   display: block;
 
@@ -19,6 +17,6 @@ $padding: 2 * (variables.$input-padding-x + variables.$input-border-width);
   }
 
   input {
-    inline-size: calc(3ch + $padding);
+    inline-size: calc(3ch + 2 * variables.$input-padding-x-full);
   }
 }

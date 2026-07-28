@@ -29,7 +29,7 @@
     }
 
     .login-basic-next-button {
-      margin-block-start: map.get(variables.$spacers, 4);
+      margin-block-start: map.get(variables.$spacers-block, 4);
     }
   }
 }
@@ -45,12 +45,12 @@
 
 .login-basic-second-step--content {
   @extend .toggle-content-transition;
-  transform: translateY(map.get(variables.$spacers, 3) * -1);
+  transform: translateY(map.get(variables.$negative-spacers-block, 3));
 }
 
 .login-basic-next-button {
   @extend .toggle-content-transition;
   margin-block-start: 0;
-  transform: translateY(map.get(variables.$spacers, 3));
+  transform: translateY(map.get(variables.$spacers-block, 3));
   transition: margin var(--animation-duration) ease;
 }

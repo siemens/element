@@ -3,33 +3,15 @@
 @use '../bootstrap/variables';
 @use 'spacers';
 
-$negative-spacers: (
-  // -2px
-  n1: spacers.$spacer * -0.125,
-  // -4px
-  n2: spacers.$spacer * -0.25,
-  // -6px
-  n3: spacers.$spacer * -0.375,
-  // -8px
-  n4: spacers.$spacer * -0.5,
-  // -12px
-  n5: spacers.$spacer * -0.75,
-  // -16px
-  n6: spacers.$spacer * -1,
-  // -20px
-  n7: spacers.$spacer * -1.25,
-  // -24px
-  n8: spacers.$spacer * -1.5,
-  // -32px
-  n9: spacers.$spacer * -2,
-  // -64px
-  n10: spacers.$spacer * -4,
-  // -96px
-  n11: spacers.$spacer * -6
+$_margins-inline: map.merge(
+  spacers.$spacers-inline,
+  (
+    auto: auto
+  )
 );
 
-$_margins: map.merge(
-  spacers.$spacers,
+$_margins-block: map.merge(
+  spacers.$spacers-block,
   (
     auto: auto
   )
@@ -259,9 +241,13 @@ $utilities: (
   ),
   'gap': (
     responsive: true,
-    property: gap,
+    property: row-gap column-gap,
     class: gap,
-    values: spacers.$spacers
+    values: spacers.$spacers-block,
+    property-values: (
+      row-gap: spacers.$spacers-block,
+      column-gap: spacers.$spacers-inline
+    )
   ),
   'justify-content': (
     responsive: true,
@@ -327,131 +313,150 @@ $utilities: (
   // Margin utilities
   'margin': (
       responsive: true,
-      property: margin,
+      property: margin-block margin-inline,
       class: m,
-      values: $_margins
+      values: $_margins-block,
+      property-values: (
+        margin-block: $_margins-block,
+        margin-inline: $_margins-inline
+      )
     ),
   'margin-x': (
     responsive: true,
     property: margin-inline,
     class: mx,
-    values: $_margins
+    values: $_margins-inline
   ),
   'margin-y': (
     responsive: true,
     property: margin-block,
     class: my,
-    values: $_margins
+    values: $_margins-block
   ),
   'margin-top': (
     responsive: true,
     property: margin-block-start,
     class: mt,
-    values: $_margins
+    values: $_margins-block
   ),
   'margin-end': (
     responsive: true,
     property: margin-inline-end,
     class: me,
-    values: $_margins
+    values: $_margins-inline
   ),
   'margin-bottom': (
     responsive: true,
     property: margin-block-end,
     class: mb,
-    values: $_margins
+    values: $_margins-block
   ),
   'margin-start': (
     responsive: true,
     property: margin-inline-start,
     class: ms,
-    values: $_margins
+    values: $_margins-inline
   ),
   // Negative margin utilities
   'negative-margin': (
       responsive: true,
-      property: margin,
+      negative: true,
+      property: margin-block margin-inline,
       class: m,
-      values: $negative-spacers
+      values: spacers.$negative-spacers-block,
+      property-values: (
+        margin-block: spacers.$negative-spacers-block,
+        margin-inline: spacers.$negative-spacers-inline
+      )
     ),
   'negative-margin-x': (
     responsive: true,
+    negative: true,
     property: margin-inline,
     class: mx,
-    values: $negative-spacers
+    values: spacers.$negative-spacers-inline
   ),
   'negative-margin-y': (
     responsive: true,
+    negative: true,
     property: margin-block,
     class: my,
-    values: $negative-spacers
+    values: spacers.$negative-spacers-block
   ),
   'negative-margin-top': (
     responsive: true,
+    negative: true,
     property: margin-block-start,
     class: mt,
-    values: $negative-spacers
+    values: spacers.$negative-spacers-block
   ),
   'negative-margin-end': (
     responsive: true,
+    negative: true,
     property: margin-inline-end,
     class: me,
-    values: $negative-spacers
+    values: spacers.$negative-spacers-inline
   ),
   'negative-margin-start': (
     responsive: true,
+    negative: true,
     property: margin-inline-start,
     class: ms,
-    values: $negative-spacers
+    values: spacers.$negative-spacers-inline
   ),
   'negative-margin-bottom': (
     responsive: true,
+    negative: true,
     property: margin-block-end,
     class: mb,
-    values: $negative-spacers
+    values: spacers.$negative-spacers-block
   ),
   // Padding utilities
   'padding': (
       responsive: true,
-      property: padding,
+      property: padding-block padding-inline,
       class: p,
-      values: spacers.$spacers
+      values: spacers.$spacers-block,
+      property-values: (
+        padding-block: spacers.$spacers-block,
+        padding-inline: spacers.$spacers-inline
+      )
     ),
   'padding-x': (
     responsive: true,
     property: padding-inline,
     class: px,
-    values: spacers.$spacers
+    values: spacers.$spacers-inline
   ),
   'padding-y': (
     responsive: true,
     property: padding-block,
     class: py,
-    values: spacers.$spacers
+    values: spacers.$spacers-block
   ),
   'padding-top': (
     responsive: true,
     property: padding-block-start,
     class: pt,
-    values: spacers.$spacers
+    values: spacers.$spacers-block
   ),
   'padding-end': (
     responsive: true,
     property: padding-inline-end,
     class: pe,
-    values: spacers.$spacers
+    values: spacers.$spacers-inline
   ),
   'padding-bottom': (
     responsive: true,
     property: padding-block-end,
     class: pb,
-    values: spacers.$spacers
+    values: spacers.$spacers-block
   ),
   'padding-start': (
     responsive: true,
     property: padding-inline-start,
     class: ps,
-    values: spacers.$spacers
+    values: spacers.$spacers-inline
   ),
   // Text
   'font-family': (

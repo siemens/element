@@ -126,7 +126,7 @@ export const APP_CONFIG: ApplicationConfig = {
           themeSwitcher: true,
           rtlSwitcher: true,
           webcomponents: true,
-          rootFontSizes: [16, 20, 24]
+          rootFontSizes: [12, 14, 16, 20, 24]
         },
         false
       )
