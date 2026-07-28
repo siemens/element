@@ -40,7 +40,7 @@ const packages = [
     outdatedGoldens.forEach(name => console.info(`-  ${name}`));
     console.info();
     console.info(
-      `The goldens can be updated by running: "npm run api-goldens:build-accept"`
+      `The goldens can be updated by running: "pnpm api-goldens:build-accept"`
     );
     process.exitCode = 1;
   }
