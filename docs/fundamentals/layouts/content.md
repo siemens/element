@@ -116,7 +116,7 @@ components like tables may grow to maximum height and content overflows are
 handled with inner scroll bars.
 
 This behavior can be implemented with [flex](https://developer.mozilla.org/en-US/docs/Web/CSS/flex).
-The outer application element must set its height to `100%` of the window height by e.g. the Bootstrap
+The outer application element must set its height to `100%` of the window height by e.g. the [sizing](../styles/sizing.md)
 utility `h-100` and set its content to flex column with grow and shrink.
 
 ```scss
