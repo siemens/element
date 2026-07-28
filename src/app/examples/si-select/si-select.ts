@@ -158,7 +158,7 @@ export class SampleComponent {
     );
   }
 
-  selectionChanged(value: string): void {
+  selectionChanged(value: string | undefined): void {
     const option = this.optionsList.find(o => o.type === 'option' && o.value === value);
     this.logEvent(`Selection: ${this.value}, '${option?.label}'`);
   }

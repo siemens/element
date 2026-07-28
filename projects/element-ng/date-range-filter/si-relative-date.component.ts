@@ -128,8 +128,8 @@ export class SiRelativeDateComponent implements OnChanges {
     this.value.set(nextValue);
   }
 
-  protected changeUnit(newUnit: string): void {
-    this.unit.set(newUnit);
+  protected changeUnit(newUnit: string | undefined): void {
+    this.unit.set(newUnit!);
     const item = this.offsetList().find(x => x.value === this.unit())!;
     const roundedOffset = Math.max(1, Math.round(this.value() / item.offset));
     this.offset.set(roundedOffset);

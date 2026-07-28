@@ -9,7 +9,9 @@ import { ConfigurableFocusTrap } from '@angular/cdk/a11y';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { ControlValueAccessor } from '@angular/forms';
 import { ElementRef } from '@angular/core';
+import { FormValueControl } from '@angular/forms/signals';
 import { InputSignal } from '@angular/core';
+import { ModelSignal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
@@ -148,6 +150,8 @@ export class SiSelectModule {
 // @public
 export class SiSelectMultiValueDirective<T> extends SiSelectSelectionStrategy<T, T[]> {
     readonly allowMultiple = true;
+    // (undocumented)
+    readonly value: _angular_core.ModelSignal<T[]>;
 }
 
 // @public
@@ -163,8 +167,10 @@ export class SiSelectSimpleOptionsDirective<T = string> extends SiSelectOptionsS
 }
 
 // @public
-export class SiSelectSingleValueDirective<T> extends SiSelectSelectionStrategy<T, T> {
+export class SiSelectSingleValueDirective<T> extends SiSelectSelectionStrategy<T, T | undefined> {
     allowMultiple: boolean;
+    // (undocumented)
+    readonly value: _angular_core.ModelSignal<T | undefined>;
 }
 
 // (No @packageDocumentation comment for this package)
