@@ -6,7 +6,7 @@ from markdown.preprocessors import Preprocessor
 
 
 api_enabled = os.environ.get('DOCS_COMPOSER', 'false') in ('true', '1', 'yes', 'y')
-
+structured_output_path = 'source'
 
 class DocsComposerExtension(Extension):
   current_file_path: str = ""
@@ -39,7 +39,7 @@ class DocsComposerPreprocessor(Preprocessor):
         self.extension.current_file_path,
         self.extension.is_serve,
         True,
-        'source',
+        structured_output_path,
         True,
         True,
         timeout=1000 * 60 * 1,  # 1 minute timeout

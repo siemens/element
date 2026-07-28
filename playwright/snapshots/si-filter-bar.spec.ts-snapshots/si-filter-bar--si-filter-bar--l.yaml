@@ -7,7 +7,7 @@
 - button "Remove"
 - text: "Company : Siemens"
 - button "Remove"
-- text: + 3 filters
+- text: + 3 criteria
 - button "Remove"
 - button "Reset filters"
 - heading "Variant Dark" [level=4]
@@ -19,7 +19,7 @@
 - button "Remove"
 - text: "Company : Siemens"
 - button "Remove"
-- text: + 3 filters
+- text: + 3 criteria
 - button "Remove"
 - button "Reset filters"
 - heading "Variant Light Disabled" [level=4]

@@ -10,7 +10,7 @@
 @use 'sass:map';
 
 $datatable-header-border-color: variables.$table-border-color !default;
-$datatable-header-background-color: transparent !default;
+$datatable-header-background-color: variables.$table-bg !default;
 $datatable-header-color: semantic-tokens.$element-text-primary !default;
 $datatable-footer-background-color: transparent !default;
 
@@ -45,6 +45,11 @@ $datatable-ghost-cell-strip-radius: 0 !default;
 .ngx-datatable.table-element {
   background-color: variables.$table-bg;
   border-radius: semantic-tokens.$element-radius-2;
+
+  // Compat for v26. This element hos no class.
+  [role='table'] {
+    flex: 1;
+  }
 
   &.table-custom {
     --si-datatable-row-min-height: 24px;
@@ -202,13 +207,10 @@ $datatable-ghost-cell-strip-radius: 0 !default;
   // Header Styles
   .datatable-header {
     padding: 0;
-    display: flex;
-    align-items: center;
     border-block-end: 4px solid $datatable-header-border-color;
     background-color: $datatable-header-background-color;
     color: $datatable-header-color;
     block-size: $datatable-header-height;
-    vertical-align: baseline;
     font-size: typography.$si-font-size-h5;
     font-weight: typography.$si-font-weight-h5;
     line-height: typography.$si-line-height-h5;
@@ -312,17 +314,12 @@ $datatable-ghost-cell-strip-radius: 0 !default;
         }
       }
     }
-
-    .datatable-body-row:has(.datatable-row-group) {
-      min-inline-size: fit-content;
-    }
   }
 
   // Footer Styles
   .datatable-footer {
     display: flex;
     align-items: flex-end;
-    flex: 1;
     align-content: flex-end;
     background-color: $datatable-footer-background-color;
     color: semantic-tokens.$element-text-secondary;

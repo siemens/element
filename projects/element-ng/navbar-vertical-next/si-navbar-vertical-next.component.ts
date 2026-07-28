@@ -3,23 +3,23 @@
  * SPDX-License-Identifier: MIT
  */
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { PortalModule } from '@angular/cdk/portal';
 import {
   afterNextRender,
   booleanAttribute,
   Component,
   computed,
+  contentChild,
   contentChildren,
   inject,
   Injector,
   input,
+  linkedSignal,
   model,
   OnChanges,
   OnInit,
   signal,
   SimpleChanges,
-  viewChild,
-  ViewContainerRef
+  viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -34,7 +34,9 @@ import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
+import { SiNavbarVerticalNextChipMenuComponent } from './si-navbar-vertical-next-chip-menu.component';
 import { SiNavbarVerticalNextItemComponent } from './si-navbar-vertical-next-item.component';
+import { SiNavbarVerticalNextItemsComponent } from './si-navbar-vertical-next-items.component';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
 /** @experimental */
@@ -46,7 +48,12 @@ interface UIState {
 /** @experimental */
 @Component({
   selector: 'si-navbar-vertical-next',
-  imports: [PortalModule, SiIconComponent, SiSkipLinkTargetDirective, SiTranslatePipe],
+  imports: [
+    SiIconComponent,
+    SiNavbarVerticalNextChipMenuComponent,
+    SiSkipLinkTargetDirective,
+    SiTranslatePipe
+  ],
   templateUrl: './si-navbar-vertical-next.component.html',
   styleUrl: './si-navbar-vertical-next.component.scss',
   providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useExisting: SiNavbarVerticalNextComponent }],
@@ -55,6 +62,7 @@ interface UIState {
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
     '[class.nav-inline-collapse]': 'inlineCollapse()',
+    '[class.has-visible-chip]': 'hasVisibleChip()',
     '[class.visible]': 'visible()',
     '[class.ready]': 'ready()'
   }
@@ -157,10 +165,15 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   protected readonly ready = signal(false);
   protected readonly smallScreen = signal(false);
 
-  /** Stable ViewContainerRef inside <nav>, used to host flyout anchors when the chip DomPortal moves a trigger outside the nav.
+  /** Chip menu sub-component; present only while the parent template renders it.
    * @internal
    */
-  readonly flyoutAnchorHost = viewChild('flyoutAnchorHost', { read: ViewContainerRef });
+  private readonly chipMenu = viewChild(SiNavbarVerticalNextChipMenuComponent);
+
+  /** Projected items container; portaled into the chip menu overlay while it is open.
+   * @internal
+   */
+  readonly itemsComponent = contentChild(SiNavbarVerticalNextItemsComponent);
 
   /** All projected nav items, including descendants inside group templates.
    * @internal
@@ -172,14 +185,11 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   /** The active root-level item; group triggers resolve for nested routes.
    * @internal
    */
-  readonly activeItem = computed(() => this.items().find(item => item.isActiveRootItem()));
-
-  /** `true` when the active item's portal should occupy the chip slot.
-   * @internal
-   */
-  readonly chipPortalAttached = computed(
-    () => this.inlineCollapse() && this.collapsed() && !!this.activeItem()
-  );
+  readonly activeItem = linkedSignal({
+    source: () => this.items().find(item => item.isActiveRootItem()),
+    computation: (current, previous): SiNavbarVerticalNextItemComponent | undefined =>
+      current ?? previous?.value
+  });
 
   /**
    * @defaultValue
@@ -208,6 +218,16 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
    * @internal
    */
   readonly flyoutMode = computed(() => this.alwaysFlyout() || this.collapsed());
+
+  /** `true` when the chip menu overlay is open.
+   * @internal
+   */
+  readonly chipMenuOpen = computed(() => this.chipMenu()?.open() ?? false);
+
+  /** `true` when the chip is rendered and visually parked next to the toggle.
+   * @internal
+   */
+  readonly hasVisibleChip = computed(() => this.chipMode() && !!this.activeItem());
 
   constructor() {
     this.breakpointObserver
@@ -294,5 +314,6 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
     if (this.smallScreen()) {
       this.collapsed.set(true);
     }
+    this.chipMenu()?.close();
   }
 }

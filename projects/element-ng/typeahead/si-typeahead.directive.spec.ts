@@ -445,11 +445,7 @@ describe('SiTypeaheadDirective', () => {
 
     await tick(wrapperComponent.waitMs());
 
-    expect(setTimeout).toHaveBeenCalledWith(
-      // eslint-disable-next-line vitest/valid-expect
-      expect.any(Function),
-      333
-    );
+    expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 333);
   });
 
   it('should properly select item on click', async () => {

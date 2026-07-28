@@ -65,19 +65,19 @@ Infer the correct test command from the file path being edited. After implementa
 
 All unit tests use **Vitest**. Do NOT use `npx ng test` or Karma/Jasmine commands.
 
-| File path prefix                 | Command                      |
-| -------------------------------- | ---------------------------- |
-| `projects/element-ng/`           | `npm run lib:test`           |
-| `projects/charts-ng/`            | `npm run charts:test`        |
-| `projects/native-charts-ng/`     | `npm run native-charts:test` |
-| `projects/maps-ng/`              | `npm run maps:test`          |
-| `projects/dashboards-ng/`        | `npm run dashboards:test`    |
-| `projects/element-translate-ng/` | `npm run translate:test`     |
+| File path prefix                 | Command                   |
+| -------------------------------- | ------------------------- |
+| `projects/element-ng/`           | `pnpm lib:test`           |
+| `projects/charts-ng/`            | `pnpm charts:test`        |
+| `projects/native-charts-ng/`     | `pnpm native-charts:test` |
+| `projects/maps-ng/`              | `pnpm maps:test`          |
+| `projects/dashboards-ng/`        | `pnpm dashboards:test`    |
+| `projects/element-translate-ng/` | `pnpm translate:test`     |
 
 To run a specific test file, use `--include` and `--no-watch`:
 
 ```shell
-npm run lib:test -- --include='**/component-name/component-name.component.spec.ts' --no-watch
+pnpm lib:test -- --include='**/component-name/component-name.component.spec.ts' --no-watch
 ```
 
 Only these CLI flags are supported: `--include` (glob filter) and `--no-watch` (run once).
@@ -94,11 +94,11 @@ Always check if the DEV server is already running before starting.
 
 ```shell
 # 1. Start the dev server, port 4200
-npm run start -- --allowed-hosts true --host 0.0.0.0
+pnpm start -- --allowed-hosts true --host 0.0.0.0
 
 # 2. Only if running dashboards test:
-npm run dashboards-demo:build-and-run-all       # webpack, port 4201
-npm run dashboards-demo:build-and-run-all:esm   # ESM, port 4204
+pnpm dashboards-demo:build-and-run-all       # webpack, port 4201
+pnpm dashboards-demo:build-and-run-all:esm   # ESM, port 4204
 
 # 3. Run e2e tests
 ./e2e-local.sh                                          # run all

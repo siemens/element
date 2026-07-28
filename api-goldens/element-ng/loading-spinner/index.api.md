@@ -6,20 +6,12 @@
 
 import * as _angular_core from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { InjectionToken } from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as rxjs from 'rxjs';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
-import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
-
-// @public (undocumented)
-export const LOADING_SPINNER_BLOCKING: InjectionToken<boolean>;
-
-// @public (undocumented)
-export const LOADING_SPINNER_OVERLAY: InjectionToken<boolean>;
 
 // @public (undocumented)
 export class SiLoadingButtonComponent {
@@ -42,9 +34,9 @@ export class SiLoadingService {
 export class SiLoadingSpinnerComponent {
     readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
-    readonly isBlockingSpinner: _angular_core.InputSignal<boolean | null>;
+    readonly isBlockingSpinner: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
-    readonly isSpinnerOverlay: _angular_core.InputSignal<boolean | null>;
+    readonly isSpinnerOverlay: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
 // @public (undocumented)

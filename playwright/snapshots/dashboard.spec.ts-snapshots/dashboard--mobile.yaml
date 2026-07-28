@@ -32,7 +32,7 @@
       - menubar:
         - menuitem "Print"
         - menuitem "Expand"
-        - menuitem "Toggle"
+        - menuitem "Show actions"
     - listitem "Pie Chart":
       - text: ""
       - menubar:
@@ -43,12 +43,12 @@
       - menubar:
         - menuitem "Print"
         - menuitem "Expand"
-        - menuitem "Toggle"
+        - menuitem "Show actions"
     - listitem "List Widget":
       - text: ""
       - menubar:
         - menuitem "Sort descending"
-      - textbox "Search..."
+      - textbox "Search…"
       - list:
         - listitem:
           - text: /\d+\+/

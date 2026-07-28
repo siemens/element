@@ -47,7 +47,7 @@ import { LivePreviewThemeApiService } from './shared/live-preview-theme.api.serv
 
 const componentLoader =
   // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-  require('@siemens/live-preview/component-loader?root=src&examples=app/examples/**/*.ts&webcomponents=true!./app.config').default;
+  require('@siemens/live-preview/component-loader?root=src&examples=app/examples/**/*.ts&rel=true&webcomponents=true!./app.config').default;
 
 // On locale change, we dynamically reload the locale definition
 // for angular. With this configuration, we only load the current

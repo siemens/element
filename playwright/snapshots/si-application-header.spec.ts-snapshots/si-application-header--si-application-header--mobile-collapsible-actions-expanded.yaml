@@ -1,12 +1,12 @@
 - banner:
-  - button "Toggle navigation"
+  - button "Show navigation"
   - heading "My application" [level=1]
   - button "Notifications"
-  - button "Toggle actions" [expanded]
+  - button "Show actions" [expanded]
   - button "Tenant 1"
   - button /\+\d+ Support/ [expanded]
   - group /\+\d+ Support/:
     - button "Help"
     - button "Contact"
   - button "Settings"
-  - button "Lars Vegas"
+  - button "Lars Vegas": LV

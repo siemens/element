@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Injectable } from '@angular/core';
+import { SortPropDir } from '@siemens/ngx-datatable';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
@@ -23,10 +24,7 @@ export interface PageRequest {
   // An optional filter parameter
   filter?: string;
   // An optional sort parameter
-  sort?: {
-    prop: string;
-    dir: 'asc' | 'desc';
-  };
+  sort?: SortPropDir;
 }
 
 export class Page {

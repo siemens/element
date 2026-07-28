@@ -80,7 +80,6 @@ describe('SiPasswordStrengthDirective', () => {
 
     expect(element.classList).toHaveLength(0);
     expect(wrapperComponent.passwordStrengthChangedFunc).not.toHaveBeenCalledWith(
-      // eslint-disable-next-line vitest/valid-expect
       expect.any(Number)
     );
 
@@ -94,7 +93,6 @@ describe('SiPasswordStrengthDirective', () => {
 
     expect(element.classList).toHaveLength(0);
     expect(wrapperComponent.passwordStrengthChangedFunc).not.toHaveBeenCalledWith(
-      // eslint-disable-next-line vitest/valid-expect
       expect.any(Number)
     );
   });

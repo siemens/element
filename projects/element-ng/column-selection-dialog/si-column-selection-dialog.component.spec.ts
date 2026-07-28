@@ -141,7 +141,6 @@ describe('ColumnDialogComponent', () => {
     expect(modalRef.hidden.next).toHaveBeenCalledWith({
       type: 'restoreDefault',
       columns: columns(),
-      // eslint-disable-next-line vitest/valid-expect
       updateColumns: expect.any(Function)
     });
 

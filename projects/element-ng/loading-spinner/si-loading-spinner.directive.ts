@@ -6,27 +6,21 @@ import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import {
   booleanAttribute,
   ChangeDetectorRef,
-  ComponentRef,
   computed,
   Directive,
   ElementRef,
   inject,
-  Injector,
   input,
+  inputBinding,
   OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
   ViewContainerRef
 } from '@angular/core';
 import { BehaviorSubject, combineLatest, merge, Subscription, timer } from 'rxjs';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
-import {
-  LOADING_SPINNER_BLOCKING,
-  LOADING_SPINNER_OVERLAY,
-  SiLoadingSpinnerComponent
-} from './si-loading-spinner.component';
+import { SiLoadingSpinnerComponent } from './si-loading-spinner.component';
 @Directive({
   selector: '[siLoading]',
   host: {
@@ -64,8 +58,13 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
   private readonly initialWaitTime = computed(() => (this.initialDelay() ? 500 : 0));
   private minSpinTime = 500;
   private portalOutlet?: DomPortalOutlet;
-  private readonly compPortal = new ComponentPortal(SiLoadingSpinnerComponent, this.viewRef);
-  private compPortalRef: ComponentRef<SiLoadingSpinnerComponent> | null = null;
+  private readonly compPortal = new ComponentPortal(
+    SiLoadingSpinnerComponent,
+    this.viewRef,
+    undefined,
+    null,
+    [inputBinding('isBlockingSpinner', this.blocking), inputBinding('isSpinnerOverlay', () => true)]
+  );
 
   // this makes sure the spinner only displays with a delay of 500ms and stays for 500ms so
   // that it doesn't flicker
@@ -84,9 +83,8 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
   );
 
   private createPortal(): void {
-    this.compPortal.injector = this.createPortalInjector();
     this.portalOutlet ??= new DomPortalOutlet(this.el.nativeElement);
-    this.compPortalRef = this.compPortal.attach(this.portalOutlet);
+    this.compPortal.attach(this.portalOutlet);
   }
 
   ngOnInit(): void {
@@ -102,13 +100,10 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges<this>): void {
+  ngOnChanges(): void {
     const newState = !!this.siLoading();
     if (newState !== this.progressSubject.value) {
       this.progressSubject.next(newState);
-    }
-    if (changes.blocking && this.compPortalRef) {
-      this.compPortalRef.setInput('isBlockingSpinner', this.blocking());
     }
   }
 
@@ -118,17 +113,5 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
       this.compPortal.detach();
     }
     this.portalOutlet?.dispose();
-  }
-
-  private createPortalInjector(): Injector {
-    return Injector.create({
-      providers: [
-        { provide: LOADING_SPINNER_BLOCKING, useFactory: () => this.blocking() },
-        {
-          provide: LOADING_SPINNER_OVERLAY,
-          useValue: true
-        }
-      ]
-    });
   }
 }

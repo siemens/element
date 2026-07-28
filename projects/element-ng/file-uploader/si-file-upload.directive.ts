@@ -53,11 +53,11 @@ export class SiFileUploadDirective {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Invalid file type`)
    * ```
    */
   readonly errorTextFileType = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Invalid file type`)
   );
 
   /**
@@ -65,14 +65,11 @@ export class SiFileUploadDirective {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size of {{maxFileSize}}`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:Max. {{maxFileSize}}`)
    * ```
    */
   readonly errorTextFileMaxSize = input(
-    t(
-      () =>
-        $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size of {{maxFileSize}}`
-    )
+    t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:Max. {{maxFileSize}}`)
   );
 
   /**

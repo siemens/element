@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Directive, HostListener, inject, OnInit } from '@angular/core';
+import { Directive, inject, OnInit } from '@angular/core';
 import { elementDown2 } from '@siemens/element-icons';
 import { SiHeaderDropdownTriggerDirective } from '@siemens/element-ng/header-dropdown';
 import { addIcons } from '@siemens/element-ng/icon';
@@ -10,17 +10,23 @@ import { addIcons } from '@siemens/element-ng/icon';
 import { SiApplicationHeaderComponent } from './si-application-header.component';
 import { SiHeaderCollapsibleActionsComponent } from './si-header-collapsible-actions.component';
 
-@Directive({})
+@Directive({
+  host: {
+    '(click)': 'click()'
+  }
+})
 export abstract class SiHeaderActionItemBase implements OnInit {
   /** @internal */
-  dropdownTrigger = inject(SiHeaderDropdownTriggerDirective, {
+  readonly dropdownTrigger = inject(SiHeaderDropdownTriggerDirective, {
     self: true,
     optional: true
   });
-  protected collapsibleActions = inject(SiHeaderCollapsibleActionsComponent, { optional: true });
+  protected readonly collapsibleActions = inject(SiHeaderCollapsibleActionsComponent, {
+    optional: true
+  });
   protected readonly icons = addIcons({ elementDown2 });
 
-  private header = inject(SiApplicationHeaderComponent);
+  private readonly header = inject(SiApplicationHeaderComponent);
 
   ngOnInit(): void {
     if (this.dropdownTrigger) {
@@ -28,7 +34,6 @@ export abstract class SiHeaderActionItemBase implements OnInit {
     }
   }
 
-  @HostListener('click')
   protected click(): void {
     if (!this.dropdownTrigger?.isOpen && !this.collapsibleActions?.mobileExpanded()) {
       // we must close other immediately as we would close the dropdown else wise immediately after opening.

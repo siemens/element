@@ -33,6 +33,7 @@ export class SiTreeViewItemDirective implements AfterViewInit, OnDestroy {
   private differs = inject(IterableDiffers);
   private cdRef = inject(ChangeDetectorRef);
   private differ: IterableDiffer<TreeItem> | null = null;
+  private trackBy?: (index: number, item: TreeItem) => unknown;
   private subscription!: OutputRefSubscription;
   private itemsVirtualizedDirty = true;
 
@@ -41,7 +42,7 @@ export class SiTreeViewItemDirective implements AfterViewInit, OnDestroy {
       this.itemsVirtualizedDirty = false;
       const value = this.parent.itemsVirtualized;
       if (!this.differ && value) {
-        this.differ = this.differs.find(value).create((_index, item) => item);
+        this.differ = this.differs.find(value).create(this.parent.trackBy());
       }
     }
     queueMicrotask(() => this.evaluateDiffer());
@@ -56,8 +57,15 @@ export class SiTreeViewItemDirective implements AfterViewInit, OnDestroy {
   }
 
   private evaluateDiffer(): void {
+    const items = this.parent.itemsVirtualized;
+    const trackBy = this.parent.trackBy();
+    if (this.trackBy !== trackBy) {
+      this.trackBy = trackBy;
+      this.differ = this.differs.find(items).create(trackBy);
+      this.viewContainerRef.clear();
+    }
     if (this.differ) {
-      const changes = this.differ.diff(this.parent.itemsVirtualized);
+      const changes = this.differ.diff(items);
       if (changes) this.applyChanges(changes);
     }
   }
@@ -115,7 +123,7 @@ export class SiTreeViewItemDirective implements AfterViewInit, OnDestroy {
     }
 
     changes.forEachIdentityChange((record: IterableChangeRecord<TreeItem>) => {
-      if (record.currentIndex) {
+      if (record.currentIndex !== null) {
         const viewRef = viewContainer.get(record.currentIndex) as EmbeddedViewRef<TreeItemContext>;
         viewRef.context = {
           treeItem: record.item,
