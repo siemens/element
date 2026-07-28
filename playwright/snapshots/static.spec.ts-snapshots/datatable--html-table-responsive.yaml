@@ -1,0 +1,21 @@
+- table:
+  - rowgroup:
+    - row "Device Status Last updated Location Operator":
+      - columnheader "Device"
+      - columnheader "Status"
+      - columnheader "Last updated"
+      - columnheader "Location"
+      - columnheader "Operator"
+  - rowgroup:
+    - row /Cooling unit Operational \d+:\d+ Building A Alex Smith/:
+      - rowheader "Cooling unit"
+      - cell "Operational"
+      - cell /\d+:\d+/
+      - cell "Building A"
+      - cell "Alex Smith"
+    - row /Ventilation unit Operational \d+:\d+ Building B Jordan Lee/:
+      - rowheader "Ventilation unit"
+      - cell "Operational"
+      - cell /\d+:\d+/
+      - cell "Building B"
+      - cell "Jordan Lee"

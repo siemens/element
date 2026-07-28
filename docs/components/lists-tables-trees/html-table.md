@@ -23,8 +23,79 @@ it comes with some inherent limitations.
 
 ## Code ---
 
-For simple HTML tables the general [Bootstrap Tables](https://getbootstrap.com/docs/5.1/content/tables/)
-documentation applies. Add the CSS class `table-hover` for row hover effect. The theme comes with the
-following styling for `table`:
+Element styles native HTML tables with CSS classes. Apply the `.table` class to a `<table>` element.
 
-<si-docs-component example="datatable/bootstrap" height="500"></si-docs-component>
+<si-docs-component example="datatable/html-table" height="500"></si-docs-component>
+
+### Usage
+
+Use semantic table markup with a caption, table headers, and table body. Add `scope="col"` to column headers and `scope="row"` to row headers so assistive technologies can associate headers with their cells.
+
+```html
+<table class="table">
+  <caption>Device status</caption>
+  <thead>
+    <tr>
+      <th scope="col">Device</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Cooling unit</th>
+      <td>Operational</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+<si-docs-component example="datatable/html-table-basic" height="330"></si-docs-component>
+
+### Variants
+
+Add `.table-sm` to use condensed rows. Add `.table-striped` to distinguish alternating body rows, and `.table-hover` to provide hover feedback for body rows.
+
+Apply `.table-active` to a row or cell to highlight it. Use `.table-success`, `.table-info`, `.table-warning`, or `.table-danger` on a row or cell to communicate its status.
+
+```html
+<table class="table table-sm table-striped table-hover">
+  <!-- Table content -->
+</table>
+
+<tr class="table-active">
+  <!-- Table cells -->
+</tr>
+
+<tr class="table-warning">
+  <!-- Table cells -->
+</tr>
+```
+
+<si-docs-component example="datatable/html-table-variants" height="330"></si-docs-component>
+
+### Captions
+
+Captions are displayed below the table by default. Add `.caption-top` to the `<table>` element to display the caption above it.
+
+```html
+<table class="table caption-top">
+  <caption>Device status</caption>
+  <!-- Table content -->
+</table>
+```
+
+<si-docs-component example="datatable/html-table-caption" height="330"></si-docs-component>
+
+### Responsive tables
+
+Wrap a wide table in `.table-responsive` to allow horizontal scrolling. Use a breakpoint variant such as `.table-responsive-md` to enable scrolling only below that breakpoint.
+
+```html
+<div class="table-responsive">
+  <table class="table">
+    <!-- Table content -->
+  </table>
+</div>
+```
+
+<si-docs-component example="datatable/html-table-responsive" height="330"></si-docs-component>

@@ -13,7 +13,11 @@ test('colors/color-utils', ({ si }) => si.static());
 test('custom-form-elements/checkbox', ({ si }) => si.static());
 test('custom-form-elements/radio', ({ si }) => si.static());
 test('custom-form-elements/select', ({ si }) => si.static());
-test('datatable/bootstrap', ({ si }) => si.static());
+test('datatable/html-table', ({ si }) => si.static());
+test('datatable/html-table-basic', ({ si }) => si.static());
+test('datatable/html-table-caption', ({ si }) => si.static());
+test('datatable/html-table-responsive', ({ si }) => si.static());
+test('datatable/html-table-variants', ({ si }) => si.static());
 test('datatable/datatable-footer', async ({ si }) => {
   test.setTimeout(60000);
   await si.static({ disabledA11yRules: ['scrollable-region-focusable'] });
