@@ -186,34 +186,6 @@
   border-block-start: 1px solid bootstrap-variables.$dropdown-divider-bg;
 }
 
-.dropdown > .dropdown-menu {
-  inset-block: 100% auto;
-  inset-inline: 0 auto;
-  margin-block: bootstrap-variables.$dropdown-spacer 0;
-  margin-inline: 0;
-}
-
-.dropup > .dropdown-menu {
-  inset-block: auto 100%;
-  inset-inline: auto;
-  margin-block: 0 bootstrap-variables.$dropdown-spacer;
-  margin-inline: 0;
-}
-
-.dropend > .dropdown-menu {
-  inset-block: 0 auto;
-  inset-inline: 100% auto;
-  margin-block: 0;
-  margin-inline: bootstrap-variables.$dropdown-spacer 0;
-}
-
-.dropstart > .dropdown-menu {
-  inset-block: 0 auto;
-  inset-inline: auto 100%;
-  margin-block: 0;
-  margin-inline: 0 bootstrap-variables.$dropdown-spacer;
-}
-
 .dropdown-menu {
   &.align-center {
     left: 0; // stylelint-disable-line property-layout-mappings
