@@ -1,3 +1,19 @@
+# [49.14.0](https://github.com/siemens/element/compare/v49.13.0...v49.14.0) (2026-07-28)
+
+
+### Features
+
+* **tree-view:** support tracking immutable items ([943b49c](https://github.com/siemens/element/commit/943b49c3f56bebc0c81da14c5b9372cc2d8a36ce)), closes [#2405](https://github.com/siemens/element/issues/2405)
+
+
+### Bug Fixes
+
+* **accordion:** prevent initial panel animation ([9e58186](https://github.com/siemens/element/commit/9e581864c148b14eb5a96f6b9c7475b92a6ced82)), closes [#2347](https://github.com/siemens/element/issues/2347)
+* **dashboards:** use correct aria roles for widgets in none edit mode ([0dfefbd](https://github.com/siemens/element/commit/0dfefbd6821551f5dff70839a60be231b07cd88f))
+* **popover:** emit current state visibility with siPopoverVisibilityChange ([02132f5](https://github.com/siemens/element/commit/02132f570fa928658d5f19a6fdee740254d0e84d))
+* **summary-chip:** make single-digit chips circular ([66331ae](https://github.com/siemens/element/commit/66331aeb251d7d1b731656a626e682e52beb992f))
+* **tour:** calculate arrow position correctly on size change ([fdc9b9a](https://github.com/siemens/element/commit/fdc9b9abd9bdcfdceafee95df5698c53afc0add7))
+
 # [49.13.0](https://github.com/siemens/element/compare/v49.12.0...v49.13.0) (2026-07-02)
 
 
