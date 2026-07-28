@@ -1,0 +1,10 @@
+- table "Device status":
+  - caption: Device status
+  - rowgroup:
+    - row "Device Status":
+      - columnheader "Device"
+      - columnheader "Status"
+  - rowgroup:
+    - row "Cooling unit Operational":
+      - rowheader "Cooling unit"
+      - cell "Operational"

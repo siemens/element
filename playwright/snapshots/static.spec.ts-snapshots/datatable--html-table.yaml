@@ -16,19 +16,19 @@
       - cell "selected":
         - checkbox "selected"
       - cell "open dropdown":
-        - button "open dropdown"
+        - button "open dropdown": 
       - cell
       - cell "Cooling coil device mode B1'Flr_1'RSegm1'HVAC"
       - cell
       - cell
       - cell
       - cell /\d+%/:
-        - textbox "value" [disabled]
+        - textbox "value" [disabled]: /\d+%/
     - row "selected open dropdown Cooling coil cooling request Control Mode":
       - cell "selected":
         - checkbox "selected"
       - cell "open dropdown":
-        - button "open dropdown"
+        - button "open dropdown": 
       - cell
       - cell "Cooling coil cooling request"
       - cell
@@ -41,26 +41,26 @@
       - cell "selected":
         - checkbox "selected"
       - cell "open dropdown":
-        - button "open dropdown"
+        - button "open dropdown": 
       - cell
       - cell "Cooling coil dehumidification request"
       - cell
       - cell
       - cell
       - cell /\d+%/:
-        - textbox "value" [disabled]
+        - textbox "value" [disabled]: /\d+%/
     - row /selected open dropdown Cooling coil available for cooling \d+%/:
       - cell "selected":
         - checkbox "selected"
       - cell "open dropdown":
-        - button "open dropdown"
+        - button "open dropdown": 
       - cell
       - cell "Cooling coil available for cooling"
       - cell
       - cell
       - cell
       - cell /\d+%/:
-        - textbox "value" [disabled]
+        - textbox "value" [disabled]: /\d+%/
 - text: Settings Condensed rows
 - checkbox "Check to apply the table-sm class for condensed row height."
 - text: Check to apply the table-sm class for condensed row height. Hoverable rows
