@@ -40,7 +40,11 @@ test.describe('filtered search', () => {
     await page.keyboard.press('Enter');
     await page.keyboard.press('Escape');
     await expect(page.getByText('Event', { exact: true })).not.toBeAttached();
-    // delete location criterion
+    // delete location criterion. Ensure focus is on the free-text search before
+    // pressing Backspace, otherwise the keypress may be routed to whichever
+    // element currently has focus after the Event pill was removed.
+    await freeTextSearch.focus();
+    await expect(freeTextSearch).toBeFocused();
     await page.keyboard.press('Backspace');
     await expect(
       page.locator('.pill-group', { hasText: 'Location' }).getByRole('combobox')
