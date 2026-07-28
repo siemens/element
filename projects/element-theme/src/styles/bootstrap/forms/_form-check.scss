@@ -13,9 +13,9 @@ $form-check-size: 1rem;
 $form-radio-size: 1rem;
 $form-radio-inner-size: 0.375rem;
 $form-radio-offset: calc((#{$form-radio-size} - #{$form-radio-inner-size}) * 0.5 - 1px);
-$form-check-padding-x: map.get(spacers.$spacers, 2);
+$form-check-padding-x: map.get(spacers.$spacers-inline, 2);
 
-$form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
+$form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline, 4));
 
 %form-check-spacing {
   .form-check-input {
@@ -24,9 +24,9 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
 }
 
 .form-check {
-  padding-block: map.get(spacers.$spacers, 1);
-  padding-inline-start: calc($form-check-size + map.get(spacers.$spacers, 4));
-  margin-block-end: map.get(spacers.$spacers, 2);
+  padding-block: map.get(spacers.$spacers-block, 1);
+  padding-inline-start: calc($form-check-size + map.get(spacers.$spacers-inline, 4));
+  margin-block-end: map.get(spacers.$spacers-block, 2);
 
   @extend %form-check-spacing;
 

@@ -2,7 +2,10 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 $chat-message-bubble-bg: var(--chat-message-bubble-bg, variables.$si-sys-background-1);
-$chat-message-bubble-padding: var(--chat-message-bubble-padding, map.get(variables.$spacers, 5));
+$chat-message-bubble-padding: var(
+  --chat-message-bubble-padding,
+  map.get(variables.$spacers-block, 5) map.get(variables.$spacers-inline, 5)
+);
 
 :host {
   display: block;
@@ -51,12 +54,12 @@ $chat-message-bubble-padding: var(--chat-message-bubble-padding, map.get(variabl
   }
 
   &:not(:empty) ~ .message-wrapper:not(:has(.message-bubble:empty)) {
-    margin-block-start: map.get(variables.$spacers, 2);
+    margin-block-start: map.get(variables.$spacers-block, 2);
   }
 
   &:not(:empty) ~ .message-wrapper:has(.message-bubble:empty) .actions-wrapper.actions-horizontal {
     // Since it will be on the bottom of the attachment (but is not in bottom mode), we need some spacing
-    margin-block-start: map.get(variables.$spacers, 2);
+    margin-block-start: map.get(variables.$spacers-block, 2);
   }
 }
 
@@ -69,11 +72,11 @@ $chat-message-bubble-padding: var(--chat-message-bubble-padding, map.get(variabl
   align-self: flex-start;
 
   &:not(.end) {
-    margin-inline-end: map.get(variables.$spacers, 3);
+    margin-inline-end: map.get(variables.$spacers-inline, 3);
   }
 
   &.end {
-    margin-inline-start: map.get(variables.$spacers, 3);
+    margin-inline-start: map.get(variables.$spacers-inline, 3);
   }
 
   &:empty {
@@ -119,7 +122,7 @@ $chat-message-bubble-padding: var(--chat-message-bubble-padding, map.get(variabl
   }
 
   .avatar-wrapper {
-    margin-block-end: map.get(variables.$spacers, 3);
+    margin-block-end: map.get(variables.$spacers-block, 3);
 
     &.end {
       align-self: flex-end;
@@ -129,12 +132,12 @@ $chat-message-bubble-padding: var(--chat-message-bubble-padding, map.get(variabl
   .avatar-wrapper::ng-deep:has(si-icon) {
     &.end {
       // stylelint-disable-next-line declaration-no-important
-      margin-inline-end: map.get(variables.$spacers, 2) !important;
+      margin-inline-end: map.get(variables.$spacers-inline, 2) !important;
     }
 
     &:not(.end) {
       // stylelint-disable-next-line declaration-no-important
-      margin-inline-start: map.get(variables.$spacers, 2) !important;
+      margin-inline-start: map.get(variables.$spacers-inline, 2) !important;
     }
   }
 }

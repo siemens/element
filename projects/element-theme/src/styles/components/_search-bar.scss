@@ -33,14 +33,14 @@
 
   .search-bar:has(.search-bar-icon) & {
     padding-inline-start: calc(
-      #{variables.$si-icon-font-size} + #{map.get(variables.$spacers, 2) * 2}
+      #{variables.$si-icon-font-size} + #{map.get(variables.$spacers-inline, 2)} * 2
     );
   }
 
   .search-bar:has(.search-bar-clear) & {
     padding-inline-end: calc(
       #{bootstrap-variables.$btn-font-size} * #{bootstrap-variables.$btn-line-height} +
-        #{bootstrap-variables.$btn-padding-y-sm * 2} + #{map.get(variables.$spacers, 2) * 2}
+        #{bootstrap-variables.$btn-padding-y-sm} * 2 + #{map.get(variables.$spacers-inline, 2)} * 2
     );
   }
 
@@ -52,7 +52,7 @@
 .search-bar-icon {
   position: absolute;
   inset-block: 0;
-  inset-inline-start: map.get(variables.$spacers, 2);
+  inset-inline-start: map.get(variables.$spacers-inline, 2);
   align-items: center;
   font-size: variables.$si-icon-font-size;
   color: system-tokens.$si-sys-text-disabled;
@@ -62,6 +62,6 @@
 .search-bar-clear {
   position: absolute;
   inset-block: 0;
-  inset-inline-end: map.get(variables.$spacers, 2);
+  inset-inline-end: map.get(variables.$spacers-inline, 2);
   margin-block: auto;
 }

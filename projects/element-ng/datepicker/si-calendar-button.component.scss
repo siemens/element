@@ -4,6 +4,6 @@
 
 :host {
   --si-action-icon-offset: calc(
-    #{si-vars.$si-icon-font-size} + #{map.get(all-variables.$spacers, 1) * 3}
+    #{si-vars.$si-icon-font-size} + #{map.get(all-variables.$spacers-block, 1)} * 3
   );
 }

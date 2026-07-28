@@ -4,11 +4,12 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 $item-min-width: 7.1429em;
-$item-padding: map.get(variables.$spacers, 4);
-$item-padding-inline-small: map.get(variables.$spacers, 2);
-$item-padding-block-small: map.get(variables.$spacers, 1);
-$item-spacing: map.get(variables.$spacers, 2);
-$colorbar-width: map.get(variables.$spacers, 2);
+$item-padding-block: map.get(variables.$spacers-block, 4);
+$item-padding-inline: map.get(variables.$spacers-inline, 4);
+$item-padding-inline-small: map.get(variables.$spacers-inline, 2);
+$item-padding-block-small: map.get(variables.$spacers-block, 1);
+$item-spacing: map.get(variables.$spacers-block, 2);
+$colorbar-width: map.get(variables.$spacers-inline, 2);
 
 :host {
   position: relative;
@@ -38,8 +39,8 @@ $colorbar-width: map.get(variables.$spacers, 2);
 .status-item {
   position: relative;
   isolation: isolate;
-  padding-block: $item-padding;
-  padding-inline: $item-padding-inline-small $item-padding;
+  padding-block: $item-padding-block;
+  padding-inline: $item-padding-inline-small $item-padding-inline;
   min-inline-size: var(--__si-status-bar-item-min-width, $item-min-width);
   white-space: nowrap;
 
@@ -83,6 +84,6 @@ $colorbar-width: map.get(variables.$spacers, 2);
 .color-bar {
   align-self: stretch;
   min-inline-size: $colorbar-width;
-  border-radius: math.div($colorbar-width, 2);
+  border-radius: calc($colorbar-width / 2);
   background: variables.$si-sys-border-4;
 }

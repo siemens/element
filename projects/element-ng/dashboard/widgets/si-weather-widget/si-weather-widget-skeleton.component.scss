@@ -6,14 +6,14 @@ $si-weather-illustration-size: 40px;
 :host {
   display: flex;
   flex-direction: column;
-  gap: map.get(variables.$spacers, 3);
+  gap: map.get(variables.$spacers-block, 3) map.get(variables.$spacers-inline, 3);
 }
 
 .si-weather-widget-skeleton-row {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  gap: map.get(variables.$spacers, 4);
+  gap: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
 }
 
 .si-weather-widget-skeleton-col {
@@ -21,7 +21,7 @@ $si-weather-illustration-size: 40px;
   flex: 0 0 auto;
   flex-direction: column;
   align-items: flex-end;
-  gap: map.get(variables.$spacers, 3);
+  gap: map.get(variables.$spacers-block, 3) map.get(variables.$spacers-inline, 3);
 }
 
 .si-weather-widget-skeleton-illustration {

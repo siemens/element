@@ -34,7 +34,7 @@
 
   .icon {
     margin-inline: 0;
-    margin-block: map.get(variables.$spacers, 1) * -1;
+    margin-block: map.get(variables.$negative-spacers-block, 1);
   }
 
   .item-end {
@@ -52,7 +52,7 @@
   }
 
   .icon + .item-title {
-    padding-inline-start: map.get(variables.$spacers, 2);
+    padding-inline-start: map.get(variables.$spacers-inline, 2);
   }
 
   .item-end .submenu {
@@ -72,7 +72,7 @@
 
     .item-title {
       padding-inline-start: map.get(
-        variables.$spacers,
+        variables.$spacers-block,
         2
       ) !important; // stylelint-disable-line declaration-no-important
     }

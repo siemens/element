@@ -67,7 +67,7 @@
 }
 
 .modal-dialog-scrollable {
-  block-size: functions.subtract(100%, variables.$modal-dialog-margin * 2);
+  block-size: calc(100% - (variables.$modal-dialog-margin * 2));
 
   .modal-content {
     max-block-size: 100%;
@@ -82,7 +82,7 @@
 .modal-dialog-centered {
   display: flex;
   align-items: center;
-  min-block-size: functions.subtract(100%, variables.$modal-dialog-margin * 2);
+  min-block-size: calc(100% - (variables.$modal-dialog-margin * 2));
 }
 
 .modal-header {
@@ -97,7 +97,7 @@
 
   .icon {
     font-size: si-vars.$si-icon-font-size-lg;
-    margin-inline-end: map.get(spacers.$spacers, 4);
+    margin-inline-end: map.get(spacers.$spacers-inline, 4);
   }
 
   .modal-title {
@@ -141,7 +141,7 @@
   // Enable `flex-grow: 1` so that the body take up as much space as possible
   // when there should be a fixed height on `.modal-dialog`.
   flex: 1 1 auto;
-  padding-block: map.get(spacers.$spacers, 5) variables.$modal-inner-padding;
+  padding-block: map.get(spacers.$spacers-block, 5) variables.$modal-inner-padding;
   // use margin instead of padding so that the scrollbar isn't on the edge of the dialog
   margin-inline: variables.$modal-inner-padding;
   padding-inline: 0;
@@ -157,7 +157,7 @@
   flex-shrink: 0;
   align-items: center; // vertically center
   justify-content: flex-end; // Right align buttons with flex property because text-align doesn't work on flex items
-  padding: (variables.$modal-inner-padding - variables.$modal-footer-margin-between * 0.5);
+  padding: calc(variables.$modal-inner-padding - variables.$modal-footer-margin-between * 0.5);
   border-end-start-radius: variables.$modal-content-inner-border-radius;
   border-end-end-radius: variables.$modal-content-inner-border-radius;
 
@@ -165,7 +165,7 @@
   // This solution is far from ideal because of the universal selector usage,
   // but is needed to fix https://github.com/twbs/bootstrap/issues/24800
   > * {
-    margin: (variables.$modal-footer-margin-between * 0.5);
+    margin: calc(variables.$modal-footer-margin-between * 0.5);
   }
 }
 
@@ -186,11 +186,11 @@
   }
 
   .modal-dialog-scrollable {
-    block-size: functions.subtract(100%, variables.$modal-dialog-margin-y-sm-up * 2);
+    block-size: calc(100% - (variables.$modal-dialog-margin-y-sm-up * 2));
   }
 
   .modal-dialog-centered {
-    min-block-size: functions.subtract(100%, variables.$modal-dialog-margin-y-sm-up * 2);
+    min-block-size: calc(100% - (variables.$modal-dialog-margin-y-sm-up * 2));
   }
 
   .modal-content {

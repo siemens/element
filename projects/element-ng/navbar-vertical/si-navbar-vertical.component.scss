@@ -2,7 +2,7 @@
 @use '@siemens/element-theme/src/styles/all-variables';
 
 $vertical-nav-width: 240px;
-$vertical-nav-collapsed-width: calc(1.5rem + 2 * map.get(all-variables.$spacers, 5));
+$vertical-nav-collapsed-width: calc(1.5rem + 2 * map.get(all-variables.$spacers-inline, 5));
 $vertical-nav-transition-duration: all-variables.$element-default-transition-duration;
 
 :host {
@@ -48,7 +48,7 @@ nav {
   min-block-size: 0;
   flex: 1 0 0;
   overflow-y: auto;
-  margin-block-start: map.get(all-variables.$spacers, 4);
+  margin-block-start: map.get(all-variables.$spacers-block, 4);
 
   :host(.nav-collapsed) & {
     display: none;
@@ -80,8 +80,8 @@ nav {
 .nav-search {
   display: flex;
   align-items: center;
-  margin-block-start: map.get(all-variables.$spacers, 4);
-  padding-block: map.get(all-variables.$spacers, 2);
+  margin-block-start: map.get(all-variables.$spacers-block, 4);
+  padding-block: map.get(all-variables.$spacers-block, 2);
   overflow-x: hidden;
 
   :host(.nav-collapsed) & {
@@ -98,7 +98,7 @@ si-search-bar {
   border: 0;
   border-radius: all-variables.$element-radius-2;
   block-size: all-variables.$input-height;
-  inline-size: calc(1.5rem + 2 * map.get(all-variables.$spacers, 2));
+  inline-size: calc(1.5rem + 2 * map.get(all-variables.$spacers-inline, 2));
   text-align: start;
 }
 

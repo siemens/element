@@ -1,28 +1,110 @@
+@use 'sass:list';
+@use 'sass:map';
+
 $spacer: 16px;
 
-// stylelint-disable-next-line scss/dollar-variable-default
-$spacers: (
-  0: 0,
+$var-spacer-inline: var(--element-spacer-inline, $spacer);
+$var-spacer-block: var(--element-spacer-block, $spacer);
+
+$_spacer-factors: (
+  0: (
+    0,
+    null
+  ),
   // 2px
-  1: $spacer * 0.125,
+  1: (
+      0.125,
+      2px
+    ),
   // 4px
-  2: $spacer * 0.25,
+  2: (
+      0.25,
+      3px
+    ),
   // 6px
-  3: $spacer * 0.375,
+  3: (
+      0.375,
+      4px
+    ),
   // 8px
-  4: $spacer * 0.5,
+  4: (
+      0.5,
+      null
+    ),
   // 12px
-  5: $spacer * 0.75,
+  5: (
+      0.75,
+      null
+    ),
   // 16px
-  6: $spacer,
+  6: (
+      1,
+      null
+    ),
   // 20px
-  7: $spacer * 1.25,
+  7: (
+      1.25,
+      null
+    ),
   // 24px
-  8: $spacer * 1.5,
+  8: (
+      1.5,
+      null
+    ),
   // 32px
-  9: $spacer * 2,
+  9: (
+      2,
+      null
+    ),
   // 64px
-  10: $spacer * 4,
+  10: (
+      4,
+      null
+    ),
   // 96px
-  11: $spacer * 6
+  11: (
+      6,
+      null
+    )
 );
+
+// stylelint-disable-next-line scss/at-function-pattern
+@function _spacer-map($var-spacer, $negative: false) {
+  $spacer-map: ();
+
+  @each $key, $values in $_spacer-factors {
+    $factor: list.nth($values, 1);
+    $min-value: list.nth($values, 2);
+
+    @if not($negative and $key == 0) {
+      @if $negative {
+        $negative-factor: $factor * -1;
+        @if $min-value {
+          $negative-min-value: $min-value * -1;
+          $spacer-map: map.set(
+            $spacer-map,
+            $key,
+            min($negative-min-value, calc($var-spacer * $negative-factor))
+          );
+        } @else {
+          $spacer-map: map.set($spacer-map, $key, calc($var-spacer * $negative-factor));
+        }
+      } @else if $key == 0 {
+        $spacer-map: map.set($spacer-map, $key, 0);
+      } @else if $min-value {
+        $spacer-map: map.set($spacer-map, $key, max($min-value, calc($var-spacer * $factor)));
+      } @else {
+        $spacer-map: map.set($spacer-map, $key, calc($var-spacer * $factor));
+      }
+    }
+  }
+
+  @return $spacer-map;
+}
+
+$spacers-inline: _spacer-map($var-spacer-inline);
+$spacers-block: _spacer-map($var-spacer-block);
+$negative-spacers-inline: _spacer-map($var-spacer-inline, true);
+$negative-spacers-block: _spacer-map($var-spacer-block, true);
+
+$spacers: $spacers-block;

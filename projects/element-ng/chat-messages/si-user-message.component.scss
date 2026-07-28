@@ -8,7 +8,7 @@
   &:not(:has([siChatMessageAction])) si-chat-message {
     // Keep in sync with button size and actions wrapper padding
     // stylelint-disable-next-line declaration-no-important
-    padding-block-end: calc(32px + #{map.get(variables.$spacers, 2)}) !important;
+    padding-block-end: calc(32px + #{map.get(variables.$spacers-block, 2)}) !important;
   }
 }
 
