@@ -8,10 +8,10 @@
 
 .search-country {
   display: inline-block;
-  margin-block-start: map.get(all-variables.$spacers, 4);
-  margin-block-end: map.get(all-variables.$spacers, 4);
-  margin-inline: map.get(all-variables.$spacers, 4);
-  inline-size: calc(100% - #{map.get(all-variables.$spacers, 6)});
+  margin-block-start: map.get(all-variables.$spacers-block, 4);
+  margin-block-end: map.get(all-variables.$spacers-block, 4);
+  margin-inline: map.get(all-variables.$spacers-inline, 4);
+  inline-size: calc(100% - #{map.get(all-variables.$spacers-inline, 6)});
 }
 
 .disabled {

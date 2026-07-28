@@ -18,7 +18,7 @@
   --#{variables.$variable-prefix}table-hover-bg: #{variables.$table-hover-bg};
 
   inline-size: 100%;
-  margin-block-end: spacers.$spacer;
+  margin-block-end: map.get(spacers.$spacers-block, 6);
   color: variables.$table-color;
   vertical-align: variables.$table-cell-vertical-align;
   border-color: variables.$table-border-color;
@@ -55,17 +55,17 @@
     vertical-align: middle;
 
     &:first-child {
-      padding-inline-start: map.get(spacers.$spacers, 6);
+      padding-inline-start: map.get(spacers.$spacers-inline, 6);
     }
 
     &:last-child {
-      padding-inline-end: map.get(spacers.$spacers, 6);
+      padding-inline-end: map.get(spacers.$spacers-inline, 6);
     }
   }
 
   thead {
     border-width: 0;
-    border-block-end: map.get(spacers.$spacers, 2) solid variables.$table-border-color;
+    border-block-end: map.get(spacers.$spacers-block, 2) solid variables.$table-border-color;
 
     th {
       vertical-align: baseline;
@@ -96,7 +96,9 @@
     }
 
     :is(th, td) {
-      block-size: calc(2lh + 2 * map.get(spacers.$spacers, 2) + 2 * map.get(spacers.$spacers, 5));
+      block-size: calc(
+        2lh + 2 * map.get(spacers.$spacers-block, 2) + 2 * map.get(spacers.$spacers-block, 5)
+      );
     }
   }
 }
@@ -118,7 +120,7 @@
 
   tbody {
     :is(th, td) {
-      block-size: calc(2lh + 2 * map.get(spacers.$spacers, 4));
+      block-size: calc(2lh + 2 * map.get(spacers.$spacers-block, 4));
     }
   }
 }

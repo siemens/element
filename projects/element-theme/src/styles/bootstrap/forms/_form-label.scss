@@ -14,7 +14,7 @@
 
 .form-label {
   display: inline-block;
-  padding-block: map.get(spacers.$spacers, 2);
+  padding-block: map.get(spacers.$spacers-block, 2);
 
   .text-end & {
     padding-inline-end: variables.$input-padding-x;

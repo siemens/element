@@ -7,7 +7,7 @@
   block-size: 100%;
   color: all-variables.$si-sys-text-primary;
   padding-inline-end: calc(
-    #{map.get(all-variables.$spacers, 2) - all-variables.$input-border-width} +
+    map.get(all-variables.$spacers-block, 2) - all-variables.$input-border-width +
       var(--si-feedback-icon-size, 0px)
   );
 
@@ -18,7 +18,7 @@
 
 :host-context(.form-control) {
   :host {
-    padding-block: map.get(all-variables.$spacers, 2) - 1px;
+    padding-block: calc(map.get(all-variables.$spacers-block, 2) - 1px);
     padding-inline-end: var(--si-input-padding-inline-end);
   }
 }

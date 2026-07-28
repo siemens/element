@@ -6,6 +6,6 @@
   flex-direction: row;
   flex: none;
   border-block-start: 1px solid variables.$si-sys-border-4;
-  gap: map.get(variables.$spacers, 6);
-  padding: map.get(variables.$spacers, 6);
+  gap: map.get(variables.$spacers-block, 6) map.get(variables.$spacers-inline, 6);
+  padding: map.get(variables.$spacers-block, 6) map.get(variables.$spacers-inline, 6);
 }

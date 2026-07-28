@@ -93,7 +93,7 @@
 }
 
 .blockquote-footer {
-  margin-block: -(variables.$blockquote-margin-y) variables.$blockquote-margin-y;
+  margin-block: calc(variables.$blockquote-margin-y * -1) variables.$blockquote-margin-y;
   font-size: variables.$blockquote-footer-font-size;
   color: variables.$blockquote-footer-color;
 

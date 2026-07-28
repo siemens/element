@@ -23,7 +23,7 @@
   color: variables.$si-sys-text-primary;
   min-inline-size: 0;
   border-block-end: 1px solid variables.$si-sys-border-4;
-  padding-inline: map.get(variables.$spacers, 5);
+  padding-inline: map.get(variables.$spacers-inline, 5);
   flex-shrink: 0;
 
   &:hover {

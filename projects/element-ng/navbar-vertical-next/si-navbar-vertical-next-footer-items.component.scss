@@ -5,7 +5,7 @@
   display: block;
   overflow-x: hidden;
   margin-block-start: auto;
-  padding-block-end: map.get(all-variables.$spacers, 4);
+  padding-block-end: map.get(all-variables.$spacers-block, 4);
 }
 
 :host-context(.nav-collapsed) {

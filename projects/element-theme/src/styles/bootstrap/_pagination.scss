@@ -11,7 +11,7 @@ $page-button-size: 1.5rem;
 .pagination {
   display: flex;
   margin: 0;
-  padding-block: map.get(spacers.$spacers, 4);
+  padding-block: map.get(spacers.$spacers-block, 4);
   @include lists.list-unstyled();
 }
 
@@ -23,8 +23,8 @@ $page-button-size: 1.5rem;
   min-inline-size: $page-button-size;
   block-size: $page-button-size;
   padding-block: 0;
-  padding-inline: map.get(spacers.$spacers, 2);
-  margin-inline: map.get(spacers.$spacers, 1);
+  padding-inline: map.get(spacers.$spacers-inline, 2);
+  margin-inline: map.get(spacers.$spacers-inline, 1);
   background: transparent;
   font-size: typography.$si-font-size-h5;
   font-weight: typography.$si-font-weight-h5;

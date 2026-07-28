@@ -15,7 +15,7 @@
   border-radius: all-variables.$popover-border-radius;
   box-shadow: all-variables.$popover-box-shadow;
   margin-block-start: all-variables.$popover-arrow-height - 2px;
-  inset-inline-start: map.get(all-variables.$spacers, 7) * -1;
+  inset-inline-start: map.get(spacers.$negative-spacers-inline, 7);
 
   &-arrow {
     position: absolute;
@@ -23,7 +23,9 @@
     inline-size: all-variables.$popover-arrow-width;
     block-size: all-variables.$popover-arrow-height;
     margin-block: 0;
-    margin-inline: map.get(all-variables.$spacers, 5) + all-variables.$popover-border-width;
+    margin-inline: calc(
+      map.get(all-variables.$spacers-inline, 5) + all-variables.$popover-border-width
+    );
 
     inset-block-start: all-variables.subtract(
       -(all-variables.$popover-arrow-height),
@@ -59,9 +61,9 @@
 
   .si-map-popover-item {
     display: flex;
-    margin-block-end: map.get(all-variables.$spacers, 5);
+    margin-block-end: map.get(all-variables.$spacers-block, 5);
     flex-direction: column;
-    gap: map.get(all-variables.$spacers, 2);
+    gap: map.get(all-variables.$spacers-block, 2) map.get(all-variables.$spacers-inline, 2);
   }
 
   .si-map-popover-item-title {

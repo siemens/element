@@ -65,7 +65,7 @@ button {
   .icon {
     font-size: var(--btn-icon-size);
     margin-block: calc((var(--btn-icon-size) - var(--btn-font-size)) / -2);
-    margin-inline-end: #{map.get(spacers.$spacers, 2)};
+    margin-inline-end: #{map.get(spacers.$spacers-inline, 2)};
   }
 }
 
@@ -270,7 +270,6 @@ button {
   );
   padding-block: bootstrap-variables.$input-padding-y;
   padding-inline: bootstrap-variables.$input-padding-x;
-
   border-radius: bootstrap-variables.$input-border-radius;
   justify-content: flex-start;
 
