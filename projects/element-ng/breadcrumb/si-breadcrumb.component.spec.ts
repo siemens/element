@@ -288,9 +288,8 @@ describe('SiBreadcrumbComponent', () => {
     fixture.detectChanges();
 
     const ellipsesElement = element.querySelector('.breadcrumb .breadcrumb-ellipses-item')!;
-    const dropdownToggleElement = ellipsesElement.querySelector(
-      '.breadcrumb-dropdown-toggle'
-    ) as HTMLElement;
+    const dropdownToggleElement =
+      ellipsesElement.querySelector<HTMLButtonElement>('button.btn.btn-link')!;
     const dropdownElement = ellipsesElement.querySelector('.dropdown-menu');
     const dropdownElementComputedStyle = window.getComputedStyle(dropdownElement!);
 
@@ -314,9 +313,8 @@ describe('SiBreadcrumbComponent', () => {
     fixture.detectChanges();
 
     const ellipsesElement = element.querySelector('.breadcrumb .breadcrumb-ellipses-item')!;
-    const dropdownToggleElement = ellipsesElement.querySelector(
-      '.breadcrumb-dropdown-toggle'
-    ) as HTMLElement;
+    const dropdownToggleElement =
+      ellipsesElement.querySelector<HTMLButtonElement>('button.btn.btn-link')!;
     const dropdownElement = ellipsesElement.querySelector('.dropdown-menu');
     const dropdownElementComputedStyle = window.getComputedStyle(dropdownElement!);
 
@@ -341,9 +339,8 @@ describe('SiBreadcrumbComponent', () => {
     fixture.detectChanges();
 
     const shortenedElement = element.querySelectorAll('.breadcrumb .shortened')[1]!;
-    const shortenedBreadcrumbItemElement = shortenedElement.querySelector<HTMLElement>(
-      '.breadcrumb-dropdown-toggle'
-    );
+    const shortenedBreadcrumbItemElement =
+      shortenedElement.querySelector<HTMLElement>('button.btn.btn-link');
     const dropdownElement = shortenedElement.querySelector('.dropdown-menu');
 
     expect(shortenedBreadcrumbItemElement).toHaveTextContent('Level 8');
@@ -363,12 +360,10 @@ describe('SiBreadcrumbComponent', () => {
     const ellipsesElement = element
       .querySelector('.breadcrumb')!
       .querySelector('.breadcrumb-ellipses-item')!;
-    const shortenedDropdownToggleElement = shortenedElement.querySelector(
-      '.breadcrumb-dropdown-toggle'
-    ) as HTMLElement;
-    const ellipsesDropdownToggleElement = ellipsesElement.querySelector(
-      '.breadcrumb-dropdown-toggle'
-    ) as HTMLElement;
+    const shortenedDropdownToggleElement =
+      shortenedElement.querySelector<HTMLButtonElement>('button.btn.btn-link')!;
+    const ellipsesDropdownToggleElement =
+      ellipsesElement.querySelector<HTMLButtonElement>('button.btn.btn-link')!;
     const shortenedDropdownElement = shortenedElement.querySelector('.dropdown-menu');
     const shortenedDropdownElementComputedStyle = window.getComputedStyle(
       shortenedDropdownElement!
