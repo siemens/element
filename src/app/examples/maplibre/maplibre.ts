@@ -15,7 +15,7 @@ import {
   Position,
   ScaleControlDirective
 } from '@maplibre/ngx-maplibre-gl';
-import { injectSiMapStyle } from '@siemens/element-ng/maplibre';
+import { injectSiMapStyle, injectSiMapTranslations } from '@siemens/element-ng/maplibre';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 import { environment } from '../../../environments/environment';
@@ -40,6 +40,7 @@ import { environment } from '../../../environments/environment';
 export class SampleComponent {
   protected readonly logEvent = inject(LOG_EVENT);
   protected readonly mapStyle = injectSiMapStyle(environment.maptilerKey);
+  protected readonly mapTranslations = injectSiMapTranslations();
 
   protected onError(event: ErrorEvent & EventData): void {
     if (event.error.message) {

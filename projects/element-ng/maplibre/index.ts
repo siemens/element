@@ -3,3 +3,4 @@
  * SPDX-License-Identifier: MIT
  */
 export * from './si-maplibre-style';
+export * from './si-maplibre-translate';
