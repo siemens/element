@@ -10,6 +10,9 @@ import { StyleSpecification } from 'maplibre-gl';
 // @public
 export const injectSiMapStyle: (key: string) => Signal<StyleSpecification>;
 
+// @public
+export const injectSiMapTranslations: () => Signal<Record<string, string>>;
+
 // (No @packageDocumentation comment for this package)
 
 ```
