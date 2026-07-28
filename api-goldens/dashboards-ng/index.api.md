@@ -249,7 +249,9 @@ export type SimplDashboardsNgModule = SiDashboardsNgModule;
 export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnInit {
     readonly closed: _angular_core.OutputEmitterRef<Omit<WidgetConfig, "id"> | undefined>;
     readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    // @deprecated
     widgetCatalog: Widget[];
+    readonly widgetList: _angular_core.WritableSignal<Widget[]>;
 }
 
 // @public

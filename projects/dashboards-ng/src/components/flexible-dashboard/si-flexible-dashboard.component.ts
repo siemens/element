@@ -287,7 +287,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
         })
       ]
     });
-    catalogRef.instance.widgetCatalog = this.widgetCatalog();
+    catalogRef.instance.widgetList.set(this.widgetCatalog());
   }
 
   protected onModified(event: boolean): void {
