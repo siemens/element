@@ -1,8 +1,8 @@
 @use '../variables/animations';
 @use '../variables/elevation';
 @use '../variables/semantic-tokens';
-@use '../variables/spacers';
 @use '../variables/system-tokens';
+@use '../variables/spacers';
 @use '../variables/typography';
 @use './functions';
 
@@ -51,10 +51,10 @@ $body-text-align: null !default;
 //
 // Style anchor elements.
 
-$link-color: semantic-tokens.$element-ui-0;
+$link-color: system-tokens.$si-sys-text-accent;
 $link-decoration: none !default;
 $link-shade-percentage: 20% !default;
-$link-hover-color: semantic-tokens.$element-ui-0-hover;
+$link-hover-color: system-tokens.$si-sys-text-accent-hover;
 $link-hover-decoration: underline !default;
 $link-border-radius: semantic-tokens.$element-button-radius;
 
