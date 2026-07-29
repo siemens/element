@@ -149,8 +149,8 @@ button {
   --btn-color-hover: #{semantic-tokens.$element-action-warning-text};
   --btn-color-active: #{semantic-tokens.$element-action-warning-text};
   --btn-border-color: #{semantic-tokens.$element-action-secondary-warning};
-  --btn-border-color-hover: #{semantic-tokens.$element-action-warning-hover};
-  --btn-border-color-active: #{semantic-tokens.$element-action-warning-active};
+  --btn-border-color-hover: transparent;
+  --btn-border-color-active: transparent;
 }
 
 .btn-secondary-danger,
@@ -161,8 +161,8 @@ button {
   --btn-color-hover: #{semantic-tokens.$element-action-danger-text};
   --btn-color-active: #{semantic-tokens.$element-action-danger-text};
   --btn-border-color: #{semantic-tokens.$element-action-secondary-danger};
-  --btn-border-color-hover: #{semantic-tokens.$element-action-danger-hover};
-  --btn-border-color-active: #{semantic-tokens.$element-action-danger-active};
+  --btn-border-color-hover: transparent;
+  --btn-border-color-active: transparent;
 }
 
 .btn-secondary-ghost,
