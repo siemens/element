@@ -2,6 +2,7 @@
 @use '../variables/elevation';
 @use '../variables/semantic-tokens';
 @use '../variables/spacers';
+@use '../variables/system-tokens';
 @use '../variables/typography';
 @use './functions';
 
@@ -456,16 +457,16 @@ $dropdown-font-size: $font-size-base !default;
 // this is to have room for icon and badges
 $dropdown-line-height: $badge-height;
 $dropdown-color: $body-color !default;
-$dropdown-bg: semantic-tokens.$element-base-1 !default;
+$dropdown-bg: system-tokens.$si-sys-background-1 !default;
 $dropdown-border-radius: semantic-tokens.$element-radius-2 !default;
-$dropdown-divider-bg: semantic-tokens.$element-ui-4 !default;
+$dropdown-divider-bg: system-tokens.$si-sys-border-4 !default;
 $dropdown-divider-margin-y: 4px !default;
 $dropdown-box-shadow: elevation.$element-elevation-2 !default;
-$dropdown-link-color: semantic-tokens.$element-text-primary !default;
-$dropdown-link-disabled-color: semantic-tokens.$element-text-disabled !default;
+$dropdown-link-color: system-tokens.$si-sys-text-primary !default;
+$dropdown-link-disabled-color: system-tokens.$si-sys-text-disabled !default;
 $dropdown-item-padding-y: map.get(spacers.$spacers, 2);
 $dropdown-item-padding-x: map.get(spacers.$spacers, 5);
-$dropdown-header-color: semantic-tokens.$element-text-primary !default;
+$dropdown-header-color: system-tokens.$si-sys-text-primary !default;
 
 // Cards
 
