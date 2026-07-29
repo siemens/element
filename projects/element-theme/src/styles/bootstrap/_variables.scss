@@ -335,10 +335,12 @@ $input-line-height: typography.$si-line-height-body-rem !default;
 
 $input-bg: semantic-tokens.$element-base-1 !default;
 $input-disabled-bg: semantic-tokens.$element-base-1 !default;
+$input-disabled-color: semantic-tokens.$element-text-disabled !default;
 $input-disabled-border-color: semantic-tokens.$element-ui-4 !default;
 
 $input-color: semantic-tokens.$element-text-primary !default;
 $input-border-color: semantic-tokens.$element-ui-2 !default;
+$input-focus-border-color: semantic-tokens.$element-ui-1 !default;
 $input-border-width: $border-width !default;
 $input-box-shadow: $box-shadow-inset !default;
 
