@@ -1,0 +1,59 @@
+<div class="row g-5">
+  <div class="col-sm-4">
+    <si-form-item label="Inline spacer">
+      <si-number-input
+        inputId="inline-spacer"
+        class="form-control"
+        [min]="0"
+        [(ngModel)]="inlineSpacer"
+        (ngModelChange)="applySpacer('inline', $event)"
+      />
+    </si-form-item>
+  </div>
+
+  <div class="col-sm-4">
+    <si-form-item label="Block spacer">
+      <si-number-input
+        inputId="block-spacer"
+        class="form-control"
+        [min]="0"
+        [(ngModel)]="blockSpacer"
+        (ngModelChange)="applySpacer('block', $event)"
+      />
+    </si-form-item>
+  </div>
+</div>
+
+<div class="row g-5 mt-4">
+  <div class="col-lg-6">
+    <h4>Inline spacing</h4>
+    <div class="bg-secondary text-inverse px-2 ms-0">Spacing 0</div>
+    <div class="bg-secondary text-inverse px-2 ms-1">Spacing 1</div>
+    <div class="bg-secondary text-inverse px-2 ms-2">Spacing 2</div>
+    <div class="bg-secondary text-inverse px-2 ms-3">Spacing 3</div>
+    <div class="bg-secondary text-inverse px-2 ms-4">Spacing 4</div>
+    <div class="bg-secondary text-inverse px-2 ms-5">Spacing 5</div>
+    <div class="bg-secondary text-inverse px-2 ms-6">Spacing 6</div>
+    <div class="bg-secondary text-inverse px-2 ms-7">Spacing 7</div>
+    <div class="bg-secondary text-inverse px-2 ms-8">Spacing 8</div>
+    <div class="bg-secondary text-inverse px-2 ms-9">Spacing 9</div>
+    <div class="bg-secondary text-inverse px-2 ms-10">Spacing 10</div>
+    <div class="bg-secondary text-inverse px-2 ms-11">Spacing 11</div>
+  </div>
+
+  <div class="col-lg-6">
+    <h4>Block spacing</h4>
+    <div class="bg-secondary text-inverse px-2 mt-0">Spacing 0</div>
+    <div class="bg-secondary text-inverse px-2 mt-1">Spacing 1</div>
+    <div class="bg-secondary text-inverse px-2 mt-2">Spacing 2</div>
+    <div class="bg-secondary text-inverse px-2 mt-3">Spacing 3</div>
+    <div class="bg-secondary text-inverse px-2 mt-4">Spacing 4</div>
+    <div class="bg-secondary text-inverse px-2 mt-5">Spacing 5</div>
+    <div class="bg-secondary text-inverse px-2 mt-6">Spacing 6</div>
+    <div class="bg-secondary text-inverse px-2 mt-7">Spacing 7</div>
+    <div class="bg-secondary text-inverse px-2 mt-8">Spacing 8</div>
+    <div class="bg-secondary text-inverse px-2 mt-9">Spacing 9</div>
+    <div class="bg-secondary text-inverse px-2 mt-10">Spacing 10</div>
+    <div class="bg-secondary text-inverse px-2 mt-11">Spacing 11</div>
+  </div>
+</div>
