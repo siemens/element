@@ -96,7 +96,7 @@
           </span>
         }
       } @else {
-        @let range = dateRange();
+        @let range = safeDateRange();
         {{ range.start | date: pipeFormat() }} -
         @if (range.end) {
           {{ range.end | date: pipeFormat() }}
@@ -192,7 +192,6 @@
         required
         siDatepicker
         [siDatepickerConfig]="datepickerConfigInternal()"
-        [attr.aria-label]="dateLabel() | translate"
         [placeholder]="datePlaceholder() | translate"
         [(ngModel)]="point2date"
         (ngModelChange)="point2Changed()"
