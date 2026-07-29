@@ -11,6 +11,7 @@ import {
   DestroyRef,
   Directive,
   effect,
+  ElementRef,
   EmbeddedViewRef,
   inject,
   Injector,
@@ -48,9 +49,9 @@ class SiNavbarFlyoutAnchorComponent {
   host: {
     class: 'dropdown-toggle',
     '[id]': 'id',
-    '[class.show]': '!flyoutMode() && expanded()',
+    '[class.show]': 'navbar.flatMode() ? flatGroupActive() : !flyoutMode() && expanded()',
     '[attr.aria-controls]': 'groupId',
-    '[attr.aria-expanded]': 'flyoutMode() ? flyout() : expanded()',
+    '[attr.aria-expanded]': 'ariaExpanded()',
     '(click)': 'triggered()'
   }
 })
@@ -107,6 +108,28 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
     computation: () => false
   });
 
+  /** `true` when this group is currently rendered as a mobile flat group.
+   * @internal
+   */
+  readonly flatGroupActive = computed(
+    () => this.navbar.flatMode() && this.navbar.openFlatGroupId() === this.groupId
+  );
+
+  /**
+   * Whether the group is currently revealed to the user, taking the active
+   * rendering mode into account. Used for `aria-expanded`.
+   * @internal
+   */
+  readonly ariaExpanded = computed(() => {
+    if (this.navbar.flatMode()) {
+      return this.flatGroupActive();
+    }
+    if (this.flyoutMode()) {
+      return this.flyout();
+    }
+    return this.expanded();
+  });
+
   /** `true` when this group contains the active route. Set by the group component.
    * @internal
    */
@@ -121,6 +144,7 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
 
   private flyoutOutsideClickSubscription?: Subscription;
   private readonly viewContainer = inject(ViewContainerRef);
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly overlay = inject(Overlay);
   private readonly destroyRef = inject(DestroyRef);
   private readonly injector = Injector.create({ parent: inject(Injector), providers: [] });
@@ -152,6 +176,9 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
     });
 
     this.destroyRef.onDestroy(() => {
+      if (this.navbar.openFlatGroupId() === this.groupId) {
+        this.navbar.closeFlatGroup();
+      }
       this.overlayRef.detach();
       this.overlayRef.dispose();
     });
@@ -165,8 +192,15 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
     this.attachInline();
   }
 
+  /** @internal */
+  focus(): void {
+    this.elementRef.nativeElement.focus();
+  }
+
   protected triggered(): void {
-    if (this.flyoutMode()) {
+    if (this.navbar.flatMode()) {
+      this.navbar.openFlatGroupId.set(this.flatGroupActive() ? undefined : this.groupId);
+    } else if (this.flyoutMode()) {
       this.toggleFlyout();
     } else {
       this.expanded.set(!this.expanded());
