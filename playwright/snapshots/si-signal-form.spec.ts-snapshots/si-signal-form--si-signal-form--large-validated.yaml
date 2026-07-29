@@ -1,0 +1,74 @@
+- heading "Signal form" [level=2]
+- group "Role*":
+  - text: ""
+  - button "More information about the role"
+  - radio "Engineer"
+  - text: Engineer
+  - radio "Installer"
+  - text: Installer Role required
+- text: Name*
+- button "More information about the name"
+- textbox "Name*" [invalid]
+- text: Minimum 3 characters Name must start with an uppercase letter Description
+- textbox "Description"
+- text: Phone number
+- group "Phone number":
+  - combobox /Select country Switzerland \+\d+/
+  - textbox "Enter phone number":
+    - /placeholder: 21 234 56 78
+    - text: "5"
+- text: Invalid phone number Day of birth
+- textbox "Day of birth" [invalid]
+- button "Open calendar"
+- text: Day of birth required Travel date
+- group "Travel date":
+  - textbox "Start date"
+  - text: "-"
+  - textbox "End date"
+  - button "Open calendar"
+- text: Travel dates are required Arrival
+- group "Arrival":
+  - textbox "Hours":
+    - /placeholder: hh
+    - text: /\d+/
+  - textbox "Minutes":
+    - /placeholder: mm
+    - text: /\d+/
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
+- text: Departure
+- group "Departure":
+  - textbox "Hours":
+    - /placeholder: hh
+    - text: /\d+/
+  - textbox "Minutes":
+    - /placeholder: mm
+    - text: /\d+/
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
+- text: Departure must be after arrival Class of service
+- combobox "Class of service": Economy
+- text: You deserve better! Fellow passengers
+- spinbutton "Fellow passengers": "0"
+- text: Minimum 2
+- checkbox "I confirm that I accept all and everything*" [invalid]
+- text: I confirm that I accept all and everything*
+- button "More information about the terms"
+- text: Accept terms before joining
+- checkbox "I confirm that I do not care about my privacy*" [invalid]
+- text: I confirm that I do not care about my privacy* Accept the privacy policy before joining
+- button "Cancel"
+- button "Save"
+- heading "Debugging" [level=2]
+- paragraph: "Validation status: INVALID"
+- table:
+  - rowgroup:
+    - row "Model Submitted":
+      - columnheader "Model"
+      - columnheader "Submitted"
+  - rowgroup:
+    - 'row /\{ "name": "a", "description": "", "phoneNumber": "", "birthday": "", "travelDate": \{\}, "arrival": "\d+-\d+-25T09:\d+:\d+\.000Z", "departure": "\d+-\d+-25T08:\d+:\d+\.000Z", "serviceClass": "economy", "role": "", "fellowPassengers": 0, "termsAccepted": false, "privacyDeclined": false \} undefined/':
+      - 'cell /\{ "name": "a", "description": "", "phoneNumber": "", "birthday": "", "travelDate": \{\}, "arrival": "\d+-\d+-25T09:\d+:\d+\.000Z", "departure": "\d+-\d+-25T08:\d+:\d+\.000Z", "serviceClass": "economy", "role": "", "fellowPassengers": 0, "termsAccepted": false, "privacyDeclined": false \}/'
+      - cell "undefined"
