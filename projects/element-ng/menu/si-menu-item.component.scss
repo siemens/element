@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/variables/system-tokens';
 
 .item-wrapper {
   display: flex;
@@ -17,8 +18,8 @@
 }
 
 :host-context(si-menu-bar, si-content-action-bar) {
-  color: variables.$element-action-secondary-text;
-  background: variables.$element-base-1;
+  color: system-tokens.$si-sys-text-accent;
+  background: system-tokens.$si-sys-background-1;
   padding-inline: map.get(variables.$spacers, 4);
 
   .item-wrapper {
@@ -73,28 +74,28 @@
 
   &:focus,
   &.focus {
-    color: variables.$element-action-secondary-text;
-    background: variables.$element-base-1;
+    color: system-tokens.$si-sys-text-accent;
+    background: system-tokens.$si-sys-background-1;
   }
 
   &:hover,
   &.hover {
-    color: variables.$element-action-secondary-text-hover;
-    background: variables.$element-action-secondary-hover;
+    color: system-tokens.$si-sys-text-on-accent-secondary-hover;
+    background: system-tokens.$si-sys-background-accent-secondary-hover;
   }
 
   &:active,
   &.active,
   &[aria-expanded='true'] {
-    color: variables.$element-action-primary-active;
-    background: variables.$element-action-secondary-active;
+    color: system-tokens.$si-sys-text-on-accent-secondary-active;
+    background: system-tokens.$si-sys-background-accent-secondary-active;
   }
 
   &:disabled,
   &.disabled {
     opacity: variables.$element-action-disabled-opacity;
-    color: variables.$element-action-secondary-text;
-    background: variables.$element-base-1;
+    color: system-tokens.$si-sys-text-accent;
+    background: system-tokens.$si-sys-background-1;
   }
 }
 
