@@ -10,6 +10,7 @@ import { inputBinding, signal, twoWayBinding, WritableSignal } from '@angular/co
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TestScheduler } from 'rxjs/testing';
+import { page, userEvent } from 'vitest/browser';
 
 import { SiCalendarCellHarness } from '../datepicker/testing/si-calendar-cell.harness';
 import { DateRangeFilter, DateRangePreset, SiDateRangeFilterComponent } from './index';
@@ -404,5 +405,23 @@ describe('SiDateRangeFilterComponent', () => {
     expect(rangeInputValue()).toBe(2);
     expect(rangeSelectContent()).toBe('Days');
     expect(preview()).toEqual(rangeText(from, to, true));
+  });
+
+  it('ignores invalid date input in preview', async () => {
+    const from = new Date('2023-05-13');
+    const to = new Date('2023-08-14');
+
+    range.set({ point1: from, point2: to });
+    enableTimeSelection.set(true);
+    await fixture.whenStable();
+
+    const toInput = page.getByRole('textbox', { name: 'To' });
+    await expect.element(toInput).toBeInTheDocument();
+    // Shouldn't throw error via DatePipe when invalid date is entered
+    await userEvent.fill(toInput, '08/14/2023, 12:40 A');
+    await fixture.whenStable();
+
+    expect(preview()).toContain('- 5/13/23, 12:00');
+    expect(preview()).not.toContain('08/14/2023, 12:40 A');
   });
 });
