@@ -1,5 +1,5 @@
 @use '../variables/focus';
-@use '../variables/semantic-tokens';
+@use '../variables/system-tokens';
 @use '../variables/spacers';
 @use '../variables/typography';
 @use 'mixins/breakpoints';
@@ -43,56 +43,55 @@
   }
 
   &.accent-primary {
-    border-inline-start: map.get(spacers.$spacers, 4) solid semantic-tokens.$element-ui-0;
+    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-accent;
   }
 
   &.accent-inactive {
-    border-inline-start: map.get(spacers.$spacers, 4) solid semantic-tokens.$element-ui-4;
+    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-4;
   }
 
   &.accent-info {
-    border-inline-start: map.get(spacers.$spacers, 4) solid
-      semantic-tokens.$element-status-information;
+    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-information;
   }
 
   &.accent-success {
-    border-inline-start: map.get(spacers.$spacers, 4) solid semantic-tokens.$element-status-success;
+    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-success;
   }
 
   &.accent-warning {
-    border-inline-start: map.get(spacers.$spacers, 4) solid semantic-tokens.$element-status-warning;
+    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-warning;
   }
 
   &.accent-caution {
-    border-inline-start: map.get(spacers.$spacers, 4) solid semantic-tokens.$element-status-caution;
+    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-caution;
   }
 
   &.accent-danger {
-    border-inline-start: map.get(spacers.$spacers, 4) solid semantic-tokens.$element-status-danger;
+    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-danger;
   }
 
   &.accent-critical {
-    border-inline-start: map.get(spacers.$spacers, 4) solid semantic-tokens.$element-status-critical;
+    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-critical;
   }
 
   &.action-card:not(:disabled) {
     &:hover {
       &,
       .card-footer {
-        background-color: semantic-tokens.$element-base-1-hover;
+        background-color: system-tokens.$si-sys-background-hover;
       }
     }
 
     &:active {
       &,
       .card-footer {
-        background-color: semantic-tokens.$element-base-1-selected;
+        background-color: system-tokens.$si-sys-background-selected;
       }
     }
   }
 
   &.selected {
-    box-shadow: 0 0 0 1px semantic-tokens.$element-ui-0;
+    box-shadow: 0 0 0 1px system-tokens.$si-sys-border-accent-active;
   }
 
   &:focus-visible {
@@ -101,7 +100,7 @@
 
   &.card-outline {
     background-color: transparent;
-    box-shadow: inset 0 0 0 1px semantic-tokens.$element-ui-4;
+    box-shadow: inset 0 0 0 1px system-tokens.$si-sys-border-4;
   }
 }
 
