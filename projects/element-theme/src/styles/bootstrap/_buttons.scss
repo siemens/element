@@ -263,29 +263,29 @@ button {
   --btn-color: #{bootstrap-variables.$input-color};
   --btn-color-hover: #{bootstrap-variables.$input-color};
   --btn-color-active: #{bootstrap-variables.$input-color};
-  --btn-border-width: 1px;
-  --btn-border-color: #{semantic-tokens.$element-ui-2};
-  --btn-border-color-hover: #{semantic-tokens.$element-ui-1};
-  --btn-border-color-active: #{semantic-tokens.$element-ui-1};
+  --btn-border-width: #{bootstrap-variables.$input-border-width};
+  --btn-border-color: #{bootstrap-variables.$input-border-color};
+  --btn-border-color-hover: #{bootstrap-variables.$input-focus-border-color};
+  --btn-border-color-active: #{bootstrap-variables.$input-focus-border-color};
 
   @include typography.si-font(
-    typography.$si-font-size-body,
-    typography.$si-line-height-body,
-    typography.$si-font-weight-body
+    bootstrap-variables.$input-font-size,
+    bootstrap-variables.$input-line-height,
+    bootstrap-variables.$input-font-weight
   );
   padding-block: bootstrap-variables.$input-padding-y;
-  padding-inline: bootstrap-variables.$btn-padding-x - bootstrap-variables.$input-border-width;
+  padding-inline: bootstrap-variables.$input-padding-x;
 
   border-radius: bootstrap-variables.$input-border-radius;
   justify-content: flex-start;
 
   &:is(:disabled, .disabled) {
-    --btn-border-color: #{semantic-tokens.$element-ui-3};
-    --btn-color: #{semantic-tokens.$element-text-disabled};
+    --btn-border-color: #{bootstrap-variables.$input-disabled-border-color};
+    --btn-color: #{bootstrap-variables.$input-disabled-color};
     opacity: unset;
   }
 
   &:focus {
-    --btn-border-color: #{semantic-tokens.$element-ui-1};
+    --btn-border-color: #{bootstrap-variables.$input-focus-border-color};
   }
 }
