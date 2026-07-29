@@ -3,7 +3,7 @@
   - link "Siemens logo":
     - /url: "#/"
 - dialog "Launchpad":
-  - paragraph: Switch applications
+  - paragraph: Switch app
   - button "Close launchpad"
   - text: Favorites
   - link "Assets System name":
