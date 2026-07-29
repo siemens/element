@@ -4,8 +4,8 @@
  */
 import { DebugElement, inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By, DomSanitizer } from '@angular/platform-browser';
-import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
+import { By } from '@angular/platform-browser';
+import { makeSiMarkdownOptions, SiMarkdownOptions } from '@siemens/element-ng/markdown';
 import { MenuItem } from '@siemens/element-ng/menu';
 
 import { MessageAction } from './chat-message.model';
@@ -14,9 +14,8 @@ import { SiAiMessageComponent as TestComponent } from './si-ai-message.component
 describe('SiAiMessageComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let debugElement: DebugElement;
-  let markdownRenderer: (text: string) => string | Node;
   let content: WritableSignal<string>;
-  let contentFormatter: WritableSignal<((text: string) => string | Node) | undefined>;
+  let markdownOptions: WritableSignal<SiMarkdownOptions | undefined>;
   let loading: WritableSignal<boolean>;
   let actions: WritableSignal<MessageAction[]>;
   let secondaryActions: WritableSignal<MenuItem[]>;
@@ -24,7 +23,7 @@ describe('SiAiMessageComponent', () => {
 
   beforeEach(() => {
     content = signal('');
-    contentFormatter = signal<((text: string) => string | Node) | undefined>(undefined);
+    markdownOptions = signal<SiMarkdownOptions | undefined>(undefined);
     loading = signal(false);
     actions = signal<MessageAction[]>([]);
     secondaryActions = signal<MenuItem[]>([]);
@@ -33,7 +32,7 @@ describe('SiAiMessageComponent', () => {
     fixture = TestBed.createComponent(TestComponent, {
       bindings: [
         inputBinding('content', content),
-        inputBinding('contentFormatter', contentFormatter),
+        inputBinding('markdownOptions', markdownOptions),
         inputBinding('loading', loading),
         inputBinding('actions', actions),
         inputBinding('secondaryActions', secondaryActions),
@@ -41,13 +40,11 @@ describe('SiAiMessageComponent', () => {
       ]
     });
     debugElement = fixture.debugElement;
-    const sanitizer = TestBed.inject(DomSanitizer);
-    markdownRenderer = getMarkdownRenderer(sanitizer);
   });
 
   it('should render markdown content', async () => {
     content.set('This is **bold** text');
-    contentFormatter.set(markdownRenderer);
+    markdownOptions.set(makeSiMarkdownOptions());
     await fixture.whenStable();
 
     const markdownContent = fixture.nativeElement.querySelector('.markdown-content') as HTMLElement;

@@ -32,7 +32,7 @@
             [secondaryActions]="getMessageSecondaryActions(message)"
             [actionParam]="message"
             [secondaryActionsLabel]="secondaryActionsLabel()"
-            [contentFormatter]="markdownRenderer()"
+            [markdownOptions]="markdownOptions()"
           />
         }
 
@@ -46,7 +46,7 @@
             [secondaryActions]="getMessageSecondaryActions(message)"
             [actionParam]="message"
             [secondaryActionsLabel]="secondaryActionsLabel()"
-            [contentFormatter]="markdownRenderer()"
+            [markdownOptions]="markdownOptions()"
           />
         }
 
@@ -62,7 +62,7 @@
             [outputLabel]="message.outputLabel ?? toolOutputLabel()"
             [expandInputArguments]="shouldAutoExpandInputArguments(message)"
             [expandOutput]="shouldAutoExpandOutput(message)"
-            [contentFormatter]="markdownRenderer()"
+            [markdownOptions]="markdownOptions()"
           />
         }
 
@@ -74,7 +74,7 @@
             [loading]="getLoadingState(message.loading, message.content, false, false, true)"
             [outputLabel]="reasoningLabel()"
             [expandOutput]="shouldAutoExpandReasoning(message)"
-            [contentFormatter]="markdownRenderer()"
+            [markdownOptions]="markdownOptions()"
           />
         }
       }

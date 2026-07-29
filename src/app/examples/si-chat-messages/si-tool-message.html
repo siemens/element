@@ -4,7 +4,7 @@
     toolIcon="element-search"
     [inputArguments]="retrievalInput"
     [output]="retrievalOutput"
-    [contentFormatter]="markdownRenderer"
+    [markdownOptions]="markdownOptions"
   />
 
   <div class="mt-4">
@@ -17,7 +17,7 @@
       outputLabel="Reasoning"
       [name]="reasoningName"
       [output]="reasoningOutput"
-      [contentFormatter]="markdownRenderer"
+      [markdownOptions]="markdownOptions"
     />
   </div>
 

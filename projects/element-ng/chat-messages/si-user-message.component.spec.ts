@@ -4,8 +4,8 @@
  */
 import { DebugElement, inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By, DomSanitizer } from '@angular/platform-browser';
-import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
+import { By } from '@angular/platform-browser';
+import { makeSiMarkdownOptions, SiMarkdownOptions } from '@siemens/element-ng/markdown';
 import { MenuItem } from '@siemens/element-ng/menu';
 
 import { Attachment, MessageAction } from './chat-message.model';
@@ -14,9 +14,8 @@ import { SiUserMessageComponent as TestComponent } from './si-user-message.compo
 describe('SiUserMessageComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let debugElement: DebugElement;
-  let markdownRenderer: (text: string) => string | Node;
   let content: WritableSignal<string>;
-  let contentFormatter: WritableSignal<((text: string) => string | Node) | undefined>;
+  let markdownOptions: WritableSignal<SiMarkdownOptions | undefined>;
   let actions: WritableSignal<MessageAction[]>;
   let secondaryActions: WritableSignal<MenuItem[]>;
   let attachments: WritableSignal<Attachment[]>;
@@ -24,7 +23,7 @@ describe('SiUserMessageComponent', () => {
 
   beforeEach(() => {
     content = signal('');
-    contentFormatter = signal<((text: string) => string | Node) | undefined>(undefined);
+    markdownOptions = signal<SiMarkdownOptions | undefined>(undefined);
     actions = signal<MessageAction[]>([]);
     secondaryActions = signal<MenuItem[]>([]);
     attachments = signal<Attachment[]>([]);
@@ -33,7 +32,7 @@ describe('SiUserMessageComponent', () => {
     fixture = TestBed.createComponent(TestComponent, {
       bindings: [
         inputBinding('content', content),
-        inputBinding('contentFormatter', contentFormatter),
+        inputBinding('markdownOptions', markdownOptions),
         inputBinding('actions', actions),
         inputBinding('secondaryActions', secondaryActions),
         inputBinding('attachments', attachments),
@@ -41,13 +40,11 @@ describe('SiUserMessageComponent', () => {
       ]
     });
     debugElement = fixture.debugElement;
-    const sanitizer = TestBed.inject(DomSanitizer);
-    markdownRenderer = getMarkdownRenderer(sanitizer);
   });
 
   it('should render markdown content', async () => {
     content.set('This is my **message**');
-    contentFormatter.set(markdownRenderer);
+    markdownOptions.set(makeSiMarkdownOptions());
     await fixture.whenStable();
 
     const markdownContent = fixture.nativeElement.querySelector('.markdown-content') as HTMLElement;

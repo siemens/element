@@ -2,37 +2,25 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   computed,
   input,
   output,
   booleanAttribute,
-  inject,
   contentChild,
   Signal,
   isSignal,
   effect,
   viewChild,
-  signal,
-  PLATFORM_ID,
-  DOCUMENT
+  signal
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
-import {
-  getMarkdownRenderer,
-  MarkdownRendererOptions
-} from '@siemens/element-ng/markdown-renderer';
+import { makeSiMarkdownOptions, SiMarkdownOptions } from '@siemens/element-ng/markdown';
 import { MenuItem } from '@siemens/element-ng/menu';
-import {
-  SiTranslatePipe,
-  TranslatableString,
-  injectSiTranslateService,
-  t
-} from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-translate-ng/translate';
 
 import {
   AiChatMessage,
@@ -93,12 +81,6 @@ import { SiUserMessageComponent } from './si-user-message.component';
 export class SiAiChatContainerComponent {
   private readonly chatInput = contentChild<SiChatInputComponent>(SiChatInputComponent);
   private readonly chatContainer = viewChild<SiChatContainerComponent>(SiChatContainerComponent);
-  private sanitizer = inject(DomSanitizer);
-  private translateService = injectSiTranslateService();
-  private platformId = inject(PLATFORM_ID);
-  private isBrowser = isPlatformBrowser(this.platformId);
-  private doc = inject(DOCUMENT);
-
   constructor() {
     effect(() => {
       const inputComponent = this.chatInput();
@@ -177,60 +159,10 @@ export class SiAiChatContainerComponent {
   readonly colorVariant = input<BackgroundColorVariant>('base-0');
 
   /**
-   * Do not display the copy code button.
-   * @defaultValue false
+   * Options used to render markdown message content.
+   * @defaultValue `makeSiMarkdownOptions()`
    */
-  readonly disableCopyCodeButton = input<boolean>(false);
-
-  /**
-   * Do not display the download CSV button for tables.
-   * @defaultValue false
-   */
-  readonly disableDownloadTableButton = input<boolean>(false);
-
-  /**
-   * Optional syntax highlighter function for code blocks.
-   * Receives code content and optional language, returns an HTML content string to display inside of the code block or undefined to use default rendering.
-   * The returned code is sanitized before insertion.
-   * Make sure that the required styles/scripts for the syntax highlighter are included in your application.
-   * @defaultValue undefined
-   */
-  readonly syntaxHighlighter = input<
-    ((code: string, language?: string) => string | undefined) | undefined
-  >(undefined);
-
-  /**
-   * Optional LaTeX renderer function for math expressions.
-   * Receives LaTeX string and display mode flag, returns an HTML content string to display or undefined to use default rendering.
-   * The returned HTML is sanitized before insertion.
-   * Make sure that the required styles/scripts for the LaTeX renderer are included in your application.
-   * @defaultValue undefined
-   */
-  readonly latexRenderer = input<
-    ((latex: string, displayMode: boolean) => string | undefined) | undefined
-  >(undefined);
-
-  /**
-   * Label for the copy button.
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY_CODE:Copy code`)
-   * ```
-   */
-  readonly copyCodeButtonLabel = input(
-    t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY_CODE:Copy code`)
-  );
-
-  /**
-   * Label for the download CSV button.
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`)
-   * ```
-   */
-  readonly downloadTableButtonLabel = input(
-    t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`)
-  );
+  readonly markdownOptions = input<SiMarkdownOptions>(makeSiMarkdownOptions());
 
   /**
    * The greeting text for the welcome screen
@@ -367,23 +299,6 @@ export class SiAiChatContainerComponent {
     content: string;
     attachments: ChatInputAttachment[];
   }>();
-
-  protected readonly markdownRenderer = computed(() => {
-    const highlighterFn = this.syntaxHighlighter();
-    const latexFn = this.latexRenderer();
-
-    const options: MarkdownRendererOptions | undefined = {
-      copyCodeButton: !this.disableCopyCodeButton() ? this.copyCodeButtonLabel() : undefined,
-      downloadTableButton: !this.disableDownloadTableButton()
-        ? this.downloadTableButtonLabel()
-        : undefined,
-      syntaxHighlighter: highlighterFn,
-      latexRenderer: latexFn,
-      translateSync: this.translateService.translateSync.bind(this.translateService)
-    };
-
-    return getMarkdownRenderer(this.sanitizer, options, this.doc, this.isBrowser);
-  });
 
   protected readonly isEmpty = computed(() => this.messages()?.length === 0 && !this.loading());
 

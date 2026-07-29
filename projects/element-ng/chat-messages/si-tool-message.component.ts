@@ -2,18 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  Component,
-  input,
-  Signal,
-  booleanAttribute,
-  viewChild,
-  ElementRef,
-  effect,
-  signal
-} from '@angular/core';
+import { Component, input, Signal, booleanAttribute, effect, signal } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
+import { SiMarkdownComponent, SiMarkdownOptions } from '@siemens/element-ng/markdown';
 import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-translate-ng/translate';
 
 import { SiChatMessageComponent } from './si-chat-message.component';
@@ -41,7 +33,13 @@ import { SiChatMessageComponent } from './si-chat-message.component';
  */
 @Component({
   selector: 'si-tool-message',
-  imports: [SiChatMessageComponent, SiIconComponent, SiLoadingSpinnerComponent, SiTranslatePipe],
+  imports: [
+    SiChatMessageComponent,
+    SiIconComponent,
+    SiLoadingSpinnerComponent,
+    SiMarkdownComponent,
+    SiTranslatePipe
+  ],
   templateUrl: './si-tool-message.component.html',
   styleUrl: './si-tool-message.component.scss',
   host: {
@@ -122,21 +120,10 @@ export class SiToolMessageComponent {
   );
 
   /**
-   * Optional formatter function to transform output content before display.
-   * - Returns string: Content will be displayed as text
-   * - Returns Node: DOM node will be inserted directly
-   *
-   * When a formatter is provided and the rendered output contains only a single
-   * code block, the surrounding markdown-content styling is stripped for a cleaner look.
-   *
+   * Optional options to render input and output content as markdown.
    * @defaultValue undefined
    */
-  readonly contentFormatter = input<((text: string) => string | Node) | undefined>(undefined);
-
-  protected readonly formattedInputContent =
-    viewChild<ElementRef<HTMLDivElement>>('formattedInputContent');
-  protected readonly formattedOutputContent =
-    viewChild<ElementRef<HTMLDivElement>>('formattedOutputContent');
+  readonly markdownOptions = input<SiMarkdownOptions>();
   protected readonly inputArgumentsOpened = signal(false);
   protected readonly outputOpened = signal(false);
   protected readonly inputArgumentsManuallyToggled = signal(false);
@@ -152,59 +139,6 @@ export class SiToolMessageComponent {
     effect(() => {
       this.outputOpened.set(this.expandOutput());
     });
-
-    effect(() => {
-      const formatter = this.contentFormatter();
-
-      const inputContainer = this.formattedInputContent()?.nativeElement;
-      if (inputContainer && formatter) {
-        this.renderFormatted(formatter, inputContainer, this.formatData(this.getInputValue()));
-      }
-
-      const outputContainer = this.formattedOutputContent()?.nativeElement;
-      if (outputContainer && formatter) {
-        this.renderFormatted(formatter, outputContainer, this.formatData(this.getOutputValue()));
-      }
-    });
-  }
-
-  private renderFormatted(
-    formatter: (text: string) => string | Node,
-    container: HTMLElement,
-    content: string
-  ): void {
-    container.innerHTML = '';
-    if (!content) {
-      return;
-    }
-    const formatted = formatter(content);
-    if (typeof formatted === 'string') {
-      container.textContent = formatted;
-    } else if (formatted instanceof Node) {
-      this.stripSingleCodeBlockWrapper(formatted);
-      container.appendChild(formatted);
-    }
-  }
-
-  /**
-   * If the rendered node contains only a single code block (`.code-wrapper`),
-   * strips the surrounding `markdown-content` class so the code block renders
-   * without extra markdown container styling.
-   */
-  private stripSingleCodeBlockWrapper(node: Node): void {
-    if (!(node instanceof HTMLElement)) {
-      return;
-    }
-    const significantChildren = Array.from(node.childNodes).filter(
-      child => child.nodeType === 1 || (child.nodeType === 3 && child.textContent?.trim())
-    );
-    if (
-      significantChildren.length === 1 &&
-      significantChildren[0] instanceof HTMLElement &&
-      significantChildren[0].classList.contains('code-wrapper')
-    ) {
-      node.className = '';
-    }
   }
 
   protected formatData(data: string | object | Signal<string | object> | undefined): string {

@@ -43,14 +43,14 @@
           [attr.hidden]="!singleSectionOpened() ? '' : undefined"
         >
           @if (hasInputArguments()) {
-            @if (contentFormatter()) {
-              <div #formattedInputContent class="tool-data-formatted markdown-content"></div>
+            @if (markdownOptions(); as options) {
+              <si-markdown [markdown]="formatData(getInputValue())" [options]="options" />
             } @else {
               <pre class="tool-data"><code>{{ formatData(getInputValue()) }}</code></pre>
             }
           } @else if (hasOutput() && !getLoadingState()) {
-            @if (contentFormatter()) {
-              <div #formattedOutputContent class="tool-data-formatted markdown-content"></div>
+            @if (markdownOptions(); as options) {
+              <si-markdown [markdown]="formatData(getOutputValue())" [options]="options" />
             } @else {
               <pre class="tool-data"><code>{{ formatData(getOutputValue()) }}</code></pre>
             }
@@ -99,8 +99,8 @@
                   [id]="inputArgumentsContentId"
                   [attr.hidden]="!inputArgumentsOpened() ? '' : undefined"
                 >
-                  @if (contentFormatter()) {
-                    <div #formattedInputContent class="tool-data-formatted markdown-content"></div>
+                  @if (markdownOptions(); as options) {
+                    <si-markdown [markdown]="formatData(getInputValue())" [options]="options" />
                   } @else {
                     <pre class="tool-data"><code>{{ formatData(getInputValue()) }}</code></pre>
                   }
@@ -130,8 +130,8 @@
                   [id]="outputContentId"
                   [attr.hidden]="!outputOpened() ? '' : undefined"
                 >
-                  @if (contentFormatter()) {
-                    <div #formattedOutputContent class="tool-data-formatted markdown-content"></div>
+                  @if (markdownOptions(); as options) {
+                    <si-markdown [markdown]="formatData(getOutputValue())" [options]="options" />
                   } @else {
                     <pre class="tool-data"><code>{{ formatData(getOutputValue()) }}</code></pre>
                   }
