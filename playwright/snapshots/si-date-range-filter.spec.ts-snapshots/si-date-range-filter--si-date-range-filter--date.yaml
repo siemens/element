@@ -10,11 +10,11 @@
 - text: From
 - textbox "From Open calendar":
   - /placeholder: Select date
-  - text: ""
+  - text: /8\/\d+\/\d+/
 - button "Open calendar"
 - checkbox "Today"
 - text: Today To
-- textbox "Date":
+- textbox "To Open calendar":
   - /placeholder: Select date
   - text: /4\/5\/\d+/
 - button "Open calendar"

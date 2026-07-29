@@ -324,6 +324,12 @@ export class SiDateRangeFilterComponent implements OnChanges {
   protected readonly icons = addIcons({ elementDown2 });
   protected readonly advancedMode = signal(false);
   protected readonly dateRange = signal<DateRange>({ start: undefined, end: undefined });
+  protected readonly safeDateRange = computed(() => {
+    const range = this.dateRange();
+    const start = this.isValidDate(range.start) ? range.start : undefined;
+    const end = this.isValidDate(range.end) ? range.end : undefined;
+    return { start, end };
+  });
 
   protected readonly point1Now = signal(true);
   protected readonly point2Mode = signal<'duration' | 'date'>('duration');
@@ -551,5 +557,9 @@ export class SiDateRangeFilterComponent implements OnChanges {
     if (this.smallScreen) {
       this.presetOpen.set(false);
     }
+  }
+
+  private isValidDate(date: Date | undefined): boolean {
+    return date instanceof Date && !isNaN(date.getTime());
   }
 }
