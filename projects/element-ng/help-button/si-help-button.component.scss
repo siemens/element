@@ -1,22 +1,20 @@
-@use '@siemens/element-theme/src/styles/variables';
-@use 'sass:map';
-@use 'sass:math';
+@use '@siemens/element-theme/src/styles/variables/system-tokens';
 
 :host {
   display: inline-flex;
   vertical-align: middle;
   font-size: 1rem;
   border-radius: 100%;
-  color: variables.$element-ui-2;
+  color: system-tokens.$si-sys-text-secondary;
   border: 0;
   background: transparent;
   padding: 0;
 
   &:is(:hover, :active) {
-    color: variables.$element-ui-1;
+    color: system-tokens.$si-sys-text-primary;
   }
 
   &:disabled {
-    color: variables.$element-text-disabled;
+    color: system-tokens.$si-sys-text-disabled;
   }
 }
