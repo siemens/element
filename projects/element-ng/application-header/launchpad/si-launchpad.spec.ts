@@ -8,8 +8,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
 import { SiLaunchpadHarness } from '../testing/si-launchpad.harness';
-import { FavoriteChangeEvent, SiLaunchpadFactoryComponent } from './si-launchpad-factory.component';
-import { App, AppCategory } from './si-launchpad.model';
+import { SiLaunchpadFactoryComponent } from './si-launchpad-factory.component';
+import { App, AppCategory, FavoriteChangeEvent } from './si-launchpad.model';
 
 describe('SiLaunchpad', () => {
   let fixture: ComponentFixture<SiLaunchpadFactoryComponent>;
