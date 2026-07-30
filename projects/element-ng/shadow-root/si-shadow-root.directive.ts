@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
-import { Directive, ElementRef, inject, DOCUMENT } from '@angular/core';
+import { Directive, ElementRef, inject, DOCUMENT, DestroyRef } from '@angular/core';
 
 /**
  * This directive is intended to be used in applications that do NOT load element styles in the root HTML element.
@@ -38,20 +38,46 @@ import { Directive, ElementRef, inject, DOCUMENT } from '@angular/core';
 export class SiShadowRootDirective extends OverlayContainer {
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private document = inject(DOCUMENT);
+  private destroyRef = inject(DestroyRef);
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   protected override _createContainer(): void {
-    const root = document.createElement('element-overlay-root');
+    const sourceShadow = this.elementRef.nativeElement.shadowRoot!;
+    const root = this.document.createElement('element-overlay-root');
     this.document.body.append(root);
     const shadow = root.attachShadow({ mode: 'open' });
-    const shadowElement = document.createElement('div');
+    const shadowElement = this.document.createElement('div');
     shadowElement.classList.add('cdk-overlay-container');
-    shadow.append(
-      ...Array.from(this.elementRef.nativeElement.shadowRoot!.styleSheets).map(styleSheet =>
-        styleSheet.ownerNode!.cloneNode(true)
-      ),
-      shadowElement
-    );
+    shadow.append(shadowElement);
+
+    const styleCopies = new Map<CSSStyleSheet, Node>();
+    const syncStyleElements = (): void => {
+      const sourceStyleSheets = new Set(Array.from(sourceShadow.styleSheets));
+
+      styleCopies.forEach((copy, source) => {
+        if (!sourceStyleSheets.has(source)) {
+          copy.parentNode?.removeChild(copy);
+          styleCopies.delete(source);
+        }
+      });
+
+      sourceStyleSheets.forEach(source => {
+        let copy = styleCopies.get(source);
+        if (!copy) {
+          copy = source.ownerNode!.cloneNode(true);
+          styleCopies.set(source, copy);
+        }
+        shadow.insertBefore(copy, shadowElement);
+      });
+    };
+
+    syncStyleElements();
+    const observer = new MutationObserver(syncStyleElements);
+    observer.observe(sourceShadow, { childList: true });
+    this.destroyRef.onDestroy(() => {
+      observer.disconnect();
+      root.remove();
+    });
 
     this._containerElement = shadowElement;
   }
