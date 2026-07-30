@@ -3,11 +3,14 @@
 
 :host {
   display: inline-block;
-  margin-inline-start: map.get(variables.$spacers, 2);
-  vertical-align: middle;
+  margin-inline: map.get(variables.$spacers, 3);
+  vertical-align: text-bottom;
 }
 
 .source-citation-trigger {
+  display: inline-flex;
+  align-items: center;
+  block-size: map.get(variables.$spacers, 6);
   padding: 0;
   border: 0;
   border-radius: map.get(variables.$spacers, 6);
@@ -20,7 +23,28 @@
   }
 }
 
-si-popover-body {
-  display: block;
-  min-inline-size: 20rem;
+:host ::ng-deep si-summary-chip .chip {
+  box-sizing: border-box;
+  block-size: map.get(variables.$spacers, 6);
+  min-block-size: map.get(variables.$spacers, 6);
+  padding-block: 0;
+  padding-inline: map.get(variables.$spacers, 3);
+}
+
+:host ::ng-deep si-summary-chip .si-body {
+  font-size: variables.$si-font-size-caption;
+  line-height: variables.$si-line-height-caption;
+}
+
+:host ::ng-deep .source-citation-popover {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 14.375rem;
+  max-inline-size: 25rem;
+  max-block-size: 25rem;
+}
+
+:host ::ng-deep .source-citation-popover .popover-body {
+  min-block-size: 0;
+  overflow-y: auto;
 }
