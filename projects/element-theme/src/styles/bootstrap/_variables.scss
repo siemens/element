@@ -43,8 +43,8 @@ $position-values: (
 //
 // Settings for the `<body>` element.
 
-$body-bg: semantic-tokens.$element-base-0 !default;
-$body-color: semantic-tokens.$element-text-primary !default;
+$body-bg: system-tokens.$si-sys-background-0 !default;
+$body-color: system-tokens.$si-sys-text-primary !default;
 $body-text-align: null !default;
 
 // Links
@@ -125,7 +125,7 @@ $border-widths: (
   5: 5px
 ) !default;
 
-$border-color: semantic-tokens.$element-ui-4 !default;
+$border-color: system-tokens.$si-sys-border-4 !default;
 
 $border-radius: semantic-tokens.$element-radius-2 !default;
 $border-radius-sm: semantic-tokens.$element-radius-1 !default;
@@ -201,7 +201,7 @@ $headings-font-family: null !default;
 $headings-font-style: null !default;
 $headings-font-weight: typography.$si-font-weight-semibold !default;
 $headings-line-height: 1.2 !default;
-$headings-color: semantic-tokens.$element-text-primary !default;
+$headings-color: system-tokens.$si-sys-text-primary !default;
 
 $lead-font-size: typography.$si-font-size-body-lg !default;
 $lead-line-height: typography.$si-line-height-body-lg !default;
@@ -213,15 +213,15 @@ $sub-sup-font-size: 0.75em !default;
 
 $initialism-font-size: $small-font-size !default;
 
-$text-muted: semantic-tokens.$element-text-disabled !default;
+$text-muted: system-tokens.$si-sys-text-disabled !default;
 
 $blockquote-margin-y: spacers.$spacer !default;
 $blockquote-font-size: typography.$si-font-size-body-lg !default;
-$blockquote-footer-color: semantic-tokens.$element-text-secondary !default;
+$blockquote-footer-color: system-tokens.$si-sys-text-secondary !default;
 $blockquote-footer-font-size: $small-font-size !default;
 
 $hr-margin-y: spacers.$spacer !default;
-$hr-color: semantic-tokens.$element-ui-4 !default;
+$hr-color: system-tokens.$si-sys-border-4 !default;
 $hr-height: $border-width !default;
 $hr-opacity: 1 !default;
 
@@ -237,8 +237,8 @@ $nested-kbd-font-weight: $font-weight-bold !default;
 
 $list-inline-padding: 0.5rem !default;
 
-$mark-bg: semantic-tokens.$element-status-caution;
-$mark-color: semantic-tokens.$element-status-caution-contrast;
+$mark-bg: system-tokens.$si-sys-background-caution;
+$mark-color: system-tokens.$si-sys-text-on-caution;
 
 // Tables
 //
@@ -252,19 +252,19 @@ $table-cell-padding-x-sm: map.get(spacers.$spacers, 4) !default;
 $table-cell-vertical-align: top !default;
 
 $table-color: $body-color !default;
-$table-bg: semantic-tokens.$element-base-1 !default;
+$table-bg: system-tokens.$si-sys-background-1 !default;
 $table-accent-bg: transparent !default;
 
 $table-th-font-weight: null !default;
 
 $table-striped-color: $table-color !default;
-$table-striped-bg: semantic-tokens.$element-base-0 !default;
+$table-striped-bg: system-tokens.$si-sys-background-0 !default;
 
 $table-active-color: $table-color !default;
-$table-active-bg: semantic-tokens.$element-base-1-selected !default;
+$table-active-bg: system-tokens.$si-sys-background-selected !default;
 
 $table-hover-color: $table-color !default;
-$table-hover-bg: semantic-tokens.$element-base-1-hover !default;
+$table-hover-bg: system-tokens.$si-sys-background-hover !default;
 
 $table-border-width: $border-width !default;
 $table-border-color: $border-color !default;
@@ -276,10 +276,10 @@ $table-group-separator-color: currentColor !default;
 $table-caption-color: $text-muted !default;
 
 $table-variants: (
-  'success': semantic-tokens.$element-base-success,
-  'info': semantic-tokens.$element-base-information,
-  'warning': semantic-tokens.$element-base-warning,
-  'danger': semantic-tokens.$element-base-danger
+  'success': system-tokens.$si-sys-background-success-subtle,
+  'info': system-tokens.$si-sys-background-information-subtle,
+  'warning': system-tokens.$si-sys-background-warning-subtle,
+  'danger': system-tokens.$si-sys-background-danger-subtle
 ) !default;
 
 // Buttons
@@ -297,7 +297,7 @@ $btn-padding-y-lg: map.get(spacers.$spacers, 5);
 
 $btn-link-color: $link-color !default;
 $btn-link-hover-color: $link-hover-color !default;
-$btn-link-disabled-color: semantic-tokens.$element-text-disabled !default;
+$btn-link-disabled-color: system-tokens.$si-sys-text-disabled !default;
 
 // Allows for customizing button radius independently from global border radius
 $btn-border-radius: semantic-tokens.$element-button-radius !default;
@@ -317,13 +317,13 @@ $form-text-margin-top: map.get(spacers.$spacers, 2);
 $form-text-font-size: $small-font-size !default;
 $form-text-font-style: null !default;
 $form-text-font-weight: null !default;
-$form-text-color: semantic-tokens.$element-text-secondary !default;
+$form-text-color: system-tokens.$si-sys-text-secondary !default;
 
 $form-label-margin-bottom: 4px !default;
 $form-label-font-size: typography.$si-font-size-body !default;
 $form-label-font-style: null !default;
 $form-label-font-weight: null !default;
-$form-label-color: semantic-tokens.$element-text-secondary !default;
+$form-label-color: system-tokens.$si-sys-text-secondary !default;
 
 $input-padding-y: (map.get(spacers.$spacers, 4) - 1px); // 8px including 1px border
 $input-padding-x: (map.get(spacers.$spacers, 4) - 1px); // 8px including 1px border
@@ -334,14 +334,14 @@ $input-font-weight: $font-weight-base;
 // rounding differences (Safari rounds 14 × 1.1428... to 15px, Chrome to 16px). See #2031
 $input-line-height: typography.$si-line-height-body-rem !default;
 
-$input-bg: semantic-tokens.$element-base-1 !default;
-$input-disabled-bg: semantic-tokens.$element-base-1 !default;
-$input-disabled-color: semantic-tokens.$element-text-disabled !default;
-$input-disabled-border-color: semantic-tokens.$element-ui-4 !default;
+$input-bg: system-tokens.$si-sys-background-1 !default;
+$input-disabled-bg: system-tokens.$si-sys-background-1 !default;
+$input-disabled-color: system-tokens.$si-sys-text-disabled !default;
+$input-disabled-border-color: system-tokens.$si-sys-border-4 !default;
 
-$input-color: semantic-tokens.$element-text-primary !default;
-$input-border-color: semantic-tokens.$element-ui-2 !default;
-$input-focus-border-color: semantic-tokens.$element-ui-1 !default;
+$input-color: system-tokens.$si-sys-text-primary !default;
+$input-border-color: system-tokens.$si-sys-border-2 !default;
+$input-focus-border-color: system-tokens.$si-sys-border-1 !default;
 $input-border-width: $border-width !default;
 $input-box-shadow: $box-shadow-inset !default;
 
@@ -350,7 +350,7 @@ $input-border-radius: semantic-tokens.$element-input-radius !default;
 $input-focus-bg: $input-bg !default;
 $input-focus-color: $input-color !default;
 
-$input-placeholder-color: semantic-tokens.$element-text-secondary !default;
+$input-placeholder-color: system-tokens.$si-sys-text-secondary !default;
 $input-placeholder-disabled-color: transparent !default;
 $input-plaintext-color: $body-color !default;
 
@@ -377,15 +377,15 @@ $input-group-addon-padding-y: $input-padding-y !default;
 $input-group-addon-padding-x: $input-padding-x !default;
 $input-group-addon-font-weight: $input-font-weight !default;
 $input-group-addon-color: $input-color !default;
-$input-group-addon-bg: semantic-tokens.$element-ui-4 !default;
+$input-group-addon-bg: system-tokens.$si-sys-background-4 !default;
 $input-group-addon-border-color: $input-border-color !default;
 
 // Form validation
 
 $form-feedback-font-size: $form-text-font-size !default;
 $form-feedback-valid-color: null !default;
-$form-feedback-warning-color: semantic-tokens.$element-text-warning !default;
-$form-feedback-invalid-color: semantic-tokens.$element-text-danger !default;
+$form-feedback-warning-color: system-tokens.$si-sys-text-warning !default;
+$form-feedback-invalid-color: system-tokens.$si-sys-text-danger !default;
 
 $form-feedback-icon-valid: semantic-tokens.$element-feedback-icon-valid;
 $form-feedback-icon-invalid: semantic-tokens.$element-feedback-icon-invalid;
@@ -398,12 +398,12 @@ $form-validation-states: (
     'icon': $form-feedback-icon-valid
   ),
   'invalid': (
-    'color': semantic-tokens.$element-status-danger,
+    'color': system-tokens.$si-sys-border-danger,
     'text-color': $form-feedback-invalid-color,
     'icon': $form-feedback-icon-invalid
   ),
   'warning': (
-    'color': semantic-tokens.$element-status-warning,
+    'color': system-tokens.$si-sys-border-warning,
     'text-color': $form-feedback-warning-color,
     'icon': $form-feedback-icon-warning
   )
@@ -423,22 +423,22 @@ $nav-link-padding-x: map.get(spacers.$spacers, 8);
 $nav-link-font-size: typography.$si-font-size-h4;
 $nav-link-font-weight: typography.$si-font-weight-h4;
 $nav-link-line-height: typography.$si-line-height-h4;
-$nav-link-color: semantic-tokens.$element-text-primary !default;
+$nav-link-color: system-tokens.$si-sys-text-primary !default;
 $nav-link-hover-color: $link-hover-color !default;
 $nav-link-transition: ();
-$nav-link-disabled-color: semantic-tokens.$element-text-disabled !default;
+$nav-link-disabled-color: system-tokens.$si-sys-text-disabled !default;
 
 $nav-tabs-border-color: transparent;
 $nav-tabs-border-width: 2px;
 $nav-tabs-border-radius: 0;
 $nav-tabs-link-hover-border-color: transparent transparent $nav-tabs-border-color !default;
-$nav-tabs-link-active-color: semantic-tokens.$element-action-secondary-text-hover !default;
+$nav-tabs-link-active-color: system-tokens.$si-sys-text-accent-hover !default;
 $nav-tabs-link-active-bg: transparent !default;
 
 // Badges
 $badge-font-size: typography.$si-font-size-body;
 $badge-font-weight: typography.$si-font-weight-body;
-$badge-color: semantic-tokens.$element-text-inverse !default;
+$badge-color: system-tokens.$si-sys-text-inverse !default;
 $badge-padding-y: map.get(spacers.$spacers, 1);
 $badge-padding-x: map.get(spacers.$spacers, 4);
 $badge-border-radius: 0.75rem;
@@ -477,11 +477,11 @@ $card-border-radius: $border-radius !default;
 $card-inner-border-radius: $card-border-radius;
 $card-cap-padding-y: map.get(spacers.$spacers, 5) !default;
 $card-cap-padding-x: $card-spacer-x !default;
-$card-cap-bg: semantic-tokens.$element-base-1 !default;
+$card-cap-bg: system-tokens.$si-sys-background-1 !default;
 $card-cap-color: null !default;
 $card-height: null !default;
 $card-color: null !default;
-$card-bg: semantic-tokens.$element-base-1 !default;
+$card-bg: system-tokens.$si-sys-background-1 !default;
 $card-img-overlay-padding: spacers.$spacer !default;
 $card-group-margin: $grid-gutter-width !default;
 
@@ -489,8 +489,8 @@ $card-group-margin: $grid-gutter-width !default;
 
 $tooltip-font-size: $font-size-base !default;
 $tooltip-max-width: 200px !default;
-$tooltip-color: semantic-tokens.$element-ui-5 !default;
-$tooltip-bg: semantic-tokens.$element-ui-1 !default;
+$tooltip-color: system-tokens.$si-sys-text-inverse !default;
+$tooltip-bg: system-tokens.$si-sys-background-inverse !default;
 $tooltip-border-radius: semantic-tokens.$element-radius-2 !default;
 $tooltip-opacity: 0.9 !default;
 $tooltip-padding-y: map.get(spacers.$spacers, 4) !default;
@@ -504,10 +504,10 @@ $tooltip-arrow-color: $tooltip-bg !default;
 // Popovers
 
 $popover-font-size: $font-size-base;
-$popover-bg: semantic-tokens.$element-base-3 !default;
+$popover-bg: system-tokens.$si-sys-background-3 !default;
 $popover-max-width: 276px !default;
 $popover-border-width: $border-width !default;
-$popover-border-color: semantic-tokens.$element-ui-4 !default;
+$popover-border-color: system-tokens.$si-sys-border-4 !default;
 $popover-border-radius: $border-radius-lg !default;
 $popover-inner-border-radius: functions.subtract(
   $popover-border-radius,
@@ -515,12 +515,12 @@ $popover-inner-border-radius: functions.subtract(
 ) !default;
 $popover-box-shadow: $box-shadow !default;
 
-$popover-header-bg: semantic-tokens.$element-base-3 !default;
-$popover-header-color: semantic-tokens.$element-text-active;
+$popover-header-bg: system-tokens.$si-sys-background-3 !default;
+$popover-header-color: system-tokens.$si-sys-text-accent;
 $popover-header-padding-y: map.get(spacers.$spacers, 5) !default;
 $popover-header-padding-x: map.get(spacers.$spacers, 5) !default;
 
-$popover-body-color: semantic-tokens.$element-text-primary !default;
+$popover-body-color: system-tokens.$si-sys-text-primary !default;
 $popover-body-padding-y: $popover-header-padding-y !default;
 $popover-body-padding-x: $popover-header-padding-x !default;
 
@@ -544,7 +544,7 @@ $modal-dialog-margin-y-sm-up: map.get(spacers.$spacers, 9);
 $modal-title-line-height: typography.$si-line-height-h4 !default;
 
 $modal-content-color: null !default;
-$modal-content-bg: semantic-tokens.$element-base-1 !default;
+$modal-content-bg: system-tokens.$si-sys-background-1 !default;
 $modal-content-border-width: $border-width !default;
 $modal-content-border-radius: $border-radius-lg !default;
 $modal-content-inner-border-radius: functions.subtract(
@@ -589,18 +589,18 @@ $alert-dismissible-padding-r: $alert-padding-x * 3 !default; // 3x covers width 
 
 $progress-height: 0.5rem !default;
 $progress-font-size: $font-size-base * 0.75 !default;
-$progress-bg: semantic-tokens.$element-ui-4 !default;
+$progress-bg: system-tokens.$si-sys-background-4 !default;
 $progress-border-radius: $progress-height * 0.5 !default;
 $progress-box-shadow: none !default;
-$progress-bar-color: semantic-tokens.$element-text-inverse !default;
-$progress-bar-bg: semantic-tokens.$element-ui-0 !default;
+$progress-bar-color: system-tokens.$si-sys-text-on-accent !default;
+$progress-bar-bg: system-tokens.$si-sys-background-accent !default;
 $progress-bar-animation-timing: 1s linear infinite !default;
 $progress-bar-transition: width animations.element-transition-duration(0.6s) ease;
 
 // List group
 
-$list-group-color: semantic-tokens.$element-text-primary !default;
-$list-group-bg: semantic-tokens.$element-base-1 !default;
+$list-group-color: system-tokens.$si-sys-text-primary !default;
+$list-group-bg: system-tokens.$si-sys-background-1 !default;
 $list-group-border-color: $border-color !default;
 $list-group-border-width: $border-width !default;
 $list-group-border-radius: $border-radius !default;
@@ -608,19 +608,19 @@ $list-group-border-radius: $border-radius !default;
 $list-group-item-padding-y: map.get(spacers.$spacers, 4) !default;
 $list-group-item-padding-x: map.get(spacers.$spacers, 6) !default; // 1.25rem !default;
 
-$list-group-hover-bg: semantic-tokens.$element-base-1-hover !default;
+$list-group-hover-bg: system-tokens.$si-sys-background-hover !default;
 $list-group-active-color: $body-color !default;
-$list-group-active-bg: semantic-tokens.$element-base-1-selected !default;
+$list-group-active-bg: system-tokens.$si-sys-background-selected !default;
 $list-group-active-border-color: $border-color !default;
 
-$list-group-disabled-color: semantic-tokens.$element-text-disabled !default;
+$list-group-disabled-color: system-tokens.$si-sys-text-disabled !default;
 $list-group-disabled-bg: $list-group-bg !default;
 
-$list-group-action-color: semantic-tokens.$element-text-primary !default;
+$list-group-action-color: system-tokens.$si-sys-text-primary !default;
 $list-group-action-hover-color: $list-group-action-color !important !default;
 
 $list-group-action-active-color: $body-color !default;
-$list-group-action-active-bg: semantic-tokens.$element-base-0 !default;
+$list-group-action-active-bg: system-tokens.$si-sys-background-0 !default;
 
 // Image thumbnails
 
@@ -634,7 +634,7 @@ $thumbnail-box-shadow: $box-shadow-sm !default;
 // Figures
 
 $figure-caption-font-size: $small-font-size !default;
-$figure-caption-color: semantic-tokens.$element-text-secondary !default;
+$figure-caption-color: system-tokens.$si-sys-text-secondary !default;
 
 // Breadcrumbs
 
@@ -644,7 +644,7 @@ $breadcrumb-padding-x: 0;
 $breadcrumb-item-padding-x: map.get(spacers.$spacers, 5);
 $breadcrumb-margin-bottom: 0;
 $breadcrumb-bg: inherit !default;
-$breadcrumb-divider-color: semantic-tokens.$element-ui-2 !default;
+$breadcrumb-divider-color: system-tokens.$si-sys-border-2 !default;
 $breadcrumb-active-color: $link-color !default;
 $breadcrumb-divider: string.quote('>') !default;
 $breadcrumb-divider-flipped: $breadcrumb-divider !default;
@@ -654,22 +654,22 @@ $breadcrumb-border-radius: 0 !default;
 
 $code-font-size: typography.$si-font-size-body !default;
 $code-line-height: typography.$si-line-height-body !default;
-$code-color: semantic-tokens.$element-text-primary !default;
-$code-background: semantic-tokens.$element-ui-4 !default;
+$code-color: system-tokens.$si-sys-text-primary !default;
+$code-background: system-tokens.$si-sys-background-selected !default;
 $code-padding-y: map.get(spacers.$spacers, 1) !default;
 $code-padding-x: map.get(spacers.$spacers, 2) !default;
 $code-border-radius: semantic-tokens.$element-radius-1 !default;
 
 $kbd-padding-y: 0.2rem !default;
 $kbd-padding-x: 0.4rem !default;
-$kbd-color: semantic-tokens.$element-text-primary !default;
-$kbd-bg: semantic-tokens.$element-ui-1 !default;
+$kbd-color: system-tokens.$si-sys-text-primary !default;
+$kbd-bg: system-tokens.$si-sys-background-3 !default;
 // variable is unused. TODO: remove it.
 $kbd-font-size: $code-font-size !default;
 
-$pre-color: semantic-tokens.$element-text-primary !default;
+$pre-color: system-tokens.$si-sys-text-primary !default;
 $pre-padding-y: map.get(spacers.$spacers, 4) !default;
 $pre-padding-x: map.get(spacers.$spacers, 4) !default;
-$pre-border-color: semantic-tokens.$element-ui-4 !default;
+$pre-border-color: system-tokens.$si-sys-border-4 !default;
 $pre-border-width: $border-width !default;
 $pre-border-radius: semantic-tokens.$element-radius-1 !default;
