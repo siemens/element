@@ -15,7 +15,7 @@
           [actions]="getMessagePrimaryActions(message)"
           [secondaryActions]="getMessageSecondaryActions(message)"
         >
-          <si-markdown [markdown]="message.content" [options]="markdownOptions" />
+          <si-markdown [markdown]="message.content" [options]="getMessageMarkdownOptions(message)" />
         </si-ai-message>
       }
       @if (message.type === 'custom') {

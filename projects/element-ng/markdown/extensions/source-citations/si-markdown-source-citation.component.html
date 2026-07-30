@@ -1,0 +1,30 @@
+<button
+  type="button"
+  class="source-citation-trigger"
+  [siPopover]="sourcePopover"
+  [attr.aria-label]="triggerLabel()"
+>
+  <si-summary-chip [label]="label()" [interactive]="false" />
+</button>
+
+<ng-template #sourcePopover>
+  <si-popover-title>Sources</si-popover-title>
+  <si-popover-body>
+    <ul class="list-unstyled mb-0">
+      @for (citation of citations(); track citation.reference) {
+        <li>
+          <button
+            type="button"
+            class="list-item list-item-action"
+            (click)="openSource(citation)"
+          >
+            <h5 class="list-item-title">{{ citation.name }}</h5>
+            @if (citation.quote ?? citation.description; as description) {
+              <p class="list-item-description">{{ description }}</p>
+            }
+          </button>
+        </li>
+      }
+    </ul>
+  </si-popover-body>
+</ng-template>
