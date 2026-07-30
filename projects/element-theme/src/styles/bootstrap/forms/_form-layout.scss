@@ -1,4 +1,40 @@
+@use 'sass:map';
 @use '../mixins/form-layout';
+@use '../../variables/spacers';
+
+.si-form-fieldset,
+.si-form-input {
+  display: flex;
+  flex-direction: column;
+  margin-block-end: map.get(spacers.$spacers, 6);
+
+  .form-item-content {
+    flex-grow: 1;
+  }
+}
+
+.si-form-fieldset {
+  .form-label {
+    margin-block-end: map.get(spacers.$spacers, 2);
+  }
+
+  .form-check:not(.form-check-inline) {
+    display: block;
+  }
+}
+
+:is(.si-form-fieldset, .si-form-input) .form-label:empty {
+  display: none;
+}
+
+// Maintain compatibility with the old si-form-item style which allows wrapping multiple checkboxes.
+:is(.si-form-fieldset, .si-form-input).form-check:not(.form-check-inline) {
+  display: block;
+}
+
+:is(.si-form-fieldset, .si-form-input).form-check:has(.form-check) {
+  padding-block: 0;
+}
 
 .form-col-layout {
   @include form-layout.form-col-layout;
