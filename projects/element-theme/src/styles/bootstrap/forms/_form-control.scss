@@ -1,5 +1,5 @@
 @use '../../variables/focus';
-@use '../../variables/semantic-tokens';
+@use '../../variables/system-tokens';
 @use '../../variables/spacers';
 @use '../../variables/utilities';
 @use '../../variables/si-vars';
@@ -8,8 +8,8 @@
 @use 'sass:map';
 
 :is(.form-control, .form-select) {
-  --border-color: #{semantic-tokens.$element-ui-2};
-  --si-textarea-mask: #{semantic-tokens.$element-base-1};
+  --border-color: #{system-tokens.$si-sys-border-2};
+  --si-textarea-mask: #{system-tokens.$si-sys-background-1};
   // Formula:
   // (1.25rem / 0px) (feedback icon size)
   // + (action-size / 0px) (action-offset includes a padding)
@@ -27,8 +27,8 @@
   font-size: variables.$input-font-size;
   font-weight: variables.$input-font-weight;
   line-height: variables.$input-line-height;
-  color: semantic-tokens.$element-text-primary;
-  background-color: semantic-tokens.$element-base-1;
+  color: system-tokens.$si-sys-text-primary;
+  background-color: system-tokens.$si-sys-background-1;
   background-clip: padding-box;
   border: variables.$input-border-width solid var(--border-color);
   border-radius: variables.$input-border-radius;
@@ -65,32 +65,32 @@
   }
 
   &:autofill {
-    background: semantic-tokens.$element-base-information;
+    background: system-tokens.$si-sys-background-information-subtle;
   }
 
   &:is(:focus, :hover, :has(+ .form-control-actions:is(:hover, :focus-within))) {
-    --border-color: #{semantic-tokens.$element-ui-1};
-    --si-textarea-mask: #{semantic-tokens.$element-base-input-experimental};
-    background-color: semantic-tokens.$element-base-input-experimental;
+    --border-color: #{system-tokens.$si-sys-border-1};
+    --si-textarea-mask: #{system-tokens.$si-sys-background-4};
+    background-color: system-tokens.$si-sys-background-4;
   }
 
   &:is(.readonly, [readonly]) {
     &,
     &:is(:hover, :focus, :has(+ .form-control-actions:is(:hover, :focus-within))) {
-      --border-color: #{semantic-tokens.$element-ui-4};
+      --border-color: #{system-tokens.$si-sys-border-4};
       --si-textarea-mask: transparent;
       background-color: transparent;
-      color: semantic-tokens.$element-text-primary;
+      color: system-tokens.$si-sys-text-primary;
     }
   }
 
   &:is(.disabled, :disabled) {
     &,
     &:is(:hover, :focus, :has(+ .form-control-actions:is(:hover, :focus-within))) {
-      --border-color: #{semantic-tokens.$element-ui-4};
+      --border-color: #{system-tokens.$si-sys-border-4};
       --si-textarea-mask: transparent;
       background-color: transparent;
-      color: semantic-tokens.$element-text-disabled;
+      color: system-tokens.$si-sys-text-disabled;
     }
 
     &::placeholder {
@@ -216,7 +216,7 @@ select:is(.form-control, .form-select)[multiple] {
 
   option:checked,
   &:not(:disabled) option:not(:disabled):hover {
-    background: semantic-tokens.$element-base-0;
-    color: semantic-tokens.$element-text-active;
+    background: system-tokens.$si-sys-background-0;
+    color: system-tokens.$si-sys-text-accent;
   }
 }
