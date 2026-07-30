@@ -4,7 +4,6 @@
 
 ```ts
 
-import { ActivatedRoute } from '@angular/router';
 import * as _angular_core from '@angular/core';
 import { ConnectedPosition } from '@angular/cdk/overlay';
 import { ElementRef } from '@angular/core';
