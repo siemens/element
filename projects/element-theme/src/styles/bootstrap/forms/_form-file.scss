@@ -1,4 +1,4 @@
-@use '../../variables/semantic-tokens';
+@use '../../variables/system-tokens';
 @use '../variables';
 
 .form-control {
@@ -11,8 +11,8 @@
   }
 
   &::file-selector-button {
-    color: semantic-tokens.$element-action-secondary-text;
-    background: semantic-tokens.$element-action-secondary;
+    color: system-tokens.$si-sys-text-on-accent-secondary;
+    background: system-tokens.$si-sys-background-accent-secondary;
     border-color: inherit;
     border-block-width: 0;
     border-inline-width: 0 1px;
@@ -23,12 +23,12 @@
   }
 
   &:hover::file-selector-button {
-    color: semantic-tokens.$element-action-secondary-text-hover;
-    background: semantic-tokens.$element-action-secondary-hover;
+    color: system-tokens.$si-sys-text-on-accent-secondary-hover;
+    background: system-tokens.$si-sys-background-accent-secondary-hover;
   }
 
   &:active::file-selector-button {
-    color: semantic-tokens.$element-action-primary-active;
-    background: semantic-tokens.$element-action-secondary-active;
+    color: system-tokens.$si-sys-text-on-accent-secondary-active;
+    background: system-tokens.$si-sys-background-accent-secondary-active;
   }
 }
