@@ -3,29 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule } from '@angular/cdk/a11y';
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  input,
-  output
-} from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
+import { booleanAttribute, Component, computed, inject, input, output } from '@angular/core';
 import { elementCancel, elementDown2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
-import { SiLaunchpadAppComponent } from './si-launchpad-app.component';
-import { App, AppCategory } from './si-launchpad.model';
-
-export interface FavoriteChangeEvent {
-  app: App;
-  favorite: boolean;
-}
+import { SiLaunchpadCategoryComponent } from './si-launchpad-category.component';
+import { App, AppCategory, FavoriteChangeEvent } from './si-launchpad.model';
 
 @Component({
   selector: 'si-launchpad-factory',
@@ -33,14 +19,11 @@ export interface FavoriteChangeEvent {
     A11yModule,
     SiLinkModule,
     SiTranslatePipe,
-    SiLaunchpadAppComponent,
-    SiIconComponent,
-    RouterLinkActive,
-    RouterLink
+    SiLaunchpadCategoryComponent,
+    SiIconComponent
   ],
   templateUrl: './si-launchpad-factory.component.html',
-  styleUrl: './si-launchpad-factory.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './si-launchpad-factory.component.scss'
 })
 export class SiLaunchpadFactoryComponent {
   /**
@@ -58,10 +41,10 @@ export class SiLaunchpadFactoryComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch app`)
    * ```
    */
-  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`));
+  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch app`));
 
   /**
    * Subtitle of the launchpad.
@@ -114,10 +97,21 @@ export class SiLaunchpadFactoryComponent {
   protected showAllApps = false;
   protected readonly categories = computed(() => {
     const apps = this.apps();
-    if (this.isCategories(apps)) {
-      return apps;
+    const favorites = this.favorites();
+    const categories: AppCategory[] = [];
+    if (this.enableFavorites() && this.hasFavorites()) {
+      categories.push({
+        name: this.favoriteAppsText(),
+        apps: favorites
+      });
     }
-    return [{ name: '', apps: [...apps] }];
+
+    if (this.isCategories(apps)) {
+      categories.push(...apps);
+    } else {
+      categories.push({ name: '', apps: [...apps] });
+    }
+    return categories;
   });
   protected readonly favorites = computed(() =>
     this.apps()
@@ -126,15 +120,14 @@ export class SiLaunchpadFactoryComponent {
   );
   protected readonly hasFavorites = computed(() => this.favorites().length > 0);
   protected readonly icons = addIcons({ elementDown2, elementCancel });
-  protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
   private header = inject(SiApplicationHeaderComponent);
 
   protected closeLaunchpad(): void {
     this.header.closeLaunchpad();
   }
 
-  protected toggleFavorite(app: App, favorite: boolean): void {
-    this.favoriteChange.emit({ app, favorite });
+  protected toggleFavorite(event: FavoriteChangeEvent): void {
+    this.favoriteChange.emit(event);
   }
 
   protected escape(): void {
@@ -143,13 +136,5 @@ export class SiLaunchpadFactoryComponent {
 
   protected isCategories(items: App[] | AppCategory[]): items is AppCategory[] {
     return items.some(item => 'apps' in item);
-  }
-
-  protected isFavoriteToggleDisabled(app: App): boolean {
-    if ('_noFavorite' in app) {
-      return !!app._noFavorite;
-    } else {
-      return false;
-    }
   }
 }
