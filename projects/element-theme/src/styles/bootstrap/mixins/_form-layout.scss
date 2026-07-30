@@ -6,6 +6,7 @@ $form-col-layout-label-width: 16ch !default;
 
 /* Turns every inner form-field into a column layout */
 @mixin form-col-layout {
+  .si-form-fieldset,
   .si-form-input:not(.form-check),
   .si-form-input.form-check:not(.form-check-inline) {
     display: flex;
@@ -40,12 +41,13 @@ $form-col-layout-label-width: 16ch !default;
     }
   }
 
-  si-form-fieldset.si-form-input {
+  .si-form-fieldset {
     align-items: start;
 
     > .form-label {
       align-self: start;
       padding-block: map.get(spacers.$spacers, 1) 0 !important; // stylelint-disable-line declaration-no-important
+      margin-block-end: 0 !important; // stylelint-disable-line declaration-no-important
     }
   }
 }

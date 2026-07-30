@@ -3,13 +3,20 @@
 
 @use '@siemens/element-theme/src/styles/all-variables';
 
-:host.si-form-input {
+:host(si-form-fieldset),
+:host(.si-form-input) {
   display: flex;
   flex-direction: column;
-  margin-block-end: map.get(all-variables.$spacers, 5);
+  margin-block-end: map.get(all-variables.$spacers, 6);
 
   .form-item-content {
     flex-grow: 1;
+  }
+}
+
+:host(si-form-fieldset) {
+  .form-label {
+    margin-block-end: map.get(all-variables.$spacers, 2);
   }
 }
 
