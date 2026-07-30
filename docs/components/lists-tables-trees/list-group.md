@@ -39,6 +39,15 @@ contained `list-group-item` elements with the supported heights of the [Datatabl
 - CSS class `.list-group-md` set a minimum height of `48px`.
 - CSS class `.list-group-lg` set a minimum height of `64px`.
 
+### Appearances
+
+List groups are Filled by default. Use an appearance class for the alternatives:
+
+- `.list-group-ghost` removes item fills and dividers.
+- `.list-group-dividers` displays a divider below each item.
+- `.list-group-outline` displays individual outlined items.
+- `.list-group-legacy` restores the previous connected-item styling for migration purposes.
+
 ### Example
 
 <si-docs-component example="list-group/list-group" height="400"></si-docs-component>

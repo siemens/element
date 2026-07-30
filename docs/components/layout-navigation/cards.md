@@ -202,7 +202,7 @@ Create organized lists within cards using flush list groups that integrate seaml
 
 ```html
 <div class="card">
-  <ul class="list-group list-group-flush">
+  <ul class="list-group list-group-legacy list-group-flush">
     <li class="list-group-item">An item</li>
     <li class="list-group-item">A second item</li>
     <li class="list-group-item">A third item</li>
@@ -215,7 +215,7 @@ Combine list groups with card headers for better content organization.
 ```html
 <div class="card">
   <div class="card-header">Header text</div>
-  <ul class="list-group list-group-flush">
+  <ul class="list-group list-group-legacy list-group-flush">
     <li class="list-group-item">An item</li>
     <li class="list-group-item">A second item</li>
     <li class="list-group-item">A third item</li>
@@ -227,7 +227,7 @@ Add footers to provide additional context or actions for list content.
 
 ```html
 <div class="card">
-  <ul class="list-group list-group-flush">
+  <ul class="list-group list-group-legacy list-group-flush">
     <li class="list-group-item">An item</li>
     <li class="list-group-item">A second item</li>
     <li class="list-group-item">A third item</li>

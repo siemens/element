@@ -2,6 +2,7 @@
 
 @use '../variables/focus';
 @use '../variables/semantic-tokens';
+@use '../variables/spacers';
 @use '../variables/typography';
 @use 'mixins/breakpoints';
 @use 'variables';
@@ -9,8 +10,8 @@
 .list-group {
   display: flex;
   flex-direction: column;
+  gap: map.get(spacers.$spacers, 2);
   padding-inline-start: 0;
-  border-radius: variables.$list-group-border-radius;
 }
 
 .list-group-numbered {
@@ -55,25 +56,12 @@
   color: variables.$list-group-color;
   text-decoration: none;
   background-color: variables.$list-group-bg;
-  border: variables.$list-group-border-width solid variables.$list-group-border-color;
-  border-radius: 0;
-  border-inline-width: 0;
+  border: 0;
+  border-radius: variables.$list-group-border-radius;
   margin: 0;
 
   .list-group-item-heading {
     color: variables.$headings-color;
-  }
-
-  &:first-child {
-    border-block-start: none;
-    border-start-start-radius: inherit;
-    border-start-end-radius: inherit;
-  }
-
-  &:last-child {
-    border-block-end-color: transparent;
-    border-end-start-radius: inherit;
-    border-end-end-radius: inherit;
   }
 
   &:is(.disabled, :disabled) {
@@ -90,12 +78,55 @@
     border-color: variables.$list-group-active-border-color;
   }
 
-  & + & {
-    border-block-start-width: 0;
+}
 
-    &.active {
-      margin-block-start: -(variables.$list-group-border-width);
-      border-block-start-width: variables.$list-group-border-width;
+.list-group-ghost,
+.list-group-dividers {
+  gap: 0;
+
+  > .list-group-item {
+    background-color: transparent;
+    border-radius: 0;
+  }
+}
+
+.list-group-dividers > .list-group-item {
+  border-block-end: variables.$list-group-border-width solid variables.$list-group-border-color;
+}
+
+.list-group-outline > .list-group-item {
+  background-color: transparent;
+  border: variables.$list-group-border-width solid variables.$list-group-border-color;
+}
+
+.list-group-legacy {
+  gap: 0;
+  border-radius: variables.$list-group-border-radius;
+
+  > .list-group-item {
+    border: variables.$list-group-border-width solid variables.$list-group-border-color;
+    border-radius: 0;
+    border-inline-width: 0;
+
+    &:first-child {
+      border-block-start: none;
+      border-start-start-radius: inherit;
+      border-start-end-radius: inherit;
+    }
+
+    &:last-child {
+      border-block-end-color: transparent;
+      border-end-start-radius: inherit;
+      border-end-end-radius: inherit;
+    }
+
+    + .list-group-item {
+      border-block-start-width: 0;
+
+      &.active {
+        margin-block-start: -(variables.$list-group-border-width);
+        border-block-start-width: variables.$list-group-border-width;
+      }
     }
   }
 }
@@ -124,7 +155,7 @@
     .list-group-horizontal#{$infix} {
       flex-direction: row;
 
-      > .list-group-item {
+      &.list-group-legacy > .list-group-item {
         border-block-width: 0;
 
         &:first-child {
@@ -155,9 +186,12 @@
 }
 
 .list-group-flush {
+  gap: 0;
   border-radius: 0;
 
   > .list-group-item {
+    background-color: transparent;
+    border-radius: 0;
     border-inline-width: 0;
     border-block-width: 0 variables.$list-group-border-width;
 
@@ -165,6 +199,10 @@
       border-block-end-width: 0;
     }
   }
+}
+
+.list-group-legacy.list-group-flush > .list-group-item {
+  background-color: variables.$list-group-bg;
 }
 
 .list-group-item-secondary {
