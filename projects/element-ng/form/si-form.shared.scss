@@ -3,31 +3,6 @@
 
 @use '@siemens/element-theme/src/styles/all-variables';
 
-:host.si-form-input {
-  display: flex;
-  flex-direction: column;
-  margin-block-end: map.get(all-variables.$spacers, 5);
-
-  .form-item-content {
-    flex-grow: 1;
-  }
-}
-
-.form-label:empty {
-  display: none;
-}
-
-// maintain compatibility with the old style of si-form-item which allows wrapping multiple checkbox
-:host(.form-check) {
-  &:not(.form-check-inline) {
-    display: block;
-  }
-
-  &:has(.form-check) {
-    padding-block: 0;
-  }
-}
-
 /// ACCOUNT FOR MEASURED CONTAINERS
 :host-context(.si-container-sm),
 :host-context(.si-container-md),
@@ -55,7 +30,7 @@
     }
   }
 
-  :host-context(si-form-fieldset) .form-label {
+  :host-context(.si-form-fieldset) .form-label {
     padding-block: map.get(all-variables.$spacers, 1) 0;
   }
 

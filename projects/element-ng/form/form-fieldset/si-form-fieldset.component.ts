@@ -14,7 +14,7 @@ import { SiFormFieldsetControl } from './si-form-fieldset.control';
   styleUrl: '../si-form.shared.scss',
   host: {
     role: 'group',
-    class: 'si-form-input',
+    class: 'si-form-fieldset',
     '[style.--si-form-label-width]': 'labelWidth()',
     '[attr.aria-labelledby]': 'labelId'
   }
