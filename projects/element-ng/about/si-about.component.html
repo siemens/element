@@ -5,7 +5,7 @@
         {{ aboutTitle() }}
       </div>
 
-      <div>
+      <div class="list-group list-group-legacy">
         <div class="list-group-item text-center">
           @let appIcon = iconName();
           @if (icon()) {
@@ -73,7 +73,7 @@
 
       <div class="h-100">
         @if (licenseInfo().text) {
-          <pre class="list-group-item">{{ licenseInfo().text }}</pre>
+          <pre class="border-0 border-bottom my-0 px-6 py-4">{{ licenseInfo().text }}</pre>
         }
 
         @if (sanitizedUrl()) {

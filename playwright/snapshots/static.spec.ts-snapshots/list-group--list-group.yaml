@@ -1,10 +1,25 @@
-- heading "Basic" [level=2]
+- heading "Filled" [level=2]
 - list:
   - listitem: Cras justo odio
   - listitem: Dapibus ac facilisis in
   - listitem: Morbi leo risus
   - listitem: Porta ac consectetur ac
   - listitem: Vestibulum at eros
+- heading "Ghost" [level=2]
+- list:
+  - listitem: Cras justo odio
+  - listitem: Dapibus ac facilisis in
+  - listitem: Morbi leo risus
+- heading "Dividers" [level=2]
+- list:
+  - listitem: Cras justo odio
+  - listitem: Dapibus ac facilisis in
+  - listitem: Morbi leo risus
+- heading "Outline" [level=2]
+- list:
+  - listitem: Cras justo odio
+  - listitem: Dapibus ac facilisis in
+  - listitem: Morbi leo risus
 - heading "Large list group items with large status indication" [level=2]
 - list:
   - listitem:

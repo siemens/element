@@ -11,7 +11,7 @@
 @let filteredListWidgetItemsList = filteredListWidgetItems();
 @if (!showLoadingIndicator() && filteredListWidgetItemsList) {
   @if (filteredListWidgetItemsList.length > 0) {
-    <div class="list-group list-group-lg" role="list">
+    <div class="list-group list-group-legacy list-group-lg" role="list">
       @for (item of filteredListWidgetItemsList; track $index) {
         <si-list-widget-item [value]="item" />
       }
@@ -20,7 +20,7 @@
     <ng-content select="[empty-state]" />
   }
 } @else {
-  <div class="list-group list-group-lg" role="list">
+  <div class="list-group list-group-legacy list-group-lg" role="list">
     @for (some of ghosts(); track $index) {
       <si-list-widget-item [value]="undefined" />
     }
