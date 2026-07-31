@@ -31,10 +31,13 @@ import { SiTooltipContent } from './si-tooltip.model';
   }
 })
 export class TooltipComponent {
+  /** ID assigned to the tooltip element. */
   readonly id = input<string>();
 
+  /** Content rendered by the tooltip. */
   readonly tooltip = input<SiTooltipContent>();
 
+  /** Context passed to tooltip template content. */
   readonly tooltipContext = input<unknown>();
 
   protected readonly tooltipPositionClass = signal('');

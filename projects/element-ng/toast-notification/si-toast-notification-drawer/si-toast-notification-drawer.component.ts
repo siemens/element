@@ -19,8 +19,11 @@ import { SiToast } from '../si-toast.model';
   }
 })
 export class SiToastNotificationDrawerComponent {
+  /** Toast notifications displayed by the drawer. */
   readonly toasts = input.required<SiToast[]>();
+  /** Emits when the user pauses a toast's automatic dismissal by hovering over it. */
   readonly toastPaused = output<SiToast>();
+  /** Emits when the user resumes a toast's automatic dismissal by moving the pointer away. */
   readonly toastResumed = output<SiToast>();
 
   protected animationsDisabled = areAnimationsDisabled();
