@@ -14,6 +14,7 @@ test.describe('datatable', () => {
     await ageInput.fill('1');
     await ageInput.blur();
     await ageInput.hover();
+    await expect(page.getByRole('tooltip')).toBeVisible();
     await si.runVisualAndA11yTests('invalid-age');
   });
 
