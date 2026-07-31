@@ -38,8 +38,16 @@ export class SiMicrochartProgressComponent {
    * ```
    */
   readonly series = input.required<MicrochartProgressSeries>();
-  /** @defaultValue 64 */
+  /**
+   * Progress bar width in pixels.
+   *
+   * @defaultValue 64
+   */
   readonly barWidth = input<number>(64);
-  /** @defaultValue 4 */
+  /**
+   * Progress bar height in pixels.
+   *
+   * @defaultValue 4
+   */
   readonly barHeight = input<number>(4);
 }
