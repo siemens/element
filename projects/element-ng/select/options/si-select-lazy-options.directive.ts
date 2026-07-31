@@ -34,6 +34,10 @@ export class SiSelectLazyOptionsDirective<T> implements SiSelectOptionsStrategy<
    */
   readonly selectedRows = signal<SelectOption<T>[]>([]);
 
+  /**
+   * Lazy source that resolves selected values and provides the options displayed by the select.
+   * Implement `getAllOptions` when the select has no filter, or `getOptionsForSearch` when it has one.
+   */
   readonly optionSource = input.required<SelectOptionSource<T>>();
 
   private valueChange = new Subject<void>();

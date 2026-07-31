@@ -19,6 +19,12 @@ import { SelectOption } from '../si-select.types';
   }
 })
 export class SiSelectOptionComponent {
+  /**
+   * Option to render.
+   */
   readonly option = input.required<SelectOption<unknown>>();
+  /**
+   * Custom template for rendering the option.
+   */
   readonly optionTemplate = input<TemplateRef<unknown>>();
 }
