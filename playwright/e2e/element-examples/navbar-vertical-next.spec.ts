@@ -23,9 +23,9 @@ test.describe('navbar vertical next', () => {
   test(example + ' collapsed', async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.getByLabel('Toggle', { exact: true }).click();
+    await page.getByLabel('Show side navigation', { exact: true }).click();
     await page.getByRole('button', { name: 'User management' }).click();
-    await expect(page.getByRole('group', { name: 'User management' })).toBeVisible();
+    await expect(page.getByRole('dialog', { name: 'User management' })).toBeVisible();
     await page.getByRole('link', { name: 'Sub item 2' }).click();
 
     await si.waitForAllAnimationsToComplete();
@@ -48,7 +48,7 @@ test.describe('navbar vertical next', () => {
     );
 
     await page.getByRole('button', { name: 'User management' }).click();
-    await expect(page.getByRole('group', { name: 'User management' })).toBeVisible();
+    await expect(page.getByRole('dialog', { name: 'User management' })).toBeVisible();
 
     await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('always-flyout');
@@ -59,8 +59,8 @@ test.describe('navbar vertical next', () => {
 
     await page.getByRole('checkbox', { name: 'Inline collapse' }).check();
 
-    await page.getByLabel('Toggle', { exact: true }).click();
-    await expect(page.getByLabel('Toggle', { exact: true })).toHaveAttribute(
+    await page.getByLabel('Show side navigation', { exact: true }).click();
+    await expect(page.getByLabel('Show side navigation', { exact: true })).toHaveAttribute(
       'aria-expanded',
       'false'
     );
@@ -76,7 +76,7 @@ test.describe('navbar vertical next', () => {
     await page.getByRole('checkbox', { name: 'Inline collapse' }).check();
     await page.getByRole('button', { name: 'User management' }).click();
     await page.getByRole('link', { name: 'Sub item', exact: true }).click();
-    await page.getByLabel('Toggle', { exact: true }).click();
+    await page.getByLabel('Show side navigation', { exact: true }).click();
     await si.waitForAllAnimationsToComplete();
 
     const chip = page.locator('button[aria-haspopup="dialog"]');
@@ -97,7 +97,7 @@ test.describe('navbar vertical next', () => {
     await page.getByRole('checkbox', { name: 'Inline collapse' }).check();
     await page.getByRole('button', { name: 'User management' }).click();
     await page.getByRole('link', { name: 'Sub item', exact: true }).click();
-    await page.getByLabel('Toggle', { exact: true }).click();
+    await page.getByLabel('Show side navigation', { exact: true }).click();
     await si.waitForAllAnimationsToComplete();
 
     const chip = page.locator('button[aria-haspopup="dialog"]');
@@ -115,7 +115,7 @@ test.describe('navbar vertical next', () => {
     await page.getByRole('checkbox', { name: 'Inline collapse' }).check();
     await page.getByRole('button', { name: 'User management' }).click();
     await page.getByRole('link', { name: 'Sub item', exact: true }).click();
-    await page.getByLabel('Toggle', { exact: true }).click();
+    await page.getByLabel('Show side navigation', { exact: true }).click();
 
     const chip = page.locator('button[aria-haspopup="dialog"]');
     await chip.click();
@@ -127,12 +127,12 @@ test.describe('navbar vertical next', () => {
 
   test.skip('it should show tooltip only on keyboard interaction', async ({ page, si }) => {
     await si.visitExample(example);
-    await page.getByLabel('Toggle', { exact: true }).click();
-    await expect(page.getByLabel('Toggle', { exact: true })).toBeVisible();
+    await page.getByLabel('Show side navigation', { exact: true }).click();
+    await expect(page.getByLabel('Show side navigation', { exact: true })).toBeVisible();
     await si.waitForAllAnimationsToComplete();
     const userManagement = page.getByRole('button', { name: 'User management' });
     const tooltip = page.getByRole('tooltip', { name: 'User management' });
-    const group = page.getByRole('group', { name: 'User management' });
+    const group = page.getByRole('dialog', { name: 'User management' });
 
     // This checks the tooltip is visible when using the keyboard
     await userManagement.focus();
@@ -155,7 +155,7 @@ test.describe('navbar vertical next', () => {
     await page.setViewportSize({ width: 570, height: 600 });
     await si.visitExample(example, false);
 
-    await expect(page.getByLabel('Toggle', { exact: true })).toBeVisible();
+    await expect(page.getByLabel('Show side navigation', { exact: true })).toBeVisible();
 
     await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('mobile-collapsed');
@@ -165,18 +165,18 @@ test.describe('navbar vertical next', () => {
     await page.setViewportSize({ width: 570, height: 600 });
     await si.visitExample(example, false);
 
-    await page.getByLabel('Toggle', { exact: true }).click();
-    await expect(page.getByLabel('Toggle', { exact: true })).toHaveAttribute(
+    await page.getByLabel('Show side navigation', { exact: true }).click();
+    await expect(page.getByLabel('Show side navigation', { exact: true })).toHaveAttribute(
       'aria-expanded',
       'true'
     );
     await page.getByText('Documentation').click();
     await page.getByRole('link', { name: 'Sub item 4' }).click();
-    await expect(page.getByLabel('Toggle', { exact: true })).toHaveAttribute(
+    await expect(page.getByLabel('Show side navigation', { exact: true })).toHaveAttribute(
       'aria-expanded',
       'false'
     );
-    await page.getByLabel('Toggle', { exact: true }).click();
+    await page.getByLabel('Show side navigation', { exact: true }).click();
 
     await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('mobile-expanded');
@@ -202,9 +202,9 @@ test.describe('navbar vertical next badges', () => {
   test(example + ' collapsed', async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.getByLabel('Toggle', { exact: true }).click();
+    await page.getByLabel('Show side navigation', { exact: true }).click();
     await page.getByRole('button', { name: 'Group with badges' }).click();
-    await expect(page.getByRole('group', { name: 'Group with badges' })).toBeVisible();
+    await expect(page.getByRole('dialog', { name: 'Group with badges' })).toBeVisible();
     await page.getByRole('link', { name: 'Sub item info' }).click();
 
     await si.waitForAllAnimationsToComplete();

@@ -5,7 +5,7 @@
     - /url: "#/"
   - heading "Navbar Vertical Next Example" [level=1]
 - navigation:
-  - button "Toggle"
+  - button "Show side navigation"
   - button "User management" [expanded]
 - main:
   - heading "Here is a title" [level=2]
@@ -14,7 +14,7 @@
   - text: Always flyout
   - checkbox "Inline collapse" [checked]
   - text: Inline collapse
-- group "User management":
+- dialog "User management":
   - link "Sub item":
     - /url: "#/viewer/viewer/subItem"
   - link "Sub item 2":

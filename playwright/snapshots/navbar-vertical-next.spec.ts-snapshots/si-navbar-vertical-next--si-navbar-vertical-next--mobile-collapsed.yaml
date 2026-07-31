@@ -5,9 +5,11 @@
     - /url: "#/"
   - heading "Navbar Vertical Next Example" [level=1]
 - navigation:
-  - button "Toggle"
+  - button "Show side navigation"
 - main:
   - heading "Here is a title" [level=2]
   - text: Content with path 'home' Control panel
   - checkbox "Always flyout"
   - text: Always flyout
+  - checkbox "Inline collapse"
+  - text: Inline collapse

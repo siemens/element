@@ -4,9 +4,9 @@
   - link "Siemens logo":
     - /url: "#/"
   - heading "Navbar vertical next text only" [level=1]
-  - button "Jane Smith"
+  - button "Jane Smith": JS
 - navigation:
-  - button "Toggle" [expanded]
+  - button "Show side navigation" [expanded]
   - button "Home"
   - group "Home"
   - button "Documentation"
