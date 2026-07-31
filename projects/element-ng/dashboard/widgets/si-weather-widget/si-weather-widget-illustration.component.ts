@@ -51,10 +51,17 @@ type IllustrationSize = 'sm' | 'md' | 'lg';
   }
 })
 export class SiWeatherWidgetIllustrationComponent {
+  /** Weather icon data or a direct image URL to render. */
   readonly illustration = input<SiWeatherIcon | string>();
+  /** Weather condition used as fallback alt text. */
   readonly condition = input<TranslatableString>();
+  /** Alt text used when neither the illustration nor condition provides one. */
   readonly altFallback = input<TranslatableString>();
-  /** @defaultValue 'lg' */
+  /**
+   * Display size of the illustration.
+   *
+   * @defaultValue 'lg'
+   */
   readonly size = input<IllustrationSize>('lg');
 
   private readonly resolver = inject(SiWeatherIconResolver);
