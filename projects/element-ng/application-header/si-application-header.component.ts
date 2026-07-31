@@ -48,8 +48,11 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
    * @defaultValue 'sm'
    */
   readonly expandBreakpoint = input<'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'never'>('sm');
+  /** Template reference for the launchpad content rendered inside the header. */
   readonly launchpad = input<TemplateRef<void>>();
   /**
+   * Accessible label for the launchpad toggle button.
+   *
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_APPLICATION_HEADER.LAUNCHPAD:Launchpad`)
