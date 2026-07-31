@@ -30,9 +30,17 @@ interface SeriesInternal {
   templateUrl: './si-microchart-bar.component.html'
 })
 export class SiMicrochartBarComponent {
-  /** @defaultValue 64 */
+  /**
+   * Chart width in pixels.
+   *
+   * @defaultValue 64
+   */
   readonly width = input<number>(64);
-  /** @defaultValue 24 */
+  /**
+   * Chart height in pixels.
+   *
+   * @defaultValue 24
+   */
   readonly height = input<number>(24);
   /**
    * Microchart bar series.
