@@ -44,23 +44,21 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
   position: relative;
   appearance: none;
   background-color: system-tokens.$si-sys-background-1;
-  border: 1px solid system-tokens.$si-sys-border-1;
+  border: 1px solid system-tokens.$si-sys-border-2;
   flex-shrink: 0;
   float: inline-start;
 
   &:is(:hover, .hover) {
-    border-color: system-tokens.$si-sys-border-1;
     background: system-tokens.$si-sys-background-hover;
   }
 
   &:is(:active, .active) {
-    border-color: system-tokens.$si-sys-border-accent-active;
-    background: system-tokens.$si-sys-background-accent-active;
+    background: system-tokens.$si-sys-background-selected;
   }
 
   &:is([disabled], .disabled) {
-    border-color: system-tokens.$si-sys-border-3;
-    background-color: system-tokens.$si-sys-background-4;
+    border-color: system-tokens.$si-sys-text-disabled;
+    background-color: transparent;
   }
 }
 
@@ -81,59 +79,39 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
     opacity: 0;
   }
 
-  &:is(:checked, .checked) {
+  &:is(:checked, .checked, :indeterminate) {
     background-color: system-tokens.$si-sys-background-accent;
-    border-color: system-tokens.$si-sys-border-accent;
+    border-color: transparent;
 
     &:hover {
       background-color: system-tokens.$si-sys-background-accent-hover;
-      border-color: system-tokens.$si-sys-border-accent-hover;
+      border-color: transparent;
     }
 
     &:active {
       background-color: system-tokens.$si-sys-background-accent-active;
-      border-color: system-tokens.$si-sys-border-accent-active;
+      border-color: transparent;
     }
 
     &::after {
-      background-color: system-tokens.$si-sys-text-inverse;
+      background-color: system-tokens.$si-sys-text-on-accent;
       opacity: 1;
     }
 
     &[disabled] {
-      background-color: system-tokens.$si-sys-border-3;
-      border-color: system-tokens.$si-sys-border-3;
+      border-color: transparent;
+      background-color: system-tokens.$si-sys-text-disabled;
     }
   }
 
   &:indeterminate {
-    background-color: system-tokens.$si-sys-background-1;
-    border-color: system-tokens.$si-sys-border-accent;
-
     &::after {
       mask-image: none;
-      background-color: system-tokens.$si-sys-background-accent;
       inline-size: 0.625rem;
       block-size: 0.125rem;
       opacity: 1;
       inset-inline-start: 0.125rem;
       inset-block-start: 0.375rem;
-    }
-
-    &:hover {
-      border-color: system-tokens.$si-sys-border-accent-hover;
-
-      &::after {
-        background-color: system-tokens.$si-sys-background-accent-hover;
-      }
-    }
-
-    &:disabled {
-      border-color: system-tokens.$si-sys-border-3;
-
-      &::after {
-        background-color: system-tokens.$si-sys-border-3;
-      }
     }
   }
 }
@@ -156,36 +134,27 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
   }
 
   &:checked {
-    border-color: system-tokens.$si-sys-border-accent;
+    border-color: transparent;
     background-color: system-tokens.$si-sys-background-accent;
 
     &::after {
+      border-color: transparent;
       background-color: system-tokens.$si-sys-text-on-accent;
     }
 
     &:hover {
+      border-color: transparent;
       background-color: system-tokens.$si-sys-background-accent-hover;
-      border-color: system-tokens.$si-sys-border-accent-hover;
-
-      &::after {
-        background-color: system-tokens.$si-sys-text-on-accent;
-      }
     }
 
     &:active {
-      border-color: system-tokens.$si-sys-border-accent-active;
-
-      &::after {
-        background-color: system-tokens.$si-sys-text-on-accent;
-      }
+      border-color: transparent;
+      background-color: system-tokens.$si-sys-border-accent-active;
     }
 
     &[disabled] {
-      border-color: system-tokens.$si-sys-border-3;
-
-      &::after {
-        background-color: system-tokens.$si-sys-border-3;
-      }
+      border-color: transparent;
+      background-color: system-tokens.$si-sys-text-disabled;
     }
   }
 }
