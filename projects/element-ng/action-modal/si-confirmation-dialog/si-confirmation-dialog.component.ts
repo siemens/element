@@ -19,12 +19,20 @@ import { ConfirmationDialogResult } from '../si-action-dialog.types';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiConfirmationDialogComponent {
+  /** ID of the dialog title element used for accessible naming. */
   readonly titleId = input<string>();
-  /** @defaultValue '' */
+  /**
+   * Heading displayed in the dialog.
+   * @defaultValue ''
+   */
   readonly heading = input<TranslatableString>('');
-  /** @defaultValue '' */
+  /**
+   * Message displayed in the dialog.
+   * @defaultValue ''
+   */
   readonly message = input<TranslatableString>('');
   /**
+   * Label displayed on the confirmation button.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_CONFIRMATION_DIALOG.YES:Yes`)
@@ -32,6 +40,7 @@ export class SiConfirmationDialogComponent {
    */
   readonly confirmBtnName = input(t(() => $localize`:@@SI_CONFIRMATION_DIALOG.YES:Yes`));
   /**
+   * Label displayed on the decline button.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_CONFIRMATION_DIALOG.NO:No`)
@@ -39,13 +48,17 @@ export class SiConfirmationDialogComponent {
    */
   readonly declineBtnName = input(t(() => $localize`:@@SI_CONFIRMATION_DIALOG.NO:No`));
   /**
+   * Parameters interpolated into the translated heading and message.
    * @defaultValue
    * ```
    * {}
    * ```
    */
   readonly translationParams = input<{ [key: string]: any }>({});
-  /** @defaultValue '' */
+  /**
+   * Icon displayed next to the dialog content.
+   * @defaultValue ''
+   */
   readonly icon = input('');
 
   protected modalRef = inject(ModalRef<SiConfirmationDialogComponent, ConfirmationDialogResult>);
