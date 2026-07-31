@@ -31,17 +31,44 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
 })
 export class SiStatusBarItemComponent implements OnChanges {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);
+  /**
+   * Status that determines the displayed icon and color.
+   */
   readonly status = input<ExtendedStatusType>();
+  /**
+   * Value displayed by the status bar item.
+   */
   readonly value = input.required<TranslatableString | number>();
+  /**
+   * Heading displayed for the status bar item.
+   */
   readonly heading = input.required<TranslatableString>();
+  /**
+   * Custom background color for the item.
+   */
   readonly color = input<string>();
-  /** @defaultValue false */
+  /**
+   * Whether the item blinks to highlight its status.
+   *
+   * @defaultValue false
+   */
   readonly blink = input(false, { transform: booleanAttribute });
-  /** @defaultValue false */
+  /**
+   * Whether only the value is displayed.
+   *
+   * @defaultValue false
+   */
   readonly valueOnly = input<boolean | undefined, unknown>(false, { transform: booleanAttribute });
-  /** @defaultValue false */
+  /**
+   * Whether the item has an interactive appearance.
+   *
+   * @defaultValue false
+   */
   readonly clickable = input(false, { transform: booleanAttribute });
 
+  /**
+   * Emits when the value changes between an empty and non-empty state.
+   */
   readonly significanceChange = output<void>();
 
   private readonly bg = viewChild.required<ElementRef>('bg');
