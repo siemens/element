@@ -19,7 +19,6 @@ import { ValidatorFn } from '@angular/forms';
 // @public (undocumented)
 export class SiNumberInputComponent implements OnChanges, ControlValueAccessor, Validator, SiFormItemControl {
     readonly ariaLabel: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly errormessageId: _angular_core.InputSignal<string>;
     // (undocumented)

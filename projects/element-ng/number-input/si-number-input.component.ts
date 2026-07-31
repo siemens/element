@@ -126,7 +126,11 @@ export class SiNumberInputComponent
 
   readonly id = computed(() => this.inputId());
 
-  /** @defaultValue false */
+  /**
+   * Whether the input is disabled.
+   *
+   * @defaultValue false
+   */
   // eslint-disable-next-line @angular-eslint/no-input-rename
   readonly disabledInput = input(false, { alias: 'disabled', transform: booleanAttribute });
   /** @defaultValue false */
