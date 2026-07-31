@@ -90,7 +90,11 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    * initialization and for bidirectional binding.
    */
   readonly dateRange = model<DateRange | undefined>();
-  /** @internal */
+  /**
+   * Role of this calendar when a date range is displayed across two calendars.
+   *
+   * @internal
+   */
   readonly dateRangeRole = input<RangeType>();
   /**
    * Set initial focus to calendar body.
@@ -194,7 +198,11 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    * @defaultValue false
    */
   readonly hideTimeToggle = input(false);
-  /** @internal */
+  /**
+   * Whether the calendar is hidden while retaining the optional timepicker.
+   *
+   * @internal
+   */
   readonly hideCalendar = input(false);
   /**
    * Optional timepicker label.

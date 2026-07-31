@@ -22,14 +22,18 @@ export type Direction = 'left' | 'right';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiCalendarDirectionButtonComponent {
+  /** Accessible label for the button. */
   readonly ariaLabel = input.required<string>();
-  /** @defaultValue false */
+  /**
+   * Whether the button is disabled.
+   *
+   * @defaultValue false
+   */
   readonly disabled = input(false, { transform: booleanAttribute });
+  /** Direction in which the button navigates. */
   readonly direction = input<Direction>();
 
-  /**
-   * Emit on button click.
-   */
+  /** Emits when the button is clicked. */
   readonly clicked = output();
 
   protected readonly icon = computed(() =>

@@ -121,18 +121,26 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
   readonly disabledInput = input(false, { alias: 'disabled' });
 
   /**
+   * Visible label for the hours input.
+   *
    * @defaultValue 'hh'
    */
   readonly hoursLabel = input<TranslatableString>('hh');
   /**
+   * Visible label for the minutes input.
+   *
    * @defaultValue 'mm'
    */
   readonly minutesLabel = input<TranslatableString>('mm');
   /**
+   * Visible label for the seconds input.
+   *
    * @defaultValue 'ss'
    */
   readonly secondsLabel = input<TranslatableString>('ss');
   /**
+   * Visible label for the milliseconds input.
+   *
    * @defaultValue 'ms'
    */
   readonly millisecondsLabel = input<TranslatableString>('ms');
@@ -174,24 +182,35 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
   );
 
   /**
+   * Placeholder for the hours input.
+   *
    * @defaultValue 'hh'
    */
   readonly hoursPlaceholder = input('hh');
   /**
+   * Placeholder for the minutes input.
+   *
    * @defaultValue 'mm'
    */
   readonly minutesPlaceholder = input('mm');
   /**
+   * Placeholder for the seconds input.
+   *
    * @defaultValue 'ss'
    */
   readonly secondsPlaceholder = input('ss');
   /**
+   * Placeholder for the milliseconds input.
+   *
    * @defaultValue 'ms'
    */
   readonly millisecondsPlaceholder = input('ms');
 
+  /** Custom labels for the AM and PM options. */
   readonly meridians = input<string[]>();
   /**
+   * Visible label for the AM/PM selector.
+   *
    * @defaultValue 'am/pm'
    */
   readonly meridiansLabel = input<TranslatableString>('am/pm');
@@ -203,11 +222,23 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
    */
   readonly meridiansAriaLabel = input(t(() => $localize`:@@SI_DATEPICKER.PERIOD:Period`));
 
-  /** @defaultValue true */
+  /**
+   * Whether the minutes input is displayed.
+   *
+   * @defaultValue true
+   */
   readonly showMinutes = input(true, { transform: booleanAttribute });
-  /** @defaultValue false */
+  /**
+   * Whether the seconds input is displayed.
+   *
+   * @defaultValue false
+   */
   readonly showSeconds = input(false, { transform: booleanAttribute });
-  /** @defaultValue false */
+  /**
+   * Whether the milliseconds input is displayed.
+   *
+   * @defaultValue false
+   */
   readonly showMilliseconds = input(false, { transform: booleanAttribute });
   /**
    * Show time in 12-hour period including the select to toggle between AM/PM.
@@ -224,11 +255,18 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
    */
   readonly max = input<Date>();
 
-  /** @defaultValue false */
+  /**
+   * Whether the time inputs are read-only.
+   *
+   * @defaultValue false
+   */
   readonly readonly = input(false, { transform: booleanAttribute });
 
+  /** Emits whether the entered time components form a valid time. */
   readonly isValid = output<boolean>();
+  /** Emits the selected meridian when it changes. */
   readonly meridianChange = output<string>();
+  /** Emits when the user presses Enter in the final time input. */
   readonly inputCompleted = output<void>();
 
   private readonly inputParts = viewChildren<ElementRef<HTMLElement>>('inputPart');
