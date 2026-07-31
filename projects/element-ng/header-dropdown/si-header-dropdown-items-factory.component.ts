@@ -30,6 +30,8 @@ import { SiHeaderDropdownComponent } from './si-header-dropdown.component';
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiHeaderDropdownItemsFactoryComponent {
+  /** Menu items rendered by this factory. */
   readonly items = input.required<MenuItem[]>();
+  /** Emits whether a generated dropdown item is active. */
   readonly activeChange = output<boolean>();
 }

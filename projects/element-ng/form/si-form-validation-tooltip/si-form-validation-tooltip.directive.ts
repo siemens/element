@@ -49,6 +49,7 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
   private tooltipService = inject(SiTooltipService);
   private formValidationService = inject(SiFormValidationErrorService);
   private formContainer = inject(SiFormContainerComponent, { optional: true });
+  /** Maps validation errors of the associated form control to custom tooltip messages. */
   readonly formErrorMapper = input<SiFormValidationErrorMapper>();
   private ngControl = inject(NgControl);
   private elementRef = inject(ElementRef);
