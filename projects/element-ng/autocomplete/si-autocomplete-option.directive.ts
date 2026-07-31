@@ -31,14 +31,22 @@ export class SiAutocompleteOptionDirective<T = unknown> implements Highlightable
    */
   readonly id = input(`__si-autocomplete-option-${SiAutocompleteOptionDirective.idCounter++}`);
 
-  /** @defaultValue false */
+  /**
+   * When `true`, the option cannot be selected and is rendered in a disabled state.
+   *
+   * @defaultValue false
+   */
   // eslint-disable-next-line @angular-eslint/no-input-rename
   readonly disabledInput = input(false, { alias: 'disabled', transform: booleanAttribute });
 
   get disabled(): boolean {
     return this.disabledInput();
   }
-  /** @defaultValue undefined */
+  /**
+   * The value emitted when this option is selected or activated.
+   *
+   * @defaultValue undefined
+   */
   readonly value = input<T>(undefined, { alias: 'siAutocompleteOption' });
 
   protected readonly active = signal(false);

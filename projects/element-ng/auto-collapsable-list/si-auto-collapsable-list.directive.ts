@@ -46,7 +46,12 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
     SiAutoCollapsableListAdditionalContentDirective
   );
 
-  /** @defaultValue true */
+  /**
+   * Enables the auto-collapsing behavior. When `true`, items that overflow the container
+   * are hidden and an overflow indicator item is shown instead.
+   *
+   * @defaultValue true
+   */
   readonly siAutoCollapsableList = input(true, { transform: booleanAttribute });
 
   /**

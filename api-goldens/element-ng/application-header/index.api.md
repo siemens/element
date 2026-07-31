@@ -80,9 +80,7 @@ export class SiAccountDetailsComponent {
 export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDestroy {
     constructor();
     readonly expandBreakpoint: _angular_core.InputSignal<"sm" | "md" | "lg" | "xl" | "xxl" | "never">;
-    // (undocumented)
     readonly launchpad: _angular_core.InputSignal<TemplateRef<void> | undefined>;
-    // (undocumented)
     readonly launchpadLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
 
