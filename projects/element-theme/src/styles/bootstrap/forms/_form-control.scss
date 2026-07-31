@@ -70,8 +70,8 @@
 
   &:is(:focus, :hover, :has(+ .form-control-actions:is(:hover, :focus-within))) {
     --border-color: #{semantic-tokens.$element-ui-1};
-    --si-textarea-mask: #{semantic-tokens.$element-base-input-experimental};
-    background-color: semantic-tokens.$element-base-input-experimental;
+    --si-textarea-mask: #{semantic-tokens.$element-base-input};
+    background-color: semantic-tokens.$element-base-input;
   }
 
   &:is(.readonly, [readonly]) {

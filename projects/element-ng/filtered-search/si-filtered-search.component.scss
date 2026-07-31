@@ -8,13 +8,13 @@ $filtered-search-criteria-margin: map.get(variables.$spacers, 2);
 :host {
   --search-bar-icon-color: #{variables.$element-text-primary};
   --input-background-color: #{variables.$element-base-1};
-  --input-background-hover-color: #{variables.$element-base-1};
+  --input-background-hover-color: #{variables.$element-base-input};
   --filter-search-background-color: #{variables.$element-base-1};
   --filter-pill-background-color: #{variables.$element-base-4};
 
   &.dark-background {
     --input-background-color: #{variables.$element-base-4};
-    --input-background-hover-color: #{variables.$element-ui-4};
+    --input-background-hover-color: #{variables.$element-base-input};
     --filter-search-background-color: #{variables.$element-base-4};
     --filter-pill-background-color: #{variables.$element-base-1};
   }
