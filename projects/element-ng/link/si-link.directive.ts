@@ -43,17 +43,26 @@ export const SI_LINK_DEFAULT_NAVIGATION_EXTRA = new InjectionToken<NavigationExt
   exportAs: 'siLink'
 })
 export class SiLinkDirective implements DoCheck, OnChanges, OnDestroy {
+  /** Link configuration, including the destination, action, and tooltip. */
   readonly siLink = input<Link>();
+  /** Default target for links configured with an `href` but no explicit target. */
   readonly siLinkDefaultTarget = input<string>();
+  /** Parameter passed to the configured link action. */
   readonly actionParam = input<any>();
+  /** CSS class applied while the link is active. */
   readonly activeClass = input<string>();
-  /** @defaultValue false */
+  /**
+   * Whether router links must match the complete URL to be considered active.
+   *
+   * @defaultValue false
+   */
   readonly exactMatch = input(false, { transform: booleanAttribute });
   /**
    * Type for `aria-current` to set if routerLink is active.
    */
   readonly ariaCurrent = input<AriaCurrentType>();
 
+  /** Emits when the active state of the link changes. */
   readonly activeChange = output<boolean>();
 
   protected readonly href = signal<string | undefined>(undefined);

@@ -16,12 +16,16 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 })
 export class SiLoadingSpinnerComponent {
   /**
+   * Whether the spinner blocks interaction with the surrounding content.
+   *
    * @defaultValue false
    */
   readonly isBlockingSpinner = input(false, {
     transform: booleanAttribute
   });
   /**
+   * Whether the spinner is displayed as an overlay.
+   *
    * @defaultValue false
    */
   readonly isSpinnerOverlay = input(false, {
