@@ -44,6 +44,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   host: { '[attr.aria-owns]': 'groupId()' }
 })
 class SiNavbarFlyoutAnchorComponent {
+  /** ID of the flyout group owned by this accessibility anchor. */
   readonly groupId = input<string>();
 }
 
@@ -66,10 +67,12 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
   readonly groupId = `si-navbar-vertical-next-group-${SiNavbarVerticalNextGroupTriggerDirective.idCounter++}`;
   readonly id = `${this.groupId}-trigger`;
 
+  /** Template rendered for the expandable group. */
   readonly groupTemplate = input.required<TemplateRef<unknown>>({
     alias: 'siNavbarVerticalNextGroupTriggerFor'
   });
 
+  /** Key used to persist the expanded state of this group. */
   readonly stateId = input<string>();
 
   /** @defaultValue false */

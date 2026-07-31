@@ -266,6 +266,7 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
    */
   readonly ariaLabelSecondaryMenu = input('Header secondary');
 
+  /** Emits the app item and its new favorite state when the user changes it. */
   readonly appItemFavoriteChanged = output<[AppItem, boolean]>();
 
   /** @internal */

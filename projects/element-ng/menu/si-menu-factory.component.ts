@@ -41,7 +41,9 @@ import { SiMenuDirective } from './si-menu.directive';
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiMenuFactoryComponent {
+  /** Menu items to render. Supports legacy and current menu item models. */
   readonly items = input<readonly (MenuItemLegacy | MenuItem)[]>();
+  /** Parameter passed to triggered menu item actions. */
   readonly actionParam = input();
 
   private linkActionService = inject(SiLinkActionService, { optional: true });

@@ -135,7 +135,11 @@ export class SiNumberInputComponent
    */
   // eslint-disable-next-line @angular-eslint/no-input-rename
   readonly disabledInput = input(false, { alias: 'disabled', transform: booleanAttribute });
-  /** @defaultValue false */
+  /**
+   * Whether the input can be focused but not edited.
+   *
+   * @defaultValue false
+   */
   readonly readonly = input(false, { transform: booleanAttribute });
 
   /**
@@ -143,6 +147,7 @@ export class SiNumberInputComponent
    */
   readonly placeholder = input<TranslatableString>();
 
+  /** Emits the current value when the user changes it. */
   readonly valueChange = output<number | undefined>();
 
   readonly inputElement = viewChild.required<ElementRef<HTMLInputElement>>('inputElement');
