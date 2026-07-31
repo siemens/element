@@ -16,10 +16,8 @@ export interface MicrochartBarSeries {
 
 // @public (undocumented)
 export class SiMicrochartBarComponent {
-    // (undocumented)
     readonly height: _angular_core.InputSignal<number>;
     readonly series: _angular_core.InputSignal<MicrochartBarSeries>;
-    // (undocumented)
     readonly width: _angular_core.InputSignal<number>;
 }
 

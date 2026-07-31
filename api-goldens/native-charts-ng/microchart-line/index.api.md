@@ -15,14 +15,12 @@ export interface MicrochartLineSeries {
 
 // @public (undocumented)
 export class SiMicrochartLineComponent {
-    // (undocumented)
     readonly height: _angular_core.InputSignal<number>;
     readonly lineWidth: _angular_core.InputSignal<number>;
     readonly markerColor: _angular_core.InputSignal<string | undefined>;
     readonly series: _angular_core.InputSignal<MicrochartLineSeries>;
     readonly showArea: _angular_core.InputSignal<boolean>;
     readonly showMarkers: _angular_core.InputSignal<boolean>;
-    // (undocumented)
     readonly width: _angular_core.InputSignal<number>;
 }
 
