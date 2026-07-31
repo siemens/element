@@ -18,12 +18,10 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
     readonly clearButtonAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
     readonly debounceTime: _angular_core.InputSignalWithTransform<number, unknown>;
-    // (undocumented)
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly maxlength: _angular_core.InputSignalWithTransform<number | undefined, unknown>;
     readonly placeholder: _angular_core.InputSignal<string>;
     readonly prohibitedCharacters: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchChange: _angular_core.OutputEmitterRef<string>;
     readonly showIcon: _angular_core.InputSignalWithTransform<boolean, unknown>;

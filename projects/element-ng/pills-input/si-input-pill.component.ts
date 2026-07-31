@@ -18,9 +18,14 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
   }
 })
 export class SiInputPillComponent {
+  /** Emits when the pill's close button is clicked. */
   readonly deletePill = output<void>();
 
-  /** @defaultValue false */
+  /**
+   * Whether to hide the close button.
+   *
+   * @defaultValue false
+   */
   readonly hideClose = input(false);
 
   protected readonly icons = addIcons({ elementCancel });

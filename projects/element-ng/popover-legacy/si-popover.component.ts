@@ -24,12 +24,23 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class PopoverComponent implements OnInit {
+  /** Text or template content displayed in the popover. */
   readonly popover = input<string | TemplateRef<any>>();
-  /** @defaultValue '' */
+  /**
+   * Title displayed at the top of the popover.
+   *
+   * @defaultValue ''
+   */
   readonly popoverTitle = input('');
-  /** @defaultValue '' */
+  /**
+   * CSS class applied to the popover container.
+   *
+   * @defaultValue ''
+   */
   readonly containerClass = input('');
+  /** Icon displayed beside the popover title. */
   readonly icon = input<string>();
+  /** Context provided to the popover template. */
   readonly popoverContext = input<unknown>();
 
   protected readonly positionClass = signal('');
