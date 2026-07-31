@@ -39,10 +39,8 @@ export class SiFilterBarModule {
 // @public (undocumented)
 export class SiFilterPillComponent {
     readonly deleteFilters: _angular_core.OutputEmitterRef<Filter>;
-    // (undocumented)
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly filter: _angular_core.InputSignal<Filter>;
-    // (undocumented)
     readonly totalPills: _angular_core.InputSignal<number>;
 }
 

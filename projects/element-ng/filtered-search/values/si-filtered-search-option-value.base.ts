@@ -18,13 +18,26 @@ import { SiFilteredSearchValueBase } from './si-filtered-search-value.base';
 
 @Directive()
 export abstract class SiFilteredSearchOptionValueBase extends SiFilteredSearchValueBase {
+  /** Loads value options for the current criterion on demand. */
   readonly lazyValueProvider =
     input<(criterionName: string, typed: string | string[]) => Observable<OptionType[]>>();
+
+  /** Delay in milliseconds before requesting lazy value options. */
   readonly searchDebounceTime = input.required<number>();
+
+  /** Whether the editor only permits selecting configured options. */
   readonly onlySelectValue = input.required<boolean>();
+
+  /** Maximum number of options displayed by the typeahead. */
   readonly maxCriteriaOptions = input.required<number>();
+
+  /** Number of options visible before the typeahead scrolls. */
   readonly optionsInScrollableView = input.required<number>();
+
+  /** Whether typing a colon or semicolon must not select an option. */
   readonly disableSelectionByColonAndSemicolon = input.required<boolean>();
+
+  /** Whether strict or selection-only value validation is active. */
   readonly isStrictOrOnlySelectValue = input.required<boolean>();
 
   protected readonly inputChange = new BehaviorSubject('');

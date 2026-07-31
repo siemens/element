@@ -24,15 +24,22 @@ export class SiFilterPillComponent {
    */
   readonly filter = input.required<Filter>();
 
-  /** @defaultValue false */
+  /**
+   * Whether the pill's delete button is disabled.
+   *
+   * @defaultValue false
+   */
   readonly disabled = input(false, { transform: booleanAttribute });
 
-  /** @defaultValue 0 */
+  /**
+   * Total number of filter pills currently displayed.
+   *
+   * @defaultValue 0
+   */
   readonly totalPills = input(0);
 
   /**
-   * Output callback event which will provide you the name of the deleted filter
-   * pill if a filter was deleted.
+   * Emits the filter when its delete button is clicked.
    */
   readonly deleteFilters = output<Filter>();
 
