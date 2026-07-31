@@ -30,9 +30,17 @@ export class SiMicrochartLineComponent {
    * ```
    */
   readonly series = input.required<MicrochartLineSeries>();
-  /** @defaultValue 64 */
+  /**
+   * Chart width in pixels.
+   *
+   * @defaultValue 64
+   */
   readonly width = input<number>(64);
-  /** @defaultValue 24 */
+  /**
+   * Chart height in pixels.
+   *
+   * @defaultValue 24
+   */
   readonly height = input<number>(24);
   /**
    * Display circular markers at each data point on the line.
