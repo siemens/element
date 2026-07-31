@@ -18,14 +18,19 @@ echarts.use([SunburstChart]);
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class SiChartSunburstComponent extends SiChartBaseComponent {
-  /** The series for the chart. */
+  /** The series configuration for the chart. */
   readonly series = input<SunburstSeriesOption>();
   /**
+   * Whether to display the chart tooltip.
+   *
    * @deprecated Use `tooltip` instead.
    * @defaultValue false
    */
   readonly toolTip = input(false);
-  /** @defaultValue false */
+  /** Whether to display the chart tooltip.
+   *
+   * @defaultValue false
+   */
   readonly tooltip = input(false);
 
   protected override applyOptions(): void {

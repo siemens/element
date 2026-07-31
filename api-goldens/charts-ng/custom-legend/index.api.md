@@ -58,7 +58,6 @@ export interface CustomLegendProps {
 
 // @public (undocumented)
 export class SiCustomLegendComponent {
-    // (undocumented)
     readonly customLegend: _angular_core.InputSignal<CustomLegend | undefined>;
     readonly legendClickEvent: _angular_core.OutputEmitterRef<CustomLegendItem>;
     readonly legendHoverEndEvent: _angular_core.OutputEmitterRef<CustomLegendItem>;
