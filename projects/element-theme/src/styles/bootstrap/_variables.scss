@@ -377,7 +377,7 @@ $input-group-addon-padding-y: $input-padding-y !default;
 $input-group-addon-padding-x: $input-padding-x !default;
 $input-group-addon-font-weight: $input-font-weight !default;
 $input-group-addon-color: $input-color !default;
-$input-group-addon-bg: system-tokens.$si-sys-background-4 !default;
+$input-group-addon-bg: system-tokens.$si-sys-background-1 !default;
 $input-group-addon-border-color: $input-border-color !default;
 
 // Form validation
@@ -432,7 +432,7 @@ $nav-tabs-border-color: transparent;
 $nav-tabs-border-width: 2px;
 $nav-tabs-border-radius: 0;
 $nav-tabs-link-hover-border-color: transparent transparent $nav-tabs-border-color !default;
-$nav-tabs-link-active-color: system-tokens.$si-sys-text-accent-hover !default;
+$nav-tabs-link-active-color: system-tokens.$si-sys-text-accent-active !default;
 $nav-tabs-link-active-bg: transparent !default;
 
 // Badges
@@ -589,10 +589,10 @@ $alert-dismissible-padding-r: $alert-padding-x * 3 !default; // 3x covers width 
 
 $progress-height: 0.5rem !default;
 $progress-font-size: $font-size-base * 0.75 !default;
-$progress-bg: system-tokens.$si-sys-background-4 !default;
+$progress-bg: system-tokens.$si-sys-border-4 !default;
 $progress-border-radius: $progress-height * 0.5 !default;
 $progress-box-shadow: none !default;
-$progress-bar-color: system-tokens.$si-sys-text-on-accent !default;
+$progress-bar-color: system-tokens.$si-sys-background-accent !default;
 $progress-bar-bg: system-tokens.$si-sys-background-accent !default;
 $progress-bar-animation-timing: 1s linear infinite !default;
 $progress-bar-transition: width animations.element-transition-duration(0.6s) ease;
@@ -644,7 +644,7 @@ $breadcrumb-padding-x: 0;
 $breadcrumb-item-padding-x: map.get(spacers.$spacers, 5);
 $breadcrumb-margin-bottom: 0;
 $breadcrumb-bg: inherit !default;
-$breadcrumb-divider-color: system-tokens.$si-sys-border-2 !default;
+$breadcrumb-divider-color: system-tokens.$si-sys-text-secondary !default;
 $breadcrumb-active-color: $link-color !default;
 $breadcrumb-divider: string.quote('>') !default;
 $breadcrumb-divider-flipped: $breadcrumb-divider !default;
