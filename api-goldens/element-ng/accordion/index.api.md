@@ -12,11 +12,8 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiAccordionComponent implements AfterContentInit, OnChanges {
-    // (undocumented)
     readonly expandFirstPanel: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly fullHeight: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly hcollapsed: _angular_core.InputSignal<boolean>;
 }
 
