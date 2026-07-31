@@ -25,7 +25,9 @@ import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
   host: { class: 'd-flex align-items-center py-2 my-4 px-4 si-h5' }
 })
 export class SiReadonlyThresholdOptionComponent {
+  /** Value of the option to display. */
   readonly value = input.required<string>();
+  /** Available threshold options from which the displayed option is selected. */
   readonly options = input.required<SelectOption<unknown>[]>();
 
   protected readonly option = computed(() => {

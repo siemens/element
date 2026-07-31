@@ -52,7 +52,6 @@ export class SiWizardStepComponent {
     readonly back: _angular_core.OutputEmitterRef<void>;
     // (undocumented)
     readonly failed: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly heading: _angular_core.InputSignal<TranslatableString>;
     readonly isActive: _angular_core.WritableSignal<boolean>;
     // (undocumented)
