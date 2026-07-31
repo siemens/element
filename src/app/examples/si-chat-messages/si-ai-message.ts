@@ -18,7 +18,7 @@ import { SiMarkdownCitation } from '@siemens/element-ng/markdown/extensions/sour
 import { MenuItemAction } from '@siemens/element-ng/menu';
 import { LOG_EVENT } from '@siemens/live-preview';
 
-import { createMarkdownOptions } from './markdown-options';
+import { createChatMarkdownOptions } from '../../shared/chat-markdown-options';
 
 @Component({
   selector: 'app-sample',
@@ -43,7 +43,7 @@ export class SampleComponent {
     }
   ];
 
-  protected readonly markdownOptions = createMarkdownOptions({
+  protected readonly markdownOptions = createChatMarkdownOptions({
     citations: this.citations,
     onSourceOpen: citation => this.openSource(citation)
   });

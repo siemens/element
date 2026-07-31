@@ -11,7 +11,7 @@ import {
 import { siMarkdownHighlightJs } from '@siemens/element-ng/markdown/hightlighter/highlightjs';
 import remarkGemoji from 'remark-gemoji';
 
-export const createMarkdownOptions = (
+export const createChatMarkdownOptions = (
   sourceCitations?: SiMarkdownSourceCitationsOptions
 ): SiMarkdownOptions => {
   const options = makeSiMarkdownOptions()
@@ -29,4 +29,4 @@ export const createMarkdownOptions = (
   return options;
 };
 
-export const markdownOptions = createMarkdownOptions();
+export const chatMarkdownOptions = createChatMarkdownOptions();

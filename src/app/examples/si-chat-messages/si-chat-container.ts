@@ -38,7 +38,7 @@ import { MenuItem } from '@siemens/element-ng/menu';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
-import { createMarkdownOptions, markdownOptions } from './markdown-options';
+import { chatMarkdownOptions, createChatMarkdownOptions } from '../../shared/chat-markdown-options';
 
 interface ChatMessage {
   type: 'user' | 'ai' | 'custom';
@@ -71,7 +71,7 @@ export class SampleComponent {
   private readonly toastService = inject(SiToastNotificationService);
   private readonly chatContainer = viewChild<SiChatContainerComponent>(SiChatContainerComponent);
 
-  protected markdownOptions = markdownOptions;
+  protected markdownOptions = chatMarkdownOptions;
 
   protected readonly icons = addIcons({
     elementUser,
@@ -361,7 +361,7 @@ export class SampleComponent {
     ChatMessage,
     { primary: MessageAction[]; secondary: MenuItem[] }
   >();
-  private readonly markdownOptionsCache = new WeakMap<ChatMessage, typeof markdownOptions>();
+  private readonly markdownOptionsCache = new WeakMap<ChatMessage, typeof chatMarkdownOptions>();
 
   private getMessageActions(message: ChatMessage): {
     primary: MessageAction[];
@@ -399,7 +399,7 @@ export class SampleComponent {
 
   protected getMessageMarkdownOptions(message: ChatMessage): SiMarkdownOptions {
     if (!message.citations) {
-      return markdownOptions;
+      return chatMarkdownOptions;
     }
 
     const cached = this.markdownOptionsCache.get(message);
@@ -407,7 +407,7 @@ export class SampleComponent {
       return cached;
     }
 
-    const options = createMarkdownOptions({
+    const options = createChatMarkdownOptions({
       citations: message.citations,
       onSourceOpen: citation => this.openSource(citation)
     });
