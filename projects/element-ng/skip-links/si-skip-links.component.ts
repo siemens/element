@@ -15,7 +15,11 @@ import { SiSkipLinkTargetDirective } from './si-skip-link-target.directive';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiSkipLinksComponent {
-  /** @defaultValue [] */
+  /**
+   * Targets displayed as skip links.
+   *
+   * @defaultValue []
+   */
   readonly skipLinks = input<readonly SiSkipLinkTargetDirective[]>([]);
 
   protected jumpToLabel = t(() => $localize`:@@SI_SKIP_LINKS.JUMP_TO:Jump to {{link}}`);

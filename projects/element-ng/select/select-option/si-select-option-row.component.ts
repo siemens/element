@@ -29,9 +29,19 @@ import { SelectOption } from '../si-select.types';
   }
 })
 export class SiSelectOptionRowComponent {
+  /**
+   * Option displayed by the row.
+   */
   readonly option = input.required<SelectOption<unknown>>();
+  /**
+   * Custom template for rendering the option.
+   */
   readonly optionTemplate = input<TemplateRef<unknown>>();
-  /** @defaultValue false */
+  /**
+   * Whether the option is selected.
+   *
+   * @defaultValue false
+   */
   readonly selected = input(false, { transform: booleanAttribute });
   protected readonly icons = addIcons({ elementOk });
 }
