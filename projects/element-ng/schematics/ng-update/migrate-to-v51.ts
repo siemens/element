@@ -9,6 +9,7 @@ import { ElementMigrationData, getElementMigrationData } from '../migrations/dat
 import { elementMigrationRule } from '../migrations/element-migration/element-migration.js';
 import { iconPathMigrationRule } from '../migrations/icon-path-migration/index.js';
 import { missingTranslateMigrationRule } from '../migrations/ngx-translate/index.js';
+import { splitCollapseMigrationRule } from './migrate-split-collapse.js';
 import { splitSizesMigrationRule } from './migrate-split-sizes.js';
 
 export const migrateToV51 = (): Rule => {
@@ -20,7 +21,8 @@ export const migrateToV51 = (): Rule => {
       elementMigrationRule(options, migrationData),
       missingTranslateMigrationRule(options),
       iconPathMigrationRule(options),
-      splitSizesMigrationRule(options)
+      splitSizesMigrationRule(options),
+      splitCollapseMigrationRule(options)
     ])(tree, context);
   };
 };
