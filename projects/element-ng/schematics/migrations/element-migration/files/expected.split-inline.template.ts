@@ -6,12 +6,12 @@ import { SiSplitModule } from '@siemens/element-ng/split';
   template: `<si-split class="si-layout-fixed-height" [orientation]="'horizontal'" [sizes]="[20, 60, 20]">
     <si-split-part
       heading="Filters"
-      collapseDirection="start"
+      collapsible="to-start"
       class="bg-base-1"
       [minSize]="100"  >
       <p class="p-4 text-secondary">Split Part #1</p>
     </si-split-part>
-    <si-split-part heading="Employees" collapseDirection="start" class="bg-base-1"   [minSize]="200">
+    <si-split-part heading="Employees" collapsible="to-start" class="bg-base-1"   [minSize]="200">
       <div class="si-layout-fixed-height justify-content-center bg-secondary">
         <p class="text-center text-inverse">Split Part with resizable content!</p>
       </div>

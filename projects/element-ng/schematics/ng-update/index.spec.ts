@@ -260,4 +260,47 @@ export class SplitComponent {}`,
     expect(modifiedContent).toContain('<si-split-part size="400" heading="Left"  unit="px"/>');
     expect(modifiedContent).toContain('<si-split-part size="200" heading="Right"  unit="px"/>');
   });
+
+  it('should rename split collapse bindings and CollapseTo literals', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component, signal } from '@angular/core';
+import { CollapseTo } from '@siemens/element-ng/split';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part collapseDirection="start" [collapseDirection]="'end'" />\`
+})
+export class SplitComponent {
+  readonly direction = signal<CollapseTo>('start');
+  currentDirection: CollapseTo = 'end';
+
+  toggle(): void {
+    this.direction.set('end');
+    this.currentDirection = 'start';
+  }
+}`,
+      '/projects/app/src/external-split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-external-split',
+  templateUrl: './split.component.html'
+})
+export class ExternalSplitComponent {}`,
+      '/projects/app/src/split.component.html': `<si-split-part collapseDirection="end" />
+<div collapseDirection="start"></div>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+    const template = tree.readContent('/projects/app/src/split.component.html');
+
+    expect(component).toContain('collapsible="to-start"');
+    expect(component).toContain(`[collapsible]="'to-end'"`);
+    expect(component).toContain(`signal<CollapseTo>('to-start')`);
+    expect(component).toContain(`this.direction.set('to-end')`);
+    expect(component).toContain(`currentDirection: CollapseTo = 'to-end'`);
+    expect(component).toContain(`this.currentDirection = 'to-start'`);
+    expect(template).toContain('<si-split-part collapsible="to-end" />');
+    expect(template).toContain('<div collapseDirection="start"></div>');
+  });
 });

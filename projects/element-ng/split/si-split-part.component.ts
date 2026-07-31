@@ -38,7 +38,7 @@ import {
   styleUrl: './si-split-part.component.scss',
   host: {
     '[class.is-collapsed]': 'collapsedState()',
-    '[class.collapse-start]': 'collapseDirectionState() === "start"',
+    '[class.collapse-start]': 'collapseDirectionState() === "to-start"',
     '[style.grid-area]': '"p-" + this.index'
   }
 })
@@ -51,11 +51,11 @@ export class SiSplitPartComponent {
    */
   readonly actions = input<Action[]>([]);
   /**
-   * Defines which direction the split part collapses to.
+   * Defines whether and in which direction the split part can collapse.
    *
-   * @defaultValue 'start'
+   * @defaultValue 'to-start'
    */
-  readonly collapseDirection = input<CollapseTo>('start');
+  readonly collapsible = input<CollapseTo>('to-start');
 
   /**
    * Sets the icon class that is used in the buttons of split parts to
@@ -191,11 +191,11 @@ export class SiSplitPartComponent {
   readonly collapsedState = linkedSignal(() => !this.expanded());
 
   /**
-   * Internal, mutable collapse direction. Initialized from the {@link collapseDirection}
+   * Internal, mutable collapse direction. Initialized from the {@link collapsible}
    * input but can be overwritten while cascading collapse state to sibling parts.
    * @internal
    */
-  readonly collapseDirectionState = linkedSignal(() => this.collapseDirection());
+  readonly collapseDirectionState = linkedSignal(() => this.collapsible());
 
   /**
    * Get collapsed state.
@@ -279,18 +279,18 @@ export class SiSplitPartComponent {
 
   private refreshCollapsedToEnd(): void {
     const before = this.before();
-    if (before?.collapsedState() && before.collapseDirectionState() === 'end') {
+    if (before?.collapsedState() && before.collapseDirectionState() === 'to-end') {
       this.collapsedState.set(true);
-      this.collapseDirectionState.set('end');
+      this.collapseDirectionState.set('to-end');
       this.after()?.refreshCollapsedToEnd();
     }
   }
 
   private refreshCollapseToStart(): void {
     const after = this.after();
-    if (after?.collapsedState() && after.collapseDirectionState() === 'start') {
+    if (after?.collapsedState() && after.collapseDirectionState() === 'to-start') {
       this.collapsedState.set(true);
-      this.collapseDirectionState.set('start');
+      this.collapseDirectionState.set('to-start');
       this.before()?.refreshCollapseToStart();
     }
   }
