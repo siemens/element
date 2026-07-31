@@ -19,11 +19,9 @@ export class SiAutocompleteListboxDirective<T> implements OnInit {
     constructor();
     // (undocumented)
     get active(): SiAutocompleteOptionDirective<T> | null;
-    // (undocumented)
     readonly autocomplete: _angular_core.InputSignal<SiAutocompleteDirective<T>>;
     // (undocumented)
     readonly id: _angular_core.InputSignal<string>;
-    // (undocumented)
     readonly siAutocompleteDefaultIndex: _angular_core.InputSignal<number>;
     // (undocumented)
     readonly siAutocompleteOptionSubmitted: _angular_core.OutputEmitterRef<T | undefined>;
@@ -37,11 +35,9 @@ export class SiAutocompleteModule {
 export class SiAutocompleteOptionDirective<T = unknown> implements Highlightable {
     // (undocumented)
     get disabled(): boolean;
-    // (undocumented)
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     readonly id: _angular_core.InputSignal<string>;
-    // (undocumented)
     readonly value: _angular_core.InputSignal<T | undefined>;
 }
 

@@ -21,7 +21,6 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
     readonly containerElement: i0.InputSignal<HTMLElement | null | undefined>;
     readonly gap: i0.InputSignal<number | undefined>;
     readonly items: i0.Signal<readonly SiAutoCollapsableListItemDirective[]>;
-    // (undocumented)
     readonly siAutoCollapsableList: i0.InputSignalWithTransform<boolean, unknown>;
 }
 
