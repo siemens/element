@@ -47,7 +47,6 @@ export class SiIconModule {
 
 // @public (undocumented)
 export class SiStatusIconComponent {
-    // (undocumented)
     readonly status: _angular_core.InputSignal<EntityStatusType>;
 }
 

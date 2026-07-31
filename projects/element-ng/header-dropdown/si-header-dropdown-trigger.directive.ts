@@ -60,9 +60,9 @@ class SiHeaderAnchorComponent {
 export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDestroy {
   private static idCounter = 0;
 
-  /** Template that be rendered inside the dropdown. */
+  /** Template rendered inside the dropdown. */
   readonly dropdown = input.required<TemplateRef<unknown>>({ alias: 'siHeaderDropdownTriggerFor' });
-  /** Data that should be passed as template context to the dropdown. */
+  /** Context data passed to the dropdown template. */
   readonly dropdownData = input<unknown>();
   /** Emits whenever a dropdown is opened or closed. */
   readonly openChange = output<boolean>();
@@ -122,7 +122,7 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
     });
   }
 
-  /** Whether the dropdown is open. */
+  /** Whether the dropdown is currently open. */
   get isOpen(): boolean {
     return this._isOpen;
   }

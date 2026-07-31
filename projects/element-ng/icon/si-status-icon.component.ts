@@ -26,6 +26,7 @@ import { STATUS_ICON_CONFIG } from './status-icon';
 export class SiStatusIconComponent {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);
 
+  /** Status that determines the rendered stacked icon and accessible label. */
   readonly status = input.required<EntityStatusType>();
 
   protected readonly statusIcon = computed(() => this.statusIcons[this.status()]);

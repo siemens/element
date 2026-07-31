@@ -33,6 +33,7 @@ export class SiFormlyComponent<
    */
   readonly formlyForm = viewChild(FormlyForm);
 
+  /** Reactive form used by Formly. A form is created when none is provided. */
   readonly form = model<FormGroup<TControl>>();
   /**
    * Mapping of field name and its value.
@@ -66,9 +67,10 @@ export class SiFormlyComponent<
   // eslint-disable-next-line @angular-eslint/prefer-signal-model
   readonly fields = input<FormlyFieldConfig[]>([]);
 
+  /** Emits the effective field configuration, including configuration generated from `schema`. */
   readonly fieldsChange = output<FormlyFieldConfig[]>();
 
-  /** Define width for field labels in pixel */
+  /** Width in pixels applied to field labels. */
   readonly labelWidth = input<number | undefined>();
 
   protected readonly fieldConfig = computed<FormlyFieldConfig[]>(() => {
