@@ -42,11 +42,17 @@ export class SiAutocompleteListboxDirective<T> implements OnInit {
    */
   readonly id = input(`__si-autocomplete-listbox-${SiAutocompleteListboxDirective.idCounter++}`);
 
+  /** The `SiAutocompleteDirective` instance this listbox is attached to. */
   readonly autocomplete = input.required<SiAutocompleteDirective<T>>({
     alias: 'siAutocompleteListboxFor'
   });
 
-  /** @defaultValue 0 */
+  /**
+   * Index of the option that is pre-selected when the listbox opens.
+   * Pass `-1` to start with no active item.
+   *
+   * @defaultValue 0
+   */
   readonly siAutocompleteDefaultIndex = input(0);
 
   readonly siAutocompleteOptionSubmitted = output<T | undefined>();
