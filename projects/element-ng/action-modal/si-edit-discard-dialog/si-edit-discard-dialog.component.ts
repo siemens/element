@@ -19,10 +19,15 @@ import { EditDiscardDialogResult } from '../si-action-dialog.types';
   templateUrl: './si-edit-discard-dialog.component.html'
 })
 export class SiEditDiscardDialogComponent {
+  /** ID of the dialog title element used for accessible naming. */
   readonly titleId = input<string>();
-  /** @defaultValue '' */
+  /**
+   * Heading displayed in the dialog.
+   * @defaultValue ''
+   */
   readonly heading = input<TranslatableString>('');
   /**
+   * Message displayed in the dialog.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.MESSAGE:Save changes?`)
@@ -30,6 +35,7 @@ export class SiEditDiscardDialogComponent {
    */
   readonly message = input(t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.MESSAGE:Save changes?`));
   /**
+   * Label displayed on the save button.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.SAVE_BTN:Save`)
@@ -37,6 +43,7 @@ export class SiEditDiscardDialogComponent {
    */
   readonly saveBtnName = input(t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.SAVE_BTN:Save`));
   /**
+   * Label displayed on the discard button.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISCARD_BTN:Discard`)
@@ -46,15 +53,20 @@ export class SiEditDiscardDialogComponent {
     t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISCARD_BTN:Discard`)
   );
   /**
+   * Label displayed on the cancel button.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.CANCEL_BTN:Cancel`)
    * ```
    */
   readonly cancelBtnName = input(t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.CANCEL_BTN:Cancel`));
-  /** @defaultValue false */
+  /**
+   * Whether the save button is disabled.
+   * @defaultValue false
+   */
   readonly disableSave = input(false, { transform: booleanAttribute });
   /**
+   * Message displayed when saving is disabled.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISABLE_SAVE_MESSAGE:Discard changes?`)
@@ -64,6 +76,7 @@ export class SiEditDiscardDialogComponent {
     t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISABLE_SAVE_MESSAGE:Discard changes?`)
   );
   /**
+   * Label displayed on the discard button when saving is disabled.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISABLE_SAVE_DISCARD_BTN:Discard`)
@@ -73,13 +86,17 @@ export class SiEditDiscardDialogComponent {
     t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISABLE_SAVE_DISCARD_BTN:Discard`)
   );
   /**
+   * Parameters interpolated into the translated heading and message.
    * @defaultValue
    * ```
    * {}
    * ```
    */
   readonly translationParams = input<{ [key: string]: any }>({});
-  /** @defaultValue '' */
+  /**
+   * Icon displayed next to the dialog content.
+   * @defaultValue ''
+   */
   readonly icon = input('');
 
   protected modalRef = inject(ModalRef<SiEditDiscardDialogComponent, EditDiscardDialogResult>);

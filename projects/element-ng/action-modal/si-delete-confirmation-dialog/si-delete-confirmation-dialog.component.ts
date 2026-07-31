@@ -19,10 +19,15 @@ import { DeleteConfirmationDialogResult } from '../si-action-dialog.types';
   templateUrl: './si-delete-confirmation-dialog.component.html'
 })
 export class SiDeleteConfirmationDialogComponent {
+  /** ID of the dialog title element used for accessible naming. */
   readonly titleId = input<string>();
-  /** @defaultValue '' */
+  /**
+   * Heading displayed in the dialog.
+   * @defaultValue ''
+   */
   readonly heading = input<TranslatableString>('');
   /**
+   * Message displayed in the dialog.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.MESSAGE:Do you really want to delete the selected elements?`)
@@ -35,6 +40,7 @@ export class SiDeleteConfirmationDialogComponent {
     )
   );
   /**
+   * Label displayed on the delete button.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.DELETE_BTN:Delete`)
@@ -44,6 +50,7 @@ export class SiDeleteConfirmationDialogComponent {
     t(() => $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.DELETE_BTN:Delete`)
   );
   /**
+   * Label displayed on the cancel button.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.CANCEL_BTN:Cancel`)
@@ -53,13 +60,17 @@ export class SiDeleteConfirmationDialogComponent {
     t(() => $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.CANCEL_BTN:Cancel`)
   );
   /**
+   * Parameters interpolated into the translated heading and message.
    * @defaultValue
    * ```
    * {}
    * ```
    */
   readonly translationParams = input<{ [key: string]: any }>({});
-  /** @defaultValue '' */
+  /**
+   * Icon displayed next to the dialog content.
+   * @defaultValue ''
+   */
   readonly icon = input('');
 
   protected modalRef = inject(
