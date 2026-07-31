@@ -11,9 +11,8 @@ import { SunburstSeriesOption } from '@siemens/charts-ng/common';
 // @public (undocumented)
 export class SiChartSunburstComponent extends SiChartBaseComponent {
     readonly series: _angular_core.InputSignal<SunburstSeriesOption | undefined>;
-    // @deprecated (undocumented)
+    // @deprecated
     readonly toolTip: _angular_core.InputSignal<boolean>;
-    // (undocumented)
     readonly tooltip: _angular_core.InputSignal<boolean>;
 }
 

@@ -18,14 +18,19 @@ echarts.use([SankeyChart]);
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiChartSankeyComponent extends SiChartBaseComponent {
-  /** The series for the chart. */
+  /** The series configuration for the chart. */
   readonly series = input<SankeySeriesOption>();
   /**
+   * Whether to display the chart tooltip.
+   *
    * @deprecated Use `tooltip` instead.
    * @defaultValue false
    */
   readonly toolTip = input(false);
-  /** @defaultValue false */
+  /** Whether to display the chart tooltip.
+   *
+   * @defaultValue false
+   */
   readonly tooltip = input(false);
 
   protected override applyOptions(): void {
