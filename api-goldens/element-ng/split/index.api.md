@@ -38,7 +38,6 @@ export class SiSplitComponent {
     constructor();
     readonly gutterSize: _angular_core.InputSignal<number>;
     readonly orientation: _angular_core.InputSignal<SplitOrientation>;
-    // (undocumented)
     readonly sizesChange: _angular_core.OutputEmitterRef<number[]>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
 }
@@ -51,7 +50,6 @@ export class SiSplitModule {
 export class SiSplitPartComponent {
     constructor();
     readonly actions: _angular_core.InputSignal<Action[]>;
-    // (undocumented)
     readonly collapseChanged: _angular_core.OutputEmitterRef<boolean>;
     get collapsed(): boolean;
     readonly collapseDirection: _angular_core.InputSignal<CollapseTo>;
@@ -70,7 +68,6 @@ export class SiSplitPartComponent {
     readonly showCollapseButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showHeader: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly size: _angular_core.InputSignalWithTransform<number, string | number>;
-    // (undocumented)
     readonly stateChange: _angular_core.OutputEmitterRef<PartState>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
     toggleCollapse(): void;

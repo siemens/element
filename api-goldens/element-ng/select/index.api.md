@@ -131,7 +131,6 @@ export class SiSelectLazyOptionsDirective<T> implements SiSelectOptionsStrategy<
     onFilter(filterInput?: string): void;
     // (undocumented)
     onValueChange(value: T[]): void;
-    // (undocumented)
     readonly optionSource: _angular_core.InputSignal<SelectOptionSource<T>>;
     readonly rows: _angular_core.WritableSignal<SelectItem<T>[]>;
     readonly selectedRows: _angular_core.WritableSignal<SelectOption<T>[]>;

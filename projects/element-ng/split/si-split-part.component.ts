@@ -161,7 +161,13 @@ export class SiSplitPartComponent {
    */
   readonly expanded = input(true, { transform: booleanAttribute });
 
+  /**
+   * Emits when the part is collapsed or expanded.
+   */
   readonly collapseChanged = output<boolean>();
+  /**
+   * Emits the part's expanded state and size after it is toggled.
+   */
   readonly stateChange = output<PartState>();
 
   /** @internal */

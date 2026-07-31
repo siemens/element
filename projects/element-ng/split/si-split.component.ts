@@ -74,6 +74,9 @@ export class SiSplitComponent {
    */
   readonly stateId = input<string>();
 
+  /**
+   * Emits the sizes of all parts as percentages when the user resizes a gutter.
+   */
   readonly sizesChange = output<number[]>();
 
   @WebComponentContentChildren(SiSplitPartComponent)
