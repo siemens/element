@@ -133,6 +133,8 @@ export class SiPhoneNumberInputComponent
     t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_PLACEHOLDER:Search`)
   );
   /**
+   * Text shown when the country search returns no results.
+   *
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_NO-RESULTS_FOUND:No results found`)
@@ -170,6 +172,8 @@ export class SiPhoneNumberInputComponent
   readonly supportedCountries = input<readonly string[] | null>();
 
   /**
+   * ID of the element that labels the phone number input.
+   *
    * @defaultValue
    * ```
    * `${this.id()}-label`
@@ -177,13 +181,22 @@ export class SiPhoneNumberInputComponent
    */
   readonly labelledby = input(`${this.id()}-label`);
 
-  /** @defaultValue false */
+  /**
+   * Whether the input is disabled.
+   *
+   * @defaultValue false
+   */
   // eslint-disable-next-line @angular-eslint/no-input-rename
   readonly disabledInput = input(false, { alias: 'disabled', transform: booleanAttribute });
 
-  /** @defaultValue false */
+  /**
+   * Whether the input can be focused but not edited.
+   *
+   * @defaultValue false
+   */
   readonly readonly = input(false, { transform: booleanAttribute });
 
+  /** Emits the selected country, formatted phone number, and its validity when the value changes. */
   readonly valueChange = output<PhoneDetails>();
 
   /**

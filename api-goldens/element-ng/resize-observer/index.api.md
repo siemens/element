@@ -44,11 +44,8 @@ export class ResizeObserverService {
 
 // @public
 export class SiResizeObserverDirective implements OnInit, OnDestroy {
-    // (undocumented)
     readonly emitInitial: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly resizeThrottle: _angular_core.InputSignal<number>;
-    // (undocumented)
     readonly siResizeObserver: _angular_core.OutputEmitterRef<ElementDimensions>;
 }
 
@@ -58,13 +55,11 @@ export class SiResizeObserverModule {
 
 // @public
 export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
-    // (undocumented)
     readonly breakpoints: _angular_core.InputSignal<Breakpoints | undefined>;
     // (undocumented)
     readonly lg: _angular_core.WritableSignal<boolean>;
     // (undocumented)
     readonly md: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
     readonly resizeThrottle: _angular_core.InputSignal<number>;
     // (undocumented)
     readonly sm: _angular_core.WritableSignal<boolean>;
