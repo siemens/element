@@ -96,7 +96,9 @@
     }
 
     :is(th, td) {
-      block-size: 64px;
+      block-size: calc(
+        2lh + 2 * map.get(spacers.$spacers-block, 2) + 2 * map.get(spacers.$spacers-block, 5)
+      );
     }
   }
 }
@@ -118,7 +120,7 @@
 
   tbody {
     :is(th, td) {
-      block-size: 48px;
+      block-size: calc(2lh + 2 * map.get(spacers.$spacers-block, 4));
     }
   }
 }
