@@ -31,18 +31,37 @@ echarts.use([GaugeChart]);
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class SiChartGaugeComponent extends SiChartBaseComponent implements OnChanges {
-  /** @defaultValue 0 */
+  /** The lowest value displayed on the gauge axis.
+   *
+   * @defaultValue 0
+   */
   readonly minValue = input(0);
-  /** @defaultValue 100 */
+  /** The highest value displayed on the gauge axis.
+   *
+   * @defaultValue 100
+   */
   readonly maxValue = input(100);
-  /** @defaultValue 0 */
+  /** The value displayed by the gauge.
+   *
+   * @defaultValue 0
+   */
   readonly value = input(0);
+  /** The number of intervals displayed on the gauge axis. */
   readonly splitSteps = input<number>();
-  /** @defaultValue true */
+  /** Whether the number of gauge-axis intervals adapts to the component size.
+   *
+   * @defaultValue true
+   */
   readonly responsiveSplitSteps = input(true);
-  /** @defaultValue '%' */
+  /** The unit displayed with the gauge value.
+   *
+   * @defaultValue '%'
+   */
   readonly unit = input('%');
-  /** @defaultValue false */
+  /** Whether to display the unit on gauge-axis labels.
+   *
+   * @defaultValue false
+   */
   readonly unitsOnSplit = input(false);
   /**
    * Custom formatter for axis labels.
@@ -74,7 +93,10 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
    * @defaultValue 0
    */
   readonly axisNumberOfDecimals = input(0);
-  /** @defaultValue false */
+  /** Whether to hide the gauge-axis labels.
+   *
+   * @defaultValue false
+   */
   readonly hideAxisLabels = input(false, { transform: booleanAttribute });
   /**
    * Segments on the arc from 0 (implicit) to 1 (explicit)

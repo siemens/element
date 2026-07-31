@@ -72,6 +72,7 @@ echarts.use([
 export class SiChartCartesianComponent extends SiChartBaseComponent implements OnChanges {
   /** The series for the chart. */
   readonly series = input<CartesianChartSeries[]>();
+  /** Grid definitions for rendering series in subcharts. */
   readonly subChartGrids = input<SubchartGrid[]>();
   /** The y axis in cartesian(rectangular) coordinate. */
   readonly yAxis = input<ChartYAxis | ChartYAxis[]>();
@@ -85,7 +86,7 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
    * @defaultValue false
    */
   readonly stacked = input(false);
-  /** Enable or disable brush zoom mode */
+  /** Whether brush zoom mode is enabled. */
   readonly zoomMode = input<boolean>();
 
   // Used to toggle different chart types
