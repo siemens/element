@@ -29,12 +29,21 @@ import { SelectGroup, SelectOption } from '../si-select.types';
   }
 })
 export abstract class SiSelectListBase<T> implements OnInit, OnDestroy {
+  /**
+   * Base ID used to associate the listbox with its label.
+   */
   readonly baseId = input.required<string>();
+  /**
+   * Custom template for rendering options.
+   */
   readonly optionTemplate = input<
     TemplateRef<{
       $implicit: SelectOption<T>;
     }>
   >();
+  /**
+   * Custom template for rendering option groups.
+   */
   readonly groupTemplate = input<
     TemplateRef<{
       $implicit: SelectGroup<T>;
@@ -42,8 +51,14 @@ export abstract class SiSelectListBase<T> implements OnInit, OnDestroy {
   >();
   /** @defaultValue null */
   readonly labelledby = input<string | null>(null);
+  /**
+   * Custom template for actions displayed below the options.
+   */
   readonly actionsTemplate = input<TemplateRef<any>>();
 
+  /**
+   * Emits when the listbox should close.
+   */
   readonly closeOverlay = output<void>();
 
   protected readonly selectionStrategy =
