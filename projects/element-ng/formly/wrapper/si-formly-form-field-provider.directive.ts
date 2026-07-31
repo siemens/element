@@ -11,6 +11,7 @@ import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/for
   providers: [{ provide: SI_FORM_ITEM_CONTROL, useExisting: SiFormlyFormFieldProviderDirective }]
 })
 export class SiFormlyFormFieldProviderDirective implements SiFormItemControl, OnChanges {
+  /** Formly field configuration used to provide form-item control metadata. */
   readonly field = input.required<FormlyFieldConfig>();
 
   readonly id = computed(() => this.field().id);
