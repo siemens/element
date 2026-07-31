@@ -197,5 +197,10 @@ export class SiListWidgetBodyComponent
     return filteredListWidgetItems;
   });
 
+  /**
+   * Current search term used to filter the displayed list items.
+   *
+   * @defaultValue ''
+   */
   protected readonly searchText = model('');
 }

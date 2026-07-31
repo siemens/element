@@ -19,7 +19,9 @@ import { CompareAdapter } from './si-compare-adapter';
   }
 })
 export class SiCalendarDateCellDirective {
+  /** Calendar cell data used to render its state and accessible label. */
   readonly cell = input.required<Cell>();
+  /** Date comparison strategy used by the containing calendar view. */
   readonly compareAdapter = input.required<CompareAdapter>();
   /** @defaultValue inject(ElementRef) */
   readonly ref = inject(ElementRef);
