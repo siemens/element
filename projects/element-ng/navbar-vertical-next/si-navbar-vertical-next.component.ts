@@ -124,10 +124,12 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.TOGGLE:Toggle`)
+   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.TOGGLE:Show side navigation`)
    * ```
    */
-  readonly toggleButtonText = input(t(() => $localize`:@@SI_NAVBAR_VERTICAL.TOGGLE:Toggle`));
+  readonly toggleButtonText = input(
+    t(() => $localize`:@@SI_NAVBAR_VERTICAL.TOGGLE:Show side navigation`)
+  );
 
   /**
    * An optional stateId to uniquely identify a component instance.

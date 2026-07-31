@@ -5,7 +5,7 @@
     - /url: "#/"
   - heading "Navbar Vertical Next Badges Example" [level=1]
 - navigation:
-  - button "Toggle" [expanded]
+  - button "Show side navigation" [expanded]
   - textbox "Search..."
   - link "Home Text":
     - /url: "#/viewer/viewer/home"
@@ -33,3 +33,5 @@
   - text: Content with path 'sub-badge-1' Control panel
   - checkbox "Always flyout"
   - text: Always flyout
+  - checkbox "Inline collapse"
+  - text: Inline collapse
