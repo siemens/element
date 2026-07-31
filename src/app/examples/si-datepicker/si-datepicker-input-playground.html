@@ -1,75 +1,81 @@
 <div class="p-5">
-  <div class="row justify-content-center mx-0">
-    <div class="col-xs-12 col-12 col-md-4 my-6">
-      <si-form-item label="Date input (empty with placeholder)">
-        <input
-          autocomplete="off"
-          class="form-control"
-          id="si-datetime-input-0"
-          type="text"
-          siDatepicker
-          [placeholder]="placeholder"
-          [required]="required"
-          [readonly]="readonly"
-          [disabled]="disabled"
-          [autoClose]="autoClose"
-          [siDatepickerConfig]="config"
-          (siDatepickerClose)="logEvent('siDatepickerClosed', $event)"
-          (siDatepickerDisabledTime)="logEvent('siDatepickerDisabledTime', $event)"
-        />
-        <small class="form-text">Placeholder text not displayed for disabled input</small>
-      </si-form-item>
+  <div class="pt-6">
+    <div class="row justify-content-center mx-0">
+      <div class="col-12 col-md-4">
+        <si-form-item label="Date input (empty with placeholder)">
+          <input
+            autocomplete="off"
+            class="form-control"
+            id="si-datetime-input-0"
+            type="text"
+            siDatepicker
+            [placeholder]="placeholder"
+            [required]="required"
+            [readonly]="readonly"
+            [disabled]="disabled"
+            [autoClose]="autoClose"
+            [siDatepickerConfig]="config"
+            (siDatepickerClose)="logEvent('siDatepickerClosed', $event)"
+            (siDatepickerDisabledTime)="logEvent('siDatepickerDisabledTime', $event)"
+          />
+          <small class="form-text">Placeholder text not displayed for disabled input</small>
+        </si-form-item>
+      </div>
     </div>
-  </div>
-  <div class="row justify-content-center mx-0">
-    <div class="col-xs-12 col-12 col-md-4 my-6">
-      <si-form-item label="Date input">
-        <input
-          #control="ngModel"
-          #validation="ngModel"
-          autocomplete="off"
-          class="form-control"
-          id="si-datetime-input-1"
-          type="text"
-          siDatepicker
-          [placeholder]="placeholder"
-          [required]="required"
-          [readonly]="readonly"
-          [disabled]="disabled"
-          [autoClose]="autoClose"
-          [siDatepickerConfig]="config"
-          [(ngModel)]="value"
-          (siDatepickerClose)="logEvent('siDatepickerClosed', $event)"
-          (siDatepickerDisabledTime)="logEvent('siDatepickerDisabledTime', $event)"
-        />
-      </si-form-item>
+    <div class="row justify-content-center mx-0">
+      <div class="col-12 col-md-4">
+        <si-form-item label="Date input">
+          <input
+            #control="ngModel"
+            #validation="ngModel"
+            autocomplete="off"
+            class="form-control"
+            id="si-datetime-input-1"
+            type="text"
+            siDatepicker
+            [placeholder]="placeholder"
+            [required]="required"
+            [readonly]="readonly"
+            [disabled]="disabled"
+            [autoClose]="autoClose"
+            [siDatepickerConfig]="config"
+            [(ngModel)]="value"
+            (siDatepickerClose)="logEvent('siDatepickerClosed', $event)"
+            (siDatepickerDisabledTime)="logEvent('siDatepickerDisabledTime', $event)"
+          />
+        </si-form-item>
+      </div>
     </div>
-  </div>
-  <div class="row justify-content-center mx-0">
-    <div class="col-xs-12 col-12 col-md-4 my-6">
-      <label for="si-datetime-input-2" class="form-label" [class.required]="required && !readonly">
-        Date input with calendar button
-      </label>
-      <si-calendar-button class="w-100">
-        <input
-          #control="ngModel"
-          #validation="ngModel"
-          autocomplete="off"
-          class="form-control"
-          id="si-datetime-input-2"
-          type="text"
-          siDatepicker
-          [placeholder]="placeholder"
-          [required]="required"
-          [readonly]="readonly"
-          [disabled]="disabled"
-          [autoClose]="autoClose"
-          [siDatepickerConfig]="config"
-          [(ngModel)]="value"
-          (siDatepickerClose)="logEvent('siDatepickerClosed', $event)"
-          (siDatepickerDisabledTime)="logEvent('siDatepickerDisabledTime', $event)"
-        />
-      </si-calendar-button>
+    <div class="row justify-content-center mx-0">
+      <div class="col-12 col-md-4">
+        <label
+          for="si-datetime-input-2"
+          class="form-label"
+          [class.required]="required && !readonly"
+        >
+          Date input with calendar button
+        </label>
+        <si-calendar-button class="w-100">
+          <input
+            #control="ngModel"
+            #validation="ngModel"
+            autocomplete="off"
+            class="form-control"
+            id="si-datetime-input-2"
+            type="text"
+            siDatepicker
+            [placeholder]="placeholder"
+            [required]="required"
+            [readonly]="readonly"
+            [disabled]="disabled"
+            [autoClose]="autoClose"
+            [siDatepickerConfig]="config"
+            [(ngModel)]="value"
+            (siDatepickerClose)="logEvent('siDatepickerClosed', $event)"
+            (siDatepickerDisabledTime)="logEvent('siDatepickerDisabledTime', $event)"
+          />
+        </si-calendar-button>
+      </div>
     </div>
   </div>
   <div class="card mt-6 e2e-ignore">
