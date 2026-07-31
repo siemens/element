@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, inject, input, signal, ViewEncapsulation } from '@angular/core';
+import { Component, inject, input, signal, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { elementAi, elementCancel } from '@siemens/element-icons';
 import {
@@ -16,7 +16,11 @@ import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { createWebsemTools } from '@websem/angular';
 
 import { createDocsSearchConfig } from '../docs-search.config';
-import { getLanguageModelApi, type BrowserLanguageModel } from '../prompt-api';
+import {
+  createLanguageModel,
+  type DocsLanguageModel,
+  type DocsLanguageModelChunk
+} from '../prompt-api';
 
 interface DocsChatMessage {
   type: 'ai' | 'user';
@@ -64,16 +68,15 @@ export class DocsChatComponent {
   protected readonly icons = addIcons({ elementAi, elementCancel });
   protected readonly open = signal(false);
   protected readonly loading = signal(false);
+  protected readonly answerStarted = signal(false);
   protected readonly messages = signal<DocsChatMessage[]>([
     {
       type: 'ai',
       content:
-        'Ask about Element components, APIs, themes, charts, maps, dashboards, or implementation patterns. Search and answer generation run locally in Chrome.'
+        'Ask about Element components, APIs, themes, charts, maps, dashboards, or implementation patterns.'
     }
   ]);
-  protected readonly hasPendingContent = computed(() => Boolean(this.messages().at(-1)?.content));
-
-  private modelPromise: Promise<BrowserLanguageModel> | undefined;
+  private modelPromise: Promise<DocsLanguageModel> | undefined;
   private modelPageUrl: string | undefined;
   private searchTool: WebMcpTool | undefined;
 
@@ -100,9 +103,11 @@ export class DocsChatComponent {
     this.messages.update(messages => [...messages, { type: 'user', content: query }]);
     const answerIndex = this.messages().length;
     this.messages.update(messages => [...messages, { type: 'ai', content: '' }]);
+    this.answerStarted.set(false);
     this.loading.set(true);
     try {
       const trace: string[] = [];
+      let reasoning = '';
       let answer = '';
       const updateMessage = (): void => {
         this.messages.update(messages =>
@@ -110,7 +115,13 @@ export class DocsChatComponent {
             index === answerIndex
               ? {
                   ...message,
-                  content: [this.asBlockquote(trace), answer].filter(Boolean).join('\n\n')
+                  content: [
+                    this.asBlockquote(trace),
+                    reasoning ? this.asBlockquote(reasoning.split('\n')) : '',
+                    answer
+                  ]
+                    .filter(Boolean)
+                    .join('\n\n')
                 }
               : message
           )
@@ -120,8 +131,13 @@ export class DocsChatComponent {
         trace.push(agentEvent);
         updateMessage();
       });
-      await this.streamAnswer(query, searchContext, async content => {
-        answer = content;
+      await this.streamAnswer(query, searchContext, async chunk => {
+        if (chunk.type === 'reasoning') {
+          reasoning = chunk.content;
+        } else {
+          this.answerStarted.set(true);
+          answer = chunk.content;
+        }
         updateMessage();
         await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
       });
@@ -139,23 +155,17 @@ export class DocsChatComponent {
     }
   }
 
-  private async getModel(): Promise<BrowserLanguageModel> {
+  private async getModel(): Promise<DocsLanguageModel> {
     const pageUrl = globalThis.location.href;
     if (this.modelPromise && this.modelPageUrl === pageUrl) {
       return this.modelPromise;
     }
     if (this.modelPromise) {
-      (await this.modelPromise).destroy();
+      (await this.modelPromise).destroy?.();
     }
 
-    const languageModel = getLanguageModelApi();
-    if (!languageModel) {
-      throw new Error('Chrome built-in language model is unavailable.');
-    }
     this.modelPageUrl = pageUrl;
-    this.modelPromise = languageModel.create({
-      initialPrompts: [{ role: 'system', content: this.createSystemPrompt() }]
-    });
+    this.modelPromise = createLanguageModel(this.createSystemPrompt());
     return this.modelPromise;
   }
 
@@ -216,14 +226,12 @@ export class DocsChatComponent {
   private async streamAnswer(
     query: string,
     searchContext: string,
-    onChunk: (content: string) => Promise<void>
+    onChunk: (chunk: DocsLanguageModelChunk) => Promise<void>
   ): Promise<void> {
     const model = await this.getModel();
-    let content = '';
     const prompt = `Question: ${query}\n\nDocumentation retrieved through the Element search tool:\n${searchContext}\n\nAnswer now in Markdown. Use only the retrieved documentation and preserve its source links.`;
     for await (const chunk of model.promptStreaming(prompt)) {
-      content += chunk;
-      await onChunk(content);
+      await onChunk(chunk);
     }
   }
 
@@ -241,7 +249,16 @@ export class DocsChatComponent {
   private parseSearchAction(
     value: string
   ): SearchAction | ReadAction | { action: 'answer' } | undefined {
-    const parsed = JSON.parse(value) as Record<string, unknown>;
+    const json = value.match(/\{[\s\S]*\}/)?.[0];
+    if (!json) {
+      return undefined;
+    }
+    let parsed: Record<string, unknown>;
+    try {
+      parsed = JSON.parse(json) as Record<string, unknown>;
+    } catch {
+      return undefined;
+    }
     const limit = parsed.limit;
     if (parsed.action === 'answer') {
       return { action: 'answer' };

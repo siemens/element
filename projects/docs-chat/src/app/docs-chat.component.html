@@ -40,7 +40,7 @@
         }
       }
 
-      @if (loading() && !hasPendingContent()) {
+      @if (loading() && !answerStarted()) {
         <si-ai-message content="" [loading]="true" />
       }
 

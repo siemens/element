@@ -46,7 +46,7 @@
     "docs:build": "pnpm docs-chat:build && uv run mkdocs build --strict",
     "docs:build:api": "pnpm docs-chat:build && cross-env DOCS_COMPOSER=true DOCS_COMPOSER_OPTIONS='{ \"structured\": true, \"structuredRemoveEncoded\": true }' uv run mkdocs build --strict",
     "docs:build:generate": "pnpm docs-chat:build && cross-env DOCS_COMPOSER=true DOCS_COMPOSER_GENERATE=true DOCS_COMPOSER_OPTIONS='{ \"structured\": true, \"structuredRemoveEncoded\": true, \"structuredExcludeGenerated\": true }' uv run mkdocs build --strict",
-    "docs:serve": "pnpm docs-chat:build && uv run mkdocs serve",
+    "docs:serve": "pnpm docs-chat:build && node tools/docs-chat-relay.mjs uv run mkdocs serve",
     "docs:serve:api": "pnpm docs-chat:build && cross-env DOCS_COMPOSER=true uv run mkdocs serve",
     "docs:serve:generate": "pnpm docs-chat:build && cross-env DOCS_COMPOSER=true DOCS_COMPOSER_GENERATE=true uv run mkdocs serve",
     "icon-viewer:build-docs": "ng build icon-viewer --configuration=production",
