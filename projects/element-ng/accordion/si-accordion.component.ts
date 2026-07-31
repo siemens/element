@@ -34,11 +34,20 @@ const PANEL_MIN_HEIGHT = 100;
   }
 })
 export class SiAccordionComponent implements AfterContentInit, OnChanges {
-  /** @defaultValue true */
+  /**
+   * Whether the first panel is expanded initially.
+   * @defaultValue true
+   */
   readonly expandFirstPanel = input(true, { transform: booleanAttribute });
-  /** @defaultValue false */
+  /**
+   * Whether panels expand to fill the accordion height.
+   * @defaultValue false
+   */
   readonly fullHeight = input(false, { transform: booleanAttribute });
-  /** @defaultValue false */
+  /**
+   * Whether the accordion is horizontally collapsed.
+   * @defaultValue false
+   */
   readonly hcollapsed = input(false);
   /**
    * Indicate whether the accordion is collapsed.
