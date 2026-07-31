@@ -62,10 +62,14 @@ const dragConfig = {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiColumnSelectionDialogComponent implements OnInit {
+  /** HTML `id` applied to the dialog title element, used for `aria-labelledby` association. */
   readonly titleId = input<string>();
+  /** The dialog title text displayed in the modal header. */
   readonly heading = input<TranslatableString>();
+  /** The section title displayed above the column list. */
   readonly bodyTitle = input<TranslatableString>();
   /**
+   * Label for the submit button that applies the column selection.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.SUBMIT:Apply`)
@@ -75,6 +79,7 @@ export class SiColumnSelectionDialogComponent implements OnInit {
     t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.SUBMIT:Apply`)
   );
   /**
+   * Label for the cancel button that discards changes and closes the dialog.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.CANCEL:Cancel`)
@@ -84,6 +89,7 @@ export class SiColumnSelectionDialogComponent implements OnInit {
     t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.CANCEL:Cancel`)
   );
   /**
+   * Label for the button that resets the column configuration to its original default state.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RESTORE_TO_DEFAULT:Restore to default`)
@@ -93,6 +99,7 @@ export class SiColumnSelectionDialogComponent implements OnInit {
     t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RESTORE_TO_DEFAULT:Restore to default`)
   );
   /**
+   * Label shown next to a column that is currently hidden.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.HIDDEN:Hidden`)
@@ -102,6 +109,7 @@ export class SiColumnSelectionDialogComponent implements OnInit {
     t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.HIDDEN:Hidden`)
   );
   /**
+   * Label shown next to a column that is currently visible.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.VISIBLE:Visible`)
@@ -110,10 +118,18 @@ export class SiColumnSelectionDialogComponent implements OnInit {
   readonly visibleText = input<TranslatableString>(
     t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.VISIBLE:Visible`)
   );
-  /** @defaultValue false */
+  /**
+   * Whether to show the "Restore to default" button.
+   * @defaultValue false
+   */
   readonly restoreEnabled = input(false, { transform: booleanAttribute });
+  /**
+   * Two-way bound array of `Column` objects defining the column list state.
+   * Changes are reflected back to the parent on reorder, visibility toggle, or rename.
+   */
   readonly columns = model.required<Column[]>();
   /**
+   * Additional interpolation parameters passed to translatable strings.
    * @defaultValue
    * ```
    * {}
@@ -122,6 +138,7 @@ export class SiColumnSelectionDialogComponent implements OnInit {
   readonly translationParams = input<Record<string, unknown>>({});
 
   /**
+   * Accessible label for the column list, used as an `aria-label`. Describes available keyboard shortcuts for reordering and renaming.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.LIST_ARIA_LABEL:List of possible columns. Items can be moved using Alt+ArrowUp or Alt+ArrowDown. Press Enter to rename supported items.`)
@@ -135,6 +152,7 @@ export class SiColumnSelectionDialogComponent implements OnInit {
   );
 
   /**
+   * Accessible label for the rename input field inside each column editor row.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename column`)
@@ -145,6 +163,7 @@ export class SiColumnSelectionDialogComponent implements OnInit {
   );
 
   /**
+   * Live-region message announced after a column is successfully moved to a new position. Supports `{{targetPosition}}` interpolation.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_MOVED:Item is now at position {{targetPosition}}`)
@@ -157,6 +176,7 @@ export class SiColumnSelectionDialogComponent implements OnInit {
     )
   );
   /**
+   * Live-region message announced when a column could not be moved (e.g. already at the boundary).
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_NOT_MOVED:Item was not moved`)
@@ -166,7 +186,10 @@ export class SiColumnSelectionDialogComponent implements OnInit {
   readonly a11yItemNotMovedMessage = input<TranslatableString>(
     t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_NOT_MOVED:Item was not moved`)
   );
-  /** @defaultValue true */
+  /**
+   * Whether column visibility can be toggled by the user. When `false`, visibility controls are hidden for all columns.
+   * @defaultValue true
+   */
   readonly columnVisibilityConfigurable = input(true, { transform: booleanAttribute });
 
   private readonly listOptions = viewChildren(CdkOption);
