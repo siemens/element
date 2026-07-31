@@ -49,7 +49,11 @@ import { TreeItem } from './si-tree-view.model';
   selector: '[siTreeViewItemTemplate]'
 })
 export class SiTreeViewItemTemplateDirective {
-  /** @defaultValue undefined */
+  /**
+   * Name of the tree item template. It is matched against a tree item's `templateName`.
+   *
+   * @defaultValue undefined
+   */
   readonly name = input<string | undefined>(undefined, { alias: 'siTreeViewItemTemplate' });
   /** @internal */
   template = inject(TemplateRef<any>);
