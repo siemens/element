@@ -33,29 +33,64 @@ import { InternalCriterionDefinition } from './si-filtered-search-helper';
 export class SiFilteredSearchInputComponent {
   private static readonly criterionRegex = /(.+?):(.*)$/;
 
+  /** Supplies the criterion definitions shown in the typeahead. */
   readonly dataSource = input.required<Observable<InternalCriterionDefinition[]>>();
+
+  /** Limits the number of criterion options displayed in the typeahead. */
   readonly typeaheadOptionsLimit = input.required<number>();
+
+  /** Sets the number of options visible before the typeahead scrolls. */
   readonly optionsInScrollableView = input.required<number>();
+
+  /** Whether the search input is disabled. */
   readonly disabled = input.required<boolean>();
+
+  /** Placeholder text shown when the search input is empty. */
   readonly placeholder = input.required<string>();
+
+  /** Accessible label for the search input. */
   readonly searchLabel = input.required<TranslatableString>();
 
   /** Factory for the CDK scroll strategy used by the criterion typeahead overlay. */
   readonly scrollStrategyFactory = input.required<() => ScrollStrategy>();
 
+  /** Current search text. Supports two-way binding through `searchValueChange`. */
   readonly searchValue = model.required<string>();
+
+  /** Whether the current criterion accepts free-text values. */
   readonly freeTextCriterion = input.required<boolean>();
+
+  /** Whether the configured maximum number of criteria has been reached. */
   readonly maxCriteriaReached = input.required<boolean>();
+
+  /** Whether users can create a free-text criterion. */
   readonly allowFreeText = input.required<boolean>();
+
+  /** Label for the typeahead option that creates a free-text criterion. */
   readonly searchForFreeTextLabel = input.required<TranslatableString>();
+
+  /** Whether typing a colon or semicolon must not select a criterion. */
   readonly disableSelectionByColonAndSemicolon = input.required<boolean>();
+
+  /** Whether the input only permits selecting values from the typeahead. */
   readonly onlySelectValue = input.required<boolean>();
 
+  /** Emits the selected criterion and an optional value typed with it. */
   readonly createCriterion = output<{ criterion: InternalCriterionDefinition; value?: string }>();
+
+  /** Emits a criterion name and optional value parsed from the input text. */
   readonly createCriterionByName = output<{ criterionName: string; value?: string }>();
+
+  /** Emits when Backspace is pressed in an empty search input. */
   readonly backspaceOverflow = output();
+
+  /** Emits the text used to create a free-text criterion. */
   readonly createFreeTextPill = output<string>();
+
+  /** Emits when the search input receives focus. */
   readonly inputFocus = output();
+
+  /** Emits when Enter is pressed in the search input. */
   readonly enterSubmit = output();
 
   private readonly inputElement =
