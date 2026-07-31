@@ -1,7 +1,7 @@
 <si-split orientation="horizontal" style="height: 500px">
   <si-split-part
     heading="Outer Left"
-    collapseDirection="start"
+    collapsible="to-start"
     class="bg-base-1"
     size="30"
     unit="fr"
@@ -14,17 +14,11 @@
     <p class="p-4 text-secondary">Split Part #1</p>
   </si-split-part>
 
-  <si-split-part
-    heading="Outer Right"
-    collapseDirection="end"
-    class="bg-base-1"
-    size="70"
-    unit="fr"
-  >
+  <si-split-part heading="Outer Right" collapsible="to-end" class="bg-base-1" size="70" unit="fr">
     <si-split orientation="vertical">
       <si-split-part
         heading="Inner Top"
-        collapseDirection="start"
+        collapsible="to-start"
         class="bg-base-1"
         size="60"
         unit="fr"
@@ -34,7 +28,7 @@
       </si-split-part>
       <si-split-part
         heading="Inner Bottom"
-        collapseDirection="end"
+        collapsible="to-end"
         class="bg-base-1"
         size="40"
         unit="fr"

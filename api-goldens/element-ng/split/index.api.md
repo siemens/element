@@ -20,7 +20,7 @@ export interface Action {
 }
 
 // @public (undocumented)
-export type CollapseTo = 'start' | 'end';
+export type CollapseTo = 'to-start' | 'to-end';
 
 // @public (undocumented)
 export interface PartState {
@@ -52,11 +52,11 @@ export class SiSplitPartComponent {
     readonly actions: _angular_core.InputSignal<Action[]>;
     readonly collapseChanged: _angular_core.OutputEmitterRef<boolean>;
     get collapsed(): boolean;
-    readonly collapseDirection: _angular_core.InputSignal<CollapseTo>;
     readonly collapseIconClass: _angular_core.InputSignal<string | undefined>;
     readonly collapseLabel: _angular_core.InputSignal<TranslatableString>;
     readonly collapseOthers: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly collapseToMinSize: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly collapsible: _angular_core.InputSignal<CollapseTo>;
     readonly expanded: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly headerTemplate: _angular_core.InputSignal<TemplateRef<{
         $implicit: SiSplitPartComponent;
