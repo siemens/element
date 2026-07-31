@@ -44,7 +44,7 @@ $thumb-size: 24px !default;
 }
 
 .form-range {
-  --thumb-shadow: #{elevation.$element-elevation-1};
+  --thumb-shadow: #{system-tokens.$si-sys-effects-shadow-2};
   -webkit-appearance: none; // stylelint-disable-line property-no-vendor-prefix
   background: transparent;
   inline-size: 100%;
