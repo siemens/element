@@ -69,7 +69,6 @@ export class SiFormFieldsetComponent {
 // @public (undocumented)
 export class SiFormItemComponent implements AfterContentInit, AfterContentChecked, OnChanges, OnInit, OnDestroy, SiFormFieldsetControl {
     readonly disableErrorPrinting: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly formErrorMapper: _angular_core.InputSignal<SiFormValidationErrorMapper | undefined>;
     readonly label: _angular_core.InputSignal<TranslatableString>;
     readonly labelWidth: _angular_core.InputSignal<string | number | undefined>;
@@ -168,7 +167,6 @@ export interface SiFormValidationErrorMapper {
 // @public
 export class SiFormValidationTooltipDirective implements DoCheck {
     constructor();
-    // (undocumented)
     readonly formErrorMapper: _angular_core.InputSignal<SiFormValidationErrorMapper | undefined>;
 }
 
