@@ -39,6 +39,7 @@ export class SiFilteredSearchMultiSelectComponent
   extends SiFilteredSearchOptionValueBase
   implements OnChanges, OnInit
 {
+  /** Text used to summarize multiple selected values. */
   readonly itemCountText = input.required<TranslatableString>();
   /** CDK scroll strategy used for the value typeahead overlay. */
   readonly scrollStrategy = input.required<ScrollStrategy>();
