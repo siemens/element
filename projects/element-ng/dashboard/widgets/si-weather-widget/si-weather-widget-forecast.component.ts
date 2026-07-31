@@ -25,9 +25,15 @@ type ForecastLayout = 'vertical' | 'horizontal';
   styleUrl: './si-weather-widget-forecast.component.scss'
 })
 export class SiWeatherWidgetForecastComponent {
+  /** Forecast data rendered by this block. */
   readonly forecast = input.required<SiWeatherWidgetForecast>();
-  /** @defaultValue 'vertical' */
+  /**
+   * Layout used to render the forecast.
+   *
+   * @defaultValue 'vertical'
+   */
   readonly layout = input<ForecastLayout>('vertical');
+  /** Accessible label for the forecast section. */
   readonly forecastLabel = input<TranslatableString>();
 
   protected readonly columns = computed(() => {
