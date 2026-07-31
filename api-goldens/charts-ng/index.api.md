@@ -481,7 +481,6 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
     refreshSeries(isLive?: boolean, dzToSet?: DataZoomRange): void;
     readonly series: i0.InputSignal<CartesianChartSeries[] | undefined>;
     readonly stacked: i0.InputSignal<boolean>;
-    // (undocumented)
     readonly subChartGrids: i0.InputSignal<SubchartGrid[] | undefined>;
     readonly tooltipFormatter: i0.InputSignal<string | echarts_2.TooltipComponentFormatterCallback<echarts_2.TooltipComponentFormatterCallbackParams> | undefined>;
     readonly xAxis: i0.InputSignal<ChartXAxis | ChartXAxis[] | undefined>;
@@ -504,26 +503,18 @@ export class SiChartComponent extends SiChartBaseComponent {
 export class SiChartGaugeComponent extends SiChartBaseComponent implements OnChanges {
     readonly axisNumberOfDecimals: i0.InputSignal<number>;
     readonly colors: i0.InputSignal<string[] | undefined>;
-    // (undocumented)
     readonly hideAxisLabels: i0.InputSignalWithTransform<boolean, unknown>;
     readonly labelFormatter: i0.InputSignal<((val: number) => string) | undefined>;
     readonly maxNumberOfDecimals: i0.InputSignal<number>;
-    // (undocumented)
     readonly maxValue: i0.InputSignal<number>;
     readonly minNumberOfDecimals: i0.InputSignal<number>;
-    // (undocumented)
     readonly minValue: i0.InputSignal<number>;
-    // (undocumented)
     readonly responsiveSplitSteps: i0.InputSignal<boolean>;
     readonly segments: i0.InputSignal<number[]>;
     setValue(value: number): void;
-    // (undocumented)
     readonly splitSteps: i0.InputSignal<number | undefined>;
-    // (undocumented)
     readonly unit: i0.InputSignal<string>;
-    // (undocumented)
     readonly unitsOnSplit: i0.InputSignal<boolean>;
-    // (undocumented)
     readonly value: i0.InputSignal<number>;
     readonly valueFormatter: i0.InputSignal<((val: number) => string) | undefined>;
 }
@@ -551,9 +542,8 @@ export class SiChartProgressComponent extends SiChartBaseComponent {
 // @public (undocumented)
 export class SiChartSankeyComponent extends SiChartBaseComponent {
     readonly series: i0.InputSignal<SankeySeriesOption | undefined>;
-    // @deprecated (undocumented)
+    // @deprecated
     readonly toolTip: i0.InputSignal<boolean>;
-    // (undocumented)
     readonly tooltip: i0.InputSignal<boolean>;
 }
 
@@ -566,15 +556,13 @@ export { SiChartsNgModule as SimplChartsNgModule }
 // @public (undocumented)
 export class SiChartSunburstComponent extends SiChartBaseComponent {
     readonly series: i0.InputSignal<SunburstSeriesOption | undefined>;
-    // @deprecated (undocumented)
+    // @deprecated
     readonly toolTip: i0.InputSignal<boolean>;
-    // (undocumented)
     readonly tooltip: i0.InputSignal<boolean>;
 }
 
 // @public (undocumented)
 export class SiCustomLegendComponent {
-    // (undocumented)
     readonly customLegend: i0.InputSignal<CustomLegend | undefined>;
     readonly legendClickEvent: i0.OutputEmitterRef<CustomLegendItem>;
     readonly legendHoverEndEvent: i0.OutputEmitterRef<CustomLegendItem>;

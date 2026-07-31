@@ -29,9 +29,8 @@ import { SunburstSeriesOption } from 'echarts';
 // @public (undocumented)
 export class SiChartSankeyComponent extends SiChartBaseComponent {
     readonly series: _angular_core.InputSignal<SankeySeriesOption | undefined>;
-    // @deprecated (undocumented)
+    // @deprecated
     readonly toolTip: _angular_core.InputSignal<boolean>;
-    // (undocumented)
     readonly tooltip: _angular_core.InputSignal<boolean>;
 }
 

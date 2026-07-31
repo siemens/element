@@ -89,7 +89,6 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
     refreshSeries(isLive?: boolean, dzToSet?: DataZoomRange): void;
     readonly series: _angular_core.InputSignal<CartesianChartSeries[] | undefined>;
     readonly stacked: _angular_core.InputSignal<boolean>;
-    // (undocumented)
     readonly subChartGrids: _angular_core.InputSignal<SubchartGrid[] | undefined>;
     readonly tooltipFormatter: _angular_core.InputSignal<string | echarts_2.TooltipComponentFormatterCallback<echarts_2.TooltipComponentFormatterCallbackParams> | undefined>;
     readonly xAxis: _angular_core.InputSignal<ChartXAxis | ChartXAxis[] | undefined>;
