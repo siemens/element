@@ -416,41 +416,29 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
     readonly hideLabels: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     readonly hoursAriaLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
     readonly hoursLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
     readonly hoursPlaceholder: _angular_core.InputSignal<string>;
     // (undocumented)
     readonly id: _angular_core.InputSignal<string>;
-    // (undocumented)
     readonly inputCompleted: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
     readonly isValid: _angular_core.OutputEmitterRef<boolean>;
     // (undocumented)
     readonly labelledby: string;
     readonly max: _angular_core.InputSignal<Date | undefined>;
-    // (undocumented)
     readonly meridianChange: _angular_core.OutputEmitterRef<string>;
-    // (undocumented)
     readonly meridians: _angular_core.InputSignal<string[] | undefined>;
     // (undocumented)
     readonly meridiansAriaLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
     readonly meridiansLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     readonly millisecondsAriaLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
     readonly millisecondsLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
     readonly millisecondsPlaceholder: _angular_core.InputSignal<string>;
     readonly min: _angular_core.InputSignal<Date | undefined>;
     // (undocumented)
     readonly minutesAriaLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
     readonly minutesLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
     readonly minutesPlaceholder: _angular_core.InputSignal<string>;
-    // (undocumented)
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     registerOnChange(fn: any): void;
@@ -458,18 +446,13 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
     registerOnTouched(fn: () => void): void;
     // (undocumented)
     readonly secondsAriaLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
     readonly secondsLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
     readonly secondsPlaceholder: _angular_core.InputSignal<string>;
     // (undocumented)
     setDisabledState(isDisabled: boolean): void;
     readonly showMeridian: _angular_core.InputSignal<boolean | undefined>;
-    // (undocumented)
     readonly showMilliseconds: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly showMinutes: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly showSeconds: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     writeValue(obj?: Date | string): void;
