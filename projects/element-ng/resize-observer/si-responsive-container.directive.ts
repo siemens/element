@@ -54,8 +54,17 @@ export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
   /** @defaultValue false */
   readonly xxl = signal(false);
 
-  /** @defaultValue 100 */
+  /**
+   * Minimum time in milliseconds between resize observations.
+   *
+   * @defaultValue 100
+   */
   readonly resizeThrottle = input(100);
+  /**
+   * Width thresholds used to assign responsive container classes.
+   *
+   * @defaultValue BOOTSTRAP_BREAKPOINTS
+   */
   readonly breakpoints = input<Breakpoints>();
 
   private subs?: Subscription;
