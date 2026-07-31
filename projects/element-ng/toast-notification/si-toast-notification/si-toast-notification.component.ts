@@ -33,6 +33,7 @@ import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from '../si-toast.model';
 })
 export class SiToastNotificationComponent {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);
+  /** Toast notification to display. */
   readonly toast = input.required<SiToast>();
 
   private closeAriaLabelDefault = t(() => $localize`:@@SI_TOAST.CLOSE:Close`);
@@ -50,7 +51,9 @@ export class SiToastNotificationComponent {
     return toast.timeout ? toast.timeout / 1000 : SI_TOAST_AUTO_HIDE_DELAY / 1000;
   });
   protected readonly animationMode = signal('running');
+  /** Emits when the user pauses automatic dismissal by hovering over the notification. */
   readonly paused = output<void>();
+  /** Emits when the user resumes automatic dismissal by moving the pointer away. */
   readonly resumed = output<void>();
 
   @HostListener('mouseenter')
