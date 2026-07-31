@@ -3,22 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { type Node, type Parent, type Root } from 'mdast';
+import type { SiSource } from '@siemens/element-ng/common';
 
 import { SiMarkdownExtension } from '../../si-markdown.types';
 import { SiMarkdownSourceCitationComponent } from './si-markdown-source-citation.component';
 
 /** A source that can be referenced in AI-generated markdown. */
-export interface SiMarkdownCitation {
+export interface SiMarkdownCitation extends SiSource {
   /** Numeric reference emitted in markdown, for example `1` for `[1]`. */
   reference: string;
-  /** Source name displayed in the source chip and popover. */
-  name: string;
-  /** Source URL. */
-  url: string;
-  /** Optional source description. */
-  description?: string;
-  /** Optional source quote. Takes precedence over {@link description}. */
-  quote?: string;
 }
 
 /** Configuration for {@link siMarkdownSourceCitations}. */

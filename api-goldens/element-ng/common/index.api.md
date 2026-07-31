@@ -234,6 +234,14 @@ export class ScrollbarHelper {
     readonly width: number;
 }
 
+// @public
+export interface SiSource {
+    description?: string;
+    name: string;
+    quote?: string;
+    url: string;
+}
+
 // @public (undocumented)
 export const STATUS_ICON: {
     [key in EntityStatusType]: StatusIcon;

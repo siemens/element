@@ -1,0 +1,31 @@
+- paragraph:
+  - text: Here's a
+  - strong: simple response
+  - text: with basic formatting and source citations.
+  - 'button "View source: Connected Devices Guide"'
+- paragraph:
+  - text: You can use
+  - code: inline code
+  - text: "and create lists:"
+- list:
+  - listitem: First item
+  - listitem: Second item
+- paragraph:
+  - text: Production installations should follow the device and configuration guidance.
+  - 'button "View sources: Connected Devices Guide and 1 additional source" [expanded]'
+- group:
+  - button "Good response"
+  - button "Bad response"
+  - button "Copy response"
+  - button "Additional actions"
+- dialog "Sources":
+  - text: ""
+  - list:
+    - listitem:
+      - button /Connected Devices Guide Up to \d+ devices may be connected to one controller\./:
+        - heading "Connected Devices Guide" [level=5]
+        - paragraph: /Up to \d+ devices may be connected to one controller\./
+    - listitem:
+      - button "System Configuration Manual Recommendations for configuring production installations.":
+        - heading "System Configuration Manual" [level=5]
+        - paragraph: Recommendations for configuring production installations.

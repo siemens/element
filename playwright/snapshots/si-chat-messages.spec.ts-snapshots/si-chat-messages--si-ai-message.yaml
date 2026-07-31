@@ -1,7 +1,8 @@
 - paragraph:
   - text: Here's a
   - strong: simple response
-  - text: with basic formatting.
+  - text: with basic formatting and source citations.
+  - 'button "View source: Connected Devices Guide"'
 - paragraph:
   - text: You can use
   - code: inline code
@@ -9,6 +10,9 @@
 - list:
   - listitem: First item
   - listitem: Second item
+- paragraph:
+  - text: Production installations should follow the device and configuration guidance.
+  - 'button "View sources: Connected Devices Guide and 1 additional source"'
 - group:
   - button "Good response"
   - button "Bad response"
