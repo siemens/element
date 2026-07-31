@@ -110,9 +110,7 @@ export class SiMenuDividerDirective {
 
 // @public (undocumented)
 export class SiMenuFactoryComponent {
-    // (undocumented)
     readonly actionParam: i0.InputSignal<unknown>;
-    // (undocumented)
     readonly items: i0.InputSignal<readonly (MenuItem_2 | MenuItem)[] | undefined>;
 }
 

@@ -39,9 +39,13 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
   }
 })
 export class SiNavbarVerticalItemLegacyComponent {
+  /** Legacy menu item to render in the vertical navbar. */
   readonly item = input.required<MenuItem>();
+  /** Accessible label for expanding the item group. */
   readonly navbarExpandButtonText = input.required();
+  /** Accessible label for collapsing the item group. */
   readonly navbarCollapseButtonText = input.required();
+  /** Whether the item group is expanded. Emits `expandedChange` when changed. */
   readonly expanded = model.required<boolean>();
 
   protected readonly flyoutItems = computed(() => {
