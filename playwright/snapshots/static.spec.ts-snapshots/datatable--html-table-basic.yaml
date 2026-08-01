@@ -1,0 +1,15 @@
+- table:
+  - rowgroup:
+    - row "Device Status Last updated":
+      - columnheader "Device"
+      - columnheader "Status"
+      - columnheader "Last updated"
+  - rowgroup:
+    - row /Cooling unit Operational \d+:\d+/:
+      - rowheader "Cooling unit"
+      - cell "Operational"
+      - cell /\d+:\d+/
+    - row /Ventilation unit Operational \d+:\d+/:
+      - rowheader "Ventilation unit"
+      - cell "Operational"
+      - cell /\d+:\d+/

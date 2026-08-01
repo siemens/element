@@ -273,7 +273,7 @@ $table-striped-order: odd !default;
 
 $table-group-separator-color: currentColor !default;
 
-$table-caption-color: $text-muted !default;
+$table-caption-color: semantic-tokens.$element-text-secondary !default;
 
 $table-variants: (
   'success': semantic-tokens.$element-base-success,
