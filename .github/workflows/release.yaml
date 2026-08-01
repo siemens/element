@@ -15,6 +15,8 @@ jobs:
   publish:
     environment: release
     runs-on: ubuntu-24.04
+    env:
+      PNPM_CONFIG_AUTO_INSTALL_PEERS: true
     needs:
       - build-and-test
     permissions:
@@ -40,7 +42,8 @@ jobs:
         run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: pnpm install
+      # Publishing workspace packages with workspace:* peer dependencies requires pnpm to install those peers.
+      - run: pnpm install --no-frozen-lockfile
       - id: before_release
         run: |
           BEFORE_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")

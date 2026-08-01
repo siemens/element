@@ -1,6 +1,6 @@
 @use '../bootstrap/mixins/breakpoints';
 @use '../bootstrap/variables' as bootstrap-variables;
-@use '../variables';
+@use '../variables/si-vars';
 @use '../variables/elevation';
 @use '../variables/semantic-tokens';
 @use '../variables/spacers';
@@ -12,8 +12,8 @@
 .has-application-header,
 .has-navbar-fixed-top {
   padding-block-start: calc(
-    variables.$si-application-header-height + variables.$si-titlebar-spacing +
-      variables.$si-system-banner-spacing
+    si-vars.$si-application-header-height + si-vars.$si-titlebar-spacing +
+      si-vars.$si-system-banner-spacing
   );
 }
 
@@ -27,7 +27,7 @@
   );
   z-index: zindex.$zindex-application-header;
   background: semantic-tokens.$element-base-1;
-  min-block-size: variables.$si-application-header-height;
+  min-block-size: si-vars.$si-application-header-height;
   align-items: stretch;
   border-block-end: 1px solid semantic-tokens.$element-ui-4;
 
@@ -152,7 +152,7 @@
   font-size: typography.$si-font-size-h4;
   line-height: typography.$si-line-height-h4;
   font-weight: typography.$si-font-weight-h4;
-  padding-block: 13px;
+  padding-block: map.get(spacers.$spacers, 5);
   padding-inline: map.get(spacers.$spacers, 5);
   background: none;
   box-shadow: none;
@@ -160,7 +160,7 @@
   white-space: nowrap;
 
   .icon-lg {
-    margin-block: -3px;
+    margin-block: -0.125rem;
 
     ~ .item-title {
       padding-inline-start: map.get(spacers.$spacers, 5);

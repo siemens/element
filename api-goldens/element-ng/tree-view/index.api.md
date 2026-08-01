@@ -229,7 +229,6 @@ export class SiTreeViewItemDirective implements AfterViewInit, OnDestroy {
 
 // @public @deprecated
 export class SiTreeViewItemTemplateDirective {
-    // (undocumented)
     readonly name: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
     static ngTemplateContextGuard(dir: SiTreeViewItemTemplateDirective, ctx: any): ctx is {

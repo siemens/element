@@ -1,4 +1,4 @@
-@use '../variables/semantic-tokens';
+@use '../variables/system-tokens';
 @use '../variables/typography';
 @use 'variables';
 
@@ -36,37 +36,37 @@
 }
 
 .alert-success {
-  --color-bar: #{semantic-tokens.$element-status-success};
-  color: semantic-tokens.$element-text-success;
-  background: semantic-tokens.$element-base-success;
+  --color-bar: #{system-tokens.$si-sys-border-success};
+  color: system-tokens.$si-sys-text-success;
+  background: system-tokens.$si-sys-background-success-subtle;
 }
 
 .alert-warning {
-  --color-bar: #{semantic-tokens.$element-status-warning};
-  color: semantic-tokens.$element-text-warning;
-  background: semantic-tokens.$element-base-warning;
+  --color-bar: #{system-tokens.$si-sys-border-warning};
+  color: system-tokens.$si-sys-text-warning;
+  background: system-tokens.$si-sys-background-warning-subtle;
 }
 
 .alert-caution {
-  --color-bar: #{semantic-tokens.$element-status-caution};
-  color: semantic-tokens.$element-text-caution;
-  background: semantic-tokens.$element-base-caution;
+  --color-bar: #{system-tokens.$si-sys-border-caution};
+  color: system-tokens.$si-sys-text-caution;
+  background: system-tokens.$si-sys-background-caution-subtle;
 }
 
 .alert-danger {
-  --color-bar: #{semantic-tokens.$element-status-danger};
-  color: semantic-tokens.$element-text-danger;
-  background: semantic-tokens.$element-base-danger;
+  --color-bar: #{system-tokens.$si-sys-border-danger};
+  color: system-tokens.$si-sys-text-danger;
+  background: system-tokens.$si-sys-background-danger-subtle;
 }
 
 .alert-critical {
-  --color-bar: #{semantic-tokens.$element-status-critical};
-  color: semantic-tokens.$element-text-critical;
-  background: semantic-tokens.$element-base-critical;
+  --color-bar: #{system-tokens.$si-sys-border-critical};
+  color: system-tokens.$si-sys-text-critical;
+  background: system-tokens.$si-sys-background-critical-subtle;
 }
 
 .alert-info {
-  --color-bar: #{semantic-tokens.$element-status-information};
-  color: semantic-tokens.$element-text-information;
-  background: semantic-tokens.$element-base-information;
+  --color-bar: #{system-tokens.$si-sys-border-information};
+  color: system-tokens.$si-sys-text-information;
+  background: system-tokens.$si-sys-background-information-subtle;
 }

@@ -19,12 +19,20 @@ import { AlertDialogResult } from '../si-action-dialog.types';
   templateUrl: './si-alert-dialog.component.html'
 })
 export class SiAlertDialogComponent {
+  /** ID of the dialog title element used for accessible naming. */
   readonly titleId = input<string>();
-  /** @defaultValue '' */
+  /**
+   * Heading displayed in the dialog.
+   * @defaultValue ''
+   */
   readonly heading = input<TranslatableString>('');
-  /** @defaultValue '' */
+  /**
+   * Message displayed in the dialog.
+   * @defaultValue ''
+   */
   readonly message = input<TranslatableString>('');
   /**
+   * Label displayed on the confirmation button.
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_ALERT_DIALOG.OK:OK`)
@@ -32,13 +40,17 @@ export class SiAlertDialogComponent {
    */
   readonly confirmBtnName = input(t(() => $localize`:@@SI_ALERT_DIALOG.OK:OK`));
   /**
+   * Parameters interpolated into the translated heading and message.
    * @defaultValue
    * ```
    * {}
    * ```
    */
   readonly translationParams = input<{ [key: string]: any }>({});
-  /** @defaultValue '' */
+  /**
+   * Icon displayed next to the dialog content.
+   * @defaultValue ''
+   */
   readonly icon = input('');
 
   protected modalRef = inject(ModalRef<SiAlertDialogComponent, AlertDialogResult>);

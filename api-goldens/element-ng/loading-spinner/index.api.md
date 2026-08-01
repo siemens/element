@@ -33,9 +33,7 @@ export class SiLoadingService {
 // @public (undocumented)
 export class SiLoadingSpinnerComponent {
     readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
     readonly isBlockingSpinner: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly isSpinnerOverlay: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 

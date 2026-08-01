@@ -47,7 +47,7 @@
     margin-block-end: map.get(variables.$spacers, 8);
   }
 
-  &.show:has(+ div .launchpad-category-title) {
+  &.show:has(+ si-launchpad-category.has-title) {
     margin-block-end: 0;
   }
 }

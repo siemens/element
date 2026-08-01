@@ -4,10 +4,6 @@
   flex-wrap: nowrap;
 }
 
-.dropdown-menu.show > .dropdown-item {
-  background-color: variables.$element-base-1;
-}
-
 .item {
   display: flex;
   align-items: center;
@@ -21,20 +17,6 @@
 
 .breadcrumb-dropdown-toggle {
   cursor: pointer;
-}
-
-// overwrite some of Bootstrap's dropdown styling
-.dropdown-item {
-  &.active,
-  &:active {
-    background-color: variables.$element-base-1;
-  }
-
-  &:hover,
-  &:focus {
-    background-color: variables.$element-base-0 !important; // stylelint-disable-line declaration-no-important
-    text-decoration: underline;
-  }
 }
 
 .disable-router-link,

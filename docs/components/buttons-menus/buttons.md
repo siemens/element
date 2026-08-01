@@ -97,11 +97,11 @@ Only wrap the text when the full label is critical and truncation would cause lo
 
 ## Code ---
 
-### References
+Buttons are implemented using CSS classes on native HTML elements. Use `<button>` for actions and `<a>` for navigation. No Angular component is required.
 
-- **Bootstrap:** [Buttons](https://getbootstrap.com/docs/5.1/components/buttons/)
+### Usage
 
-### Example
+Apply the `.btn` base class together with a semantic variant such as `.btn-primary`. Always add `type="button"` to action buttons. Icon-only buttons must have an accessible name via `aria-label`, `title` or a visually hidden label.
 
 <si-docs-component example="buttons/buttons" height="330"></si-docs-component>
 

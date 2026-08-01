@@ -39,11 +39,21 @@ interface OffsetOption extends SelectOption<string> {
   styleUrl: './si-relative-date.component.scss'
 })
 export class SiRelativeDateComponent implements OnChanges {
-  /** @defaultValue 0 */
+  /**
+   * Relative offset in milliseconds. Changes when the user selects a different offset or unit.
+   *
+   * @defaultValue 0
+   */
   readonly value = model(0);
-  /** @defaultValue false */
+  /**
+   * Whether minute- and hour-based offsets are available.
+   *
+   * @defaultValue false
+   */
   readonly enableTimeSelection = input(false, { transform: booleanAttribute });
+  /** Label for the numeric offset input. */
   readonly valueLabel = input.required<string>();
+  /** Label for the offset unit selector. */
   readonly unitLabel = input.required<string>();
 
   protected readonly offset = signal(0);

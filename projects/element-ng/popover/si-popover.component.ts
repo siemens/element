@@ -36,6 +36,7 @@ import { SiPopoverDirective } from './si-popover.directive';
   }
 })
 export class PopoverComponent implements OnInit, OnDestroy {
+  /** The directive that supplies and controls the popover content. */
   readonly popoverDirective = input.required<SiPopoverDirective>();
   readonly popoverWrapper = viewChild.required<ElementRef>('popoverWrapper');
 

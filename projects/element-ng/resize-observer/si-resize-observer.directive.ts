@@ -30,10 +30,19 @@ import { ElementDimensions, ResizeObserverService } from './resize-observer.serv
   selector: '[siResizeObserver]'
 })
 export class SiResizeObserverDirective implements OnInit, OnDestroy {
-  /** @defaultValue 100 */
+  /**
+   * Minimum time in milliseconds between resize events.
+   *
+   * @defaultValue 100
+   */
   readonly resizeThrottle = input(100);
-  /** @defaultValue true */
+  /**
+   * Whether to emit the element's dimensions when the directive initializes.
+   *
+   * @defaultValue true
+   */
   readonly emitInitial = input(true, { transform: booleanAttribute });
+  /** Emits the observed element's current width and height. */
   readonly siResizeObserver = output<ElementDimensions>();
 
   private subs?: Subscription;

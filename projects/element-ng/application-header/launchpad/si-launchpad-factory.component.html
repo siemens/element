@@ -24,71 +24,17 @@
     </div>
   }
   <div class="apps-scroll ms-n2 ps-2">
-    @for (category of categories(); track category.name; let first = $first) {
-      @if (!enableFavorites() || !hasFavorites() || first || showAllApps) {
-        <div>
-          @if (category.name) {
-            <div
-              class="si-h4 launchpad-category-title mb-6"
-              [class.mt-4]="first"
-              [class.mt-8]="!first"
-            >
-              {{ category.name | translate }}
-            </div>
-          }
-          <div class="d-flex flex-wrap gap-4">
-            @for (app of category.apps; track app) {
-              @switch (app.type) {
-                @case ('router-link') {
-                  <a
-                    si-launchpad-app
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="app.activeMatchOptions ?? { exact: false }"
-                    [enableFavoriteToggle]="enableFavorites() && !isFavoriteToggleDisabled(app)"
-                    [external]="app.external"
-                    [iconUrl]="app.iconUrl"
-                    [iconClass]="app.iconClass"
-                    [favorite]="!!app.favorite"
-                    [routerLink]="app.routerLink"
-                    [queryParams]="app.extras?.queryParams"
-                    [queryParamsHandling]="app.extras?.queryParamsHandling"
-                    [fragment]="app.extras?.fragment"
-                    [state]="app.extras?.state"
-                    [relativeTo]="app.extras?.relativeTo ?? this.activatedRoute"
-                    [preserveFragment]="app.extras?.preserveFragment"
-                    [skipLocationChange]="app.extras?.skipLocationChange"
-                    [replaceUrl]="app.extras?.replaceUrl"
-                    (favoriteChange)="toggleFavorite(app, $event)"
-                  >
-                    <span app-name>{{ app.name | translate }}</span>
-                    <span app-systemName>{{ app.systemName | translate }}</span>
-                  </a>
-                }
-                @default {
-                  <!--fallback for existing apps that do not have a type defined -->
-                  <a
-                    si-launchpad-app
-                    [enableFavoriteToggle]="enableFavorites() && !isFavoriteToggleDisabled(app)"
-                    [favorite]="!!app.favorite"
-                    [href]="app.href"
-                    [target]="app.target ?? ''"
-                    [active]="app.active"
-                    [external]="app.external"
-                    [iconUrl]="app.iconUrl"
-                    [iconClass]="app.iconClass"
-                    (favoriteChange)="toggleFavorite(app, $event)"
-                  >
-                    <span app-name>{{ app.name | translate }}</span>
-                    <span app-systemName>{{ app.systemName | translate }}</span>
-                  </a>
-                }
-              }
-            }
-          </div>
-        </div>
+    @for (category of categories(); track category.name) {
+      @if (!enableFavorites() || !hasFavorites() || $first || showAllApps) {
+        <si-launchpad-category
+          [class.pt-6]="!$first && !!category.name"
+          [category]="category"
+          [enableFavorites]="enableFavorites()"
+          (favoriteChange)="toggleFavorite($event)"
+        />
       }
 
-      @if (enableFavorites() && first && hasFavorites()) {
+      @if (enableFavorites() && $first && hasFavorites()) {
         <button
           type="button"
           class="btn btn-link btn-show-all dropdown-toggle text-decoration-none"

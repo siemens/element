@@ -1,6 +1,7 @@
 @use '../variables/animations';
 @use '../variables/elevation';
 @use '../variables/semantic-tokens';
+@use '../variables/system-tokens';
 @use '../variables/spacers';
 @use '../variables/typography';
 @use './functions';
@@ -50,10 +51,10 @@ $body-text-align: null !default;
 //
 // Style anchor elements.
 
-$link-color: semantic-tokens.$element-ui-0;
+$link-color: system-tokens.$si-sys-text-accent;
 $link-decoration: none !default;
 $link-shade-percentage: 20% !default;
-$link-hover-color: semantic-tokens.$element-ui-0-hover;
+$link-hover-color: system-tokens.$si-sys-text-accent-hover;
 $link-hover-decoration: underline !default;
 $link-border-radius: semantic-tokens.$element-button-radius;
 
@@ -335,10 +336,12 @@ $input-line-height: typography.$si-line-height-body-rem !default;
 
 $input-bg: semantic-tokens.$element-base-1 !default;
 $input-disabled-bg: semantic-tokens.$element-base-1 !default;
+$input-disabled-color: semantic-tokens.$element-text-disabled !default;
 $input-disabled-border-color: semantic-tokens.$element-ui-4 !default;
 
 $input-color: semantic-tokens.$element-text-primary !default;
 $input-border-color: semantic-tokens.$element-ui-2 !default;
+$input-focus-border-color: semantic-tokens.$element-ui-1 !default;
 $input-border-width: $border-width !default;
 $input-box-shadow: $box-shadow-inset !default;
 
@@ -454,16 +457,16 @@ $dropdown-font-size: $font-size-base !default;
 // this is to have room for icon and badges
 $dropdown-line-height: $badge-height;
 $dropdown-color: $body-color !default;
-$dropdown-bg: semantic-tokens.$element-base-1 !default;
+$dropdown-bg: system-tokens.$si-sys-background-1 !default;
 $dropdown-border-radius: semantic-tokens.$element-radius-2 !default;
-$dropdown-divider-bg: semantic-tokens.$element-ui-4 !default;
+$dropdown-divider-bg: system-tokens.$si-sys-border-4 !default;
 $dropdown-divider-margin-y: 4px !default;
 $dropdown-box-shadow: elevation.$element-elevation-2 !default;
-$dropdown-link-color: semantic-tokens.$element-text-primary !default;
-$dropdown-link-disabled-color: semantic-tokens.$element-text-disabled !default;
+$dropdown-link-color: system-tokens.$si-sys-text-primary !default;
+$dropdown-link-disabled-color: system-tokens.$si-sys-text-disabled !default;
 $dropdown-item-padding-y: map.get(spacers.$spacers, 2);
 $dropdown-item-padding-x: map.get(spacers.$spacers, 5);
-$dropdown-header-color: semantic-tokens.$element-text-primary !default;
+$dropdown-header-color: system-tokens.$si-sys-text-primary !default;
 
 // Cards
 

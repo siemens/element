@@ -55,11 +55,9 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
     constructor();
     // (undocumented)
     readonly expanded: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
     readonly groupTemplate: _angular_core.InputSignal<TemplateRef<unknown>>;
     // (undocumented)
     readonly id: string;
-    // (undocumented)
     readonly stateId: _angular_core.InputSignal<string | undefined>;
 }
 

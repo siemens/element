@@ -39,6 +39,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
   host: { '[attr.aria-owns]': 'groupId()' }
 })
 class SiNavbarFlyoutAnchorComponent {
+  /** ID of the flyout group owned by this accessibility anchor. */
   readonly groupId = input<string>();
 }
 
@@ -60,14 +61,18 @@ export class SiNavbarVerticalGroupTriggerDirective implements OnInit {
   readonly groupId = `si-navbar-vertical-group-${SiNavbarVerticalGroupTriggerDirective.idCounter++}`;
   readonly id = `${this.groupId}-trigger`;
 
+  /** Template rendered for the expandable group. */
   readonly groupTemplate = input.required<TemplateRef<unknown>>({
     alias: 'siNavbarVerticalGroupTriggerFor'
   });
 
+  /** Context passed to the group template. */
   readonly groupData = input<{ item?: NavbarVerticalItem; group: NavbarVerticalItemGroup }>();
 
+  /** Key used to persist the expanded state of this group. */
   readonly stateId = input<string>();
 
+  /** Whether the group is expanded. Emits `expandedChange` when changed. */
   readonly expanded = model.required<boolean>();
 
   /** @internal */

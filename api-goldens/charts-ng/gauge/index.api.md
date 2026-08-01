@@ -40,26 +40,18 @@ export interface GaugeChartSeries {
 export class SiChartGaugeComponent extends SiChartBaseComponent implements OnChanges {
     readonly axisNumberOfDecimals: _angular_core.InputSignal<number>;
     readonly colors: _angular_core.InputSignal<string[] | undefined>;
-    // (undocumented)
     readonly hideAxisLabels: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly labelFormatter: _angular_core.InputSignal<((val: number) => string) | undefined>;
     readonly maxNumberOfDecimals: _angular_core.InputSignal<number>;
-    // (undocumented)
     readonly maxValue: _angular_core.InputSignal<number>;
     readonly minNumberOfDecimals: _angular_core.InputSignal<number>;
-    // (undocumented)
     readonly minValue: _angular_core.InputSignal<number>;
-    // (undocumented)
     readonly responsiveSplitSteps: _angular_core.InputSignal<boolean>;
     readonly segments: _angular_core.InputSignal<number[]>;
     setValue(value: number): void;
-    // (undocumented)
     readonly splitSteps: _angular_core.InputSignal<number | undefined>;
-    // (undocumented)
     readonly unit: _angular_core.InputSignal<string>;
-    // (undocumented)
     readonly unitsOnSplit: _angular_core.InputSignal<boolean>;
-    // (undocumented)
     readonly value: _angular_core.InputSignal<number>;
     readonly valueFormatter: _angular_core.InputSignal<((val: number) => string) | undefined>;
 }

@@ -41,9 +41,11 @@ type NavbarVerticalItemInteractive =
 })
 export class SiNavbarVerticalItemComponent implements OnInit {
   protected readonly icons = addIcons({ elementDown2 });
+  /** Item configuration to render. */
   readonly item = input.required<NavbarVerticalItemInteractive | MenuItem>({
     alias: 'si-navbar-vertical-item'
   });
+  /** Overrides the item's automatically determined active state. */
   readonly activeOverride = input<boolean>();
 
   protected readonly navbar = inject(SI_NAVBAR_VERTICAL);

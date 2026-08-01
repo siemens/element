@@ -32,9 +32,13 @@ import { Column } from '../si-column-selection-dialog.types';
   }
 })
 export class SiColumnSelectionEditorComponent {
+  /** The column data object being displayed and edited, including its id, title, visibility, and editable state. */
   readonly column = input.required<Column>();
+  /** Whether this column item is currently selected (visible) in the listbox. */
   readonly selected = input.required<boolean>();
+  /** Accessible label for the rename input field shown when editing the column title. */
   readonly renameInputLabel = input.required<string>();
+  /** Whether the visibility of this column can be toggled by the user. When `false`, the visibility toggle button is hidden. */
   readonly columnVisibilityConfigurable = input.required<boolean>();
 
   readonly titleChange = output();

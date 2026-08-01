@@ -36,6 +36,7 @@ export class SiFilteredSearchMultiSelectComponent
   extends SiFilteredSearchOptionValueBase
   implements OnChanges, OnInit
 {
+  /** Text used to summarize multiple selected values. */
   readonly itemCountText = input.required<TranslatableString>();
   protected override readonly valueInput = viewChild<ElementRef<HTMLInputElement>>('valueInput');
   protected readonly optionValue = signal<OptionCriterion[]>([]);

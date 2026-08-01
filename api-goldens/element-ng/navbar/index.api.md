@@ -62,7 +62,6 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
     readonly accountItems: _angular_core.InputSignal<MenuItem[] | undefined>;
     readonly allAppsLink: _angular_core.InputSignal<MenuItem | undefined>;
     readonly appCategoryItems: _angular_core.InputSignal<AppItemCategory[] | undefined>;
-    // (undocumented)
     readonly appItemFavoriteChanged: _angular_core.OutputEmitterRef<[AppItem, boolean]>;
     readonly appItems: _angular_core.InputSignal<AppItem[] | undefined>;
     readonly appItemsFavorites: _angular_core.InputSignalWithTransform<boolean, unknown>;

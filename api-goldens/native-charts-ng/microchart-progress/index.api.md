@@ -14,9 +14,7 @@ export interface MicrochartProgressSeries {
 
 // @public (undocumented)
 export class SiMicrochartProgressComponent {
-    // (undocumented)
     readonly barHeight: _angular_core.InputSignal<number>;
-    // (undocumented)
     readonly barWidth: _angular_core.InputSignal<number>;
     readonly series: _angular_core.InputSignal<MicrochartProgressSeries>;
 }

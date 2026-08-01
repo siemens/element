@@ -67,8 +67,9 @@ to inject `Actions`.
 
 ### Illustrations
 
-Use the `&lt;img/&gt;` element and add the `.si-info-image` CSS class to change the info page image to
-an illustration.
+Use the `&lt;img/&gt;` element with Angular's `NgOptimizedImage` directive and add the `.si-info-image`
+CSS class to change the info page image to an illustration. Provide the image using `ngSrc` and set
+its `width` and `height` up front, preserving the source image's aspect ratio to prevent distortion.
 
 <si-docs-component example="si-info-page/si-info-page-illustration" height="650"></si-docs-component>
 
