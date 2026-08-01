@@ -11,23 +11,23 @@
   background: none;
   border: 0;
   font-size: variables.$si-font-size-body;
-  padding-block: map.get(variables.$spacers, 4);
-  padding-inline: 0 map.get(variables.$spacers, 5);
+  padding-block: map.get(variables.$spacers-block, 4);
+  padding-inline: 0 map.get(variables.$spacers-inline, 5);
   min-inline-size: 0;
-  min-block-size: calc(1lh + (2 * map.get(variables.$spacers, 5)));
+  min-block-size: calc(1lh + (2 * map.get(variables.$spacers-block, 5)));
   inline-size: 100%;
   border-radius: 0;
 
   .item-title {
-    margin-inline-start: map.get(variables.$spacers, 5);
+    margin-inline-start: map.get(variables.$spacers-inline, 5);
   }
 
   .icon-lg {
-    margin-inline-start: map.get(variables.$spacers, 5);
+    margin-inline-start: map.get(variables.$spacers-inline, 5);
   }
 
   .icon-lg + .item-title {
-    margin-inline-start: map.get(variables.$spacers, 4);
+    margin-inline-start: map.get(variables.$spacers-inline, 4);
   }
 
   &.show .badge:not(.badge-collapsed) {
@@ -63,7 +63,7 @@
 :host-context(.nav-scroll > .navbar-vertical-item) + :host(.navbar-vertical-item),
 :host-context(.nav-scroll > si-navbar-vertical-group) + :host(.navbar-vertical-item),
 :host-context(.nav-scroll > si-navbar-flyout-anchor) + :host(.navbar-vertical-item) {
-  margin-block-start: map.get(variables.$spacers, 4);
+  margin-block-start: map.get(variables.$spacers-block, 4);
 }
 
 :host-context(.nav-text-only si-navbar-vertical-group) .item-title {
@@ -71,7 +71,7 @@
 }
 
 :host-context(si-navbar-vertical-group) :host(.navbar-vertical-item) {
-  padding-inline-start: map.get(variables.$spacers, 9);
+  padding-inline-start: map.get(variables.$spacers-inline, 9);
 
   .item-title {
     font-weight: normal;
@@ -89,8 +89,8 @@
     @include badge-text.badge-text();
 
     position: absolute;
-    inset-block-start: map.get(variables.$spacers, 2);
-    inset-inline-end: map.get(variables.$spacers, 3);
+    inset-block-start: map.get(variables.$spacers-block, 2);
+    inset-inline-end: map.get(variables.$spacers-inline, 3);
 
     &.badge-text-only {
       color: transparent;
@@ -108,7 +108,7 @@
 }
 
 :host-context(.link-with-items) > :host(button) {
-  padding-inline: map.get(variables.$spacers, 5);
+  padding-inline: map.get(variables.$spacers-inline, 5);
 
   .item-title,
   .icon-lg {

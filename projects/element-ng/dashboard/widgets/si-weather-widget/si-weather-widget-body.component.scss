@@ -8,7 +8,7 @@
 :host {
   display: flex;
   flex-direction: column;
-  gap: map.get(variables.$spacers, 9);
+  gap: map.get(variables.$spacers-block, 9) map.get(variables.$spacers-inline, 9);
   block-size: 100%;
 }
 
@@ -28,7 +28,7 @@
 .si-weather-widget-today {
   display: flex;
   align-items: start;
-  gap: map.get(variables.$spacers, 4);
+  gap: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
 }
 
 // vertical & horizontal: temperature at the inline-start,
@@ -47,7 +47,7 @@
 .si-weather-widget-today-info {
   display: flex;
   flex-direction: column;
-  gap: map.get(variables.$spacers, 1);
+  gap: map.get(variables.$spacers-block, 1) map.get(variables.$spacers-inline, 1);
   min-inline-size: 0;
 }
 
@@ -71,7 +71,7 @@
 
 .si-weather-widget-range {
   display: flex;
-  gap: map.get(variables.$spacers, 2);
+  gap: map.get(variables.$spacers-block, 2) map.get(variables.$spacers-inline, 2);
 }
 
 .si-weather-widget-range-min {
@@ -88,7 +88,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: map.get(variables.$spacers, 4);
+  gap: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
   margin-block: 0;
   inline-size: 100%;
 }
@@ -97,7 +97,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: map.get(variables.$spacers, 4);
+  gap: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
 }
 
 .si-weather-widget-metric-label {

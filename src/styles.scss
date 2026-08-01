@@ -47,11 +47,11 @@ body {
 .code-preview {
   border: 1px solid semantic-tokens.$element-ui-4;
   border-radius: semantic-tokens.$element-radius-2;
-  padding: map.get(spacers.$spacers, 4);
+  padding: map.get(spacers.$spacers-block, 4) map.get(spacers.$spacers-inline, 4);
 }
 
 .sortable-item {
-  margin-block-end: map.get(spacers.$spacers, 2);
+  margin-block-end: map.get(spacers.$spacers-block, 2);
 }
 
 // Padding around "app-sample", move into examples

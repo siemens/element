@@ -11,7 +11,7 @@
   background-color: transparent;
   border: 0;
   border-block-end: 1px solid var(--input-border-color);
-  padding: map.get(all-variables.$spacers, 3);
+  padding: map.get(all-variables.$spacers-block, 3) map.get(all-variables.$spacers-inline, 3);
   cursor: pointer;
   color: var(--language-switcher-color);
 

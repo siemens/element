@@ -10,7 +10,7 @@
   overflow: hidden;
 
   &:has(si-search-bar) {
-    padding-block-start: map.get(variables.$spacers, 4);
+    padding-block-start: map.get(variables.$spacers-block, 4);
   }
 }
 

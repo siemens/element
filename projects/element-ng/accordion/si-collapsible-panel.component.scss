@@ -25,7 +25,7 @@
     }
 
     .collapsible-header {
-      padding-block: map.get(variables.$spacers, 4);
+      padding-block: map.get(variables.$spacers-block, 4);
 
       &:hover {
         background: variables.$element-base-1-hover;
@@ -52,7 +52,7 @@
   align-items: center;
   background: variables.$element-base-1;
   color: variables.$element-text-primary;
-  padding-block: map.get(variables.$spacers, 5);
+  padding-block: map.get(variables.$spacers-block, 5);
   border-radius: var(--__radius);
 
   &.disabled {

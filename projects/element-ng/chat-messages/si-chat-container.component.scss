@@ -29,8 +29,8 @@
 
     .chat-input-area,
     si-ai-welcome-screen {
-      padding-inline-start: map.get(variables.$spacers, 6);
-      padding-inline-end: map.get(variables.$spacers, 6);
+      padding-inline-start: map.get(variables.$spacers-inline, 6);
+      padding-inline-end: map.get(variables.$spacers-inline, 6);
     }
   }
 
@@ -44,14 +44,17 @@
 .messages-container {
   overflow-y: auto;
   overflow-x: visible;
-  padding-inline: map.get(variables.$spacers, 4);
+  padding-inline: map.get(variables.$spacers-inline, 4);
   // Ensure the messages can still be seen on very short screens
   min-block-size: 5rem;
-  gap: map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4);
+  gap: calc(map.get(variables.$spacers-block, 9) + map.get(variables.$spacers-block, 4))
+    calc(map.get(variables.$spacers-inline, 9) + map.get(variables.$spacers-inline, 4));
 
   // Padding is included here, cancel out the gap on the messages container
   ::ng-deep si-user-message:not(.last) {
-    margin-block-end: -1 * (map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4));
+    margin-block-end: calc(
+      map.get(variables.$negative-spacers-block, 9) + map.get(variables.$negative-spacers-block, 4)
+    );
   }
 
   ::ng-deep &:not(:has(si-ai-welcome-screen)) {

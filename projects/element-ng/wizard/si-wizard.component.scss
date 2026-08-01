@@ -44,7 +44,7 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
       }
 
       .title {
-        margin-block-start: map.get(variables.$spacers, 5);
+        margin-block-start: map.get(variables.$spacers-block, 5);
       }
     }
   }
@@ -52,7 +52,7 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
   &.vertical {
     flex-direction: column;
     block-size: 100%;
-    padding-block-start: map.get(variables.$spacers, 9);
+    padding-block-start: map.get(variables.$spacers-block, 9);
 
     min-inline-size: $wizard-vertical-min-inline-size;
     max-inline-size: $wizard-vertical-max-inline-size;
@@ -73,7 +73,7 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
       .title {
         grid-row: 2 / 3;
         grid-column: 2 / 3;
-        padding-inline-start: map.get(variables.$spacers, 4);
+        padding-inline-start: map.get(variables.$spacers-inline, 4);
       }
     }
   }
@@ -94,14 +94,14 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
     border-inline-start-color: $wizard-default-border-color;
     border-inline-start-width: 2px;
     border-inline-start-style: solid;
-    min-block-size: map.get(variables.$spacers, 5);
+    min-block-size: map.get(variables.$spacers-block, 5);
 
     &.dashed {
       border-inline-start-style: dashed;
     }
 
     &.spacer {
-      block-size: map.get(variables.$spacers, 5);
+      block-size: map.get(variables.$spacers-block, 5);
       border: 0;
     }
 
@@ -122,7 +122,7 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
     }
 
     &.dashed {
-      inline-size: map.get(variables.$spacers, 9);
+      inline-size: map.get(variables.$spacers-inline, 9);
       border-block-start-style: dashed;
     }
 
@@ -142,7 +142,7 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
 
   &.dashed {
     &.vertical {
-      min-block-size: map.get(variables.$spacers, 5);
+      min-block-size: map.get(variables.$spacers-block, 5);
       inline-size: auto;
     }
   }
@@ -244,7 +244,7 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
 
   &:not(.vertical) {
     justify-content: center;
-    padding-block-end: map.get(variables.$spacers, 6);
+    padding-block-end: map.get(variables.$spacers-block, 6);
   }
 
   &.vertical {
@@ -253,7 +253,7 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
 
     .steps-content {
       flex: 100%;
-      padding-inline-start: map.get(variables.$spacers, 6);
+      padding-inline-start: map.get(variables.$spacers-inline, 6);
     }
   }
 
@@ -266,7 +266,7 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
 .center-save {
   display: flex;
   justify-content: center;
-  padding-block-start: map.get(variables.$spacers, 6);
+  padding-block-start: map.get(variables.$spacers-block, 6);
 }
 
 .wizard-btn-container {
@@ -313,7 +313,7 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
   flex-wrap: wrap;
   align-items: center;
   justify-content: start;
-  gap: map.get(variables.$spacers, 6);
+  gap: map.get(variables.$spacers-block, 6) map.get(variables.$spacers-inline, 6);
 
   > .end {
     margin-inline-start: auto;

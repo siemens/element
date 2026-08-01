@@ -20,7 +20,7 @@
   z-index: zindex.$zindex-dropdown;
   display: none; // none by default, but block on "open" of the menu
   min-inline-size: bootstrap-variables.$dropdown-min-width;
-  max-block-size: calc(100vb - #{map.get(spacers.$spacers, 1) * 2});
+  max-block-size: calc(100vb - map.get(spacers.$spacers-block, 1) * 2);
   overflow-y: auto;
   padding-block: bootstrap-variables.$dropdown-padding-y;
   padding-inline: bootstrap-variables.$dropdown-padding-x;
@@ -30,7 +30,7 @@
   background-clip: padding-box;
   border-radius: bootstrap-variables.$dropdown-border-radius;
   box-shadow: bootstrap-variables.$dropdown-box-shadow;
-  margin-block: map.get(spacers.$spacers, 1);
+  margin-block: map.get(spacers.$spacers-block, 1);
   margin-inline: 0;
   text-align: start;
 
@@ -46,8 +46,8 @@
     100vb,
     calc(
       (
-          bootstrap-variables.$dropdown-line-height + #{2 *
-            bootstrap-variables.$dropdown-item-padding-y}
+          bootstrap-variables.$dropdown-line-height + 2 *
+            bootstrap-variables.$dropdown-item-padding-y
         ) *
         8.3125
     )
@@ -56,7 +56,7 @@
 
 :is(.dropdown-menu, .dropdown-item) {
   .icon + .item-title {
-    padding-inline-start: map.get(spacers.$spacers, 4);
+    padding-inline-start: map.get(spacers.$spacers-inline, 4);
   }
 }
 
@@ -65,13 +65,13 @@
   text-align: start;
 
   .dropdown-caret {
-    padding-inline-start: map.get(spacers.$spacers, 2);
-    margin-block: -#{map.get(spacers.$spacers, 2)};
-    margin-inline: auto -#{map.get(spacers.$spacers, 2)};
+    padding-inline-start: map.get(spacers.$spacers-inline, 2);
+    margin-block: map.get(spacers.$negative-spacers-block, 2);
+    margin-inline: auto map.get(spacers.$negative-spacers-inline, 2);
     font-size: variables.$si-icon-font-size !important; // stylelint-disable-line declaration-no-important
     transform: rotate(var(--caret-rotate));
     // adjust the origin to account for the negative margin. Otherwise the element would visually not rotate around the center.
-    transform-origin: calc(50% + #{map.get(spacers.$spacers, 1)}) 50%;
+    transform-origin: calc(50% + map.get(spacers.$spacers-inline, 1)) 50%;
     transition: transform variables.$si-caret-transition-duration;
   }
 
@@ -146,11 +146,11 @@
   }
 
   .menu-end-icon {
-    margin-inline-end: -1 * map.get(spacers.$spacers, 3);
+    margin-inline-end: map.get(spacers.$negative-spacers-inline, 3);
 
     &.element-record-filled {
       font-size: 1rem;
-      margin-inline-end: -1 * map.get(spacers.$spacers, 1);
+      margin-inline-end: map.get(spacers.$negative-spacers-inline, 1);
     }
   }
 }
@@ -182,7 +182,7 @@
 .dropdown-divider {
   block-size: 0;
   margin-block: bootstrap-variables.$dropdown-divider-margin-y;
-  margin-inline: map.get(spacers.$spacers, 5);
+  margin-inline: map.get(spacers.$spacers-inline, 5);
   overflow: hidden;
   border-block-start: 1px solid bootstrap-variables.$dropdown-divider-bg;
 }

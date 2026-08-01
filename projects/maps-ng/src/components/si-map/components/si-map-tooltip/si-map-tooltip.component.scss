@@ -3,11 +3,11 @@
 
 .si-map-tooltip {
   text-align: start;
-  margin-block-start: map.get(variables.$spacers, 2);
+  margin-block-start: map.get(variables.$spacers-block, 2);
   position: relative;
   max-inline-size: max-content;
-  padding-block: map.get(variables.$spacers, 2);
-  padding-inline: map.get(variables.$spacers, 4);
+  padding-block: map.get(variables.$spacers-block, 2);
+  padding-inline: map.get(variables.$spacers-inline, 4);
   color: variables.$element-ui-5;
   background-color: variables.$element-ui-1;
   border-radius: variables.$element-radius-1;
@@ -15,11 +15,11 @@
   &::before {
     content: '';
     position: absolute;
-    inset-block-start: -(map.get(variables.$spacers, 2));
+    inset-block-start: map.get(variables.$negative-spacers-block, 2);
     left: 50%; // stylelint-disable-line property-layout-mappings
     transform: translate(-50%, 0%) rotate(45deg);
-    block-size: map.get(variables.$spacers, 4);
-    inline-size: map.get(variables.$spacers, 4);
+    block-size: map.get(variables.$spacers-block, 4);
+    inline-size: map.get(variables.$spacers-inline, 4);
     background-color: inherit;
   }
 }

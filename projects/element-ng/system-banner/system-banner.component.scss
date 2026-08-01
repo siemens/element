@@ -8,7 +8,7 @@
 
   .banner {
     padding-block: variables.$si-system-banner-padding-y;
-    padding-inline: map.get(variables.$spacers, 5);
+    padding-inline: map.get(variables.$spacers-inline, 5);
   }
 
   &.banner-info {

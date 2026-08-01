@@ -24,7 +24,8 @@ $color-size: 1.5rem;
 .input-color-box {
   cursor: pointer;
   position: relative;
-  padding: (map.get(variables.$spacers, 4) - 1px);
+  padding: calc(map.get(variables.$spacers-block, 4) - 1px)
+    calc(map.get(variables.$spacers-inline, 4) - 1px);
   border-radius: variables.$element-radius-1;
   border-width: 1px;
   border-style: solid;

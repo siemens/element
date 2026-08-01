@@ -2,7 +2,7 @@
 
 @use '@siemens/element-theme/src/styles/variables';
 
-$filter-pill-height: map.get(variables.$spacers, 9);
+$filter-pill-height: map.get(variables.$spacers-block, 9);
 
 :host {
   --filter-pill-background-color: #{variables.$element-base-1};
@@ -13,7 +13,7 @@ $filter-pill-height: map.get(variables.$spacers, 9);
 }
 
 .pill {
-  margin-inline-start: var(--filter-pill-gap, #{map.get(variables.$spacers, 4)});
+  margin-inline-start: var(--filter-pill-gap, #{map.get(variables.$spacers-inline, 4)});
 }
 
 .wrapper {
@@ -34,12 +34,12 @@ $filter-pill-height: map.get(variables.$spacers, 9);
   .value {
     color: variables.$element-text-primary;
     white-space: nowrap;
-    margin-inline-end: map.get(variables.$spacers, 2);
+    margin-inline-end: map.get(variables.$spacers-inline, 2);
   }
 
   &.disabled,
   &.disabled .value {
-    padding-inline-end: map.get(variables.$spacers, 1);
+    padding-inline-end: map.get(variables.$spacers-inline, 1);
     color: variables.$element-text-disabled;
   }
 }

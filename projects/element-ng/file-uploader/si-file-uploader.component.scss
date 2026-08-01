@@ -33,8 +33,10 @@
 .file {
   display: flex;
   position: relative;
-  margin-block-end: map.get(variables.$spacers, 4);
-  min-block-size: map.get(variables.$spacers, 4) + map.get(variables.$spacers, 10);
+  margin-block-end: map.get(variables.$spacers-block, 4);
+  min-block-size: calc(
+    map.get(variables.$spacers-block, 4) + map.get(variables.$spacers-block, 10)
+  );
   transition: opacity variables.$element-default-transition-duration;
 }
 

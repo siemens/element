@@ -7,10 +7,10 @@
 @use './si-navbar-vertical-next-layout' as layout;
 
 $vertical-nav-width: 240px;
-$vertical-nav-collapsed-width: calc(1.5rem + 2 * map.get(all-variables.$spacers, 5));
-$mobile-drawer-padding-block: map.get(all-variables.$spacers, 2);
-$mobile-drawer-padding-inline: map.get(all-variables.$spacers, 4);
-$mobile-drawer-margin-block-start: map.get(all-variables.$spacers, 4);
+$vertical-nav-collapsed-width: calc(1.5rem + 2 * map.get(all-variables.$spacers-inline, 5));
+$mobile-drawer-padding-block: map.get(all-variables.$spacers-block, 2);
+$mobile-drawer-padding-inline: map.get(all-variables.$spacers-inline, 4);
+$mobile-drawer-margin-block-start: map.get(all-variables.$spacers-block, 4);
 
 // Position of the toggle in the nav's expanded layout (top-right of nav).
 $toggle-expanded-block-start: calc(
@@ -148,10 +148,10 @@ nav {
   --si-layout-header-first-element-offset: 0;
 
   // Match `.si-layout-main-padding` so the parked toggle/chip align with page content.
-  --si-navbar-parked-inline-start: #{map.get(all-variables.$spacers, 6)};
+  --si-navbar-parked-inline-start: #{map.get(all-variables.$spacers-inline, 6)};
 
   @include all-variables.media-breakpoint-up(md) {
-    --si-navbar-parked-inline-start: #{map.get(all-variables.$spacers, 9)};
+    --si-navbar-parked-inline-start: #{map.get(all-variables.$spacers-inline, 9)};
   }
 
   nav {
@@ -203,7 +203,7 @@ nav {
   &.nav-collapsed {
     .toggle-placeholder {
       block-size: layout.$toggle-size;
-      margin-block-start: map.get(all-variables.$spacers, 6);
+      margin-block-start: map.get(all-variables.$spacers-block, 6);
     }
 
     .toggle-button {

@@ -10,10 +10,10 @@
 
   .si-dashboard-header {
     &.sticky {
-      padding-inline-end: map.get(all-variables.$spacers, 6);
+      padding-inline-end: map.get(all-variables.$spacers-inline, 6);
 
       @include all-variables.media-breakpoint-up(md) {
-        padding-inline-end: map.get(all-variables.$spacers, 9);
+        padding-inline-end: map.get(all-variables.$spacers-inline, 9);
       }
     }
   }

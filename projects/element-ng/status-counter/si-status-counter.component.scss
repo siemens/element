@@ -6,7 +6,7 @@
   align-items: center;
   flex-direction: column;
   text-align: center;
-  gap: map.get(variables.$spacers, 2);
+  gap: map.get(variables.$spacers-block, 2) map.get(variables.$spacers-inline, 2);
 }
 
 .inactive {

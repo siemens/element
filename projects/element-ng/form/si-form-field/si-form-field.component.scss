@@ -2,7 +2,7 @@
 @use '@siemens/element-theme/src/styles/all-variables';
 
 :host {
-  margin-block-end: map.get(all-variables.$spacers, 5);
+  margin-block-end: map.get(all-variables.$spacers-block, 5);
 }
 
 :host-context(si-form-fieldset) {

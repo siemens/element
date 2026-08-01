@@ -18,7 +18,7 @@
 // equivalent rules from reaching inside the forecast template.
 .si-weather-widget-forecast-day-range {
   display: flex;
-  gap: map.get(variables.$spacers, 2);
+  gap: map.get(variables.$spacers-block, 2) map.get(variables.$spacers-inline, 2);
 }
 
 .si-weather-widget-forecast-range-min {
@@ -64,7 +64,7 @@
     repeat(min(var(--si-weather-forecast-extras), var(--si-weather-forecast-extras-cap)), 1fr auto)
     1fr
     auto;
-  row-gap: map.get(variables.$spacers, 4);
+  row-gap: map.get(variables.$spacers-block, 4);
   align-items: center;
   inline-size: 100%;
   // Enable inline-size container queries so the cap can be lowered as the
@@ -133,7 +133,7 @@
 
 .si-weather-widget-forecast-day-label {
   color: variables.$element-text-secondary;
-  margin-block: map.get(variables.$spacers, 4);
+  margin-block: map.get(variables.$spacers-block, 4);
   // The label track is `max-content`; prevent wrapping if the container
   // ever constrains the row below `max-content` (e.g. very large root font
   // sizes combined with the smallest breakpoint).
@@ -144,7 +144,7 @@
 // with a fixed gap to the illustration.
 .si-weather-widget-forecast.si-weather-widget-vertical .si-weather-widget-forecast-day-label {
   // Fixed gap between the day label and the illustration (Figma spacing-6).
-  padding-inline-end: map.get(variables.$spacers, 6);
+  padding-inline-end: map.get(variables.$spacers-inline, 6);
   grid-column-start: 1;
 }
 
@@ -157,14 +157,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-block: map.get(variables.$spacers, 3);
+  margin-block: map.get(variables.$spacers-block, 3);
   grid-column-start: 2;
 }
 
 .si-weather-widget-forecast-extra {
   display: inline-flex;
   align-items: center;
-  gap: map.get(variables.$spacers, 1);
+  gap: map.get(variables.$spacers-block, 1) map.get(variables.$spacers-inline, 1);
   white-space: nowrap;
 }
 
@@ -203,8 +203,8 @@
   display: inline-flex;
   align-items: baseline;
   justify-content: flex-end;
-  gap: map.get(variables.$spacers, 2);
-  margin-block: map.get(variables.$spacers, 3);
+  gap: map.get(variables.$spacers-block, 2) map.get(variables.$spacers-inline, 2);
+  margin-block: map.get(variables.$spacers-block, 3);
 }
 
 :host {
@@ -215,7 +215,7 @@
   // horizontal strip layout
   display: flex;
   flex-wrap: wrap;
-  gap: map.get(variables.$spacers, 4);
+  gap: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
 }
 
 .si-weather-widget-forecast.si-weather-widget-vertical {
@@ -271,24 +271,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: map.get(variables.$spacers, 1);
+  gap: map.get(variables.$spacers-block, 1) map.get(variables.$spacers-inline, 1);
   text-align: center;
 }
 
 // Horizontal-layout variant: add block padding to each forecast column so the
 // items don't sit flush against the top/bottom of the strip.
 .si-weather-widget-forecast.si-weather-widget-horizontal .si-weather-widget-forecast-day {
-  padding-block: map.get(variables.$spacers, 1);
+  padding-block: map.get(variables.$spacers-block, 1);
 }
 
 .si-weather-widget-forecast.si-weather-widget-horizontal .si-weather-widget-forecast-day-label {
-  margin-block: map.get(variables.$spacers, 0);
+  margin-block: map.get(variables.$spacers-block, 0);
 }
 
 .si-weather-widget-forecast-extra-icon {
   display: inline-flex;
   vertical-align: middle;
-  margin-inline-end: map.get(variables.$spacers, 1);
+  margin-inline-end: map.get(variables.$spacers-inline, 1);
   color: variables.$element-text-secondary;
-  margin-block: map.get(variables.$spacers, 3);
+  margin-block: map.get(variables.$spacers-block, 3);
 }

@@ -25,8 +25,8 @@
 }
 
 :host-context(.collapsible .collapsed) {
-  padding-block: map.get(all-variables.$spacers, 4);
-  padding-inline: map.get(all-variables.$spacers, 5);
+  padding-block: map.get(all-variables.$spacers-block, 4);
+  padding-inline: map.get(all-variables.$spacers-inline, 5);
 
   &:not(:disabled):hover {
     background: all-variables.$element-base-1-hover;
@@ -34,7 +34,7 @@
 
   .dot,
   .icon {
-    margin: map.get(all-variables.$spacers, 1);
+    margin: map.get(all-variables.$spacers-block, 1) map.get(all-variables.$spacers-inline, 1);
   }
 }
 

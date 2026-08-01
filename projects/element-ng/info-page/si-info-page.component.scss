@@ -18,7 +18,7 @@
 
 .si-info-page-link,
 .si-info-action-container:not(:empty) {
-  margin-block-start: map.get(all-variables.$spacers, 9);
+  margin-block-start: map.get(all-variables.$spacers-block, 9);
 }
 
 @include all-variables.media-breakpoint-down(sm) {

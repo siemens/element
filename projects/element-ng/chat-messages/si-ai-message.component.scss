@@ -11,11 +11,13 @@ si-chat-message {
   // Because of the transparent background we need to remove the padding
   --chat-message-bubble-padding: 0;
 
-  margin-block-end: -1 * map.get(variables.$spacers, 2);
+  margin-block-end: map.get(variables.$negative-spacers-block, 2);
 }
 
 .ai-message-actions {
-  margin-block-start: map.get(variables.$spacers, 5) - map.get(variables.$spacers, 2);
+  margin-block-start: calc(
+    map.get(variables.$spacers-block, 5) - map.get(variables.$spacers-block, 2)
+  );
 }
 
 // Loading spinner size adjustment (inherited from generic component)
