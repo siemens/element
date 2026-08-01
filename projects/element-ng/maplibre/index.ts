@@ -4,3 +4,4 @@
  */
 export * from './si-maplibre-style';
 export * from './si-maplibre-translate';
+export * from './si-status-marker.component';
