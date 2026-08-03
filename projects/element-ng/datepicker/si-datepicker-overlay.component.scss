@@ -2,7 +2,7 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 :host {
-  background: variables.$element-base-1;
+  background: variables.$si-sys-background-1;
   max-block-size: max-content;
   // Shrink the container when the two month layout wraps the content
   // so that the scrollbar is positioned directly at the end of the content.

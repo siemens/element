@@ -18,12 +18,12 @@ input {
 
   &::placeholder {
     opacity: 1;
-    color: all-variables.$element-text-secondary;
+    color: all-variables.$si-sys-text-secondary;
   }
 
   &:disabled,
   &[readonly] {
-    background-color: all-variables.$element-base-1;
+    background-color: all-variables.$si-sys-background-1;
     // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
     opacity: 1;
   }
@@ -40,7 +40,7 @@ input {
   &,
   &:hover,
   &:focus {
-    --border-color: #{all-variables.$element-ui-3};
-    color: all-variables.$element-text-disabled;
+    --border-color: #{all-variables.$si-sys-border-3};
+    color: all-variables.$si-sys-text-disabled;
   }
 }
