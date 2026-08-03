@@ -1,0 +1,57 @@
+<button
+  type="button"
+  class="docs-chat-launcher btn btn-primary"
+  aria-controls="docs-chat-panel"
+  [attr.aria-expanded]="open()"
+  (click)="toggle()"
+>
+  <si-icon aria-hidden="true" [icon]="icons.elementAi" />
+  Ask Element docs
+</button>
+
+@if (open()) {
+  <section
+    id="docs-chat-panel"
+    class="docs-chat-panel"
+    role="dialog"
+    aria-label="Search Element documentation"
+  >
+    <header class="docs-chat-header d-flex align-items-center justify-content-between gap-4">
+      <div>
+        <div class="h5 mb-0">Element documentation</div>
+        <small>Local semantic and keyword search</small>
+      </div>
+      <button
+        type="button"
+        class="btn btn-tertiary-ghost btn-circle"
+        aria-label="Close documentation search"
+        (click)="close()"
+      >
+        <si-icon aria-hidden="true" [icon]="icons.elementCancel" />
+      </button>
+    </header>
+
+    <si-chat-container class="docs-chat-container" colorVariant="base-0">
+      @for (message of messages(); track $index) {
+        @if (message.type === 'user') {
+          <si-user-message [content]="message.content" />
+        } @else {
+          <si-ai-message [content]="message.content" [contentFormatter]="markdownRenderer" />
+        }
+      }
+
+      @if (loading() && !hasPendingContent()) {
+        <si-ai-message content="" [loading]="true" />
+      }
+
+      <si-chat-input
+        class="w-100"
+        placeholder="Ask about Element..."
+        disclaimer="Generated locally by Chrome. Verify answers against the linked documentation."
+        label="Documentation search query"
+        [disabled]="loading()"
+        (send)="sendMessage($event)"
+      />
+    </si-chat-container>
+  </section>
+}

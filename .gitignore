@@ -14,6 +14,7 @@ docs/api
 docs/_src/fonts
 docs/_src/style
 docs/_src/icon-viewer
+docs/_src/docs-chat
 
 # dependencies
 /node_modules

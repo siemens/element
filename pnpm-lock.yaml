@@ -75,6 +75,15 @@ importers:
       '@softarc/native-federation-orchestrator':
         specifier: 4.5.2
         version: 4.5.2
+      '@websem/angular':
+        specifier: 0.1.5
+        version: 0.1.5(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))
+      '@websem/client':
+        specifier: 0.1.5
+        version: 0.1.5
+      '@websem/types':
+        specifier: 0.1.5
+        version: 0.1.5
       ag-grid-angular:
         specifier: ^36.0.0
         version: 36.0.2(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))
@@ -3848,6 +3857,20 @@ packages:
   '@webassemblyjs/wast-printer@1.14.1':
     resolution: {integrity: sha512-kPSSXE6De1XOR820C90RIo2ogvZG+c3KiHzqUoO/F34Y2shGzesfqv7o57xrxovZJH/MetF5UjroJ/R/3isoiw==, tarball: https://registry.npmjs.org/@webassemblyjs/wast-printer/-/wast-printer-1.14.1.tgz}
 
+  '@websem/angular@0.1.5':
+    resolution: {integrity: sha512-o95RtMjtn0n/uJmV0lSWvy0ltet2dQzKS46en7u0yjY0TokOatvHknzW/AwzrJirzS//TkqZp/TA3RPrx8jZxA==, tarball: https://registry.npmjs.org/@websem/angular/-/angular-0.1.5.tgz}
+    engines: {node: '>=20.19.0'}
+    peerDependencies:
+      '@angular/core': '>=22.0.0'
+
+  '@websem/client@0.1.5':
+    resolution: {integrity: sha512-+gUSq0+jEbfOZUlAgcmnwrYqbvMDn57v/k3q/TiSqL0dhPA8mf0/2WEgts5gtnhOOmoR1MxKbz2RDvHTWUcQNA==, tarball: https://registry.npmjs.org/@websem/client/-/client-0.1.5.tgz}
+    engines: {node: '>=20'}
+
+  '@websem/types@0.1.5':
+    resolution: {integrity: sha512-WJYH0Rl/9duw8IM9dom8gwRQlcS+2F6BtyrZGtVVVw94+Rjfn6C6gdf4tWbmM1oWNaeo9ePT8Za+vSXRll/vMg==, tarball: https://registry.npmjs.org/@websem/types/-/types-0.1.5.tgz}
+    engines: {node: '>=20'}
+
   '@xtuc/ieee754@1.2.0':
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==, tarball: https://registry.npmjs.org/@xtuc/ieee754/-/ieee754-1.2.0.tgz}
 
@@ -4488,6 +4511,7 @@ packages:
   cron-parser@4.9.0:
     resolution: {integrity: sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==, tarball: https://registry.npmjs.org/cron-parser/-/cron-parser-4.9.0.tgz}
     engines: {node: '>=12.0.0'}
+    deprecated: v4 is no longer maintained, upgrade to v5
 
   cross-env@10.1.0:
     resolution: {integrity: sha512-GsYosgnACZTADcmEyJctkJIoqAhHjttw7RsFrVoJNXbsWWqaq6Ym+7kZjq6mS45O0jij6vtiReppKQEtqWy6Dw==, tarball: https://registry.npmjs.org/cross-env/-/cross-env-10.1.0.tgz}
@@ -12051,6 +12075,18 @@ snapshots:
     dependencies:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
+
+  '@websem/angular@0.1.5(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))':
+    dependencies:
+      '@angular/core': 22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)
+      '@websem/client': 0.1.5
+      '@websem/types': 0.1.5
+
+  '@websem/client@0.1.5':
+    dependencies:
+      '@websem/types': 0.1.5
+
+  '@websem/types@0.1.5': {}
 
   '@xtuc/ieee754@1.2.0': {}
 

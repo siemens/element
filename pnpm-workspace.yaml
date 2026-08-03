@@ -45,3 +45,6 @@ lockfileIncludeTarballUrl: true
 
 minimumReleaseAgeExclude:
   - '@maplibre/ngx-maplibre-gl@22.0.0'
+  - '@websem/angular@0.1.5'
+  - '@websem/client@0.1.5'
+  - '@websem/types@0.1.5'
