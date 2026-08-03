@@ -4,6 +4,7 @@
  */
 import { createCustomElement } from '@angular/elements';
 import { createApplication } from '@angular/platform-browser';
+import { initializeWebMCPPolyfill } from '@mcp-b/webmcp-polyfill';
 import { provideWebsemTools } from '@websem/angular';
 
 import { DocsChatComponent } from './app/docs-chat.component';
@@ -12,6 +13,7 @@ import { isLanguageModelAvailable } from './prompt-api';
 
 const tagName = 'si-docs-chat';
 const indexUrl = new URL('../../websem/index/', import.meta.url).href;
+initializeWebMCPPolyfill();
 const application = await createApplication({
   providers: [provideWebsemTools(createDocsSearchConfig(indexUrl))]
 });
