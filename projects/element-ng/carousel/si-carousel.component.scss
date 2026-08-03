@@ -30,7 +30,7 @@
 .carousel-pager-dot {
   inline-size: 0.375rem;
   block-size: 0.375rem;
-  background-color: variables.$element-ui-3;
+  background-color: variables.$si-sys-text-secondary;
   transition: background-color variables.$element-default-transition-duration ease;
 
   &.active {
@@ -38,13 +38,13 @@
       inline-size variables.$element-default-transition-duration ease,
       background-color variables.$element-default-transition-duration ease;
     inline-size: 0.75rem;
-    background-color: variables.$element-ui-0;
+    background-color: variables.$si-sys-background-accent;
     border-radius: 6.25rem;
   }
 }
 
 .carousel-pager-small-dot {
-  background-color: variables.$element-ui-3;
+  background-color: variables.$si-sys-text-secondary;
   inline-size: 0.25rem;
   block-size: 0.25rem;
 }

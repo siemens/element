@@ -22,7 +22,7 @@ $header-height: 40px;
   flex: none;
   align-items: center;
   padding: map.get(all-variables.$spacers, 3);
-  background: all-variables.$element-base-0;
+  background: all-variables.$si-sys-background-0;
   block-size: $header-height;
 }
 
@@ -58,7 +58,7 @@ $header-height: 40px;
 .si-split-button {
   display: inline-block;
   padding: map.get(all-variables.$spacers, 2);
-  color: all-variables.$element-text-primary;
+  color: all-variables.$si-sys-text-primary;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -72,7 +72,7 @@ $header-height: 40px;
   cursor: pointer;
 
   &:hover {
-    background: all-variables.$element-action-secondary-hover;
+    background: all-variables.$si-sys-background-accent-secondary-hover;
   }
 
   :host-context(.vertical) > :host & {
