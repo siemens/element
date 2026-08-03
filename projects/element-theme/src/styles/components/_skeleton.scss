@@ -1,5 +1,6 @@
 @use '../variables/animations';
 @use '../variables/semantic-tokens';
+@use '../variables/system-tokens';
 
 @keyframes shimmer {
   to {
@@ -12,9 +13,9 @@
   min-block-size: 1em;
   background: linear-gradient(
     90deg,
-    semantic-tokens.$element-base-1-hover 0%,
-    semantic-tokens.$element-base-1-selected 25%,
-    semantic-tokens.$element-base-1-hover 50%
+    system-tokens.$si-sys-background-hover 0%,
+    system-tokens.$si-sys-background-selected 25%,
+    system-tokens.$si-sys-background-hover 50%
   );
   background-size: 200% 100%;
   background-position-x: 100%;
