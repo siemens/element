@@ -227,6 +227,7 @@ export class SiDateRangeComponent
   private validator!: ValidatorFn;
   private onChange = (val: any): void => {};
   private onTouch = (): void => {};
+  private onValidatorChange = (): void => {};
 
   protected readonly icons = addIcons({ elementCalendar });
   protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
@@ -291,6 +292,10 @@ export class SiDateRangeComponent
     this.onTouch = fn;
   }
 
+  registerOnValidatorChange(fn: () => void): void {
+    this.onValidatorChange = fn;
+  }
+
   setDisabledState(isDisabled: boolean): void {
     this.disabledNgControl.set(isDisabled);
   }
@@ -321,6 +326,7 @@ export class SiDateRangeComponent
     this.updateValue(dateRange);
 
     this.onChange(this.value());
+    this.onValidatorChange();
     this.siDatepickerRangeChange.emit(this.value());
   }
 

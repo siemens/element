@@ -396,6 +396,8 @@ export class SiDateRangeComponent implements ControlValueAccessor, Validator, Af
     // (undocumented)
     registerOnTouched(fn: () => void): void;
     // (undocumented)
+    registerOnValidatorChange(fn: () => void): void;
+    // (undocumented)
     setDisabledState(isDisabled: boolean): void;
     readonly siDatepickerConfig: _angular_core.ModelSignal<DatepickerInputConfig>;
     readonly siDatepickerRangeChange: _angular_core.OutputEmitterRef<DateRange | undefined>;
