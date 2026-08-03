@@ -1,9 +1,10 @@
 @use './variables';
+@use '../selectors';
 
 @use 'sass:meta';
 
 // this is _root.scss without the automatic `to-rgb` brain damage
-:root {
+#{selectors.$root} {
   // Note: Use `inspect` for lists so that quoted items keep the quotes.
   // See https://github.com/sass/sass/issues/2383#issuecomment-336349172
   --#{variables.$variable-prefix}font-sans-serif: #{meta.inspect(variables.$font-family-sans-serif)};

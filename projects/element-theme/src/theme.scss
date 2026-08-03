@@ -1,5 +1,8 @@
 $element-theme-default: null !default;
 $element-themes: null !default;
+$element-theme-root-selector: ':root' !default;
+$element-theme-document-selector: 'html' !default;
+$element-theme-body-selector: 'body' !default;
 
 // Defines the default root font size. Change to 'none' at some point.
 $element-root-font-size: 16px !default;
@@ -7,6 +10,11 @@ $element-root-font-size: 16px !default;
 $_theme-default: 'element';
 $_themes: () !default;
 
+@use 'styles/selectors' with (
+  $root: $element-theme-root-selector,
+  $document: $element-theme-document-selector,
+  $body: $element-theme-body-selector
+);
 @use 'styles/root-font-size' with (
   $element-root-font-size: $element-root-font-size
 );
@@ -40,11 +48,11 @@ $_themes: () !default;
 @use 'styles/themes';
 @use 'theme/theme-element';
 
-@include themes.configure($element-theme-default, $element-themes);
+@include themes.configure($element-theme-default, $element-themes, $element-theme-root-selector);
 @include themes.make-theme(theme-element.$theme-element-light, 'element');
 @include themes.make-theme(theme-element.$theme-element-dark, 'element', true);
 
-html,
-body {
+#{selectors.$document},
+#{selectors.$body} {
   block-size: 100%;
 }
