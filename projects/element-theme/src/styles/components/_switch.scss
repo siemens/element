@@ -5,12 +5,10 @@
 $si-switch-size: 1.25rem !default;
 $si-switch-inline-size: calc(2 * #{$si-switch-size});
 $si-switch-inline-spacing: calc($si-switch-inline-size + map.get(variables.$spacers, 4));
-$si-switch-background-off-color: variables.$element-ui-4 !default;
-$si-switch-background-on-color: variables.$element-ui-0 !default;
-$si-switch-background-disabled-color: variables.$element-ui-3 !default;
+$si-switch-background-off-color: variables.$si-sys-background-1 !default;
+$si-switch-background-on-color: variables.$si-sys-background-accent !default;
 $si-switch-slider-margin: 0.25rem !default;
-$si-switch-slider-off-color: variables.$element-ui-2 !default;
-$si-switch-slider-on-color: variables.$element-ui-5 !default;
+$si-switch-slider-on-color: variables.$si-sys-text-on-accent !default;
 $si-switch-transition-length: variables.element-transition-duration(0.4s) !default;
 
 $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin});
@@ -26,9 +24,9 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
     margin-inline-start: calc(-1 * $si-switch-inline-spacing);
     inline-size: $si-switch-inline-size !important; // stylelint-disable-line declaration-no-important
     block-size: #{$si-switch-size} !important; // stylelint-disable-line declaration-no-important
-    background-color: variables.$element-base-1;
+    background-color: variables.$si-sys-background-1;
     transition: $si-switch-transition-length;
-    border: 1px solid variables.$element-ui-2;
+    border: 1px solid variables.$si-sys-border-2;
     border-radius: #{$si-switch-size};
     appearance: none;
 
@@ -39,7 +37,7 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
       inline-size: $si-switch-knob-size !important; // stylelint-disable-line declaration-no-important
       inset-inline-start: calc(#{$si-switch-slider-margin} - 1px);
       inset-block-end: calc(#{$si-switch-slider-margin} - 1px);
-      background-color: variables.$element-text-secondary;
+      background-color: variables.$si-sys-text-secondary;
       transition: $si-switch-transition-length;
       border-radius: 50%;
     }
@@ -49,23 +47,23 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
     }
 
     &:hover {
-      background-color: variables.$element-base-1-hover;
+      background-color: variables.$si-sys-background-hover;
     }
 
     &:is(:checked, .checked) {
-      background-color: variables.$element-action-primary;
+      background-color: variables.$si-sys-background-accent;
 
       &:hover {
-        background-color: variables.$element-action-primary-hover;
+        background-color: variables.$si-sys-background-accent-hover;
       }
 
       &:active {
-        background-color: variables.$element-action-primary-active;
+        background-color: variables.$si-sys-background-accent-active;
       }
 
       &:is(:disabled, .disabled) {
-        background-color: variables.$element-action-primary;
-        border-color: variables.$element-action-primary;
+        background-color: variables.$si-sys-background-accent;
+        border-color: variables.$si-sys-border-accent;
       }
     }
 

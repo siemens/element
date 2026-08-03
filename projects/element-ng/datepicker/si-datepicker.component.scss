@@ -4,8 +4,8 @@
 @use '@siemens/element-theme/src/styles/bootstrap/variables' as bootstrap-variables;
 
 %selection-hover {
-  background: variables.$element-base-1-hover;
-  color: variables.$element-ui-0;
+  background: variables.$si-sys-background-hover;
+  color: variables.$si-sys-text-accent;
 }
 
 %table-cell-height-32 {
@@ -31,7 +31,7 @@
 }
 
 :host {
-  background: variables.$element-base-1;
+  background: variables.$si-sys-background-1;
   border-radius: variables.$element-radius-2;
   display: flex;
   flex-direction: column;
@@ -50,7 +50,7 @@
   .header {
     padding-block: map.get(variables.$spacers, 5);
     padding-inline: map.get(variables.$spacers, 9);
-    border-block-end: 1px solid variables.$element-ui-4;
+    border-block-end: 1px solid variables.$si-sys-border-4;
 
     a {
       text-decoration: none;
@@ -82,8 +82,8 @@
     @extend %table-cell-base;
 
     &.selected {
-      background: variables.$element-ui-0;
-      color: variables.$element-base-1;
+      background: variables.$si-sys-background-accent;
+      color: variables.$si-sys-text-on-accent;
     }
 
     &:not(.disabled):not(.selected):hover {
@@ -99,8 +99,8 @@
     inline-size: calc(4 * 2rem);
 
     &.selected {
-      background: variables.$element-ui-0;
-      color: variables.$element-base-1;
+      background: variables.$si-sys-background-accent;
+      color: variables.$si-sys-text-on-accent;
     }
 
     &:not(.disabled):not(.selected):hover {
@@ -116,8 +116,8 @@
     inline-size: calc((8 / 3) * 2rem);
 
     &.selected {
-      background: variables.$element-ui-0;
-      color: variables.$element-base-1;
+      background: variables.$si-sys-background-accent;
+      color: variables.$si-sys-text-on-accent;
     }
 
     &:not(.disabled):not(.selected):hover {
@@ -135,37 +135,37 @@
   .week-num,
   th {
     font-size: variables.$si-font-size-caption;
-    color: variables.$element-text-secondary;
+    color: variables.$si-sys-text-secondary;
     inline-size: 2rem;
     cursor: default;
   }
 
   .today {
     &.selected::before {
-      border-color: variables.$element-ui-5;
+      border-color: variables.$si-sys-border-inverse;
     }
 
     &::before {
       position: absolute;
       content: '';
       inset: 1px;
-      border: 1px solid variables.$element-ui-1;
+      border: 1px solid variables.$si-sys-border-1;
       border-radius: variables.$element-radius-2;
       display: inline-block;
     }
   }
 
   .disabled {
-    color: variables.$element-text-disabled;
+    color: variables.$si-sys-text-disabled;
     font-weight: variables.$si-font-weight-normal !important; // stylelint-disable-line declaration-no-important
     cursor: default !important; // stylelint-disable-line declaration-no-important
   }
 
   .range {
-    background-color: variables.$element-ui-4;
+    background-color: variables.$si-sys-background-selected;
 
     &:hover {
-      background: variables.$element-base-1-hover;
+      background: variables.$si-sys-background-hover;
 
       div.si-h4:hover {
         background: transparent;
@@ -174,7 +174,7 @@
   }
 
   .range-hover {
-    background-color: variables.$element-base-1-hover;
+    background-color: variables.$si-sys-background-hover;
   }
 
   .range-hover-end {
@@ -183,19 +183,19 @@
   }
 
   td:is(.range-start, .range-end) {
-    background: variables.$element-ui-0;
-    color: variables.$element-base-1;
+    background: variables.$si-sys-background-accent;
+    color: variables.$si-sys-text-on-accent;
 
     div.si-h4,
     div.si-body-lg {
       &:hover {
         background: transparent;
-        color: variables.$element-base-1;
+        color: variables.$si-sys-text-on-accent;
       }
     }
 
     .today::before {
-      border-color: variables.$element-ui-5;
+      border-color: variables.$si-sys-border-inverse;
     }
   }
 
@@ -213,7 +213,7 @@
     font-weight: variables.$si-font-weight-h5;
     font-size: variables.$si-font-size-h5;
     line-height: variables.$si-line-height-h5;
-    color: variables.$element-text-active;
+    color: variables.$si-sys-text-accent;
     min-inline-size: 0 !important; // stylelint-disable-line declaration-no-important
   }
 

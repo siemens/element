@@ -14,7 +14,7 @@ $datepicker-height: calc(
 
 :host {
   display: inline-grid;
-  background: variables.$element-base-1;
+  background: variables.$si-sys-background-1;
   grid-template-areas: 'preset main' 'footer footer';
 
   &.mobile {
@@ -22,7 +22,7 @@ $datepicker-height: calc(
     justify-items: stretch;
 
     .presets {
-      border-block-end: 1px solid variables.$element-ui-4;
+      border-block-end: 1px solid variables.$si-sys-border-4;
     }
   }
 }
@@ -41,7 +41,7 @@ $datepicker-height: calc(
   inline-size: calc(9.5rem + #{2 * map.get(variables.$spacers, 8)});
   flex-direction: column;
   grid-area: preset;
-  background: variables.$element-base-1;
+  background: variables.$si-sys-background-1;
 
   &.mobile {
     max-block-size: 346px;
@@ -60,7 +60,7 @@ ul {
   line-height: variables.$si-line-height-body;
 
   &:hover {
-    background: variables.$element-base-1-hover;
+    background: variables.$si-sys-background-hover;
   }
 }
 
