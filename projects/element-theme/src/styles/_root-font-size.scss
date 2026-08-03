@@ -1,11 +1,13 @@
+@use 'selectors';
+
 $element-root-font-size: initial !default;
 
-html {
+#{selectors.$document} {
   // defines the default with low specificity, i.e. easy overridable with :root
   --element-root-font-size: #{$element-root-font-size};
 }
 
-:root {
+#{selectors.$root} {
   font-size: var(--element-root-font-size);
 }
 
