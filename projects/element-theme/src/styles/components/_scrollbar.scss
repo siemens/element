@@ -1,6 +1,7 @@
 @use '../variables/system-tokens';
+@use '../selectors';
 
-html {
+#{selectors.$document} {
   scrollbar-color: color-mix(
       in srgb,
       system-tokens.$si-sys-border-2 60%,
