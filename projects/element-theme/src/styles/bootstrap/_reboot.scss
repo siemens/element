@@ -1,4 +1,5 @@
 @use '../variables/typography';
+@use '../selectors';
 @use './variables';
 
 // stylelint-disable declaration-no-important, selector-no-qualifying-type, property-no-vendor-prefix
@@ -25,7 +26,7 @@
 // Ability to the value of the root font sizes, affecting the value of `rem`.
 // null by default, thus nothing is generated.
 
-:root {
+#{selectors.$root} {
   @if variables.$enable-smooth-scroll {
     @media (prefers-reduced-motion: no-preference) {
       scroll-behavior: smooth;
@@ -41,7 +42,7 @@
 // 4. Change the default tap highlight to be completely transparent in iOS.
 
 // scss-docs-start reboot-body-rules
-body {
+#{selectors.$body} {
   margin: 0; // 1
   font-family: var(--#{variables.$variable-prefix}body-font-family);
   font-size: var(--#{variables.$variable-prefix}body-font-size);
