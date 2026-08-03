@@ -1,8 +1,8 @@
-@use '@siemens/element-theme/src/styles/variables/semantic-tokens';
+@use '@siemens/element-theme/src/styles/variables';
 
 .highlighter {
   position: fixed;
-  box-shadow: semantic-tokens.$element-base-translucent-1 0 0 0 1000vmax;
+  box-shadow: variables.$si-sys-effects-backdrop 0 0 0 1000vmax;
   pointer-events: none;
 }
 
