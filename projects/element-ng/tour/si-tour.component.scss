@@ -1,9 +1,9 @@
-@use '@siemens/element-theme/src/styles/variables/semantic-tokens';
+@use '@siemens/element-theme/src/styles/variables';
 
 .tour-content {
   --popover-arrow-width: 24px;
   --popover-arrow-height: 12px;
-  --popover-bg-color: #{semantic-tokens.$element-base-1};
+  --popover-bg-color: #{variables.$si-sys-background-1};
   max-inline-size: 400px;
   inline-size: 100vi;
   opacity: 0;

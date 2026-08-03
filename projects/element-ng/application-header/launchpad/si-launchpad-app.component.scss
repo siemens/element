@@ -11,25 +11,25 @@
   inline-size: calc(7rem + 2 * map.get(variables.$spacers, 7));
   max-inline-size: calc(7rem + 2 * map.get(variables.$spacers, 7));
   padding-inline: map.get(variables.$spacers, 4);
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-text-primary;
   border-radius: variables.$element-radius-2;
 
   &.action {
-    color: variables.$element-action-primary;
+    color: variables.$si-sys-text-accent;
   }
 
   &.active,
   &:hover {
-    color: variables.$element-text-primary;
+    color: variables.$si-sys-text-primary;
     text-decoration: none;
   }
 
   &.active {
-    background-color: variables.$element-base-1-selected;
+    background-color: variables.$si-sys-background-selected;
   }
 
   &:hover {
-    background-color: variables.$element-base-1-hover;
+    background-color: variables.$si-sys-background-hover;
   }
 }
 
@@ -62,11 +62,11 @@
   position: absolute;
   inset-inline-end: map.get(variables.$spacers, 6);
   inset-block-start: map.get(variables.$spacers, 6);
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-text-secondary;
 }
 
 .is-favorite {
-  color: variables.$element-status-caution;
+  color: variables.$si-sys-background-caution;
 }
 
 @include all-variables.media-breakpoint-down(md) {

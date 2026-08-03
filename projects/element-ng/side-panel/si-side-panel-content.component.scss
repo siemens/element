@@ -50,7 +50,7 @@
       padding-inline: map.get(all-variables.$spacers, 5);
 
       &:not(.dot-outer):hover {
-        background: all-variables.$element-base-1-hover;
+        background: all-variables.$si-sys-background-hover;
       }
 
       &.dot-outer {
@@ -112,11 +112,11 @@
 
   span {
     white-space: pre-wrap;
-    color: all-variables.$element-text-primary;
+    color: all-variables.$si-sys-text-primary;
   }
 
   &:hover span {
-    color: all-variables.$element-text-active;
+    color: all-variables.$si-sys-text-accent;
   }
 }
 
@@ -146,7 +146,7 @@
       border-end-start-radius: all-variables.$border-radius;
       border-start-end-radius: 0 !important; // stylelint-disable-line declaration-no-important
       border-end-end-radius: 0 !important; // stylelint-disable-line declaration-no-important
-      background: all-variables.$element-base-1;
+      background: all-variables.$si-sys-background-1;
       box-shadow: all-variables.$element-elevation-1;
       z-index: 2;
     }
