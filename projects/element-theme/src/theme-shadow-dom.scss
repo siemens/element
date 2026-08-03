@@ -1,0 +1,17 @@
+/**
+  * Uses :host selector to apply styles to the shadow DOM root element.
+  *
+  * @see https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM
+**/
+$element-theme-default: null !default;
+$element-themes: null !default;
+
+@use 'styles/reboot-shadow-dom';
+
+@use 'theme' with (
+  $element-theme-default: $element-theme-default,
+  $element-themes: $element-themes,
+  $element-theme-root-selector: ':host',
+  $element-theme-document-selector: ':host',
+  $element-theme-body-selector: ':host'
+);
