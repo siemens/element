@@ -1,0 +1,5 @@
+// by default shadow dom inherits certain browser styles from parent DOM.
+// To avoid this, we reset all styles to initial values. This is a reboot for shadow dom.
+:host {
+  all: initial;
+}

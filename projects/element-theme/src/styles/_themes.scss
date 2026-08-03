@@ -2,8 +2,9 @@
 
 $_theme-default: 'element';
 $_themes: () !default;
+$_root-selector: ':root';
 
-@mixin configure($defaultTheme: null, $themes: ()) {
+@mixin configure($defaultTheme: null, $themes: (), $rootSelector: null) {
   @if $defaultTheme {
     $_theme-default: $defaultTheme !global;
   }
@@ -11,11 +12,17 @@ $_themes: () !default;
   @if $themes {
     $_themes: $themes !global;
   }
+
+  @if $rootSelector {
+    $_root-selector: $rootSelector !global;
+  }
 }
 
-@mixin make-theme($vars, $name, $dark: false, $force-generate: false) {
+@mixin make-theme($vars, $name, $dark: false, $force-generate: false, $root-selector: null) {
   $theme-name: '';
   $mode: '';
+  $actual-root-selector: $root-selector or $_root-selector;
+  $selector: '';
 
   @if list.index($_themes, $name) or $name == $_theme-default or $force-generate {
     @if $name != $_theme-default {
@@ -26,7 +33,12 @@ $_themes: () !default;
       $mode: '.app--dark';
     }
 
-    :root#{$theme-name}#{$mode} {
+    $selector: '#{$actual-root-selector}#{$theme-name}#{$mode}';
+    @if $actual-root-selector == ':host' and ($theme-name != '' or $mode != '') {
+      $selector: ':host(#{$theme-name}#{$mode})';
+    }
+
+    #{$selector} {
       @each $token, $val in $vars {
         --#{$token}: #{$val};
       }
