@@ -27,6 +27,14 @@
       <si-form-item label="Debug" class="mb-0 py-4">
         <input type="checkbox" class="form-check-input" [(ngModel)]="debug" />
       </si-form-item>
+      <si-form-item label="Scroll sync" class="mb-0 py-4">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [disabled]="streaming()"
+          [(ngModel)]="scrollSync"
+        />
+      </si-form-item>
     </si-collapsible-panel>
     <si-collapsible-panel
       heading="Streaming"
@@ -65,18 +73,22 @@
   <div class="flex-fill d-flex">
     <div class="col-6 p-4">
       <textarea
+        #textarea
         class="w-100 h-100 form-control"
         style="resize: none"
         [readonly]="streaming()"
         [(ngModel)]="markdownText"
         (ngModelChange)="updateRenderer()"
+        (scroll)="syncScroll('sourceTop', 'outputTop')"
       ></textarea>
     </div>
     <div class="col-6 d-flex flex-column">
       <div
+        #renderedOutput
         class="d-flex p-4 overflow-auto"
         style="flex: 1 1 0"
         [class.flex-column-reverse]="keepScrollBottom()"
+        (scroll)="syncScroll('outputTop', 'sourceTop')"
       >
         <si-markdown
           class="flex-fill"
