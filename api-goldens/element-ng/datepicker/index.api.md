@@ -7,6 +7,7 @@
 import { AbstractControl } from '@angular/forms';
 import { AfterContentInit } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
+import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import * as _angular_forms from '@angular/forms';
 import { ComponentRef } from '@angular/core';
@@ -372,6 +373,7 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
     contains(element: HTMLElement): boolean;
     focus(focus?: boolean): this;
     isShown(): ComponentRef<SiDatepickerOverlayComponent> | undefined;
+    readonly scrollStrategy: _angular_core.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
     setInputs(inputs?: DatepickerInputPartial): this;
     showOverlay(focus?: boolean, inputs?: DatepickerInputPartial): ComponentRef<SiDatepickerOverlayComponent>;
     readonly siDatepickerClose: _angular_core.OutputEmitterRef<CloseCause>;

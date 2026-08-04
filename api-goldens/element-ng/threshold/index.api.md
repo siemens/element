@@ -4,6 +4,7 @@
 
 ```ts
 
+import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -21,6 +22,7 @@ export class SiThresholdComponent implements OnChanges {
     readonly options: _angular_core.InputSignal<SelectOption<unknown>[]>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly readonlyConditions: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly scrollStrategy: _angular_core.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
     readonly showDecIncButtons: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly statusAriaLabel: _angular_core.InputSignal<TranslatableString>;
     readonly stepSize: _angular_core.InputSignal<number>;
