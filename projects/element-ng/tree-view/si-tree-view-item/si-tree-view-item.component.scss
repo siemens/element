@@ -39,7 +39,7 @@
       inline-size: 100%;
       block-size: 2px;
       content: '';
-      background-color: variables.$element-focus-default !important; // stylelint-disable-line declaration-no-important
+      background-color: variables.$si-sys-effects-focus !important; // stylelint-disable-line declaration-no-important
     }
 
     > * {
@@ -76,7 +76,7 @@
 
     .si-tree-view-item-end-icons,
     .si-tree-view-li.si-tree-view-li-item {
-      background-color: variables.$element-base-3 !important; // stylelint-disable-line declaration-no-important
+      background-color: variables.$si-sys-background-3 !important; // stylelint-disable-line declaration-no-important
     }
   }
 }
@@ -124,7 +124,7 @@
       cursor: pointer;
 
       .si-tree-view-item-icon {
-        color: variables.$element-text-primary;
+        color: variables.$si-sys-text-primary;
       }
     }
   }
@@ -218,7 +218,7 @@
 .si-tree-view-item-dropdown-caret:hover,
 .si-tree-view-item-icon,
 .si-tree-view-item-icon:hover {
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-text-primary;
   text-decoration: none;
   font-size: var(--si-tree-view-icon-size);
 }
