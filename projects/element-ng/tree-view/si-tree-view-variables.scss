@@ -1,14 +1,14 @@
 @use '@siemens/element-theme/src/styles/variables';
 
-$si-tree-view-background: variables.$element-base-1;
-$si-tree-view-border-color: variables.$element-ui-4;
+$si-tree-view-background: variables.$si-sys-background-1;
+$si-tree-view-border-color: variables.$si-sys-border-4;
 $si-tree-view-icon-size: variables.$si-icon-font-size;
 
-$si-tree-view-item-hover-color: variables.$element-base-1-hover;
-$si-tree-view-item-select-color: variables.$element-base-1-selected;
+$si-tree-view-item-hover-color: variables.$si-sys-background-hover;
+$si-tree-view-item-select-color: variables.$si-sys-background-selected;
 $si-tree-view-item-line-height: variables.$si-line-height-body;
 $si-tree-view-item-min-height: 40px;
-$si-tree-view-item-object-data-field-1-color: variables.$element-text-secondary;
+$si-tree-view-item-object-data-field-1-color: variables.$si-sys-text-secondary;
 
 :host {
   --si-tree-view-background: #{$si-tree-view-background};

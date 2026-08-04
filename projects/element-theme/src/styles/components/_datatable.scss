@@ -4,6 +4,7 @@
 @use '../variables/focus';
 @use '../variables/semantic-tokens';
 @use '../variables/spacers';
+@use '../variables/system-tokens';
 @use '../variables/typography';
 @use '../variables/utilities';
 
@@ -11,10 +12,10 @@
 
 $datatable-header-border-color: variables.$table-border-color !default;
 $datatable-header-background-color: variables.$table-bg !default;
-$datatable-header-color: semantic-tokens.$element-text-primary !default;
+$datatable-header-color: system-tokens.$si-sys-text-primary !default;
 $datatable-footer-background-color: transparent !default;
 
-$datatable-summary-background-color: semantic-tokens.$element-base-4 !default;
+$datatable-summary-background-color: system-tokens.$si-sys-background-2 !default;
 
 $datatable-header-height: 40px !default;
 $datatable-cell-min-width: 40px !default;
@@ -22,12 +23,12 @@ $datatable-body-row-min-height: 48px !default;
 
 $datatable-ghost-cell-container-background: variables.$table-bg !default;
 
-$datatable-ghost-cell-strip-background: semantic-tokens.$element-base-1-hover !default;
+$datatable-ghost-cell-strip-background: system-tokens.$si-sys-background-hover !default;
 $datatable-ghost-cell-strip-background-image: linear-gradient(
   90deg,
-  semantic-tokens.$element-base-1-hover 0%,
-  semantic-tokens.$element-base-1-selected 25%,
-  semantic-tokens.$element-base-1-hover 50%
+  system-tokens.$si-sys-background-hover 0%,
+  system-tokens.$si-sys-background-selected 25%,
+  system-tokens.$si-sys-background-hover 50%
 ) !default;
 $datatable-ghost-cell-strip-radius: 0 !default;
 
@@ -189,7 +190,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       .datatable-row-left {
         .datatable-body-cell:last-child,
         .datatable-header-cell:last-child {
-          box-shadow: 0 0 8px var(--element-box-shadow-color-1);
+          box-shadow: 0 0 8px system-tokens.$si-sys-effects-shadow-1;
           clip-path: inset(0 -8px 0 0);
         }
       }
@@ -197,7 +198,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       .datatable-row-right {
         .datatable-body-cell:first-child,
         .datatable-header-cell:first-child {
-          box-shadow: 0 0 8px var(--element-box-shadow-color-1);
+          box-shadow: 0 0 8px system-tokens.$si-sys-effects-shadow-1;
           clip-path: inset(0 0 0 -8px);
         }
       }
@@ -224,7 +225,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     // Resizable handle
     .resizeable:hover {
       .resize-handle {
-        background-color: semantic-tokens.$element-base-0;
+        background-color: system-tokens.$si-sys-background-0;
         inline-size: 2px;
         border-radius: 2px;
         padding-block: 0;
@@ -322,7 +323,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     align-items: flex-end;
     align-content: flex-end;
     background-color: $datatable-footer-background-color;
-    color: semantic-tokens.$element-text-secondary;
+    color: system-tokens.$si-sys-text-secondary;
     font-size: typography.$si-font-size-caption;
     margin-block-start: -1px;
     position: relative;
@@ -341,7 +342,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
         inset-inline-start: 0;
         inline-size: 100%;
         block-size: 1px;
-        background-color: var(--element-base-0);
+        background-color: system-tokens.$si-sys-background-0;
       }
     }
   }
