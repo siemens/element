@@ -11,8 +11,10 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { MenuItem } from '@siemens/element-ng/menu';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
+import { page, userEvent } from 'vitest/browser';
 
 import { SiTreeViewItemHeightService } from './si-tree-view-item-height.service';
 import { SiTreeViewComponent } from './si-tree-view.component';
@@ -658,6 +660,37 @@ describe('SiTreeViewComponent', () => {
 
         await fixture.whenStable();
       }
+    });
+
+    it('should keep the context menu open when closing a submenu by click', async () => {
+      const createMenuItems = (): MenuItemLegacy[] => [
+        { title: 'Parent item', items: [{ title: 'Child item', disabled: true }] }
+      ];
+      const menuItems = new BehaviorSubject(createMenuItems());
+      component.contextMenuItems.set(() => menuItems.pipe(map(() => createMenuItems())));
+      await fixture.whenStable();
+
+      await userEvent.click(element.querySelector<HTMLElement>('si-tree-view-item')!, {
+        button: 'right'
+      });
+      await vi.advanceTimersByTimeAsync(0);
+      await fixture.whenStable();
+
+      const submenuTrigger = page.getByRole('menuitem', { name: 'Parent item' });
+      // userEvent.click cannot be used here as its pointer sequence hover-opens the submenu and the
+      // following click toggles it closed again
+      (submenuTrigger.element() as HTMLElement).click();
+      await fixture.whenStable();
+      await expect.element(page.getByRole('menuitem', { name: 'Child item' })).toBeInTheDocument();
+
+      menuItems.next(createMenuItems());
+      await fixture.whenStable();
+      await expect.element(page.getByRole('menuitem', { name: 'Child item' })).toBeInTheDocument();
+
+      await userEvent.click(submenuTrigger);
+      await fixture.whenStable();
+      expect(page.getByRole('menuitem', { name: 'Child item' }).elements()).toHaveLength(0);
+      await expect.element(submenuTrigger).toBeInTheDocument();
     });
   });
 
