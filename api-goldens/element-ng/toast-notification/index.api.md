@@ -46,7 +46,9 @@ export class SiToastNotificationService implements OnDestroy {
     constructor();
     get activeToasts(): SiToast[];
     hideToastNotification(toast?: SiToast): void;
-    queueToastNotification(state: StatusType, title: string, message: string, disableAutoClose?: boolean, disableManualClose?: boolean, action?: Link): SiToast;
+    queueToastNotification(state: StatusType, title: string, message: string, disableAutoClose?: boolean, disableManualClose?: boolean, action?: Link, translationParams?: {
+        [key: string]: any;
+    }): SiToast;
     showToastNotification(toast: SiToast): SiToast;
 }
 
