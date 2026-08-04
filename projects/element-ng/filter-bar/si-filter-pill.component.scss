@@ -5,10 +5,10 @@
 $filter-pill-height: map.get(variables.$spacers, 9);
 
 :host {
-  --filter-pill-background-color: #{variables.$element-base-1};
+  --filter-pill-background-color: #{variables.$si-sys-background-1};
 
   &.dark-background {
-    --filter-pill-background-color: #{variables.$element-base-0};
+    --filter-pill-background-color: #{variables.$si-sys-background-2};
   }
 }
 
@@ -32,7 +32,7 @@ $filter-pill-height: map.get(variables.$spacers, 9);
   }
 
   .value {
-    color: variables.$element-text-primary;
+    color: variables.$si-sys-text-primary;
     white-space: nowrap;
     margin-inline-end: map.get(variables.$spacers, 2);
   }
@@ -40,6 +40,6 @@ $filter-pill-height: map.get(variables.$spacers, 9);
   &.disabled,
   &.disabled .value {
     padding-inline-end: map.get(variables.$spacers, 1);
-    color: variables.$element-text-disabled;
+    color: variables.$si-sys-text-disabled;
   }
 }
