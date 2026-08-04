@@ -2,11 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import {
   ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
+  input,
   OnChanges,
   OnInit,
   signal,
@@ -36,6 +38,8 @@ export class SiFilteredSearchTypeaheadComponent
   extends SiFilteredSearchOptionValueBase
   implements OnChanges, OnInit
 {
+  /** CDK scroll strategy used for the value typeahead overlay. */
+  readonly scrollStrategy = input.required<ScrollStrategy>();
   protected override readonly valueInput = viewChild<ElementRef<HTMLInputElement>>('valueInput');
   protected readonly optionValue = signal<OptionCriterion | undefined>(undefined);
 

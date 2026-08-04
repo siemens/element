@@ -77,6 +77,7 @@
           [ariaLabel]="statusAriaLabel() | translate"
           [readonly]="readonly()"
           [options]="options()"
+          [scrollStrategy]="scrollStrategy()"
           [(value)]="step.optionValue"
           (valueChange)="stepChange()"
         />

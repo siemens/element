@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMonitorFocus, FocusOrigin } from '@angular/cdk/a11y';
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import {
   afterNextRender,
   ChangeDetectionStrategy,
@@ -70,10 +71,17 @@ export class SiFilteredSearchValueComponent implements OnInit {
   readonly isStrictOrOnlySelectValue = input.required<boolean>();
   readonly editOnCreation = input.required<boolean>();
 
+  /** Factory for CDK scroll strategies used by filtered-search value editor overlays. */
+  readonly scrollStrategyFactory = input.required<() => ScrollStrategy>();
+
   readonly deleteCriterion = output<{ triggerSearch: boolean } | void>();
   readonly submitCriterion = output<{ freeText: string } | void>();
 
   protected readonly active = signal<boolean>(false);
+  protected readonly operatorScrollStrategy = computed(() => this.scrollStrategyFactory()());
+  protected readonly datepickerScrollStrategy = computed(() => this.scrollStrategyFactory()());
+  protected readonly multiSelectScrollStrategy = computed(() => this.scrollStrategyFactory()());
+  protected readonly typeaheadScrollStrategy = computed(() => this.scrollStrategyFactory()());
   protected readonly icons = addIcons({ elementCancel });
 
   private hasPendingFocus = false;

@@ -25,6 +25,7 @@
     class="px-4 py-0 border-0 focus-inside"
     [attr.aria-label]="searchLabel() | translate"
     [siDatepickerConfig]="dateConfig()"
+    [siDatepickerScrollStrategy]="scrollStrategy()"
     [ngModel]="dateValue"
     (keydown.backspace)="valueBackspace()"
     (keydown.enter)="valueEnter()"

@@ -4,6 +4,7 @@
 
 ```ts
 
+import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import { ConfigurableFocusTrap } from '@angular/cdk/a11y';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
@@ -64,6 +65,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     open(event?: Event): void;
     readonly openChange: _angular_core.OutputEmitterRef<boolean>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly scrollStrategy: _angular_core.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
     updateValue(value: T | undefined): void;
     readonly value: _angular_core.ModelSignal<T | undefined>;
 }
@@ -103,6 +105,7 @@ export class SiSelectComponent<T> implements SiFormItemControl {
     readonly openChange: _angular_core.OutputEmitterRef<boolean>;
     readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly scrollStrategy: _angular_core.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
 }
 
 // @public

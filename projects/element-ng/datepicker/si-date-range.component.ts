@@ -88,6 +88,7 @@ import { DatepickerInputConfig, DateRange } from './si-datepicker.model';
   hostDirectives: [
     {
       directive: SiDatepickerOverlayDirective,
+      inputs: ['siDatepickerScrollStrategy: scrollStrategy'],
       outputs: ['siDatepickerClose']
     }
   ]

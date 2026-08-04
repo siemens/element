@@ -23,7 +23,11 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { elementCancel, elementSearch } from '@siemens/element-icons';
-import { BackgroundColorVariant, isRTL } from '@siemens/element-ng/common';
+import {
+  BackgroundColorVariant,
+  defaultConnectedOverlayScrollStrategyFactory,
+  isRTL
+} from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import {
   injectSiTranslateService,
@@ -67,6 +71,12 @@ import {
   }
 })
 export class SiFilteredSearchComponent implements OnInit, OnChanges {
+  /**
+   * Factory for CDK scroll strategies used by filtered-search overlays.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategyFactory()
+   */
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategyFactory());
   /**
    * Output callback event that provides an object describing the
    * selected criteria and additional filter text.

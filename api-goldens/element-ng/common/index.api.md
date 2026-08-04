@@ -78,6 +78,12 @@ export function calculateOverlayArrowPosition(change: ConnectedOverlayPositionCh
 // @public (undocumented)
 export const correctKeyRTL: (key: string) => string;
 
+// @public
+export function defaultConnectedOverlayScrollStrategy(): ScrollStrategy;
+
+// @public
+export function defaultConnectedOverlayScrollStrategyFactory(): () => ScrollStrategy;
+
 // @public @deprecated (undocumented)
 export type Direction = 'down' | 'up' | 'start' | 'end';
 
