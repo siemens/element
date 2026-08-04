@@ -212,4 +212,22 @@ describe('with scrollStrategy', () => {
 
     expect(document.querySelector('.popover')).not.toBeInTheDocument();
   });
+
+  it('should reopen popover after the close scroll strategy detached it', async () => {
+    const overlay = TestBed.inject(Overlay);
+    fixture.componentInstance.scrollStrategy.set(overlay.scrollStrategies.close());
+    await fixture.whenStable();
+    const button = page.getByRole('button', { name: 'Test' });
+
+    await userEvent.click(button);
+    document.dispatchEvent(new Event('scroll', { bubbles: true }));
+    await fixture.whenStable();
+
+    await userEvent.click(button);
+
+    expect(document.querySelector('.popover')).toBeInTheDocument();
+    await expect.element(button).toHaveAttribute('aria-expanded', 'true');
+
+    await userEvent.click(button);
+  });
 });
