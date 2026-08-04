@@ -4,7 +4,6 @@
 
 $list-header-filter-padding-horizontal: map.get(all-variables.$spacers, 5);
 $list-header-filter-padding-vertical: map.get(all-variables.$spacers, 3);
-$filter-bar-background-color: all-variables.$element-base-0;
 
 :host {
   --filter-pill-gap: #{map.get(all-variables.$spacers, 4)};
@@ -30,7 +29,7 @@ $filter-bar-background-color: all-variables.$element-base-0;
   gap: var(--filter-pill-gap);
 
   .list-text {
-    color: all-variables.$element-text-disabled;
+    color: all-variables.$si-sys-text-disabled;
   }
 
   .invisible {
