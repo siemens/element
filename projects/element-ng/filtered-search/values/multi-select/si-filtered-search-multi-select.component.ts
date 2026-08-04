@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import {
   Component,
   computed,
@@ -38,6 +39,8 @@ export class SiFilteredSearchMultiSelectComponent
 {
   /** Text used to summarize multiple selected values. */
   readonly itemCountText = input.required<TranslatableString>();
+  /** CDK scroll strategy used for the value typeahead overlay. */
+  readonly scrollStrategy = input.required<ScrollStrategy>();
   protected override readonly valueInput = viewChild<ElementRef<HTMLInputElement>>('valueInput');
   protected readonly optionValue = signal<OptionCriterion[]>([]);
   protected readonly selectionChange = new BehaviorSubject<string[]>([]);

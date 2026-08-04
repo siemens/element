@@ -23,6 +23,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { elementDown2 } from '@siemens/element-icons';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import {
   DatepickerConfig,
   DatepickerInputConfig,
@@ -114,6 +115,13 @@ export class SiDateRangeFilterComponent implements OnChanges {
    * @defaultValue false
    */
   readonly reverseInputFields = input(false, { transform: booleanAttribute });
+
+  /**
+   * Optional CDK scroll strategy used for the preset overlay.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
+   */
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy());
 
   /**
    * Determines whether to show the 'Apply' button
