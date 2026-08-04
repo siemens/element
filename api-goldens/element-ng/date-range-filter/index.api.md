@@ -4,6 +4,7 @@
 
 ```ts
 
+import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import { DatepickerConfig } from '@siemens/element-ng/datepicker';
 import { DatepickerInputConfig } from '@siemens/element-ng/datepicker';
@@ -104,6 +105,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
     readonly rangeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly refLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly reverseInputFields: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly scrollStrategy: _angular_core.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
     readonly searchLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly selectRangeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly showApplyButton: _angular_core.InputSignalWithTransform<boolean, unknown>;

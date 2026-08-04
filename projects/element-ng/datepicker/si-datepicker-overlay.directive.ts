@@ -11,12 +11,13 @@ import {
   Directive,
   ElementRef,
   inject,
+  input,
   OnDestroy,
   output,
   signal
 } from '@angular/core';
 import { outputToObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { isRTL } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy, isRTL } from '@siemens/element-ng/common';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { asapScheduler, merge, Observable, Subject } from 'rxjs';
 import { filter, map, observeOn, skip, takeUntil, tap } from 'rxjs/operators';
@@ -73,6 +74,16 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
       originY: 'top'
     }
   ]);
+
+  /**
+   * Optional CDK scroll strategy used for the datepicker overlay.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
+   */
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy(), {
+    // eslint-disable-next-line @angular-eslint/no-input-rename
+    alias: 'siDatepickerScrollStrategy' // to be aligned with the `siDatepickerClose` output
+  });
   /**
    * Output event on closing datepicker e.g. by clicking backdrop or escape key.
    */
@@ -224,6 +235,7 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
       positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
       direction: isRTL() ? 'rtl' : 'ltr',
       hasBackdrop: true,
+      scrollStrategy: this.scrollStrategy(),
       backdropClass: 'modal-backdrop'
     });
   }
@@ -240,9 +252,11 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
         .withViewportMargin(4),
       direction: isRTL() ? 'rtl' : 'ltr',
       hasBackdrop: true,
+      scrollStrategy: this.scrollStrategy(),
       backdropClass: 'cdk-overlay-transparent-backdrop'
     });
   }
+
   /**
    * Merge events which shall close the overlay
    * @param overlayRef - source for backdrop, detach or escape events.

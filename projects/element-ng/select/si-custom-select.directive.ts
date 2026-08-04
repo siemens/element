@@ -22,6 +22,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { filter, merge, Subject, takeUntil } from 'rxjs';
 
@@ -125,6 +126,15 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    * @defaultValue false
    */
   readonly readonly = input(false, { transform: booleanAttribute });
+
+  /**
+   * Optional CDK scroll strategy used for the custom select overlay.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
+   */
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy(), {
+    alias: 'siCustomSelectScrollStrategy'
+  });
 
   /** Emits when the dropdown open state changes. */
   readonly openChange = output<boolean>();
@@ -251,6 +261,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
         .withFlexibleDimensions(true)
         .withPush(true),
       hasBackdrop: true,
+      scrollStrategy: this.scrollStrategy(),
       backdropClass: 'cdk-overlay-transparent-backdrop',
       panelClass: ['dropdown-menu', 'show'],
       minWidth: width + 2

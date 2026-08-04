@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { elementOk } from '@siemens/element-icons';
-import { isRTL } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy, isRTL } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -82,6 +82,13 @@ export class SiColorPickerComponent implements ControlValueAccessor {
    * @defaultValue false
    */
   readonly autoClose = input(false, { transform: booleanAttribute });
+
+  /**
+   * Optional CDK scroll strategy used for the color picker overlay.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
+   */
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy());
 
   /**
    * Specifies whether the color picker component is disabled.

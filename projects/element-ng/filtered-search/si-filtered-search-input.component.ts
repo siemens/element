@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -38,6 +39,10 @@ export class SiFilteredSearchInputComponent {
   readonly disabled = input.required<boolean>();
   readonly placeholder = input.required<string>();
   readonly searchLabel = input.required<TranslatableString>();
+
+  /** Factory for the CDK scroll strategy used by the criterion typeahead overlay. */
+  readonly scrollStrategyFactory = input.required<() => ScrollStrategy>();
+
   readonly searchValue = model.required<string>();
   readonly freeTextCriterion = input.required<boolean>();
   readonly maxCriteriaReached = input.required<boolean>();
@@ -66,6 +71,7 @@ export class SiFilteredSearchInputComponent {
       ? this.searchForFreeTextLabel()
       : undefined
   );
+  protected readonly typeaheadScrollStrategy = computed(() => this.scrollStrategyFactory()());
 
   protected freeTextBackspaceHandler(event: Event): void {
     if (!(event.target as HTMLInputElement).value) {

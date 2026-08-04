@@ -16,6 +16,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { elementDelete, elementPlus } from '@siemens/element-icons';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import {
@@ -143,6 +144,12 @@ export class SiThresholdComponent implements OnChanges {
    * @defaultValue false
    */
   readonly readonlyConditions = input(false, { transform: booleanAttribute });
+  /**
+   * CDK scroll strategy used for threshold option select overlays.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
+   */
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy());
   /**
    * The aria-label for delete button
    *

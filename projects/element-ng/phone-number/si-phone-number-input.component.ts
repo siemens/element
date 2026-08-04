@@ -30,6 +30,7 @@ import {
   Validator
 } from '@angular/forms';
 import { elementDown2 } from '@siemens/element-icons';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SelectOption, SiSelectListHasFilterComponent } from '@siemens/element-ng/select';
@@ -112,6 +113,13 @@ export class SiPhoneNumberInputComponent
    * ISO_3166-2 Code of the country which shall be used on form-control reset.
    */
   readonly defaultCountry = input<string>();
+
+  /**
+   * Optional CDK scroll strategy used for the country selection overlay.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
+   */
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy());
 
   /**
    * Placeholder text for country search input.

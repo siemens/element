@@ -4,6 +4,7 @@
 
 ```ts
 
+import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { DatepickerInputConfig } from '@siemens/element-ng/datepicker';
@@ -82,6 +83,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     readonly onlySelectValue: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly optionsInScrollableView: _angular_core.InputSignal<number>;
     readonly placeholder: _angular_core.InputSignal<string>;
+    readonly scrollStrategy: _angular_core.InputSignal<() => _angular_cdk_overlay.ScrollStrategy>;
     readonly searchCriteria: _angular_core.ModelSignal<SearchCriteria>;
     readonly searchDebounceTime: _angular_core.InputSignal<number>;
     readonly searchForFreeTextLabel: _angular_core.InputSignal<TranslatableString>;

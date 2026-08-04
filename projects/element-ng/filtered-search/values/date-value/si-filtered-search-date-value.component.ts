@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import { DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -9,6 +10,7 @@ import {
   computed,
   ElementRef,
   inject,
+  input,
   LOCALE_ID,
   signal,
   viewChild
@@ -37,6 +39,8 @@ import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiFilteredSearchDateValueComponent extends SiFilteredSearchValueBase {
+  /** CDK scroll strategy used for the datepicker overlay. */
+  readonly scrollStrategy = input.required<ScrollStrategy>();
   private locale = inject(LOCALE_ID).toString();
 
   protected override readonly valueInput = viewChild<ElementRef<HTMLInputElement>>('valueInput');

@@ -2,8 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { t } from '@siemens/element-translate-ng/translate';
 
 import { SiRelativeDateComponent } from './si-relative-date.component';
@@ -15,6 +17,7 @@ const ONE_DAY = ONE_MINUTE * 60 * 24;
   imports: [SiRelativeDateComponent],
   template: `<si-relative-date
     [enableTimeSelection]="enableTimeSelection()"
+    [scrollStrategy]="scrollStrategy"
     [unitLabel]="unitLabel"
     [valueLabel]="valueLabel"
     [(value)]="value"
@@ -24,6 +27,7 @@ const ONE_DAY = ONE_MINUTE * 60 * 24;
 class TestHostComponent {
   readonly value = signal(0);
   readonly enableTimeSelection = signal(false);
+  readonly scrollStrategy: ScrollStrategy = defaultConnectedOverlayScrollStrategy();
   readonly unitLabel = t(() => $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`);
   readonly valueLabel = t(() => $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`);
 }

@@ -4,6 +4,7 @@
 
 ```ts
 
+import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { ElementRef } from '@angular/core';
@@ -11,7 +12,6 @@ import { Injector } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { OverlayArrowPosition } from '@siemens/element-ng/common';
-import { ScrollStrategy } from '@angular/cdk/overlay';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
@@ -31,7 +31,7 @@ export class SiPopoverDirective implements OnDestroy {
     readonly placement: _angular_core.InputSignal<"auto" | "start" | "end" | "top" | "bottom">;
     // (undocumented)
     readonly placementInternal: _angular_core.Signal<"auto" | "start" | "end" | "top" | "bottom">;
-    readonly scrollStrategy: _angular_core.InputSignal<ScrollStrategy | undefined>;
+    readonly scrollStrategy: _angular_core.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
     show(): void;
     readonly siPopover: _angular_core.InputSignal<TranslatableString | TemplateRef<unknown> | undefined>;
     readonly title: _angular_core.InputSignal<TranslatableString | undefined>;
