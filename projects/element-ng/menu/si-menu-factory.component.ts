@@ -47,6 +47,19 @@ export class SiMenuFactoryComponent {
   private linkActionService = inject(SiLinkActionService, { optional: true });
   private menuActionService = inject(SiMenuActionService, { optional: true });
 
+  protected trackItem(index: number, item: MenuItemLegacy | MenuItem): string | number {
+    if ('id' in item && item.id) {
+      return item.id;
+    }
+    if ('label' in item && item.label) {
+      return item.label;
+    }
+    if ('title' in item && item.title) {
+      return item.title;
+    }
+    return index;
+  }
+
   protected isNewItemStyle(item: MenuItemLegacy | MenuItem): item is MenuItem {
     return 'label' in item || item.type === 'divider' || item.type === 'radio-group';
   }
