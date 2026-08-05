@@ -161,7 +161,7 @@
     "ng-packagr": "22.0.2",
     "ngx-build-plus": "20.0.0",
     "piscina": "5.2.0",
-    "postcss": "8.5.18",
+    "postcss": "8.5.23",
     "postcss-scss": "4.0.9",
     "prettier": "3.9.5",
     "rimraf": "6.1.3",
