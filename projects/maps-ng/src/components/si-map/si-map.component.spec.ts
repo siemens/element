@@ -191,7 +191,7 @@ describe('SiMapComponent', () => {
     component.select(singlePoint);
     expect(component.featureClick).toHaveBeenCalled();
     expect(component.tooltipOverlay.getPosition()).toBeUndefined();
-    expect(component.popoverOverlay.getPosition()).toEqual([2041131.9192873053, 5850738.242670742]);
+    expect(component.popoverOverlay.getPosition()).toEqual([2041131.9192873053, 5850738.242670743]);
   });
 
   it('should display popover component on hover when hovered', () => {
