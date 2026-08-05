@@ -33,7 +33,9 @@ export class SampleComponent {
   showRangeLabelsOutside = false;
   showSegments = true;
 
-  series: GaugeSeries[] = [{ name: 'Series 1', value: 350, colorToken: 'element-data-5' }];
+  series: GaugeSeries[] = [
+    { name: 'Series 1', value: 350, colorToken: 'si-sys-data-categorial-5' }
+  ];
 
   setValues(val1: number): void {
     this.series[0].value = val1;

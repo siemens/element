@@ -15,13 +15,13 @@ describe('SiMicrochartProgressComponent', () => {
   let element: HTMLElement;
   const series = signal<MicrochartProgressSeries>({
     valuePercent: 80,
-    colorToken: 'element-data-7'
+    colorToken: 'si-sys-data-categorial-7'
   });
   const barWidth = signal(64);
   const barHeight = signal(4);
 
   beforeEach(() => {
-    series.set({ valuePercent: 80, colorToken: 'element-data-7' });
+    series.set({ valuePercent: 80, colorToken: 'si-sys-data-categorial-7' });
     barWidth.set(64);
     barHeight.set(4);
     fixture = TestBed.createComponent(SiMicrochartProgressComponent, {
@@ -48,7 +48,7 @@ describe('SiMicrochartProgressComponent', () => {
   it('should apply color token as CSS variable on foreground bar', async () => {
     await fixture.whenStable();
     const foreground = element.querySelector('.bar-foreground') as HTMLElement;
-    expect(foreground).toHaveStyle({ backgroundColor: 'var(--element-data-7)' });
+    expect(foreground).toHaveStyle({ backgroundColor: 'var(--si-sys-data-categorial-7)' });
   });
 
   it('should use default barWidth of 64px', async () => {
@@ -81,12 +81,12 @@ describe('SiMicrochartProgressComponent', () => {
   it('should update when series input changes', async () => {
     await fixture.whenStable();
 
-    series.set({ valuePercent: 30, colorToken: 'element-data-2' });
+    series.set({ valuePercent: 30, colorToken: 'si-sys-data-categorial-2' });
     await fixture.whenStable();
 
     expect(element.querySelector('.si-body')).toHaveTextContent('30%');
     const foreground = element.querySelector('.bar-foreground') as HTMLElement;
     expect(foreground).toHaveStyle({ width: '30%' });
-    expect(foreground).toHaveStyle({ backgroundColor: 'var(--element-data-2)' });
+    expect(foreground).toHaveStyle({ backgroundColor: 'var(--si-sys-data-categorial-2)' });
   });
 });
