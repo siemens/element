@@ -1,0 +1,59 @@
+@use './docs-chat.theme';
+
+:host {
+  position: fixed;
+  z-index: 20;
+  inset-block-end: 24px;
+  inset-inline-end: 24px;
+  font-size: 14px;
+}
+
+.docs-chat-launcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 20%);
+}
+
+.docs-chat-panel {
+  position: absolute;
+  inset-block-end: calc(100% + 12px);
+  inset-inline-end: 0;
+  display: flex;
+  inline-size: min(430px, calc(100vi - 32px));
+  block-size: min(640px, calc(100vb - 104px));
+  overflow: hidden;
+  flex-direction: column;
+  border: 1px solid var(--element-ui-4);
+  border-radius: 12px;
+  background: var(--element-base-1);
+  box-shadow: 0 16px 48px rgb(0 0 0 / 28%);
+}
+
+.docs-chat-header {
+  flex: 0 0 auto;
+  padding: 12px 16px;
+  border-block-end: 1px solid var(--element-ui-4);
+  background: var(--element-base-1);
+}
+
+.docs-chat-container {
+  min-block-size: 0;
+  flex: 1 1 auto;
+}
+
+@media (max-width: 575.98px) {
+  :host {
+    inset-block-end: 12px;
+    inset-inline-end: 12px;
+  }
+
+  .docs-chat-panel {
+    position: fixed;
+    inset: 0;
+    inline-size: 100vi;
+    block-size: 100dvb;
+    border: 0;
+    border-radius: 0;
+  }
+}

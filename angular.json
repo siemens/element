@@ -972,6 +972,58 @@
         }
       }
     },
+    "docs-chat": {
+      "projectType": "application",
+      "root": "projects/docs-chat",
+      "sourceRoot": "projects/docs-chat/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": {
+              "base": "docs/_src/docs-chat",
+              "browser": ""
+            },
+            "index": "projects/docs-chat/src/index.html",
+            "browser": "projects/docs-chat/src/main.ts",
+            "polyfills": ["@angular/localize/init"],
+            "tsConfig": "projects/docs-chat/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "siemens-element-icons.{woff,woff2}",
+                "input": "node_modules/@siemens/element-icons/dist/fonts",
+                "output": "fonts"
+              }
+            ],
+            "preserveSymlinks": true
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "none",
+              "optimization": true,
+              "sourceMap": false
+            },
+            "development": {
+              "outputPath": {
+                "base": "dist/docs-chat",
+                "browser": ""
+              },
+              "optimization": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/docs-chat/**/*.ts", "projects/docs-chat/**/*.html"]
+          }
+        }
+      }
+    },
     "icon-viewer": {
       "projectType": "application",
       "schematics": {

@@ -234,6 +234,10 @@ extra_css:
   - '_src/color-grid.css'
 
 extra_javascript:
+  - path: '_src/docs-chat/polyfills.js'
+    type: module
+  - path: '_src/docs-chat/main.js'
+    type: module
   - '//w3.siemens.com/ote/ote_config.js'
   - '//w3.siemens.com/ote/sinet/ote.js'
   - 'https://assets.adobedtm.com/5dfc7d97c6fb/f16b45bec907/launch-af252bb19983.min.js'
@@ -273,5 +277,17 @@ markdown_extensions:
 
 plugins:
   - material/search
+  - websem-build:
+      dims: 128
+      markdown_reader_path: source/docs/
+      exclude:
+        - api/**
+      index_path: websem/index
+  - websem-search:
+      factor: 1.0
+      index_path: websem/index
+      limit: 10
+      min_score: 0.2
+      mode: hybrid
   - minify_html
   - element-docs-builder
