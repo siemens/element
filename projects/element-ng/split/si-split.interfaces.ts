@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /** */
-type CollapseTo = 'start' | 'end';
+type CollapseTo = 'to-start' | 'to-end';
 type SplitOrientation = 'horizontal' | 'vertical';
 type SplitUnit = 'px' | 'fr';
 

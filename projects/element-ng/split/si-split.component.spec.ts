@@ -40,7 +40,7 @@ class SynchronousMockStore implements UIStateStorage {
         <si-split-part
           #splitPart1
           stateId="one"
-          collapseDirection="start"
+          collapsible="to-start"
           collapseIconClass="element-command-arrow"
           collapseLabel="collapse"
           heading="part 1"
@@ -68,7 +68,7 @@ class SynchronousMockStore implements UIStateStorage {
           showCollapseButton="true"
           showHeader="true"
           [actions]="[]"
-          [collapseDirection]="collapseDirection2()"
+          [collapsible]="collapsible2()"
           [collapseToMinSize]="false"
           [minSize]="0"
           [scale]="scale2()"
@@ -91,7 +91,7 @@ class SynchronousMockStore implements UIStateStorage {
             showCollapseButton="true"
             showHeader="true"
             [actions]="[]"
-            [collapseDirection]="collapseDirection3()"
+            [collapsible]="collapsible3()"
             [collapseToMinSize]="false"
             [minSize]="minSize3()"
             [scale]="scale3()"
@@ -122,12 +122,12 @@ class WrapperComponent {
   readonly size1 = signal(0);
   readonly unit1 = signal<SplitUnit>('px');
   readonly splitPart2 = viewChild.required('splitPart2', { read: ElementRef });
-  readonly collapseDirection2 = signal<CollapseTo>('start');
+  readonly collapsible2 = signal<CollapseTo>('to-start');
   readonly scale2 = signal<Scale>('auto');
   readonly size2 = signal(0);
   readonly unit2 = signal<SplitUnit>('px');
   readonly splitPart3 = viewChild.required('splitPart3', { read: ElementRef });
-  readonly collapseDirection3 = signal<CollapseTo>('start');
+  readonly collapsible3 = signal<CollapseTo>('to-start');
   readonly minSize3 = signal(0);
   readonly scale3 = signal<Scale>('auto');
   readonly size3 = signal(0);
@@ -701,8 +701,8 @@ describe('SiSplitComponent', () => {
         wrapperComponent.setSizes([40, 30, 30], 'fr');
         wrapperComponent.gutterSize.set(32);
         wrapperComponent.containerWidth.set(564);
-        wrapperComponent.collapseDirection2.set('end');
-        wrapperComponent.collapseDirection3.set('end');
+        wrapperComponent.collapsible2.set('to-end');
+        wrapperComponent.collapsible3.set('to-end');
         await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
@@ -722,8 +722,8 @@ describe('SiSplitComponent', () => {
         wrapperComponent.setSizes([40, 20, 40], 'fr');
         wrapperComponent.gutterSize.set(32);
         wrapperComponent.containerWidth.set(564);
-        wrapperComponent.collapseDirection2.set('end');
-        wrapperComponent.collapseDirection3.set('end');
+        wrapperComponent.collapsible2.set('to-end');
+        wrapperComponent.collapsible3.set('to-end');
         wrapperComponent.collapseOthers2.set(false);
         await fixture.whenStable();
 
@@ -863,7 +863,7 @@ describe('SiSplitComponent', () => {
       it('should switch to horizontal orientation after collapsed part on click', async () => {
         wrapperComponent.orientation.set('vertical');
         wrapperComponent.setSizes([40, 30, 30], 'fr');
-        wrapperComponent.collapseDirection3.set('end');
+        wrapperComponent.collapsible3.set('to-end');
         await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
