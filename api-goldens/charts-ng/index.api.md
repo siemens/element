@@ -862,6 +862,11 @@ export const themeElement: {
                 };
             };
         };
+        visualMap: {
+            textStyle: {
+                color: string;
+            };
+        };
         graph: {
             color: string[];
         };
@@ -1259,6 +1264,11 @@ export const themeSupport: {
                             color: string;
                         };
                     };
+                };
+            };
+            visualMap: {
+                textStyle: {
+                    color: string;
                 };
             };
             graph: {

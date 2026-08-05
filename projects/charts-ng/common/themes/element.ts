@@ -375,6 +375,12 @@ export const themeElement = {
         }
       },
 
+      visualMap: {
+        textStyle: {
+          color: textColor
+        }
+      },
+
       // different chart types
       graph: {
         color: colorPalettes.default
