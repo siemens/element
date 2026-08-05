@@ -11,13 +11,13 @@ describe('SiMicrochartDonutComponent', () => {
   let fixture: ComponentFixture<SiMicrochartDonutComponent>;
   let element: HTMLElement;
   const series = signal<MicrochartDonutSeries[]>([
-    { valuePercent: 40, colorToken: 'element-data-4' }
+    { valuePercent: 40, colorToken: 'si-sys-data-categorial-4' }
   ]);
   const radius = signal(7.5);
 
   const multiSeries: MicrochartDonutSeries[] = [
-    { valuePercent: 30, colorToken: 'element-data-1', id: 'series-a' },
-    { valuePercent: 50, colorToken: 'element-data-5', id: 'series-b' }
+    { valuePercent: 30, colorToken: 'si-sys-data-categorial-1', id: 'series-a' },
+    { valuePercent: 50, colorToken: 'si-sys-data-categorial-5', id: 'series-b' }
   ];
 
   const getSvg = (): SVGSVGElement => element.querySelector('svg')!;
@@ -27,7 +27,7 @@ describe('SiMicrochartDonutComponent', () => {
   const getDataPaths = (): SVGPathElement[] => Array.from(element.querySelectorAll('g.data path'));
 
   beforeEach(() => {
-    series.set([{ valuePercent: 40, colorToken: 'element-data-4' }]);
+    series.set([{ valuePercent: 40, colorToken: 'si-sys-data-categorial-4' }]);
     radius.set(7.5);
     fixture = TestBed.createComponent(SiMicrochartDonutComponent, {
       bindings: [inputBinding('series', series), inputBinding('radius', radius)]
@@ -76,8 +76,8 @@ describe('SiMicrochartDonutComponent', () => {
     await fixture.whenStable();
 
     const paths = getDataPaths();
-    expect(paths[0]).toHaveStyle({ stroke: 'var(--element-data-1)' });
-    expect(paths[1]).toHaveStyle({ stroke: 'var(--element-data-5)' });
+    expect(paths[0]).toHaveStyle({ stroke: 'var(--si-sys-data-categorial-1)' });
+    expect(paths[1]).toHaveStyle({ stroke: 'var(--si-sys-data-categorial-5)' });
   });
 
   it('should set data arc stroke-width to arcThickness', async () => {
@@ -97,8 +97,8 @@ describe('SiMicrochartDonutComponent', () => {
 
   it('should skip series with 0 valuePercent', async () => {
     series.set([
-      { valuePercent: 0, colorToken: 'element-data-1' },
-      { valuePercent: 50, colorToken: 'element-data-5' }
+      { valuePercent: 0, colorToken: 'si-sys-data-categorial-1' },
+      { valuePercent: 50, colorToken: 'si-sys-data-categorial-5' }
     ]);
     await fixture.whenStable();
 
@@ -106,7 +106,7 @@ describe('SiMicrochartDonutComponent', () => {
   });
 
   it('should skip series with negative valuePercent', async () => {
-    series.set([{ valuePercent: -10, colorToken: 'element-data-1' }]);
+    series.set([{ valuePercent: -10, colorToken: 'si-sys-data-categorial-1' }]);
     await fixture.whenStable();
 
     expect(getDataPaths()).toHaveLength(0);
