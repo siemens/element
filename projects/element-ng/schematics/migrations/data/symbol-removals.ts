@@ -16,6 +16,11 @@ export interface SymbolRemovalInstruction {
 export const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
   // v49 to v51
   {
+    module: /@siemens\/element-ng\/application-header/,
+    elementSelector: 'si-launchpad-factory',
+    names: ['showLessAppsText']
+  },
+  {
     module: /@siemens\/element-ng\/file-uploader/,
     elementSelector: 'si-file-uploader',
     names: ['uploadTextFileSelect']
