@@ -9,7 +9,7 @@ import { type SiMarkdownRoot } from '../si-markdown.types';
 
 describe('siMarkdownPostprocess', () => {
   it('collects definitions used by link and image references', () => {
-    const processor = new SiMarkdownOptions().makeProcessor();
+    const processor = new SiMarkdownOptions().makeProcessor({});
     const tree = processor.runSync(
       processor.parse(`[foo]: /url "title"
 
@@ -36,7 +36,7 @@ describe('siMarkdownPostprocess', () => {
   });
 
   it('moves definitions to the end and numbers definitions and references by definition order', () => {
-    const processor = new SiMarkdownOptions().makeProcessor();
+    const processor = new SiMarkdownOptions().makeProcessor({});
     const tree = processor.runSync(
       processor.parse(`A reference.[^second]
 
