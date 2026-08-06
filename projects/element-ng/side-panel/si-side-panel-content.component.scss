@@ -147,7 +147,7 @@
       border-start-end-radius: 0 !important; // stylelint-disable-line declaration-no-important
       border-end-end-radius: 0 !important; // stylelint-disable-line declaration-no-important
       background: all-variables.$si-sys-background-1;
-      box-shadow: all-variables.$element-elevation-1;
+      box-shadow: all-variables.$si-sys-effects-shadow-1;
       z-index: 2;
     }
   }

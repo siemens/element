@@ -60,6 +60,10 @@ illustrations, or animations to enhance depth and spatial relationships.
 - `shadow-3`: For elements requiring stronger visual prominence, such as multi-layered highlights.
 - `shadow-4`: Reserved for rare or critical cases requiring maximum elevation distinction.
 
+--8<-- "si-themes.md:si-sys-effects-shadow"
+
+### Elevation (deprecated)
+
 | Elevation | Token                  | Color            | Opacity (light) | Opacity (dark) | X   | Y    | Blur |
 | --------- | ---------------------- | ---------------- | --------------- | -------------- | --- | ---- | ---- |
 | Level 1   | `$element-elevation-1` | `$element-black` | 16%             | 40%            | 0px | 0px  | 4px  |
@@ -73,27 +77,19 @@ illustrations, or animations to enhance depth and spatial relationships.
 
 ## Code ---
 
-The 4 elevation levels (including `none`) in the form of `box-shadow` values can
-be accessed directly by using CSS utility classes.
+Four shadow levels and a `none` option are available as CSS utility classes.
+Choose the level according to the usage guidance above.
 
 <si-docs-component example="elevation/elevation" height="120"></si-docs-component>
 
-### Sass variables
-
-The shadow values for each _Element_ elevation level can also be alternatively
-used as SCSS variables within stylesheets. This also allows you to consume the
-inset alternatives to the outside shadow variants.
+Use a system token when a utility class is not suitable. The Sass variables
+resolve to theme-aware CSS custom properties and automatically adapt to the
+active theme.
 
 ```scss
 @use '@siemens/element-theme/src/styles/variables';
 
-box-shadow: variables.$element-elevation-1;
-box-shadow: variables.$element-elevation-2;
-box-shadow: variables.$element-elevation-3;
-box-shadow: variables.$element-elevation-4;
-
-box-shadow: variables.$element-elevation-inset-1;
-box-shadow: variables.$element-elevation-inset-2;
-box-shadow: variables.$element-elevation-inset-3;
-box-shadow: variables.$element-elevation-inset-4;
+.my-element {
+  box-shadow: variables.$si-sys-effects-shadow-2;
+}
 ```

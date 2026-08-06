@@ -60,7 +60,15 @@ export const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = 
     ['text-body', 'text-primary'],
     ['text-tertiary', 'text-disabled'],
     ['text-muted', 'text-disabled'],
-    ['text-info', 'text-information']
+    ['text-info', 'text-information'],
+    ['shadow', 'shadow-2'],
+    ['shadow-sm', 'shadow-1'],
+    ['shadow-lg', 'shadow-3'],
+    ['elevation-none', 'shadow-none'],
+    ['elevation-1', 'shadow-1'],
+    ['elevation-2', 'shadow-2'],
+    ['elevation-3', 'shadow-3'],
+    ['elevation-4', 'shadow-4']
   ].map(([oldClass, newClass]) => ({
     requiredClasses: [oldClass],
     removeClasses: [oldClass],

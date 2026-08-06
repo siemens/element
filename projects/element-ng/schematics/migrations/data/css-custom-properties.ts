@@ -165,5 +165,49 @@ export const CSS_CUSTOM_PROPERTIES_MIGRATION: CssCustomPropertyInstruction[] = [
   {
     replace: '$si-font-weight-display-4',
     replaceWith: '$si-font-weight-display'
+  },
+  {
+    replace: '$box-shadow',
+    replaceWith: '$si-sys-effects-shadow-2'
+  },
+  {
+    replace: '$box-shadow-sm',
+    replaceWith: '$si-sys-effects-shadow-1'
+  },
+  {
+    replace: '$box-shadow-lg',
+    replaceWith: '$si-sys-effects-shadow-3'
+  },
+  {
+    replace: '$popover-box-shadow',
+    replaceWith: '$si-sys-effects-shadow-3'
+  },
+  {
+    replace: '$modal-content-box-shadow-xs',
+    replaceWith: '$si-sys-effects-shadow-3'
+  },
+  {
+    replace: '$modal-content-box-shadow-sm-up',
+    replaceWith: '$si-sys-effects-shadow-2'
+  },
+  {
+    replace: '$thumbnail-box-shadow',
+    replaceWith: '$si-sys-effects-shadow-1'
+  },
+  {
+    replace: '$element-elevation-1',
+    replaceWith: '$si-sys-effects-shadow-1'
+  },
+  {
+    replace: '$element-elevation-2',
+    replaceWith: '$si-sys-effects-shadow-2'
+  },
+  {
+    replace: '$element-elevation-3',
+    replaceWith: '$si-sys-effects-shadow-3'
+  },
+  {
+    replace: '$element-elevation-4',
+    replaceWith: '$si-sys-effects-shadow-4'
   }
 ];
