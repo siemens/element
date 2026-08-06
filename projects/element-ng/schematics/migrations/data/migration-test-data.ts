@@ -11,8 +11,16 @@ import {
   ProviderFunctionRemovalInstruction,
   SymbolRemovalInstruction,
   ClassMemberReplacementInstruction,
-  ElementClassChangeInstruction
+  ElementClassChangeInstruction,
+  CssCustomPropertyInstruction
 } from './index.js';
+
+const CSS_CUSTOM_PROPERTIES_MIGRATION: CssCustomPropertyInstruction[] = [
+  {
+    replace: '--si-feedback-icon-offset',
+    replaceWith: '--si-feedback-icon-size'
+  }
+];
 
 const SYMBOL_RENAMING_MIGRATION: SymbolRenamingInstruction[] = [
   {
@@ -298,6 +306,7 @@ export const getElementMigrationTestData = (): ElementMigrationData => ({
   attributeSelectorChanges: ATTRIBUTE_SELECTORS_MIGRATION,
   classMemberReplacementChanges: CLASS_MEMBER_REPLACEMENTS_MIGRATION,
   componentPropertyNameChanges: COMPONENT_PROPERTY_NAMES_MIGRATION,
+  cssCustomPropertyChanges: CSS_CUSTOM_PROPERTIES_MIGRATION,
   elementClassChanges: ELEMENT_CLASS_CHANGES_MIGRATION,
   elementSelectorChanges: ELEMENT_SELECTORS_MIGRATION,
   providerFunctionRemovalChanges: PROVIDER_FUNCTION_REMOVALS_MIGRATION,
