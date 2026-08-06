@@ -12,7 +12,7 @@
     class="table-element"
     siDatatableInteraction
     columnMode="force"
-    [rows]="rows"
+    [rows]="rows()"
     [columns]="[
       { name: 'Name', sortable: true },
       { name: 'Role', sortable: true },
@@ -20,7 +20,7 @@
     ]"
     [rowHeight]="tableConfig.rowHeightSmall"
     [footerHeight]="0"
-    [ghostLoadingIndicator]="isLoading > 0"
+    [ghostLoadingIndicator]="dataResource.isLoading()"
     [(offset)]="offset"
   >
     <si-empty-state empty-content icon="element-users" heading="No users to display" />
