@@ -1,0 +1,21 @@
+<div class="p-5 d-flex flex-column gap-6">
+  <section>
+    <h3 class="h5">Compact source</h3>
+    <si-source-chip compact [sources]="compactSources" (sourceClicked)="logEvent($event)" />
+  </section>
+
+  <section>
+    <h3 class="h5">Compact multiple sources</h3>
+    <si-source-chip compact [sources]="compactMultipleSources" (sourceClicked)="logEvent($event)" />
+  </section>
+
+  <section>
+    <h3 class="h5">Sources with icon and label</h3>
+    <si-source-chip
+      showIcon
+      showLabel
+      [sources]="labelledSources"
+      (sourceClicked)="logEvent($event)"
+    />
+  </section>
+</div>
