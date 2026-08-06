@@ -19,6 +19,14 @@ const CSS_CUSTOM_PROPERTIES_MIGRATION: CssCustomPropertyInstruction[] = [
   {
     replace: '--si-feedback-icon-offset',
     replaceWith: '--si-feedback-icon-size'
+  },
+  {
+    replace: '$si-font-size-title-1-bold',
+    replaceWith: '$si-font-size-h4-bold'
+  },
+  {
+    replace: '$si-font-weight-title-2',
+    replaceWith: '$si-font-weight-h5'
   }
 ];
 
