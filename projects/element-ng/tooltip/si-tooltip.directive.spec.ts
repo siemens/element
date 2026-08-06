@@ -270,6 +270,7 @@ describe('SiTooltipDirective', () => {
       component = fixture.componentInstance;
       fixture.detectChanges();
       button = component.anchor().nativeElement;
+      button.style.pointerEvents = 'none';
       vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
       component.createTooltip();
     });
