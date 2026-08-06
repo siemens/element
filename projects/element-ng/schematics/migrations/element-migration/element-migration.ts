@@ -11,10 +11,12 @@ import {
   applyElementClassMigration,
   applyClassMemberReplacementMigration,
   applyComponentPropertyNameMigration,
+  applyCssCustomPropertyMigration,
   applyElementSelectorMigration,
   applyProviderFunctionRemovalMigration,
   applySymbolRemovalMigration,
-  applySymbolRenamingMigration
+  applySymbolRenamingMigration,
+  migrateCssCustomPropertiesInExternalFiles
 } from '../utilities/index.js';
 
 export const elementMigrationRule = (
@@ -37,6 +39,7 @@ export const elementMigrationRule = (
 
       const {
         componentPropertyNameChanges,
+        cssCustomPropertyChanges,
         symbolRenamingChanges,
         attributeSelectorChanges,
         elementSelectorChanges,
@@ -47,6 +50,7 @@ export const elementMigrationRule = (
       } = migrationData;
 
       applyComponentPropertyNameMigration(migrationContext, componentPropertyNameChanges);
+      applyCssCustomPropertyMigration(migrationContext, cssCustomPropertyChanges);
       applySymbolRenamingMigration(migrationContext, symbolRenamingChanges);
       applyAttributeSelectorMigration(migrationContext, attributeSelectorChanges);
       applyElementSelectorMigration(migrationContext, elementSelectorChanges);
@@ -57,6 +61,12 @@ export const elementMigrationRule = (
 
       tree.commitUpdate(recorder);
     }
+
+    migrateCssCustomPropertiesInExternalFiles(
+      tree,
+      options.path,
+      migrationData.cssCustomPropertyChanges
+    );
 
     return tree;
   };
