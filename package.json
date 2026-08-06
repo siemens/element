@@ -35,7 +35,7 @@
     "build:examples": "ng build",
     "build:examples:prod": "ng build --configuration production",
     "build:examples:aot": "ng build --configuration aot",
-    "build:all": "pnpm run translate:build && pnpm run lib:build && pnpm run schematics:build && pnpm run live-preview:build && pnpm run charts:build && pnpm run native-charts:build && pnpm run dashboards:build && pnpm run map-styles:build && pnpm run maps:build",
+    "build:all": "pnpm run translate:build && pnpm run \"/^(lib|schematics|live-preview|charts|native-charts|dashboards|map-styles|maps):build$/\"",
     "build:all:update-translatable-keys": "pnpm --filter . exec update-translatable-keys",
     "lib:build": "ng build element-ng && cpy \"projects/element-ng/*.scss\" \"./dist/@siemens/element-ng\" && cpy \"README.md\" \"./dist/@siemens/element-ng/\"",
     "lib:test": "ng test element-ng",
