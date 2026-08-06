@@ -56,6 +56,7 @@ describe('SiTooltipDirective', () => {
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+      button.style.pointerEvents = 'none';
       vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
       fixture.detectChanges();
     });
