@@ -4,6 +4,16 @@ Here's a **comprehensive example** of markdown content with various formatting o
 
 This is a separate paragraph that demonstrates how double line breaks create proper paragraph spacing.
 
+## Citations
+
+A citation can be resolved by reference.[reference-citation]
+
+xAI style citation references inside a link.[[reference-citation]](https://example.com/report)
+
+A citation can also be resolved by its source position.[position-citation]
+
+Adjacent references are grouped together.[citation-one][citation-three][citation-two]
+
 ## Code Examples
 
 You can use inline code like `console.log('Hello World')` or multi-line code blocks:

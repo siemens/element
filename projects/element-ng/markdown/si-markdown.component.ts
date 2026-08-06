@@ -9,7 +9,8 @@ import {
   viewChildren,
   contentChildren,
   computed,
-  TemplateRef
+  TemplateRef,
+  output
 } from '@angular/core';
 import { type Root } from 'mdast';
 import { Processor } from 'unified';
@@ -18,7 +19,7 @@ import { SiMarkdownFragmentComponent } from './si-markdown-fragment.component';
 import { SiMarkdownOptions } from './si-markdown-options';
 import { SiMarkdownTemplateDirective } from './si-markdown-template.directive';
 import { SI_MARKDOWN_CONTROL, SiMarkdownControl } from './si-markdown-token';
-import { SiMarkdownRoot } from './si-markdown.types';
+import { SiMarkdownCitation, SiMarkdownMetadata, SiMarkdownRoot } from './si-markdown.types';
 import { computedAsync, throttledSignal } from './utils/signal-utils';
 
 /**
@@ -56,12 +57,17 @@ export class SiMarkdownComponent implements SiMarkdownControl {
    * Options to control rendering. Can be shared across multiple instances.
    */
   readonly options = input<SiMarkdownOptions>();
+  /** Citation metadata used to create citations. */
+  readonly citations = input<SiMarkdownCitation[]>();
   /**
    * Debug mode. When true, unknown node types will be displayed along with the node
    * as JSON.
    * @defaultValue false
    */
   readonly debug = input(false);
+
+  /** Emitted by extension components. */
+  readonly extensionEvent = output<{ name: string; data: any }>();
 
   protected baseId = `__si-markdown-${SiMarkdownComponent.idCounter++}`;
 
@@ -89,11 +95,14 @@ export class SiMarkdownComponent implements SiMarkdownControl {
     return map;
   });
 
+  /** Gives access to metadata in extension components */
+  readonly meta = computed<SiMarkdownMetadata>(() => ({ citations: this.citations() }));
+
   private readonly actualOptions = computed(() => this.options() ?? new SiMarkdownOptions());
   protected readonly config = computed(() => {
     const options = this.actualOptions();
     return {
-      processor: options.makeProcessor(),
+      processor: options.makeProcessor(this.meta()),
       typeHandlers: options.getTypeHandlers(),
       codeTypeHandlers: options.getCodeTypeHandlers()
     };

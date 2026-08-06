@@ -2,16 +2,23 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { makeSiMarkdownOptions, SiMarkdownComponent } from '@siemens/element-ng/markdown';
+import {
+  makeSiMarkdownOptions,
+  SiMarkdownCitation,
+  SiMarkdownComponent
+} from '@siemens/element-ng/markdown';
+import { siMarkdownCitations } from '@siemens/element-ng/markdown/extensions/citations';
 import { siMarkdownMathKaTeX } from '@siemens/element-ng/markdown/extensions/katex';
 import { siMarkdownMermaid } from '@siemens/element-ng/markdown/extensions/mermaid';
 import { siMarkdownHighlightJs } from '@siemens/element-ng/markdown/hightlighter/highlightjs';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
+import { LOG_EVENT } from '@siemens/live-preview';
 import remarkGemoji from 'remark-gemoji';
 
 interface ScrollMapPoint {
@@ -19,12 +26,15 @@ interface ScrollMapPoint {
   outputTop: number;
 }
 
+const positionCitationMarker = '[position-citation]';
+
 @Component({
   selector: 'app-sample',
   imports: [
+    FormsModule,
+    JsonPipe,
     SiMarkdownComponent,
     SiNumberInputComponent,
-    FormsModule,
     SiFormItemComponent,
     SiAccordionComponent,
     SiCollapsiblePanelComponent
@@ -33,11 +43,15 @@ interface ScrollMapPoint {
 })
 export class SampleComponent implements OnInit {
   private readonly http = inject(HttpClient);
+  protected logEvent = inject(LOG_EVENT);
 
   protected readonly markdownOptions = computed(() => {
     const opts = makeSiMarkdownOptions();
     if (this.useHighlightJs()) {
       opts.setCodeHighlighter(siMarkdownHighlightJs({ autoDetectLanguage: this.autoDetectLang() }));
+    }
+    if (this.useCitations()) {
+      opts.installExtension(siMarkdownCitations());
     }
     if (this.useKatex()) {
       opts.installExtension(
@@ -55,8 +69,54 @@ export class SampleComponent implements OnInit {
     return opts;
   });
 
+  private readonly lorem =
+    'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non ab amet architecto aspernatur corrupti harum hic, vero ducimus cumque eos delectus doloribus.';
   protected readonly markdownText = signal<string>('');
   protected readonly markdownTextForRenderer = signal<string>('');
+  protected readonly citations = computed<SiMarkdownCitation[]>(() => {
+    const markdown = this.markdownText();
+    const positionStart = markdown.indexOf(positionCitationMarker);
+    const citations: SiMarkdownCitation[] = [
+      {
+        identifier: 'reference-citation',
+        name: 'Reference citation',
+        url: 'https://element.siemens.io',
+        description: 'This is a reference to the Element home page.'
+      },
+      {
+        identifier: 'citation-one',
+        name: 'First source with long name',
+        url: 'https://example.com/1',
+        description: this.lorem
+      },
+      {
+        identifier: 'citation-two',
+        name: 'Second source',
+        url: 'https://example.com/2',
+        description: this.lorem
+      },
+      {
+        identifier: 'citation-three',
+        name: 'Third source',
+        url: 'https://example.com/3',
+        description: this.lorem
+      }
+    ];
+
+    if (positionStart !== -1) {
+      citations.push({
+        name: 'Position citation',
+        url: 'https://example.com/position',
+        description: this.lorem,
+        position: {
+          startIndex: positionStart,
+          endIndex: positionStart + positionCitationMarker.length
+        }
+      });
+    }
+
+    return citations;
+  });
   protected readonly streaming = signal(false);
   protected readonly streamIterationDelay = signal(30);
   protected readonly streamCharsPerIteration = signal(15);
@@ -65,6 +125,7 @@ export class SampleComponent implements OnInit {
 
   protected readonly useHighlightJs = signal(true);
   protected readonly autoDetectLang = signal(true);
+  protected readonly useCitations = signal(true);
   protected readonly useKatex = signal(true);
   protected readonly useMermaid = signal(true);
   protected readonly useGemojis = signal(true);
