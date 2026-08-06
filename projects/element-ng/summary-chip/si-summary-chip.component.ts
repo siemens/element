@@ -44,6 +44,12 @@ export class SiSummaryChipComponent {
    * @defaultValue false
    */
   readonly hideLabel = input(false, { transform: booleanAttribute });
+  /**
+   * Whether the chip exposes selectable checkbox semantics.
+   * Set to false when the chip is used as presentational content within another interactive element.
+   * @defaultValue true
+   */
+  readonly interactive = input(true, { transform: booleanAttribute });
 
   protected readonly statusIcon = computed(() => {
     const status = this.status();
@@ -58,7 +64,7 @@ export class SiSummaryChipComponent {
   });
 
   protected toggleSelected(): void {
-    if (!this.disabled()) {
+    if (this.interactive() && !this.disabled()) {
       this.selected.set(!this.selected());
     }
   }

@@ -26,6 +26,7 @@ export class SiSummaryChipComponent {
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly hideLabel: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
+    readonly interactive: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly label: _angular_core.InputSignal<TranslatableString>;
     readonly selected: _angular_core.ModelSignal<boolean>;
     readonly stackedColor: _angular_core.InputSignal<string | undefined>;

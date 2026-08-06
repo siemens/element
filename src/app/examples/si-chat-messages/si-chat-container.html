@@ -16,7 +16,47 @@
           [actions]="getMessagePrimaryActions(message)"
           [secondaryActions]="getMessageSecondaryActions(message)"
           [contentFormatter]="markdownRenderer"
-        />
+        >
+          @if (message.sources?.length) {
+            <ng-container siChatMessageAction>
+              <button
+                type="button"
+                class="source-citation-trigger"
+                [siPopover]="sourcesPopover"
+                siPopoverContainerClass="source-citation-popover"
+                aria-label="View sources"
+              >
+                <si-summary-chip
+                  [icon]="icons.elementGlobal"
+                  label="Sources"
+                  [interactive]="false"
+                />
+              </button>
+
+              <ng-template #sourcesPopover>
+                <si-popover-title class="visually-hidden">Sources</si-popover-title>
+                <si-popover-body>
+                  <ul class="source-list list-unstyled mb-0">
+                    @for (source of message.sources; track source.url) {
+                      <li>
+                        <button
+                          type="button"
+                          class="list-item list-item-action"
+                          (click)="openSource(source)"
+                        >
+                          <h5 class="list-item-title">{{ source.name }}</h5>
+                          @if (source.quote ?? source.description; as description) {
+                            <p class="list-item-description">{{ description }}</p>
+                          }
+                        </button>
+                      </li>
+                    }
+                  </ul>
+                </si-popover-body>
+              </ng-template>
+            </ng-container>
+          }
+        </si-ai-message>
       }
       @if (message.type === 'custom') {
         <si-chat-message alignment="start" actionsPosition="bottom">

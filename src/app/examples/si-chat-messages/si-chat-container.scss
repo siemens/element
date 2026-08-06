@@ -1,0 +1,61 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+.source-citation-trigger {
+  display: inline-flex;
+  align-items: center;
+  block-size: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 1rem;
+  background: transparent;
+  color: inherit;
+  text-align: start;
+
+  &:focus-visible {
+    @include variables.make-outline-focus();
+  }
+}
+
+:host ::ng-deep si-summary-chip .chip {
+  box-sizing: border-box;
+  block-size: 2rem;
+  min-block-size: 2rem;
+  padding-block: 0;
+  padding-inline: map.get(variables.$spacers, 4);
+  gap: map.get(variables.$spacers, 2);
+}
+
+:host ::ng-deep si-summary-chip .si-body {
+  font-size: variables.$si-font-size-body;
+  line-height: variables.$si-line-height-body;
+}
+
+:host ::ng-deep si-summary-chip .icon {
+  font-size: variables.$si-icon-font-size;
+}
+
+::ng-deep .source-citation-popover {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 14.375rem;
+  max-inline-size: 25rem;
+  max-block-size: 25rem;
+}
+
+::ng-deep .source-citation-popover .popover-body {
+  min-block-size: 0;
+  padding: map.get(variables.$spacers, 2);
+  overflow-y: auto;
+}
+
+.source-list {
+  display: flex;
+  flex-direction: column;
+  gap: map.get(variables.$spacers, 4);
+}
+
+.source-list .list-item {
+  padding: map.get(variables.$spacers, 4);
+}

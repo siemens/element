@@ -6,6 +6,7 @@ import { CdkMenuTrigger } from '@angular/cdk/menu';
 import {
   booleanAttribute,
   Component,
+  contentChildren,
   effect,
   input,
   viewChild,
@@ -58,6 +59,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
 export class SiAiMessageComponent {
   protected readonly formattedContent = viewChild<ElementRef<HTMLDivElement>>('formattedContent');
   protected readonly icons = addIcons({ elementOptionsVertical });
+  protected readonly projectedActions = contentChildren(SiChatMessageActionDirective);
 
   /**
    * The AI-generated message content
