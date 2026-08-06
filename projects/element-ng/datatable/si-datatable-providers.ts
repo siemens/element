@@ -3,68 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { Provider } from '@angular/core';
-
-// Copy of NgxDatatableConfig from @siemens/ngx-datatable to maintain compatibility
-// with v22 and earlier where `NgxDatatableConfig` is not defined.
-// See https://github.com/siemens/ngx-datatable/blob/main/projects/ngx-datatable/src/lib/ngx-datatable.config.ts#L50.
-/** Interface for messages to override default table texts. */
-interface NgxDatatableMessages {
-  /** Message to show when the array is present but empty */
-  emptyMessage: string;
-  /** Footer total message */
-  totalMessage: string;
-  /** Footer selected message */
-  selectedMessage: string;
-  /** Pager screen reader message for the first page button */
-  ariaFirstPageMessage: string;
-  /**
-   * Pager screen reader message for the n-th page button.
-   * It will be rendered as: `{{ariaPageNMessage}} {{n}}`.
-   */
-  ariaPageNMessage: string;
-  /** Pager screen reader message for the previous page button */
-  ariaPreviousPageMessage: string;
-  /** Pager screen reader message for the next page button */
-  ariaNextPageMessage: string;
-  /** Pager screen reader message for the last page button */
-  ariaLastPageMessage: string;
-  /** Row checkbox aria label */
-  ariaRowCheckboxMessage: string;
-  /** Header checkbox aria label */
-  ariaHeaderCheckboxMessage: string;
-  /** Group header checkbox aria label */
-  ariaGroupHeaderCheckboxMessage: string;
-}
-/** CSS classes for icons that override the default table icons. */
-interface NgxDatatableCssClasses {
-  sortAscending: string;
-  sortDescending: string;
-  sortUnset: string;
-  pagerLeftArrow: string;
-  pagerRightArrow: string;
-  pagerPrevious: string;
-  pagerNext: string;
-  treeStatusLoading: string;
-  treeStatusExpanded: string;
-  treeStatusCollapsed: string;
-}
-/**
- * Interface definition for ngx-datatable global configuration
- */
-export interface NgxDatatableConfig {
-  messages?: NgxDatatableMessages;
-  cssClasses?: NgxDatatableCssClasses;
-  headerHeight?: number;
-  footerHeight?: number;
-  rowHeight?: number;
-  defaultColumnWidth?: number;
-}
+import {
+  type NgxDatatableConfig,
+  providedNgxDatatableConfig
+} from '@siemens/ngx-datatable';
 
 /**
- * @deprecated Use NgxDatatableConfig from \@siemens/ngx-datatable instead from v23 onward.
+ * Configuration interface for \@siemens/ngx-datatable.
  *
- * Configuration interface for the upstream \@siemens/ngx-datatable project.
- * See https://github.com/siemens/ngx-datatable/blob/main/projects/ngx-datatable/src/lib/ngx-datatable.config.ts#L50.
+ * @deprecated Import `NgxDatatableConfig` directly from `\@siemens/ngx-datatable` instead.
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface INgxDatatableConfig extends NgxDatatableConfig {}
@@ -110,7 +57,12 @@ export const SI_DATATABLE_CONFIG: SiDatatableConfig = {
  *
  *  @param configOverrides - overrides that will be merged with the element configuration.
  */
-export const provideSiDatatableConfig = (configOverrides?: NgxDatatableConfig): Provider => ({
-  provide: 'configuration',
-  useValue: { ...SI_DATATABLE_CONFIG, ...configOverrides }
-});
+export const provideSiDatatableConfig = (configOverrides?: NgxDatatableConfig): Provider =>
+  providedNgxDatatableConfig({ ...SI_DATATABLE_CONFIG, ...configOverrides });
+
+/**
+ * Configuration interface for \@siemens/ngx-datatable.
+ *
+ * @deprecated Import `NgxDatatableConfig` directly from `\@siemens/ngx-datatable` instead.
+ */
+export {NgxDatatableConfig};
