@@ -15,6 +15,14 @@ export const CSS_CUSTOM_PROPERTIES_MIGRATION: CssCustomPropertyInstruction[] = [
     replaceWith: '--si-feedback-icon-size'
   },
   {
+    replace: '--element-base-input-experimental',
+    replaceWith: '--element-base-input'
+  },
+  {
+    replace: '$element-base-input-experimental',
+    replaceWith: '$element-base-input'
+  },
+  {
     replace: '$si-font-size-h1-black',
     replaceWith: '$si-font-size-h1-bold'
   },
