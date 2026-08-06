@@ -77,7 +77,7 @@ All unit tests use **Vitest**. Do NOT use `npx ng test` or Karma/Jasmine command
 To run a specific test file, use `--include` and `--no-watch`:
 
 ```shell
-pnpm lib:test -- --include='**/component-name/component-name.component.spec.ts' --no-watch
+pnpm lib:test --include='**/component-name/component-name.component.spec.ts' --no-watch
 ```
 
 Only these CLI flags are supported: `--include` (glob filter) and `--no-watch` (run once).
