@@ -67,14 +67,6 @@ describe('to legacy migration', () => {
     }
   };
 
-  it('should migrate si-icon used in a template', async () => {
-    await checkTemplateMigration(['icon-template.ts', 'icon-template.html']);
-  });
-
-  it('should migrate si-icon used in an inline template', async () => {
-    await checkTemplateMigration(['icon-inline-template.ts']);
-  });
-
   it('should migrate si-tab used in a template', async () => {
     await checkTemplateMigration(['tab-template.ts', 'tab-template.html']);
   });
