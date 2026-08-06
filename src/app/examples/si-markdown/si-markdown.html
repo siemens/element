@@ -4,6 +4,9 @@
       heading="Options"
       contentCssClasses="px-6 pb-5 pt-4 d-flex gap-5 align-items-end"
     >
+      <si-form-item label="Use citations" class="mb-0 py-4">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="useCitations" />
+      </si-form-item>
       <si-form-item label="Use Highlight.js" class="mb-0 py-4">
         <input type="checkbox" class="form-check-input" [(ngModel)]="useHighlightJs" />
       </si-form-item>
@@ -68,6 +71,9 @@
         <button type="button" class="btn btn-secondary" (click)="start()">Start streaming</button>
       }
     </si-collapsible-panel>
+    <si-collapsible-panel heading="Citations" contentCssClasses="px-6 pb-5 pt-4">
+      <pre class="m-0" style="max-block-size: 300px">{{ citations() | json }}</pre>
+    </si-collapsible-panel>
   </si-accordion>
 
   <div class="flex-fill d-flex">
@@ -95,7 +101,9 @@
           class="flex-fill"
           [markdown]="markdownTextForRenderer()"
           [options]="markdownOptions()"
+          [citations]="citations()"
           [debug]="debug()"
+          (extensionEvent)="logEvent($event)"
         />
       </div>
     </div>

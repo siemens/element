@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { InputSignal, Type } from '@angular/core';
+import { SourceReference } from '@siemens/element-ng/source-chip';
 import {
   type Definition,
   type FootnoteDefinition,
@@ -53,12 +54,14 @@ export type SiMarkdownHighlighter = ComponentWithOptions<SiMarkdownHighlighterCo
 
 export type UnifiedPlugin = Plugin<any> | Transformer<any> | Preset | PluggableList;
 
+export type UnifiedPluginOptions = ((meta: SiMarkdownMetadata) => any) | any;
+
 /** Combination of unified plugin with options */
 export interface PluginWithOptions {
   /** The plugin */
   plugin: UnifiedPlugin;
   /** Options passed during plugin registration */
-  options?: any;
+  options?: UnifiedPluginOptions;
 }
 
 /** An extension to the si-markdown component */
@@ -71,15 +74,47 @@ export interface SiMarkdownExtension {
   codeTypes?: TypeHandler[];
 }
 
+/** Citation metadata associated with a markdown response. */
+export interface SiMarkdownCitation extends SourceReference {
+  /** Identifier referenced by bracket notation, such as `[source-1]`. */
+  identifier?: string;
+  /** Zero-based, end-exclusive source range of the citation reference in the markdown source. */
+  position?: {
+    startIndex: number;
+    endIndex: number;
+  };
+}
+
+/** Options passed to makeProcessor() */
+export interface SiMarkdownMetadata {
+  citations?: SiMarkdownCitation[];
+}
+
+/** Inline node that references an item in the source citation array. */
+export interface Citation extends Node {
+  type: 'citation';
+  citationIndex: number;
+  /** Text replaced by a position-based citation. */
+  text?: string;
+}
+
+/** Container for one or more adjacent citation nodes. */
+export interface Citations extends Node {
+  type: 'citations';
+  children: Citation[];
+}
+
 /** Extra node for collecting all footnotes */
 export interface Footnotes extends Parent {
   type: 'footnotes';
   children: FootnoteDefinition[];
 }
 
+export type ExtendedRootContent = RootContent | Footnotes | Citations;
+
 /** Extended root with references */
 export type SiMarkdownRoot = Omit<Root, 'children'> & {
-  children: (RootContent | Footnotes)[];
+  children: ExtendedRootContent[];
   references?: {
     footnoteDefinitions?: Map<string, FootnoteDefinition>;
     definitions?: Map<string, Definition>;
