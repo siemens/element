@@ -27,6 +27,13 @@ import { Part, ThemeDefaultParams, createPart } from 'ag-grid-community';
  */
 export const elementColorScheme: Part = createPart({
   feature: 'colorScheme',
+  css: `
+    .ag-header-cell:focus-visible,
+    .ag-header-group-cell:focus-visible {
+      outline: var(--element-button-focus-width) solid var(--element-focus-default);
+      outline-offset: calc(-1 * var(--element-button-focus-width));
+    }
+  `,
   params: {
     // Typography
     buttonFontWeight: '600',
