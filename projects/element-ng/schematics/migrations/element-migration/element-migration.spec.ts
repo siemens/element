@@ -171,6 +171,10 @@ describe('to legacy migration', () => {
     ]);
   });
 
+  it('should rename direct and module-prefixed typography variables', async () => {
+    await checkTemplateMigration(['typography-variables.scss']);
+  });
+
   it('should remove provideIconConfig from a providers array and drop its import', async () => {
     await checkTemplateMigration(['provide-icon-config.ts']);
   });
