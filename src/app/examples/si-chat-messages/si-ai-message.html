@@ -6,7 +6,36 @@
     [actions]="actions"
     [secondaryActions]="secondaryActions"
     [loading]="false"
-  />
+  >
+    <button
+      type="button"
+      class="source-citation-trigger"
+      siChatMessageAction
+      [siPopover]="sourcesPopover"
+      siPopoverContainerClass="source-citation-popover"
+      aria-label="View sources"
+    >
+      <si-summary-chip [icon]="icons.elementGlobal" label="Sources" [interactive]="false" />
+    </button>
+
+    <ng-template #sourcesPopover>
+      <si-popover-title class="visually-hidden">Sources</si-popover-title>
+      <si-popover-body>
+        <ul class="source-list list-unstyled mb-0">
+          @for (source of sources; track source.url) {
+            <li>
+              <button type="button" class="list-item list-item-action" (click)="openSource(source)">
+                <h5 class="list-item-title">{{ source.name }}</h5>
+                @if (source.quote ?? source.description; as description) {
+                  <p class="list-item-description">{{ description }}</p>
+                }
+              </button>
+            </li>
+          }
+        </ul>
+      </si-popover-body>
+    </ng-template>
+  </si-ai-message>
 
   <div class="mt-5">
     <si-ai-message [loading]="true" />

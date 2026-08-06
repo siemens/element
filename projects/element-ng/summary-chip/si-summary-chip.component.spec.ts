@@ -16,6 +16,7 @@ describe('SiSummaryChipComponent', () => {
   let hideLabel: WritableSignal<boolean>;
   let selected: WritableSignal<boolean>;
   let disabled: WritableSignal<boolean>;
+  let interactive: WritableSignal<boolean>;
 
   beforeEach(() => {
     label = signal('test label');
@@ -24,6 +25,7 @@ describe('SiSummaryChipComponent', () => {
     hideLabel = signal(false);
     selected = signal(false);
     disabled = signal(false);
+    interactive = signal(true);
     fixture = TestBed.createComponent(SiSummaryChipComponent, {
       bindings: [
         inputBinding('label', label),
@@ -31,6 +33,7 @@ describe('SiSummaryChipComponent', () => {
         inputBinding('icon', icon),
         inputBinding('hideLabel', hideLabel),
         inputBinding('disabled', disabled),
+        inputBinding('interactive', interactive),
         twoWayBinding('selected', selected)
       ]
     });
@@ -77,6 +80,20 @@ describe('SiSummaryChipComponent', () => {
     expect(selected()).toBe(false);
 
     element.querySelector('div')?.click();
+    expect(selected()).toBe(false);
+  });
+
+  it('should be non-interactive without checkbox semantics when requested', async () => {
+    interactive.set(false);
+    await fixture.whenStable();
+
+    const chip = element.querySelector('.chip') as HTMLElement;
+    chip.click();
+
+    expect(chip).not.toHaveAttribute('role');
+    expect(chip).not.toHaveAttribute('tabindex');
+    expect(chip).not.toHaveAttribute('aria-disabled');
+    expect(chip).not.toHaveAttribute('aria-checked');
     expect(selected()).toBe(false);
   });
 });

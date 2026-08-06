@@ -9,6 +9,7 @@ import {
   elementCopy,
   elementDelete,
   elementExport,
+  elementGlobal,
   elementRefresh,
   elementShare,
   elementThumbsDown,
@@ -30,6 +31,7 @@ import {
   PromptCategory,
   PromptSuggestion
 } from '@siemens/element-ng/chat-messages';
+import { SiSource } from '@siemens/element-ng/common';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
@@ -38,6 +40,12 @@ import {
   SiMarkdownRendererComponent
 } from '@siemens/element-ng/markdown-renderer';
 import { MenuItem } from '@siemens/element-ng/menu';
+import {
+  SiPopoverBodyDirective,
+  SiPopoverDirective,
+  SiPopoverTitleDirective
+} from '@siemens/element-ng/popover';
+import { SiSummaryChipComponent } from '@siemens/element-ng/summary-chip';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -46,6 +54,7 @@ interface ChatMessage {
   content: string;
   attachments?: Attachment[];
   actions?: MessageAction[];
+  sources?: SiSource[];
 }
 
 @Component({
@@ -61,9 +70,14 @@ interface ChatMessage {
     SiMarkdownRendererComponent,
     SiChatMessageActionDirective,
     SiAttachmentListComponent,
-    SiAiWelcomeScreenComponent
+    SiAiWelcomeScreenComponent,
+    SiPopoverBodyDirective,
+    SiPopoverDirective,
+    SiPopoverTitleDirective,
+    SiSummaryChipComponent
   ],
-  templateUrl: './si-chat-container.html'
+  templateUrl: './si-chat-container.html',
+  styleUrl: './si-chat-container.scss'
 })
 export class SampleComponent {
   private logEvent = inject(LOG_EVENT);
@@ -81,6 +95,7 @@ export class SampleComponent {
     elementThumbsUp,
     elementThumbsDown,
     elementCopy,
+    elementGlobal,
     elementRefresh,
     elementBookmark,
     elementShare
@@ -165,7 +180,19 @@ export class SampleComponent {
       content: `I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
 
   Let me examine the structure and provide guidance.`,
-      actions: this.aiActions
+      actions: this.aiActions,
+      sources: [
+        {
+          name: 'Data Analysis Guide',
+          url: 'https://example.com/guides/data-analysis',
+          quote: 'Start by validating the structure and types of the input data.'
+        },
+        {
+          name: 'Python Performance Manual',
+          url: 'https://example.com/manuals/python-performance',
+          description: 'Recommendations for processing large datasets efficiently.'
+        }
+      ]
     },
     {
       type: 'user',
@@ -183,7 +210,14 @@ export class SampleComponent {
     {
       type: 'ai',
       content: "Great question! When analyzing large datasets, it's crucial to focus on...",
-      actions: this.aiActions
+      actions: this.aiActions,
+      sources: [
+        {
+          name: 'Large Dataset Processing',
+          url: 'https://example.com/guides/large-datasets',
+          description: 'Techniques for scalable data processing and memory management.'
+        }
+      ]
     }
   ]);
 
@@ -335,7 +369,14 @@ export class SampleComponent {
           {
             type: 'ai',
             content: response,
-            actions: this.aiActions
+            actions: this.aiActions,
+            sources: [
+              {
+                name: 'AI Assistant Guide',
+                url: 'https://example.com/guides/ai-assistant',
+                description: 'General guidance for working with the AI assistant.'
+              }
+            ]
           }
         ]);
         this.loading.set(false);
@@ -380,5 +421,10 @@ export class SampleComponent {
 
   protected getMessageSecondaryActions(message: ChatMessage): MenuItem[] {
     return this.getMessageActions(message).secondary;
+  }
+
+  protected openSource(source: SiSource): void {
+    this.logEvent(`Open source: ${source.name}`);
+    window.open(source.url, '_blank', 'noopener');
   }
 }

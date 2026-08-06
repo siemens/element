@@ -7,21 +7,41 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {
   elementBookmark,
   elementCopy,
+  elementGlobal,
   elementRefresh,
   elementShare,
   elementThumbsDown,
   elementThumbsUp
 } from '@siemens/element-icons';
-import { MessageAction, SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
+import {
+  MessageAction,
+  SiAiMessageComponent,
+  SiChatMessageActionDirective
+} from '@siemens/element-ng/chat-messages';
+import { SiSource } from '@siemens/element-ng/common';
 import { addIcons } from '@siemens/element-ng/icon';
 import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { MenuItemAction } from '@siemens/element-ng/menu';
+import {
+  SiPopoverBodyDirective,
+  SiPopoverDirective,
+  SiPopoverTitleDirective
+} from '@siemens/element-ng/popover';
+import { SiSummaryChipComponent } from '@siemens/element-ng/summary-chip';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiAiMessageComponent],
-  templateUrl: './si-ai-message.html'
+  imports: [
+    SiAiMessageComponent,
+    SiChatMessageActionDirective,
+    SiPopoverBodyDirective,
+    SiPopoverDirective,
+    SiPopoverTitleDirective,
+    SiSummaryChipComponent
+  ],
+  templateUrl: './si-ai-message.html',
+  styleUrl: './si-ai-message.scss'
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
@@ -33,6 +53,7 @@ export class SampleComponent {
     elementThumbsUp,
     elementThumbsDown,
     elementCopy,
+    elementGlobal,
     elementRefresh,
     elementBookmark,
     elementShare
@@ -44,6 +65,19 @@ You can use \`inline code\` and create lists:
 
 - First item
 - Second item`;
+
+  sources: SiSource[] = [
+    {
+      name: 'Connected Devices Guide',
+      url: 'https://example.com/guides/connected-devices',
+      quote: 'Up to 250 devices may be connected to one controller.'
+    },
+    {
+      name: 'System Configuration Manual',
+      url: 'https://example.com/manuals/system-configuration',
+      description: 'Recommendations for configuring production installations.'
+    }
+  ];
 
   actions: MessageAction[] = [
     {
@@ -83,4 +117,9 @@ You can use \`inline code\` and create lists:
       action: (messageId: string) => this.logEvent(`Share message ${messageId}`)
     }
   ];
+
+  openSource(source: SiSource): void {
+    this.logEvent(`Open source: ${source.name}`);
+    window.open(source.url, '_blank', 'noopener');
+  }
 }

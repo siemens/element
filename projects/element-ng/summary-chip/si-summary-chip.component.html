@@ -1,9 +1,9 @@
 <div
   class="chip"
-  role="checkbox"
-  [attr.tabindex]="disabled() ? '' : '0'"
-  [attr.aria-disabled]="disabled()"
-  [attr.aria-checked]="selected()"
+  [attr.role]="interactive() ? 'checkbox' : null"
+  [attr.tabindex]="interactive() && !disabled() ? '0' : null"
+  [attr.aria-disabled]="interactive() ? disabled() : null"
+  [attr.aria-checked]="interactive() ? selected() : null"
   [class.selected]="selected()"
   [class.disabled]="disabled()"
   (click)="toggleSelected()"
