@@ -9,6 +9,11 @@
  */
 export interface ElementClassChangeInstruction {
   /**
+   * Element selector that this migration applies to
+   */
+  elementSelector?: string;
+
+  /**
    * Classes that must be present for this migration to apply
    */
   requiredClasses: string[];
@@ -41,6 +46,13 @@ export const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = 
     requiredClasses: ['btn-primary-ghost'],
     removeClasses: ['btn-primary-ghost'],
     addClasses: ['btn-ghost']
+  },
+  {
+    elementSelector: 'si-select',
+    requiredClasses: [],
+    excludedClasses: ['form-control', 'btn'],
+    removeClasses: [],
+    addClasses: ['btn', 'btn-ghost']
   },
   {
     requiredClasses: ['si-h1-black'],
