@@ -11,6 +11,7 @@ si-chat-message {
   // Because of the transparent background we need to remove the padding
   --chat-message-bubble-padding: 0;
 
+  line-height: 1.25rem;
   margin-block-end: -1 * map.get(variables.$spacers, 2);
 }
 

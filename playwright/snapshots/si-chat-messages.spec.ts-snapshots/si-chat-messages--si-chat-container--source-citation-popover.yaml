@@ -1,0 +1,54 @@
+- group:
+  - button "data-analysis.py"
+- group:
+  - button "dataset.csv"
+- paragraph: Can you help me analyze these files?
+- paragraph: I'm having trouble understanding the data structure and need assistance with the implementation.
+- group:
+  - button "Export message"
+- paragraph: I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
+- paragraph:
+  - text: Let me examine the structure and provide guidance based on the data analysis and performance documentation.
+  - 'button "View sources: Data Analysis Guide and 1 additional source" [expanded]'
+- group:
+  - button "Good response"
+  - button "Bad response"
+  - button "Copy response"
+  - button "Additional actions"
+- paragraph: Perfect! What should I focus on first
+- paragraph: I also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?
+- group:
+  - button "Export message"
+- paragraph:
+  - text: Great question! When analyzing large datasets, it's crucial to focus on efficient data access patterns and incremental processing.
+  - 'button "View source: Large Dataset Performance Guide"'
+- group:
+  - button "Good response"
+  - button "Bad response"
+  - button "Copy response"
+  - button "Additional actions"
+- alert: Info AI responses are for demonstration purposes.
+- group:
+  - text: requirements.pdf
+  - button "Remove requirements.pdf"
+- group:
+  - text: mockup.png
+  - button "Remove mockup.png"
+- textbox "Chat input":
+  - /placeholder: Enter a command, question or topic...
+- group:
+  - button "Additional actions"
+  - button "Show Welcome Screen"
+- button "Send"
+- text: The content is AI generated. Always verify the information for accuracy.
+- dialog "Sources":
+  - text: ""
+  - list:
+    - listitem:
+      - button "Data Analysis Guide Start by reviewing the dataset structure and validating the input data.":
+        - heading "Data Analysis Guide" [level=5]
+        - paragraph: Start by reviewing the dataset structure and validating the input data.
+    - listitem:
+      - button "Large Dataset Performance Guide Recommendations for processing production datasets with millions of rows.":
+        - heading "Large Dataset Performance Guide" [level=5]
+        - paragraph: Recommendations for processing production datasets with millions of rows.

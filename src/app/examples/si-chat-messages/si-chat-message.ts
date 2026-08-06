@@ -26,7 +26,7 @@ import { MenuItemAction, SiMenuFactoryComponent } from '@siemens/element-ng/menu
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { LOG_EVENT } from '@siemens/live-preview';
 
-import { markdownOptions } from './markdown-options';
+import { chatMarkdownOptions } from '../../shared/chat-markdown-options';
 
 @Component({
   selector: 'app-sample',
@@ -46,7 +46,7 @@ import { markdownOptions } from './markdown-options';
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
 
-  protected markdownOptions = markdownOptions;
+  protected markdownOptions = chatMarkdownOptions;
 
   protected readonly icons = addIcons({
     elementUser,

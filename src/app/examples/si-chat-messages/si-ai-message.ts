@@ -14,10 +14,11 @@ import {
 import { MessageAction, SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
 import { addIcons } from '@siemens/element-ng/icon';
 import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
+import { SiMarkdownCitation } from '@siemens/element-ng/markdown/extensions/source-citations';
 import { MenuItemAction } from '@siemens/element-ng/menu';
 import { LOG_EVENT } from '@siemens/live-preview';
 
-import { markdownOptions } from './markdown-options';
+import { createChatMarkdownOptions } from '../../shared/chat-markdown-options';
 
 @Component({
   selector: 'app-sample',
@@ -27,7 +28,25 @@ import { markdownOptions } from './markdown-options';
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
 
-  protected markdownOptions = markdownOptions;
+  protected readonly citations: SiMarkdownCitation[] = [
+    {
+      reference: '1',
+      name: 'Connected Devices Guide',
+      url: 'https://example.com/guides/connected-devices',
+      quote: 'Up to 250 devices may be connected to one controller.'
+    },
+    {
+      reference: '2',
+      name: 'System Configuration Manual',
+      url: 'https://example.com/manuals/system-configuration',
+      description: 'Recommendations for configuring production installations.'
+    }
+  ];
+
+  protected readonly markdownOptions = createChatMarkdownOptions({
+    citations: this.citations,
+    onSourceOpen: citation => this.openSource(citation)
+  });
 
   protected readonly icons = addIcons({
     elementThumbsUp,
@@ -38,12 +57,14 @@ export class SampleComponent {
     elementShare
   });
 
-  content = `Here's a **simple response** with basic formatting.
+  content = `Here's a **simple response** with basic formatting and source citations.[1]
 
 You can use \`inline code\` and create lists:
 
 - First item
-- Second item`;
+- Second item
+
+Production installations should follow the device and configuration guidance.[1][2]`;
 
   actions: MessageAction[] = [
     {
@@ -83,4 +104,9 @@ You can use \`inline code\` and create lists:
       action: (messageId: string) => this.logEvent(`Share message ${messageId}`)
     }
   ];
+
+  private openSource(citation: SiMarkdownCitation): void {
+    this.logEvent(`Open source: ${citation.name}`);
+    window.open(citation.url, '_blank', 'noopener');
+  }
 }

@@ -11,7 +11,7 @@ import {
 import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
 import { LOG_EVENT } from '@siemens/live-preview';
 
-import { markdownOptions } from './markdown-options';
+import { chatMarkdownOptions } from '../../shared/chat-markdown-options';
 
 @Component({
   selector: 'app-sample',
@@ -21,7 +21,7 @@ import { markdownOptions } from './markdown-options';
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
 
-  protected markdownOptions = markdownOptions;
+  protected markdownOptions = chatMarkdownOptions;
 
   content = `Can you help me with this **code snippet**?
 

@@ -32,18 +32,20 @@ import {
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
-import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
+import { SiMarkdownComponent, SiMarkdownOptions } from '@siemens/element-ng/markdown';
+import { SiMarkdownCitation } from '@siemens/element-ng/markdown/extensions/source-citations';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
-import { markdownOptions } from './markdown-options';
+import { chatMarkdownOptions, createChatMarkdownOptions } from '../../shared/chat-markdown-options';
 
 interface ChatMessage {
   type: 'user' | 'ai' | 'custom';
   content: string;
   attachments?: Attachment[];
   actions?: MessageAction[];
+  citations?: SiMarkdownCitation[];
 }
 
 @Component({
@@ -69,7 +71,7 @@ export class SampleComponent {
   private readonly toastService = inject(SiToastNotificationService);
   private readonly chatContainer = viewChild<SiChatContainerComponent>(SiChatContainerComponent);
 
-  protected markdownOptions = markdownOptions;
+  protected markdownOptions = chatMarkdownOptions;
 
   protected readonly icons = addIcons({
     elementUser,
@@ -161,8 +163,22 @@ export class SampleComponent {
       type: 'ai',
       content: `I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
 
-  Let me examine the structure and provide guidance.`,
-      actions: this.aiActions
+  Let me examine the structure and provide guidance based on the data analysis and performance documentation.[1][2]`,
+      actions: this.aiActions,
+      citations: [
+        {
+          reference: '1',
+          name: 'Data Analysis Guide',
+          url: 'https://example.com/guides/data-analysis',
+          quote: 'Start by reviewing the dataset structure and validating the input data.'
+        },
+        {
+          reference: '2',
+          name: 'Large Dataset Performance Guide',
+          url: 'https://example.com/guides/large-datasets',
+          description: 'Recommendations for processing production datasets with millions of rows.'
+        }
+      ]
     },
     {
       type: 'user',
@@ -179,8 +195,17 @@ export class SampleComponent {
     },
     {
       type: 'ai',
-      content: "Great question! When analyzing large datasets, it's crucial to focus on...",
-      actions: this.aiActions
+      content:
+        "Great question! When analyzing large datasets, it's crucial to focus on efficient data access patterns and incremental processing.[1]",
+      actions: this.aiActions,
+      citations: [
+        {
+          reference: '1',
+          name: 'Large Dataset Performance Guide',
+          url: 'https://example.com/guides/large-datasets',
+          quote: 'Use incremental processing to reduce memory pressure for large datasets.'
+        }
+      ]
     }
   ]);
 
@@ -336,6 +361,7 @@ export class SampleComponent {
     ChatMessage,
     { primary: MessageAction[]; secondary: MenuItem[] }
   >();
+  private readonly markdownOptionsCache = new WeakMap<ChatMessage, typeof chatMarkdownOptions>();
 
   private getMessageActions(message: ChatMessage): {
     primary: MessageAction[];
@@ -369,5 +395,28 @@ export class SampleComponent {
 
   protected getMessageSecondaryActions(message: ChatMessage): MenuItem[] {
     return this.getMessageActions(message).secondary;
+  }
+
+  protected getMessageMarkdownOptions(message: ChatMessage): SiMarkdownOptions {
+    if (!message.citations) {
+      return chatMarkdownOptions;
+    }
+
+    const cached = this.markdownOptionsCache.get(message);
+    if (cached) {
+      return cached;
+    }
+
+    const options = createChatMarkdownOptions({
+      citations: message.citations,
+      onSourceOpen: citation => this.openSource(citation)
+    });
+    this.markdownOptionsCache.set(message, options);
+    return options;
+  }
+
+  private openSource(citation: SiMarkdownCitation): void {
+    this.logEvent(`Open source: ${citation.name}`);
+    window.open(citation.url, '_blank', 'noopener');
   }
 }
