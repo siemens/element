@@ -14,9 +14,11 @@ import {
   PluginWithOptions,
   SiMarkdownExtension,
   SiMarkdownHighlighter,
+  SiMarkdownMetadata,
   SiMarkdownRoot,
   TypeHandler,
-  UnifiedPlugin
+  UnifiedPlugin,
+  UnifiedPluginOptions
 } from './si-markdown.types';
 
 /**
@@ -55,7 +57,7 @@ export class SiMarkdownOptions {
    * @param options - Options for the plugin
    * @returns self for chaining
    */
-  installUnifiedPlugin(plugin: UnifiedPlugin, options?: any): SiMarkdownOptions {
+  installUnifiedPlugin(plugin: UnifiedPlugin, options?: UnifiedPluginOptions): SiMarkdownOptions {
     this.plugins.push({ plugin, options });
     return this;
   }
@@ -93,11 +95,14 @@ export class SiMarkdownOptions {
    * Creates the `unified` processor with all plugins and options
    * @returns `unified` processor
    */
-  makeProcessor(): Processor<Root, Root, SiMarkdownRoot, undefined, undefined> {
+  makeProcessor(
+    meta: SiMarkdownMetadata
+  ): Processor<Root, Root, SiMarkdownRoot, undefined, undefined> {
     const processor = unified().use(remarkParse).use(remarkGfm);
 
     for (const p of this.plugins) {
-      processor.use(p.plugin as Plugin, p.options);
+      const options = typeof p.options === 'function' ? p.options(meta) : p.options;
+      processor.use(p.plugin as Plugin, options);
     }
 
     return processor.use(siMarkdownPostprocess);
