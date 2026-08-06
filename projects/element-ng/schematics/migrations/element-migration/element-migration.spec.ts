@@ -159,6 +159,10 @@ describe('to legacy migration', () => {
     await checkTemplateMigration(['element-class-inline-template.ts']);
   });
 
+  it('should add button classes to si-select without form-control', async () => {
+    await checkTemplateMigration(['select-class-inline-template.ts']);
+  });
+
   it('should remove provideIconConfig from a providers array and drop its import', async () => {
     await checkTemplateMigration(['provide-icon-config.ts']);
   });

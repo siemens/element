@@ -237,6 +237,23 @@ const CLASS_MEMBER_REPLACEMENTS_MIGRATION: ClassMemberReplacementInstruction[] =
 ];
 
 const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = [
+  {
+    requiredClasses: ['btn-ghost'],
+    removeClasses: ['btn-ghost'],
+    addClasses: ['btn-tertiary-ghost']
+  },
+  {
+    requiredClasses: ['btn-primary-ghost'],
+    removeClasses: ['btn-primary-ghost'],
+    addClasses: ['btn-ghost']
+  },
+  {
+    elementSelector: 'si-select',
+    requiredClasses: [],
+    excludedClasses: ['form-control', 'btn'],
+    removeClasses: [],
+    addClasses: ['btn', 'btn-ghost']
+  },
   // btn-circle with btn-sm should have btn-sm removed
   {
     requiredClasses: ['btn', 'btn-circle', 'btn-sm'],
