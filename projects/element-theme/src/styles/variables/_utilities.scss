@@ -2,6 +2,7 @@
 
 @use '../bootstrap/variables';
 @use 'spacers';
+@use 'system-tokens';
 
 $negative-spacers: (
   // -2px
@@ -75,9 +76,9 @@ $utilities: (
     property: box-shadow,
     class: shadow,
     values: (
-      null: variables.$box-shadow,
-      sm: variables.$box-shadow-sm,
-      lg: variables.$box-shadow-lg,
+      null: system-tokens.$si-sys-effects-shadow-2,
+      sm: system-tokens.$si-sys-effects-shadow-1,
+      lg: system-tokens.$si-sys-effects-shadow-3,
       none: none
     )
   ),

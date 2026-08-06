@@ -1,7 +1,7 @@
 @let toastValue = toast();
 @let autoClose = !toastValue.disableAutoClose;
 @let manualClose = !toastValue.disableManualClose;
-<div class="si-toast elevation-2" [class.si-toast-auto-close]="autoClose">
+<div class="si-toast elevation-3" [class.si-toast-auto-close]="autoClose">
   @if (autoClose) {
     <div
       class="si-toast-timer-bar"

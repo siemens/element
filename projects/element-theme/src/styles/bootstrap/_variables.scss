@@ -1,5 +1,4 @@
 @use '../variables/animations';
-@use '../variables/elevation';
 @use '../variables/semantic-tokens';
 @use '../variables/system-tokens';
 @use '../variables/spacers';
@@ -131,11 +130,6 @@ $border-radius: semantic-tokens.$element-radius-2 !default;
 $border-radius-sm: semantic-tokens.$element-radius-1 !default;
 $border-radius-lg: semantic-tokens.$element-radius-2 !default;
 $border-radius-pill: 50rem !default;
-
-$box-shadow: elevation.$element-elevation-2 !default;
-$box-shadow-sm: elevation.$element-elevation-1 !default;
-$box-shadow-lg: elevation.$element-elevation-3 !default;
-$box-shadow-inset: inset 0 1px 1px var(--element-box-shadow-color-2);
 
 $component-active-color: semantic-tokens.$element-ui-5 !default;
 
@@ -343,7 +337,6 @@ $input-color: system-tokens.$si-sys-text-primary !default;
 $input-border-color: system-tokens.$si-sys-border-2 !default;
 $input-focus-border-color: system-tokens.$si-sys-border-1 !default;
 $input-border-width: $border-width !default;
-$input-box-shadow: $box-shadow-inset !default;
 
 $input-border-radius: semantic-tokens.$element-input-radius !default;
 
@@ -461,7 +454,7 @@ $dropdown-bg: system-tokens.$si-sys-background-1 !default;
 $dropdown-border-radius: semantic-tokens.$element-radius-2 !default;
 $dropdown-divider-bg: system-tokens.$si-sys-border-4 !default;
 $dropdown-divider-margin-y: 4px !default;
-$dropdown-box-shadow: elevation.$element-elevation-2 !default;
+$dropdown-box-shadow: system-tokens.$si-sys-effects-shadow-3 !default;
 $dropdown-link-color: system-tokens.$si-sys-text-primary !default;
 $dropdown-link-disabled-color: system-tokens.$si-sys-text-disabled !default;
 $dropdown-item-padding-y: map.get(spacers.$spacers, 2);
@@ -513,7 +506,6 @@ $popover-inner-border-radius: functions.subtract(
   $popover-border-radius,
   $popover-border-width
 ) !default;
-$popover-box-shadow: $box-shadow !default;
 
 $popover-header-bg: system-tokens.$si-sys-background-3 !default;
 $popover-header-color: system-tokens.$si-sys-text-accent;
@@ -551,8 +543,6 @@ $modal-content-inner-border-radius: functions.subtract(
   $modal-content-border-radius,
   $modal-content-border-width
 ) !default;
-$modal-content-box-shadow-xs: $box-shadow-sm !default;
-$modal-content-box-shadow-sm-up: $box-shadow !default;
 
 $modal-backdrop-bg: semantic-tokens.$element-base-translucent-1 !default;
 $modal-backdrop-opacity: 1 !default;
@@ -629,7 +619,6 @@ $thumbnail-bg: $body-bg !default;
 $thumbnail-border-width: $border-width !default;
 $thumbnail-border-color: $border-color !default;
 $thumbnail-border-radius: $border-radius !default;
-$thumbnail-box-shadow: $box-shadow-sm !default;
 
 // Figures
 

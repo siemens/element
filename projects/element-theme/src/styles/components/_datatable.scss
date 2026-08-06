@@ -3,6 +3,7 @@
 @use '../variables/animations';
 @use '../variables/focus';
 @use '../variables/semantic-tokens';
+@use '../variables/system-tokens';
 @use '../variables/spacers';
 @use '../variables/typography';
 @use '../variables/utilities';
@@ -189,7 +190,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       .datatable-row-left {
         .datatable-body-cell:last-child,
         .datatable-header-cell:last-child {
-          box-shadow: 0 0 8px var(--element-box-shadow-color-1);
+          box-shadow: system-tokens.$si-sys-effects-shadow-3;
           clip-path: inset(0 -8px 0 0);
         }
       }
@@ -197,7 +198,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       .datatable-row-right {
         .datatable-body-cell:first-child,
         .datatable-header-cell:first-child {
-          box-shadow: 0 0 8px var(--element-box-shadow-color-1);
+          box-shadow: system-tokens.$si-sys-effects-shadow-3;
           clip-path: inset(0 0 0 -8px);
         }
       }

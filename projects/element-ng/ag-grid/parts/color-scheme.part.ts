@@ -172,8 +172,7 @@ export const elementColorScheme: Part = createPart({
     // Menu styles
     menuBackgroundColor: 'var(--element-base-1)',
     menuBorder: false,
-    menuShadow:
-      '0 0 8px var(--element-box-shadow-color-1), 0 8px 8px var(--element-box-shadow-color-2)',
+    menuShadow: 'var(--si-sys-effects-shadow-2)',
 
     // Pinning styles
     pinnedColumnBorder: {
@@ -186,8 +185,7 @@ export const elementColorScheme: Part = createPart({
     // Drag and drop styles
     dragAndDropImageBackgroundColor: 'var(--element-base-3)',
     dragAndDropImageBorder: false,
-    dragAndDropImageShadow:
-      '0 0 8px var(--element-box-shadow-color-1), 0 8px 8px var(--element-box-shadow-color-2)',
+    dragAndDropImageShadow: 'var(--si-sys-effects-shadow-2)',
     dragHandleColor: 'var(--element-text-primary)',
 
     // Range selection styles

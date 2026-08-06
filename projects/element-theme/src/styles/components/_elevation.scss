@@ -1,21 +1,21 @@
-@use '../variables/elevation';
+@use '../variables/system-tokens';
 
 .shadow-none {
   box-shadow: none;
 }
 
 .elevation-1 {
-  box-shadow: elevation.$element-elevation-1;
+  box-shadow: system-tokens.$si-sys-effects-shadow-1;
 }
 
 .elevation-2 {
-  box-shadow: elevation.$element-elevation-2;
+  box-shadow: system-tokens.$si-sys-effects-shadow-2;
 }
 
 .elevation-3 {
-  box-shadow: elevation.$element-elevation-3;
+  box-shadow: system-tokens.$si-sys-effects-shadow-3;
 }
 
 .elevation-4 {
-  box-shadow: elevation.$element-elevation-4;
+  box-shadow: system-tokens.$si-sys-effects-shadow-4;
 }

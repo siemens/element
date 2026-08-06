@@ -23,7 +23,7 @@ body:has(.cdk-drag-preview, .ui-draggable-dragging) {
 
 .cdk-drag-preview {
   background-color: variables.$element-base-3 !important;
-  box-shadow: variables.$element-elevation-2 !important;
+  box-shadow: variables.$si-sys-effects-shadow-3 !important;
   position: relative !important;
   inset-inline-start: -5px !important;
   inset-block-start: -10px !important;

@@ -69,7 +69,7 @@ $transition: opacity 0.15s linear;
     padding-inline-end: var(--rpanel-collapsed-width);
 
     &:not(.rpanel-collapsed) .side-panel {
-      box-shadow: all-variables.$element-elevation-2;
+      box-shadow: all-variables.$si-sys-effects-shadow-2;
     }
   }
 
@@ -109,7 +109,7 @@ $transition: opacity 0.15s linear;
 
     &:not(.rpanel-collapsed) {
       .side-panel {
-        box-shadow: all-variables.$element-elevation-2;
+        box-shadow: all-variables.$si-sys-effects-shadow-2;
       }
 
       .side-panel,

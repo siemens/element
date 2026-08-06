@@ -59,16 +59,12 @@ illustrations, or animations to enhance depth and spatial relationships.
 - `elevation-3`: For elements requiring stronger visual prominence, such as multi-layered highlights.
 - `elevation-4`: Reserved for rare or critical cases requiring maximum elevation distinction.
 
-| Elevation | Token                  | Color            | Opacity (light) | Opacity (dark) | X   | Y    | Blur |
-| --------- | ---------------------- | ---------------- | --------------- | -------------- | --- | ---- | ---- |
-| Level 1   | `$element-elevation-1` | `$element-black` | 16%             | 40%            | 0px | 0px  | 4px  |
-|           |                        | `$element-black` | 8%              | 20%            | 0px | 4px  | 4px  |
-| Level 2   | `$element-elevation-2` | `$element-black` | 16%             | 40%            | 0px | 0px  | 8px  |
-|           |                        | `$element-black` | 8%              | 20%            | 0px | 8px  | 8px  |
-| Level 3   | `$element-elevation-3` | `$element-black` | 16%             | 40%            | 0px | 0px  | 16px |
-|           |                        | `$element-black` | 8%              | 20%            | 0px | 40px | 16px |
-| Level 4   | `$element-elevation-4` | `$element-black` | 16%             | 40%            | 0px | 0px  | 32px |
-|           |                        | `$element-black` | 8%              | 20%            | 0px | 32px | 32px |
+| Elevation | System token                |
+| --------- | --------------------------- |
+| Level 1   | `--si-sys-effects-shadow-1` |
+| Level 2   | `--si-sys-effects-shadow-2` |
+| Level 3   | `--si-sys-effects-shadow-3` |
+| Level 4   | `--si-sys-effects-shadow-4` |
 
 ## Code ---
 
@@ -77,22 +73,24 @@ be accessed directly by using CSS utility classes.
 
 <si-docs-component example="elevation/elevation" height="120"></si-docs-component>
 
-### Sass variables
+### System tokens
 
-The shadow values for each _Element_ elevation level can also be alternatively
-used as SCSS variables within stylesheets. This also allows you to consume the
-inset alternatives to the outside shadow variants.
+Use the system tokens directly when applying an elevation in a stylesheet.
 
 ```scss
-@use '@siemens/element-theme/src/styles/variables';
-
-box-shadow: variables.$element-elevation-1;
-box-shadow: variables.$element-elevation-2;
-box-shadow: variables.$element-elevation-3;
-box-shadow: variables.$element-elevation-4;
-
-box-shadow: variables.$element-elevation-inset-1;
-box-shadow: variables.$element-elevation-inset-2;
-box-shadow: variables.$element-elevation-inset-3;
-box-shadow: variables.$element-elevation-inset-4;
+box-shadow: var(--si-sys-effects-shadow-1);
+box-shadow: var(--si-sys-effects-shadow-2);
+box-shadow: var(--si-sys-effects-shadow-3);
+box-shadow: var(--si-sys-effects-shadow-4);
 ```
+
+The legacy elevation variables have been removed. Migrate to the corresponding
+`--si-sys-effects-shadow-*` token:
+
+- `$element-elevation-1`, `$element-elevation-2`, `$element-elevation-3`, `$element-elevation-4`
+- `$element-elevation-inset-1`, `$element-elevation-inset-2`, `$element-elevation-inset-3`, `$element-elevation-inset-4`
+- `$box-shadow`, `$box-shadow-sm`, `$box-shadow-lg`, `$box-shadow-inset`, `$input-box-shadow`
+- `$popover-box-shadow`, `$modal-content-box-shadow-xs`, `$modal-content-box-shadow-sm-up`, `$thumbnail-box-shadow`
+
+The `--element-box-shadow-color-1` and `--element-box-shadow-color-2` custom
+properties have also been removed.

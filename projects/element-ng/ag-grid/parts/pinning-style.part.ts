@@ -14,17 +14,13 @@ import { createPart, type Part } from 'ag-grid-community';
 export const elementPinningStyle: Part = createPart({
   css: `
   .ag-floating-top {
-    box-shadow:
-      0 0 8px var(--element-box-shadow-color-1),
-      0 8px 8px var(--element-box-shadow-color-2);
+    box-shadow: var(--si-sys-effects-shadow-2);
     z-index: 1;
     position: relative;
   }
 
   .ag-floating-bottom {
-    box-shadow:
-      0 0 8px var(--element-box-shadow-color-1),
-      0 -8px 8px var(--element-box-shadow-color-2);
+    box-shadow: 0 0 8px rgb(0 0 0 / 16%), 0 -8px 8px rgb(0 0 0 / 8%);
     z-index: 1;
     position: relative;
   }

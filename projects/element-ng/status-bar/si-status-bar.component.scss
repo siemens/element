@@ -79,7 +79,7 @@ $blink-transition-duration: variables.$element-default-transition-duration;
   cursor: pointer;
 
   &.expanded {
-    box-shadow: 0 8px 8px var(--element-box-shadow-color-2);
+    box-shadow: variables.$si-sys-effects-shadow-2;
 
     si-icon {
       transform: rotate(180deg);

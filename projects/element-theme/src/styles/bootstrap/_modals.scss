@@ -1,4 +1,5 @@
 @use '../variables/spacers';
+@use '../variables/system-tokens';
 @use '../variables/typography';
 @use '../variables/zindex';
 @use '../variables/si-vars';
@@ -131,7 +132,7 @@
   background-color: variables.$modal-content-bg;
   background-clip: padding-box;
   border-radius: variables.$modal-content-border-radius;
-  box-shadow: variables.$modal-content-box-shadow-xs;
+  box-shadow: system-tokens.$si-sys-effects-shadow-3;
   // Remove focus outline from opened modal
   outline: 0;
 }
@@ -194,7 +195,7 @@
   }
 
   .modal-content {
-    box-shadow: variables.$modal-content-box-shadow-sm-up;
+    box-shadow: system-tokens.$si-sys-effects-shadow-2;
   }
 
   .modal-sm {

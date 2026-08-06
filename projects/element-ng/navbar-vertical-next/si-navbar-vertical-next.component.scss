@@ -96,7 +96,7 @@ nav {
 // the .nav-text-only sidebar and the mobile off-canvas drawer below sm.
 @mixin mobile-drawer-overlay {
   background: all-variables.$element-base-1;
-  box-shadow: all-variables.$element-elevation-1;
+  box-shadow: all-variables.$si-sys-effects-shadow-1;
 }
 
 :host(.nav-text-only:not(.nav-inline-collapse)).nav-collapsed .mobile-drawer {
