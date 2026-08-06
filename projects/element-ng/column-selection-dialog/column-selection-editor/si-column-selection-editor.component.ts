@@ -28,7 +28,7 @@ import { Column } from '../si-column-selection-dialog.types';
     }
   `,
   host: {
-    class: 'd-block my-4 mx-1 rounded-2 elevation-1'
+    class: 'd-block my-4 mx-1 rounded-2 shadow-1'
   }
 })
 export class SiColumnSelectionEditorComponent {

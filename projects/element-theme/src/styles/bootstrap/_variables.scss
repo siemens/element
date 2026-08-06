@@ -1,5 +1,4 @@
 @use '../variables/animations';
-@use '../variables/elevation';
 @use '../variables/system-tokens';
 @use '../variables/semantic-tokens';
 @use '../variables/spacers';
@@ -134,9 +133,13 @@ $border-radius-sm: semantic-tokens.$element-radius-1 !default;
 $border-radius-lg: semantic-tokens.$element-radius-2 !default;
 $border-radius-pill: 50rem !default;
 
-$box-shadow: elevation.$element-elevation-2 !default;
-$box-shadow-sm: elevation.$element-elevation-1 !default;
-$box-shadow-lg: elevation.$element-elevation-3 !default;
+// DEPRECATED: Use $si-sys-effects-shadow-2 instead.
+$box-shadow: system-tokens.$si-sys-effects-shadow-2 !default;
+// DEPRECATED: Use $si-sys-effects-shadow-1 instead.
+$box-shadow-sm: system-tokens.$si-sys-effects-shadow-1 !default;
+// DEPRECATED: Use $si-sys-effects-shadow-3 instead.
+$box-shadow-lg: system-tokens.$si-sys-effects-shadow-3 !default;
+// DEPRECATED: There is no replacement.
 $box-shadow-inset: inset 0 1px 1px var(--element-box-shadow-color-2);
 
 $component-active-color: semantic-tokens.$element-ui-5 !default;
@@ -346,6 +349,7 @@ $input-color: system-tokens.$si-sys-text-primary !default;
 $input-border-color: system-tokens.$si-sys-border-2 !default;
 $input-focus-border-color: system-tokens.$si-sys-border-1 !default;
 $input-border-width: $border-width !default;
+// DEPRECATED: There is no replacement.
 $input-box-shadow: $box-shadow-inset !default;
 
 $input-border-radius: semantic-tokens.$element-input-radius !default;
@@ -464,7 +468,7 @@ $dropdown-bg: system-tokens.$si-sys-background-1 !default;
 $dropdown-border-radius: semantic-tokens.$element-radius-2 !default;
 $dropdown-divider-bg: system-tokens.$si-sys-border-4 !default;
 $dropdown-divider-margin-y: 4px !default;
-$dropdown-box-shadow: elevation.$element-elevation-2 !default;
+$dropdown-box-shadow: system-tokens.$si-sys-effects-shadow-2 !default;
 $dropdown-link-color: system-tokens.$si-sys-text-primary !default;
 $dropdown-link-disabled-color: system-tokens.$si-sys-text-disabled !default;
 $dropdown-item-padding-y: map.get(spacers.$spacers-block, 2);
@@ -516,6 +520,7 @@ $popover-inner-border-radius: functions.subtract(
   $popover-border-radius,
   $popover-border-width
 ) !default;
+// DEPRECATED: Use $si-sys-effects-shadow-3 instead.
 $popover-box-shadow: $box-shadow !default;
 
 $popover-header-bg: system-tokens.$si-sys-background-3 !default;
@@ -554,7 +559,9 @@ $modal-content-inner-border-radius: functions.subtract(
   $modal-content-border-radius,
   $modal-content-border-width
 ) !default;
+// DEPRECATED: Use $si-sys-effects-shadow-3 instead.
 $modal-content-box-shadow-xs: $box-shadow-sm !default;
+// DEPRECATED: Use $si-sys-effects-shadow-2 instead.
 $modal-content-box-shadow-sm-up: $box-shadow !default;
 
 $modal-backdrop-bg: system-tokens.$si-sys-effects-backdrop !default;
@@ -634,6 +641,7 @@ $thumbnail-bg: $body-bg !default;
 $thumbnail-border-width: $border-width !default;
 $thumbnail-border-color: $border-color !default;
 $thumbnail-border-radius: $border-radius !default;
+// DEPRECATED: Use $si-sys-effects-shadow-1 instead.
 $thumbnail-box-shadow: $box-shadow-sm !default;
 
 // Figures

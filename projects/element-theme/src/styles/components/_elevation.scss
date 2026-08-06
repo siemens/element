@@ -1,21 +1,26 @@
-@use '../variables/elevation';
+@use '../variables/system-tokens';
 
-.shadow-none {
+// @deprecated Use .shadow-none instead.
+.elevation-none {
   box-shadow: none;
 }
 
+// @deprecated Use .shadow-1 instead.
 .elevation-1 {
-  box-shadow: elevation.$element-elevation-1;
+  box-shadow: system-tokens.$si-sys-effects-shadow-1;
 }
 
+// @deprecated Use .shadow-2 instead.
 .elevation-2 {
-  box-shadow: elevation.$element-elevation-2;
+  box-shadow: system-tokens.$si-sys-effects-shadow-2;
 }
 
+// @deprecated Use .shadow-3 instead.
 .elevation-3 {
-  box-shadow: elevation.$element-elevation-3;
+  box-shadow: system-tokens.$si-sys-effects-shadow-3;
 }
 
+// @deprecated Use .shadow-4 instead.
 .elevation-4 {
-  box-shadow: elevation.$element-elevation-4;
+  box-shadow: system-tokens.$si-sys-effects-shadow-4;
 }

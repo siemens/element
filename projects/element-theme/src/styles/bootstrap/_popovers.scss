@@ -1,5 +1,6 @@
 @use '../variables/semantic-tokens';
 @use '../variables/spacers';
+@use '../variables/system-tokens';
 @use '../variables/zindex';
 @use './mixins/reset-text';
 @use './variables';
@@ -27,7 +28,7 @@ $si-popover-bg: var(--popover-bg-color, variables.$popover-bg);
   word-wrap: break-word;
   background-color: $si-popover-bg;
   background-clip: padding-box;
-  box-shadow: variables.$popover-box-shadow;
+  box-shadow: system-tokens.$si-sys-effects-shadow-3;
   border-radius: semantic-tokens.$element-radius-2;
 
   &.auto-width {

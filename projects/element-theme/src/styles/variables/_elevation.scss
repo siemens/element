@@ -1,25 +1,27 @@
-$element-elevation-1:
-  0 0 4px var(--element-box-shadow-color-1),
-  0 4px 4px var(--element-box-shadow-color-2);
-$element-elevation-2:
-  0 0 8px var(--element-box-shadow-color-1),
-  0 8px 8px var(--element-box-shadow-color-2);
-$element-elevation-3:
-  0 0 16px var(--element-box-shadow-color-1),
-  0 16px 16px var(--element-box-shadow-color-2);
-$element-elevation-4:
-  0 0 32px var(--element-box-shadow-color-1),
-  0 32px 32px var(--element-box-shadow-color-2);
+@use 'system-tokens';
 
+// @deprecated Use $si-sys-effects-shadow-1 instead.
+$element-elevation-1: system-tokens.$si-sys-effects-shadow-1;
+// @deprecated Use $si-sys-effects-shadow-2 instead.
+$element-elevation-2: system-tokens.$si-sys-effects-shadow-2;
+// @deprecated Use $si-sys-effects-shadow-3 instead.
+$element-elevation-3: system-tokens.$si-sys-effects-shadow-3;
+// @deprecated Use $si-sys-effects-shadow-4 instead.
+$element-elevation-4: system-tokens.$si-sys-effects-shadow-4;
+
+// @deprecated There is no replacement.
 $element-elevation-inset-1:
   inset 0 0 4px var(--element-box-shadow-color-1),
   inset 0 4px 4px var(--element-box-shadow-color-2);
+// @deprecated There is no replacement.
 $element-elevation-inset-2:
   inset 0 0 8px var(--element-box-shadow-color-1),
   inset 0 8px 8px var(--element-box-shadow-color-2);
+// @deprecated There is no replacement.
 $element-elevation-inset-3:
   inset 0 0 16px var(--element-box-shadow-color-1),
   inset 0 16px 16px var(--element-box-shadow-color-2);
+// @deprecated There is no replacement.
 $element-elevation-inset-4:
   inset 0 0 32px var(--element-box-shadow-color-1),
   inset 0 32px 32px var(--element-box-shadow-color-2);

@@ -135,7 +135,7 @@ $thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers-block, 4
     min-inline-size: $thumb-size;
     border-radius: 50%;
     border: 1px solid var(--thumb-state-color);
-    box-shadow: variables.$element-elevation-2;
+    box-shadow: variables.$si-sys-effects-shadow-1;
     background: variables.$si-sys-background-1;
 
     &:hover:not(.dragging) {

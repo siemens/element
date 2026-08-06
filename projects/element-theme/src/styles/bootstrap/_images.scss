@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '../variables/spacers';
+@use '../variables/system-tokens';
 @use './mixins/image';
 @use './variables';
 
@@ -20,7 +21,7 @@
   background-color: variables.$thumbnail-bg;
   border: variables.$thumbnail-border-width solid variables.$thumbnail-border-color;
   border-radius: variables.$thumbnail-border-radius;
-  box-shadow: variables.$thumbnail-box-shadow;
+  box-shadow: system-tokens.$si-sys-effects-shadow-1;
 
   // Keep them at most 100% wide
   @include image.img-fluid();

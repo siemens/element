@@ -13,7 +13,7 @@
   background-clip: padding-box;
   border: all-variables.$popover-border-width solid all-variables.$popover-border-color;
   border-radius: all-variables.$popover-border-radius;
-  box-shadow: all-variables.$popover-box-shadow;
+  box-shadow: all-variables.$si-sys-effects-shadow-3;
   margin-block-start: all-variables.$popover-arrow-height - 2px;
   inset-inline-start: map.get(spacers.$negative-spacers-inline, 7);
 
