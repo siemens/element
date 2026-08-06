@@ -11,4 +11,6 @@ export interface ElementSelectorInstruction {
   defaultAttributes?: { name: string; value: string }[];
 }
 
-export const ELEMENT_SELECTORS_MIGRATION: ElementSelectorInstruction[] = [];
+export const ELEMENT_SELECTORS_MIGRATION: ElementSelectorInstruction[] = [
+  { replace: 'si-icon-status', replaceWith: 'si-status-counter' }
+];
