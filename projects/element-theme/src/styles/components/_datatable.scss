@@ -244,7 +244,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     }
 
     .datatable-header-cell:focus-visible {
-      @include focus.make-outline-focus();
+      @include focus.make-outline-focus-inside();
     }
   }
 
