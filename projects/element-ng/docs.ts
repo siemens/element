@@ -75,6 +75,7 @@ export * from './split';
 export * from './status-bar';
 export * from './status-counter';
 export * from './status-toggle';
+export * from './source-chip';
 export * from './summary-chip';
 export * from './summary-widget';
 export * from './system-banner';
