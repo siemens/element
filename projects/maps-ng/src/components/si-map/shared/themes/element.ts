@@ -14,32 +14,32 @@ export const themeElement = {
   style: () => {
     const style = window.getComputedStyle(document.documentElement);
     const status: Record<MarkerStatusType, string> = {
-      info: getProp(style, '--element-status-information'), // $element-status-information / $siemens-blue-500
-      success: getProp(style, '--element-status-success'), // $element-status-success / $siemens-green-700
-      warning: getProp(style, '--element-status-warning'), // $element-status-warning / $siemens-orange-700
-      danger: getProp(style, '--element-status-danger'), // $element-status-danger / $siemens-red-500
-      caution: getProp(style, '--element-status-caution'), // $element-status-caution / $siemens-yellow-500
-      critical: getProp(style, '--element-status-critical'), // $element-status-critical / $siemens-red-900
-      default: getProp(style, '--element-ui-0'), // $element-ui-0 / $siemens-interactive-blue-500
-      unknown: getProp(style, '--element-ui-3') // $element-ui-3 / $siemens-deep-blue-400
+      info: getProp(style, '--si-sys-background-information'),
+      success: getProp(style, '--si-sys-background-success'),
+      warning: getProp(style, '--si-sys-background-warning'),
+      danger: getProp(style, '--si-sys-background-danger'),
+      caution: getProp(style, '--si-sys-background-caution'),
+      critical: getProp(style, '--si-sys-background-critical'),
+      default: getProp(style, '--si-sys-background-accent'),
+      unknown: getProp(style, '--si-sys-background-neutral')
     };
 
     return {
-      fillColor: getProp(style, '--element-base-1'), // $element-base-1 / $siemens-white
-      strokeColor: getProp(style, '--element-base-1'), // $element-base-1 / $siemens-white
-      textColor: getProp(style, '--element-text-primary'), // $element-text-primary / $siemens-deep-blue-900
-      defaultMarkerColor: getProp(style, '--element-text-primary'), // $element-text-primary / $siemens-deep-blue-900
+      fillColor: getProp(style, '--si-sys-background-1'),
+      strokeColor: getProp(style, '--si-sys-background-1'),
+      textColor: getProp(style, '--si-sys-text-primary'),
+      defaultMarkerColor: getProp(style, '--si-sys-text-primary'),
       status,
       colorPalette: {
         status: [status.info, status.success, status.warning, status.danger],
         element: [
-          getProp(style, '--element-data-red-2'), // $siemens-red-500
-          getProp(style, '--element-data-orange-4'), // $siemens-orange-700
-          getProp(style, '--element-status-caution'), // $siemens-yellow-300
-          getProp(style, '--element-data-green-2'), // $siemens-green-500
-          getProp(style, '--element-status-information'), // $siemens-blue-500
-          getProp(style, '--element-petrol'), // $element-petrol
-          getProp(style, '--element-data-17') // $siemens-deep-blue-500
+          getProp(style, '--si-sys-data-sequential-red-2'),
+          getProp(style, '--si-sys-data-sequential-orange-4'),
+          getProp(style, '--si-sys-background-caution'),
+          getProp(style, '--si-sys-data-sequential-green-2'),
+          getProp(style, '--si-sys-background-information'),
+          getProp(style, '--si-sys-data-categorial-1'),
+          getProp(style, '--si-sys-data-categorial-17')
         ]
       } as ColorPalettes
     };

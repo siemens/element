@@ -30,21 +30,21 @@ describe('SiMapComponent', () => {
 
   beforeAll(() => {
     // Define style variables from element.ts to prevent test failures
-    document.documentElement.style.setProperty('--element-status-information', '#0070F2');
-    document.documentElement.style.setProperty('--element-status-success', '#00A04B');
-    document.documentElement.style.setProperty('--element-status-warning', '#FF7F00');
-    document.documentElement.style.setProperty('--element-status-danger', '#D8371C');
-    document.documentElement.style.setProperty('--element-status-caution', '#FFD322');
-    document.documentElement.style.setProperty('--element-status-critical', '#B71E24');
-    document.documentElement.style.setProperty('--element-ui-0', '#0070F2');
-    document.documentElement.style.setProperty('--element-ui-3', '#004987');
-    document.documentElement.style.setProperty('--element-base-1', '#FFFFFF');
-    document.documentElement.style.setProperty('--element-text-primary', '#1F2937');
-    document.documentElement.style.setProperty('--element-data-red-2', '#D8371C');
-    document.documentElement.style.setProperty('--element-data-orange-4', '#FF7F00');
-    document.documentElement.style.setProperty('--element-data-green-2', '#00A04B');
-    document.documentElement.style.setProperty('--element-petrol', '#007C7C');
-    document.documentElement.style.setProperty('--element-data-17', '#004A87');
+    document.documentElement.style.setProperty('--si-sys-background-information', '#0070F2');
+    document.documentElement.style.setProperty('--si-sys-background-success', '#00A04B');
+    document.documentElement.style.setProperty('--si-sys-background-warning', '#FF7F00');
+    document.documentElement.style.setProperty('--si-sys-background-danger', '#D8371C');
+    document.documentElement.style.setProperty('--si-sys-background-caution', '#FFD322');
+    document.documentElement.style.setProperty('--si-sys-background-critical', '#B71E24');
+    document.documentElement.style.setProperty('--si-sys-background-accent', '#0070F2');
+    document.documentElement.style.setProperty('--si-sys-border-3', '#004987');
+    document.documentElement.style.setProperty('--si-sys-background-1', '#FFFFFF');
+    document.documentElement.style.setProperty('--si-sys-text-primary', '#1F2937');
+    document.documentElement.style.setProperty('--si-sys-data-sequential-red-2', '#D8371C');
+    document.documentElement.style.setProperty('--si-sys-data-sequential-orange-4', '#FF7F00');
+    document.documentElement.style.setProperty('--si-sys-data-sequential-green-2', '#00A04B');
+    document.documentElement.style.setProperty('--si-sys-data-categorial-1', '#007C7C');
+    document.documentElement.style.setProperty('--si-sys-data-categorial-17', '#004A87');
   });
 
   beforeEach(() => {

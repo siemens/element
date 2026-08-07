@@ -24,8 +24,8 @@ $main-button-margin: 1px;
       align-items: center;
       justify-content: center;
       position: relative;
-      background: variables.$element-base-3;
-      color: variables.$element-action-secondary-text;
+      background: variables.$si-sys-background-3;
+      color: variables.$si-sys-text-accent;
       margin: 0;
       line-height: 1;
       border-radius: 0;
@@ -35,8 +35,8 @@ $main-button-margin: 1px;
       outline: none;
 
       &:hover {
-        color: variables.$element-action-secondary-text-hover;
-        background: variables.$element-action-secondary-hover;
+        color: variables.$si-sys-text-accent-hover;
+        background: variables.$si-sys-background-accent-secondary-hover;
       }
 
       &:focus-visible {
