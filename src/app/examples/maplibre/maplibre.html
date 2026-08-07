@@ -14,4 +14,13 @@
   <mgl-control mglAttribution position="bottom-left" />
   <mgl-control mglNavigation position="bottom-right" />
   <mgl-control mglGeolocate position="bottom-right" (geolocate)="onGeolocate($event)" />
+  @for (point of points(); track point) {
+    <!--
+      Only use this if you really need to use HTML/Angular component to render your symbol.
+      These markers are slow compared to a Layer of symbol because they're not rendered using WebGL.
+    -->
+    <mgl-marker [feature]="point">
+      <si-status-marker [status]="point.properties.status" />
+    </mgl-marker>
+  }
 </mgl-map>
