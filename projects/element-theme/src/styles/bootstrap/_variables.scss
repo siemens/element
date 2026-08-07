@@ -1,7 +1,7 @@
 @use '../variables/animations';
 @use '../variables/elevation';
-@use '../variables/semantic-tokens';
 @use '../variables/system-tokens';
+@use '../variables/semantic-tokens';
 @use '../variables/spacers';
 @use '../variables/typography';
 @use './functions';
@@ -554,7 +554,7 @@ $modal-content-inner-border-radius: functions.subtract(
 $modal-content-box-shadow-xs: $box-shadow-sm !default;
 $modal-content-box-shadow-sm-up: $box-shadow !default;
 
-$modal-backdrop-bg: semantic-tokens.$element-base-translucent-1 !default;
+$modal-backdrop-bg: system-tokens.$si-sys-effects-backdrop !default;
 $modal-backdrop-opacity: 1 !default;
 $modal-header-border-color: $border-color !default;
 $modal-footer-border-color: $modal-header-border-color !default;

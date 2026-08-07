@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
       div {
         min-inline-size: 8rem;
         min-block-size: 8rem;
-        background-color: rgb(from var(--element-ui-2) r g b / 0.2);
+        background-color: rgb(from var(--si-sys-background-information) r g b / 0.2);
       }
       div > span {
         position: absolute;

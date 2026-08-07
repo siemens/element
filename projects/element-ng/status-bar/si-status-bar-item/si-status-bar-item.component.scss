@@ -22,7 +22,7 @@ $colorbar-width: map.get(variables.$spacers, 2);
 
   &.clickable:hover {
     .status-item {
-      background-color: variables.$element-base-0 !important; // stylelint-disable-line declaration-no-important
+      background-color: variables.$si-sys-background-0 !important; // stylelint-disable-line declaration-no-important
     }
 
     .bg {
@@ -31,7 +31,7 @@ $colorbar-width: map.get(variables.$spacers, 2);
   }
 
   ::ng-deep .indicator-disabled {
-    color: variables.$element-ui-3;
+    color: variables.$si-sys-text-disabled;
   }
 }
 
@@ -41,7 +41,7 @@ $colorbar-width: map.get(variables.$spacers, 2);
   padding-block: $item-padding;
   padding-inline: $item-padding-inline-small $item-padding;
   min-inline-size: var(--__si-status-bar-item-min-width, $item-min-width);
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-text-primary;
   white-space: nowrap;
 
   > * {
@@ -85,5 +85,5 @@ $colorbar-width: map.get(variables.$spacers, 2);
   align-self: stretch;
   min-inline-size: $colorbar-width;
   border-radius: math.div($colorbar-width, 2);
-  background: variables.$element-ui-4;
+  background: variables.$si-sys-border-4;
 }

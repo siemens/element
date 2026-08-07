@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
       }
       .col > div,
       .col-6 > div {
-        border: 1px solid rgb(from var(--element-action-primary) r g b / 0.3);
+        border: 1px solid var(--si-sys-border-information);
       }
     }
   `,

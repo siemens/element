@@ -6,8 +6,8 @@
 }
 
 .input-wrapper {
-  border-color: variables.$element-ui-4;
-  background-color: variables.$element-base-1;
+  border-color: variables.$si-sys-border-4;
+  background-color: variables.$si-sys-background-1;
   padding-block: map.get(variables.$spacers, 5) map.get(variables.$spacers, 4);
   padding-inline: map.get(variables.$spacers, 5);
   display: flex;
@@ -18,12 +18,12 @@
   &:active,
   &:focus-within {
     background-color: variables.$element-base-input-experimental;
-    border-color: variables.$element-ui-1;
+    border-color: variables.$si-sys-border-1;
   }
 
   &.drag-over {
-    border: 1px solid variables.$element-focus-default;
-    box-shadow: 0 0 0 1px variables.$element-focus-default;
+    border: 1px solid variables.$si-sys-effects-focus;
+    box-shadow: 0 0 0 1px variables.$si-sys-effects-focus;
   }
 }
 
@@ -38,16 +38,16 @@
   background-color: transparent;
 
   &::placeholder {
-    color: variables.$element-text-secondary;
+    color: variables.$si-sys-text-secondary;
   }
 
   &:disabled {
     background-color: transparent;
-    color: variables.$element-text-disabled;
+    color: variables.$si-sys-text-disabled;
     cursor: not-allowed;
 
     &::placeholder {
-      color: variables.$element-text-disabled;
+      color: variables.$si-sys-text-disabled;
     }
   }
 }

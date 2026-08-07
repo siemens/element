@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/bootstrap/variables';
+@use '@siemens/element-theme/src/styles/variables/system-tokens';
 
 $padding: 2 * (variables.$input-padding-x + variables.$input-border-width);
 
@@ -13,7 +14,7 @@ $padding: 2 * (variables.$input-padding-x + variables.$input-border-width);
   // When individual fields are invalid, they will show their own validation styling instead.
   &.ng-touched.ng-invalid:not(:has(.ng-touched.ng-invalid)) {
     .form-control {
-      --border-color: var(--element-status-danger);
+      --border-color: #{system-tokens.$si-sys-border-danger};
     }
   }
 

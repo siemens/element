@@ -1,3 +1,4 @@
+@use '../variables/system-tokens';
 @use '../variables/semantic-tokens';
 @use '../variables/spacers';
 @use '../variables/typography';
@@ -27,11 +28,11 @@ $page-button-size: 1.5rem;
   background: transparent;
   font-size: typography.$si-font-size-h5;
   font-weight: typography.$si-font-weight-h5;
-  color: semantic-tokens.$element-text-primary;
+  color: system-tokens.$si-sys-text-primary;
   border: 0;
 
   &:is(.active, :hover:not(:disabled)):not(.separator) {
-    background: semantic-tokens.$element-base-1-selected;
+    background: system-tokens.$si-sys-background-selected;
   }
 
   &:has(.icon) {

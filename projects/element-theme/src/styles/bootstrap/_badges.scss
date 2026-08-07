@@ -1,4 +1,4 @@
-@use '../variables/semantic-tokens';
+@use '../variables/system-tokens';
 @use '../variables/spacers';
 @use '../variables/typography';
 @use './mixins/badge-text';
@@ -15,7 +15,7 @@
 
 .badge {
   display: inline-block;
-  color: semantic-tokens.$element-text-primary;
+  color: system-tokens.$si-sys-text-primary;
   padding-block: variables.$badge-padding-y;
   padding-inline: variables.$badge-padding-x;
   margin-block: 0;
@@ -41,89 +41,89 @@
   }
 
   &.bg-default {
-    background-color: semantic-tokens.$element-base-0 !important;
-    color: semantic-tokens.$element-text-primary;
-    outline: 1px solid semantic-tokens.$element-ui-4;
+    background-color: system-tokens.$si-sys-background-0 !important;
+    color: system-tokens.$si-sys-text-primary;
+    outline: 1px solid system-tokens.$si-sys-border-4;
   }
 
   &.bg-primary {
-    background-color: semantic-tokens.$element-ui-0 !important;
-    color: semantic-tokens.$element-text-inverse;
+    background-color: system-tokens.$si-sys-background-accent !important;
+    color: system-tokens.$si-sys-text-on-accent;
   }
 
   &.bg-secondary {
-    background-color: semantic-tokens.$element-ui-4 !important;
-    color: semantic-tokens.$element-text-primary;
+    background-color: system-tokens.$si-sys-background-neutral !important;
+    color: system-tokens.$si-sys-text-primary;
   }
 
   &.bg-info {
-    background-color: semantic-tokens.$element-base-information !important;
-    color: semantic-tokens.$element-text-information;
+    background-color: system-tokens.$si-sys-background-information-subtle !important;
+    color: system-tokens.$si-sys-text-information;
   }
 
   &.bg-success {
-    background-color: semantic-tokens.$element-base-success !important;
-    color: semantic-tokens.$element-text-success;
+    background-color: system-tokens.$si-sys-background-success-subtle !important;
+    color: system-tokens.$si-sys-text-success;
   }
 
   &.bg-caution {
-    background-color: semantic-tokens.$element-base-caution !important;
-    color: semantic-tokens.$element-text-caution;
+    background-color: system-tokens.$si-sys-background-caution-subtle !important;
+    color: system-tokens.$si-sys-text-caution;
   }
 
   &.bg-warning {
-    background-color: semantic-tokens.$element-base-warning !important;
-    color: semantic-tokens.$element-text-warning;
+    background-color: system-tokens.$si-sys-background-warning-subtle !important;
+    color: system-tokens.$si-sys-text-warning;
   }
 
   &.bg-danger {
-    background-color: semantic-tokens.$element-base-danger !important;
-    color: semantic-tokens.$element-text-danger;
+    background-color: system-tokens.$si-sys-background-danger-subtle !important;
+    color: system-tokens.$si-sys-text-danger;
   }
 
   &.bg-critical {
-    background-color: semantic-tokens.$element-base-critical !important;
-    color: semantic-tokens.$element-text-critical;
+    background-color: system-tokens.$si-sys-background-critical-subtle !important;
+    color: system-tokens.$si-sys-text-critical;
   }
 
   &.bg-inverse {
-    background-color: semantic-tokens.$element-ui-1 !important;
-    color: semantic-tokens.$element-text-inverse;
+    background-color: system-tokens.$si-sys-background-inverse !important;
+    color: system-tokens.$si-sys-text-inverse;
   }
 
   &.bg-info-emphasis {
-    background: semantic-tokens.$element-status-information;
-    color: semantic-tokens.$element-status-information-contrast;
+    background: system-tokens.$si-sys-background-information;
+    color: system-tokens.$si-sys-text-on-information;
     @extend %badge-text-emphasis;
   }
 
   &.bg-success-emphasis {
-    background: semantic-tokens.$element-status-success;
-    color: semantic-tokens.$element-status-success-contrast;
+    background: system-tokens.$si-sys-background-success;
+    color: system-tokens.$si-sys-text-on-success;
     @extend %badge-text-emphasis;
   }
 
   &.bg-warning-emphasis {
-    background: semantic-tokens.$element-status-warning;
-    color: semantic-tokens.$element-status-warning-contrast;
+    background: system-tokens.$si-sys-background-warning;
+    color: system-tokens.$si-sys-text-on-warning;
     @extend %badge-text-emphasis;
   }
 
   &.bg-danger-emphasis {
-    background: semantic-tokens.$element-status-danger;
-    color: semantic-tokens.$element-status-danger-contrast;
+    background: system-tokens.$si-sys-background-danger;
+    color: system-tokens.$si-sys-text-on-danger;
     @extend %badge-text-emphasis;
   }
 
   &.bg-critical-emphasis {
-    background: semantic-tokens.$element-status-critical;
-    color: semantic-tokens.$element-status-critical-contrast;
+    background: system-tokens.$si-sys-background-critical;
+    color: system-tokens.$si-sys-text-on-critical;
     @extend %badge-text-emphasis;
   }
 
   &.bg-caution-emphasis {
-    background: semantic-tokens.$element-status-caution;
-    color: semantic-tokens.$element-status-caution-contrast;
+    background: system-tokens.$si-sys-background-caution;
+    color: system-tokens.$si-sys-text-on-caution;
     @extend %badge-text-emphasis;
   }
 
@@ -146,14 +146,14 @@
     position: absolute;
     inset-block-start: 0;
     inset-inline-end: 0;
-    background-color: semantic-tokens.$element-status-danger;
+    background-color: system-tokens.$si-sys-background-danger;
   }
 }
 
 .badge-text {
   @include badge-text.badge-text();
-  background-color: semantic-tokens.$element-action-danger;
-  color: semantic-tokens.$element-action-danger-text;
+  background-color: system-tokens.$si-sys-background-danger;
+  color: system-tokens.$si-sys-text-on-danger;
   position: relative;
 }
 
