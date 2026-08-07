@@ -114,21 +114,10 @@ export class SiLaunchpadFactoryComponent {
   protected showAllApps = false;
   protected readonly categories = computed(() => {
     const apps = this.apps();
-    const favorites = this.favorites();
-    const categories: AppCategory[] = [];
-    if (this.enableFavorites() && this.hasFavorites()) {
-      categories.push({
-        name: this.favoriteAppsText(),
-        apps: favorites
-      });
-    }
-
     if (this.isCategories(apps)) {
-      categories.push(...apps);
-    } else {
-      categories.push({ name: '', apps: [...apps] });
+      return apps;
     }
-    return categories;
+    return [{ name: '', apps: [...apps] }];
   });
   protected readonly favorites = computed(() =>
     this.apps()
