@@ -30,7 +30,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   }`,
   styleUrl: './si-navbar-vertical-next-group.component.scss',
   host: {
-    role: 'group',
+    '[attr.role]': "groupTrigger.flyout() ? 'dialog' : 'group'",
     '[id]': 'groupTrigger.groupId',
     '[attr.aria-labelledby]': 'groupTrigger.id',
     'animate.enter': 'component-enter',

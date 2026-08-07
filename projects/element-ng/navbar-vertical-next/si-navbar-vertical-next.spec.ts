@@ -353,7 +353,7 @@ describe('SiNavbarVerticalNext', () => {
       await fixture.whenStable();
 
       const item = page.getByRole('button', { name: 'item1' });
-      const collapseToggle = page.getByRole('button', { name: 'Toggle' });
+      const collapseToggle = page.getByRole('button', { name: 'Show side navigation' });
 
       // User expands the group inline.
       await userEvent.click(item);
