@@ -1,5 +1,6 @@
 @use '../variables/system-tokens';
 @use '../variables/spacers';
+@use '../variables/typography';
 @use './variables';
 
 @use 'sass:map';
@@ -56,7 +57,7 @@ $nav-tabs-min-width: 100px;
     position: absolute;
     inset-inline: 0;
     inset-block-end: 0;
-    block-size: variables.$nav-tabs-border-width;
+    block-size: 1px;
     background: system-tokens.$si-sys-border-4;
   }
 
@@ -78,6 +79,7 @@ $nav-tabs-min-width: 100px;
     border-start-start-radius: variables.$btn-border-radius;
     border-start-end-radius: variables.$btn-border-radius;
     cursor: pointer;
+    font-weight: typography.$si-font-weight-body-lg;
 
     .badge {
       margin-inline-end: 0;
@@ -85,10 +87,17 @@ $nav-tabs-min-width: 100px;
 
     &.active {
       border-color: system-tokens.$si-sys-border-accent-hover;
+      font-size: typography.$si-font-size-body-lg-bold;
+      font-weight: typography.$si-font-weight-body-lg-bold;
+      line-height: typography.$si-line-height-body-lg-bold;
     }
 
     &:hover {
       isolation: isolate;
+    }
+
+    &:not(.active):hover {
+      color: variables.$nav-link-color;
     }
 
     &.disabled {
