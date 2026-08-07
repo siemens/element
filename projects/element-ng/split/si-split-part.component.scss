@@ -56,25 +56,6 @@ $header-height: 40px;
 }
 
 .si-split-button {
-  display: inline-block;
-  padding: map.get(all-variables.$spacers, 2);
-  color: all-variables.$si-sys-text-primary;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-decoration: none;
-  font-size: 20px;
-  line-height: 1;
-  vertical-align: middle;
-  user-select: none;
-  background: none;
-  border: 0;
-  cursor: pointer;
-
-  &:hover {
-    background: all-variables.$si-sys-background-accent-secondary-hover;
-  }
-
   :host-context(.vertical) > :host & {
     --orientation-rotate: rotate(90deg);
   }
