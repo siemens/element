@@ -181,7 +181,7 @@
   },
   "optionalDependencies": {
     "@simpl/brand": "2.2.1",
-    "@simpl/docs-composer": "11.16.6",
+    "@simpl/docs-composer": "11.16.11",
     "@simpl/element-icons": "1.33.0"
   }
 }
