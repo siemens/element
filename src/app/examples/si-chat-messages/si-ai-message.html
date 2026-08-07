@@ -4,8 +4,15 @@
     [actions]="actions"
     [secondaryActions]="secondaryActions"
     [loading]="false"
+    [sources]="sources"
+    (sourceClicked)="logEvent($event)"
   >
-    <si-markdown [markdown]="content" [options]="markdownOptions" />
+    <si-markdown
+      [markdown]="content"
+      [options]="markdownOptions"
+      [citations]="inlineSources"
+      (extensionEvent)="logEvent($event)"
+    />
   </si-ai-message>
 
   <div class="mt-5">
