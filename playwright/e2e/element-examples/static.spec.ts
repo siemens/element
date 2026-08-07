@@ -121,14 +121,6 @@ test('si-markdown-renderer/si-markdown-renderer', ({ si }) =>
       await page.evaluate(() => document.fonts.ready);
     }
   }));
-test('si-chat-messages/si-ai-message', ({ si }) => si.static());
-test('si-chat-messages/si-user-message', ({ si }) => si.static());
-test('si-chat-messages/si-chat-message', ({ si }) => si.static());
-test('si-chat-messages/si-attachment-list', ({ si }) => si.static());
-test('si-chat-messages/si-chat-input', ({ si }) => si.static());
-// FIXME: test is unstable
-test.skip('si-chat-messages/si-chat-container', ({ si }) => si.static());
-test('si-chat-messages/si-ai-welcome-screen', ({ si }) => si.static());
 test('ag-grid/ag-grid-empty-state', async ({ si }) => {
   await si.static({ disabledA11yRules: ['aria-required-children'] });
 });

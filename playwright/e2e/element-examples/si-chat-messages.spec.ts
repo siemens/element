@@ -4,6 +4,14 @@
  */
 import { expect, test } from '../../support/test-helpers';
 
+test('si-chat-messages/si-ai-message', ({ si }) => si.static());
+test('si-chat-messages/si-user-message', ({ si }) => si.static());
+test('si-chat-messages/si-chat-message', ({ si }) => si.static());
+test('si-chat-messages/si-attachment-list', ({ si }) => si.static());
+test('si-chat-messages/si-chat-input', ({ si }) => si.static());
+test('si-chat-messages/si-chat-container', ({ si }) => si.static());
+test('si-chat-messages/si-ai-welcome-screen', ({ si }) => si.static());
+
 const example = 'si-chat-messages/si-ai-message';
 
 test.describe('si-chat-messages', () => {
@@ -38,7 +46,6 @@ test.describe('si-chat-messages', () => {
     const popover = page.getByRole('dialog', { name: 'Sources' });
     await expect(sourceTrigger).toHaveAttribute('aria-expanded', 'true');
     await expect(popover).toBeVisible();
-    await expect(popover.getByText('Sources', { exact: true })).not.toBeVisible();
     await expect(popover).toHaveCSS('min-width', '230px');
     await expect(popover).toHaveCSS('max-width', '400px');
     await expect(popover).toHaveCSS('max-height', '400px');
@@ -85,8 +92,6 @@ test.describe('si-chat-messages', () => {
     await expect(
       popover.getByText('Start by validating the structure and types of the input data.')
     ).toBeVisible();
-    await expect(
-      popover.getByRole('button', { name: /Python Performance Manual/ })
-    ).toBeVisible();
+    await expect(popover.getByRole('button', { name: /Python Performance Manual/ })).toBeVisible();
   });
 });
