@@ -8,7 +8,7 @@
     }
   }
 
-  @if (actions().length > 0 || secondaryActions().length > 0) {
+  @if (actions().length > 0 || secondaryActions().length > 0 || projectedActions().length > 0) {
     <div class="btn-group ai-message-actions" role="group" siChatMessageAction>
       @for (action of actions(); track $index) {
         <button
@@ -37,6 +37,8 @@
           <si-menu-factory [items]="secondaryActions()" [actionParam]="actionParam()" />
         </ng-template>
       }
+
+      <ng-content select="[siChatMessageAction]" />
     </div>
   }
 </si-chat-message>

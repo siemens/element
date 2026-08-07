@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement, inputBinding, signal, WritableSignal } from '@angular/core';
+import { Component, DebugElement, inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, DomSanitizer } from '@angular/platform-browser';
 import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
@@ -10,6 +10,22 @@ import { MenuItem } from '@siemens/element-ng/menu';
 
 import { MessageAction } from './message-action.model';
 import { SiAiMessageComponent as TestComponent } from './si-ai-message.component';
+import { SiChatMessageActionDirective } from './si-chat-message-action.directive';
+
+@Component({
+  imports: [TestComponent, SiChatMessageActionDirective],
+  template: `
+    <si-ai-message [actions]="actions()" [secondaryActions]="secondaryActions()">
+      <button type="button" class="custom-action" siChatMessageAction aria-label="View sources">
+        Sources
+      </button>
+    </si-ai-message>
+  `
+})
+class CustomActionsTestComponent {
+  readonly actions = signal<MessageAction[]>([]);
+  readonly secondaryActions = signal<MenuItem[]>([]);
+}
 
 describe('SiAiMessageComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -184,5 +200,44 @@ describe('SiAiMessageComponent', () => {
 
     const actionButtons = fixture.nativeElement.querySelectorAll('[siChatMessageAction] button');
     expect(actionButtons).toHaveLength(0);
+  });
+
+  it('should render a projected custom action without built-in actions', async () => {
+    const hostFixture = TestBed.createComponent(CustomActionsTestComponent);
+    await hostFixture.whenStable();
+
+    const actionGroup = hostFixture.nativeElement.querySelector('.ai-message-actions');
+    const customAction = actionGroup?.querySelector('.custom-action');
+
+    expect(actionGroup).toBeInTheDocument();
+    expect(customAction).toHaveTextContent('Sources');
+  });
+
+  it('should render projected custom actions after primary and secondary actions', async () => {
+    const hostFixture = TestBed.createComponent(CustomActionsTestComponent);
+    hostFixture.componentInstance.actions.set([
+      {
+        label: 'Copy',
+        icon: 'element-copy',
+        action: () => {}
+      }
+    ]);
+    hostFixture.componentInstance.secondaryActions.set([
+      {
+        type: 'action',
+        label: 'Bookmark',
+        action: () => {}
+      }
+    ]);
+    await hostFixture.whenStable();
+
+    const actionButtons = hostFixture.nativeElement.querySelectorAll(
+      '.ai-message-actions > button'
+    );
+
+    expect(actionButtons).toHaveLength(3);
+    expect(actionButtons[0]).toHaveAttribute('aria-label', 'Copy');
+    expect(actionButtons[1]).toHaveAttribute('aria-label', 'Additional actions');
+    expect(actionButtons[2]).toHaveAttribute('aria-label', 'View sources');
   });
 });

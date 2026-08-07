@@ -6,3 +6,4 @@ export * from './color-variant.model';
 export * from './menu.model';
 export * from './status-type.model';
 export * from './positions.model';
+export * from './source.model';

@@ -12,7 +12,8 @@
   - button "Good response"
   - button "Bad response"
   - button "Copy response"
-  - button "More actions"
+  - button "Additional actions"
+  - button "View sources": Sources
 - paragraph: Perfect! What should I focus on first
 - paragraph: I also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?
 - group:
@@ -22,18 +23,19 @@
   - button "Good response"
   - button "Bad response"
   - button "Copy response"
-  - button "More actions"
+  - button "Additional actions"
+  - button "View sources": Sources
 - alert: Info AI responses are for demonstration purposes.
 - group:
   - text: requirements.pdf
-  - button "Remove attachment requirements.pdf"
+  - button "Remove requirements.pdf"
 - group:
   - text: mockup.png
-  - button "Remove attachment mockup.png"
-- textbox "Chat message input":
+  - button "Remove mockup.png"
+- textbox "Chat input":
   - /placeholder: Enter a command, question or topic...
 - group:
-  - button "More actions"
+  - button "Additional actions"
   - button "Show Welcome Screen"
 - button "Send"
 - text: The content is AI generated. Always verify the information for accuracy.
