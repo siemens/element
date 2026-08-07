@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
         padding: 0.5rem;
       }
       .example div {
-        border: 1px solid rgb(from var(--element-action-primary) r g b / 0.3);
+        border: 1px solid var(--si-sys-border-accent);
       }
     }
   `,

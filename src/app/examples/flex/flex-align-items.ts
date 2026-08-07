@@ -16,7 +16,7 @@ import { Component } from '@angular/core';
         block-size: 80px;
       }
       .example div {
-        border: 1px solid rgb(from var(--element-action-primary) r g b / 0.3);
+        border: 1px solid rgb(from var(--si-sys-border-accent) r g b / 0.3);
       }
     }
   `,

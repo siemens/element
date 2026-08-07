@@ -68,8 +68,8 @@ export class SampleComponent {
   private createChartColors(): EChartOption {
     const style = window.getComputedStyle(document.documentElement);
     const colors = [
-      this.getProperty(style, '--element-data-plum-1', '#e5659b'),
-      this.getProperty(style, '--element-data-plum-2', '#c04774')
+      this.getProperty(style, '--si-sys-data-sequential-plum-1', '#e5659b'),
+      this.getProperty(style, '--si-sys-data-sequential-plum-2', '#c04774')
     ];
     return {
       color: colors
