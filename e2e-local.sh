@@ -95,6 +95,9 @@ else
     PLAYWRIGHT_isvrt=true
     echo "Updating all snapshots.."
   fi
+  # The extra 'sleep 1' prevents tests initially failing sometimes with Chrome reporting
+  #   Failed to load resource: net::ERR_NETWORK_CHANGED
+  # The reason is if the container is started but network isn't ready yet
   $DOCKER run -it --rm \
     -e LOCAL_ADDRESS=$LOCAL_ADDRESS \
     -e PORT=$PORT \
@@ -107,6 +110,10 @@ else
     --net=$NETWORK_MODE \
     --ipc=host \
     $PLAYWRIGHT_IMAGE \
+    sh \
+    -c \
+    'sleep 1; exec "$@"' \
+    -- \
     npx \
     playwright \
     test \
