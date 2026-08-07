@@ -1,0 +1,49 @@
+@let dis = disabled();
+@let src = sources();
+<button
+  type="button"
+  class="chip"
+  siPopoverContainerClass="si-source-chip-popover"
+  [attr.tabindex]="dis ? '' : '0'"
+  [attr.aria-disabled]="dis"
+  [class.disabled]="dis"
+  [class.full-size]="!compact()"
+  [siPopover]="sourcePopover"
+>
+  @if (showIcon()) {
+    <si-icon icon="element-global" />
+  }
+  @if (showLabel() || !src.length) {
+    {{ labelSources | translate }}
+  } @else {
+    {{ label() }}
+
+    @if (src.length > 2) {
+      +{{ src.length - 1 }}
+    }
+  }
+</button>
+
+<ng-template #sourcePopover>
+  <si-popover-title class="visually-hidden">
+    {{ labelSources | translate }}
+  </si-popover-title>
+  <si-popover-body class="p-0 sources">
+    <ul class="list-unstyled mb-0">
+      @for (source of src; track $index) {
+        <li>
+          <button
+            type="button"
+            class="list-item list-item-action"
+            (click)="sourceClicked.emit(source)"
+          >
+            <div class="list-item-title">{{ source.name }}</div>
+            @if (source.quote ?? source.description; as description) {
+              <p class="list-item-description">{{ description }}</p>
+            }
+          </button>
+        </li>
+      }
+    </ul>
+  </si-popover-body>
+</ng-template>

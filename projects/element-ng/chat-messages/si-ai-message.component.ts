@@ -10,11 +10,13 @@ import {
   input,
   viewChild,
   ElementRef,
-  signal
+  signal,
+  output
 } from '@angular/core';
 import { elementOptionsVertical } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
+import { SourceReference, SiSourceChipComponent } from '@siemens/element-ng/source-chip';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
@@ -50,7 +52,8 @@ import { SiChatMessageComponent } from './si-chat-message.component';
     SiIconComponent,
     SiMenuFactoryComponent,
     SiChatMessageActionDirective,
-    SiTranslatePipe
+    SiTranslatePipe,
+    SiSourceChipComponent
   ],
   templateUrl: './si-ai-message.component.html',
   styleUrl: './si-ai-message.component.scss'
@@ -127,6 +130,9 @@ export class SiAiMessageComponent {
   /** Parameter to pass to action handlers */
   readonly actionParam = input();
 
+  /** Source references */
+  readonly sources = input<SourceReference[]>();
+
   /**
    * More actions button aria label
    *
@@ -138,4 +144,7 @@ export class SiAiMessageComponent {
   readonly secondaryActionsLabel = input(
     t(() => $localize`:@@SI_AI_MESSAGE.SECONDARY_ACTIONS:Additional actions`)
   );
+
+  /** Emitted when a source has been clicked. */
+  readonly sourceClicked = output<SourceReference>();
 }

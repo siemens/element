@@ -1,0 +1,57 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: calc(1lh + 2 * map.get(variables.$spacers, 4));
+  border: 1px solid variables.$si-sys-border-neutral;
+  border-radius: 1lh;
+  padding-block: 0;
+  padding-inline: map.get(variables.$spacers, 4);
+  gap: map.get(variables.$spacers, 2);
+  background: variables.$si-sys-background-0;
+
+  &:not(.disabled) {
+    cursor: pointer;
+
+    &:not(.selected):hover {
+      background: variables.$si-sys-background-hover;
+    }
+  }
+
+  &[aria-expanded='true'] {
+    background: variables.$si-sys-background-selected;
+  }
+}
+
+.full-size {
+  block-size: calc(1lh + 2 * map.get(variables.$spacers, 4));
+}
+
+.disabled {
+  opacity: variables.$element-action-disabled-opacity;
+}
+
+.sources {
+  max-block-size: 400px;
+  overflow-y: auto;
+
+  .list-item {
+    &:first-child {
+      border-start-start-radius: variables.$element-radius-2;
+      border-start-end-radius: variables.$element-radius-2;
+    }
+
+    &:last-child {
+      border-end-start-radius: variables.$element-radius-2;
+      border-end-end-radius: variables.$element-radius-2;
+    }
+  }
+}
+
+::ng-deep .si-source-chip-popover {
+  min-inline-size: 230px;
+  max-inline-size: 400px;
+}
