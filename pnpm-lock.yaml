@@ -103,14 +103,14 @@ importers:
         specifier: 9.1.6
         version: 9.1.6(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))
       ol:
-        specifier: 10.9.0
-        version: 10.9.0
+        specifier: 10.10.0
+        version: 10.10.0
       ol-ext:
         specifier: 4.0.38
-        version: 4.0.38(ol@10.9.0)
+        version: 4.0.38(ol@10.10.0)
       ol-mapbox-style:
-        specifier: 13.4.1
-        version: 13.4.1(ol@10.9.0)
+        specifier: 13.4.2
+        version: 13.4.2(ol@10.10.0)
       rxjs:
         specifier: 7.8.2
         version: 7.8.2
@@ -5050,8 +5050,8 @@ packages:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==, tarball: https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz}
     engines: {node: '>=6.9.0'}
 
-  geotiff@3.0.5:
-    resolution: {integrity: sha512-OWcL9S9+yDZ6iAlXMt32T1iwUApJM8UiD47xbm6ZP1h33d10fqkPs14EG/ttT5EnefpZSx3G15iDFC5FxUNUwA==, tarball: https://registry.npmjs.org/geotiff/-/geotiff-3.0.5.tgz}
+  geotiff@3.1.0-beta.0:
+    resolution: {integrity: sha512-wbVwOaQYuN+ywly5NoMXn37nHslwkQg5EFHqMeUTtjDACrSag0EEVlFsc+2DK3Pzmmp6XzJW2RTZOamPsBM6ng==, tarball: https://registry.npmjs.org/geotiff/-/geotiff-3.1.0-beta.0.tgz}
     engines: {node: '>=10.19'}
 
   get-caller-file@2.0.5:
@@ -6336,13 +6336,13 @@ packages:
     peerDependencies:
       ol: '>= 5.3.0'
 
-  ol-mapbox-style@13.4.1:
-    resolution: {integrity: sha512-da4FKZUXoXMzK5ADeRHAXzd3bTeiKg/Y9LBOTB6qNTP62MQm93y6ISrIXzOS9atfGgQMEHJ2pCgP272IMeZCXA==, tarball: https://registry.npmjs.org/ol-mapbox-style/-/ol-mapbox-style-13.4.1.tgz}
+  ol-mapbox-style@13.4.2:
+    resolution: {integrity: sha512-UJNNr8rEfLGullGHfdfxwpoisLAteHJ+WdSmT4VewDn5BgTkTJX1zGGQ997NYGTJxJpbW44Q9rKo8BJOKIB2Lg==, tarball: https://registry.npmjs.org/ol-mapbox-style/-/ol-mapbox-style-13.4.2.tgz}
     peerDependencies:
       ol: '*'
 
-  ol@10.9.0:
-    resolution: {integrity: sha512-svbbgVQUmEHaKpLQ8kRySojs59Brvgl2zYIrqG9eQNXGfsbi55rQasZIDpwpQzDL6OlzrUb0H4hQaiX9wDoGmA==, tarball: https://registry.npmjs.org/ol/-/ol-10.9.0.tgz}
+  ol@10.10.0:
+    resolution: {integrity: sha512-tLPKn6zl+6uWdPufYlqG/lQzuVUTVmfwahQqVr5+wZNyZecyAtIhMTyOtKpu7ooNDLY2sEjKZNXw9HL+sOjC1A==, tarball: https://registry.npmjs.org/ol/-/ol-10.10.0.tgz}
 
   on-finished@2.4.1:
     resolution: {integrity: sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==, tarball: https://registry.npmjs.org/on-finished/-/on-finished-2.4.1.tgz}
@@ -6547,10 +6547,6 @@ packages:
 
   pathe@2.0.3:
     resolution: {integrity: sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==, tarball: https://registry.npmjs.org/pathe/-/pathe-2.0.3.tgz}
-
-  pbf@4.0.1:
-    resolution: {integrity: sha512-SuLdBvS42z33m8ejRbInMapQe8n0D3vN/Xd5fmWM3tufNgRQFBpaW2YVJxQZV4iPNqb0vEFvssMEo5w9c6BTIA==, tarball: https://registry.npmjs.org/pbf/-/pbf-4.0.1.tgz}
-    hasBin: true
 
   pbf@5.1.2:
     resolution: {integrity: sha512-mnvGdvOrIvJOBGUEdGkrVXjN8E/VkIJCkf2eS1DH2yv82ORUlLttmDt0rWY38yYZmVwciZwBUvHM20qxBZf40w==, tarball: https://registry.npmjs.org/pbf/-/pbf-5.1.2.tgz}
@@ -13321,7 +13317,7 @@ snapshots:
 
   gensync@1.0.0-beta.2: {}
 
-  geotiff@3.0.5:
+  geotiff@3.1.0-beta.0:
     dependencies:
       '@petamoriken/float16': 3.9.3
       lerc: 3.0.0
@@ -14547,22 +14543,22 @@ snapshots:
 
   obug@2.1.4: {}
 
-  ol-ext@4.0.38(ol@10.9.0):
+  ol-ext@4.0.38(ol@10.10.0):
     dependencies:
-      ol: 10.9.0
+      ol: 10.10.0
 
-  ol-mapbox-style@13.4.1(ol@10.9.0):
+  ol-mapbox-style@13.4.2(ol@10.10.0):
     dependencies:
       '@maplibre/maplibre-gl-style-spec': 24.10.0
       mapbox-to-css-font: 3.2.0
-      ol: 10.9.0
+      ol: 10.10.0
 
-  ol@10.9.0:
+  ol@10.10.0:
     dependencies:
       '@types/rbush': 4.0.0
       earcut: 3.2.3
-      geotiff: 3.0.5
-      pbf: 4.0.1
+      geotiff: 3.1.0-beta.0
+      pbf: 5.1.2
       rbush: 4.0.1
       zarrita: 0.7.3
 
@@ -14812,10 +14808,6 @@ snapshots:
     optional: true
 
   pathe@2.0.3: {}
-
-  pbf@4.0.1:
-    dependencies:
-      resolve-protobuf-schema: 2.1.0
 
   pbf@5.1.2:
     dependencies:
