@@ -41,21 +41,13 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
 
 // @public (undocumented)
 export class SiStatusBarItemComponent implements OnChanges {
-    // (undocumented)
     readonly blink: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly clickable: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly color: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
     readonly heading: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
     readonly significanceChange: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
     readonly status: _angular_core.InputSignal<ExtendedStatusType | undefined>;
-    // (undocumented)
     readonly value: _angular_core.InputSignal<number | TranslatableString>;
-    // (undocumented)
     readonly valueOnly: _angular_core.InputSignalWithTransform<boolean | undefined, unknown>;
 }
 

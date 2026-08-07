@@ -4,6 +4,7 @@
 
 ```ts
 
+import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import { Highlightable } from '@angular/cdk/a11y';
@@ -11,7 +12,6 @@ import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { ScrollStrategy } from '@angular/cdk/overlay';
 import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -54,7 +54,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     readonly typeaheadProcess: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadScrollable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadScrollableAdditionalHeight: _angular_core.InputSignal<number>;
-    readonly typeaheadScrollStrategy: _angular_core.InputSignal<ScrollStrategy | undefined>;
+    readonly typeaheadScrollStrategy: _angular_core.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
     readonly typeaheadSkipSortingMatches: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadTokenize: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadWaitMs: _angular_core.InputSignal<number>;

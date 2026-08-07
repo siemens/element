@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Overlay, OverlayRef, ScrollStrategy } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ComponentRef,
@@ -16,7 +16,12 @@ import {
   signal,
   TemplateRef
 } from '@angular/core';
-import { getOverlay, getPositionStrategy, positions } from '@siemens/element-ng/common';
+import {
+  defaultConnectedOverlayScrollStrategy,
+  getOverlay,
+  getPositionStrategy,
+  positions
+} from '@siemens/element-ng/common';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -88,12 +93,13 @@ export class SiPopoverDirective implements OnDestroy {
   readonly context = input<unknown>(undefined, { alias: 'siPopoverContext' });
 
   /**
-   * Optional CDK scroll strategy used for the popover overlay.
-   * If not provided, the default reposition strategy is used.
+   * CDK scroll strategy used for the popover overlay.
    *
-   * @defaultValue undefined
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
    */
-  readonly scrollStrategy = input<ScrollStrategy>(undefined, { alias: 'siPopoverScrollStrategy' });
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy(), {
+    alias: 'siPopoverScrollStrategy'
+  });
 
   /**
    * Emits `true` when the popover is shown, `false` when the popover is hidden.

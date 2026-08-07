@@ -2,7 +2,7 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 :host {
-  background-color: variables.$element-base-1;
+  background-color: variables.$si-sys-background-1;
   border-radius: variables.$element-radius-3;
   display: flex;
   flex-direction: column;

@@ -57,16 +57,16 @@
     typography.$si-line-height-display-xl,
     typography.$si-font-weight-display-xl
   );
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-text-primary;
 }
 
 .si-weather-widget-condition {
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-text-primary;
 }
 
 .si-weather-widget-location {
   font-weight: variables.$si-font-weight-semibold;
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-text-primary;
 }
 
 .si-weather-widget-range {
@@ -75,11 +75,11 @@
 }
 
 .si-weather-widget-range-min {
-  color: variables.$element-text-secondary;
+  color: variables.$si-sys-text-secondary;
 }
 
 .si-weather-widget-range-max {
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-text-primary;
   font-weight: variables.$si-font-weight-semibold;
 }
 
@@ -101,11 +101,11 @@
 }
 
 .si-weather-widget-metric-label {
-  color: variables.$element-text-secondary;
+  color: variables.$si-sys-text-secondary;
 }
 
 .si-weather-widget-metric-value {
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-text-primary;
   font-weight: variables.$si-font-weight-semibold;
   text-align: end;
 }

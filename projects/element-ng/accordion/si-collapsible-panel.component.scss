@@ -6,7 +6,7 @@
   --__radius: var(--si-accordion-radius, #{variables.$element-button-radius});
   display: flex;
   flex-direction: column;
-  background: variables.$element-base-0;
+  background: variables.$si-sys-background-0;
   padding-block-end: 2px;
 
   &:not(.hcollapsed) {
@@ -17,7 +17,7 @@
   }
 
   &.hcollapsed {
-    background: variables.$element-base-1;
+    background: variables.$si-sys-background-1;
 
     .collapsible-header .autohide,
     .collapsible-content {
@@ -28,7 +28,7 @@
       padding-block: map.get(variables.$spacers, 4);
 
       &:hover {
-        background: variables.$element-base-1-hover;
+        background: variables.$si-sys-background-hover;
       }
     }
   }
@@ -50,13 +50,13 @@
 .collapsible-header {
   display: flex;
   align-items: center;
-  background: variables.$element-base-1;
-  color: variables.$element-text-primary;
+  background: variables.$si-sys-background-1;
+  color: variables.$si-sys-text-primary;
   padding-block: map.get(variables.$spacers, 5);
   border-radius: var(--__radius);
 
   &.disabled {
-    color: variables.$element-text-disabled;
+    color: variables.$si-sys-text-disabled;
     cursor: default;
   }
 
@@ -70,14 +70,14 @@
 
     &:hover {
       text-decoration: none;
-      background: variables.$element-base-1-hover;
+      background: variables.$si-sys-background-hover;
     }
   }
 }
 
 .dropdown-caret {
   transition: transform variables.$element-default-transition-duration;
-  color: variables.$element-ui-1;
+  color: variables.$si-sys-text-primary;
 
   .open & {
     transform: rotate(180deg);
@@ -86,7 +86,7 @@
 
 .collapsible-content {
   overflow: hidden;
-  background: variables.$element-base-1;
+  background: variables.$si-sys-background-1;
   border-end-start-radius: var(--__radius);
   border-end-end-radius: var(--__radius);
 

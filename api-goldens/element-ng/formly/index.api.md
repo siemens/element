@@ -32,11 +32,9 @@ export class SiFormlyComponent<TControl extends {
     readonly fields: _angular_core.InputSignal<FormlyFieldConfig<_ngx_formly_core.FormlyFieldProps & {
         [additionalProperties: string]: any;
     }>[]>;
-    // (undocumented)
     readonly fieldsChange: _angular_core.OutputEmitterRef<FormlyFieldConfig<_ngx_formly_core.FormlyFieldProps & {
         [additionalProperties: string]: any;
     }>[]>;
-    // (undocumented)
     readonly form: _angular_core.ModelSignal<FormGroup<TControl> | undefined>;
     readonly formlyForm: _angular_core.Signal<FormlyForm | undefined>;
     readonly labelWidth: _angular_core.InputSignal<number | undefined>;

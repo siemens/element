@@ -4,13 +4,13 @@
 
 ```ts
 
+import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { ElementRef } from '@angular/core';
 import * as i0 from '@angular/core';
 import { Injector } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { ScrollStrategy } from '@angular/cdk/overlay';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';

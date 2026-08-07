@@ -86,16 +86,17 @@ const processElementClassesInTemplate = ({
 }): void => {
   findElement(template, () => true).forEach(el => {
     const classAttr = el.attrs.find(attr => attr.name === 'class');
-    if (!classAttr) {
-      return;
-    }
-
-    const originalClasses = classAttr.value.split(/\s+/).filter(Boolean);
+    const originalClasses = classAttr?.value.split(/\s+/).filter(Boolean) ?? [];
     const removeSet = new Set<string>();
     const addList: string[] = [];
 
     changes.forEach(change => {
-      const { addClasses, removeClasses, requiredClasses, excludedClasses } = change;
+      const { addClasses, elementSelector, removeClasses, requiredClasses, excludedClasses } =
+        change;
+
+      if (elementSelector && el.name !== elementSelector) {
+        return;
+      }
 
       const hasAllRequiredClasses = requiredClasses.every(reqClass =>
         originalClasses.includes(reqClass)
@@ -136,6 +137,12 @@ const processElementClassesInTemplate = ({
     const newClassString = updatedClasses.join(' ');
 
     if (originalClassString !== newClassString) {
+      if (!classAttr) {
+        const insertPosition = el.startSourceSpan.start.offset + 1 + offset + el.name.length;
+        recorder.insertLeft(insertPosition, ` class="${newClassString}"`);
+        return;
+      }
+
       const valueStart = classAttr.valueSpan?.start.offset;
       const valueEnd = classAttr.valueSpan?.end.offset;
 

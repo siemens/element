@@ -11,7 +11,7 @@ $handle-length: 40px;
 
 .si-split-gutter {
   flex: 0 0 auto;
-  background: variables.$element-base-0;
+  background: variables.$si-sys-background-0;
   cursor: col-resize;
 
   &::before {
@@ -24,7 +24,7 @@ $handle-length: 40px;
     margin-inline-start: $handle-size * -0.5;
     inline-size: $handle-size;
     block-size: $handle-length;
-    background: variables.$element-ui-2;
+    background: variables.$si-sys-border-2;
   }
 
   :host(.vertical) > & {
@@ -37,10 +37,10 @@ $handle-length: 40px;
   }
 
   &:hover::before {
-    background: variables.$element-ui-0-hover;
+    background: variables.$si-sys-border-accent-hover;
   }
 
   &:active::before {
-    background: variables.$element-ui-0;
+    background: variables.$si-sys-border-accent-active;
   }
 }

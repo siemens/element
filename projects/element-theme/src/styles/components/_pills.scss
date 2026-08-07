@@ -6,19 +6,19 @@
   display: flex;
   align-items: center;
   border-radius: 0.75rem;
-  background: var(--filter-pill-background-color, variables.$element-base-0);
+  background: var(--filter-pill-background-color, variables.$si-sys-background-0);
   padding-inline: map.get(variables.$spacers, 4);
   max-inline-size: 100%;
 
   &.active {
-    background: variables.$element-base-1-selected;
+    background: variables.$si-sys-background-selected;
   }
 
   &.pill-interactive {
     cursor: pointer;
 
     &:hover {
-      background: variables.$element-action-secondary-hover;
+      background: variables.$si-sys-background-accent-secondary-hover;
     }
   }
 
