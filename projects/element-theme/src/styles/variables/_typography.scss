@@ -62,6 +62,10 @@ $si-font-size-body-lg: px-to-rem(16px);
 $si-line-height-body-lg: px-to-ratio($si-font-size-body-lg, 20px);
 $si-font-weight-body-lg: $si-font-weight-normal;
 
+$si-font-size-body-lg-bold: px-to-rem(16px);
+$si-line-height-body-lg-bold: px-to-ratio($si-font-size-body-lg-bold, 20px);
+$si-font-weight-body-lg-bold: $si-font-weight-semibold;
+
 $si-font-size-body: px-to-rem(14px);
 $si-line-height-body: px-to-ratio($si-font-size-body, 16px);
 $si-line-height-body-rem: px-to-rem(16px);
