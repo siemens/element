@@ -82,7 +82,15 @@ export class SampleComponent {
 
   onFileError(error: FileUploadError): void {
     this.logEvent(`File error: ${error.errorText} - ${error.fileName}`);
-    this.toastService.queueToastNotification('danger', error.errorText, error.fileName);
+    this.toastService.queueToastNotification(
+      'danger',
+      error.errorText,
+      error.fileName,
+      undefined,
+      undefined,
+      undefined,
+      error.errorParams
+    );
   }
 
   onInterrupt(): void {

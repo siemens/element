@@ -68,7 +68,8 @@ export class SiToastNotificationService implements OnDestroy {
     message: string,
     disableAutoClose?: boolean,
     disableManualClose?: boolean,
-    action?: Link
+    action?: Link,
+    translationParams?: { [key: string]: any }
   ): SiToast {
     const toast: SiToast = {
       state,
@@ -77,7 +78,8 @@ export class SiToastNotificationService implements OnDestroy {
       disableAutoClose,
       disableManualClose,
       action,
-      hidden: new Subject()
+      hidden: new Subject(),
+      translationParams
     };
     return this.showToastNotification(toast);
   }

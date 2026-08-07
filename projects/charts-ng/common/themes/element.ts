@@ -61,50 +61,54 @@ export const themeElement = {
   style: () => {
     const style = window.getComputedStyle(document.documentElement);
 
-    const elementUi0 = getProp(style, '--element-ui-0');
-    const elementUi0Hover = getProp(style, '--element-ui-0-hover');
-    const elementUi1 = getProp(style, '--element-ui-1');
-    const elementUi2 = getProp(style, '--element-ui-2');
-    const elementUi3 = getProp(style, '--element-ui-3');
-    const elementUi4 = getProp(style, '--element-ui-4');
-    const elementBase1 = getProp(style, '--element-base-1');
-    const elementTextPrimary = getProp(style, '--element-text-primary');
-    const elementTextSecondary = getProp(style, '--element-text-secondary');
-    const elementTextInverse = getProp(style, '--element-text-inverse');
+    const backgroundAccent = getProp(style, '--si-sys-background-accent');
+    const backgroundAccentHover = getProp(style, '--si-sys-background-accent-hover');
+    const background1 = getProp(style, '--si-sys-background-1');
+    const backgroundNeutral = getProp(style, '--si-sys-background-neutral');
+    const backgroundInverse = getProp(style, '--si-sys-background-inverse');
+    const border1 = getProp(style, '--si-sys-border-1');
+    const border3 = getProp(style, '--si-sys-border-3');
+    const border4 = getProp(style, '--si-sys-border-4');
+    const borderNeutral = getProp(style, '--si-sys-border-neutral');
+    const borderAccent = getProp(style, '--si-sys-border-accent');
+    const textPrimary = getProp(style, '--si-sys-text-primary');
+    const textSecondary = getProp(style, '--si-sys-text-secondary');
+    const textInverse = getProp(style, '--si-sys-text-inverse');
+    const textDisabled = getProp(style, '--si-sys-text-disabled');
 
     // The order of colors is provided by ux.
     const colorPalettes = {
       default: [
-        getProp(style, '--element-data-1'), // $siemens-data-petrol,
-        getProp(style, '--element-data-2'), // $siemens-data-turquoise-900,
-        getProp(style, '--element-data-4'), // $siemens-data-turquoise-700,
-        getProp(style, '--element-data-6'), // $siemens-data-interactive-coral-900,
-        getProp(style, '--element-data-5'), // $siemens-data-royal-blue-500,
-        getProp(style, '--element-data-7'), // $siemens-data-purple-700,
-        getProp(style, '--element-data-8'), // $siemens-data-purple-900,
-        getProp(style, '--element-data-9'), // $siemens-data-orchid-700,
-        getProp(style, '--element-data-11'), // $siemens-data-plum-900,
-        getProp(style, '--element-data-12'), // $siemens-data-plum-500
-        getProp(style, '--element-data-13'), // $siemens-data-royal-blue-700,
-        getProp(style, '--element-data-16'), // $siemens-data-sand-700,
-        getProp(style, '--element-data-17'), // $siemens-data-deep-blue-700
-        getProp(style, '--element-data-3'), // $siemens-data-green-700,
-        getProp(style, '--element-data-10'), // $siemens-data-red-700,
-        getProp(style, '--element-data-14'), // $siemens-data-orange-900,
-        getProp(style, '--element-data-15') // $siemens-data-yellow-900,
+        getProp(style, '--si-sys-data-categorial-1'),
+        getProp(style, '--si-sys-data-categorial-2'),
+        getProp(style, '--si-sys-data-categorial-4'),
+        getProp(style, '--si-sys-data-categorial-6'),
+        getProp(style, '--si-sys-data-categorial-5'),
+        getProp(style, '--si-sys-data-categorial-7'),
+        getProp(style, '--si-sys-data-categorial-8'),
+        getProp(style, '--si-sys-data-categorial-9'),
+        getProp(style, '--si-sys-data-categorial-11'),
+        getProp(style, '--si-sys-data-categorial-12'),
+        getProp(style, '--si-sys-data-categorial-13'),
+        getProp(style, '--si-sys-data-categorial-16'),
+        getProp(style, '--si-sys-data-categorial-17'),
+        getProp(style, '--si-sys-data-categorial-3'),
+        getProp(style, '--si-sys-data-categorial-10'),
+        getProp(style, '--si-sys-data-categorial-14'),
+        getProp(style, '--si-sys-data-categorial-15')
       ]
     };
 
     const gradientColors = {
       default: [
-        getProp(style, '--element-data-1'), // $siemens-data-petrol,
-        getProp(style, '--element-data-2') // $siemens-data-turquoise-900,
+        getProp(style, '--si-sys-data-categorial-1'),
+        getProp(style, '--si-sys-data-categorial-2')
       ]
     };
 
     const axisFontSize = 12;
     const axisLineHeight = 12;
-    const axisLineColor = elementUi4;
+    const axisLineColor = border4;
 
     const rootFontSizeRaw = getProp(style, 'font-size');
     const rootFontSize = rootFontSizeRaw.endsWith('px') ? parseInt(rootFontSizeRaw) : 16;
@@ -113,21 +117,21 @@ export const themeElement = {
     const fontSize = rootFontSize * 0.875;
     // diverging here by intention
     const lineHeight = fontSize;
-    const textColor = elementTextPrimary;
+    const textColor = textPrimary;
 
     const candlestickBull = colorPalettes.default[4];
     const candlestickBear = colorPalettes.default[12];
 
-    const dataZoomFillerColor = echarts.color.modifyAlpha(elementUi4, 0.4);
-    const dataZoomBrushColor = elementUi0;
-    const dataZoomAreaColor = elementUi4;
-    const dataZoomLineColor = elementUi2;
+    const dataZoomFillerColor = echarts.color.modifyAlpha(backgroundNeutral, 0.2);
+    const dataZoomBrushColor = backgroundAccent;
+    const dataZoomAreaColor = backgroundNeutral;
+    const dataZoomLineColor = border3;
 
     const dataZoomHandleIcon =
       'path://M-9.35,34.56V42m0-40V9.5m-2,0h4a2,2,0,0,1,2,2v21a2,2,0,0,1-2,2h-4a2,2,0,0,1-2-2v-21A2,2,0,0,1-11.35,9.5Z';
-    const dataZoomHandleColor = elementUi0;
+    const dataZoomHandleColor = borderAccent;
 
-    const tooltipBackground = echarts.color.modifyAlpha(elementUi1, 0.8);
+    const tooltipBackground = echarts.color.modifyAlpha(backgroundInverse, 0.8);
 
     const rtl = style.direction === 'rtl';
 
@@ -158,13 +162,13 @@ export const themeElement = {
           fontFamily,
           lineHeight,
           fontSize,
-          color: elementTextSecondary
+          color: textSecondary
         }
       },
 
       legend: {
         backgroundColor: 'transparent',
-        inactiveColor: elementUi3,
+        inactiveColor: textDisabled,
         left: 'auto',
         right: 20,
         top: 35,
@@ -190,13 +194,13 @@ export const themeElement = {
         backgroundColor: tooltipBackground,
         textStyle: {
           fontFamily,
-          color: 'var(--element-text-inverse)',
+          color: 'var(--si-sys-text-inverse)',
           fontWeight: 400
         },
         padding: [8, 12, 8, 12],
         axisPointer: {
           crossStyle: {
-            color: elementUi3,
+            color: border3,
             width: 1
           }
         },
@@ -206,13 +210,13 @@ export const themeElement = {
       axisPointer: {
         label: {
           fontFamily,
-          color: elementTextInverse,
-          backgroundColor: elementUi1,
+          color: textInverse,
+          backgroundColor: border1,
           lineHeight: axisLineHeight,
           fontSize: axisFontSize
         },
         lineStyle: {
-          color: elementUi3,
+          color: border3,
           width: 2
         },
         handle: {
@@ -232,7 +236,7 @@ export const themeElement = {
       valueAxis: {
         nameTextStyle: {
           fontFamily,
-          color: elementTextSecondary
+          color: textSecondary
         },
         axisLine: {
           show: true,
@@ -260,7 +264,7 @@ export const themeElement = {
         inverse: rtl,
         nameTextStyle: {
           fontFamily,
-          color: elementTextSecondary
+          color: textSecondary
         },
         axisLine: {
           show: true,
@@ -289,7 +293,7 @@ export const themeElement = {
         inverse: rtl,
         nameTextStyle: {
           fontFamily,
-          color: elementTextSecondary
+          color: textSecondary
         },
         axisLine: {
           show: true,
@@ -322,15 +326,15 @@ export const themeElement = {
           lineHeight: axisLineHeight,
           fontSize: axisFontSize
         },
-        borderColor: elementUi4,
+        borderColor: border4,
         fillerColor: dataZoomFillerColor,
         handleIcon: dataZoomHandleIcon,
         handleStyle: {
           color: dataZoomHandleColor,
-          borderColor: elementUi4
+          borderColor: border4
         },
         moveHandleStyle: {
-          color: elementUi4,
+          color: borderNeutral,
           opacity: 1
         },
         brushStyle: {
@@ -355,12 +359,12 @@ export const themeElement = {
         },
         emphasis: {
           moveHandleStyle: {
-            color: elementUi0Hover,
+            color: backgroundAccentHover,
             opacity: 1
           },
           handleStyle: {
-            color: elementUi0Hover,
-            borderColor: elementUi4
+            color: backgroundAccentHover,
+            borderColor: border4
           }
         }
       },
@@ -390,7 +394,7 @@ export const themeElement = {
         barGap: 0,
         label: {
           fontFamily,
-          color: elementTextSecondary,
+          color: textSecondary,
           fontSize
         }
       },
@@ -409,7 +413,7 @@ export const themeElement = {
           distanceToLabelLine: 2,
           fontFamily,
           formatter: '{d}%',
-          color: elementTextSecondary,
+          color: textSecondary,
           lineHeight,
           fontSize
         },
@@ -417,12 +421,12 @@ export const themeElement = {
           length: 15,
           length2: 8,
           lineStyle: {
-            color: elementTextSecondary
+            color: textSecondary
           }
         },
         itemStyle: {
           borderWidth: 2,
-          borderColor: elementBase1
+          borderColor: background1
         }
       },
 
@@ -437,19 +441,19 @@ export const themeElement = {
 
       gauge: {
         detail: {
-          color: elementTextPrimary,
+          color: textPrimary,
           rich: {
             value: {
-              color: elementTextPrimary
+              color: textPrimary
             },
             unit: {
-              color: elementTextPrimary
+              color: textPrimary
             }
           }
         },
         axisLabel: {
           fontFamily,
-          color: elementTextPrimary
+          color: textPrimary
         },
         axisTick: {
           lineStyle: {
@@ -537,7 +541,7 @@ export const themeElement = {
         progress: {
           itemWidth: 6,
           itemGap: 6,
-          grey: elementUi4
+          grey: border4
         },
 
         progressBar: {
@@ -551,10 +555,10 @@ export const themeElement = {
         },
 
         gauge: {
-          grey: elementUi4,
-          value: elementTextPrimary,
-          unit: elementTextSecondary,
-          defaultColor: elementUi0
+          grey: border4,
+          value: textPrimary,
+          unit: textSecondary,
+          defaultColor: borderAccent
         }
       }
     };

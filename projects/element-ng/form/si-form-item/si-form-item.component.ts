@@ -90,6 +90,7 @@ export class SiFormItemComponent
    */
   readonly disableErrorPrinting = input(false, { transform: booleanAttribute });
 
+  /** Maps validation errors of the contained control to custom messages. */
   readonly formErrorMapper = input<SiFormValidationErrorMapper>();
 
   /**

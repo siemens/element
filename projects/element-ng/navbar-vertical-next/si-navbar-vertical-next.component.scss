@@ -61,7 +61,7 @@ nav {
   text-align: end;
   border: 0;
   inline-size: $vertical-nav-collapsed-width;
-  color: all-variables.$element-text-primary;
+  color: all-variables.$si-sys-text-primary;
   padding-block: $mobile-drawer-padding-block;
   padding-inline: $mobile-drawer-padding-inline;
   margin-block-start: $mobile-drawer-margin-block-start;
@@ -95,7 +95,7 @@ nav {
 // Surface styling for the collapsed drawer when it floats over content:
 // the .nav-text-only sidebar and the mobile off-canvas drawer below sm.
 @mixin mobile-drawer-overlay {
-  background: all-variables.$element-base-1;
+  background: all-variables.$si-sys-background-1;
   box-shadow: all-variables.$element-elevation-1;
 }
 
@@ -163,7 +163,7 @@ nav {
       content: '';
       position: absolute;
       inset: 0;
-      background: all-variables.$element-base-1;
+      background: all-variables.$si-sys-background-1;
       z-index: 1;
       pointer-events: none;
     }

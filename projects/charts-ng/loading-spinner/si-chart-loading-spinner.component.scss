@@ -21,7 +21,7 @@ svg {
 }
 
 path {
-  fill: var(--element-ui-2, #656a6f); // stylelint-disable-line color-no-hex
+  fill: var(--si-sys-border-2, #656a6f); // stylelint-disable-line color-no-hex
   animation: spinner-fade 1s infinite linear;
 
   @for $i from 0 through 9 {

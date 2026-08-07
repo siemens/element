@@ -31,11 +31,11 @@ export class SampleComponent {
   showRangeLabelsOutside = false;
 
   series: GaugeSeries[] = [
-    { name: 'Series 1', value: 50.456, colorToken: 'element-data-5' },
+    { name: 'Series 1', value: 50.456, colorToken: 'si-sys-data-categorial-5' },
     {
       name: 'Series 2',
       value: 100.123,
-      colorToken: 'element-data-15',
+      colorToken: 'si-sys-data-categorial-15',
       description: 'Optional description'
     }
   ];
