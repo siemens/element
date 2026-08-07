@@ -3,7 +3,7 @@
 
 :host {
   display: block;
-  --chat-message-bubble-bg: #{variables.$element-base-1};
+  --chat-message-bubble-bg: #{variables.$si-sys-background-1};
   --chat-message-bubble-padding: #{map.get(variables.$spacers, 5)};
 }
 
@@ -119,7 +119,7 @@
 
 .attachment-slot ::ng-deep si-attachment-list {
   --attachment-list-bg: transparent;
-  --attachment-name-color: #{variables.$element-text-secondary};
+  --attachment-name-color: #{variables.$si-sys-text-secondary};
 }
 
 :host-context(.si-container-xs, .si-container-sm) {

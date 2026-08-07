@@ -1,4 +1,4 @@
-@use '../variables/semantic-tokens';
+@use '../variables/system-tokens';
 @use '../variables/spacers';
 @use './variables';
 
@@ -16,9 +16,9 @@ $nav-tabs-min-width: 100px;
 
   .nav-link {
     &:hover {
-      color: semantic-tokens.$element-action-secondary-text-hover;
-      background: semantic-tokens.$element-action-secondary-hover;
-      border-color: semantic-tokens.$element-action-secondary-border-hover;
+      color: system-tokens.$si-sys-text-on-accent-secondary-hover;
+      background: system-tokens.$si-sys-background-accent-secondary-hover;
+      border-color: system-tokens.$si-sys-border-accent-hover;
     }
   }
 }
@@ -57,12 +57,12 @@ $nav-tabs-min-width: 100px;
     inset-inline: 0;
     inset-block-end: 0;
     block-size: variables.$nav-tabs-border-width;
-    background: semantic-tokens.$element-ui-4;
+    background: system-tokens.$si-sys-border-4;
   }
 
   &:focus-visible::before {
     // because otherwise the focus is cut off
-    background: semantic-tokens.$element-focus-default;
+    background: system-tokens.$si-sys-effects-focus;
   }
 
   .nav-link {
@@ -84,7 +84,7 @@ $nav-tabs-min-width: 100px;
     }
 
     &.active {
-      border-color: semantic-tokens.$element-action-secondary-border-hover;
+      border-color: system-tokens.$si-sys-border-accent-hover;
     }
 
     &:hover {

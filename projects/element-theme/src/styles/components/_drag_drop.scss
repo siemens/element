@@ -22,7 +22,7 @@ body:has(.cdk-drag-preview, .ui-draggable-dragging) {
 }
 
 .cdk-drag-preview {
-  background-color: variables.$element-base-3 !important;
+  background-color: variables.$si-sys-background-3 !important;
   box-shadow: variables.$element-elevation-2 !important;
   position: relative !important;
   inset-inline-start: -5px !important;
@@ -36,7 +36,7 @@ body:has(.cdk-drag-preview, .ui-draggable-dragging) {
 }
 
 .cdk-drag-handle {
-  color: variables.$element-ui-2;
+  color: variables.$si-sys-text-secondary;
 }
 
 .cdk-drag-disabled {
@@ -70,7 +70,7 @@ body:has(.cdk-drag-preview, .ui-draggable-dragging) {
 
 .cdk-drop-list:not([cdkDropListHasAnchor]) .cdk-drag-placeholder {
   opacity: 0.3;
-  background-color: variables.$element-base-information !important;
+  background-color: variables.$si-sys-background-information-subtle !important;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   min-block-size: 45px;
   font-size: 0; // hide direct text
@@ -92,7 +92,7 @@ body:has(.cdk-drag-preview, .ui-draggable-dragging) {
 
 .droppable-container {
   &.drop-border {
-    border: 1px dashed variables.$element-ui-2;
+    border: 1px dashed variables.$si-sys-border-2;
   }
 
   .cdk-drag-placeholder {

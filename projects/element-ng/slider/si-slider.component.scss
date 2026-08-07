@@ -48,7 +48,7 @@ $thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers, 4)});
   position: relative;
   display: inline-block;
   white-space: nowrap;
-  color: variables.$element-text-secondary;
+  color: variables.$si-sys-text-secondary;
 
   > span {
     display: inline-block;
@@ -64,7 +64,7 @@ $thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers, 4)});
     display: inline-flex;
     white-space: nowrap;
     inline-size: 100%;
-    color: variables.$element-text-secondary;
+    color: variables.$si-sys-text-secondary;
 
     > span {
       display: inline-block;
@@ -93,7 +93,7 @@ $thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers, 4)});
     margin-block-start: calc($track-height / -2);
     block-size: $track-height;
     inline-size: 100%;
-    background: variables.$element-ui-4;
+    background: variables.$si-sys-border-4;
     pointer-events: none;
   }
 
@@ -124,7 +124,7 @@ $thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers, 4)});
   }
 
   .thumb {
-    --thumb-state-color: #{variables.$element-ui-0};
+    --thumb-state-color: #{variables.$si-sys-text-accent};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -136,15 +136,15 @@ $thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers, 4)});
     border-radius: 50%;
     border: 1px solid var(--thumb-state-color);
     box-shadow: variables.$element-elevation-2;
-    background: variables.$element-base-1;
+    background: variables.$si-sys-background-1;
 
     &:hover:not(.dragging) {
-      --thumb-state-color: #{variables.$element-ui-0-hover};
-      background: variables.$element-action-secondary-hover;
+      --thumb-state-color: #{variables.$si-sys-text-accent-hover};
+      background: variables.$si-sys-background-accent-secondary-hover;
     }
 
     :host.disabled & {
-      --thumb-state-color: #{variables.$element-ui-3};
+      --thumb-state-color: #{variables.$si-sys-text-disabled};
     }
 
     si-icon {

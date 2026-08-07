@@ -14,8 +14,8 @@ import { createPart, type Part } from 'ag-grid-community';
 export const elementCheckboxStyle: Part = createPart({
   css: `
 .ag-checkbox-input-wrapper:not(.ag-checked):not(.ag-indeterminate):hover {
-  border-color: var(--element-action-secondary-border-hover);
-  background: var(--element-action-secondary-hover);
+  border-color: var(--si-sys-border-accent-hover);
+  background: var(--si-sys-background-accent-secondary-hover);
 }
 `
 });

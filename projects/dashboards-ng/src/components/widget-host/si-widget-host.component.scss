@@ -55,7 +55,7 @@
 
 .resize-handle {
   inset-block-end: map.get(variables.$spacers, 3);
-  color: variables.$element-ui-2;
+  color: variables.$si-sys-text-secondary;
   pointer-events: none;
   position: absolute;
   inset-inline-end: map.get(variables.$spacers, 3);

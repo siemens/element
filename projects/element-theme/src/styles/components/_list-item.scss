@@ -49,7 +49,7 @@ ol:has(.list-item) {
 
   .list-item-timestamp {
     grid-area: timestamp;
-    color: variables.$element-text-secondary;
+    color: variables.$si-sys-text-secondary;
     margin-block-end: 0;
   }
 
@@ -79,7 +79,7 @@ ol:has(.list-item) {
         block-size: 0.375rem;
         inline-size: 0.375rem;
         border-radius: 50%;
-        background-color: variables.$element-ui-1;
+        background-color: variables.$si-sys-background-inverse;
         inset-inline-start: -0.625rem;
         inset-block-start: 50%;
         translate: 0 -50%;
@@ -102,11 +102,11 @@ ol:has(.list-item) {
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: variables.$element-text-secondary;
+    color: variables.$si-sys-text-secondary;
     margin-block-end: map.get(variables.$spacers, 4);
 
     a:not(:hover) {
-      color: variables.$element-text-secondary;
+      color: variables.$si-sys-text-secondary;
     }
 
     .badge {
@@ -117,7 +117,7 @@ ol:has(.list-item) {
       inline-size: 0.125rem;
       block-size: 0.125rem;
       border-radius: 50%;
-      background-color: variables.$element-text-secondary;
+      background-color: variables.$si-sys-text-secondary;
       margin-inline: map.get(variables.$spacers, 2);
     }
   }
@@ -134,11 +134,11 @@ ol:has(.list-item) {
     color: inherit;
 
     &:hover {
-      background-color: variables.$element-base-1-hover;
+      background-color: variables.$si-sys-background-hover;
     }
 
     &:active {
-      background-color: variables.$element-base-1-selected;
+      background-color: variables.$si-sys-background-selected;
     }
 
     &:focus-visible {

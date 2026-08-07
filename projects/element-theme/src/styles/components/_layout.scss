@@ -62,7 +62,7 @@
   grid-area: subtitle;
   margin-block-start: map.get(variables.$spacers, 4);
   margin-block-end: 0;
-  color: variables.$element-text-secondary;
+  color: variables.$si-sys-text-secondary;
   @include variables.si-font(
     variables.$si-font-size-body,
     variables.$si-line-height-body,

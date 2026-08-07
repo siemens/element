@@ -101,8 +101,9 @@ describe('SiPasswordToggleComponent', () => {
     it('should show invalid border on blur', () => {
       const passwordInput = element.querySelector<HTMLElement>('input')!;
       const defaultBorderColor = getComputedStyle(passwordInput).getPropertyValue('--element-ui-2');
-      const invalidBorderColor =
-        getComputedStyle(passwordInput).getPropertyValue('--element-status-danger');
+      const invalidBorderColor = getComputedStyle(passwordInput).getPropertyValue(
+        '--si-sys-background-danger'
+      );
 
       expect(rgbToHex(getComputedStyle(passwordInput).borderColor)).toBe(defaultBorderColor);
 

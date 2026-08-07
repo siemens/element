@@ -6,7 +6,7 @@
       // Ensure cropper dialog fit into screen
       max-block-size: 70vb;
       // map sass processed vars to CSS vars
-      --image-cropper-outline-color: var(--element-base-translucent-1);
+      --image-cropper-outline-color: var(--si-sys-effects-backdrop);
 
       // override CSS vars internally used by ngx-image-cropper
       --cropper-outline-color: var(--image-cropper-outline-color);

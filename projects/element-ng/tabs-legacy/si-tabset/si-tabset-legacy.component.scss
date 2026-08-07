@@ -40,18 +40,18 @@
   }
 
   &:hover {
-    color: variables.$element-text-active;
+    color: variables.$si-sys-text-accent;
   }
 
   &:disabled {
-    color: variables.$element-text-disabled;
+    color: variables.$si-sys-text-disabled;
     cursor: default;
   }
 }
 
 .nav-link {
   flex-shrink: 0;
-  color: variables.$element-text-secondary;
+  color: variables.$si-sys-text-secondary;
   // TODO: can define a max width here if this is desired
   // max-inline-size: 240px;
 
