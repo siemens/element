@@ -1,4 +1,6 @@
-:root {
+@use 'selectors';
+
+#{selectors.$root} {
   --element-animations-enabled: 1;
 }
 
@@ -7,7 +9,7 @@
 }
 
 @media (prefers-reduced-motion) {
-  :root {
+  #{selectors.$root} {
     --element-animations-enabled: 0;
   }
 }
