@@ -1,0 +1,242 @@
+- button "Options" [expanded]
+- region "Options":
+  - checkbox "Use citations" [checked]
+  - text: Use citations
+  - checkbox "Use Highlight.js" [checked]
+  - text: Use Highlight.js
+  - checkbox "Auto-detect language" [checked]
+  - text: Auto-detect language
+  - checkbox "Use KaTeX" [checked]
+  - text: Use KaTeX
+  - checkbox "Use Mermaid" [checked]
+  - text: Use Mermaid
+  - checkbox "Support Gemojis" [checked]
+  - text: Support Gemojis
+  - checkbox "Debug"
+  - text: Debug
+  - checkbox "Scroll sync" [checked]
+  - text: Scroll sync
+- button "Streaming"
+- region "Streaming"
+- button "Citations"
+- region "Citations"
+- textbox: "/# Sample Markdown Content Here's a \\*\\*comprehensive example\\*\\* of markdown content with various formatting options\\. This is a separate paragraph that demonstrates how double line breaks create proper paragraph spacing\\. ## Citations A citation can be resolved by reference\\.\\[reference-citation\\] xAI style citation references inside a link\\.\\[\\[reference-citation\\]\\]\\(https:\\/\\/example\\.com\\/report\\) A citation can also be resolved by its source position\\.\\[position-citation\\] Adjacent references are grouped together\\.\\[citation-one\\]\\[citation-three\\]\\[citation-two\\] ## Code Examples You can use inline code like `console\\.log\\('Hello World'\\)` or multi-line code blocks: ```javascript function calculateSum\\(a, b\\) \\{ return a \\+ b; \\} const result = calculateSum\\(5, 3\\); console\\.log\\(`Result: \\$\\{result\\}`\\); ``` Language can be auto-detected: ``` import cmath a = 1 b = 5 c = 6 # calculate the discriminant d = \\(b\\*\\*2\\) - \\(4\\*a\\*c\\) # find two solutions sol1 = \\(-b-cmath\\.sqrt\\(d\\)\\)\\/\\(2\\*a\\) sol2 = \\(-b\\+cmath\\.sqrt\\(d\\)\\)\\/\\(2\\*a\\) print\\('The solution are \\{0\\} and \\{1\\}'\\.format\\(sol1,sol2\\)\\) ``` --- ## Formatting Options Here's a paragraph explaining the formatting options available\\. Another paragraph with different formatting elements: - \\*\\*Bold text\\*\\* for emphasis - _Italic text_ for subtle emphasis - `inline code` for technical terms ## Links You can include links such as \\[Element\\]\\(https:\\/\\/element\\.siemens\\.io\\) for more information, as well as local links like \\[Internal Page\\]\\(\\/#\\/internal-page\\)\\. Links are also automatically detected: https:\\/\\/angular\\.io GFM Link references links are also supported: \\[foo\\]: \\/url 'title' \\[foo\\] The reference can be used multiple times like here \\[foo\\] --- ## Lists and Bullets Here are the key features: - Multi-line code blocks with syntax preservation - Bold and italic text formatting - Inline code highlighting - Bullet point lists - Blockquote support - \\[ \\] Open task-list item - \\[x\\] Completed task-list item - \\[x\\] Completed task-list item with uppercase marker \\* Or in the alternate format \\* Another bullet point - Nested lists are supported too - Another item in the nested list This paragraph appears after the list to show proper spacing\\. ## Ordered Lists Step-by-step instructions: 1\\. First, analyze the requirements 2\\. Then, implement the solution 3\\. Finally, test the implementation --- > This is a blockquote that demonstrates how quoted text appears in the markdown content component\\. > And of course it can span multiple lines This paragraph follows the blockquotes to demonstrate proper paragraph separation\\. This is a separate paragraph created by double line breaks\\. - Unordered item - Another item Another paragraph between the lists\\. 1\\. First ordered item 2\\. Second ordered item Final paragraph to show proper spacing\\. --- ## Footnotes Here's a simple footnote,\\[\\^1\\] and here's a longer one\\.\\[\\^bignote\\] \\[\\^1\\]: This is the first footnote\\. \\[\\^bignote\\]: Here's one with multiple paragraphs and code\\. Indent paragraphs to include them in the footnote\\. `\\{ my code \\}` Add as many paragraphs as you like\\. --- ## Images Images can be included as follows: !\\[Building Image\\]\\(\\.\\/assets\\/images\\/building-1\\.webp\\) And also the GFM reference is supported: !\\[Building image as reference\\]\\[imageref\\] \\[imageref\\]: \\.\\/assets\\/images\\/building-1\\.webp And again in collapsed style: !\\[imageref\\]\\[\\] --- ## Tables Tables are also supported: \\| Feature \\| Examples \\| Status \\| Notes \\| \\| ----------------- \\| ------------------------------------------------------------ \\| ---------- \\| --------------------------- \\| \\| \\*\\*Basic content\\*\\* \\| Alice Johnson<br>Bob Smith \\| ✓ Complete \\| Simple text and line breaks \\| \\| _Formatting_ \\| \\*\\*Bold\\*\\* and _italic_<br>Plus `code` and<br>`multiline code` \\| ✓ Complete \\| Multiple markdown formats \\| \\| Lists in cells \\| - First item<br>- Second item<br>- Third item \\| ✓ Complete \\| Bullet lists work properly \\| \\| Escaped pipes \\| grep \"text\\\\\\|pattern\"<br>awk '\\{print \\\\\\$1\\\\\\|\\\\\\$2\\}' \\| ✓ Complete \\| Use \\\\\\| for literal pipes \\| \\| Line breaks \\| Line 1<br>Line 2<br>Line 3 \\| ✓ Complete \\| Uses `<br>` tags \\| This paragraph appears after the tables to demonstrate proper spacing\\. --- ## Math Expressions LaTeX math expressions are supported for mathematical notation\\. Inline math can be written like this: \\$E = mc\\^2\\$ or the quadratic formula \\$x = \\\\frac\\{-b \\\\pm \\\\sqrt\\{b\\^2-4ac\\}\\}\\{2a\\}\\$\\. Display math uses double dollar signs for block equations: \\$\\$ \\\\int_\\{-\\\\infty\\}\\^\\{\\\\infty\\} e\\^\\{-x\\^2\\} dx = \\\\sqrt\\{\\\\pi\\} \\$\\$ --- ## Mermaid Mermaid diagrams are supported\\. ```mermaid graph TD A\\[Enter Chart Definition\\] --> B\\(Preview\\) B --> C\\{decide\\} C --> D\\[Keep\\] C --> E\\[Edit Definition\\] E --> B D --> F\\[Save Image and Code\\] F --> B ``` --- ## Gemojis Look, the moon :new_moon_with_face: Here's a cat :cat2: meow! Слава Україні! :ukraine: This is awesome :\\+1: :\\d+:/"
+- heading "Sample Markdown Content" [level=1]
+- paragraph:
+  - text: Here's a
+  - strong: comprehensive example
+  - text: of markdown content with various formatting options.
+- paragraph: This is a separate paragraph that demonstrates how double line breaks create proper paragraph spacing.
+- heading "Citations" [level=2]
+- paragraph:
+  - text: A citation can be resolved by reference.
+  - button "Reference citation"
+- paragraph:
+  - text: xAI style citation references inside a link.
+  - button "Reference citation"
+- paragraph:
+  - text: A citation can also be resolved by its source position.
+  - button "Position citation"
+- paragraph:
+  - text: Adjacent references are grouped together.
+  - button "First source with long n… +2"
+- heading "Code Examples" [level=2]
+- paragraph:
+  - text: You can use inline code like
+  - code: console.log('Hello World')
+  - text: "or multi-line code blocks:"
+- text: JavaScript
+- button "Copy code"
+- code: "function calculateSum(a, b) { return a + b; } const result = calculateSum(5, 3); console.log(`Result: ${result}`);"
+- paragraph: "Language can be auto-detected:"
+- text: Python
+- button "Copy code"
+- code: "import cmath a = 1 b = 5 c = 6 # calculate the discriminant d = (b**2) - (4*a*c) # find two solutions sol1 = (-b-cmath.sqrt(d))/(2*a) sol2 = (-b+cmath.sqrt(d))/(2*a) print('The solution are {0} and {1}'.format(sol1,sol2))"
+- separator
+- heading "Formatting Options" [level=2]
+- paragraph: Here's a paragraph explaining the formatting options available.
+- paragraph: "Another paragraph with different formatting elements:"
+- list:
+  - listitem:
+    - strong: Bold text
+    - text: for emphasis
+  - listitem:
+    - emphasis: Italic text
+    - text: for subtle emphasis
+  - listitem:
+    - code: inline code
+    - text: for technical terms
+- heading "Links" [level=2]
+- paragraph:
+  - text: You can include links such as
+  - link "Element":
+    - /url: https://element.siemens.io
+  - text: for more information, as well as local links like
+  - link "Internal Page":
+    - /url: /#/internal-page
+  - text: .
+- paragraph:
+  - text: "Links are also automatically detected:"
+  - link "https://angular.io":
+    - /url: https://angular.io
+- paragraph: "GFM Link references links are also supported:"
+- paragraph:
+  - link "foo":
+    - /url: /url
+- paragraph:
+  - text: The reference can be used multiple times like here
+  - link "foo":
+    - /url: /url
+- separator
+- heading "Lists and Bullets" [level=2]
+- paragraph: "Here are the key features:"
+- list:
+  - listitem: Multi-line code blocks with syntax preservation
+  - listitem: Bold and italic text formatting
+  - listitem: Inline code highlighting
+  - listitem: Bullet point lists
+  - listitem: Blockquote support
+  - listitem:
+    - checkbox [disabled]
+    - text: Open task-list item
+  - listitem:
+    - checkbox [checked] [disabled]
+    - text: Completed task-list item
+  - listitem:
+    - checkbox [checked] [disabled]
+    - text: Completed task-list item with uppercase marker
+- list:
+  - listitem: Or in the alternate format
+  - listitem:
+    - paragraph: Another bullet point
+    - list:
+      - listitem: Nested lists are supported too
+      - listitem: Another item in the nested list
+- paragraph: This paragraph appears after the list to show proper spacing.
+- heading "Ordered Lists" [level=2]
+- paragraph: "Step-by-step instructions:"
+- list:
+  - listitem: First, analyze the requirements
+  - listitem: Then, implement the solution
+  - listitem: Finally, test the implementation
+- separator
+- blockquote:
+  - paragraph: This is a blockquote that demonstrates how quoted text appears in the markdown content component. And of course it can span multiple lines
+- paragraph: This paragraph follows the blockquotes to demonstrate proper paragraph separation.
+- paragraph: This is a separate paragraph created by double line breaks.
+- list:
+  - listitem: Unordered item
+  - listitem: Another item
+- paragraph: Another paragraph between the lists.
+- list:
+  - listitem: First ordered item
+  - listitem: Second ordered item
+- paragraph: Final paragraph to show proper spacing.
+- separator
+- heading "Footnotes" [level=2]
+- paragraph:
+  - text: Here's a simple footnote,
+  - superscript:
+    - link "1":
+      - /url: "#__si-markdown-1:fn:1"
+  - text: and here's a longer one.
+  - superscript:
+    - link "2":
+      - /url: "#__si-markdown-1:fn:bignote"
+- separator
+- heading "Images" [level=2]
+- paragraph: "Images can be included as follows:"
+- paragraph:
+  - img "Building Image"
+- paragraph: "And also the GFM reference is supported:"
+- paragraph:
+  - img "Building image as reference"
+- paragraph:
+  - text: "And again in collapsed style:"
+  - img "imageref"
+- separator
+- heading "Tables" [level=2]
+- paragraph: "Tables are also supported:"
+- table:
+  - rowgroup:
+    - row "Feature Examples Status Notes":
+      - columnheader "Feature"
+      - columnheader "Examples"
+      - columnheader "Status"
+      - columnheader "Notes"
+  - rowgroup:
+    - row "Basic content Alice Johnson Bob Smith ✓ Complete Simple text and line breaks":
+      - cell "Basic content":
+        - strong: Basic content
+      - cell "Alice Johnson Bob Smith"
+      - cell "✓ Complete"
+      - cell "Simple text and line breaks"
+    - row "Formatting Bold and italic Plus code and multiline code ✓ Complete Multiple markdown formats":
+      - cell "Formatting":
+        - emphasis: Formatting
+      - cell "Bold and italic Plus code and multiline code":
+        - strong: Bold
+        - text: ""
+        - emphasis: italic
+        - text: ""
+        - code: code
+        - text: ""
+        - code: multiline code
+      - cell "✓ Complete"
+      - cell "Multiple markdown formats"
+    - row "Lists in cells - First item - Second item - Third item ✓ Complete Bullet lists work properly":
+      - cell "Lists in cells"
+      - cell "- First item - Second item - Third item"
+      - cell "✓ Complete"
+      - cell "Bullet lists work properly"
+    - 'row "Escaped pipes grep \"text|pattern\" awk ''{print $1|$2}'' ✓ Complete Use | for literal pipes"':
+      - cell "Escaped pipes"
+      - 'cell "grep \"text|pattern\" awk ''{print $1|$2}''"'
+      - cell "✓ Complete"
+      - cell "Use | for literal pipes"
+    - row "Line breaks Line 1 Line 2 Line 3 ✓ Complete Uses <br> tags":
+      - cell "Line breaks"
+      - cell "Line 1 Line 2 Line 3"
+      - cell "✓ Complete"
+      - cell "Uses <br> tags":
+        - text: ""
+        - code: <br>
+        - text: ""
+- paragraph: This paragraph appears after the tables to demonstrate proper spacing.
+- separator
+- heading "Math Expressions" [level=2]
+- paragraph: LaTeX math expressions are supported for mathematical notation.
+- paragraph:
+  - text: "Inline math can be written like this:"
+  - math: E = m c 2
+  - text: or the quadratic formula
+  - math: x = − b ± b 2 − 4 a c 2 a
+  - text: .
+- paragraph: "Display math uses double dollar signs for block equations:"
+- math: ∫ − ∞ ∞ e − x 2 d x = π
+- separator
+- heading "Mermaid" [level=2]
+- paragraph: Mermaid diagrams are supported.
+- document:
+  - paragraph: Enter Chart Definition
+  - paragraph: Preview
+  - paragraph: decide
+  - paragraph: Keep
+  - paragraph: Edit Definition
+  - paragraph: Save Image and Code
+- separator
+- heading "Gemojis" [level=2]
+- paragraph: Look, the moon 🌚
+- paragraph: Here's a cat 🐈 meow!
+- paragraph: Слава Україні! 🇺🇦
+- paragraph: This is awesome 👍 💯
+- separator
+- list:
+  - listitem:
+    - paragraph: This is the first footnote.
+  - listitem:
+    - paragraph: Here's one with multiple paragraphs and code.
+    - paragraph: Indent paragraphs to include them in the footnote.
+    - paragraph:
+      - code: "{ my code }"
+    - paragraph: Add as many paragraphs as you like.
