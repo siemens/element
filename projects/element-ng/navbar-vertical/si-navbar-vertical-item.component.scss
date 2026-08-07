@@ -22,11 +22,12 @@
     margin-inline-start: map.get(variables.$spacers, 5);
   }
 
-  .icon-lg {
+  .icon {
     margin-inline-start: map.get(variables.$spacers, 5);
+    padding: map.get(variables.$spacers, 1);
   }
 
-  .icon-lg + .item-title {
+  .icon + .item-title {
     margin-inline-start: map.get(variables.$spacers, 4);
   }
 
@@ -111,7 +112,7 @@
   padding-inline: map.get(variables.$spacers, 5);
 
   .item-title,
-  .icon-lg {
+  .icon {
     display: none;
   }
 
@@ -132,7 +133,7 @@
       display: block;
     }
 
-    .icon-lg {
+    .icon {
       display: flex;
     }
   }
