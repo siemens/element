@@ -498,9 +498,9 @@ describe('SiSplitComponent', () => {
         partElement1.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
         await fixture.whenStable();
 
-        expect(wrapperComponent.measureSize1()).toBeCloseTo(40, 0);
-        expect(wrapperComponent.measureSize2()).toBeCloseTo(246, 0);
-        expect(wrapperComponent.measureSize3()).toBeCloseTo(246, 0);
+        expect(wrapperComponent.measureSize1()).toBeCloseTo(44, 0);
+        expect(wrapperComponent.measureSize2()).toBeCloseTo(244, 0);
+        expect(wrapperComponent.measureSize3()).toBeCloseTo(244, 0);
       });
 
       it('should collapse part to min size on click if set', async () => {
@@ -660,9 +660,9 @@ describe('SiSplitComponent', () => {
         partElement2.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
         await fixture.whenStable();
 
-        expect(wrapperComponent.measureSize1()).toBeCloseTo(484, 0);
-        expect(wrapperComponent.measureSize2()).toBeCloseTo(40, 0);
-        expect(wrapperComponent.measureSize3()).toBeCloseTo(40, 0);
+        expect(wrapperComponent.measureSize1()).toBeCloseTo(476, 0);
+        expect(wrapperComponent.measureSize2()).toBeCloseTo(44, 0);
+        expect(wrapperComponent.measureSize3()).toBeCloseTo(44, 0);
       });
 
       it('should only collapse split part if collapseOthers2 is false', async () => {
@@ -682,9 +682,9 @@ describe('SiSplitComponent', () => {
         partElement2.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
         await fixture.whenStable();
 
-        expect(wrapperComponent.measureSize1()).toBeCloseTo(246, 0);
-        expect(wrapperComponent.measureSize2()).toBeCloseTo(40, 0);
-        expect(wrapperComponent.measureSize3()).toBeCloseTo(246, 0);
+        expect(wrapperComponent.measureSize1()).toBeCloseTo(244, 0);
+        expect(wrapperComponent.measureSize2()).toBeCloseTo(44, 0);
+        expect(wrapperComponent.measureSize3()).toBeCloseTo(244, 0);
       });
     });
 
@@ -828,9 +828,9 @@ describe('SiSplitComponent', () => {
         wrapperComponent.orientation.set('horizontal');
         await fixture.whenStable();
 
-        expect(wrapperComponent.measureSize1()).toBeCloseTo(272, 0);
-        expect(wrapperComponent.measureSize2()).toBeCloseTo(204, 0);
-        expect(wrapperComponent.measureSize3()).toBeCloseTo(40, 0);
+        expect(wrapperComponent.measureSize1()).toBeCloseTo(270, 0);
+        expect(wrapperComponent.measureSize2()).toBeCloseTo(202, 0);
+        expect(wrapperComponent.measureSize3()).toBeCloseTo(44, 0);
       });
     });
   });
