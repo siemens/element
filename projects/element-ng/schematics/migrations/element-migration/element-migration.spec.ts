@@ -163,6 +163,18 @@ describe('to legacy migration', () => {
     await checkTemplateMigration(['select-class-inline-template.ts']);
   });
 
+  it('should rename CSS custom properties in all supported usages', async () => {
+    await checkTemplateMigration([
+      'feedback-icon-property.ts',
+      'feedback-icon-property.html',
+      'feedback-icon-property.scss'
+    ]);
+  });
+
+  it('should rename direct and module-prefixed typography variables', async () => {
+    await checkTemplateMigration(['typography-variables.scss']);
+  });
+
   it('should remove provideIconConfig from a providers array and drop its import', async () => {
     await checkTemplateMigration(['provide-icon-config.ts']);
   });

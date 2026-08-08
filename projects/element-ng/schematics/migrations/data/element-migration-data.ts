@@ -5,6 +5,7 @@
 import { ATTRIBUTE_SELECTORS_MIGRATION } from './attribute-selectors.js';
 import { CLASS_MEMBER_REPLACEMENTS_MIGRATION } from './class-member-replacement.js';
 import { COMPONENT_PROPERTY_NAMES_MIGRATION } from './component-property-names.js';
+import { CSS_CUSTOM_PROPERTIES_MIGRATION } from './css-custom-properties.js';
 import { ELEMENT_CLASS_CHANGES_MIGRATION } from './element-class-changes.js';
 import { ELEMENT_SELECTORS_MIGRATION } from './element-selectors.js';
 import { PROVIDER_FUNCTION_REMOVALS_MIGRATION } from './provider-function-removals.js';
@@ -15,6 +16,7 @@ export type ElementMigrationData = {
   attributeSelectorChanges: typeof ATTRIBUTE_SELECTORS_MIGRATION;
   classMemberReplacementChanges: typeof CLASS_MEMBER_REPLACEMENTS_MIGRATION;
   componentPropertyNameChanges: typeof COMPONENT_PROPERTY_NAMES_MIGRATION;
+  cssCustomPropertyChanges: typeof CSS_CUSTOM_PROPERTIES_MIGRATION;
   elementClassChanges: typeof ELEMENT_CLASS_CHANGES_MIGRATION;
   elementSelectorChanges: typeof ELEMENT_SELECTORS_MIGRATION;
   providerFunctionRemovalChanges: typeof PROVIDER_FUNCTION_REMOVALS_MIGRATION;
@@ -26,6 +28,7 @@ export const getElementMigrationData = (): ElementMigrationData => ({
   attributeSelectorChanges: ATTRIBUTE_SELECTORS_MIGRATION,
   classMemberReplacementChanges: CLASS_MEMBER_REPLACEMENTS_MIGRATION,
   componentPropertyNameChanges: COMPONENT_PROPERTY_NAMES_MIGRATION,
+  cssCustomPropertyChanges: CSS_CUSTOM_PROPERTIES_MIGRATION,
   elementClassChanges: ELEMENT_CLASS_CHANGES_MIGRATION,
   elementSelectorChanges: ELEMENT_SELECTORS_MIGRATION,
   providerFunctionRemovalChanges: PROVIDER_FUNCTION_REMOVALS_MIGRATION,
