@@ -8,92 +8,87 @@
 :host ::ng-deep {
   // 1. Default and text
   .hljs {
-    color: variables.$element-text-primary;
+    color: variables.$si-sys-code-1;
   }
 
   // 2. Keywords
-  :is(.hljs-keyword, .hljs-literal) {
-    color: variables.$element-data-purple-3;
-  }
-
   // 3. Special keywords and operators
-  .hljs-operator {
-    color: variables.$element-data-plum-2;
+  :is(.hljs-keyword, .hljs-literal, .hljs-operator) {
+    color: variables.$si-sys-code-2;
   }
 
   // 4. Variables
-  :is(
-    .hljs-variable,
-    .hljs-variable.language_,
-    .hljs-variable.constant_,
-    .hljs-params,
-    .hljs-property
-  ) {
-    color: variables.$element-data-6;
+  :is(.hljs-variable, .hljs-variable.language_, .hljs-params, .hljs-property) {
+    color: variables.$si-sys-code-4;
+  }
+
+  :is(.hljs-variable.constant_) {
+    color: variables.$si-sys-code-3;
   }
 
   // 5. Functions and methods
   :is(.hljs-title, .hljs-title.function_, .hljs-title.function_.invoke__, .hljs-built_in) {
-    color: variables.$element-text-caution;
+    color: variables.$si-sys-code-5;
   }
 
   // 6. Strings
   :is(.hljs-string, .hljs-regexp, .hljs-char.escape_, .hljs-subst, .hljs-doctag) {
-    color: variables.$element-text-warning;
+    color: variables.$si-sys-code-6;
   }
 
   // 7. Numbers
   .hljs-number {
-    color: variables.$element-text-success;
+    color: variables.$si-sys-code-7;
   }
 
   // 8. Constants and enums
   :is(.hljs-symbol, .hljs-bullet) {
-    color: variables.$element-data-13;
+    color: variables.$si-sys-code-2;
   }
 
   // 9. Comments
   :is(.hljs-comment, .hljs-quote) {
-    color: variables.$element-data-green-3;
+    color: variables.$si-sys-code-8;
   }
 
   // 10. Brackets/punctuation
   .hljs-punctuation {
-    color: variables.$element-data-17;
+    color: variables.$si-sys-code-9;
   }
 
   // 11. Tags (HTML/XML)
   :is(
     .hljs-tag,
     .hljs-name,
-    .hljs-attr,
-    .hljs-attribute,
     .hljs-selector-tag,
     .hljs-selector-id,
     .hljs-selector-class,
-    .hljs-selector-attr,
     .hljs-selector-pseudo,
     .hljs-meta,
     .hljs-meta.keyword_,
     .hljs-template-tag,
     .hljs-template-variable
   ) {
-    color: variables.$element-data-5;
+    color: variables.$si-sys-code-10;
+  }
+
+  :is(.hljs-attr, .hljs-attribute, .hljs-selector-attr) {
+    color: variables.$si-sys-code-3;
   }
 
   // 12. Types declaration and references
-  :is(.hljs-type, .hljs-title.class_, .hljs-title.class_.inherited__, .hljs-section) {
-    color: variables.$element-data-4;
+  :is(.hljs-type, .hljs-title.class_, .hljs-title.class_.inherited__) {
+    color: variables.$si-sys-code-11;
   }
 
-  // 13. Invalid
+  // Deletions in diffs
   .hljs-deletion {
-    color: variables.$element-data-10;
+    color: variables.$si-sys-code-11;
   }
 
-  // Additions in diffs (use comment green)
+  // Additions in diffs
   .hljs-addition {
-    color: variables.$element-data-green-3;
+    color: variables.$si-sys-code-12;
   }
 
   // Emphasis
@@ -107,13 +102,18 @@
   }
 
   // Code blocks and formulas
-  .hljs-code,
-  .hljs-formula {
-    color: variables.$element-text-primary;
+  :is(.hljs-code, .hljs-formula) {
+    color: variables.$si-sys-code-1;
+  }
+
+  // Section, e.g. in Markdown
+  :is(.hljs-section) {
+    color: variables.$si-sys-code-1;
+    font-weight: variables.$si-font-weight-sbold;
   }
 
   // Links
   .hljs-link {
-    color: variables.$element-text-warning;
+    color: variables.$si-sys-text-accent;
   }
 }
