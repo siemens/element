@@ -63,26 +63,26 @@ by the Element integrations, such as emoji shortcodes.
 ## Custom extension ---
 
 An extension can install `unified` plugin(s) and associate the AST node types produced by that
-plugin with Angular renderer components. The KaTeX integration is an example: `remark-math` parses
-Markdown math into `math` and `inlineMath` nodes, which are then rendered by the same component.
+plugin with Angular renderer components. As an example, the following provides an alternative
+to render LaTeX math expressions. Instead of using KaTeX it uses `@webc.site/math`. This package
+is smaller and faster than KaTeX, but can only produce MathML (supported by all major browsers).
+It is distributed under the `MulanPSL-2.0`, an OSI approved liberal license.
 
 ```ts
-import { type KatexOptions } from 'katex';
-import remarkMath, { type Options as RemarkMathOptions } from 'remark-math';
-import { type SiMarkdownExtension } from '@siemens/element-ng/markdown';
+import remarkMath, { type Options } from 'remark-math';
 
-import { MarkdownKatexComponent } from './markdown-katex.component';
+import { SiMarkdownExtension } from '../../si-markdown.types';
+import { SiMarkdownMathComponent } from './si-markdown-math.component';
 
-export const markdownKaTeX = (
-  parseOptions?: RemarkMathOptions,
-  katexOptions?: KatexOptions
-): SiMarkdownExtension => ({
-  plugins: [{ plugin: remarkMath, options: parseOptions }],
-  types: [
-    { type: 'math', component: MarkdownKatexComponent, options: katexOptions },
-    { type: 'inlineMath', component: MarkdownKatexComponent, options: katexOptions }
-  ]
-});
+export const siMarkdownWebcSiteMath = (parseOptions?: Options): SiMarkdownExtension => {
+  return {
+    plugins: [{ plugin: remarkMath, options: parseOptions }],
+    types: [
+      { type: 'math', component: SiMarkdownMathComponent },
+      { type: 'inlineMath', component: SiMarkdownMathComponent }
+    ]
+  };
+};
 ```
 
 The renderer implements `SiMarkdownExtensionComponent`. Element supplies the parsed node, its
@@ -91,32 +91,32 @@ parent, and the options provided in the extension definition as signal inputs.
 ```ts
 import { Component, computed, inject, input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { type KatexOptions, renderToString } from 'katex';
-import { type Literal, type Node, type Parent } from 'mdast';
-import { type SiMarkdownExtensionComponent } from '@siemens/element-ng/markdown';
+import mathml from '@webc.site/math';
+import { Literal, type Node, type Parent } from 'mdast';
+
+import { SiMarkdownExtensionComponent } from '../../si-markdown.types';
 
 @Component({
-  selector: 'app-markdown-katex',
+  selector: 'si-markdown-math',
   template: '',
   host: {
+    '[attr.data-line]': 'node().position?.start?.line',
+    '[class.d-block]': 'displayMode()',
     '[innerHTML]': 'html()'
   }
 })
-export class MarkdownKatexComponent implements SiMarkdownExtensionComponent {
+export class SiMarkdownMathComponent implements SiMarkdownExtensionComponent {
   private readonly sanitizer = inject(DomSanitizer);
 
   readonly node = input.required<Node>();
   readonly parent = input.required<Parent>();
-  readonly options = input<KatexOptions>();
+  readonly options = input<any>();
 
+  protected readonly displayMode = computed(() => this.node().type === 'math');
   protected readonly html = computed(() => {
-    const expression = (this.node() as Literal).value;
-    return this.sanitizer.bypassSecurityTrustHtml(
-      renderToString(expression, {
-        ...this.options(),
-        displayMode: this.node().type === 'math'
-      })
-    );
+    const expr = (this.node() as Literal).value;
+    const html = mathml(expr, this.displayMode());
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   });
 }
 ```
@@ -124,7 +124,7 @@ export class MarkdownKatexComponent implements SiMarkdownExtensionComponent {
 Register the extension with the component options:
 
 ```ts
-protected readonly markdownOptions = makeSiMarkdownOptions().installExtension(markdownKaTeX());
+protected readonly markdownOptions = makeSiMarkdownOptions().installExtension(siMarkdownWebcSiteMath());
 ```
 
 ## Code ---
