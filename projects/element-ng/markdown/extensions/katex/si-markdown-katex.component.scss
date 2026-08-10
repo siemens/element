@@ -1,3 +1,9 @@
+@use '@siemens/element-theme/src/styles/variables';
+
 @use 'katex/src/styles/katex' with (
   $font-folder: 'katex/dist/fonts'
 );
+
+.katex-error {
+  color: variables.$si-sys-text-danger !important; // stylelint-disable-line declaration-no-important
+}
