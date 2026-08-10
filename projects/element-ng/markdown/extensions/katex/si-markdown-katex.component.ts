@@ -5,13 +5,13 @@
 import {
   Component,
   computed,
+  effect,
+  ElementRef,
   inject,
   input,
-  SecurityContext,
   ViewEncapsulation
 } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { type KatexOptions, renderToString } from 'katex';
+import { type KatexOptions, render } from 'katex';
 import { Literal, type Node, type Parent } from 'mdast';
 
 import { SiMarkdownExtensionComponent } from '../../si-markdown.types';
@@ -26,14 +26,11 @@ import { SiMarkdownExtensionComponent } from '../../si-markdown.types';
   host: {
     class: 'katex-container',
     '[attr.data-line]': 'node().position?.start?.line',
-    '[class.d-block]': 'displayMode()',
-    '[class.text-danger]': 'html().error',
-    '[title]': 'html().error',
-    '[innerHTML]': 'html().html'
+    '[class.d-block]': 'displayMode()'
   }
 })
 export class SiMarkdownKatexComponent implements SiMarkdownExtensionComponent {
-  private readonly sanitizer = inject(DomSanitizer);
+  private readonly elementRef = inject(ElementRef);
 
   readonly node = input.required<Node>();
   readonly parent = input.required<Parent>();
@@ -41,22 +38,18 @@ export class SiMarkdownKatexComponent implements SiMarkdownExtensionComponent {
 
   protected readonly displayMode = computed(() => this.node().type === 'math');
   private readonly expr = computed(() => (this.node() as Literal).value);
-  protected readonly html = computed(() => this.render());
 
-  private render(): { html: SafeHtml; error: string } {
+  constructor() {
+    effect(() => this.render());
+  }
+
+  private render(): void {
     const expr = this.expr();
-    try {
-      const options = this.options() ?? {};
-      const html = renderToString(expr, { ...options, displayMode: this.displayMode() });
-      return {
-        html: this.sanitizer.bypassSecurityTrustHtml(html),
-        error: ''
-      };
-    } catch (error: any) {
-      return {
-        html: this.sanitizer.sanitize(SecurityContext.HTML, expr) as SafeHtml,
-        error: error.toString()
-      };
-    }
+    const options = this.options() ?? {};
+    render(expr, this.elementRef.nativeElement, {
+      ...options,
+      displayMode: this.displayMode(),
+      throwOnError: false
+    });
   }
 }
