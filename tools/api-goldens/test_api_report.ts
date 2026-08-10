@@ -7,7 +7,6 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import {
-  ApiReportVariant,
   ConsoleMessageId,
   Extractor,
   ExtractorConfig,
@@ -20,7 +19,6 @@ import { AstDeclaration } from '@microsoft/api-extractor/lib/analyzer/AstDeclara
 import { AstModule } from '@microsoft/api-extractor/lib/analyzer/AstModule';
 import { ExportAnalyzer } from '@microsoft/api-extractor/lib/analyzer/ExportAnalyzer';
 import { Collector } from '@microsoft/api-extractor/lib/collector/Collector';
-import { ApiReportGenerator } from '@microsoft/api-extractor/lib/generators/ApiReportGenerator';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -48,12 +46,10 @@ const _angularLifecycleHooks = [
   'ngAfterViewChecked',
   'ngOnDestroy'
 ];
+const _internalReleaseTag = 1;
 
-/**
- * Original definition of private static `ApiReportGenerator#_shouldIncludeDeclaration` for
- * monkey patching to skip Angular related stuff.
- */
-const _orig_shouldIncludeDeclaration = (ApiReportGenerator as any)._shouldIncludeDeclaration;
+/** Original `Collector#fetchApiItemMetadata` method, patched for Angular declarations below. */
+const _origFetchApiItemMetadata = Collector.prototype.fetchApiItemMetadata;
 
 function skipAngular(astDeclaration: AstDeclaration): boolean {
   // check if this is an Angular component/directive/module
@@ -185,20 +181,22 @@ export async function testApiGolden(
     return info;
   };
 
-  // Patch the report generator to skip some Angular related stuff
-  (ApiReportGenerator as any)._shouldIncludeDeclaration = function (
-     collector: Collector,
-     astDeclaration: AstDeclaration,
-     reportVariant: ApiReportVariant
-  ): boolean {
-   if (skipAngular(astDeclaration)) {
-     return false;
-   }
-   return _orig_shouldIncludeDeclaration.apply(
-     ApiReportGenerator,
-     [collector, astDeclaration, reportVariant]
-   );
-  }
+  Collector.prototype.fetchApiItemMetadata = function (astDeclaration: AstDeclaration) {
+    const metadata = _origFetchApiItemMetadata.apply(this, [astDeclaration]);
+    if (!skipAngular(astDeclaration)) {
+      return metadata;
+    }
+
+    // `effectiveReleaseTag` is readonly, therefore proxy the report-time read and treat ignored
+    // Angular declarations as `@internal`.
+    return new Proxy(metadata, {
+      get(target, property, receiver) {
+        return property === 'effectiveReleaseTag'
+          ? _internalReleaseTag
+          : Reflect.get(target, property, receiver);
+      }
+    });
+  };
 
   const reportTmpOutPath = path.join(
     tempDir,

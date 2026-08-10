@@ -26,8 +26,8 @@ $toast-timer-height: 2px;
   position: relative;
   display: flex;
   align-items: flex-start;
-  color: all-variables.$element-text-primary;
-  background: all-variables.$element-base-3;
+  color: all-variables.$si-sys-text-primary;
+  background: all-variables.$si-sys-background-3;
   border-radius: all-variables.$element-radius-2;
   padding-inline: map.get(all-variables.$spacers, 5) $toast-padding;
   padding-block: $toast-padding;
@@ -48,7 +48,7 @@ $toast-timer-height: 2px;
     &::before {
       @extend %si-toast-bottom-bar;
       content: '';
-      background: all-variables.$element-ui-4;
+      background: all-variables.$si-sys-border-4;
       inset-inline-end: 0;
     }
   }
@@ -77,7 +77,7 @@ $toast-timer-height: 2px;
   animation: si-toast-auto-close-animation var(--toast-timer-duration, 4s) linear forwards;
   animation-play-state: var(--play-state, running);
   @extend %si-toast-bottom-bar;
-  background-color: all-variables.$element-ui-0;
+  background-color: all-variables.$si-sys-border-accent;
 }
 
 .toast-content {

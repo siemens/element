@@ -1,7 +1,6 @@
 @use '../variables';
-@use '../variables/semantic-tokens';
-@use '../variables/spacers';
 @use '../variables/system-tokens';
+@use '../variables/spacers';
 @use '../variables/typography';
 @use '../variables/zindex';
 @use './variables' as bootstrap-variables;

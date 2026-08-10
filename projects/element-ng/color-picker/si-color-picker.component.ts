@@ -25,22 +25,22 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
  * Note: This array needs to be kept in sync with the design system data color tokens.
  */
 const defaultDataColors: string[] = [
-  'element-data-1',
-  'element-data-2',
-  'element-data-3',
-  'element-data-4',
-  'element-data-5',
-  'element-data-6',
-  'element-data-7',
-  'element-data-8',
-  'element-data-9',
-  'element-data-10',
-  'element-data-11',
-  'element-data-12',
-  'element-data-13',
-  'element-data-14',
-  'element-data-15',
-  'element-data-16'
+  'si-sys-data-categorial-1',
+  'si-sys-data-categorial-2',
+  'si-sys-data-categorial-3',
+  'si-sys-data-categorial-4',
+  'si-sys-data-categorial-5',
+  'si-sys-data-categorial-6',
+  'si-sys-data-categorial-7',
+  'si-sys-data-categorial-8',
+  'si-sys-data-categorial-9',
+  'si-sys-data-categorial-10',
+  'si-sys-data-categorial-11',
+  'si-sys-data-categorial-12',
+  'si-sys-data-categorial-13',
+  'si-sys-data-categorial-14',
+  'si-sys-data-categorial-15',
+  'si-sys-data-categorial-16'
 ];
 @Component({
   selector: 'si-color-picker',

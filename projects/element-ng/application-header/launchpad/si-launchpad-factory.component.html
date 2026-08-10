@@ -24,26 +24,31 @@
     </div>
   }
   <div class="apps-scroll ms-n2 ps-2">
-    @for (category of categories(); track category.name) {
-      @if (!enableFavorites() || !hasFavorites() || $first || showAllApps) {
+    @if (enableFavorites() && hasFavorites()) {
+      <si-launchpad-category
+        [category]="{ name: favoriteAppsText(), apps: favorites() }"
+        [enableFavorites]="enableFavorites()"
+        (favoriteChange)="toggleFavorite($event)"
+      />
+      <button
+        type="button"
+        class="btn btn-link btn-show-all dropdown-toggle text-decoration-none"
+        [class.show]="showAllApps"
+        (click)="showAllApps = !showAllApps"
+      >
+        <b>{{ (showAllApps ? showLessAppsText() : showMoreAppsText()) | translate }}</b>
+        <si-icon class="link-icon dropdown-caret" [icon]="icons.elementDown2" />
+      </button>
+    }
+
+    @if (!enableFavorites() || !hasFavorites() || showAllApps) {
+      @for (category of categories(); track category.name) {
         <si-launchpad-category
-          [class.pt-6]="!$first && !!category.name"
+          [class.pt-6]="!!category.name && (hasFavorites() || !$first)"
           [category]="category"
           [enableFavorites]="enableFavorites()"
           (favoriteChange)="toggleFavorite($event)"
         />
-      }
-
-      @if (enableFavorites() && $first && hasFavorites()) {
-        <button
-          type="button"
-          class="btn btn-link btn-show-all dropdown-toggle text-decoration-none"
-          [class.show]="showAllApps"
-          (click)="showAllApps = !showAllApps"
-        >
-          <b>{{ (showAllApps ? showLessAppsText() : showMoreAppsText()) | translate }}</b>
-          <si-icon class="link-icon dropdown-caret" [icon]="icons.elementDown2" />
-        </button>
       }
     }
   </div>
