@@ -60,6 +60,7 @@ export class SampleComponent implements OnInit {
   }
 
   resizeTable(): void {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     setTimeout(() => this.table()?.recalculate());
   }
 
