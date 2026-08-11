@@ -24,7 +24,7 @@
     "@siemens/element-theme": "49.14.0",
     "gridstack": "^12.3.3",
     "@angular-architects/module-federation": "^20.0.0 || ^21.0.0",
-    "@angular-architects/native-federation": "^21.1.0",
+    "@angular-architects/native-federation": "^21.1.0 || ^22.0.0",
     "@module-federation/enhanced": "^2.0.0",
     "@module-federation/runtime": "^2.0.0"
   },
