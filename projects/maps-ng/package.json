@@ -24,7 +24,7 @@
     "@siemens/element-theme": "workspace:*",
     "@siemens/element-translate-ng": "workspace:*",
     "@siemens/map-styles": "workspace:*",
-    "ol": "~10.6.0 || ~10.7.0 || ~10.8.0 || ~10.9.0",
+    "ol": "~10.6.0 || ~10.7.0 || ~10.8.0 || ~10.9.0 || ~10.10.0",
     "ol-ext": "^4.0.24",
     "ol-mapbox-style": "^13.1.0"
   },
