@@ -64,8 +64,8 @@ export const themeElement = {
     const backgroundAccent = getProp(style, '--si-sys-background-accent');
     const backgroundAccentHover = getProp(style, '--si-sys-background-accent-hover');
     const background1 = getProp(style, '--si-sys-background-1');
+    const background3 = getProp(style, '--si-sys-background-3');
     const backgroundNeutral = getProp(style, '--si-sys-background-neutral');
-    const backgroundInverse = getProp(style, '--si-sys-background-inverse');
     const border1 = getProp(style, '--si-sys-border-1');
     const border3 = getProp(style, '--si-sys-border-3');
     const border4 = getProp(style, '--si-sys-border-4');
@@ -131,8 +131,6 @@ export const themeElement = {
       'path://M-9.35,34.56V42m0-40V9.5m-2,0h4a2,2,0,0,1,2,2v21a2,2,0,0,1-2,2h-4a2,2,0,0,1-2-2v-21A2,2,0,0,1-11.35,9.5Z';
     const dataZoomHandleColor = borderAccent;
 
-    const tooltipBackground = echarts.color.modifyAlpha(backgroundInverse, 0.8);
-
     const rtl = style.direction === 'rtl';
 
     // For E2E testing to get rid of font-loading instability.
@@ -191,10 +189,10 @@ export const themeElement = {
 
       tooltip: {
         borderWidth: 0,
-        backgroundColor: tooltipBackground,
+        backgroundColor: background3,
         textStyle: {
           fontFamily,
-          color: 'var(--si-sys-text-inverse)',
+          color: textPrimary,
           fontWeight: 400
         },
         padding: [8, 12, 8, 12],
