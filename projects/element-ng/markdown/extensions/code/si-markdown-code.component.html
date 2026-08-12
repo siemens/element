@@ -1,5 +1,12 @@
 <div class="d-flex align-items-center mb-6">
-  <span class="code-language">
+  @let file = filename();
+  @if (file) {
+    <span class="filename border rounded-1 px-1 me-4">
+      <si-icon class="icon-sm" icon="element-document" />
+      {{ file }}
+    </span>
+  }
+  <span class="code-language" [class.text-secondary]="file">
     {{ languageToDisplay() }}
   </span>
   <div class="ms-auto">
