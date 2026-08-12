@@ -1,110 +1,55 @@
-@use 'sass:list';
 @use 'sass:map';
 
-$spacer: 16px;
-
-$var-spacer-inline: var(--element-spacer-inline, $spacer);
-$var-spacer-block: var(--element-spacer-block, $spacer);
-
-$_spacer-factors: (
-  0: (
-    0,
-    null
-  ),
-  // 2px
-  1: (
-      0.125,
-      2px
-    ),
-  // 4px
-  2: (
-      0.25,
-      3px
-    ),
-  // 6px
-  3: (
-      0.375,
-      4px
-    ),
-  // 8px
-  4: (
-      0.5,
-      null
-    ),
-  // 12px
-  5: (
-      0.75,
-      null
-    ),
-  // 16px
-  6: (
-      1,
-      null
-    ),
-  // 20px
-  7: (
-      1.25,
-      null
-    ),
-  // 24px
-  8: (
-      1.5,
-      null
-    ),
-  // 32px
-  9: (
-      2,
-      null
-    ),
-  // 64px
-  10: (
-      4,
-      null
-    ),
-  // 96px
-  11: (
-      6,
-      null
-    )
+$spacers-inline: (
+  0: 0,
+  1: var(--element-spacer-inline-1, 2px),
+  2: var(--element-spacer-inline-2, 4px),
+  3: var(--element-spacer-inline-3, 6px),
+  4: var(--element-spacer-inline-4, 8px),
+  5: var(--element-spacer-inline-5, 12px),
+  6: var(--element-spacer-inline-6, 16px),
+  7: var(--element-spacer-inline-7, 20px),
+  8: var(--element-spacer-inline-8, 24px),
+  9: var(--element-spacer-inline-9, 32px),
+  10: var(--element-spacer-inline-10, 40px),
+  11: var(--element-spacer-inline-11, 48px),
+  12: var(--element-spacer-inline-12, 56px),
+  13: var(--element-spacer-inline-13, 64px),
+  14: var(--element-spacer-inline-14, 96px)
 );
 
-// stylelint-disable-next-line scss/at-function-pattern
-@function _spacer-map($var-spacer, $negative: false) {
-  $spacer-map: ();
+$spacers-block: (
+  0: 0,
+  1: var(--element-spacer-block-1, 2px),
+  2: var(--element-spacer-block-2, 4px),
+  3: var(--element-spacer-block-3, 6px),
+  4: var(--element-spacer-block-4, 8px),
+  5: var(--element-spacer-block-5, 12px),
+  6: var(--element-spacer-block-6, 16px),
+  7: var(--element-spacer-block-7, 20px),
+  8: var(--element-spacer-block-8, 24px),
+  9: var(--element-spacer-block-9, 32px),
+  10: var(--element-spacer-block-10, 40px),
+  11: var(--element-spacer-block-11, 48px),
+  12: var(--element-spacer-block-12, 56px),
+  13: var(--element-spacer-block-13, 64px),
+  14: var(--element-spacer-block-14, 96px)
+);
 
-  @each $key, $values in $_spacer-factors {
-    $factor: list.nth($values, 1);
-    $min-value: list.nth($values, 2);
+@function negative-spacer-map($spacers) {
+  $negative-spacers: ();
 
-    @if not($negative and $key == 0) {
-      @if $negative {
-        $negative-factor: $factor * -1;
-        @if $min-value {
-          $negative-min-value: $min-value * -1;
-          $spacer-map: map.set(
-            $spacer-map,
-            $key,
-            min($negative-min-value, calc($var-spacer * $negative-factor))
-          );
-        } @else {
-          $spacer-map: map.set($spacer-map, $key, calc($var-spacer * $negative-factor));
-        }
-      } @else if $key == 0 {
-        $spacer-map: map.set($spacer-map, $key, 0);
-      } @else if $min-value {
-        $spacer-map: map.set($spacer-map, $key, max($min-value, calc($var-spacer * $factor)));
-      } @else {
-        $spacer-map: map.set($spacer-map, $key, calc($var-spacer * $factor));
-      }
+  @each $key, $spacer in $spacers {
+    @if $key != 0 {
+      $negative-spacers: map.set($negative-spacers, $key, calc(#{$spacer} * -1));
     }
   }
 
-  @return $spacer-map;
+  @return $negative-spacers;
 }
 
-$spacers-inline: _spacer-map($var-spacer-inline);
-$spacers-block: _spacer-map($var-spacer-block);
-$negative-spacers-inline: _spacer-map($var-spacer-inline, true);
-$negative-spacers-block: _spacer-map($var-spacer-block, true);
+$negative-spacers-inline: negative-spacer-map($spacers-inline);
+$negative-spacers-block: negative-spacer-map($spacers-block);
 
-$spacers: $spacers-block;
+// $spacer: 16px;
+// $spacers: $spacers-block;

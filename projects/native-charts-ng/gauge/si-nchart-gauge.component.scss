@@ -85,7 +85,7 @@
 
   .name {
     inline-size: 100%;
-    min-inline-size: map.get(variables.$spacers-inline, 10);
+    min-inline-size: map.get(variables.$spacers-inline, 13);
     max-inline-size: 0;
   }
 

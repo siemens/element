@@ -48,6 +48,7 @@ $_themes: () !default;
 // theming
 @use 'styles/themes';
 @use 'theme/theme-element';
+@use 'styles/density';
 
 @include themes.configure($element-theme-default, $element-themes, $element-theme-root-selector);
 @include themes.make-theme(theme-element.$theme-element-light, 'element');

@@ -6,39 +6,48 @@ import { DOCUMENT } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
+import { SelectItem, SiSelectModule } from '@siemens/element-ng/select';
+
+type Density = 'none' | 'density-compact' | 'density-compact-2';
+
+const densityClasses: Exclude<Density, 'none'>[] = ['density-compact', 'density-compact-2'];
 
 @Component({
   selector: 'app-sample',
-  imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent],
+  imports: [FormsModule, SiFormItemComponent, SiSelectModule],
   templateUrl: './spacer-controls.html',
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {
-  inlineSpacer = 16;
-  blockSpacer = 16;
+  density: Density = 'none';
+
+  readonly densityOptions: SelectItem<Density>[] = [
+    { type: 'option', value: 'none', label: 'None' },
+    { type: 'option', value: 'density-compact', label: 'Compact (Dani Biasi)' },
+    { type: 'option', value: 'density-compact-2', label: 'Compact 2 (Dani Ritz)' }
+  ];
 
   private document = inject(DOCUMENT);
 
   ngOnInit(): void {
-    this.inlineSpacer = this.initializeSpacer('inline', this.inlineSpacer);
-    this.blockSpacer = this.initializeSpacer('block', this.blockSpacer);
+    this.density = this.getDensity();
   }
 
-  applySpacer(direction: 'inline' | 'block', value: number): void {
-    this.document.documentElement.style.setProperty(`--element-spacer-${direction}`, `${value}px`);
+  applyDensity(density: Density): void {
+    this.document.documentElement.classList.remove(...densityClasses);
+
+    if (density !== 'none') {
+      this.document.documentElement.classList.add(density);
+    }
   }
 
-  private initializeSpacer(direction: 'inline' | 'block', defaultValue: number): number {
-    const value = Number.parseFloat(
-      this.document.documentElement.style.getPropertyValue(`--element-spacer-${direction}`)
-    );
-
-    if (Number.isFinite(value)) {
-      return value;
+  private getDensity(): Density {
+    for (const density of densityClasses) {
+      if (this.document.documentElement.classList.contains(density)) {
+        return density;
+      }
     }
 
-    this.applySpacer(direction, defaultValue);
-    return defaultValue;
+    return 'none';
   }
 }
