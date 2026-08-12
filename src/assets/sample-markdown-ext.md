@@ -18,7 +18,7 @@ Adjacent references are grouped together.[citation-one][citation-three][citation
 
 You can use inline code like `console.log('Hello World')` or multi-line code blocks:
 
-```javascript
+```javascript [calculate.js]
 function calculateSum(a, b) {
   return a + b;
 }
