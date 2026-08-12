@@ -4,7 +4,7 @@
  */
 import { NgComponentOutlet } from '@angular/common';
 import { Component, computed, input, linkedSignal, OnDestroy, signal } from '@angular/core';
-import { elementCopy, elementOk } from '@siemens/element-icons';
+import { elementCopy, elementDocument, elementOk } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Code, type Node, type Parent } from 'mdast';
@@ -27,7 +27,6 @@ export interface MarkdownCodeOptions {
 export class SiMarkdownCodeComponent implements SiMarkdownExtensionComponent, OnDestroy {
   readonly node = input.required<Node>();
   readonly parent = input.required<Parent>();
-
   readonly options = input<MarkdownCodeOptions>();
 
   protected labelCopy = t(() => $localize`:@@SI_MARKDOWN.COPY_CODE:Copy code`);
@@ -35,6 +34,11 @@ export class SiMarkdownCodeComponent implements SiMarkdownExtensionComponent, On
   protected readonly code = computed(() => (this.node() as Code).value);
   protected readonly language = computed(() => (this.node() as Code).lang);
   protected readonly highlighter = computed(() => this.options()?.getHighlighter());
+  protected readonly filename = computed(() => {
+    const meta = (this.node() as Code).meta ?? '';
+    const match = meta.match('\\[([^\\]]+)\\]');
+    return match ? match[1] : '';
+  });
   protected readonly languageToDisplay = linkedSignal(() => this.language());
   protected readonly copied = signal(false);
   private copyTimeout?: ReturnType<typeof setTimeout>;
@@ -42,7 +46,7 @@ export class SiMarkdownCodeComponent implements SiMarkdownExtensionComponent, On
   protected readonly updateLanguage = (lang?: string): void => this.languageToDisplay.set(lang);
 
   constructor() {
-    addIcons({ elementCopy, elementOk });
+    addIcons({ elementCopy, elementOk, elementDocument });
   }
 
   ngOnDestroy(): void {
