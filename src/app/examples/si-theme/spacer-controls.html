@@ -11,7 +11,111 @@
   </div>
 </div>
 
-<div class="row g-5 mt-4">
+<div class="row g-5 mt-5">
+  <div class="col-lg-6">
+    <h4>Inline spacer overrides</h4>
+    <div class="row g-3">
+      @for (control of inlineSpacerControls; track control.name) {
+        <div class="col-sm-6">
+          <label class="form-label" [for]="control.id">{{ control.label }}</label>
+          <div class="d-flex align-items-center gap-2">
+            <input
+              class="form-check-input flex-shrink-0"
+              type="checkbox"
+              [id]="control.id + '-enabled'"
+              [attr.aria-label]="'Customize ' + control.label"
+              [(ngModel)]="control.customized"
+              (ngModelChange)="toggleCustomization(control)"
+            />
+            <si-number-input
+              class="form-control"
+              unit="px"
+              [inputId]="control.id"
+              [min]="0"
+              [disabled]="!control.customized"
+              [(ngModel)]="control.value"
+              (ngModelChange)="applyCustomization(control)"
+            />
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <h4>Block spacer overrides</h4>
+    <div class="row g-3">
+      @for (control of blockSpacerControls; track control.name) {
+        <div class="col-sm-6">
+          <label class="form-label" [for]="control.id">{{ control.label }}</label>
+          <div class="d-flex align-items-center gap-2">
+            <input
+              class="form-check-input flex-shrink-0"
+              type="checkbox"
+              [id]="control.id + '-enabled'"
+              [attr.aria-label]="'Customize ' + control.label"
+              [(ngModel)]="control.customized"
+              (ngModelChange)="toggleCustomization(control)"
+            />
+            <si-number-input
+              class="form-control"
+              unit="px"
+              [inputId]="control.id"
+              [min]="0"
+              [disabled]="!control.customized"
+              [(ngModel)]="control.value"
+              (ngModelChange)="applyCustomization(control)"
+            />
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="col-12">
+    <h4>Font-size overrides</h4>
+    <div class="row g-3">
+      @for (control of fontSizeControls; track control.name) {
+        <div class="col-sm-6 col-lg-4">
+          <label class="form-label" [for]="control.id">{{ control.label }}</label>
+          <div class="d-flex align-items-center gap-2">
+            <input
+              class="form-check-input flex-shrink-0"
+              type="checkbox"
+              [id]="control.id + '-enabled'"
+              [attr.aria-label]="'Customize ' + control.label"
+              [(ngModel)]="control.customized"
+              (ngModelChange)="toggleCustomization(control)"
+            />
+            <si-number-input
+              class="form-control flex-grow-1"
+              style="inline-size: auto; min-inline-size: 0"
+              [inputId]="control.id"
+              [min]="0"
+              [step]="control.unit === 'rem' ? 0.125 : 1"
+              [disabled]="!control.customized"
+              [(ngModel)]="control.value"
+              (ngModelChange)="applyCustomization(control)"
+            />
+            <select
+              class="form-select flex-shrink-0"
+              style="inline-size: 5rem"
+              [attr.aria-label]="control.label + ' unit'"
+              [disabled]="!control.customized"
+              [ngModel]="control.unit"
+              (ngModelChange)="changeFontUnit(control, $event)"
+            >
+              <option value="px">px</option>
+              <option value="rem">rem</option>
+            </select>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<div class="row g-5 mt-5">
   <div class="col-lg-6">
     <h4>Inline spacing</h4>
     <div class="bg-secondary text-inverse px-2 ms-0">Spacing 0</div>
