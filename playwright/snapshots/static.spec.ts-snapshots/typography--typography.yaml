@@ -16,3 +16,5 @@
 - paragraph: Body Large
 - paragraph: Body
 - paragraph: Caption
+- table:
+  - caption: Caption

@@ -341,6 +341,11 @@ table {
 }
 
 caption {
+  @include typography.si-font(
+    typography.$si-font-size-caption,
+    typography.$si-line-height-caption,
+    typography.$si-font-weight-caption
+  );
   padding-block: variables.$table-cell-padding-y;
   color: variables.$table-caption-color;
   text-align: start;
