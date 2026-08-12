@@ -71,7 +71,7 @@ ol:has(.list-item) {
     // This restricts the height on purpose.
     // Content taller than the title remains centered and overflows on both sides.
     max-block-size: calc(
-      #{typography.$si-line-height-h5 * typography.$si-font-size-h5} +
+      #{typography.$si-line-height-h5} * #{typography.$si-font-size-h5} +
         #{map.get(variables.$spacers-block, 4)} * 2
     );
     margin-inline-end: map.get(variables.$spacers-inline, 4);

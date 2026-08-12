@@ -593,7 +593,7 @@ $alert-dismissible-padding-r: calc(
 // Progress bars
 
 $progress-height: 0.5rem !default;
-$progress-font-size: $font-size-base * 0.75 !default;
+$progress-font-size: calc(#{$font-size-base} * 0.75) !default;
 $progress-bg: system-tokens.$si-sys-border-4 !default;
 $progress-border-radius: $progress-height * 0.5 !default;
 $progress-box-shadow: none !default;
