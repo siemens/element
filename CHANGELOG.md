@@ -1,3 +1,58 @@
+# [49.15.0](https://github.com/siemens/element/compare/v49.14.0...v49.15.0) (2026-08-12)
+
+
+### Features
+
+* **cdk/overlay:** expose scroll strategies ([2c59407](https://github.com/siemens/element/commit/2c59407f7a14589bdb0c690e26b54d7efe389cd2))
+* **live-preview:** support relative imports in loader via rel=true ([6121e67](https://github.com/siemens/element/commit/6121e67ab6c969069e6b768ad2ef1dbcc757cf18))
+* **theme:** consumer defined root font size ([fad2101](https://github.com/siemens/element/commit/fad2101ea988d94aa820d56a73daaeec1e6a14de)), closes [#2166](https://github.com/siemens/element/issues/2166)
+
+
+### Bug Fixes
+
+* **application-header:** fix item size to be 44px (for RFS 16px) isof 46px ([cfef86b](https://github.com/siemens/element/commit/cfef86b160f7f460ee24f5a3a2977ca1852352fe))
+* **breadcrumb:** remove obsolete dropdown styling ([b3571fc](https://github.com/siemens/element/commit/b3571fc48343276de9aa9260d34e6ad7de2df114))
+* **charts/theme:** add support for visualmap ([9475a6e](https://github.com/siemens/element/commit/9475a6e88d34558feea4e1456d1c977d297b6b66))
+* **dashboards-ng:** extend native-federation version range to include v22 ([bc8f31d](https://github.com/siemens/element/commit/bc8f31d267153de3271496b82f1c6e08781cb75c))
+* **datatable:** show complete header focus ring ([d686f63](https://github.com/siemens/element/commit/d686f6326f9088c27fd6878cf9800a4b802378d8))
+* **date-range-filter:** align spacing with UX ([237b005](https://github.com/siemens/element/commit/237b005ba452c7412226bf9ebc12fd9c89c77fa3))
+* **date-range-filter:** support entering invalid date time values ([bb9fb2e](https://github.com/siemens/element/commit/bb9fb2e05f3bd9639b602fab89f8446ab533f2dc))
+* **empty-state:** use relative size for icon ([a3a8753](https://github.com/siemens/element/commit/a3a87538b3293b19904595d51286d677b0996928))
+* **menu:** preserve submenus when items update ([3098b01](https://github.com/siemens/element/commit/3098b01ec0faae62c594b8d7c848df9abea7e3c8)), closes [#2335](https://github.com/siemens/element/issues/2335)
+* **popover:** reopen after close scroll strategy ([b6832d8](https://github.com/siemens/element/commit/b6832d8efe97e201663899e808233459b6ae6b08))
+* **shadow-root:** sync overlay styles ([347a844](https://github.com/siemens/element/commit/347a844d9ba717dc816d80fc831ee3174b81ed53)), closes [#2447](https://github.com/siemens/element/issues/2447)
+* **theme:** use relative sizes for table row heights ([813dff4](https://github.com/siemens/element/commit/813dff4ee284d6a71d5204b54aa45dff7ad02fc5))
+* **toast-notification:** allow passing translation params to constructor function ([9bfae7b](https://github.com/siemens/element/commit/9bfae7b3b0ddf4d4cb27cdf48eb0021951d75f4a))
+* **wizard:** focus next step content ([e20e69f](https://github.com/siemens/element/commit/e20e69f48aa0a2dfb3a862af1280c6c0c6fab9bd)), closes [#2346](https://github.com/siemens/element/issues/2346)
+
+
+### NOTES
+
+* **theme:** The default root font size is now configurable when loading the
+  Element theme. Pass the value via `$element-root-font-size`, or set it
+  to `none` to use the browser default.
+  
+  If nothing is provided, the default remains `16px`, so nothing breaks
+  and projects can opt in when ready. We recommend switching to `none / initial`
+  as soon as possible. Starting with Element v52, `initial` will be the
+  default.
+  
+  ```scss
+  @use '@siemens/element-theme/src/theme' with (
+    $element-root-font-size: initial
+  );
+  ```
+  
+  Furthermore, a series of helper classes are provided that can be applied
+  to the `<html>` tag to change the root font size:
+  - `rfs-none`: use the browser default, regardless of the configured default
+  - `rfs-16`: use 16px
+  - `rfs-20`: use 20px
+  - `rfs-24`: use 24px
+  
+  Any other value can be used by setting the CSS variable at the `<html>`
+  tag or using a `:root {}` CSS block: `--element-root-font-size`.
+
 # [49.14.0](https://github.com/siemens/element/compare/v49.13.0...v49.14.0) (2026-07-28)
 
 
