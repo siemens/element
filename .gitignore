@@ -69,13 +69,6 @@ __screenshots__/
 /playwright/.cache/
 /.playwright-cli/
 
-# these are from LFS and are re-added automatically.
-# In this .gitignore because husky recreates its own .gitignore after `yarn install`
-/.husky/post-checkout
-/.husky/post-commit
-/.husky/post-merge
-/.husky/pre-push
-
 # Native federation tsconfigs
 # Here because these are generated at runtime by native federation builder
 /projects/dashboards-demo/tsconfig.federation.json
