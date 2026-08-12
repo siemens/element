@@ -45,18 +45,18 @@ const createSpacerControls = (direction: 'inline' | 'block'): CssVariableControl
 };
 
 const fontSizeControlDefinitions: readonly (readonly [string, string, number])[] = [
-  ['h1-bold', 'Heading 1 bold', 1.875],
   ['h1', 'Heading 1', 1.875],
+  ['h1-bold', 'Heading 1 bold', 1.875],
   ['h2', 'Heading 2', 1.25],
   ['h3', 'Heading 3', 1.125],
   ['h4', 'Heading 4', 1],
   ['h4-bold', 'Heading 4 bold', 1],
   ['h5', 'Heading 5', 0.875],
   ['h5-bold', 'Heading 5 bold', 0.875],
-  ['display-xl', 'Display XL', 3.5],
-  ['display-lg', 'Display LG', 3],
+  ['display', 'Display', 2.5],
   ['display-bold', 'Display bold', 2.5],
-  ['display', 'Display', 2.5]
+  ['display-lg', 'Display LG', 3],
+  ['display-xl', 'Display XL', 3.5]
 ];
 
 const fontSizeControls: CssVariableControl[] = fontSizeControlDefinitions.map(
