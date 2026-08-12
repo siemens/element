@@ -1,24 +1,11 @@
 <div class="row g-5">
   <div class="col-sm-4">
-    <si-form-item label="Inline spacer">
-      <si-number-input
-        inputId="inline-spacer"
+    <si-form-item label="Density">
+      <si-select
         class="form-control"
-        [min]="0"
-        [(ngModel)]="inlineSpacer"
-        (ngModelChange)="applySpacer('inline', $event)"
-      />
-    </si-form-item>
-  </div>
-
-  <div class="col-sm-4">
-    <si-form-item label="Block spacer">
-      <si-number-input
-        inputId="block-spacer"
-        class="form-control"
-        [min]="0"
-        [(ngModel)]="blockSpacer"
-        (ngModelChange)="applySpacer('block', $event)"
+        [options]="densityOptions"
+        [(value)]="density"
+        (valueChange)="applyDensity($event)"
       />
     </si-form-item>
   </div>
@@ -39,6 +26,9 @@
     <div class="bg-secondary text-inverse px-2 ms-9">Spacing 9</div>
     <div class="bg-secondary text-inverse px-2 ms-10">Spacing 10</div>
     <div class="bg-secondary text-inverse px-2 ms-11">Spacing 11</div>
+    <div class="bg-secondary text-inverse px-2 ms-12">Spacing 12</div>
+    <div class="bg-secondary text-inverse px-2 ms-13">Spacing 13</div>
+    <div class="bg-secondary text-inverse px-2 ms-14">Spacing 14</div>
   </div>
 
   <div class="col-lg-6">
@@ -55,5 +45,8 @@
     <div class="bg-secondary text-inverse px-2 mt-9">Spacing 9</div>
     <div class="bg-secondary text-inverse px-2 mt-10">Spacing 10</div>
     <div class="bg-secondary text-inverse px-2 mt-11">Spacing 11</div>
+    <div class="bg-secondary text-inverse px-2 mt-12">Spacing 12</div>
+    <div class="bg-secondary text-inverse px-2 mt-13">Spacing 13</div>
+    <div class="bg-secondary text-inverse px-2 mt-14">Spacing 14</div>
   </div>
 </div>

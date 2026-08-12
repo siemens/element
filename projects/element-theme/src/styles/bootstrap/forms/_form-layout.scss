@@ -6,7 +6,7 @@
 .si-form-input {
   display: flex;
   flex-direction: column;
-  margin-block-end: map.get(spacers.$spacers, 6);
+  margin-block-end: map.get(spacers.$spacers-block, 6);
 
   .form-item-content {
     flex-grow: 1;
@@ -15,7 +15,7 @@
 
 .si-form-fieldset {
   .form-label {
-    margin-block-end: map.get(spacers.$spacers, 2);
+    margin-block-end: map.get(spacers.$spacers-block, 2);
   }
 
   .form-check:not(.form-check-inline) {
