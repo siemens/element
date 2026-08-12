@@ -2,8 +2,8 @@
 
 @use '@siemens/element-theme/src/styles/all-variables';
 
-$margin-content: map.get(all-variables.$spacers-block, 11);
-$margin-content-large-tablet: map.get(all-variables.$spacers-block, 10);
+$margin-content: map.get(all-variables.$spacers-block, 14);
+$margin-content-large-tablet: map.get(all-variables.$spacers-block, 13);
 $margin-content-tablet: map.get(all-variables.$spacers-block, 9);
 $margin-content-mobile: map.get(all-variables.$spacers-block, 9);
 
