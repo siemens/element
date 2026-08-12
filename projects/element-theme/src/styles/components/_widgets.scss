@@ -9,7 +9,9 @@
 .si-value-widget-value {
   @extend .si-display-bold;
   display: inline-block;
-  min-block-size: variables.$si-font-size-display-bold * variables.$si-line-height-display-bold;
+  min-block-size: calc(
+    #{variables.$si-font-size-display-bold} * #{variables.$si-line-height-display-bold}
+  );
 }
 
 /**
@@ -20,7 +22,7 @@
   @extend .si-display-bold;
   @extend .si-skeleton;
   display: inline-block;
-  block-size: variables.$si-font-size-display-bold;
+  block-size: #{variables.$si-font-size-display-bold};
   vertical-align: middle;
   inline-size: 100%;
 }
@@ -47,7 +49,7 @@
 
 .si-link-widget-skeleton {
   @extend .si-skeleton;
-  block-size: calc(variables.$si-font-size-body * variables.$si-line-height-body);
+  block-size: calc(#{variables.$si-font-size-body} * #{variables.$si-line-height-body});
   inline-size: 100%;
 }
 

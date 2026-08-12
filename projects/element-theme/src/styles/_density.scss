@@ -1,6 +1,8 @@
+@use 'variables/typography';
+
 // proposal Dani B.
 .density-compact {
-  --element-spacer-inline-1: 0px;
+  --element-spacer-inline-1: 0px; // stylelint-disable-line length-zero-no-unit
   --element-spacer-inline-2: 4px;
   --element-spacer-inline-3: 4px;
   --element-spacer-inline-4: 8px;
@@ -15,7 +17,7 @@
   --element-spacer-inline-13: 48px;
   --element-spacer-inline-14: 72px;
 
-  --element-spacer-block-1: 0px;
+  --element-spacer-block-1: 0px; // stylelint-disable-line length-zero-no-unit
   --element-spacer-block-2: 4px;
   --element-spacer-block-3: 4px;
   --element-spacer-block-4: 8px;
@@ -62,4 +64,24 @@
   --element-spacer-block-12: 44px;
   --element-spacer-block-13: 48px;
   --element-spacer-block-14: 72px;
+}
+
+.density-compact,
+.density-compact-2 {
+  // these stay the same for now
+  // --element-font-size-body: #{typography.px-to-rem(14px};
+  // --element-font-size-body-lg: #{typography.px-to-rem(16px};
+  // --element-font-size-caption: #{typography.px-to-rem(12px};
+  --element-font-size-h1-bold: #{typography.px-to-rem(24px)};
+  --element-font-size-h1: #{typography.px-to-rem(24px)};
+  --element-font-size-h2: #{typography.px-to-rem(16px)};
+  --element-font-size-h3: #{typography.px-to-rem(12px)};
+  --element-font-size-h4: #{typography.px-to-rem(12px)};
+  --element-font-size-h4-bold: #{typography.px-to-rem(12px)};
+  --element-font-size-h5: #{typography.px-to-rem(12px)};
+  --element-font-size-h5-bold: #{typography.px-to-rem(14px)};
+  --element-font-size-display-xl: #{typography.px-to-rem(44px)};
+  --element-font-size-display-lg: #{typography.px-to-rem(36px)};
+  --element-font-size-display-bold: #{typography.px-to-rem(32px)};
+  --element-font-size-display: #{typography.px-to-rem(32px)};
 }

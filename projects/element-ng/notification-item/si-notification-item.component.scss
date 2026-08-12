@@ -57,7 +57,7 @@ div:has(.notification-item-content a):hover {
 
     div {
       // Unread heading block-size
-      block-size: variables.$si-font-size-h5-bold * variables.$si-line-height-h5-bold;
+      block-size: calc(variables.$si-font-size-h5-bold * variables.$si-line-height-h5-bold);
     }
   }
 }
