@@ -41,6 +41,8 @@ import { computedAsync, throttledSignal } from './utils/signal-utils';
   styles: `
     :host {
       display: block;
+      max-inline-size: 100%;
+      min-inline-size: 0;
     }
   `,
   providers: [{ provide: SI_MARKDOWN_CONTROL, useExisting: SiMarkdownComponent }]
