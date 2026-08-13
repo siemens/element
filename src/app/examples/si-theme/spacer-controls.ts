@@ -9,10 +9,13 @@ import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import { SelectItem, SiSelectModule } from '@siemens/element-ng/select';
 
-type Density = 'none' | 'density-compact' | 'density-compact-2';
+type Density = 'none' | 'density-compact-dani' | 'density-compact-andre';
 type CssUnit = 'px' | 'rem';
 
-const densityClasses: Exclude<Density, 'none'>[] = ['density-compact', 'density-compact-2'];
+const densityClasses: Exclude<Density, 'none'>[] = [
+  'density-compact-dani',
+  'density-compact-andre'
+];
 const spacerDefaults = [2, 4, 6, 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 96];
 
 interface CssVariableControl {
@@ -45,6 +48,9 @@ const createSpacerControls = (direction: 'inline' | 'block'): CssVariableControl
 };
 
 const fontSizeControlDefinitions: readonly (readonly [string, string, number])[] = [
+  ['body', 'Body', 0.875],
+  ['body-lg', 'Body LG', 1.0],
+  ['caption', 'Caption', 0.75],
   ['h1', 'Heading 1', 1.875],
   ['h1-bold', 'Heading 1 bold', 1.875],
   ['h2', 'Heading 2', 1.25],
@@ -91,8 +97,8 @@ export class SampleComponent implements OnInit {
 
   readonly densityOptions: SelectItem<Density>[] = [
     { type: 'option', value: 'none', label: 'None' },
-    { type: 'option', value: 'density-compact', label: 'Compact (Dani Biasi)' },
-    { type: 'option', value: 'density-compact-2', label: 'Compact 2 (Dani Ritz)' }
+    { type: 'option', value: 'density-compact-dani', label: 'Compact (Dani Biasi)' },
+    { type: 'option', value: 'density-compact-andre', label: 'Compact (Andre Fischbach)' }
   ];
 
   private document = inject(DOCUMENT);
