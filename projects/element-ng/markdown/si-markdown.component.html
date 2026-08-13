@@ -92,27 +92,6 @@
   <del [siMarkdownFragment]="node"></del>
 </ng-template>
 
-<ng-template siMarkdownTemplate="table" let-node>
-  <table class="table mb-6" [attr.data-line]="node?.position?.start.line">
-    <thead>
-      <tr>
-        @for (cell of node.children[0].children; track $index) {
-          <th [siMarkdownFragment]="cell" [style.text-align]="node.align?.[$index]"> </th>
-        }
-      </tr>
-    </thead>
-    <tbody>
-      @for (row of node.children.slice(1); track $index) {
-        <tr [attr.data-line]="row.position?.start.line">
-          @for (cell of row.children; track $index; let cellIndex = $index) {
-            <td [siMarkdownFragment]="cell" [style.text-align]="node.align?.[cellIndex]"> </td>
-          }
-        </tr>
-      }
-    </tbody>
-  </table>
-</ng-template>
-
 <ng-template siMarkdownTemplate="text" let-node>
   <span>{{ node.value }}</span>
 </ng-template>

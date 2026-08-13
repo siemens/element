@@ -9,6 +9,7 @@ import { Processor, unified, type Plugin } from 'unified';
 
 import { siMarkdownCode } from './extensions/code';
 import { siMarkdownInlineHtml } from './extensions/inline-html';
+import { siMarkdownTable } from './extensions/table';
 import { siMarkdownPostprocess } from './internal/si-markdown-postprocess';
 import {
   PluginWithOptions,
@@ -46,9 +47,9 @@ export class SiMarkdownOptions {
   private highlighter?: SiMarkdownHighlighter;
 
   constructor() {
-    this.installExtension(siMarkdownInlineHtml()).installExtension(
-      siMarkdownCode({ getHighlighter: () => this.getHighlighter() })
-    );
+    this.installExtension(siMarkdownInlineHtml())
+      .installExtension(siMarkdownTable())
+      .installExtension(siMarkdownCode({ getHighlighter: () => this.getHighlighter() }));
   }
 
   /**
