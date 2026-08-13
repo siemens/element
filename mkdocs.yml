@@ -187,6 +187,7 @@ nav:
     - Overview:                           'patterns/index.md'
     - Backdrop:                           'patterns/backdrop.md'
     - Drag & drop:                        'patterns/drag-and-drop.md'
+    - Overlays in scroll containers: 'patterns/overlays-in-scroll-containers.md'
     - Loading:                            'patterns/loading.md'
     - Notifications:                      'patterns/notifications.md'
     - Filter:                             'patterns/filter.md'
