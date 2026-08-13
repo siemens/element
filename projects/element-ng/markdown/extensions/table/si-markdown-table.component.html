@@ -1,0 +1,19 @@
+<!-- eslint-disable @angular-eslint/template/attributes-order -->
+<table class="table mb-6" [attr.data-line]="table().position?.start?.line">
+  <thead>
+    <tr>
+      @for (cell of table().children[0].children; track $index) {
+        <th [siMarkdownFragment]="cell" [style.text-align]="table().align?.[$index]"> </th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (row of table().children.slice(1); track $index) {
+      <tr [attr.data-line]="row.position?.start?.line">
+        @for (cell of row.children; track $index; let cellIndex = $index) {
+          <td [siMarkdownFragment]="cell" [style.text-align]="table().align?.[cellIndex]"> </td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>
