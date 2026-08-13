@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.markdown-table-wrapper {
+  max-inline-size: 100%;
+  overflow-x: auto;
+}

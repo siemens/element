@@ -11,6 +11,7 @@ import { SiMarkdownExtensionComponent } from '../../si-markdown.types';
 @Component({
   selector: 'si-markdown-table',
   imports: [SiMarkdownFragmentComponent],
+  styleUrl: './si-markdown-table.component.scss',
   templateUrl: './si-markdown-table.component.html'
 })
 export class SiMarkdownTableComponent implements SiMarkdownExtensionComponent {
