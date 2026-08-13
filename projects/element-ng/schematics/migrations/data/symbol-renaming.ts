@@ -8,4 +8,10 @@ export interface SymbolRenamingInstruction {
   symbolRenamings: { replace: string; replaceWith: string }[];
 }
 
-export const SYMBOL_RENAMING_MIGRATION: SymbolRenamingInstruction[] = [];
+export const SYMBOL_RENAMING_MIGRATION: SymbolRenamingInstruction[] = [
+  {
+    module: /@siemens\/element-ng\/icon-status$/,
+    toModule: '@siemens/element-ng/status-counter',
+    symbolRenamings: [{ replace: 'SiIconStatusComponent', replaceWith: 'SiStatusCounterComponent' }]
+  }
+];

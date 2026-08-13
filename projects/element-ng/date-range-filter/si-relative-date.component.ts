@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
   Component,
@@ -55,6 +56,8 @@ export class SiRelativeDateComponent implements OnChanges {
   readonly valueLabel = input.required<string>();
   /** Label for the offset unit selector. */
   readonly unitLabel = input.required<string>();
+  /** CDK scroll strategy used for the offset unit select overlay. */
+  readonly scrollStrategy = input.required<ScrollStrategy>();
 
   protected readonly offset = signal(0);
   protected readonly unit = signal('days');

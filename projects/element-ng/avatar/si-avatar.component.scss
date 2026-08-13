@@ -4,14 +4,14 @@
 :host {
   --avatar-size: calc(#{variables.$si-icon-font-size} + 20px);
   --indicator-size: #{variables.$si-icon-font-size};
-  --background: #{variables.$element-base-0};
+  --background: #{variables.$si-sys-background-0};
   --indicator-offset-x: -0.625rem;
   --indicator-offset-y: -0.375rem;
 
   flex: 0 0 auto;
   display: inline-flex;
   vertical-align: middle;
-  color: variables.$element-text-inverse;
+  color: variables.$si-sys-text-inverse;
   position: relative;
   align-items: center;
   justify-content: center;
@@ -74,7 +74,8 @@ img {
   inset-inline-end: var(--indicator-offset-x);
   font-size: var(--indicator-size);
 
-  filter: drop-shadow(1px 0 0 variables.$element-base-1)
-    drop-shadow(-1px 0 0 variables.$element-base-1) drop-shadow(0 1px 0 variables.$element-base-1)
-    drop-shadow(0 -1px 0 variables.$element-base-1);
+  filter: drop-shadow(1px 0 0 variables.$si-sys-background-1)
+    drop-shadow(-1px 0 0 variables.$si-sys-background-1)
+    drop-shadow(0 1px 0 variables.$si-sys-background-1)
+    drop-shadow(0 -1px 0 variables.$si-sys-background-1);
 }

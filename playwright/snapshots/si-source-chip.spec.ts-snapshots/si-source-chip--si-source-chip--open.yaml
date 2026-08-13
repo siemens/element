@@ -1,0 +1,21 @@
+- heading "Compact source" [level=3]
+- button "Comprehensive annual ope…"
+- heading "Compact multiple sources" [level=3]
+- button "Maintenance status +2"
+- heading "Sources with icon and label" [level=3]
+- button "Sources" [expanded]
+- dialog "Sources":
+  - text: ""
+  - list:
+    - listitem:
+      - button "Operations dashboard Current production and service performance metrics.":
+        - text: ""
+        - paragraph: Current production and service performance metrics.
+    - listitem:
+      - button "Maintenance log Completed and scheduled maintenance activities.":
+        - text: ""
+        - paragraph: Completed and scheduled maintenance activities.
+    - listitem:
+      - button "Safety report Safety observations and corrective actions.":
+        - text: ""
+        - paragraph: Safety observations and corrective actions.

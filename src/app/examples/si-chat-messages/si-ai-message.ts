@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import {
   elementBookmark,
   elementCopy,
@@ -14,20 +13,22 @@ import {
 } from '@siemens/element-icons';
 import { MessageAction, SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
 import { addIcons } from '@siemens/element-ng/icon';
-import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
+import { SiMarkdownCitation, SiMarkdownComponent } from '@siemens/element-ng/markdown';
 import { MenuItemAction } from '@siemens/element-ng/menu';
+import { SourceReference } from '@siemens/element-ng/source-chip';
 import { LOG_EVENT } from '@siemens/live-preview';
+
+import { markdownOptions } from './markdown-options';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiAiMessageComponent],
+  imports: [SiAiMessageComponent, SiMarkdownComponent],
   templateUrl: './si-ai-message.html'
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
-  private sanitizer = inject(DomSanitizer);
 
-  protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
+  protected markdownOptions = markdownOptions;
 
   protected readonly icons = addIcons({
     elementThumbsUp,
@@ -42,8 +43,11 @@ export class SampleComponent {
 
 You can use \`inline code\` and create lists:
 
-- First item
-- Second item`;
+- First item [1]
+- Second item [2]
+- **Bold text** for emphasis
+- _Italic text_ for subtle emphasis
+`;
 
   actions: MessageAction[] = [
     {
@@ -81,6 +85,34 @@ You can use \`inline code\` and create lists:
       label: 'Share',
       icon: this.icons.elementShare,
       action: (messageId: string) => this.logEvent(`Share message ${messageId}`)
+    }
+  ];
+
+  sources: SourceReference[] = [
+    {
+      name: 'Data Analysis Guide',
+      url: 'https://example.com/guides/data-analysis',
+      quote: 'Start by reviewing the dataset structure and validating the input data.'
+    },
+    {
+      name: 'Large Dataset Performance Guide',
+      url: 'https://example.com/guides/large-datasets',
+      description: 'Recommendations for processing production datasets with millions of rows.'
+    }
+  ];
+
+  inlineSources: SiMarkdownCitation[] = [
+    {
+      identifier: '1',
+      name: 'First source',
+      url: 'https://example.com/guides/data-analysis',
+      quote: 'Start by reviewing the dataset structure and validating the input data.'
+    },
+    {
+      identifier: '2',
+      name: 'Second source',
+      url: 'https://example.com/guides/large-datasets',
+      description: 'Recommendations for processing production datasets with millions of rows.'
     }
   ];
 }

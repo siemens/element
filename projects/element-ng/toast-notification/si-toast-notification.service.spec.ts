@@ -29,6 +29,22 @@ describe('SiToastNotificationService', () => {
     expect(activeToast.message).toEqual('A successful event has occurred.');
   });
 
+  it('should queue a toast notification with translation parameters', () => {
+    const translationParams = { fileName: 'report.pdf' };
+
+    const toast = service.queueToastNotification(
+      'danger',
+      'Upload failed',
+      'Could not upload {{fileName}}.',
+      undefined,
+      undefined,
+      undefined,
+      translationParams
+    );
+
+    expect(toast.translationParams).toEqual(translationParams);
+  });
+
   it('should successfully hide all toast notifications', () => {
     service.queueToastNotification('success', 'Success!', 'A successful event has occurred.');
     service.hideToastNotification();

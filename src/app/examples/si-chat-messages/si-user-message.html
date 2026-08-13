@@ -1,9 +1,5 @@
 <div class="p-4">
-  <si-user-message
-    actionParam="message-1"
-    [content]="content"
-    [contentFormatter]="markdownRenderer"
-    [attachments]="attachments"
-    [actions]="actions"
-  />
+  <si-user-message actionParam="message-1" [attachments]="attachments" [actions]="actions">
+    <si-markdown [markdown]="content" [options]="markdownOptions" />
+  </si-user-message>
 </div>

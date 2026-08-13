@@ -16,11 +16,11 @@
   }
 
   span {
-    color: all-variables.$element-text-primary;
+    color: all-variables.$si-sys-text-primary;
   }
 
   &:hover span {
-    color: all-variables.$element-text-active;
+    color: all-variables.$si-sys-text-accent;
   }
 }
 
@@ -29,7 +29,7 @@
   padding-inline: map.get(all-variables.$spacers, 5);
 
   &:not(:disabled):hover {
-    background: all-variables.$element-base-1-hover;
+    background: all-variables.$si-sys-background-hover;
   }
 
   .dot,

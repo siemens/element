@@ -82,36 +82,19 @@ export class SiLaunchpadFactoryComponent {
    */
   readonly showMoreAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`));
 
-  /**
-   * Title of the show less apps button.
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`)
-   * ```
-   */
-  readonly showLessAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`));
+  /** @deprecated This input no longer has an effect. {@link showMoreAppsText} is shown in all cases. */
+  readonly showLessAppsText = input();
 
   readonly favoriteChange = output<FavoriteChangeEvent>();
 
   protected showAllApps = false;
+  protected readonly allAppsId = '__si-launchpad-factory-all-apps';
   protected readonly categories = computed(() => {
     const apps = this.apps();
-    const favorites = this.favorites();
-    const categories: AppCategory[] = [];
-    if (this.enableFavorites() && this.hasFavorites()) {
-      categories.push({
-        name: this.favoriteAppsText(),
-        apps: favorites
-      });
-    }
-
     if (this.isCategories(apps)) {
-      categories.push(...apps);
-    } else {
-      categories.push({ name: '', apps: [...apps] });
+      return apps;
     }
-    return categories;
+    return [{ name: '', apps: [...apps] }];
   });
   protected readonly favorites = computed(() =>
     this.apps()

@@ -3,14 +3,14 @@
 svg {
   inline-size: 1em;
   block-size: 1em;
-  fill: variables.$element-ui-1;
+  fill: variables.$si-sys-text-primary;
 
   &.none,
   &.none .inactive {
-    fill: variables.$element-status-danger;
+    fill: variables.$si-sys-text-danger;
   }
 
   .inactive {
-    fill: variables.$element-ui-3;
+    fill: variables.$si-sys-text-disabled;
   }
 }

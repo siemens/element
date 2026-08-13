@@ -1,0 +1,6 @@
+@use '@siemens/element-theme/src/styles/variables/typography';
+
+.datatable-summary-row .datatable-body-row {
+  font-size: $si-font-size-h4-bold;
+  font-weight: typography.$si-font-weight-h5;
+}

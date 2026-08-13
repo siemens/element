@@ -24,27 +24,36 @@
     </div>
   }
   <div class="apps-scroll ms-n2 ps-2">
-    @for (category of categories(); track category.name) {
-      @if (!enableFavorites() || !hasFavorites() || $first || showAllApps) {
-        <si-launchpad-category
-          [class.pt-6]="!$first && !!category.name"
-          [category]="category"
-          [enableFavorites]="enableFavorites()"
-          (favoriteChange)="toggleFavorite($event)"
-        />
-      }
-
-      @if (enableFavorites() && $first && hasFavorites()) {
-        <button
-          type="button"
-          class="btn btn-link btn-show-all dropdown-toggle text-decoration-none"
-          [class.show]="showAllApps"
-          (click)="showAllApps = !showAllApps"
-        >
-          <b>{{ (showAllApps ? showLessAppsText() : showMoreAppsText()) | translate }}</b>
-          <si-icon class="link-icon dropdown-caret" [icon]="icons.elementDown2" />
-        </button>
-      }
+    @if (enableFavorites() && hasFavorites()) {
+      <si-launchpad-category
+        [category]="{ name: favoriteAppsText(), apps: favorites() }"
+        [enableFavorites]="enableFavorites()"
+        (favoriteChange)="toggleFavorite($event)"
+      />
+      <button
+        type="button"
+        class="btn btn-link btn-show-all dropdown-toggle text-decoration-none"
+        [class.show]="showAllApps"
+        [attr.aria-expanded]="showAllApps"
+        [attr.aria-controls]="allAppsId"
+        (click)="showAllApps = !showAllApps"
+      >
+        <b>{{ showMoreAppsText() | translate }}</b>
+        <si-icon class="link-icon dropdown-caret" [icon]="icons.elementDown2" />
+      </button>
     }
+
+    <div class="all-apps" [id]="allAppsId">
+      @if (!enableFavorites() || !hasFavorites() || showAllApps) {
+        @for (category of categories(); track category.name) {
+          <si-launchpad-category
+            [class.pt-6]="!!category.name && (hasFavorites() || !$first)"
+            [category]="category"
+            [enableFavorites]="enableFavorites()"
+            (favoriteChange)="toggleFavorite($event)"
+          />
+        }
+      }
+    </div>
   </div>
 </div>

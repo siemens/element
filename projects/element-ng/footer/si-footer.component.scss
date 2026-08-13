@@ -8,10 +8,10 @@ $footer-separator-padding: map.get(variables.$spacers, 4);
 
 footer {
   margin-block-end: 0;
-  background-color: variables.$element-base-0;
-  color: variables.$element-text-secondary;
+  background-color: variables.$si-sys-background-0;
+  color: variables.$si-sys-text-secondary;
   font-size: variables.$si-font-size-caption;
-  border-block-start: 1px solid variables.$element-ui-4;
+  border-block-start: 1px solid variables.$si-sys-border-4;
 
   // Ensure we use the space in a surrounding container
   overflow: auto;

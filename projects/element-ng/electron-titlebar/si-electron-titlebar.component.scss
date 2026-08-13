@@ -13,7 +13,7 @@
 }
 
 .electron-title-bar-app-name {
-  color: variables.$element-text-secondary;
+  color: variables.$si-sys-text-secondary;
   -webkit-app-region: drag;
   -webkit-user-select: none; // stylelint-disable-line property-no-vendor-prefix
   user-select: none;
@@ -25,5 +25,5 @@
 }
 
 .unfocused {
-  color: variables.$element-ui-3;
+  color: variables.$si-sys-text-disabled;
 }

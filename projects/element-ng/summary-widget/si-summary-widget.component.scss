@@ -11,13 +11,13 @@
     cursor: pointer;
 
     &:not(.selected):hover {
-      background: variables.$element-base-1-hover;
+      background: variables.$si-sys-background-hover;
     }
   }
 }
 
 .selected {
-  background: variables.$element-base-1-selected;
+  background: variables.$si-sys-background-selected;
 }
 
 .disabled {

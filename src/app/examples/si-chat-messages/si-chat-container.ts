@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, computed, inject, signal, TemplateRef, viewChild } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import {
   elementBookmark,
   elementCopy,
@@ -33,13 +32,12 @@ import {
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
-import {
-  getMarkdownRenderer,
-  SiMarkdownRendererComponent
-} from '@siemens/element-ng/markdown-renderer';
+import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
+
+import { markdownOptions } from './markdown-options';
 
 interface ChatMessage {
   type: 'user' | 'ai' | 'custom';
@@ -58,7 +56,7 @@ interface ChatMessage {
     SiChatInputComponent,
     SiChatMessageComponent,
     SiIconComponent,
-    SiMarkdownRendererComponent,
+    SiMarkdownComponent,
     SiChatMessageActionDirective,
     SiAttachmentListComponent,
     SiAiWelcomeScreenComponent
@@ -68,11 +66,10 @@ interface ChatMessage {
 export class SampleComponent {
   private logEvent = inject(LOG_EVENT);
   private readonly modalTemplate = viewChild<TemplateRef<any>>('modalTemplate');
-  private sanitizer = inject(DomSanitizer);
   private readonly toastService = inject(SiToastNotificationService);
   private readonly chatContainer = viewChild<SiChatContainerComponent>(SiChatContainerComponent);
 
-  protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
+  protected markdownOptions = markdownOptions;
 
   protected readonly icons = addIcons({
     elementUser,
@@ -189,6 +186,11 @@ export class SampleComponent {
 
   readonly loading = signal(false);
   readonly sending = signal(false);
+  readonly followUpPrompts = signal<string[]>([
+    'What are the risks if this insight is ignored?',
+    'Show related insights from similar customer events.',
+    'Summarize this insight in 2 bullet points for presentation.'
+  ]);
   readonly disabled = signal(false);
   readonly disableInterrupt = signal(false);
   readonly interrupting = signal(false);
@@ -260,6 +262,11 @@ export class SampleComponent {
     this.onMessageSent({ content: suggestion.text, attachments: [] });
   }
 
+  onFollowUpPromptSelected(prompt: string): void {
+    this.inputValue.set(prompt);
+    this.followUpPrompts.set([]);
+  }
+
   onClearMessages(): void {
     this.logEvent('Clear messages clicked');
     this.messages.set([]);
@@ -279,6 +286,7 @@ export class SampleComponent {
   onMessageSent(event: { content: string; attachments: ChatInputAttachment[] }): void {
     this.logEvent(`Message sent: "${event.content}" with ${event.attachments.length} attachments`);
     this.firstMessageSent.set(true);
+    this.followUpPrompts.set([]);
     this.messages.update(current => [
       ...current,
       {
@@ -309,7 +317,15 @@ export class SampleComponent {
 
   onFileError(error: FileUploadError): void {
     this.logEvent(`File error: ${error.errorText} - ${error.fileName}`);
-    this.toastService.queueToastNotification('danger', error.errorText, error.fileName);
+    this.toastService.queueToastNotification(
+      'danger',
+      error.errorText,
+      error.fileName,
+      undefined,
+      undefined,
+      undefined,
+      error.errorParams
+    );
   }
 
   private simulateAiResponse(userInput: string): void {
@@ -329,6 +345,12 @@ export class SampleComponent {
             content: response,
             actions: this.aiActions
           }
+        ]);
+        this.followUpPrompts.set([
+          'What are the risks if this insight is ignored?',
+          'Show related insights from similar customer events.',
+          'Summarize this insight in 2 bullet points for presentation.',
+          'Generate a summary report'
         ]);
         this.loading.set(false);
       }, 2000);

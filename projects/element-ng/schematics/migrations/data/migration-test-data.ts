@@ -11,8 +11,24 @@ import {
   ProviderFunctionRemovalInstruction,
   SymbolRemovalInstruction,
   ClassMemberReplacementInstruction,
-  ElementClassChangeInstruction
+  ElementClassChangeInstruction,
+  CssCustomPropertyInstruction
 } from './index.js';
+
+const CSS_CUSTOM_PROPERTIES_MIGRATION: CssCustomPropertyInstruction[] = [
+  {
+    replace: '--si-feedback-icon-offset',
+    replaceWith: '--si-feedback-icon-size'
+  },
+  {
+    replace: '$si-font-size-title-1-bold',
+    replaceWith: '$si-font-size-h4-bold'
+  },
+  {
+    replace: '$si-font-weight-title-2',
+    replaceWith: '$si-font-weight-h5'
+  }
+];
 
 const SYMBOL_RENAMING_MIGRATION: SymbolRenamingInstruction[] = [
   {
@@ -237,6 +253,23 @@ const CLASS_MEMBER_REPLACEMENTS_MIGRATION: ClassMemberReplacementInstruction[] =
 ];
 
 const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = [
+  {
+    requiredClasses: ['btn-ghost'],
+    removeClasses: ['btn-ghost'],
+    addClasses: ['btn-tertiary-ghost']
+  },
+  {
+    requiredClasses: ['btn-primary-ghost'],
+    removeClasses: ['btn-primary-ghost'],
+    addClasses: ['btn-ghost']
+  },
+  {
+    elementSelector: 'si-select',
+    requiredClasses: [],
+    excludedClasses: ['form-control', 'btn'],
+    removeClasses: [],
+    addClasses: ['btn', 'btn-ghost']
+  },
   // btn-circle with btn-sm should have btn-sm removed
   {
     requiredClasses: ['btn', 'btn-circle', 'btn-sm'],
@@ -281,6 +314,7 @@ export const getElementMigrationTestData = (): ElementMigrationData => ({
   attributeSelectorChanges: ATTRIBUTE_SELECTORS_MIGRATION,
   classMemberReplacementChanges: CLASS_MEMBER_REPLACEMENTS_MIGRATION,
   componentPropertyNameChanges: COMPONENT_PROPERTY_NAMES_MIGRATION,
+  cssCustomPropertyChanges: CSS_CUSTOM_PROPERTIES_MIGRATION,
   elementClassChanges: ELEMENT_CLASS_CHANGES_MIGRATION,
   elementSelectorChanges: ELEMENT_SELECTORS_MIGRATION,
   providerFunctionRemovalChanges: PROVIDER_FUNCTION_REMOVALS_MIGRATION,

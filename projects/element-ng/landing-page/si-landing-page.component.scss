@@ -36,7 +36,7 @@ $margin-bottom-footer: map.get(all-variables.$spacers, 9);
   block-size: 100vb;
   overflow-y: auto;
   inline-size: 40%;
-  background-color: all-variables.$element-base-0;
+  background-color: all-variables.$si-sys-background-0;
   padding-block: $margin-bottom-header $margin-bottom-footer;
   padding-inline: $margin-content;
 
@@ -94,7 +94,7 @@ $margin-bottom-footer: map.get(all-variables.$spacers, 9);
 }
 
 footer {
-  color: all-variables.$element-text-secondary;
+  color: all-variables.$si-sys-text-secondary;
 }
 
 // large tablet

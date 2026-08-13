@@ -209,6 +209,8 @@ export interface SiTranslatableKeys {
   'SI_MAP.WINDOWS_HELP'?: string;
   'SI_MAP.ZOOM_IN'?: string;
   'SI_MAP.ZOOM_OUT'?: string;
+  'SI_MARKDOWN.COPIED_CODE'?: string;
+  'SI_MARKDOWN.COPY_CODE'?: string;
   'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;
   'SI_NAVBAR.TOGGLE_NAVIGATION'?: string;
   'SI_NAVBAR_VERTICAL.COLLAPSE'?: string;
@@ -249,6 +251,7 @@ export interface SiTranslatableKeys {
   'SI_SLIDER.DECREMENT'?: string;
   'SI_SLIDER.INCREMENT'?: string;
   'SI_SLIDER.LABEL'?: string;
+  'SI_SOURCE_CHIP.SOURCES'?: string;
   'SI_SPLIT.COLLAPSE_LABEL'?: string;
   'SI_STATUS_BAR.ALL_OK'?: string;
   'SI_STATUS_BAR.MUTE'?: string;

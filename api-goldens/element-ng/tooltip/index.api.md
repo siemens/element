@@ -4,6 +4,7 @@
 
 ```ts
 
+import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import { ElementRef } from '@angular/core';
 import * as i0 from '@angular/core';
@@ -17,10 +18,10 @@ import { Type } from '@angular/core';
 export class SiTooltipDirective {
     constructor();
     readonly isDisabled: i0.InputSignalWithTransform<boolean, unknown>;
-    readonly placement: i0.InputSignal<"auto" | "start" | "end" | "top" | "bottom">;
+    readonly placement: i0.InputSignal<"auto" | "top" | "start" | "end" | "bottom">;
     readonly siTooltip: i0.InputSignal<TemplateRef<any> | TranslatableString>;
     readonly tooltipContext: i0.InputSignal<unknown>;
-    readonly tooltipScrollStrategy: i0.InputSignal<ScrollStrategy | undefined>;
+    readonly tooltipScrollStrategy: i0.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
 }
 
 // @public (undocumented)

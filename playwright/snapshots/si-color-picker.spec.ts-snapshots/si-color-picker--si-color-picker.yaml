@@ -1,19 +1,19 @@
-- button "Selected color element-data-7"
+- button "Selected color si-sys-data-categorial-7"
 - grid:
-  - row "element-data-1 element-data-2 element-data-3 element-data-4 element-data-5 element-data-6 element-data-7 element-data-8":
-    - gridcell "element-data-1":
-      - radio "element-data-1"
-    - gridcell "element-data-2":
-      - radio "element-data-2"
-    - gridcell "element-data-3":
-      - radio "element-data-3"
-    - gridcell "element-data-4":
-      - radio "element-data-4"
-    - gridcell "element-data-5":
-      - radio "element-data-5"
-    - gridcell "element-data-6":
-      - radio "element-data-6"
-    - gridcell "element-data-7":
-      - radio "element-data-7" [checked]
-    - gridcell "element-data-8":
-      - radio "element-data-8"
+  - row "si-sys-data-categorial-1 si-sys-data-categorial-2 si-sys-data-categorial-3 si-sys-data-categorial-4 si-sys-data-categorial-5 si-sys-data-categorial-6 si-sys-data-categorial-7 si-sys-data-categorial-8":
+    - gridcell "si-sys-data-categorial-1":
+      - radio "si-sys-data-categorial-1"
+    - gridcell "si-sys-data-categorial-2":
+      - radio "si-sys-data-categorial-2"
+    - gridcell "si-sys-data-categorial-3":
+      - radio "si-sys-data-categorial-3"
+    - gridcell "si-sys-data-categorial-4":
+      - radio "si-sys-data-categorial-4"
+    - gridcell "si-sys-data-categorial-5":
+      - radio "si-sys-data-categorial-5"
+    - gridcell "si-sys-data-categorial-6":
+      - radio "si-sys-data-categorial-6"
+    - gridcell "si-sys-data-categorial-7":
+      - radio "si-sys-data-categorial-7" [checked]
+    - gridcell "si-sys-data-categorial-8":
+      - radio "si-sys-data-categorial-8"

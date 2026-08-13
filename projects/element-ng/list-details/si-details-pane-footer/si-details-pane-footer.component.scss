@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: row;
   flex: none;
-  border-block-start: 1px solid variables.$element-ui-4;
+  border-block-start: 1px solid variables.$si-sys-border-4;
   gap: map.get(variables.$spacers, 6);
   padding: map.get(variables.$spacers, 6);
 }

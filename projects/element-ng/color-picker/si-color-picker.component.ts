@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { elementOk } from '@siemens/element-icons';
-import { isRTL } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy, isRTL } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -25,22 +25,22 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
  * Note: This array needs to be kept in sync with the design system data color tokens.
  */
 const defaultDataColors: string[] = [
-  'element-data-1',
-  'element-data-2',
-  'element-data-3',
-  'element-data-4',
-  'element-data-5',
-  'element-data-6',
-  'element-data-7',
-  'element-data-8',
-  'element-data-9',
-  'element-data-10',
-  'element-data-11',
-  'element-data-12',
-  'element-data-13',
-  'element-data-14',
-  'element-data-15',
-  'element-data-16'
+  'si-sys-data-categorial-1',
+  'si-sys-data-categorial-2',
+  'si-sys-data-categorial-3',
+  'si-sys-data-categorial-4',
+  'si-sys-data-categorial-5',
+  'si-sys-data-categorial-6',
+  'si-sys-data-categorial-7',
+  'si-sys-data-categorial-8',
+  'si-sys-data-categorial-9',
+  'si-sys-data-categorial-10',
+  'si-sys-data-categorial-11',
+  'si-sys-data-categorial-12',
+  'si-sys-data-categorial-13',
+  'si-sys-data-categorial-14',
+  'si-sys-data-categorial-15',
+  'si-sys-data-categorial-16'
 ];
 @Component({
   selector: 'si-color-picker',
@@ -80,6 +80,13 @@ export class SiColorPickerComponent implements ControlValueAccessor {
    * @defaultValue false
    */
   readonly autoClose = input(false, { transform: booleanAttribute });
+
+  /**
+   * Optional CDK scroll strategy used for the color picker overlay.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
+   */
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy());
 
   /**
    * Specifies whether the color picker component is disabled.

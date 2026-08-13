@@ -95,10 +95,10 @@ export class SampleComponent {
   private createChartColors(): EChartOption {
     const style = window.getComputedStyle(document.documentElement);
     const colors = [
-      this.getProp(style, '--element-data-plum-1', '#e5659b'),
-      this.getProp(style, '--element-data-plum-2', '#c04774'),
-      this.getProp(style, '--element-data-plum-3', '#9f1853'),
-      this.getProp(style, '--element-data-plum-4', '#4f153d')
+      this.getProp(style, '--si-sys-data-sequential-plum-1', '#e5659b'),
+      this.getProp(style, '--si-sys-data-sequential-plum-2', '#c04774'),
+      this.getProp(style, '--si-sys-data-sequential-plum-3', '#9f1853'),
+      this.getProp(style, '--si-sys-data-sequential-plum-4', '#4f153d')
     ];
     return {
       color: colors

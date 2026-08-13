@@ -6,10 +6,13 @@
     } @else {
       <div #formattedContent> </div>
     }
+  } @else {
+    <ng-content />
   }
 
-  @if (actions().length > 0 || secondaryActions().length > 0) {
-    <div class="btn-group ai-message-actions" role="group" siChatMessageAction>
+  @let src = sources();
+  @if (actions().length > 0 || secondaryActions().length > 0 || src?.length) {
+    <div class="btn-group ai-message-actions align-items-center" role="group" siChatMessageAction>
       @for (action of actions(); track $index) {
         <button
           type="button"
@@ -36,6 +39,15 @@
         <ng-template #secondaryActionsMenu>
           <si-menu-factory [items]="secondaryActions()" [actionParam]="actionParam()" />
         </ng-template>
+      }
+
+      @if (src?.length) {
+        <si-source-chip
+          showIcon
+          showLabel
+          [sources]="src"
+          (sourceClicked)="sourceClicked.emit($event)"
+        />
       }
     </div>
   }

@@ -1,7 +1,7 @@
 @use 'sass:map';
 
 @use '../variables/focus';
-@use '../variables/semantic-tokens';
+@use '../variables/system-tokens';
 @use '../variables/typography';
 @use 'mixins/breakpoints';
 @use 'variables';
@@ -168,31 +168,31 @@
 }
 
 .list-group-item-secondary {
-  background-color: semantic-tokens.$element-ui-4;
-  color: semantic-tokens.$element-text-primary;
+  background-color: system-tokens.$si-sys-background-neutral;
+  color: system-tokens.$si-sys-text-primary;
 }
 
 .list-group-item-success {
-  color: semantic-tokens.$element-text-success;
-  background: semantic-tokens.$element-base-success;
+  color: system-tokens.$si-sys-text-success;
+  background: system-tokens.$si-sys-background-success-subtle;
 }
 
 .list-group-item-warning {
-  color: semantic-tokens.$element-text-warning;
-  background: semantic-tokens.$element-base-warning;
+  color: system-tokens.$si-sys-text-warning;
+  background: system-tokens.$si-sys-background-warning-subtle;
 }
 
 .list-group-item-caution {
-  background-color: semantic-tokens.$element-base-caution;
-  color: semantic-tokens.$element-text-caution;
+  background-color: system-tokens.$si-sys-background-caution-subtle;
+  color: system-tokens.$si-sys-text-caution;
 }
 
 .list-group-item-danger {
-  color: semantic-tokens.$element-text-danger;
-  background: semantic-tokens.$element-base-danger;
+  color: system-tokens.$si-sys-text-danger;
+  background: system-tokens.$si-sys-background-danger-subtle;
 }
 
 .list-group-item-info {
-  color: semantic-tokens.$element-text-information;
-  background: semantic-tokens.$element-base-information;
+  color: system-tokens.$si-sys-text-information;
+  background: system-tokens.$si-sys-background-information-subtle;
 }

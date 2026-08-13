@@ -2,9 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
+import { Overlay } from '@angular/cdk/overlay';
 import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { page, userEvent } from 'vitest/browser';
 
 import { SiPopoverDirective } from './si-popover.directive';
@@ -191,7 +192,7 @@ describe('with scrollStrategy', () => {
     </button>`
   })
   class ScrollStrategyHostComponent {
-    readonly scrollStrategy = signal<ScrollStrategy | undefined>(undefined);
+    readonly scrollStrategy = signal(defaultConnectedOverlayScrollStrategy());
   }
 
   beforeEach(() => {

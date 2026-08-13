@@ -17,7 +17,7 @@ import { Component } from '@angular/core';
       }
       span {
         padding: 2rem;
-        background-color: rgb(from var(--element-ui-2) r g b / 0.3);
+        background-color: rgb(from var(--si-sys-border-2) r g b / 0.3);
       }
     }
   `,

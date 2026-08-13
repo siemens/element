@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-text-primary;
   background: none;
   border: 0;
   font-size: variables.$si-font-size-body;
@@ -22,11 +22,12 @@
     margin-inline-start: map.get(variables.$spacers, 5);
   }
 
-  .icon-lg {
+  .icon {
     margin-inline-start: map.get(variables.$spacers, 5);
+    padding: map.get(variables.$spacers, 1);
   }
 
-  .icon-lg + .item-title {
+  .icon + .item-title {
     margin-inline-start: map.get(variables.$spacers, 4);
   }
 
@@ -40,8 +41,8 @@
   }
 
   &.active {
-    color: variables.$element-action-primary-hover;
-    background: variables.$element-base-1-selected;
+    color: variables.$si-sys-text-accent-active;
+    background: variables.$si-sys-background-selected;
 
     &::after {
       content: '';
@@ -49,13 +50,13 @@
       inset-block: 0;
       inset-inline-start: 0;
       inline-size: 4px;
-      background: variables.$element-action-primary-hover;
+      background: variables.$si-sys-border-accent-active;
     }
   }
 
   &:hover {
     text-decoration: none;
-    background: variables.$element-base-1-hover;
+    background: variables.$si-sys-background-hover;
   }
 }
 
