@@ -4,6 +4,7 @@
 
 ```ts
 
+import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
@@ -19,6 +20,7 @@ export class SiColorPickerComponent implements ControlValueAccessor {
     registerOnChange(fn: (value: string) => void): void;
     // (undocumented)
     registerOnTouched(fn: () => void): void;
+    readonly scrollStrategy: _angular_core.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
     // (undocumented)
     setDisabledState(isDisabled: boolean): void;
     // (undocumented)

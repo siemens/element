@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ConnectionPositionPair,
-  Overlay,
-  OverlayConfig,
-  OverlayRef,
-  ScrollStrategy
-} from '@angular/cdk/overlay';
+import { ConnectionPositionPair, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   booleanAttribute,
@@ -30,6 +24,7 @@ import {
 } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { SiAutocompleteDirective } from '@siemens/element-ng/autocomplete';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { catchError, isObservable, ReplaySubject, Subscription, timer } from 'rxjs';
 import { map, share, switchMap, takeUntil } from 'rxjs/operators';
@@ -235,10 +230,11 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   readonly typeaheadFullWidth = input(false, { transform: booleanAttribute });
 
   /**
-   * Optional CDK scroll strategy used for the typeahead overlay.
-   * If not provided, no strategy is set explicitly and CDK will apply its default behavior.
+   * CDK scroll strategy used for the typeahead overlay.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
    */
-  readonly typeaheadScrollStrategy = input<ScrollStrategy>();
+  readonly typeaheadScrollStrategy = input(defaultConnectedOverlayScrollStrategy());
 
   /**
    * This option will be shown at the end of the typeahead.

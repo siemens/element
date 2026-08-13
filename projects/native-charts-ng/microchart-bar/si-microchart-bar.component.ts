@@ -10,7 +10,7 @@ export interface MicrochartBarSeries {
   /**
    * Use a data-color. See: {@link https://element.siemens.io/fundamentals/colors/data-visualization-colors/#tokens}
    *
-   * @example "element-data-10"
+   * @example "si-sys-data-categorial-10"
    */
   colorToken: string;
   /**
@@ -30,16 +30,24 @@ interface SeriesInternal {
   templateUrl: './si-microchart-bar.component.html'
 })
 export class SiMicrochartBarComponent {
-  /** @defaultValue 64 */
+  /**
+   * Chart width in pixels.
+   *
+   * @defaultValue 64
+   */
   readonly width = input<number>(64);
-  /** @defaultValue 24 */
+  /**
+   * Chart height in pixels.
+   *
+   * @defaultValue 24
+   */
   readonly height = input<number>(24);
   /**
    * Microchart bar series.
    * Example series can be:
    * @example
    * ```ts
-   * Series: MicrochartBarSeries = { values: [2, 4, 5, 3, 5, 7, 7, 9, 11, 10, 12, 9], colorToken: 'element-data-7'};
+   * Series: MicrochartBarSeries = { values: [2, 4, 5, 3, 5, 7, 7, 9, 11, 10, 12, 9], colorToken: 'si-sys-data-categorial-7'};
    * ```
    */
   readonly series = input.required<MicrochartBarSeries>();

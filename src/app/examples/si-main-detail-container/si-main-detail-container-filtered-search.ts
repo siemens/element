@@ -82,8 +82,7 @@ export class SampleComponent {
     this.updateFilter(this.searchCriteria);
   }
 
-  datatableOnSelect(items: CorporateEmployee[]): void {
-    this.selectedEntities = [...items];
+  datatableOnSelect(): void {
     this.selectedEntity = this.selectedEntities[0];
     this.detailsActive = true;
     this.logEvent(this.selectedEntities);

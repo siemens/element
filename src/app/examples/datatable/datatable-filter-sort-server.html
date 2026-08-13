@@ -11,7 +11,7 @@
     class="table-element"
     siDatatableInteraction
     columnMode="force"
-    [rows]="rows"
+    [rows]="rows()"
     [offset]="offset"
     [columns]="[
       { name: 'Name', sortable: true },
@@ -20,9 +20,9 @@
     ]"
     [rowHeight]="tableConfig.rowHeightSmall"
     [footerHeight]="0"
-    [ghostLoadingIndicator]="isLoading"
+    [ghostLoadingIndicator]="dataResource.isLoading()"
     [externalSorting]="true"
-    (sort)="onSort($event)"
+    (sortsChange)="onSort($event)"
   >
     <si-empty-state empty-content icon="element-users" heading="No users to display" />
   </ngx-datatable>

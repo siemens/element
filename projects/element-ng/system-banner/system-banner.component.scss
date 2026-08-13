@@ -12,32 +12,32 @@
   }
 
   &.banner-info {
-    background-color: variables.$element-status-information;
-    color: variables.$element-status-information-contrast;
+    background-color: variables.$si-sys-background-information;
+    color: variables.$si-sys-text-on-information;
   }
 
   &.banner-success {
-    background-color: variables.$element-status-success;
-    color: variables.$element-status-success-contrast;
+    background-color: variables.$si-sys-background-success;
+    color: variables.$si-sys-text-on-success;
   }
 
   &.banner-warning {
-    background-color: variables.$element-status-warning;
-    color: variables.$element-status-warning-contrast;
+    background-color: variables.$si-sys-background-warning;
+    color: variables.$si-sys-text-on-warning;
   }
 
   &.banner-caution {
-    background-color: variables.$element-status-caution;
-    color: variables.$element-status-caution-contrast;
+    background-color: variables.$si-sys-background-caution;
+    color: variables.$si-sys-text-on-caution;
   }
 
   &.banner-danger {
-    background-color: variables.$element-status-danger;
-    color: variables.$element-status-danger-contrast;
+    background-color: variables.$si-sys-background-danger;
+    color: variables.$si-sys-text-on-danger;
   }
 
   &.banner-critical {
-    background-color: variables.$element-status-critical;
-    color: variables.$element-status-critical-contrast;
+    background-color: variables.$si-sys-background-critical;
+    color: variables.$si-sys-text-on-critical;
   }
 }

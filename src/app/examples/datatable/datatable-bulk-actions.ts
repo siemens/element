@@ -6,11 +6,11 @@ import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { Component, computed, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { elementDown2, elementOptionsVertical } from '@siemens/element-icons';
+import { SiAutoCollapsableListModule } from '@siemens/element-ng/auto-collapsable-list';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
-import { SiAutoCollapsableListModule } from 'projects/element-ng/auto-collapsable-list';
 
 type Status = 'Active' | 'Inactive' | 'On Leave';
 
@@ -41,9 +41,6 @@ export class SampleComponent implements OnInit {
   protected readonly collapsed = signal(false);
   protected readonly statusMenuOpen = signal(false);
 
-  private readonly bulkActionsTemplate = viewChild.required('bulkActionsTemplate', {
-    read: TemplateRef<unknown>
-  });
   private readonly checkboxCellTemplate = viewChild.required('checkboxCellTmpl', {
     read: TemplateRef<unknown>
   });

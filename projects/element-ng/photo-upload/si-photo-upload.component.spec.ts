@@ -80,7 +80,7 @@ describe(`SiPhotoUploadComponent`, () => {
 
     const buttons = fixture.debugElement.queryAll(By.css('button'));
     expect(buttons).toHaveLength(1);
-    expect(buttons[0].nativeElement.innerHTML.trim()).toEqual('Upload photo');
+    expect(buttons[0].nativeElement.innerHTML.trim()).toEqual('Upload picture');
   });
 
   it('should not have an upload button in readonly mode', () => {
@@ -213,7 +213,7 @@ describe(`SiPhotoUploadComponent`, () => {
 
     let errorMessage = fixture.debugElement.query(By.css('span.text-danger'))!;
     expect(errorMessage.nativeElement.innerHTML.trim()).toEqual(
-      'The actual file size 0.002 MB exceeds the 0.001953125 MB limit.'
+      'Current file size of 0.002 MB exceeds file size of max. 0.001953125 MB'
     );
 
     componentRef.setInput('maxFileSize', 2048);

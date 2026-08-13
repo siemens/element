@@ -1,24 +1,25 @@
 @use 'sass:map';
 
 @use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/variables/system-tokens';
 
 :host {
-  --search-bar-icon-color: #{variables.$element-text-secondary};
-  --input-background-color: #{variables.$element-base-1};
-  --input-background-hover-color: #{variables.$element-base-1};
+  --search-bar-icon-color: #{system-tokens.$si-sys-text-secondary};
+  --input-background-color: #{system-tokens.$si-sys-background-1};
+  --input-background-hover-color: #{system-tokens.$si-sys-background-1};
 
   div:hover,
   div.focus {
     .search-bar-icon,
     ::placeholder {
-      color: variables.$element-text-primary !important; // stylelint-disable-line declaration-no-important
+      color: system-tokens.$si-sys-text-primary !important; // stylelint-disable-line declaration-no-important
     }
   }
 }
 
 .dark-background {
-  --input-background-color: #{variables.$element-base-4};
-  --input-background-hover-color: #{variables.$element-ui-4};
+  --input-background-color: #{system-tokens.$si-sys-background-2};
+  --input-background-hover-color: #{system-tokens.$si-sys-background-2};
 }
 
 input {
@@ -40,7 +41,7 @@ input {
 }
 
 .is-invalid ~ .cancel-button {
-  color: variables.$element-status-danger;
+  color: system-tokens.$si-sys-text-danger;
 }
 
 .search-bar-icon {
@@ -60,7 +61,7 @@ input {
 }
 
 ::placeholder {
-  color: variables.$element-text-secondary;
+  color: system-tokens.$si-sys-text-secondary;
   padding-inline-start: map.get(variables.$spacers, 1);
 }
 
@@ -69,7 +70,7 @@ input {
   input,
   .cancel-button,
   ::placeholder {
-    color: variables.$element-text-disabled;
+    color: system-tokens.$si-sys-text-disabled;
   }
 
   input {

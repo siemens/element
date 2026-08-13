@@ -51,3 +51,8 @@ export interface AppBase {
 }
 
 export type App = AppLink | AppRouterLink;
+
+export interface FavoriteChangeEvent {
+  app: App;
+  favorite: boolean;
+}

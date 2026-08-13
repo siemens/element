@@ -7,11 +7,11 @@
 
   &.invalid-criterion {
     border-radius: 0.75rem;
-    box-shadow: 0 0 0 1px variables.$element-status-danger;
+    box-shadow: 0 0 0 1px variables.$si-sys-border-danger;
   }
 
   &:not(.invalid-criterion) .invalid-criterion {
-    box-shadow: inset 0 0 0 1px variables.$element-status-danger;
+    box-shadow: inset 0 0 0 1px variables.$si-sys-border-danger;
   }
 
   &.disabled {

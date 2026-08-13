@@ -38,6 +38,7 @@ import {
   SiLivePreviewRoutingModule,
   provideStackblitzConfig
 } from '@siemens/live-preview';
+import { setWorkerUrl } from 'maplibre-gl';
 import { lastValueFrom, Observable, take } from 'rxjs';
 
 import { BundlerTranslateLoader } from './bundler-translate-loader';
@@ -45,9 +46,13 @@ import { FileUploadInterceptor } from './examples/si-file-uploader/file-upload-i
 import { CustomWrapperComponent } from './examples/si-formly/dynamic-form-custom-wrapper';
 import { LivePreviewThemeApiService } from './shared/live-preview-theme.api.service';
 
+// Register the maplibre-gl worker script. This is required for maplibre-gl to work properly in a web worker context.
+// see https://github.com/maplibre/ngx-maplibre-gl
+setWorkerUrl(new URL('assets/maplibre/maplibre-gl-worker.mjs', document.baseURI).href);
+
 const componentLoader =
   // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-  require('@siemens/live-preview/component-loader?root=src&examples=app/examples/**/*.ts&webcomponents=true!./app.config').default;
+  require('@siemens/live-preview/component-loader?root=src&examples=app/examples/**/*.ts&rel=true&webcomponents=true!./app.config').default;
 
 // On locale change, we dynamically reload the locale definition
 // for angular. With this configuration, we only load the current

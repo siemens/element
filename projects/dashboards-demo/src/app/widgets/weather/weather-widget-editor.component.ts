@@ -7,7 +7,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { WidgetConfig, WidgetConfigStatus, WidgetInstanceEditor } from '@siemens/dashboards-ng';
 import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
-import { SiFormContainerComponent, SiFormItemComponent } from '@siemens/element-ng/form';
+import { SiFormItemComponent } from '@siemens/element-ng/form';
 import {
   SelectOption,
   SiSelectComponent,
@@ -40,7 +40,6 @@ interface WeatherFormShape {
   imports: [
     ReactiveFormsModule,
     SiDashboardCardComponent,
-    SiFormContainerComponent,
     SiFormItemComponent,
     SiSelectComponent,
     SiSelectSimpleOptionsDirective,
@@ -60,96 +59,92 @@ interface WeatherFormShape {
         </si-dashboard-card>
       </div>
       <div class="col-6 ps-4">
-        <form class="d-flex h-100" [formGroup]="form">
-          <si-form-container disableContainerBreakpoints labelWidth="160px" [form]="form">
-            <div si-form-container-content>
-              <si-form-item label="Location">
-                <input
-                  type="text"
-                  id="location"
-                  class="form-control"
-                  formControlName="location"
-                  required
-                  minlength="1"
-                />
-              </si-form-item>
-              <si-form-item label="Layout">
-                <si-select
-                  class="form-control"
-                  id="layout"
-                  formControlName="layout"
-                  [options]="layoutOptions"
-                />
-              </si-form-item>
-              <si-form-item label="Temperature">
-                <input
-                  type="text"
-                  id="temperature"
-                  class="form-control"
-                  formControlName="temperature"
-                />
-              </si-form-item>
-              <si-form-item label="Min temperature">
-                <input
-                  type="text"
-                  id="minTemperature"
-                  class="form-control"
-                  formControlName="minTemperature"
-                />
-              </si-form-item>
-              <si-form-item label="Max temperature">
-                <input
-                  type="text"
-                  id="maxTemperature"
-                  class="form-control"
-                  formControlName="maxTemperature"
-                />
-              </si-form-item>
-              <si-form-item label="Condition">
-                <si-select
-                  class="form-control"
-                  id="condition"
-                  formControlName="condition"
-                  [options]="conditionOptions"
-                />
-              </si-form-item>
-              <si-form-item label="Condition label">
-                <input
-                  type="text"
-                  id="conditionLabel"
-                  class="form-control"
-                  formControlName="conditionLabel"
-                />
-              </si-form-item>
-              <si-form-item label="Show metrics" class="form-check">
-                <input
-                  type="checkbox"
-                  formControlName="showMetrics"
-                  id="showMetrics"
-                  class="form-check-input"
-                />
-              </si-form-item>
-              <si-form-item label="Show forecast" class="form-check">
-                <input
-                  type="checkbox"
-                  formControlName="showForecast"
-                  id="showForecast"
-                  class="form-check-input"
-                />
-              </si-form-item>
-              <si-form-item label="Forecast columns">
-                <input
-                  type="number"
-                  id="forecastColumnCount"
-                  class="form-control"
-                  min="0"
-                  max="5"
-                  step="1"
-                  formControlName="forecastColumnCount"
-                />
-              </si-form-item>
-            </div>
-          </si-form-container>
+        <form [formGroup]="form">
+          <si-form-item label="Location">
+            <input
+              type="text"
+              id="location"
+              class="form-control"
+              formControlName="location"
+              required
+              minlength="1"
+            />
+          </si-form-item>
+          <si-form-item label="Layout">
+            <si-select
+              class="form-control"
+              id="layout"
+              formControlName="layout"
+              [options]="layoutOptions"
+            />
+          </si-form-item>
+          <si-form-item label="Temperature">
+            <input
+              type="text"
+              id="temperature"
+              class="form-control"
+              formControlName="temperature"
+            />
+          </si-form-item>
+          <si-form-item label="Min temperature">
+            <input
+              type="text"
+              id="minTemperature"
+              class="form-control"
+              formControlName="minTemperature"
+            />
+          </si-form-item>
+          <si-form-item label="Max temperature">
+            <input
+              type="text"
+              id="maxTemperature"
+              class="form-control"
+              formControlName="maxTemperature"
+            />
+          </si-form-item>
+          <si-form-item label="Condition">
+            <si-select
+              class="form-control"
+              id="condition"
+              formControlName="condition"
+              [options]="conditionOptions"
+            />
+          </si-form-item>
+          <si-form-item label="Condition label">
+            <input
+              type="text"
+              id="conditionLabel"
+              class="form-control"
+              formControlName="conditionLabel"
+            />
+          </si-form-item>
+          <si-form-item label="Show metrics" class="form-check">
+            <input
+              type="checkbox"
+              formControlName="showMetrics"
+              id="showMetrics"
+              class="form-check-input"
+            />
+          </si-form-item>
+          <si-form-item label="Show forecast" class="form-check">
+            <input
+              type="checkbox"
+              formControlName="showForecast"
+              id="showForecast"
+              class="form-check-input"
+            />
+          </si-form-item>
+          <si-form-item label="Forecast columns">
+            <input
+              type="number"
+              id="forecastColumnCount"
+              class="form-control"
+              min="0"
+              max="5"
+              step="1"
+              formControlName="forecastColumnCount"
+            />
+          </si-form-item>
         </form>
       </div>
     </div>

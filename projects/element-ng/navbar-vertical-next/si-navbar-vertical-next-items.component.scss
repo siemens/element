@@ -19,3 +19,10 @@
     display: block;
   }
 }
+
+:host-context(.chip-menu-panel) {
+  flex: none;
+  margin: 0;
+  overflow: visible;
+  min-block-size: auto;
+}

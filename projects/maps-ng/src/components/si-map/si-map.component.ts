@@ -316,9 +316,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
   protected attributionsLabel = t(() => $localize`:@@SI_MAPS.ATTRIBUTIONS_BUTTON:Attributions`);
   protected zoomInLabel = t(() => $localize`:@@SI_MAPS.ZOOM_IN_BUTTON:Zoom in`);
   protected zoomOutLabel = t(() => $localize`:@@SI_MAPS.ZOOM_OUT_BUTTON:Zoom out`);
-  protected zoomToDefaultLabel = t(
-    () => $localize`:@@SI_MAPS.ZOOM_TO_DEFAULT_BUTTON:Zoom to default view`
-  );
+  protected zoomToDefaultLabel = t(() => $localize`:@@SI_MAPS.ZOOM_TO_DEFAULT_BUTTON:Reset zoom`);
   protected clusterInteraction?: SelectCluster;
   private selectedCluster?: Feature;
   private darkTheme: boolean | undefined = undefined;
@@ -1102,7 +1100,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
   }
 
   private setPopOver(feature: Feature, zoom: boolean | undefined, event: any): void {
-    const extraProperties = feature.getProperties().extraProps;
+    const extraProperties = feature.getProperties().extraProperties;
     const geometry = feature?.getGeometry();
 
     /*If a Point geometry is present on top of a GeoJson layer, and when clicked on the point,

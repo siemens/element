@@ -5,29 +5,16 @@
 ```ts
 
 import * as i0 from '@angular/core';
+import { NgxDatatableConfig } from '@siemens/ngx-datatable';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Provider } from '@angular/core';
 
-// @public @deprecated (undocumented)
+// @public @deprecated
 export interface INgxDatatableConfig extends NgxDatatableConfig {
 }
 
-// @public
-export interface NgxDatatableConfig {
-    // (undocumented)
-    cssClasses?: NgxDatatableCssClasses;
-    // (undocumented)
-    defaultColumnWidth?: number;
-    // (undocumented)
-    footerHeight?: number;
-    // (undocumented)
-    headerHeight?: number;
-    // (undocumented)
-    messages?: NgxDatatableMessages;
-    // (undocumented)
-    rowHeight?: number;
-}
+export { NgxDatatableConfig }
 
 // @public
 export const provideSiDatatableConfig: (configOverrides?: NgxDatatableConfig) => Provider;

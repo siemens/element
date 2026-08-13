@@ -23,6 +23,7 @@ export class SiCustomLegendComponent {
   /** @internal */
   readonly customLegendContainer = viewChild.required<ElementRef>('customLegendContainer');
 
+  /** The data and configuration rendered by the custom legend. */
   readonly customLegend = input<CustomLegend>();
   /** The legend title. */
   readonly title = input<string>();

@@ -3,7 +3,7 @@
 - text: My Application
 - button "Back"
 - button "Forward" [disabled]
-- button "Menu"
+- button "Show actions"
 - banner:
   - button "Launchpad"
   - link "Siemens logo":
@@ -31,7 +31,7 @@
   - button "Toggle"
   - heading "Here is a title" [level=2]
   - text: A nice list of things
-  - button "Toggle"
+  - button "Show actions"
   - list:
     - listitem:
       - status "door in status info"

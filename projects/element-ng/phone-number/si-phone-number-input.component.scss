@@ -16,13 +16,6 @@
 
 .disabled {
   pointer-events: none;
-
-  &,
-  &:hover,
-  &:focus {
-    --border-color: #{all-variables.$element-ui-3};
-    color: all-variables.$element-text-disabled;
-  }
 }
 
 .dropdown-toggle {
@@ -32,7 +25,7 @@
 
   .fi.fi-xx {
     background-image: none;
-    background-color: all-variables.$element-text-disabled;
+    background-color: all-variables.$si-sys-background-neutral;
   }
 
   &:disabled {
@@ -55,7 +48,7 @@
   }
 
   &:disabled {
-    color: all-variables.$element-text-disabled;
+    color: all-variables.$si-sys-text-disabled;
 
     &::placeholder {
       color: all-variables.$input-placeholder-disabled-color;
@@ -63,6 +56,6 @@
   }
 
   &::placeholder {
-    color: all-variables.$element-text-secondary;
+    color: all-variables.$si-sys-text-secondary;
   }
 }

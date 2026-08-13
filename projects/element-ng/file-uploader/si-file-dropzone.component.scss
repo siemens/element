@@ -10,7 +10,7 @@
   border: 0;
   background: transparent;
   cursor: pointer;
-  color: variables.$element-ui-0;
+  color: variables.$si-sys-text-accent;
 
   &:hover,
   &:active {
@@ -19,15 +19,15 @@
 }
 
 .drag-and-drop {
-  background-color: variables.$element-base-1;
-  border: 1px dashed variables.$element-ui-2;
+  background-color: variables.$si-sys-background-1;
+  border: 1px dashed variables.$si-sys-border-2;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   &.drag-over {
-    border: 1px solid variables.$element-focus-default;
-    box-shadow: 0 0 0 1px variables.$element-focus-default;
+    border: 1px solid variables.$si-sys-effects-focus;
+    box-shadow: 0 0 0 1px variables.$si-sys-effects-focus;
   }
 }

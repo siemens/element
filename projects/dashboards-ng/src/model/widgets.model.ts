@@ -186,6 +186,14 @@ export interface WidgetConfig {
   expandable?: boolean;
   /** A widget specific payload object. Placeholder to pass in additional configuration. */
   payload?: any;
+  /**
+   * If true, the widget host renders a placeholder and waits for explicit
+   * configuration before instantiating the widget instance component.
+   *
+   * Indicates that initial setup by the user is still pending. The flag
+   * flips to `false` once the setup has been completed.
+   */
+  setupPending?: boolean;
   actionBarViewType?: ViewType;
   isNotRemovable?: boolean;
   immutable?: boolean;

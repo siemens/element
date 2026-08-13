@@ -1,7 +1,7 @@
 - text: Date Range Input*
 - group "Date Range Input*":
   - textbox /Start dd[\d,.]+[bkmBKM]+\.yyyy/: /3\/\d+\/\d+, 7:\d+ AM/
-  - text: ""
+  - text: "-"
   - textbox /End dd[\d,.]+[bkmBKM]+\.yyyy/: /\d+\/\d+\/\d+, 6:\d+ AM/
   - button "Open calendar"
 - text: Control panel
@@ -33,7 +33,7 @@
 - text: Max date
 - textbox "Max date": /\d+-\d+-\d+/
 - text: Date format
-- textbox "Date format"
+- textbox "Date format": /dd[\d,.]+[bkmBKM]+\.yyyy/
 - text: Week start day
 - combobox "Week start day":
   - option "Monday" [selected]
@@ -159,14 +159,14 @@
         - button /Sat Jan \d+ \d+/
 - button "Today"
 - switch "Consider time" [checked]
-- text: Consider time from
+- text: Consider time From
 - group:
   - textbox "Hours":
     - /placeholder: hh
-    - text: ""
+    - text: /\d+/
   - textbox "Minutes":
     - /placeholder: mm
-    - text: ""
+    - text: /\d+/
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
@@ -283,14 +283,14 @@
       - gridcell /Sat Feb \d+ \d+/:
         - button /Sat Feb \d+ \d+/
 - button "Today"
-- text: to
+- text: To
 - group:
   - textbox "Hours":
     - /placeholder: hh
-    - text: ""
+    - text: /\d+/
   - textbox "Minutes":
     - /placeholder: mm
-    - text: ""
+    - text: /\d+/
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"

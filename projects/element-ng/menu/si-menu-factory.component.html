@@ -1,5 +1,5 @@
 <si-menu>
-  @for (item of items(); track item) {
+  @for (item of items(); track trackItem($index, item)) {
     <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }" />
   }
   <ng-template #itemTemplate let-item siMenuFactoryItemGuard>

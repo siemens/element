@@ -16,6 +16,7 @@ import {
   TemplateRef,
   viewChild
 } from '@angular/core';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -74,10 +75,10 @@ export class SiSelectComponent<T> implements SiFormItemControl {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search...`)
+   * t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search…`)
    * ```
    */
-  readonly filterPlaceholder = input(t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search...`));
+  readonly filterPlaceholder = input(t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search…`));
   /**
    * Label if no item can be found.
    *
@@ -97,6 +98,13 @@ export class SiSelectComponent<T> implements SiFormItemControl {
    * @defaultValue false
    */
   readonly readonly = input(false, { transform: booleanAttribute });
+
+  /**
+   * Optional CDK scroll strategy used for the select overlay.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
+   */
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy());
 
   /** Emits when the dropdown open state changes. */
   readonly openChange = output<boolean>();

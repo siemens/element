@@ -3,7 +3,7 @@
 @use '@siemens/element-theme/src/styles/all-variables';
 
 :host {
-  --language-switcher-color: #{all-variables.$element-text-active};
+  --language-switcher-color: #{all-variables.$si-sys-text-accent};
 }
 
 .language-switcher-select {
@@ -20,6 +20,6 @@
   }
 
   option {
-    background-color: all-variables.$element-base-1;
+    background-color: all-variables.$si-sys-background-1;
   }
 }

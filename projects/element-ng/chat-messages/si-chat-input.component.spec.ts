@@ -44,6 +44,8 @@ describe('SiChatInputComponent', () => {
   let sendSpy = vi.fn();
   let interruptSpy = vi.fn();
   let fileErrorSpy = vi.fn();
+  let followUpPrompts: WritableSignal<string[]>;
+  let followUpPromptSelectedSpy = vi.fn();
 
   beforeEach(() => {
     value = signal('');
@@ -63,6 +65,8 @@ describe('SiChatInputComponent', () => {
     sendSpy = vi.fn();
     interruptSpy = vi.fn();
     fileErrorSpy = vi.fn();
+    followUpPrompts = signal<string[]>([]);
+    followUpPromptSelectedSpy = vi.fn();
 
     fixture = TestBed.createComponent(TestComponent, {
       bindings: [
@@ -82,7 +86,9 @@ describe('SiChatInputComponent', () => {
         inputBinding('sendButtonIcon', sendButtonIcon),
         outputBinding('send', sendSpy),
         outputBinding('interrupt', interruptSpy),
-        outputBinding('fileError', fileErrorSpy)
+        outputBinding('fileError', fileErrorSpy),
+        inputBinding('followUpPrompts', followUpPrompts),
+        outputBinding('followUpPromptSelected', followUpPromptSelectedSpy)
       ]
     });
     debugElement = fixture.debugElement;
@@ -399,7 +405,9 @@ describe('SiChatInputComponent', () => {
     await fixture.whenStable();
 
     expect(
-      debugElement.query(By.css('button[aria-label="Interrupt"] [data-icon="elementStopFilled"]'))
+      debugElement.query(
+        By.css('button[aria-label="Stop processing"] [data-icon="elementStopFilled"]')
+      )
     ).toBeTruthy();
   });
 
@@ -410,7 +418,7 @@ describe('SiChatInputComponent', () => {
     const button = debugElement.query(By.css('button'));
     expect(button.nativeElement).toHaveAttribute(
       'aria-label',
-      expect.stringContaining('Interrupt')
+      expect.stringContaining('Stop processing')
     );
   });
 
@@ -490,7 +498,7 @@ describe('SiChatInputComponent', () => {
     ]);
     await fixture.whenStable();
 
-    const menuTrigger = page.getByRole('button', { name: 'More actions' });
+    const menuTrigger = page.getByRole('button', { name: 'Additional actions' });
     await menuTrigger.click();
 
     await expect.element(page.getByRole('menuitem', { name: 'Attach' })).toBeVisible();
@@ -517,8 +525,81 @@ describe('SiChatInputComponent', () => {
     await fixture.whenStable();
 
     expect((component as any).showInterruptButton()).toBe(true);
-    const interruptButton = debugElement.query(By.css('button[aria-label="Interrupt"]'));
+    const interruptButton = debugElement.query(By.css('button[aria-label="Stop processing"]'));
     expect(interruptButton).toBeTruthy();
     expect(interruptButton.query(By.css('[data-icon="elementStopFilled"]'))).toBeTruthy();
+  });
+
+  describe('follow-up prompts', () => {
+    it('should not render follow-up prompts section when prompts are empty', async () => {
+      followUpPrompts.set([]);
+      await fixture.whenStable();
+
+      const promptsContainer = debugElement.query(By.css('.follow-up-prompts'));
+      expect(promptsContainer).toBeFalsy();
+    });
+
+    it('should render follow-up prompt buttons when prompts are provided', async () => {
+      followUpPrompts.set(['Tell me more', 'Give an example']);
+      await fixture.whenStable();
+
+      const promptButtons = debugElement.queryAll(By.css('.follow-up-prompts button'));
+      expect(promptButtons).toHaveLength(2);
+      expect(promptButtons[0].nativeElement).toHaveTextContent('Tell me more');
+      expect(promptButtons[1].nativeElement).toHaveTextContent('Give an example');
+    });
+
+    it('should emit followUpPromptSelected with the prompt text when a prompt is clicked', async () => {
+      followUpPrompts.set(['Tell me more']);
+      await fixture.whenStable();
+
+      const promptButton = debugElement.query(By.css('.follow-up-prompts button'));
+      promptButton.nativeElement.click();
+      await fixture.whenStable();
+
+      expect(followUpPromptSelectedSpy).toHaveBeenCalledWith('Tell me more');
+    });
+
+    it('should delegate updating the input value to the consumer', async () => {
+      followUpPrompts.set(['Tell me more']);
+      value.set('');
+      await fixture.whenStable();
+
+      const promptButton = debugElement.query(By.css('.follow-up-prompts button'));
+      promptButton.nativeElement.click();
+      await fixture.whenStable();
+
+      expect(value()).toBe('');
+    });
+
+    it('should disable follow-up prompt buttons when disabled', async () => {
+      followUpPrompts.set(['Tell me more']);
+      disabled.set(true);
+      await fixture.whenStable();
+
+      const promptButton = debugElement.query(By.css('.follow-up-prompts button'));
+      expect(promptButton.nativeElement).toBeDisabled();
+    });
+
+    it('should disable follow-up prompt buttons when sending', async () => {
+      followUpPrompts.set(['Tell me more']);
+      sending.set(true);
+      await fixture.whenStable();
+
+      const promptButton = debugElement.query(By.css('.follow-up-prompts button'));
+      expect(promptButton.nativeElement).toBeDisabled();
+    });
+
+    it('should focus the textarea after selecting a follow-up prompt', async () => {
+      followUpPrompts.set(['Tell me more']);
+      await fixture.whenStable();
+
+      const focusSpy = vi.spyOn(component, 'focus');
+      const promptButton = debugElement.query(By.css('.follow-up-prompts button'));
+      promptButton.nativeElement.click();
+      await fixture.whenStable();
+
+      expect(focusSpy).toHaveBeenCalled();
+    });
   });
 });

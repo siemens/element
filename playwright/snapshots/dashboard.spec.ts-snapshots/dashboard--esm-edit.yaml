@@ -10,10 +10,10 @@
   - button "expand"
 - main:
   - heading "Add widget" [level=2]
-  - textbox "Search widget"
-  - text: Widget catalog list
-  - listbox "Widget catalog list":
-    - option "report status none Hello World A dummy widget for testing." [selected]:
+  - textbox "Search…"
+  - text: Widget catalog
+  - listbox "Widget catalog":
+    - option "report status none Hello World A dummy widget for testing.":
       - status "report status none"
       - text: ""
     - option "user status none Contact Add a contact card to your dashboard.":
@@ -59,4 +59,4 @@
       - status "status none"
       - text: ""
   - button "Cancel"
-  - button "Next"
+  - button "Add" [disabled]

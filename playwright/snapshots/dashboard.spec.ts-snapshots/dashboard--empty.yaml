@@ -10,8 +10,8 @@
   - button "expand"
 - main:
   - heading "Add widget" [level=2]
-  - textbox "Search widget": empty
-  - button "clear"
+  - textbox "Search…": empty
+  - button "Clear"
   - text: No widgets available.
   - button "Cancel"
   - button "Add" [disabled]

@@ -5,6 +5,7 @@
 import { AsyncPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  booleanAttribute,
   Component,
   computed,
   inject,
@@ -138,11 +139,11 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
+   * t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search…`)
    * ```
    */
   readonly searchPlaceholder = input(
-    t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
+    t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search…`)
   );
 
   /**
@@ -156,6 +157,15 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
    * @defaultValue []
    */
   readonly secondaryEditActions = input<DashboardToolbarItem[]>([]);
+
+  /**
+   * Option to enable multi-select in the widget catalog.
+   * When enabled, the user can select multiple widgets to add to the dashboard at once.
+   * @defaultValue false
+   * */
+  readonly multiSelect = input(false, {
+    transform: booleanAttribute
+  });
 
   /**
    * The grid component is the actual container for the widgets.
@@ -277,17 +287,16 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     const componentType = this.widgetCatalogComponent() ?? SiWidgetCatalogComponent;
     const catalogRef = this.catalogHost().createComponent<SiWidgetCatalogComponent>(componentType, {
       bindings: [
+        inputBinding('multiSelect', this.multiSelect),
         inputBinding('searchPlaceholder', this.searchPlaceholder),
-        outputBinding<Omit<WidgetConfig, 'id'> | undefined>('closed', widgetConfig => {
+        outputBinding<Omit<WidgetConfig, 'id'>[] | undefined>('closed', widgetConfigs => {
           this.viewState.set('dashboard');
           this.catalogHost().clear();
-          if (widgetConfig) {
-            this.grid().addWidgetInstance(widgetConfig);
-          }
+          widgetConfigs?.forEach(config => this.grid().addWidgetInstance(config));
         })
       ]
     });
-    catalogRef.instance.widgetCatalog = this.widgetCatalog();
+    catalogRef.instance.widgetList.set(this.widgetCatalog());
   }
 
   protected onModified(event: boolean): void {

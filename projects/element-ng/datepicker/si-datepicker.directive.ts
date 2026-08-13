@@ -42,6 +42,7 @@ import { SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive'
   hostDirectives: [
     {
       directive: SiDatepickerOverlayDirective,
+      inputs: ['siDatepickerScrollStrategy'],
       outputs: ['siDatepickerClose']
     }
   ],

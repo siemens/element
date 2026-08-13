@@ -5,8 +5,9 @@
 import { Component, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ColorPalette, MapPoint, SiMapComponent } from '@siemens/maps-ng';
-import { mockGroupedPoints } from 'src/app/mocks/points.mock';
-import { environment } from 'src/environments/environment';
+
+import { environment } from '../../../environments/environment';
+import { mockGroupedPoints } from '../../mocks/points.mock';
 
 @Component({
   selector: 'app-sample',

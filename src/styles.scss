@@ -4,6 +4,7 @@
 @use '@siemens/element-ng/element-ng';
 @use '@siemens/element-theme/src/styles/variables/spacers';
 @use '@siemens/element-theme/src/styles/variables/semantic-tokens';
+@use '@siemens/element-theme/src/styles/variables/system-tokens';
 @use '@siemens/element-theme/src/styles/variables/utilities';
 @use '@siemens/live-preview/styles/live-preview';
 
@@ -30,6 +31,8 @@
 @use '@siemens/element-theme/src/styles/themes';
 // OpenLayers styling
 @use 'ol/ol.css';
+// MapLibre styling
+@use '@siemens/element-ng/maplibre/styles';
 @include themes.make-theme(brand-light.$tokens, 'siemens-brand');
 @include themes.make-theme(brand-dark.$tokens, 'siemens-brand', true);
 
@@ -43,7 +46,7 @@ body {
 }
 
 .code-preview {
-  border: 1px solid semantic-tokens.$element-ui-4;
+  border: 1px solid system-tokens.$si-sys-border-4;
   border-radius: semantic-tokens.$element-radius-2;
   padding: map.get(spacers.$spacers, 4);
 }

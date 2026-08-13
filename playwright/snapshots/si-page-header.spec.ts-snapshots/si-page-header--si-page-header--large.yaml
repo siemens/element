@@ -9,7 +9,7 @@
   - button "Collapse" [expanded]
 - main:
   - text: /0 Security 0 Supervisory \d+ Not clickable/
-  - navigation "Breadcrumbs":
+  - navigation "Breadcrumb navigation":
     - list:
       - listitem:
         - link "Root":
@@ -26,7 +26,7 @@
     - menuitem "Print"
     - menuitem "Share"
     - menuitem "Save As"
-    - menuitem "Toggle"
+    - menuitem "Show actions"
   - textbox "Search"
   - button "Toolbar item"
   - text: Page Header Controls

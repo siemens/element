@@ -182,6 +182,15 @@ describe('SiTabset', () => {
     expect(await tabsetHarness.getTabItemsLength()).toEqual(3);
   });
 
+  it('should not make tab content focusable without automatic overflow', async () => {
+    vi.setTimerTickMode('nextTimerAsync');
+    testComponent.tabs = ['1'];
+    testComponent.activeTab.set(0);
+    await fixture.whenStable();
+
+    expect(await (await tabsetHarness.getTabContent()).getAttribute('tabindex')).toBeNull();
+  });
+
   it('should be possible to select a tab', async () => {
     testComponent.tabs = ['1', '2', '3'];
     fixture.detectChanges();

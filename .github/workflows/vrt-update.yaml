@@ -28,6 +28,10 @@ on:
         required: false
         default: false
         type: boolean
+    secrets:
+      SIEMENS_NPM_TOKEN:
+        description: 'Token for the private Siemens npm registry'
+        required: false
 
 jobs:
   vrt-update:
@@ -35,7 +39,7 @@ jobs:
     permissions:
       actions: read
       pull-requests: write
-    container: mcr.microsoft.com/playwright:v1.61.1-noble@sha256:5b8f294aff9041b7191c34a4bab3ac270157a28774d4b0660e9743297b697e48
+    container: mcr.microsoft.com/playwright:v1.62.1-noble@sha256:dcc5531e97840b9b5e794f2814476b21571c5124a3fca2267d73041f56e7580e
     # PR from non-collaborators requires a manual re-run from collaborators which
     # makes run_attempt > 1 on first attempt causing the workflow to run.
     # So we always skip if the PR is not from a collaborator.
@@ -70,12 +74,12 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ steps.check.outputs.target-ref }}
           lfs: true
 
-      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: lts/krypton
@@ -155,7 +159,11 @@ jobs:
           path: dist
           run-id: ${{ steps.get-workflow.outputs.workflow-run-id }}
           github-token: ${{ github.token }}
-      # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
+      - name: Set up registry authentication
+        if: env.SIEMENS_NPM_TOKEN != ''
+        run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
+        env:
+          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: pnpm install
 
       - name: Update VRTs

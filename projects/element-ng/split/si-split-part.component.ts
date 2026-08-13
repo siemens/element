@@ -18,10 +18,18 @@ import {
   TemplateRef,
   untracked
 } from '@angular/core';
-import { SiIconComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { elementDoubleRight } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-split.interfaces';
+import {
+  Action,
+  CollapseTo,
+  PartState,
+  Scale,
+  SplitOrientation,
+  SplitUnit
+} from './si-split.interfaces';
 
 @Component({
   selector: 'si-split-part',
@@ -35,6 +43,7 @@ import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-spl
   }
 })
 export class SiSplitPartComponent {
+  protected readonly icons = addIcons({ elementDoubleRight });
   /**
    * Action buttons displayed in the split part header.
    *
@@ -51,10 +60,8 @@ export class SiSplitPartComponent {
   /**
    * Sets the icon class that is used in the buttons of split parts to
    * collapse and uncollapse the parts.
-   *
-   * @defaultValue 'element-double-right'
    */
-  readonly collapseIconClass = input('element-double-right');
+  readonly collapseIconClass = input<string | undefined>();
 
   /**
    * Collapse only to the given min size.
@@ -114,9 +121,14 @@ export class SiSplitPartComponent {
   /**
    * Aria label for collapse button. Needed for a11y
    *
-   * @defaultValue 'collapse'
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_SPLIT.COLLAPSE_LABEL:Collapse`)
+   * ```
    */
-  readonly collapseLabel = input<TranslatableString>('collapse');
+  readonly collapseLabel = input<TranslatableString>(
+    t(() => $localize`:@@SI_SPLIT.COLLAPSE_LABEL:Collapse`)
+  );
   /**
    * An optional stateId to uniquely identify a component instance.
    * Required for persistence of ui state.
@@ -124,11 +136,14 @@ export class SiSplitPartComponent {
   readonly stateId = input<string>();
 
   /**
-   * Expanded size in px.
-   *
-   * @defaultValue undefined
+   * Expanded size.
    */
-  readonly size = input<number | undefined, unknown>(undefined, { transform: numberAttribute });
+  readonly size = input.required<number, number | string>({ transform: numberAttribute });
+
+  /**
+   * Unit for the configured {@link size}.
+   */
+  readonly unit = input.required<SplitUnit>();
 
   /**
    * This toggles the behavior when collapsing this split part.
@@ -146,7 +161,13 @@ export class SiSplitPartComponent {
    */
   readonly expanded = input(true, { transform: booleanAttribute });
 
+  /**
+   * Emits when the part is collapsed or expanded.
+   */
   readonly collapseChanged = output<boolean>();
+  /**
+   * Emits the part's expanded state and size after it is toggled.
+   */
   readonly stateChange = output<PartState>();
 
   /** @internal */
@@ -157,7 +178,7 @@ export class SiSplitPartComponent {
   readonly after = signal<SiSplitPartComponent | undefined>(undefined);
 
   /** @internal */
-  readonly fractionalSize = signal<number | undefined>(undefined);
+  readonly fractionalSize = linkedSignal(() => (this.unit() === 'fr' ? this.size() : undefined));
 
   /** @internal */
   readonly collapsedSize = computed(() => (this.collapseToMinSize() ? (this.minSize() ?? 40) : 40));
@@ -185,7 +206,10 @@ export class SiSplitPartComponent {
   }
 
   /** @internal */
-  readonly expandedSize = linkedSignal(() => this.size());
+  readonly expandedSize = linkedSignal({
+    source: () => ({ size: this.size(), unit: this.unit() }),
+    computation: source => (source.unit === 'fr' ? undefined : source.size)
+  });
 
   /** @internal */
   readonly actualSize = computed(() => {

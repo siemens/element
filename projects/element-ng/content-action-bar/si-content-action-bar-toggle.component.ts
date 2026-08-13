@@ -14,5 +14,6 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
   host: { class: 'dropdown-item flex-grow-0 focus-inside' }
 })
 export class SiContentActionBarToggleComponent {
+  /** Icon identifier rendered inside the toggle button. */
   readonly icon = input.required<string>();
 }

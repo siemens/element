@@ -55,7 +55,7 @@
 
 .resize-handle {
   inset-block-end: map.get(variables.$spacers, 3);
-  color: variables.$element-ui-2;
+  color: variables.$si-sys-text-secondary;
   pointer-events: none;
   position: absolute;
   inset-inline-end: map.get(variables.$spacers, 3);
@@ -67,4 +67,13 @@
   inset: map.get(variables.$spacers, 4);
   position: absolute;
   z-index: 100;
+}
+
+// Ensure the empty state can scroll within small widget cards
+// instead of overflowing the card body.
+si-empty-state {
+  display: block;
+  block-size: 100%;
+  inline-size: 100%;
+  overflow: auto;
 }

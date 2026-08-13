@@ -81,7 +81,11 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
    */
   readonly value = input<string>();
 
-  /** @defaultValue false */
+  /**
+   * Whether the input can be focused but not edited.
+   *
+   * @defaultValue false
+   */
   readonly readonly = input(false, { transform: booleanAttribute });
   /**
    * Color to use for component background
@@ -90,7 +94,11 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
    */
   readonly colorVariant = input<BackgroundColorVariant>('base-1');
 
-  /** @defaultValue false */
+  /**
+   * Whether the input is disabled.
+   *
+   * @defaultValue false
+   */
   // eslint-disable-next-line @angular-eslint/no-input-rename
   readonly disabledInput = input(false, { alias: 'disabled', transform: booleanAttribute });
 
@@ -106,10 +114,10 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_SEARCH_BAR.CLEAR_BUTTON:clear`)
+   * t(() => $localize`:@@SI_SEARCH_BAR.CLEAR_BUTTON:Clear`)
    * ```
    */
-  readonly clearButtonAriaLabel = input(t(() => $localize`:@@SI_SEARCH_BAR.CLEAR_BUTTON:clear`));
+  readonly clearButtonAriaLabel = input(t(() => $localize`:@@SI_SEARCH_BAR.CLEAR_BUTTON:Clear`));
 
   /**
    * Output callback event will provide you with search term if search input changes.

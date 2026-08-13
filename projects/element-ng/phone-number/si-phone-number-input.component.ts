@@ -28,6 +28,7 @@ import {
   Validator
 } from '@angular/forms';
 import { elementDown2 } from '@siemens/element-icons';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SelectOption, SiSelectListHasFilterComponent } from '@siemens/element-ng/select';
@@ -110,6 +111,13 @@ export class SiPhoneNumberInputComponent
   readonly defaultCountry = input<string>();
 
   /**
+   * Optional CDK scroll strategy used for the country selection overlay.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
+   */
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy());
+
+  /**
    * Placeholder text for country search input.
    *
    * @defaultValue
@@ -121,6 +129,8 @@ export class SiPhoneNumberInputComponent
     t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_PLACEHOLDER:Search`)
   );
   /**
+   * Text shown when the country search returns no results.
+   *
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_NO-RESULTS_FOUND:No results found`)
@@ -158,6 +168,8 @@ export class SiPhoneNumberInputComponent
   readonly supportedCountries = input<readonly string[] | null>();
 
   /**
+   * ID of the element that labels the phone number input.
+   *
    * @defaultValue
    * ```
    * `${this.id()}-label`
@@ -165,13 +177,22 @@ export class SiPhoneNumberInputComponent
    */
   readonly labelledby = input(`${this.id()}-label`);
 
-  /** @defaultValue false */
+  /**
+   * Whether the input is disabled.
+   *
+   * @defaultValue false
+   */
   // eslint-disable-next-line @angular-eslint/no-input-rename
   readonly disabledInput = input(false, { alias: 'disabled', transform: booleanAttribute });
 
-  /** @defaultValue false */
+  /**
+   * Whether the input can be focused but not edited.
+   *
+   * @defaultValue false
+   */
   readonly readonly = input(false, { transform: booleanAttribute });
 
+  /** Emits the selected country, formatted phone number, and its validity when the value changes. */
   readonly valueChange = output<PhoneDetails>();
 
   /**

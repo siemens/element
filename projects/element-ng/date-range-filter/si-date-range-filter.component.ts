@@ -23,6 +23,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { elementDown2 } from '@siemens/element-icons';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import {
   DatepickerConfig,
   DatepickerInputConfig,
@@ -114,6 +115,13 @@ export class SiDateRangeFilterComponent implements OnChanges {
    * @defaultValue false
    */
   readonly reverseInputFields = input(false, { transform: booleanAttribute });
+
+  /**
+   * Optional CDK scroll strategy used for the preset overlay.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
+   */
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy());
 
   /**
    * Determines whether to show the 'Apply' button
@@ -324,6 +332,12 @@ export class SiDateRangeFilterComponent implements OnChanges {
   protected readonly icons = addIcons({ elementDown2 });
   protected readonly advancedMode = signal(false);
   protected readonly dateRange = signal<DateRange>({ start: undefined, end: undefined });
+  protected readonly safeDateRange = computed(() => {
+    const range = this.dateRange();
+    const start = this.isValidDate(range.start) ? range.start : undefined;
+    const end = this.isValidDate(range.end) ? range.end : undefined;
+    return { start, end };
+  });
 
   protected readonly point1Now = signal(true);
   protected readonly point2Mode = signal<'duration' | 'date'>('duration');
@@ -551,5 +565,9 @@ export class SiDateRangeFilterComponent implements OnChanges {
     if (this.smallScreen) {
       this.presetOpen.set(false);
     }
+  }
+
+  private isValidDate(date: Date | undefined): boolean {
+    return date instanceof Date && !isNaN(date.getTime());
   }
 }

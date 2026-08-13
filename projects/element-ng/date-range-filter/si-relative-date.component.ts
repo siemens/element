@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
   Component,
@@ -39,12 +40,24 @@ interface OffsetOption extends SelectOption<string> {
   styleUrl: './si-relative-date.component.scss'
 })
 export class SiRelativeDateComponent implements OnChanges {
-  /** @defaultValue 0 */
+  /**
+   * Relative offset in milliseconds. Changes when the user selects a different offset or unit.
+   *
+   * @defaultValue 0
+   */
   readonly value = model(0);
-  /** @defaultValue false */
+  /**
+   * Whether minute- and hour-based offsets are available.
+   *
+   * @defaultValue false
+   */
   readonly enableTimeSelection = input(false, { transform: booleanAttribute });
+  /** Label for the numeric offset input. */
   readonly valueLabel = input.required<string>();
+  /** Label for the offset unit selector. */
   readonly unitLabel = input.required<string>();
+  /** CDK scroll strategy used for the offset unit select overlay. */
+  readonly scrollStrategy = input.required<ScrollStrategy>();
 
   protected readonly offset = signal(0);
   protected readonly unit = signal('days');

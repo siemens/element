@@ -493,11 +493,11 @@ describe('SiNavbarVerticalNext', () => {
         await fixture.whenStable();
 
         const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
-        const chipWrapper = host.querySelector('.chip') as HTMLElement;
-        expect(chipWrapper).not.toHaveAttribute('inert');
-        expect(chipWrapper).not.toHaveAttribute('aria-hidden');
-        const chip = page.elementLocator(chipWrapper).getByRole('button', { name: 'item1' });
-
+        const chip = host.querySelector('.chip') as HTMLButtonElement;
+        expect(chip).toBeInTheDocument();
+        expect(chip).not.toHaveAttribute('inert');
+        expect(chip).not.toHaveAttribute('aria-hidden');
+        expect(chip).toHaveAccessibleName('item1');
         await expect.element(chip).toBeVisible();
       });
 
@@ -506,17 +506,17 @@ describe('SiNavbarVerticalNext', () => {
         await fixture.whenStable();
 
         const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
-        const chipWrapper = host.querySelector('.chip') as HTMLElement;
-        const chip = page.elementLocator(chipWrapper).getByRole('button', { name: 'item1' });
+        const chip = host.querySelector('.chip') as HTMLButtonElement;
 
         await userEvent.click(chip);
         await fixture.whenStable();
 
-        expect(chip.element()).toHaveAttribute('aria-expanded', 'true');
-        const flyoutId = chip.element().getAttribute('aria-controls');
-        const flyoutMenu = document.querySelector(`#${flyoutId} .dropdown-menu`);
-        expect(flyoutMenu).toBeInTheDocument();
-        expect(flyoutMenu!.textContent).toContain('sub-item1');
+        expect(chip).toHaveAttribute('aria-expanded', 'true');
+        const menuId = chip.getAttribute('aria-controls');
+        const menu = document.querySelector(`#${menuId}`);
+        expect(menu).toBeInTheDocument();
+        expect(menu).toHaveClass('chip-menu-panel');
+        expect(menu!.textContent).toContain('item1');
       });
     });
   });

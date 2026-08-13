@@ -27,6 +27,13 @@ import { Part, ThemeDefaultParams, createPart } from 'ag-grid-community';
  */
 export const elementColorScheme: Part = createPart({
   feature: 'colorScheme',
+  css: `
+    .ag-header-cell:focus-visible,
+    .ag-header-group-cell:focus-visible {
+      outline: var(--element-button-focus-width) solid var(--element-focus-default);
+      outline-offset: calc(-1 * var(--element-button-focus-width));
+    }
+  `,
   params: {
     // Typography
     buttonFontWeight: '600',
@@ -36,219 +43,219 @@ export const elementColorScheme: Part = createPart({
     headerFontWeight: '600',
 
     // Base colors:
-    accentColor: 'var(--element-focus-default)',
-    backgroundColor: 'var(--element-base-1)',
-    borderColor: 'var(--element-ui-4)',
-    foregroundColor: 'var(--element-text-primary)',
-    invalidColor: 'var(--element-status-danger)',
-    subtleTextColor: 'var(--element-text-secondary)',
+    accentColor: 'var(--si-sys-effects-focus)',
+    backgroundColor: 'var(--si-sys-background-1)',
+    borderColor: 'var(--si-sys-border-4)',
+    foregroundColor: 'var(--si-sys-text-primary)',
+    invalidColor: 'var(--si-sys-background-danger)',
+    subtleTextColor: 'var(--si-sys-text-secondary)',
 
     // Button styles
-    buttonActiveBackgroundColor: 'var(--element-action-secondary-hover)',
+    buttonActiveBackgroundColor: 'var(--si-sys-background-accent-secondary-hover)',
     buttonActiveBorder: {
-      color: 'var(--element-action-secondary-hover)'
+      color: 'var(--si-sys-background-accent-secondary-hover)'
     },
-    buttonActiveTextColor: 'var(--element-action-secondary-text-hover)',
-    buttonBackgroundColor: 'var(--element-action-secondary)',
+    buttonActiveTextColor: 'var(--si-sys-text-accent-hover)',
+    buttonBackgroundColor: 'var(--si-sys-background-accent-secondary)',
     buttonBorder: {
-      color: 'var(--element-action-secondary-border)'
+      color: 'var(--si-sys-border-accent)'
     },
-    buttonTextColor: 'var(--element-action-secondary-text)',
+    buttonTextColor: 'var(--si-sys-text-accent)',
 
-    buttonHoverBackgroundColor: 'var(--element-action-secondary-hover)',
+    buttonHoverBackgroundColor: 'var(--si-sys-background-accent-secondary-hover)',
     buttonHoverBorder: {
-      color: 'var(--element-action-secondary-border-hover)'
+      color: 'var(--si-sys-border-accent-hover)'
     },
-    buttonHoverTextColor: 'var(--element-action-secondary-text-hover)',
+    buttonHoverTextColor: 'var(--si-sys-text-accent-hover)',
 
-    buttonDisabledBackgroundColor: 'var(--element-action-secondary)',
-    buttonDisabledTextColor: 'var(--element-text-disabled)',
+    buttonDisabledBackgroundColor: 'var(--si-sys-background-accent-secondary)',
+    buttonDisabledTextColor: 'var(--si-sys-text-disabled)',
     buttonDisabledBorder: {
-      color: 'var(--element-ui-4)'
+      color: 'var(--si-sys-border-4)'
     },
 
     // Advanced filter builder styles
     advancedFilterBuilderButtonBarBorder: {
-      color: 'var(--element-ui-4)'
+      color: 'var(--si-sys-border-4)'
     },
-    advancedFilterBuilderJoinPillColor: 'var(--element-base-danger)',
-    advancedFilterBuilderColumnPillColor: 'var(--element-base-success)',
-    advancedFilterBuilderOptionPillColor: 'var(--element-base-warning)',
-    advancedFilterBuilderValuePillColor: 'var(--element-base-information)',
+    advancedFilterBuilderJoinPillColor: 'var(--si-sys-background-danger-subtle)',
+    advancedFilterBuilderColumnPillColor: 'var(--si-sys-background-success-subtle)',
+    advancedFilterBuilderOptionPillColor: 'var(--si-sys-background-warning-subtle)',
+    advancedFilterBuilderValuePillColor: 'var(--si-sys-background-information-subtle)',
 
     // Cell styles
     cellEditingBorder: {
-      color: 'var(--element-action-primary)'
+      color: 'var(--si-sys-background-accent)'
     },
-    cellTextColor: 'var(--element-text-primary)',
+    cellTextColor: 'var(--si-sys-text-primary)',
 
     // Column styles
     columnBorder: {
-      color: 'var(--element-action-secondary)'
+      color: 'var(--si-sys-background-accent-secondary)'
     },
-    columnDropCellBackgroundColor: 'var(--element-base-1)',
+    columnDropCellBackgroundColor: 'var(--si-sys-background-1)',
     columnDropCellBorder: {
-      color: 'var(--element-action-secondary)'
+      color: 'var(--si-sys-background-accent-secondary)'
     },
-    columnDropCellDragHandleColor: 'var(--element-text-primary)',
-    columnDropCellTextColor: 'var(--element-text-primary)',
-    columnHoverColor: 'var(--element-base-1-hover)',
+    columnDropCellDragHandleColor: 'var(--si-sys-text-primary)',
+    columnDropCellTextColor: 'var(--si-sys-text-primary)',
+    columnHoverColor: 'var(--si-sys-background-hover)',
 
     // Row styles
-    oddRowBackgroundColor: 'var(--element-base-1)',
+    oddRowBackgroundColor: 'var(--si-sys-background-1)',
     rowBorder: {
-      color: 'var(--element-ui-4)'
+      color: 'var(--si-sys-border-4)'
     },
-    rowHoverColor: 'var(--element-base-1-hover)',
-    rowLoadingSkeletonEffectColor: 'var(--element-base-1)',
-    selectedRowBackgroundColor: 'var(--element-base-1-selected)',
+    rowHoverColor: 'var(--si-sys-background-hover)',
+    rowLoadingSkeletonEffectColor: 'var(--si-sys-background-1)',
+    selectedRowBackgroundColor: 'var(--si-sys-background-selected)',
 
     // Dialog and footer styles
     footerRowBorder: {
-      color: 'var(--element-ui-4)'
+      color: 'var(--si-sys-border-4)'
     },
     dialogBorder: {
-      color: 'var(--element-ui-4)'
+      color: 'var(--si-sys-border-4)'
     },
 
     // Checkbox styles
     checkboxBorderRadius: '2px',
     checkboxBorderWidth: '1px',
-    checkboxCheckedBackgroundColor: 'var(--element-action-primary)',
-    checkboxCheckedBorderColor: 'var(--element-action-primary)',
-    checkboxCheckedShapeColor: 'var(--element-action-primary-text)',
+    checkboxCheckedBackgroundColor: 'var(--si-sys-background-accent)',
+    checkboxCheckedBorderColor: 'var(--si-sys-background-accent)',
+    checkboxCheckedShapeColor: 'var(--si-sys-text-on-accent)',
     checkboxCheckedShapeImage: {
       url: elementCheckedImageShape
     },
-    checkboxIndeterminateBackgroundColor: 'var(--element-action-primary)',
-    checkboxIndeterminateBorderColor: 'var(--element-action-primary)',
-    checkboxIndeterminateShapeColor: 'var(--element-base-1)',
-    checkboxUncheckedBackgroundColor: 'var(--element-base-1)',
-    checkboxUncheckedBorderColor: 'var(--element-ui-1)',
+    checkboxIndeterminateBackgroundColor: 'var(--si-sys-background-accent)',
+    checkboxIndeterminateBorderColor: 'var(--si-sys-background-accent)',
+    checkboxIndeterminateShapeColor: 'var(--si-sys-background-1)',
+    checkboxUncheckedBackgroundColor: 'var(--si-sys-background-1)',
+    checkboxUncheckedBorderColor: 'var(--si-sys-border-1)',
 
     // Header styles
-    headerBackgroundColor: 'var(--element-base-1)',
-    headerCellHoverBackgroundColor: 'var(--element-base-1-hover)',
+    headerBackgroundColor: 'var(--si-sys-background-1)',
+    headerCellHoverBackgroundColor: 'var(--si-sys-background-hover)',
     headerColumnBorder: {
-      color: 'var(--element-action-secondary)'
+      color: 'var(--si-sys-background-accent-secondary)'
     },
-    headerColumnResizeHandleColor: 'var(--element-ui-4)',
+    headerColumnResizeHandleColor: 'var(--si-sys-border-4)',
     headerRowBorder: {
-      color: 'var(--element-ui-4)'
+      color: 'var(--si-sys-border-4)'
     },
 
     // Input styles
-    inputBackgroundColor: 'var(--element-base-1)',
+    inputBackgroundColor: 'var(--si-sys-background-1)',
     inputBorder: {
-      color: 'var(--element-ui-2)'
+      color: 'var(--si-sys-border-2)'
     },
     inputBorderRadius: '2px',
-    inputDisabledBackgroundColor: 'var(--element-base-1)',
+    inputDisabledBackgroundColor: 'var(--si-sys-background-1)',
     inputDisabledBorder: {
-      color: 'var(--element-ui-3)'
+      color: 'var(--si-sys-border-3)'
     },
-    inputDisabledTextColor: 'var(--element-text-disabled)',
+    inputDisabledTextColor: 'var(--si-sys-text-disabled)',
     inputFocusBorder: {
-      color: 'var(--element-focus-default)'
+      color: 'var(--si-sys-effects-focus)'
     },
     inputFocusShadow: false,
-    inputIconColor: 'var(--element-ui-1)',
+    inputIconColor: 'var(--si-sys-border-1)',
     inputInvalidBorder: {
-      color: 'var(--element-status-danger)'
+      color: 'var(--si-sys-background-danger)'
     },
-    inputTextColor: 'var(--element-text-primary)',
+    inputTextColor: 'var(--si-sys-text-primary)',
 
     // Icon styles
-    iconButtonActiveBackgroundColor: 'var(--element-base-1-selected)',
-    iconButtonActiveColor: 'var(--element-action-primary-hover)',
-    iconButtonActiveIndicatorColor: 'var(--element-action-primary-hover)',
-    iconButtonBackgroundColor: 'var(--element-action-secondary)',
-    iconButtonColor: 'var(--element-text-primary)',
-    iconButtonHoverBackgroundColor: 'var(--element-base-1-hover)',
-    iconButtonHoverColor: 'var(--element-text-primary)',
-    iconColor: 'var(--element-text-primary)',
+    iconButtonActiveBackgroundColor: 'var(--si-sys-background-selected)',
+    iconButtonActiveColor: 'var(--si-sys-background-accent-hover)',
+    iconButtonActiveIndicatorColor: 'var(--si-sys-background-accent-hover)',
+    iconButtonBackgroundColor: 'var(--si-sys-background-accent-secondary)',
+    iconButtonColor: 'var(--si-sys-text-primary)',
+    iconButtonHoverBackgroundColor: 'var(--si-sys-background-hover)',
+    iconButtonHoverColor: 'var(--si-sys-text-primary)',
+    iconColor: 'var(--si-sys-text-primary)',
     iconSize: '18px',
 
     // Menu styles
-    menuBackgroundColor: 'var(--element-base-1)',
+    menuBackgroundColor: 'var(--si-sys-background-1)',
     menuBorder: false,
     menuShadow:
       '0 0 8px var(--element-box-shadow-color-1), 0 8px 8px var(--element-box-shadow-color-2)',
 
     // Pinning styles
     pinnedColumnBorder: {
-      color: 'var(--element-base-1-selected)'
+      color: 'var(--si-sys-background-selected)'
     },
     pinnedRowBorder: {
-      color: 'var(--element-base-1-selected)'
+      color: 'var(--si-sys-background-selected)'
     },
 
     // Drag and drop styles
-    dragAndDropImageBackgroundColor: 'var(--element-base-3)',
+    dragAndDropImageBackgroundColor: 'var(--si-sys-background-3)',
     dragAndDropImageBorder: false,
     dragAndDropImageShadow:
       '0 0 8px var(--element-box-shadow-color-1), 0 8px 8px var(--element-box-shadow-color-2)',
-    dragHandleColor: 'var(--element-text-primary)',
+    dragHandleColor: 'var(--si-sys-text-primary)',
 
     // Range selection styles
-    rangeHeaderHighlightColor: 'var(--element-base-1)',
-    rangeSelectionBackgroundColor: 'var(--element-base-1-selected)',
-    rangeSelectionBorderColor: 'var(--element-action-primary-hover)',
-    rangeSelectionHighlightColor: 'var(--element-base-1-selected)',
+    rangeHeaderHighlightColor: 'var(--si-sys-background-1)',
+    rangeSelectionBackgroundColor: 'var(--si-sys-background-selected)',
+    rangeSelectionBorderColor: 'var(--si-sys-background-accent-hover)',
+    rangeSelectionHighlightColor: 'var(--si-sys-background-selected)',
 
     // Sidebar styles
-    sideBarBackgroundColor: 'var(--element-base-1)',
+    sideBarBackgroundColor: 'var(--si-sys-background-1)',
     sidePanelBorder: {
-      color: 'var(--element-ui-4)'
+      color: 'var(--si-sys-border-4)'
     },
 
     // Side button styles
-    sideButtonBackgroundColor: 'var(--element-action-secondary)',
-    sideButtonBarBackgroundColor: 'var(--element-base-1)',
-    sideButtonHoverBackgroundColor: 'var(--element-base-1-hover)',
-    sideButtonSelectedBackgroundColor: 'var(--element-base-1-selected)',
-    sideButtonSelectedBorder: 'var(--element-action-secondary-border)',
-    sideButtonSelectedUnderlineColor: 'var(--element-base-1-selected)',
+    sideButtonBackgroundColor: 'var(--si-sys-background-accent-secondary)',
+    sideButtonBarBackgroundColor: 'var(--si-sys-background-1)',
+    sideButtonHoverBackgroundColor: 'var(--si-sys-background-hover)',
+    sideButtonSelectedBackgroundColor: 'var(--si-sys-background-selected)',
+    sideButtonSelectedBorder: 'var(--si-sys-border-accent)',
+    sideButtonSelectedUnderlineColor: 'var(--si-sys-background-selected)',
 
     // Status bar styles
-    statusBarLabelColor: 'var(--element-text-primary)',
-    statusBarValueColor: 'var(--element-text-primary)',
+    statusBarLabelColor: 'var(--si-sys-text-primary)',
+    statusBarValueColor: 'var(--si-sys-text-primary)',
 
     // Select cell styles
     selectCellBorder: {
-      color: 'var(--element-ui-4)'
+      color: 'var(--si-sys-border-4)'
     },
 
     // Toggle button styles - matching Element switch design
     toggleButtonHeight: '20px',
-    toggleButtonOffBackgroundColor: 'var(--element-ui-4)',
-    toggleButtonOnBackgroundColor: 'var(--element-ui-0)',
-    toggleButtonSwitchBackgroundColor: 'var(--element-ui-2)',
+    toggleButtonOffBackgroundColor: 'var(--si-sys-background-neutral)',
+    toggleButtonOnBackgroundColor: 'var(--si-sys-background-accent)',
+    toggleButtonSwitchBackgroundColor: 'var(--si-sys-background-inverse)',
     toggleButtonSwitchInset: '4px',
     toggleButtonWidth: '40px',
 
     // Value change styles
-    valueChangeDeltaDownColor: 'var(--element-status-danger)',
-    valueChangeDeltaUpColor: 'var(--element-status-success)',
-    valueChangeValueHighlightBackgroundColor: 'var(--element-base-1-selected)',
+    valueChangeDeltaDownColor: 'var(--si-sys-background-danger)',
+    valueChangeDeltaUpColor: 'var(--si-sys-background-success)',
+    valueChangeValueHighlightBackgroundColor: 'var(--si-sys-background-selected)',
 
     // Tooltip styles
-    tooltipBackgroundColor: 'var(--element-base-translucent-2)',
+    tooltipBackgroundColor: 'var(--si-sys-background-inverse)',
     tooltipBorder: false,
-    tooltipTextColor: 'var(--element-text-inverse)',
+    tooltipTextColor: 'var(--si-sys-text-inverse)',
 
     // Tab styles
-    tabBackgroundColor: 'var(--element-action-secondary)',
-    tabBarBackgroundColor: 'var(--element-base-1)',
+    tabBackgroundColor: 'var(--si-sys-background-accent-secondary)',
+    tabBarBackgroundColor: 'var(--si-sys-background-1)',
     tabBarBorder: {
-      color: 'var(--element-ui-4)'
+      color: 'var(--si-sys-border-4)'
     },
-    tabHoverBackgroundColor: 'var(--element-action-secondary)',
-    tabSelectedTextColor: 'var(--element-action-primary)',
-    tabSelectedUnderlineColor: 'var(--element-action-secondary)',
+    tabHoverBackgroundColor: 'var(--si-sys-background-accent-secondary)',
+    tabSelectedTextColor: 'var(--si-sys-background-accent)',
+    tabSelectedUnderlineColor: 'var(--si-sys-background-accent-secondary)',
 
     // Chart styles
-    chartMenuLabelColor: 'var(--element-text-primary)',
+    chartMenuLabelColor: 'var(--si-sys-text-primary)',
 
     // Misc styles
     focusShadow: false,

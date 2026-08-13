@@ -13,10 +13,14 @@ import {
   SiTranslateService
 } from '@siemens/element-translate-ng/translate';
 import { firstValueFrom, NEVER } from 'rxjs';
+import { page } from 'vitest/browser';
 
 import { TEST_WIDGET } from '../../../test/test-widget/test-widget';
 import { createTestingWidget, TestingModule } from '../../../test/testing.module';
+import { Widget, WidgetConfig } from '../../model/widgets.model';
 import { SiWidgetCatalogComponent } from './si-widget-catalog.component';
+
+type WidgetSetterMode = 'deprecated' | 'signal';
 
 describe('SiWidgetCatalogComponent', () => {
   let component: SiWidgetCatalogComponent;
@@ -25,7 +29,17 @@ describe('SiWidgetCatalogComponent', () => {
   const buttonsByName = (label: string): DebugElement[] => {
     return fixture.debugElement
       .queryAll(By.css('button'))
-      .filter((debugElement: DebugElement) => debugElement.nativeElement.innerHTML === label);
+      .filter(
+        (debugElement: DebugElement) => debugElement.nativeElement.textContent.trim() === label
+      );
+  };
+
+  const setWidgets = (widgets: Widget[], mode: WidgetSetterMode): void => {
+    if (mode === 'deprecated') {
+      component.widgetCatalog = widgets;
+    } else {
+      component.widgetList.set(widgets);
+    }
   };
 
   beforeEach(async () => {
@@ -49,245 +63,322 @@ describe('SiWidgetCatalogComponent', () => {
     expect(addButtons[0].attributes.disabled).toBeDefined();
   });
 
-  describe('Add button', () => {
-    it('should be present and active if the selected widget has no widget editor component', () => {
-      component.widgetCatalog = [createTestingWidget('hello', 'helloId', 'HelloComponent')];
-      fixture.detectChanges();
+  (['deprecated', 'signal'] as const).forEach(mode => {
+    describe(`Add button (${mode})`, () => {
+      it('should be present and active if the selected widget has no widget editor component', () => {
+        setWidgets([createTestingWidget('hello', 'helloId', 'HelloComponent')], mode);
+        fixture.detectChanges();
 
-      const addButtons = buttonsByName('Add');
-      expect(addButtons).toHaveLength(1);
-      expect(addButtons[0].attributes.disabled).toBeUndefined();
+        const addButtons = buttonsByName('Add');
+        expect(addButtons).toHaveLength(1);
+        expect(addButtons[0].attributes.disabled).toBeUndefined();
+      });
+
+      it('should be invisible if the catalog component has an editor', () => {
+        setWidgets(
+          [createTestingWidget('hello', 'helloId', 'HelloComponent', 'HelloEditorComponent')],
+          mode
+        );
+        fixture.detectChanges();
+
+        const addButtons = buttonsByName('Add');
+        expect(addButtons).toHaveLength(0);
+      });
+
+      it('should be visible on the editor view', () => {
+        setWidgets(
+          [createTestingWidget('hello', 'helloId', 'HelloComponent', 'HelloEditorComponent')],
+          mode
+        );
+        component.view.set('editor');
+        fixture.detectChanges();
+        const addButtons = buttonsByName('Add');
+        expect(addButtons).toHaveLength(1);
+      });
+
+      it('should create and emit widget config from selected', async () => {
+        setWidgets([createTestingWidget('Hello', 'id-1234')], mode);
+        fixture.detectChanges();
+
+        const widgetConfigPromise = firstValueFrom(outputToObservable(component.closed));
+        buttonsByName('Add')[0].nativeElement.click();
+        fixture.detectChanges();
+        const widgetConfigs = await widgetConfigPromise;
+        expect(widgetConfigs).toHaveLength(1);
+        expect(widgetConfigs?.[0].widgetId).toBe('id-1234');
+      });
     });
 
-    it('should be invisible if the catalog component has an editor', () => {
-      component.widgetCatalog = [
-        createTestingWidget('hello', 'helloId', 'HelloComponent', 'HelloEditorComponent')
-      ];
-      fixture.detectChanges();
+    describe(`Next button (${mode})`, () => {
+      it('should be visible if the selected widget has an editor component in list view', () => {
+        setWidgets(
+          [createTestingWidget('hello', 'helloId', 'HelloComponent', 'HelloEditorComponent')],
+          mode
+        );
+        fixture.detectChanges();
 
-      const addButtons = buttonsByName('Add');
-      expect(addButtons).toHaveLength(0);
+        expect(component.view()).toBe('list');
+        const addButtons = buttonsByName('Next');
+        expect(addButtons).toHaveLength(1);
+      });
+
+      it('should be invisible false if the selected widget has no editor component', () => {
+        setWidgets([createTestingWidget('hello', 'helloId', 'HelloComponent')], mode);
+        fixture.detectChanges();
+
+        const addButtons = buttonsByName('Next');
+        expect(addButtons).toHaveLength(0);
+      });
+
+      it('should be invisible in editor view', () => {
+        setWidgets(
+          [createTestingWidget('hello', 'helloId', 'HelloComponent', 'HelloEditorComponent')],
+          mode
+        );
+        component.view.set('editor');
+        fixture.detectChanges();
+
+        expect(buttonsByName('Next')).toHaveLength(0);
+
+        component.view.set('editor-only');
+        fixture.detectChanges();
+        expect(buttonsByName('Next')).toHaveLength(0);
+
+        component.view.set('list');
+        fixture.detectChanges();
+        expect(buttonsByName('Next')).toHaveLength(1);
+      });
+
+      it('should switch to editor view and display the widget editor component', async () => {
+        setWidgets([TEST_WIDGET], mode);
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+
+        buttonsByName('Next')[0].nativeElement.click();
+        fixture.detectChanges();
+
+        // cannot use jasmine.clock here.
+        await new Promise(resolve => setTimeout(resolve, 100));
+        expect(component.view()).toBe('editor');
+        expect(
+          fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
+            .tagName
+        ).toBe('SI-TEST-WIDGET-EDITOR');
+      });
+
+      it('with wrong widget editor configuration should switch to editor view should not display an editor', async () => {
+        setWidgets(
+          [createTestingWidget('hello', 'helloId', 'HelloComponent', 'Hello123Component')],
+          mode
+        );
+        fixture.detectChanges();
+
+        buttonsByName('Next')[0].nativeElement.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.view()).toBe('editor');
+        expect(fixture.debugElement.query(By.css('.si-layout-fixed-height')).children).toHaveLength(
+          0
+        );
+      });
     });
 
-    it('should be visible on the editor view', () => {
-      component.widgetCatalog = [
-        createTestingWidget('hello', 'helloId', 'HelloComponent', 'HelloEditorComponent')
-      ];
-      component.view.set('editor');
-      fixture.detectChanges();
-      const addButtons = buttonsByName('Add');
-      expect(addButtons).toHaveLength(1);
+    describe(`Search (${mode})`, () => {
+      beforeEach(() => {
+        setWidgets(
+          [
+            createTestingWidget('eins', '1'),
+            createTestingWidget('zwei', '2', 'HelloComponent', 'HelloEditorComponent'),
+            createTestingWidget('drei', '3')
+          ],
+          mode
+        );
+        fixture.detectChanges();
+      });
+
+      it('with undefined should not filter visible widgets', () => {
+        fixture.debugElement
+          .query(By.css('si-search-bar'))
+          .triggerEventHandler('searchChange', 'some');
+        fixture.detectChanges();
+
+        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(0);
+
+        fixture.debugElement
+          .query(By.css('si-search-bar'))
+          .triggerEventHandler('searchChange', undefined);
+        fixture.detectChanges();
+        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(3);
+      });
+
+      it('with case-insensitive matching string should filter visible widgets', () => {
+        fixture.debugElement
+          .query(By.css('si-search-bar'))
+          .triggerEventHandler('searchChange', 'WEI');
+        fixture.detectChanges();
+
+        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
+      });
+
+      it('with empty string should not filter visible widgets', () => {
+        fixture.debugElement
+          .query(By.css('si-search-bar'))
+          .triggerEventHandler('searchChange', 'some');
+        fixture.detectChanges();
+        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(0);
+
+        fixture.debugElement
+          .query(By.css('si-search-bar'))
+          .triggerEventHandler('searchChange', '   ');
+        fixture.detectChanges();
+        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(3);
+      });
+
+      it('shall keep the search term and result after clicking `Next` to widget editor and `Previous` to catalog', async () => {
+        expect(buttonsByName('Next')).toHaveLength(0);
+
+        let searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
+        searchInput.value = 'zwei';
+        searchInput.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+
+        const searchBarEl = fixture.debugElement.query(By.css('si-search-bar'));
+        const searchBarComponent = searchBarEl.componentInstance as SiSearchBarComponent;
+        const debounceTime = searchBarComponent.debounceTime();
+        // cannot use jasmine.clock here.
+        await new Promise(resolve => setTimeout(resolve, debounceTime + 1)); // wait for debounce time + extra 1 ms to avoid flaky test
+        await fixture.whenStable();
+
+        expect(buttonsByName('Next')).toHaveLength(1);
+        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
+
+        const nextButton = buttonsByName('Next')[0].nativeElement;
+        expect(nextButton.innerHTML).toBe('Next');
+
+        // Navigate to next page that shows the editor of the widget and not the widget catalog.
+        // Test by verifying the search input is gone.
+        nextButton.click();
+        fixture.detectChanges();
+        searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
+        expect(searchInput).toBeNull();
+
+        // Navigate back to the widget catalog.
+        const previousButton = fixture.nativeElement.querySelectorAll(
+          'button'
+        )[1] as HTMLButtonElement;
+        expect(previousButton.innerHTML).toBe('Previous');
+        previousButton.click();
+        fixture.detectChanges();
+
+        // Verify that the search input is back and includes the value `zwei`
+        searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
+        expect(searchInput).not.toBeNull();
+        expect(searchInput.value).toBe('zwei');
+        expect(buttonsByName('Next')).toHaveLength(1);
+        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
+      });
     });
 
-    it('should create and emit widget config from selected', async () => {
-      component.widgetCatalog = [createTestingWidget('Hello', 'id-1234')];
+    it('Cancel button shall emit undefined on closed', async () => {
       fixture.detectChanges();
 
-      const widgetConfigPromise = firstValueFrom(outputToObservable(component.closed));
-      buttonsByName('Add')[0].nativeElement.click();
-      fixture.detectChanges();
-      const widgetConfig = await widgetConfigPromise;
-      expect(widgetConfig?.widgetId).toBe('id-1234');
-    });
-  });
-
-  describe('Next button', () => {
-    it('should be visible if the selected widget has an editor component in list view', () => {
-      component.widgetCatalog = [
-        createTestingWidget('hello', 'helloId', 'HelloComponent', 'HelloEditorComponent')
-      ];
-      fixture.detectChanges();
-
-      expect(component.view()).toBe('list');
-      const addButtons = buttonsByName('Next');
-      expect(addButtons).toHaveLength(1);
+      const closedPromise = firstValueFrom(outputToObservable(component.closed));
+      buttonsByName('Cancel')[0].nativeElement.click();
+      const wd = await closedPromise;
+      expect(wd).toBeUndefined();
     });
 
-    it('should be invisible false if the selected widget has no editor component', () => {
-      component.widgetCatalog = [createTestingWidget('hello', 'helloId', 'HelloComponent')];
-      fixture.detectChanges();
-
-      const addButtons = buttonsByName('Next');
-      expect(addButtons).toHaveLength(0);
-    });
-
-    it('should be invisible in editor view', () => {
-      component.widgetCatalog = [
-        createTestingWidget('hello', 'helloId', 'HelloComponent', 'HelloEditorComponent')
-      ];
-      component.view.set('editor');
-      fixture.detectChanges();
-
-      expect(buttonsByName('Next')).toHaveLength(0);
-
-      component.view.set('editor-only');
-      fixture.detectChanges();
-      expect(buttonsByName('Next')).toHaveLength(0);
-
-      component.view.set('list');
-      fixture.detectChanges();
-      expect(buttonsByName('Next')).toHaveLength(1);
-    });
-
-    it('should switch to editor view and display the widget editor component', async () => {
-      component.widgetCatalog = [TEST_WIDGET];
-      fixture.changeDetectorRef.markForCheck();
+    it(`Previous button shall switch to list view (${mode})`, async () => {
+      setWidgets([TEST_WIDGET], mode);
       fixture.detectChanges();
 
       buttonsByName('Next')[0].nativeElement.click();
       fixture.detectChanges();
+      await fixture.whenStable();
 
+      expect(component.view()).toBe('editor');
       // cannot use jasmine.clock here.
       await new Promise(resolve => setTimeout(resolve, 100));
-      expect(component.view()).toBe('editor');
       expect(
         fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
           .tagName
       ).toBe('SI-TEST-WIDGET-EDITOR');
-    });
 
-    it('with wrong widget editor configuration should switch to editor view should not display an editor', async () => {
-      component.widgetCatalog = [
-        createTestingWidget('hello', 'helloId', 'HelloComponent', 'Hello123Component')
-      ];
+      buttonsByName('Previous')[0].nativeElement.click();
       fixture.detectChanges();
-
-      buttonsByName('Next')[0].nativeElement.click();
-      fixture.detectChanges();
-      await fixture.whenStable();
-
-      expect(component.view()).toBe('editor');
-      expect(fixture.debugElement.query(By.css('.si-layout-fixed-height')).children).toHaveLength(
-        0
-      );
+      expect(component.view()).toBe('list');
+      expect(
+        fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
+          .tagName
+      ).not.toBe('SI-TEST-WIDGET-EDITOR');
     });
   });
 
-  describe('Search', () => {
+  describe('List multi selection', () => {
+    const widgetWithoutEditor = createTestingWidget('widgetA', 'a-1');
+    const widgetWithoutEditor2 = createTestingWidget('widgetB', 'b-1');
+    const widgetWithEditor = createTestingWidget('widgetC', 'c-1', 'CComponent', 'CEditor');
+
+    // The checkboxes are decorative (aria-hidden, inert). The accessible, interactive
+    // elements are the cdkListbox options, so query and interact with those.
+    const options = (): HTMLElement[] => page.getByRole('option').elements() as HTMLElement[];
+
     beforeEach(() => {
-      component.widgetCatalog = [
-        createTestingWidget('eins', '1'),
-        createTestingWidget('zwei', '2', 'HelloComponent', 'HelloEditorComponent'),
-        createTestingWidget('drei', '3')
-      ];
+      component.widgetCatalog = [widgetWithoutEditor, widgetWithoutEditor2, widgetWithEditor];
+      fixture.componentRef.setInput('multiSelect', true);
       fixture.detectChanges();
     });
 
-    it('with undefined should not filter visible widgets', () => {
-      fixture.debugElement
-        .query(By.css('si-search-bar'))
-        .triggerEventHandler('searchChange', 'some');
-      fixture.detectChanges();
-
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(0);
-
-      fixture.debugElement
-        .query(By.css('si-search-bar'))
-        .triggerEventHandler('searchChange', undefined);
-      fixture.detectChanges();
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(3);
+    it('should always show checkboxes in list view', () => {
+      expect(options()).toHaveLength(3);
     });
 
-    it('with case-insensitive matching string should filter visible widgets', () => {
-      fixture.debugElement
-        .query(By.css('si-search-bar'))
-        .triggerEventHandler('searchChange', 'WEI');
-      fixture.detectChanges();
+    it('should allow selecting widgets with editor components', async () => {
+      const editorOption = options()[2];
+      expect(editorOption).not.toHaveAttribute('aria-disabled', 'true');
 
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
-    });
-
-    it('with empty string should not filter visible widgets', () => {
-      fixture.debugElement
-        .query(By.css('si-search-bar'))
-        .triggerEventHandler('searchChange', 'some');
-      fixture.detectChanges();
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(0);
-
-      fixture.debugElement
-        .query(By.css('si-search-bar'))
-        .triggerEventHandler('searchChange', '   ');
-      fixture.detectChanges();
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(3);
-    });
-
-    it('shall keep the search term and result after clicking `Next` to widget editor and `Previous` to catalog', async () => {
-      expect(buttonsByName('Next')).toHaveLength(0);
-
-      let searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
-      searchInput.value = 'zwei';
-      searchInput.dispatchEvent(new Event('input'));
-      fixture.detectChanges();
-
-      const searchBarEl = fixture.debugElement.query(By.css('si-search-bar'));
-      const searchBarComponent = searchBarEl.componentInstance as SiSearchBarComponent;
-      const debounceTime = searchBarComponent.debounceTime();
-      // cannot use jasmine.clock here.
-      await new Promise(resolve => setTimeout(resolve, debounceTime + 1)); // wait for debounce time + extra 1 ms to avoid flaky test
+      editorOption.click();
       await fixture.whenStable();
 
+      expect(editorOption).toHaveAttribute('aria-selected', 'true');
       expect(buttonsByName('Next')).toHaveLength(1);
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
-
-      const nextButton = buttonsByName('Next')[0].nativeElement;
-      expect(nextButton.innerHTML).toBe('Next');
-
-      // Navigate to next page that shows the editor of the widget and not the widget catalog.
-      // Test by verifying the search input is gone.
-      nextButton.click();
-      fixture.detectChanges();
-      searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
-      expect(searchInput).toBeNull();
-
-      // Navigate back to the widget catalog.
-      const previousButton = fixture.nativeElement.querySelectorAll(
-        'button'
-      )[1] as HTMLButtonElement;
-      expect(previousButton.innerHTML).toBe('Previous');
-      previousButton.click();
-      fixture.detectChanges();
-
-      // Verify that the search input is back and includes the value `zwei`
-      searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
-      expect(searchInput).not.toBeNull();
-      expect(searchInput.value).toBe('zwei');
-      expect(buttonsByName('Next')).toHaveLength(1);
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
     });
-  });
 
-  it('Cancel button shall emit undefined on closed', async () => {
-    fixture.detectChanges();
+    it('should show add for multi-selection and hide next', async () => {
+      const opts = options();
+      opts[1].click();
+      await fixture.whenStable();
+      opts[2].click();
+      await fixture.whenStable();
 
-    const closedPromise = firstValueFrom(outputToObservable(component.closed));
-    buttonsByName('Cancel')[0].nativeElement.click();
-    const wd = await closedPromise;
-    expect(wd).toBeUndefined();
-  });
+      expect(buttonsByName('Next')).toHaveLength(0);
+      expect(buttonsByName('Add')).toHaveLength(1);
+      expect(buttonsByName('Add')[0].nativeElement).not.toHaveAttribute('disabled');
+    });
 
-  it('Previous button shall switch to list view', async () => {
-    component.widgetCatalog = [TEST_WIDGET];
-    fixture.detectChanges();
+    it('should emit deferred config for editor widgets in multi-selection', async () => {
+      const opts = options();
+      opts[1].click();
+      await fixture.whenStable();
+      opts[2].click();
+      await fixture.whenStable();
 
-    buttonsByName('Next')[0].nativeElement.click();
-    fixture.detectChanges();
-    await fixture.whenStable();
+      const closedPromise = firstValueFrom(outputToObservable(component.closed));
+      buttonsByName('Add')[0].nativeElement.click();
+      await fixture.whenStable();
 
-    expect(component.view()).toBe('editor');
-    // cannot use jasmine.clock here.
-    await new Promise(resolve => setTimeout(resolve, 100));
-    expect(
-      fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
-        .tagName
-    ).toBe('SI-TEST-WIDGET-EDITOR');
+      const result = (await closedPromise) as Omit<WidgetConfig, 'id'>[];
+      expect(result).toBeDefined();
+      expect(result).toHaveLength(2);
+      expect(result.find(config => config.widgetId === 'b-1')?.setupPending).toBe(undefined);
+      expect(result.find(config => config.widgetId === 'c-1')?.setupPending).toBe(true);
+    });
 
-    buttonsByName('Previous')[0].nativeElement.click();
-    fixture.detectChanges();
-    expect(component.view()).toBe('list');
-    expect(
-      fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
-        .tagName
-    ).not.toBe('SI-TEST-WIDGET-EDITOR');
+    it('should disable add button when no widget is selected', async () => {
+      await fixture.whenStable();
+      expect(buttonsByName('Add')[0].nativeElement).toHaveAttribute('disabled');
+    });
   });
 
   describe('Widget name and description translation', () => {
@@ -312,51 +403,61 @@ describe('SiWidgetCatalogComponent', () => {
           )
         ]
       });
-
-      fixture = TestBed.createComponent(SiWidgetCatalogComponent);
-      component = fixture.componentInstance;
     });
 
-    it('should display translated widget name and description', () => {
-      component.widgetCatalog = [
-        {
-          ...createTestingWidget('WIDGET.NAME_KEY', 'translatable-1'),
-          description: 'WIDGET.DESCRIPTION_KEY'
-        }
-      ];
-      fixture.detectChanges();
+    (['deprecated', 'signal'] as const).forEach(mode => {
+      beforeEach(() => {
+        fixture = TestBed.createComponent(SiWidgetCatalogComponent);
+        component = fixture.componentInstance;
+      });
 
-      const listItems = fixture.debugElement.queryAll(By.css('.list-group-item'));
-      expect(listItems).toHaveLength(1);
-      expect(listItems[0].query(By.css('.si-h5')).nativeElement).toHaveTextContent(
-        'Translated Widget Name'
-      );
-      expect(listItems[0].query(By.css('.si-body')).nativeElement).toHaveTextContent(
-        'Translated Widget Description'
-      );
-    });
+      it(`should display translated widget name and description (${mode})`, () => {
+        setWidgets(
+          [
+            {
+              ...createTestingWidget('WIDGET.NAME_KEY', 'translatable-1'),
+              description: 'WIDGET.DESCRIPTION_KEY'
+            }
+          ],
+          mode
+        );
+        fixture.detectChanges();
 
-    it('should filter widgets by translated name', () => {
-      component.widgetCatalog = [
-        {
-          ...createTestingWidget('WIDGET.NAME_KEY', 'translatable-1'),
-          description: 'WIDGET.DESCRIPTION_KEY'
-        },
-        createTestingWidget('Other Widget', 'other-1')
-      ];
-      fixture.detectChanges();
+        const listItems = fixture.debugElement.queryAll(By.css('.list-group-item'));
+        expect(listItems).toHaveLength(1);
+        expect(listItems[0].query(By.css('.si-h5')).nativeElement).toHaveTextContent(
+          'Translated Widget Name'
+        );
+        expect(listItems[0].query(By.css('.si-body')).nativeElement).toHaveTextContent(
+          'Translated Widget Description'
+        );
+      });
 
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(2);
+      it(`should filter widgets by translated name (${mode})`, () => {
+        setWidgets(
+          [
+            {
+              ...createTestingWidget('WIDGET.NAME_KEY', 'translatable-1'),
+              description: 'WIDGET.DESCRIPTION_KEY'
+            },
+            createTestingWidget('Other Widget', 'other-1')
+          ],
+          mode
+        );
+        fixture.detectChanges();
 
-      fixture.debugElement
-        .query(By.css('si-search-bar'))
-        .triggerEventHandler('searchChange', 'Translated');
-      fixture.detectChanges();
+        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(2);
 
-      expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
-      expect(
-        fixture.debugElement.query(By.css('.list-group-item .si-h5')).nativeElement
-      ).toHaveTextContent('Translated Widget Name');
+        fixture.debugElement
+          .query(By.css('si-search-bar'))
+          .triggerEventHandler('searchChange', 'Translated');
+        fixture.detectChanges();
+
+        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
+        expect(
+          fixture.debugElement.query(By.css('.list-group-item .si-h5')).nativeElement
+        ).toHaveTextContent('Translated Widget Name');
+      });
     });
   });
 });

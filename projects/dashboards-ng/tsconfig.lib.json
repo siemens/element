@@ -6,16 +6,16 @@
     "inlineSources": true,
     "types": ["@siemens/element-translate-ng/localize-types", "node"],
     "paths": {
-      "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng"],
-      "@siemens/element-translate-ng/*": ["dist/@siemens/element-translate-ng/*"],
-      "@siemens/element-ng": ["dist/@siemens/element-ng"],
-      "@siemens/element-ng/*": ["dist/@siemens/element-ng/*"],
-      "@siemens/dashboards-ng": ["projects/dashboards-ng/src/public-api.ts"]
+      "@siemens/element-translate-ng": ["../../dist/@siemens/element-translate-ng"],
+      "@siemens/element-translate-ng/*": ["../../dist/@siemens/element-translate-ng/*"],
+      "@siemens/element-ng": ["../../dist/@siemens/element-ng"],
+      "@siemens/element-ng/*": ["../../dist/@siemens/element-ng/*"],
+      "@siemens/dashboards-ng": ["../../projects/dashboards-ng/src/public-api.ts"]
     }
   },
   "angularCompilerOptions": {
     "compilationMode": "partial"
   },
-  "include": ["./**/*.ts"],
+  "include": ["**/*.ts"],
   "exclude": ["**/*.spec.ts", "test"]
 }

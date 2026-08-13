@@ -4,9 +4,9 @@
 
 :host {
   display: block;
-  border: 1px solid variables.$element-ui-4;
+  border: 1px solid variables.$si-sys-border-4;
   border-radius: variables.$element-radius-2;
-  background: variables.$element-base-2;
+  background: variables.$si-sys-background-1;
   padding: (map.get(variables.$spacers, 2) - 1px);
 }
 
@@ -27,7 +27,7 @@
     }
 
     .status-toggle-item {
-      color: variables.$element-text-disabled;
+      color: variables.$si-sys-text-disabled;
     }
   }
 }
@@ -38,18 +38,18 @@
   justify-content: center;
   flex-direction: column;
   z-index: 10;
-  color: variables.$element-text-secondary;
+  color: variables.$si-sys-text-secondary;
   border-radius: 1px;
   cursor: pointer;
   padding-block: map.get(variables.$spacers, 1);
 
   &.active {
-    color: variables.$element-text-primary !important; // stylelint-disable-line declaration-no-important
+    color: variables.$si-sys-text-primary !important; // stylelint-disable-line declaration-no-important
   }
 
   &.disabled {
     cursor: default;
-    color: variables.$element-text-disabled !important; // stylelint-disable-line declaration-no-important
+    color: variables.$si-sys-text-disabled !important; // stylelint-disable-line declaration-no-important
   }
 
   span {
@@ -73,5 +73,5 @@
   inline-size: 100%;
   block-size: 100%;
   border-radius: 1px;
-  background: variables.$element-base-1-selected;
+  background: variables.$si-sys-background-selected;
 }

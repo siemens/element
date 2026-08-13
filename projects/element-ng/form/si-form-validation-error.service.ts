@@ -78,8 +78,7 @@ export const buildDefaults = (): SiFormValidationErrorMapper => ({
   email: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.EMAIL:Invalid email address`),
   numberFormat: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.NUMBER_FORMAT:Number required`),
   pattern: t(
-    () =>
-      $localize`:@@SI_FORM_CONTAINER.ERROR.PATTERN:The value does not match the predefined pattern.`
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.PATTERN:Required value format not fulfilled`
   ),
   required: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED:Required`),
   requiredTrue: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED_TRUE:Required`)
@@ -118,13 +117,20 @@ export class SiFormValidationErrorService {
    */
   resolveFormFieldErrors(state: FieldState<any>): SiFormError[] {
     return state.errors().map(error => {
-      const { message, kind, ...params } = error;
+      const { message, kind, fieldTree, formField, ...rawErrorParams } = error;
+      const errorParams = this.getErrorParams(rawErrorParams);
       if (!message) {
-        return this.resolveError(kind, state.name(), params);
+        return this.resolveError(kind, state.name(), errorParams);
       } else {
-        return { message, key: kind, params };
+        return { message, key: kind, params: errorParams };
       }
     });
+  }
+
+  /** Returns legacy reactive-form parameters stored in `context`, or the signal-form error. */
+  private getErrorParams(error: object): unknown {
+    const { context } = error as { context?: unknown };
+    return context ?? error;
   }
 
   /**

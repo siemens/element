@@ -54,6 +54,9 @@ import { SelectOption } from '../si-select.types';
   }
 })
 export class SiSelectInputComponent<T> {
+  /**
+   * Base ID used to associate the input with its label.
+   */
   readonly baseId = input.required<string>();
   /**
    * Aria labelledby of the select.
@@ -67,19 +70,39 @@ export class SiSelectInputComponent<T> {
    * @defaultValue null
    */
   readonly ariaLabel = input<string | null>(null);
-  /** @defaultValue false */
+  /**
+   * Whether the listbox is open.
+   *
+   * @defaultValue false
+   */
   readonly open = input(false, { transform: booleanAttribute });
+  /**
+   * Text shown when no option is selected.
+   */
   readonly placeholder = input<TranslatableString>();
+  /**
+   * ID of the associated listbox.
+   */
   readonly controls = input.required<string>();
+  /**
+   * Custom template for rendering selected options.
+   */
   readonly optionTemplate = input<
     TemplateRef<{
       $implicit: SelectOption<T>;
     }>
   >();
 
-  /** @defaultValue false */
+  /**
+   * Whether the input is read-only.
+   *
+   * @defaultValue false
+   */
   readonly readonly = input(false, { transform: booleanAttribute });
 
+  /**
+   * Emits when the user requests to open the listbox.
+   */
   readonly openListbox = output<void>();
   protected readonly selectionStrategy = inject<SiSelectSelectionStrategy<T>>(
     SiSelectSelectionStrategy<T>

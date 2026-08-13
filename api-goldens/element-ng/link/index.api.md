@@ -45,22 +45,16 @@ export class SiLinkActionService {
 
 // @public (undocumented)
 export class SiLinkDirective implements DoCheck, OnChanges, OnDestroy {
-    // (undocumented)
     readonly actionParam: _angular_core.InputSignal<any>;
     // (undocumented)
     readonly active: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
     readonly activeChange: _angular_core.OutputEmitterRef<boolean>;
-    // (undocumented)
     readonly activeClass: _angular_core.InputSignal<string | undefined>;
     readonly ariaCurrent: _angular_core.InputSignal<AriaCurrentType | undefined>;
-    // (undocumented)
     readonly exactMatch: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     onClick(event: any): void;
-    // (undocumented)
     readonly siLink: _angular_core.InputSignal<Link | undefined>;
-    // (undocumented)
     readonly siLinkDefaultTarget: _angular_core.InputSignal<string | undefined>;
 }
 

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { JsonPipe } from '@angular/common';
-import { Component, viewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -24,7 +24,7 @@ import {
   SiTimepickerComponent
 } from '@siemens/element-ng/datepicker';
 import {
-  SiFormContainerComponent,
+  provideFormValidationErrorMapper,
   SiFormModule,
   SiFormValidationError
 } from '@siemens/element-ng/form';
@@ -100,7 +100,19 @@ export const noEconomy: ValidatorFn = control => {
     TranslatePipe
   ],
   templateUrl: './si-form.html',
-  providers: [JsonPipe],
+  providers: [
+    JsonPipe,
+    provideFormValidationErrorMapper({
+      'name.pattern': 'FORM.NAME_UPPERCASE',
+      'name.required': 'FORM.NAME_REQUIRED',
+      'termsAccepted.required': 'FORM.ACCEPT_TERMS_REQUIRED',
+      notEighteen: 'FORM.NOT_EIGHTEEN',
+      departureTime: 'FORM.DEPARTURE_AFTER_ARRIVAL',
+      'travelDate.endBeforeStart': 'FORM.END_BEFORE_START',
+      'travelDate.required': 'FORM.TRAVEL_DATE_REQUIRED',
+      noEconomy: 'You deserve better!'
+    })
+  ],
   host: { class: 'p-5' }
 })
 export class SampleComponent {
@@ -127,29 +139,6 @@ export class SampleComponent {
       label: 'Economy'
     }
   ];
-
-  errorCodeTranslateKeyMap = new Map<string, string>([
-    ['name.pattern', 'FORM.NAME_UPPERCASE'],
-    ['name.required', 'FORM.NAME_REQUIRED'],
-    ['termsAccepted.required', 'FORM.ACCEPT_TERMS_REQUIRED'],
-    ['notEighteen', 'FORM.NOT_EIGHTEEN'],
-    ['departureTime', 'FORM.DEPARTURE_AFTER_ARRIVAL'],
-    ['travelDate.endBeforeStart', 'FORM.END_BEFORE_START'],
-    ['travelDate.required', 'FORM.TRAVEL_DATE_REQUIRED'],
-    ['noEconomy', 'You deserve better!']
-  ]);
-
-  controlNameTranslateKeyMap = new Map<string, string>([
-    ['name', 'FORM.NAME'],
-    ['role', 'FORM.ROLE'],
-    ['description', 'FORM.DESCRIPTION'],
-    ['phoneNumber', 'FORM.PHONE_NUMBER'],
-    ['birthday', 'FORM.BIRTHDAY'],
-    ['termsAccepted', 'FORM.ACCEPT_TERMS'],
-    ['serviceClass', 'FORM.CLASS']
-  ]);
-
-  readonly formContainer = viewChild.required(SiFormContainerComponent);
 
   entity?: Entity;
 

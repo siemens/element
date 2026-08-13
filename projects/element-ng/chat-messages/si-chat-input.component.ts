@@ -4,11 +4,14 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import {
+  afterNextRender,
   AfterViewInit,
   booleanAttribute,
   Component,
   computed,
   ElementRef,
+  inject,
+  Injector,
   input,
   model,
   output,
@@ -195,10 +198,10 @@ export class SiChatInputComponent implements AfterViewInit {
    * The label for the input, used for accessibility
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_CHAT_INPUT.LABEL:Chat message input`)
+   * t(() => $localize`:@@SI_CHAT_INPUT.LABEL:Chat input`)
    * ```
    */
-  readonly label = input<string>(t(() => $localize`:@@SI_CHAT_INPUT.LABEL:Chat message input`));
+  readonly label = input<string>(t(() => $localize`:@@SI_CHAT_INPUT.LABEL:Chat input`));
 
   /** Parameter to pass to action handlers */
   readonly actionParam = input<any>();
@@ -227,11 +230,11 @@ export class SiChatInputComponent implements AfterViewInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_CHAT_INPUT.INTERRUPT:Interrupt`)
+   * t(() => $localize`:@@SI_CHAT_INPUT.INTERRUPT:Stop processing`)
    * ```
    */
   readonly interruptButtonLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_CHAT_INPUT.INTERRUPT:Interrupt`)
+    t(() => $localize`:@@SI_CHAT_INPUT.INTERRUPT:Stop processing`)
   );
 
   /**
@@ -270,12 +273,26 @@ export class SiChatInputComponent implements AfterViewInit {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_CHAT_INPUT.SECONDARY_ACTIONS:More actions`)
+   * t(() => $localize`:@@SI_CHAT_INPUT.SECONDARY_ACTIONS:Additional actions`)
    * ```
    */
   readonly secondaryActionsLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_CHAT_INPUT.SECONDARY_ACTIONS:More actions`)
+    t(() => $localize`:@@SI_CHAT_INPUT.SECONDARY_ACTIONS:Additional actions`)
   );
+
+  /**
+   * Suggested follow-up prompts to display as pill buttons above the chat input.
+   * Use `followUpPromptSelected` to handle selection and update the input value.
+   * Typically populated from AI response data and cleared after selection or on send.
+   * @defaultValue []
+   */
+  readonly followUpPrompts = input<string[]>([]);
+
+  /**
+   * Emitted when the user selects a follow-up prompt.
+   * The emitted value is the text of the selected prompt.
+   */
+  readonly followUpPromptSelected = output<string>();
 
   /**
    * Emitted when the user wants to send a message
@@ -349,8 +366,24 @@ export class SiChatInputComponent implements AfterViewInit {
 
   protected readonly dragOver = signal(false);
 
+  private readonly injector = inject(Injector);
+
   protected onInputChange(value: string): void {
     this.value.set(value);
+  }
+
+  protected selectFollowUpPrompt(prompt: string): void {
+    this.followUpPromptSelected.emit(prompt);
+    this.focus();
+    afterNextRender(
+      () => {
+        const textarea = this.textInput();
+        if (textarea?.nativeElement) {
+          this.setTextareaHeight(textarea.nativeElement);
+        }
+      },
+      { injector: this.injector }
+    );
   }
 
   protected onSend(): void {

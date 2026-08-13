@@ -2,9 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
+import { Overlay } from '@angular/cdk/overlay';
 import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { page, userEvent } from 'vitest/browser';
 
 import { SiPopoverDirective } from './si-popover.directive';
@@ -191,7 +192,7 @@ describe('with scrollStrategy', () => {
     </button>`
   })
   class ScrollStrategyHostComponent {
-    readonly scrollStrategy = signal<ScrollStrategy | undefined>(undefined);
+    readonly scrollStrategy = signal(defaultConnectedOverlayScrollStrategy());
   }
 
   beforeEach(() => {
@@ -211,5 +212,23 @@ describe('with scrollStrategy', () => {
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).not.toBeInTheDocument();
+  });
+
+  it('should reopen popover after the close scroll strategy detached it', async () => {
+    const overlay = TestBed.inject(Overlay);
+    fixture.componentInstance.scrollStrategy.set(overlay.scrollStrategies.close());
+    await fixture.whenStable();
+    const button = page.getByRole('button', { name: 'Test' });
+
+    await userEvent.click(button);
+    document.dispatchEvent(new Event('scroll', { bubbles: true }));
+    await fixture.whenStable();
+
+    await userEvent.click(button);
+
+    expect(document.querySelector('.popover')).toBeInTheDocument();
+    await expect.element(button).toHaveAttribute('aria-expanded', 'true');
+
+    await userEvent.click(button);
   });
 });

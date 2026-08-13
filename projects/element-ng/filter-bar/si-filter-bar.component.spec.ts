@@ -279,7 +279,7 @@ describe('SiFilterBarComponent', () => {
     await timeout(200);
     fixture.detectChanges();
     const values = element.querySelectorAll<HTMLElement>('si-filter-pill .value');
-    expect(values[values.length - 1]).toHaveTextContent('+ 1 filters');
+    expect(values[values.length - 1]).toHaveTextContent('+ 1 criteria');
   });
 
   it('should not display too many filters when responsive is enabled and allow reset disabled', async () => {
@@ -321,6 +321,6 @@ describe('SiFilterBarComponent', () => {
     await timeout(200);
     fixture.detectChanges();
     const values = element.querySelectorAll<HTMLElement>('si-filter-pill .value');
-    expect(values[values.length - 1]).toHaveTextContent('+ 2 filters');
+    expect(values[values.length - 1]).toHaveTextContent('+ 2 criteria');
   });
 });

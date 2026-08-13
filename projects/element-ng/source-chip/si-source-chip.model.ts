@@ -1,0 +1,16 @@
+/**
+ * Copyright (c) Siemens 2016 - 2026
+ * SPDX-License-Identifier: MIT
+ */
+
+/** Definition of a single source */
+export interface SourceReference {
+  /** Source name displayed to the user. */
+  name: string;
+  /** Source URL. */
+  url: string;
+  /** Optional source description. */
+  description?: string;
+  /** Optional source quote. Takes precedence over {@link description}. */
+  quote?: string;
+}

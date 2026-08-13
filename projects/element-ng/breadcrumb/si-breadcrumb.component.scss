@@ -4,17 +4,13 @@
   flex-wrap: nowrap;
 }
 
-.dropdown-menu.show > .dropdown-item {
-  background-color: variables.$element-base-1;
-}
-
 .item {
   display: flex;
   align-items: center;
 }
 
 .separator {
-  color: variables.$element-ui-2;
+  color: variables.$si-sys-text-secondary;
   margin-block: 0;
   margin-inline: 0;
 }
@@ -23,22 +19,8 @@
   cursor: pointer;
 }
 
-// overwrite some of Bootstrap's dropdown styling
-.dropdown-item {
-  &.active,
-  &:active {
-    background-color: variables.$element-base-1;
-  }
-
-  &:hover,
-  &:focus {
-    background-color: variables.$element-base-0 !important; // stylelint-disable-line declaration-no-important
-    text-decoration: underline;
-  }
-}
-
 .disable-router-link,
 .disable-router-link:hover {
   pointer-events: none;
-  color: variables.$element-text-disabled;
+  color: variables.$si-sys-text-disabled;
 }

@@ -1,0 +1,8 @@
+:root {
+  --si-feedback-icon-size: 1rem;
+}
+
+.feedback {
+  inset-inline-start: var(--si-feedback-icon-size);
+  --si-feedback-icon-offset-extra: 2rem;
+}

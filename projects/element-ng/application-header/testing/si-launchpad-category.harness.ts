@@ -7,7 +7,7 @@ import { ComponentHarness, HarnessPredicate } from '@angular/cdk/testing';
 import { SiLaunchpadAppHarness } from './si-launchpad-app.harness';
 
 export class SiLaunchpadCategoryHarness extends ComponentHarness {
-  static readonly hostSelector = '.apps-scroll > div';
+  static readonly hostSelector = 'si-launchpad-category';
 
   static withName(name: string): HarnessPredicate<SiLaunchpadCategoryHarness> {
     return new HarnessPredicate(SiLaunchpadCategoryHarness, {}).add('name', item =>

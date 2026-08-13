@@ -4,25 +4,25 @@ $font-family-monospace: Menlo, 'Ubuntu Mono', 'Liberation Mono', Consolas, Couri
 
 $live-preview-font-weight-semibold: variables.$si-font-weight-semibold;
 
-$live-preview-alert-color: variables.$element-action-danger-text;
-$live-preview-alert-background-color: variables.$element-action-danger;
+$live-preview-alert-color: variables.$si-sys-text-on-danger;
+$live-preview-alert-background-color: variables.$si-sys-background-danger;
 
-$live-preview-info-color: variables.$element-action-secondary-text;
-$live-preview-info-background-color: variables.$element-action-secondary;
+$live-preview-info-color: variables.$si-sys-text-accent;
+$live-preview-info-background-color: variables.$si-sys-background-accent-secondary;
 
-$live-preview-background-color: variables.$element-base-0;
-$live-preview-editor-background-color: variables.$element-base-1;
-$live-preview-bar-background-color: variables.$element-base-0;
-$live-preview-border-color: variables.$element-ui-4;
-$live-preview-button-background-color: variables.$element-action-secondary;
+$live-preview-background-color: variables.$si-sys-background-0;
+$live-preview-editor-background-color: variables.$si-sys-background-1;
+$live-preview-bar-background-color: variables.$si-sys-background-0;
+$live-preview-border-color: variables.$si-sys-border-4;
+$live-preview-button-background-color: variables.$si-sys-background-accent-secondary;
 
-$live-preview-control-fill-color: variables.$element-text-primary;
+$live-preview-control-fill-color: variables.$si-sys-text-primary;
 
 $live-preview-focus-outline: variables.$focus-style-outline;
 $live-preview-focus-outline-offset: variables.$focus-style-outline-offset;
 $live-preview-focus-outline-inside-offset: variables.$focus-style-outline-inside-offset;
-$live-preview-font-color: variables.$element-text-primary;
+$live-preview-font-color: variables.$si-sys-text-primary;
 
-$live-preview-link-color: variables.$element-action-secondary-text;
-$live-preview-link-hover-color: variables.$element-action-secondary-text-hover;
-$live-preview-link-inactive-color: variables.$element-text-primary;
+$live-preview-link-color: variables.$si-sys-text-accent;
+$live-preview-link-hover-color: variables.$si-sys-text-accent-hover;
+$live-preview-link-inactive-color: variables.$si-sys-text-primary;

@@ -1,0 +1,31 @@
+/**
+ * Copyright (c) Siemens 2016 - 2026
+ * SPDX-License-Identifier: MIT
+ */
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/all-variables';
+
+// Shared layout constants for the vertical navbar (next). Kept in one place so
+// the navbar host and the chip menu sub-component cannot drift on the values
+// that align the parked toggle and chip into a single segmented control.
+
+$vertical-nav-transition-duration: all-variables.$element-default-transition-duration;
+
+$vertical-nav-top-offset: calc(
+  all-variables.$si-application-header-height + all-variables.$si-titlebar-spacing +
+    all-variables.$si-system-banner-spacing
+);
+
+// Height of the toggle button; the chip must match this to fuse cleanly.
+$toggle-size: calc(1lh + (2 * map.get(all-variables.$spacers, 4)));
+
+// Position of the parked toggle/chip when the nav is collapsed (in-page slot).
+// Inline-start uses a CSS custom property so it can track `.si-layout-main-padding`
+// across breakpoints (16px below md, 32px from md up).
+$toggle-parked-block-start: calc(
+  #{$vertical-nav-top-offset} + #{map.get(all-variables.$spacers, 6)}
+);
+$toggle-parked-inline-start: var(--si-navbar-parked-inline-start);
+
+// Visual gap between the toggle and the chip inside the segmented control.
+$segmented-gap: 1px;

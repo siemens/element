@@ -1,4 +1,5 @@
 @use '../../variables/semantic-tokens';
+@use '../../variables/system-tokens';
 @use '../../variables/spacers';
 @use '../functions';
 @use '../variables';
@@ -42,24 +43,22 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
 %form-check-base {
   position: relative;
   appearance: none;
-  background-color: semantic-tokens.$element-base-1;
-  border: 1px solid semantic-tokens.$element-ui-1;
+  background-color: system-tokens.$si-sys-background-1;
+  border: 1px solid system-tokens.$si-sys-border-2;
   flex-shrink: 0;
   float: inline-start;
 
   &:is(:hover, .hover) {
-    border-color: semantic-tokens.$element-ui-1;
-    background: semantic-tokens.$element-base-1-hover;
+    background: system-tokens.$si-sys-background-hover;
   }
 
   &:is(:active, .active) {
-    border-color: semantic-tokens.$element-action-primary-active;
-    background: semantic-tokens.$element-action-primary-active;
+    background: system-tokens.$si-sys-background-selected;
   }
 
   &:is([disabled], .disabled) {
-    border-color: semantic-tokens.$element-ui-3;
-    background-color: semantic-tokens.$element-ui-5;
+    border-color: system-tokens.$si-sys-text-disabled;
+    background-color: transparent;
   }
 }
 
@@ -80,59 +79,39 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
     opacity: 0;
   }
 
-  &:is(:checked, .checked) {
-    background-color: semantic-tokens.$element-action-primary;
-    border-color: semantic-tokens.$element-action-primary;
+  &:is(:checked, .checked, :indeterminate) {
+    background-color: system-tokens.$si-sys-background-accent;
+    border-color: transparent;
 
     &:hover {
-      background-color: semantic-tokens.$element-action-primary-hover;
-      border-color: semantic-tokens.$element-action-primary-hover;
+      background-color: system-tokens.$si-sys-background-accent-hover;
+      border-color: transparent;
     }
 
     &:active {
-      background-color: semantic-tokens.$element-action-primary-active;
-      border-color: semantic-tokens.$element-action-primary-active;
+      background-color: system-tokens.$si-sys-background-accent-active;
+      border-color: transparent;
     }
 
     &::after {
-      background-color: semantic-tokens.$element-text-inverse;
+      background-color: system-tokens.$si-sys-text-on-accent;
       opacity: 1;
     }
 
     &[disabled] {
-      background-color: semantic-tokens.$element-ui-3;
-      border-color: semantic-tokens.$element-ui-3;
+      border-color: transparent;
+      background-color: system-tokens.$si-sys-text-disabled;
     }
   }
 
   &:indeterminate {
-    background-color: semantic-tokens.$element-base-1;
-    border-color: semantic-tokens.$element-action-primary;
-
     &::after {
       mask-image: none;
-      background-color: semantic-tokens.$element-action-primary;
       inline-size: 0.625rem;
       block-size: 0.125rem;
       opacity: 1;
       inset-inline-start: 0.125rem;
       inset-block-start: 0.375rem;
-    }
-
-    &:hover {
-      border-color: semantic-tokens.$element-action-primary-hover;
-
-      &::after {
-        background-color: semantic-tokens.$element-action-primary-hover;
-      }
-    }
-
-    &:disabled {
-      border-color: semantic-tokens.$element-ui-3;
-
-      &::after {
-        background-color: semantic-tokens.$element-ui-3;
-      }
     }
   }
 }
@@ -155,36 +134,27 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
   }
 
   &:checked {
-    border-color: semantic-tokens.$element-action-primary;
-    background-color: semantic-tokens.$element-action-primary;
+    border-color: transparent;
+    background-color: system-tokens.$si-sys-background-accent;
 
     &::after {
-      background-color: semantic-tokens.$element-action-primary-text;
+      border-color: transparent;
+      background-color: system-tokens.$si-sys-text-on-accent;
     }
 
     &:hover {
-      background-color: semantic-tokens.$element-action-primary-hover;
-      border-color: semantic-tokens.$element-action-primary-hover;
-
-      &::after {
-        background-color: semantic-tokens.$element-action-primary-text;
-      }
+      border-color: transparent;
+      background-color: system-tokens.$si-sys-background-accent-hover;
     }
 
     &:active {
-      border-color: semantic-tokens.$element-action-primary-active;
-
-      &::after {
-        background-color: semantic-tokens.$element-action-primary-text;
-      }
+      border-color: transparent;
+      background-color: system-tokens.$si-sys-border-accent-active;
     }
 
     &[disabled] {
-      border-color: semantic-tokens.$element-ui-3;
-
-      &::after {
-        background-color: semantic-tokens.$element-ui-3;
-      }
+      border-color: transparent;
+      background-color: system-tokens.$si-sys-text-disabled;
     }
   }
 }
@@ -193,7 +163,7 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
   display: inline-block;
   position: relative;
   padding-inline-end: $form-check-padding-x;
-  color: semantic-tokens.$element-text-primary;
+  color: system-tokens.$si-sys-text-primary;
 }
 
 .form-check-input {
@@ -204,7 +174,7 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
   }
 
   &[disabled] ~ .form-check-label {
-    color: semantic-tokens.$element-text-disabled;
+    color: system-tokens.$si-sys-text-disabled;
   }
 
   &:is([type='checkbox'], .si-form-checkbox) {
@@ -239,7 +209,7 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
     + .btn {
       pointer-events: none;
       filter: none;
-      color: semantic-tokens.$element-text-disabled;
+      color: system-tokens.$si-sys-text-disabled;
     }
   }
 }
@@ -271,7 +241,7 @@ formly-field-multicheckbox {
     }
 
     &[disabled] ~ label {
-      color: semantic-tokens.$element-text-disabled;
+      color: system-tokens.$si-sys-text-disabled;
     }
   }
 }
@@ -286,7 +256,7 @@ formly-field-radio {
     }
 
     &[disabled] ~ label {
-      color: semantic-tokens.$element-text-disabled;
+      color: system-tokens.$si-sys-text-disabled;
     }
   }
 }

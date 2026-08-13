@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ScrollStrategy } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
   computed,
@@ -12,7 +11,7 @@ import {
   input,
   TemplateRef
 } from '@angular/core';
-import { positions } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy, positions } from '@siemens/element-ng/common';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiTooltipService } from './si-tooltip.service';
@@ -49,10 +48,11 @@ export class SiTooltipDirective {
   readonly isDisabled = input(false, { transform: booleanAttribute });
 
   /**
-   * Optional CDK scroll strategy used for the tooltip overlay.
-   * If not provided, the default reposition strategy is used.
+   * CDK scroll strategy used for the tooltip overlay.
+   *
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
    */
-  readonly tooltipScrollStrategy = input<ScrollStrategy>();
+  readonly tooltipScrollStrategy = input(defaultConnectedOverlayScrollStrategy());
 
   /**
    * The context for the attached template

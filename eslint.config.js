@@ -60,6 +60,8 @@ export const tsConfig = defineConfig({
     '@angular-eslint/no-experimental': ['off'],
     '@angular-eslint/no-developer-preview': ['error'],
     '@angular-eslint/prefer-host-metadata-property': ['off'],
+    '@angular-eslint/inject-at-top': ['off'],
+    '@angular-eslint/prefer-service-decorator': ['off'],
     'no-console': [
       'error',
       {
@@ -148,6 +150,7 @@ export const templateConfig = defineConfig({
     '@angular-eslint/template/interactive-supports-focus': ['off'],
     '@angular-eslint/template/prefer-template-literal': ['off'],
     '@angular-eslint/template/no-non-null-assertion': ['off'],
+    '@angular-eslint/template/require-switch-default': ['off'],
     '@angular-eslint/template/elements-content': [
       'error',
       {

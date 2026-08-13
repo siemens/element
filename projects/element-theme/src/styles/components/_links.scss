@@ -1,4 +1,4 @@
-@use '../variables/semantic-tokens';
+@use '../variables/system-tokens';
 @use '../variables/si-vars';
 
 @use 'sass:math';
@@ -10,7 +10,7 @@ $si-link-icon-line-height: math.div(14em, 16);
 $si-link-icon-spacing: math.div(4em, 16);
 
 a:active {
-  color: semantic-tokens.$element-action-primary-active;
+  color: system-tokens.$si-sys-text-accent-active;
   text-decoration: underline;
 }
 

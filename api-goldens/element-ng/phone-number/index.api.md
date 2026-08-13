@@ -5,6 +5,7 @@
 ```ts
 
 import { AbstractControl } from '@angular/forms';
+import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { ElementRef } from '@angular/core';
@@ -40,21 +41,17 @@ export interface PhoneNumberModel {
 export class SiPhoneNumberInputComponent implements ControlValueAccessor, Validator, OnChanges, SiFormItemControl {
     readonly country: _angular_core.ModelSignal<string | undefined>;
     readonly defaultCountry: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly errormessageId: _angular_core.InputSignal<string>;
     readonly id: _angular_core.InputSignal<string>;
-    // (undocumented)
     readonly labelledby: _angular_core.InputSignal<string>;
     readonly phoneNumberAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly placeholderForSearch: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
+    readonly scrollStrategy: _angular_core.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
     readonly searchNoResultsFoundLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly selectCountryAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly supportedCountries: _angular_core.InputSignal<readonly string[] | null | undefined>;
-    // (undocumented)
     readonly valueChange: _angular_core.OutputEmitterRef<PhoneDetails>;
 }
 

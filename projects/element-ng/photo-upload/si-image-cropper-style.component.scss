@@ -6,15 +6,15 @@
       // Ensure cropper dialog fit into screen
       max-block-size: 70vb;
       // map sass processed vars to CSS vars
-      --image-cropper-outline-color: var(--element-base-translucent-1);
+      --image-cropper-outline-color: var(--si-sys-effects-backdrop);
 
       // override CSS vars internally used by ngx-image-cropper
       --cropper-outline-color: var(--image-cropper-outline-color);
-      --cropper-overlay-color: #{variables.$element-ui-5};
+      --cropper-overlay-color: #{variables.$si-sys-text-inverse};
 
       .ngx-ic-square {
         /* stylelint-disable-next-line declaration-no-important */
-        background: variables.$element-ui-0 !important;
+        background: variables.$si-sys-border-accent !important;
       }
 
       // we make use of the 'double selector' tactic to increase
@@ -22,7 +22,7 @@
       .ngx-ic-cropper.ngx-ic-cropper {
         // Necessary to show the cropper rectangle on top of the image, by default the outline is removed by _focus.scss
         /* stylelint-disable-next-line declaration-no-important */
-        outline: 2px solid variables.$element-ui-0 !important;
+        outline: 2px solid variables.$si-sys-border-accent !important;
 
         &::after {
           z-index: 0;

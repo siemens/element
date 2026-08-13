@@ -1,5 +1,5 @@
 @use '../variables';
-@use '../variables/semantic-tokens';
+@use '../variables/system-tokens';
 @use '../variables/spacers';
 @use '../variables/typography';
 @use '../variables/zindex';
@@ -126,15 +126,15 @@
 
   // duplicating hover styles from bootstrap. To split them from focus styles. Otherwise hover on focus elements will not work.
   &:hover {
-    color: semantic-tokens.$element-text-primary;
-    background-color: semantic-tokens.$element-base-1-hover;
+    color: system-tokens.$si-sys-text-primary;
+    background-color: system-tokens.$si-sys-background-hover;
     text-decoration: none;
   }
 
   // duplicating hover styles from bootstrap. To split them from focus styles. Otherwise hover on focus elements will not work.
   &:is(:active, .active) {
-    color: var(--element-text-primary);
-    background-color: var(--element-base-1-selected);
+    color: var(--si-sys-text-primary);
+    background-color: var(--si-sys-background-selected);
   }
 
   &:is(.disabled, :disabled) {
@@ -162,7 +162,7 @@
 // FIXME: drop when dropping si-menu-legacy
 .dropdown-item-static {
   &:is(.active, :active, :hover, :hover:focus:not(:focus-visible), :focus) {
-    background-color: semantic-tokens.$element-base-1;
+    background-color: system-tokens.$si-sys-background-1;
   }
 }
 

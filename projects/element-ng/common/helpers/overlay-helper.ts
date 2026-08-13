@@ -6,14 +6,16 @@
 import {
   ConnectedOverlayPositionChange,
   ConnectionPositionPair,
+  CDK_CONNECTED_OVERLAY_DEFAULT_CONFIG,
   FlexibleConnectedPositionStrategy,
   Overlay,
   OverlayConfig,
   OverlayRef,
   PositionStrategy,
-  ScrollStrategy
+  ScrollStrategy,
+  ScrollStrategyOptions
 } from '@angular/cdk/overlay';
-import { ElementRef } from '@angular/core';
+import { ElementRef, inject } from '@angular/core';
 
 import {
   positionBottomEnd,
@@ -47,6 +49,26 @@ export function makePositionStrategy(
     positionStrategy.withViewportMargin(8);
   }
   return positionStrategy;
+}
+
+/**
+ * Returns the configured connected-overlay scroll strategy or the CDK reposition fallback.
+ * Must be called in an Angular injection context.
+ */
+export function defaultConnectedOverlayScrollStrategy(): ScrollStrategy {
+  return defaultConnectedOverlayScrollStrategyFactory()();
+}
+
+/**
+ * Returns a factory that creates a connected-overlay scroll strategy on demand.
+ * Must be called in an Angular injection context.
+ */
+export function defaultConnectedOverlayScrollStrategyFactory(): () => ScrollStrategy {
+  const defaultScrollStrategy = inject(CDK_CONNECTED_OVERLAY_DEFAULT_CONFIG, {
+    optional: true
+  })?.scrollStrategy;
+  const scrollStrategyOptions = inject(ScrollStrategyOptions);
+  return () => defaultScrollStrategy ?? scrollStrategyOptions.reposition();
 }
 
 export function makeOverlay(

@@ -50,7 +50,8 @@ provides fundamental information users need while navigating the page.
 ### Placement
 
 - The vertical space between the page header and top element is `16px`.
-- Use the text style `H2 Heading` with a `text-primary` color for the page title.
+- Use the text style `H3 Heading` with a `text-primary` color for the page title below 576px.
+  At 576px and above, use the `H2 Heading` text style.
 - If a description or subtitle is needed, the use the text style `Body 2` with a
   `text-secondary` color. The vertical space between the title and subtitle must
   be `8px`.

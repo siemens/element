@@ -5,5 +5,5 @@
     "lib": ["es2022", "dom", "esnext.disposable"],
     "types": ["@siemens/element-translate-ng/localize-types", "vitest/globals"]
   },
-  "include": ["**/*.spec.ts", "**/*.d.ts"]
+  "include": ["./**/*.spec.ts", "./**/*.d.ts"]
 }

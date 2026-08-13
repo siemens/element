@@ -38,8 +38,6 @@ export class SiSplitComponent {
     constructor();
     readonly gutterSize: _angular_core.InputSignal<number>;
     readonly orientation: _angular_core.InputSignal<SplitOrientation>;
-    readonly sizes: _angular_core.InputSignal<number[]>;
-    // (undocumented)
     readonly sizesChange: _angular_core.OutputEmitterRef<number[]>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
 }
@@ -52,11 +50,10 @@ export class SiSplitModule {
 export class SiSplitPartComponent {
     constructor();
     readonly actions: _angular_core.InputSignal<Action[]>;
-    // (undocumented)
     readonly collapseChanged: _angular_core.OutputEmitterRef<boolean>;
     get collapsed(): boolean;
     readonly collapseDirection: _angular_core.InputSignal<CollapseTo>;
-    readonly collapseIconClass: _angular_core.InputSignal<string>;
+    readonly collapseIconClass: _angular_core.InputSignal<string | undefined>;
     readonly collapseLabel: _angular_core.InputSignal<TranslatableString>;
     readonly collapseOthers: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly collapseToMinSize: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -70,15 +67,18 @@ export class SiSplitPartComponent {
     readonly scale: _angular_core.InputSignal<Scale>;
     readonly showCollapseButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showHeader: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly size: _angular_core.InputSignalWithTransform<number | undefined, unknown>;
-    // (undocumented)
+    readonly size: _angular_core.InputSignalWithTransform<number, string | number>;
     readonly stateChange: _angular_core.OutputEmitterRef<PartState>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
     toggleCollapse(): void;
+    readonly unit: _angular_core.InputSignal<SplitUnit>;
 }
 
 // @public (undocumented)
 export type SplitOrientation = 'horizontal' | 'vertical';
+
+// @public (undocumented)
+export type SplitUnit = 'px' | 'fr';
 
 // (No @packageDocumentation comment for this package)
 

@@ -4,7 +4,6 @@
 
 ```ts
 
-import { ActivatedRoute } from '@angular/router';
 import * as _angular_core from '@angular/core';
 import { ConnectedPosition } from '@angular/cdk/overlay';
 import { ElementRef } from '@angular/core';
@@ -80,9 +79,7 @@ export class SiAccountDetailsComponent {
 export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDestroy {
     constructor();
     readonly expandBreakpoint: _angular_core.InputSignal<"sm" | "md" | "lg" | "xl" | "xxl" | "never">;
-    // (undocumented)
     readonly launchpad: _angular_core.InputSignal<TemplateRef<void> | undefined>;
-    // (undocumented)
     readonly launchpadLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
 
@@ -137,7 +134,8 @@ export class SiLaunchpadFactoryComponent {
     readonly favoriteAppsText: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     readonly favoriteChange: _angular_core.OutputEmitterRef<FavoriteChangeEvent>;
-    readonly showLessAppsText: _angular_core.InputSignal<TranslatableString>;
+    // @deprecated (undocumented)
+    readonly showLessAppsText: _angular_core.InputSignal<unknown>;
     readonly showMoreAppsText: _angular_core.InputSignal<TranslatableString>;
     readonly subtitleText: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly titleText: _angular_core.InputSignal<TranslatableString>;

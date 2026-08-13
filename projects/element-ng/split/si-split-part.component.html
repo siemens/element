@@ -8,7 +8,7 @@
         @for (action of actions(); track $index) {
           <button
             type="button"
-            class="si-split-button"
+            class="btn btn-icon btn-tertiary-ghost si-split-button"
             [title]="action.tooltip || ''"
             [attr.aria-label]="action.tooltip"
             (click)="action.click($event)"
@@ -22,11 +22,11 @@
       <div class="si-split-part-collapse-button">
         <button
           type="button"
-          class="si-split-button"
+          class="btn btn-icon btn-tertiary-ghost si-split-button"
           [attr.aria-label]="collapseLabel() | translate"
           (click)="toggleCollapse()"
         >
-          <si-icon class="collapse-icon" [icon]="collapseIconClass()" />
+          <si-icon class="collapse-icon" [icon]="collapseIconClass() ?? icons.elementDoubleRight" />
         </button>
       </div>
     }

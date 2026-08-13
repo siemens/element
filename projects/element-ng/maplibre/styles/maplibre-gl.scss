@@ -1,0 +1,716 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/variables/semantic-tokens';
+
+$button-block-size: calc(1rem + 2 * map.get(variables.$spacers, 4));
+$outer-ctrl-margin: map.get(variables.$spacers, 3);
+$attrib-icon-size: map.get(variables.$spacers, 8);
+$attrib-compact-padding: map.get(variables.$spacers, 8) + map.get(variables.$spacers, 2);
+
+// Element icon assets are resolved and emitted by the consumer's Sass build.
+$icon-attribution: url('@siemens/element-icons/icons/element-state-info.svg');
+$icon-zoom-out: url('@siemens/element-icons/icons/element-minus.svg');
+$icon-zoom-in: url('@siemens/element-icons/icons/element-plus.svg');
+$icon-fullscreen: url('@siemens/element-icons/icons/element-zoom.svg');
+$icon-shrink: url('@siemens/element-icons/icons/element-pinch.svg');
+$icon-compass: url('@siemens/element-icons/icons/element-compass-needle.svg');
+$icon-glob: url('@siemens/element-icons/icons/element-global.svg');
+$icon-locate: url('@siemens/element-icons/icons/element-locate.svg');
+$icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
+
+%base-control {
+  background: variables.$si-sys-background-3;
+}
+
+.maplibregl-map {
+  @extend %base-control;
+
+  font:
+    12px/20px variables.$si-font-family,
+    sans-serif;
+  overflow: hidden;
+  position: relative;
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0);
+
+  &:fullscreen {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  &:hover .maplibregl-popup-track-pointer {
+    display: flex;
+  }
+
+  &:active .maplibregl-popup-track-pointer {
+    display: none;
+  }
+}
+
+.maplibregl-canvas {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+}
+
+.maplibregl-canvas-container {
+  &.maplibregl-interactive {
+    cursor: grab;
+    user-select: none;
+
+    &.maplibregl-track-pointer {
+      cursor: pointer;
+    }
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  &.maplibregl-touch-zoom-rotate {
+    touch-action: pan-x pan-y;
+
+    .maplibregl-canvas {
+      touch-action: pan-x pan-y;
+    }
+
+    &.maplibregl-touch-drag-pan {
+      touch-action: none;
+
+      .maplibregl-canvas {
+        touch-action: none;
+      }
+    }
+  }
+
+  &.maplibregl-touch-drag-pan {
+    touch-action: pinch-zoom;
+
+    .maplibregl-canvas {
+      touch-action: pinch-zoom;
+    }
+
+    &.maplibregl-cooperative-gestures {
+      touch-action: pan-x pan-y;
+
+      .maplibregl-canvas {
+        touch-action: pan-x pan-y;
+      }
+    }
+  }
+}
+
+.maplibregl-ctrl-top-left,
+.maplibregl-ctrl-top-right,
+.maplibregl-ctrl-bottom-left,
+.maplibregl-ctrl-bottom-right {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.maplibregl-ctrl-top-left {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+
+  .maplibregl-ctrl {
+    margin-block: $outer-ctrl-margin 0;
+    margin-inline: $outer-ctrl-margin 0;
+    float: inline-start;
+  }
+
+  > .maplibregl-ctrl-attrib.maplibregl-compact-show {
+    padding-block: map.get(variables.$spacers, 1);
+    padding-inline: $attrib-compact-padding map.get(variables.$spacers, 4);
+    border-radius: map.get(variables.$spacers, 5);
+  }
+
+  .maplibregl-ctrl-attrib-button {
+    inset-inline-start: 0;
+  }
+
+  > .maplibregl-ctrl-attrib.maplibregl-compact::after {
+    inset-block-start: 0;
+    inset-inline-start: 0;
+  }
+}
+
+.maplibregl-ctrl-top-right {
+  inset-block-start: 0;
+  inset-inline-end: 0;
+
+  .maplibregl-ctrl {
+    margin-block: $outer-ctrl-margin 0;
+    margin-inline: 0 $outer-ctrl-margin;
+    float: inline-end;
+  }
+
+  > .maplibregl-ctrl-attrib.maplibregl-compact::after {
+    inset-block-start: 0;
+    inset-inline-end: 0;
+  }
+}
+
+.maplibregl-ctrl-bottom-left {
+  inset-block-end: 0;
+  inset-inline-start: 0;
+
+  .maplibregl-ctrl {
+    margin-block: 0 $outer-ctrl-margin;
+    margin-inline: $outer-ctrl-margin 0;
+    float: inline-start;
+  }
+
+  > .maplibregl-ctrl-attrib.maplibregl-compact-show {
+    padding-block: map.get(variables.$spacers, 1);
+    padding-inline: $attrib-compact-padding map.get(variables.$spacers, 4);
+    border-radius: map.get(variables.$spacers, 4);
+  }
+
+  .maplibregl-ctrl-attrib-button {
+    inset-inline-start: 0;
+  }
+
+  > .maplibregl-ctrl-attrib.maplibregl-compact::after {
+    inset-block-end: 0;
+    inset-inline-start: 0;
+  }
+}
+
+.maplibregl-ctrl-bottom-right {
+  inset-inline-end: 0;
+  inset-block-end: 0;
+
+  .maplibregl-ctrl {
+    margin-block: 0 $outer-ctrl-margin;
+    margin-inline: 0 $outer-ctrl-margin;
+    float: inline-end;
+  }
+
+  > .maplibregl-ctrl-attrib.maplibregl-compact::after {
+    inset-block-end: 0;
+    inset-inline-end: 0;
+  }
+}
+
+.maplibregl-ctrl {
+  clear: both;
+  pointer-events: auto;
+  /* workaround for a Safari bug https://github.com/mapbox/mapbox-gl-js/issues/8185 */
+  transform: translate(0, 0);
+}
+
+.maplibregl-ctrl-group {
+  display: flex;
+  flex-direction: column;
+  gap: map.get(variables.$spacers, 1);
+
+  button {
+    inline-size: $button-block-size;
+    block-size: $button-block-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    outline: none;
+    border: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &.maplibregl-ctrl-compass {
+      touch-action: none;
+      cursor: grab;
+      user-select: none;
+
+      &:active {
+        cursor: grabbing;
+      }
+
+      .maplibregl-ctrl-icon {
+        background-color: variables.$si-sys-text-accent;
+        mask-image: $icon-compass;
+      }
+    }
+
+    &:focus {
+      @include variables.make-outline-focus-inside();
+
+      &:focus-visible {
+        @include variables.make-outline-focus-inside();
+      }
+
+      &:not(:focus-visible) {
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+.maplibregl-ctrl {
+  button {
+    @extend %base-control;
+
+    .maplibregl-ctrl-icon {
+      display: block;
+      inline-size: variables.$si-icon-font-size;
+      block-size: variables.$si-icon-font-size;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: variables.$element-action-disabled-opacity;
+    }
+
+    &:not(:disabled) {
+      &:hover {
+        background: variables.$si-sys-background-accent-secondary-hover;
+        color: variables.$si-sys-text-on-accent-secondary-hover;
+      }
+
+      &:active {
+        background-color: variables.$si-sys-background-accent-secondary-active;
+        color: variables.$si-sys-text-on-accent-secondary-active;
+      }
+    }
+  }
+}
+
+.maplibregl-ctrl button {
+  .maplibregl-ctrl-icon {
+    background-color: variables.$si-sys-text-accent;
+  }
+
+  &.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon {
+    mask-image: $icon-zoom-out;
+  }
+
+  &.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon {
+    // element-plus
+    mask-image: $icon-zoom-in;
+  }
+
+  &.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon {
+    mask-image: $icon-fullscreen;
+  }
+
+  &.maplibregl-ctrl-shrink .maplibregl-ctrl-icon {
+    mask-image: $icon-shrink;
+  }
+
+  &.maplibregl-ctrl-globe,
+  &.maplibregl-ctrl-globe-enabled {
+    .maplibregl-ctrl-icon {
+      mask-image: $icon-glob;
+    }
+  }
+
+  &.maplibregl-ctrl-terrain,
+  &.maplibregl-ctrl-terrain-enabled {
+    .maplibregl-ctrl-icon {
+      mask-image: $icon-terrain;
+    }
+  }
+
+  &.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon {
+    mask-image: $icon-locate;
+  }
+}
+
+.maplibregl-ctrl.maplibregl-ctrl-attrib {
+  @extend %base-control;
+  padding-block: 0;
+  padding-inline: map.get(variables.$spacers, 3);
+  color: variables.$si-sys-text-accent;
+  margin: 0;
+}
+
+.maplibregl-ctrl-attrib {
+  a {
+    color: variables.$si-sys-text-accent;
+    text-decoration: none;
+
+    &:hover {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+
+  @media screen {
+    // Compact more when canvas size <= = 640px forced compact mode
+    &.maplibregl-compact {
+      background: variables.$si-sys-background-3;
+
+      min-block-size: 20px;
+      padding-block: map.get(variables.$spacers, 1);
+      padding-inline: 0 map.get(variables.$spacers, 8);
+      margin: $outer-ctrl-margin;
+      position: relative;
+      border-radius: map.get(variables.$spacers, 5);
+      box-sizing: content-box;
+
+      .maplibregl-ctrl-attrib-inner {
+        display: none;
+      }
+
+      .maplibregl-ctrl-attrib-button {
+        display: block;
+      }
+
+      &::after {
+        @media (forced-colors: active) {
+          background-image: $icon-attribution;
+        }
+
+        @media (forced-colors: active) and (prefers-color-scheme: light) {
+          background-image: $icon-attribution;
+        }
+      }
+    }
+
+    &.maplibregl-compact-show {
+      padding-block: map.get(variables.$spacers, 1);
+      padding-inline: map.get(variables.$spacers, 4) $attrib-compact-padding;
+      visibility: visible;
+
+      .maplibregl-ctrl-attrib-inner {
+        display: block;
+      }
+    }
+
+    .maplibregl-ctrl-attrib-button {
+      display: none;
+      cursor: pointer;
+      position: absolute;
+      inline-size: $attrib-icon-size;
+      block-size: $attrib-icon-size;
+      box-sizing: border-box;
+      border-radius: map.get(variables.$spacers, 5);
+      outline: none;
+      inset-block-start: 0;
+      inset-inline-end: 0;
+      border: 0;
+
+      &::before {
+        content: '';
+        display: block;
+        inline-size: 100%;
+        block-size: 100%;
+        background-color: variables.$si-sys-text-accent;
+        mask-image: $icon-attribution;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
+      }
+
+      &:focus {
+        @include variables.make-outline-focus-inside();
+      }
+    }
+
+    summary.maplibregl-ctrl-attrib-button {
+      appearance: none;
+      list-style: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+    }
+  }
+}
+
+.maplibregl-attrib-empty {
+  display: none;
+}
+
+.maplibregl-ctrl-scale {
+  @extend %base-control;
+
+  font-size: 10px;
+  white-space: nowrap;
+  border-width: medium map.get(variables.$spacers, 1) map.get(variables.$spacers, 1);
+  border-style: none solid solid;
+  border-color: variables.$si-sys-border-accent;
+  padding-block: 0;
+  padding-inline: map.get(variables.$spacers, 2);
+  color: variables.$si-sys-text-accent;
+  box-sizing: border-box;
+}
+
+.maplibregl-popup {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  display: flex;
+  will-change: transform;
+  pointer-events: none;
+
+  &-anchor-top,
+  &-anchor-top-left,
+  &-anchor-top-right {
+    flex-direction: column;
+  }
+
+  &-anchor-bottom,
+  &-anchor-bottom-left,
+  &-anchor-bottom-right {
+    flex-direction: column-reverse;
+  }
+
+  &-anchor-left {
+    flex-direction: row;
+  }
+
+  &-anchor-right {
+    flex-direction: row-reverse;
+  }
+}
+
+.maplibregl-popup-tip {
+  inline-size: 0;
+  block-size: 0;
+  border: 10px solid transparent;
+  z-index: 1;
+
+  .maplibregl-popup-anchor-top & {
+    align-self: center;
+    border-block-start: none;
+    border-block-end-color: variables.$si-sys-background-3;
+  }
+
+  .maplibregl-popup-anchor-top-left & {
+    align-self: flex-start;
+    border-block-start: none;
+    border-inline-start: none;
+    border-block-end-color: variables.$si-sys-background-3;
+  }
+
+  .maplibregl-popup-anchor-top-right & {
+    align-self: flex-end;
+    border-block-start: none;
+    border-inline-end: none;
+    border-block-end-color: variables.$si-sys-background-3;
+  }
+
+  .maplibregl-popup-anchor-bottom & {
+    align-self: center;
+    border-block-end: none;
+    border-block-start-color: variables.$si-sys-background-3;
+  }
+
+  .maplibregl-popup-anchor-bottom-left & {
+    align-self: flex-start;
+    border-block-end: none;
+    border-inline-start: none;
+    border-block-start-color: variables.$si-sys-background-3;
+  }
+
+  .maplibregl-popup-anchor-bottom-right & {
+    align-self: flex-end;
+    border-block-end: none;
+    border-inline-end: none;
+    border-block-start-color: variables.$si-sys-background-3;
+  }
+
+  .maplibregl-popup-anchor-left & {
+    align-self: center;
+    border-inline-start: none;
+    border-inline-end-color: variables.$si-sys-background-3;
+  }
+
+  .maplibregl-popup-anchor-right & {
+    align-self: center;
+    border-inline-end: none;
+    border-inline-start-color: variables.$si-sys-background-3;
+  }
+}
+
+.maplibregl-popup-close-button {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: 0;
+  border: 0;
+  border-radius: 0 3px 0 0;
+  cursor: pointer;
+  background-color: transparent;
+
+  &:hover {
+    background-color: variables.$si-sys-background-accent-secondary-hover;
+  }
+}
+
+.maplibregl-popup-content {
+  @extend %base-control;
+
+  position: relative;
+  border-radius: 3px;
+  box-shadow: 0 1px map.get(variables.$spacers, 1) rgb(0 0 0 / 0.1);
+  padding-block: 15px;
+  padding-inline: 10px;
+  pointer-events: auto;
+
+  .maplibregl-popup-anchor-top-left & {
+    border-start-start-radius: 0;
+  }
+
+  .maplibregl-popup-anchor-top-right & {
+    border-start-end-radius: 0;
+  }
+
+  .maplibregl-popup-anchor-bottom-left & {
+    border-end-start-radius: 0;
+  }
+
+  .maplibregl-popup-anchor-bottom-right & {
+    border-end-end-radius: 0;
+  }
+}
+
+.maplibregl-popup-track-pointer {
+  display: none;
+
+  * {
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+.maplibregl-marker {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  will-change: transform;
+  transition: opacity 0.2s;
+}
+
+.maplibregl-user-location-dot {
+  background-color: rgb(29 161 242);
+  inline-size: 0.9375rem;
+  block-size: 0.9375rem;
+  border-radius: 50%;
+
+  &::before {
+    background-color: rgb(29 161 242);
+    content: '';
+    inline-size: 0.9375rem;
+    block-size: 0.9375rem;
+    border-radius: 50%;
+    position: absolute;
+    animation: maplibregl-user-location-dot-pulse 2s infinite;
+  }
+
+  &::after {
+    border-radius: 50%;
+    border: 0.125rem solid rgb(255 255 255);
+    content: '';
+    block-size: 1.1875rem;
+    inset-inline-start: -0.125rem;
+    position: absolute;
+    inset-block-start: -0.125rem;
+    inline-size: 1.1875rem;
+    box-sizing: border-box;
+    box-shadow: 0 0 3px rgb(0 0 0 / 0.35);
+  }
+}
+
+@keyframes maplibregl-user-location-dot-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  70% {
+    transform: scale(3);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.maplibregl-user-location-dot-stale {
+  background-color: rgb(170 170 170);
+
+  &::after {
+    display: none;
+  }
+}
+
+.maplibregl-user-location-accuracy-circle {
+  background-color: rgb(29 161 242 / 0.2);
+  inline-size: 1px;
+  block-size: 1px;
+  border-radius: 100%;
+}
+
+.maplibregl-crosshair {
+  cursor: crosshair;
+
+  .maplibregl-interactive {
+    cursor: crosshair;
+
+    &:active {
+      cursor: crosshair;
+    }
+  }
+}
+
+.maplibregl-boxzoom {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 0;
+  block-size: 0;
+  background: rgb(255 255 255);
+  border: map.get(variables.$spacers, 1) dotted rgb(32 32 32);
+  opacity: 0.5;
+}
+
+.maplibregl-cooperative-gesture-screen {
+  background: rgb(0 0 0 / 0.4);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(255 255 255);
+  padding: 1rem;
+  font-size: 1.4em;
+  line-height: 1.2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease 1s;
+  z-index: 99999;
+
+  &.maplibregl-show {
+    opacity: 1;
+    transition: opacity 0.05s;
+  }
+
+  .maplibregl-mobile-message {
+    display: none;
+
+    @media (hover: none), (pointer: coarse) {
+      display: block;
+    }
+  }
+
+  .maplibregl-desktop-message {
+    @media (hover: none), (pointer: coarse) {
+      display: none;
+    }
+  }
+}
+
+.maplibregl-pseudo-fullscreen {
+  /* stylelint-disable */
+  position: fixed !important;
+  inline-size: 100% !important;
+  block-size: 100% !important;
+  inset-block-start: 0 !important;
+  inset-inline-start: 0 !important;
+  /* stylelint-enable */
+  z-index: 99999;
+}

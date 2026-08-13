@@ -1,8 +1,8 @@
 @use '../../variables/elevation';
 @use '../../variables/focus';
-@use '../../variables/semantic-tokens';
+@use '../../variables/system-tokens';
 
-$track-color: semantic-tokens.$element-ui-4 !default;
+$track-color: system-tokens.$si-sys-border-4 !default;
 $track-height: 4px !default;
 $thumb-size: 24px !default;
 
@@ -15,36 +15,36 @@ $thumb-size: 24px !default;
 
 @mixin range-thumb {
   box-shadow: var(--thumb-shadow);
-  border: 1px solid semantic-tokens.$element-action-secondary-border;
+  border: 1px solid system-tokens.$si-sys-border-accent;
   block-size: $thumb-size;
   inline-size: $thumb-size;
   border-radius: 50%;
-  background: semantic-tokens.$element-base-1;
+  background: system-tokens.$si-sys-background-1;
   cursor: pointer;
 
   &:hover {
-    border-color: semantic-tokens.$element-action-secondary-border-hover;
+    border-color: system-tokens.$si-sys-border-accent-hover;
     background: radial-gradient(
       circle,
-      semantic-tokens.$element-action-secondary-text-hover 0%,
-      semantic-tokens.$element-action-secondary-text-hover 35%,
-      semantic-tokens.$element-action-secondary-hover 36%
+      system-tokens.$si-sys-text-accent-hover 0%,
+      system-tokens.$si-sys-text-accent-hover 35%,
+      system-tokens.$si-sys-background-accent-secondary-hover 36%
     );
   }
 
   &:active {
-    border-color: semantic-tokens.$element-action-primary-active;
+    border-color: system-tokens.$si-sys-border-accent-active;
     background: radial-gradient(
       circle,
-      semantic-tokens.$element-action-primary-active 0%,
-      semantic-tokens.$element-action-primary-active 35%,
-      semantic-tokens.$element-action-secondary-active 36%
+      system-tokens.$si-sys-background-accent-active 0%,
+      system-tokens.$si-sys-background-accent-active 35%,
+      system-tokens.$si-sys-background-accent-secondary-active 36%
     );
   }
 }
 
 .form-range {
-  --thumb-shadow: #{elevation.$element-elevation-1};
+  --thumb-shadow: #{system-tokens.$si-sys-effects-shadow-2};
   -webkit-appearance: none; // stylelint-disable-line property-no-vendor-prefix
   background: transparent;
   inline-size: 100%;

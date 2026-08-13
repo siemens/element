@@ -4,20 +4,14 @@
  */
 import { A11yModule } from '@angular/cdk/a11y';
 import { booleanAttribute, Component, computed, inject, input, output } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { elementCancel, elementDown2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
-import { SiLaunchpadAppComponent } from './si-launchpad-app.component';
-import { App, AppCategory } from './si-launchpad.model';
-
-export interface FavoriteChangeEvent {
-  app: App;
-  favorite: boolean;
-}
+import { SiLaunchpadCategoryComponent } from './si-launchpad-category.component';
+import { App, AppCategory, FavoriteChangeEvent } from './si-launchpad.model';
 
 @Component({
   selector: 'si-launchpad-factory',
@@ -25,10 +19,8 @@ export interface FavoriteChangeEvent {
     A11yModule,
     SiLinkModule,
     SiTranslatePipe,
-    SiLaunchpadAppComponent,
-    SiIconComponent,
-    RouterLinkActive,
-    RouterLink
+    SiLaunchpadCategoryComponent,
+    SiIconComponent
   ],
   templateUrl: './si-launchpad-factory.component.html',
   styleUrl: './si-launchpad-factory.component.scss'
@@ -49,10 +41,10 @@ export class SiLaunchpadFactoryComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch app`)
    * ```
    */
-  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`));
+  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch app`));
 
   /**
    * Subtitle of the launchpad.
@@ -90,36 +82,19 @@ export class SiLaunchpadFactoryComponent {
    */
   readonly showMoreAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`));
 
-  /**
-   * Title of the show less apps button.
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`)
-   * ```
-   */
-  readonly showLessAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`));
+  /** @deprecated This input no longer has an effect. {@link showMoreAppsText} is shown in all cases. */
+  readonly showLessAppsText = input();
 
   readonly favoriteChange = output<FavoriteChangeEvent>();
 
   protected showAllApps = false;
+  protected readonly allAppsId = '__si-launchpad-factory-all-apps';
   protected readonly categories = computed(() => {
     const apps = this.apps();
-    const favorites = this.favorites();
-    const categories: AppCategory[] = [];
-    if (this.enableFavorites() && this.hasFavorites()) {
-      categories.push({
-        name: this.favoriteAppsText(),
-        apps: favorites
-      });
-    }
-
     if (this.isCategories(apps)) {
-      categories.push(...apps);
-    } else {
-      categories.push({ name: '', apps: [...apps] });
+      return apps;
     }
-    return categories;
+    return [{ name: '', apps: [...apps] }];
   });
   protected readonly favorites = computed(() =>
     this.apps()
@@ -128,15 +103,14 @@ export class SiLaunchpadFactoryComponent {
   );
   protected readonly hasFavorites = computed(() => this.favorites().length > 0);
   protected readonly icons = addIcons({ elementDown2, elementCancel });
-  protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
   private header = inject(SiApplicationHeaderComponent);
 
   protected closeLaunchpad(): void {
     this.header.closeLaunchpad();
   }
 
-  protected toggleFavorite(app: App, favorite: boolean): void {
-    this.favoriteChange.emit({ app, favorite });
+  protected toggleFavorite(event: FavoriteChangeEvent): void {
+    this.favoriteChange.emit(event);
   }
 
   protected escape(): void {
@@ -145,13 +119,5 @@ export class SiLaunchpadFactoryComponent {
 
   protected isCategories(items: App[] | AppCategory[]): items is AppCategory[] {
     return items.some(item => 'apps' in item);
-  }
-
-  protected isFavoriteToggleDisabled(app: App): boolean {
-    if ('_noFavorite' in app) {
-      return !!app._noFavorite;
-    } else {
-      return false;
-    }
   }
 }

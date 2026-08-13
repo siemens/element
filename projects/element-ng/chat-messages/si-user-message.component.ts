@@ -101,11 +101,11 @@ export class SiUserMessageComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_USER_MESSAGE.SECONDARY_ACTIONS:More actions`)
+   * t(() => $localize`:@@SI_USER_MESSAGE.SECONDARY_ACTIONS:Additional actions`)
    * ```
    */
   readonly secondaryActionsLabel = input(
-    t(() => $localize`:@@SI_USER_MESSAGE.SECONDARY_ACTIONS:More actions`)
+    t(() => $localize`:@@SI_USER_MESSAGE.SECONDARY_ACTIONS:Additional actions`)
   );
 
   protected readonly hasAttachments = computed(() => this.attachments()?.length > 0);

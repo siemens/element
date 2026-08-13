@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-text-primary;
   background: none;
   border: 0;
   font-size: variables.$si-font-size-body;
@@ -22,11 +22,12 @@
     margin-inline-start: map.get(variables.$spacers, 5);
   }
 
-  .icon-lg {
+  .icon {
     margin-inline-start: map.get(variables.$spacers, 5);
+    padding: map.get(variables.$spacers, 1);
   }
 
-  .icon-lg + .item-title {
+  .icon + .item-title {
     margin-inline-start: map.get(variables.$spacers, 4);
   }
 
@@ -40,8 +41,8 @@
   }
 
   &.active {
-    color: variables.$element-action-primary-hover;
-    background: variables.$element-base-1-selected;
+    color: variables.$si-sys-text-accent-active;
+    background: variables.$si-sys-background-selected;
 
     &::after {
       content: '';
@@ -49,13 +50,13 @@
       inset-block: 0;
       inset-inline-start: 0;
       inline-size: 4px;
-      background: variables.$element-action-primary-hover;
+      background: variables.$si-sys-border-accent-active;
     }
   }
 
   &:hover {
     text-decoration: none;
-    background: variables.$element-base-1-hover;
+    background: variables.$si-sys-background-hover;
   }
 }
 
@@ -94,7 +95,7 @@
   }
 }
 
-:host-context(.nav-collapsed):not(.is-chip) {
+:host-context(.nav-collapsed) {
   .badge {
     position: absolute;
     inset-block-start: map.get(variables.$spacers, 2);
@@ -118,30 +119,4 @@
 
 .badge {
   margin-inline: auto 0;
-}
-
-:host(.is-chip) {
-  // Suppress the left-bar active indicator; `aria-current="page"` carries
-  // the active role in the chip.
-  &.active::after {
-    display: none;
-  }
-
-  // Dropdown caret not needed in the chip — the flyout opens on click.
-  .dropdown-caret {
-    display: none;
-  }
-
-  .item-title {
-    font-weight: normal;
-  }
-}
-
-// Within the chip slot: fuse the left edge with the toggle button
-// (segmented control) and fill the wrapper so the label can truncate.
-:host-context(.chip).is-chip {
-  border-start-start-radius: 0;
-  border-end-start-radius: 0;
-  inline-size: 100%;
-  min-inline-size: 0;
 }

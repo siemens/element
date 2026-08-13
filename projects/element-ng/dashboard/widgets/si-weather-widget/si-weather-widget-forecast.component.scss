@@ -22,11 +22,11 @@
 }
 
 .si-weather-widget-forecast-range-min {
-  color: variables.$element-text-secondary;
+  color: variables.$si-sys-text-secondary;
 }
 
 .si-weather-widget-forecast-range-max {
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-text-primary;
   font-weight: variables.$si-font-weight-semibold;
 }
 
@@ -132,7 +132,7 @@
 }
 
 .si-weather-widget-forecast-day-label {
-  color: variables.$element-text-secondary;
+  color: variables.$si-sys-text-secondary;
   margin-block: map.get(variables.$spacers, 4);
   // The label track is `max-content`; prevent wrapping if the container
   // ever constrains the row below `max-content` (e.g. very large root font
@@ -289,6 +289,6 @@
   display: inline-flex;
   vertical-align: middle;
   margin-inline-end: map.get(variables.$spacers, 1);
-  color: variables.$element-text-secondary;
+  color: variables.$si-sys-text-secondary;
   margin-block: map.get(variables.$spacers, 3);
 }

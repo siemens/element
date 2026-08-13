@@ -1,5 +1,5 @@
 - text: Heading
-- button "Toggle"
+- button "Show actions"
 - list:
   - listitem:
     - text: /Today \d+:\d+ Title Description/
@@ -19,33 +19,33 @@
 - list:
   - listitem:
     - text: /Today \d+:\d+ Title Description/
-    - button "Expand actions"
+    - button "Show actions": 
   - listitem:
     - text: /Today \d+:\d+ Title Description/
-    - button "Expand actions"
+    - button "Show actions": 
   - listitem:
     - text: /Today \d+:\d+ Title Description/
     - button "Redo"
   - listitem:
     - text: /Today \d+:\d+ Title Description/
-    - button "Expand actions"
+    - button "Show actions": 
 - button "Do something"
 - text: Heading
 - list:
   - listitem:
     - text: /Today \d+:\d+ Title/
-    - button "Expand actions"
+    - button "Show actions": 
   - listitem:
     - text: /Today \d+:\d+ Title/
-    - button "Expand actions"
+    - button "Show actions": 
   - listitem:
     - text: /Today \d+:\d+ Title/
     - button "Redo"
   - listitem:
     - text: /Today \d+:\d+ Title/
-    - button "Expand actions"
+    - button "Show actions": 
 - text: Heading
-- button "Toggle"
+- button "Show actions"
 - list:
   - listitem:
     - text: /Today \d+:\d+ Title Description/

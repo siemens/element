@@ -48,8 +48,8 @@ $si-circle-status-bullet-size-small: 0.5rem;
   border: 1px solid transparent;
 
   &.has-icon {
-    border-color: #{variables.$element-ui-4};
-    background-color: variables.$element-base-1;
+    border-color: #{variables.$si-sys-border-4};
+    background-color: variables.$si-sys-background-1;
     margin-block: 0.375rem;
     margin-inline: 0 0.75rem;
 

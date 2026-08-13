@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, output } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import { SiWidgetCatalogComponent, Widget, WidgetConfig } from '@siemens/dashboards-ng';
 import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -16,9 +16,9 @@ import { HELLO_DESCRIPTOR } from '../../widgets/hello-widget/widget-descriptors'
   styleUrl: './custom-widget-catalog.component.scss'
 })
 export class CustomWidgetCatalogComponent extends SiWidgetCatalogComponent {
-  override readonly closed = output<Omit<WidgetConfig, 'id'> | undefined>();
+  override readonly closed = output<Omit<WidgetConfig, 'id'>[] | undefined>();
 
-  override widgetCatalog: Widget[] = [];
+  override readonly widgetList = signal<Widget[]>([]);
 
   myDescriptor = HELLO_DESCRIPTOR;
 
@@ -27,7 +27,7 @@ export class CustomWidgetCatalogComponent extends SiWidgetCatalogComponent {
   }
 
   override onAddWidget(): void {
-    const selected = this.selected();
+    const selected = this.selectedWidgets()[0];
     if (selected) {
       const widgetConfig: Omit<WidgetConfig, 'id'> = {
         heading: selected.name,
@@ -37,7 +37,7 @@ export class CustomWidgetCatalogComponent extends SiWidgetCatalogComponent {
         ...selected.defaults,
         payload: { ...selected.payload }
       };
-      this.closed.emit(widgetConfig);
+      this.closed.emit([widgetConfig]);
     }
   }
 

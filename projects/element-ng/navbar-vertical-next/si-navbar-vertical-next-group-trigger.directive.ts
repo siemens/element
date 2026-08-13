@@ -2,11 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ConnectionPositionPair,
-  FlexibleConnectedPositionStrategy,
-  Overlay
-} from '@angular/cdk/overlay';
+import { Overlay } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
   Component,
@@ -42,6 +38,7 @@ import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
   host: { '[attr.aria-owns]': 'groupId()' }
 })
 class SiNavbarFlyoutAnchorComponent {
+  /** ID of the flyout group owned by this accessibility anchor. */
   readonly groupId = input<string>();
 }
 
@@ -51,7 +48,7 @@ class SiNavbarFlyoutAnchorComponent {
   host: {
     class: 'dropdown-toggle',
     '[id]': 'id',
-    '[class.show]': 'expanded()',
+    '[class.show]': '!flyoutMode() && expanded()',
     '[attr.aria-controls]': 'groupId',
     '[attr.aria-expanded]': 'flyoutMode() ? flyout() : expanded()',
     '(click)': 'triggered()'
@@ -64,10 +61,12 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
   readonly groupId = `si-navbar-vertical-next-group-${SiNavbarVerticalNextGroupTriggerDirective.idCounter++}`;
   readonly id = `${this.groupId}-trigger`;
 
+  /** Template rendered for the expandable group. */
   readonly groupTemplate = input.required<TemplateRef<unknown>>({
     alias: 'siNavbarVerticalNextGroupTriggerFor'
   });
 
+  /** Key used to persist the expanded state of this group. */
   readonly stateId = input<string>();
 
   /** @defaultValue false */
@@ -125,8 +124,14 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
   private readonly overlay = inject(Overlay);
   private readonly destroyRef = inject(DestroyRef);
   private readonly injector = Injector.create({ parent: inject(Injector), providers: [] });
-  private readonly overlayRef = this.overlay.create({
-    positionStrategy: this.buildPositionStrategy(this.navbar.chipMode())
+  private overlayRef = this.overlay.create({
+    positionStrategy: this.overlay
+      .position()
+      .flexibleConnectedTo(this.viewContainer.element)
+      .withPositions([
+        { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top' },
+        { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
+      ])
   });
   private groupView?: EmbeddedViewRef<unknown>;
   private flyoutAnchorComponentRef?: ComponentRef<SiNavbarFlyoutAnchorComponent>;
@@ -150,24 +155,6 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
       this.overlayRef.detach();
       this.overlayRef.dispose();
     });
-  }
-
-  /** @internal */
-  private buildPositionStrategy(chipMode: boolean): FlexibleConnectedPositionStrategy {
-    const positions: ConnectionPositionPair[] = chipMode
-      ? [
-          { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
-          { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' }
-        ]
-      : [
-          { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top' },
-          { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
-        ];
-
-    return this.overlay
-      .position()
-      .flexibleConnectedTo(this.viewContainer.element)
-      .withPositions(positions);
   }
 
   /** @internal */
@@ -205,13 +192,11 @@ export class SiNavbarVerticalNextGroupTriggerDirective {
   }
 
   private attachFlyout(): void {
-    this.overlayRef.updatePositionStrategy(this.buildPositionStrategy(this.navbar.chipMode()));
     this.groupView?.destroy();
     this.groupView = this.overlayRef.attach(this.templatePortal());
-    // In chip mode the trigger's DOM is outside <nav> via DomPortal; use the
-    // navbar's in-nav anchor host so aria-owns stays within the navigation landmark.
-    const anchorHost = this.navbar.flyoutAnchorHost() ?? this.viewContainer;
-    this.flyoutAnchorComponentRef = anchorHost.createComponent(SiNavbarFlyoutAnchorComponent);
+    this.flyoutAnchorComponentRef = this.viewContainer.createComponent(
+      SiNavbarFlyoutAnchorComponent
+    );
     this.flyoutAnchorComponentRef.setInput('groupId', this.groupId);
     this.flyoutOutsideClickSubscription = this.overlayRef
       .outsidePointerEvents()

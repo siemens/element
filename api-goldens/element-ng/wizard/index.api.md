@@ -48,20 +48,13 @@ export class SiWizardModule {
 
 // @public (undocumented)
 export class SiWizardStepComponent {
-    // (undocumented)
     readonly back: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
     readonly failed: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly heading: _angular_core.InputSignal<TranslatableString>;
     readonly isActive: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
     readonly isNextNavigable: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly isValid: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
     readonly next: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
     readonly save: _angular_core.OutputEmitterRef<void>;
 }
 

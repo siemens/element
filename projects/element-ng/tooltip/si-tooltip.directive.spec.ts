@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Overlay, ScrollStrategy } from '@angular/cdk/overlay';
+import { Overlay } from '@angular/cdk/overlay';
 import {
   Component,
   ElementRef,
@@ -13,6 +13,7 @@ import {
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { page } from 'vitest/browser';
 
 import { SiTooltipModule } from './si-tooltip.module';
@@ -55,6 +56,7 @@ describe('SiTooltipDirective', () => {
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+      button.style.pointerEvents = 'none';
       vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
       fixture.detectChanges();
     });
@@ -269,6 +271,7 @@ describe('SiTooltipDirective', () => {
       component = fixture.componentInstance;
       fixture.detectChanges();
       button = component.anchor().nativeElement;
+      button.style.pointerEvents = 'none';
       vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
       component.createTooltip();
     });
@@ -315,7 +318,7 @@ describe('SiTooltipDirective', () => {
       >`
     })
     class TestHostComponent {
-      readonly scrollStrategy = signal<ScrollStrategy | undefined>(undefined);
+      readonly scrollStrategy = signal(defaultConnectedOverlayScrollStrategy());
     }
 
     beforeEach(() => {

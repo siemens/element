@@ -1,8 +1,9 @@
+@use 'system-tokens';
 @use 'semantic-tokens';
 
 // Building focus< with outline
 $focus-style-outline: semantic-tokens.$element-button-focus-width solid
-  semantic-tokens.$element-focus-default;
+  system-tokens.$si-sys-effects-focus;
 $focus-style-outline-offset: semantic-tokens.$element-button-focus-overlay-width;
 $focus-style-outline-inside-offset: calc(-1 * #{semantic-tokens.$element-button-focus-width});
 
@@ -51,5 +52,5 @@ $focus-style-outline-inside-offset: calc(-1 * #{semantic-tokens.$element-button-
   @return inset 0 0 0 semantic-tokens.$element-button-focus-width $focus-color;
 }
 
-$si-focus-styling-box-shadow: make-focus(semantic-tokens.$element-focus-default);
-$si-focus-styling-inside-box-shadow: make-focus-inside(semantic-tokens.$element-focus-default);
+$si-focus-styling-box-shadow: make-focus(system-tokens.$si-sys-effects-focus);
+$si-focus-styling-inside-box-shadow: make-focus-inside(system-tokens.$si-sys-effects-focus);

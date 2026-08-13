@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Overlay, OverlayRef, ScrollStrategy } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ComponentRef,
@@ -16,7 +16,12 @@ import {
   signal,
   TemplateRef
 } from '@angular/core';
-import { getOverlay, getPositionStrategy, positions } from '@siemens/element-ng/common';
+import {
+  defaultConnectedOverlayScrollStrategy,
+  getOverlay,
+  getPositionStrategy,
+  positions
+} from '@siemens/element-ng/common';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -88,12 +93,13 @@ export class SiPopoverDirective implements OnDestroy {
   readonly context = input<unknown>(undefined, { alias: 'siPopoverContext' });
 
   /**
-   * Optional CDK scroll strategy used for the popover overlay.
-   * If not provided, the default reposition strategy is used.
+   * CDK scroll strategy used for the popover overlay.
    *
-   * @defaultValue undefined
+   * @defaultValue defaultConnectedOverlayScrollStrategy()
    */
-  readonly scrollStrategy = input<ScrollStrategy>(undefined, { alias: 'siPopoverScrollStrategy' });
+  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy(), {
+    alias: 'siPopoverScrollStrategy'
+  });
 
   /**
    * Emits `true` when the popover is shown, `false` when the popover is hidden.
@@ -109,6 +115,7 @@ export class SiPopoverDirective implements OnDestroy {
   protected readonly isOpen = signal<boolean>(false);
 
   private overlayref?: OverlayRef;
+  private popoverRef?: ComponentRef<PopoverComponent>;
   private overlay = inject(Overlay);
   private elementRef = inject(ElementRef);
   private destroyer = new Subject<void>();
@@ -126,33 +133,13 @@ export class SiPopoverDirective implements OnDestroy {
     if (this.overlayref?.hasAttached()) {
       return;
     }
-    this.overlayref = getOverlay(
-      this.elementRef,
-      this.overlay,
-      false,
-      this.placementInternal(),
-      false,
-      true,
-      this.scrollStrategy()
-    );
-    this.overlayref
-      .outsidePointerEvents()
-      .pipe(takeUntil(this.destroyer))
-      .subscribe(({ target }) => {
-        if (target !== this.elementRef.nativeElement) {
-          this.hide();
-        }
-      });
+
+    this.overlayref ??= this.createOverlay();
 
     const popoverPortal = new ComponentPortal(PopoverComponent);
-    const popoverRef: ComponentRef<PopoverComponent> = this.overlayref.attach(popoverPortal);
+    this.popoverRef = this.overlayref.attach(popoverPortal);
 
-    popoverRef.setInput('popoverDirective', this);
-
-    const positionStrategy = getPositionStrategy(this.overlayref);
-    positionStrategy?.positionChanges
-      .pipe(takeUntil(this.destroyer))
-      .subscribe(change => popoverRef.instance.updateArrow(change, this.elementRef));
+    this.popoverRef.setInput('popoverDirective', this);
 
     this.isOpen.set(true);
     this.visibilityChange.emit(true);
@@ -162,12 +149,7 @@ export class SiPopoverDirective implements OnDestroy {
    * Hides the popover and emits 'hidden' event.
    */
   hide(): void {
-    if (this.overlayref?.hasAttached()) {
-      this.overlayref?.detach();
-      this.isOpen.set(false);
-      this.visibilityChange.emit(false);
-      this.destroyer.next();
-    }
+    this.overlayref?.detach();
   }
 
   /**
@@ -183,5 +165,39 @@ export class SiPopoverDirective implements OnDestroy {
     } else {
       this.show();
     }
+  }
+
+  private createOverlay(): OverlayRef {
+    const overlayRef = getOverlay(
+      this.elementRef,
+      this.overlay,
+      false,
+      this.placementInternal(),
+      false,
+      true,
+      this.scrollStrategy()
+    );
+    overlayRef
+      .detachments()
+      .pipe(takeUntil(this.destroyer))
+      .subscribe(() => {
+        this.popoverRef = undefined;
+        if (this.isOpen()) {
+          this.isOpen.set(false);
+          this.visibilityChange.emit(false);
+        }
+      });
+    overlayRef
+      .outsidePointerEvents()
+      .pipe(takeUntil(this.destroyer))
+      .subscribe(({ target }) => {
+        if (target !== this.elementRef.nativeElement) {
+          this.hide();
+        }
+      });
+    getPositionStrategy(overlayRef)
+      ?.positionChanges.pipe(takeUntil(this.destroyer))
+      .subscribe(change => this.popoverRef?.instance.updateArrow(change, this.elementRef));
+    return overlayRef;
   }
 }

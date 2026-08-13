@@ -48,8 +48,11 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
    * @defaultValue 'sm'
    */
   readonly expandBreakpoint = input<'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'never'>('sm');
+  /** Template reference for the launchpad content rendered inside the header. */
   readonly launchpad = input<TemplateRef<void>>();
   /**
+   * Accessible label for the launchpad toggle button.
+   *
    * @defaultValue
    * ```
    * t(() => $localize`:@@SI_APPLICATION_HEADER.LAUNCHPAD:Launchpad`)
@@ -69,7 +72,7 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
   protected readonly launchpadOpen = signal(false);
   protected readonly id = `__si-application-header-${SiApplicationHeaderComponent.idCounter++}`;
   protected toggleNavigation = t(
-    () => $localize`:@@SI_APPLICATION_HEADER.TOGGLE_NAVIGATION:Toggle navigation`
+    () => $localize`:@@SI_APPLICATION_HEADER.TOGGLE_NAVIGATION:Show navigation`
   );
   protected injector = inject(Injector);
   protected readonly icons = addIcons({ elementThumbnails, elementMenu });
