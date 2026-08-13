@@ -1,7 +1,7 @@
 @use 'variables/typography';
 
 // proposal Dani B.
-.density-compact {
+.density-compact-dani {
   --element-spacer-inline-1: 0px; // stylelint-disable-line length-zero-no-unit
   --element-spacer-inline-2: 4px;
   --element-spacer-inline-3: 4px;
@@ -31,43 +31,7 @@
   --element-spacer-block-12: 44px;
   --element-spacer-block-13: 48px;
   --element-spacer-block-14: 72px;
-}
 
-// proposal Dani R.
-.density-compact-2 {
-  --element-spacer-inline-1: 2px;
-  --element-spacer-inline-2: 4px;
-  --element-spacer-inline-3: 4px;
-  --element-spacer-inline-4: 6px;
-  --element-spacer-inline-5: 8px;
-  --element-spacer-inline-6: 12px;
-  --element-spacer-inline-7: 16px;
-  --element-spacer-inline-8: 20px;
-  --element-spacer-inline-9: 24px;
-  --element-spacer-inline-10: 32px;
-  --element-spacer-inline-11: 36px;
-  --element-spacer-inline-12: 44px;
-  --element-spacer-inline-13: 48px;
-  --element-spacer-inline-14: 72px;
-
-  --element-spacer-block-1: 2px;
-  --element-spacer-block-2: 4px;
-  --element-spacer-block-3: 4px;
-  --element-spacer-block-4: 6px;
-  --element-spacer-block-5: 8px;
-  --element-spacer-block-6: 12px;
-  --element-spacer-block-7: 16px;
-  --element-spacer-block-8: 20px;
-  --element-spacer-block-9: 24px;
-  --element-spacer-block-10: 32px;
-  --element-spacer-block-11: 36px;
-  --element-spacer-block-12: 44px;
-  --element-spacer-block-13: 48px;
-  --element-spacer-block-14: 72px;
-}
-
-.density-compact,
-.density-compact-2 {
   // these stay the same for now
   // --element-font-size-body: #{typography.px-to-rem(14px};
   // --element-font-size-body-lg: #{typography.px-to-rem(16px};
@@ -84,4 +48,39 @@
   --element-font-size-display-lg: #{typography.px-to-rem(36px)};
   --element-font-size-display-bold: #{typography.px-to-rem(32px)};
   --element-font-size-display: #{typography.px-to-rem(32px)};
+}
+
+// proposal Andre F.
+.density-compact-andre {
+  --element-spacer-inline-1: 2px;
+  --element-spacer-inline-2: 2px;
+  --element-spacer-inline-3: 4px;
+  --element-spacer-inline-4: 6px;
+  --element-spacer-inline-5: 8px;
+  --element-spacer-inline-6: 12px;
+  --element-spacer-inline-7: 16px;
+  --element-spacer-inline-8: 20px;
+  --element-spacer-inline-9: 24px;
+  --element-spacer-inline-10: 32px;
+  --element-spacer-inline-11: 40px;
+  --element-spacer-inline-12: 48px;
+  --element-spacer-inline-13: 64px;
+  --element-spacer-inline-14: 80px;
+
+  --element-spacer-block-1: 2px;
+  --element-spacer-block-2: 2px;
+  --element-spacer-block-3: 4px;
+  --element-spacer-block-4: 6px;
+  --element-spacer-block-5: 8px;
+  --element-spacer-block-6: 12px;
+  --element-spacer-block-7: 16px;
+  --element-spacer-block-8: 20px;
+  --element-spacer-block-9: 24px;
+  --element-spacer-block-10: 32px;
+  --element-spacer-block-11: 40px;
+  --element-spacer-block-12: 48px;
+  --element-spacer-block-13: 64px;
+  --element-spacer-block-14: 80px;
+
+  // fonts remain unchanged
 }
