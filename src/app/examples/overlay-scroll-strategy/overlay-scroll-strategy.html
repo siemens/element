@@ -1,0 +1,45 @@
+<div class="p-6">
+  <p class="mb-4">
+    Open each overlay, then scroll this container. The typeahead dropdown repositions, while the
+    popover closes.
+  </p>
+
+  <div
+    class="border rounded-2 overflow-auto p-6"
+    style="block-size: 360px"
+    cdkScrollable
+    tabindex="0"
+    aria-label="Scrollable overlay examples"
+  >
+    <p class="d-flex align-items-center">This container is scrollable. </p>
+
+    <div class="d-flex flex-column align-items-start gap-6">
+      <si-form-item label="Country (overlay will reposition)">
+        <!-- This is using the default strategy: reposition -->
+        <input
+          id="country"
+          type="text"
+          class="form-control"
+          placeholder="Select a country"
+          [siTypeahead]="countries"
+          [typeaheadMinLength]="0"
+          [(ngModel)]="selectedCountry"
+        />
+      </si-form-item>
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        siPopoverTitle="Nested scrolling"
+        siPopover="This popover closes when its container scrolls."
+        [siPopoverScrollStrategy]="popoverScrollStrategy"
+      >
+        Show popover
+      </button>
+    </div>
+
+    <div class="d-flex align-items-end text-secondary" style="block-size: 460px">
+      End of scroll container
+    </div>
+  </div>
+</div>
