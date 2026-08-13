@@ -131,14 +131,6 @@
         - 'img /Wind: [\d,.]+[bkmBKM]+\/h/'
         - text: /\d+° \d+°/
   - img
-  - application "Download (native-federation)":
-    - text: ""
-    - menubar:
-      - menuitem "Remove"
-    - img
+  - application "Download (native-federation)"
   - img
-  - application "Upload (module-federation on native-federation shell)":
-    - text: ""
-    - menubar:
-      - menuitem "Remove"
-    - img
+  - application "Upload (module-federation on native-federation shell)"
