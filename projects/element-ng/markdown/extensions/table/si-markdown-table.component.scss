@@ -4,6 +4,11 @@
   min-inline-size: 0;
 }
 
+.markdown-table-container {
+  inline-size: fit-content;
+  max-inline-size: 100%;
+}
+
 .markdown-table-wrapper {
   max-inline-size: 100%;
   overflow-x: auto;

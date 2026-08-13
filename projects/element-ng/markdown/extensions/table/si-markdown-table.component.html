@@ -1,21 +1,51 @@
-<!-- eslint-disable @angular-eslint/template/attributes-order -->
-<div class="markdown-table-wrapper mb-6">
-  <table class="markdown-table table mb-0" [attr.data-line]="table().position?.start?.line">
-    <thead>
-      <tr>
-        @for (cell of table().children[0].children; track $index) {
-          <th [siMarkdownFragment]="cell" [style.text-align]="table().align?.[$index]"> </th>
-        }
-      </tr>
-    </thead>
-    <tbody>
-      @for (row of table().children.slice(1); track $index) {
-        <tr [attr.data-line]="row.position?.start?.line">
-          @for (cell of row.children; track $index; let cellIndex = $index) {
-            <td [siMarkdownFragment]="cell" [style.text-align]="table().align?.[cellIndex]"> </td>
+<div class="markdown-table-container mb-6">
+  <div class="markdown-table-wrapper">
+    <table
+      #renderedTable
+      class="markdown-table table mb-0"
+      [attr.data-line]="table().position?.start?.line"
+    >
+      <thead>
+        <tr>
+          @for (cell of table().children[0].children; track $index) {
+            <th [siMarkdownFragment]="cell" [style.text-align]="table().align?.[$index]"></th>
           }
         </tr>
-      }
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        @for (row of table().children.slice(1); track $index) {
+          <tr [attr.data-line]="row.position?.start?.line">
+            @for (cell of row.children; track $index; let cellIndex = $index) {
+              <td [siMarkdownFragment]="cell" [style.text-align]="table().align?.[cellIndex]"></td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="markdown-table-actions d-flex justify-content-end gap-2 mt-2">
+    @if (copied()) {
+      <div class="btn text-secondary btn-sm copied">
+        <si-icon class="icon" icon="elementOk" />
+        {{ labelCopied | translate }}
+      </div>
+    } @else {
+      <button
+        type="button"
+        class="btn btn-tertiary btn-icon btn-sm"
+        [aria-label]="labelCopy | translate"
+        (click)="copy()"
+      >
+        <si-icon class="icon" icon="elementCopy" />
+      </button>
+    }
+    <button
+      type="button"
+      class="btn btn-tertiary btn-icon btn-sm"
+      [aria-label]="labelDownload | translate"
+      (click)="download()"
+    >
+      <si-icon class="icon" icon="elementDownload" />
+    </button>
+  </div>
 </div>

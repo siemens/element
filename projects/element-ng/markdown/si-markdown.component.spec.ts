@@ -82,7 +82,6 @@ Second line
     expect(element.querySelectorAll('input[type="checkbox"]')[0]).toBeChecked();
     expect(element.querySelectorAll('input[type="checkbox"]')[1]).not.toBeChecked();
     expect(element.querySelector('si-markdown-table')).not.toBeNull();
-    expect(element.querySelector('.markdown-table-wrapper')).toHaveClass('mb-6');
     expect(element.querySelector('table')).toHaveClass('markdown-table', 'table', 'mb-0');
     expect(element.querySelectorAll('th')).toHaveLength(3);
     expect(element.querySelectorAll('td')).toHaveLength(3);
