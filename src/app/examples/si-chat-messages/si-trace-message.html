@@ -1,0 +1,12 @@
+<div class="d-flex flex-column gap-4 p-6">
+  @for (trace of traces; track trace.label) {
+    <si-trace-message
+      [label]="trace.label"
+      [state]="trace.state"
+      [icon]="trace.icon"
+      [expanded]="trace.expanded ?? false"
+    >
+      <si-markdown [markdown]="trace.content" [options]="markdownOptions" />
+    </si-trace-message>
+  }
+</div>

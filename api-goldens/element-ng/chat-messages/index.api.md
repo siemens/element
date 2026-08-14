@@ -151,6 +151,14 @@ export class SiChatMessageComponent {
 }
 
 // @public
+export class SiTraceMessageComponent {
+    readonly expanded: _angular_core.ModelSignal<boolean>;
+    readonly icon: _angular_core.InputSignal<string>;
+    readonly label: _angular_core.InputSignal<TranslatableString_2>;
+    readonly state: _angular_core.InputSignal<TraceMessageState>;
+}
+
+// @public
 export class SiUserMessageComponent {
     constructor();
     readonly actionParam: _angular_core.InputSignal<any>;
@@ -161,6 +169,9 @@ export class SiUserMessageComponent {
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
+
+// @public
+export type TraceMessageState = 'running' | 'completed' | 'failed';
 
 // (No @packageDocumentation comment for this package)
 

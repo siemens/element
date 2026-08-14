@@ -1,0 +1,120 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/variables/system-tokens';
+
+$trace-marker-size: 1.5rem;
+$trace-line-position: calc($trace-marker-size / 2);
+
+:host {
+  display: block;
+  position: relative;
+  color: system-tokens.$si-sys-text-secondary;
+}
+
+:host(:not(:first-child))::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: $trace-line-position;
+  inset-block-end: 100%;
+  block-size: map.get(variables.$spacers, 4);
+  border-inline-start: 1px solid system-tokens.$si-sys-border-3;
+  pointer-events: none;
+}
+
+:host(.trace-failed) {
+  color: system-tokens.$si-sys-text-danger;
+}
+
+.trace-message {
+  max-inline-size: 100%;
+}
+
+.trace-header {
+  display: inline-flex;
+  align-items: center;
+  max-inline-size: 100%;
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+
+  &:hover {
+    color: system-tokens.$si-sys-text-primary;
+  }
+
+  &:hover,
+  &:focus-visible {
+    .state-marker {
+      display: none;
+    }
+
+    .disclosure-marker {
+      display: inline-flex;
+    }
+  }
+}
+
+.trace-marker {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: $trace-marker-size;
+  block-size: $trace-marker-size;
+  margin-inline-end: map.get(variables.$spacers, 2);
+}
+
+.state-marker,
+.disclosure-marker {
+  font-size: 1rem;
+}
+
+.disclosure-marker {
+  display: none;
+}
+
+si-loading-spinner.state-marker {
+  --loading-spinner-size: 1rem;
+  --loading-spinner-color: currentColor;
+}
+
+.trace-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trace-content {
+  overflow: hidden;
+  margin-inline-start: $trace-line-position;
+}
+
+.content-motion {
+  display: grid;
+  grid-template-rows: 1fr;
+
+  &:is(.content-enter, .content-leave) {
+    transition: grid-template-rows variables.$element-default-transition-duration;
+  }
+
+  &.content-enter {
+    @starting-style {
+      grid-template-rows: 0fr;
+    }
+  }
+
+  &.content-leave {
+    grid-template-rows: 0fr;
+  }
+}
+
+.content-inner {
+  overflow: hidden;
+  border-inline-start: 1px solid system-tokens.$si-sys-border-3;
+  padding-block-start: map.get(variables.$spacers, 3);
+  padding-inline-start: calc($trace-line-position + map.get(variables.$spacers, 2));
+  color: system-tokens.$si-sys-text-secondary;
+}

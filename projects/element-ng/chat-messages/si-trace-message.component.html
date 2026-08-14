@@ -1,0 +1,34 @@
+<div class="trace-message">
+  <button
+    type="button"
+    class="trace-header focus-inside"
+    [id]="headerId"
+    [attr.aria-expanded]="expanded()"
+    [attr.aria-controls]="contentId"
+    (click)="expanded.set(!expanded())"
+  >
+    <span class="trace-marker" aria-hidden="true">
+      @if (state() === 'running') {
+        <si-loading-spinner class="state-marker" />
+      } @else {
+        <si-icon class="state-marker" [icon]="markerIcon()" />
+      }
+      <si-icon
+        class="disclosure-marker"
+        [icon]="expanded() ? icons.elementDown2 : icons.elementRight2"
+      />
+    </span>
+    <span class="trace-label">{{ label() | translate }}</span>
+    <span class="visually-hidden">{{ stateLabel() | translate }}</span>
+  </button>
+
+  <div class="trace-content" role="region" [id]="contentId" [attr.aria-labelledby]="headerId">
+    @if (expanded()) {
+      <div class="content-motion" animate.enter="content-enter" animate.leave="content-leave">
+        <div class="content-inner">
+          <ng-content />
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -167,6 +167,7 @@ nav:
       - Chat message:                     'components/chat-messages/chat-message.md'
       - Markdown:                         'components/chat-messages/markdown.md'
       - Source chips:                     'components/chat-messages/source-chips.md'
+      - Trace message:                    'components/chat-messages/trace-message.md'
     - Charts:
       - Overview:                         'components/charts/index.md'
       - Bar chart:                        'components/charts/bar-chart.md'
