@@ -4,7 +4,6 @@
 
 ```ts
 
-import { AfterContentInit } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
 import { ElementRef } from '@angular/core';
@@ -87,11 +86,10 @@ export class SiAttachmentListComponent {
 }
 
 // @public
-export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
-    constructor();
+export class SiChatContainerComponent {
     readonly colorVariant: _angular_core.InputSignal<string>;
     focus(): void;
-    readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, string | boolean>;
+    readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, unknown>;
     scrollToBottom(): void;
     scrollToTop(): void;
 }

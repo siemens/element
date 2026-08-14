@@ -41,25 +41,39 @@
   overflow-x: visible;
 }
 
-.messages-container {
+.messages-scroll-container {
+  flex: 1;
   overflow-y: auto;
-  overflow-x: visible;
-  padding-inline: map.get(variables.$spacers, 4);
+  display: flex;
+  flex-direction: column-reverse;
+  align-self: center;
+  inline-size: 100%;
+  padding-block-end: map.get(variables.$spacers, 2);
   // Ensure the messages can still be seen on very short screens
   min-block-size: 5rem;
+
+  &:not(:has(si-ai-welcome-screen)) {
+    max-inline-size: 720px;
+  }
+
+  &:has(si-ai-welcome-screen) {
+    inline-size: 100%;
+    flex-direction: column;
+  }
+
+  &.no-auto-scroll {
+    flex-direction: column;
+  }
+}
+
+.messages-container {
+  overflow-x: visible;
+  padding-inline: map.get(variables.$spacers, 4);
   gap: map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4);
 
   // Padding is included here, cancel out the gap on the messages container
   ::ng-deep si-user-message:not(.last) {
     margin-block-end: -1 * (map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4));
-  }
-
-  ::ng-deep &:not(:has(si-ai-welcome-screen)) {
-    max-inline-size: 720px;
-  }
-
-  ::ng-deep &:has(si-ai-welcome-screen) {
-    inline-size: 100%;
   }
 }
 
