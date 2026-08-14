@@ -59,7 +59,6 @@ if [ x$1 = "xshell" ]; then
     -e PORT=$PORT \
     -e PLAYWRIGHT_CONTAINER=true \
     -e PLAYWRIGHT_isvrt=true \
-    -e PLAYWRIGHT_staticTest=$PLAYWRIGHT_staticTest \
     -e PW_WORKERS=$PW_WORKERS \
     -v $CWD:/e2e:rw$MOUNT_FLAGS \
     -w /e2e \
@@ -104,7 +103,6 @@ else
     -e PLAYWRIGHT_CONTAINER=true \
     -e PLAYWRIGHT_isa11y=$PLAYWRIGHT_isa11y \
     -e PLAYWRIGHT_isvrt=$PLAYWRIGHT_isvrt \
-    -e PLAYWRIGHT_staticTest=$PLAYWRIGHT_staticTest \
     -v $CWD:/e2e:rw$MOUNT_FLAGS \
     -w /e2e \
     --net=$NETWORK_MODE \
