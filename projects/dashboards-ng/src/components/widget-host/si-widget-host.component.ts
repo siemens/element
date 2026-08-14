@@ -25,6 +25,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { elementApps } from '@siemens/element-icons';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 // We need one import from the main entry.
 // Otherwise, module federation is confused.
@@ -33,6 +34,7 @@ import type { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
+import { addIcons } from '@siemens/element-ng/icon';
 import { MenuItem } from '@siemens/element-ng/menu';
 import {
   injectSiTranslateService,
@@ -72,6 +74,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   private readonly destroyRef = inject(DestroyRef);
   private readonly translateService = injectSiTranslateService();
   private readonly liveAnnouncer = inject(LiveAnnouncer);
+  private readonly elementAppsIcon = addIcons({ elementApps }).elementApps;
   /** @internal */
   readonly elementRef = inject<ElementRef<GridItemHTMLElement>>(ElementRef).nativeElement;
 
@@ -87,11 +90,11 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   readonly componentFactory = input<WidgetComponentFactory>();
 
   /**
-   * CSS icon class for the widget, displayed in the configuration placeholder.
+   * Icon for the widget, displayed in the configuration placeholder.
    *
-   * @defaultValue 'element-apps'
+   * @defaultValue this.elementAppsIcon
    */
-  readonly iconClass = input('element-apps');
+  readonly widgetIcon = input<string>();
 
   /**
    * Sets the widget host into editable mode.
@@ -154,8 +157,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
     }
     return null;
   });
-
-  protected readonly emptyStateIcon = computed(() => `${this.iconClass()} si-display-xl`);
+  protected readonly emptyStateIcon = computed(() => this.widgetIcon() ?? this.elementAppsIcon);
 
   widgetInstance?: WidgetInstance;
   widgetRef?: ComponentRef<WidgetInstance>;
