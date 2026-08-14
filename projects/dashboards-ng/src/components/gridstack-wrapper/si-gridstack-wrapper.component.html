@@ -10,7 +10,7 @@
         [grid]="grid"
         [editable]="editable()"
         [widgetConfig]="item"
-        [iconClass]="widget?.iconClass ?? 'element-apps'"
+        [widgetIcon]="widget?.iconClass"
         [componentFactory]="widget?.componentFactory"
         (remove)="widgetInstanceRemove.emit(item.id)"
         (edit)="widgetInstanceEdit.emit(item)"
