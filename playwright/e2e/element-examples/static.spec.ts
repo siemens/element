@@ -63,6 +63,14 @@ test('si-electron-titlebar/si-electron-titlebar', ({ si }) => si.static());
 test('si-electron-titlebar/si-fixed-height-layout-side-panel', ({ si }) => si.static());
 test('si-empty-state/si-empty-state', ({ si }) => si.static());
 test('si-footer/si-footer', ({ si }) => si.static());
+test('http-error-pages/http-error-pages', async ({ page, si }) => {
+  await si.visitExample('http-error-pages/http-error-pages', true);
+
+  for (const errorCode of ['400', '401', '404', '418', '500', '504']) {
+    await page.locator('select').selectOption(errorCode);
+    await si.runVisualAndA11yTests(errorCode);
+  }
+});
 test('si-icon/si-icon', ({ si }) => si.static({ skipAriaSnapshot: true }));
 test('si-icon/si-icon-composite', ({ si }) => si.static());
 test('si-icon/si-status-icon', ({ si }) => si.static());

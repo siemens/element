@@ -1,0 +1,13 @@
+- img "Internal Server Error"
+- heading /\d+ Internal Server Error/ [level=1]
+- paragraph: This page is not available right now. Try refreshing the page or try again later.
+- button "Go back"
+- button "Open homepage"
+- text: Settings Choose HTTP error code
+- combobox "Choose HTTP error code":
+  - option /\d+ Not Found/
+  - option /\d+ Gateway Timeout/
+  - option /\d+ Unauthorized/
+  - option /\d+ Internal Server Error/ [selected]
+  - option /\d+ Bad Request/
+  - option /\d+ I’m a Teapot/

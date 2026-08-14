@@ -1,0 +1,13 @@
+- img "Unauthorized"
+- heading /\d+ Unauthorized/ [level=1]
+- paragraph: Authorization is required to access this page. Check your credentials and try again.
+- button "Go back"
+- button "Login"
+- text: Settings Choose HTTP error code
+- combobox "Choose HTTP error code":
+  - option /\d+ Not Found/
+  - option /\d+ Gateway Timeout/
+  - option /\d+ Unauthorized/ [selected]
+  - option /\d+ Internal Server Error/
+  - option /\d+ Bad Request/
+  - option /\d+ I’m a Teapot/

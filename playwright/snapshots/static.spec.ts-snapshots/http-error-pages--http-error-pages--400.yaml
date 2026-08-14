@@ -1,0 +1,13 @@
+- img "Bad Request"
+- heading /\d+ Bad Request/ [level=1]
+- paragraph: Failed to process the request. Check your request and try again.
+- button "Go back"
+- button "Open homepage"
+- text: Settings Choose HTTP error code
+- combobox "Choose HTTP error code":
+  - option /\d+ Not Found/
+  - option /\d+ Gateway Timeout/
+  - option /\d+ Unauthorized/
+  - option /\d+ Internal Server Error/
+  - option /\d+ Bad Request/ [selected]
+  - option /\d+ I’m a Teapot/
