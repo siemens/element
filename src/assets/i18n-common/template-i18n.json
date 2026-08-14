@@ -1,0 +1,34 @@
+{
+  "SI_HTTP_ERRORS": {
+    "NOT_FOUND": {
+      "HEADING": "404 Not Found",
+      "DESCRIPTION": "We’re not able to find that page. It may have been deleted or moved.",
+      "ALT": "Not Found"
+    },
+    "GATEWAY_TIMEOUT": {
+      "HEADING": "504 Gateway Timeout",
+      "DESCRIPTION": "The server is taking too long to respond. Try again or change your timeout settings.",
+      "ALT": "Gateway Timeout"
+    },
+    "UNAUTHORIZED": {
+      "HEADING": "401 Unauthorized",
+      "DESCRIPTION": "Authorization is required to access this page. Check your credentials and try again.",
+      "ALT": "Unauthorized"
+    },
+    "INTERNAL_SERVER_ERROR": {
+      "HEADING": "500 Internal Server Error",
+      "DESCRIPTION": "This page is not available right now. Try refreshing the page or try again later.",
+      "ALT": "Internal Server Error"
+    },
+    "BAD_REQUEST": {
+      "HEADING": "400 Bad Request",
+      "DESCRIPTION": "Failed to process the request. Check your request and try again.",
+      "ALT": "Bad Request"
+    },
+    "TEAPOT": {
+      "HEADING": "418 I’m a Teapot",
+      "DESCRIPTION": "The server refuses to brew coffee because, well... it’s a teapot.",
+      "ALT": "I’m a Teapot"
+    }
+  }
+}

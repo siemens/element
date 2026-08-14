@@ -1,0 +1,13 @@
+- img "Gateway Timeout"
+- heading /\d+ Gateway Timeout/ [level=1]
+- paragraph: The server is taking too long to respond. Try again or change your timeout settings.
+- button "Go back"
+- button "Open homepage"
+- text: Settings Choose HTTP error code
+- combobox "Choose HTTP error code":
+  - option /\d+ Not Found/
+  - option /\d+ Gateway Timeout/ [selected]
+  - option /\d+ Unauthorized/
+  - option /\d+ Internal Server Error/
+  - option /\d+ Bad Request/
+  - option /\d+ I’m a Teapot/

@@ -1,0 +1,11 @@
+- img "I’m a Teapot"
+- heading /\d+ I’m a Teapot/ [level=1]
+- paragraph: The server refuses to brew coffee because, well... it’s a teapot.
+- text: Settings Choose HTTP error code
+- combobox "Choose HTTP error code":
+  - option /\d+ Not Found/
+  - option /\d+ Gateway Timeout/
+  - option /\d+ Unauthorized/
+  - option /\d+ Internal Server Error/
+  - option /\d+ Bad Request/
+  - option /\d+ I’m a Teapot/ [selected]

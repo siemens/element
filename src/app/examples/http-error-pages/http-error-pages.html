@@ -1,0 +1,34 @@
+<div class="d-flex flex-column p-8 h-100">
+  <si-info-page [titleText]="selectedPage().heading" [instructions]="selectedPage().description">
+    <img
+      class="si-info-image"
+      [alt]="selectedPage().illustration.alt | translate"
+      [ngSrc]="selectedPage().illustration.src"
+      [width]="260"
+      [height]="190"
+    />
+    @if (selectedPage().actions; as actions) {
+      <div class="si-info-actions">
+        @for (action of actions; track action.title) {
+          <button type="button" class="btn btn-secondary me-6 mb-6" (click)="action.action()">
+            {{ action.title }}
+          </button>
+        }
+      </div>
+    }
+  </si-info-page>
+  <div class="card e2e-ignore">
+    <div class="card-header">Settings</div>
+    <div class="card-body">
+      <div class="col-sm-3">
+        <si-form-item label="Choose HTTP error code">
+          <select class="form-select" [(ngModel)]="selectedId">
+            @for (errorPage of httpErrorPages; track errorPage.id) {
+              <option [value]="errorPage.id">{{ errorPage.heading | translate }}</option>
+            }
+          </select>
+        </si-form-item>
+      </div>
+    </div>
+  </div>
+</div>
