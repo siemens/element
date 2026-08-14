@@ -9,6 +9,14 @@ export class BundlerTranslateLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {
     // Esbuild is preventing extensions of imported json files.
     // So we clone it.
-    return from(import(`../assets/i18n/${lang}.json`).then(en => ({ ...en })));
+    return from(
+      Promise.all([
+        import(`../assets/i18n/${lang}.json`),
+        import('../assets/i18n-common/en.json')
+      ]).then(([translations, commonTranslations]) => ({
+        ...translations,
+        ...commonTranslations
+      }))
+    );
   }
 }
