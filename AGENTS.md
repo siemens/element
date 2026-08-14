@@ -113,8 +113,8 @@ pnpm dashboards-demo:build-and-run-all:esm   # ESM, port 4204
 ./e2e-local.sh update-all                       # all snapshots
 ./e2e-local.sh update <test-file-name>          # specific test (glob supported)
 
-# Run specific static test
-PLAYWRIGHT_staticTest=buttons/buttons:badges/badges ./e2e-local.sh run static
+# Run specific static tests
+./e2e-local.sh run static --grep 'buttons/buttons|badges/badges'
 ```
 
 ## State Management
