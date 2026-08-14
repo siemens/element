@@ -45,10 +45,6 @@ export const expect = baseExpect.extend({
 
 const SI_EXAMPLE_NAME_ID = 'siExampleName';
 
-const staticTest = process.env.PLAYWRIGHT_staticTest
-  ? new Set(process.env.PLAYWRIGHT_staticTest.split(':'))
-  : undefined;
-
 export const VIEWPORTS = [
   { name: 'default', width: 0, height: 0 }, // Default, 0 will skip resizing and use the default value
   { name: 'tablet-portrait', width: 768, height: 1024 },
@@ -86,34 +82,32 @@ class SiTestHelpers {
    */
   public async static(options?: StaticTestOptions): Promise<void> {
     const exampleName = this.testInfo.title;
-    if (!staticTest || staticTest.has(exampleName)) {
-      const viewports = (options?.viewports?.length ? options.viewports : ['default'])
-        .map(viewport =>
-          typeof viewport !== 'string' ? viewport : VIEWPORTS.find(v => v.name === viewport)
-        )
-        .filter(viewport => !!viewport)
-        .sort((a, b) => a.width * a.height - a.height * b.height); // This ensures the default viewport is first.
+    const viewports = (options?.viewports?.length ? options.viewports : ['default'])
+      .map(viewport =>
+        typeof viewport !== 'string' ? viewport : VIEWPORTS.find(v => v.name === viewport)
+      )
+      .filter(viewport => !!viewport)
+      .sort((a, b) => a.width * a.height - a.height * b.height); // This ensures the default viewport is first.
 
-      for (const viewport of viewports) {
-        const isDefaultViewport = viewport.height === 0 && viewport.width === 0;
-        const specifyViewport = !isDefaultViewport || viewports.length > 1;
-        const step = specifyViewport ? viewport.name : undefined;
-        if (!isDefaultViewport) {
-          await this.page.setViewportSize({ width: viewport.width, height: viewport.height });
-        }
-        await this.visitExample(exampleName, !options?.skipAutoScaleViewport);
-        if (options?.waitCallback) {
-          await options?.waitCallback(this.page);
-        }
-        if (options?.delay) {
-          await this.page.waitForTimeout(options?.delay);
-        }
-        await this.runVisualAndA11yTests(step, {
-          axeRulesSet: options?.disabledA11yRules?.map(item => ({ id: item, enabled: false })),
-          maxDiffPixels: options?.maxDiffPixels,
-          skipAriaSnapshot: options?.skipAriaSnapshot
-        });
+    for (const viewport of viewports) {
+      const isDefaultViewport = viewport.height === 0 && viewport.width === 0;
+      const specifyViewport = !isDefaultViewport || viewports.length > 1;
+      const step = specifyViewport ? viewport.name : undefined;
+      if (!isDefaultViewport) {
+        await this.page.setViewportSize({ width: viewport.width, height: viewport.height });
       }
+      await this.visitExample(exampleName, !options?.skipAutoScaleViewport);
+      if (options?.waitCallback) {
+        await options?.waitCallback(this.page);
+      }
+      if (options?.delay) {
+        await this.page.waitForTimeout(options?.delay);
+      }
+      await this.runVisualAndA11yTests(step, {
+        axeRulesSet: options?.disabledA11yRules?.map(item => ({ id: item, enabled: false })),
+        maxDiffPixels: options?.maxDiffPixels,
+        skipAriaSnapshot: options?.skipAriaSnapshot
+      });
     }
   }
 

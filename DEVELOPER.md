@@ -129,8 +129,8 @@ pnpm run dashboards-demo:build-and-run-all:esm
 # To only update a specific test, append the file name. Glob patterns are supported.
 ./e2e-local.sh update <test-file-name>
 
-# To run a specific static test, use an environment variable and restrict the to static specs:
-PLAYWRIGHT_staticTest=buttons/buttons:badges/badges ./e2e-local.sh run static
+# To run specific static tests, use --grep and restrict to the static spec:
+./e2e-local.sh run --grep 'buttons/buttons|badges/badges'
 ```
 
 Available parameters for `e2e-local.sh`:
@@ -142,7 +142,6 @@ Available parameters for `e2e-local.sh`:
 # - DOCKER: Override the docker command (default: docker)
 # - PORT: Override the port for the example application (default: 4200)
 # - LOCAL_ADDRESS: Override the local address for the example application (default: localhost)
-# - PLAYWRIGHT_staticTest: Run only the specified static test
 ```
 
 ### Use Podman instead of Docker on Linux
