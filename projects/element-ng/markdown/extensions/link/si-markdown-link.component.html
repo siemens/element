@@ -1,0 +1,17 @@
+@let directLink = link();
+@if (isFileLink()) {
+  <a
+    class="filename border rounded-1 px-1 d-inline-flex align-items-center"
+    [href]="directLink.url"
+    [title]="directLink.title ?? ''"
+  >
+    <si-icon class="icon-sm me-1" icon="element-document" />
+    @if (hasLabel()) {
+      <span [siMarkdownFragment]="directLink"></span>
+    } @else {
+      {{ filename() }}
+    }
+  </a>
+} @else {
+  <a [href]="directLink.url" [title]="directLink.title ?? ''" [siMarkdownFragment]="directLink"></a>
+}

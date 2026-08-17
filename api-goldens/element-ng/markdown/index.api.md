@@ -79,7 +79,7 @@ export interface SiMarkdownCitation extends SourceReference {
 // @public
 export class SiMarkdownComponent implements SiMarkdownControl {
     readonly citations: _angular_core.InputSignal<SiMarkdownCitation[] | undefined>;
-    readonly debug: _angular_core.InputSignal<boolean>;
+    readonly debug: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly extensionEvent: _angular_core.OutputEmitterRef<{
         name: string;
         data: any;

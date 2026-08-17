@@ -10,7 +10,8 @@ import {
   contentChildren,
   computed,
   TemplateRef,
-  output
+  output,
+  booleanAttribute
 } from '@angular/core';
 import { type Root } from 'mdast';
 import { Processor } from 'unified';
@@ -66,7 +67,7 @@ export class SiMarkdownComponent implements SiMarkdownControl {
    * as JSON.
    * @defaultValue false
    */
-  readonly debug = input(false);
+  readonly debug = input(false, { transform: booleanAttribute });
 
   /** Emitted by extension components. */
   readonly extensionEvent = output<{ name: string; data: any }>();

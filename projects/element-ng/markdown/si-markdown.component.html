@@ -69,10 +69,6 @@
   }
 </ng-template>
 
-<ng-template siMarkdownTemplate="link" let-node>
-  <a [href]="node.url" [title]="node.title ?? ''" [siMarkdownFragment]="node"></a>
-</ng-template>
-
 <ng-template siMarkdownTemplate="linkReference" let-node>
   @let def = ast?.references?.definitions?.get(node.identifier);
   @if (def) {
