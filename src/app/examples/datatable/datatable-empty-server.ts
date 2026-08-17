@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
