@@ -58,6 +58,7 @@ export const migrateCssCustomPropertiesInExternalFiles = (
   tree.visit(filePath => {
     if (
       !filePath.startsWith(normalizedProjectPath) ||
+      filePath.includes('/node_modules/') ||
       !['.css', '.html', '.less', '.sass', '.scss'].some(extension => filePath.endsWith(extension))
     ) {
       return;
