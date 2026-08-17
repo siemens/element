@@ -13,7 +13,7 @@ console.log('Running localize-extract');
 const args = ['-s', toolConfig.files, '-f', 'xlf2', '-o', 'messages.xlf'];
 const extract = spawn('localize-extract', args, {
   stdio: ['ignore', 'ignore', 'inherit'],
-  shell: true
+  shell: false
 });
 extract.on('error', error => console.log(`error: ${error.message}`));
 
