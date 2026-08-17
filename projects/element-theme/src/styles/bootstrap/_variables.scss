@@ -155,8 +155,7 @@ $aspect-ratios: (
 //
 // Font, line-height, and color for body text, headings, and more.
 $font-family-sans-serif: var(--element-body-font-family);
-$font-family-monospace:
-  SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !default;
+$font-family-monospace: typography.$si-font-family-mono !default;
 
 $font-family-base: $font-family-sans-serif !default;
 $font-family-code: $font-family-monospace !default;
@@ -185,7 +184,7 @@ $h2-font-size: typography.$si-font-size-h2 !default;
 $h3-font-size: typography.$si-font-size-h3 !default;
 $h4-font-size: typography.$si-font-size-h4 !default;
 $h5-font-size: typography.$si-font-size-h5 !default;
-$h6-font-size: $font-size-base !default;
+$h6-font-size: typography.$si-font-size-h6 !default;
 
 $font-sizes: (
   1: $h1-font-size,

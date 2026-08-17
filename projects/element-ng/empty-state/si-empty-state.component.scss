@@ -3,7 +3,7 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 .list-group-item-empty {
-  block-size: 100%;
+  min-block-size: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,5 +14,5 @@
 
 .state-icon {
   color: variables.$si-sys-text-secondary;
-  font-size: 5rem;
+  font-size: 4rem;
 }

@@ -167,14 +167,22 @@ h4,
 }
 
 h5,
-h6,
 .h5,
-.h6,
 .si-h5 {
   @include typography.si-font(
     typography.$si-font-size-h5,
     typography.$si-line-height-h5,
     typography.$si-font-weight-h5
+  );
+}
+
+h6,
+.h6,
+.si-h6 {
+  @include typography.si-font(
+    typography.$si-font-size-h6,
+    typography.$si-line-height-h6,
+    typography.$si-font-weight-h6
   );
 }
 
@@ -194,6 +202,22 @@ h6,
   );
 }
 
+.si-body-paragraph {
+  @include typography.si-font(
+    typography.$si-font-size-body-paragraph,
+    typography.$si-line-height-body-paragraph,
+    typography.$si-font-weight-body-paragraph
+  );
+}
+
+.si-body-sm {
+  @include typography.si-font(
+    typography.$si-font-size-body-sm,
+    typography.$si-line-height-body-sm,
+    typography.$si-font-weight-body-sm
+  );
+}
+
 .si-caption {
   @include typography.si-font(
     typography.$si-font-size-caption,
@@ -208,6 +232,14 @@ h6,
     typography.$si-font-size-display-xl,
     typography.$si-line-height-display-xl,
     typography.$si-font-weight-display-xl
+  );
+}
+
+.si-display-xxl {
+  @include typography.si-font(
+    typography.$si-font-size-display-xxl,
+    typography.$si-line-height-display-xxl,
+    typography.$si-font-weight-display-xxl
   );
 }
 
@@ -235,6 +267,36 @@ h6,
     typography.$si-font-size-display,
     typography.$si-line-height-display,
     typography.$si-font-weight-display
+  );
+}
+
+.si-code-sm,
+.si-code,
+.si-code-lg {
+  font-family: typography.$si-font-family-mono;
+}
+
+.si-code-sm {
+  @include typography.si-font(
+    typography.$si-font-size-code-sm,
+    typography.$si-line-height-code-sm,
+    typography.$si-font-weight-code-sm
+  );
+}
+
+.si-code {
+  @include typography.si-font(
+    typography.$si-font-size-code,
+    typography.$si-line-height-code,
+    typography.$si-font-weight-code
+  );
+}
+
+.si-code-lg {
+  @include typography.si-font(
+    typography.$si-font-size-code-lg,
+    typography.$si-line-height-code-lg,
+    typography.$si-font-weight-code-lg
   );
 }
 
