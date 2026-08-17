@@ -26,7 +26,7 @@
   <div class="markdown-table-actions d-flex justify-content-end gap-2 mt-2">
     @if (copied()) {
       <div class="btn text-secondary btn-sm copied">
-        <si-icon class="icon" icon="elementOk" />
+        <si-icon class="icon" [icon]="icons.elementOk" />
         {{ labelCopied | translate }}
       </div>
     } @else {
@@ -36,7 +36,7 @@
         [aria-label]="labelCopy | translate"
         (click)="copy()"
       >
-        <si-icon class="icon" icon="elementCopy" />
+        <si-icon class="icon" [icon]="icons.elementCopy" />
       </button>
     }
     <button
@@ -45,7 +45,7 @@
       [aria-label]="labelDownload | translate"
       (click)="download()"
     >
-      <si-icon class="icon" icon="elementDownload" />
+      <si-icon class="icon" [icon]="icons.elementDownload" />
     </button>
   </div>
 </div>

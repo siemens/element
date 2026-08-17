@@ -30,6 +30,7 @@ export class SiMarkdownTableComponent implements SiMarkdownExtensionComponent, O
   readonly parent = input.required<Parent>();
   readonly options = input<any>();
 
+  protected readonly icons = addIcons({ elementCopy, elementDownload, elementOk });
   protected labelCopy = t(() => $localize`:@@SI_MARKDOWN.COPY_TABLE_AS_CSV:Copy table as CSV`);
   protected labelCopied = t(() => $localize`:@@SI_MARKDOWN.COPIED_CODE:Copied`);
   protected labelDownload = t(
@@ -39,10 +40,6 @@ export class SiMarkdownTableComponent implements SiMarkdownExtensionComponent, O
   protected readonly copied = signal(false);
   private readonly tableElement = viewChild.required<ElementRef<HTMLTableElement>>('renderedTable');
   private copyTimeout?: ReturnType<typeof setTimeout>;
-
-  constructor() {
-    addIcons({ elementCopy, elementDownload, elementOk });
-  }
 
   ngOnDestroy(): void {
     clearTimeout(this.copyTimeout);

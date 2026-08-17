@@ -2,7 +2,7 @@
   @let file = filename();
   @if (file) {
     <span class="filename border rounded-1 px-1 me-4">
-      <si-icon class="icon-sm" icon="element-document" />
+      <si-icon class="icon-sm" [icon]="icons.elementDocument" />
       {{ file }}
     </span>
   }
@@ -12,7 +12,7 @@
   <div class="ms-auto">
     @if (copied()) {
       <div class="btn text-secondary btn-sm copied">
-        <si-icon class="icon" icon="elementOk" />
+        <si-icon class="icon" [icon]="icons.elementOk" />
         {{ labelCopied | translate }}
       </div>
     } @else {
@@ -22,7 +22,7 @@
         [aria-label]="labelCopy | translate"
         (click)="copy()"
       >
-        <si-icon class="icon" icon="elementCopy" />
+        <si-icon class="icon" [icon]="icons.elementCopy" />
       </button>
     }
   </div>
