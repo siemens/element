@@ -72,6 +72,8 @@ GFM Link references links are also supported:
 
 The reference can be used multiple times like here [foo]
 
+There's also special handling for `file://` links, i.e. [](file:///Users/dritz/tmp/source-file.ts#200-200)
+
 ---
 
 ## Lists and Bullets
