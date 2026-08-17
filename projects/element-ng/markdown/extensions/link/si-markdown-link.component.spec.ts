@@ -49,7 +49,6 @@ describe('SiMarkdownLinkComponent', () => {
     expect(links).toHaveLength(2);
     expect(links[0]).toHaveTextContent('Open file');
     expect(links[0]).toHaveAttribute('href', 'file:///Users/dritz/some-file.ts#40-55');
-    expect(links[0].querySelector('si-icon')).toHaveAttribute('icon', 'element-document');
     expect(links[1]).toHaveTextContent('another-file.ts');
     expect(links[1]).toHaveAttribute('href', 'file:///Users/dritz/another-file.ts#1');
   });

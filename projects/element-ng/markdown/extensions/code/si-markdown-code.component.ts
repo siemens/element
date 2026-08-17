@@ -29,6 +29,7 @@ export class SiMarkdownCodeComponent implements SiMarkdownExtensionComponent, On
   readonly parent = input.required<Parent>();
   readonly options = input<MarkdownCodeOptions>();
 
+  protected readonly icons = addIcons({ elementCopy, elementOk, elementDocument });
   protected labelCopy = t(() => $localize`:@@SI_MARKDOWN.COPY_CODE:Copy code`);
   protected labelCopied = t(() => $localize`:@@SI_MARKDOWN.COPIED_CODE:Copied`);
   protected readonly code = computed(() => (this.node() as Code).value);
@@ -44,10 +45,6 @@ export class SiMarkdownCodeComponent implements SiMarkdownExtensionComponent, On
   private copyTimeout?: ReturnType<typeof setTimeout>;
 
   protected readonly updateLanguage = (lang?: string): void => this.languageToDisplay.set(lang);
-
-  constructor() {
-    addIcons({ elementCopy, elementOk, elementDocument });
-  }
 
   ngOnDestroy(): void {
     clearTimeout(this.copyTimeout);

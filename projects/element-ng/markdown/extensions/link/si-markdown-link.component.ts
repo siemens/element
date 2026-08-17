@@ -25,6 +25,7 @@ export class SiMarkdownLinkComponent implements SiMarkdownExtensionComponent {
   readonly parent = input.required<Parent>();
   readonly options = input<any>();
 
+  protected readonly icons = addIcons({ elementDocument });
   protected readonly link = computed(() => this.node() as Link);
   protected readonly fileUrl = computed(() => {
     try {
@@ -40,8 +41,4 @@ export class SiMarkdownLinkComponent implements SiMarkdownExtensionComponent {
     return decodeURIComponent(path).split('/').at(-1) ?? '';
   });
   protected readonly hasLabel = computed(() => this.link().children.length > 0);
-
-  constructor() {
-    addIcons({ elementDocument });
-  }
 }
