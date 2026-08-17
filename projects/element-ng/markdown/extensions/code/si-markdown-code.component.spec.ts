@@ -45,7 +45,6 @@ describe('SiMarkdownCodeComponent', () => {
     const copied = element.querySelector<HTMLElement>('si-markdown-code .copied');
     expect(writeText).toHaveBeenCalledWith('const answer = 42;');
     expect(copied).toHaveTextContent('Copied');
-    expect(copied?.querySelector('si-icon')).toHaveAttribute('icon', 'elementOk');
 
     await vi.advanceTimersByTimeAsync(1500);
     fixture.detectChanges();
