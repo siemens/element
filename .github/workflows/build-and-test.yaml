@@ -22,11 +22,12 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0 # We need this for commit-lint
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+      - name: Install Node.js and pnpm
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
         with:
-          node-version: lts/krypton
-          cache: 'pnpm'
+          runtime: node@krypton
+          cache: true
+          install: false
       - name: Set up registry authentication
         run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
         env:
@@ -58,11 +59,12 @@ jobs:
       - build
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+      - name: Install Node.js and pnpm
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
         with:
-          node-version: lts/krypton
-          cache: 'pnpm'
+          runtime: node@krypton
+          cache: true
+          install: false
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: dist
@@ -113,11 +115,12 @@ jobs:
       - build
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+      - name: Install Node.js and pnpm
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
         with:
-          node-version: lts/krypton
-          cache: 'pnpm'
+          runtime: node@krypton
+          cache: true
+          install: false
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: dist
@@ -156,11 +159,12 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           lfs: true
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+      - name: Install Node.js and pnpm
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
         with:
-          node-version: lts/krypton
-          cache: 'pnpm'
+          runtime: node@krypton
+          cache: true
+          install: false
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: dist
@@ -211,11 +215,12 @@ jobs:
         with:
           name: dist
           path: dist
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+      - name: Install Node.js and pnpm
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
         with:
-          node-version: lts/krypton
-          cache: 'pnpm'
+          runtime: node@krypton
+          cache: true
+          install: false
       - name: Set up registry authentication
         run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
         env:
