@@ -3,6 +3,7 @@
     @for (message of messages(); track message) {
       @if (message.type === 'user') {
         <si-user-message
+          [actionParam]="message"
           [actions]="getMessagePrimaryActions(message)"
           [secondaryActions]="getMessageSecondaryActions(message)"
           [attachments]="message.attachments ?? []"
@@ -12,6 +13,7 @@
       }
       @if (message.type === 'ai') {
         <si-ai-message
+          [actionParam]="message"
           [actions]="getMessagePrimaryActions(message)"
           [secondaryActions]="getMessageSecondaryActions(message)"
         >
