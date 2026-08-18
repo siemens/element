@@ -11,10 +11,9 @@ import {
   input,
   ViewEncapsulation
 } from '@angular/core';
+import { type SiMarkdownExtensionComponent } from '@siemens/element-ng/markdown';
 import { type KatexOptions, render } from 'katex';
 import { Literal, type Node, type Parent } from 'mdast';
-
-import { SiMarkdownExtensionComponent } from '../../si-markdown.types';
 
 @Component({
   selector: 'si-markdown-katex',

@@ -2,10 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { type SiMarkdownExtension } from '@siemens/element-ng/markdown';
+/**
+ * Copyright (c) Siemens 2016 - 2026
+ * SPDX-License-Identifier: MIT
+ */
 import { type KatexOptions } from 'katex';
 import remarkMath, { type Options } from 'remark-math';
 
-import { SiMarkdownExtension } from '../../si-markdown.types';
 import { SiMarkdownKatexComponent } from './si-markdown-katex.component';
 
 /**

@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { SiMarkdownMetadata, type SiMarkdownExtension } from '../../si-markdown.types';
+import { SiMarkdownMetadata, type SiMarkdownExtension } from '@siemens/element-ng/markdown';
+
 import { siMarkdownCitationsTransformer } from './si-markdown-citations';
 import { SiMarkdownCitationsComponent } from './si-markdown-citations.component';
 

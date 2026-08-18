@@ -4,11 +4,9 @@
  */
 import { afterNextRender, Component, computed, inject, Injector, input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { computedAsync, type SiMarkdownExtensionComponent } from '@siemens/element-ng/markdown';
 import { Literal, type Node, type Parent } from 'mdast';
 import mermaid, { MermaidConfig } from 'mermaid';
-
-import { SiMarkdownExtensionComponent } from '../../si-markdown.types';
-import { computedAsync } from '../../utils/signal-utils';
 
 @Component({
   selector: 'si-markdown-mermaid',
