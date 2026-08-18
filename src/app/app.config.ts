@@ -120,7 +120,6 @@ export const APP_CONFIG: ApplicationConfig = {
       // App internal
       SiLivePreviewModule.forRoot(
         {
-          modules: [],
           componentLoader,
           examplesBaseUrl: 'app/examples/',
           ticketBaseUrl: 'https://github.com/siemens/element/issues/new',
