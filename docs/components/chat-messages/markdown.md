@@ -6,7 +6,9 @@ The **markdown** component renders Markdown content as Angular components. Use i
 configure extensions, code highlighting, and custom rendering behavior. Options can, and where
 possible should, be shared between multiple component instances.
 
-## Usage ---
+## Usage --
+
+### Basic usage
 
 Create the options once and pass the same instance to each `si-markdown` component that needs the
 configuration. The component supports GitHub Flavored Markdown by default, including tables, task
@@ -34,7 +36,56 @@ export class MarkdownExampleComponent {
 }
 ```
 
-## Extensions ---
+### Code highlighting
+
+Configure syntax highlighting for fenced code blocks with `siMarkdownHighlightJs()` and
+`.setCodeHighlighter()`. The highlighter includes JavaScript, TypeScript, JSON, CSS, SCSS, Bash,
+Python, and XML languages (also HTML) by default.
+
+Use `languageLoader` to load other languages only when a code block requests them. The loader
+receives the language name from the fence and returns the corresponding Highlight.js language
+module. Return `undefined` for languages your application does not support.
+
+```ts
+import {
+  siMarkdownHighlightJs,
+  type HighlightJSLanguageImport
+} from '@siemens/element-ng/markdown/hightlighter/highlightjs';
+
+const highlightJsLanguageLoader = async (language: string): HighlightJSLanguageImport => {
+  switch (language) {
+    case 'c':
+      return import('highlight.js/lib/languages/c');
+    case 'cpp':
+      return import('highlight.js/lib/languages/cpp');
+    case 'yaml':
+      return import('highlight.js/lib/languages/yaml');
+    default:
+      return undefined;
+  }
+};
+
+protected readonly markdownOptions = makeSiMarkdownOptions().setCodeHighlighter(
+  siMarkdownHighlightJs({ languageLoader: highlightJsLanguageLoader })
+);
+```
+
+When `autoDetectLanguage` is enabled, Highlight.js can only detect languages that have already
+been registered; it does not invoke `languageLoader`. Eagerly register every language you want to
+auto-detect, following the built-in language registration used by the Highlight.js component:
+
+```ts
+import hljs from 'highlight.js/lib/core';
+import langYaml from 'highlight.js/lib/languages/yaml';
+
+hljs.registerLanguage('yaml', langYaml);
+
+protected readonly markdownOptions = makeSiMarkdownOptions().setCodeHighlighter(
+  siMarkdownHighlightJs({ autoDetectLanguage: true })
+);
+```
+
+### Extensions
 
 The following rendering support is included in every Markdown component:
 
@@ -60,7 +111,7 @@ by the Element integrations, such as emoji shortcodes.
 > **Bundle size:** KaTeX, Mermaid, Highlight.js, and additional `unified` plugins increase the
 > application bundle size. Import and configure only the integrations your Markdown content requires.
 
-## Custom extension ---
+### Custom extension
 
 An extension can install `unified` plugin(s) and associate the AST node types produced by that
 plugin with Angular renderer components. As an example, the following provides an alternative
