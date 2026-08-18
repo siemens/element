@@ -84,6 +84,7 @@ describe('SiMapComponent', () => {
 
     fixture.detectChanges();
     component.showTooltipContent(mockFeature);
+    fixture.detectChanges();
     expect(component.showTooltipContent).toHaveBeenCalled();
     const tooltip = fixture.debugElement.query(By.directive(SiMapTooltipComponent));
     expect(tooltip.nativeElement.innerHTML).toContain('name');
