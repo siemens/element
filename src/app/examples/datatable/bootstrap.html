@@ -38,25 +38,31 @@
             <td class="text-center">
               <button
                 type="button"
-                class="btn btn-tertiary btn-circle element-down-2"
+                class="btn btn-tertiary btn-circle"
                 title="open dropdown"
                 aria-label="open dropdown"
-              ></button>
+              >
+                <si-icon [icon]="icons.elementDown2" />
+              </button>
             </td>
-            <td class="text-center"><si-icon class="icon" icon="element-config-value" /></td>
+            <td class="text-center">
+              <si-icon class="icon" [icon]="icons.elementConfigValue" />
+            </td>
             <td>
               <span class="si-h5">Cooling coil device mode</span><br /><span
                 class="si-body text-secondary"
                 >B1'Flr_1'RSegm1'HVAC</span
               >
             </td>
-            <td class="text-center"
-              ><si-icon class="icon text-secondary" icon="element-transient" />
+            <td class="text-center">
+              <si-icon class="icon text-secondary" [icon]="icons.elementTransient" />
             </td>
             <td class="text-center">
-              <si-icon class="icon status-warning" icon="element-maintenance-filled" />
+              <si-icon class="icon status-warning" [icon]="icons.elementMaintenanceFilled" />
             </td>
-            <td class="text-center"><si-icon class="icon" icon="element-alarm" /></td>
+            <td class="text-center">
+              <si-icon class="icon" [icon]="icons.elementAlarm" />
+            </td>
             <td class="si-body">
               <input type="text" class="form-control" value="50%" aria-label="value" disabled />
             </td>
@@ -72,16 +78,20 @@
             <td class="text-center">
               <button
                 type="button"
-                class="btn btn-tertiary btn-circle element-down-2"
+                class="btn btn-tertiary btn-circle"
                 title="open dropdown"
                 aria-label="open dropdown"
-              ></button>
+              >
+                <si-icon [icon]="icons.elementDown2" />
+              </button>
             </td>
-            <td class="text-center"><si-icon class="icon" icon="element-physical-input" /></td>
+            <td class="text-center">
+              <si-icon class="icon" [icon]="icons.elementPhysicalInput" />
+            </td>
             <td class="si-h5">Cooling coil cooling request</td>
             <td class="text-center"></td>
             <td class="text-center">
-              <si-icon class="icon status-danger" icon="element-manual-filled" />
+              <si-icon class="icon status-danger" [icon]="icons.elementManualFilled" />
             </td>
             <td class="text-center"></td>
             <td class="si-body">
@@ -101,19 +111,23 @@
             <td class="text-center">
               <button
                 type="button"
-                class="btn btn-tertiary btn-circle element-down-2"
+                class="btn btn-tertiary btn-circle"
                 title="open dropdown"
                 aria-label="open dropdown"
-              ></button>
+              >
+                <si-icon [icon]="icons.elementDown2" />
+              </button>
             </td>
-            <td class="text-center"><si-icon class="icon" icon="element-physical-input" /></td>
+            <td class="text-center">
+              <si-icon class="icon" [icon]="icons.elementPhysicalInput" />
+            </td>
             <td class="si-h5">Cooling coil dehumidification request</td>
             <td class="text-center"></td>
             <td class="text-center">
-              <si-icon class="icon status-warning" icon="element-manual-filled" />
+              <si-icon class="icon status-warning" [icon]="icons.elementManualFilled" />
             </td>
             <td class="text-center">
-              <si-icon class="icon status-danger" icon="element-alarm-filled" />
+              <si-icon class="icon status-danger" [icon]="icons.elementAlarmFilled" />
             </td>
             <td class="si-body">
               <input type="text" class="form-control" value="50%" aria-label="value" disabled />
@@ -130,21 +144,25 @@
             <td class="text-center">
               <button
                 type="button"
-                class="btn btn-tertiary btn-circle element-down-2"
+                class="btn btn-tertiary btn-circle"
                 title="open dropdown"
                 aria-label="open dropdown"
-              ></button>
+              >
+                <si-icon [icon]="icons.elementDown2" />
+              </button>
             </td>
-            <td class="text-center"><si-icon class="icon" icon="element-calculated-value" /></td>
+            <td class="text-center">
+              <si-icon class="icon" [icon]="icons.elementCalculatedValue" />
+            </td>
             <td class="si-h5">Cooling coil available for cooling</td>
             <td class="text-center">
-              <si-icon class="icon status-danger" icon="element-cancel-filled" />
+              <si-icon class="icon status-danger" [icon]="icons.elementCancelFilled" />
             </td>
             <td class="text-center"></td>
             <td class="text-center">
               <span class="icon icon-stack">
-                <si-icon class="status-danger" icon="element-alarm-background-filled" />
-                <si-icon class="text-secondary" icon="element-alarm-tick" />
+                <si-icon class="status-danger" [icon]="icons.elementAlarmBackgroundFilled" />
+                <si-icon class="text-secondary" [icon]="icons.elementAlarmTick" />
               </span>
             </td>
             <td class="si-body">
