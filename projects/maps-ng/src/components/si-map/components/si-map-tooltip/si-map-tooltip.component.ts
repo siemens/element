@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, inject, input, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, input, signal } from '@angular/core';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { TOOLTIP_FEATURES_TO_DISPLAY } from '../../models/constants';
@@ -15,8 +15,6 @@ import { TOOLTIP_FEATURES_TO_DISPLAY } from '../../models/constants';
   styleUrl: './si-map-tooltip.component.scss'
 })
 export class SiMapTooltipComponent {
-  protected readonly content = viewChild.required<ElementRef>('content');
-
   /**
    * Cutoff text for tooltips, when cluster combines more than 4 features
    *
@@ -41,6 +39,7 @@ export class SiMapTooltipComponent {
   }
 
   protected readonly hiddenEntries = signal(0);
+  protected readonly tooltipLabels = signal<string[]>([]);
   private readonly elementRef = inject(ElementRef);
 
   /**
@@ -51,37 +50,18 @@ export class SiMapTooltipComponent {
    * @param labels - array of strings or string itself
    */
   setTooltip(labels: string[] | string): void {
-    if (typeof labels === 'string') {
-      this.setContent(this.getLabelSnippet(labels));
-      this.hiddenEntries.set(0);
-      return;
-    }
-
-    const list: string[] = [];
-
-    if (labels.length > 1) {
-      const toDisplay = [...labels];
-      const rest = toDisplay.splice(
-        TOOLTIP_FEATURES_TO_DISPLAY,
-        toDisplay.length - TOOLTIP_FEATURES_TO_DISPLAY
-      );
-
-      toDisplay.forEach(feat => list.push(this.getLabelSnippet(feat)));
-      this.hiddenEntries.set(rest.length ?? 0);
-    }
-
-    this.setContent(list.join(''));
+    const labelList = typeof labels === 'string' ? [labels] : labels.length > 1 ? labels : [];
+    this.tooltipLabels.set(
+      labelList.slice(0, TOOLTIP_FEATURES_TO_DISPLAY).map(label => this.getLabelText(label))
+    );
+    this.hiddenEntries.set(Math.max(labelList.length - TOOLTIP_FEATURES_TO_DISPLAY, 0));
   }
 
-  private getLabelSnippet(label: string): string {
+  private getLabelText(label: string): string {
     if (this.maxLabelLength() != -1 && label.length > this.maxLabelLength()) {
-      return `<div>${label.substring(0, this.maxLabelLength())}...</div>`;
-    } else {
-      return `<div>${label}</div>`;
+      return `${label.substring(0, this.maxLabelLength())}…`;
     }
-  }
 
-  private setContent(tooltip: string): void {
-    this.content().nativeElement.innerHTML = tooltip;
+    return label;
   }
 }
