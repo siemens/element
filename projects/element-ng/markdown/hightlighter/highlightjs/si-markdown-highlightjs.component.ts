@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { computedAsync, type SiMarkdownHighlighterComponent } from '@siemens/element-ng/markdown';
 import { type Language } from 'highlight.js';
@@ -16,8 +16,10 @@ import langScss from 'highlight.js/lib/languages/scss';
 import langTs from 'highlight.js/lib/languages/typescript';
 import langXml from 'highlight.js/lib/languages/xml';
 
-import { hljsLanguageLoader } from './hljs-language-loader';
-import { SiMarkdownHighlightJsOptions } from './si-markdown-highlightjs.types';
+import {
+  HighlightJSLanguageLoader,
+  SiMarkdownHighlightJsOptions
+} from './si-markdown-highlightjs.types';
 
 // some common languages are built-in for initial loading speed
 hljs.registerLanguage('javascript', langJs);
@@ -29,15 +31,21 @@ hljs.registerLanguage('bash', langBash);
 hljs.registerLanguage('python', langPython);
 hljs.registerLanguage('xml', langXml);
 
-const getHljsLang = async (lang: string): Promise<Language | undefined> => {
+const getHljsLang = async (
+  lang: string,
+  loader?: HighlightJSLanguageLoader
+): Promise<Language | undefined> => {
   const loadedLang = hljs.getLanguage(lang);
   if (loadedLang) {
     return loadedLang;
   }
-  const importLang = await hljsLanguageLoader(lang);
-  if (importLang) {
-    hljs.registerLanguage(lang, importLang.default);
-    return hljs.getLanguage(lang);
+
+  if (loader) {
+    const importLang = await loader(lang);
+    if (importLang) {
+      hljs.registerLanguage(lang, importLang.default);
+      return hljs.getLanguage(lang);
+    }
   }
   return undefined;
 };
@@ -56,17 +64,6 @@ export class SiMarkdownHightlightJsComponent implements SiMarkdownHighlighterCom
   readonly language = input.required<string>();
   readonly updateLanguage = input.required<(lang?: string) => void>();
   readonly options = input<SiMarkdownHighlightJsOptions>();
-
-  constructor() {
-    effect(() => {
-      const opts = this.options();
-      for (const l of opts?.languages ?? []) {
-        if (!hljs.getLanguage(l.name)) {
-          hljs.registerLanguage(l.name, l.lang);
-        }
-      }
-    });
-  }
 
   protected readonly highlighted = computedAsync({
     params: () => ({ code: this.code(), language: this.language(), options: this.options() }),
@@ -95,7 +92,7 @@ export class SiMarkdownHightlightJsComponent implements SiMarkdownHighlighterCom
       }
     } else {
       await new Promise(resolve => setTimeout(resolve));
-      const hljsLang = await getHljsLang(language);
+      const hljsLang = await getHljsLang(language, options.languageLoader);
       if (hljsLang) {
         this.updateLanguage()(hljsLang.name);
         try {
