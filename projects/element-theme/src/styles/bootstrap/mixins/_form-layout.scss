@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '../../variables/spacers';
+@use '../../variables/si-typography-map';
 @use '../variables';
 
 $form-col-layout-label-width: 16ch !default;
@@ -18,7 +19,10 @@ $form-col-layout-label-width: 16ch !default;
       max-inline-size: var(--si-form-label-width, #{$form-col-layout-label-width});
       align-self: start;
       padding-block: variables.$input-padding-y + variables.$input-border-width;
-      line-height: variables.$input-line-height;
+      line-height: map.get(
+        map.get(si-typography-map.$si-typography, variables.$input-font),
+        line-height
+      );
 
       &:empty {
         display: block;

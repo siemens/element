@@ -125,11 +125,7 @@ button.card {
   margin-block-end: 0; // Removes the default margin-bottom of <hN>
   color: variables.$card-cap-color;
 
-  @include typography.si-font(
-    typography.$si-font-size-h5,
-    typography.$si-line-height-h5,
-    typography.$si-font-weight-h5
-  );
+  @include typography.sdl-font(h5);
 
   + * .card-body, // for action cards, where we wrap the content
   + .card-body {

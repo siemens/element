@@ -18,11 +18,7 @@
 .si-weather-widget-condition,
 :host.si-weather-widget-vertical .si-weather-widget-range,
 :host.si-weather-widget-horizontal .si-weather-widget-range {
-  @include typography.si-font(
-    typography.$si-font-size-body-lg,
-    typography.$si-line-height-body-lg,
-    typography.$si-font-weight-body-lg
-  );
+  @include typography.sdl-font(body-lg);
 }
 
 .si-weather-widget-today {
@@ -52,11 +48,7 @@
 }
 
 .si-weather-widget-temperature {
-  @include typography.si-font(
-    typography.$si-font-size-display-xl,
-    typography.$si-line-height-display-xl,
-    typography.$si-font-weight-display-xl
-  );
+  @include typography.sdl-font(display-xl);
   color: variables.$si-sys-text-primary;
 }
 

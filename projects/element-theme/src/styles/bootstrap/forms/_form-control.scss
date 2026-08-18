@@ -3,9 +3,13 @@
 @use '../../variables/spacers';
 @use '../../variables/utilities';
 @use '../../variables/si-vars';
+@use '../../variables/si-typography-map';
 @use '../variables';
 
+@use 'sass:math';
 @use 'sass:map';
+
+$input-typography: map.get(si-typography-map.$si-typography, variables.$input-font);
 
 :is(.form-control, .form-select) {
   --border-color: #{system-tokens.$si-sys-border-2};
@@ -23,10 +27,13 @@
   padding-block: variables.$input-padding-y;
   padding-inline-start: variables.$input-padding-x;
   padding-inline-end: var(--si-input-padding-inline-end);
-  font-family: variables.$input-font-family;
-  font-size: variables.$input-font-size;
-  font-weight: variables.$input-font-weight;
-  line-height: variables.$input-line-height;
+  font-size: map.get($input-typography, font-size);
+  font-weight: map.get($input-typography, font-weight);
+  // Use an explicit rem value instead of a unitless ratio to prevent cross-browser
+  // rounding differences (Safari rounds 14 × 1.1428... to 15px, Chrome to 16px). See #2031
+  line-height: math.round(
+    map.get($input-typography, line-height) * map.get($input-typography, font-size)
+  );
   color: system-tokens.$si-sys-text-primary;
   background-color: system-tokens.$si-sys-background-1;
   background-clip: padding-box;
@@ -159,7 +166,6 @@ textarea.form-control {
   padding-block: calc(variables.$input-padding-y - 3px);
   padding-inline-start: calc(variables.$input-padding-x - 3px);
   padding-inline-end: calc(var(--si-input-padding-inline-end) - 3px);
-  line-height: variables.$input-line-height;
   box-shadow: 0 0 0 1px var(--border-color);
   border: 3px solid var(--si-textarea-mask) !important; // stylelint-disable-line declaration-no-important
   outline-offset: 2px !important; // stylelint-disable-line declaration-no-important

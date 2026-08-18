@@ -2,6 +2,7 @@
 @use 'sass:math';
 
 @use '@siemens/element-theme/src/styles/all-variables';
+@use '@siemens/element-theme/src/styles/variables/si-typography-map';
 
 :host.si-form-input {
   display: flex;
@@ -48,7 +49,10 @@
     );
     padding-inline: map.get(all-variables.$spacers, 6);
     inline-size: var(--si-form-label-width, math.percentage(math.div(2, 12)));
-    line-height: all-variables.$input-line-height;
+    line-height: map.get(
+      map.get(si-typography-map.$si-typography, all-variables.$input-font),
+      line-height
+    );
 
     &:empty {
       display: block;

@@ -1,9 +1,28 @@
 @use 'sass:math';
+@use 'sass:map';
+@use 'si-typography-map';
 
 @mixin si-font($font-size, $line-height, $font-weight) {
   font-size: $font-size;
   font-weight: $font-weight;
   line-height: $line-height;
+}
+
+@mixin sdl-font($name) {
+  $config: map.get(si-typography-map.$si-typography, $name);
+  @if $config == null {
+    @error "Unknown typography token '#{$name}'. Available: #{map.keys(si-typography-map.$si-typography)}.";
+  }
+  $body-config: map.get(si-typography-map.$si-typography, body);
+  font-weight: map.get($config, font-weight);
+  font-size: map.get($config, font-size);
+  line-height: map.get($config, line-height);
+  @if map.get($config, font-family) != map.get($body-config, font-family) {
+    font-family: map.get($config, font-family);
+  }
+  @if map.get($config, letter-spacing) != map.get($body-config, letter-spacing) {
+    letter-spacing: map.get($config, letter-spacing);
+  }
 }
 
 @function px-to-rem($value) {
@@ -15,8 +34,8 @@
   @return math.div($ratio, $ratio * 0 + 1);
 }
 
-$si-font-family: 'SiemensSans Pro VF', 'SiemensSans Pro', helvetica, arial, sans-serif;
-$si-font-family-mono: 'JetBrains Mono', monospace;
+$si-font-family: map.get(si-typography-map.$si-typography, body, font-family);
+$si-font-family-mono: map.get(si-typography-map.$si-typography, code, font-family);
 
 $si-font-weight-lighter: lighter !default;
 $si-font-weight-light: 300 !default;
@@ -27,93 +46,101 @@ $si-font-weight-bold: 700 !default;
 $si-font-weight-bolder: bolder !default;
 $si-font-weight-black: 900 !default;
 
-$si-font-size-h1-bold: px-to-rem(28px);
-$si-line-height-h1-bold: px-to-ratio($si-font-size-h1-bold, 36px);
-$si-font-weight-h1-bold: $si-font-weight-bold;
+$si-font-size-h1-bold: map.get(si-typography-map.$si-typography, h1, font-size);
+$si-line-height-h1-bold: map.get(si-typography-map.$si-typography, h1, line-height);
+$si-font-weight-h1-bold: map.get(si-typography-map.$si-typography, h1, font-weight);
 
-$si-font-size-h1: px-to-rem(28px);
-$si-line-height-h1: px-to-ratio($si-font-size-h1, 36px);
-$si-font-weight-h1: $si-font-weight-normal;
+$si-font-size-h1: map.get(si-typography-map.$si-typography, h1, font-size);
+$si-line-height-h1: map.get(si-typography-map.$si-typography, h1, line-height);
+$si-font-weight-h1: map.get(si-typography-map.$si-typography, h1, font-weight);
 
-$si-font-size-h2: px-to-rem(24px);
-$si-line-height-h2: px-to-ratio($si-font-size-h2, 32px);
-$si-font-weight-h2: $si-font-weight-semibold;
+$si-font-size-h2: map.get(si-typography-map.$si-typography, h2, font-size);
+$si-line-height-h2: map.get(si-typography-map.$si-typography, h2, line-height);
+$si-font-weight-h2: map.get(si-typography-map.$si-typography, h2, font-weight);
 
-$si-font-size-h3: px-to-rem(20px);
-$si-line-height-h3: px-to-ratio($si-font-size-h3, 24px);
-$si-font-weight-h3: $si-font-weight-semibold;
+$si-font-size-h3: map.get(si-typography-map.$si-typography, h3, font-size);
+$si-line-height-h3: map.get(si-typography-map.$si-typography, h3, line-height);
+$si-font-weight-h3: map.get(si-typography-map.$si-typography, h3, font-weight);
 
-$si-font-size-h4: px-to-rem(16px);
-$si-line-height-h4: px-to-ratio($si-font-size-h4, 20px);
-$si-font-weight-h4: $si-font-weight-semibold;
+$si-font-size-h4: map.get(si-typography-map.$si-typography, h4, font-size);
+$si-line-height-h4: map.get(si-typography-map.$si-typography, h4, line-height);
+$si-font-weight-h4: map.get(si-typography-map.$si-typography, h4, font-weight);
 
-$si-font-size-h4-bold: px-to-rem(16px);
-$si-line-height-h4-bold: px-to-ratio($si-font-size-h4-bold, 20px);
-$si-font-weight-h4-bold: $si-font-weight-bold;
+$si-font-size-h4-bold: map.get(si-typography-map.$si-typography, h4, font-size);
+$si-line-height-h4-bold: map.get(si-typography-map.$si-typography, h4, line-height);
+$si-font-weight-h4-bold: map.get(si-typography-map.$si-typography, h4, font-weight);
 
-$si-font-size-h5: px-to-rem(14px);
-$si-line-height-h5: px-to-ratio($si-font-size-h5, 20px);
-$si-font-weight-h5: $si-font-weight-semibold;
+$si-font-size-h5: map.get(si-typography-map.$si-typography, h5, font-size);
+$si-line-height-h5: map.get(si-typography-map.$si-typography, h5, line-height);
+$si-font-weight-h5: map.get(si-typography-map.$si-typography, h5, font-weight);
 
-$si-font-size-h5-bold: px-to-rem(14px);
-$si-line-height-h5-bold: px-to-ratio($si-font-size-h5-bold, 20px);
-$si-font-weight-h5-bold: $si-font-weight-bold;
+$si-font-size-h5-bold: map.get(si-typography-map.$si-typography, h5-bold, font-size);
+$si-line-height-h5-bold: map.get(si-typography-map.$si-typography, h5-bold, line-height);
+$si-font-weight-h5-bold: map.get(si-typography-map.$si-typography, h5-bold, font-weight);
 
-$si-font-size-h6: px-to-rem(12px);
-$si-line-height-h6: px-to-ratio($si-font-size-h6, 16px);
-$si-font-weight-h6: $si-font-weight-semibold;
+$si-font-size-h6: map.get(si-typography-map.$si-typography, h6, font-size);
+$si-line-height-h6: map.get(si-typography-map.$si-typography, h6, line-height);
+$si-font-weight-h6: map.get(si-typography-map.$si-typography, h6, font-weight);
 
-$si-font-size-body-lg: px-to-rem(16px);
-$si-line-height-body-lg: px-to-ratio($si-font-size-body-lg, 20px);
-$si-font-weight-body-lg: $si-font-weight-normal;
+$si-font-size-body-lg: map.get(si-typography-map.$si-typography, body-lg, font-size);
+$si-line-height-body-lg: map.get(si-typography-map.$si-typography, body-lg, line-height);
+$si-font-weight-body-lg: map.get(si-typography-map.$si-typography, body-lg, font-weight);
 
-$si-font-size-body: px-to-rem(14px);
-$si-line-height-body: px-to-ratio($si-font-size-body, 16px);
-$si-line-height-body-rem: px-to-rem(16px);
-$si-font-weight-body: $si-font-weight-normal;
+$si-font-size-body: map.get(si-typography-map.$si-typography, body, font-size);
+$si-line-height-body: map.get(si-typography-map.$si-typography, body, line-height);
+$si-line-height-body-rem: $si-line-height-body * $si-font-size-body;
+$si-font-weight-body: map.get(si-typography-map.$si-typography, body, font-weight);
 
-$si-font-size-body-paragraph: px-to-rem(14px);
-$si-line-height-body-paragraph: px-to-ratio($si-font-size-body-paragraph, 20px);
-$si-font-weight-body-paragraph: $si-font-weight-normal;
+$si-font-size-body-paragraph: map.get(si-typography-map.$si-typography, body-paragraph, font-size);
+$si-line-height-body-paragraph: map.get(
+  si-typography-map.$si-typography,
+  body-paragraph,
+  line-height
+);
+$si-font-weight-body-paragraph: map.get(
+  si-typography-map.$si-typography,
+  body-paragraph,
+  font-weight
+);
 
-$si-font-size-body-sm: px-to-rem(12px);
-$si-line-height-body-sm: px-to-ratio($si-font-size-body-sm, 16px);
-$si-font-weight-body-sm: $si-font-weight-normal;
+$si-font-size-body-sm: map.get(si-typography-map.$si-typography, body-sm, font-size);
+$si-line-height-body-sm: map.get(si-typography-map.$si-typography, body-sm, line-height);
+$si-font-weight-body-sm: map.get(si-typography-map.$si-typography, body-sm, font-weight);
 
-$si-font-size-caption: $si-font-size-body-sm;
-$si-line-height-caption: $si-line-height-body-sm;
-$si-font-weight-caption: $si-font-weight-normal;
+$si-font-size-caption: map.get(si-typography-map.$si-typography, body-sm, font-size);
+$si-line-height-caption: map.get(si-typography-map.$si-typography, body-sm, line-height);
+$si-font-weight-caption: map.get(si-typography-map.$si-typography, body-sm, font-weight);
 
-$si-font-size-display-xxl: px-to-rem(58px);
-$si-line-height-display-xxl: px-to-ratio($si-font-size-display-xxl, 72px);
-$si-font-weight-display-xxl: $si-font-weight-normal;
+$si-font-size-display-xxl: map.get(si-typography-map.$si-typography, display-xxl, font-size);
+$si-line-height-display-xxl: map.get(si-typography-map.$si-typography, display-xxl, line-height);
+$si-font-weight-display-xxl: map.get(si-typography-map.$si-typography, display-xxl, font-weight);
 
-$si-font-size-display-xl: px-to-rem(48px);
-$si-line-height-display-xl: px-to-ratio($si-font-size-display-xl, 64px);
-$si-font-weight-display-xl: $si-font-weight-normal;
+$si-font-size-display-xl: map.get(si-typography-map.$si-typography, display-xl, font-size);
+$si-line-height-display-xl: map.get(si-typography-map.$si-typography, display-xl, line-height);
+$si-font-weight-display-xl: map.get(si-typography-map.$si-typography, display-xl, font-weight);
 
-$si-font-size-display-lg: px-to-rem(40px);
-$si-line-height-display-lg: px-to-ratio($si-font-size-display-lg, 52px);
-$si-font-weight-display-lg: $si-font-weight-normal;
+$si-font-size-display-lg: map.get(si-typography-map.$si-typography, display-lg, font-size);
+$si-line-height-display-lg: map.get(si-typography-map.$si-typography, display-lg, line-height);
+$si-font-weight-display-lg: map.get(si-typography-map.$si-typography, display-lg, font-weight);
 
-$si-font-size-display-bold: $si-font-size-display-lg;
-$si-line-height-display-bold: $si-line-height-display-lg;
-$si-font-weight-display-bold: $si-font-weight-bold;
+$si-font-size-display-bold: map.get(si-typography-map.$si-typography, display-sbold, font-size);
+$si-line-height-display-bold: map.get(si-typography-map.$si-typography, display-sbold, line-height);
+$si-font-weight-display-bold: map.get(si-typography-map.$si-typography, display-sbold, font-weight);
 
-$si-font-size-display: px-to-rem(32px);
-$si-line-height-display: px-to-ratio($si-font-size-display, 40px);
-$si-font-weight-display: $si-font-weight-normal;
+$si-font-size-display: map.get(si-typography-map.$si-typography, display, font-size);
+$si-line-height-display: map.get(si-typography-map.$si-typography, display, line-height);
+$si-font-weight-display: map.get(si-typography-map.$si-typography, display, font-weight);
 
-$si-font-size-code-sm: px-to-rem(12px);
-$si-line-height-code-sm: px-to-ratio($si-font-size-code-sm, 16px);
-$si-font-weight-code-sm: $si-font-weight-normal;
+$si-font-size-code-sm: map.get(si-typography-map.$si-typography, code-sm, font-size);
+$si-line-height-code-sm: map.get(si-typography-map.$si-typography, code-sm, line-height);
+$si-font-weight-code-sm: map.get(si-typography-map.$si-typography, code-sm, font-weight);
 
-$si-font-size-code: px-to-rem(14px);
-$si-line-height-code: px-to-ratio($si-font-size-code, 20px);
-$si-font-weight-code: $si-font-weight-normal;
+$si-font-size-code: map.get(si-typography-map.$si-typography, code, font-size);
+$si-line-height-code: map.get(si-typography-map.$si-typography, code, line-height);
+$si-font-weight-code: map.get(si-typography-map.$si-typography, code, font-weight);
 
-$si-font-size-code-lg: px-to-rem(16px);
-$si-line-height-code-lg: px-to-ratio($si-font-size-code-lg, 20px);
-$si-font-weight-code-lg: $si-font-weight-normal;
+$si-font-size-code-lg: map.get(si-typography-map.$si-typography, code-lg, font-size);
+$si-line-height-code-lg: map.get(si-typography-map.$si-typography, code-lg, line-height);
+$si-font-weight-code-lg: map.get(si-typography-map.$si-typography, code-lg, font-weight);
 
-$si-letter-spacing-normal: 0;
+$si-letter-spacing-normal: map.get(si-typography-map.$si-typography, body, letter-spacing);
