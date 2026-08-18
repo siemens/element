@@ -6,6 +6,7 @@
 
 import { ActivatedRoute } from '@angular/router';
 import { AfterViewInit } from '@angular/core';
+import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import * as i0 from '@angular/core';
 import * as i1 from '@angular/router';
@@ -18,7 +19,9 @@ import { OnInit } from '@angular/core';
 import { Provider } from '@angular/core';
 import { Route } from '@angular/router';
 import { Routes } from '@angular/router';
+import { Signal } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
+import { Type } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { ViewContainerRef } from '@angular/core';
 
@@ -256,6 +259,7 @@ export interface SiLivePreviewConfig {
         list: string[];
         webcomponentsList: string[];
     };
+    defaultRoutes?: Route[];
     // (undocumented)
     errorHandler?: (err: any) => void;
     // (undocumented)
@@ -263,11 +267,10 @@ export interface SiLivePreviewConfig {
     // (undocumented)
     landscapeToggle?: boolean;
     // (undocumented)
-    modules: any[];
-    // (undocumented)
     rootFontSizes?: number[];
     // (undocumented)
     rtlSwitcher?: boolean;
+    runtimeComponent?: Type<SiLivePreviewRuntimeComponent>;
     // (undocumented)
     themeSwitcher?: boolean;
     // (undocumented)
@@ -411,6 +414,16 @@ class SiLivePreviewRoutingModule {
 }
 export { SiLivePreviewRoutingModule }
 export { SiLivePreviewRoutingModule as SimplLivePreviewRoutingModule }
+
+// @public
+export abstract class SiLivePreviewRuntimeComponent implements AfterViewInit, DoCheck, OnDestroy {
+    // (undocumented)
+    readonly component: i0.InputSignal<Type<unknown>>;
+    // (undocumented)
+    readonly ready: i0.OutputEmitterRef<void>;
+    // (undocumented)
+    readonly renderingError: i0.OutputEmitterRef<Error>;
+}
 
 // @public (undocumented)
 export abstract class SiLivePreviewThemeApi {
