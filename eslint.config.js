@@ -6,7 +6,7 @@ import angularTemplateConfig from '@siemens/eslint-config-angular/template';
 import tsdocPlugin from 'eslint-plugin-tsdoc';
 import eslintPluginHeaders from 'eslint-plugin-headers';
 
-// mimic CommonJS variables
+// mimic CommonJS variables.
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
