@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { SiMarkdownHighlighter } from '../../si-markdown.types';
+import { type SiMarkdownHighlighter } from '@siemens/element-ng/markdown';
+
 import { SiMarkdownHightlightJsComponent } from './si-markdown-highlightjs.component';
 import { SiMarkdownHighlightJsOptions } from './si-markdown-highlightjs.types';
 

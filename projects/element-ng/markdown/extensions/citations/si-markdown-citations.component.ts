@@ -3,15 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, computed, inject, input } from '@angular/core';
+import {
+  SI_MARKDOWN_CONTROL,
+  type Citations,
+  type SiMarkdownCitation,
+  type SiMarkdownExtensionComponent
+} from '@siemens/element-ng/markdown';
 import { SiSourceChipComponent } from '@siemens/element-ng/source-chip';
 import { type Node, type Parent } from 'mdast';
-
-import { SI_MARKDOWN_CONTROL } from '../../si-markdown-token';
-import {
-  Citations,
-  SiMarkdownCitation,
-  SiMarkdownExtensionComponent
-} from '../../si-markdown.types';
 
 @Component({
   selector: 'si-markdown-citations',

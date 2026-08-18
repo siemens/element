@@ -4,6 +4,7 @@
  */
 import { Component, effect, inject, input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { computedAsync, type SiMarkdownHighlighterComponent } from '@siemens/element-ng/markdown';
 import { type Language } from 'highlight.js';
 import hljs from 'highlight.js/lib/core';
 import langBash from 'highlight.js/lib/languages/bash';
@@ -15,8 +16,6 @@ import langScss from 'highlight.js/lib/languages/scss';
 import langTs from 'highlight.js/lib/languages/typescript';
 import langXml from 'highlight.js/lib/languages/xml';
 
-import { SiMarkdownHighlighterComponent } from '../../si-markdown.types';
-import { computedAsync } from '../../utils/signal-utils';
 import { hljsLanguageLoader } from './hljs-language-loader';
 import { SiMarkdownHighlightJsOptions } from './si-markdown-highlightjs.types';
 
