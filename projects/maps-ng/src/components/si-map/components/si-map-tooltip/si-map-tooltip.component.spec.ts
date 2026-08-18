@@ -30,25 +30,25 @@ describe('SiMapTooltipComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display the tooltip from simple string value', () => {
+  it('should display the tooltip from simple string value', async () => {
     component.setTooltip(label);
+    await fixture.whenStable();
 
     const tooltip = fixture.debugElement.query(By.css('.si-map-tooltip'));
-    expect(tooltip.nativeElement.innerHTML).toContain('<div>Label X</div>');
+    expect(tooltip.nativeElement.textContent).toContain(label);
   });
 
-  it('should display the tooltip from array of strings', () => {
+  it('should display the tooltip from array of strings', async () => {
     component.setTooltip(labels);
+    await fixture.whenStable();
 
     const tooltip = fixture.debugElement.query(By.css('.si-map-tooltip'));
-    expect(tooltip.nativeElement.innerHTML).toContain(
-      '<div>Label A</div><div>Label B</div><div>Label C</div>'
-    );
+    expect(tooltip.nativeElement.textContent).toContain(labels.join(''));
   });
 
-  it('should render cropped tooltip if there are too many labels', () => {
+  it('should render cropped tooltip if there are too many labels', async () => {
     component.setTooltip([...labels, ...labels]);
-    fixture.detectChanges();
+    await fixture.whenStable();
     const tooltip = fixture.debugElement.query(By.css('.si-map-tooltip'));
     expect(tooltip.nativeElement.innerHTML).toContain('+ 2 locations');
   });
@@ -56,7 +56,18 @@ describe('SiMapTooltipComponent', () => {
   it('should trim the label if too long', () => {
     const longLabel = 'This is too long label, which will be trimmed 50 ch';
     component.setTooltip(longLabel);
+    fixture.detectChanges();
     const tooltip = fixture.debugElement.query(By.css('.si-map-tooltip'));
-    expect(tooltip.nativeElement.innerHTML).toContain('…');
+    expect(tooltip.nativeElement.textContent).toContain('…');
+  });
+
+  it('should render untrusted label markup as text', () => {
+    const labelWithMarkup = '<img src=x onerror=alert(document.domain)>';
+    component.setTooltip(labelWithMarkup);
+    fixture.detectChanges();
+
+    const tooltip = fixture.debugElement.query(By.css('.si-map-tooltip'));
+    expect(tooltip.nativeElement.textContent).toContain(labelWithMarkup);
+    expect(tooltip.nativeElement.querySelector('img')).toBeNull();
   });
 });

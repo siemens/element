@@ -81,14 +81,13 @@ describe('SiMapComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should define popup html and right overlay position when clustering is enabled', () => {
+  it('should define popup html and right overlay position when clustering is enabled', async () => {
     componentRef.setInput('displayTooltipOnHover', true);
     componentRef.setInput('cluster', true);
     component.isClicked = false;
     vi.spyOn(component, 'showTooltipContent');
-
-    fixture.detectChanges();
     component.showTooltipContent(mockFeature);
+    await fixture.whenStable();
     expect(component.showTooltipContent).toHaveBeenCalled();
     const tooltip = fixture.debugElement.query(By.directive(SiMapTooltipComponent));
     expect(tooltip.nativeElement.innerHTML).toContain('name');
