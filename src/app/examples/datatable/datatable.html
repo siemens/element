@@ -81,9 +81,9 @@
 </ng-template>
 <ng-template #otherStatusCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>
   <div class="d-flex gap-1">
-    <si-icon class="icon status-danger" icon="element-cancel-filled" />
-    <si-icon class="icon status-warning" icon="element-manual-filled" />
-    <si-icon class="icon status-danger" icon="element-alarm-filled" />
+    <si-icon class="icon status-danger" [icon]="icons.elementCancelFilled" />
+    <si-icon class="icon status-warning" [icon]="icons.elementManualFilled" />
+    <si-icon class="icon status-danger" [icon]="icons.elementAlarmFilled" />
   </div>
 </ng-template>
 
@@ -103,7 +103,7 @@
 
 <ng-template #contextCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>
   <div role="button" aria-label="Context menu" [cdkMenuTriggerFor]="menu">
-    <i class="icon element-options-vertical"></i>
+    <si-icon class="icon" [icon]="icons.elementOptionsVertical" />
   </div>
 </ng-template>
 

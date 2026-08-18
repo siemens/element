@@ -4,10 +4,16 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { Component, OnDestroy, OnInit, TemplateRef, viewChild } from '@angular/core';
+import {
+  elementAlarmFilled,
+  elementCancelFilled,
+  elementManualFilled,
+  elementOptionsVertical
+} from '@siemens/element-icons';
 import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
 import { StatusType } from '@siemens/element-ng/common';
 import { SiDatatableModule } from '@siemens/element-ng/datatable';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiPaginationComponent } from '@siemens/element-ng/pagination';
 import {
@@ -34,6 +40,12 @@ import { Subject } from 'rxjs';
   styleUrl: './datatable.scss'
 })
 export class SampleComponent implements OnInit, OnDestroy {
+  readonly icons = addIcons({
+    elementAlarmFilled,
+    elementCancelFilled,
+    elementManualFilled,
+    elementOptionsVertical
+  });
   readonly statusCellTempl = viewChild.required<TemplateRef<any>>('statusCellTempl');
   readonly otherStatusCellTempl = viewChild.required<TemplateRef<any>>('otherStatusCellTempl');
   readonly contextCellTempl = viewChild.required<TemplateRef<any>>('contextCellTempl');
