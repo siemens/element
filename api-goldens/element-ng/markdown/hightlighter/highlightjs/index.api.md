@@ -4,10 +4,16 @@
 
 ```ts
 
+import * as highlight_js_lib_languages__ from 'highlight.js/lib/languages/*';
 import { HighlightOptions } from 'highlight.js';
 import { InputSignal } from '@angular/core';
-import { LanguageFn } from 'highlight.js';
 import { Type } from '@angular/core';
+
+// @public
+export type HighlightJSLanguageImport = Promise<typeof highlight_js_lib_languages__ | undefined>;
+
+// @public
+export type HighlightJSLanguageLoader = (lang: string) => HighlightJSLanguageImport;
 
 // @public
 export const siMarkdownHighlightJs: (options?: SiMarkdownHighlightJsOptions) => SiMarkdownHighlighter;
@@ -16,10 +22,7 @@ export const siMarkdownHighlightJs: (options?: SiMarkdownHighlightJsOptions) => 
 export interface SiMarkdownHighlightJsOptions {
     autoDetectLanguage?: boolean;
     highlightJs?: Partial<HighlightOptions>;
-    languages?: {
-        name: string;
-        lang: LanguageFn;
-    }[];
+    languageLoader?: HighlightJSLanguageLoader;
 }
 
 // (No @packageDocumentation comment for this package)
