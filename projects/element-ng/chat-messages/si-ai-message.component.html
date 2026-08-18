@@ -1,11 +1,6 @@
 <si-chat-message alignment="start" actionsPosition="bottom" [loading]="loading()">
   @if (content()) {
-    @let content = textContent();
-    @if (content) {
-      <span class="text-pre-wrap">{{ content }}</span>
-    } @else {
-      <div #formattedContent> </div>
-    }
+    <span class="text-pre-wrap">{{ content() }}</span>
   } @else {
     <ng-content />
   }
