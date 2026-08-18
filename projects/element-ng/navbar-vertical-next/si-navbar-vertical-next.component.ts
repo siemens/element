@@ -10,6 +10,7 @@ import {
   computed,
   contentChild,
   contentChildren,
+  effect,
   inject,
   Injector,
   input,
@@ -64,6 +65,7 @@ interface UIState {
     '[class.nav-inline-collapse]': 'inlineCollapse()',
     '[class.has-visible-chip]': 'hasVisibleChip()',
     '[class.visible]': 'visible()',
+    '[class.nav-flat-group-open]': '!!openFlatGroupId()',
     '[class.ready]': 'ready()'
   }
 })
@@ -167,6 +169,21 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   protected readonly ready = signal(false);
   protected readonly smallScreen = signal(false);
 
+  /**
+   * `true` when triggering a group should open the mobile flat group
+   * instead of inline/flyout. Tied to the mobile breakpoint (viewport width at
+   * or below {@link BOOTSTRAP_BREAKPOINTS.smMinimum}, 576px). Collapsing the
+   * drawer on mobile must not reset the open flat group, so this stays `true`
+   * regardless of `collapsed`.
+   * @internal
+   */
+  readonly flatMode = signal(false);
+
+  /** Id of the group currently shown as a mobile flat group.
+   * @internal
+   */
+  readonly openFlatGroupId = signal<string | undefined>(undefined);
+
   /** Chip menu sub-component; present only while the parent template renders it.
    * @internal
    */
@@ -219,7 +236,9 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   /** `true` when groups should render as flyout overlays.
    * @internal
    */
-  readonly flyoutMode = computed(() => this.alwaysFlyout() || this.collapsed());
+  readonly flyoutMode = computed(
+    () => !this.flatMode() && (this.alwaysFlyout() || this.collapsed())
+  );
 
   /** `true` when the chip menu overlay is open.
    * @internal
@@ -232,6 +251,12 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
   readonly hasVisibleChip = computed(() => this.chipMode() && !!this.activeItem());
 
   constructor() {
+    effect(() => {
+      if (!this.flatMode()) {
+        this.closeFlatGroup();
+      }
+    });
+
     this.breakpointObserver
       .observe(`(max-width: ${BOOTSTRAP_BREAKPOINTS.lgMinimum}px)`)
       .pipe(takeUntilDestroyed())
@@ -239,6 +264,11 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
         this.collapsed.set(matches || this.preferCollapse);
         this.smallScreen.set(matches);
       });
+
+    this.breakpointObserver
+      .observe(`(max-width: ${BOOTSTRAP_BREAKPOINTS.smMinimum}px)`)
+      .pipe(takeUntilDestroyed())
+      .subscribe(({ matches }) => this.flatMode.set(matches));
   }
 
   ngOnChanges(changes: SimpleChanges<this>): void {
@@ -297,6 +327,13 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
       this.uiStateExpandedItems.update(items => ({ ...items, [stateId]: expanded }));
     }
     this.saveUIState();
+  }
+
+  /** Closes the open mobile flat group.
+   * @internal
+   */
+  closeFlatGroup(): void {
+    this.openFlatGroupId.set(undefined);
   }
 
   protected saveUIState(): void {

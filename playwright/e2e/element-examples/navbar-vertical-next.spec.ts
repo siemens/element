@@ -151,35 +151,88 @@ test.describe('navbar vertical next', () => {
     await expect(tooltip).not.toBeVisible();
   });
 
-  test(example + ' mobile collapsed', async ({ page, si }) => {
-    await page.setViewportSize({ width: 570, height: 600 });
-    await si.visitExample(example, false);
+  test.describe('mobile', () => {
+    test.beforeEach(async ({ page, si }) => {
+      await page.setViewportSize({ width: 570, height: 600 });
+      await si.visitExample(example, false);
+    });
 
-    await expect(page.getByLabel('Show side navigation', { exact: true })).toBeVisible();
+    test(example + ' collapsed', async ({ page, si }) => {
+      await expect(page.getByLabel('Show side navigation', { exact: true })).toBeVisible();
 
-    await si.waitForAllAnimationsToComplete();
-    await si.runVisualAndA11yTests('mobile-collapsed');
-  });
+      await si.waitForAllAnimationsToComplete();
+      await si.runVisualAndA11yTests('mobile-collapsed');
+    });
 
-  test(example + ' mobile expanded', async ({ page, si }) => {
-    await page.setViewportSize({ width: 570, height: 600 });
-    await si.visitExample(example, false);
+    test.describe('flat group', () => {
+      test.beforeEach(async ({ page }) => {
+        const toggle = page.getByRole('button', { name: 'Show side navigation', exact: true });
+        await toggle.click();
+        await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+        await page.getByRole('button', { name: 'Documentation' }).click();
+        await expect(page.getByRole('group', { name: 'Documentation' })).toBeVisible();
+        await expect(page.getByRole('button', { name: 'Back' })).toBeVisible();
+      });
 
-    await page.getByLabel('Show side navigation', { exact: true }).click();
-    await expect(page.getByLabel('Show side navigation', { exact: true })).toHaveAttribute(
-      'aria-expanded',
-      'true'
-    );
-    await page.getByText('Documentation').click();
-    await page.getByRole('link', { name: 'Sub item 4' }).click();
-    await expect(page.getByLabel('Show side navigation', { exact: true })).toHaveAttribute(
-      'aria-expanded',
-      'false'
-    );
-    await page.getByLabel('Show side navigation', { exact: true }).click();
+      test(example + ' opened', async ({ page, si }) => {
+        await expect(page.getByRole('link', { name: 'Sub item 4' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Sub item 5' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Sub item 6' })).toBeVisible();
 
-    await si.waitForAllAnimationsToComplete();
-    await si.runVisualAndA11yTests('mobile-expanded');
+        await si.waitForAllAnimationsToComplete();
+        await si.runVisualAndA11yTests('mobile-flat-group-opened');
+      });
+
+      test(example + ' expanded', async ({ page, si }) => {
+        await expect(page.getByRole('link', { name: 'Sub item 4' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Sub item 5' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Sub item 6' })).toBeVisible();
+
+        await page.getByRole('link', { name: 'Sub item 4' }).click();
+        await expect(page).toHaveURL(/subItem4/);
+
+        await page.getByRole('button', { name: 'Show side navigation', exact: true }).click();
+        await expect(page.getByRole('group', { name: 'Documentation' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Sub item 4' })).toHaveClass(/active/);
+
+        await si.waitForAllAnimationsToComplete();
+        await si.runVisualAndA11yTests('mobile-expanded');
+      });
+
+      test(example + ' back navigation closes the submenu', async ({ page, si }) => {
+        await page.getByRole('button', { name: 'Back' }).click();
+
+        await expect(page.getByRole('button', { name: 'Back' })).toHaveCount(0);
+        await expect(page.getByRole('button', { name: 'Documentation' })).toHaveAttribute(
+          'aria-expanded',
+          'false'
+        );
+
+        await si.waitForAllAnimationsToComplete();
+        await si.runVisualAndA11yTests('mobile-flat-group-closed');
+      });
+
+      test(
+        example + ' is preserved across drawer collapse and auto-closes on resize',
+        async ({ page, si }) => {
+          const toggle = page.getByRole('button', { name: 'Show side navigation', exact: true });
+          await toggle.click();
+          await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+          await toggle.click();
+          await expect(page.getByRole('group', { name: 'Documentation' })).toBeVisible();
+          await expect(page.getByRole('button', { name: 'Back' })).toBeVisible();
+
+          await page.setViewportSize({ width: 1200, height: 800 });
+          await expect(page.getByRole('button', { name: 'Back' })).toHaveCount(0);
+          await page.getByRole('button', { name: 'Documentation' }).click();
+          await expect(page.getByRole('group', { name: 'Documentation' })).toBeVisible();
+
+          await si.waitForAllAnimationsToComplete();
+          await si.runVisualAndA11yTests('mobile-flat-group-resize-out');
+        }
+      );
+    });
   });
 });
 

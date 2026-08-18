@@ -215,6 +215,7 @@ export interface SiTranslatableKeys {
   'SI_MARKDOWN.DOWNLOAD_TABLE_AS_CSV'?: string;
   'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;
   'SI_NAVBAR.TOGGLE_NAVIGATION'?: string;
+  'SI_NAVBAR_VERTICAL.BACK'?: string;
   'SI_NAVBAR_VERTICAL.COLLAPSE'?: string;
   'SI_NAVBAR_VERTICAL.EXPAND'?: string;
   'SI_NAVBAR_VERTICAL.SEARCH_PLACEHOLDER'?: string;

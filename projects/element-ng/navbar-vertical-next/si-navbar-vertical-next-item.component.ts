@@ -119,6 +119,12 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
     return badge.toString();
   });
 
+  protected readonly toggleIcon = computed(() =>
+    this.navbar.flyoutMode() || this.navbar.flatMode()
+      ? this.icons.elementRight2
+      : this.icons.elementDown2
+  );
+
   /** Active via override or router link — excludes group state.
    * @internal
    */

@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
 :host.component-enter .inline-group {
@@ -29,4 +30,47 @@
 .dropdown-menu {
   display: block;
   position: static;
+}
+
+:host-context(.nav-flat-group-open) {
+  display: none;
+}
+
+:host(.flat-group-active) {
+  display: block;
+}
+
+.flat-group {
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    opacity variables.element-transition-duration(250ms) ease,
+    transform variables.element-transition-duration(250ms) ease;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  &.group-leave {
+    display: none;
+  }
+}
+
+.flat-group-header {
+  display: flex;
+  align-items: center;
+  gap: map.get(variables.$spacers, 4);
+  padding-inline: map.get(variables.$spacers, 5);
+  color: variables.$element-text-primary;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity variables.element-transition-duration(200ms) ease,
+    transform variables.element-transition-duration(200ms) ease;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
 }
