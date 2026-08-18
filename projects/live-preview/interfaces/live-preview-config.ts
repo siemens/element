@@ -2,12 +2,22 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, Type } from '@angular/core';
 import { Route } from '@angular/router';
 
+import type { SiLivePreviewRuntimeComponent } from '../components/si-live-preview-renderer/si-live-preview-runtime.component';
+
 export interface SiLivePreviewConfig {
-  modules: any[];
   errorHandler?: (err: any) => void;
+  /**
+   * Optional shell for rendered examples. The shell receives the standalone example through
+   * `component` and is responsible for rendering it, for example by composing the default shell.
+   */
+  runtimeComponent?: Type<SiLivePreviewRuntimeComponent>;
+  /**
+   * Routes used by rendered examples that do not provide routes through `provideExampleRoutes`.
+   */
+  defaultRoutes?: Route[];
   componentLoader: {
     load: (name: string) => Promise<any>;
     list: string[];

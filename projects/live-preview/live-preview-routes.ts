@@ -13,39 +13,17 @@ import { SiLivePreviewWrapperComponent } from './components/si-live-preview-wrap
 export const livePreviewRoutes: Routes = [
   {
     path: 'overview',
-    children: [
-      // those need to be explicit for Ionic router related components like tabs
-      { path: 'route1', component: SiDummyComponent },
-      { path: 'route2', component: SiDummyComponent },
-      { path: 'route3', component: SiDummyComponent },
-      { path: 'route4', component: SiDummyComponent },
-      { path: 'route5', component: SiDummyComponent },
-      { path: '**', component: SiExampleOverviewComponent }
-    ]
+    children: [{ path: '**', component: SiExampleOverviewComponent }]
   },
   {
     path: 'viewer/:mode',
     component: SiExampleViewerComponent,
-    children: [
-      { path: 'route1', component: SiDummyComponent },
-      { path: 'route2', component: SiDummyComponent },
-      { path: 'route3', component: SiDummyComponent },
-      { path: 'route4', component: SiDummyComponent },
-      { path: 'route5', component: SiDummyComponent },
-      { path: '**', component: SiDummyComponent }
-    ]
+    children: [{ path: '**', component: SiDummyComponent }]
   },
   {
     path: 'iframe',
     component: SiLivePreviewWrapperComponent,
-    children: [
-      { path: 'route1', component: SiDummyComponent },
-      { path: 'route2', component: SiDummyComponent },
-      { path: 'route3', component: SiDummyComponent },
-      { path: 'route4', component: SiDummyComponent },
-      { path: 'route5', component: SiDummyComponent },
-      { path: '**', component: SiDummyComponent }
-    ]
+    children: [{ path: '**', component: SiDummyComponent }]
   },
   { path: '', redirectTo: 'viewer/editor', pathMatch: 'full' },
   { path: '**', component: SiExampleViewerComponent }
