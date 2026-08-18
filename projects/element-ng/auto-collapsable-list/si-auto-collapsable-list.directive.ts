@@ -29,8 +29,8 @@ import { SiAutoCollapsableListOverflowItemDirective } from './si-auto-collapsabl
 @Directive({
   selector: '[siAutoCollapsableList]',
   host: {
-    style: 'position: relative',
-    '[style.overflow]': 'siAutoCollapsableList() ? "hidden" : ""'
+    class: 'position-relative',
+    '[class.overflow-hidden]': 'siAutoCollapsableList()'
   },
   exportAs: 'siAutoCollapsableList'
 })

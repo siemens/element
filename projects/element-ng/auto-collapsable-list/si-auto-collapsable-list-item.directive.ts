@@ -9,10 +9,11 @@ import { SiAutoCollapsableListMeasurable } from './si-auto-collapsable-list-meas
 @Directive({
   selector: '[siAutoCollapsableListItem]',
   host: {
-    '[style.visibility]': 'isVisible() ? "visible" : "hidden"',
-    '[style.position]': 'isVisible() ? "" : "absolute"',
+    '[class.visible]': 'isVisible()',
+    '[class.invisible]': '!isVisible()',
+    '[class.position-absolute]': '!isVisible()',
     // Ensure hidden items are behind the visible ones. Otherwise, the visible ones are not clickable
-    '[style.z-index]': 'isVisible() ? "" : "-1"'
+    '[class.z-n1]': '!isVisible()'
   },
   exportAs: 'siAutoCollapsableListItem'
 })
