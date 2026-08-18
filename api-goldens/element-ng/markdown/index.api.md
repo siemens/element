@@ -8,6 +8,7 @@ import * as _angular_core from '@angular/core';
 import * as _angular_platform_browser from '@angular/platform-browser';
 import { Definition } from 'mdast';
 import { FootnoteDefinition } from 'mdast';
+import { InjectionToken } from '@angular/core';
 import { InputSignal } from '@angular/core';
 import * as mdast from 'mdast';
 import { Node as Node_2 } from 'mdast';
@@ -47,6 +48,16 @@ export interface ComponentWithOptions<T> {
     options?: any;
 }
 
+// @public
+export const computedAsync: <T, R>(options: ComputedAsyncOptions<T, R>) => Signal<T>;
+
+// @public
+export interface ComputedAsyncOptions<T, R> {
+    computation: (params: R) => Promise<T>;
+    initial: T;
+    params: () => R;
+}
+
 // @public (undocumented)
 export type ExtendedRootContent = RootContent | Footnotes | Citations;
 
@@ -68,6 +79,9 @@ export interface PluginWithOptions {
 }
 
 // @public
+export const SI_MARKDOWN_CONTROL: InjectionToken<SiMarkdownControl>;
+
+// @public
 export interface SiMarkdownCitation extends SourceReference {
     identifier?: string;
     position?: {
@@ -87,6 +101,21 @@ export class SiMarkdownComponent implements SiMarkdownControl {
     readonly markdown: _angular_core.InputSignal<string>;
     readonly meta: _angular_core.Signal<SiMarkdownMetadata>;
     readonly options: _angular_core.InputSignal<SiMarkdownOptions | undefined>;
+}
+
+// @public
+export interface SiMarkdownControl {
+    // (undocumented)
+    debug: Signal<boolean>;
+    // (undocumented)
+    extensionEvent: OutputEmitterRef<{
+        name: string;
+        data: any;
+    }>;
+    // (undocumented)
+    meta: Signal<SiMarkdownMetadata>;
+    // (undocumented)
+    templates: Signal<Map<string, TemplateRef<any>>>;
 }
 
 // @public
@@ -167,6 +196,9 @@ export class SiMarkdownTemplateDirective {
     // (undocumented)
     readonly template: TemplateRef<any>;
 }
+
+// @public
+export const throttledSignal: <T>(source: Signal<T>, interval: number, immediatelyEmitFirstChange?: boolean) => Signal<T>;
 
 // @public
 export interface TypeHandler extends ComponentWithOptions<SiMarkdownExtensionComponent> {

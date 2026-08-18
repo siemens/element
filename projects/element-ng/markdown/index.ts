@@ -8,3 +8,5 @@ export * from './si-markdown-fragment.component';
 export * from './extensions/inline-html/si-markdown-inline-html.component';
 export * from './si-markdown-template.directive';
 export * from './si-markdown-options';
+export * from './si-markdown-token';
+export * from './utils/signal-utils';

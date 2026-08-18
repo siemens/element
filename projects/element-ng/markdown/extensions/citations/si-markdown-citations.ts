@@ -2,15 +2,18 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { type Node, type Parent, type Root, type Text } from 'mdast';
-import { type Transformer } from 'unified';
-
 import {
   ExtendedRootContent,
   type Citation,
   type Citations,
   type SiMarkdownCitation
-} from '../../si-markdown.types';
+} from '@siemens/element-ng/markdown';
+/**
+ * Copyright (c) Siemens 2016 - 2026
+ * SPDX-License-Identifier: MIT
+ */
+import { type Node, type Parent, type Root, type Text } from 'mdast';
+import { type Transformer } from 'unified';
 
 const positionKey = (start: number, end: number): string => `${start}:${end}`;
 

@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { type SiMarkdownExtension } from '@siemens/element-ng/markdown';
 import { MermaidConfig } from 'mermaid';
 
-import { SiMarkdownExtension } from '../../si-markdown.types';
 import { SiMarkdownMermaidComponent } from './si-markdown-mermaid.component';
 
 export const siMarkdownMermaid = (options?: MermaidConfig): SiMarkdownExtension => {
