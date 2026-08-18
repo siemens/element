@@ -170,6 +170,86 @@ export class SplitComponent {}`,
     );
   });
 
+  it('should replace an AI message content formatter with si-markdown in an external template', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/ai-message.component.ts': `import { Component, inject } from '@angular/core';
+import { SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
+import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
+
+@Component({
+  selector: 'app-ai-message',
+  imports: [SiAiMessageComponent],
+  templateUrl: './ai-message.component.html'
+})
+export class AiMessageComponent {
+  readonly markdownRenderer = getMarkdownRenderer(inject(DomSanitizer));
+  readonly response = 'This is **bold**';
+}`,
+      '/projects/app/src/ai-message.component.html': `<si-ai-message
+  [content]="response"
+  [contentFormatter]="markdownRenderer"
+  [actions]="actions"
+/>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/ai-message.component.ts');
+    const template = tree.readContent('/projects/app/src/ai-message.component.html');
+
+    expect(component).toBe(`import { Component, inject } from '@angular/core';
+import { SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
+import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
+import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
+
+@Component({
+  selector: 'app-ai-message',
+  imports: [SiAiMessageComponent, SiMarkdownComponent],
+  templateUrl: './ai-message.component.html'
+})
+export class AiMessageComponent {
+  readonly markdownRenderer = getMarkdownRenderer(inject(DomSanitizer));
+  readonly response = 'This is **bold**';
+}`);
+    expect(template).toBe(`<si-ai-message
+  [actions]="actions"><si-markdown [markdown]="response" /></si-ai-message>`);
+  });
+
+  it('should replace a user message content formatter with si-markdown in an inline template', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/user-message.component.ts': `import { Component, inject } from '@angular/core';
+import { SiUserMessageComponent } from '@siemens/element-ng/chat-messages';
+import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
+
+@Component({
+  selector: 'app-user-message',
+  imports: [SiUserMessageComponent],
+  template: \`<si-user-message [content]="message" [contentFormatter]="markdownRenderer" />\`
+})
+export class UserMessageComponent {
+  readonly markdownRenderer = getMarkdownRenderer(inject(DomSanitizer));
+  readonly message = 'A **markdown** message';
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/user-message.component.ts');
+
+    expect(component).toBe(`import { Component, inject } from '@angular/core';
+import { SiUserMessageComponent } from '@siemens/element-ng/chat-messages';
+import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
+import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
+
+@Component({
+  selector: 'app-user-message',
+  imports: [SiUserMessageComponent, SiMarkdownComponent],
+  template: \`<si-user-message><si-markdown [markdown]="message" /></si-user-message>\`
+})
+export class UserMessageComponent {
+  readonly markdownRenderer = getMarkdownRenderer(inject(DomSanitizer));
+  readonly message = 'A **markdown** message';
+}`);
+  });
+
   it('should pass options to sub-migrations', async () => {
     const customPath = '/custom/path';
     const options = { path: customPath };

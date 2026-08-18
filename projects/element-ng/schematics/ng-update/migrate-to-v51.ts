@@ -8,6 +8,7 @@ import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics'
 import { ElementMigrationData, getElementMigrationData } from '../migrations/data/index.js';
 import { elementMigrationRule } from '../migrations/element-migration/element-migration.js';
 import { missingTranslateMigrationRule } from '../migrations/ngx-translate/index.js';
+import { contentFormatterMigrationRule } from './migrate-content-formatter.js';
 import { splitCollapseMigrationRule } from './migrate-split-collapse.js';
 import { splitSizesMigrationRule } from './migrate-split-sizes.js';
 
@@ -20,7 +21,8 @@ export const migrateToV51 = (): Rule => {
       elementMigrationRule(options, migrationData),
       missingTranslateMigrationRule(options),
       splitSizesMigrationRule(options),
-      splitCollapseMigrationRule(options)
+      splitCollapseMigrationRule(options),
+      contentFormatterMigrationRule(options)
     ])(tree, context);
   };
 };
