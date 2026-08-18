@@ -4,8 +4,22 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import {
+  elementAlarm,
+  elementAlarmBackgroundFilled,
+  elementAlarmFilled,
+  elementAlarmTick,
+  elementCalculatedValue,
+  elementCancelFilled,
+  elementConfigValue,
+  elementDown2,
+  elementMaintenanceFilled,
+  elementManualFilled,
+  elementTransient,
+  elementPhysicalInput
+} from '@siemens/element-icons';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'app-sample',
@@ -15,6 +29,20 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
   host: { class: 'p-5' }
 })
 export class SampleComponent {
+  readonly icons = addIcons({
+    elementAlarm,
+    elementAlarmBackgroundFilled,
+    elementAlarmFilled,
+    elementAlarmTick,
+    elementCalculatedValue,
+    elementCancelFilled,
+    elementConfigValue,
+    elementDown2,
+    elementMaintenanceFilled,
+    elementManualFilled,
+    elementTransient,
+    elementPhysicalInput
+  });
   useHover = false;
   useSmallTable = false;
 }

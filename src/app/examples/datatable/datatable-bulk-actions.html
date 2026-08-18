@@ -44,7 +44,7 @@
               (cdkMenuClosed)="statusMenuOpen.set(false)"
             >
               Change status
-              <i aria-hidden="true" class="dropdown-caret icon element-down-2"></i>
+              <si-icon class="dropdown-caret" [icon]="icons.elementDown2" />
             </button>
             <button type="button" class="btn btn-tertiary" (click)="delete()"> Delete </button>
             <button type="button" class="btn btn-tertiary" (click)="export()"> Export </button>
