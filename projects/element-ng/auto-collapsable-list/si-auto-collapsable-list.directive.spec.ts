@@ -68,7 +68,7 @@ describe('SiAutoCollapsableListDirective', () => {
   let hostElement: HTMLElement;
   const readVisibilityStates = (): string[] =>
     Array.from(hostElement.querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')).map(
-      element => element.style.visibility
+      element => (element.classList.contains('visible') ? 'visible' : 'hidden')
     );
 
   // Each browser rendering frame runs in order:
@@ -112,13 +112,13 @@ describe('SiAutoCollapsableListDirective', () => {
     fixture.detectChanges();
     hostElement
       .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
-      .forEach(element => expect(element).toHaveStyle({ visibility: 'hidden' }));
+      .forEach(element => expect(element).toHaveClass('invisible'));
 
     await waitForResizeObserver();
     await fixture.whenStable();
     hostElement
       .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
-      .forEach(element => expect(element).toHaveStyle({ visibility: 'visible' }));
+      .forEach(element => expect(element).toHaveClass('visible'));
     component.items().forEach(item => expect(item.canBeVisible()).toBe(true));
   });
 
