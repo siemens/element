@@ -5,11 +5,17 @@
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { Component, OnInit, TemplateRef, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import {
+  elementAlarmFilled,
+  elementCancelFilled,
+  elementManualFilled,
+  elementOptionsVertical
+} from '@siemens/element-icons';
 import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 import { StatusType } from '@siemens/element-ng/common';
 import { SiDatatableInteractionDirective } from '@siemens/element-ng/datatable';
 import { SiFormItemComponent, SiFormValidationTooltipDirective } from '@siemens/element-ng/form';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiPaginationComponent } from '@siemens/element-ng/pagination';
 import { NgxDatatableModule, SelectionType, TableColumn } from '@siemens/ngx-datatable';
@@ -32,6 +38,12 @@ import { NgxDatatableModule, SelectionType, TableColumn } from '@siemens/ngx-dat
   styleUrl: './datatable.scss'
 })
 export class SampleComponent implements OnInit {
+  readonly icons = addIcons({
+    elementAlarmFilled,
+    elementCancelFilled,
+    elementManualFilled,
+    elementOptionsVertical
+  });
   readonly statusCellTempl = viewChild.required('statusCellTempl', {
     read: TemplateRef<any>
   });
