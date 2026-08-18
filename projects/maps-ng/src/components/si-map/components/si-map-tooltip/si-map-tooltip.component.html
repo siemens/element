@@ -1,5 +1,7 @@
 <div class="si-map-tooltip">
-  <div #content></div>
+  @for (label of tooltipLabels(); track $index) {
+    <div>{{ label }}</div>
+  }
   @if (hiddenEntries()) {
     <div>{{ moreText() | translate: { length: hiddenEntries() } }}</div>
   }
