@@ -8,7 +8,13 @@ import { Element } from '@angular/compiler';
 import { dirname, join } from 'path/posix';
 import ts from 'typescript';
 
-import { applyImport, discoverSourceFiles, findElement } from '../utils/index.js';
+import { removeImportSpecifiers } from '../migrations/utilities/import-removal.js';
+import {
+  applyImport,
+  discoverSourceFiles,
+  findElement,
+  getImportSpecifiers
+} from '../utils/index.js';
 
 const MESSAGE_SELECTORS = new Set(['si-ai-message', 'si-user-message']);
 
@@ -27,18 +33,16 @@ export const contentFormatterMigrationRule = (options: { path: string }): Rule =
           continue;
         }
 
-        let componentChanged = false;
+        const migrationResult = createMigrationResult();
         const template = getInlineTemplate(component.metadata);
         if (template) {
           const templateText = sourceFile.text.substring(
             template.getStart() + 1,
             template.getEnd() - 1
           );
-          componentChanged ||= migrateContentFormatter(
-            templateText,
-            template.getStart() + 1,
-            recorder,
-            rendererNames
+          mergeMigrationResult(
+            migrationResult,
+            migrateContentFormatter(templateText, template.getStart() + 1, recorder, rendererNames)
           );
         }
 
@@ -51,17 +55,24 @@ export const contentFormatterMigrationRule = (options: { path: string }): Rule =
           processedTemplates.add(templatePath);
           const templateContent = tree.read(templatePath)!.toString('utf-8');
           const templateRecorder = tree.beginUpdate(templatePath);
-          const templateChanged = migrateContentFormatter(
+          const templateResult = migrateContentFormatter(
             templateContent,
             0,
             templateRecorder,
             rendererNames
           );
           tree.commitUpdate(templateRecorder);
-          componentChanged ||= templateChanged;
+          mergeMigrationResult(migrationResult, templateResult);
         }
 
-        if (componentChanged) {
+        if (migrationResult.migratedRendererNames.size > 0) {
+          const removedRendererProperties = removeUnusedRendererProperties(
+            component.declaration,
+            migrationResult,
+            recorder
+          );
+          removeUnusedMarkdownRendererImports(sourceFile, removedRendererProperties, recorder);
+          removeUnusedDomSanitizerImports(sourceFile, removedRendererProperties, recorder);
           addMarkdownToComponentImports(component.metadata, recorder);
           sourceChanged = true;
         }
@@ -184,21 +195,27 @@ const migrateContentFormatter = (
   offset: number,
   recorder: UpdateRecorder,
   rendererNames: Set<string>
-): boolean => {
-  let changed = false;
+): ContentFormatterMigrationResult => {
+  const result = createMigrationResult();
 
-  findElement(template, element => MESSAGE_SELECTORS.has(element.name)).forEach(element => {
+  findElement(template, () => true).forEach(element => {
+    const formatter = element.attrs.find(attribute => attribute.name === '[contentFormatter]');
+    const formatterName = formatter?.value.trim();
+    if (!formatterName || !rendererNames.has(formatterName)) {
+      return;
+    }
+
     const content = element.attrs.find(attribute => {
       return attribute.name === 'content' || attribute.name === '[content]';
     });
-    const formatter = element.attrs.find(attribute => attribute.name === '[contentFormatter]');
 
     if (
+      !MESSAGE_SELECTORS.has(element.name) ||
       !content ||
       !formatter ||
-      !rendererNames.has(formatter.value.trim()) ||
       !hasOnlyWhitespaceContent(element, template)
     ) {
+      result.retainedRendererNames.add(formatterName);
       return;
     }
 
@@ -210,10 +227,177 @@ const migrateContentFormatter = (
 
     recorder.remove(start, length);
     recorder.insertLeft(start, replacement);
-    changed = true;
+    result.migratedRendererNames.add(formatterName);
   });
 
-  return changed;
+  return result;
+};
+
+interface ContentFormatterMigrationResult {
+  migratedRendererNames: Set<string>;
+  retainedRendererNames: Set<string>;
+}
+
+const createMigrationResult = (): ContentFormatterMigrationResult => ({
+  migratedRendererNames: new Set<string>(),
+  retainedRendererNames: new Set<string>()
+});
+
+const mergeMigrationResult = (
+  target: ContentFormatterMigrationResult,
+  source: ContentFormatterMigrationResult
+): void => {
+  source.migratedRendererNames.forEach(name => target.migratedRendererNames.add(name));
+  source.retainedRendererNames.forEach(name => target.retainedRendererNames.add(name));
+};
+
+const removeUnusedRendererProperties = (
+  component: ts.ClassDeclaration,
+  migrationResult: ContentFormatterMigrationResult,
+  recorder: UpdateRecorder
+): ts.PropertyDeclaration[] => {
+  const removedProperties: ts.PropertyDeclaration[] = [];
+
+  for (const property of component.members) {
+    if (
+      !ts.isPropertyDeclaration(property) ||
+      !ts.isIdentifier(property.name) ||
+      !migrationResult.migratedRendererNames.has(property.name.text) ||
+      migrationResult.retainedRendererNames.has(property.name.text) ||
+      hasReferenceOutsideProperty(component, property.name.text, property)
+    ) {
+      continue;
+    }
+
+    recorder.remove(property.getFullStart(), property.getEnd() - property.getFullStart());
+    removedProperties.push(property);
+  }
+
+  return removedProperties;
+};
+
+const hasReferenceOutsideProperty = (
+  component: ts.ClassDeclaration,
+  name: string,
+  excludedProperty: ts.PropertyDeclaration
+): boolean => {
+  let referenced = false;
+
+  const visit = (node: ts.Node): void => {
+    if (node === excludedProperty || referenced) {
+      return;
+    }
+
+    if (ts.isIdentifier(node) && node.text === name) {
+      referenced = true;
+      return;
+    }
+
+    ts.forEachChild(node, visit);
+  };
+
+  component.forEachChild(visit);
+  return referenced;
+};
+
+const removeUnusedMarkdownRendererImports = (
+  sourceFile: ts.SourceFile,
+  removedProperties: ts.PropertyDeclaration[],
+  recorder: UpdateRecorder
+): void => {
+  const getMarkdownRendererImports = getImportSpecifiers(
+    sourceFile,
+    '@siemens/element-ng/markdown-renderer',
+    'getMarkdownRenderer'
+  );
+
+  if (
+    getMarkdownRendererImports.length &&
+    !hasIdentifierReferenceOutsideNodes(
+      sourceFile,
+      getMarkdownRendererImports.map(specifier => specifier.name.text),
+      removedProperties
+    )
+  ) {
+    removeImports(sourceFile, getMarkdownRendererImports, recorder);
+  }
+};
+
+const removeUnusedDomSanitizerImports = (
+  sourceFile: ts.SourceFile,
+  removedProperties: ts.PropertyDeclaration[],
+  recorder: UpdateRecorder
+): void => {
+  const domSanitizerImports = getImportSpecifiers(
+    sourceFile,
+    '@angular/platform-browser',
+    'DomSanitizer'
+  );
+
+  if (
+    domSanitizerImports.length &&
+    !hasIdentifierReferenceOutsideNodes(
+      sourceFile,
+      domSanitizerImports.map(specifier => specifier.name.text),
+      removedProperties
+    )
+  ) {
+    removeImports(sourceFile, domSanitizerImports, recorder);
+  }
+};
+
+const hasIdentifierReferenceOutsideNodes = (
+  sourceFile: ts.SourceFile,
+  names: string[],
+  excludedNodes: ts.Node[]
+): boolean => {
+  let referenced = false;
+  const namesToFind = new Set(names);
+
+  const visit = (node: ts.Node): void => {
+    if (excludedNodes.some(excludedNode => node === excludedNode) || referenced) {
+      return;
+    }
+
+    if (ts.isIdentifier(node) && namesToFind.has(node.text) && !ts.isImportSpecifier(node.parent)) {
+      referenced = true;
+      return;
+    }
+
+    ts.forEachChild(node, visit);
+  };
+
+  sourceFile.forEachChild(visit);
+  return referenced;
+};
+
+const removeImports = (
+  sourceFile: ts.SourceFile,
+  specifiers: ts.ImportSpecifier[],
+  recorder: UpdateRecorder
+): void => {
+  const specifiersByImport = new Map<ts.ImportDeclaration, ts.ImportSpecifier[]>();
+  for (const specifier of specifiers) {
+    const importDeclaration = specifier.parent.parent.parent;
+    if (!ts.isImportDeclaration(importDeclaration)) {
+      continue;
+    }
+    const matchingSpecifiers = specifiersByImport.get(importDeclaration) ?? [];
+    matchingSpecifiers.push(specifier);
+    specifiersByImport.set(importDeclaration, matchingSpecifiers);
+  }
+
+  const printer = ts.createPrinter();
+  for (const [importDeclaration, importedSpecifiers] of specifiersByImport) {
+    const edit = removeImportSpecifiers(sourceFile, importDeclaration, importedSpecifiers);
+    recorder.remove(edit.start, edit.width);
+    if (edit.newNode) {
+      recorder.insertLeft(
+        edit.start,
+        printer.printNode(ts.EmitHint.Unspecified, edit.newNode, sourceFile)
+      );
+    }
+  }
 };
 
 const hasOnlyWhitespaceContent = (element: Element, template: string): boolean => {
