@@ -10,7 +10,8 @@ import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import { SelectItem, SiSelectModule } from '@siemens/element-ng/select';
 
 type Density = 'none' | 'density-compact-dani' | 'density-compact-andre';
-type CssUnit = 'px' | 'rem';
+type FontUnit = 'px' | 'rem';
+type CssUnit = FontUnit | '';
 
 const densityClasses: Exclude<Density, 'none'>[] = [
   'density-compact-dani',
@@ -27,6 +28,11 @@ interface CssVariableControl {
   value: number | undefined;
   unit: CssUnit;
   customized: boolean;
+}
+
+interface TypographyControlPair {
+  fontSize: CssVariableControl;
+  lineHeight: CssVariableControl;
 }
 
 const createSpacerControls = (direction: 'inline' | 'block'): CssVariableControl[] => {
@@ -47,37 +53,57 @@ const createSpacerControls = (direction: 'inline' | 'block'): CssVariableControl
   });
 };
 
-const fontSizeControlDefinitions: readonly (readonly [string, string, number])[] = [
-  ['body', 'Body', 0.875],
-  ['body-lg', 'Body LG', 1.0],
-  ['caption', 'Caption', 0.75],
-  ['h1', 'Heading 1', 1.875],
-  ['h1-bold', 'Heading 1 bold', 1.875],
-  ['h2', 'Heading 2', 1.25],
-  ['h3', 'Heading 3', 1.125],
-  ['h4', 'Heading 4', 1],
-  ['h4-bold', 'Heading 4 bold', 1],
-  ['h5', 'Heading 5', 0.875],
-  ['h5-bold', 'Heading 5 bold', 0.875],
-  ['display', 'Display', 2.5],
-  ['display-bold', 'Display bold', 2.5],
-  ['display-lg', 'Display LG', 3],
-  ['display-xl', 'Display XL', 3.5]
+const typographyControlDefinitions: readonly (readonly [string, string, number, number])[] = [
+  ['body', 'Body', 0.875, 16 / 14],
+  ['body-lg', 'Body LG', 1, 1.25],
+  ['body-lg-bold', 'Body LG bold', 1, 1.25],
+  ['body-paragraph', 'Body paragraph', 0.875, 20 / 14],
+  ['body-sm', 'Body SM', 0.75, 16 / 12],
+  ['h1', 'Heading 1', 1.75, 36 / 28],
+  ['h1-bold', 'Heading 1 bold', 1.75, 36 / 28],
+  ['h2', 'Heading 2', 1.5, 32 / 24],
+  ['h3', 'Heading 3', 1.25, 24 / 20],
+  ['h4', 'Heading 4', 1, 1.25],
+  ['h4-bold', 'Heading 4 bold', 1, 1.25],
+  ['h5', 'Heading 5', 0.875, 20 / 14],
+  ['h5-bold', 'Heading 5 bold', 0.875, 20 / 14],
+  ['h6', 'Heading 6', 0.75, 16 / 12],
+  ['display', 'Display', 2, 40 / 32],
+  ['display-bold', 'Display bold', 2.5, 52 / 40],
+  ['display-lg', 'Display LG', 2.5, 52 / 40],
+  ['display-xl', 'Display XL', 3, 64 / 48],
+  ['display-xxl', 'Display XXL', 3.625, 72 / 58],
+  ['code-sm', 'Code SM', 0.75, 16 / 12],
+  ['code', 'Code', 0.875, 20 / 14],
+  ['code-lg', 'Code LG', 1, 20 / 16]
 ];
 
-const fontSizeControls: CssVariableControl[] = fontSizeControlDefinitions.map(
-  ([suffix, label, fallbackValue]) => {
-    const name = `--element-font-size-${suffix}`;
+const typographyControls: TypographyControlPair[] = typographyControlDefinitions.map(
+  ([suffix, label, fontSize, lineHeight]) => {
+    const fontSizeName = `--element-font-size-${suffix}`;
+    const lineHeightName = `--element-line-height-${suffix}`;
 
     return {
-      id: name.slice(2),
-      name,
-      label,
-      fallbackValue,
-      fallbackUnit: 'rem',
-      value: fallbackValue,
-      unit: 'rem',
-      customized: false
+      fontSize: {
+        id: fontSizeName.slice(2),
+        name: fontSizeName,
+        label: `Font size ${label}`,
+        fallbackValue: fontSize,
+        fallbackUnit: 'rem',
+        value: fontSize,
+        unit: 'rem',
+        customized: false
+      },
+      lineHeight: {
+        id: lineHeightName.slice(2),
+        name: lineHeightName,
+        label: `Line height ${label}`,
+        fallbackValue: lineHeight,
+        fallbackUnit: '',
+        value: lineHeight,
+        unit: '',
+        customized: false
+      }
     };
   }
 );
@@ -93,7 +119,7 @@ export class SampleComponent implements OnInit {
 
   readonly inlineSpacerControls = createSpacerControls('inline');
   readonly blockSpacerControls = createSpacerControls('block');
-  readonly fontSizeControls = fontSizeControls;
+  readonly typographyControls = typographyControls;
 
   readonly densityOptions: SelectItem<Density>[] = [
     { type: 'option', value: 'none', label: 'None' },
@@ -135,7 +161,7 @@ export class SampleComponent implements OnInit {
     }
   }
 
-  changeFontUnit(control: CssVariableControl, unit: CssUnit): void {
+  changeFontUnit(control: CssVariableControl, unit: FontUnit): void {
     if (unit === control.unit) {
       return;
     }
@@ -146,6 +172,14 @@ export class SampleComponent implements OnInit {
 
     control.unit = unit;
     this.applyCustomization(control);
+  }
+
+  resultingLineHeight(fontSize: CssVariableControl, lineHeight: CssVariableControl): string {
+    const fontSizeInPixels =
+      (fontSize.value ?? fontSize.fallbackValue) * (fontSize.unit === 'rem' ? 16 : 1);
+    const lineHeightRatio = lineHeight.value ?? lineHeight.fallbackValue;
+
+    return `${this.formatNumber(fontSizeInPixels * lineHeightRatio)} px`;
   }
 
   private getDensity(): Density {
@@ -190,20 +224,28 @@ export class SampleComponent implements OnInit {
   }
 
   private parseCssValue(value: string): { value: number; unit: CssUnit } | undefined {
-    const match = /^(-?(?:\d+|\d*\.\d+))(px|rem)$/.exec(value);
+    const match = /^(-?(?:\d+|\d*\.\d+))(px|rem)?$/.exec(value);
 
     if (!match) {
       return undefined;
     }
 
-    return { value: Number(match[1]), unit: match[2] as CssUnit };
+    return { value: Number(match[1]), unit: (match[2] ?? '') as CssUnit };
   }
 
   private toCssValue(control: CssVariableControl): string {
     return `${control.value ?? control.fallbackValue}${control.unit}`;
   }
 
+  private formatNumber(value: number): string {
+    return value.toFixed(2).replace(/\.?0+$/, '');
+  }
+
   private get allControls(): CssVariableControl[] {
-    return [...this.inlineSpacerControls, ...this.blockSpacerControls, ...this.fontSizeControls];
+    return [
+      ...this.inlineSpacerControls,
+      ...this.blockSpacerControls,
+      ...this.typographyControls.flatMap(({ fontSize, lineHeight }) => [fontSize, lineHeight])
+    ];
   }
 }

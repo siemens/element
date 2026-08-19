@@ -73,41 +73,71 @@
   </div>
 
   <div class="col-12">
-    <h4>Font-size overrides</h4>
+    <h4>Typography overrides</h4>
     <div class="row g-3">
-      @for (control of fontSizeControls; track control.name) {
+      @for (controls of typographyControls; track controls.fontSize.name) {
         <div class="col-sm-6 col-lg-4">
-          <label class="form-label" [for]="control.id">{{ control.label }}</label>
+          <label class="form-label" [for]="controls.fontSize.id">
+            {{ controls.fontSize.label }}
+          </label>
           <div class="d-flex align-items-center gap-2">
             <input
               class="form-check-input flex-shrink-0"
               type="checkbox"
-              [id]="control.id + '-enabled'"
-              [attr.aria-label]="'Customize ' + control.label"
-              [(ngModel)]="control.customized"
-              (ngModelChange)="toggleCustomization(control)"
+              [id]="controls.fontSize.id + '-enabled'"
+              [attr.aria-label]="'Customize ' + controls.fontSize.label"
+              [(ngModel)]="controls.fontSize.customized"
+              (ngModelChange)="toggleCustomization(controls.fontSize)"
             />
             <si-number-input
               class="form-control flex-grow-1"
               style="inline-size: auto; min-inline-size: 0"
-              [inputId]="control.id"
+              [inputId]="controls.fontSize.id"
               [min]="0"
-              [step]="control.unit === 'rem' ? 0.125 : 1"
-              [disabled]="!control.customized"
-              [(ngModel)]="control.value"
-              (ngModelChange)="applyCustomization(control)"
+              [step]="controls.fontSize.unit === 'rem' ? 0.125 : 1"
+              [disabled]="!controls.fontSize.customized"
+              [(ngModel)]="controls.fontSize.value"
+              (ngModelChange)="applyCustomization(controls.fontSize)"
             />
             <select
               class="form-select flex-shrink-0"
               style="inline-size: 5rem"
-              [attr.aria-label]="control.label + ' unit'"
-              [disabled]="!control.customized"
-              [ngModel]="control.unit"
-              (ngModelChange)="changeFontUnit(control, $event)"
+              [attr.aria-label]="controls.fontSize.label + ' unit'"
+              [disabled]="!controls.fontSize.customized"
+              [ngModel]="controls.fontSize.unit"
+              (ngModelChange)="changeFontUnit(controls.fontSize, $event)"
             >
               <option value="px">px</option>
               <option value="rem">rem</option>
             </select>
+          </div>
+
+          <div class="d-flex align-items-baseline justify-content-between gap-2 mt-3">
+            <label class="form-label mb-0" [for]="controls.lineHeight.id">
+              {{ controls.lineHeight.label }}
+            </label>
+            <span class="text-secondary text-nowrap">
+              {{ resultingLineHeight(controls.fontSize, controls.lineHeight) }}
+            </span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <input
+              class="form-check-input flex-shrink-0"
+              type="checkbox"
+              [id]="controls.lineHeight.id + '-enabled'"
+              [attr.aria-label]="'Customize ' + controls.lineHeight.label"
+              [(ngModel)]="controls.lineHeight.customized"
+              (ngModelChange)="toggleCustomization(controls.lineHeight)"
+            />
+            <si-number-input
+              class="form-control"
+              [inputId]="controls.lineHeight.id"
+              [min]="0"
+              [step]="0.05"
+              [disabled]="!controls.lineHeight.customized"
+              [(ngModel)]="controls.lineHeight.value"
+              (ngModelChange)="applyCustomization(controls.lineHeight)"
+            />
           </div>
         </div>
       }
