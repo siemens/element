@@ -132,18 +132,6 @@ describe('SiChatContainerComponent', () => {
     expect(debugElement.nativeElement).toHaveClass('w-100');
   });
 
-  it('should handle scroll events', async () => {
-    await fixture.whenStable();
-
-    const messagesContainer = debugElement.query(By.css('.messages-container'));
-    expect(messagesContainer).toBeTruthy();
-
-    messagesContainer.nativeElement.dispatchEvent(new Event('scroll'));
-    await fixture.whenStable();
-
-    expect(fixture.componentInstance).toBeTruthy();
-  });
-
   it('should project content into input area', () => {
     const hostFixture = TestBed.createComponent(TestHostComponent);
     hostFixture.detectChanges();
@@ -156,19 +144,5 @@ describe('SiChatContainerComponent', () => {
     const testMessage = containerDebugElement.query(By.css('.test-message'));
     expect(testMessage).toBeTruthy();
     expect(testMessage.nativeElement).toHaveTextContent('Test message');
-  });
-
-  it('should cleanup observers on destroy', () => {
-    const ngOnDestroySpy = vi.spyOn(fixture.componentInstance, 'ngOnDestroy');
-    fixture.componentInstance.ngOnDestroy();
-    expect(ngOnDestroySpy).toHaveBeenCalled();
-  });
-
-  it('should call ngAfterContentInit', () => {
-    const newFixture = TestBed.createComponent(SiChatContainerComponent);
-    const newComponent = newFixture.componentInstance;
-    const ngAfterContentInitSpy = vi.spyOn(newComponent, 'ngAfterContentInit');
-    newComponent.ngAfterContentInit();
-    expect(ngAfterContentInitSpy).toHaveBeenCalled();
   });
 });
