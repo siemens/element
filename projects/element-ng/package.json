@@ -41,6 +41,7 @@
     "@angular/core": "22",
     "@angular/forms": "22",
     "@angular/router": "22",
+    "@angular/aria": "22",
     "@ngx-formly/bootstrap": "^6.2.2 || ^7.0.1",
     "@ngx-formly/core": "^6.2.2 || ^7.0.1",
     "@maplibre/ngx-maplibre-gl": "21 - 22",
