@@ -6,6 +6,7 @@
 
 import { AfterContentInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
+import * as i1 from '@angular/aria/accordion';
 import { OnChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
