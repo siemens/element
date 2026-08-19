@@ -22,7 +22,7 @@ import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-obser
  * - Responsive behavior that adapts to container size
  *
  * This is a low-level component designed for slotting in custom content, it provides slots via content projection:
- * - Default content: Main message content area (consider using {@link SiMarkdownRendererComponent} for markdown support)
+ * - Default content: Main message content area (consider using `si-markdown` for markdown support)
  * - `si-avatar/si-icon/img` selector: Avatar or icon representing the message sender
  * - `si-chat-message-action` selector: Action buttons related to the message
  * - `si-attachment-list` selector: Attachment list component for displaying file attachments
@@ -31,7 +31,6 @@ import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-obser
  * @see {@link SiAiMessageComponent} for AI message display
  * @see {@link SiAttachmentListComponent} for attachment list to slot in
  * @see {@link SiChatMessageActionDirective} for action buttons to slot in
- * @see {@link SiMarkdownRendererComponent} for markdown content rendering
  * @see {@link SiChatContainerComponent} for the chat container to use this within
  *
  * @experimental
