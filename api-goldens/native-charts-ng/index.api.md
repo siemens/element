@@ -24,7 +24,7 @@ export interface GaugeSeries {
     value: number;
 }
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 class SiNativeChartsNgModule {
 }
 export { SiNativeChartsNgModule }
