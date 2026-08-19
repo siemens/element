@@ -23,6 +23,8 @@ export interface MenuItemBase {
   badgeColor?: string;
   /** Whether the menu item id disabled. */
   disabled?: boolean;
+  /** Tooltip that is shown when the user hovers over the menu item. */
+  tooltip?: TranslatableString;
 }
 
 export interface MenuItemGroup extends MenuItemBase {
