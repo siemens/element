@@ -1,65 +1,74 @@
-<div
-  role="button"
-  placement="start"
-  [siTooltip]="hcollapsed() && heading() ? (heading()! | translate) : ''"
-  [class]="`collapsible-header focus-inside ${headerCssClasses()}`"
-  [class.px-5]="hcollapsed()"
-  [class.px-6]="!hcollapsed()"
-  [attr.tabindex]="disabled() ? '' : '0'"
-  [id]="headerId"
-  [class.open]="opened()"
-  [class.disabled]="disabled()"
-  [attr.aria-expanded]="opened() && !hcollapsed()"
-  [attr.aria-disabled]="disabled()"
-  [attr.aria-controls]="controlId"
-  [attr.aria-label]="hcollapsed() ? (heading() | translate) : ''"
-  (keydown)="keydown($event)"
-  (click)="doToggle($event)"
->
-  @let headerIcon = icon();
-  @if (headerIcon) {
-    <si-icon
-      class="icon"
-      [class.p-1]="hcollapsed()"
-      [class.pe-2]="!hcollapsed()"
-      [icon]="headerIcon"
-      [class.collapsed-icon]="isHCollapsible"
+@if (accordionService) {
+  <ng-container [ngTemplateOutlet]="panelTemplate" />
+} @else {
+  <div #standaloneAccordionGroup class="d-contents" ngAccordionGroup>
+    <ng-container
+      [ngTemplateOutlet]="panelTemplate"
+      [ngTemplateOutletInjector]="accordionGroupInjector()"
     />
-  }
-  @if (icon() && badge() !== undefined && badge() !== '') {
-    <span class="badge-text">
-      {{ badge() }}
-    </span>
-  }
-  <div class="si-h5 autohide">
-    {{ heading() | translate }}
-    <ng-content select="[si-panel-heading]" />
   </div>
+}
 
-  @if (badge() !== undefined && badge() !== '') {
-    <span [class]="'badge autohide' + (badgeColor() ? ' bg-' + badgeColor() : '')">
-      {{ badge() }}
+<ng-template #panelTemplate>
+  <div
+    ngAccordionTrigger
+    placement="start"
+    [panel]="panel"
+    [siTooltip]="hcollapsed() && heading() ? (heading()! | translate) : ''"
+    [class]="`collapsible-header focus-inside ${headerCssClasses()}`"
+    [class.px-5]="hcollapsed()"
+    [class.px-6]="!hcollapsed()"
+    [class.open]="opened()"
+    [class.disabled]="disabled()"
+    [disabled]="disabled()"
+    [attr.aria-label]="hcollapsed() ? (heading() | translate) : ''"
+    [(expanded)]="opened"
+    (expandedChange)="doToggle($event)"
+  >
+    @let headerIcon = icon();
+    @if (headerIcon) {
+      <si-icon
+        class="icon"
+        [class.p-1]="hcollapsed()"
+        [class.pe-2]="!hcollapsed()"
+        [icon]="headerIcon"
+        [class.collapsed-icon]="isHCollapsible"
+      />
+    }
+    @if (icon() && badge() !== undefined && badge() !== '') {
+      <span class="badge-text">
+        {{ badge() }}
+      </span>
+    }
+    <div class="si-h5 autohide">
+      {{ heading() | translate }}
+      <ng-content select="[si-panel-heading]" />
+    </div>
+
+    @if (badge() !== undefined && badge() !== '') {
+      <span [class]="'badge autohide' + (badgeColor() ? ' bg-' + badgeColor() : '')">
+        {{ badge() }}
+      </span>
+    }
+    <span class="ms-auto autohide">
+      <si-icon class="icon dropdown-caret" [icon]="icons.elementDown2" />
     </span>
-  }
-  <span class="ms-auto autohide">
-    <si-icon class="icon dropdown-caret" [icon]="icons.elementDown2" />
-  </span>
-</div>
-<div
-  #content
-  role="region"
-  [id]="controlId"
-  [class]="`collapsible-content ${contentBgClasses()}`"
-  [attr.aria-labelledby]="headerId"
-  [class.full-height]="fullHeight()"
->
-  @if (opened()) {
-    <div class="content-motion" animate.enter="content-enter" animate.leave="content-leave">
-      <div class="overflow-hidden">
-        <div [class]="contentCssClasses()">
-          <ng-content />
+  </div>
+  <div
+    #content
+    #panel="ngAccordionPanel"
+    ngAccordionPanel
+    [class]="`collapsible-content ${contentBgClasses()}`"
+    [class.full-height]="fullHeight()"
+  >
+    <ng-template ngAccordionContent>
+      <div class="content-motion" animate.enter="content-enter" animate.leave="content-leave">
+        <div class="overflow-hidden">
+          <div [class]="contentCssClasses()">
+            <ng-content />
+          </div>
         </div>
       </div>
-    </div>
-  }
-</div>
+    </ng-template>
+  </div>
+</ng-template>
