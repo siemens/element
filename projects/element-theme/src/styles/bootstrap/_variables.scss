@@ -335,7 +335,7 @@ $input-font-size: $font-size-base;
 $input-font-weight: $font-weight-base;
 // Use an explicit rem value instead of a unitless ratio to prevent cross-browser
 // rounding differences (Safari rounds 14 × 1.1428... to 15px, Chrome to 16px). See #2031
-$input-line-height: typography.$si-line-height-body-rem !default;
+$input-line-height: calc(typography.$si-font-size-body * typography.$si-line-height-body);
 
 $input-bg: system-tokens.$si-sys-background-1 !default;
 $input-disabled-bg: system-tokens.$si-sys-background-1 !default;
