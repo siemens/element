@@ -23,9 +23,9 @@ Circle status is available in two sizes: `Regular` or `Small`.
 
 ### Best practices
 
-- Badge on circle status shall be colored according definition for the [status colors](../../fundamentals/colors/ui-colors.md/#status)
+- Badge on circle status shall be colored according definition for the [status colors](../../fundamentals/colors/ui-colors.md#status)
 - Use it with severity symbols when there is a need to identify different severities
-- The color of the icon should remain constant according definition in [UI colors](../../fundamentals/colors/ui-colors.md/#ui)
+- The color of the icon should remain constant according definition in [UI colors](../../fundamentals/colors/ui-colors.md#ui)
 
 ## Design ---
 
