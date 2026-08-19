@@ -1,0 +1,16 @@
+- button "Back to chat history"
+- paragraph: Summarize project notes
+- button "Close"
+- text: Text generation
+- heading "You" [level=2]
+- paragraph: Summarize the key decisions and action items from these project notes.
+- heading "AI response" [level=2]
+- paragraph: The team agreed on three priorities and assigned an owner to each action item.
+- main:
+  - link "Siemens logo":
+    - /url: "#/"
+  - heading "AI assistant" [level=1]
+  - button "Chat history"
+  - heading "How can I help?" [level=1]
+  - paragraph: Start a new conversation or return to one of your recent chats.
+  - button "View chat history"

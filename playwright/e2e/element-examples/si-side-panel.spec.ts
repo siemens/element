@@ -7,6 +7,7 @@ import { expect, test } from '../../support/test-helpers';
 test.describe('si-side-panel', () => {
   const example = 'si-side-panel/si-side-panel';
   const exampleCollapsible = 'si-side-panel/si-side-panel-collapsible';
+  const exampleInnerNavigation = 'si-side-panel/si-side-panel-inner-navigation';
 
   const exampleCollapsibleLegacyStatusActions =
     'si-side-panel/si-side-panel-collapsible-legacy-status-actions';
@@ -86,5 +87,22 @@ test.describe('si-side-panel', () => {
     await expect(page.locator('si-side-panel:not(.rpanel-collapsed)')).toBeVisible();
     await expect(page.locator('si-side-panel .fullscreen-button')).toBeHidden();
     await si.runVisualAndA11yTests();
+  });
+
+  test(exampleInnerNavigation, async ({ page, si }) => {
+    await si.visitExample(exampleInnerNavigation);
+
+    await page.getByRole('button', { name: 'View chat history' }).click();
+    const firstChat = page.getByRole('button', { name: /Summarize project notes/ });
+    await firstChat.click();
+
+    const backButton = page.getByRole('button', { name: 'Back to chat history' });
+    await expect(backButton).toBeFocused();
+    await expect(page.getByRole('heading', { name: 'AI response' })).toBeVisible();
+    await si.runVisualAndA11yTests('detail');
+
+    await backButton.click();
+    await expect(firstChat).toBeFocused();
+    await si.runVisualAndA11yTests('list');
   });
 });

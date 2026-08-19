@@ -1,0 +1,20 @@
+- paragraph: Chat history
+- button "Close"
+- paragraph: Select a chat to continue the conversation.
+- button /Summarize project notes Text generation · Today, \d+:\d+/:
+  - strong: Summarize project notes
+  - text: ""
+- button /Compare quarterly results Data analysis · Yesterday, \d+:\d+/:
+  - strong: Compare quarterly results
+  - text: ""
+- button /Describe an uploaded image Image understanding · Monday, \d+:\d+/:
+  - strong: Describe an uploaded image
+  - text: ""
+- main:
+  - link "Siemens logo":
+    - /url: "#/"
+  - heading "AI assistant" [level=1]
+  - button "Chat history"
+  - heading "How can I help?" [level=1]
+  - paragraph: Start a new conversation or return to one of your recent chats.
+  - button "View chat history"

@@ -244,6 +244,7 @@ export interface SiTranslatableKeys {
   'SI_SEARCH_BAR.CLEAR_BUTTON'?: string;
   'SI_SELECT.NO-RESULTS-FOUND'?: string;
   'SI_SELECT.SEARCH-PLACEHOLDER'?: string;
+  'SI_SIDE_PANEL.BACK'?: string;
   'SI_SIDE_PANEL.CLOSE'?: string;
   'SI_SIDE_PANEL.ENTER_FULLSCREEN'?: string;
   'SI_SIDE_PANEL.EXIT_FULLSCREEN'?: string;

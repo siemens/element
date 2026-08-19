@@ -80,12 +80,15 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
 // @public (undocumented)
 export class SiSidePanelContentComponent implements OnInit {
     constructor();
+    readonly back: _angular_core.OutputEmitterRef<void>;
+    readonly backButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly closeButtonLabel: _angular_core.InputSignal<TranslatableString>;
     // @deprecated (undocumented)
     readonly collapsibleInput: _angular_core.InputSignalWithTransform<boolean | undefined, unknown>;
     readonly displayMode: _angular_core.InputSignal<SidePanelDisplayMode | undefined>;
     readonly enterFullscreenLabel: _angular_core.InputSignal<TranslatableString>;
     readonly exitFullscreenLabel: _angular_core.InputSignal<TranslatableString>;
+    focusBackButton(): void;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
     readonly navigateConfig: _angular_core.InputSignal<SidePanelNavigateConfig | undefined>;
     readonly primaryActions: _angular_core.InputSignal<(MenuItem | ContentActionBarMainItem)[]>;
@@ -93,6 +96,7 @@ export class SiSidePanelContentComponent implements OnInit {
     readonly searchEvent: _angular_core.OutputEmitterRef<string>;
     readonly searchPlaceholder: _angular_core.InputSignal<TranslatableString>;
     readonly secondaryActions: _angular_core.InputSignal<(MenuItem | MenuItem_2)[]>;
+    readonly showBackButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showMobileDrawerBadge: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // @deprecated
     readonly statusActions: _angular_core.InputSignal<StatusItem[]>;

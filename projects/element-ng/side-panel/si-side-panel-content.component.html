@@ -1,5 +1,25 @@
 <div class="rpanel-header pt-5">
-  <p class="si-h5 my-0 ms-6 auto-hide text-truncate">{{ heading() | translate }}</p>
+  <div class="d-flex align-items-center min-width-0 auto-hide">
+    @if (showBackButton()) {
+      <button
+        #backButton
+        type="button"
+        class="btn btn-icon btn-tertiary ms-4 auto-hide"
+        [attr.aria-label]="backButtonLabel() | translate"
+        [tabindex]="focusable() ? null : '-1'"
+        (click)="back.emit()"
+      >
+        <si-icon class="flip-rtl" [icon]="icons.elementLeft4" />
+      </button>
+    }
+    <p
+      class="si-h5 my-0 auto-hide text-truncate"
+      [class.ms-2]="showBackButton()"
+      [class.ms-6]="!showBackButton()"
+    >
+      {{ heading() | translate }}
+    </p>
+  </div>
   @if ((primaryActions().length || secondaryActions().length) && focusable()) {
     <si-content-action-bar
       class="auto-hide ms-auto"
