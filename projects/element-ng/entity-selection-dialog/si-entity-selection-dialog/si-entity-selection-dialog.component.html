@@ -1,0 +1,44 @@
+<div class="modal-container w-100">
+  <div class="modal-header">
+    <h4 class="modal-title si-title-2">{{ modalTitle | translate }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeModalDialog()">
+      <span aria-hidden="true" class="element-cancel"></span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <si-search-bar
+      [placeholder]="'SISUITE.LIST-SELECT-MODAL.SEARCH' | translate"
+      [value]="searchString"
+      [showIcon]="true"
+      [debounceTime]="400"
+      (searchChange)="searchText($event)"
+    />
+    <ngx-datatable
+      #table
+      class="list-table table-element elevation-0 mt-6 rounded-0"
+      columnMode="force"
+      siDatatableInteraction
+      [cssClasses]="tableConfig.cssClasses"
+      [rows]="datatableRows"
+      [columns]="tableColumns"
+      [reorderable]="false"
+      [headerHeight]="0"
+      [rowHeight]="tableConfig.rowHeightSmall"
+      [scrollbarV]="true"
+      [externalPaging]="true"
+      [count]="page.totalElements"
+      [selected]="loadedSelected"
+      [selectionType]="datatableSelectionType"
+      (select)="onSelect($event.selected)"
+      (page)="setPage($event)"
+    />
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModalDialog()">{{
+      modalCancel | translate
+    }}</button>
+    <button type="button" class="btn btn-primary" [disabled]="saveDisabled" (click)="saveModal()">{{
+      modalSave | translate
+    }}</button>
+  </div>
+</div>
