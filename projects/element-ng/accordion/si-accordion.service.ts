@@ -5,15 +5,15 @@
 import { Injectable, signal } from '@angular/core';
 import { Subject } from 'rxjs';
 
+import type { SiCollapsiblePanelComponent } from './si-collapsible-panel.component';
+
 /** @internal */
 @Injectable({
   providedIn: null
 })
 export class SiAccordionService {
-  /**
-   * Emit an item in the accordion which should be toggled.
-   */
-  readonly toggle$ = new Subject<any>();
+  /** Emit the panel that was toggled so sibling panels can close. */
+  readonly toggle$ = new Subject<SiCollapsiblePanelComponent>();
   /**
    * Subject to emit when the items should be expanded to their full height or restored to normal height.
    *
