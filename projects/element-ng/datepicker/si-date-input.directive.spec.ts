@@ -5,6 +5,7 @@
 import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
+import { userEvent } from 'vitest/browser';
 
 import { SiDateInputDirective } from './si-date-input.directive';
 import { DatepickerInputConfig } from './si-datepicker.model';
@@ -22,7 +23,7 @@ import { dispatchEvents, enterValue } from './testing/test-helper';
     siDateInput
     [disabled]="disabled()"
     [siDatepickerConfig]="config()"
-    [ngModel]="date"
+    [ngModel]="date()"
     (ngModelChange)="onModelChange($event)"
   />`
 })
@@ -30,13 +31,15 @@ class WrapperComponent {
   readonly siDateInput = viewChild.required<ElementRef>('siDateInput');
   readonly validation = viewChild.required<NgControl>('validation');
   readonly siDateInputDirective = viewChild.required(SiDateInputDirective);
-  date: Date | string = new Date('2022-03-12');
+  readonly date = signal<Date | string>(new Date('2022-03-12'));
   readonly disabled = signal(false);
   readonly config = signal<DatepickerInputConfig>({
     showTime: true,
     disabledTime: false
   });
-  onModelChange(d: Date): void {}
+  onModelChange(d: Date): void {
+    this.date.set(d);
+  }
 }
 
 describe('SiDateInputDirective', () => {
@@ -72,7 +75,7 @@ describe('SiDateInputDirective', () => {
   };
 
   it('should consider short time format', async () => {
-    component.date = getTestDate();
+    component.date.set(getTestDate());
     await updateConfig({
       showTime: true,
       dateTimeFormat: 'dd.MM.yyyy, HH:mm'
@@ -83,7 +86,7 @@ describe('SiDateInputDirective', () => {
   });
 
   it('should consider default time format if showSeconds true', async () => {
-    component.date = getTestDate();
+    component.date.set(getTestDate());
     await updateConfig({
       showTime: true,
       showSeconds: true
@@ -97,7 +100,7 @@ describe('SiDateInputDirective', () => {
 
   it('should consider minDate criteria with time', async () => {
     vi.spyOn(component.siDateInputDirective(), 'validate');
-    component.date = new Date('2020-03-12T13:13:13');
+    component.date.set(new Date('2020-03-12T13:13:13'));
     await updateConfig({
       showTime: true,
       showSeconds: true,
@@ -109,7 +112,7 @@ describe('SiDateInputDirective', () => {
 
     expect(component.validation().errors).toBeDefined();
     expect(component.validation().errors?.minDate).toEqual({
-      actual: component.date,
+      actual: component.date(),
       min: component.config().minDate,
       minString: '3/12/2021, 1:13:12 PM'
     });
@@ -117,7 +120,7 @@ describe('SiDateInputDirective', () => {
 
   it('should consider minDate criteria only date', async () => {
     vi.spyOn(component.siDateInputDirective(), 'validate');
-    component.date = new Date('2020-03-12');
+    component.date.set(new Date('2020-03-12'));
     await updateConfig({
       showTime: true,
       showSeconds: true,
@@ -128,7 +131,7 @@ describe('SiDateInputDirective', () => {
     await fixture.whenStable();
 
     expect(component.validation().errors?.minDate).toEqual({
-      actual: component.date,
+      actual: component.date(),
       min: component.config().minDate,
       minString: '3/13/2021, 12:00:00 AM'
     });
@@ -136,7 +139,7 @@ describe('SiDateInputDirective', () => {
 
   it('should consider maxDate criteria with time', async () => {
     vi.spyOn(component.siDateInputDirective(), 'validate');
-    component.date = new Date('2024-03-12T13:13:13');
+    component.date.set(new Date('2024-03-12T13:13:13'));
     await updateConfig({
       showTime: true,
       showSeconds: true,
@@ -147,7 +150,7 @@ describe('SiDateInputDirective', () => {
     await fixture.whenStable();
 
     expect(component.validation().errors?.maxDate).toEqual({
-      actual: component.date,
+      actual: component.date(),
       max: component.config().maxDate,
       maxString: '3/12/2023, 1:13:12 PM'
     });
@@ -155,7 +158,7 @@ describe('SiDateInputDirective', () => {
 
   it('should consider maxDate criteria only date', async () => {
     vi.spyOn(component.siDateInputDirective(), 'validate');
-    component.date = new Date('2024-03-12');
+    component.date.set(new Date('2024-03-12'));
     await updateConfig({
       showTime: true,
       showSeconds: true,
@@ -166,7 +169,7 @@ describe('SiDateInputDirective', () => {
     await fixture.whenStable();
 
     expect(component.validation().errors?.maxDate).toEqual({
-      actual: component.date,
+      actual: component.date(),
       max: component.config().maxDate,
       maxString: '3/11/2023, 12:00:00 AM'
     });
@@ -191,8 +194,26 @@ describe('SiDateInputDirective', () => {
     expect((vi.mocked(spy).mock.lastCall![0]! as Date).getTime()).toBeNaN();
   });
 
+  it('should restore displayed value after manual entry when ngModel is reset programmatically', async () => {
+    await updateConfig({ showTime: true, dateTimeFormat: 'dd.MM.yyyy, HH:mm' });
+    component.date.set(getTestDate());
+    await fixture.whenStable();
+
+    expect(dateInput()).toHaveValue('12.03.2022, 05:30');
+
+    await userEvent.fill(dateInput(), '15.06.2023, 10:00');
+    await fixture.whenStable();
+
+    expect(dateInput()).toHaveValue('15.06.2023, 10:00');
+
+    component.date.set(new Date(2022, 2, 12, 5, 30));
+    await fixture.whenStable();
+
+    expect(dateInput()).toHaveValue('12.03.2022, 05:30');
+  });
+
   it('should update displayed value when config changes', async () => {
-    component.date = getTestDate();
+    component.date.set(getTestDate());
 
     await updateConfig({ showTime: true });
     fixture.detectChanges();
