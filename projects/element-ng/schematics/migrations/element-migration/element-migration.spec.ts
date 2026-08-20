@@ -147,6 +147,10 @@ describe('to legacy migration', () => {
     await checkTemplateMigration(['chart-gauge-decimals.ts']);
   });
 
+  it('should move map moreText to the map tooltip', async () => {
+    await checkTemplateMigration(['map-tooltip-inline-template.ts']);
+  });
+
   it('should rename functions of classes', async () => {
     await checkTemplateMigration(['function-rename.ts']);
   });
