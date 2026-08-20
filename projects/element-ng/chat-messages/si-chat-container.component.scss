@@ -2,6 +2,8 @@
 
 @use '@siemens/element-theme/src/styles/variables';
 
+$container-max-inline-size: 720px;
+
 :host {
   overflow-y: hidden;
   overflow-x: visible;
@@ -27,8 +29,7 @@
     // stylelint-disable-next-line declaration-no-important
     padding-inline-end: 0 !important;
 
-    .chat-input-area,
-    si-ai-welcome-screen {
+    :is(.chat-input-area, si-ai-welcome-screen) {
       padding-inline-start: map.get(variables.$spacers, 6);
       padding-inline-end: map.get(variables.$spacers, 6);
     }
@@ -55,7 +56,7 @@
   }
 
   ::ng-deep &:not(:has(si-ai-welcome-screen)) {
-    max-inline-size: 720px;
+    max-inline-size: $container-max-inline-size;
   }
 
   ::ng-deep &:has(si-ai-welcome-screen) {
@@ -70,7 +71,7 @@
   inline-size: 100%;
 
   > ::ng-deep * {
-    max-inline-size: 720px;
+    max-inline-size: $container-max-inline-size;
   }
 
   &:empty,
@@ -96,8 +97,7 @@
 // In mobile mode the inline-notification is massive compared to the scrollable area
 :host-context(.si-container-xs, .si-container-sm) ::ng-deep {
   si-inline-notification {
-    .alert,
-    .alert-link {
+    :is(.alert, .alert-link) {
       font-size: variables.$si-font-size-body;
     }
   }

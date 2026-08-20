@@ -1,13 +1,11 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
+$chat-message-bubble-bg: var(--chat-message-bubble-bg, variables.$si-sys-background-1);
+$chat-message-bubble-padding: var(--chat-message-bubble-padding, map.get(variables.$spacers, 5));
+
 :host {
   display: block;
-  --chat-message-bubble-bg: #{variables.$si-sys-background-1};
-  --chat-message-bubble-padding: #{map.get(variables.$spacers, 5)};
-}
-
-:host ::ng-deep si-loading-spinner {
   --loading-spinner-size: 1.5em;
 }
 
@@ -21,19 +19,17 @@
 
 .loading-message-bubble,
 .message-bubble {
-  padding: var(--chat-message-bubble-padding);
+  padding: $chat-message-bubble-padding;
+  margin-block-end: auto;
+  background-color: $chat-message-bubble-bg;
 }
 
 .loading-message-bubble {
   inline-size: max-content;
   min-inline-size: 75%;
-  margin-block-end: auto;
-  background-color: var(--chat-message-bubble-bg);
 }
 
 .message-bubble {
-  margin-block-end: auto;
-  background-color: var(--chat-message-bubble-bg);
   min-inline-size: 0;
   max-inline-size: 100%;
   overflow-wrap: break-word;
@@ -115,11 +111,6 @@
   .message-bubble.end {
     margin-inline-start: auto;
   }
-}
-
-.attachment-slot ::ng-deep si-attachment-list {
-  --attachment-list-bg: transparent;
-  --attachment-name-color: #{variables.$si-sys-text-secondary};
 }
 
 :host-context(.si-container-xs, .si-container-sm) {
