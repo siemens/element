@@ -177,6 +177,7 @@ nav:
       - Scatter chart:                    'components/charts/scatter-chart.md'
       - Generic chart:                    'components/charts/generic-chart.md'
       - Micro charts:                     'components/charts/micro-charts.md'
+      - Native gauge chart:               'components/charts/native-gauge-chart.md'
     - Maps:                               'components/maps/maps.md'
     - Pages:
       - About:                            'components/pages/about.md'
