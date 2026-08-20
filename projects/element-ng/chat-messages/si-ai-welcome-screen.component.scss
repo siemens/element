@@ -8,8 +8,10 @@
 @use '@siemens/element-theme/src/styles/variables';
 @use '@siemens/element-theme/src/styles/bootstrap/variables' as bootstrap;
 
+$welcome-screen-max-inline-size: 720px;
+
 .welcome-header {
-  max-inline-size: 720px;
+  max-inline-size: $welcome-screen-max-inline-size;
   overflow-x: visible;
   position: relative;
 
@@ -39,7 +41,7 @@
 }
 
 .prompt-suggestions {
-  max-inline-size: 720px;
+  max-inline-size: $welcome-screen-max-inline-size;
 
   > div:first-child {
     flex-wrap: wrap;
