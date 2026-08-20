@@ -9,6 +9,7 @@ export type { AttributeSelectorInstruction } from './attribute-selectors.js';
 export type { ClassMemberReplacementInstruction } from './class-member-replacement.js';
 export type { ComponentPropertyNamesInstruction } from './component-property-names.js';
 export type { CssCustomPropertyInstruction } from './css-custom-properties.js';
+export type { ComponentPropertyToChildInstruction } from './component-property-to-child.js';
 export type { ElementClassChangeInstruction } from './element-class-changes.js';
 export type { ElementSelectorInstruction } from './element-selectors.js';
 export type { ProviderFunctionRemovalInstruction } from './provider-function-removals.js';
