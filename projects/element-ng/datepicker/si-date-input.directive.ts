@@ -7,7 +7,6 @@ import {
   booleanAttribute,
   computed,
   Directive,
-  HostListener,
   inject,
   input,
   LOCALE_ID,
@@ -58,7 +57,9 @@ import { DatepickerInputConfig, getDatepickerFormat } from './si-datepicker.mode
     '[attr.readonly]': 'readonly() || null',
     '[class.readonly]': 'readonly()',
     '[attr.aria-describedby]': 'errormessageId()',
-    '[value]': 'dateString()'
+    '[value]': 'dateString()',
+    '(input)': 'onInput($event)',
+    '(blur)': 'onBlur($event)'
   },
   exportAs: 'siDateInput'
 })
@@ -219,10 +220,14 @@ export class SiDateInputDirective
   /**
    * Handles `input` events on the input element.
    */
-  @HostListener('input', ['$event'])
   protected onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     const parsedDate = parseDate(value, this.getFormat(), this.locale);
+
+    // Keep dateString in sync with the raw DOM value so that a subsequent
+    // writeValue() with the same formatted string still triggers the host
+    // [value] binding and overwrites any manually entered text.
+    this.dateString.set(value);
 
     // Is same date
     const hasChanged = !(parsedDate === this.date);
@@ -233,7 +238,7 @@ export class SiDateInputDirective
     }
   }
 
-  @HostListener('blur', ['$event']) protected onBlur(event: FocusEvent): void {
+  protected onBlur(event: FocusEvent): void {
     this.onTouched();
   }
 
