@@ -7,6 +7,8 @@ import { inject, PLATFORM_ID, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { fromEvent, map } from 'rxjs';
 
+import { SI_THEME_DOM_TARGET } from './si-theme-dom-target';
+
 /**
  * Returns a signal that reflects whether the current Element theme is dark (`true`) or light
  * (`false`). The signal reacts to `theme-switch` events dispatched on `window`.
@@ -19,11 +21,12 @@ export const injectIsDarkTheme = (): Signal<boolean> => {
   if (!isPlatformBrowser(inject(PLATFORM_ID))) {
     return signal(false);
   }
+  const targetDom = inject(SI_THEME_DOM_TARGET);
 
   return toSignal(
     fromEvent<CustomEvent<{ dark: boolean }>>(window, 'theme-switch').pipe(map(e => e.detail.dark)),
     {
-      initialValue: document.documentElement.classList.contains('app--dark')
+      initialValue: targetDom.element.classList.contains('app--dark')
     }
   );
 };
