@@ -6,8 +6,12 @@
 
 import { EventEmitter } from '@angular/core';
 import * as i0 from '@angular/core';
+import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Signal } from '@angular/core';
+
+// @public (undocumented)
+export type ColorScheme = 'light' | 'dark';
 
 // @public (undocumented)
 export const ELEMENT_THEME_NAME = "element";
@@ -17,6 +21,9 @@ export const elementTheme: ThemeDescription;
 
 // @public
 export const injectIsDarkTheme: () => Signal<boolean>;
+
+// @public
+export const SI_THEME_DOM_TARGET: InjectionToken<SiThemeDomTarget>;
 
 // @public (undocumented)
 export const SI_THEME_LOCAL_STORAGE_KEY = "si-themes";
@@ -38,6 +45,23 @@ export class SiDefaultThemeStore extends SiThemeStore {
     loadThemeNames(): Observable<string[]>;
     // (undocumented)
     saveTheme(theme: Theme): Observable<boolean>;
+}
+
+// @public
+export interface SiThemeDomTarget {
+    // (undocumented)
+    appendStyleElement(style: HTMLStyleElement): void;
+    readonly element: HTMLElement;
+    readonly eventTarget?: EventTarget;
+    // (undocumented)
+    forEachElement(callback: (element: HTMLElement) => void): void;
+    // (undocumented)
+    getStyleElement(id: string): HTMLStyleElement | null;
+    // (undocumented)
+    registerElement?(element: HTMLElement): () => void;
+    readonly rootSelector: string;
+    // (undocumented)
+    updateColorScheme(colorScheme: ColorScheme): void;
 }
 
 // @public (undocumented)
@@ -138,7 +162,7 @@ export interface ThemeStorage {
 }
 
 // @public (undocumented)
-export type ThemeType = 'dark' | 'light' | 'auto';
+export type ThemeType = ColorScheme | 'auto';
 
 // (No @packageDocumentation comment for this package)
 

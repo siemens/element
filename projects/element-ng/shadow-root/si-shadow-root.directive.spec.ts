@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
-import { Component, input, signal, ViewEncapsulation } from '@angular/core';
+import { Component, inject, input, signal, ViewEncapsulation } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { SiThemeService } from '@siemens/element-ng/theme';
 
 import { SiShadowRootDirective } from './si-shadow-root.directive';
 
@@ -45,6 +47,7 @@ describe('ShadowRootDirective', () => {
   class WithOverlayComponent {
     readonly open = input(false);
     readonly showLateStyled = input(false);
+    readonly themeService = inject(SiThemeService);
   }
 
   @Component({
@@ -68,6 +71,31 @@ describe('ShadowRootDirective', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
+  });
+
+  it('should apply the scoped theme to an overlay created later', () => {
+    fixture.detectChanges();
+    const component = fixture.debugElement.query(By.directive(WithOverlayComponent))
+      .componentInstance as WithOverlayComponent;
+    component.themeService.applyThemeType('dark');
+
+    fixture.componentInstance.open.set(true);
+    fixture.detectChanges();
+
+    const overlayHost = document.querySelector('element-overlay-root')!;
+    expect(overlayHost.classList).toContain('app--dark');
+    component.themeService.applyThemeType('light');
+    expect(overlayHost.classList).not.toContain('app--dark');
+  });
+
+  it('should apply theme-switch events to the shadow root', () => {
+    fixture.detectChanges();
+    const shadowHost = fixture.debugElement.query(By.directive(WithOverlayComponent))
+      .nativeElement as HTMLElement;
+
+    window.dispatchEvent(new CustomEvent('theme-switch', { detail: { dark: true } }));
+
+    expect(shadowHost.classList).toContain('app--dark');
   });
 
   it('should have styles in the overlay available', () => {

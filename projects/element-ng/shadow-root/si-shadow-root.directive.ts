@@ -4,6 +4,10 @@
  */
 import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
 import { Directive, ElementRef, inject, DOCUMENT, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SI_THEME_DOM_TARGET, SiThemeService } from '@siemens/element-ng/theme';
+
+import { createShadowRootThemeTarget } from './si-shadow-root-theme-target';
 
 /**
  * This directive is intended to be used in applications that do NOT load element styles in the root HTML element.
@@ -33,17 +37,41 @@ import { Directive, ElementRef, inject, DOCUMENT, DestroyRef } from '@angular/co
  */
 @Directive({
   selector: '[siShadowRoot]',
-  providers: [{ provide: OverlayContainer, useExisting: SiShadowRootDirective }, Overlay]
+  providers: [
+    { provide: OverlayContainer, useExisting: SiShadowRootDirective },
+    Overlay,
+    SiThemeService,
+    { provide: SI_THEME_DOM_TARGET, useFactory: createShadowRootThemeTarget }
+  ],
+  host: {
+    '(window:theme-switch)': 'onThemeSwitch($event)'
+  }
 })
 export class SiShadowRootDirective extends OverlayContainer {
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private document = inject(DOCUMENT);
   private destroyRef = inject(DestroyRef);
+  private themeTarget = inject(SI_THEME_DOM_TARGET);
+  private parentTheme = inject(SiThemeService, { skipSelf: true, optional: true });
+  private themeService = inject(SiThemeService, { self: true });
+
+  constructor() {
+    super();
+    this.parentTheme?.resolvedColorScheme$.pipe(takeUntilDestroyed()).subscribe(colorScheme => {
+      this.themeService.applyThemeType(colorScheme);
+    });
+  }
+
+  protected onThemeSwitch(event: Event): void {
+    const themeSwitchEvent = event as CustomEvent<{ dark: boolean }>;
+    this.themeService.applyThemeType(themeSwitchEvent.detail.dark ? 'dark' : 'light');
+  }
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   protected override _createContainer(): void {
     const sourceShadow = this.elementRef.nativeElement.shadowRoot!;
     const root = this.document.createElement('element-overlay-root');
+    const unregisterThemeTarget = this.themeTarget.registerElement?.(root);
     this.document.body.append(root);
     const shadow = root.attachShadow({ mode: 'open' });
     const shadowElement = this.document.createElement('div');
@@ -76,6 +104,7 @@ export class SiShadowRootDirective extends OverlayContainer {
     observer.observe(sourceShadow, { childList: true });
     this.destroyRef.onDestroy(() => {
       observer.disconnect();
+      unregisterThemeTarget?.();
       root.remove();
     });
 

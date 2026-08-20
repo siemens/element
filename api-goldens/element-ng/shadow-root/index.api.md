@@ -9,6 +9,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 
 // @public
 export class SiShadowRootDirective extends OverlayContainer {
+    constructor();
 }
 
 // (No @packageDocumentation comment for this package)
