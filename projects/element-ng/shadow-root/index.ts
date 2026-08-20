@@ -3,3 +3,4 @@
  * SPDX-License-Identifier: MIT
  */
 export * from './si-shadow-root.directive';
+export * from './si-shadow-root-theme-target';

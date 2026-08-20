@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 export * from './si-theme-store';
+export * from './si-theme-dom-target';
 export * from './si-theme.service';
 export * from './si-theme.model';
 export * from './si-theme-signals';

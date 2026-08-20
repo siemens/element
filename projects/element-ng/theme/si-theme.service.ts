@@ -4,10 +4,10 @@
  */
 import { isPlatformBrowser } from '@angular/common';
 import { DOCUMENT, EventEmitter, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import { Meta } from '@angular/platform-browser';
 import { Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
+import { SI_THEME_DOM_TARGET } from './si-theme-dom-target';
 import { SiDefaultThemeStore, SiThemeStore } from './si-theme-store';
 import {
   ELEMENT_THEME_NAME,
@@ -85,10 +85,13 @@ export class SiThemeService {
 
   private themeStore =
     inject(SiThemeStore, { optional: true }) ?? new SiDefaultThemeStore(this.isBrowser);
-  private meta = inject(Meta);
   private document = inject(DOCUMENT);
+  private themeTarget = inject(SI_THEME_DOM_TARGET);
 
   constructor() {
+    this._resolvedColorScheme = this.themeTarget.element.classList.contains('app--dark')
+      ? 'dark'
+      : 'light';
     this.resolvedColorScheme$.subscribe(scheme => (this._resolvedColorScheme = scheme));
     this.themeNames$.subscribe(names => (this._themeNames = names));
 
@@ -282,7 +285,7 @@ export class SiThemeService {
   }
 
   /**
-   * Apply `light` or `dark` theme to the document.
+   * Apply `light` or `dark` theme to the configured theme target.
    */
   applyThemeType(type: ThemeType): void {
     if (type === this._resolvedColorScheme || !this.darkMediaQuery || !this.mediaQueryListener) {
@@ -302,7 +305,7 @@ export class SiThemeService {
   }
 
   /**
-   * Applies the given theme to the document. If no theme is given, the active theme is applied.
+   * Applies the given theme to the configured theme target. If no theme is given, the active theme is applied.
    */
   applyTheme(theme?: Theme, type?: ThemeType, overwrite?: boolean): void {
     if (theme) {
@@ -326,7 +329,7 @@ export class SiThemeService {
     }
     this.previewTheme!.schemes[type]![name] = value;
     this.createThemeCSS(this.previewTheme!);
-    this.document.documentElement.classList.add('theme-__preview');
+    this.themeTarget.forEachElement(element => element.classList.add('theme-__preview'));
     this.dispatchThemeSwitchEvent();
   }
 
@@ -382,30 +385,36 @@ export class SiThemeService {
   }
 
   private activateTheme(theme?: Theme): void {
-    const classList = this.document.documentElement.classList;
-    classList.forEach(c => {
-      if (c.startsWith('theme-')) {
-        classList.remove(c);
+    this.themeTarget.forEachElement(element => {
+      const classList = element.classList;
+      classList.forEach(className => {
+        if (className.startsWith('theme-')) {
+          classList.remove(className);
+        }
+      });
+      if (theme) {
+        classList.add(`theme-${theme.name}`);
       }
     });
-    if (theme) {
-      classList.add(`theme-${theme.name}`);
-    }
   }
 
   private hasThemeCSS(theme: Theme): boolean {
     const id = `__theme-${theme.name}`;
-    return !!this.document.getElementById(id);
+    return !!this.themeTarget.getStyleElement(id);
   }
 
   private createThemeCSS(theme: Theme): void {
     let css = '';
-    const themeSelector = `:root.theme-${theme.name}`;
+    const themeSelector = this.createThemeSelector(theme.name);
     if (theme.schemes.light) {
       css = this.createThemeVariantCSS(css, themeSelector, theme.schemes.light);
     }
     if (theme.schemes.dark) {
-      css = this.createThemeVariantCSS(css, themeSelector + '.app--dark', theme.schemes.dark);
+      css = this.createThemeVariantCSS(
+        css,
+        this.createThemeSelector(theme.name, true),
+        theme.schemes.dark
+      );
     }
 
     this.removeThemeCSS(theme.name);
@@ -413,7 +422,14 @@ export class SiThemeService {
     cssElement.id = `__theme-${theme.name}`;
     cssElement.textContent = css;
 
-    this.document.body.appendChild(cssElement);
+    this.themeTarget.appendStyleElement(cssElement);
+  }
+
+  private createThemeSelector(name: string, dark: boolean = false): string {
+    const classes = `.theme-${name}${dark ? '.app--dark' : ''}`;
+    return this.themeTarget.rootSelector === ':host'
+      ? `:host(${classes})`
+      : `${this.themeTarget.rootSelector}${classes}`;
   }
 
   private createThemeVariantCSS(css: string, selector: string, scheme: ThemeColorScheme): string {
@@ -427,8 +443,8 @@ export class SiThemeService {
 
   private removeThemeCSS(name: string): void {
     const id = `__theme-${name}`;
-    this.document.getElementById(id)?.remove();
-    this.document.documentElement.classList.remove(`theme-${name}`);
+    this.themeTarget.getStyleElement(id)?.remove();
+    this.themeTarget.forEachElement(element => element.classList.remove(`theme-${name}`));
   }
 
   private toggleDark(dark: boolean): void {
@@ -436,9 +452,9 @@ export class SiThemeService {
       return;
     }
 
-    this.document.documentElement.classList.toggle('app--dark', dark);
+    this.themeTarget.forEachElement(element => element.classList.toggle('app--dark', dark));
     const colorScheme = dark ? 'dark' : 'light';
-    this.meta.updateTag({ name: 'color-scheme', content: colorScheme });
+    this.themeTarget.updateColorScheme(colorScheme);
     this.resolvedColorSchemeSub.next(colorScheme);
     this.dispatchThemeSwitchEvent();
   }
