@@ -6,6 +6,7 @@ import {
   AttributeSelectorInstruction,
   SymbolRenamingInstruction,
   ComponentPropertyNamesInstruction,
+  ComponentPropertyToChildInstruction,
   ElementMigrationData,
   ElementSelectorInstruction,
   ProviderFunctionRemovalInstruction,
@@ -232,6 +233,14 @@ const COMPONENT_PROPERTY_NAMES_MIGRATION: ComponentPropertyNamesInstruction[] = 
   }
 ];
 
+const COMPONENT_PROPERTY_TO_CHILD_MIGRATION: ComponentPropertyToChildInstruction[] = [
+  {
+    parentElementSelector: 'si-map',
+    childElementSelector: 'si-map-tooltip',
+    propertyName: 'moreText'
+  }
+];
+
 const CLASS_MEMBER_REPLACEMENTS_MIGRATION: ClassMemberReplacementInstruction[] = [
   {
     module: /@(siemens|simpl)\/element-ng(\/resize-observer)?/,
@@ -315,6 +324,7 @@ export const getElementMigrationTestData = (): ElementMigrationData => ({
   classMemberReplacementChanges: CLASS_MEMBER_REPLACEMENTS_MIGRATION,
   componentPropertyNameChanges: COMPONENT_PROPERTY_NAMES_MIGRATION,
   cssCustomPropertyChanges: CSS_CUSTOM_PROPERTIES_MIGRATION,
+  componentPropertyToChildChanges: COMPONENT_PROPERTY_TO_CHILD_MIGRATION,
   elementClassChanges: ELEMENT_CLASS_CHANGES_MIGRATION,
   elementSelectorChanges: ELEMENT_SELECTORS_MIGRATION,
   providerFunctionRemovalChanges: PROVIDER_FUNCTION_REMOVALS_MIGRATION,

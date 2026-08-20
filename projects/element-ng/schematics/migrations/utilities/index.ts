@@ -8,6 +8,7 @@ export * from './element-class-change.migration.js';
 export * from './class-member-replacement.migration.js';
 export * from './component-property-name.migration.js';
 export * from './css-custom-property.migration.js';
+export * from './component-property-to-child.migration.js';
 export * from './element-selector.migration.js';
 export * from './symbol-renaming.migration.js';
 export * from './symbol-removal.migration.js';

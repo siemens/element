@@ -12,6 +12,7 @@ import {
   applyClassMemberReplacementMigration,
   applyComponentPropertyNameMigration,
   applyCssCustomPropertyMigration,
+  applyComponentPropertyToChildMigration,
   applyElementSelectorMigration,
   applyProviderFunctionRemovalMigration,
   applySymbolRemovalMigration,
@@ -40,6 +41,7 @@ export const elementMigrationRule = (
       const {
         componentPropertyNameChanges,
         cssCustomPropertyChanges,
+        componentPropertyToChildChanges,
         symbolRenamingChanges,
         attributeSelectorChanges,
         elementSelectorChanges,
@@ -51,6 +53,7 @@ export const elementMigrationRule = (
 
       applyComponentPropertyNameMigration(migrationContext, componentPropertyNameChanges);
       applyCssCustomPropertyMigration(migrationContext, cssCustomPropertyChanges);
+      applyComponentPropertyToChildMigration(migrationContext, componentPropertyToChildChanges);
       applySymbolRenamingMigration(migrationContext, symbolRenamingChanges);
       applyAttributeSelectorMigration(migrationContext, attributeSelectorChanges);
       applyElementSelectorMigration(migrationContext, elementSelectorChanges);
