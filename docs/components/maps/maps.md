@@ -47,7 +47,7 @@ information.
 A _Map pin_ is used to represent a single location.
 If needed, _Map pins_ can also be used to represent different status.
 Avoid mixing the
-[Status color palette](https://element.siemens.io/fundamentals/colors/ui-colors/#status)
+[Status color palette](../../fundamentals/colors/ui-colors.md#status)
 with the default color.
 
 ![Map Pin](images/map-pin.png)
