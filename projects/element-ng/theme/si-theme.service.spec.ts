@@ -2,7 +2,9 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { SiShadowRootDirective } from '@siemens/element-ng/shadow-root';
 import { firstValueFrom, of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { type Mock } from 'vitest';
@@ -12,6 +14,16 @@ import { ELEMENT_THEME_NAME, Theme } from './si-theme.model';
 import { SiThemeService as TestService } from './si-theme.service';
 
 describe('SiThemeService', () => {
+  @Component({
+    selector: 'si-test-shadow-theme-host',
+    template: '',
+    encapsulation: ViewEncapsulation.ShadowDom,
+    hostDirectives: [SiShadowRootDirective]
+  })
+  class ShadowThemeHostComponent {
+    readonly themeService = inject(TestService);
+  }
+
   let service: TestService;
   let themeSwitchSpy: Mock;
 
@@ -61,6 +73,38 @@ describe('SiThemeService', () => {
       service.applyThemeType('dark');
       expect(document.documentElement.classList).toContain('app--dark');
       expect(themeSwitchSpy).toHaveBeenCalledWith('dark');
+    });
+  });
+
+  describe('with a shadow root target', () => {
+    it('should apply the color scheme only to the shadow host', () => {
+      setupTestBed();
+      const fixture = TestBed.createComponent(ShadowThemeHostComponent);
+
+      fixture.componentInstance.themeService.applyThemeType('dark');
+
+      expect(fixture.nativeElement.classList).toContain('app--dark');
+      expect(document.documentElement.classList).not.toContain('app--dark');
+    });
+
+    it('should add custom theme styles to the shadow root with host selectors', () => {
+      setupTestBed();
+      const fixture = TestBed.createComponent(ShadowThemeHostComponent);
+      const theme: Theme = {
+        name: 'example',
+        schemes: {
+          light: { '--element-base-0': '#fff' },
+          dark: { '--element-base-0': '#000' }
+        }
+      };
+
+      fixture.componentInstance.themeService.applyTheme(theme, 'dark', true);
+
+      const style = fixture.nativeElement.shadowRoot.getElementById('__theme-example');
+      expect(fixture.nativeElement.classList).toContain('theme-example');
+      expect(style.textContent).toContain(':host(.theme-example)');
+      expect(style.textContent).toContain(':host(.theme-example.app--dark)');
+      expect(document.getElementById('__theme-example')).toBeNull();
     });
   });
 
