@@ -10,11 +10,13 @@ import {
   computed,
   DestroyRef,
   effect,
+  ElementRef,
   inject,
   input,
   OnInit,
   output,
-  signal
+  signal,
+  viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -23,6 +25,7 @@ import {
   elementDoubleLeft,
   elementDoubleRight,
   elementExport,
+  elementLeft4,
   elementPinch,
   elementZoom
 } from '@siemens/element-icons';
@@ -96,6 +99,7 @@ export interface StatusItem extends MenuItemLegacy {
 })
 export class SiSidePanelContentComponent implements OnInit {
   private static idCounter = 0;
+  private readonly backButton = viewChild<ElementRef<HTMLButtonElement>>('backButton');
   protected readonly panelContentId = `__si-side-panel-content-${SiSidePanelContentComponent.idCounter++}`;
   /**
    * @deprecated This input is no longer used. The collapsible state is managed by the SiSidePanelService.
@@ -113,6 +117,28 @@ export class SiSidePanelContentComponent implements OnInit {
    * @defaultValue ''
    */
   readonly heading = input<TranslatableString>('');
+
+  /**
+   * Whether to show the back button.
+   *
+   * @defaultValue false
+   */
+  readonly showBackButton = input(false, { transform: booleanAttribute });
+
+  /**
+   * Aria label for the optional back button.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_SIDE_PANEL.BACK:Back`)
+   * ```
+   */
+  readonly backButtonLabel = input(t(() => $localize`:@@SI_SIDE_PANEL.BACK:Back`));
+
+  /** Focuses the back button when it is available. */
+  focusBackButton(): void {
+    this.backButton()?.nativeElement.focus();
+  }
 
   /**
    * Input list of primary action items
@@ -240,6 +266,11 @@ export class SiSidePanelContentComponent implements OnInit {
    */
   readonly searchEvent = output<string>();
 
+  /**
+   * Emitted when the back button is activated.
+   */
+  readonly back = output<void>();
+
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
   protected readonly service = inject(SiSidePanelService);
   protected readonly isCollapsed = signal(false);
@@ -258,6 +289,7 @@ export class SiSidePanelContentComponent implements OnInit {
     elementDoubleLeft,
     elementDoubleRight,
     elementExport,
+    elementLeft4,
     elementPinch,
     elementZoom
   });
