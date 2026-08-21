@@ -158,7 +158,7 @@ Element provides the possibility to override text keys on a global level. This c
 text keys that are used multiple times within an application but have most likely the same value. This is usually the case
 for static labels like `Close`, `Ok`, ...
 
-All keys that can be overridden can be found [here.](https://element.siemens.io/api/element-ng/types/SiTranslatableKeys)
+All keys that can be overridden can be found <a href="../../api/element-ng/types/SiTranslatableKeys">here.</a>
 
 The overriding of text keys is available for every framework except `@angular/localize` due to technical limitations.
 

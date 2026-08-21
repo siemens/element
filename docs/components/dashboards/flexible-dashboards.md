@@ -81,9 +81,9 @@ The flexible dashboards are based on [gridstack.js](http://gridstackjs.com).
 See [README](https://github.com/siemens/element/blob/main/projects/dashboards-ng/README.md) for details
 about including to your app.
 
-<iframe class="component-preview" src="https://element.siemens.io/dashboards-demo/#/dashboard" height="991px" width="100%" allowfullscreen="true"></iframe>
+<iframe class="component-preview" src="../../../dashboards-demo/#/dashboard" height="991px" width="100%" allowfullscreen="true"></iframe>
 
-Direct [Link](https://element.siemens.io/dashboards-demo/#/dashboard) to dashboard demo.
+Direct <a href="../../../dashboards-demo/#/dashboard">Link</a> to dashboard demo.
 
 <si-docs-api component="SiFlexibleDashboardComponent" package="@siemens/dashboards-ng" hideImplicitlyPublic="true"></si-docs-api>
 
