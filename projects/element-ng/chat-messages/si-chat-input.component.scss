@@ -30,11 +30,13 @@
 .chat-textarea {
   // Prevent layout shift on first input
   min-block-size: 1lh;
+  max-block-size: 30vh;
   font-family: inherit;
   padding-block: 0;
   display: block;
   outline: none;
   resize: none;
+  overflow-y: auto;
   background-color: transparent;
 
   &::placeholder {
