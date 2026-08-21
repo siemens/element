@@ -40,7 +40,7 @@ available.
 There is also a [generic chart](generic-chart.md) which provides full
 flexibility by supporting all ECharts options.
 
-More examples can be found in our [playground](https://element.siemens.io/element-examples/#/overview?q=si-charts)
+More examples can be found in our <a href="../../element-examples/#/overview?q=si-charts">playground</a>
 by filtering for `si-charts`.
 
 ### Axis and labels
