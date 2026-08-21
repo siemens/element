@@ -1,50 +1,56 @@
 <si-select-input
-  #trigger="cdkOverlayOrigin"
+  #combobox="ngCombobox"
+  ngCombobox
   cdkOverlayOrigin
   [baseId]="id()"
   [labelledby]="labelledby()"
   [optionTemplate]="optionTemplate()"
   [ariaLabel]="ariaLabel()"
-  [controls]="id() + '-listbox'"
-  [open]="isOpen()"
   [placeholder]="placeholder()"
   [readonly]="readonly()"
+  [disabled]="selectionStrategy.disabled() || readonly()"
+  [softDisabled]="readonly()"
   [attr.aria-describedby]="errormessageId()"
-  (openListbox)="open()"
+  [(expanded)]="isOpen"
+  (expandedChange)="openChange.emit($event)"
 />
 
-<ng-template
-  cdkConnectedOverlay
-  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
-  [cdkConnectedOverlayHasBackdrop]="true"
-  [cdkConnectedOverlayOrigin]="trigger"
-  [cdkConnectedOverlayOpen]="isOpen()"
-  [cdkConnectedOverlayScrollStrategy]="scrollStrategy()"
-  [cdkConnectedOverlayFlexibleDimensions]="true"
-  [cdkConnectedOverlayOffsetX]="-1"
-  [cdkConnectedOverlayMinWidth]="overlayWidth"
-  (backdropClick)="backdropClick()"
-  (detach)="close()"
->
-  @if (!hasFilter()) {
-    <si-select-list
-      [baseId]="id()"
-      [optionTemplate]="optionTemplate()"
-      [groupTemplate]="groupTemplate()"
-      [labelledby]="labelledby()"
-      [actionsTemplate]="actionsTemplate()"
-      (closeOverlay)="close()"
-    />
-  } @else {
-    <si-select-list-has-filter
-      [baseId]="id()"
-      [filterPlaceholder]="filterPlaceholder()"
-      [noResultsFoundLabel]="noResultsFoundLabel()"
-      [optionTemplate]="optionTemplate()"
-      [groupTemplate]="groupTemplate()"
-      [labelledby]="labelledby()"
-      [actionsTemplate]="actionsTemplate()"
-      (closeOverlay)="close()"
-    />
-  }
+<ng-template ngComboboxPopup [combobox]="combobox">
+  <ng-template
+    cdkConnectedOverlay
+    cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+    [cdkConnectedOverlayHasBackdrop]="true"
+    [cdkConnectedOverlayOrigin]="combobox.element"
+    [cdkConnectedOverlayOpen]="isOpen()"
+    [cdkConnectedOverlayScrollStrategy]="scrollStrategy()"
+    [cdkConnectedOverlayFlexibleDimensions]="true"
+    [cdkConnectedOverlayOffsetX]="-1"
+    [cdkConnectedOverlayMinWidth]="overlayWidth()"
+    (backdropClick)="backdropClick()"
+    (detach)="close()"
+  >
+    @if (!hasFilter()) {
+      <si-select-list
+        ngComboboxWidget
+        [baseId]="id()"
+        [optionTemplate]="optionTemplate()"
+        [groupTemplate]="groupTemplate()"
+        [labelledby]="labelledby()"
+        [actionsTemplate]="actionsTemplate()"
+        (closeOverlay)="close()"
+      />
+    } @else {
+      <si-select-list-has-filter
+        ngComboboxWidget
+        [baseId]="id()"
+        [filterPlaceholder]="filterPlaceholder()"
+        [noResultsFoundLabel]="noResultsFoundLabel()"
+        [optionTemplate]="optionTemplate()"
+        [groupTemplate]="groupTemplate()"
+        [labelledby]="labelledby()"
+        [actionsTemplate]="actionsTemplate()"
+        (closeOverlay)="close()"
+      />
+    }
+  </ng-template>
 </ng-template>

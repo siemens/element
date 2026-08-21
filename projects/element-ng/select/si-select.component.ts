@@ -2,13 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
+import { Combobox, ComboboxPopup, ComboboxWidget } from '@angular/aria/combobox';
+import { OverlayModule } from '@angular/cdk/overlay';
 import {
+  afterRenderEffect,
   booleanAttribute,
   Component,
   computed,
   contentChild,
-  ElementRef,
   inject,
   input,
   output,
@@ -35,7 +36,10 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
     OverlayModule,
     SiSelectInputComponent,
     SiSelectListComponent,
-    SiSelectListHasFilterComponent
+    SiSelectListHasFilterComponent,
+    ComboboxPopup,
+    Combobox,
+    ComboboxWidget
   ],
   templateUrl: './si-select.component.html',
   styleUrl: './si-select.component.scss',
@@ -126,13 +130,6 @@ export class SiSelectComponent<T> implements SiFormItemControl {
     { read: TemplateRef }
   );
 
-  private readonly trigger = viewChild.required<CdkOverlayOrigin, ElementRef<HTMLDivElement>>(
-    CdkOverlayOrigin,
-    {
-      read: ElementRef
-    }
-  );
-
   /** @internal */
   readonly labelledby = computed(() => this.labelledbyInput() ?? this.id() + '-label');
   /**
@@ -148,7 +145,12 @@ export class SiSelectComponent<T> implements SiFormItemControl {
   readonly errormessageId = input(`${this.id()}-errormessage`);
 
   protected rows: readonly SelectItem<T>[] = [];
-  protected overlayWidth = 0;
+  protected readonly overlayWidth = computed(() => {
+    if (this.isOpen()) {
+      return this.combobox().element.getBoundingClientRect().width + 2;
+    }
+    return 0;
+  });
   protected readonly selectionStrategy = inject(SiSelectSelectionStrategy<T>);
 
   private backdropClicked = false;
@@ -160,26 +162,32 @@ export class SiSelectComponent<T> implements SiFormItemControl {
    */
   readonly hasFilter = input(false, { transform: booleanAttribute });
 
+  private readonly combobox = viewChild.required(Combobox);
+  private readonly siSelectList = viewChild(SiSelectListComponent);
+  constructor() {
+    afterRenderEffect(() => {
+      if (this.combobox()?.expanded() === true) {
+        this.siSelectList()?.listbox()?.scrollActiveItemIntoView();
+      }
+    });
+  }
   /** Opens the `si-select`. */
   open(): void {
     if (this.readonly() || this.selectionStrategy.disabled()) {
       return;
     }
-    this.overlayWidth = this.trigger().nativeElement.getBoundingClientRect().width + 2; // 2px border
     this.isOpen.set(true);
-    this.openChange.emit(true);
   }
 
   /** Closes the `si-select`. */
   close(): void {
     this.isOpen.set(false);
     if (!this.backdropClicked) {
-      this.trigger().nativeElement.focus();
+      this.combobox().element.focus();
     } else {
       this.backdropClicked = false;
       this.selectionStrategy.onTouched();
     }
-    this.openChange.emit(false);
   }
 
   protected backdropClick(): void {
