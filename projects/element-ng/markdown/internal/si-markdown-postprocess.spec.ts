@@ -8,6 +8,26 @@ import { SiMarkdownOptions } from '../si-markdown-options';
 import { type SiMarkdownRoot } from '../si-markdown.types';
 
 describe('siMarkdownPostprocess', () => {
+  it('converts GitHub-style admonition blockquotes to callout directives', () => {
+    const processor = new SiMarkdownOptions().makeProcessor({});
+    const tree = processor.runSync(
+      processor.parse(`> [!NOTE]
+> Note content.
+
+> An ordinary blockquote.`)
+    );
+
+    expect(tree.children).toMatchObject([
+      {
+        type: 'containerDirective',
+        name: 'callout',
+        attributes: { type: 'note' },
+        children: [{ type: 'paragraph', children: [{ type: 'text', value: 'Note content.' }] }]
+      },
+      { type: 'blockquote' }
+    ]);
+  });
+
   it('collects definitions used by link and image references', () => {
     const processor = new SiMarkdownOptions().makeProcessor({});
     const tree = processor.runSync(

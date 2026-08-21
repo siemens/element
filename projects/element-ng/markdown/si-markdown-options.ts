@@ -3,11 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { type Root } from 'mdast';
+import remarkDirective from 'remark-directive';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import { Processor, unified, type Plugin } from 'unified';
 
+import { siMarkdownCalloutDirective } from './directives/callout';
 import { siMarkdownCode } from './extensions/code';
+import { siMarkdownDirective } from './extensions/directive/si-markdown-directive.extension';
 import { siMarkdownInlineHtml } from './extensions/inline-html';
 import { siMarkdownLink } from './extensions/link';
 import { siMarkdownTable } from './extensions/table';
@@ -45,13 +48,16 @@ export class SiMarkdownOptions {
   private readonly plugins: PluginWithOptions[] = [];
   private types: TypeHandler[] = [];
   private codeTypes = new Map<string, TypeHandler>();
+  private directives = new Map<string, TypeHandler>();
   private highlighter?: SiMarkdownHighlighter;
 
   constructor() {
     this.installExtension(siMarkdownInlineHtml())
       .installExtension(siMarkdownLink())
       .installExtension(siMarkdownTable())
-      .installExtension(siMarkdownCode({ getHighlighter: () => this.getHighlighter() }));
+      .installExtension(siMarkdownCode({ getHighlighter: () => this.getHighlighter() }))
+      .installExtension(siMarkdownDirective(this.directives))
+      .registerDirective(siMarkdownCalloutDirective());
   }
 
   /**
@@ -62,6 +68,21 @@ export class SiMarkdownOptions {
    */
   installUnifiedPlugin(plugin: UnifiedPlugin, options?: UnifiedPluginOptions): SiMarkdownOptions {
     this.plugins.push({ plugin, options });
+    return this;
+  }
+
+  /**
+   * Registers a component used to render a named Markdown directive.
+   * @param directive - The directive with name and handling component
+   * @returns self for chaining
+   */
+  registerDirective(directives: TypeHandler | TypeHandler[]): SiMarkdownOptions {
+    if (!Array.isArray(directives)) {
+      directives = [directives];
+    }
+    for (const directive of directives) {
+      this.directives.set(directive.type, directive);
+    }
     return this;
   }
 
@@ -82,6 +103,9 @@ export class SiMarkdownOptions {
         this.codeTypes.set(ct.type, ct);
       }
     }
+    if (extension.directives) {
+      this.registerDirective(extension.directives);
+    }
     return this;
   }
 
@@ -101,7 +125,7 @@ export class SiMarkdownOptions {
   makeProcessor(
     meta: SiMarkdownMetadata
   ): Processor<Root, Root, SiMarkdownRoot, undefined, undefined> {
-    const processor = unified().use(remarkParse).use(remarkGfm);
+    const processor = unified().use(remarkParse).use(remarkGfm).use(remarkDirective);
 
     for (const p of this.plugins) {
       const options = typeof p.options === 'function' ? p.options(meta) : p.options;

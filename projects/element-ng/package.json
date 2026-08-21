@@ -58,6 +58,7 @@
     "mermaid": "^11.16.0",
     "katex": "^0.17.0",
     "ngx-image-cropper": "^9.0.0",
+    "remark-directive": "^4.0.0",
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
     "remark-parse": "^11.0.0",
@@ -101,6 +102,9 @@
       "optional": true
     },
     "katex": {
+      "optional": true
+    },
+    "remark-directive": {
       "optional": true
     },
     "remark-gfm": {
