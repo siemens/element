@@ -11,6 +11,7 @@
   [disabled]="disabled()"
   [readonly]="readonly()"
   (ngModelChange)="onInputChanged({ start: $event, end: value()?.end })"
+  (validationChange)="onChildValidationChange()"
 />
 <span class="mx-3">-</span>
 <input
@@ -26,6 +27,7 @@
   [disabled]="disabled()"
   [readonly]="readonly()"
   (ngModelChange)="onInputChanged({ start: value()?.start, end: $event })"
+  (validationChange)="onChildValidationChange()"
 />
 <div class="form-control-actions">
   <button

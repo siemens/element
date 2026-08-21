@@ -122,6 +122,8 @@ export class SiDateInputDirective
 
   /** @internal */
   validatorOnChange: () => void = () => {};
+  /** @internal */
+  readonly validationChange = output<void>();
   /**
    * Date form input validator function, validating text format, min and max value.
    */
@@ -160,6 +162,8 @@ export class SiDateInputDirective
       if (this.date && formatChanged) {
         this.updateNativeValue();
       }
+      this.validatorOnChange();
+      this.validationChange.emit();
     }
   }
 
