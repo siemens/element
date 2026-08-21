@@ -43,35 +43,42 @@
   }
 
   &.accent-primary {
-    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-accent;
+    border-inline-start: map.get(spacers.$spacers-inline, 4) solid
+      system-tokens.$si-sys-border-accent;
   }
 
   &.accent-inactive {
-    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-4;
+    border-inline-start: map.get(spacers.$spacers-inline, 4) solid system-tokens.$si-sys-border-4;
   }
 
   &.accent-info {
-    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-information;
+    border-inline-start: map.get(spacers.$spacers-inline, 4) solid
+      system-tokens.$si-sys-border-information;
   }
 
   &.accent-success {
-    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-success;
+    border-inline-start: map.get(spacers.$spacers-inline, 4) solid
+      system-tokens.$si-sys-border-success;
   }
 
   &.accent-warning {
-    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-warning;
+    border-inline-start: map.get(spacers.$spacers-inline, 4) solid
+      system-tokens.$si-sys-border-warning;
   }
 
   &.accent-caution {
-    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-caution;
+    border-inline-start: map.get(spacers.$spacers-inline, 4) solid
+      system-tokens.$si-sys-border-caution;
   }
 
   &.accent-danger {
-    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-danger;
+    border-inline-start: map.get(spacers.$spacers-inline, 4) solid
+      system-tokens.$si-sys-border-danger;
   }
 
   &.accent-critical {
-    border-inline-start: map.get(spacers.$spacers, 4) solid system-tokens.$si-sys-border-critical;
+    border-inline-start: map.get(spacers.$spacers-inline, 4) solid
+      system-tokens.$si-sys-border-critical;
   }
 
   &.action-card:not(:disabled) {
@@ -133,8 +140,8 @@ button.card {
 
   + * .card-body, // for action cards, where we wrap the content
   + .card-body {
-    margin-block-start: map.get(spacers.$spacers, 2) * -1;
-    padding-block-start: map.get(spacers.$spacers, 2);
+    margin-block-start: map.get(spacers.$negative-spacers-block, 2);
+    padding-block-start: map.get(spacers.$spacers-block, 2);
   }
 
   + .list-group {
@@ -167,7 +174,7 @@ button.card {
 }
 
 .card-subtitle {
-  margin-block: (-(variables.$card-title-spacer-y) * 0.5) 0;
+  margin-block: calc(variables.$card-title-spacer-y * -0.5) 0;
 }
 
 .card-text:last-child {

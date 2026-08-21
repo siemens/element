@@ -2,8 +2,8 @@
 
 @use '@siemens/element-theme/src/styles/variables';
 
-$filtered-search-line-height: map.get(variables.$spacers, 8);
-$filtered-search-criteria-margin: map.get(variables.$spacers, 2);
+$filtered-search-line-height: map.get(variables.$spacers-block, 8);
+$filtered-search-criteria-margin: map.get(variables.$spacers-block, 2);
 
 :host {
   --search-bar-icon-color: #{variables.$si-sys-text-primary};
@@ -34,14 +34,14 @@ $filtered-search-criteria-margin: map.get(variables.$spacers, 2);
   border-start-start-radius: 4px;
   border-end-start-radius: 4px;
   background-color: var(--filter-search-background-color);
-  gap: map.get(variables.$spacers, 2);
+  gap: map.get(variables.$spacers-block, 2) map.get(variables.$spacers-inline, 2);
 }
 
 .clear-button-container {
   display: flex;
   align-items: flex-start;
   align-self: stretch;
-  padding-block: map.get(variables.$spacers, 2);
+  padding-block: map.get(variables.$spacers-block, 2);
   background-color: var(--filter-search-background-color);
 }
 
@@ -58,7 +58,7 @@ $filtered-search-criteria-margin: map.get(variables.$spacers, 2);
   block-size: auto;
   inline-size: auto;
   padding-inline: map.get(
-    variables.$spacers,
+    variables.$spacers-block,
     2
   ) !important; // stylelint-disable-line declaration-no-important
 }

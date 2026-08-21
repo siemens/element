@@ -8,7 +8,10 @@ $rpanel-width-extended-xl: 640px;
 $rpanel-width-extended-xxl: 720px;
 $rpanel-width-extended-xxxl: 912px;
 $rpanel-transition-duration: all-variables.$element-default-transition-duration;
-$rpanel-collapsed-width: calc(1.5rem + 2 * map.get(all-variables.$spacers, 5));
+$rpanel-collapsed-width: calc(
+  all-variables.$si-icon-font-size + 2 *
+    (map.get(all-variables.$spacers-inline, 4) + map.get(all-variables.$spacers-inline, 3))
+);
 $transition: opacity 0.15s linear;
 
 :host {

@@ -7,7 +7,7 @@
   min-block-size: 0;
   flex: 1 0 0;
   overflow-y: auto;
-  margin-block-start: map.get(all-variables.$spacers, 4);
+  margin-block-start: map.get(all-variables.$spacers-block, 4);
 }
 
 :host-context(.nav-collapsed) {

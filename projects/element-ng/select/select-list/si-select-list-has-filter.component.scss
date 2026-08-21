@@ -13,5 +13,7 @@ si-loading-spinner {
 }
 
 .icon-start {
-  padding-inline-start: calc(#{variables.$si-icon-font-size} + #{map.get(variables.$spacers, 5)});
+  padding-inline-start: calc(
+    #{variables.$si-icon-font-size} + #{map.get(variables.$spacers-inline, 5)}
+  );
 }

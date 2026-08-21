@@ -2,7 +2,7 @@
 @use '@siemens/element-theme/src/styles/all-variables';
 
 :host {
-  margin-block-end: map.get(all-variables.$spacers, 6);
+  margin-block-end: map.get(all-variables.$spacers-block, 6);
 }
 
 :host(:not(.form-check)) {

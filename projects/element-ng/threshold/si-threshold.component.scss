@@ -14,7 +14,7 @@ $ths-dot-size: 6px;
     --direction-main: row;
     --direction-option: column;
     --direction-value: column-reverse;
-    --value-margin: #{map.get(variables.$spacers, 8) * -1};
+    --value-margin: #{map.get(variables.$negative-spacers-block, 8)};
     padding-inline: calc(var(--value-margin) * -1);
   }
 
@@ -48,7 +48,7 @@ si-select {
   inline-size: var(--input-width);
   // This is a weird one. When zooming, it seems like `border-width` and relative `line-height` are scaled differently on inputs
   // Since the threshold needs correct size to keep the lines aligned, setting it to a fixed value here.
-  block-size: calc(1rem + (map.get(variables.$spacers, 4) * 2));
+  block-size: calc(1rem + (map.get(variables.$spacers-block, 4) * 2));
   // Ensure the number input and its buttons are above other elements
   position: relative;
   z-index: 1;
@@ -56,12 +56,12 @@ si-select {
 
 .line {
   align-self: stretch;
-  flex-basis: map.get(variables.$spacers, 6);
+  flex-basis: map.get(variables.$spacers-block, 6);
   display: flex;
   flex-direction: var(--direction-main);
   align-items: center;
   color: variables.$si-sys-border-2;
-  gap: map.get(variables.$spacers, 2);
+  gap: map.get(variables.$spacers-block, 2) map.get(variables.$spacers-inline, 2);
 }
 
 .segment {

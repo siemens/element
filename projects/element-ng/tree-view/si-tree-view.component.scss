@@ -50,7 +50,7 @@
 
 ::ng-deep {
   .si-tree-view-top-level-item {
-    margin-block-start: map.get(variables.$spacers, 4);
+    margin-block-start: map.get(variables.$spacers-block, 4);
 
     .si-tree-expand-collapse &:first-child {
       margin-block-start: 0;

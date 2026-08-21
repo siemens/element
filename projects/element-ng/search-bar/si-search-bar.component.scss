@@ -36,7 +36,7 @@ input {
 .cancel-button {
   position: absolute;
   inset-block: 0;
-  inset-inline-end: map.get(variables.$spacers, 2);
+  inset-inline-end: map.get(variables.$spacers-inline, 2);
   margin-block: auto;
 }
 
@@ -47,13 +47,15 @@ input {
 .search-bar-icon {
   position: absolute;
   inset-block: 0;
-  inset-inline-start: map.get(variables.$spacers, 3);
+  inset-inline-start: map.get(variables.$spacers-inline, 3);
   align-items: center;
   color: var(--search-bar-icon-color);
 }
 
 .icon-start {
-  padding-inline-start: calc(#{variables.$si-icon-font-size} + #{map.get(variables.$spacers, 5)});
+  padding-inline-start: calc(
+    #{variables.$si-icon-font-size} + #{map.get(variables.$spacers-inline, 5)}
+  );
 }
 
 .icon-end {
@@ -62,7 +64,7 @@ input {
 
 ::placeholder {
   color: system-tokens.$si-sys-text-secondary;
-  padding-inline-start: map.get(variables.$spacers, 1);
+  padding-inline-start: map.get(variables.$spacers-inline, 1);
 }
 
 .disabled {

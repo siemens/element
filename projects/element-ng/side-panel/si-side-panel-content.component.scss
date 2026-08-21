@@ -19,7 +19,7 @@
   }
 
   .rpanel-wrapper {
-    gap: map.get(all-variables.$spacers, 5);
+    gap: map.get(all-variables.$spacers-block, 5) map.get(all-variables.$spacers-inline, 5);
   }
 
   :host.collapsed {
@@ -35,7 +35,7 @@
 
     .rpanel-content {
       flex: 0 0 auto;
-      margin-block-start: map.get(all-variables.$spacers, 4);
+      margin-block-start: map.get(all-variables.$spacers-block, 4);
     }
 
     .rpanel-statusactions {
@@ -46,8 +46,8 @@
     }
 
     .rpanel-statusaction {
-      padding-block: map.get(all-variables.$spacers, 4);
-      padding-inline: map.get(all-variables.$spacers, 5);
+      padding-block: map.get(all-variables.$spacers-block, 4);
+      padding-inline: map.get(all-variables.$spacers-inline, 5);
 
       &:not(.dot-outer):hover {
         background: all-variables.$si-sys-background-hover;
@@ -59,7 +59,7 @@
       }
 
       .icon {
-        padding: map.get(all-variables.$spacers, 1);
+        padding: map.get(all-variables.$spacers-block, 1) map.get(all-variables.$spacers-inline, 1);
       }
     }
   }
@@ -91,7 +91,7 @@
 }
 
 .rpanel-wrapper {
-  padding-block-start: map.get(all-variables.$spacers, 5);
+  padding-block-start: map.get(all-variables.$spacers-block, 5);
 }
 
 .rpanel-wrapper,
@@ -127,7 +127,7 @@
       // height of the expand button (== width since square) + padding of expand button
       margin-inline-end: calc(
         (all-variables.$btn-font-size * all-variables.$btn-line-height) +
-          (2 * all-variables.$btn-padding-y) + (2 * map.get(all-variables.$spacers, 4))
+          (2 * all-variables.$btn-padding-y) + (2 * map.get(all-variables.$spacers-block, 4))
       );
     }
 

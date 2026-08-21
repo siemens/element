@@ -1,0 +1,201 @@
+<div class="row g-5">
+  <div class="col-sm-4">
+    <si-form-item label="Density">
+      <si-select
+        class="form-control"
+        [options]="densityOptions"
+        [(value)]="density"
+        (valueChange)="applyDensity($event)"
+      />
+    </si-form-item>
+  </div>
+</div>
+
+<div class="row g-5 mt-5">
+  <div class="col-lg-6">
+    <h4>Inline spacer overrides</h4>
+    <div class="row g-3">
+      @for (control of inlineSpacerControls; track control.name) {
+        <div class="col-sm-6">
+          <label class="form-label" [for]="control.id">{{ control.label }}</label>
+          <div class="d-flex align-items-center gap-2">
+            <input
+              class="form-check-input flex-shrink-0"
+              type="checkbox"
+              [id]="control.id + '-enabled'"
+              [attr.aria-label]="'Customize ' + control.label"
+              [(ngModel)]="control.customized"
+              (ngModelChange)="toggleCustomization(control)"
+            />
+            <si-number-input
+              class="form-control"
+              unit="px"
+              [inputId]="control.id"
+              [min]="0"
+              [disabled]="!control.customized"
+              [(ngModel)]="control.value"
+              (ngModelChange)="applyCustomization(control)"
+            />
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <h4>Block spacer overrides</h4>
+    <div class="row g-3">
+      @for (control of blockSpacerControls; track control.name) {
+        <div class="col-sm-6">
+          <label class="form-label" [for]="control.id">{{ control.label }}</label>
+          <div class="d-flex align-items-center gap-2">
+            <input
+              class="form-check-input flex-shrink-0"
+              type="checkbox"
+              [id]="control.id + '-enabled'"
+              [attr.aria-label]="'Customize ' + control.label"
+              [(ngModel)]="control.customized"
+              (ngModelChange)="toggleCustomization(control)"
+            />
+            <si-number-input
+              class="form-control"
+              unit="px"
+              [inputId]="control.id"
+              [min]="0"
+              [disabled]="!control.customized"
+              [(ngModel)]="control.value"
+              (ngModelChange)="applyCustomization(control)"
+            />
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="col-12">
+    <h4>Typography overrides</h4>
+    <div class="row g-3">
+      @for (controls of typographyControls; track controls.fontSize.name) {
+        <div class="col-sm-6 col-lg-4">
+          <label class="form-label" [for]="controls.fontSize.id">
+            {{ controls.fontSize.label }}
+          </label>
+          <div class="d-flex align-items-center gap-2">
+            <input
+              class="form-check-input flex-shrink-0"
+              type="checkbox"
+              [id]="controls.fontSize.id + '-enabled'"
+              [attr.aria-label]="'Customize ' + controls.fontSize.label"
+              [(ngModel)]="controls.fontSize.customized"
+              (ngModelChange)="toggleCustomization(controls.fontSize)"
+            />
+            <si-number-input
+              class="form-control flex-grow-1"
+              style="inline-size: auto; min-inline-size: 0"
+              [inputId]="controls.fontSize.id"
+              [min]="0"
+              [step]="controls.fontSize.unit === 'rem' ? 0.125 : 1"
+              [disabled]="!controls.fontSize.customized"
+              [(ngModel)]="controls.fontSize.value"
+              (ngModelChange)="applyCustomization(controls.fontSize)"
+            />
+            <select
+              class="form-select flex-shrink-0"
+              style="inline-size: 5rem"
+              [attr.aria-label]="controls.fontSize.label + ' unit'"
+              [disabled]="!controls.fontSize.customized"
+              [ngModel]="controls.fontSize.unit"
+              (ngModelChange)="changeFontUnit(controls.fontSize, $event)"
+            >
+              <option value="px">px</option>
+              <option value="rem">rem</option>
+            </select>
+          </div>
+
+          <div class="d-flex align-items-baseline justify-content-between gap-2 mt-3">
+            <label class="form-label mb-0" [for]="controls.lineHeight.id">
+              {{ controls.lineHeight.label }}
+            </label>
+            <span class="text-secondary text-nowrap">
+              {{ resultingLineHeight(controls.fontSize, controls.lineHeight) }}
+            </span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <input
+              class="form-check-input flex-shrink-0"
+              type="checkbox"
+              [id]="controls.lineHeight.id + '-enabled'"
+              [attr.aria-label]="'Customize ' + controls.lineHeight.label"
+              [(ngModel)]="controls.lineHeight.customized"
+              (ngModelChange)="toggleCustomization(controls.lineHeight)"
+            />
+            <si-number-input
+              class="form-control"
+              [inputId]="controls.lineHeight.id"
+              [min]="0"
+              [step]="0.05"
+              [disabled]="!controls.lineHeight.customized"
+              [(ngModel)]="controls.lineHeight.value"
+              (ngModelChange)="applyCustomization(controls.lineHeight)"
+            />
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<div class="row g-5 mt-5">
+  <div class="col-lg-6">
+    <h4>Inline spacing</h4>
+    <div class="bg-secondary text-inverse px-2 ms-0">Spacing 0</div>
+    <div class="bg-secondary text-inverse px-2 ms-1">Spacing 1</div>
+    <div class="bg-secondary text-inverse px-2 ms-2">Spacing 2</div>
+    <div class="bg-secondary text-inverse px-2 ms-3">Spacing 3</div>
+    <div class="bg-secondary text-inverse px-2 ms-4">Spacing 4</div>
+    <div class="bg-secondary text-inverse px-2 ms-5">Spacing 5</div>
+    <div class="bg-secondary text-inverse px-2 ms-6">Spacing 6</div>
+    <div class="bg-secondary text-inverse px-2 ms-7">Spacing 7</div>
+    <div class="bg-secondary text-inverse px-2 ms-8">Spacing 8</div>
+    <div class="bg-secondary text-inverse px-2 ms-9">Spacing 9</div>
+    <div class="bg-secondary text-inverse px-2 ms-10">Spacing 10</div>
+    <div class="bg-secondary text-inverse px-2 ms-11">Spacing 11</div>
+    <div class="bg-secondary text-inverse px-2 ms-12">Spacing 12</div>
+    <div class="bg-secondary text-inverse px-2 ms-13">Spacing 13</div>
+    <div class="bg-secondary text-inverse px-2 ms-14">Spacing 14</div>
+
+    <br />
+    <h4>Typography</h4>
+    <p class="si-body-lg">Body large</p>
+    <p class="si-body">Body</p>
+    <p class="si-caption">Caption</p>
+    <br />
+    <p class="si-h1">H1 heading</p>
+    <p class="si-h1-bold">H1 heading bold</p>
+    <p class="si-h2">H2 heading</p>
+    <p class="si-h3">H3 heading</p>
+    <p class="si-h4">H4 heading</p>
+    <p class="si-h4-bold">H4 heading bold</p>
+    <p class="si-h5">H5 heading</p>
+    <p class="si-h5-bold">H5 heading bold</p>
+  </div>
+
+  <div class="col-lg-6">
+    <h4>Block spacing</h4>
+    <div class="bg-secondary text-inverse px-2 mt-0">Spacing 0</div>
+    <div class="bg-secondary text-inverse px-2 mt-1">Spacing 1</div>
+    <div class="bg-secondary text-inverse px-2 mt-2">Spacing 2</div>
+    <div class="bg-secondary text-inverse px-2 mt-3">Spacing 3</div>
+    <div class="bg-secondary text-inverse px-2 mt-4">Spacing 4</div>
+    <div class="bg-secondary text-inverse px-2 mt-5">Spacing 5</div>
+    <div class="bg-secondary text-inverse px-2 mt-6">Spacing 6</div>
+    <div class="bg-secondary text-inverse px-2 mt-7">Spacing 7</div>
+    <div class="bg-secondary text-inverse px-2 mt-8">Spacing 8</div>
+    <div class="bg-secondary text-inverse px-2 mt-9">Spacing 9</div>
+    <div class="bg-secondary text-inverse px-2 mt-10">Spacing 10</div>
+    <div class="bg-secondary text-inverse px-2 mt-11">Spacing 11</div>
+    <div class="bg-secondary text-inverse px-2 mt-12">Spacing 12</div>
+    <div class="bg-secondary text-inverse px-2 mt-13">Spacing 13</div>
+    <div class="bg-secondary text-inverse px-2 mt-14">Spacing 14</div>
+  </div>
+</div>

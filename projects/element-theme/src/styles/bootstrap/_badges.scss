@@ -19,7 +19,7 @@
   padding-block: variables.$badge-padding-y;
   padding-inline: variables.$badge-padding-x;
   margin-block: 0;
-  margin-inline: map.get(spacers.$spacers, 4);
+  margin-inline: map.get(spacers.$spacers-inline, 4);
   line-height: variables.$badge-line-height;
   flex-shrink: 0;
   font-size: typography.$si-font-size-body;
@@ -130,8 +130,8 @@
   &:has(> .icon) {
     display: inline-flex;
     align-items: center;
-    gap: map.get(spacers.$spacers, 1);
-    padding-inline: map.get(spacers.$spacers, 2) variables.$badge-padding-x;
+    gap: map.get(spacers.$spacers-block, 1) map.get(spacers.$spacers-inline, 1);
+    padding-inline: map.get(spacers.$spacers-inline, 2) variables.$badge-padding-x;
   }
 }
 

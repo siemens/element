@@ -2,13 +2,13 @@
 
 @use '@siemens/element-theme/src/styles/all-variables';
 
-$margin-content: map.get(all-variables.$spacers, 11);
-$margin-content-large-tablet: map.get(all-variables.$spacers, 10);
-$margin-content-tablet: map.get(all-variables.$spacers, 9);
-$margin-content-mobile: map.get(all-variables.$spacers, 9);
+$margin-content: map.get(all-variables.$spacers-block, 14);
+$margin-content-large-tablet: map.get(all-variables.$spacers-block, 13);
+$margin-content-tablet: map.get(all-variables.$spacers-block, 9);
+$margin-content-mobile: map.get(all-variables.$spacers-block, 9);
 
-$margin-bottom-header: map.get(all-variables.$spacers, 9);
-$margin-bottom-footer: map.get(all-variables.$spacers, 9);
+$margin-bottom-header: map.get(all-variables.$spacers-block, 9);
+$margin-bottom-footer: map.get(all-variables.$spacers-block, 9);
 
 :host {
   display: flex;

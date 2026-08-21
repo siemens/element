@@ -2,10 +2,15 @@
 @use '@siemens/element-theme/src/styles/variables';
 @use '@siemens/element-theme/src/styles/variables/semantic-tokens';
 
-$button-block-size: calc(1rem + 2 * map.get(variables.$spacers, 4));
-$outer-ctrl-margin: map.get(variables.$spacers, 3);
-$attrib-icon-size: map.get(variables.$spacers, 8);
-$attrib-compact-padding: map.get(variables.$spacers, 8) + map.get(variables.$spacers, 2);
+$button-block-size: calc(1rem + 2 * map.get(variables.$spacers-block, 4));
+$button-inline-size: calc(1rem + 2 * map.get(variables.$spacers-inline, 4));
+$outer-ctrl-margin-block: map.get(variables.$spacers-block, 3);
+$outer-ctrl-margin-inline: map.get(variables.$spacers-inline, 3);
+$attrib-icon-block-size: map.get(variables.$spacers-block, 8);
+$attrib-icon-inline-size: map.get(variables.$spacers-inline, 8);
+$attrib-compact-padding: calc(
+  map.get(variables.$spacers-inline, 8) + map.get(variables.$spacers-inline, 2)
+);
 
 // Element icon assets are resolved and emitted by the consumer's Sass build.
 $icon-attribution: url('@siemens/element-icons/icons/element-state-info.svg');
@@ -113,15 +118,15 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
   inset-inline-start: 0;
 
   .maplibregl-ctrl {
-    margin-block: $outer-ctrl-margin 0;
-    margin-inline: $outer-ctrl-margin 0;
+    margin-block: $outer-ctrl-margin-block 0;
+    margin-inline: $outer-ctrl-margin-inline 0;
     float: inline-start;
   }
 
   > .maplibregl-ctrl-attrib.maplibregl-compact-show {
-    padding-block: map.get(variables.$spacers, 1);
-    padding-inline: $attrib-compact-padding map.get(variables.$spacers, 4);
-    border-radius: map.get(variables.$spacers, 5);
+    padding-block: map.get(variables.$spacers-block, 1);
+    padding-inline: $attrib-compact-padding map.get(variables.$spacers-inline, 4);
+    border-radius: map.get(variables.$spacers-block, 5);
   }
 
   .maplibregl-ctrl-attrib-button {
@@ -139,8 +144,8 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
   inset-inline-end: 0;
 
   .maplibregl-ctrl {
-    margin-block: $outer-ctrl-margin 0;
-    margin-inline: 0 $outer-ctrl-margin;
+    margin-block: $outer-ctrl-margin-block 0;
+    margin-inline: 0 $outer-ctrl-margin-inline;
     float: inline-end;
   }
 
@@ -155,15 +160,15 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
   inset-inline-start: 0;
 
   .maplibregl-ctrl {
-    margin-block: 0 $outer-ctrl-margin;
-    margin-inline: $outer-ctrl-margin 0;
+    margin-block: 0 $outer-ctrl-margin-block;
+    margin-inline: $outer-ctrl-margin-inline 0;
     float: inline-start;
   }
 
   > .maplibregl-ctrl-attrib.maplibregl-compact-show {
-    padding-block: map.get(variables.$spacers, 1);
-    padding-inline: $attrib-compact-padding map.get(variables.$spacers, 4);
-    border-radius: map.get(variables.$spacers, 4);
+    padding-block: map.get(variables.$spacers-block, 1);
+    padding-inline: $attrib-compact-padding map.get(variables.$spacers-inline, 4);
+    border-radius: map.get(variables.$spacers-block, 4);
   }
 
   .maplibregl-ctrl-attrib-button {
@@ -181,8 +186,8 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
   inset-block-end: 0;
 
   .maplibregl-ctrl {
-    margin-block: 0 $outer-ctrl-margin;
-    margin-inline: 0 $outer-ctrl-margin;
+    margin-block: 0 $outer-ctrl-margin-block;
+    margin-inline: 0 $outer-ctrl-margin-inline;
     float: inline-end;
   }
 
@@ -202,10 +207,10 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
 .maplibregl-ctrl-group {
   display: flex;
   flex-direction: column;
-  gap: map.get(variables.$spacers, 1);
+  gap: map.get(variables.$spacers-block, 1) map.get(variables.$spacers-inline, 1);
 
   button {
-    inline-size: $button-block-size;
+    inline-size: $button-inline-size;
     block-size: $button-block-size;
     display: flex;
     justify-content: center;
@@ -320,7 +325,7 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
 .maplibregl-ctrl.maplibregl-ctrl-attrib {
   @extend %base-control;
   padding-block: 0;
-  padding-inline: map.get(variables.$spacers, 3);
+  padding-inline: map.get(variables.$spacers-inline, 3);
   color: variables.$si-sys-text-accent;
   margin: 0;
 }
@@ -342,11 +347,11 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
       background: variables.$si-sys-background-3;
 
       min-block-size: 20px;
-      padding-block: map.get(variables.$spacers, 1);
-      padding-inline: 0 map.get(variables.$spacers, 8);
-      margin: $outer-ctrl-margin;
+      padding-block: map.get(variables.$spacers-block, 1);
+      padding-inline: 0 map.get(variables.$spacers-inline, 8);
+      margin: $outer-ctrl-margin-block $outer-ctrl-margin-inline;
       position: relative;
-      border-radius: map.get(variables.$spacers, 5);
+      border-radius: map.get(variables.$spacers-block, 5);
       box-sizing: content-box;
 
       .maplibregl-ctrl-attrib-inner {
@@ -369,8 +374,8 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
     }
 
     &.maplibregl-compact-show {
-      padding-block: map.get(variables.$spacers, 1);
-      padding-inline: map.get(variables.$spacers, 4) $attrib-compact-padding;
+      padding-block: map.get(variables.$spacers-block, 1);
+      padding-inline: map.get(variables.$spacers-inline, 4) $attrib-compact-padding;
       visibility: visible;
 
       .maplibregl-ctrl-attrib-inner {
@@ -382,10 +387,10 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
       display: none;
       cursor: pointer;
       position: absolute;
-      inline-size: $attrib-icon-size;
-      block-size: $attrib-icon-size;
+      inline-size: $attrib-icon-inline-size;
+      block-size: $attrib-icon-block-size;
       box-sizing: border-box;
-      border-radius: map.get(variables.$spacers, 5);
+      border-radius: map.get(variables.$spacers-block, 5);
       outline: none;
       inset-block-start: 0;
       inset-inline-end: 0;
@@ -428,11 +433,11 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
 
   font-size: 10px;
   white-space: nowrap;
-  border-width: medium map.get(variables.$spacers, 1) map.get(variables.$spacers, 1);
+  border-width: medium map.get(variables.$spacers-block, 1) map.get(variables.$spacers-block, 1);
   border-style: none solid solid;
   border-color: variables.$si-sys-border-accent;
   padding-block: 0;
-  padding-inline: map.get(variables.$spacers, 2);
+  padding-inline: map.get(variables.$spacers-inline, 2);
   color: variables.$si-sys-text-accent;
   box-sizing: border-box;
 }
@@ -544,7 +549,7 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
 
   position: relative;
   border-radius: 3px;
-  box-shadow: 0 1px map.get(variables.$spacers, 1) rgb(0 0 0 / 0.1);
+  box-shadow: 0 1px map.get(variables.$spacers-block, 1) rgb(0 0 0 / 0.1);
   padding-block: 15px;
   padding-inline: 10px;
   pointer-events: auto;
@@ -664,7 +669,7 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
   inline-size: 0;
   block-size: 0;
   background: rgb(255 255 255);
-  border: map.get(variables.$spacers, 1) dotted rgb(32 32 32);
+  border: map.get(variables.$spacers-block, 1) dotted rgb(32 32 32);
   opacity: 0.5;
 }
 

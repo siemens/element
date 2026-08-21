@@ -21,7 +21,7 @@
       all-variables.$input-padding-y,
       all-variables.$input-border-width
     );
-    padding-inline: map.get(all-variables.$spacers, 6);
+    padding-inline: map.get(all-variables.$spacers-inline, 6);
     inline-size: var(--si-form-label-width, math.percentage(math.div(2, 12)));
     line-height: all-variables.$input-line-height;
 
@@ -31,7 +31,7 @@
   }
 
   :host-context(.si-form-fieldset) .form-label {
-    padding-block: map.get(all-variables.$spacers, 1) 0;
+    padding-block: map.get(all-variables.$spacers-block, 1) 0;
   }
 
   :host(.form-check) {

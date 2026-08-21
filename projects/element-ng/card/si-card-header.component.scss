@@ -19,5 +19,5 @@
 
 ::ng-deep .icon[headerIcon] {
   // The icon would be 8px too high without this.
-  margin-block: - map.get(spacers.$spacers, 2);
+  margin-block: map.get(spacers.$negative-spacers-block, 2);
 }

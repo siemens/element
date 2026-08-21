@@ -1,12 +1,12 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
-$button-size: calc(1lh + 2 * map.get(variables.$spacers, 4));
+$button-size: calc(1lh + 2 * map.get(variables.$spacers-block, 4));
 $button-gap: 4px;
 
 $track-height: 4px;
 $thumb-size: 1.5rem;
-$thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers, 4)});
+$thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers-block, 4)});
 
 :host {
   display: flex;

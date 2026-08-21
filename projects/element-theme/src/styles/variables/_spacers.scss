@@ -1,28 +1,55 @@
-$spacer: 16px;
+@use 'sass:map';
 
-// stylelint-disable-next-line scss/dollar-variable-default
-$spacers: (
+$spacers-inline: (
   0: 0,
-  // 2px
-  1: $spacer * 0.125,
-  // 4px
-  2: $spacer * 0.25,
-  // 6px
-  3: $spacer * 0.375,
-  // 8px
-  4: $spacer * 0.5,
-  // 12px
-  5: $spacer * 0.75,
-  // 16px
-  6: $spacer,
-  // 20px
-  7: $spacer * 1.25,
-  // 24px
-  8: $spacer * 1.5,
-  // 32px
-  9: $spacer * 2,
-  // 64px
-  10: $spacer * 4,
-  // 96px
-  11: $spacer * 6
+  1: var(--element-spacer-inline-1, 2px),
+  2: var(--element-spacer-inline-2, 4px),
+  3: var(--element-spacer-inline-3, 6px),
+  4: var(--element-spacer-inline-4, 8px),
+  5: var(--element-spacer-inline-5, 12px),
+  6: var(--element-spacer-inline-6, 16px),
+  7: var(--element-spacer-inline-7, 20px),
+  8: var(--element-spacer-inline-8, 24px),
+  9: var(--element-spacer-inline-9, 32px),
+  10: var(--element-spacer-inline-10, 40px),
+  11: var(--element-spacer-inline-11, 48px),
+  12: var(--element-spacer-inline-12, 56px),
+  13: var(--element-spacer-inline-13, 64px),
+  14: var(--element-spacer-inline-14, 96px)
 );
+
+$spacers-block: (
+  0: 0,
+  1: var(--element-spacer-block-1, 2px),
+  2: var(--element-spacer-block-2, 4px),
+  3: var(--element-spacer-block-3, 6px),
+  4: var(--element-spacer-block-4, 8px),
+  5: var(--element-spacer-block-5, 12px),
+  6: var(--element-spacer-block-6, 16px),
+  7: var(--element-spacer-block-7, 20px),
+  8: var(--element-spacer-block-8, 24px),
+  9: var(--element-spacer-block-9, 32px),
+  10: var(--element-spacer-block-10, 40px),
+  11: var(--element-spacer-block-11, 48px),
+  12: var(--element-spacer-block-12, 56px),
+  13: var(--element-spacer-block-13, 64px),
+  14: var(--element-spacer-block-14, 96px)
+);
+
+@function negative-spacer-map($spacers) {
+  $negative-spacers: ();
+
+  @each $key, $spacer in $spacers {
+    @if $key != 0 {
+      $negative-spacers: map.set($negative-spacers, $key, calc(#{$spacer} * -1));
+    }
+  }
+
+  @return $negative-spacers;
+}
+
+$negative-spacers-inline: negative-spacer-map($spacers-inline);
+$negative-spacers-block: negative-spacer-map($spacers-block);
+
+// $spacer: 16px;
+// $spacers: $spacers-block;

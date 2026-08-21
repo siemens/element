@@ -27,97 +27,111 @@ $si-font-weight-bold: 700 !default;
 $si-font-weight-bolder: bolder !default;
 $si-font-weight-black: 900 !default;
 
-$si-font-size-h1-bold: px-to-rem(28px);
-$si-line-height-h1-bold: px-to-ratio($si-font-size-h1-bold, 36px);
+$si-font-size-h1-bold: var(--element-font-size-h1-bold, px-to-rem(28px));
+$si-line-height-h1-bold: var(--element-line-height-h1-bold, px-to-ratio(px-to-rem(28px), 36px));
 $si-font-weight-h1-bold: $si-font-weight-bold;
 
-$si-font-size-h1: px-to-rem(28px);
-$si-line-height-h1: px-to-ratio($si-font-size-h1, 36px);
+$si-font-size-h1: var(--element-font-size-h1, px-to-rem(28px));
+$si-line-height-h1: var(--element-line-height-h1, px-to-ratio(px-to-rem(28px), 36px));
 $si-font-weight-h1: $si-font-weight-normal;
 
-$si-font-size-h2: px-to-rem(24px);
-$si-line-height-h2: px-to-ratio($si-font-size-h2, 32px);
+$si-font-size-h2: var(--element-font-size-h2, px-to-rem(24px));
+$si-line-height-h2: var(--element-line-height-h2, px-to-ratio(px-to-rem(24px), 32px));
 $si-font-weight-h2: $si-font-weight-semibold;
 
-$si-font-size-h3: px-to-rem(20px);
-$si-line-height-h3: px-to-ratio($si-font-size-h3, 24px);
+$si-font-size-h3: var(--element-font-size-h3, px-to-rem(20px));
+$si-line-height-h3: var(--element-line-height-h3, px-to-ratio(px-to-rem(20px), 24px));
 $si-font-weight-h3: $si-font-weight-semibold;
 
-$si-font-size-h4: px-to-rem(16px);
-$si-line-height-h4: px-to-ratio($si-font-size-h4, 20px);
+$si-font-size-h4: var(--element-font-size-h4, px-to-rem(16px));
+$si-line-height-h4: var(--element-line-height-h4, px-to-ratio(px-to-rem(16px), 20px));
 $si-font-weight-h4: $si-font-weight-semibold;
 
-$si-font-size-h4-bold: px-to-rem(16px);
-$si-line-height-h4-bold: px-to-ratio($si-font-size-h4-bold, 20px);
+$si-font-size-h4-bold: var(--element-font-size-h4-bold, px-to-rem(16px));
+$si-line-height-h4-bold: var(--element-line-height-h4-bold, px-to-ratio(px-to-rem(16px), 20px));
 $si-font-weight-h4-bold: $si-font-weight-bold;
 
-$si-font-size-h5: px-to-rem(14px);
-$si-line-height-h5: px-to-ratio($si-font-size-h5, 20px);
+$si-font-size-h5: var(--element-font-size-h5, px-to-rem(14px));
+$si-line-height-h5: var(--element-line-height-h5, px-to-ratio(px-to-rem(14px), 20px));
 $si-font-weight-h5: $si-font-weight-semibold;
 
-$si-font-size-h5-bold: px-to-rem(14px);
-$si-line-height-h5-bold: px-to-ratio($si-font-size-h5-bold, 20px);
+$si-font-size-h5-bold: var(--element-font-size-h5-bold, px-to-rem(14px));
+$si-line-height-h5-bold: var(--element-line-height-h5-bold, px-to-ratio(px-to-rem(14px), 20px));
 $si-font-weight-h5-bold: $si-font-weight-bold;
 
-$si-font-size-h6: px-to-rem(12px);
-$si-line-height-h6: px-to-ratio($si-font-size-h6, 16px);
+$si-font-size-h6: var(--element-font-size-h6, px-to-rem(12px));
+$si-line-height-h6: var(--element-line-height-h6, px-to-ratio(px-to-rem(12px), 16px));
 $si-font-weight-h6: $si-font-weight-semibold;
 
-$si-font-size-body-lg: px-to-rem(16px);
-$si-line-height-body-lg: px-to-ratio($si-font-size-body-lg, 20px);
+$si-font-size-body-lg: var(--element-font-size-body-lg, px-to-rem(16px));
+$si-line-height-body-lg: var(--element-line-height-body-lg, px-to-ratio(px-to-rem(16px), 20px));
 $si-font-weight-body-lg: $si-font-weight-normal;
 
-$si-font-size-body-lg-bold: px-to-rem(16px);
-$si-line-height-body-lg-bold: px-to-ratio($si-font-size-body-lg-bold, 20px);
+$si-font-size-body-lg-bold: var(--element-font-size-body-lg, px-to-rem(16px));
+$si-line-height-body-lg-bold: var(
+  --element-line-height-body-lg-bold,
+  px-to-ratio(px-to-rem(16px), 20px)
+);
 $si-font-weight-body-lg-bold: $si-font-weight-semibold;
 
-$si-font-size-body: px-to-rem(14px);
-$si-line-height-body: px-to-ratio($si-font-size-body, 16px);
-$si-line-height-body-rem: px-to-rem(16px);
+$si-font-size-body: var(--element-font-size-body, px-to-rem(14px));
+$si-line-height-body: var(--element-line-height-body, px-to-ratio(px-to-rem(14px), 16px));
 $si-font-weight-body: $si-font-weight-normal;
 
-$si-font-size-body-paragraph: px-to-rem(14px);
-$si-line-height-body-paragraph: px-to-ratio($si-font-size-body-paragraph, 20px);
+$si-font-size-body-paragraph: var(--element-font-size-body-paragraph, px-to-rem(14px));
+$si-line-height-body-paragraph: var(
+  --element-line-height-body-paragraph,
+  px-to-ratio(px-to-rem(14px), 20px)
+);
 $si-font-weight-body-paragraph: $si-font-weight-normal;
 
-$si-font-size-body-sm: px-to-rem(12px);
-$si-line-height-body-sm: px-to-ratio($si-font-size-body-sm, 16px);
+$si-font-size-body-sm: var(--element-font-size-body-sm, px-to-rem(12px));
+$si-line-height-body-sm: var(--element-line-height-body-sm, px-to-ratio(px-to-rem(12px), 16px));
 $si-font-weight-body-sm: $si-font-weight-normal;
 
 $si-font-size-caption: $si-font-size-body-sm;
 $si-line-height-caption: $si-line-height-body-sm;
 $si-font-weight-caption: $si-font-weight-normal;
 
-$si-font-size-display-xxl: px-to-rem(58px);
-$si-line-height-display-xxl: px-to-ratio($si-font-size-display-xxl, 72px);
+$si-font-size-display-xxl: var(--element-font-size-display-xl, px-to-rem(58px));
+$si-line-height-display-xxl: var(
+  --element-line-height-display-xxl,
+  px-to-ratio(px-to-rem(58px), 72px)
+);
 $si-font-weight-display-xxl: $si-font-weight-normal;
 
-$si-font-size-display-xl: px-to-rem(48px);
-$si-line-height-display-xl: px-to-ratio($si-font-size-display-xl, 64px);
+$si-font-size-display-xl: var(--element-font-size-display-xl, px-to-rem(48px));
+$si-line-height-display-xl: var(
+  --element-line-height-display-xl,
+  px-to-ratio(px-to-rem(48px), 64px)
+);
 $si-font-weight-display-xl: $si-font-weight-normal;
 
-$si-font-size-display-lg: px-to-rem(40px);
-$si-line-height-display-lg: px-to-ratio($si-font-size-display-lg, 52px);
+$si-font-size-display-lg: var(--element-font-size-display-lg, px-to-rem(40px));
+$si-line-height-display-lg: var(
+  --element-line-height-display-lg,
+  px-to-ratio(px-to-rem(40px), 52px)
+);
 $si-font-weight-display-lg: $si-font-weight-normal;
 
 $si-font-size-display-bold: $si-font-size-display-lg;
 $si-line-height-display-bold: $si-line-height-display-lg;
 $si-font-weight-display-bold: $si-font-weight-bold;
 
-$si-font-size-display: px-to-rem(32px);
-$si-line-height-display: px-to-ratio($si-font-size-display, 40px);
+$si-font-size-display: var(--element-font-size-display, px-to-rem(32px));
+$si-line-height-display: var(--element-line-height-display, px-to-ratio(px-to-rem(32px), 40px));
 $si-font-weight-display: $si-font-weight-normal;
 
-$si-font-size-code-sm: px-to-rem(12px);
-$si-line-height-code-sm: px-to-ratio($si-font-size-code-sm, 16px);
+$si-font-size-code-sm: var(--element-font-size-code-sm, px-to-rem(12px));
+$si-line-height-code-sm: var(--element-line-height-code-sm, px-to-ratio(px-to-rem(12px), 16px));
 $si-font-weight-code-sm: $si-font-weight-normal;
 
-$si-font-size-code: px-to-rem(14px);
-$si-line-height-code: px-to-ratio($si-font-size-code, 20px);
+$si-font-size-code: var(--element-font-size-code, px-to-rem(14px));
+$si-line-height-code: var(--element-line-height-code, px-to-ratio(px-to-rem(14px), 20px));
 $si-font-weight-code: $si-font-weight-normal;
 
-$si-font-size-code-lg: px-to-rem(16px);
-$si-line-height-code-lg: px-to-ratio($si-font-size-code-lg, 20px);
+$si-font-size-code-lg: var(--element-font-size-code-lg, px-to-rem(16px));
+$si-line-height-code-lg: var(--element-line-height-code-lg, px-to-ratio(px-to-rem(16px), 20px));
 $si-font-weight-code-lg: $si-font-weight-normal;
 
 $si-letter-spacing-normal: 0;
