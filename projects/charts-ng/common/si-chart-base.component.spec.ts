@@ -6,14 +6,14 @@ import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { echarts, EChartOption } from '@siemens/charts-ng/common';
 import { LineChart } from 'echarts/charts';
-import { GridComponent } from 'echarts/components';
+import { GridComponent, VisualMapContinuousComponent } from 'echarts/components';
 
 import { SiChartBaseComponent } from './si-chart-base.component';
 
 // Register chart types and components needed by the tests.
 // The base component only registers renderers + title/tooltip.
 // Without this, ECharts silently drops series with unregistered types.
-echarts.use([LineChart, GridComponent]);
+echarts.use([LineChart, GridComponent, VisualMapContinuousComponent]);
 
 @Component({
   imports: [SiChartBaseComponent],
@@ -82,6 +82,25 @@ describe('SiChartBase', () => {
       expect(options).toBeDefined();
       expect(options.series).toHaveLength(1);
       expect(options.series[0].data).toHaveLength(4);
+    });
+
+    it('should retain the selected visual map range when switching themes', () => {
+      component.options.visualMap = {
+        type: 'continuous',
+        min: 1,
+        max: 4,
+        calculable: true
+      };
+      fixture.detectChanges();
+      component.chartComponent().chart.dispatchAction({
+        type: 'selectDataRange',
+        visualMapIndex: 0,
+        selected: [2, 3]
+      });
+
+      component.chartComponent().themeSwitch();
+
+      expect(component.chartComponent().getOptionNoClone().visualMap[0].range).toEqual([2, 3]);
     });
   });
 });
