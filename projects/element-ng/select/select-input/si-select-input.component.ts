@@ -2,15 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  booleanAttribute,
-  Component,
-  computed,
-  inject,
-  input,
-  output,
-  TemplateRef
-} from '@angular/core';
+import { Combobox } from '@angular/aria/combobox';
+import { booleanAttribute, Component, computed, inject, input, TemplateRef } from '@angular/core';
 import { elementDown2 } from '@siemens/element-icons';
 import { SiAutoCollapsableListModule } from '@siemens/element-ng/auto-collapsable-list';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
@@ -30,27 +23,10 @@ import { SelectOption } from '../si-select.types';
   templateUrl: './si-select-input.component.html',
   styleUrl: './si-select-input.component.scss',
   host: {
-    // In readonly mode, the select needs to be announced as a textbox.
-    // Otherwise, screen-reader won't announce the readonly state.
     class: 'select focus-none dropdown-toggle d-flex align-items-center ps-4',
-    'aria-autocomplete': 'none',
-    '[attr.role]': 'readonly() ? "textbox": "combobox"',
-    '[attr.aria-haspopup]': 'readonly() ? undefined : "listbox"',
-    '[attr.aria-expanded]': 'readonly() ? undefined : open()',
-    '[attr.aria-controls]': 'readonly() ? undefined : controls()',
-    '[attr.aria-readonly]': 'readonly()',
     '[attr.aria-labelledby]': 'labeledBy()',
-    '[attr.aria-disabled]': 'selectionStrategy.disabled()',
-    '[attr.tabindex]': 'selectionStrategy.disabled() ? "-1" : "0"',
     '[class.disabled]': 'selectionStrategy.disabled()',
-    '[class.active]': 'open()',
-    '(blur)': 'blur()',
-    '(click)': 'click($event)',
-    '(keydown.arrowDown)': 'click($event)',
-    '(keydown.alt.arrowDown)': 'click($event)',
-    '(keydown.arrowUp)': 'click($event)',
-    '(keydown.enter)': 'click($event)',
-    '(keydown.space)': 'click($event)'
+    '(blur)': 'blur()'
   }
 })
 export class SiSelectInputComponent<T> {
@@ -71,19 +47,9 @@ export class SiSelectInputComponent<T> {
    */
   readonly ariaLabel = input<string | null>(null);
   /**
-   * Whether the listbox is open.
-   *
-   * @defaultValue false
-   */
-  readonly open = input(false, { transform: booleanAttribute });
-  /**
    * Text shown when no option is selected.
    */
   readonly placeholder = input<TranslatableString>();
-  /**
-   * ID of the associated listbox.
-   */
-  readonly controls = input.required<string>();
   /**
    * Custom template for rendering selected options.
    */
@@ -100,10 +66,6 @@ export class SiSelectInputComponent<T> {
    */
   readonly readonly = input(false, { transform: booleanAttribute });
 
-  /**
-   * Emits when the user requests to open the listbox.
-   */
-  readonly openListbox = output<void>();
   protected readonly selectionStrategy = inject<SiSelectSelectionStrategy<T>>(
     SiSelectSelectionStrategy<T>
   );
@@ -112,14 +74,11 @@ export class SiSelectInputComponent<T> {
   protected readonly labeledBy = computed(() => `${this.baseId()}-aria-label ${this.labelledby()}`);
   protected readonly icons = addIcons({ elementDown2 });
 
+  private readonly ngCombobox = inject(Combobox);
+
   protected blur(): void {
-    if (!this.open()) {
+    if (!this.ngCombobox.expanded()) {
       this.selectionStrategy.onTouched();
     }
-  }
-
-  protected click(event?: Event): void {
-    event?.preventDefault();
-    this.openListbox.emit();
   }
 }

@@ -54,7 +54,7 @@ test.describe('si-select', () => {
     const selectFormControlInput = page.getByRole('combobox', { name: 'FormControl' }).nth(1);
     await expect(selectFormControlInput).toBeFocused();
     await expect(selectFormControlInput).toHaveAttribute('aria-expanded', 'true');
-    await expect(formControlSelect.first()).toContainClass('active');
+    await expect(formControlSelect).toHaveAttribute('aria-expanded', 'true');
 
     await si.runVisualAndA11yTests('filter-opened');
     await selectFormControlInput.pressSequentially('Bad');
@@ -69,7 +69,7 @@ test.describe('si-select', () => {
     await formControlSelect.click();
     await expect(selectFormControlInput).toBeFocused();
     await expect(selectFormControlInput).toHaveAttribute('aria-expanded', 'true');
-    await expect(formControlSelect.first()).toContainClass('active');
+    await expect(formControlSelect).toHaveAttribute('aria-expanded', 'true');
 
     await selectFormControlInput.pressSequentially('no-value-found');
     await si.runVisualAndA11yTests('filter-no-value-found');
@@ -83,7 +83,7 @@ test.describe('si-select', () => {
       .nth(1);
     await expect(selectInputWithActions).toBeFocused();
     await expect(selectInputWithActions).toHaveAttribute('aria-expanded', 'true');
-    await expect(selectWithActions.first()).toContainClass('active');
+    await expect(selectWithActions.first()).toHaveAttribute('aria-expanded', 'true');
 
     await selectInputWithActions.pressSequentially('New option');
     await si.runVisualAndA11yTests('actions-search');
