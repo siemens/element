@@ -4,6 +4,7 @@
  */
 
 import { Rule, SchematicContext, Tree, UpdateRecorder } from '@angular-devkit/schematics';
+import type { Attribute, Element } from '@angular/compiler';
 import { dirname, join } from 'path/posix';
 import ts from 'typescript';
 
@@ -18,6 +19,9 @@ const collapseValues = new Map([
   ['start', 'to-start'],
   ['end', 'to-end']
 ]);
+const collapseDirectionNames = ['collapseDirection', '[collapseDirection]'];
+const collapsibleNames = ['collapsible', '[collapsible]'];
+const showCollapseButtonNames = ['showCollapseButton', '[showCollapseButton]'];
 
 export const splitCollapseMigrationRule = (options: { path: string }): Rule => {
   return async (tree: Tree, context: SchematicContext) => {
@@ -64,49 +68,217 @@ const migrateSplitCollapseTemplate = (
   recorder: UpdateRecorder
 ): void => {
   findElement(template, element => element.name === 'si-split-part').forEach(element => {
-    element.attrs
-      .filter(
-        attribute =>
-          attribute.name === 'collapseDirection' || attribute.name === '[collapseDirection]'
-      )
-      .forEach(attribute => {
-        const isBound = attribute.name.startsWith('[');
-        const attributeNameOffset = attribute.sourceSpan.start.offset + offset + (isBound ? 1 : 0);
-        recorder.remove(attributeNameOffset, 'collapseDirection'.length);
-        recorder.insertLeft(attributeNameOffset, 'collapsible');
-
-        const value = isBound
-          ? getStringLiteral(attribute.value)
-          : collapseValues.get(attribute.value);
-        if (!value || !attribute.valueSpan) {
-          return;
-        }
-
-        const valueOffset = attribute.valueSpan.start.offset + offset;
-        recorder.remove(
-          valueOffset,
-          attribute.valueSpan.end.offset - attribute.valueSpan.start.offset
-        );
-        recorder.insertLeft(valueOffset, isBound ? `'${value}'` : value);
-      });
+    migrateSplitCollapseElement(template, element, offset, recorder);
   });
 };
 
+const migrateSplitCollapseElement = (
+  template: string,
+  element: Element,
+  offset: number,
+  recorder: UpdateRecorder
+): void => {
+  const showCollapseButton = element.attrs.find(attribute =>
+    showCollapseButtonNames.includes(attribute.name)
+  );
+  const collapseDirections = element.attrs.filter(attribute =>
+    collapseDirectionNames.includes(attribute.name)
+  );
+  const collapseDirection = collapseDirections[0];
+  const collapsible = element.attrs.find(attribute => collapsibleNames.includes(attribute.name));
+
+  if (showCollapseButton) {
+    const staticValue = getStaticBooleanValue(showCollapseButton);
+    if (staticValue === undefined) {
+      const target = collapsible ?? collapseDirection ?? showCollapseButton;
+      replaceAttribute(
+        target,
+        formatBoundAttribute(
+          'collapsible',
+          `${getBooleanAttributeCondition(getShowCollapseButtonExpression(showCollapseButton))} ? ${getCollapsibleExpression(collapsible ?? collapseDirection)} : undefined`
+        ),
+        offset,
+        recorder
+      );
+      if (target !== showCollapseButton) {
+        removeAttribute(template, showCollapseButton, offset, recorder);
+      }
+      collapseDirections
+        .filter(attribute => attribute !== target)
+        .forEach(attribute => removeAttribute(template, attribute, offset, recorder));
+      return;
+    }
+
+    removeAttribute(template, showCollapseButton, offset, recorder);
+    if (!staticValue && !collapsible) {
+      collapseDirections.forEach(attribute =>
+        removeAttribute(template, attribute, offset, recorder)
+      );
+      return;
+    }
+  }
+
+  if (collapsible) {
+    collapseDirections.forEach(attribute => removeAttribute(template, attribute, offset, recorder));
+    return;
+  }
+
+  if (collapseDirections.length > 0) {
+    collapseDirections.forEach(attribute => migrateCollapseDirection(attribute, offset, recorder));
+  } else {
+    insertAttribute(template, element, 'collapsible="to-start"', offset, recorder);
+  }
+};
+
+const migrateCollapseDirection = (
+  attribute: Attribute,
+  offset: number,
+  recorder: UpdateRecorder
+): void => {
+  const isBound = attribute.name.startsWith('[');
+  const attributeNameOffset = attribute.sourceSpan.start.offset + offset + (isBound ? 1 : 0);
+  recorder.remove(attributeNameOffset, 'collapseDirection'.length);
+  recorder.insertLeft(attributeNameOffset, 'collapsible');
+
+  const value = isBound ? getStringLiteral(attribute.value) : collapseValues.get(attribute.value);
+  if (!value || !attribute.valueSpan) {
+    return;
+  }
+
+  const valueOffset = attribute.valueSpan.start.offset + offset;
+  recorder.remove(valueOffset, attribute.valueSpan.end.offset - attribute.valueSpan.start.offset);
+  recorder.insertLeft(valueOffset, isBound ? `'${value}'` : value);
+};
+
+const getCollapsibleExpression = (attribute: Attribute | undefined): string => {
+  if (!attribute) {
+    return `'to-start'`;
+  }
+
+  if (attribute.name.startsWith('[')) {
+    const migratedLiteral = getStringLiteral(attribute.value);
+    return migratedLiteral ? `'${migratedLiteral}'` : `(${attribute.value})`;
+  }
+
+  return `'${collapseValues.get(attribute.value) ?? attribute.value}'`;
+};
+
+const getStaticBooleanValue = (attribute: Attribute): boolean | undefined => {
+  if (!attribute.name.startsWith('[')) {
+    if (/^\s*{{[\s\S]*}}\s*$/.test(attribute.value)) {
+      return undefined;
+    }
+    return attribute.value !== 'false';
+  }
+
+  const initializer = getExpression(attribute.value);
+  if (!initializer) {
+    return undefined;
+  }
+
+  if (initializer.kind === ts.SyntaxKind.TrueKeyword) {
+    return true;
+  }
+  if (
+    initializer.kind === ts.SyntaxKind.FalseKeyword ||
+    initializer.kind === ts.SyntaxKind.NullKeyword ||
+    (ts.isIdentifier(initializer) && initializer.text === 'undefined') ||
+    (ts.isStringLiteral(initializer) && initializer.text === 'false')
+  ) {
+    return false;
+  }
+  if (ts.isStringLiteral(initializer) || ts.isNumericLiteral(initializer)) {
+    return true;
+  }
+
+  return undefined;
+};
+
+const getShowCollapseButtonExpression = (attribute: Attribute): string => {
+  if (attribute.name.startsWith('[')) {
+    return attribute.value;
+  }
+
+  return attribute.value.replace(/^\s*{{\s*|\s*}}\s*$/g, '');
+};
+
+const getBooleanAttributeCondition = (expression: string): string =>
+  `![false, null, undefined, 'false'].includes($any(${expression}))`;
+
+const formatBoundAttribute = (name: string, expression: string): string => {
+  const quote = expression.includes('"') && !expression.includes("'") ? "'" : '"';
+  const escapedExpression =
+    quote === '"' ? expression.replaceAll('"', '&quot;') : expression.replaceAll("'", '&#39;');
+  return `[${name}]=${quote}${escapedExpression}${quote}`;
+};
+
+const replaceAttribute = (
+  attribute: Attribute,
+  replacement: string,
+  offset: number,
+  recorder: UpdateRecorder
+): void => {
+  const start = attribute.sourceSpan.start.offset + offset;
+  recorder.remove(start, attribute.sourceSpan.end.offset - attribute.sourceSpan.start.offset);
+  recorder.insertLeft(start, replacement);
+};
+
+const insertAttribute = (
+  template: string,
+  element: Element,
+  attribute: string,
+  offset: number,
+  recorder: UpdateRecorder
+): void => {
+  const selfClosing = element.startSourceSpan.toString().endsWith('/>');
+  const insertOffset = element.startSourceSpan.end.offset - (selfClosing ? 2 : 1);
+  const prefix = /\s/.test(template[insertOffset - 1]) ? '' : ' ';
+  recorder.insertLeft(insertOffset + offset, `${prefix}${attribute}${selfClosing ? ' ' : ''}`);
+};
+
+const removeAttribute = (
+  template: string,
+  attribute: { sourceSpan: { start: { offset: number }; end: { offset: number } } },
+  offset: number,
+  recorder: UpdateRecorder
+): void => {
+  const start = attribute.sourceSpan.start.offset;
+  const end = attribute.sourceSpan.end.offset;
+  const lineStart = template.lastIndexOf('\n', start - 1) + 1;
+  const lineEnd = template.indexOf('\n', end);
+  const endOfLine = lineEnd === -1 ? template.length : lineEnd;
+  if (
+    template.slice(lineStart, start).trim() === '' &&
+    template.slice(end, endOfLine).trim() === ''
+  ) {
+    const removeEnd = lineEnd === -1 ? endOfLine : lineEnd + 1;
+    recorder.remove(lineStart + offset, removeEnd - lineStart);
+    return;
+  }
+
+  const removeStart = start > 0 && /\s/.test(template[start - 1]) ? start - 1 : start;
+  recorder.remove(removeStart + offset, attribute.sourceSpan.end.offset - removeStart);
+};
+
 const getStringLiteral = (value: string): string | undefined => {
-  const expression = ts.createSourceFile(
+  const initializer = getExpression(value);
+  return initializer && ts.isStringLiteral(initializer)
+    ? collapseValues.get(initializer.text)
+    : undefined;
+};
+
+const getExpression = (value: string): ts.Expression | undefined => {
+  const statement = ts.createSourceFile(
     'template-expression.ts',
     `const value = ${value};`,
     ts.ScriptTarget.Latest,
     true
   ).statements[0];
-  if (!expression || !ts.isVariableStatement(expression)) {
+  if (!statement || !ts.isVariableStatement(statement)) {
     return undefined;
   }
 
-  const initializer = expression.declarationList.declarations[0]?.initializer;
-  return initializer && ts.isStringLiteral(initializer)
-    ? collapseValues.get(initializer.text)
-    : undefined;
+  return statement.declarationList.declarations[0]?.initializer;
 };
 
 const migrateCollapseToLiterals = (sourceFile: ts.SourceFile, recorder: UpdateRecorder): void => {
