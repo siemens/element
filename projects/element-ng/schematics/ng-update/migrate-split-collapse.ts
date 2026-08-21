@@ -64,6 +64,36 @@ const migrateSplitCollapseTemplate = (
   recorder: UpdateRecorder
 ): void => {
   findElement(template, element => element.name === 'si-split-part').forEach(element => {
+    const hideCollapseButton = element.attrs.find(
+      attribute =>
+        ['showCollapseButton', '[showCollapseButton]'].includes(attribute.name) &&
+        attribute.value === 'false'
+    );
+    if (hideCollapseButton) {
+      removeAttribute(template, hideCollapseButton, offset, recorder);
+      const hasCollapsible = element.attrs.some(attribute =>
+        ['collapsible', '[collapsible]'].includes(attribute.name)
+      );
+      if (!hasCollapsible) {
+        recorder.insertLeft(
+          hideCollapseButton.sourceSpan.start.offset + offset,
+          ' [collapsible]="undefined"'
+        );
+      }
+
+      element.attrs
+        .filter(
+          attribute =>
+            attribute.name === 'collapseDirection' || attribute.name === '[collapseDirection]'
+        )
+        .forEach(attribute =>
+          removeAttribute(template, attribute, offset, recorder, {
+            removeAllLeadingWhitespace: true
+          })
+        );
+      return;
+    }
+
     element.attrs
       .filter(
         attribute =>
@@ -90,6 +120,25 @@ const migrateSplitCollapseTemplate = (
         recorder.insertLeft(valueOffset, isBound ? `'${value}'` : value);
       });
   });
+};
+
+const removeAttribute = (
+  template: string,
+  attribute: { sourceSpan: { start: { offset: number }; end: { offset: number } } },
+  offset: number,
+  recorder: UpdateRecorder,
+  options: { removeAllLeadingWhitespace?: boolean } = {}
+): void => {
+  const start = attribute.sourceSpan.start.offset;
+  let removeStart = start;
+  while (
+    removeStart > 0 &&
+    /\s/.test(template[removeStart - 1]) &&
+    (options.removeAllLeadingWhitespace || removeStart === start)
+  ) {
+    removeStart--;
+  }
+  recorder.remove(removeStart + offset, attribute.sourceSpan.end.offset - removeStart);
 };
 
 const getStringLiteral = (value: string): string | undefined => {

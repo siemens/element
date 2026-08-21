@@ -303,4 +303,118 @@ export class ExternalSplitComponent {}`,
     expect(template).toContain('<si-split-part collapsible="to-end" />');
     expect(template).toContain('<div collapseDirection="start"></div>');
   });
+
+  it('should replace showCollapseButton=false with an undefined collapsible binding', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part showCollapseButton="false" collapseDirection="start" />\`
+})
+export class SplitComponent {}`,
+      '/projects/app/src/external-split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-external-split',
+  templateUrl: './split.component.html'
+})
+export class ExternalSplitComponent {}`,
+      '/projects/app/src/split.component.html': `<si-split-part heading="Details" showCollapseButton="false" />`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+    const template = tree.readContent('/projects/app/src/split.component.html');
+
+    expect(component).toBe(`import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part [collapsible]="undefined" />\`
+})
+export class SplitComponent {}`);
+    expect(template).toBe('<si-split-part heading="Details" [collapsible]="undefined" />');
+  });
+
+  it('should migrate a bound false showCollapseButton and preserve other content', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  templateUrl: './split.component.html'
+})
+export class SplitComponent {}`,
+      '/projects/app/src/split.component.html': `<si-split-part
+  heading="Details"
+  [showCollapseButton]="false"
+  [collapseDirection]="'end'"
+>
+  <p>Content</p>
+</si-split-part>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const template = tree.readContent('/projects/app/src/split.component.html');
+
+    expect(template).toBe(`<si-split-part
+  heading="Details"
+  [collapsible]="undefined"
+>
+  <p>Content</p>
+</si-split-part>`);
+  });
+
+  it('should leave non-literal and non-split showCollapseButton inputs unchanged', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part [showCollapseButton]="canCollapse" />
+<div showCollapseButton="false"></div>\`
+})
+export class SplitComponent {
+  readonly canCollapse = false;
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toBe(`import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part [showCollapseButton]="canCollapse" />
+<div showCollapseButton="false"></div>\`
+})
+export class SplitComponent {
+  readonly canCollapse = false;
+}`);
+  });
+
+  it('should preserve an explicit collapsible input when removing showCollapseButton=false', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part showCollapseButton="false" collapsible="to-end" />\`
+})
+export class SplitComponent {}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toBe(`import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part collapsible="to-end" />\`
+})
+export class SplitComponent {}`);
+  });
 });
