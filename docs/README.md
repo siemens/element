@@ -25,12 +25,12 @@ which implement the Element design system. The components are developed in the
 
 ## Playground
 
-Open our [demo playground](https://element.siemens.io/element-examples/#/overview)
+Open our <a href="element-examples/#/overview">demo playground</a>
 to see examples for all our components.
 
 ## Flexible dashboard demo
 
-Open our [flexible dashboard demo](https://element.siemens.io/dashboards-demo/).
+Open our <a href="dashboards-demo/">flexible dashboard demo</a>.
 
 ## Figma design assets
 
