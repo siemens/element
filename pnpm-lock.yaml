@@ -97,8 +97,8 @@ importers:
         specifier: 3.2.46
         version: 3.2.46
       gridstack:
-        specifier: 12.6.0
-        version: 12.6.0
+        specifier: 13.1.2
+        version: 13.1.2
       highlight.js:
         specifier: ^11.11.1
         version: 11.11.1
@@ -5564,8 +5564,8 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==, tarball: https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.11.tgz}
 
-  gridstack@12.6.0:
-    resolution: {integrity: sha512-dUrqsormSybFn/2P4Dz8AgprftKD5e/IiV7UmC0XLQU+G+/WtkAeFiCSNLoAGhPDXoJ/O61Xtj3gljY/Ds83yQ==, tarball: https://registry.npmjs.org/gridstack/-/gridstack-12.6.0.tgz}
+  gridstack@13.1.2:
+    resolution: {integrity: sha512-TnEGpGKDrW3XutMgb+Gf/QGff003jzjEXfP5tG5jNB5OU33KfnZJVfe2sy58L3SnP4ImqJRqz3mE6Z88s14n1w==, tarball: https://registry.npmjs.org/gridstack/-/gridstack-13.1.2.tgz}
 
   hachure-fill@0.5.2:
     resolution: {integrity: sha512-3GKBOn+m2LX9iq+JC1064cSFprJY4jL1jCXTcpnfER5HYE2l/4EfWSGzkPa/ZDBmYI0ZOEj5VHV/eKnPGkHuOg==, tarball: https://registry.npmjs.org/hachure-fill/-/hachure-fill-0.5.2.tgz}
@@ -14548,7 +14548,7 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  gridstack@12.6.0: {}
+  gridstack@13.1.2: {}
 
   hachure-fill@0.5.2: {}
 

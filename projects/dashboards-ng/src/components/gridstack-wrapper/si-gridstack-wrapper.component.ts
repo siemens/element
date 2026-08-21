@@ -137,9 +137,12 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
       ...initialViewMode
     };
 
-    this.grid = GridStack.init(options, this.elementRef.nativeElement.firstChild as HTMLElement);
+    this.grid =
+      GridStack.init(options, this.elementRef.nativeElement.firstChild as HTMLElement) ?? undefined;
     this.startBatch();
-    this.hookEvents(this.grid);
+    if (this.grid) {
+      this.hookEvents(this.grid);
+    }
     this.destroyRef.onDestroy(() => this.grid?.destroy());
   }
 
