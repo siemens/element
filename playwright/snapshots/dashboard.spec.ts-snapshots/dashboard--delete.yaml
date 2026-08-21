@@ -33,12 +33,6 @@
     - menubar:
       - menuitem "Remove"
   - img
-  - application "Line Chart":
-    - text: ""
-    - menubar:
-      - menuitem "Remove"
-      - menuitem "Expand"
-  - img
   - application "List Widget":
     - text: ""
     - menubar:
@@ -71,6 +65,12 @@
         - button "Building overview"
     - link "Go to...":
       - /url: https://github.com/siemens/element/issues
+  - img
+  - application "Line Chart":
+    - text: ""
+    - menubar:
+      - menuitem "Remove"
+      - menuitem "Expand"
   - img
   - application "Timeline Widget":
     - text: ""

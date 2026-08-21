@@ -221,6 +221,8 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   });
   protected readonly setupPending = computed(() => !!this.widgetConfig().setupPending);
 
+  private moveInProgress = false;
+
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.widgetConfig) {
       const options = {
@@ -298,7 +300,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   }
 
   protected onFocusOut(): void {
-    if (this.keyboardActive()) {
+    if (this.keyboardActive() && !this.moveInProgress) {
       this.keyboardActive.set(false);
     }
   }
@@ -315,11 +317,14 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
     }
 
     const keyEvent = event as KeyboardEvent;
+    this.moveInProgress = true;
     if (keyEvent.shiftKey) {
       this.handleResize(keyEvent, node);
     } else {
       this.handleMove(keyEvent, node);
     }
+    this.card().element.nativeElement.focus();
+    this.moveInProgress = false;
   }
 
   private handleResize(event: KeyboardEvent, node: GridStackNode): void {

@@ -40,12 +40,6 @@
       - menubar:
         - menuitem "Expand"
     - listitem "Full Speed"
-    - listitem "Line Chart":
-      - text: ""
-      - menubar:
-        - menuitem "Print"
-        - menuitem "Expand"
-        - menuitem "Show actions"
     - listitem "List Widget":
       - text: ""
       - menubar:
@@ -78,6 +72,12 @@
           - button "Building overview"
       - link "Go to...":
         - /url: https://github.com/siemens/element/issues
+    - listitem "Line Chart":
+      - text: ""
+      - menubar:
+        - menuitem "Print"
+        - menuitem "Expand"
+        - menuitem "Show actions"
     - listitem "Timeline Widget":
       - text: ""
       - list:
