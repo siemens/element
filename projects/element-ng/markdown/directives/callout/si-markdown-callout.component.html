@@ -1,0 +1,27 @@
+@let conf = config();
+<div class="card card-outline" [class]="`accent-${conf.callout.severity}`">
+  <div class="card-header d-flex aling-items-center">
+    @if (conf.callout.icon) {
+      <si-icon
+        class="icon me-4 flex-shrink-0"
+        [icon]="conf.callout.icon"
+        [class]="conf.callout.color"
+      />
+    } @else {
+      <si-status-icon
+        class="icon me-4 flex-shrink-0"
+        aria-hidden="true"
+        [status]="conf.callout.severity"
+      />
+    }
+    <span [class]="`text-${conf.callout.severity}`">
+      {{ conf.callout.label | translate }}
+      @if (conf.heading) {
+        - {{ conf.heading }}
+      }
+    </span>
+  </div>
+  <div class="card-body pb-4">
+    <div [siMarkdownFragment]="node()"></div>
+  </div>
+</div>

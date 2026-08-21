@@ -44,10 +44,19 @@ export interface ComponentWithOptions<T> {
   options?: any;
 }
 
-/** AST node type handler */
+/** Type handler for a named type. This can be an AST node type, a code type, a directive name */
 export interface TypeHandler extends ComponentWithOptions<SiMarkdownExtensionComponent> {
-  /** type of the AST node */
+  /** Type name */
   type: string;
+}
+
+/** AST node created by `remark-directive`. */
+export interface DirectiveNode extends Parent {
+  type: 'containerDirective' | 'leafDirective' | 'textDirective';
+  /** The directive name without its leading colons. */
+  name: string;
+  /** Attributes declared on the directive. */
+  attributes: Record<string, string | undefined>;
 }
 
 export type SiMarkdownHighlighter = ComponentWithOptions<SiMarkdownHighlighterComponent>;
@@ -72,6 +81,8 @@ export interface SiMarkdownExtension {
   types?: TypeHandler[];
   /** Special code type handlers to install */
   codeTypes?: TypeHandler[];
+  /** Directives */
+  directives?: TypeHandler[];
 }
 
 /** Citation metadata associated with a markdown response. */
@@ -110,7 +121,7 @@ export interface Footnotes extends Parent {
   children: FootnoteDefinition[];
 }
 
-export type ExtendedRootContent = RootContent | Footnotes | Citations;
+export type ExtendedRootContent = RootContent | Footnotes | Citations | DirectiveNode;
 
 /** Extended root with references */
 export type SiMarkdownRoot = Omit<Root, 'children'> & {

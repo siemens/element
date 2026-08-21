@@ -215,3 +215,53 @@ Here's a cat :cat2: meow!
 Слава Україні! :ukraine:
 
 This is awesome :+1: :100:
+
+---
+
+### Directives
+
+Directives are a generic way to extend markdown syntax. There's tree types of directives
+
+- Inline directives in the form `:name[label]{attributes}`
+- Block leaf directives, i.e. `::name{attributes}`
+- Container directives. Those start with at least three colons and are terminated by the same amount
+  of colons:
+
+  ```md
+  :::name{attributes}
+  normal **markdown** content
+  :::
+  ```
+
+  Container directives can also be nested. The outer directive needs more colons, e.g.
+
+  ```md
+  Outer directives have more colons
+
+  ::::outer{attributes}
+  normal markdown content
+
+  :::inner{attributes}
+  :::
+  ::::
+  ```
+
+:::callout{type=warning}
+This is a warning callout
+:::
+
+:::callout{type=tip heading="Did you know?"}
+Directives can be nested. When nesting, the parent directive needs more colons.
+:::
+
+:::callout
+This is cool. **Any** markdown works here too.
+
+```js
+console.log('Hello world');
+````
+
+:::
+
+> [!NOTE]
+> This is a GitHub style callout

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  type Blockquote,
   type Definition,
   type FootnoteReference,
   type FootnoteDefinition,
@@ -12,6 +13,40 @@ import {
 import { type Transformer } from 'unified';
 
 import { type SiMarkdownRoot } from '../si-markdown.types';
+
+const githubAdmonitionPattern = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\][ \t]*(?:\r?\n|$)/;
+
+/** Turns GitHub style admonitions into a callout directive */
+const toCalloutDirective = (node: Blockquote): void => {
+  const firstChild = node.children[0];
+  if (firstChild?.type !== 'paragraph') {
+    return;
+  }
+
+  const firstText = firstChild.children[0];
+  if (firstText?.type !== 'text') {
+    return;
+  }
+
+  const match = githubAdmonitionPattern.exec(firstText.value);
+  if (!match) {
+    return;
+  }
+
+  firstText.value = firstText.value.slice(match[0].length);
+  if (!firstText.value) {
+    firstChild.children.shift();
+  }
+  if (!firstChild.children.length) {
+    node.children.shift();
+  }
+
+  Object.assign(node, {
+    type: 'containerDirective',
+    name: 'callout',
+    attributes: { type: match[1].toLowerCase() }
+  });
+};
 
 /** Moves footnote definitions into a single root-level container. */
 export const siMarkdownPostprocess = (): Transformer<Root, SiMarkdownRoot> => tree => {
@@ -23,6 +58,9 @@ export const siMarkdownPostprocess = (): Transformer<Root, SiMarkdownRoot> => tr
   const collect = (parent: Parent): void => {
     for (let index = 0; index < parent.children.length; index++) {
       const child = parent.children[index];
+      if (child.type === 'blockquote') {
+        toCalloutDirective(child);
+      }
 
       if (child.type === 'footnoteReference') {
         footnoteReferences.push(child);
