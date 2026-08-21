@@ -56,7 +56,7 @@ export class SiSplitPartComponent {
     readonly collapseLabel: _angular_core.InputSignal<TranslatableString>;
     readonly collapseOthers: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly collapseToMinSize: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly collapsible: _angular_core.InputSignal<CollapseTo>;
+    readonly collapsible: _angular_core.InputSignal<CollapseTo | undefined>;
     readonly expanded: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly headerTemplate: _angular_core.InputSignal<TemplateRef<{
         $implicit: SiSplitPartComponent;
@@ -65,7 +65,6 @@ export class SiSplitPartComponent {
     readonly minSize: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly removeContentOnCollapse: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly scale: _angular_core.InputSignal<Scale>;
-    readonly showCollapseButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showHeader: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly size: _angular_core.InputSignalWithTransform<number, string | number>;
     readonly stateChange: _angular_core.OutputEmitterRef<PartState>;

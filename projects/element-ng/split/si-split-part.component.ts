@@ -52,10 +52,11 @@ export class SiSplitPartComponent {
   readonly actions = input<Action[]>([]);
   /**
    * Defines whether and in which direction the split part can collapse.
+   * When unset, the collapse button is hidden.
    *
-   * @defaultValue 'to-start'
+   * @defaultValue undefined
    */
-  readonly collapsible = input<CollapseTo>('to-start');
+  readonly collapsible = input<CollapseTo>();
 
   /**
    * Sets the icon class that is used in the buttons of split parts to
@@ -104,13 +105,6 @@ export class SiSplitPartComponent {
    * @defaultValue 'auto'
    */
   readonly scale = input<Scale>('auto');
-
-  /**
-   * Defines if the collapse button of a split part is displayed. Default value is true.
-   *
-   * @defaultValue true
-   */
-  readonly showCollapseButton = input(true, { transform: booleanAttribute });
 
   /**
    * Defines if the header of the split part is visible. Default is true.

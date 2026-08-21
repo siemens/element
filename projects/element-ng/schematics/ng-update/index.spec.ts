@@ -125,7 +125,7 @@ export class ExternalSearchComponent {}`,
 
 @Component({
   selector: 'app-split',
-  template: \`<si-split [sizes]="[20, 60, 20]">
+  template: \`<si-split [sizes]="[20, 60, 30]">
   <si-split-part>Left</si-split-part>
   <si-split-part>Center</si-split-part>
   <si-split-part>Right</si-split-part>
@@ -138,9 +138,9 @@ export class SplitComponent {}`
     const modifiedContent = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(modifiedContent).not.toContain('[sizes]');
-    expect(modifiedContent).toContain('<si-split-part size="20" unit="fr">Left</si-split-part>');
-    expect(modifiedContent).toContain('<si-split-part size="60" unit="fr">Center</si-split-part>');
-    expect(modifiedContent).toContain('<si-split-part size="20" unit="fr">Right</si-split-part>');
+    expect(modifiedContent).toContain('<si-split-part size="20" unit="fr"');
+    expect(modifiedContent).toContain('<si-split-part size="60" unit="fr"');
+    expect(modifiedContent).toContain('<si-split-part size="30" unit="fr"');
   });
 
   it('should move expression split sizes to external split parts', async () => {
@@ -162,12 +162,8 @@ export class SplitComponent {}`,
     const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
 
     expect(modifiedContent).not.toContain('[sizes]');
-    expect(modifiedContent).toContain(
-      '<si-split-part [size]="panelSizes[0]" unit="fr">Left</si-split-part>'
-    );
-    expect(modifiedContent).toContain(
-      '<si-split-part [size]="panelSizes[1]" unit="fr">Right</si-split-part>'
-    );
+    expect(modifiedContent).toContain('<si-split-part [size]="panelSizes[0]" unit="fr"');
+    expect(modifiedContent).toContain('<si-split-part [size]="panelSizes[1]" unit="fr"');
   });
 
   it('should pass options to sub-migrations', async () => {
@@ -198,8 +194,8 @@ export class SplitComponent {}`
     const tree = await runner.runSchematic('migration-v51', {}, appTree);
     const modifiedContent = tree.readContent('/projects/app/src/split.component.ts');
 
-    expect(modifiedContent).toContain('<si-split-part size="300" unit="px">Left</si-split-part>');
-    expect(modifiedContent).toContain('<si-split-part size="200" unit="px">Right</si-split-part>');
+    expect(modifiedContent).toContain('<si-split-part size="300" unit="px"');
+    expect(modifiedContent).toContain('<si-split-part size="200" unit="px"');
   });
 
   it('should add unit="px" to a split part with a bound size but no unit (external template)', async () => {
@@ -220,12 +216,8 @@ export class SplitComponent {}`,
     const tree = await runner.runSchematic('migration-v51', {}, appTree);
     const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
 
-    expect(modifiedContent).toContain(
-      '<si-split-part [size]="leftSize" unit="px">Left</si-split-part>'
-    );
-    expect(modifiedContent).toContain(
-      '<si-split-part [size]="rightSize" unit="px">Right</si-split-part>'
-    );
+    expect(modifiedContent).toContain('<si-split-part [size]="leftSize" unit="px"');
+    expect(modifiedContent).toContain('<si-split-part [size]="rightSize" unit="px"');
   });
 
   it('should not add unit="px" when unit is already present', async () => {
@@ -239,10 +231,8 @@ export class SplitComponent {}`,
     const tree = await runner.runSchematic('migration-v51', {}, appTree);
     const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
 
-    expect(modifiedContent).toContain('<si-split-part size="20" unit="fr">Left</si-split-part>');
-    expect(modifiedContent).toContain(
-      '<si-split-part [size]="rightSize" [unit]="unitVal">Right</si-split-part>'
-    );
+    expect(modifiedContent).toContain('<si-split-part size="20" unit="fr"');
+    expect(modifiedContent).toContain('<si-split-part [size]="rightSize" [unit]="unitVal"');
   });
 
   it('should add unit="fr" when converting [sizes] and not duplicate with unit="px"', async () => {
@@ -264,8 +254,8 @@ export class SplitComponent {}`,
     const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
 
     expect(modifiedContent).not.toContain('[sizes]');
-    expect(modifiedContent).toContain('<si-split-part size="30" unit="fr">Left</si-split-part>');
-    expect(modifiedContent).toContain('<si-split-part size="70" unit="fr">Right</si-split-part>');
+    expect(modifiedContent).toContain('<si-split-part size="30" unit="fr"');
+    expect(modifiedContent).toContain('<si-split-part size="70" unit="fr"');
     expect(modifiedContent).not.toContain('unit="px"');
   });
 
@@ -287,8 +277,8 @@ export class SplitComponent {}`,
     const tree = await runner.runSchematic('migration-v51', {}, appTree);
     const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
 
-    expect(modifiedContent).toContain('<si-split-part size="400" heading="Left"  unit="px"/>');
-    expect(modifiedContent).toContain('<si-split-part size="200" heading="Right"  unit="px"/>');
+    expect(modifiedContent).toContain('<si-split-part size="400" heading="Left"  unit="px"');
+    expect(modifiedContent).toContain('<si-split-part size="200" heading="Right"  unit="px"');
   });
 
   it('should rename split collapse bindings and CollapseTo literals', async () => {
@@ -332,5 +322,119 @@ export class ExternalSplitComponent {}`,
     expect(component).toContain(`this.currentDirection = 'to-start'`);
     expect(template).toContain('<si-split-part collapsible="to-end" />');
     expect(template).toContain('<div collapseDirection="start"></div>');
+  });
+
+  it('should add the former default collapse direction to collapsible split parts', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part />
+<si-split-part showCollapseButton />
+<si-split-part showCollapseButton="true" />
+<si-split-part [showCollapseButton]="true" />\`
+})
+export class SplitComponent {}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).not.toContain('showCollapseButton');
+    expect(component.match(/collapsible="to-start"/g)).toHaveLength(4);
+  });
+
+  it('should remove false collapse buttons and their legacy directions', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part showCollapseButton="false" collapseDirection="start" />
+<si-split-part [showCollapseButton]="'false'" [collapseDirection]="'end'" />
+<si-split-part showCollapseButton="false" />\`
+})
+export class SplitComponent {}`,
+      '/projects/app/src/external-split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-external-split',
+  templateUrl: './split.component.html'
+})
+export class ExternalSplitComponent {}`,
+      '/projects/app/src/split.component.html': `<si-split-part
+  heading="Details"
+  [showCollapseButton]="false"
+  [collapseDirection]="'end'"
+>
+  <p>Content</p>
+</si-split-part>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+    const template = tree.readContent('/projects/app/src/split.component.html');
+
+    expect(component).not.toContain('showCollapseButton');
+    expect(component).not.toContain('collapseDirection');
+    expect(component).not.toContain('collapsible');
+    expect(template).toBe(`<si-split-part
+  heading="Details"
+>
+  <p>Content</p>
+</si-split-part>`);
+  });
+
+  it('should conditionally migrate dynamic collapse button bindings', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part [showCollapseButton]="canCollapse" />
+<si-split-part [showCollapseButton]="canCollapse" collapseDirection="end" />
+<si-split-part [showCollapseButton]="canCollapse" [collapseDirection]="direction" />
+<div [showCollapseButton]="canCollapse"></div>\`
+})
+export class SplitComponent {
+  readonly canCollapse = false;
+  readonly direction = 'end';
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    const condition = `![false, null, undefined, 'false'].includes($any(canCollapse))`;
+    expect(component).toContain(`[collapsible]="${condition} ? 'to-start' : undefined"`);
+    expect(component).toContain(`[collapsible]="${condition} ? 'to-end' : undefined"`);
+    expect(component).toContain(`[collapsible]="${condition} ? (direction) : undefined"`);
+    expect(component).toContain('<div [showCollapseButton]="canCollapse"></div>');
+    expect(component.match(/showCollapseButton/g)).toHaveLength(1);
+    expect(component).not.toContain('collapseDirection');
+  });
+
+  it('should preserve an explicit collapsible input when removing showCollapseButton=false', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part showCollapseButton="false" collapsible="to-end" />\`
+})
+export class SplitComponent {}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toBe(`import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part collapsible="to-end" />\`
+})
+export class SplitComponent {}`);
   });
 });
