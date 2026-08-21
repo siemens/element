@@ -11,6 +11,7 @@ import langBash from 'highlight.js/lib/languages/bash';
 import langCss from 'highlight.js/lib/languages/css';
 import langJs from 'highlight.js/lib/languages/javascript';
 import langJson from 'highlight.js/lib/languages/json';
+import langMarkdown from 'highlight.js/lib/languages/markdown';
 import langPython from 'highlight.js/lib/languages/python';
 import langScss from 'highlight.js/lib/languages/scss';
 import langTs from 'highlight.js/lib/languages/typescript';
@@ -30,6 +31,7 @@ hljs.registerLanguage('scss', langScss);
 hljs.registerLanguage('bash', langBash);
 hljs.registerLanguage('python', langPython);
 hljs.registerLanguage('xml', langXml);
+hljs.registerLanguage('markdown', langMarkdown);
 
 const getHljsLang = async (
   lang: string,
@@ -77,9 +79,9 @@ export class SiMarkdownHightlightJsComponent implements SiMarkdownHighlighterCom
     options: SiMarkdownHighlightJsOptions = {}
   ): Promise<SafeHtml> {
     let highlighted = '';
-    if (options?.autoDetectLanguage) {
+    if (!language && options?.autoDetectLanguage) {
       try {
-        const res = hljs.highlightAuto(code, language ? [language] : undefined);
+        const res = hljs.highlightAuto(code, undefined);
         highlighted = res.value;
         if (res.language) {
           const lang = hljs.getLanguage(res.language);
@@ -91,7 +93,6 @@ export class SiMarkdownHightlightJsComponent implements SiMarkdownHighlighterCom
         // ignored
       }
     } else {
-      await new Promise(resolve => setTimeout(resolve));
       const hljsLang = await getHljsLang(language, options.languageLoader);
       if (hljsLang) {
         this.updateLanguage()(hljsLang.name);
