@@ -56,7 +56,7 @@ As the icons now have a reduced built-in margin, spacings must be adjusted:
 
 Remove the `@angular/animations` package and `@angular/platform-browser/animations` imports
 if your app never uses the `animations` property in their `@Component` metadata.
-See our [Motion animation](https://element.siemens.io/architecture/motion-animation/) chapter for more details.
+See our [Motion animation](../architecture/motion-animation.md) chapter for more details.
 
 Compile and test your application. Consult the [changelog](https://github.com/siemens/element/releases/tag/v49.0.0) for more changes.
 
