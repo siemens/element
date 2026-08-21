@@ -48,6 +48,7 @@ export class SiNavbarVerticalNextFooterItemsComponent {
 // @public (undocumented)
 export class SiNavbarVerticalNextGroupComponent {
     constructor();
+    readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
 
 // @public (undocumented)
