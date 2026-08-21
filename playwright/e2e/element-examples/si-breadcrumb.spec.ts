@@ -10,10 +10,11 @@ test.describe('si-breadcrumb', () => {
   test(example + ' dropdown', async ({ page, si }) => {
     await page.setViewportSize({ width: 760, height: 600 });
     await si.visitExample(example, false);
-    const toggle = await page.locator('.breadcrumb-dropdown-toggle').nth(1);
+    const breadcrumb = page.getByRole('navigation', { name: 'root as icon breadcrumbs' });
+    const toggle = breadcrumb.getByRole('button', { name: '...', exact: true });
     await toggle.click();
     await toggle.blur();
-    await expect(page.locator('.breadcrumb-dropdown-wrapper').first()).toBeVisible();
+    await expect(toggle.locator('..').locator('.dropdown-menu')).toBeVisible();
 
     await si.runVisualAndA11yTests('dropdown');
   });
@@ -21,10 +22,11 @@ test.describe('si-breadcrumb', () => {
   test(example + ' shortened', async ({ page, si }) => {
     await page.setViewportSize({ width: 760, height: 600 });
     await si.visitExample(example, false);
-    const toggle = await page.locator('.breadcrumb-dropdown-toggle').first();
+    const breadcrumb = page.getByRole('navigation', { name: 'root as icon breadcrumbs' });
+    const toggle = breadcrumb.getByRole('button').nth(0);
     await toggle.click();
     await toggle.blur();
-    await expect(page.locator('.dropdown-menu').first()).toBeVisible();
+    await expect(toggle.locator('..').locator('.dropdown-menu')).toBeVisible();
 
     await si.runVisualAndA11yTests('shortened');
   });
