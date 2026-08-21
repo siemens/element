@@ -320,6 +320,19 @@ describe('SiWidgetHostComponent', () => {
         expect(mockGrid.update).toHaveBeenCalledWith(hostEl, { x: 3, y: 1 });
       });
 
+      it('should retain focus when Gridstack reorders the active widget', () => {
+        mockGrid.update.mockImplementation((_el: unknown, opts: unknown) => {
+          Object.assign(mockNode, opts);
+          hostEl.parentElement!.appendChild(hostEl);
+        });
+        cardEl.focus();
+
+        cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+
+        expect(document.activeElement).toBe(cardEl);
+        expect(component.keyboardActive()).toBe(true);
+      });
+
       it('should move left', () => {
         cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
         expect(mockGrid.update).toHaveBeenCalledWith(hostEl, { x: 1, y: 1 });

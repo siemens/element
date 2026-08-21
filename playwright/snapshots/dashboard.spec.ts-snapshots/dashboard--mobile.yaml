@@ -22,23 +22,7 @@
     - option "Danger"
   - button "Edit"
   - list "Dashboard widgets":
-    - listitem "Project Issues!":
-      - img "Buildings at scale"
-      - text: /Project Issues! \d+ Issues Number of contributing issues/
-      - link "Go to issues":
-        - /url: https://github.com/siemens/element/issues
     - listitem "Bar Chart":
-      - text: ""
-      - menubar:
-        - menuitem "Print"
-        - menuitem "Expand"
-        - menuitem "Show actions"
-    - listitem "Pie Chart":
-      - text: ""
-      - menubar:
-        - menuitem "Expand"
-    - listitem "Full Speed"
-    - listitem "Line Chart":
       - text: ""
       - menubar:
         - menuitem "Print"
@@ -76,6 +60,22 @@
           - button "Building overview"
       - link "Go to...":
         - /url: https://github.com/siemens/element/issues
+    - listitem "Project Issues!":
+      - img "Buildings at scale"
+      - text: /Project Issues! \d+ Issues Number of contributing issues/
+      - link "Go to issues":
+        - /url: https://github.com/siemens/element/issues
+    - listitem "Pie Chart":
+      - text: ""
+      - menubar:
+        - menuitem "Expand"
+    - listitem "Full Speed"
+    - listitem "Line Chart":
+      - text: ""
+      - menubar:
+        - menuitem "Print"
+        - menuitem "Expand"
+        - menuitem "Show actions"
     - listitem "Timeline Widget":
       - text: ""
       - list:
