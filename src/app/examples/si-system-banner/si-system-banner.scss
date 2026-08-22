@@ -1,0 +1,11 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+.banner-link {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: map.get(variables.$spacers, 6);
+  transform: translateY(-50%);
+  color: variables.$si-sys-text-on-information;
+}
