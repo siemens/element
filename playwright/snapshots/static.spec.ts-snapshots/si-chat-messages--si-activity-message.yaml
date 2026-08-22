@@ -1,0 +1,44 @@
+- button "Reasoning about the request Running"
+- region "Reasoning about the request Running"
+- button "Searched the knowledge base Completed"
+- region "Searched the knowledge base Completed"
+- button "Calculated energy consumption Completed"
+- region "Calculated energy consumption Completed"
+- button "Generated the response Completed"
+- region "Generated the response Completed"
+- button "Edited the configuration Completed"
+- region "Edited the configuration Completed"
+- button "Completed the maintenance workflow Completed"
+- region "Completed the maintenance workflow Completed"
+- button "Read equipment-manual.md Completed"
+- region "Read equipment-manual.md Completed"
+- button "Summarized the findings Completed"
+- region "Summarized the findings Completed"
+- button "Could not execute the activity Failed"
+- region "Could not execute the activity Failed"
+- button "Generated breadcrumb implementation plan Completed" [expanded]
+- region "Generated breadcrumb implementation plan Completed":
+  - paragraph: "/Agent: UI Generator Model: GPT-X Duration: [\\d,.]+[hmsp]+/"
+  - text: TypeScript
+  - button "Copy code"
+  - code: "<Breadcrumb items={[ { label: \"Home\", href: \"/\" }, { label: \"Dashboard\" } ]} />"
+  - paragraph:
+    - strong: Key findings
+  - list:
+    - listitem: Breadcrumb is recommended for navigation hierarchy
+    - listitem: Requires items with labels and links
+    - listitem: Placed below the header
+  - paragraph:
+    - strong: Relevant inputs
+  - paragraph:
+    - text: Here are the two input files to work with.
+    - link "page.tsx":
+      - /url: file:///page.tsx
+    - link "layout.tsx":
+      - /url: file:///layout.tsx
+  - paragraph:
+    - strong: Changes applied
+  - list:
+    - listitem: Add breadcrumb component to header
+    - listitem: Updated layout structure
+    - listitem: Adjusted spacing tokens

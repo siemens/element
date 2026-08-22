@@ -4,6 +4,9 @@
 
 export interface SiTranslatableKeys {
   'SI_ABOUT.LOGO_ALT'?: string;
+  'SI_ACTIVITY_MESSAGE.COMPLETED'?: string;
+  'SI_ACTIVITY_MESSAGE.FAILED'?: string;
+  'SI_ACTIVITY_MESSAGE.RUNNING'?: string;
   'SI_AI_MESSAGE.SECONDARY_ACTIONS'?: string;
   'SI_ALERT_DIALOG.OK'?: string;
   'SI_APPLICATION_HEADER.LAUNCHPAD'?: string;

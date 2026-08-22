@@ -1,0 +1,12 @@
+<div class="d-flex flex-column gap-4 p-6">
+  @for (activity of activities; track activity.label) {
+    <si-activity-message
+      [label]="activity.label"
+      [state]="activity.state"
+      [icon]="activity.icon"
+      [expanded]="activity.expanded ?? false"
+    >
+      <si-markdown [markdown]="activity.content" [options]="markdownOptions" />
+    </si-activity-message>
+  }
+</div>
