@@ -13,13 +13,13 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-/** State of a trace message. */
-export type TraceMessageState = 'running' | 'completed' | 'failed';
+/** State of an activity message. */
+export type ActivityMessageState = 'running' | 'completed' | 'failed';
 
-let traceMessageId = 0;
+let activityMessageId = 0;
 
 /**
- * Displays a meaningful step or phase in an AI activity trace.
+ * Displays a meaningful step or phase in an AI activity.
  *
  * The marker communicates whether the activity is running, completed, or failed. The message can
  * be expanded to reveal additional projected content such as markdown, metadata, or tool output.
@@ -27,22 +27,22 @@ let traceMessageId = 0;
  * @experimental
  */
 @Component({
-  selector: 'si-trace-message',
+  selector: 'si-activity-message',
   imports: [SiIconComponent, SiLoadingSpinnerComponent, SiTranslatePipe],
-  templateUrl: './si-trace-message.component.html',
-  styleUrl: './si-trace-message.component.scss',
+  templateUrl: './si-activity-message.component.html',
+  styleUrl: './si-activity-message.component.scss',
   host: {
-    '[class.trace-running]': `state() === 'running'`,
-    '[class.trace-completed]': `state() === 'completed'`,
-    '[class.trace-failed]': `state() === 'failed'`,
-    '[class.trace-expanded]': 'expanded()'
+    '[class.activity-running]': `state() === 'running'`,
+    '[class.activity-completed]': `state() === 'completed'`,
+    '[class.activity-failed]': `state() === 'failed'`,
+    '[class.activity-expanded]': 'expanded()'
   }
 })
-export class SiTraceMessageComponent {
-  private readonly stateLabels: Record<TraceMessageState, TranslatableString> = {
-    running: t(() => $localize`:@@SI_TRACE_MESSAGE.RUNNING:Running`),
-    completed: t(() => $localize`:@@SI_TRACE_MESSAGE.COMPLETED:Completed`),
-    failed: t(() => $localize`:@@SI_TRACE_MESSAGE.FAILED:Failed`)
+export class SiActivityMessageComponent {
+  private readonly stateLabels: Record<ActivityMessageState, TranslatableString> = {
+    running: t(() => $localize`:@@SI_ACTIVITY_MESSAGE.RUNNING:Running`),
+    completed: t(() => $localize`:@@SI_ACTIVITY_MESSAGE.COMPLETED:Completed`),
+    failed: t(() => $localize`:@@SI_ACTIVITY_MESSAGE.FAILED:Failed`)
   };
 
   /** Label describing the activity. */
@@ -53,7 +53,7 @@ export class SiTraceMessageComponent {
    *
    * @defaultValue 'completed'
    */
-  readonly state = input<TraceMessageState>('completed');
+  readonly state = input<ActivityMessageState>('completed');
 
   /**
    * Icon displayed for the activity when it is completed.
@@ -63,13 +63,13 @@ export class SiTraceMessageComponent {
   readonly icon = input<string>('element-record-filled');
 
   /**
-   * Whether the trace details are expanded.
+   * Whether the activity details are expanded.
    *
    * @defaultValue false
    */
   readonly expanded = model(false);
 
-  protected readonly contentId = `__si-trace-message-${traceMessageId++}-content`;
+  protected readonly contentId = `__si-activity-message-${activityMessageId++}-content`;
   protected readonly headerId = `${this.contentId}-header`;
   protected readonly stateLabel = computed(() => this.stateLabels[this.state()]);
 

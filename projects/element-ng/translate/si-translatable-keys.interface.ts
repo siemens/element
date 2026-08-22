@@ -4,6 +4,9 @@
 
 export interface SiTranslatableKeys {
   'SI_ABOUT.LOGO_ALT'?: string;
+  'SI_ACTIVITY_MESSAGE.COMPLETED'?: string;
+  'SI_ACTIVITY_MESSAGE.FAILED'?: string;
+  'SI_ACTIVITY_MESSAGE.RUNNING'?: string;
   'SI_AI_MESSAGE.SECONDARY_ACTIONS'?: string;
   'SI_ALERT_DIALOG.OK'?: string;
   'SI_APPLICATION_HEADER.LAUNCHPAD'?: string;
@@ -269,9 +272,6 @@ export interface SiTranslatableKeys {
   'SI_TOUR.NEXT'?: string;
   'SI_TOUR.PROGRESS'?: string;
   'SI_TOUR.SKIP'?: string;
-  'SI_TRACE_MESSAGE.COMPLETED'?: string;
-  'SI_TRACE_MESSAGE.FAILED'?: string;
-  'SI_TRACE_MESSAGE.RUNNING'?: string;
   'SI_TREE_VIEW.COLLAPSE_ALL'?: string;
   'SI_TREE_VIEW.EXPAND_ALL'?: string;
   'SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL'?: string;

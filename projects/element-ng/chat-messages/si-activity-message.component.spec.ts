@@ -6,20 +6,20 @@ import { inputBinding, signal, twoWayBinding, WritableSignal } from '@angular/co
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {
-  SiTraceMessageComponent as TestComponent,
-  TraceMessageState
-} from './si-trace-message.component';
+  ActivityMessageState,
+  SiActivityMessageComponent as TestComponent
+} from './si-activity-message.component';
 
-describe('SiTraceMessageComponent', () => {
+describe('SiActivityMessageComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let element: HTMLElement;
   let label: WritableSignal<string>;
-  let state: WritableSignal<TraceMessageState>;
+  let state: WritableSignal<ActivityMessageState>;
   let expanded: WritableSignal<boolean>;
 
   beforeEach(() => {
     label = signal('Searched the knowledge base');
-    state = signal<TraceMessageState>('completed');
+    state = signal<ActivityMessageState>('completed');
     expanded = signal(false);
 
     fixture = TestBed.createComponent(TestComponent, {
@@ -35,9 +35,11 @@ describe('SiTraceMessageComponent', () => {
   it('renders the activity label and completed state', async () => {
     await fixture.whenStable();
 
-    expect(element.querySelector('.trace-label')).toHaveTextContent('Searched the knowledge base');
+    expect(element.querySelector('.activity-label')).toHaveTextContent(
+      'Searched the knowledge base'
+    );
     expect(element.querySelector('.visually-hidden')).toHaveTextContent('Completed');
-    expect(element).toHaveClass('trace-completed');
+    expect(element).toHaveClass('activity-completed');
     const marker = fixture.debugElement.query(debugElement =>
       debugElement.nativeElement.matches?.('si-icon.state-marker')
     );
@@ -48,7 +50,7 @@ describe('SiTraceMessageComponent', () => {
     state.set('running');
     await fixture.whenStable();
 
-    expect(element).toHaveClass('trace-running');
+    expect(element).toHaveClass('activity-running');
     expect(element.querySelector('.visually-hidden')).toHaveTextContent('Running');
     expect(element.querySelector('si-loading-spinner.state-marker')).toBeTruthy();
     expect(element.querySelector('si-icon.state-marker')).toBeFalsy();
@@ -62,7 +64,7 @@ describe('SiTraceMessageComponent', () => {
       debugElement.nativeElement.matches?.('si-icon.state-marker')
     );
 
-    expect(element).toHaveClass('trace-failed');
+    expect(element).toHaveClass('activity-failed');
     expect(element.querySelector('.visually-hidden')).toHaveTextContent('Failed');
     expect(marker.componentInstance.icon()).toBe('elementValidationIssue');
   });
@@ -84,8 +86,8 @@ describe('SiTraceMessageComponent', () => {
   it('toggles the details and exposes their accessible relationship', async () => {
     await fixture.whenStable();
 
-    const button = element.querySelector<HTMLButtonElement>('.trace-header')!;
-    const region = element.querySelector<HTMLElement>('.trace-content')!;
+    const button = element.querySelector<HTMLButtonElement>('.activity-header')!;
+    const region = element.querySelector<HTMLElement>('.activity-content')!;
 
     expect(button).toHaveAttribute('aria-expanded', 'false');
     expect(button).toHaveAttribute('aria-controls', region.id);

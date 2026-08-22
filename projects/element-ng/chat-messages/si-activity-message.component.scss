@@ -2,8 +2,8 @@
 @use '@siemens/element-theme/src/styles/variables';
 @use '@siemens/element-theme/src/styles/variables/system-tokens';
 
-$trace-marker-size: 1.5rem;
-$trace-line-position: calc($trace-marker-size / 2);
+$activity-marker-size: 1.5rem;
+$activity-line-position: calc($activity-marker-size / 2);
 
 :host {
   display: block;
@@ -14,22 +14,22 @@ $trace-line-position: calc($trace-marker-size / 2);
 :host(:not(:first-child))::before {
   content: '';
   position: absolute;
-  inset-inline-start: $trace-line-position;
+  inset-inline-start: $activity-line-position;
   inset-block-end: 100%;
   block-size: map.get(variables.$spacers, 4);
   border-inline-start: 1px solid system-tokens.$si-sys-border-3;
   pointer-events: none;
 }
 
-:host(.trace-failed) {
+:host(.activity-failed) {
   color: system-tokens.$si-sys-text-danger;
 }
 
-.trace-message {
+.activity-message {
   max-inline-size: 100%;
 }
 
-.trace-header {
+.activity-header {
   display: inline-flex;
   align-items: center;
   max-inline-size: 100%;
@@ -58,13 +58,13 @@ $trace-line-position: calc($trace-marker-size / 2);
   }
 }
 
-.trace-marker {
+.activity-marker {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  inline-size: $trace-marker-size;
-  block-size: $trace-marker-size;
+  inline-size: $activity-marker-size;
+  block-size: $activity-marker-size;
   margin-inline-end: map.get(variables.$spacers, 2);
 }
 
@@ -82,14 +82,14 @@ si-loading-spinner.state-marker {
   --loading-spinner-color: currentColor;
 }
 
-.trace-label {
+.activity-label {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.trace-content {
+.activity-content {
   overflow: hidden;
-  margin-inline-start: $trace-line-position;
+  margin-inline-start: $activity-line-position;
 }
 
 .content-motion {
@@ -115,6 +115,6 @@ si-loading-spinner.state-marker {
   overflow: hidden;
   border-inline-start: 1px solid system-tokens.$si-sys-border-3;
   padding-block-start: map.get(variables.$spacers, 3);
-  padding-inline-start: calc($trace-line-position + map.get(variables.$spacers, 2));
+  padding-inline-start: calc($activity-line-position + map.get(variables.$spacers, 2));
   color: system-tokens.$si-sys-text-secondary;
 }

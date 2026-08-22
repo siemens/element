@@ -13,15 +13,18 @@ import {
   elementRecordFilled,
   elementSearch
 } from '@siemens/element-icons';
-import { SiTraceMessageComponent, TraceMessageState } from '@siemens/element-ng/chat-messages';
+import {
+  ActivityMessageState,
+  SiActivityMessageComponent
+} from '@siemens/element-ng/chat-messages';
 import { addIcons } from '@siemens/element-ng/icon';
 import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
 
 import { markdownOptions } from './markdown-options';
 
-interface TraceExample {
+interface ActivityExample {
   label: string;
-  state: TraceMessageState;
+  state: ActivityMessageState;
   icon: string;
   content: string;
   expanded?: boolean;
@@ -29,8 +32,8 @@ interface TraceExample {
 
 @Component({
   selector: 'app-sample',
-  imports: [SiTraceMessageComponent, SiMarkdownComponent],
-  templateUrl: './si-trace-message.html'
+  imports: [SiActivityMessageComponent, SiMarkdownComponent],
+  templateUrl: './si-activity-message.html'
 })
 export class SampleComponent {
   protected readonly markdownOptions = markdownOptions;
@@ -45,7 +48,7 @@ export class SampleComponent {
     elementSearch
   });
 
-  protected readonly traces: TraceExample[] = [
+  protected readonly activities: ActivityExample[] = [
     {
       label: 'Reasoning about the request',
       state: 'running',

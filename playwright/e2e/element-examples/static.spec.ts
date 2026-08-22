@@ -128,7 +128,7 @@ test('si-markdown-renderer/si-markdown-renderer', ({ si }) =>
 test('si-chat-messages/si-ai-message', ({ si }) => si.static());
 test('si-chat-messages/si-user-message', ({ si }) => si.static());
 test('si-chat-messages/si-chat-message', ({ si }) => si.static());
-test('si-chat-messages/si-trace-message', ({ si }) =>
+test('si-chat-messages/si-activity-message', ({ si }) =>
   si.static({
     waitCallback: page => page.getByRole('link', { name: 'page.tsx' }).waitFor()
   }));
