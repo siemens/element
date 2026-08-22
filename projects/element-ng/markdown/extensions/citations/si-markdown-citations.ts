@@ -150,6 +150,14 @@ export const siMarkdownCitationsTransformer = (
         continue;
       }
 
+      if (child.type === 'textDirective' && child.name === 'cite') {
+        const directiveCitationIndex = citationsByIdentifier.get(getText(child));
+        if (directiveCitationIndex !== undefined) {
+          children.splice(index, 1, createCitation(directiveCitationIndex));
+          continue;
+        }
+      }
+
       if ('children' in child) {
         replaceCitations(child as Parent);
       }

@@ -34,6 +34,25 @@ describe('siMarkdownCitationsTransformer', () => {
     ]);
   });
 
+  it('replaces inline cite directives with identifier citations', () => {
+    const processor = makeOptions().makeProcessor({
+      citations: [
+        {
+          identifier: 'doc1',
+          name: 'Annual Report',
+          url: 'https://example.com/report'
+        }
+      ]
+    });
+    const tree = processor.runSync(processor.parse('Revenue increased by 12% :cite[doc1].'));
+
+    expect((tree.children[0] as Parent).children).toMatchObject([
+      { type: 'text', value: 'Revenue increased by 12% ' },
+      { type: 'citations', children: [{ type: 'citation', citationIndex: 0 }] },
+      { type: 'text', value: '.' }
+    ]);
+  });
+
   it('replaces nodes covered by position citations', () => {
     const markdown = 'Revenue increased in 2025.[[1]](https://example.com/report)';
     const processor = makeOptions().makeProcessor({
