@@ -259,9 +259,26 @@ This is cool. **Any** markdown works here too.
 
 ```js
 console.log('Hello world');
-````
+```
 
 :::
 
 > [!NOTE]
 > This is a GitHub style callout
+
+And with the custom tab set directives
+
+::::tabset{height=12rem}
+:::tab{heading="First"}
+First content with **any** markdown inside
+
+```js
+console.log('Hello world');
+```
+
+:::
+
+:::tab{heading="Second"}
+Second content
+:::
+::::
