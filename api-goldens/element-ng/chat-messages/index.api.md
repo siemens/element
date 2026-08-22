@@ -57,11 +57,9 @@ export interface PromptSuggestion {
 
 // @public
 export class SiAiMessageComponent {
-    constructor();
     readonly actionParam: _angular_core.InputSignal<unknown>;
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
     readonly content: _angular_core.InputSignal<string>;
-    readonly contentFormatter: _angular_core.InputSignal<((text: string) => string | Node) | undefined>;
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
@@ -152,12 +150,10 @@ export class SiChatMessageComponent {
 
 // @public
 export class SiUserMessageComponent {
-    constructor();
     readonly actionParam: _angular_core.InputSignal<any>;
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
     readonly attachments: _angular_core.InputSignal<Attachment[]>;
     readonly content: _angular_core.InputSignal<string>;
-    readonly contentFormatter: _angular_core.InputSignal<((text: string) => string | Node) | undefined>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
