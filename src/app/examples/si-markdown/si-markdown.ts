@@ -13,6 +13,7 @@ import {
   SiMarkdownCitation,
   SiMarkdownComponent
 } from '@siemens/element-ng/markdown';
+import { siMarkdownTabsetDirective } from '@siemens/element-ng/markdown/directives/tabs';
 import { siMarkdownCitations } from '@siemens/element-ng/markdown/extensions/citations';
 import { siMarkdownMathKaTeX } from '@siemens/element-ng/markdown/extensions/katex';
 import { siMarkdownMermaid } from '@siemens/element-ng/markdown/extensions/mermaid';
@@ -64,6 +65,9 @@ export class SampleComponent implements OnInit {
     }
     if (this.useGemojis()) {
       opts.installUnifiedPlugin(remarkGemoji);
+    }
+    if (this.useTabsetDirective()) {
+      opts.registerDirective(siMarkdownTabsetDirective());
     }
 
     return opts;
@@ -129,6 +133,7 @@ export class SampleComponent implements OnInit {
   protected readonly useKatex = signal(true);
   protected readonly useMermaid = signal(true);
   protected readonly useGemojis = signal(true);
+  protected readonly useTabsetDirective = signal(true);
   protected readonly debug = signal(false);
 
   private readonly textarea = viewChild.required<ElementRef<HTMLTextAreaElement>>('textarea');
