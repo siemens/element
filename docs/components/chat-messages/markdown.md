@@ -111,6 +111,97 @@ by the Element integrations, such as emoji shortcodes.
 > **Bundle size:** KaTeX, Mermaid, Highlight.js, and additional `unified` plugins increase the
 > application bundle size. Import and configure only the integrations your Markdown content requires.
 
+### Directives
+
+Directives add named, component-backed elements to Markdown. The renderer supports the directive
+syntax provided by [`remark-directive`](https://github.com/remarkjs/remark-directive): inline
+directives use `:name[label]{attributes}`, leaf directives use `::name{attributes}`, and container
+directives wrap Markdown content with matching colon fences, at least three colons.
+
+```md
+:::name{attribute=value attribute2=value2}
+Normal **Markdown** content.
+:::
+```
+
+Register a directive handler with `registerDirective()`. A handler maps a directive name to an
+Angular component that implements `SiMarkdownExtensionComponent`; that component receives the
+parsed directive node, its parent, and any registered options as signal inputs.
+
+Example:
+
+```md
+::notice{message="Scheduled maintenance starts at 22:00."}
+```
+
+```ts
+import { Component, input } from '@angular/core';
+import {
+  makeSiMarkdownOptions,
+  type SiMarkdownDirectiveNode,
+  type SiMarkdownExtensionComponent
+} from '@siemens/element-ng/markdown';
+import { type Node, type Parent } from 'mdast';
+
+@Component({
+  selector: 'si-markdown-notice',
+  template: '<div class="notice">{{ node().attributes.message }}</div>'
+})
+class MarkdownNoticeComponent implements SiMarkdownExtensionComponent {
+  readonly node = input.required<SiMarkdownDirectiveNode>();
+  readonly parent = input.required<Parent>();
+  readonly options = input<unknown>();
+}
+
+protected readonly markdownOptions = makeSiMarkdownOptions().registerDirective({
+  type: 'notice',
+  component: MarkdownNoticeComponent
+});
+```
+
+#### Callout
+
+The `callout` container directive is integrated by default. Use its optional `type` attribute to
+choose a visual severity: `success`, `info`, `warning`, `danger`, `caution`, `critical`, `note`,
+or `tip`. `note` is the default.
+
+```md
+:::callout{type=warning heading="Optional heading"}
+This action cannot be undone.
+:::
+```
+
+#### Tabs
+
+The tabset directive is an opt-in directive that adds Element tabset. Register
+`siMarkdownTabsetDirective()` to enable the `tabset` container directive. Its child `tab`
+directives map to `si-tab`; only their `heading` attribute is used. Use a longer fence for the
+outer `tabset` when nesting `tab` directives.
+
+```ts
+import { makeSiMarkdownOptions } from '@siemens/element-ng/markdown';
+import { siMarkdownTabsetDirective } from '@siemens/element-ng/markdown/directives/tabs';
+
+protected readonly markdownOptions = makeSiMarkdownOptions().registerDirective(
+  siMarkdownTabsetDirective()
+);
+```
+
+```md
+::::tabset{height=12rem}
+:::tab{heading="First tab"}
+First tab content.
+:::
+
+:::tab{heading="Second tab"}
+Second tab content.
+:::
+::::
+```
+
+Supported attribute on `::::tabset` is `height`. It can be any CSS length unit or `auto` to take
+up the space needed for the active tab.
+
 ### Custom extension
 
 An extension can install `unified` plugin(s) and associate the AST node types produced by that
