@@ -8,7 +8,7 @@ test.describe('si-markdown', () => {
   const example = 'si-markdown/si-markdown';
 
   test('markdown renderer', async ({ page, si }) => {
-    await page.setViewportSize({ width: 1200, height: 5200 });
+    await page.setViewportSize({ width: 1200, height: 6950 });
     await si.visitExample(example);
     await page.evaluate(() => document.fonts.ready);
     await expect(page.locator('si-markdown')).toContainText('This is awesome');
