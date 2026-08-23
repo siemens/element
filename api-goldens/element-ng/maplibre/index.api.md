@@ -4,6 +4,7 @@
 
 ```ts
 
+import * as i0 from '@angular/core';
 import { Signal } from '@angular/core';
 import { StyleSpecification } from 'maplibre-gl';
 
@@ -12,6 +13,14 @@ export const injectSiMapStyle: (key: string) => Signal<StyleSpecification>;
 
 // @public
 export const injectSiMapTranslations: () => Signal<Record<string, string>>;
+
+// @public (undocumented)
+export type MarkerStatus = 'default' | 'unknown' | 'success' | 'info' | 'warning' | 'danger' | 'caution' | 'critical';
+
+// @public (undocumented)
+export class SiStatusMarkerComponent {
+    readonly status: i0.InputSignal<MarkerStatus>;
+}
 
 // (No @packageDocumentation comment for this package)
 

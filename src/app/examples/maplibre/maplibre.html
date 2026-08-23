@@ -14,4 +14,25 @@
   <mgl-control mglAttribution position="bottom-left" />
   <mgl-control mglNavigation position="bottom-right" />
   <mgl-control mglGeolocate position="bottom-right" (geolocate)="onGeolocate($event)" />
+  @for (point of points(); track point) {
+    <!--
+      Only use this if you really need to use HTML/Angular component to render your symbol.
+      These markers are slow compared to a Layer of symbol because they're not rendered using WebGL.
+    -->
+    <mgl-marker #marker [feature]="point">
+      <si-status-marker [status]="point.properties.status" [ariaLabel]="point.properties.name" />
+    </mgl-marker>
+    <mgl-popup [marker]="marker">
+      <dl class="mb-0">
+        <dt>Name</dt>
+        <dd>{{ point.properties.name }}</dd>
+        <dt>Description</dt>
+        <dd>{{ point.properties.description }}</dd>
+        <dt>Status</dt>
+        <dd>{{ point.properties.status }}</dd>
+        <dt>Coordinates</dt>
+        <dd>{{ point.geometry.coordinates[0] }}, {{ point.geometry.coordinates[1] }}</dd>
+      </dl>
+    </mgl-popup>
+  }
 </mgl-map>
