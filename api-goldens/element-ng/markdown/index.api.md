@@ -23,6 +23,7 @@ import { RootContent } from 'mdast';
 import { Signal } from '@angular/core';
 import { TemplateRef } from '@angular/core';
 import { Transformer as Transformer_2 } from 'unified';
+import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 import { Type } from '@angular/core';
 
 // @public
@@ -58,8 +59,16 @@ export interface ComputedAsyncOptions<T, R> {
     params: () => R;
 }
 
+// @public
+export interface DirectiveNode extends Parent {
+    attributes: Record<string, string | undefined>;
+    name: string;
+    // (undocumented)
+    type: 'containerDirective' | 'leafDirective' | 'textDirective';
+}
+
 // @public (undocumented)
-export type ExtendedRootContent = RootContent | Footnotes | Citations;
+export type ExtendedRootContent = RootContent | Footnotes | Citations | DirectiveNode;
 
 // @public
 export interface Footnotes extends Parent {
@@ -80,6 +89,20 @@ export interface PluginWithOptions {
 
 // @public
 export const SI_MARKDOWN_CONTROL: InjectionToken<SiMarkdownControl>;
+
+// @public (undocumented)
+export class SiMarkdownCalloutComponent implements SiMarkdownExtensionComponent {
+    // (undocumented)
+    readonly callouts: Record<CalloutType, Callout>;
+    // (undocumented)
+    readonly icons: Record<"elementLightOn", string>;
+    // (undocumented)
+    readonly node: _angular_core.InputSignal<Node_2>;
+    // (undocumented)
+    readonly options: _angular_core.InputSignal<unknown>;
+    // (undocumented)
+    readonly parent: _angular_core.InputSignal<Parent>;
+}
 
 // @public
 export interface SiMarkdownCitation extends SourceReference {
@@ -119,8 +142,12 @@ export interface SiMarkdownControl {
 }
 
 // @public
+export const siMarkdownDirective: (directives: ReadonlyMap<string, TypeHandler>) => SiMarkdownExtension;
+
+// @public
 export interface SiMarkdownExtension {
     codeTypes?: TypeHandler[];
+    directives?: TypeHandler[];
     plugins?: PluginWithOptions[];
     types?: TypeHandler[];
 }
@@ -177,6 +204,7 @@ export class SiMarkdownOptions {
     installExtension(extension: SiMarkdownExtension): SiMarkdownOptions;
     installUnifiedPlugin(plugin: UnifiedPlugin, options?: UnifiedPluginOptions): SiMarkdownOptions;
     makeProcessor(meta: SiMarkdownMetadata): Processor<Root, Root, SiMarkdownRoot, undefined, undefined>;
+    registerDirective(directives: TypeHandler | TypeHandler[]): SiMarkdownOptions;
     setCodeHighlighter(highlighter?: SiMarkdownHighlighter): SiMarkdownOptions;
 }
 
