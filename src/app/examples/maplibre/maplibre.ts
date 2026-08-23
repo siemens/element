@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   AttributionControlDirective,
   ControlComponent,
@@ -11,14 +11,40 @@ import {
   GeolocateControlDirective,
   GlobeControlDirective,
   MapComponent,
+  MarkerComponent,
   NavigationControlDirective,
+  PopupComponent,
   Position,
   ScaleControlDirective
 } from '@maplibre/ngx-maplibre-gl';
-import { injectSiMapStyle, injectSiMapTranslations } from '@siemens/element-ng/maplibre';
+import {
+  injectSiMapStyle,
+  injectSiMapTranslations,
+  MarkerStatus,
+  SiStatusMarkerComponent
+} from '@siemens/element-ng/maplibre';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 import { environment } from '../../../environments/environment';
+
+type StatusPoint = GeoJSON.Feature<
+  GeoJSON.Point,
+  { name: string; description: string; type: 'status'; status: MarkerStatus }
+>;
+
+const buildPoint = (coordinates: number[], status: MarkerStatus): StatusPoint => ({
+  type: 'Feature',
+  geometry: {
+    type: 'Point',
+    coordinates
+  },
+  properties: {
+    name: 'marker point',
+    description: `Description for marker point`,
+    type: 'status',
+    status
+  }
+});
 
 @Component({
   selector: 'app-sample',
@@ -29,8 +55,11 @@ import { environment } from '../../../environments/environment';
     GeolocateControlDirective,
     GlobeControlDirective,
     MapComponent,
+    MarkerComponent,
     NavigationControlDirective,
-    ScaleControlDirective
+    PopupComponent,
+    ScaleControlDirective,
+    SiStatusMarkerComponent
   ],
   templateUrl: './maplibre.html',
   host: {
@@ -41,6 +70,16 @@ export class SampleComponent {
   protected readonly logEvent = inject(LOG_EVENT);
   protected readonly mapStyle = injectSiMapStyle(environment.maptilerKey);
   protected readonly mapTranslations = injectSiMapTranslations();
+  protected readonly points = signal<StatusPoint[]>([
+    buildPoint([11.34774, 48.138848], 'default'),
+    buildPoint([11.24774, 48.258848], 'unknown'),
+    buildPoint([11.18037, 48.258848], 'success'),
+    buildPoint([11.54774, 48.158848], 'info'),
+    buildPoint([11.51274, 48.178848], 'warning'),
+    buildPoint([11.54774, 48.178848], 'danger'),
+    buildPoint([11.37774, 48.288848], 'caution'),
+    buildPoint([11.52774, 48.280848], 'critical')
+  ]);
 
   protected onError(event: ErrorEvent & EventData): void {
     if (event.error.message) {

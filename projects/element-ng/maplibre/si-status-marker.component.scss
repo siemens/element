@@ -1,0 +1,55 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+  inline-size: 42px;
+  block-size: 42px;
+  color: variables.$element-ui-3;
+  cursor: pointer;
+
+  &[data-status='default'] {
+    color: variables.$element-ui-0;
+  }
+
+  &[data-status='success'] {
+    color: variables.$element-status-success;
+  }
+
+  &[data-status='info'] {
+    color: variables.$element-status-information;
+  }
+
+  &[data-status='warning'] {
+    color: variables.$element-status-warning;
+  }
+
+  &[data-status='danger'] {
+    color: variables.$element-status-danger;
+  }
+
+  &[data-status='caution'] {
+    color: variables.$element-status-caution;
+  }
+
+  &[data-status='critical'] {
+    color: variables.$element-status-critical;
+  }
+
+  svg {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .icon {
+    fill: currentColor;
+  }
+
+  .middle {
+    fill: variables.$element-base-1;
+  }
+
+  .symbol {
+    fill: variables.$element-text-primary;
+  }
+}

@@ -527,6 +527,9 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
 
 .maplibregl-popup-close-button {
   position: absolute;
+  block-size: calc(1.5rem + 2 * map.get(variables.$spacers, 2));
+  aspect-ratio: 1 / 1;
+  font-size: 1.25rem;
   inset-inline-end: 0;
   inset-block-start: 0;
   border: 0;
