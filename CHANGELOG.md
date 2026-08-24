@@ -1,3 +1,20 @@
+# [49.16.0](https://github.com/siemens/element/compare/v49.15.0...v49.16.0) (2026-08-24)
+
+
+### Features
+
+* **theme:** support dynamic root selectors ([ee6f770](https://github.com/siemens/element/commit/ee6f77085aad1194eb44aba831b8902b295ec5df))
+
+
+### Bug Fixes
+
+* **datepicker:** reset manually edited input value ([2d107c3](https://github.com/siemens/element/commit/2d107c3cda15dbff4122fc637c467dff094bdedc)), closes [#2574](https://github.com/siemens/element/issues/2574)
+* **empty-state:** align icon size with figma specs ([9603a0a](https://github.com/siemens/element/commit/9603a0a52ee8bf7fe5a7f52707e8e35ac5111447))
+* **empty-state:** keep overflowing content reachable ([e429cdc](https://github.com/siemens/element/commit/e429cdc00bd40a06d7189ffa1ae8937217ffbb53))
+* **split:** use tertiary ghost icon buttons in headers ([25c8a67](https://github.com/siemens/element/commit/25c8a6759c501f1193f246c249a5226203480bd2)), closes [#2520](https://github.com/siemens/element/issues/2520)
+* **tabs:** remove tabindex from non-scrollable panels ([1498e11](https://github.com/siemens/element/commit/1498e110f9070058c4fcd97509a32b4d42effa4c))
+* **translate-cli:** avoid shell expansion for glob ([6fdd8c0](https://github.com/siemens/element/commit/6fdd8c0845360dea718b18e83f0447e07ae927cd))
+
 # [49.15.0](https://github.com/siemens/element/compare/v49.14.0...v49.15.0) (2026-08-12)
 
 
