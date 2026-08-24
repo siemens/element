@@ -41,7 +41,6 @@ $colorbar-width: map.get(variables.$spacers, 2);
   padding-block: $item-padding;
   padding-inline: $item-padding-inline-small $item-padding;
   min-inline-size: var(--__si-status-bar-item-min-width, $item-min-width);
-  color: variables.$si-sys-text-primary;
   white-space: nowrap;
 
   > * {

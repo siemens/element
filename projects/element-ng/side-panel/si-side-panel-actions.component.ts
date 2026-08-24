@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
  *         icon="element-alarm-background-filled"
  *         iconColor="status-danger"
  *         stackedIcon="element-alarm-tick"
- *         stackedIconColor="text-body"
+ *         stackedIconColor="text-primary"
  *         (click)="action()"
  *       >
  *         Action

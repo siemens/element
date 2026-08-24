@@ -35,17 +35,11 @@
   }
 }
 
+// Deprecated legacy utilities. Use system-token text utilities instead.
 $text-colors: (
-  'primary': system-tokens.$si-sys-text-accent,
   'body': system-tokens.$si-sys-text-primary,
-  'secondary': system-tokens.$si-sys-text-secondary,
   'tertiary': system-tokens.$si-sys-text-disabled,
-  'success': system-tokens.$si-sys-text-success,
   'info': system-tokens.$si-sys-text-information,
-  'warning': system-tokens.$si-sys-text-warning,
-  'caution': system-tokens.$si-sys-text-caution,
-  'danger': system-tokens.$si-sys-text-danger,
-  'inverse': system-tokens.$si-sys-text-inverse,
   'muted': system-tokens.$si-sys-text-disabled
 ) !default;
 
@@ -55,6 +49,7 @@ $text-colors: (
   }
 }
 
+// Deprecated legacy utilities. Use system-token background utilities instead.
 $background-colors: (
   'primary': system-tokens.$si-sys-background-accent,
   'secondary': system-tokens.$si-sys-text-secondary,

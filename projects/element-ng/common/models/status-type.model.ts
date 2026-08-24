@@ -25,7 +25,7 @@ export const STATUS_ICON: { [key in EntityStatusType]: StatusIcon } = {
     color: 'status-success',
     stacked: 'element-state-tick smooth-auto',
     stackedColor: 'status-success-contrast',
-    background: 'bg-base-success',
+    background: 'background-success-subtle',
     severity: 5
   },
   info: {
@@ -33,7 +33,7 @@ export const STATUS_ICON: { [key in EntityStatusType]: StatusIcon } = {
     color: 'status-info',
     stacked: 'element-state-info smooth-auto',
     stackedColor: 'status-info-contrast',
-    background: 'bg-base-info',
+    background: 'background-information-subtle',
     severity: 4
   },
   caution: {
@@ -41,7 +41,7 @@ export const STATUS_ICON: { [key in EntityStatusType]: StatusIcon } = {
     color: 'status-caution',
     stacked: 'element-state-exclamation-mark smooth-auto',
     stackedColor: 'status-caution-contrast',
-    background: 'bg-base-caution',
+    background: 'background-caution-subtle',
     severity: 3
   },
   warning: {
@@ -49,7 +49,7 @@ export const STATUS_ICON: { [key in EntityStatusType]: StatusIcon } = {
     color: 'status-warning',
     stacked: 'element-state-exclamation-mark smooth-auto',
     stackedColor: 'status-warning-contrast',
-    background: 'bg-base-warning',
+    background: 'background-warning-subtle',
     severity: 2
   },
   danger: {
@@ -57,7 +57,7 @@ export const STATUS_ICON: { [key in EntityStatusType]: StatusIcon } = {
     color: 'status-danger',
     stacked: 'element-state-exclamation-mark smooth-auto',
     stackedColor: 'status-danger-contrast',
-    background: 'bg-base-danger',
+    background: 'background-danger-subtle',
     severity: 1
   },
   critical: {
@@ -65,7 +65,7 @@ export const STATUS_ICON: { [key in EntityStatusType]: StatusIcon } = {
     color: 'status-critical',
     stacked: 'element-state-exclamation-mark smooth-auto',
     stackedColor: 'status-critical-contrast',
-    background: 'bg-base-critical',
+    background: 'background-critical-subtle',
     severity: 0
   },
   progress: {
@@ -73,7 +73,7 @@ export const STATUS_ICON: { [key in EntityStatusType]: StatusIcon } = {
     color: 'status-info',
     stacked: 'element-state-progress smooth-auto',
     stackedColor: 'status-info-contrast',
-    background: 'bg-base-info',
+    background: 'background-information-subtle',
     severity: 7
   },
   pending: {
@@ -81,15 +81,15 @@ export const STATUS_ICON: { [key in EntityStatusType]: StatusIcon } = {
     color: 'status-caution',
     stacked: 'element-state-pause smooth-auto',
     stackedColor: 'status-caution-contrast',
-    background: 'bg-base-caution',
+    background: 'background-caution-subtle',
     severity: 6
   },
   unknown: {
     icon: 'element-circle-filled',
     color: 'status-neutral',
     stacked: 'element-state-question-mark',
-    stackedColor: 'text-body',
-    background: 'bg-base-0',
+    stackedColor: 'text-primary',
+    background: 'background-0',
     severity: 8
   }
 };

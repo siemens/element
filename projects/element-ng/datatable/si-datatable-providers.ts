@@ -29,8 +29,8 @@ interface SiDatatableConfig extends NgxDatatableConfig {
 
 export const SI_DATATABLE_CONFIG: SiDatatableConfig = {
   cssClasses: {
-    sortAscending: 'icon element-sort-up text-primary',
-    sortDescending: 'icon element-sort-down text-primary',
+    sortAscending: 'icon element-sort-up text-accent',
+    sortDescending: 'icon element-sort-down text-accent',
     pagerLeftArrow: 'icon element-left-2 flip-rtl',
     pagerRightArrow: 'icon element-right-2 flip-rtl',
     pagerPrevious: 'icon element-double-left flip-rtl',

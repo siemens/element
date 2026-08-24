@@ -1,13 +1,13 @@
 <div class="wrapper">
   @if (!exampleUrl() && !template()) {
-    <p class="text-info" style="margin: 1em">
+    <p class="text-information" style="margin: 1em">
       No example specified. Head to
       <strong><a href="#/overview">/overview</a></strong>
       for a list of them.
     </p>
   }
   @if ((template() || reactTemplate() || vueTemplate() || jsTemplate()) && mode() === 'editor') {
-    <p class="text-info" style="margin: 1em">
+    <p class="text-information" style="margin: 1em">
       This is an adopted example built from the URL. Head to
       <strong><a href="#/overview">/overview</a></strong> for a list of examples.
     </p>

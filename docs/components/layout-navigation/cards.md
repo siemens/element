@@ -279,7 +279,7 @@ When card groups include footers, they automatically align at the bottom regardl
       </p>
     </div>
     <div class="card-footer">
-      <small class="text-muted">Last updated 3 mins ago</small>
+      <small class="text-disabled">Last updated 3 mins ago</small>
     </div>
   </div>
   <div class="card">
@@ -289,7 +289,7 @@ When card groups include footers, they automatically align at the bottom regardl
       </p>
     </div>
     <div class="card-footer">
-      <small class="text-muted">Last updated 3 mins ago</small>
+      <small class="text-disabled">Last updated 3 mins ago</small>
     </div>
   </div>
 </div>

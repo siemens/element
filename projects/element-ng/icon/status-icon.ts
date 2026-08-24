@@ -50,7 +50,7 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           color: 'status-success',
           stacked: 'elementStateTick',
           stackedColor: 'status-success-contrast',
-          background: 'bg-base-success',
+          background: 'background-success-subtle',
           severity: 5,
           ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.SUCCESS:Success`)
         },
@@ -59,7 +59,7 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           color: 'status-info',
           stacked: 'elementStateInfo',
           stackedColor: 'status-info-contrast',
-          background: 'bg-base-info',
+          background: 'background-information-subtle',
           severity: 4,
           ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.INFO:Info`)
         },
@@ -68,7 +68,7 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           color: 'status-caution',
           stacked: 'elementStateExclamationMark',
           stackedColor: 'status-caution-contrast',
-          background: 'bg-base-caution',
+          background: 'background-caution-subtle',
           severity: 3,
           ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.CAUTION:Caution`)
         },
@@ -77,7 +77,7 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           color: 'status-warning',
           stacked: 'elementStateExclamationMark',
           stackedColor: 'status-warning-contrast',
-          background: 'bg-base-warning',
+          background: 'background-warning-subtle',
           severity: 2,
           ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.WARNING:Warning`)
         },
@@ -86,7 +86,7 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           color: 'status-danger',
           stacked: 'elementStateExclamationMark',
           stackedColor: 'status-danger-contrast',
-          background: 'bg-base-danger',
+          background: 'background-danger-subtle',
           severity: 1,
           ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.DANGER:Danger`)
         },
@@ -95,7 +95,7 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           color: 'status-critical',
           stacked: 'elementStateExclamationMark',
           stackedColor: 'status-critical-contrast',
-          background: 'bg-base-critical',
+          background: 'background-critical-subtle',
           severity: 0,
           ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.CRITICAL:Critical`)
         },
@@ -104,7 +104,7 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           color: 'status-info',
           stacked: 'elementStateProgress',
           stackedColor: 'status-info-contrast',
-          background: 'bg-base-info',
+          background: 'background-information-subtle',
           severity: 7,
           ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.PROGRESS:Progress`)
         },
@@ -113,7 +113,7 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           color: 'status-caution',
           stacked: 'elementStatePause',
           stackedColor: 'status-caution-contrast',
-          background: 'bg-base-caution',
+          background: 'background-caution-subtle',
           severity: 6,
           ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.PENDING:Pending`)
         },
@@ -121,8 +121,8 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           icon: 'elementCircleFilled',
           color: 'status-neutral',
           stacked: 'elementStateQuestionMark',
-          stackedColor: 'text-body',
-          background: 'bg-base-0',
+          stackedColor: 'text-primary',
+          background: 'background-0',
           severity: 8,
           ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.UNKNOWN:Unknown`)
         }
