@@ -124,7 +124,7 @@
         >
           <si-icon [icon]="icons.elementCancel" />
         </button>
-        <div class="si-h5 text-primary">{{ cancelText() | translate }}</div>
+        <div class="si-h5 text-accent">{{ cancelText() | translate }}</div>
       </div>
     </div>
   }
@@ -197,7 +197,7 @@
         >
           <si-icon class="flip-rtl" [icon]="icons.elementLeft4" />
         </button>
-        <div class="si-h5 text-primary">{{ backText() | translate }}</div>
+        <div class="si-h5 text-accent">{{ backText() | translate }}</div>
       </div>
     }
   </div>
@@ -217,8 +217,8 @@
           <si-icon class="flip-rtl" [icon]="icons.elementRight4" />
         </button>
         <div
-          class="si-h5 text-primary"
-          [class.text-muted]="!currentStep?.isValid()"
+          class="si-h5 text-accent"
+          [class.text-disabled]="!currentStep?.isValid()"
           [attr.aria-disabled]="!currentStep?.isValid()"
           >{{ nextText() | translate }}</div
         >

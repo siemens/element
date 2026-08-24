@@ -1,6 +1,6 @@
 <div
   class="status-item rounded-2 focus-inside d-flex align-items-center"
-  [class.text-muted]="!value()"
+  [class.text-disabled]="!value()"
   [class.blink]="blink() && value()"
   [attr.tabindex]="clickable() ? '0' : ''"
   [attr.aria-disabled]="!value()"

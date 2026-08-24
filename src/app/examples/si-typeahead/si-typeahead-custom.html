@@ -1,6 +1,6 @@
 <app-filter-settings [(variant)]="variant" [(disabled)]="disable" [(showIcon)]="showIcon">
   <ng-template #newItemTemplate let-match="match" siTypeaheadTemplate>
-    <span class="text-info me-2">sweet home</span>
+    <span class="text-information me-2">sweet home</span>
     @for (segment of match.result; track $index) {
       <span [class.typeahead-match-segment-matching]="segment.isMatching">{{ segment.text }}</span>
     }

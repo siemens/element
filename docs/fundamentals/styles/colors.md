@@ -6,28 +6,28 @@ Apply color to text elements using the following classes:
 
 ```html
 <!-- Default Text Color -->
-<div class="text-body">default</div>
+<div class="text-primary">default</div>
 
 <!-- Text Color Classes -->
 <hr />
 <div class="text-secondary">text-secondary</div>
-<div class="text-muted">text-muted</div>
-<div class="text-primary">text-primary</div>
+<div class="text-disabled">text-disabled</div>
+<div class="text-accent">text-accent</div>
 
 <!-- Inverse Color Classes -->
 <hr />
-<div class="text-inverse bg-secondary">text-inverse</div>
+<div class="text-inverse background-neutral">text-inverse</div>
 
 <!-- Context Color Classes -->
 <hr />
 <div class="text-success">text-success</div>
 <div class="text-warning">text-warning</div>
 <div class="text-caution">text-caution</div>
-<div class="text-info">text-info</div>
+<div class="text-information">text-information</div>
 <div class="text-danger">text-danger</div>
 ```
 
-<si-docs-component example="typography/color-variants" height="380"></si-docs-component>
+<si-docs-component example="typography/color-variants" height="840"></si-docs-component>
 
 ## Using SASS variables
 

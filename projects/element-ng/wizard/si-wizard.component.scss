@@ -279,7 +279,7 @@ $wizard-vertical-divider-border-color: variables.$si-sys-border-4;
     cursor: default;
   }
 
-  &:not(.wizard-text-deactivate):hover .text-primary {
+  &:not(.wizard-text-deactivate):hover .text-accent {
     color: $wizard-hover-color !important; // stylelint-disable-line declaration-no-important
   }
 }

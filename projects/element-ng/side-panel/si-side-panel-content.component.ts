@@ -58,7 +58,7 @@ import { SidePanelDisplayMode, SidePanelNavigateConfig } from './side-panel.mode
  *         icon="element-alarm-background-filled"
  *         iconColor="status-danger"
  *         stackedIcon="element-alarm-tick"
- *         stackedIconColor="text-body"
+ *         stackedIconColor="text-primary"
  *         (click)="action()"
  *       >
  *         Action
@@ -142,7 +142,7 @@ export class SiSidePanelContentComponent implements OnInit {
    *         icon="element-alarm-background-filled"
    *         iconColor="status-danger"
    *         stackedIcon="element-alarm-tick"
-   *         stackedIconColor="text-body"
+   *         stackedIconColor="text-primary"
    *         (click)="action()"
    *       >
    *         Action

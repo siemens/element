@@ -1,1 +1,126 @@
-- text: bg-primary bg-secondary bg-tertiary bg-success bg-info bg-warning bg-danger bg-base-0 bg-base-1
+- table:
+  - rowgroup:
+    - row "Color utility Preview":
+      - columnheader "Color utility"
+      - columnheader "Preview"
+  - rowgroup:
+    - row "background-0":
+      - rowheader "background-0"
+      - cell
+    - row "background-1":
+      - rowheader "background-1"
+      - cell
+    - row "background-2":
+      - rowheader "background-2"
+      - cell
+    - row "background-3":
+      - rowheader "background-3"
+      - cell
+    - row "background-4":
+      - rowheader "background-4"
+      - cell
+    - row "background-accent":
+      - rowheader "background-accent"
+      - cell
+    - row "background-accent-active":
+      - rowheader "background-accent-active"
+      - cell
+    - row "background-accent-hover":
+      - rowheader "background-accent-hover"
+      - cell
+    - row "background-accent-secondary":
+      - rowheader "background-accent-secondary"
+      - cell
+    - row "background-accent-secondary-active":
+      - rowheader "background-accent-secondary-active"
+      - cell
+    - row "background-accent-secondary-hover":
+      - rowheader "background-accent-secondary-hover"
+      - cell
+    - row "background-caution":
+      - rowheader "background-caution"
+      - cell
+    - row "background-caution-active":
+      - rowheader "background-caution-active"
+      - cell
+    - row "background-caution-hover":
+      - rowheader "background-caution-hover"
+      - cell
+    - row "background-caution-subtle":
+      - rowheader "background-caution-subtle"
+      - cell
+    - row "background-critical":
+      - rowheader "background-critical"
+      - cell
+    - row "background-critical-active":
+      - rowheader "background-critical-active"
+      - cell
+    - row "background-critical-hover":
+      - rowheader "background-critical-hover"
+      - cell
+    - row "background-critical-subtle":
+      - rowheader "background-critical-subtle"
+      - cell
+    - row "background-danger":
+      - rowheader "background-danger"
+      - cell
+    - row "background-danger-active":
+      - rowheader "background-danger-active"
+      - cell
+    - row "background-danger-hover":
+      - rowheader "background-danger-hover"
+      - cell
+    - row "background-danger-secondary":
+      - rowheader "background-danger-secondary"
+      - cell
+    - row "background-danger-subtle":
+      - rowheader "background-danger-subtle"
+      - cell
+    - row "background-hover":
+      - rowheader "background-hover"
+      - cell
+    - row "background-information":
+      - rowheader "background-information"
+      - cell
+    - row "background-information-active":
+      - rowheader "background-information-active"
+      - cell
+    - row "background-information-hover":
+      - rowheader "background-information-hover"
+      - cell
+    - row "background-information-subtle":
+      - rowheader "background-information-subtle"
+      - cell
+    - row "background-inverse":
+      - rowheader "background-inverse"
+      - cell
+    - row "background-neutral":
+      - rowheader "background-neutral"
+      - cell
+    - row "background-success":
+      - rowheader "background-success"
+      - cell
+    - row "background-success-active":
+      - rowheader "background-success-active"
+      - cell
+    - row "background-success-hover":
+      - rowheader "background-success-hover"
+      - cell
+    - row "background-success-subtle":
+      - rowheader "background-success-subtle"
+      - cell
+    - row "background-warning":
+      - rowheader "background-warning"
+      - cell
+    - row "background-warning-active":
+      - rowheader "background-warning-active"
+      - cell
+    - row "background-warning-hover":
+      - rowheader "background-warning-hover"
+      - cell
+    - row "background-warning-secondary":
+      - rowheader "background-warning-secondary"
+      - cell
+    - row "background-warning-subtle":
+      - rowheader "background-warning-subtle"
+      - cell

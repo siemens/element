@@ -27,7 +27,7 @@
     @if (columnVisibilityConfigurable()) {
       <span
         class="btn btn-circle btn-tertiary ms-4"
-        [class.text-primary]="!column().disabled"
+        [class.text-accent]="!column().disabled"
         [class.disabled]="column().disabled"
         (click)="toggleVisibility()"
       >

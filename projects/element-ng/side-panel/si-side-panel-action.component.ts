@@ -19,7 +19,7 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
  *         icon="element-alarm-background-filled"
  *         iconColor="status-danger"
  *         stackedIcon="element-alarm-tick"
- *         stackedIconColor="text-body"
+ *         stackedIconColor="text-primary"
  *         (click)="action()"
  *       >
  *         Action
@@ -34,7 +34,7 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
   imports: [SiIconComponent],
   template: `
     @if (disabled()) {
-      <div class="icon dot text-muted text-center">&bull;</div>
+      <div class="icon dot text-disabled text-center">&bull;</div>
     } @else {
       <span class="icon icon-stack">
         <si-icon [class]="iconColor()" [icon]="icon()" />
@@ -62,7 +62,7 @@ export class SiSidePanelActionComponent {
   /** Optional stacked icon name displayed on top of the main icon. */
   readonly stackedIcon = input<string>();
 
-  /** CSS color class for the stacked icon (e.g. `'text-body'`). */
+  /** CSS color class for the stacked icon (e.g. `'text-primary'`). */
   readonly stackedIconColor = input<string>();
 
   /**

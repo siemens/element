@@ -41,7 +41,7 @@ describe('SiStatusBarItemComponent', () => {
     await fixture.whenStable();
 
     expect(element.querySelector('.item-title')).toHaveTextContent('heading');
-    expect(element.querySelector('.status-item .bg')).toHaveClass('bg-base-danger');
+    expect(element.querySelector('.status-item .bg')).toHaveClass('background-danger-subtle');
     expect(element.querySelector('.item-value')).toHaveTextContent('value');
   });
 });
