@@ -43,7 +43,9 @@ The following color palettes are specific to the context of data visualization:
 They are used to indicate distinctly different categories. Use these color
 palettes for small areas such as lines, dashes, or dots (e.g. trend, line chart).
 
-#### Data
+--8<-- "si-themes.md:si-sys-data-categorical"
+
+#### Data (deprecated)
 
 | Value light                                                  | Value dark                                                   | Token              | Associated color - light                   | Associated color - dark                    |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------ | ------------------------------------------ | ------------------------------------------ |
@@ -65,10 +67,14 @@ palettes for small areas such as lines, dashes, or dots (e.g. trend, line chart)
 | <si-docs-color style="background: #757563;"></si-docs-color> | <si-docs-color style="background: #AAAA96;"></si-docs-color> | `$element-data-16` | `$si-ref-color-data-sand-700`              | `$si-ref-color-data-sand-500`              |
 | <si-docs-color style="background: #4C4C68;"></si-docs-color> | <si-docs-color style="background: #7D8099;"></si-docs-color> | `$element-data-17` | `$si-ref-color-data-deep-blue-700`         | `$si-ref-color-data-deep-blue-500`         |
 
-#### Rating Scale
+#### Rating scale
 
 Use it to represent the status of a metric. It shows the quality or properties
 of the data in a scale such as poor, average, and good.
+
+--8<-- "si-themes.md:si-sys-data-rating"
+
+#### Rating scale (deprecated)
 
 | Value                                                        | Token                      | Use       | Associated color                 |
 | ------------------------------------------------------------ | -------------------------- | --------- | -------------------------------- |
@@ -82,6 +88,10 @@ of the data in a scale such as poor, average, and good.
 
 #### Data avocado
 
+--8<-- "si-themes.md:si-sys-data-sequential-avocado"
+
+#### Data avocado (deprecated)
+
 | Value light                                                  | Value dark                                                   | Token                     | Associated color - light         | Associated color - dark          |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------- | -------------------------------- | -------------------------------- |
 | <si-docs-color style="background: #9EC625;"></si-docs-color> | <si-docs-color style="background: #D1E98A;"></si-docs-color> | `$element-data-avocado-1` | `$si-ref-color-data-avocado-400` | `$si-ref-color-data-avocado-200` |
@@ -90,6 +100,10 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #2E3A0A;"></si-docs-color> | <si-docs-color style="background: #435410;"></si-docs-color> | `$element-data-avocado-4` | `$si-ref-color-data-avocado-900` | `$si-ref-color-data-avocado-700` |
 
 #### Data green
+
+--8<-- "si-themes.md:si-sys-data-sequential-green"
+
+#### Data green (deprecated)
 
 | Value light                                                  | Value dark                                                   | Token                   | Associated color - light       | Associated color - dark        |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------- | ------------------------------ | ------------------------------ |
@@ -100,6 +114,10 @@ of the data in a scale such as poor, average, and good.
 
 #### Data turquoise
 
+--8<-- "si-themes.md:si-sys-data-sequential-turquoise"
+
+#### Data turquoise (deprecated)
+
 | Value light                                                  | Value dark                                                   | Token                       | Associated color - light           | Associated color - dark            |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | --------------------------- | ---------------------------------- | ---------------------------------- |
 | <si-docs-color style="background: #00D7A0;"></si-docs-color> | <si-docs-color style="background: #47E2BB;"></si-docs-color> | `$element-data-turquoise-1` | `$si-ref-color-data-turquoise-400` | `$si-ref-color-data-turquoise-200` |
@@ -108,6 +126,10 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #005159;"></si-docs-color> | <si-docs-color style="background: #1A747D;"></si-docs-color> | `$element-data-turquoise-4` | `$si-ref-color-data-turquoise-900` | `$si-ref-color-data-turquoise-700` |
 
 #### Data interactive coral
+
+--8<-- "si-themes.md:si-sys-data-sequential-interactive-coral"
+
+#### Data interactive coral (deprecated)
 
 | Value light                                                  | Value dark                                                   | Token                               | Associated color - light                   | Associated color - dark                    |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------------------- | ------------------------------------------ | ------------------------------------------ |
@@ -118,6 +140,10 @@ of the data in a scale such as poor, average, and good.
 
 #### Data blue
 
+--8<-- "si-themes.md:si-sys-data-sequential-blue"
+
+#### Data blue (deprecated)
+
 | Value light                                                  | Value dark                                                   | Token                  | Associated color - light      | Associated color - dark       |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------- | ----------------------------- | ----------------------------- |
 | <si-docs-color style="background: #4DD1E7;"></si-docs-color> | <si-docs-color style="background: #80DFED;"></si-docs-color> | `$element-data-blue-1` | `$si-ref-color-data-blue-400` | `$si-ref-color-data-blue-200` |
@@ -126,6 +152,10 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #00557C;"></si-docs-color> | <si-docs-color style="background: #0087BE;"></si-docs-color> | `$element-data-blue-4` | `$si-ref-color-data-blue-900` | `$si-ref-color-data-blue-700` |
 
 #### Data royal blue
+
+--8<-- "si-themes.md:si-sys-data-sequential-royal-blue"
+
+#### Data royal blue (deprecated)
 
 | Value light                                                  | Value dark                                                   | Token                        | Associated color - light            | Associated color - dark             |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------- | ----------------------------------- | ----------------------------------- |
@@ -136,6 +166,10 @@ of the data in a scale such as poor, average, and good.
 
 #### Data purple
 
+--8<-- "si-themes.md:si-sys-data-sequential-purple"
+
+#### Data purple (deprecated)
+
 | Value light                                                  | Value dark                                                   | Token                    | Associated color - light        | Associated color - dark         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------ | ------------------------------- | ------------------------------- |
 | <si-docs-color style="background: #A68DFF;"></si-docs-color> | <si-docs-color style="background: #BFB0F3;"></si-docs-color> | `$element-data-purple-1` | `$si-ref-color-data-purple-400` | `$si-ref-color-data-purple-200` |
@@ -144,6 +178,10 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #553BA3;"></si-docs-color> | <si-docs-color style="background: #7353E5;"></si-docs-color> | `$element-data-purple-4` | `$si-ref-color-data-purple-900` | `$si-ref-color-data-purple-700` |
 
 #### Data orchid
+
+--8<-- "si-themes.md:si-sys-data-sequential-orchid"
+
+#### Data orchid (deprecated)
 
 | Value light                                                  | Value dark                                                   | Token                    | Associated color - light        | Associated color - dark         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------ | ------------------------------- | ------------------------------- |
@@ -154,6 +192,10 @@ of the data in a scale such as poor, average, and good.
 
 #### Data plum
 
+--8<-- "si-themes.md:si-sys-data-sequential-plum"
+
+#### Data plum (deprecated)
+
 | Value light                                                  | Value dark                                                   | Token                  | Associated color - light      | Associated color - dark       |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------- | ----------------------------- | ----------------------------- |
 | <si-docs-color style="background: #E5659B;"></si-docs-color> | <si-docs-color style="background: #FF98C4;"></si-docs-color> | `$element-data-plum-1` | `$si-ref-color-data-plum-400` | `$si-ref-color-data-plum-200` |
@@ -162,6 +204,10 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #4F153D;"></si-docs-color> | <si-docs-color style="background: #9F1853;"></si-docs-color> | `$element-data-plum-4` | `$si-ref-color-data-plum-900` | `$si-ref-color-data-plum-700` |
 
 #### Data red
+
+--8<-- "si-themes.md:si-sys-data-sequential-red"
+
+#### Data red (deprecated)
 
 | Value light                                                  | Value dark                                                   | Token                 | Associated color - light     | Associated color - dark      |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | --------------------- | ---------------------------- | ---------------------------- |
@@ -172,6 +218,10 @@ of the data in a scale such as poor, average, and good.
 
 #### Data orange
 
+--8<-- "si-themes.md:si-sys-data-sequential-orange"
+
+#### Data orange (deprecated)
+
 | Value light                                                  | Value dark                                                   | Token                    | Associated color - light        | Associated color - dark         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------ | ------------------------------- | ------------------------------- |
 | <si-docs-color style="background: #FFBC66;"></si-docs-color> | <si-docs-color style="background: #FFBC66;"></si-docs-color> | `$element-data-orange-1` | `$si-ref-color-data-orange-200` | `$si-ref-color-data-orange-200` |
@@ -180,6 +230,10 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #BC551E;"></si-docs-color> | <si-docs-color style="background: #BC551E;"></si-docs-color> | `$element-data-orange-4` | `$si-ref-color-data-orange-700` | `$si-ref-color-data-orange-700` |
 
 #### Data yellow
+
+--8<-- "si-themes.md:si-sys-data-sequential-yellow"
+
+#### Data yellow (deprecated)
 
 | Value light                                                  | Value dark                                                   | Token                    | Associated color - light        | Associated color - dark         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------ | ------------------------------- | ------------------------------- |
@@ -190,6 +244,10 @@ of the data in a scale such as poor, average, and good.
 
 #### Data sand
 
+--8<-- "si-themes.md:si-sys-data-sequential-sand"
+
+#### Data sand (deprecated)
+
 | Value light                                                  | Value dark                                                   | Token                  | Associated color - light      | Associated color - dark       |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------- | ----------------------------- | ----------------------------- |
 | <si-docs-color style="background: #C5C5B8;"></si-docs-color> | <si-docs-color style="background: #DFDFD9;"></si-docs-color> | `$element-data-sand-1` | `$si-ref-color-data-sand-400` | `$si-ref-color-data-sand-200` |
@@ -198,6 +256,10 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #5E5E4A;"></si-docs-color> | <si-docs-color style="background: #757563;"></si-docs-color> | `$element-data-sand-4` | `$si-ref-color-data-sand-900` | `$si-ref-color-data-sand-700` |
 
 #### Data deep blue
+
+--8<-- "si-themes.md:si-sys-data-sequential-deep-blue"
+
+#### Data deep blue (deprecated)
 
 | Value light                                                  | Value dark                                                   | Token                       | Associated color - light           | Associated color - dark            |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | --------------------------- | ---------------------------------- | ---------------------------------- |
