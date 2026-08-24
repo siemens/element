@@ -20,7 +20,7 @@ export interface MarkdownCodeOptions {
   imports: [NgComponentOutlet, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-markdown-code.component.html',
   host: {
-    class: 'd-flex flex-column px-6 py-5 mb-6 border rounded bg-base-2',
+    class: 'd-flex flex-column px-6 py-5 mb-6 border rounded',
     '[attr.data-line]': 'node().position?.start?.line'
   }
 })
