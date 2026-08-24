@@ -41,7 +41,27 @@ Naming colors semantically has two benefits:
 
 The following categories are defined in our system:
 
-### UI
+### Background
+
+--8<-- "si-themes.md:si-sys-background"
+
+### Border
+
+--8<-- "si-themes.md:si-sys-border"
+
+### Text
+
+--8<-- "si-themes.md:si-sys-text"
+
+### Effects
+
+--8<-- "si-themes.md:si-sys-effects"
+
+### Code
+
+--8<-- "si-themes.md:si-sys-code"
+
+### UI (deprecated)
 
 UI colors are used on structural properties and icons and provide good contrast
 when used over any background.
@@ -57,7 +77,7 @@ when used over any background.
 | <si-docs-color style="background: #ffffff;"></si-docs-color> | <si-docs-color style="background: #23233c;"></si-docs-color> | `$element-ui-5`       | Inverse                          | `$si-ref-color-main-brand-white`          | `$si-ref-color-main-deep-blue-800`           |
 | <si-docs-color style="background: #000000;"></si-docs-color> | <si-docs-color style="background: #000000;"></si-docs-color> | `$element-ui-6`       | Shadows                          | `$si-ref-color-main-brand-black`          | `$si-ref-color-main-brand-black`             |
 
-### Base
+### Base (deprecated)
 
 Base colors are used as backgrounds of containers.
 
@@ -79,7 +99,7 @@ Base colors are used as backgrounds of containers.
 | <si-docs-color style="background: #0000004D;"></si-docs-color> | <si-docs-color style="background: #000000B3;"></si-docs-color> | `$element-base-translucent-1` | Translucent, e.g. backdrop                                | `rgba($si-ref-color-main-brand-black, 0.3)`    | `rgba($si-ref-color-main-brand-black, 0.7)`  |
 | <si-docs-color style="background: #000028E2;"></si-docs-color> | <si-docs-color style="background: #FFFFFFE2;"></si-docs-color> | `$element-base-translucent-2` | Slightly translucent background, e.g. toasts              | `rgba($si-ref-color-main-deep-blue-900, 0.88)` | `rgba($si-ref-color-main-brand-white, 0.88)` |
 
-### Actions
+### Actions (deprecated)
 
 Action colors are used to indicate actions that users can perform.
 
@@ -104,7 +124,7 @@ Action colors are used to indicate actions that users can perform.
 | <si-docs-color style="background: #ffffff;"></si-docs-color>   | <si-docs-color style="background: #ffffff;"></si-docs-color>   | `$element-action-danger-text`            | Danger text color              | `$si-ref-color-main-brand-white`          | `$si-ref-color-main-brand-white`             |
 | <si-docs-color style="background: #199fff;"></si-docs-color>   | <si-docs-color style="background: #199fff;"></si-docs-color>   | `$element-focus-default`                 | Default focus shadow color     | `$si-ref-color-main-brand-focus`          | `$si-ref-color-main-brand-focus`             |
 
-### Text
+### Text (deprecated)
 
 Similarly, categories for typography colors are also defined in this system.
 
@@ -122,7 +142,7 @@ Similarly, categories for typography colors are also defined in this system.
 | <si-docs-color style="background: #a60823;"></si-docs-color> | <si-docs-color style="background: #ff8e9c;"></si-docs-color> | `$element-text-danger`      | Danger        | `$si-ref-color-main-red-700`              | `$si-ref-color-main-red-300`                 |
 | <si-docs-color style="background: #a733bc;"></si-docs-color> | <si-docs-color style="background: #edd6f2;"></si-docs-color> | `$element-text-critical`    | Critical      | `$si-ref-color-data-orchid-500`           | `$si-ref-color-data-orchid-100`              |
 
-### Status
+### Status (deprecated)
 
 Status colors are used to describe and/or report on the status of different
 things.
