@@ -22,7 +22,7 @@ export interface SiListWidgetItem {
   badge?: TranslatableString;
   /**
    * Defines the badge color. Must be one of the element `bg-<color>` CSS classes,
-   * like `bg-primary`, `bg-secondary`, 'bg-caution'. Use only the name without `bg`.
+   * like `background-accent`, `background-neutral`, 'bg-caution'. Use only the name without `bg`.
    */
   badgeColor?: string;
   /** Optional translatable text that is display to the right. */

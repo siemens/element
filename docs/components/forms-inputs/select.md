@@ -147,7 +147,7 @@ Options are provided as an array of `SelectItem<T>` objects:
       label: 'Label',
       disabled: false,
       icon: 'element-face-happy',
-      iconColor: 'status-success'
+      iconColor: 'text-success'
     }
   ]"
 />

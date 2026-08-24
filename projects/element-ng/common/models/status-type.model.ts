@@ -22,74 +22,74 @@ export interface StatusIcon {
 export const STATUS_ICON: { [key in EntityStatusType]: StatusIcon } = {
   success: {
     icon: 'element-circle-filled',
-    color: 'status-success',
+    color: 'text-success',
     stacked: 'element-state-tick smooth-auto',
-    stackedColor: 'status-success-contrast',
-    background: 'bg-base-success',
+    stackedColor: 'text-on-success',
+    background: 'background-success-subtle',
     severity: 5
   },
   info: {
     icon: 'element-square-filled',
-    color: 'status-info',
+    color: 'text-information',
     stacked: 'element-state-info smooth-auto',
-    stackedColor: 'status-info-contrast',
-    background: 'bg-base-info',
+    stackedColor: 'text-on-information',
+    background: 'background-information-subtle',
     severity: 4
   },
   caution: {
     icon: 'element-square-45-filled',
-    color: 'status-caution',
+    color: 'text-caution',
     stacked: 'element-state-exclamation-mark smooth-auto',
-    stackedColor: 'status-caution-contrast',
-    background: 'bg-base-caution',
+    stackedColor: 'text-on-caution',
+    background: 'background-caution-subtle',
     severity: 3
   },
   warning: {
     icon: 'element-triangle-filled',
-    color: 'status-warning',
+    color: 'text-warning',
     stacked: 'element-state-exclamation-mark smooth-auto',
-    stackedColor: 'status-warning-contrast',
-    background: 'bg-base-warning',
+    stackedColor: 'text-on-warning',
+    background: 'background-warning-subtle',
     severity: 2
   },
   danger: {
     icon: 'element-circle-filled',
-    color: 'status-danger',
+    color: 'text-danger',
     stacked: 'element-state-exclamation-mark smooth-auto',
-    stackedColor: 'status-danger-contrast',
-    background: 'bg-base-danger',
+    stackedColor: 'text-on-danger',
+    background: 'background-danger-subtle',
     severity: 1
   },
   critical: {
     icon: 'element-octagon-filled',
-    color: 'status-critical',
+    color: 'text-critical',
     stacked: 'element-state-exclamation-mark smooth-auto',
-    stackedColor: 'status-critical-contrast',
-    background: 'bg-base-critical',
+    stackedColor: 'text-on-critical',
+    background: 'background-critical-subtle',
     severity: 0
   },
   progress: {
     icon: 'element-circle-filled',
-    color: 'status-info',
+    color: 'text-information',
     stacked: 'element-state-progress smooth-auto',
-    stackedColor: 'status-info-contrast',
-    background: 'bg-base-info',
+    stackedColor: 'text-on-information',
+    background: 'background-information-subtle',
     severity: 7
   },
   pending: {
     icon: 'element-circle-filled',
-    color: 'status-caution',
+    color: 'text-caution',
     stacked: 'element-state-pause smooth-auto',
-    stackedColor: 'status-caution-contrast',
-    background: 'bg-base-caution',
+    stackedColor: 'text-on-caution',
+    background: 'background-caution-subtle',
     severity: 6
   },
   unknown: {
     icon: 'element-circle-filled',
-    color: 'status-neutral',
+    color: 'text-disabled',
     stacked: 'element-state-question-mark',
-    stackedColor: 'text-body',
-    background: 'bg-base-0',
+    stackedColor: 'text-primary',
+    background: 'background-0',
     severity: 8
   }
 };

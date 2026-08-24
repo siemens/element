@@ -1,0 +1,256 @@
+@use '../variables/system-tokens' as tokens;
+
+@mixin background-utilities($prefix: 'background-') {
+  .#{$prefix}0 {
+    background-color: tokens.$si-sys-background-0;
+  }
+  .#{$prefix}1 {
+    background-color: tokens.$si-sys-background-1;
+  }
+  .#{$prefix}2 {
+    background-color: tokens.$si-sys-background-2;
+  }
+  .#{$prefix}3 {
+    background-color: tokens.$si-sys-background-3;
+  }
+  .#{$prefix}4 {
+    background-color: tokens.$si-sys-background-4;
+  }
+  .#{$prefix}accent {
+    background-color: tokens.$si-sys-background-accent;
+  }
+  .#{$prefix}accent-active {
+    background-color: tokens.$si-sys-background-accent-active;
+  }
+  .#{$prefix}accent-hover {
+    background-color: tokens.$si-sys-background-accent-hover;
+  }
+  .#{$prefix}accent-secondary {
+    background-color: tokens.$si-sys-background-accent-secondary;
+  }
+  .#{$prefix}accent-secondary-active {
+    background-color: tokens.$si-sys-background-accent-secondary-active;
+  }
+  .#{$prefix}accent-secondary-hover {
+    background-color: tokens.$si-sys-background-accent-secondary-hover;
+  }
+  .#{$prefix}caution {
+    background-color: tokens.$si-sys-background-caution;
+  }
+  .#{$prefix}caution-active {
+    background-color: tokens.$si-sys-background-caution-active;
+  }
+  .#{$prefix}caution-hover {
+    background-color: tokens.$si-sys-background-caution-hover;
+  }
+  .#{$prefix}caution-subtle {
+    background-color: tokens.$si-sys-background-caution-subtle;
+  }
+  .#{$prefix}critical {
+    background-color: tokens.$si-sys-background-critical;
+  }
+  .#{$prefix}critical-active {
+    background-color: tokens.$si-sys-background-critical-active;
+  }
+  .#{$prefix}critical-hover {
+    background-color: tokens.$si-sys-background-critical-hover;
+  }
+  .#{$prefix}critical-subtle {
+    background-color: tokens.$si-sys-background-critical-subtle;
+  }
+  .#{$prefix}danger {
+    background-color: tokens.$si-sys-background-danger;
+  }
+  .#{$prefix}danger-active {
+    background-color: tokens.$si-sys-background-danger-active;
+  }
+  .#{$prefix}danger-hover {
+    background-color: tokens.$si-sys-background-danger-hover;
+  }
+  .#{$prefix}danger-secondary {
+    background-color: tokens.$si-sys-background-danger-secondary;
+  }
+  .#{$prefix}danger-subtle {
+    background-color: tokens.$si-sys-background-danger-subtle;
+  }
+  .#{$prefix}hover {
+    background-color: tokens.$si-sys-background-hover;
+  }
+  .#{$prefix}information {
+    background-color: tokens.$si-sys-background-information;
+  }
+  .#{$prefix}information-active {
+    background-color: tokens.$si-sys-background-information-active;
+  }
+  .#{$prefix}information-hover {
+    background-color: tokens.$si-sys-background-information-hover;
+  }
+  .#{$prefix}information-subtle {
+    background-color: tokens.$si-sys-background-information-subtle;
+  }
+  .#{$prefix}inverse {
+    background-color: tokens.$si-sys-background-inverse;
+  }
+  .#{$prefix}neutral {
+    background-color: tokens.$si-sys-background-neutral;
+  }
+  .#{$prefix}success {
+    background-color: tokens.$si-sys-background-success;
+  }
+  .#{$prefix}success-active {
+    background-color: tokens.$si-sys-background-success-active;
+  }
+  .#{$prefix}success-hover {
+    background-color: tokens.$si-sys-background-success-hover;
+  }
+  .#{$prefix}success-subtle {
+    background-color: tokens.$si-sys-background-success-subtle;
+  }
+  .#{$prefix}warning {
+    background-color: tokens.$si-sys-background-warning;
+  }
+  .#{$prefix}warning-active {
+    background-color: tokens.$si-sys-background-warning-active;
+  }
+  .#{$prefix}warning-hover {
+    background-color: tokens.$si-sys-background-warning-hover;
+  }
+  .#{$prefix}warning-secondary {
+    background-color: tokens.$si-sys-background-warning-secondary;
+  }
+  .#{$prefix}warning-subtle {
+    background-color: tokens.$si-sys-background-warning-subtle;
+  }
+}
+
+@mixin text-utilities($prefix: 'text-') {
+  .#{$prefix}accent {
+    color: tokens.$si-sys-text-accent;
+  }
+  .#{$prefix}accent-active {
+    color: tokens.$si-sys-text-accent-active;
+  }
+  .#{$prefix}accent-hover {
+    color: tokens.$si-sys-text-accent-hover;
+  }
+  .#{$prefix}caution {
+    color: tokens.$si-sys-text-caution;
+  }
+  .#{$prefix}critical {
+    color: tokens.$si-sys-text-critical;
+  }
+  .#{$prefix}danger {
+    color: tokens.$si-sys-text-danger;
+  }
+  .#{$prefix}disabled {
+    color: tokens.$si-sys-text-disabled;
+  }
+  .#{$prefix}information {
+    color: tokens.$si-sys-text-information;
+  }
+  .#{$prefix}inverse {
+    color: tokens.$si-sys-text-inverse;
+  }
+  .#{$prefix}on-accent {
+    color: tokens.$si-sys-text-on-accent;
+  }
+  .#{$prefix}on-accent-secondary {
+    color: tokens.$si-sys-text-on-accent-secondary;
+  }
+  .#{$prefix}on-accent-secondary-active {
+    color: tokens.$si-sys-text-on-accent-secondary-active;
+  }
+  .#{$prefix}on-accent-secondary-hover {
+    color: tokens.$si-sys-text-on-accent-secondary-hover;
+  }
+  .#{$prefix}on-caution {
+    color: tokens.$si-sys-text-on-caution;
+  }
+  .#{$prefix}on-critical {
+    color: tokens.$si-sys-text-on-critical;
+  }
+  .#{$prefix}on-danger {
+    color: tokens.$si-sys-text-on-danger;
+  }
+  .#{$prefix}on-danger-secondary {
+    color: tokens.$si-sys-text-on-danger-secondary;
+  }
+  .#{$prefix}on-information {
+    color: tokens.$si-sys-text-on-information;
+  }
+  .#{$prefix}on-success {
+    color: tokens.$si-sys-text-on-success;
+  }
+  .#{$prefix}on-warning {
+    color: tokens.$si-sys-text-on-warning;
+  }
+  .#{$prefix}on-warning-secondary {
+    color: tokens.$si-sys-text-on-warning-secondary;
+  }
+  .#{$prefix}primary {
+    color: tokens.$si-sys-text-primary;
+  }
+  .#{$prefix}secondary {
+    color: tokens.$si-sys-text-secondary;
+  }
+  .#{$prefix}success {
+    color: tokens.$si-sys-text-success;
+  }
+  .#{$prefix}warning {
+    color: tokens.$si-sys-text-warning;
+  }
+}
+
+@mixin border-utilities($prefix: 'border-') {
+  .#{$prefix}1 {
+    border-color: tokens.$si-sys-border-1;
+  }
+  .#{$prefix}2 {
+    border-color: tokens.$si-sys-border-2;
+  }
+  .#{$prefix}3 {
+    border-color: tokens.$si-sys-border-3;
+  }
+  .#{$prefix}4 {
+    border-color: tokens.$si-sys-border-4;
+  }
+  .#{$prefix}accent {
+    border-color: tokens.$si-sys-border-accent;
+  }
+  .#{$prefix}accent-active {
+    border-color: tokens.$si-sys-border-accent-active;
+  }
+  .#{$prefix}accent-hover {
+    border-color: tokens.$si-sys-border-accent-hover;
+  }
+  .#{$prefix}caution {
+    border-color: tokens.$si-sys-border-caution;
+  }
+  .#{$prefix}critical {
+    border-color: tokens.$si-sys-border-critical;
+  }
+  .#{$prefix}danger {
+    border-color: tokens.$si-sys-border-danger;
+  }
+  .#{$prefix}danger-secondary {
+    border-color: tokens.$si-sys-border-danger-secondary;
+  }
+  .#{$prefix}information {
+    border-color: tokens.$si-sys-border-information;
+  }
+  .#{$prefix}inverse {
+    border-color: tokens.$si-sys-border-inverse;
+  }
+  .#{$prefix}neutral {
+    border-color: tokens.$si-sys-border-neutral;
+  }
+  .#{$prefix}success {
+    border-color: tokens.$si-sys-border-success;
+  }
+  .#{$prefix}warning {
+    border-color: tokens.$si-sys-border-warning;
+  }
+  .#{$prefix}warning-secondary {
+    border-color: tokens.$si-sys-border-warning-secondary;
+  }
+}

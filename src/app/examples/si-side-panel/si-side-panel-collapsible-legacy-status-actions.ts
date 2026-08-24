@@ -89,19 +89,19 @@ export class SampleComponent implements OnDestroy {
   statusActions: StatusItem[] = [
     {
       title: 'Out of Service',
-      icon: 'element-out-of-service status-warning',
+      icon: 'element-out-of-service text-warning',
       action: () => this.logEvent('Out of Service')
     },
     {
       title: 'System Operator',
-      icon: 'element-manual-filled status-warning',
+      icon: 'element-manual-filled text-warning',
       disabled: true,
       action: () => this.logEvent('System Operator')
     },
     {
       title: 'Event source\nactive, ack',
-      icon: 'element-alarm-background-filled status-danger',
-      overlayIcon: 'element-alarm-tick text-body',
+      icon: 'element-alarm-background-filled text-danger',
+      overlayIcon: 'element-alarm-tick text-primary',
       action: () => this.logEvent('Event source, active, ack')
     }
   ];

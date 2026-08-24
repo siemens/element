@@ -48,7 +48,7 @@ describe('SiListWidgetItemComponent', () => {
     value.set({ label: 'label', badge: 'badge', badgeColor: 'primary' });
     await fixture.whenStable();
     expect(element.querySelector('.badge')!).toHaveTextContent('badge');
-    expect(element.querySelector('.bg-primary')).toBeInTheDocument();
+    expect(element.querySelector('.background-accent')).toBeInTheDocument();
   });
 
   it('should display the item description', async () => {

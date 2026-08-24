@@ -72,17 +72,17 @@ describe('SiTimelineWidgetComponent', () => {
         title: 'Title',
         description: 'Description',
         icon: 'element-triangle-filled',
-        iconColor: 'status-warning',
+        iconColor: 'text-warning',
         stackedIcon: 'element-state-exclamation-mark',
-        stackedIconColor: 'status-warning-contrast'
+        stackedIconColor: 'text-on-warning'
       },
       {
         timeStamp: 'Today 23:59',
         title: 'Title',
         icon: 'element-circle-filled',
-        iconColor: 'status-danger',
+        iconColor: 'text-danger',
         stackedIcon: 'element-state-exclamation-mark',
-        stackedIconColor: 'status-danger-contrast'
+        stackedIconColor: 'text-on-danger'
       },
       {
         timeStamp: 'Today 23:59',

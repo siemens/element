@@ -25,12 +25,12 @@
   }
   @let eventIconValue = eventIcon();
   @if (eventOut()) {
-    <si-icon class="icon text-body event-out flip-rtl" [icon]="icons.elementRight4" />
+    <si-icon class="icon text-primary event-out flip-rtl" [icon]="icons.elementRight4" />
   } @else if (eventIconValue) {
-    <si-icon class="icon text-body event-out" [icon]="eventIconValue" />
+    <si-icon class="icon text-primary event-out" [icon]="eventIconValue" />
   }
   @let iconValue = icon();
   @if (iconValue) {
-    <si-icon class="icon position-relative text-body" [icon]="iconValue" />
+    <si-icon class="icon position-relative text-primary" [icon]="iconValue" />
   }
 </div>

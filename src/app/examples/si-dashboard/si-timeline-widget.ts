@@ -50,9 +50,9 @@ export class SampleComponent implements OnInit {
       title: 'Title',
       description: 'Description',
       icon: 'element-circle-filled',
-      iconColor: 'status-danger',
+      iconColor: 'text-danger',
       stackedIcon: 'element-state-exclamation-mark',
-      stackedIconColor: 'status-danger-contrast',
+      stackedIconColor: 'text-on-danger',
       action: {
         type: 'menu',
         menuItems: [
@@ -67,9 +67,9 @@ export class SampleComponent implements OnInit {
       title: 'Title',
       description: 'Description',
       icon: 'element-triangle-filled',
-      iconColor: 'status-warning',
+      iconColor: 'text-warning',
       stackedIcon: 'element-state-exclamation-mark',
-      stackedIconColor: 'status-warning-contrast',
+      stackedIconColor: 'text-on-warning',
       action: {
         type: 'menu',
         menuItems: [
@@ -84,9 +84,9 @@ export class SampleComponent implements OnInit {
       title: 'Title',
       description: 'Description',
       icon: 'element-octagon-filled',
-      iconColor: 'status-critical',
+      iconColor: 'text-critical',
       stackedIcon: 'element-state-exclamation-mark',
-      stackedIconColor: 'status-critical-contrast',
+      stackedIconColor: 'text-on-critical',
       action: {
         type: 'action',
         label: 'Redo',
@@ -100,9 +100,9 @@ export class SampleComponent implements OnInit {
       title: 'Title',
       description: 'Description',
       icon: 'element-square-45-filled',
-      iconColor: 'status-caution',
+      iconColor: 'text-caution',
       stackedIcon: 'element-state-exclamation-mark',
-      stackedIconColor: 'status-caution-contrast',
+      stackedIconColor: 'text-on-caution',
       action: {
         type: 'menu',
         menuItems: [
@@ -122,9 +122,9 @@ export class SampleComponent implements OnInit {
       title: 'Title',
       description: 'Description',
       icon: 'element-triangle-filled',
-      iconColor: 'status-warning',
+      iconColor: 'text-warning',
       stackedIcon: 'element-state-exclamation-mark',
-      stackedIconColor: 'status-warning-contrast',
+      stackedIconColor: 'text-on-warning',
       action: {
         type: 'action',
         label: 'Action',
@@ -137,9 +137,9 @@ export class SampleComponent implements OnInit {
       title: 'Title',
       description: 'Description',
       icon: 'element-square-45-filled',
-      iconColor: 'status-caution',
+      iconColor: 'text-caution',
       stackedIcon: 'element-state-exclamation-mark',
-      stackedIconColor: 'status-caution-contrast',
+      stackedIconColor: 'text-on-caution',
       action: {
         type: 'action',
         label: 'Action',
@@ -151,9 +151,9 @@ export class SampleComponent implements OnInit {
       title: 'Title',
       description: 'Description',
       icon: 'element-square-filled',
-      iconColor: 'status-info',
+      iconColor: 'text-information',
       stackedIcon: 'element-state-info',
-      stackedIconColor: 'status-info-contrast',
+      stackedIconColor: 'text-on-information',
       action: {
         type: 'action',
         label: 'Action',
@@ -165,9 +165,9 @@ export class SampleComponent implements OnInit {
       title: 'Title',
       description: 'Description',
       icon: 'element-circle-filled',
-      iconColor: 'status-danger',
+      iconColor: 'text-danger',
       stackedIcon: 'element-state-exclamation-mark',
-      stackedIconColor: 'status-danger-contrast',
+      stackedIconColor: 'text-on-danger',
       action: {
         type: 'action',
         label: 'Action',
@@ -183,9 +183,9 @@ export class SampleComponent implements OnInit {
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis',
       icon: 'element-circle-filled',
-      iconColor: 'status-info',
+      iconColor: 'text-information',
       stackedIcon: 'element-state-progress',
-      stackedIconColor: 'status-info-contrast',
+      stackedIconColor: 'text-on-information',
       action: {
         type: 'link',
         label: 'Export',
@@ -200,9 +200,9 @@ export class SampleComponent implements OnInit {
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis',
       icon: 'element-square-filled',
-      iconColor: 'status-info',
+      iconColor: 'text-information',
       stackedIcon: 'element-state-info',
-      stackedIconColor: 'status-info-contrast',
+      stackedIconColor: 'text-on-information',
       action: {
         type: 'link',
         label: 'Export',
@@ -217,9 +217,9 @@ export class SampleComponent implements OnInit {
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis',
       icon: 'element-circle-filled',
-      iconColor: 'status-danger',
+      iconColor: 'text-danger',
       stackedIcon: 'element-state-exclamation-mark',
-      stackedIconColor: 'status-danger-contrast'
+      stackedIconColor: 'text-on-danger'
     }
   ];
 

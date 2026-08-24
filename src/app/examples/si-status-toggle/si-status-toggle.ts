@@ -24,8 +24,8 @@ export class SampleComponent {
       icon: 'element-issue',
       activeIcon: 'element-circle-filled',
       activeIconStacked: 'element-state-exclamation-mark',
-      activeIconClass: 'status-danger',
-      activeIconStackedClass: 'status-danger-contrast',
+      activeIconClass: 'text-danger',
+      activeIconStackedClass: 'text-on-danger',
       activeTextClass: 'text-danger'
     },
     {
@@ -34,8 +34,8 @@ export class SampleComponent {
       icon: 'element-checked',
       activeIcon: 'element-circle-filled',
       activeIconStacked: 'element-state-tick',
-      activeIconClass: 'status-success',
-      activeIconStackedClass: 'status-success-contrast',
+      activeIconClass: 'text-success',
+      activeIconStackedClass: 'text-on-success',
       activeTextClass: 'text-success'
     }
   ];
@@ -50,8 +50,8 @@ export class SampleComponent {
       icon: 'element-checked',
       activeIcon: 'element-circle-filled',
       activeIconStacked: 'element-state-tick',
-      activeIconClass: 'status-success',
-      activeIconStackedClass: 'status-success-contrast',
+      activeIconClass: 'text-success',
+      activeIconStackedClass: 'text-on-success',
       activeTextClass: 'text-success'
     }
   ];
@@ -66,15 +66,15 @@ export class SampleComponent {
       icon: 'element-issue',
       activeIcon: 'element-circle-filled',
       activeIconStacked: 'element-state-exclamation-mark',
-      activeIconClass: 'status-danger',
-      activeIconStackedClass: 'status-danger-contrast',
+      activeIconClass: 'text-danger',
+      activeIconStackedClass: 'text-on-danger',
       activeTextClass: 'text-danger'
     },
     {
       text: 'Passed',
       value: 'C',
       icon: 'element-checked',
-      activeIconClass: 'status-success',
+      activeIconClass: 'text-success',
       activeTextClass: 'text-success',
       disabled: true
     }
@@ -88,14 +88,14 @@ export class SampleComponent {
       text: 'Failed',
       value: 'B',
       icon: 'element-issue',
-      activeIconClass: 'status-danger',
+      activeIconClass: 'text-danger',
       activeTextClass: 'text-danger'
     },
     {
       text: 'Passed',
       value: 'C',
       icon: 'element-checked',
-      activeIconClass: 'status-success',
+      activeIconClass: 'text-success',
       activeTextClass: 'text-success'
     }
   ];
@@ -110,8 +110,8 @@ export class SampleComponent {
       icon: 'element-issue',
       activeIcon: 'element-circle-filled',
       activeIconStacked: 'element-state-exclamation-mark',
-      activeIconClass: 'status-danger',
-      activeIconStackedClass: 'status-danger-contrast',
+      activeIconClass: 'text-danger',
+      activeIconStackedClass: 'text-on-danger',
       activeTextClass: 'text-danger'
     },
     {
@@ -120,8 +120,8 @@ export class SampleComponent {
       icon: 'element-checked',
       activeIcon: 'element-circle-filled',
       activeIconStacked: 'element-state-tick',
-      activeIconClass: 'status-success',
-      activeIconStackedClass: 'status-success-contrast',
+      activeIconClass: 'text-success',
+      activeIconStackedClass: 'text-on-success',
       activeTextClass: 'text-success'
     }
   ];

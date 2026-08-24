@@ -62,21 +62,21 @@ describe('SiThresholdComponent', () => {
       value: 'good',
       icon: 'element-face-happy',
       label: 'Good',
-      iconColor: 'status-success',
+      iconColor: 'text-success',
       type: 'option'
     },
     {
       value: 'average',
       icon: 'element-face-neutral',
       label: 'Average',
-      iconColor: 'status-warning',
+      iconColor: 'text-warning',
       type: 'option'
     },
     {
       value: 'poor',
       icon: 'element-face-unhappy',
       label: 'Poor',
-      iconColor: 'status-danger',
+      iconColor: 'text-danger',
       type: 'option'
     }
   ];
@@ -178,11 +178,11 @@ describe('SiThresholdComponent', () => {
     await fixture.whenStable();
     const calculatedColors: string[] = getThresholdColors();
     expect(calculatedColors).toEqual([
-      'status-danger',
-      'status-warning',
-      'status-success',
-      'status-warning',
-      'status-danger'
+      'text-danger',
+      'text-warning',
+      'text-success',
+      'text-warning',
+      'text-danger'
     ]);
   });
 
@@ -196,11 +196,11 @@ describe('SiThresholdComponent', () => {
 
     const calculatedColors: string[] = getThresholdColors();
     expect(calculatedColors).toEqual([
-      'status-danger',
-      'status-success',
-      'status-success',
-      'status-warning',
-      'status-danger'
+      'text-danger',
+      'text-success',
+      'text-success',
+      'text-warning',
+      'text-danger'
     ]);
   });
 

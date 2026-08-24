@@ -35,6 +35,48 @@ export interface ElementClassChangeInstruction {
 }
 
 export const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = [
+  ...[
+    ['bg-primary', 'background-accent'],
+    ['bg-secondary', 'background-neutral'],
+    ['bg-tertiary', 'background-4'],
+    ['bg-success', 'background-success'],
+    ['bg-info', 'background-information'],
+    ['bg-warning', 'background-warning'],
+    ['bg-danger', 'background-danger'],
+    ['bg-base-0', 'background-0'],
+    ['bg-base-1', 'background-1'],
+    ['bg-base-2', 'background-2'],
+    ['bg-base-3', 'background-3'],
+    ['bg-base-4', 'background-4'],
+    ['bg-base-info', 'background-information-subtle'],
+    ['bg-base-success', 'background-success-subtle'],
+    ['bg-base-caution', 'background-caution-subtle'],
+    ['bg-base-warning', 'background-warning-subtle'],
+    ['bg-base-danger', 'background-danger-subtle'],
+    ['bg-base-critical', 'background-critical-subtle'],
+    ['text-primary', 'text-accent'],
+    ['text-body', 'text-primary'],
+    ['text-tertiary', 'text-disabled'],
+    ['text-muted', 'text-disabled'],
+    ['text-info', 'text-information'],
+    ['status-success', 'text-success'],
+    ['status-info', 'text-information'],
+    ['status-caution', 'text-caution'],
+    ['status-warning', 'text-warning'],
+    ['status-danger', 'text-danger'],
+    ['status-critical', 'text-critical'],
+    ['status-neutral', 'text-disabled'],
+    ['status-success-contrast', 'text-on-success'],
+    ['status-info-contrast', 'text-on-information'],
+    ['status-caution-contrast', 'text-on-caution'],
+    ['status-warning-contrast', 'text-on-warning'],
+    ['status-danger-contrast', 'text-on-danger'],
+    ['status-critical-contrast', 'text-on-critical']
+  ].map(([oldClass, newClass]) => ({
+    requiredClasses: [oldClass],
+    removeClasses: [oldClass],
+    addClasses: [newClass]
+  })),
   // btn-ghost now represents the primary ghost style; old btn-ghost (tertiary ghost) must become btn-tertiary-ghost
   {
     requiredClasses: ['btn-ghost'],

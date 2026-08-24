@@ -121,21 +121,21 @@ export class SampleComponent {
       type: 'option',
       value: 'first',
       icon: 'element-face-happy',
-      iconColor: 'status-success',
+      iconColor: 'text-success',
       label: 'First class'
     },
     {
       type: 'option',
       value: 'business',
       icon: 'element-face-neutral',
-      iconColor: 'status-warning',
+      iconColor: 'text-warning',
       label: 'Business'
     },
     {
       type: 'option',
       value: 'economy',
       icon: 'element-face-unhappy',
-      iconColor: 'status-danger',
+      iconColor: 'text-danger',
       label: 'Economy'
     }
   ];

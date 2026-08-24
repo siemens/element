@@ -56,28 +56,28 @@ export class SampleComponent {
       type: 'option',
       value: 'good',
       icon: 'element-face-happy',
-      iconColor: 'status-success',
+      iconColor: 'text-success',
       label: 'Good'
     },
     {
       type: 'option',
       value: 'fair',
       icon: 'element-face-neutral',
-      iconColor: 'status-warning',
+      iconColor: 'text-warning',
       label: 'Fair'
     },
     {
       type: 'option',
       value: 'bad',
       icon: 'element-face-unhappy',
-      iconColor: 'status-danger',
+      iconColor: 'text-danger',
       label: 'Bad'
     },
     {
       type: 'option',
       value: 'very-bad',
       icon: 'element-face-very-unhappy',
-      iconColor: 'status-critical',
+      iconColor: 'text-critical',
       label: 'Very bad',
       disabled: true
     }

@@ -50,11 +50,11 @@ describe('SiSummaryWidgetComponent', () => {
 
   it('should display custom icon', async () => {
     icon.set('element-manual-filled');
-    color.set('status-warning');
+    color.set('text-warning');
     await fixture.whenStable();
 
     expect(element.querySelector('si-icon div')).toHaveClass('element-manual-filled');
-    expect(element.querySelector('si-icon')).toHaveClass('status-warning');
+    expect(element.querySelector('si-icon')).toHaveClass('text-warning');
   });
 
   it('should display selected state', async () => {

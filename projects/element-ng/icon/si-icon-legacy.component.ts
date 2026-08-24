@@ -28,16 +28,16 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
  * <!-- before -->
  * <si-icon
  *   icon="element-circle-filled"
- *   color="status-success"
+ *   color="text-success"
  *   stackedIcon="element-state-tick"
- *   stackedColor="status-success-contrast"
+ *   stackedColor="text-on-success"
  *   alt="Success"
  * />
  *
  * <!-- after -->
  * <div class="icon-stack icon" aria-label="Success">
- *   <si-icon icon="element-circle-filled" class="status-success" />
- *   <si-icon icon="element-state-tick" class="status-success-contrast" />
+ *   <si-icon icon="element-circle-filled" class="text-success" />
+ *   <si-icon icon="element-state-tick" class="text-on-success" />
  * </div>
  * ```
  */

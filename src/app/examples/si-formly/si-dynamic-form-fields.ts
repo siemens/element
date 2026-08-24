@@ -291,28 +291,28 @@ export class SampleComponent {
             type: 'option',
             value: 'good',
             icon: 'element-face-happy',
-            iconColor: 'status-success',
+            iconColor: 'text-success',
             label: 'Good'
           },
           {
             type: 'option',
             value: 'average',
             icon: 'element-face-neutral',
-            iconColor: 'status-warning',
+            iconColor: 'text-warning',
             label: 'Average'
           },
           {
             type: 'option',
             value: 'poor',
             icon: 'element-face-unhappy',
-            iconColor: 'status-danger',
+            iconColor: 'text-danger',
             label: 'Poor'
           },
           {
             type: 'option',
             value: 'unhealthy',
             icon: 'element-face-very-unhappy',
-            iconColor: 'status-critical',
+            iconColor: 'text-critical',
             label: 'Unhealthy',
             disabled: true
           }
@@ -340,28 +340,28 @@ export class SampleComponent {
             type: 'option',
             value: 'good',
             icon: 'element-face-happy',
-            iconColor: 'status-success',
+            iconColor: 'text-success',
             label: 'Good'
           },
           {
             type: 'option',
             value: 'average',
             icon: 'element-face-neutral',
-            iconColor: 'status-warning',
+            iconColor: 'text-warning',
             label: 'Average'
           },
           {
             type: 'option',
             value: 'poor',
             icon: 'element-face-unhappy',
-            iconColor: 'status-danger',
+            iconColor: 'text-danger',
             label: 'Poor'
           },
           {
             type: 'option',
             value: 'unhealthy',
             icon: 'element-face-very-unhappy',
-            iconColor: 'status-critical',
+            iconColor: 'text-critical',
             label: 'Unhealthy',
             disabled: true
           }

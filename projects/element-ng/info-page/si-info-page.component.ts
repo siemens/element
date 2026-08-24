@@ -29,9 +29,9 @@ export class SiInfoPageComponent {
   /**
    * Icon color class, see {@link https://element.siemens.io/fundamentals/typography/#color-variants-classes}
    *
-   * @defaultValue 'status-warning'
+   * @defaultValue 'text-warning'
    */
-  readonly iconColor = input<string | undefined>('status-warning');
+  readonly iconColor = input<string | undefined>('text-warning');
   /** A short and concise title to explain the error. */
   readonly titleText = input.required<TranslatableString>();
   /** A more detailed explanation of the error, outlining the reasoning for it and how a user can resolve it. */

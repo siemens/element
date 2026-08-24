@@ -16,9 +16,9 @@ import { Component } from '@angular/core';
  *         type="button"
  *         si-side-panel-action
  *         icon="element-alarm-background-filled"
- *         iconColor="status-danger"
+ *         iconColor="text-danger"
  *         stackedIcon="element-alarm-tick"
- *         stackedIconColor="text-body"
+ *         stackedIconColor="text-primary"
  *         (click)="action()"
  *       >
  *         Action

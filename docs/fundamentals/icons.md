@@ -155,7 +155,7 @@ Use stacking with the `si-icon` component to combine multiple icons into a singl
 
 ```html
 <span class="icon icon-stack">
-  <si-icon class="status-danger" [icon]="icons.elementAlarmFilled" />
+  <si-icon class="text-danger" [icon]="icons.elementAlarmFilled" />
   <si-icon class="text-secondary" [icon]="icons.elementAlarmTick" />
 </span>
 ```

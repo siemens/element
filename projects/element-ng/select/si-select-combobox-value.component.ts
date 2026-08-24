@@ -21,7 +21,7 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
  * <si-select-combobox>
  *   <si-select-combobox-value
  *     icon="element-face-happy"
- *     iconColor="status-success"
+ *     iconColor="text-success"
  *   >
  *     {{ select.value() }}
  *   </si-select-combobox-value>

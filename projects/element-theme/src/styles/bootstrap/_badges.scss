@@ -46,22 +46,22 @@
     outline: 1px solid system-tokens.$si-sys-border-4;
   }
 
-  &.bg-primary {
+  &.background-accent {
     background-color: system-tokens.$si-sys-background-accent !important;
     color: system-tokens.$si-sys-text-on-accent;
   }
 
-  &.bg-secondary {
+  &.background-neutral {
     background-color: system-tokens.$si-sys-background-neutral !important;
     color: system-tokens.$si-sys-text-primary;
   }
 
-  &.bg-info {
+  &.background-information {
     background-color: system-tokens.$si-sys-background-information-subtle !important;
     color: system-tokens.$si-sys-text-information;
   }
 
-  &.bg-success {
+  &.background-success {
     background-color: system-tokens.$si-sys-background-success-subtle !important;
     color: system-tokens.$si-sys-text-success;
   }
@@ -71,12 +71,12 @@
     color: system-tokens.$si-sys-text-caution;
   }
 
-  &.bg-warning {
+  &.background-warning {
     background-color: system-tokens.$si-sys-background-warning-subtle !important;
     color: system-tokens.$si-sys-text-warning;
   }
 
-  &.bg-danger {
+  &.background-danger {
     background-color: system-tokens.$si-sys-background-danger-subtle !important;
     color: system-tokens.$si-sys-text-danger;
   }

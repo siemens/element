@@ -60,13 +60,13 @@ describe('SiIconLegacyComponent', () => {
 
   it('should create composite icon', () => {
     component.setInput('icon', 'element-alarm-background-filled');
-    component.setInput('color', 'status-danger');
+    component.setInput('color', 'text-danger');
     component.setInput('stackedIcon', 'element-alarm-tick');
     component.setInput('stackedColor', 'text-secondary');
     fixture.detectChanges();
     const icon = fixture.nativeElement.querySelector('span');
     expect(icon).toHaveClass('element-alarm-background-filled');
-    expect(icon).toHaveClass('status-danger');
+    expect(icon).toHaveClass('text-danger');
     const stackIcon = fixture.nativeElement.querySelector('i');
     expect(stackIcon).toHaveClass('element-alarm-tick');
     expect(stackIcon).toHaveClass('text-secondary');

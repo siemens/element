@@ -1,4 +1,3 @@
-@use '../variables/semantic-tokens';
 @use '../variables/utilities' as variables-utilities;
 @use 'mixins/breakpoints';
 @use 'mixins/utilities' as mixins-utilities;
@@ -32,76 +31,5 @@
     @if meta.type-of($utility) == 'map' and map.get($utility, print) == true {
       @include mixins-utilities.generate-utility($utility, '-print');
     }
-  }
-}
-
-$text-colors: (
-  'primary': semantic-tokens.$element-text-active,
-  'body': semantic-tokens.$element-text-primary,
-  'secondary': semantic-tokens.$element-text-secondary,
-  'tertiary': semantic-tokens.$element-text-disabled,
-  'success': semantic-tokens.$element-text-success,
-  'info': semantic-tokens.$element-text-information,
-  'warning': semantic-tokens.$element-text-warning,
-  'caution': semantic-tokens.$element-text-caution,
-  'danger': semantic-tokens.$element-text-danger,
-  'inverse': semantic-tokens.$element-text-inverse,
-  'muted': semantic-tokens.$element-text-disabled
-) !default;
-
-@each $color, $value in $text-colors {
-  .text-#{$color} {
-    color: #{$value} !important; // stylelint-disable-line declaration-no-important
-  }
-}
-
-$background-colors: (
-  'primary': semantic-tokens.$element-ui-0,
-  'secondary': semantic-tokens.$element-text-secondary,
-  'tertiary': semantic-tokens.$element-text-disabled,
-  'success': semantic-tokens.$element-status-success,
-  'info': semantic-tokens.$element-status-information,
-  'warning': semantic-tokens.$element-status-warning,
-  'danger': semantic-tokens.$element-status-danger,
-  'base-0': semantic-tokens.$element-base-0,
-  'base-1': semantic-tokens.$element-base-1,
-  'base-2': semantic-tokens.$element-base-2,
-  'base-3': semantic-tokens.$element-base-3,
-  'base-4': semantic-tokens.$element-base-4,
-  'base-success': semantic-tokens.$element-base-success,
-  'base-info': semantic-tokens.$element-base-information,
-  'base-caution': semantic-tokens.$element-base-caution,
-  'base-warning': semantic-tokens.$element-base-warning,
-  'base-danger': semantic-tokens.$element-base-danger,
-  'base-critical': semantic-tokens.$element-base-critical,
-  'base-translucent-1': semantic-tokens.$element-base-translucent-1,
-  'base-translucent-2': semantic-tokens.$element-base-translucent-2
-) !default;
-
-@each $color, $value in $background-colors {
-  .bg-#{$color} {
-    background: #{$value} !important; // stylelint-disable-line declaration-no-important
-  }
-}
-
-$status-colors: (
-  'success': semantic-tokens.$element-status-success,
-  'info': semantic-tokens.$element-status-information,
-  'caution': semantic-tokens.$element-status-caution,
-  'warning': semantic-tokens.$element-status-warning,
-  'danger': semantic-tokens.$element-status-danger,
-  'critical': semantic-tokens.$element-status-critical,
-  'neutral': semantic-tokens.$element-ui-4,
-  'success-contrast': semantic-tokens.$element-status-success-contrast,
-  'info-contrast': semantic-tokens.$element-status-information-contrast,
-  'caution-contrast': semantic-tokens.$element-status-caution-contrast,
-  'warning-contrast': semantic-tokens.$element-status-warning-contrast,
-  'danger-contrast': semantic-tokens.$element-status-danger-contrast,
-  'critical-contrast': semantic-tokens.$element-status-critical-contrast
-) !default;
-
-@each $color, $value in $status-colors {
-  .status-#{$color} {
-    color: #{$value} !important; // stylelint-disable-line declaration-no-important
   }
 }

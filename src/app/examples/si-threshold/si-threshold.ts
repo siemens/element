@@ -21,45 +21,45 @@ export class SampleComponent {
       type: 'option',
       value: 'very-good',
       icon: 'element-circle-filled',
-      iconColor: 'status-success',
+      iconColor: 'text-success',
       stackedIcon: 'element-state-face-very-happy',
-      stackedIconColor: 'status-success-contrast',
+      stackedIconColor: 'text-on-success',
       label: 'Very good'
     },
     {
       type: 'option',
       value: 'good',
       icon: 'element-circle-filled',
-      iconColor: 'status-success',
+      iconColor: 'text-success',
       stackedIcon: 'element-state-face-happy',
-      stackedIconColor: 'status-success-contrast',
+      stackedIconColor: 'text-on-success',
       label: 'Good'
     },
     {
       type: 'option',
       value: 'average',
       icon: 'element-circle-filled',
-      iconColor: 'status-warning',
+      iconColor: 'text-warning',
       stackedIcon: 'element-state-face-neutral',
-      stackedIconColor: 'status-warning-contrast',
+      stackedIconColor: 'text-on-warning',
       label: 'Average'
     },
     {
       type: 'option',
       value: 'poor',
       icon: 'element-circle-filled',
-      iconColor: 'status-danger',
+      iconColor: 'text-danger',
       stackedIcon: 'element-state-face-unhappy',
-      stackedIconColor: 'status-danger-contrast',
+      stackedIconColor: 'text-on-danger',
       label: 'Poor'
     },
     {
       type: 'option',
       value: 'unhealthy',
       icon: 'element-circle-filled',
-      iconColor: 'status-critical',
+      iconColor: 'text-critical',
       stackedIcon: 'element-state-face-very-unhappy',
-      stackedIconColor: 'status-critical-contrast',
+      stackedIconColor: 'text-on-critical',
       label: 'Unhealthy'
     }
   ];

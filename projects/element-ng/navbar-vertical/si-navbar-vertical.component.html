@@ -4,7 +4,7 @@
   }
   <nav
     tabindex="-1"
-    class="bg-base-1 focus-sub-inside"
+    class="background-1 focus-sub-inside"
     [class.expanded]="!collapsed()"
     [siSkipLinkTarget]="skipLinkNavigationLabel()"
     [class.text-only]="textOnly()"
@@ -40,7 +40,7 @@
         />
         <button
           type="button"
-          class="btn-search bg-base-0 px-3 mx-4 mobile navbar-vertical-no-collapse text-secondary"
+          class="btn-search background-0 px-3 mx-4 mobile navbar-vertical-no-collapse text-secondary"
           [attr.aria-label]="searchPlaceholder() | translate"
           (click)="expandForSearch()"
         >

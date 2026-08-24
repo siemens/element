@@ -414,7 +414,7 @@ textarea {
 input,
 textarea {
   &:disabled {
-    color: variables.$text-muted;
+    color: variables.$text-disabled;
 
     &::placeholder {
       color: variables.$input-placeholder-disabled-color;

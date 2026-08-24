@@ -104,11 +104,11 @@
         <div class="text-center">
           <p class="si-display-lg"
             >{{ linesAddedWeek }}
-            <si-icon class="status-success si-display-lg" icon="element-plus" />
+            <si-icon class="text-success si-display-lg" icon="element-plus" />
           </p>
           <p class="si-display-lg"
             >{{ linesRemovedWeek }}
-            <si-icon class="status-danger si-display-lg" icon="element-minus" />
+            <si-icon class="text-danger si-display-lg" icon="element-minus" />
           </p>
         </div>
       }
@@ -165,7 +165,7 @@
   <div class="card-body card-text" style="height: 450px">
     <si-chart-gauge
       #chart
-      class="bg-base-1 h-100"
+      class="background-1 h-100"
       title=""
       [minValue]="0"
       [maxValue]="100"
@@ -180,7 +180,7 @@
   <div class="card-body card-text" style="height: 450px">
     <si-chart-progress-bar
       #chart
-      class="bg-base-1 h-100"
+      class="background-1 h-100"
       title=""
       [series]="[
         { name: 'Coffee', percent: 60 },
@@ -198,7 +198,7 @@
   <div class="card-body" style="height: 450px">
     <si-chart-circle
       #chart
-      class="bg-base-1 h-100"
+      class="background-1 h-100"
       title=""
       [series]="[
         {

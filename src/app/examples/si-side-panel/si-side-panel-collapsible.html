@@ -155,7 +155,7 @@
         type="button"
         si-side-panel-action
         icon="element-out-of-service"
-        iconColor="status-warning"
+        iconColor="text-warning"
         (click)="logEvent('Out of Service')"
       >
         Out of Service
@@ -164,7 +164,7 @@
         type="button"
         si-side-panel-action
         icon="element-manual-filled"
-        iconColor="status-warning"
+        iconColor="text-warning"
         disabled
       >
         System Operator
@@ -173,9 +173,9 @@
         type="button"
         si-side-panel-action
         icon="element-alarm-background-filled"
-        iconColor="status-danger"
+        iconColor="text-danger"
         stackedIcon="element-alarm-tick"
-        stackedIconColor="text-body"
+        stackedIconColor="text-primary"
         (click)="logEvent('Event source, active, ack')"
       >
         <span>Event source<br />active, ack</span>

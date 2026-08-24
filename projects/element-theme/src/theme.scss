@@ -21,6 +21,7 @@ $_themes: () !default;
 
 // Load Bootstrap
 @use 'styles/bootstrap';
+@use 'styles/utilities';
 
 // Component extensions
 @use 'styles/components/application-header';

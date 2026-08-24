@@ -101,10 +101,10 @@ describe('SiTimelineWidgetItemComponent', () => {
       timeStamp: 'Today 23:59',
       title: 'Title',
       icon: 'element-circle-filled',
-      iconColor: 'status-danger'
+      iconColor: 'text-danger'
     });
     await fixture.whenStable();
-    expect(element.querySelector('si-icon')).toHaveClass('status-danger');
+    expect(element.querySelector('si-icon')).toHaveClass('text-danger');
   });
 
   it('should display the item icon stacked icon', async () => {
@@ -112,7 +112,7 @@ describe('SiTimelineWidgetItemComponent', () => {
       timeStamp: 'Today 23:59',
       title: 'Title',
       icon: 'element-circle-filled',
-      iconColor: 'status-danger',
+      iconColor: 'text-danger',
       stackedIcon: 'element-state-exclamation-mark'
     });
     await fixture.whenStable();
@@ -124,12 +124,12 @@ describe('SiTimelineWidgetItemComponent', () => {
       timeStamp: 'Today 23:59',
       title: 'Title',
       icon: 'element-circle-filled',
-      iconColor: 'status-danger',
+      iconColor: 'text-danger',
       stackedIcon: 'element-state-exclamation-mark',
-      stackedIconColor: 'status-danger-contrast'
+      stackedIconColor: 'text-on-danger'
     });
     await fixture.whenStable();
-    expect(element.querySelectorAll('.status-danger-contrast')).toHaveLength(1);
+    expect(element.querySelectorAll('.text-on-danger')).toHaveLength(1);
   });
 
   it('should display the item action', async () => {

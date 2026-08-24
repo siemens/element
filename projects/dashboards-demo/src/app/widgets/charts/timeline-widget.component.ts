@@ -26,36 +26,36 @@ export class TimelineWidgetComponent implements WidgetInstance {
       title: 'Title',
       description: 'Description',
       icon: 'element-triangle-filled',
-      iconColor: 'status-warning',
+      iconColor: 'text-warning',
       stackedIcon: 'element-state-exclamation-mark',
-      stackedIconColor: 'status-warning-contrast'
+      stackedIconColor: 'text-on-warning'
     },
     {
       timeStamp: 'Today 23:59',
       title: 'Title',
       description: 'Description',
       icon: 'element-square-45-filled',
-      iconColor: 'status-caution',
+      iconColor: 'text-caution',
       stackedIcon: 'element-state-exclamation-mark',
-      stackedIconColor: 'status-caution-contrast'
+      stackedIconColor: 'text-on-caution'
     },
     {
       timeStamp: 'Today 23:59',
       title: 'Title',
       description: 'Description',
       icon: 'element-square-filled',
-      iconColor: 'status-info',
+      iconColor: 'text-information',
       stackedIcon: 'element-state-info',
-      stackedIconColor: 'status-info-contrast'
+      stackedIconColor: 'text-on-information'
     },
     {
       timeStamp: 'Today 23:59',
       title: 'Title',
       description: 'Description',
       icon: 'element-circle-filled',
-      iconColor: 'status-danger',
+      iconColor: 'text-danger',
       stackedIcon: 'element-state-exclamation-mark',
-      stackedIconColor: 'status-danger-contrast'
+      stackedIconColor: 'text-on-danger'
     }
   ];
   @ViewChild('footer', { static: true }) footer?: TemplateRef<unknown>;

@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-sample',
   templateUrl: './typography.html',
-  host: { class: 'px-9 pt-9 bg-base-1' }
+  host: { class: 'px-9 pt-9 background-1' }
 })
 export class SampleComponent {}
