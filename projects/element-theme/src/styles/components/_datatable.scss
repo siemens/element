@@ -105,6 +105,24 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     }
   }
 
+  &.scroll-horz {
+    .datatable-row-left {
+      .datatable-body-cell:last-child,
+      .datatable-header-cell:last-child {
+        box-shadow: system-tokens.$si-sys-effects-shadow-3;
+        clip-path: inset(0 -8px 0 0);
+      }
+    }
+
+    .datatable-row-right {
+      .datatable-body-cell:first-child,
+      .datatable-header-cell:first-child {
+        box-shadow: system-tokens.$si-sys-effects-shadow-3;
+        clip-path: inset(0 0 0 -8px);
+      }
+    }
+  }
+
   // 'checkbox' selection
   :is(.datatable-header-cell, .datatable-body-cell) {
     label.datatable-checkbox {
@@ -185,24 +203,6 @@ $datatable-ghost-cell-strip-radius: 0 !default;
         }
       }
     }
-
-    .horizontal-overflow {
-      .datatable-row-left {
-        .datatable-body-cell:last-child,
-        .datatable-header-cell:last-child {
-          box-shadow: 0 0 8px system-tokens.$si-sys-effects-shadow-1;
-          clip-path: inset(0 -8px 0 0);
-        }
-      }
-
-      .datatable-row-right {
-        .datatable-body-cell:first-child,
-        .datatable-header-cell:first-child {
-          box-shadow: 0 0 8px system-tokens.$si-sys-effects-shadow-1;
-          clip-path: inset(0 0 0 -8px);
-        }
-      }
-    }
   }
 
   // Header Styles
@@ -239,7 +239,6 @@ $datatable-ghost-cell-strip-radius: 0 !default;
 
     :is(.datatable-row-left, .datatable-row-right) {
       background-color: variables.$table-bg;
-      display: flex;
 
       .datatable-header-cell {
         flex-shrink: 0;
