@@ -110,6 +110,17 @@ export class SiToastNotificationService implements OnDestroy {
       );
     }
 
+    // when using popover API, brings toast to top layer
+    const host = this.overlayRef?.hostElement;
+    if (host?.getAttribute('popover')) {
+      try {
+        host.hidePopover();
+        host.showPopover();
+      } catch {
+        // ignored
+      }
+    }
+
     return toast;
   }
 
