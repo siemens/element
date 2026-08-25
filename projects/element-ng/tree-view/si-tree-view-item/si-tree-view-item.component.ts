@@ -192,19 +192,27 @@ export class SiTreeViewItemComponent implements OnInit, AfterViewInit, Focusable
 
   protected readonly deleteChildrenOnCollapse = this.treeViewComponent.deleteChildrenOnCollapse;
 
-  protected get paddingStart(): string {
+  private get indentation(): number {
     return this.siTreeViewService.groupedList
-      ? '0'
-      : this.indentLevel * this.siTreeViewService.childrenIndentation + 'px';
+      ? 0
+      : this.indentLevel * this.siTreeViewService.childrenIndentation;
   }
 
+  protected get paddingStart(): string {
+    return `${this.indentation}px`;
+  }
+
+  /** Indentation plus the space the start toggle occupies, so leaf items align with foldable ones. */
   protected get biggerPaddingStart(): string {
-    const basePadding = this.showFolderStateStart ? 24 : 0;
-    return (
-      (this.siTreeViewService.groupedList
-        ? basePadding
-        : this.indentLevel * this.siTreeViewService.childrenIndentation + basePadding) + 'px'
-    );
+    return this.showFolderStateStart
+      ? `calc(${this.indentation}px + var(--si-tree-view-icon-size))`
+      : `${this.indentation}px`;
+  }
+
+  protected get negativeBiggerPaddingStart(): string {
+    return this.showFolderStateStart
+      ? `calc(${-this.indentation}px - var(--si-tree-view-icon-size))`
+      : `${-this.indentation}px`;
   }
 
   protected get isGroupedItem(): boolean {
