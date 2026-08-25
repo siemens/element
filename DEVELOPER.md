@@ -70,6 +70,16 @@ pnpm run lint:ng
 pnpm run lint:scss
 ```
 
+## Third-party agent skills
+
+Third-party agent skills are managed through [skills.sh](https://skills.sh/).
+Use `pnx skills` to add or update them so their sources and hashes are recorded
+in `skills-lock.json`.
+
+When adding a third-party skill, add its path under `.agents/skills/` to
+`.prettierignore`. Third-party skill sources must not be reformatted by this
+repository's Prettier configuration.
+
 ## API Goldens
 
 We guard our APIs against unintentional changes using API goldens based on [API Extractor](https://api-extractor.com/).
