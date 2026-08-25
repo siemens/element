@@ -1,0 +1,28 @@
+<mgl-map
+  class="h-100"
+  [attributionControl]="false"
+  [locale]="mapTranslations()"
+  [mapStyle]="mapStyle()"
+  [center]="[11.6, 48.1]"
+  [canvasContextAttributes]="{ preserveDrawingBuffer: true, antialias: true }"
+  [zoom]="16"
+  [pitch]="40"
+  (mapError)="onError($event)"
+>
+  <mgl-layer
+    id="3d-buildings"
+    type="fill-extrusion"
+    source="openmaptiles"
+    sourceLayer="building"
+    before="watername_ocean"
+    [minzoom]="15"
+    [filter]="buildingFilter"
+    [paint]="buildingPaint()"
+  />
+  <mgl-control mglFullscreen />
+  <mgl-control mglGlobe position="top-right" />
+  <mgl-control mglScale unit="metric" position="top-right" />
+  <mgl-control mglAttribution position="bottom-left" />
+  <mgl-control mglNavigation position="bottom-right" />
+  <mgl-control mglGeolocate position="bottom-right" (geolocate)="onGeolocate($event)" />
+</mgl-map>
