@@ -2,13 +2,21 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement, inputBinding, signal, WritableSignal } from '@angular/core';
+import { Component, DebugElement, inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MenuItem } from '@siemens/element-ng/menu';
 
 import { MessageAction } from './message-action.model';
 import { SiAiMessageComponent as TestComponent } from './si-ai-message.component';
+
+@Component({
+  imports: [TestComponent],
+  template: `<si-ai-message>
+    <span data-testid="projected-content">Projected AI content</span>
+  </si-ai-message>`
+})
+class ProjectedContentHostComponent {}
 
 describe('SiAiMessageComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -51,6 +59,24 @@ describe('SiAiMessageComponent', () => {
 
     const chatMessage = debugElement.query(By.css('si-chat-message'));
     expect(chatMessage.componentInstance.alignment()).toBe('start');
+  });
+
+  it('should project content when content input is empty', async () => {
+    const hostFixture = TestBed.createComponent(ProjectedContentHostComponent);
+    await hostFixture.whenStable();
+
+    const projectedContent = hostFixture.nativeElement.querySelector(
+      'si-chat-message [data-testid="projected-content"]'
+    );
+    expect(projectedContent).toHaveTextContent('Projected AI content');
+  });
+
+  it('should render text content', async () => {
+    content.set('AI response');
+    await fixture.whenStable();
+
+    const textContent = fixture.nativeElement.querySelector('si-chat-message .text-pre-wrap');
+    expect(textContent).toHaveTextContent('AI response');
   });
 
   it('should render action buttons when actions are provided', async () => {
