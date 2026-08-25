@@ -22,7 +22,6 @@ api-goldens/element-ng/data-range-filter/ @siemens/siemens-element-owners @dr-it
 api-goldens/element-ng/datepicker/ @siemens/siemens-element-owners @dr-itz @spliffone
 api-goldens/element-ng/chat-messages/ @siemens/siemens-element-owners @dr-itz
 api-goldens/element-ng/markdown/ @siemens/siemens-element-owners @dr-itz
-api-goldens/element-ng/markdown-renderer/ @siemens/siemens-element-owners @dr-itz
 api-goldens/element-ng/filtered-search/ @siemens/siemens-element-owners @chintankavathia @spliffone
 api-goldens/element-ng/form/ @siemens/siemens-element-owners @spliffone
 api-goldens/element-ng/formly/ @siemens/siemens-element-owners @chintankavathia @spliffone
