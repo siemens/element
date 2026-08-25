@@ -177,7 +177,10 @@ nav:
       - Scatter chart:                    'components/charts/scatter-chart.md'
       - Generic chart:                    'components/charts/generic-chart.md'
       - Micro charts:                     'components/charts/micro-charts.md'
-    - Maps:                               'components/maps/maps.md'
+    - Maps:
+      - Overview:                         'components/maps/maps.md'
+      - Element Maps:                     'components/maps/element-maps.md'
+      - MapLibre:                         'components/maps/maplibre.md'
     - Pages:
       - About:                            'components/pages/about.md'
       - Info Page:                        'components/pages/info-page.md'

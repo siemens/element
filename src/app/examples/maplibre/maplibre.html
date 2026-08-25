@@ -7,6 +7,7 @@
   [canvasContextAttributes]="{ preserveDrawingBuffer: true }"
   [zoom]="10"
   (mapError)="onError($event)"
+  (mapResize)="onResize($event)"
 >
   <mgl-control mglFullscreen />
   <mgl-control mglGlobe position="top-right" />
