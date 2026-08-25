@@ -81,7 +81,6 @@ export * from './summary-widget';
 export * from './system-banner';
 export * from './tabs-legacy';
 export * from './tabs';
-export * from './markdown-renderer';
 export * from './theme';
 export * from './threshold';
 export * from './toast-notification';
