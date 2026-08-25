@@ -9,6 +9,7 @@ import { ElementMigrationData, getElementMigrationData } from '../migrations/dat
 import { elementMigrationRule } from '../migrations/element-migration/element-migration.js';
 import { missingTranslateMigrationRule } from '../migrations/ngx-translate/index.js';
 import { contentFormatterMigrationRule } from './migrate-content-formatter.js';
+import { markdownRendererMigrationRule } from './migrate-markdown-renderer.js';
 import { splitCollapseMigrationRule } from './migrate-split-collapse.js';
 import { splitSizesMigrationRule } from './migrate-split-sizes.js';
 
@@ -22,7 +23,8 @@ export const migrateToV51 = (): Rule => {
       missingTranslateMigrationRule(options),
       splitSizesMigrationRule(options),
       splitCollapseMigrationRule(options),
-      contentFormatterMigrationRule(options)
+      contentFormatterMigrationRule(options),
+      markdownRendererMigrationRule(options)
     ])(tree, context);
   };
 };
