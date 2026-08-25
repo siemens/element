@@ -238,6 +238,17 @@ export class SiTourService {
       // component for each step
       this.outsideClickDispatcher.remove(this.overlayRef);
       this.outsideClickDispatcher.add(this.overlayRef);
+
+      // when using popover API, brings tour to top layer
+      const host = this.overlayRef?.hostElement;
+      if (host?.getAttribute('popover')) {
+        try {
+          host.hidePopover();
+          host.showPopover();
+        } catch {
+          // ignored
+        }
+      }
       return;
     }
 
