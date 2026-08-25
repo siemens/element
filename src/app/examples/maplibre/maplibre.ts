@@ -24,6 +24,7 @@ import {
   SiStatusMarkerComponent
 } from '@siemens/element-ng/maplibre';
 import { LOG_EVENT } from '@siemens/live-preview';
+import type { MapLibreEvent } from 'maplibre-gl';
 
 import { environment } from '../../../environments/environment';
 
@@ -91,5 +92,10 @@ export class SampleComponent {
 
   protected onGeolocate(position: Position): void {
     this.logEvent('geolocate', position);
+  }
+
+  protected onResize(event: MapLibreEvent): void {
+    const canvas = event.target.getCanvas();
+    this.logEvent('resize', { width: canvas.clientWidth, height: canvas.clientHeight });
   }
 }
