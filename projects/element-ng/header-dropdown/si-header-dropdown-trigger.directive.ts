@@ -255,7 +255,8 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
                     offsetX: -4
                   }
                 ])
-        )
+        ),
+      usePopover: false
     });
     this.portal = new TemplatePortal(
       this.dropdown(),

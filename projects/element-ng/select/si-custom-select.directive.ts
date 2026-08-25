@@ -264,7 +264,8 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
       scrollStrategy: this.scrollStrategy(),
       backdropClass: 'cdk-overlay-transparent-backdrop',
       panelClass: ['dropdown-menu', 'show'],
-      minWidth: width + 2
+      minWidth: width + 2,
+      usePopover: false
     });
 
     const portal = new TemplatePortal(this.dropdownDirective()!.templateRef, this.viewContainerRef);

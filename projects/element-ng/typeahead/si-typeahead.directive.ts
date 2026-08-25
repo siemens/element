@@ -514,7 +514,8 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
           .withPositions(SiTypeaheadDirective.overlayPositions),
         minWidth: this.typeaheadFullWidth()
           ? this.elementRef.nativeElement.getBoundingClientRect().width + 2 // 2px border
-          : 0
+          : 0,
+        usePopover: false
       };
 
       const scrollStrategy = this.typeaheadScrollStrategy();

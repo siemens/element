@@ -249,7 +249,8 @@ export class SiTourService {
     // first the highlighter,
     const hlPortal = new ComponentPortal(SiTourHighlightComponent, undefined, componentInjector);
     this.overlayRefHighlight = this.overlay.create({
-      positionStrategy: this.overlay.position().global()
+      positionStrategy: this.overlay.position().global(),
+      usePopover: false
     });
     this.overlayRefHighlight.attach(hlPortal);
 
@@ -257,7 +258,8 @@ export class SiTourService {
     this.portal = new ComponentPortal(SiTourComponent, undefined, componentInjector);
     this.overlayRef = this.overlay.create({
       scrollStrategy: this.overlay.scrollStrategies.reposition(),
-      direction: isRTL() ? 'rtl' : 'ltr'
+      direction: isRTL() ? 'rtl' : 'ltr',
+      usePopover: false
     });
     this.overlayRef.attach(this.portal);
     // needs a subscriber, otherwise events will be ignored and the .backdrop CSS hack doesn't help

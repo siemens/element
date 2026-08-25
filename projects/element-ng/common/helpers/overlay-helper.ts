@@ -81,6 +81,7 @@ export function makeOverlay(
   config.positionStrategy = positionStrategy;
   config.scrollStrategy = scrollStrategy ?? overlay.scrollStrategies.reposition();
   config.direction = isRTL() ? 'rtl' : 'ltr';
+  config.usePopover = false;
   if (hasBackdrop) {
     config.hasBackdrop = true;
     config.backdropClass = 'cdk-overlay-transparent-backdrop';

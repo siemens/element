@@ -162,7 +162,8 @@ export class SiToastNotificationService implements OnDestroy {
 
   private addToastDrawer(): void {
     this.overlayRef = this.overlay.create({
-      positionStrategy: this.overlay.position().global().end().bottom()
+      positionStrategy: this.overlay.position().global().end().bottom(),
+      usePopover: false
     });
     const portal = new ComponentPortal(
       SiToastNotificationDrawerComponent,

@@ -127,7 +127,8 @@ export class SiModalService {
 
     modalRef.overlayRef = this.overlay.create({
       positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
-      direction: isRTL() ? 'rtl' : 'ltr'
+      direction: isRTL() ? 'rtl' : 'ltr',
+      usePopover: false
     });
     const compPortal = new ComponentPortal(SiModalComponent, null, injector);
     // Ensure compatibility between Angular CDK 19 and 20 since constructor arguments have changed

@@ -234,6 +234,7 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
     this.overlayRef = this.overlay.create({
       positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
       direction: isRTL() ? 'rtl' : 'ltr',
+      usePopover: false,
       hasBackdrop: true,
       scrollStrategy: this.scrollStrategy(),
       backdropClass: 'modal-backdrop'
@@ -251,6 +252,7 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
         .withFlexibleDimensions(true)
         .withViewportMargin(4),
       direction: isRTL() ? 'rtl' : 'ltr',
+      usePopover: false,
       hasBackdrop: true,
       scrollStrategy: this.scrollStrategy(),
       backdropClass: 'cdk-overlay-transparent-backdrop'

@@ -94,7 +94,8 @@ export class SiNavbarVerticalGroupTriggerDirective implements OnInit {
       .withPositions([
         { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top' },
         { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
-      ])
+      ]),
+    usePopover: false
   });
   private groupView!: EmbeddedViewRef<unknown>;
   private flyoutAnchorComponentRef?: ComponentRef<SiNavbarFlyoutAnchorComponent>;
