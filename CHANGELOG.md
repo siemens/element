@@ -1,3 +1,11 @@
+## [48.11.3](https://github.com/siemens/element/compare/v48.11.2...v48.11.3) (2026-08-26)
+
+
+### Bug Fixes
+
+* **maps-ng:** embed tooltip content as text instead of html ([f317e16](https://github.com/siemens/element/commit/f317e16a056263e28a811c97bc486f9af18f5e5f)), closes [CVE-2026-66155](https://nvd.nist.gov/vuln/detail/CVE-2026-66155)
+* **schematics:** update split mapping ([277f9fc](https://github.com/siemens/element/commit/277f9fcccb8d4cd6ac17e998aa66fb3c527c7528))
+
 ## [48.11.2](https://github.com/siemens/element/compare/v48.11.1...v48.11.2) (2026-05-13)
 
 
