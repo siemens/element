@@ -1,3 +1,10 @@
+## [49.16.1](https://github.com/siemens/element/compare/v49.16.0...v49.16.1) (2026-08-26)
+
+
+### Bug Fixes
+
+* **maps-ng:** embed tooltip content as text instead of html ([691a1e8](https://github.com/siemens/element/commit/691a1e8133132b411175b76595353e26855432bc)), closes [CVE-2026-66155](https://nvd.nist.gov/vuln/detail/CVE-2026-66155)
+
 # [49.16.0](https://github.com/siemens/element/compare/v49.15.0...v49.16.0) (2026-08-24)
 
 
