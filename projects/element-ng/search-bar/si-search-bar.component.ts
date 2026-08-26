@@ -69,12 +69,6 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
    * @defaultValue false
    */
   readonly showIcon = input(false, { transform: booleanAttribute });
-  /**
-   * Whether the search is tabbable or not.
-   *
-   * @defaultValue true
-   */
-  readonly tabbable = input(true, { transform: booleanAttribute });
 
   /**
    * Define search input content.

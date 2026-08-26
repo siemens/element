@@ -24,7 +24,6 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchChange: _angular_core.OutputEmitterRef<string>;
     readonly showIcon: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly tabbable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly value: _angular_core.InputSignal<string | undefined>;
 }
 
