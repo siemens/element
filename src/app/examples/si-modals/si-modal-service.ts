@@ -5,6 +5,7 @@
 import { Component, inject, Injector, OnDestroy, TemplateRef } from '@angular/core';
 import { SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
+import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 import { AppTableComponent } from './app-table.component';
@@ -21,6 +22,7 @@ export class SampleComponent implements OnDestroy {
 
   private logEvent = inject(LOG_EVENT);
   private modalService = inject(SiModalService);
+  private toastNotificationService = inject(SiToastNotificationService);
   private injector = inject(Injector);
 
   ngOnDestroy(): void {
@@ -71,6 +73,15 @@ export class SampleComponent implements OnDestroy {
       animated: true,
       ariaLabelledBy: 'sample-modal-title',
       injector: this.injector
+    });
+  }
+
+  showManualCloseToast(): void {
+    this.toastNotificationService.showToastNotification({
+      state: 'info',
+      title: 'Manual close toast',
+      message: 'This notification remains visible until it is closed.',
+      disableAutoClose: true
     });
   }
 }

@@ -1,0 +1,16 @@
+- button "Create template modal"
+- button "Create large modal"
+- button "Create centered modal"
+- button "Create modal with icon"
+- button "Create full-screen modal"
+- button "Create nested modal"
+- button "Create modal with custom component"
+- text: Info
+- paragraph: Manual close toast
+- paragraph: This notification remains visible until it is closed.
+- button "Close"
+- dialog:
+  - heading "Full-screen modal" [level=4]
+  - button "Close modal": 
+  - paragraph: This full-screen modal can trigger a toast notification.
+  - button "Show manual close toast"

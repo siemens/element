@@ -17,6 +17,12 @@
   <button
     type="button"
     class="btn btn-secondary"
+    (click)="openModal(fullscreenTemplate, 'modal-fullscreen')"
+    >Create full-screen modal</button
+  >
+  <button
+    type="button"
+    class="btn btn-secondary"
     (click)="openParentModal(nestedTemplate, 'modal-dialog-centered')"
     >Create nested modal</button
   >
@@ -41,6 +47,25 @@
   <div class="modal-footer">
     <span>This is the footer.</span>
     <button type="button" class="btn btn-secondary" (click)="modalRef.hide('close')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #fullscreenTemplate let-modalRef="modalRef">
+  <div class="modal-header">
+    <h4 class="modal-title" id="sample-modal-title">Full-screen modal</h4>
+    <button
+      type="button"
+      class="btn btn-circle btn-tertiary-ghost element-cancel"
+      aria-label="Close modal"
+      (click)="modalRef.hide('cancel')"
+    >
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>This full-screen modal can trigger a toast notification.</p>
+    <button type="button" class="btn btn-secondary" (click)="showManualCloseToast()"
+      >Show manual close toast</button
+    >
   </div>
 </ng-template>
 
