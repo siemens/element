@@ -29,5 +29,10 @@ export const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
     module: /@siemens\/element-ng\/file-uploader/,
     elementSelector: 'si-file-dropzone',
     names: ['uploadTextFileSelect']
+  },
+  {
+    module: /@siemens\/element-ng\/search-bar/,
+    elementSelector: 'si-search-bar',
+    names: ['tabbable']
   }
 ];

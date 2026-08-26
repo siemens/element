@@ -89,6 +89,36 @@ export const appConfig: ApplicationConfig = {
     expect(modifiedContent).toContain('providers: [provideZonelessChangeDetection()]');
   });
 
+  it('should remove the deprecated si-search-bar tabbable input', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/search.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-search',
+  template: \`<si-search-bar [tabbable]="false" placeholder="Search" />\`
+})
+export class SearchComponent {}`,
+      '/projects/app/src/external-search.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-external-search',
+  templateUrl: './search.component.html'
+})
+export class ExternalSearchComponent {}`,
+      '/projects/app/src/search.component.html': `<si-search-bar tabbable="false" />
+<div tabbable="false"></div>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/search.component.ts');
+    const template = tree.readContent('/projects/app/src/search.component.html');
+
+    expect(component).not.toContain('tabbable');
+    expect(component).toContain('placeholder="Search"');
+    expect(template).not.toContain('si-search-bar tabbable');
+    expect(template).toContain('<div tabbable="false"></div>');
+  });
+
   it('should move literal split sizes to inline split parts', async () => {
     addTestFiles(appTree, {
       '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
