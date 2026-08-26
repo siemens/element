@@ -28,4 +28,15 @@ test.describe('si-modal-service', () => {
 
     await si.runVisualAndA11yTests('icon');
   });
+
+  test(example + ' full screen modal + toast', async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.locator('.btn').getByText('Create full-screen modal').click();
+    await expect(page.locator('.modal-body')).toBeVisible();
+    await page.locator('.btn').getByText('Show manual close toast').click();
+    await expect(page.locator('.toast-content').first()).toBeVisible();
+
+    await si.runVisualAndA11yTests('full-screen-toast');
+  });
 });
