@@ -85,6 +85,18 @@ These are not treated as errors and do not require a separate notification.
 
 ![AI errors and limitations](images/ai-errors.png)
 
+### Follow-up prompts
+
+Follow-up prompts are 2-4 suggested actions based on the AI’s last response.
+They guide users toward deeper or related questions.
+
+Show follow-up prompts only after relevant AI responses,
+and clear them as soon as the user sends a new message
+
+![follow-up prompts](images/ai-follow-up-prompts.png)
+
+> 1. Follow-up prompts
+
 ## Code ---
 
 Use the chat container with the chat messages to build chat message interfaces.
