@@ -1,0 +1,9 @@
+<button
+  type="button"
+  class="cluster-marker"
+  [attr.aria-label]="clusterLabel | translate: { count: count() }"
+  [style.--si-cluster-gradient]="gradient()"
+  (click)="onClick($event)"
+>
+  <span class="cluster-count" aria-hidden="true">{{ countLabel() }}</span>
+</button>

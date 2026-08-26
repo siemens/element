@@ -20,7 +20,7 @@
       These markers are slow compared to a Layer of symbol because they're not rendered using WebGL.
     -->
     <mgl-marker #marker [feature]="point">
-      <si-status-marker [status]="point.properties.status" [ariaLabel]="point.properties.name" />
+      <si-status-marker [status]="point.properties.status" />
     </mgl-marker>
     <mgl-popup [marker]="marker">
       <dl class="mb-0">
