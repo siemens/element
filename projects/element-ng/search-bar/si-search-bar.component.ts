@@ -125,7 +125,6 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
   readonly searchChange = output<string>();
 
   protected isInvalid = false;
-  protected inFocus = false;
 
   protected onChange = (val: any): void => {};
   protected onTouch = (): void => {};
@@ -217,7 +216,6 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
   }
 
   protected onBlur(): void {
-    this.inFocus = false;
     this.onTouch();
   }
 

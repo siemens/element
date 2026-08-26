@@ -9,7 +9,7 @@
   --input-background-hover-color: #{system-tokens.$si-sys-background-1};
 
   div:hover,
-  div.focus {
+  div:has(input:focus) {
     .search-bar-icon,
     ::placeholder {
       color: system-tokens.$si-sys-text-primary !important; // stylelint-disable-line declaration-no-important

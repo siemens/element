@@ -1,4 +1,4 @@
-<div class="position-relative" [class.disabled]="disabled()" [class.focus]="inFocus">
+<div class="position-relative" [class.disabled]="disabled()">
   @if (showIcon()) {
     <si-icon class="search-bar-icon icon text-secondary" [icon]="icons.elementSearch" />
   }
@@ -15,7 +15,6 @@
     [attr.tabindex]="tabbable() ? '' : '-1'"
     [attr.maxlength]="maxlength()"
     [readonly]="readonly()"
-    (focus)="inFocus = true"
     (blur)="onBlur()"
     (input)="input($event)"
   />
