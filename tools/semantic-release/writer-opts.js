@@ -46,6 +46,10 @@ function transform(commit) {
   return {
     ...commit,
     notes: normalizedNotes,
+    references: commit.references.map(reference => ({
+      ...reference,
+      isCve: reference.prefix === 'CVE-'
+    })),
     type: visibleTypes[commit.type],
     shortHash
   };
@@ -67,9 +71,15 @@ function finalizeContext(context) {
   return context;
 }
 
+const commitPartial = `* {{#if scope}}**{{scope}}:** {{/if}}{{subject}}
+{{~#if @root.linkReferences}} ([{{shortHash}}]({{#if @root.repository}}{{@root.host}}/{{@root.owner}}/{{@root.repository}}{{else}}{{@root.repoUrl}}{{/if}}/commit/{{hash}})){{else}} {{shortHash}}{{/if}}
+{{~#if references}}, closes{{#each references}} {{#if isCve}}[{{prefix}}{{issue}}](https://nvd.nist.gov/vuln/detail/{{prefix}}{{issue}}){{else}}[{{prefix}}{{issue}}]({{#if @root.repository}}{{@root.host}}/{{#if repository}}{{owner}}/{{repository}}{{else}}{{@root.owner}}/{{@root.repository}}{{/if}}{{else}}{{@root.repoUrl}}{{/if}}/issues/{{issue}}){{/if}}{{/each}}{{/if}}
+`;
+
 export default {
   transform,
   finalizeContext,
+  commitPartial,
   commitGroupsSort(a, b) {
     return commitGroups.indexOf(a.title) - commitGroups.indexOf(b.title);
   },
