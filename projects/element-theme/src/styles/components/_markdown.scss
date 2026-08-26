@@ -7,7 +7,7 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   word-break: break-word;
-  line-height: variables.px-to-ratio(variables.$si-font-size-body, 20px);
+  line-height: variables.$si-line-height-body-paragraph;
 
   strong {
     font-weight: variables.$si-font-weight-semibold;
