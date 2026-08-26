@@ -4,8 +4,7 @@
  */
 import { Component, input } from '@angular/core';
 
-export type MarkerStatus =
-  'default' | 'unknown' | 'success' | 'info' | 'warning' | 'danger' | 'caution' | 'critical';
+import type { MarkerStatus } from './marker-types';
 
 @Component({
   selector: 'si-status-marker',
@@ -13,7 +12,7 @@ export type MarkerStatus =
   styleUrl: './si-status-marker.component.scss',
   host: {
     class: 'si-status-marker',
-    '[attr.data-status]': 'status()'
+    '[attr.data-status]': 'status() ?? "default"'
   }
 })
 export class SiStatusMarkerComponent {

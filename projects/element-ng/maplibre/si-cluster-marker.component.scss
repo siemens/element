@@ -1,0 +1,40 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.cluster-marker {
+  position: relative;
+  display: flex;
+  inline-size: 46px;
+  block-size: 46px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 3px solid variables.$si-sys-background-1;
+  border-radius: 50%;
+  background: var(--si-cluster-gradient);
+  color: variables.$si-sys-text-primary;
+  cursor: pointer;
+
+  &::before {
+    position: absolute;
+    inset: 20%;
+    border-radius: 50%;
+    background: variables.$si-sys-background-1;
+    content: '';
+  }
+
+  &:focus-visible {
+    @include variables.make-outline-focus();
+  }
+}
+
+.cluster-count {
+  position: relative;
+  font-family: variables.$si-font-family;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}

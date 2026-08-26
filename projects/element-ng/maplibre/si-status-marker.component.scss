@@ -8,7 +8,7 @@
   cursor: pointer;
 
   &[data-status='default'] {
-    color: variables.$element-ui-0;
+    color: variables.$si-sys-background-accent;
   }
 
   &[data-status='success'] {

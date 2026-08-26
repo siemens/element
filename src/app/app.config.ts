@@ -16,6 +16,7 @@ import {
   provideAppInitializer,
   ɵLocaleDataIndex
 } from '@angular/core';
+import { provideMaplibreWorker } from '@maplibre/ngx-maplibre-gl/config';
 import { provideFormlyCore } from '@ngx-formly/core';
 import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { provideSiAgGridConfig } from '@siemens/element-ng/ag-grid';
@@ -166,6 +167,7 @@ export const APP_CONFIG: ApplicationConfig = {
       extras: {
         resetFieldOnHide: false
       }
-    })
+    }),
+    provideMaplibreWorker('assets/maplibre/maplibre-gl-worker.mjs')
   ]
 };

@@ -209,6 +209,7 @@ export interface SiTranslatableKeys {
   'SI_MAP.WINDOWS_HELP'?: string;
   'SI_MAP.ZOOM_IN'?: string;
   'SI_MAP.ZOOM_OUT'?: string;
+  'SI_MAP_CLUSTER.LABEL'?: string;
   'SI_MARKDOWN.COPIED_CODE'?: string;
   'SI_MARKDOWN.COPY_CODE'?: string;
   'SI_MARKDOWN.COPY_TABLE_AS_CSV'?: string;
