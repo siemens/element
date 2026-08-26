@@ -9,14 +9,11 @@ import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import { SelectItem, SiSelectModule } from '@siemens/element-ng/select';
 
-type Density = 'none' | 'density-compact-dani' | 'density-compact-andre';
+type Density = 'none' | 'density-compact';
 type FontUnit = 'px' | 'rem';
 type CssUnit = FontUnit | '';
 
-const densityClasses: Exclude<Density, 'none'>[] = [
-  'density-compact-dani',
-  'density-compact-andre'
-];
+const densityClasses: Exclude<Density, 'none'>[] = ['density-compact'];
 const spacerDefaults = [2, 4, 6, 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 96];
 
 interface CssVariableControl {
@@ -60,13 +57,10 @@ const typographyControlDefinitions: readonly (readonly [string, string, number, 
   ['body-paragraph', 'Body paragraph', 0.875, 20 / 14],
   ['body-sm', 'Body SM', 0.75, 16 / 12],
   ['h1', 'Heading 1', 1.75, 36 / 28],
-  ['h1-bold', 'Heading 1 bold', 1.75, 36 / 28],
   ['h2', 'Heading 2', 1.5, 32 / 24],
   ['h3', 'Heading 3', 1.25, 24 / 20],
   ['h4', 'Heading 4', 1, 1.25],
-  ['h4-bold', 'Heading 4 bold', 1, 1.25],
   ['h5', 'Heading 5', 0.875, 20 / 14],
-  ['h5-bold', 'Heading 5 bold', 0.875, 20 / 14],
   ['h6', 'Heading 6', 0.75, 16 / 12],
   ['display', 'Display', 2, 40 / 32],
   ['display-bold', 'Display bold', 2.5, 52 / 40],
@@ -123,8 +117,7 @@ export class SampleComponent implements OnInit {
 
   readonly densityOptions: SelectItem<Density>[] = [
     { type: 'option', value: 'none', label: 'None' },
-    { type: 'option', value: 'density-compact-dani', label: 'Compact (Dani Biasi)' },
-    { type: 'option', value: 'density-compact-andre', label: 'Compact (Andre Fischbach)' }
+    { type: 'option', value: 'density-compact', label: 'Compact' }
   ];
 
   private document = inject(DOCUMENT);

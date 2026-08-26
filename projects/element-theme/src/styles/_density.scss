@@ -1,86 +1,46 @@
 @use 'variables/typography';
 
-// proposal Dani B.
-.density-compact-dani {
-  --element-spacer-inline-1: 0px; // stylelint-disable-line length-zero-no-unit
-  --element-spacer-inline-2: 4px;
-  --element-spacer-inline-3: 4px;
-  --element-spacer-inline-4: 8px;
-  --element-spacer-inline-5: 8px;
-  --element-spacer-inline-6: 12px;
-  --element-spacer-inline-7: 16px;
-  --element-spacer-inline-8: 20px;
-  --element-spacer-inline-9: 24px;
-  --element-spacer-inline-10: 32px;
-  --element-spacer-inline-11: 36px;
-  --element-spacer-inline-12: 44px;
-  --element-spacer-inline-13: 48px;
-  --element-spacer-inline-14: 72px;
-
-  --element-spacer-block-1: 0px; // stylelint-disable-line length-zero-no-unit
-  --element-spacer-block-2: 4px;
-  --element-spacer-block-3: 4px;
-  --element-spacer-block-4: 8px;
-  --element-spacer-block-5: 8px;
-  --element-spacer-block-6: 12px;
-  --element-spacer-block-7: 16px;
-  --element-spacer-block-8: 20px;
-  --element-spacer-block-9: 24px;
-  --element-spacer-block-10: 32px;
-  --element-spacer-block-11: 36px;
-  --element-spacer-block-12: 44px;
-  --element-spacer-block-13: 48px;
-  --element-spacer-block-14: 72px;
-
-  // these stay the same for now
-  // --element-font-size-body: #{typography.px-to-rem(14px};
-  // --element-font-size-body-lg: #{typography.px-to-rem(16px};
-  // --element-font-size-caption: #{typography.px-to-rem(12px};
-  --element-font-size-h1-bold: #{typography.px-to-rem(24px)};
-  --element-font-size-h1: #{typography.px-to-rem(24px)};
-  --element-font-size-h2: #{typography.px-to-rem(16px)};
-  --element-font-size-h3: #{typography.px-to-rem(12px)};
-  --element-font-size-h4: #{typography.px-to-rem(12px)};
-  --element-font-size-h4-bold: #{typography.px-to-rem(12px)};
-  --element-font-size-h5: #{typography.px-to-rem(12px)};
-  --element-font-size-h5-bold: #{typography.px-to-rem(14px)};
-  --element-font-size-display-xl: #{typography.px-to-rem(44px)};
-  --element-font-size-display-lg: #{typography.px-to-rem(36px)};
-  --element-font-size-display-bold: #{typography.px-to-rem(32px)};
-  --element-font-size-display: #{typography.px-to-rem(32px)};
+@mixin spacer-override($spacer, $block-size, $inline-size) {
+  --element-spacer-block-#{$spacer}: #{$block-size};
+  --element-spacer-inline-#{$spacer}: #{$inline-size};
 }
 
-// proposal Andre F.
-.density-compact-andre {
-  --element-spacer-inline-1: 2px;
-  --element-spacer-inline-2: 2px;
-  --element-spacer-inline-3: 4px;
-  --element-spacer-inline-4: 6px;
-  --element-spacer-inline-5: 8px;
-  --element-spacer-inline-6: 12px;
-  --element-spacer-inline-7: 16px;
-  --element-spacer-inline-8: 20px;
-  --element-spacer-inline-9: 24px;
-  --element-spacer-inline-10: 32px;
-  --element-spacer-inline-11: 40px;
-  --element-spacer-inline-12: 48px;
-  --element-spacer-inline-13: 64px;
-  --element-spacer-inline-14: 80px;
+@mixin font-override($name, $font-size, $line-height) {
+  --element-font-size-#{$name}: #{typography.px-to-rem($font-size)};
+  --element-line-height-#{$name}: #{typography.px-to-ratio($font-size, $line-height)};
+}
 
-  --element-spacer-block-1: 2px;
-  --element-spacer-block-2: 2px;
-  --element-spacer-block-3: 4px;
-  --element-spacer-block-4: 6px;
-  --element-spacer-block-5: 8px;
-  --element-spacer-block-6: 12px;
-  --element-spacer-block-7: 16px;
-  --element-spacer-block-8: 20px;
-  --element-spacer-block-9: 24px;
-  --element-spacer-block-10: 32px;
-  --element-spacer-block-11: 40px;
-  --element-spacer-block-12: 48px;
-  --element-spacer-block-13: 64px;
-  --element-spacer-block-14: 80px;
+.density-compact {
+  @include spacer-override(1, 2px, 2px);
+  @include spacer-override(2, 2px, 2px);
+  @include spacer-override(3, 4px, 4px);
+  @include spacer-override(4, 6px, 6px);
+  @include spacer-override(5, 8px, 8px);
+  @include spacer-override(6, 12px, 12px);
+  @include spacer-override(7, 16px, 16px);
+  @include spacer-override(8, 20px, 20px);
+  @include spacer-override(9, 24px, 24px);
+  @include spacer-override(10, 32px, 32px);
+  @include spacer-override(11, 40px, 40px);
+  @include spacer-override(12, 48px, 48px);
+  @include spacer-override(13, 64px, 64px);
+  @include spacer-override(14, 80px, 80px);
 
-  // fonts remain unchanged
+  @include font-override(body-sm, 12px, 16px);
+  @include font-override(body, 14px, 16px);
+  @include font-override(body-lg, 14px, 16px);
+  @include font-override(body-paragraph, 14px, 18px);
+  @include font-override(h1, 24px, 28px);
+  @include font-override(h2, 20px, 24px);
+  @include font-override(h3, 16px, 18px);
+  @include font-override(h4, 14px, 20px);
+  @include font-override(h5, 14px, 16px);
+  @include font-override(h6, 12px, 16px);
+  @include font-override(display, 28px, 32px);
+  @include font-override(display-lg, 32px, 40px);
+  @include font-override(display-xl, 40px, 48px);
+  @include font-override(display-xxl, 48px, 56px);
+  @include font-override(code-sm, 12px, 16px);
+  @include font-override(code, 14px, 20px);
+  @include font-override(code-lg, 16px, 20px);
 }
