@@ -41,7 +41,7 @@ describe('SiSummaryChipComponent', () => {
     await fixture.whenStable();
 
     expect(element.querySelector('.si-body')).toHaveTextContent('test label');
-    expect(element.querySelector('.si-h5')).toHaveTextContent('42');
+    expect(element.querySelector('.fw-semibold')).toHaveTextContent('42');
     expect(element.querySelector('si-icon')).not.toBeInTheDocument();
   });
 
