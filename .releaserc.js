@@ -34,7 +34,8 @@ export default {
       {
         preset: 'angular',
         parserOpts: {
-          noteKeywords: ['BREAKING CHANGE', 'NOTE', 'DEPRECATED']
+          noteKeywords: ['BREAKING CHANGE', 'NOTE', 'DEPRECATED'],
+          issuePrefixes: ['#', 'gh-', 'CVE-']
         },
         writerOpts
       }
