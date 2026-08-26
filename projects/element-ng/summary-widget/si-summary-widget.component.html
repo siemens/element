@@ -13,7 +13,7 @@
 >
   @let actualIcon = statusIcon();
   @if (actualIcon.icon) {
-    <span class="icon icon-stack">
+    <span class="icon icon-stack mt-1">
       <si-icon [class]="actualIcon.color" [icon]="actualIcon.icon" />
       @if (actualIcon.stacked) {
         <si-icon [class]="actualIcon.stackedColor" [icon]="actualIcon.stacked" />
@@ -21,7 +21,7 @@
     </span>
   }
   <div class="d-flex flex-column py-2" [class.ps-2]="!actualIcon.icon">
-    <div class="si-h5">{{ value() | translate }}</div>
+    <div class="si-body-sbold">{{ value() | translate }}</div>
     <div class="si-body text-secondary">{{ label() | translate }}</div>
   </div>
 </div>

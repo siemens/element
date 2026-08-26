@@ -44,7 +44,7 @@ describe('SiSummaryWidgetComponent', () => {
     await fixture.whenStable();
 
     expect(element.querySelector('.text-secondary')).toHaveTextContent('test label');
-    expect(element.querySelector('.si-h5')).toHaveTextContent('42');
+    expect(element.querySelector('.si-body-sbold')).toHaveTextContent('42');
     expect(element.querySelector('si-icon')).not.toBeInTheDocument();
   });
 
