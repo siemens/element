@@ -1,0 +1,67 @@
+@use '../variables';
+@use '../variables/semantic-tokens';
+@use '../variables/system-tokens';
+@use '../bootstrap/variables' as bootstrap-variables;
+
+@use 'sass:map';
+
+.search-bar {
+  position: relative;
+
+  &:has(.search-bar-input:disabled) {
+    .search-bar-icon,
+    .search-bar-input,
+    .search-bar-input::placeholder {
+      color: system-tokens.$si-sys-text-disabled;
+    }
+  }
+}
+
+.search-bar-input.form-control {
+  transition: none;
+  background-color: system-tokens.$si-sys-background-1 !important; // stylelint-disable-line declaration-no-important
+  border-radius: semantic-tokens.$element-radius-2;
+  border-width: 0;
+
+  &::placeholder {
+    color: system-tokens.$si-sys-text-secondary;
+  }
+
+  &:is(:hover, :focus)::placeholder {
+    color: system-tokens.$si-sys-text-primary;
+  }
+
+  .search-bar:has(.search-bar-icon) & {
+    padding-inline-start: calc(
+      #{variables.$si-icon-font-size} + #{map.get(variables.$spacers, 2) * 2}
+    );
+  }
+
+  .search-bar:has(.search-bar-clear) & {
+    padding-inline-end: calc(
+      #{bootstrap-variables.$btn-font-size} * #{bootstrap-variables.$btn-line-height} +
+        #{bootstrap-variables.$btn-padding-y-sm * 2} + #{map.get(variables.$spacers, 2) * 2}
+    );
+  }
+
+  .search-bar.variant-background-0 & {
+    background-color: system-tokens.$si-sys-background-4 !important; // stylelint-disable-line declaration-no-important
+  }
+}
+
+.search-bar-icon {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: map.get(variables.$spacers, 2);
+  align-items: center;
+  font-size: variables.$si-icon-font-size;
+  color: system-tokens.$si-sys-text-disabled;
+  pointer-events: none;
+}
+
+.search-bar-clear {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: map.get(variables.$spacers, 2);
+  margin-block: auto;
+}
