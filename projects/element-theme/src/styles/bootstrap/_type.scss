@@ -194,11 +194,27 @@ h6,
   );
 }
 
+.si-body-lg-sbold {
+  @include typography.si-font(
+    typography.$si-font-size-body-lg-sbold,
+    typography.$si-line-height-body-lg-sbold,
+    typography.$si-font-weight-body-lg-sbold
+  );
+}
+
 .si-body {
   @include typography.si-font(
     typography.$si-font-size-body,
     typography.$si-line-height-body,
     typography.$si-font-weight-body
+  );
+}
+
+.si-body-sbold {
+  @include typography.si-font(
+    typography.$si-font-size-body-sbold,
+    typography.$si-line-height-body-sbold,
+    typography.$si-font-weight-body-sbold
   );
 }
 
@@ -210,11 +226,27 @@ h6,
   );
 }
 
+.si-body-paragraph-sbold {
+  @include typography.si-font(
+    typography.$si-font-size-body-paragraph-sbold,
+    typography.$si-line-height-body-paragraph-sbold,
+    typography.$si-font-weight-body-paragraph-sbold
+  );
+}
+
 .si-body-sm {
   @include typography.si-font(
     typography.$si-font-size-body-sm,
     typography.$si-line-height-body-sm,
     typography.$si-font-weight-body-sm
+  );
+}
+
+.si-body-sm-sbold {
+  @include typography.si-font(
+    typography.$si-font-size-body-sm-sbold,
+    typography.$si-line-height-body-sm-sbold,
+    typography.$si-font-weight-body-sm-sbold
   );
 }
 
@@ -235,11 +267,27 @@ h6,
   );
 }
 
+.si-display-xl-sbold {
+  @include typography.si-font(
+    typography.$si-font-size-display-xl-sbold,
+    typography.$si-line-height-display-xl-sbold,
+    typography.$si-font-weight-display-xl-sbold
+  );
+}
+
 .si-display-xxl {
   @include typography.si-font(
     typography.$si-font-size-display-xxl,
     typography.$si-line-height-display-xxl,
     typography.$si-font-weight-display-xxl
+  );
+}
+
+.si-display-xxl-sbold {
+  @include typography.si-font(
+    typography.$si-font-size-display-xxl-sbold,
+    typography.$si-line-height-display-xxl-sbold,
+    typography.$si-font-weight-display-xxl-sbold
   );
 }
 
@@ -252,12 +300,28 @@ h6,
   );
 }
 
+.si-display-lg-sbold {
+  @include typography.si-font(
+    typography.$si-font-size-display-lg-sbold,
+    typography.$si-line-height-display-lg-sbold,
+    typography.$si-font-weight-display-lg-sbold
+  );
+}
+
 .si-display-bold,
 .display-3 {
   @include typography.si-font(
     typography.$si-font-size-display-bold,
     typography.$si-line-height-display-bold,
     typography.$si-font-weight-display-bold
+  );
+}
+
+.si-display-sbold {
+  @include typography.si-font(
+    typography.$si-font-size-display-sbold,
+    typography.$si-line-height-display-sbold,
+    typography.$si-font-weight-display-sbold
   );
 }
 
