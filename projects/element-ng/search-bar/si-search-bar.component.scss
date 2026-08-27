@@ -10,9 +10,8 @@
 
   div:not(.disabled):hover,
   div:has(input:focus) {
-    .search-bar-icon,
     ::placeholder {
-      color: system-tokens.$si-sys-text-primary !important; // stylelint-disable-line declaration-no-important
+      color: system-tokens.$si-sys-text-primary;
     }
   }
 }
@@ -24,13 +23,11 @@
 
 input {
   transition: none;
-  background-color: var(--input-background-color);
+  background-color: var(
+    --input-background-color
+  ) !important; // stylelint-disable-line declaration-no-important
   border-radius: 4px;
   border-width: 0;
-
-  &.form-control:focus-visible {
-    background-color: var(--input-background-color);
-  }
 }
 
 .cancel-button {
@@ -47,13 +44,15 @@ input {
 .search-bar-icon {
   position: absolute;
   inset-block: 0;
-  inset-inline-start: map.get(variables.$spacers, 3);
+  inset-inline-start: map.get(variables.$spacers, 2);
   align-items: center;
-  color: var(--search-bar-icon-color);
+  color: system-tokens.$si-sys-text-disabled;
 }
 
 .icon-start {
-  padding-inline-start: calc(#{variables.$si-icon-font-size} + #{map.get(variables.$spacers, 5)});
+  padding-inline-start: calc(
+    #{variables.$si-icon-font-size} + #{map.get(variables.$spacers, 2) * 2}
+  );
 }
 
 .icon-end {
@@ -62,7 +61,6 @@ input {
 
 ::placeholder {
   color: system-tokens.$si-sys-text-secondary;
-  padding-inline-start: map.get(variables.$spacers, 1);
 }
 
 .disabled,
