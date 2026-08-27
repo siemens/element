@@ -6,6 +6,7 @@
 
 import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
+import { ElementRef } from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
@@ -25,6 +26,10 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
     readonly searchChange: _angular_core.OutputEmitterRef<string>;
     readonly showIcon: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly value: _angular_core.InputSignal<string | undefined>;
+}
+
+// @public
+export class SiSearchBarInputDirective {
 }
 
 // @public (undocumented)

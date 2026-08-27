@@ -2,19 +2,22 @@
   @if (showIcon()) {
     <si-icon class="search-bar-icon" [icon]="icons.elementSearch" />
   }
-  <input
-    #inputRef
-    type="text"
-    class="search-bar-input form-control"
-    [disabled]="disabled()"
-    [placeholder]="placeholder()"
-    [class.is-invalid]="isInvalid"
-    [class.icon-end]="searchValue()"
-    [attr.maxlength]="maxlength()"
-    [readonly]="readonly()"
-    (blur)="onBlur()"
-    (input)="input($event)"
-  />
+  <ng-content select="input[siSearchBarInput]">
+    <input
+      #inputRef
+      type="text"
+      class="search-bar-input form-control"
+      [disabled]="disabled()"
+      [placeholder]="placeholder()"
+      [class.is-invalid]="isInvalid"
+      [class.icon-end]="searchValue()"
+      [attr.maxlength]="maxlength()"
+      [readonly]="readonly()"
+      (blur)="onBlur()"
+      (input)="input($event)"
+    />
+  </ng-content>
+
   @if (searchValue()) {
     <button
       type="button"

@@ -6,6 +6,7 @@ import {
   booleanAttribute,
   Component,
   computed,
+  contentChild,
   ElementRef,
   input,
   numberAttribute,
@@ -25,6 +26,8 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
+import { SI_SEARCH_BAR, SiSearchBarInputDirective } from './si-search-bar-input.directive';
+
 @Component({
   selector: 'si-search-bar',
   imports: [SiIconComponent, SiTranslatePipe],
@@ -35,16 +38,22 @@ import { debounceTime } from 'rxjs/operators';
       provide: NG_VALUE_ACCESSOR,
       useExisting: SiSearchBarComponent,
       multi: true
-    }
+    },
+    { provide: SI_SEARCH_BAR, useExisting: SiSearchBarComponent }
   ],
   host: {
     '[class.readonly]': 'readonly()'
   }
 })
 export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAccessor, OnChanges {
-  private readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('inputRef');
+  private readonly inputRef = viewChild<ElementRef<HTMLInputElement>>('inputRef');
   private debouncer = new Subject<string>();
   private readonly disabledNgControl = signal(false);
+
+  protected readonly searchBarInput = contentChild<
+    SiSearchBarInputDirective,
+    ElementRef<HTMLInputElement>
+  >(SiSearchBarInputDirective, { read: ElementRef });
 
   /**
    * Time unit change of search input takes effect.
@@ -122,9 +131,11 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
   protected onChange = (val: any): void => {};
   protected onTouch = (): void => {};
 
-  protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
+  /** @internal */
+  readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
 
-  protected readonly searchValue = signal('');
+  /** @internal */
+  readonly searchValue = signal('');
   protected readonly icons = addIcons({ elementCancel, elementSearch });
 
   /** @internal */
@@ -167,7 +178,10 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
     value ??= '';
     if (value !== this.searchValue()) {
       this.searchValue.set(value);
-      this.inputRef().nativeElement.value = value;
+      const inputElement = this.getInput();
+      if (inputElement) {
+        inputElement.value = value;
+      }
       this.onChange(value);
       this.searchChange.emit(value);
     }
@@ -190,14 +204,15 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
 
   /** @internal */
   focus(): void {
-    this.inputRef().nativeElement.focus();
+    this.getInput()?.focus();
   }
 
   protected onCancelFocus(event: Event): void {
     event.stopPropagation();
   }
 
-  protected input(event: Event): void {
+  /** @internal */
+  input(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     if (!this.isProhibitedCharactersUsed(value)) {
       if (this.debounceTime() > 0) {
@@ -208,7 +223,8 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
     }
   }
 
-  protected onBlur(): void {
+  /** @internal */
+  onBlur(): void {
     this.onTouch();
   }
 
@@ -219,6 +235,13 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
 
   protected writeSearchValue(value: string): void {
     this.searchValue.set(value);
-    this.inputRef().nativeElement.value = value;
+    const inputElement = this.getInput();
+    if (inputElement) {
+      inputElement.value = value;
+    }
+  }
+
+  private getInput(): HTMLInputElement | undefined {
+    return this.searchBarInput()?.nativeElement ?? this.inputRef()?.nativeElement;
   }
 }
