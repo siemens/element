@@ -1,0 +1,13 @@
+- text: "Model:"
+- combobox "States":
+  - textbox "Placeholder" [disabled]
+- text: Settings Color Variant
+- combobox "Color Variant":
+  - option "base-1" [selected]
+  - option "base-0"
+- checkbox "Disable" [checked]
+- text: Disable
+- checkbox "Show Icon" [checked]
+- text: Show Icon
+- checkbox "Disable free text search"
+- text: Disable free text search

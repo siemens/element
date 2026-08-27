@@ -8,7 +8,7 @@
   --input-background-color: #{system-tokens.$si-sys-background-1};
   --input-background-hover-color: #{system-tokens.$si-sys-background-1};
 
-  div:hover,
+  div:not(.disabled):hover,
   div:has(input:focus) {
     .search-bar-icon,
     ::placeholder {
@@ -65,12 +65,13 @@ input {
   padding-inline-start: map.get(variables.$spacers, 1);
 }
 
-.disabled {
+.disabled,
+.disabled:hover {
   .search-bar-icon,
   input,
   .cancel-button,
   ::placeholder {
-    color: system-tokens.$si-sys-text-disabled;
+    color: system-tokens.$si-sys-text-disabled !important; // stylelint-disable-line declaration-no-important
   }
 
   input {
