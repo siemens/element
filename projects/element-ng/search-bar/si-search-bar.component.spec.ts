@@ -4,10 +4,11 @@
  */
 import { Component, inputBinding, outputBinding, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { form, FormField, maxLength } from '@angular/forms/signals';
 import { userEvent } from 'vitest/browser';
 
-import { SiSearchBarComponent } from './index';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from './index';
 
 describe('SiSearchBarComponent', () => {
   const getInput = (element: HTMLElement): HTMLInputElement => element.querySelector('input')!;
@@ -227,6 +228,142 @@ describe('SiSearchBarComponent', () => {
       expect(searchChange).toHaveBeenCalledWith('world');
 
       vi.useRealTimers();
+    });
+  });
+
+  describe('with projected input', () => {
+    it('should clear validation errors on a projected signal form field', async () => {
+      @Component({
+        imports: [FormField, SiSearchBarComponent, SiSearchBarInputDirective],
+        template: `
+          <si-search-bar [debounceTime]="0">
+            <input siSearchBarInput aria-label="States" [formField]="search" />
+          </si-search-bar>
+        `
+      })
+      class SignalInputTestComponent {
+        readonly model = signal('California');
+        readonly search = form(this.model, path => maxLength(path, 5));
+      }
+
+      const fixture = TestBed.createComponent(SignalInputTestComponent);
+      await fixture.whenStable();
+      const element: HTMLElement = fixture.nativeElement;
+      const input = getInput(element);
+      input.value = 'California';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      await fixture.whenStable();
+      expect(fixture.componentInstance.search().invalid()).toBe(true);
+
+      await userEvent.click(element.querySelector<HTMLButtonElement>('button')!);
+      await fixture.whenStable();
+
+      expect(fixture.componentInstance.model()).toBe('');
+      expect(fixture.componentInstance.search().errors()).toHaveLength(0);
+      expect(input.value).toBe('');
+      expect(input).toHaveFocus();
+    });
+
+    it('should clear validation errors on a projected input form control', async () => {
+      @Component({
+        imports: [ReactiveFormsModule, SiSearchBarComponent, SiSearchBarInputDirective],
+        template: `
+          <si-search-bar [debounceTime]="0">
+            <input siSearchBarInput aria-label="States" [formControl]="search" />
+          </si-search-bar>
+        `
+      })
+      class InputControlTestComponent {
+        readonly search = new FormControl('', Validators.maxLength(5));
+      }
+
+      const fixture = TestBed.createComponent(InputControlTestComponent);
+      await fixture.whenStable();
+      const element: HTMLElement = fixture.nativeElement;
+      const input = getInput(element);
+      await userEvent.fill(input, 'California');
+      await fixture.whenStable();
+      expect(fixture.componentInstance.search.hasError('maxlength')).toBe(true);
+
+      await userEvent.click(element.querySelector<HTMLButtonElement>('button')!);
+      await fixture.whenStable();
+
+      expect(fixture.componentInstance.search.value).toBe('');
+      expect(fixture.componentInstance.search.errors).toBeNull();
+      expect(input.value).toBe('');
+      expect(input).toHaveFocus();
+    });
+
+    @Component({
+      imports: [ReactiveFormsModule, SiSearchBarComponent, SiSearchBarInputDirective],
+      template: `
+        <si-search-bar
+          [formControl]="search"
+          [placeholder]="placeholder()"
+          [showIcon]="true"
+          [readonly]="readonly()"
+          [maxlength]="12"
+          [debounceTime]="0"
+        >
+          <input class="projected-input" siSearchBarInput aria-label="Projected search" />
+        </si-search-bar>
+      `
+    })
+    class ProjectedInputTestComponent {
+      readonly placeholder = signal('Search users');
+      readonly readonly = signal(false);
+      readonly search = new FormControl('Initial value');
+      readonly searchBar = viewChild.required(SiSearchBarComponent);
+    }
+
+    let fixture: ComponentFixture<ProjectedInputTestComponent>;
+    let testComponent: ProjectedInputTestComponent;
+    let element: HTMLElement;
+
+    beforeEach(async () => {
+      fixture = TestBed.createComponent(ProjectedInputTestComponent);
+      testComponent = fixture.componentInstance;
+      element = fixture.nativeElement;
+      await fixture.whenStable();
+    });
+
+    it('should use the projected input instead of the default input', () => {
+      const input = getInput(element);
+
+      expect(element.querySelectorAll('input')).toHaveLength(1);
+      expect(input.classList).toContain('projected-input');
+      expect(input.classList).toContain('form-control');
+      expect(input.placeholder).toBe('Search users');
+      expect(input.maxLength).toBe(12);
+      expect(input.value).toBe('Initial value');
+    });
+
+    it('should connect the projected input to the form control and clear button', async () => {
+      const input = getInput(element);
+
+      await userEvent.fill(input, 'New value');
+      await fixture.whenStable();
+      expect(testComponent.search.value).toBe('New value');
+
+      element.querySelector<HTMLButtonElement>('button')!.click();
+      await fixture.whenStable();
+      expect(testComponent.search.value).toBe('');
+      expect(input.value).toBe('');
+    });
+
+    it('should forward state and focus to the projected input', async () => {
+      const input = getInput(element);
+
+      testComponent.readonly.set(true);
+      testComponent.search.disable();
+      await fixture.whenStable();
+      expect(input).toBeDisabled();
+      expect(input.readOnly).toBe(true);
+
+      testComponent.search.enable();
+      await fixture.whenStable();
+      testComponent.searchBar().focus();
+      expect(input).toHaveFocus();
     });
   });
 });

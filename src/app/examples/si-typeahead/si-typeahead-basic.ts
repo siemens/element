@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, signal } from '@angular/core';
+import { form, FormField, maxLength } from '@angular/forms/signals';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { SiSearchBarModule } from '@siemens/element-ng/search-bar';
 import { SiTypeaheadDirective } from '@siemens/element-ng/typeahead';
@@ -15,9 +15,9 @@ import { SiFilterSettingsComponent } from '../si-filter-settings/si-filter-setti
   selector: 'app-sample',
   imports: [
     CommonModule,
+    FormField,
     SiFilterSettingsComponent,
     SiSearchBarModule,
-    FormsModule,
     SiTypeaheadDirective
   ],
   templateUrl: './si-typeahead-basic.html'
@@ -26,7 +26,8 @@ export class SampleComponent {
   variant: BackgroundColorVariant = 'base-1';
   disable = false;
   showIcon = false;
-  selected!: string;
+  readonly model = signal('');
+  readonly form = form(this.model, path => maxLength(path, 10, { message: 'Max. 10 characters' }));
   states = [
     'Alabama',
     'Alaska',
