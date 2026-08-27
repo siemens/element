@@ -88,7 +88,7 @@ const localeConfig: SiLocaleConfig = {
   defaultLocale: 'en',
   localeInitializer: genericLocaleInitializer,
   dynamicLanguageChange: false,
-  fallbackEnabled: false
+  fallbackEnabled: true
 };
 
 @Injectable()
