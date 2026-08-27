@@ -4,14 +4,14 @@
       #filter
       #siAutocomplete="siAutocomplete"
       siAutocomplete
-      class="form-control icon-start border-0 rounded-2 bg-base-0"
+      class="form-control icon-start border-0 rounded-2 bg-base-4"
       [placeholder]="filterPlaceholder() | translate"
       [id]="baseId() + 'filter-input'"
       [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
       (input)="input()"
     />
     <si-icon
-      class="icon text-secondary position-absolute top-0 bottom-0 d-flex align-items-center ps-2"
+      class="icon text-muted position-absolute top-0 bottom-0 d-flex align-items-center ps-2"
       [icon]="icons.elementSearch"
     />
     @if (selectOptions.loading?.()) {
