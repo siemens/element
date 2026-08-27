@@ -16,15 +16,34 @@ import { SimpleChanges } from '@angular/core';
 export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAccessor, OnChanges {
     readonly clearButtonAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
+    // @deprecated
     readonly debounceTime: _angular_core.InputSignalWithTransform<number, unknown>;
+    // @deprecated
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // @deprecated
     readonly maxlength: _angular_core.InputSignalWithTransform<number | undefined, unknown>;
+    // @deprecated
     readonly placeholder: _angular_core.InputSignal<string>;
+    // @deprecated
     readonly prohibitedCharacters: _angular_core.InputSignal<string | undefined>;
+    // @deprecated
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // @deprecated
     readonly searchChange: _angular_core.OutputEmitterRef<string>;
     readonly showIcon: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // @deprecated
     readonly value: _angular_core.InputSignal<string | undefined>;
+}
+
+// @public
+export class SiSearchBarInputDirective implements OnInit {
+    constructor();
+    // (undocumented)
+    readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // (undocumented)
+    onReset(): void;
+    // (undocumented)
+    readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
 // @public (undocumented)

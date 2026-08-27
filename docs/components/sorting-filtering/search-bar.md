@@ -40,30 +40,63 @@ surrounding background. Use `background-2` or `background-1` accordingly.
 
 ## Code ---
 
-It has a callback, which can be seen in example as call to `getData()`, which
-triggers every time a user has interaction with search bar. It also includes the
-actual search term.
+Use a native input with `siSearchBarInput` inside `si-search-bar`. Bind a reactive
+`FormControl` or a Signal Forms field to the input to manage its value, validation,
+and disabled state. Observe form value changes to trigger searches and debounce
+them in application code when needed.
 
-Input `[debounceTime]` is the wait time in `ms` for the search bar to notify
-changes after a user stops typing. (Type: `number`, Default value: `400`).
-
-Input `[showIcon]` defines if a search icon is displayed (false by default).
+Set `[showIcon]="true"` on `si-search-bar` to display a search icon. The icon is
+hidden by default.
 
 ### Usage
 
 ```ts
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import {
+  SiSearchBarComponent,
+  SiSearchBarInputDirective
+} from '@siemens/element-ng/search-bar';
 
 @Component({
-  imports: [SiSearchBarComponent, ...]
+  imports: [SiSearchBarComponent, SiSearchBarInputDirective, ...]
 })
 ```
 
 <si-docs-component example="si-search-bar/si-search-bar"></si-docs-component>
 
+### Projected input
+
+Apply input settings directly to the projected input. Keep appearance settings,
+such as `showIcon` and `colorVariant`, on `si-search-bar`:
+
+```html
+<si-search-bar [showIcon]="true">
+  <input
+    siSearchBarInput
+    aria-label="Search users"
+    placeholder="Search users"
+    maxlength="40"
+    [readonly]="readonly"
+    [disabled]="disabled"
+  />
+</si-search-bar>
+```
+
+Provide an accessible name with `aria-label` or an associated `<label>`;
+the placeholder does not replace a label. Native attributes such as `autocomplete`
+can also be set directly on the input.
+
+When using Signal Forms, configure disabled state in the form schema instead of
+binding `[disabled]` on the input.
+
+The `placeholder`, `maxlength`, `readonly`, and `disabled` inputs on `si-search-bar`
+are deprecated. For compatibility, omitted settings on the projected input fall
+back to the corresponding search bar settings. Explicit `false` values for
+`readonly` and `disabled` override `true` values on the search bar.
+
 ### Search Bar - Input Value
 
-Modify input value by setting `value`.
+Set the initial value on the projected input's `FormControl` or Signal Forms
+model. The clear button resets the bound form value to an empty string.
 
 <si-docs-component example="si-search-bar/si-search-bar-value"></si-docs-component>
 
