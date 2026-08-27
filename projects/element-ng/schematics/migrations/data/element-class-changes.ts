@@ -96,12 +96,12 @@ export const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = 
   {
     requiredClasses: ['si-h1-black'],
     removeClasses: ['si-h1-black'],
-    addClasses: ['si-h1-bold']
+    addClasses: ['si-h1']
   },
   {
     requiredClasses: ['si-title-1-bold'],
     removeClasses: ['si-title-1-bold'],
-    addClasses: ['si-h4-bold']
+    addClasses: ['si-h4']
   },
   {
     requiredClasses: ['si-title-1'],
@@ -141,11 +141,21 @@ export const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = 
   {
     requiredClasses: ['si-display-3'],
     removeClasses: ['si-display-3'],
-    addClasses: ['si-display-bold']
+    addClasses: ['si-display-lg-sbold']
   },
   {
     requiredClasses: ['si-display-4'],
     removeClasses: ['si-display-4'],
     addClasses: ['si-display']
-  }
+  },
+  ...[
+    ['si-h1-bold', 'si-h1'],
+    ['si-h4-bold', 'si-h4'],
+    ['si-caption', 'si-body-sm'],
+    ['si-display-bold', 'si-display-lg-sbold']
+  ].map(([oldClass, newClass]) => ({
+    requiredClasses: [oldClass],
+    removeClasses: [oldClass],
+    addClasses: [newClass]
+  }))
 ];
