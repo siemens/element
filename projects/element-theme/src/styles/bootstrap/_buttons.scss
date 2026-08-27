@@ -19,7 +19,7 @@ button {
 :is(.btn, .btn-close) {
   --btn-icon-size: #{$btn-icon-font-size};
   --btn-font-size: #{bootstrap-variables.$btn-font-size};
-  --btn-font-weight: #{typography.$si-font-weight-semibold};
+  --btn-font-weight: #{typography.$si-font-weight-sbold};
   --btn-line-height: #{bootstrap-variables.$btn-line-height};
   --btn-padding-y: #{bootstrap-variables.$btn-padding-y};
   line-height: var(--btn-line-height);

@@ -65,7 +65,7 @@
 }
 
 .si-weather-widget-location {
-  font-weight: variables.$si-font-weight-semibold;
+  font-weight: variables.$si-font-weight-sbold;
   color: variables.$si-sys-text-primary;
 }
 
@@ -80,7 +80,7 @@
 
 .si-weather-widget-range-max {
   color: variables.$si-sys-text-primary;
-  font-weight: variables.$si-font-weight-semibold;
+  font-weight: variables.$si-font-weight-sbold;
 }
 
 .si-weather-widget-metrics {
@@ -106,6 +106,6 @@
 
 .si-weather-widget-metric-value {
   color: variables.$si-sys-text-primary;
-  font-weight: variables.$si-font-weight-semibold;
+  font-weight: variables.$si-font-weight-sbold;
   text-align: end;
 }
