@@ -215,6 +215,7 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
 
   protected resetForm(): void {
     this.setSearch('');
+    this.focus();
   }
 
   protected writeSearchValue(value: string): void {
