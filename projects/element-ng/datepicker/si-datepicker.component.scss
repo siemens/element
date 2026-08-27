@@ -210,10 +210,6 @@
   }
 
   .calendar-button {
-    font-weight: variables.$si-font-weight-h5;
-    font-size: variables.$si-font-size-h5;
-    line-height: variables.$si-line-height-h5;
-    color: variables.$si-sys-text-accent;
     min-inline-size: 0 !important; // stylelint-disable-line declaration-no-important
   }
 
