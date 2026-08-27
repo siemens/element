@@ -1,19 +1,16 @@
 <div class="pt-5 pb-5 px-5 top-0">
-  <div class="position-relative">
+  <div class="search-bar variant-background-0">
     <input
       #filter
       #siAutocomplete="siAutocomplete"
       siAutocomplete
-      class="form-control icon-start border-0 rounded-2 bg-base-4"
+      class="search-bar-input form-control"
       [placeholder]="filterPlaceholder() | translate"
       [id]="baseId() + 'filter-input'"
       [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
       (input)="input()"
     />
-    <si-icon
-      class="icon text-muted position-absolute top-0 bottom-0 d-flex align-items-center ps-2"
-      [icon]="icons.elementSearch"
-    />
+    <si-icon class="search-bar-icon" [icon]="icons.elementSearch" />
     @if (selectOptions.loading?.()) {
       <si-loading-spinner class="position-absolute end-0 bottom-0 d-flex align-items-center p-2" />
     }

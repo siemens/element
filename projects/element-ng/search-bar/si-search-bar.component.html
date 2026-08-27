@@ -1,15 +1,13 @@
-<div class="position-relative" [class.disabled]="disabled()">
+<div class="search-bar" [class.variant-background-0]="colorVariant() === 'base-0'">
   @if (showIcon()) {
-    <si-icon class="search-bar-icon icon" [icon]="icons.elementSearch" />
+    <si-icon class="search-bar-icon" [icon]="icons.elementSearch" />
   }
   <input
     #inputRef
     type="text"
-    class="form-control"
+    class="search-bar-input form-control"
     [disabled]="disabled()"
     [placeholder]="placeholder()"
-    [class.dark-background]="colorVariant() === 'base-0'"
-    [class.icon-start]="showIcon()"
     [class.is-invalid]="isInvalid"
     [class.icon-end]="searchValue()"
     [attr.maxlength]="maxlength()"
@@ -20,7 +18,7 @@
   @if (searchValue()) {
     <button
       type="button"
-      class="btn btn-icon btn-sm btn-tertiary-ghost cancel-button"
+      class="btn btn-icon btn-sm btn-tertiary-ghost search-bar-clear"
       [attr.aria-label]="clearButtonAriaLabel() | translate"
       [disabled]="disabled() || readonly()"
       (click)="resetForm()"

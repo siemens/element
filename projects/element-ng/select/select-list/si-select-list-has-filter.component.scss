@@ -11,13 +11,3 @@
 si-loading-spinner {
   --loading-spinner-size: #{variables.$si-icon-font-size};
 }
-
-.icon-start {
-  padding-inline-start: calc(
-    #{variables.$si-icon-font-size} + #{map.get(variables.$spacers, 2) * 2}
-  );
-}
-
-.form-control:is(:hover, :focus)::placeholder {
-  color: variables.$si-sys-text-primary;
-}

@@ -38,8 +38,7 @@ import { debounceTime } from 'rxjs/operators';
     }
   ],
   host: {
-    '[class.readonly]': 'readonly()',
-    '(focus)': 'focus()'
+    '[class.readonly]': 'readonly()'
   }
 })
 export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAccessor, OnChanges {
