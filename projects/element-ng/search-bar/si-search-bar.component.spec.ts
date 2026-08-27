@@ -50,12 +50,14 @@ describe('SiSearchBarComponent', () => {
       expect(getInput(element).placeholder).toBe('Users');
     });
 
-    it('should reset search when clicking cancel button', async () => {
+    it('should reset search and focus input when clicking cancel button', async () => {
       vi.spyOn(component.searchChange, 'emit');
       testComponent.search.setValue('Test1234$');
       await fixture.whenStable();
-      element.querySelector<HTMLElement>('button')!.click();
+      await userEvent.click(element.querySelector<HTMLElement>('button')!);
+      await fixture.whenStable();
       expect(component.searchChange.emit).toHaveBeenCalledWith('');
+      await expect.element(getInput(element)).toHaveFocus();
     });
 
     it('should trigger the change event on input', async () => {
