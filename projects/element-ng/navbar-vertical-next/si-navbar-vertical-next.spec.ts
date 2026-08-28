@@ -14,6 +14,7 @@ import {
   SiUIStateService,
   UIStateStorage
 } from '@siemens/element-ng/common';
+import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { page, userEvent } from 'vitest/browser';
@@ -43,9 +44,13 @@ class SynchronousMockStore implements UIStateStorage {
 @Injectable({ providedIn: 'root' })
 class BreakpointObserverMock implements Partial<BreakpointObserver> {
   readonly isSmall = new BehaviorSubject<boolean>(false);
+  readonly isMobile = new BehaviorSubject<boolean>(false);
 
-  observe(): Observable<BreakpointState> {
-    return this.isSmall.pipe(map(matches => ({ matches, breakpoints: {} })));
+  observe(value: string | readonly string[]): Observable<BreakpointState> {
+    const query = typeof value === 'string' ? value : value[0];
+    const source =
+      query === `(max-width: ${BOOTSTRAP_BREAKPOINTS.smMinimum}px)` ? this.isMobile : this.isSmall;
+    return source.pipe(map(matches => ({ matches, breakpoints: {} })));
   }
 }
 
@@ -119,7 +124,7 @@ class EmptyComponent {}
     </si-navbar-vertical-next>
 
     <ng-template #flyoutGroup>
-      <si-navbar-vertical-next-group>
+      <si-navbar-vertical-next-group [ariaLabel]="ariaLabel()">
         <a
           si-navbar-vertical-next-item
           label="sub-item1"
@@ -176,6 +181,7 @@ class EmptyComponent {}
 })
 class TestHostComponent {
   readonly textOnly = signal(true);
+  readonly ariaLabel = signal('Go back');
   stateId?: string;
   readonly collapsed = signal(false);
   readonly inlineCollapse = signal(false);
@@ -319,6 +325,137 @@ describe('SiNavbarVerticalNext', () => {
       [subItem1, subItem2] = await item.getChildren();
       expect(await subItem1.isActive()).toBe(false);
       expect(await subItem2.isActive()).toBe(true);
+    });
+
+    describe('flat group (mobile)', () => {
+      const enableMobile = async (): Promise<void> => {
+        const breakpointObserver = TestBed.inject(BreakpointObserverMock);
+        breakpointObserver.isMobile.next(true);
+        await fixture.whenStable();
+      };
+
+      const getNavbarHost = (): HTMLElement =>
+        page.getByRole('navigation').element().closest('si-navbar-vertical-next')!;
+
+      it('should toggle nav-flat-group-open class only on mobile screens', async () => {
+        component.showDeclarativeFlyoutGroup.set(true);
+        await fixture.whenStable();
+
+        const navbarHost = getNavbarHost();
+        expect(navbarHost).not.toHaveClass('nav-flat-group-open');
+
+        await enableMobile();
+
+        await userEvent.click(page.getByRole('button', { name: 'item-1' }));
+        await fixture.whenStable();
+        expect(navbarHost).toHaveClass('nav-flat-group-open');
+      });
+
+      it('should open and close a flat group when triggering a group on mobile', async () => {
+        component.showDeclarativeFlyoutGroup.set(true);
+        await fixture.whenStable();
+        await enableMobile();
+
+        const navbarHost = getNavbarHost();
+        expect(navbarHost).not.toHaveClass('nav-flat-group-open');
+
+        await userEvent.click(page.getByRole('button', { name: 'item-1' }));
+        await fixture.whenStable();
+
+        const backButton = page.getByRole('button', { name: 'Go back' });
+        await expect.element(backButton).toBeInTheDocument();
+        const group = page.getByRole('group', { name: 'item-1' });
+        await expect
+          .element(group)
+          .toHaveAttribute('aria-labelledby', expect.stringMatching(/-title$/));
+        await expect.element(group).not.toHaveAttribute('aria-label');
+        expect(navbarHost).toHaveClass('nav-flat-group-open');
+        await expect.element(page.getByRole('link', { name: 'sub-item1' })).toHaveFocus();
+
+        await userEvent.click(backButton);
+        await fixture.whenStable();
+
+        await expect.element(backButton).not.toBeInTheDocument();
+        await expect
+          .element(group)
+          .toHaveAttribute('aria-labelledby', expect.stringMatching(/-trigger$/));
+        expect(navbarHost).not.toHaveClass('nav-flat-group-open');
+        await expect.element(page.getByRole('button', { name: 'item-1' })).toHaveFocus();
+      });
+
+      it('should render the projected sub-items inside the flat group', async () => {
+        component.showDeclarativeNavigationGroup.set(true);
+        await fixture.whenStable();
+        await enableMobile();
+
+        await userEvent.click(page.getByRole('button', { name: 'item1' }));
+        await fixture.whenStable();
+
+        await expect.element(page.getByRole('group', { name: 'item1' })).toBeVisible();
+        await expect.element(page.getByRole('link', { name: 'sub-item1' })).toBeVisible();
+        await expect.element(page.getByRole('link', { name: 'sub-item2' })).toBeVisible();
+      });
+
+      it('should close the flat group when leaving mobile breakpoint', async () => {
+        component.showDeclarativeFlyoutGroup.set(true);
+        await fixture.whenStable();
+        await enableMobile();
+
+        await userEvent.click(page.getByRole('button', { name: 'item-1' }));
+        await fixture.whenStable();
+        const backButton = page.getByRole('button', { name: 'Go back' });
+        await expect.element(backButton).toBeInTheDocument();
+
+        const breakpointObserver = TestBed.inject(BreakpointObserverMock);
+        breakpointObserver.isMobile.next(false);
+        await fixture.whenStable();
+
+        await expect.element(backButton).not.toBeInTheDocument();
+        const navbarHost = getNavbarHost();
+        expect(navbarHost).not.toHaveClass('nav-flat-group-open');
+      });
+
+      it('should preserve the flat group state across collapse/expand on mobile', async () => {
+        component.showDeclarativeFlyoutGroup.set(true);
+        await fixture.whenStable();
+        await enableMobile();
+
+        await userEvent.click(page.getByRole('button', { name: 'item-1' }));
+        await fixture.whenStable();
+        const backButton = page.getByRole('button', { name: 'Go back' });
+        await expect.element(backButton).toBeInTheDocument();
+
+        // Collapse the drawer on mobile — the open flat group must be preserved.
+        component.collapsed.set(true);
+        await fixture.whenStable();
+
+        const navbarHost = getNavbarHost();
+        expect(navbarHost).toHaveClass('nav-flat-group-open');
+
+        component.collapsed.set(false);
+        await fixture.whenStable();
+
+        await expect.element(backButton).toBeInTheDocument();
+        expect(navbarHost).toHaveClass('nav-flat-group-open');
+      });
+
+      it('should close the flat group when the trigger item is removed while open', async () => {
+        component.showDeclarativeFlyoutGroup.set(true);
+        await fixture.whenStable();
+        await enableMobile();
+
+        await userEvent.click(page.getByRole('button', { name: 'item-1' }));
+        await fixture.whenStable();
+        const backButton = page.getByRole('button', { name: 'Go back' });
+        await expect.element(backButton).toBeInTheDocument();
+
+        component.showDeclarativeFlyoutGroup.set(false);
+        await fixture.whenStable();
+
+        await expect.element(backButton).not.toBeInTheDocument();
+        const navbarHost = getNavbarHost();
+        expect(navbarHost).not.toHaveClass('nav-flat-group-open');
+      });
     });
 
     it('should re-expand the active group when switching back from flyout to inline mode', async () => {

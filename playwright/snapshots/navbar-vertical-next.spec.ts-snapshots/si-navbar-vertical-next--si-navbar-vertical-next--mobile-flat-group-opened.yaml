@@ -8,7 +8,7 @@
   - button "Show side navigation" [expanded]
   - group "Documentation":
     - button "Back"
-    - text: ""
+    - text: Documentation
     - link "Sub item 4":
       - /url: "#/viewer/viewer/subItem4"
     - link "Sub item 5":
@@ -17,7 +17,7 @@
       - /url: "#/viewer/viewer/subItem6"
 - main:
   - heading "Here is a title" [level=2]
-  - text: Content with path 'subItem4' Control panel
+  - text: Content with path 'home' Control panel
   - checkbox "Always flyout"
   - text: Always flyout
   - checkbox "Inline collapse"

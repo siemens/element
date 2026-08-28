@@ -8,3 +8,7 @@
   margin-block: map.get(variables.$spacers, 3);
   margin-inline: map.get(variables.$spacers, 5);
 }
+
+:host-context(.nav-flat-group-open) {
+  display: none;
+}
