@@ -24,6 +24,7 @@ export const restoreResizeObserver = (): void => {
  * `ResizeObserver` mock for testing purposes.
  */
 export class MockResizeObserver {
+  /** @defaultValue [] */
   static instances: MockResizeObserver[] = [];
   private callback: ResizeObserverCallback;
   /** @defaultValue [] */
