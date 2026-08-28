@@ -73,9 +73,9 @@ Filled icons are used sparingly to highlight important actions or indicate activ
 ### Colors
 
 Icons should be used in a single, consistent color to maintain a cohesive look and ensure high contrast against the background.
-Use tokens `$element-ui-1` and `$element-ui-2` as the default colors for their versatility and clarity.
+Use tokens `text-primary` and `text-secondary` as the default colors for their versatility and clarity.
 
-With the exception of `$element-base-*` tokens, any color can be used for icons.
+With the exception of `$element-background-subtle*` tokens, any color can be used for icons.
 Be mindful of the purpose behind the color choice. Refer to the [color guidance](../fundamentals/colors/ui-colors.md) for further details.
 
 ### Supporting labels
