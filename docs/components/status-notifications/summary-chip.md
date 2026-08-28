@@ -16,7 +16,7 @@ There are basically two main use cases for the summary chip component:
 
 Arrange one or more Summary Chips in a horizontal layout above or near the related content.
 Chips can be combined with other supporting elements, such as badges, buttons, or links, to enhance functionality.
-Place them within a container that can use a background of `None`, `Base-0`, or `Base-1`, depending on the visual requirements.
+Place them within a container that can use a background of `None`, `background-0`, or `background-1`, depending on the visual requirements.
 
 ![Summary chip example](images/summary-chip-example.png)
 

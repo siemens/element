@@ -55,6 +55,6 @@ Combine the elements according to the required complexity.
 ### Interaction states
 
 The filter pill container color should always be in contrast to its surrounding
-background. Use `base-0` or `base-1` accordingly.
+background. Use `background-0` or `background-1` accordingly.
 
 ![Filter pills - States](images/filter-pills-states.png)

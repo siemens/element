@@ -22,7 +22,7 @@ They may include an icon to visually represent the state or category of the disp
 
 ### When to use
 
-Use container component to organize a number of summary widgets or other elements such as buttons, links, and badges. The container can have a background of None, base-0, or base-1.
+Use container component to organize a number of summary widgets or other elements such as buttons, links, and badges. The container can have a background of None, background-0, or background-1.
 
 ![Summary widget example](images/summary-widget-example.png)
 

@@ -43,7 +43,7 @@ As the filter bar does not have a representation on its own, all interaction
 states correspond to the _filter pills_ and the _reset button_.
 
 The _filter pills_ container color should always be in contrast with its
-surrounding background. Use `base-0` or `base-1` according to that.
+surrounding background. Use `background-0` or `background-1` according to that.
 
 The filter bar can be hidden completely, if no filter is applied.
 
