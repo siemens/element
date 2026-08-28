@@ -23,7 +23,7 @@ import { SiElectrontitlebarComponent } from '@siemens/element-ng/electron-titleb
 
 <si-docs-component base="si-electron-titlebar">
   <si-docs-tab example="si-electron-titlebar" heading="Basic usage"></si-docs-tab>
-  <si-docs-tab example="fixed-height-layout-side-panel" heading="Full layout example"></si-docs-tab>
+  <si-docs-tab example="si-fixed-height-layout-side-panel" heading="Full layout example"></si-docs-tab>
 </si-docs-component>
 
 ### Correct rendering
