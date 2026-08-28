@@ -2,7 +2,7 @@
 
 !!! warning "Deprecated"
 
-    This component is deprecated. Use the [list item](../lists-tables-trees/list-item.md) component instead.
+  This component is deprecated. Use the [list](../lists-tables-trees/list.md) component instead.
 
 ## Usage ---
 
