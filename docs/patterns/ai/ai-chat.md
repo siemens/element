@@ -91,7 +91,7 @@ Follow-up prompts are 2-4 suggested actions based on the AI’s last response.
 They guide users toward deeper or related questions.
 
 Show follow-up prompts only after relevant AI responses,
-and clear them as soon as the user sends a new message
+and clear them as soon as the user sends a new message.
 
 ![follow-up prompts](images/ai-follow-up-prompts.png)
 
