@@ -10,6 +10,10 @@
   --element-line-height-#{$name}: #{typography.px-to-ratio($font-size, $line-height)};
 }
 
+@mixin sizing-override($name, $size) {
+  --element-sizing-#{$name}: #{$size};
+}
+
 .density-compact {
   @include spacer-override(1, 2px, 2px);
   @include spacer-override(2, 2px, 2px);
@@ -43,4 +47,25 @@
   @include font-override(code-sm, 12px, 16px);
   @include font-override(code, 14px, 20px);
   @include font-override(code-lg, 16px, 20px);
+
+  @include sizing-override(10, 2px);
+  @include sizing-override(20, 2px);
+  @include sizing-override(30, 4px);
+  @include sizing-override(40, 8px);
+  @include sizing-override(50, 12px);
+  @include sizing-override(60, 16px);
+  @include sizing-override(70, 20px);
+  @include sizing-override(80, 24px);
+  @include sizing-override(90, 32px);
+  @include sizing-override(100, 40px);
+  @include sizing-override(110, 48px);
+  @include sizing-override(120, 64px);
+  @include sizing-override(130, 80px);
+  @include sizing-override(140, 96px);
+  @include sizing-override(150, 120px);
+  @include sizing-override(160, 160px);
+  @include sizing-override(170, 240px);
+  @include sizing-override(180, 320px);
+  @include sizing-override(190, 480px);
+  @include sizing-override(200, 600px);
 }
