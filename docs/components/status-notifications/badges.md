@@ -2,77 +2,55 @@
 
 # Badges
 
-Badges act as visual aids notifying about a status of an object.
-They carry different type of content such as a label or a counter to reflect a status.
-Badges normally contain dynamic information.
+A **badge** is a small, non-interactive indicator attached to another element.
+It can show a status, category, or count for the item it accompanies.
 
 ## Usage ---
 
-### Pill badge
+Badges can display short text, numbers, or an icon.
+Place them close to the item they describe so the meaning stays clear.
 
-Badges can display text or numbers, and may also include an icon. Choose between two visual styles: Default or Emphasis.
+![Badge](images/badge.png)
 
-![Pill badge](images/pill-badge.png)
+### When to use
 
-- Pill badges with text are usually integrated inside the data-tables and depicts each row's recent status.
-- Used in conjunction with a single item or row to avoid ambiguity about which item is indicated.
-- Pill badges can extend the width to fit desired text or numbers.
-- Pill badges can also be used to indicate new or unread items with numbers.
-- In case of a counter, the maximum count should be limited to 2 digits plus 1 character. For example `99+`.
-- Status based categories are Default, Secondary, Inverse, Information, Success, Caution, Warning, Danger and Critical.
+- To label the state or category of an item.
+- To count new, unread, or pending items on an icon, tab, or navigation entry.
+- To signal that something changed since the user last looked.
 
-#### Best practices
+### Best practices
 
-- Consider the specified alignments while using Pill badges within the data-tables.
-- Use status based categories to notify about a particular type of notification.
-- Do not display status description in a badge.
-- While showing a count, use integer numbers.
-- If required, use tooltips for numbered badges to enhance user understanding.
-- Place badges appropriately to identify the object they are informing or labelling.
-- It is not recommended to use icons which are conflicting with semantic status color.
-
-### Red dot tag with count
-
-![Red dot tag with count](images/red-dot-with-count.png)
-
-- These are global badges conveying a count and not a status.
-- Use these to provide a visual cue of an object by notifying the recent changes.
-- Maximum character count should be limited to 3 characters, i.e `99+`.
-
-#### Best practices
-
-- Use only natural numbers.
-- Adjust the width to accommodate multiple digit numbers.
-- Do not include text characters inside the badge.
-
-### Red dot tag
-
-![Red dot tag](images/red-dot-tag.png)
-
-- The red dot symbolizes a global notification update.
-- If there is no content inside badge it can be represented with a simple dot.
-
-#### Best practices
-
-- Do not completely overlap the icon.
-- Must be properly aligned to the upper right of the bounding box of the icon.
-- Do not position badge out of the parent bounding box.
+- Keep badge text short and specific.
+- Use whole numbers for counts.
 
 ## Design ---
 
-### Color variations - table
+### Badge label
 
-| Badges    | Status        | Fill Color                  | Text Style | Text Color                  |
-| --------- | ------------- | --------------------------- | ---------- | --------------------------- |
-| Default   | Default       | `$element-base-0`           | `Title 2`  | `$element-text-primary`     |
-| Secondary | Secondary     | `$element-ui-3`             | `Title 2`  | `$element-text-primary`     |
-| Inverse   | Inverse       | `$element-ui-1`             | `Title 2`  | `$element-text-inverse`     |
-| Blue      | Informational | `$element-base-information` | `Title 2`  | `$element-text-information` |
-| Green     | Success       | `$element-base-success`     | `Title 2`  | `$element-text-success`     |
-| Yellow    | Caution       | `$element-base-caution`     | `Title 2`  | `$element-text-caution`     |
-| Orange    | Warning       | `$element-base-warning`     | `Title 2`  | `$element-text-warning`     |
-| Red       | Danger        | `$element-base-danger`      | `Title 2`  | `$element-text-danger`      |
-| Magenta   | Critical      | `$element-base-critical`    | `Title 2`  | `$element-text-critical`    |
+A label badge shows the state or category of a single object, such as `Active` or `Draft`.
+It is available in neutral or status colors (success, danger, etc).
+
+Every status color comes in two styles.
+
+- Use the **subtle** style by default.
+- Use the **emphasis** style when the badge needs to stand out.
+
+![Label badge](images/badge-label.png)
+
+### Badge count
+
+A badge count shows how many items need the user's attention,
+such as unread messages or pending requests. Use it when the exact quantity of new items matters.
+Keep counters to three characters or fewer, such as `99+`.
+
+![Count badge](images/badge-count.png)
+
+### Badge dot
+
+A badge dot signals change without showing a count.
+It tells the user that something changed since they last looked.
+
+![Dot badge](images/badge-dot.png)
 
 ## Code ---
 
@@ -115,7 +93,7 @@ For a more prominent appearance use tokens with the `-emphasis` postfix.
 
 There are also various badge CSS classes you can use on native HTML elements: `badge`, `badge-dot`, and `badge-text`.
 
-To set a badge's background color apply the `.bg-{status token}` utility classes:
+To set a badge's background color, apply the `.bg-{status token}` utility classes:
 
 ```html
 <div role="status" class="badge bg-critical-emphasis">Critical</div>
