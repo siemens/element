@@ -8,19 +8,8 @@ Element components to a new Angular application.
 You need to set up your development environment before you can do anything.
 
 Install [Node.js® and npm](https://nodejs.org/en/about/) if they are not already
-on your machine. We recommend using a Node.js version manager to ease switching
-between versions. To set this up, see the installation guide for your operating
-system:
-
-- [NVM (Linux & Mac)](https://github.com/nvm-sh/nvm#installing-and-updating)
-- [NVM for Windows](https://github.com/coreybutler/nvm-windows#installation--upgrades)
-
-To install the latest Node LTS version, run these commands:
-
-```sh
-nvm install --lts  # Linux & Mac
-nvm install lts    # NVM for Windows
-```
+on your machine. Consider using a tool manager like [mise-en-place](https://mise.jdx.dev/)
+to ease switching between versions in your projects.
 
 !!! info "Supported Node.js versions"
 
