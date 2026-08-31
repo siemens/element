@@ -1,6 +1,7 @@
 @use '../../variables/focus';
 @use '../../variables/system-tokens';
 @use '../../variables/spacers';
+@use '../../variables/sizing';
 @use '../../variables/utilities';
 @use '../../variables/si-vars';
 @use '../variables';
@@ -120,6 +121,7 @@
 .form-control:not(textarea):not(select[multiple]) {
   // force height to fix line-height issue in firefox
   block-size: variables.$input-height;
+  min-block-size: map.get(sizing.$sizing, 80);
 }
 
 .addon-second-icon {
