@@ -32,16 +32,38 @@ import { LandscapeSupportService } from '../../services/landscape-support.servic
 import { SiDefaultLivePreviewRuntimeComponent } from './si-default-live-preview-runtime.component';
 import { SiLivePreviewRuntimeComponent } from './si-live-preview-runtime.component';
 
-// for handling JSON.stringify with circular references, from MDN
-const getCircularReplacer = (): ((_key: any, value: any | null) => any) => {
-  const seen = new WeakSet();
-  return (_key: any, value: any | null) => {
+const MAX_LOG_DEPTH = 4;
+const MAX_LOG_SIZE = 50_000;
+
+class LogSizeExceededError extends Error {}
+
+/** Limit the depth and size of log messages to improve performance. */
+const getLogReplacer = (): ((this: unknown, key: string, value: unknown) => unknown) => {
+  const depths = new WeakMap<object, number>();
+  const seen = new WeakSet<object>();
+  let estimatedSize = 0;
+
+  return function (this: unknown, key: string, value: unknown): unknown {
+    estimatedSize += key.length + (typeof value === 'string' ? value.length : 8);
+    if (estimatedSize > MAX_LOG_SIZE) {
+      throw new LogSizeExceededError();
+    }
+
     if (typeof value === 'object' && value !== null) {
       if (seen.has(value)) {
-        return;
+        return undefined;
       }
+
+      const parentDepth = typeof this === 'object' && this !== null ? (depths.get(this) ?? -1) : -1;
+      const depth = parentDepth + 1;
+      if (depth > MAX_LOG_DEPTH) {
+        return Array.isArray(value) ? '[Array]' : '[Object]';
+      }
+
       seen.add(value);
+      depths.set(value, depth);
     }
+
     return value;
   };
 };
@@ -232,8 +254,16 @@ export class SiLivePreviewRendererComponent implements OnDestroy {
     this.createComponent();
   }
 
-  private stringifyLog(args: any[]): string {
-    return args.map(a => JSON.stringify(a, getCircularReplacer())).join(', ');
+  private stringifyLog(args: unknown[]): string {
+    return args
+      .map(value => {
+        try {
+          return JSON.stringify(value, getLogReplacer());
+        } catch (error) {
+          return error instanceof LogSizeExceededError ? '[Log output too large]' : String(value);
+        }
+      })
+      .join(', ');
   }
 
   // this exists because in production mode, the ivy internal props are defined as
