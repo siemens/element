@@ -71,6 +71,31 @@ const createSizingControls = (): CssVariableControl[] => {
   });
 };
 
+const iconSizeControlDefinitions: readonly (readonly [string, string, number])[] = [
+  ['sm', 'Small', 1],
+  ['md', 'Medium', 1.25],
+  ['lg', 'Large', 1.5],
+  ['xl', 'Extra large', 2],
+  ['xxl', 'Extra extra large', 3]
+];
+
+const iconSizeControls: CssVariableControl[] = iconSizeControlDefinitions.map(
+  ([suffix, label, value]) => {
+    const name = `--element-icon-size-${suffix}`;
+
+    return {
+      id: name.slice(2),
+      name,
+      label: `Icon size ${label}`,
+      fallbackValue: value,
+      fallbackUnit: 'rem',
+      value,
+      unit: 'rem',
+      customized: false
+    };
+  }
+);
+
 const typographyControlDefinitions: readonly (readonly [string, string, number, number])[] = [
   ['body', 'Body', 0.875, 16 / 14],
   ['body-lg', 'Body LG', 1, 1.25],
@@ -135,6 +160,7 @@ export class SampleComponent implements OnInit {
   readonly inlineSpacerControls = createSpacerControls('inline');
   readonly blockSpacerControls = createSpacerControls('block');
   readonly sizingControls = createSizingControls();
+  readonly iconSizeControls = iconSizeControls;
   readonly typographyControls = typographyControls;
 
   readonly densityOptions: SelectItem<Density>[] = [
@@ -261,6 +287,7 @@ export class SampleComponent implements OnInit {
       ...this.inlineSpacerControls,
       ...this.blockSpacerControls,
       ...this.sizingControls,
+      ...this.iconSizeControls,
       ...this.typographyControls.flatMap(({ fontSize, lineHeight }) => [fontSize, lineHeight])
     ];
   }
