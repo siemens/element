@@ -39,9 +39,9 @@ si-loading-spinner {
   position: absolute;
   inline-size: $si-result-details-list-timeline-width;
   background-color: variables.$si-sys-border-2;
-  block-size: calc(50% - math.div(variables.$si-icon-font-size, 2));
+  block-size: calc(50% - variables.$si-icon-font-size / 2);
   margin-inline-start: calc(
-    math.div(variables.$si-icon-font-size, 2) - math.div($si-result-details-list-timeline-width, 2)
+    variables.$si-icon-font-size / 2 - math.div($si-result-details-list-timeline-width, 2)
   );
 }
 

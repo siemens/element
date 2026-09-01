@@ -14,6 +14,10 @@
   --element-sizing-#{$name}: #{$size};
 }
 
+@mixin icon-override($name, $size) {
+  --element-icon-size-#{$name}: #{$size};
+}
+
 .density-compact {
   @include spacer-override(1, 2px, 2px);
   @include spacer-override(2, 2px, 2px);
@@ -68,4 +72,10 @@
   @include sizing-override(180, 320px);
   @include sizing-override(190, 480px);
   @include sizing-override(200, 600px);
+
+  @include icon-override(sm, 0.75rem);
+  @include icon-override(md, 1rem);
+  @include icon-override(lg, 1.25rem);
+  @include icon-override(xl, 1.5rem);
+  @include icon-override(xxl, 2rem);
 }
