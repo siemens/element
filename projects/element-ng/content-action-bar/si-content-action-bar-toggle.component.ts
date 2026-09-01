@@ -11,7 +11,7 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
   imports: [SiIconComponent],
   templateUrl: './si-content-action-bar-toggle.component.html',
   styleUrl: '../menu/si-menu-item.component.scss',
-  host: { class: 'dropdown-item flex-grow-0 focus-inside' }
+  host: { class: 'btn btn-tertiary flex-grow-0 focus-inside' }
 })
 export class SiContentActionBarToggleComponent {
   /** Icon identifier rendered inside the toggle button. */

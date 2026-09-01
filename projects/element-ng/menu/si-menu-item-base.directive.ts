@@ -2,12 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, computed, Directive, input } from '@angular/core';
+import { CDK_MENU } from '@angular/cdk/menu';
+import { booleanAttribute, computed, Directive, inject, input } from '@angular/core';
 
 @Directive({
   host: {
-    class: 'dropdown-item d-flex focus-inside',
-    '[class.disabled]': 'disabled()'
+    class: 'focus-inside',
+    '[class.disabled]': 'disabled()',
+    '[class]': 'isInBar ? "btn btn-tertiary" : "dropdown-item"'
   }
 })
 export abstract class SiMenuItemBase {
@@ -35,6 +37,8 @@ export abstract class SiMenuItemBase {
    * @defaultValue false
    */
   readonly disabled = input(false, { transform: booleanAttribute });
+
+  protected readonly isInBar = inject(CDK_MENU, { optional: true })?.orientation === 'horizontal';
 
   protected readonly badgeDotHasContent = computed(() => {
     return typeof this.iconBadgeDot() === 'string' || typeof this.iconBadgeDot() === 'number';
