@@ -1,5 +1,4 @@
 @use 'sass:map';
-@use '@siemens/element-theme/src/styles/bootstrap/variables' as bootstrap-variables;
 @use '@siemens/element-theme/src/styles/variables/spacers';
 
 div > [si-content-action-bar-toggle] {
@@ -13,17 +12,4 @@ div > [si-content-action-bar-toggle] {
   // space matches the toggle's actual footprint the moment it becomes visible.
   inline-size: calc(1.25rem + 2 * map.get(spacers.$spacers, 4));
   justify-content: center;
-  border-radius: bootstrap-variables.$btn-border-radius;
-}
-
-si-menu-bar {
-  > *:first-child {
-    border-start-start-radius: bootstrap-variables.$btn-border-radius;
-    border-end-start-radius: bootstrap-variables.$btn-border-radius;
-  }
-
-  > *:last-child {
-    border-start-end-radius: bootstrap-variables.$btn-border-radius;
-    border-end-end-radius: bootstrap-variables.$btn-border-radius;
-  }
 }
