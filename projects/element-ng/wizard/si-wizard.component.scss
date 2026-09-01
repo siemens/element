@@ -3,9 +3,6 @@
 
 @use '@siemens/element-theme/src/styles/variables';
 
-$icon-size: variables.$si-icon-font-size;
-$icon-size-half: math.div($icon-size, 2);
-
 $wizard-default-color: variables.$si-sys-text-secondary;
 $wizard-default-border-color: variables.$si-sys-border-2;
 $wizard-active-color: variables.$si-sys-text-accent;
