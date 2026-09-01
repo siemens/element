@@ -151,7 +151,7 @@ const typographyControls: TypographyControlPair[] = typographyControlDefinitions
 @Component({
   selector: 'app-sample',
   imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent, SiSelectModule],
-  templateUrl: './spacer-controls.html',
+  templateUrl: './density-controls.html',
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {
