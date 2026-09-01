@@ -78,6 +78,10 @@ export class SiMenuItemHarness extends ComponentHarness {
     return (await this.getAttribute('aria-disabled')) === 'true';
   }
 
+  async isActive(): Promise<boolean> {
+    return (await this.host()).hasClass('active');
+  }
+
   async isCheckItem(): Promise<boolean> {
     return (await this.getAttribute('role')) === 'menuitemcheckbox';
   }

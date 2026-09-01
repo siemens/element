@@ -52,7 +52,7 @@
     transform: rotate(90deg);
   }
 
-  &[aria-expanded='true'] {
+  &.active {
     .item-end .submenu {
       transform: rotate(270deg);
     }

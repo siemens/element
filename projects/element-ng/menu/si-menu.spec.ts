@@ -134,6 +134,7 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
 
       const menu = await menuItem.getSubmenu();
       expect(await menu?.getItemTexts()).toEqual(['child1', 'child2']);
+      expect(await menuItem.isActive()).toBe(true);
     });
 
     it('should have icon', async () => {
