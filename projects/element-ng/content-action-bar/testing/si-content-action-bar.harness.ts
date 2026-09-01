@@ -12,7 +12,7 @@ export class SiContentActionBarHarness extends ComponentHarness {
   readonly getPrimaryActions = this.locatorForAll(SiMenuItemHarness);
 
   private readonly getSecondaryToggle = this.locatorForOptional(
-    'button[si-content-action-bar-toggle].cdk-menu-trigger'
+    'button[si-menu-item].cdk-menu-trigger, :scope > button[si-content-action-bar-toggle].cdk-menu-trigger'
   );
   private readonly getPrimaryToggle = this.locatorForOptional(
     'button[si-content-action-bar-toggle]:not(.cdk-menu-trigger)'
