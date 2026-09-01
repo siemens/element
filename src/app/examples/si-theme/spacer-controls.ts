@@ -15,6 +15,9 @@ type CssUnit = FontUnit | '';
 
 const densityClasses: Exclude<Density, 'none'>[] = ['density-compact'];
 const spacerDefaults = [2, 4, 6, 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 96];
+const sizingDefaults = [
+  2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 120, 160, 240, 320, 480, 600, 720
+];
 
 interface CssVariableControl {
   id: string;
@@ -41,6 +44,24 @@ const createSpacerControls = (direction: 'inline' | 'block'): CssVariableControl
       id: name.slice(2),
       name,
       label: `${direction === 'inline' ? 'Inline' : 'Block'} ${number}`,
+      fallbackValue: value,
+      fallbackUnit: 'px',
+      value,
+      unit: 'px',
+      customized: false
+    };
+  });
+};
+
+const createSizingControls = (): CssVariableControl[] => {
+  return sizingDefaults.map((value, index) => {
+    const number = (index + 1) * 10;
+    const name = `--element-sizing-${number}`;
+
+    return {
+      id: name.slice(2),
+      name,
+      label: `Sizing ${number}`,
       fallbackValue: value,
       fallbackUnit: 'px',
       value,
@@ -113,6 +134,7 @@ export class SampleComponent implements OnInit {
 
   readonly inlineSpacerControls = createSpacerControls('inline');
   readonly blockSpacerControls = createSpacerControls('block');
+  readonly sizingControls = createSizingControls();
   readonly typographyControls = typographyControls;
 
   readonly densityOptions: SelectItem<Density>[] = [
@@ -238,6 +260,7 @@ export class SampleComponent implements OnInit {
     return [
       ...this.inlineSpacerControls,
       ...this.blockSpacerControls,
+      ...this.sizingControls,
       ...this.typographyControls.flatMap(({ fontSize, lineHeight }) => [fontSize, lineHeight])
     ];
   }

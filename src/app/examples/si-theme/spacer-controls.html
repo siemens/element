@@ -73,6 +73,36 @@
   </div>
 
   <div class="col-12">
+    <h4>Sizing overrides</h4>
+    <div class="row g-3">
+      @for (control of sizingControls; track control.name) {
+        <div class="col-sm-6 col-lg-3">
+          <label class="form-label" [for]="control.id">{{ control.label }}</label>
+          <div class="d-flex align-items-center gap-2">
+            <input
+              class="form-check-input flex-shrink-0"
+              type="checkbox"
+              [id]="control.id + '-enabled'"
+              [attr.aria-label]="'Customize ' + control.label"
+              [(ngModel)]="control.customized"
+              (ngModelChange)="toggleCustomization(control)"
+            />
+            <si-number-input
+              class="form-control"
+              unit="px"
+              [inputId]="control.id"
+              [min]="0"
+              [disabled]="!control.customized"
+              [(ngModel)]="control.value"
+              (ngModelChange)="applyCustomization(control)"
+            />
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="col-12">
     <h4>Typography overrides</h4>
     <div class="row g-3">
       @for (controls of typographyControls; track controls.fontSize.name) {
