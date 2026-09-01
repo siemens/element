@@ -20,10 +20,13 @@
             type="button"
             class="btn btn-circle btn-tertiary me-5"
             [attr.aria-label]="expanded ? 'Collapse group' : 'Expand group'"
-            [class.element-down-2]="!expanded"
-            [class.element-up-2]="expanded"
             (click)="toggleExpandGroup(group)"
           >
+            <span
+              aria-hidden="true"
+              [class.element-down-2]="!expanded"
+              [class.element-up-2]="expanded"
+            ></span>
           </button>
           <b>{{ group.value[0].system }}</b>
         </div>

@@ -8,12 +8,16 @@
       - columnheader "Status"
       - columnheader "Energy Consumption (kWh)"
   - rowgroup:
-    - checkbox "Select row group"
-    - button "Expand group"
-    - text: HVAC
-    - checkbox "Select row group"
-    - button "Collapse group"
-    - text: Lighting
+    - row "Select row group Expand group HVAC":
+      - cell "Select row group Expand group HVAC":
+        - checkbox "Select row group"
+        - button "Expand group"
+        - text: ""
+    - row "Select row group Collapse group Lighting":
+      - cell "Select row group Collapse group Lighting":
+        - checkbox "Select row group"
+        - button "Collapse group"
+        - text: ""
     - row /Select row LED Panel Conference Room Operational \d+/:
       - cell
       - cell "Select row LED Panel":
@@ -38,9 +42,11 @@
       - cell "Corridor"
       - cell "Operational"
       - cell "5"
-    - checkbox "Select row group"
-    - button "Collapse group"
-    - text: Security
+    - row "Select row group Collapse group Security":
+      - cell "Select row group Collapse group Security":
+        - checkbox "Select row group"
+        - button "Collapse group"
+        - text: ""
     - row /Select row CCTV Camera Main Entrance Operational \d+/:
       - cell
       - cell "Select row CCTV Camera":
@@ -65,9 +71,11 @@
       - cell "Parking Lot"
       - cell "Operational"
       - cell /\d+/
-    - checkbox "Select row group"
-    - button "Collapse group"
-    - text: Energy Management
+    - row "Select row group Collapse group Energy Management":
+      - cell "Select row group Collapse group Energy Management":
+        - checkbox "Select row group"
+        - button "Collapse group"
+        - text: ""
     - row "Select row Smart Meter Utility Room Operational 5":
       - cell
       - cell "Select row Smart Meter":
