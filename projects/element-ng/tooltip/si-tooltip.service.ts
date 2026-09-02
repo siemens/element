@@ -185,7 +185,8 @@ class BrowserTooltipRef {
         .withPositions(positions[this.getPlacement()]);
       this.overlayRef = this.config.overlay.create({
         positionStrategy: this.positionStrategy,
-        scrollStrategy: this.config.scrollStrategy?.(),
+        scrollStrategy:
+          this.config.scrollStrategy?.() ?? this.config.overlay.scrollStrategies.reposition(),
         direction: isRTL() ? 'rtl' : 'ltr'
       });
     }
