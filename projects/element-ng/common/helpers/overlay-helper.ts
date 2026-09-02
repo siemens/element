@@ -17,13 +17,7 @@ import {
 } from '@angular/cdk/overlay';
 import { ElementRef, inject } from '@angular/core';
 
-import {
-  positionBottomEnd,
-  positionBottomStart,
-  positions,
-  positionTopEnd,
-  positionTopStart
-} from '../models/positions.model';
+import { positions } from '../models/positions.model';
 import { isRTL } from './rtl';
 
 export function makePositionStrategy(
@@ -114,18 +108,18 @@ export function getOverlayPositions(
   placement: keyof typeof positions | ConnectionPositionPair[],
   center = true
 ): ConnectionPositionPair[] {
-  if (elementRef.nativeElement && center) {
-    const rtl = isRTL();
-    const halfWidth = Math.round(elementRef.nativeElement.offsetWidth / 2);
-    positionTopStart.offsetX = positionBottomStart.offsetX = halfWidth * (rtl ? 1 : -1);
-    positionTopEnd.offsetX = positionBottomEnd.offsetX = halfWidth * (rtl ? -1 : 1);
-  } else {
-    positionTopStart.offsetX = undefined;
-    positionTopEnd.offsetX = undefined;
-    positionBottomStart.offsetX = undefined;
-    positionBottomEnd.offsetX = undefined;
-  }
-  return typeof placement === 'string' ? positions[placement] : placement;
+  void elementRef;
+  const overlayPositions = typeof placement === 'string' ? positions[placement] : placement;
+
+  return overlayPositions.map(position => {
+    const isVerticalEdgePosition =
+      (position.originY === 'top' || position.originY === 'bottom') &&
+      (position.overlayX === 'start' || position.overlayX === 'end');
+
+    return isVerticalEdgePosition
+      ? { ...position, originX: center ? position.overlayX : 'center' }
+      : position;
+  });
 }
 
 export function hasTrigger(trigger: string, triggers?: string): boolean {

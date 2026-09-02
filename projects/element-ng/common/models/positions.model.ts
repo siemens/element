@@ -28,14 +28,14 @@ export const positionTopCenter: ConnectionPositionPair = {
 export const positionTopStart: ConnectionPositionPair = {
   overlayX: 'start',
   overlayY: 'bottom',
-  originX: 'center',
+  originX: 'start',
   originY: 'top'
 };
 
 export const positionTopEnd: ConnectionPositionPair = {
   overlayX: 'end',
   overlayY: 'bottom',
-  originX: 'center',
+  originX: 'end',
   originY: 'top'
 };
 
@@ -49,14 +49,14 @@ export const positionBottomCenter: ConnectionPositionPair = {
 export const positionBottomStart: ConnectionPositionPair = {
   overlayX: 'start',
   overlayY: 'top',
-  originX: 'center',
+  originX: 'start',
   originY: 'bottom'
 };
 
 export const positionBottomEnd: ConnectionPositionPair = {
   overlayX: 'end',
   overlayY: 'top',
-  originX: 'center',
+  originX: 'end',
   originY: 'bottom'
 };
 
