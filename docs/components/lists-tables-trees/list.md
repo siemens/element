@@ -4,9 +4,9 @@ Lists organize related content into rows that are easy to scan.
 
 ## Usage ---
 
-List items are designed to be flexible
+Lists are designed to be flexible
 and can be used with different styles depending on the context.
-Lists can be **read-only** or **support interactions**.
+They can be **read-only** or **support interactions**.
 
 - Use a **ghost** list when the items should blend into the surrounding
   content and stay lightweight.
