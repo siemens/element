@@ -191,6 +191,27 @@ differently.
 
 <si-docs-component example="si-tree-view/si-tree-view-template" height="300"></si-docs-component>
 
+### Trailing content
+
+Custom content can be projected into a tree item's trailing area using the
+`slot="trailing"` attribute. The trailing slot is rendered after the item's
+label and icons and **outside the drag grab-area**, so interactive controls
+placed there (buttons, inputs, etc.) do not start a drag and do not interfere
+with drag-and-drop reordering.
+
+```html
+<si-tree-view [items]="items">
+  <ng-template let-item="treeItem" siTreeViewItem>
+    <si-tree-view-item cdkDrag [cdkDragData]="item">
+      <button type="button" slot="trailing" (click)="acknowledge(item)">Acknowledge</button>
+      <si-tree-view-item *cdkDragPreview />
+    </si-tree-view-item>
+  </ng-template>
+</si-tree-view>
+```
+
+<si-docs-component example="si-tree-view/si-tree-view-trailing-content" height="300"></si-docs-component>
+
 ### Adding, removing, updating tree items
 
 Due to the way change detection works, mutations on the tree item structure
