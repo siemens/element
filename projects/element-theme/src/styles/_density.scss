@@ -1,3 +1,4 @@
+@use 'selectors';
 @use 'variables/typography';
 
 @mixin spacer-override($spacer, $block-size, $inline-size) {
@@ -15,7 +16,69 @@
 }
 
 @mixin icon-override($name, $size) {
-  --element-icon-size-#{$name}: #{$size};
+  --element-icon-size-#{$name}: #{typography.px-to-rem($size)};
+}
+
+#{selectors.$root} {
+  @include spacer-override(1, 2px, 2px);
+  @include spacer-override(2, 4px, 4px);
+  @include spacer-override(3, 6px, 6px);
+  @include spacer-override(4, 8px, 8px);
+  @include spacer-override(5, 12px, 12px);
+  @include spacer-override(6, 16px, 16px);
+  @include spacer-override(7, 20px, 20px);
+  @include spacer-override(8, 24px, 24px);
+  @include spacer-override(9, 32px, 32px);
+  @include spacer-override(10, 40px, 40px);
+  @include spacer-override(11, 48px, 48px);
+  @include spacer-override(12, 56px, 56px);
+  @include spacer-override(13, 64px, 64px);
+  @include spacer-override(14, 96px, 96px);
+
+  @include font-override(body-sm, 12px, 16px);
+  @include font-override(body, 14px, 16px);
+  @include font-override(body-lg, 16px, 20px);
+  @include font-override(body-paragraph, 14px, 20px);
+  @include font-override(h1, 28px, 36px);
+  @include font-override(h2, 24px, 32px);
+  @include font-override(h3, 20px, 24px);
+  @include font-override(h4, 16px, 20px);
+  @include font-override(h5, 14px, 20px);
+  @include font-override(h6, 12px, 16px);
+  @include font-override(display, 32px, 40px);
+  @include font-override(display-lg, 40px, 52px);
+  @include font-override(display-xl, 48px, 64px);
+  @include font-override(display-xxl, 58px, 72px);
+  @include font-override(code-sm, 12px, 16px);
+  @include font-override(code, 14px, 20px);
+  @include font-override(code-lg, 16px, 20px);
+
+  @include sizing-override(10, 2px);
+  @include sizing-override(20, 4px);
+  @include sizing-override(30, 8px);
+  @include sizing-override(40, 12px);
+  @include sizing-override(50, 16px);
+  @include sizing-override(60, 20px);
+  @include sizing-override(70, 24px);
+  @include sizing-override(80, 32px);
+  @include sizing-override(90, 40px);
+  @include sizing-override(100, 48px);
+  @include sizing-override(110, 64px);
+  @include sizing-override(120, 80px);
+  @include sizing-override(130, 96px);
+  @include sizing-override(140, 120px);
+  @include sizing-override(150, 160px);
+  @include sizing-override(160, 240px);
+  @include sizing-override(170, 320px);
+  @include sizing-override(180, 480px);
+  @include sizing-override(190, 600px);
+  @include sizing-override(200, 720px);
+
+  @include icon-override(sm, 16px);
+  @include icon-override(md, 20px);
+  @include icon-override(lg, 24px);
+  @include icon-override(xl, 32px);
+  @include icon-override(xxl, 48px);
 }
 
 .density-compact {
@@ -73,9 +136,9 @@
   @include sizing-override(190, 480px);
   @include sizing-override(200, 600px);
 
-  @include icon-override(sm, 0.75rem);
-  @include icon-override(md, 1rem);
-  @include icon-override(lg, 1.25rem);
-  @include icon-override(xl, 1.5rem);
-  @include icon-override(xxl, 2rem);
+  @include icon-override(sm, 12px);
+  @include icon-override(md, 16px);
+  @include icon-override(lg, 20px);
+  @include icon-override(xl, 24px);
+  @include icon-override(xxl, 32px);
 }
