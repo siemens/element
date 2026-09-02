@@ -166,7 +166,7 @@ export class SiValueWidgetComponent {
     readonly icon: _angular_core.InputSignal<string | undefined>;
     readonly imgAlt: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly imgDir: _angular_core.InputSignal<"horizontal" | "vertical">;
-    readonly imgObjectFit: _angular_core.InputSignal<"fill" | "contain" | "cover" | "none" | "scale-down">;
+    readonly imgObjectFit: _angular_core.InputSignal<"contain" | "cover" | "fill" | "none" | "scale-down">;
     readonly imgObjectPosition: _angular_core.InputSignal<string | undefined>;
     readonly imgSrc: _angular_core.InputSignal<string | undefined>;
     readonly initialLoadingIndicatorDebounceTime: _angular_core.InputSignal<number>;
@@ -217,7 +217,7 @@ export class SiWeatherWidgetComponent {
     readonly heading: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly imgAlt: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly imgDir: _angular_core.InputSignal<"horizontal" | "vertical">;
-    readonly imgObjectFit: _angular_core.InputSignal<"fill" | "contain" | "cover" | "none" | "scale-down">;
+    readonly imgObjectFit: _angular_core.InputSignal<"contain" | "cover" | "fill" | "none" | "scale-down">;
     readonly imgObjectPosition: _angular_core.InputSignal<string | undefined>;
     readonly imgSrc: _angular_core.InputSignal<string | undefined>;
     readonly initialLoadingIndicatorDebounceTime: _angular_core.InputSignal<number>;
