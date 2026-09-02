@@ -1,0 +1,78 @@
+<div class="d-flex flex-column gap-10">
+  <div class="d-flex flex-wrap gap-10">
+    <div class="flex-grow-1">
+      <h4 class="mb-4">Ghost</h4>
+      <ul class="list">
+        @for (item of items; track item.title) {
+          <li class="list-item">
+            <si-icon class="list-item-indicator icon" [icon]="item.icon" />
+            <h5 class="list-item-title">{{ item.title }}</h5>
+            <div class="list-item-primary-action">
+              <button type="button" class="btn btn-icon btn-tertiary-ghost" aria-label="Options">
+                <si-icon [icon]="icons.elementOptionsVertical" />
+              </button>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="flex-grow-1">
+      <h4 class="mb-4">With dividers</h4>
+      <ul class="list list-divider">
+        @for (item of items; track item.title) {
+          <li class="list-item">
+            <si-icon class="list-item-indicator icon" [icon]="item.icon" />
+            <h5 class="list-item-title">{{ item.title }}</h5>
+            <div class="list-item-primary-action">
+              <button type="button" class="btn btn-icon btn-tertiary-ghost" aria-label="Options">
+                <si-icon [icon]="icons.elementOptionsVertical" />
+              </button>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+  <div class="d-flex flex-wrap gap-10">
+    <div class="flex-grow-1">
+      <h4 class="mb-4">Filled</h4>
+      <ul class="list list-filled">
+        @for (item of items; track item.title) {
+          <li class="position-relative">
+            <button type="button" class="list-item list-item-action" (click)="logEvent(item.title)">
+              <si-icon class="list-item-indicator icon" [icon]="item.icon" />
+              <h5 class="list-item-title">{{ item.title }}</h5>
+              <span class="list-item-primary-action btn btn-icon" aria-hidden="true"></span>
+            </button>
+            <div class="position-absolute top-50 end-0 translate-middle-y me-6">
+              <button type="button" class="btn btn-icon btn-tertiary-ghost" aria-label="Options">
+                <si-icon [icon]="icons.elementOptionsVertical" />
+              </button>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="flex-grow-1">
+      <h4 class="mb-4">Outline</h4>
+      <ul class="list list-outline">
+        @for (item of items; track item.title) {
+          <li class="position-relative">
+            <button type="button" class="list-item list-item-action" (click)="logEvent(item.title)">
+              <si-icon class="list-item-indicator icon" [icon]="item.icon" />
+              <h5 class="list-item-title">{{ item.title }}</h5>
+              <span class="list-item-primary-action btn btn-icon" aria-hidden="true"></span>
+            </button>
+            <div class="position-absolute top-50 end-0 translate-middle-y me-6">
+              <button type="button" class="btn btn-icon btn-tertiary-ghost" aria-label="Options">
+                <si-icon [icon]="icons.elementOptionsVertical" />
+              </button>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>

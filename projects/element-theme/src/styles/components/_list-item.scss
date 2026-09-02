@@ -4,22 +4,46 @@
 
 @use 'sass:map';
 
+.list,
 ul:has(.list-item),
 ol:has(.list-item) {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+.list {
+  &.list-divider > li:not(:last-child) {
+    border-block-end: 1px solid variables.$si-sys-border-4;
+  }
+
+  &.list-filled,
+  &.list-outline {
+    gap: map.get(variables.$spacers, 4);
+  }
+
+  &.list-filled .list-item {
+    background-color: variables.$si-sys-background-1;
+    border-radius: variables.$element-radius-2;
+  }
+
+  &.list-outline .list-item {
+    border: 1px solid variables.$si-sys-border-4;
+    border-radius: variables.$element-radius-2;
+  }
+}
+
 .list-item {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto 1fr auto;
   grid-template-areas:
-    '.         timestamp     timestamp'
-    'indicator title         action'
-    '.         description   description'
-    '.         metadata      metadata'
-    '.         quick-actions quick-actions';
+    '.     .         timestamp     timestamp'
+    'check indicator title         action'
+    '.     .         description   description'
+    '.     .         metadata      metadata'
+    '.     .         quick-actions quick-actions';
   padding-block: map.get(variables.$spacers, 4);
   padding-inline: map.get(variables.$spacers, 6);
 
@@ -30,7 +54,13 @@ ol:has(.list-item) {
   );
 
   > * {
-    grid-column: 2 / -1;
+    grid-column: 3 / -1;
+  }
+
+  .list-item-check {
+    grid-area: check;
+    align-self: center;
+    margin-inline-end: map.get(variables.$spacers, 4);
   }
 
   .list-item-indicator {

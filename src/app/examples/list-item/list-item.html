@@ -1,30 +1,30 @@
 <ul>
   <li class="list-item">
-    <si-circle-status class="list-item-indicator" status="success" [icon]="icons.elementPlant" />
-    <time class="list-item-timestamp" datetime="14:20">Today at 14:20</time>
-    <h5 class="list-item-title">Conveyor belt inspection completed</h5>
-    <p class="list-item-description"
-      >Routine inspection of conveyor belt CB-04 finished without issues. All parameters within
-      tolerance.</p
-    >
-  </li>
-
-  <li class="list-item">
-    <time class="list-item-timestamp" datetime="11:45">Today at 11:45</time>
-    <h5 class="list-item-title">Sensor calibration report available</h5>
-    <p class="list-item-description"
-      >Calibration of temperature sensors on production line 2 has been completed and documented.</p
-    >
-    <div class="list-item-metadata">
-      <span>Production line 2</span>
-      <div class="list-item-metadata-divider"></div>
-      <a href="#">View report</a>
+    <si-icon class="list-item-indicator icon" [icon]="icons.elementAhuPlant" />
+    <h5 class="list-item-title">HVAC Zone Controller Lobby</h5>
+    <div class="list-item-primary-action">
+      <button
+        type="button"
+        class="btn btn-icon btn-tertiary-ghost element-options-vertical"
+        aria-label="Options"
+        [cdkMenuTriggerFor]="contextMenu"
+      ></button>
     </div>
   </li>
 
   <li class="list-item">
-    <time class="list-item-timestamp" datetime="09:30">Today at 09:30</time>
-    <h5 class="list-item-title">Firmware update pending approval</h5>
+    <input
+      type="checkbox"
+      class="form-check-input list-item-check"
+      aria-label="Select VAV box actuator Room 312"
+    />
+    <si-icon class="list-item-indicator icon" [icon]="icons.elementSpecialObject" />
+    <h5 class="list-item-title">VAV box actuator Room 312</h5>
+  </li>
+
+  <li class="list-item">
+    <si-icon class="list-item-indicator icon" [icon]="icons.elementSpecialObject" />
+    <h5 class="list-item-title">AHU-03 Supply Fan Fault</h5>
     <div class="list-item-primary-action">
       <button
         type="button"
@@ -34,15 +34,48 @@
       ></button>
     </div>
     <p class="list-item-description"
-      >Firmware v3.1.2 is ready for deployment. Review and approve to proceed with installation.</p
+      >Supply fan VFD reporting overcurrent fault. Airflow dropped below setpoint on floors 4–6.</p
+    >
+    <div class="list-item-metadata">
+      <span>Building A</span>
+      <div class="list-item-metadata-divider"></div>
+      <div class="d-inline-flex align-items-center gap-1">
+        <si-icon class="icon-sm" [icon]="icons.elementDocument" />
+        <span>3</span>
+      </div>
+      <div class="list-item-metadata-divider"></div>
+      <span>Critical</span>
+    </div>
+  </li>
+
+  <li class="list-item">
+    <si-avatar
+      class="list-item-indicator"
+      size="small"
+      icon="element-user"
+      altText="Assigned technician"
+      color="5"
+    />
+    <h5 class="list-item-title">Scheduled Maintenance</h5>
+    <div class="list-item-primary-action">
+      <button
+        type="button"
+        class="btn btn-icon btn-tertiary-ghost element-options-vertical"
+        aria-label="Options"
+        [cdkMenuTriggerFor]="contextMenu"
+      ></button>
+    </div>
+    <p class="list-item-description"
+      >Annual condenser coil cleaning and refrigerant level check. Assigned to Mike Torres,
+      Facilities.</p
     >
     <div class="list-item-quick-actions">
-      <div class="btn-group" role="group" aria-label="Approval actions">
+      <div class="btn-group" role="group" aria-label="Maintenance actions">
         <button
           type="button"
           class="btn btn-icon btn-tertiary-ghost"
           aria-label="Approve"
-          (click)="logEvent('Approve firmware update')"
+          (click)="logEvent('Approve maintenance task')"
         >
           <si-icon class="icon" [icon]="icons.elementCheckboxChecked" />
         </button>
@@ -50,7 +83,7 @@
           type="button"
           class="btn btn-icon btn-tertiary-ghost"
           aria-label="Archive"
-          (click)="logEvent('Archive firmware update')"
+          (click)="logEvent('Archive maintenance task')"
         >
           <si-icon class="icon" [icon]="icons.elementArchive" />
         </button>
@@ -58,7 +91,7 @@
           type="button"
           class="btn btn-icon btn-tertiary-ghost"
           aria-label="Delete"
-          (click)="logEvent('Delete firmware update')"
+          (click)="logEvent('Delete maintenance task')"
         >
           <si-icon class="icon" [icon]="icons.elementDelete" />
         </button>
@@ -67,9 +100,19 @@
   </li>
 
   <li class="list-item">
-    <si-status-icon class="list-item-indicator icon" status="danger" />
-    <time class="list-item-timestamp" datetime="16:05">Yesterday at 16:05</time>
-    <h5 class="list-item-title">Motor drive fault detected</h5>
+    <time class="list-item-timestamp" datetime="16:30">Yesterday at 16:30</time>
+    <si-status-icon class="list-item-indicator si-h3" status="critical" />
+    <h5 class="list-item-title">Fire Damper Fault Zone B3</h5>
+    <p class="list-item-description"
+      >Smoke damper in return duct failed to close during test sequence. Manual inspection required
+      before next occupancy cycle.</p
+    >
+  </li>
+
+  <li class="list-item">
+    <time class="list-item-timestamp" datetime="09:12">Today at 09:12</time>
+    <si-circle-status status="critical" icon="element-plant" class="list-item-indicator icon" />
+    <h5 class="list-item-title">Boiler #1 Pressure Drop Alert</h5>
     <div class="list-item-primary-action">
       <button
         type="button"
@@ -79,27 +122,46 @@
       ></button>
     </div>
     <p class="list-item-description"
-      >Drive unit DU-07 on packaging station reported overcurrent fault. Manual reset required.</p
+      >System pressure fell below 12 PSI threshold. Possible leak in the north wing hydronic loop.
+      Technician dispatched.</p
     >
     <div class="list-item-metadata">
+      <span>Campus HQ</span>
+      <div class="list-item-metadata-divider"></div>
       <div class="d-inline-flex align-items-center gap-1">
         <si-icon class="icon-sm" [icon]="icons.elementDocument" />
-        <span>Fault log</span>
+        <span>7</span>
       </div>
       <div class="list-item-metadata-divider"></div>
-      <span class="badge bg-critical">Critical</span>
+      <span>Urgent</span>
     </div>
     <div class="list-item-quick-actions">
-      <button
-        type="button"
-        class="btn btn-icon btn-primary element-ok"
-        aria-label="Accept"
-      ></button>
-      <button
-        type="button"
-        class="btn btn-icon btn-danger element-cancel"
-        aria-label="Deny"
-      ></button>
+      <div class="btn-group" role="group" aria-label="Fault actions">
+        <button
+          type="button"
+          class="btn btn-icon btn-tertiary-ghost"
+          aria-label="Approve"
+          (click)="logEvent('Approve fault resolution')"
+        >
+          <si-icon class="icon" [icon]="icons.elementCheckboxChecked" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-icon btn-tertiary-ghost"
+          aria-label="Archive"
+          (click)="logEvent('Archive fault resolution')"
+        >
+          <si-icon class="icon" [icon]="icons.elementArchive" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-icon btn-tertiary-ghost"
+          aria-label="Delete"
+          (click)="logEvent('Delete fault resolution')"
+        >
+          <si-icon class="icon" [icon]="icons.elementDelete" />
+        </button>
+      </div>
     </div>
   </li>
 </ul>
