@@ -1,5 +1,10 @@
 <div class="rpanel-header pt-5">
-  <p class="si-h5 my-0 ms-6 auto-hide text-truncate">{{ heading() | translate }}</p>
+  <div class="d-flex align-items-center min-width-0 auto-hide">
+    <ng-content select="[siSidePanelBackButton]" />
+    <p class="si-h5 my-0 auto-hide text-truncate header-title">
+      {{ heading() | translate }}
+    </p>
+  </div>
   @if ((primaryActions().length || secondaryActions().length) && focusable()) {
     <si-content-action-bar
       class="auto-hide ms-auto"

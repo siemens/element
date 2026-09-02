@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 
 import { SiSidePanelActionComponent } from './si-side-panel-action.component';
 import { SiSidePanelActionsComponent } from './si-side-panel-actions.component';
+import { SiSidePanelBackButtonComponent } from './si-side-panel-back-button.component';
 import { SiSidePanelContentComponent } from './si-side-panel-content.component';
 import { SiSidePanelComponent } from './si-side-panel.component';
 
@@ -14,13 +15,15 @@ import { SiSidePanelComponent } from './si-side-panel.component';
     SiSidePanelComponent,
     SiSidePanelContentComponent,
     SiSidePanelActionsComponent,
-    SiSidePanelActionComponent
+    SiSidePanelActionComponent,
+    SiSidePanelBackButtonComponent
   ],
   exports: [
     SiSidePanelComponent,
     SiSidePanelContentComponent,
     SiSidePanelActionsComponent,
-    SiSidePanelActionComponent
+    SiSidePanelActionComponent,
+    SiSidePanelBackButtonComponent
   ]
 })
 export class SiSidePanelModule {}
