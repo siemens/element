@@ -1,14 +1,36 @@
 # Markdown
 
+The **Markdown** component displays formatted Markdown
+content using Element styles.
+
+## Usage ---
+
+Markdown is a plain text formatting syntax where structure is written with
+ordinary characters: `#` for a heading, `**text**` for bold, `-` for a list
+item, etc.
+
+The component maps these elements to Element text styles and spacing,
+ensuring rendered content is consistent with the rest of the product.
+
+Optional features such as syntax highlighting, diagrams, math,
+and custom renderers can be enabled when needed.
+
+![Markdown renderer](images/markdown-renderer.png)
+
+## When to use
+
+- For [AI/chat](../chat-messages/chat-message.md) responses
+- Rich text from users, such as comments, descriptions, and documentation
+- For generated content such as reports, summaries, instructions, and release notes
+- Imported Markdown content, such as .md files or Markdown based documentation
+
+## Code ---
+
 > **Note:** The markdown component is currently experimental and may undergo changes in future releases.
 
-The **markdown** component renders Markdown content as Angular components. Use its options to
+The `si-markdown` component renders Markdown content as Angular components. Use its options to
 configure extensions, code highlighting, and custom rendering behavior. Options can, and where
 possible should, be shared between multiple component instances.
-
-## Usage --
-
-### Basic usage
 
 Create the options once and pass the same instance to each `si-markdown` component that needs the
 configuration. The component supports GitHub Flavored Markdown by default, including tables, task
@@ -269,7 +291,7 @@ Register the extension with the component options:
 protected readonly markdownOptions = makeSiMarkdownOptions().installExtension(siMarkdownWebcSiteMath());
 ```
 
-## Code ---
+### Example
 
 <si-docs-component example="si-markdown/si-markdown" height="700"></si-docs-component>
 
