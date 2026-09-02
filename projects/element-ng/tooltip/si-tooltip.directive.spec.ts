@@ -13,7 +13,7 @@ import {
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/overlay';
 import { page } from 'vitest/browser';
 
 import { SiTooltipModule } from './si-tooltip.module';

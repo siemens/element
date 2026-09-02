@@ -14,7 +14,7 @@ import {
   signal,
   TemplateRef
 } from '@angular/core';
-import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
+import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/overlay';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({

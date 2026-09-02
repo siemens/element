@@ -20,7 +20,7 @@ import {
   computed,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
+import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/overlay';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 

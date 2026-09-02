@@ -4,7 +4,6 @@
 
 ```ts
 
-import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import { ElementRef } from '@angular/core';
 import { FlexibleConnectedPositionStrategy } from '@angular/cdk/overlay';
@@ -72,17 +71,8 @@ export const BOUNDING_RECT_WINDOW: {
     };
 };
 
-// @public
-export function calculateOverlayArrowPosition(change: ConnectedOverlayPositionChange, overlay: ElementRef, anchor?: ElementRef): OverlayArrowPosition;
-
 // @public (undocumented)
 export const correctKeyRTL: (key: string) => string;
-
-// @public
-export function defaultConnectedOverlayScrollStrategy(): ScrollStrategy;
-
-// @public
-export function defaultConnectedOverlayScrollStrategyFactory(): () => ScrollStrategy;
 
 // @public @deprecated (undocumented)
 export type Direction = 'down' | 'up' | 'start' | 'end';
@@ -121,7 +111,7 @@ export const getContentPositionString: (params: {
 export function getOverlay(elementRef: ElementRef<any>, overlay: Overlay, hasBackdrop: boolean, placement: keyof typeof positions | ConnectionPositionPair[], constrain?: boolean, center?: boolean, scrollStrategy?: ScrollStrategy): OverlayRef;
 
 // @public (undocumented)
-export function getOverlayPositions(elementRef: ElementRef<any>, placement: keyof typeof positions | ConnectionPositionPair[], center?: boolean): ConnectionPositionPair[];
+export function getOverlayPositions(_elementRef: ElementRef<any>, placement: keyof typeof positions | ConnectionPositionPair[], _center?: boolean): ConnectionPositionPair[];
 
 // @public (undocumented)
 export function getPositionStrategy(overlayref: OverlayRef): FlexibleConnectedPositionStrategy | undefined;
@@ -163,14 +153,6 @@ export interface MenuItem extends Link {
 // @public (undocumented)
 export type NavbarItem = MenuItem;
 
-// @public (undocumented)
-export interface OverlayArrowPosition {
-    // (undocumented)
-    left?: number;
-    // (undocumented)
-    right?: number;
-}
-
 // @public @deprecated (undocumented)
 export type Placement = '' | PlacementBasic | `${PlacementBasic} ${PlacementBasic}`;
 
@@ -179,33 +161,6 @@ export type PlacementBasic = 'start' | 'end' | PlacementBasicVertical;
 
 // @public @deprecated (undocumented)
 export type PlacementBasicVertical = 'top' | 'bottom';
-
-// @public (undocumented)
-export const positionBottomCenter: ConnectionPositionPair;
-
-// @public (undocumented)
-export const positionBottomEnd: ConnectionPositionPair;
-
-// @public (undocumented)
-export const positionBottomStart: ConnectionPositionPair;
-
-// @public (undocumented)
-export const positions: {
-    top: ConnectionPositionPair[];
-    end: ConnectionPositionPair[];
-    bottom: ConnectionPositionPair[];
-    start: ConnectionPositionPair[];
-    auto: ConnectionPositionPair[];
-};
-
-// @public
-export const positionTopCenter: ConnectionPositionPair;
-
-// @public (undocumented)
-export const positionTopEnd: ConnectionPositionPair;
-
-// @public (undocumented)
-export const positionTopStart: ConnectionPositionPair;
 
 // @public
 export const provideSiUiState: (config?: {

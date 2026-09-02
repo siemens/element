@@ -16,7 +16,7 @@ import {
   TemplateRef,
   viewChild
 } from '@angular/core';
-import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/overlay';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { t, TranslatableString } from '@siemens/element-translate-ng/translate';
 

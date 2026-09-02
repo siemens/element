@@ -22,7 +22,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/overlay';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { filter, merge, Subject, takeUntil } from 'rxjs';
 

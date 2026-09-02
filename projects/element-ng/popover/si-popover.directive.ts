@@ -16,12 +16,8 @@ import {
   signal,
   TemplateRef
 } from '@angular/core';
-import {
-  defaultConnectedOverlayScrollStrategy,
-  getOverlay,
-  getPositionStrategy,
-  positions
-} from '@siemens/element-ng/common';
+import { getOverlay, getPositionStrategy } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy, positions } from '@siemens/element-ng/overlay';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 import { Subject, takeUntil } from 'rxjs';
 

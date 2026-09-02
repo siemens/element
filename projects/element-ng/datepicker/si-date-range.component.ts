@@ -45,7 +45,7 @@ import {
   positionTopCenter,
   positionTopEnd,
   positionTopStart
-} from '@siemens/element-ng/common';
+} from '@siemens/element-ng/overlay';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';

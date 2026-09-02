@@ -17,12 +17,8 @@ import {
   inputBinding,
   PLATFORM_ID
 } from '@angular/core';
-import {
-  getOverlay,
-  getOverlayPositions,
-  getPositionStrategy,
-  positions
-} from '@siemens/element-ng/common';
+import { getOverlay, getOverlayPositions, getPositionStrategy } from '@siemens/element-ng/common';
+import { positions } from '@siemens/element-ng/overlay';
 import { fromEvent, Subject, Subscription, timer } from 'rxjs';
 import { delayWhen, filter, takeUntil } from 'rxjs/operators';
 

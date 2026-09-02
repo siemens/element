@@ -11,7 +11,7 @@ import {
   input,
   TemplateRef
 } from '@angular/core';
-import { defaultConnectedOverlayScrollStrategy, positions } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy, positions } from '@siemens/element-ng/overlay';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiTooltipService } from './si-tooltip.service';

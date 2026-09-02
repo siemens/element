@@ -5,7 +5,6 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import { ElementRef } from '@angular/core';
 import { FlexibleConnectedPositionStrategy } from '@angular/cdk/overlay';
@@ -52,13 +51,13 @@ export class SiStatusIconComponent {
 
 // @public
 export const STATUS_ICON_CONFIG: InjectionToken<{
-    unknown: StatusIcon;
-    info: StatusIcon;
     success: StatusIcon;
+    info: StatusIcon;
     warning: StatusIcon;
     danger: StatusIcon;
     caution: StatusIcon;
     critical: StatusIcon;
+    unknown: StatusIcon;
     pending: StatusIcon;
     progress: StatusIcon;
 }>;

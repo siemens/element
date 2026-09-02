@@ -23,7 +23,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { elementDown2 } from '@siemens/element-icons';
-import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/overlay';
 import {
   DatepickerConfig,
   DatepickerInputConfig,

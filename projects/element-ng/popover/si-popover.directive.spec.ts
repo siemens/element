@@ -5,7 +5,7 @@
 import { Overlay } from '@angular/cdk/overlay';
 import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/overlay';
 import { page, userEvent } from 'vitest/browser';
 
 import { SiPopoverDirective } from './si-popover.directive';

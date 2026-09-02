@@ -14,11 +14,8 @@ import {
   viewChild
 } from '@angular/core';
 import { elementCancel } from '@siemens/element-icons';
-import {
-  calculateOverlayArrowPosition,
-  isRTL,
-  OverlayArrowPosition
-} from '@siemens/element-ng/common';
+import { isRTL } from '@siemens/element-ng/common';
+import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/overlay';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';

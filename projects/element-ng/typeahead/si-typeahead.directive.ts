@@ -24,7 +24,7 @@ import {
 } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { SiAutocompleteDirective } from '@siemens/element-ng/autocomplete';
-import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/overlay';
 import { t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { catchError, isObservable, ReplaySubject, Subscription, timer } from 'rxjs';
 import { map, share, switchMap, takeUntil } from 'rxjs/operators';

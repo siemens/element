@@ -28,7 +28,7 @@ import {
   Validator
 } from '@angular/forms';
 import { elementDown2 } from '@siemens/element-icons';
-import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/overlay';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SelectOption, SiSelectListHasFilterComponent } from '@siemens/element-ng/select';

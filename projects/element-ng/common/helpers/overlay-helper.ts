@@ -4,20 +4,17 @@
  */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import {
-  ConnectedOverlayPositionChange,
   ConnectionPositionPair,
-  CDK_CONNECTED_OVERLAY_DEFAULT_CONFIG,
   FlexibleConnectedPositionStrategy,
   Overlay,
   OverlayConfig,
   OverlayRef,
   PositionStrategy,
-  ScrollStrategy,
-  ScrollStrategyOptions
+  ScrollStrategy
 } from '@angular/cdk/overlay';
-import { ElementRef, inject } from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { positions } from '@siemens/element-ng/overlay';
 
-import { positions } from '../models/positions.model';
 import { isRTL } from './rtl';
 
 export function makePositionStrategy(
@@ -43,26 +40,6 @@ export function makePositionStrategy(
     positionStrategy.withViewportMargin(8);
   }
   return positionStrategy;
-}
-
-/**
- * Returns the configured connected-overlay scroll strategy or the CDK reposition fallback.
- * Must be called in an Angular injection context.
- */
-export function defaultConnectedOverlayScrollStrategy(): ScrollStrategy {
-  return defaultConnectedOverlayScrollStrategyFactory()();
-}
-
-/**
- * Returns a factory that creates a connected-overlay scroll strategy on demand.
- * Must be called in an Angular injection context.
- */
-export function defaultConnectedOverlayScrollStrategyFactory(): () => ScrollStrategy {
-  const defaultScrollStrategy = inject(CDK_CONNECTED_OVERLAY_DEFAULT_CONFIG, {
-    optional: true
-  })?.scrollStrategy;
-  const scrollStrategyOptions = inject(ScrollStrategyOptions);
-  return () => defaultScrollStrategy ?? scrollStrategyOptions.reposition();
 }
 
 export function makeOverlay(
@@ -115,42 +92,4 @@ export function getOverlayPositions(
 
 export function hasTrigger(trigger: string, triggers?: string): boolean {
   return (triggers?.split(/\s+/) ?? []).includes(trigger);
-}
-
-export interface OverlayArrowPosition {
-  left?: number;
-  right?: number;
-}
-/**
- * calculates the arrow position from left/right for tooltips, popovers, etc
- * @param change - the event from the position strategy
- * @param overlay - ElementRef for the overlay content, i.e. the popover/tooltip component
- * @param anchor - ElementRef for the anchoring element, i.e. the trigger of the popover/tooltip
- */
-export function calculateOverlayArrowPosition(
-  change: ConnectedOverlayPositionChange,
-  overlay: ElementRef,
-  anchor?: ElementRef
-): OverlayArrowPosition {
-  if (anchor && ['bottom', 'top'].includes(change.connectionPair.originY)) {
-    // Calculate offset to the anchor element center
-    const anchorRect = anchor.nativeElement.getBoundingClientRect();
-    const overlayRect = overlay.nativeElement.getBoundingClientRect();
-    const center = anchorRect.left + anchorRect.width / 2;
-    // Position arrow centered to the anchor element
-
-    // prettier-ignore
-    return isRTL()
-      ? { right: overlayRect.right - center }
-      : { left: center - overlayRect.left };
-  }
-
-  const offsetX = change.connectionPair.offsetX;
-  if (offsetX) {
-    // prettier-ignore
-    return offsetX < 0
-      ? { left: -offsetX }
-      : { right: offsetX };
-  }
-  return {};
 }

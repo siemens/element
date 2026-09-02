@@ -17,7 +17,8 @@ import {
   signal
 } from '@angular/core';
 import { outputToObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { defaultConnectedOverlayScrollStrategy, isRTL } from '@siemens/element-ng/common';
+import { isRTL } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/overlay';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { asapScheduler, merge, Observable, Subject } from 'rxjs';
 import { filter, map, observeOn, skip, takeUntil, tap } from 'rxjs/operators';

@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { elementDelete, elementPlus } from '@siemens/element-icons';
-import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/overlay';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import {

@@ -15,7 +15,7 @@ import {
   signal,
   TemplateRef
 } from '@angular/core';
-import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
+import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/overlay';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiTooltipContent } from './si-tooltip.model';

@@ -17,9 +17,9 @@ export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
     readonly icon: _angular_core.InputSignal<string | undefined>;
     readonly isOpen: _angular_core.InputSignalWithTransform<boolean | undefined, unknown>;
     readonly outsideClick: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly placement: _angular_core.InputSignal<"auto" | "start" | "end" | "top" | "bottom">;
+    readonly placement: _angular_core.InputSignal<"start" | "end" | "top" | "bottom" | "auto">;
     // (undocumented)
-    readonly placementInternal: _angular_core.Signal<"auto" | "start" | "end" | "top" | "bottom">;
+    readonly placementInternal: _angular_core.Signal<"start" | "end" | "top" | "bottom" | "auto">;
     readonly popoverContext: _angular_core.InputSignal<unknown>;
     readonly popoverTitle: _angular_core.InputSignal<string>;
     show(): void;

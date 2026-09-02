@@ -23,12 +23,9 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { elementCancel, elementSearch } from '@siemens/element-icons';
-import {
-  BackgroundColorVariant,
-  defaultConnectedOverlayScrollStrategyFactory,
-  isRTL
-} from '@siemens/element-ng/common';
+import { BackgroundColorVariant, isRTL } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { defaultConnectedOverlayScrollStrategyFactory } from '@siemens/element-ng/overlay';
 import {
   injectSiTranslateService,
   SiTranslatePipe,
