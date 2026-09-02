@@ -7,12 +7,12 @@
 $si-caret-transition-duration: animations.element-transition-duration(0.4s);
 
 // Icon sizes
-$si-icon-font-size-sm: var(--element-icon-size-sm, 1rem);
-$si-icon-font-size-md: var(--element-icon-size-md, 1.25rem);
+$si-icon-font-size-sm: var(--element-icon-size-sm);
+$si-icon-font-size-md: var(--element-icon-size-md);
 $si-icon-font-size: $si-icon-font-size-md;
-$si-icon-font-size-lg: var(--element-icon-size-lg, 1.5rem);
-$si-icon-font-size-xl: var(--element-icon-size-xl, 2rem);
-$si-icon-font-size-xxl: var(--element-icon-size-xxl, 3rem);
+$si-icon-font-size-lg: var(--element-icon-size-lg);
+$si-icon-font-size-xl: var(--element-icon-size-xl);
+$si-icon-font-size-xxl: var(--element-icon-size-xxl);
 
 $btn-width-normal: map.get(sizing.$sizing, 120);
 

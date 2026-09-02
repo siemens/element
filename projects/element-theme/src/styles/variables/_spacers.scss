@@ -2,38 +2,38 @@
 
 $spacers-inline: (
   0: 0,
-  1: var(--element-spacer-inline-1, 2px),
-  2: var(--element-spacer-inline-2, 4px),
-  3: var(--element-spacer-inline-3, 6px),
-  4: var(--element-spacer-inline-4, 8px),
-  5: var(--element-spacer-inline-5, 12px),
-  6: var(--element-spacer-inline-6, 16px),
-  7: var(--element-spacer-inline-7, 20px),
-  8: var(--element-spacer-inline-8, 24px),
-  9: var(--element-spacer-inline-9, 32px),
-  10: var(--element-spacer-inline-10, 40px),
-  11: var(--element-spacer-inline-11, 48px),
-  12: var(--element-spacer-inline-12, 56px),
-  13: var(--element-spacer-inline-13, 64px),
-  14: var(--element-spacer-inline-14, 96px)
+  1: var(--element-spacer-inline-1),
+  2: var(--element-spacer-inline-2),
+  3: var(--element-spacer-inline-3),
+  4: var(--element-spacer-inline-4),
+  5: var(--element-spacer-inline-5),
+  6: var(--element-spacer-inline-6),
+  7: var(--element-spacer-inline-7),
+  8: var(--element-spacer-inline-8),
+  9: var(--element-spacer-inline-9),
+  10: var(--element-spacer-inline-10),
+  11: var(--element-spacer-inline-11),
+  12: var(--element-spacer-inline-12),
+  13: var(--element-spacer-inline-13),
+  14: var(--element-spacer-inline-14)
 );
 
 $spacers-block: (
   0: 0,
-  1: var(--element-spacer-block-1, 2px),
-  2: var(--element-spacer-block-2, 4px),
-  3: var(--element-spacer-block-3, 6px),
-  4: var(--element-spacer-block-4, 8px),
-  5: var(--element-spacer-block-5, 12px),
-  6: var(--element-spacer-block-6, 16px),
-  7: var(--element-spacer-block-7, 20px),
-  8: var(--element-spacer-block-8, 24px),
-  9: var(--element-spacer-block-9, 32px),
-  10: var(--element-spacer-block-10, 40px),
-  11: var(--element-spacer-block-11, 48px),
-  12: var(--element-spacer-block-12, 56px),
-  13: var(--element-spacer-block-13, 64px),
-  14: var(--element-spacer-block-14, 96px)
+  1: var(--element-spacer-block-1),
+  2: var(--element-spacer-block-2),
+  3: var(--element-spacer-block-3),
+  4: var(--element-spacer-block-4),
+  5: var(--element-spacer-block-5),
+  6: var(--element-spacer-block-6),
+  7: var(--element-spacer-block-7),
+  8: var(--element-spacer-block-8),
+  9: var(--element-spacer-block-9),
+  10: var(--element-spacer-block-10),
+  11: var(--element-spacer-block-11),
+  12: var(--element-spacer-block-12),
+  13: var(--element-spacer-block-13),
+  14: var(--element-spacer-block-14)
 );
 
 @function negative-spacer-map($spacers) {
