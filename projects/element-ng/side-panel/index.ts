@@ -8,4 +8,5 @@ export * from './si-side-panel-content.component';
 export * from './si-side-panel.module';
 export * from './si-side-panel-actions.component';
 export * from './si-side-panel-action.component';
+export * from './si-side-panel-back-button.component';
 export * from './side-panel.model';
