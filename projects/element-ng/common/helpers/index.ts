@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 export * from './animation.helpers';
+export * from './connected-overlay-scroll-strategy';
+export * from './contextual-overlay-arrow';
 export * from './positioning.helpers';
 export * from './rtl';
 export * from './global-events.helpers';
-export * from './overlay-helper';
