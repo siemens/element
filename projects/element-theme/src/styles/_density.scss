@@ -1,144 +1,144 @@
 @use 'selectors';
 @use 'variables/typography';
 
-@mixin spacer-override($spacer, $block-size, $inline-size) {
-  --element-spacer-block-#{$spacer}: #{$block-size};
-  --element-spacer-inline-#{$spacer}: #{$inline-size};
+@mixin define-spacer($spacer, $block-size, $inline-size) {
+  --si-sys-sizing-spacing-y-#{$spacer}: #{$block-size};
+  --si-sys-sizing-spacing-x-#{$spacer}: #{$inline-size};
 }
 
-@mixin font-override($name, $font-size, $line-height) {
-  --element-font-size-#{$name}: #{typography.px-to-rem($font-size)};
-  --element-line-height-#{$name}: #{typography.px-to-ratio($font-size, $line-height)};
+@mixin define-font($name, $font-size, $line-height) {
+  --si-sys-typography-font-size-#{$name}: #{typography.px-to-rem($font-size)};
+  --si-sys-typography-line-height-#{$name}: #{typography.px-to-ratio($font-size, $line-height)};
 }
 
-@mixin sizing-override($name, $size) {
-  --element-sizing-#{$name}: #{$size};
+@mixin define-sizing($name, $size) {
+  --si-sys-sizing-sizing-#{$name}: #{$size};
 }
 
-@mixin icon-override($name, $size) {
-  --element-icon-size-#{$name}: #{typography.px-to-rem($size)};
+@mixin define-icon-size($name, $size) {
+  --si-sys-sizing-icon-#{$name}: #{typography.px-to-rem($size)};
 }
 
 #{selectors.$root} {
-  @include spacer-override(1, 2px, 2px);
-  @include spacer-override(2, 4px, 4px);
-  @include spacer-override(3, 6px, 6px);
-  @include spacer-override(4, 8px, 8px);
-  @include spacer-override(5, 12px, 12px);
-  @include spacer-override(6, 16px, 16px);
-  @include spacer-override(7, 20px, 20px);
-  @include spacer-override(8, 24px, 24px);
-  @include spacer-override(9, 32px, 32px);
-  @include spacer-override(10, 40px, 40px);
-  @include spacer-override(11, 48px, 48px);
-  @include spacer-override(12, 56px, 56px);
-  @include spacer-override(13, 64px, 64px);
-  @include spacer-override(14, 96px, 96px);
+  @include define-spacer(10, 2px, 2px);
+  @include define-spacer(20, 4px, 4px);
+  @include define-spacer(30, 6px, 6px);
+  @include define-spacer(40, 8px, 8px);
+  @include define-spacer(50, 12px, 12px);
+  @include define-spacer(60, 16px, 16px);
+  @include define-spacer(70, 20px, 20px);
+  @include define-spacer(80, 24px, 24px);
+  @include define-spacer(90, 32px, 32px);
+  @include define-spacer(100, 40px, 40px);
+  @include define-spacer(110, 48px, 48px);
+  @include define-spacer(120, 56px, 56px);
+  @include define-spacer(130, 64px, 64px);
+  @include define-spacer(140, 96px, 96px);
 
-  @include font-override(body-sm, 12px, 16px);
-  @include font-override(body, 14px, 16px);
-  @include font-override(body-lg, 16px, 20px);
-  @include font-override(body-paragraph, 14px, 20px);
-  @include font-override(h1, 28px, 36px);
-  @include font-override(h2, 24px, 32px);
-  @include font-override(h3, 20px, 24px);
-  @include font-override(h4, 16px, 20px);
-  @include font-override(h5, 14px, 20px);
-  @include font-override(h6, 12px, 16px);
-  @include font-override(display, 32px, 40px);
-  @include font-override(display-lg, 40px, 52px);
-  @include font-override(display-xl, 48px, 64px);
-  @include font-override(display-xxl, 58px, 72px);
-  @include font-override(code-sm, 12px, 16px);
-  @include font-override(code, 14px, 20px);
-  @include font-override(code-lg, 16px, 20px);
+  @include define-font(body-sm, 12px, 16px);
+  @include define-font(body, 14px, 16px);
+  @include define-font(body-lg, 16px, 20px);
+  @include define-font(body-paragraph, 14px, 20px);
+  @include define-font(h1, 28px, 36px);
+  @include define-font(h2, 24px, 32px);
+  @include define-font(h3, 20px, 24px);
+  @include define-font(h4, 16px, 20px);
+  @include define-font(h5, 14px, 20px);
+  @include define-font(h6, 12px, 16px);
+  @include define-font(display, 32px, 40px);
+  @include define-font(display-lg, 40px, 52px);
+  @include define-font(display-xl, 48px, 64px);
+  @include define-font(display-xxl, 58px, 72px);
+  @include define-font(code-sm, 12px, 16px);
+  @include define-font(code, 14px, 20px);
+  @include define-font(code-lg, 16px, 20px);
 
-  @include sizing-override(10, 2px);
-  @include sizing-override(20, 4px);
-  @include sizing-override(30, 8px);
-  @include sizing-override(40, 12px);
-  @include sizing-override(50, 16px);
-  @include sizing-override(60, 20px);
-  @include sizing-override(70, 24px);
-  @include sizing-override(80, 32px);
-  @include sizing-override(90, 40px);
-  @include sizing-override(100, 48px);
-  @include sizing-override(110, 64px);
-  @include sizing-override(120, 80px);
-  @include sizing-override(130, 96px);
-  @include sizing-override(140, 120px);
-  @include sizing-override(150, 160px);
-  @include sizing-override(160, 240px);
-  @include sizing-override(170, 320px);
-  @include sizing-override(180, 480px);
-  @include sizing-override(190, 600px);
-  @include sizing-override(200, 720px);
+  @include define-sizing(10, 2px);
+  @include define-sizing(20, 4px);
+  @include define-sizing(30, 8px);
+  @include define-sizing(40, 12px);
+  @include define-sizing(50, 16px);
+  @include define-sizing(60, 20px);
+  @include define-sizing(70, 24px);
+  @include define-sizing(80, 32px);
+  @include define-sizing(90, 40px);
+  @include define-sizing(100, 48px);
+  @include define-sizing(110, 64px);
+  @include define-sizing(120, 80px);
+  @include define-sizing(130, 96px);
+  @include define-sizing(140, 120px);
+  @include define-sizing(150, 160px);
+  @include define-sizing(160, 240px);
+  @include define-sizing(170, 320px);
+  @include define-sizing(180, 480px);
+  @include define-sizing(190, 600px);
+  @include define-sizing(200, 720px);
 
-  @include icon-override(sm, 16px);
-  @include icon-override(md, 20px);
-  @include icon-override(lg, 24px);
-  @include icon-override(xl, 32px);
-  @include icon-override(xxl, 48px);
+  @include define-icon-size(sm, 16px);
+  @include define-icon-size(md, 20px);
+  @include define-icon-size(lg, 24px);
+  @include define-icon-size(xl, 32px);
+  @include define-icon-size(xxl, 48px);
 }
 
 .density-compact {
-  @include spacer-override(1, 2px, 2px);
-  @include spacer-override(2, 2px, 2px);
-  @include spacer-override(3, 4px, 4px);
-  @include spacer-override(4, 6px, 6px);
-  @include spacer-override(5, 8px, 8px);
-  @include spacer-override(6, 12px, 12px);
-  @include spacer-override(7, 16px, 16px);
-  @include spacer-override(8, 20px, 20px);
-  @include spacer-override(9, 24px, 24px);
-  @include spacer-override(10, 32px, 32px);
-  @include spacer-override(11, 40px, 40px);
-  @include spacer-override(12, 48px, 48px);
-  @include spacer-override(13, 64px, 64px);
-  @include spacer-override(14, 80px, 80px);
+  @include define-spacer(10, 2px, 2px);
+  @include define-spacer(20, 2px, 2px);
+  @include define-spacer(30, 4px, 4px);
+  @include define-spacer(40, 6px, 6px);
+  @include define-spacer(50, 8px, 8px);
+  @include define-spacer(60, 12px, 12px);
+  @include define-spacer(70, 16px, 16px);
+  @include define-spacer(80, 20px, 20px);
+  @include define-spacer(90, 24px, 24px);
+  @include define-spacer(100, 32px, 32px);
+  @include define-spacer(110, 40px, 40px);
+  @include define-spacer(120, 48px, 48px);
+  @include define-spacer(130, 64px, 64px);
+  @include define-spacer(140, 80px, 80px);
 
-  @include font-override(body-sm, 12px, 16px);
-  @include font-override(body, 14px, 16px);
-  @include font-override(body-lg, 14px, 16px);
-  @include font-override(body-paragraph, 14px, 18px);
-  @include font-override(h1, 24px, 28px);
-  @include font-override(h2, 20px, 24px);
-  @include font-override(h3, 16px, 18px);
-  @include font-override(h4, 14px, 20px);
-  @include font-override(h5, 14px, 16px);
-  @include font-override(h6, 12px, 16px);
-  @include font-override(display, 28px, 32px);
-  @include font-override(display-lg, 32px, 40px);
-  @include font-override(display-xl, 40px, 48px);
-  @include font-override(display-xxl, 48px, 56px);
-  @include font-override(code-sm, 12px, 16px);
-  @include font-override(code, 14px, 20px);
-  @include font-override(code-lg, 16px, 20px);
+  @include define-font(body-sm, 12px, 16px);
+  @include define-font(body, 14px, 16px);
+  @include define-font(body-lg, 14px, 16px);
+  @include define-font(body-paragraph, 14px, 18px);
+  @include define-font(h1, 24px, 28px);
+  @include define-font(h2, 20px, 24px);
+  @include define-font(h3, 16px, 18px);
+  @include define-font(h4, 14px, 20px);
+  @include define-font(h5, 14px, 16px);
+  @include define-font(h6, 12px, 16px);
+  @include define-font(display, 28px, 32px);
+  @include define-font(display-lg, 32px, 40px);
+  @include define-font(display-xl, 40px, 48px);
+  @include define-font(display-xxl, 48px, 56px);
+  @include define-font(code-sm, 12px, 16px);
+  @include define-font(code, 14px, 20px);
+  @include define-font(code-lg, 16px, 20px);
 
-  @include sizing-override(10, 2px);
-  @include sizing-override(20, 2px);
-  @include sizing-override(30, 4px);
-  @include sizing-override(40, 8px);
-  @include sizing-override(50, 12px);
-  @include sizing-override(60, 16px);
-  @include sizing-override(70, 20px);
-  @include sizing-override(80, 24px);
-  @include sizing-override(90, 32px);
-  @include sizing-override(100, 40px);
-  @include sizing-override(110, 48px);
-  @include sizing-override(120, 64px);
-  @include sizing-override(130, 80px);
-  @include sizing-override(140, 96px);
-  @include sizing-override(150, 120px);
-  @include sizing-override(160, 160px);
-  @include sizing-override(170, 240px);
-  @include sizing-override(180, 320px);
-  @include sizing-override(190, 480px);
-  @include sizing-override(200, 600px);
+  @include define-sizing(10, 2px);
+  @include define-sizing(20, 2px);
+  @include define-sizing(30, 4px);
+  @include define-sizing(40, 8px);
+  @include define-sizing(50, 12px);
+  @include define-sizing(60, 16px);
+  @include define-sizing(70, 20px);
+  @include define-sizing(80, 24px);
+  @include define-sizing(90, 32px);
+  @include define-sizing(100, 40px);
+  @include define-sizing(110, 48px);
+  @include define-sizing(120, 64px);
+  @include define-sizing(130, 80px);
+  @include define-sizing(140, 96px);
+  @include define-sizing(150, 120px);
+  @include define-sizing(160, 160px);
+  @include define-sizing(170, 240px);
+  @include define-sizing(180, 320px);
+  @include define-sizing(190, 480px);
+  @include define-sizing(200, 600px);
 
-  @include icon-override(sm, 12px);
-  @include icon-override(md, 16px);
-  @include icon-override(lg, 20px);
-  @include icon-override(xl, 24px);
-  @include icon-override(xxl, 32px);
+  @include define-icon-size(sm, 12px);
+  @include define-icon-size(md, 16px);
+  @include define-icon-size(lg, 20px);
+  @include define-icon-size(xl, 24px);
+  @include define-icon-size(xxl, 32px);
 }
