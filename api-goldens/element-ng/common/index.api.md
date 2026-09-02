@@ -5,6 +5,7 @@
 ```ts
 
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import { ElementRef } from '@angular/core';
 import * as i0 from '@angular/core';
 import { InjectionToken } from '@angular/core';
@@ -140,7 +141,7 @@ export interface MenuItem extends Link {
 // @public (undocumented)
 export type NavbarItem = MenuItem;
 
-// @public (undocumented)
+// @public
 export interface OverlayArrowPosition {
     // (undocumented)
     left?: number;
