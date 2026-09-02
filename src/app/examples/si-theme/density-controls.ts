@@ -35,15 +35,15 @@ interface TypographyControlPair {
   lineHeight: CssVariableControl;
 }
 
-const createSpacerControls = (direction: 'inline' | 'block'): CssVariableControl[] => {
+const createSpacerControls = (direction: 'x' | 'y'): CssVariableControl[] => {
   return spacerDefaults.map((value, index) => {
-    const number = index + 1;
-    const name = `--element-spacer-${direction}-${number}`;
+    const number = (index + 1) * 10;
+    const name = `--si-sys-sizing-spacing--${direction}-${number}`;
 
     return {
       id: name.slice(2),
       name,
-      label: `${direction === 'inline' ? 'Inline' : 'Block'} ${number}`,
+      label: `${direction === 'x' ? 'Inline' : 'Block'} ${number}`,
       fallbackValue: value,
       fallbackUnit: 'px',
       value,
@@ -56,7 +56,7 @@ const createSpacerControls = (direction: 'inline' | 'block'): CssVariableControl
 const createSizingControls = (): CssVariableControl[] => {
   return sizingDefaults.map((value, index) => {
     const number = (index + 1) * 10;
-    const name = `--element-sizing-${number}`;
+    const name = `--si-sys-sizing-sizing-${number}`;
 
     return {
       id: name.slice(2),
@@ -81,7 +81,7 @@ const iconSizeControlDefinitions: readonly (readonly [string, string, number])[]
 
 const iconSizeControls: CssVariableControl[] = iconSizeControlDefinitions.map(
   ([suffix, label, value]) => {
-    const name = `--element-icon-size-${suffix}`;
+    const name = `--si-sys-sizing-icon-${suffix}`;
 
     return {
       id: name.slice(2),
@@ -120,8 +120,8 @@ const typographyControlDefinitions: readonly (readonly [string, string, number, 
 
 const typographyControls: TypographyControlPair[] = typographyControlDefinitions.map(
   ([suffix, label, fontSize, lineHeight]) => {
-    const fontSizeName = `--element-font-size-${suffix}`;
-    const lineHeightName = `--element-line-height-${suffix}`;
+    const fontSizeName = `--si-sys-typography-font-size-${suffix}`;
+    const lineHeightName = `--si-sys-typography-line-height-${suffix}`;
 
     return {
       fontSize: {
@@ -157,8 +157,8 @@ const typographyControls: TypographyControlPair[] = typographyControlDefinitions
 export class SampleComponent implements OnInit {
   density: Density = 'none';
 
-  readonly inlineSpacerControls = createSpacerControls('inline');
-  readonly blockSpacerControls = createSpacerControls('block');
+  readonly inlineSpacerControls = createSpacerControls('x');
+  readonly blockSpacerControls = createSpacerControls('y');
   readonly sizingControls = createSizingControls();
   readonly iconSizeControls = iconSizeControls;
   readonly typographyControls = typographyControls;

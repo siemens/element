@@ -2,38 +2,38 @@
 
 $spacers-inline: (
   0: 0,
-  1: var(--element-spacer-inline-1),
-  2: var(--element-spacer-inline-2),
-  3: var(--element-spacer-inline-3),
-  4: var(--element-spacer-inline-4),
-  5: var(--element-spacer-inline-5),
-  6: var(--element-spacer-inline-6),
-  7: var(--element-spacer-inline-7),
-  8: var(--element-spacer-inline-8),
-  9: var(--element-spacer-inline-9),
-  10: var(--element-spacer-inline-10),
-  11: var(--element-spacer-inline-11),
-  12: var(--element-spacer-inline-12),
-  13: var(--element-spacer-inline-13),
-  14: var(--element-spacer-inline-14)
+  1: var(--si-sys-sizing-spacing-x-10),
+  2: var(--si-sys-sizing-spacing-x-20),
+  3: var(--si-sys-sizing-spacing-x-30),
+  4: var(--si-sys-sizing-spacing-x-40),
+  5: var(--si-sys-sizing-spacing-x-50),
+  6: var(--si-sys-sizing-spacing-x-60),
+  7: var(--si-sys-sizing-spacing-x-70),
+  8: var(--si-sys-sizing-spacing-x-80),
+  9: var(--si-sys-sizing-spacing-x-90),
+  10: var(--si-sys-sizing-spacing-x-100),
+  11: var(--si-sys-sizing-spacing-x-110),
+  12: var(--si-sys-sizing-spacing-x-120),
+  13: var(--si-sys-sizing-spacing-x-130),
+  14: var(--si-sys-sizing-spacing-x-140)
 );
 
 $spacers-block: (
   0: 0,
-  1: var(--element-spacer-block-1),
-  2: var(--element-spacer-block-2),
-  3: var(--element-spacer-block-3),
-  4: var(--element-spacer-block-4),
-  5: var(--element-spacer-block-5),
-  6: var(--element-spacer-block-6),
-  7: var(--element-spacer-block-7),
-  8: var(--element-spacer-block-8),
-  9: var(--element-spacer-block-9),
-  10: var(--element-spacer-block-10),
-  11: var(--element-spacer-block-11),
-  12: var(--element-spacer-block-12),
-  13: var(--element-spacer-block-13),
-  14: var(--element-spacer-block-14)
+  1: var(--si-sys-sizing-spacing-y-10),
+  2: var(--si-sys-sizing-spacing-y-20),
+  3: var(--si-sys-sizing-spacing-y-30),
+  4: var(--si-sys-sizing-spacing-y-40),
+  5: var(--si-sys-sizing-spacing-y-50),
+  6: var(--si-sys-sizing-spacing-y-60),
+  7: var(--si-sys-sizing-spacing-y-70),
+  8: var(--si-sys-sizing-spacing-y-80),
+  9: var(--si-sys-sizing-spacing-y-90),
+  10: var(--si-sys-sizing-spacing-y-100),
+  11: var(--si-sys-sizing-spacing-y-110),
+  12: var(--si-sys-sizing-spacing-y-120),
+  13: var(--si-sys-sizing-spacing-y-130),
+  14: var(--si-sys-sizing-spacing-y-140)
 );
 
 @function negative-spacer-map($spacers) {
