@@ -16,6 +16,7 @@ $datatable-header-color: system-tokens.$si-sys-text-primary !default;
 $datatable-footer-background-color: transparent !default;
 
 $datatable-summary-background-color: system-tokens.$si-sys-background-2 !default;
+$datatable-striped-background-color: variables.$table-striped-bg !default;
 
 $datatable-header-height: 40px !default;
 $datatable-cell-min-width: 40px !default;
@@ -54,6 +55,17 @@ $datatable-ghost-cell-strip-radius: 0 !default;
 
   &.table-custom {
     --si-datatable-row-min-height: 24px;
+  }
+
+  // Zebra striping, the counterpart of `.table-striped` for HTML tables.
+  // Interactive states are excluded so that hover, active and focus keep precedence.
+  &.table-striped {
+    .datatable-row-wrapper .datatable-body-row.datatable-row-odd:not(.active, :hover, :focus) {
+      &,
+      :is(.datatable-row-left, .datatable-row-right) {
+        background-color: $datatable-striped-background-color;
+      }
+    }
   }
 
   // any kind of selection: apply a row hover state

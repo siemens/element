@@ -18,6 +18,13 @@ test.describe('datatable', () => {
     await si.runVisualAndA11yTests('invalid-age');
   });
 
+  test(example + ' striped', async ({ page, si }) => {
+    await si.visitExample(example);
+    await page.getByLabel('Striped rows').check();
+    await expect(page.locator('ngx-datatable.table-striped')).toBeVisible();
+    await si.runVisualAndA11yTests('striped');
+  });
+
   const exampleTree = 'datatable/datatable-tree';
 
   test(exampleTree, async ({ page, si }) => {

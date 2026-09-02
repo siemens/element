@@ -78,6 +78,7 @@ export class SampleComponent implements OnInit {
   selectionTypes: SelectionType[] = ['single', 'multi', 'multiClick', 'cell', 'checkbox'];
   nextStatusType = 0;
   enforceCheckboxes = false;
+  striped = false;
 
   constructor() {
     for (let i = 1; i <= 250; i++) {

@@ -107,6 +107,20 @@ in your stylesheet:
 
 <si-docs-component example="datatable/datatable-footer" height="750"></si-docs-component>
 
+### Striped rows
+
+Add `table-striped` next to `table-element` on `<ngx-datatable>` to distinguish
+alternating body rows, like the [HTML table](html-table.md) variant of the same name.
+
+```html
+<ngx-datatable class="table-element table-striped">
+  <!-- Table content -->
+</ngx-datatable>
+```
+
+Striping is based on the row index, so it stays stable while scrolling virtualized rows.
+Hover, selection and focus states take precedence over the striping.
+
 ### Client-side paging, sorting and selection options
 
 - Use `class="table-element"` on `<ngx-datatable>`.
