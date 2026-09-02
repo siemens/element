@@ -4,6 +4,7 @@
     class="table-element"
     columnMode="force"
     siDatatableInteraction
+    [class.table-striped]="striped"
     [rows]="rows"
     [columns]="columns"
     [reorderable]="true"
@@ -50,7 +51,7 @@
             </select>
           </si-form-item>
         </div>
-        <div class="col-6">
+        <div class="col-4">
           <si-form-item label="Enforce checkboxes">
             <input
               class="form-check-input"
@@ -58,6 +59,11 @@
               [(ngModel)]="enforceCheckboxes"
               (ngModelChange)="selectionTypeChanged(!enforceCheckboxes)"
             />
+          </si-form-item>
+        </div>
+        <div class="col-4">
+          <si-form-item label="Striped rows">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="striped" />
           </si-form-item>
         </div>
       </div>
