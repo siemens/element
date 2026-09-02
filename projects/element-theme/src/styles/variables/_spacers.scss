@@ -51,5 +51,6 @@ $spacers-block: (
 $negative-spacers-inline: negative-spacer-map($spacers-inline);
 $negative-spacers-block: negative-spacer-map($spacers-block);
 
-// $spacer: 16px;
-// $spacers: $spacers-block;
+// @deprecated: Those are for compatibility and will go away with v52
+$spacer: 16px;
+$spacers: $spacers-block;
