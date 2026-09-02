@@ -1,29 +1,36 @@
 - list:
   - listitem:
-    - time: /Today at \d+:\d+/
-    - heading "Conveyor belt inspection completed" [level=5]
-    - paragraph: /Routine inspection of conveyor belt CB-\d+ finished without issues\. All parameters within tolerance\./
-  - listitem:
-    - time: /Today at \d+:\d+/
-    - heading "Sensor calibration report available" [level=5]
-    - paragraph: Calibration of temperature sensors on production line 2 has been completed and documented.
-    - text: Production line 2
-    - link "View report":
-      - /url: "#"
-  - listitem:
-    - time: /Today at \d+:\d+/
-    - heading "Firmware update pending approval" [level=5]
+    - heading "HVAC Zone Controller Lobby" [level=5]
     - button "Options": 
-    - paragraph: Firmware v3.1.2 is ready for deployment. Review and approve to proceed with installation.
-    - group "Approval actions":
+  - listitem:
+    - checkbox /Select VAV box actuator Room \d+/
+    - heading /VAV box actuator Room \d+/ [level=5]
+  - listitem:
+    - heading /AHU-\d+ Supply Fan Fault/ [level=5]
+    - button "Options": 
+    - paragraph: Supply fan VFD reporting overcurrent fault. Airflow dropped below setpoint on floors 4–6.
+    - text: Building A 3 Critical
+  - listitem:
+    - heading "Scheduled Maintenance" [level=5]
+    - button "Options": 
+    - paragraph: Annual condenser coil cleaning and refrigerant level check. Assigned to Mike Torres, Facilities.
+    - group "Maintenance actions":
       - button "Approve"
       - button "Archive"
       - button "Delete"
   - listitem:
     - time: /Yesterday at \d+:\d+/
-    - heading "Motor drive fault detected" [level=5]
+    - text: Critical
+    - heading "Fire Damper Fault Zone B3" [level=5]
+    - paragraph: Smoke damper in return duct failed to close during test sequence. Manual inspection required before next occupancy cycle.
+  - listitem:
+    - time: /Today at \d+:\d+/
+    - status "plant in status critical"
+    - 'heading "Boiler #1 Pressure Drop Alert" [level=5]'
     - button "Options": 
-    - paragraph: /Drive unit DU-\d+ on packaging station reported overcurrent fault\. Manual reset required\./
-    - text: Fault log Critical
-    - button "Accept": 
-    - button "Deny": 
+    - paragraph: /System pressure fell below \d+ PSI threshold\. Possible leak in the north wing hydronic loop\. Technician dispatched\./
+    - text: Campus HQ 7 Urgent
+    - group "Fault actions":
+      - button "Approve"
+      - button "Archive"
+      - button "Delete"

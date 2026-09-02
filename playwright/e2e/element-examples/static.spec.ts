@@ -30,6 +30,7 @@ test('links/links', ({ si }) => si.static());
 test('list-group/list-group', ({ si }) => si.static());
 test('list-item/list-item', ({ si }) => si.static());
 test('list-item/list-item-action', ({ si }) => si.static());
+test('list-item/list-variants', ({ si }) => si.static());
 test('list-item/list-item-unread', ({ si }) => si.static());
 test('shapes/shapes', ({ si }) => si.static());
 test('si-about/si-about-api', ({ si }) => si.static());

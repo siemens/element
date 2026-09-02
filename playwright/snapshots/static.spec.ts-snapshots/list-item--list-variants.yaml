@@ -1,0 +1,64 @@
+- heading "Ghost" [level=4]
+- list:
+  - listitem:
+    - heading "HVAC Zone Controller Lobby" [level=5]
+    - button "Options"
+  - listitem:
+    - heading "Lighting Controller Parking Garage" [level=5]
+    - button "Options"
+  - listitem:
+    - heading "Fire Alarm Panel East Wing" [level=5]
+    - button "Options"
+  - listitem:
+    - heading "Elevator Motor Room Sensor" [level=5]
+    - button "Options"
+- heading "With dividers" [level=4]
+- list:
+  - listitem:
+    - heading "HVAC Zone Controller Lobby" [level=5]
+    - button "Options"
+  - listitem:
+    - heading "Lighting Controller Parking Garage" [level=5]
+    - button "Options"
+  - listitem:
+    - heading "Fire Alarm Panel East Wing" [level=5]
+    - button "Options"
+  - listitem:
+    - heading "Elevator Motor Room Sensor" [level=5]
+    - button "Options"
+- heading "Filled" [level=4]
+- list:
+  - listitem:
+    - button "HVAC Zone Controller Lobby":
+      - heading "HVAC Zone Controller Lobby" [level=5]
+    - button "Options"
+  - listitem:
+    - button "Lighting Controller Parking Garage":
+      - heading "Lighting Controller Parking Garage" [level=5]
+    - button "Options"
+  - listitem:
+    - button "Fire Alarm Panel East Wing":
+      - heading "Fire Alarm Panel East Wing" [level=5]
+    - button "Options"
+  - listitem:
+    - button "Elevator Motor Room Sensor":
+      - heading "Elevator Motor Room Sensor" [level=5]
+    - button "Options"
+- heading "Outline" [level=4]
+- list:
+  - listitem:
+    - button "HVAC Zone Controller Lobby":
+      - heading "HVAC Zone Controller Lobby" [level=5]
+    - button "Options"
+  - listitem:
+    - button "Lighting Controller Parking Garage":
+      - heading "Lighting Controller Parking Garage" [level=5]
+    - button "Options"
+  - listitem:
+    - button "Fire Alarm Panel East Wing":
+      - heading "Fire Alarm Panel East Wing" [level=5]
+    - button "Options"
+  - listitem:
+    - button "Elevator Motor Room Sensor":
+      - heading "Elevator Motor Room Sensor" [level=5]
+    - button "Options"

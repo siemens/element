@@ -9,8 +9,10 @@ import {
   elementCheckboxChecked,
   elementDelete,
   elementDocument,
-  elementPlant
+  elementAhuPlant,
+  elementSpecialObject
 } from '@siemens/element-icons';
+import { SiAvatarComponent } from '@siemens/element-ng/avatar';
 import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 import { addIcons, SiIconComponent, SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { type MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
@@ -21,9 +23,10 @@ import { LOG_EVENT } from '@siemens/live-preview';
   imports: [
     SiIconComponent,
     SiMenuFactoryComponent,
+    SiAvatarComponent,
     SiCircleStatusComponent,
-    CdkMenuTrigger,
-    SiStatusIconComponent
+    SiStatusIconComponent,
+    CdkMenuTrigger
   ],
   templateUrl: './list-item.html',
   host: { class: 'p-5' }
@@ -32,11 +35,12 @@ export class SampleComponent {
   logEvent = inject(LOG_EVENT);
 
   icons = addIcons({
-    elementCheckboxChecked,
     elementArchive,
+    elementCheckboxChecked,
     elementDelete,
     elementDocument,
-    elementPlant
+    elementAhuPlant,
+    elementSpecialObject
   });
 
   items: MenuItem[] = [
