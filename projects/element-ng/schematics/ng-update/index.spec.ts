@@ -62,6 +62,52 @@ export class TestComponent {
     expect(modifiedContent).toEqual(originalContent);
   });
 
+  it('should migrate spacing helpers and spacer map access', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/spacers.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-spacers',
+  template: \`<div class="mt-10 px-lg-11 m-md-n10" [class.pb-11]="padded"></div>\`
+})
+export class SpacersComponent {}`,
+      '/projects/app/src/spacers.component.html': `<div class="my-10 me-11 mt-100 custom-mt-10"></div>`,
+      '/projects/app/src/spacers.component.scss': `@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables' as variables;
+
+.spaced {
+  padding: map.get(variables.$spacers-inline, 10);
+  gap: map-get(variables.$spacers, 10);
+  z-index: map.get($layers, 10);
+}`,
+      '/outside/spacers.html': `<div class="mt-10"></div>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+
+    expect(tree.readContent('/projects/app/src/spacers.component.ts')).toBe(
+      `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-spacers',
+  template: \`<div class="mt-13 px-lg-14 m-md-n13" [class.pb-14]="padded"></div>\`
+})
+export class SpacersComponent {}`
+    );
+    expect(tree.readContent('/projects/app/src/spacers.component.html')).toBe(
+      `<div class="my-13 me-14 mt-100 custom-mt-10"></div>`
+    );
+    expect(tree.readContent('/projects/app/src/spacers.component.scss')).toBe(`@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables' as variables;
+
+.spaced {
+  padding: map.get(variables.$spacers-inline, 13);
+  gap: map-get(variables.$spacers, 13);
+  z-index: map.get($layers, 10);
+}`);
+    expect(tree.readContent('/outside/spacers.html')).toBe(`<div class="mt-13"></div>`);
+  });
+
   it('should handle empty project gracefully', async () => {
     const emptyTree = await createTestApp(runner, { style: 'scss' });
 

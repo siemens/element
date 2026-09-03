@@ -16,8 +16,8 @@
     border-color: inherit;
     border-block-width: 0;
     border-inline-width: 0 1px;
-    margin-block: -(variables.$input-padding-y);
-    margin-inline: -(variables.$input-padding-x) variables.$input-padding-x;
+    margin-block: calc(variables.$input-padding-y * -1);
+    margin-inline: calc(variables.$input-padding-x * -1) variables.$input-padding-x;
     block-size: inherit;
     padding-inline: variables.$btn-padding-x;
   }

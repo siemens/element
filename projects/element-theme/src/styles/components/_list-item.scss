@@ -44,8 +44,8 @@ ol:has(.list-item) {
     '.     .         description   description'
     '.     .         metadata      metadata'
     '.     .         quick-actions quick-actions';
-  padding-block: map.get(variables.$spacers, 4);
-  padding-inline: map.get(variables.$spacers, 6);
+  padding-block: map.get(variables.$spacers-block, 4);
+  padding-inline: map.get(variables.$spacers-inline, 6);
 
   @include typography.si-font(
     typography.$si-font-size-body,
@@ -71,10 +71,10 @@ ol:has(.list-item) {
     // This restricts the height on purpose.
     // Content taller than the title remains centered and overflows on both sides.
     max-block-size: calc(
-      #{typography.$si-line-height-h5 * typography.$si-font-size-h5} +
-        #{map.get(variables.$spacers, 4) * 2}
+      #{typography.$si-line-height-h5} * #{typography.$si-font-size-h5} +
+        #{map.get(variables.$spacers-block, 4)} * 2
     );
-    margin-inline-end: map.get(variables.$spacers, 4);
+    margin-inline-end: map.get(variables.$spacers-inline, 4);
   }
 
   .list-item-timestamp {
@@ -85,7 +85,7 @@ ol:has(.list-item) {
 
   .list-item-title {
     grid-area: title;
-    padding-block: map.get(variables.$spacers, 4);
+    padding-block: map.get(variables.$spacers-block, 4);
     margin-block-end: 0;
 
     @include typography.si-font(
@@ -124,7 +124,7 @@ ol:has(.list-item) {
 
   .list-item-description {
     grid-area: description;
-    margin-block-end: map.get(variables.$spacers, 4);
+    margin-block-end: map.get(variables.$spacers-block, 4);
   }
 
   .list-item-metadata {
@@ -133,7 +133,7 @@ ol:has(.list-item) {
     flex-direction: row;
     align-items: center;
     color: variables.$si-sys-text-secondary;
-    margin-block-end: map.get(variables.$spacers, 4);
+    margin-block-end: map.get(variables.$spacers-block, 4);
 
     a:not(:hover) {
       color: variables.$si-sys-text-secondary;
@@ -148,14 +148,14 @@ ol:has(.list-item) {
       block-size: 0.125rem;
       border-radius: 50%;
       background-color: variables.$si-sys-text-secondary;
-      margin-inline: map.get(variables.$spacers, 2);
+      margin-inline: map.get(variables.$spacers-inline, 2);
     }
   }
 
   .list-item-quick-actions {
     grid-area: quick-actions;
     display: flex;
-    gap: map.get(variables.$spacers, 4);
+    gap: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
   }
 
   &.list-item-action {

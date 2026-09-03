@@ -4,10 +4,12 @@
 :host {
   display: flex;
   flex-wrap: wrap;
-  gap: map.get(variables.$spacers, 2);
+  gap: map.get(variables.$spacers-block, 2) map.get(variables.$spacers-inline, 2);
   padding-block: 3px;
   block-size: auto !important; // stylelint-disable-line declaration-no-important
-  min-block-size: calc(#{variables.$si-line-height-body}em + #{2 * map.get(variables.$spacers, 4)});
+  min-block-size: calc(
+    #{variables.$si-line-height-body}em + 2 * map.get(variables.$spacers-block, 4)
+  );
 
   &:focus-within {
     @include variables.make-outline-focus();
@@ -17,8 +19,8 @@
 input {
   padding-inline: 0;
   // needs explicit height because of Firefox, see .form-control
-  block-size: calc(1lh + 2 * map.get(variables.$spacers, 2));
-  margin-inline: map.get(variables.$spacers, 2);
+  block-size: calc(1lh + 2 * map.get(variables.$spacers-block, 2));
+  margin-inline: map.get(variables.$spacers-inline, 2);
   border: 0;
   flex: 1;
   background: transparent;

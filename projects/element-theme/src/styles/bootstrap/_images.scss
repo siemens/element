@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../variables/spacers';
 @use './mixins/image';
 @use './variables';
@@ -35,7 +36,7 @@
 }
 
 .figure-img {
-  margin-block-end: spacers.$spacer * 0.5;
+  margin-block-end: map.get(spacers.$spacers-block, 4);
   line-height: 1;
 }
 

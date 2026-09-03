@@ -74,7 +74,7 @@ $si-popover-bg: var(--popover-bg-color, variables.$popover-bg);
   }
 
   + .popover-body {
-    padding-block-start: map.get(spacers.$spacers, 4);
+    padding-block-start: map.get(spacers.$spacers-block, 4);
   }
 
   &:has(> .icon) {

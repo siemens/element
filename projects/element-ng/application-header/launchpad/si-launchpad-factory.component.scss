@@ -14,15 +14,15 @@
     100vb - variables.$si-application-header-height - variables.$si-titlebar-spacing -
       variables.$si-system-banner-spacing
   );
-  padding: map.get(variables.$spacers, 6);
+  padding: map.get(variables.$spacers-block, 6) map.get(variables.$spacers-inline, 6);
   display: flex;
   flex-direction: column;
   z-index: variables.$zindex-launchpad;
   background-color: variables.$si-sys-background-1;
 
   @include all-variables.media-breakpoint-up(lg) {
-    padding-block: map.get(variables.$spacers, 6);
-    padding-inline: map.get(variables.$spacers, 8);
+    padding-block: map.get(variables.$spacers-block, 6);
+    padding-inline: map.get(variables.$spacers-inline, 8);
   }
 }
 
@@ -35,16 +35,16 @@
 .apps-scroll {
   overflow-y: auto;
   // Prevent scrollbar from overlapping items on mobile
-  padding-inline-end: map.get(variables.$spacers, 6);
-  margin-inline-end: map.get(variables.$spacers, 6) * -1;
+  padding-inline-end: map.get(variables.$spacers-inline, 6);
+  margin-inline-end: map.get(variables.$negative-spacers-inline, 6);
 }
 
 .btn-show-all {
-  margin-block-start: map.get(variables.$spacers, 6);
-  margin-block-end: map.get(variables.$spacers, 4);
+  margin-block-start: map.get(variables.$spacers-block, 6);
+  margin-block-end: map.get(variables.$spacers-block, 4);
 
   &.show {
-    margin-block-end: map.get(variables.$spacers, 8);
+    margin-block-end: map.get(variables.$spacers-block, 8);
   }
 
   &.show:has(+ .all-apps > si-launchpad-category.has-title) {

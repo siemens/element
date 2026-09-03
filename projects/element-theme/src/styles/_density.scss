@@ -1,0 +1,144 @@
+@use 'selectors';
+@use 'variables/typography';
+
+@mixin define-spacer($spacer, $block-size, $inline-size) {
+  --si-sys-sizing-spacing-y-#{$spacer}: #{$block-size};
+  --si-sys-sizing-spacing-x-#{$spacer}: #{$inline-size};
+}
+
+@mixin define-font($name, $font-size, $line-height) {
+  --si-sys-typography-font-size-#{$name}: #{typography.px-to-rem($font-size)};
+  --si-sys-typography-line-height-#{$name}: #{typography.px-to-ratio($font-size, $line-height)};
+}
+
+@mixin define-sizing($name, $size) {
+  --si-sys-sizing-sizing-#{$name}: #{$size};
+}
+
+@mixin define-icon-size($name, $size) {
+  --si-sys-sizing-icon-#{$name}: #{typography.px-to-rem($size)};
+}
+
+#{selectors.$root} {
+  @include define-spacer(10, 2px, 2px);
+  @include define-spacer(20, 4px, 4px);
+  @include define-spacer(30, 6px, 6px);
+  @include define-spacer(40, 8px, 8px);
+  @include define-spacer(50, 12px, 12px);
+  @include define-spacer(60, 16px, 16px);
+  @include define-spacer(70, 20px, 20px);
+  @include define-spacer(80, 24px, 24px);
+  @include define-spacer(90, 32px, 32px);
+  @include define-spacer(100, 40px, 40px);
+  @include define-spacer(110, 48px, 48px);
+  @include define-spacer(120, 56px, 56px);
+  @include define-spacer(130, 64px, 64px);
+  @include define-spacer(140, 96px, 96px);
+
+  @include define-font(body-sm, 12px, 16px);
+  @include define-font(body, 14px, 16px);
+  @include define-font(body-lg, 16px, 20px);
+  @include define-font(body-paragraph, 14px, 20px);
+  @include define-font(h1, 28px, 36px);
+  @include define-font(h2, 24px, 32px);
+  @include define-font(h3, 20px, 24px);
+  @include define-font(h4, 16px, 20px);
+  @include define-font(h5, 14px, 20px);
+  @include define-font(h6, 12px, 16px);
+  @include define-font(display, 32px, 40px);
+  @include define-font(display-lg, 40px, 52px);
+  @include define-font(display-xl, 48px, 64px);
+  @include define-font(display-xxl, 58px, 72px);
+  @include define-font(code-sm, 12px, 16px);
+  @include define-font(code, 14px, 20px);
+  @include define-font(code-lg, 16px, 20px);
+
+  @include define-sizing(10, 2px);
+  @include define-sizing(20, 4px);
+  @include define-sizing(30, 8px);
+  @include define-sizing(40, 12px);
+  @include define-sizing(50, 16px);
+  @include define-sizing(60, 20px);
+  @include define-sizing(70, 24px);
+  @include define-sizing(80, 32px);
+  @include define-sizing(90, 40px);
+  @include define-sizing(100, 48px);
+  @include define-sizing(110, 64px);
+  @include define-sizing(120, 80px);
+  @include define-sizing(130, 96px);
+  @include define-sizing(140, 120px);
+  @include define-sizing(150, 160px);
+  @include define-sizing(160, 240px);
+  @include define-sizing(170, 320px);
+  @include define-sizing(180, 480px);
+  @include define-sizing(190, 600px);
+  @include define-sizing(200, 720px);
+
+  @include define-icon-size(sm, 16px);
+  @include define-icon-size(md, 20px);
+  @include define-icon-size(lg, 24px);
+  @include define-icon-size(xl, 32px);
+  @include define-icon-size(xxl, 48px);
+}
+
+.density-compact {
+  @include define-spacer(10, 2px, 2px);
+  @include define-spacer(20, 2px, 2px);
+  @include define-spacer(30, 4px, 4px);
+  @include define-spacer(40, 6px, 6px);
+  @include define-spacer(50, 8px, 8px);
+  @include define-spacer(60, 12px, 12px);
+  @include define-spacer(70, 16px, 16px);
+  @include define-spacer(80, 20px, 20px);
+  @include define-spacer(90, 24px, 24px);
+  @include define-spacer(100, 32px, 32px);
+  @include define-spacer(110, 40px, 40px);
+  @include define-spacer(120, 48px, 48px);
+  @include define-spacer(130, 64px, 64px);
+  @include define-spacer(140, 80px, 80px);
+
+  @include define-font(body-sm, 10px, 12px);
+  @include define-font(body, 12px, 14px);
+  @include define-font(body-lg, 14px, 16px);
+  @include define-font(body-paragraph, 12px, 16px);
+  @include define-font(h1, 24px, 28px);
+  @include define-font(h2, 20px, 24px);
+  @include define-font(h3, 16px, 18px);
+  @include define-font(h4, 14px, 16px);
+  @include define-font(h5, 14px, 16px);
+  @include define-font(h6, 12px, 16px);
+  @include define-font(display, 28px, 32px);
+  @include define-font(display-lg, 32px, 40px);
+  @include define-font(display-xl, 40px, 48px);
+  @include define-font(display-xxl, 48px, 56px);
+  @include define-font(code-sm, 12px, 16px);
+  @include define-font(code, 14px, 20px);
+  @include define-font(code-lg, 16px, 20px);
+
+  @include define-sizing(10, 2px);
+  @include define-sizing(20, 2px);
+  @include define-sizing(30, 4px);
+  @include define-sizing(40, 8px);
+  @include define-sizing(50, 12px);
+  @include define-sizing(60, 16px);
+  @include define-sizing(70, 20px);
+  @include define-sizing(80, 24px);
+  @include define-sizing(90, 32px);
+  @include define-sizing(100, 40px);
+  @include define-sizing(110, 48px);
+  @include define-sizing(120, 64px);
+  @include define-sizing(130, 80px);
+  @include define-sizing(140, 96px);
+  @include define-sizing(150, 120px);
+  @include define-sizing(160, 160px);
+  @include define-sizing(170, 240px);
+  @include define-sizing(180, 320px);
+  @include define-sizing(190, 480px);
+  @include define-sizing(200, 600px);
+
+  @include define-icon-size(sm, 12px);
+  @include define-icon-size(md, 16px);
+  @include define-icon-size(lg, 20px);
+  @include define-icon-size(xl, 24px);
+  @include define-icon-size(xxl, 32px);
+}

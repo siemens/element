@@ -5,8 +5,8 @@
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
-  margin-inline: -1 * map.get(variables.$spacers, 2);
-  margin-block-start: -1 * map.get(variables.$spacers, 2);
+  margin-inline: map.get(variables.$negative-spacers-inline, 2);
+  margin-block-start: map.get(variables.$negative-spacers-block, 2);
 }
 
 .list-group-item {
@@ -25,6 +25,6 @@
   justify-content: flex-end;
 
   > * {
-    margin-inline-start: map.get(variables.$spacers, 6);
+    margin-inline-start: map.get(variables.$spacers-inline, 6);
   }
 }

@@ -48,8 +48,8 @@
   }
 
   .header {
-    padding-block: map.get(variables.$spacers, 5);
-    padding-inline: map.get(variables.$spacers, 9);
+    padding-block: map.get(variables.$spacers-block, 5);
+    padding-inline: map.get(variables.$spacers-inline, 9);
     border-block-end: 1px solid variables.$si-sys-border-4;
 
     a {
@@ -59,7 +59,7 @@
   }
 
   .footer {
-    margin-block-start: map.get(variables.$spacers, 2);
+    margin-block-start: map.get(variables.$spacers-block, 2);
   }
 
   .calendar-table {

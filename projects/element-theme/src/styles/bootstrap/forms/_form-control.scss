@@ -1,6 +1,7 @@
 @use '../../variables/focus';
 @use '../../variables/system-tokens';
 @use '../../variables/spacers';
+@use '../../variables/sizing';
 @use '../../variables/utilities';
 @use '../../variables/si-vars';
 @use '../variables';
@@ -16,7 +17,7 @@
   // + 3px (min padding between input and first action or validation icon)
   --si-input-padding-inline-end: calc(
     var(--si-feedback-icon-size, 0px) + var(--si-action-icon-offset, 0px) +
-      #{map.get(spacers.$spacers, 2) - variables.$input-border-width}
+      #{map.get(spacers.$spacers-block, 2)} - #{variables.$input-border-width}
   );
   display: block;
   inline-size: 100%;
@@ -40,14 +41,15 @@
     calc((#{variables.$input-height-inner} - #{variables.$form-feedback-icon-size}) * 0.5);
   background-position-x: right
     calc(
-      #{map.get(spacers.$spacers, 2) - variables.$input-border-width} +
+      map.get(spacers.$spacers-block, 2) - variables.$input-border-width +
         var(--si-action-icon-offset, 0px)
     );
 
   @include utilities.rtl {
     background-position-x: left
       calc(
-        map.get(spacers.$spacers, 1) + var(--si-action-icon-offset, variables.$input-border-width)
+        map.get(spacers.$spacers-block, 1) +
+          var(--si-action-icon-offset, variables.$input-border-width)
       );
   }
 
@@ -61,7 +63,9 @@
   // form-control must not add extra `padding-inline-end` for it.
   &:has(.form-control-actions) {
     background-image: none;
-    --si-input-padding-inline-end: #{map.get(spacers.$spacers, 2) - variables.$input-border-width};
+    --si-input-padding-inline-end: calc(
+      #{map.get(spacers.$spacers-block, 2)} - #{variables.$input-border-width}
+    );
   }
 
   &:autofill {
@@ -117,10 +121,11 @@
 .form-control:not(textarea):not(select[multiple]) {
   // force height to fix line-height issue in firefox
   block-size: variables.$input-height;
+  min-block-size: map.get(sizing.$sizing, 80);
 }
 
 .addon-second-icon {
-  --input-addon-inset-end: #{map.get(spacers.$spacers, 9)};
+  --input-addon-inset-end: #{map.get(spacers.$spacers-block, 9)};
 }
 
 // Wrapper for trailing actions (buttons, icons, unit labels) inside
@@ -135,7 +140,7 @@
   display: inline-flex;
   align-items: center;
   block-size: variables.$input-height-inner;
-  padding-inline-start: map.get(spacers.$spacers, 1);
+  padding-inline-start: map.get(spacers.$spacers-inline, 1);
 }
 
 .form-control .form-control-actions::before {
@@ -143,13 +148,13 @@
   margin-block: auto;
   inline-size: variables.$form-feedback-icon-size;
   block-size: variables.$form-feedback-icon-size;
-  padding-inline-end: map.get(spacers.$spacers, 1);
+  padding-inline-end: map.get(spacers.$spacers-inline, 1);
   content: var(--si-feedback-icon, none);
 }
 
 .form-control + .form-control-actions {
   position: absolute;
-  inset-inline-end: map.get(spacers.$spacers, 2);
+  inset-inline-end: map.get(spacers.$spacers-inline, 2);
   inset-block-start: variables.$input-border-width;
   z-index: 2;
 }
@@ -187,15 +192,16 @@ select:is(.form-control, .form-select):not([multiple]) {
     // + spacer-1(between arrow and validation)
     right
       calc(
-        #{map.get(spacers.$spacers, 2) - variables.$input-border-width +
-          map.get(spacers.$spacers, 1)} + #{si-vars.$si-icon-font-size}
+        map.get(spacers.$spacers-block, 2) - variables.$input-border-width +
+          map.get(spacers.$spacers-block, 1) + si-vars.$si-icon-font-size
       )
       center,
-    right map.get(spacers.$spacers, 2) - variables.$input-border-width top 50%;
+    right calc(map.get(spacers.$spacers-block, 2) - variables.$input-border-width) top 50%;
   background-size: si-vars.$si-icon-font-size, variables.$form-feedback-icon-size;
 
   @include utilities.rtl {
-    background-position: left map.get(spacers.$spacers, 2) - variables.$input-border-width top 50%;
+    background-position: left
+      calc(map.get(spacers.$spacers-inline, 2) - variables.$input-border-width) top 50%;
   }
 
   .app--dark & {
@@ -211,7 +217,7 @@ select:is(.form-control, .form-select)[multiple] {
   padding: 0;
 
   option {
-    padding: map.get(spacers.$spacers, 4);
+    padding: map.get(spacers.$spacers-block, 4) map.get(spacers.$spacers-inline, 4);
   }
 
   option:checked,

@@ -2,10 +2,10 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 dt {
-  margin-block-start: map.get(variables.$spacers, 5);
+  margin-block-start: map.get(variables.$spacers-block, 5);
 }
 
 dd {
-  margin-block-start: map.get(variables.$spacers, 2);
+  margin-block-start: map.get(variables.$spacers-block, 2);
   margin-block-end: 0;
 }

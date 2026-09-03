@@ -74,8 +74,8 @@
   align-self: center;
 
   td {
-    padding-block: map.get(variables.$spacers, 4);
-    padding-inline: map.get(variables.$spacers, 4);
+    padding-block: map.get(variables.$spacers-block, 4);
+    padding-inline: map.get(variables.$spacers-inline, 4);
   }
 
   .value {
@@ -85,7 +85,7 @@
 
   .name {
     inline-size: 100%;
-    min-inline-size: map.get(variables.$spacers, 10);
+    min-inline-size: map.get(variables.$spacers-inline, 13);
     max-inline-size: 0;
   }
 

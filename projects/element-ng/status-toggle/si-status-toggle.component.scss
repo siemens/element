@@ -7,13 +7,14 @@
   border: 1px solid variables.$si-sys-border-4;
   border-radius: variables.$element-radius-2;
   background: variables.$si-sys-background-1;
-  padding: (map.get(variables.$spacers, 2) - 1px);
+  padding: calc(map.get(variables.$spacers-block, 2) - 1px)
+    calc(map.get(variables.$spacers-inline, 2) - 1px);
 }
 
 .status-toggle-container {
   position: relative;
   display: flex;
-  gap: map.get(variables.$spacers, 1);
+  gap: map.get(variables.$spacers-block, 1) map.get(variables.$spacers-inline, 1);
   inline-size: 100%;
   block-size: 100%;
   border-radius: variables.$element-radius-1;
@@ -41,7 +42,7 @@
   color: variables.$si-sys-text-secondary;
   border-radius: 1px;
   cursor: pointer;
-  padding-block: map.get(variables.$spacers, 1);
+  padding-block: map.get(variables.$spacers-block, 1);
 
   &.active {
     color: variables.$si-sys-text-primary !important; // stylelint-disable-line declaration-no-important

@@ -9,13 +9,13 @@
 // there's too many differences between what BS5 does and what the design system expects
 @use 'sass:map';
 
-$form-check-size: 1rem;
-$form-radio-size: 1rem;
-$form-radio-inner-size: 0.375rem;
+$form-check-size: max(1rem, 16px); // FIXME: ref value
+$form-radio-size: max(1rem, 16px); // FIXME: ref value
+$form-radio-inner-size: max(0.375rem, 6px); // FIXME: ref value
 $form-radio-offset: calc((#{$form-radio-size} - #{$form-radio-inner-size}) * 0.5 - 1px);
-$form-check-padding-x: map.get(spacers.$spacers, 2);
+$form-check-padding-x: map.get(spacers.$spacers-inline, 2);
 
-$form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
+$form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline, 4));
 
 %form-check-spacing {
   .form-check-input {
@@ -24,9 +24,9 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
 }
 
 .form-check {
-  padding-block: map.get(spacers.$spacers, 1);
-  padding-inline-start: calc($form-check-size + map.get(spacers.$spacers, 4));
-  margin-block-end: map.get(spacers.$spacers, 2);
+  padding-block: map.get(spacers.$spacers-block, 1);
+  padding-inline-start: calc($form-check-size + map.get(spacers.$spacers-inline, 4));
+  margin-block-end: map.get(spacers.$spacers-block, 2);
 
   @extend %form-check-spacing;
 
@@ -109,11 +109,11 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers, 4));
   &:indeterminate {
     &::after {
       mask-image: none;
-      inline-size: 0.625rem;
-      block-size: 0.125rem;
+      inline-size: calc($form-check-size * 0.625);
+      block-size: calc($form-check-size * 0.125);
       opacity: 1;
-      inset-inline-start: 0.125rem;
-      inset-block-start: 0.375rem;
+      inset-inline-start: calc($form-check-size * 0.125);
+      inset-block-start: calc($form-check-size * 0.375);
     }
   }
 }

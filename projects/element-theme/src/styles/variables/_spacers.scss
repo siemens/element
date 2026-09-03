@@ -1,28 +1,56 @@
-$spacer: 16px;
+@use 'sass:map';
 
-// stylelint-disable-next-line scss/dollar-variable-default
-$spacers: (
+$spacers-inline: (
   0: 0,
-  // 2px
-  1: $spacer * 0.125,
-  // 4px
-  2: $spacer * 0.25,
-  // 6px
-  3: $spacer * 0.375,
-  // 8px
-  4: $spacer * 0.5,
-  // 12px
-  5: $spacer * 0.75,
-  // 16px
-  6: $spacer,
-  // 20px
-  7: $spacer * 1.25,
-  // 24px
-  8: $spacer * 1.5,
-  // 32px
-  9: $spacer * 2,
-  // 64px
-  10: $spacer * 4,
-  // 96px
-  11: $spacer * 6
+  1: var(--si-sys-sizing-spacing-x-10),
+  2: var(--si-sys-sizing-spacing-x-20),
+  3: var(--si-sys-sizing-spacing-x-30),
+  4: var(--si-sys-sizing-spacing-x-40),
+  5: var(--si-sys-sizing-spacing-x-50),
+  6: var(--si-sys-sizing-spacing-x-60),
+  7: var(--si-sys-sizing-spacing-x-70),
+  8: var(--si-sys-sizing-spacing-x-80),
+  9: var(--si-sys-sizing-spacing-x-90),
+  10: var(--si-sys-sizing-spacing-x-100),
+  11: var(--si-sys-sizing-spacing-x-110),
+  12: var(--si-sys-sizing-spacing-x-120),
+  13: var(--si-sys-sizing-spacing-x-130),
+  14: var(--si-sys-sizing-spacing-x-140)
 );
+
+$spacers-block: (
+  0: 0,
+  1: var(--si-sys-sizing-spacing-y-10),
+  2: var(--si-sys-sizing-spacing-y-20),
+  3: var(--si-sys-sizing-spacing-y-30),
+  4: var(--si-sys-sizing-spacing-y-40),
+  5: var(--si-sys-sizing-spacing-y-50),
+  6: var(--si-sys-sizing-spacing-y-60),
+  7: var(--si-sys-sizing-spacing-y-70),
+  8: var(--si-sys-sizing-spacing-y-80),
+  9: var(--si-sys-sizing-spacing-y-90),
+  10: var(--si-sys-sizing-spacing-y-100),
+  11: var(--si-sys-sizing-spacing-y-110),
+  12: var(--si-sys-sizing-spacing-y-120),
+  13: var(--si-sys-sizing-spacing-y-130),
+  14: var(--si-sys-sizing-spacing-y-140)
+);
+
+@function negative-spacer-map($spacers) {
+  $negative-spacers: ();
+
+  @each $key, $spacer in $spacers {
+    @if $key != 0 {
+      $negative-spacers: map.set($negative-spacers, $key, calc(#{$spacer} * -1));
+    }
+  }
+
+  @return $negative-spacers;
+}
+
+$negative-spacers-inline: negative-spacer-map($spacers-inline);
+$negative-spacers-block: negative-spacer-map($spacers-block);
+
+// @deprecated: Those are for compatibility and will go away with v52
+$spacer: 16px;
+$spacers: $spacers-block;

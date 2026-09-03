@@ -3,7 +3,7 @@
   placement="start"
   [siTooltip]="hcollapsed() && heading() ? (heading()! | translate) : ''"
   [class]="`collapsible-header focus-inside ${headerCssClasses()}`"
-  [class.px-5]="hcollapsed()"
+  [class.px-4]="hcollapsed()"
   [class.px-6]="!hcollapsed()"
   [attr.tabindex]="disabled() ? '' : '0'"
   [id]="headerId"
@@ -20,7 +20,9 @@
   @if (headerIcon) {
     <si-icon
       class="icon"
-      [class.p-1]="hcollapsed()"
+      [class.ps-3]="hcollapsed()"
+      [class.pe-1]="hcollapsed()"
+      [class.py-1]="hcollapsed()"
       [class.pe-2]="!hcollapsed()"
       [icon]="headerIcon"
       [class.collapsed-icon]="isHCollapsible"

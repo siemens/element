@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
-$main-button-block-size: calc(1rem + 2 * map.get(variables.$spacers, 4));
+$main-button-block-size: calc(1rem + 2 * map.get(variables.$spacers-block, 4));
 $main-button-margin: 1px;
 
 :host {
@@ -63,20 +63,20 @@ $main-button-margin: 1px;
   .ol-zoom-extent {
     inset-inline-end: 0;
     inset-block-end: 0;
-    padding-inline-end: map.get(variables.$spacers, 4);
-    padding-block-end: map.get(variables.$spacers, 4);
+    padding-inline-end: map.get(variables.$spacers-inline, 4);
+    padding-block-end: map.get(variables.$spacers-block, 4);
   }
 
   .ol-zoom {
     padding-block-end: calc(
-      #{map.get(variables.$spacers, 4) + $main-button-margin} + #{$main-button-block-size}
+      map.get(variables.$spacers-block, 4) + $main-button-margin + $main-button-block-size
     );
   }
 
   .ol-attribution {
     inset-inline-start: 0;
     inset-block-end: 0;
-    padding: map.get(variables.$spacers, 4);
+    padding: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
 
     button {
       inline-size: 1.5rem;
@@ -88,9 +88,9 @@ $main-button-margin: 1px;
 
   .ol-full-screen {
     inset-block-end: calc(
-      #{map.get(variables.$spacers, 4) + 3 * $main-button-margin} + 3 * $main-button-block-size
+      map.get(variables.$spacers-block, 4) + 3 * $main-button-margin + 3 * $main-button-block-size
     );
-    inset-inline-end: map.get(variables.$spacers, 4);
+    inset-inline-end: map.get(variables.$spacers-inline, 4);
   }
 
   // needed for RTL

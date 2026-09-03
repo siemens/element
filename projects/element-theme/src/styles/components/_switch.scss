@@ -2,19 +2,19 @@
 
 @use 'sass:map';
 
-$si-switch-size: 1.25rem !default;
+$si-switch-size: max(1.25rem, 20px) !default;
 $si-switch-inline-size: calc(2 * #{$si-switch-size});
-$si-switch-inline-spacing: calc($si-switch-inline-size + map.get(variables.$spacers, 4));
+$si-switch-inline-spacing: calc($si-switch-inline-size + map.get(variables.$spacers-inline, 4));
 $si-switch-background-off-color: variables.$si-sys-background-1 !default;
 $si-switch-background-on-color: variables.$si-sys-background-accent !default;
-$si-switch-slider-margin: 0.25rem !default;
+$si-switch-slider-margin: calc($si-switch-size / 5);
 $si-switch-slider-on-color: variables.$si-sys-text-on-accent !default;
 $si-switch-transition-length: variables.element-transition-duration(0.4s) !default;
 
 $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin});
 
 .form-switch {
-  padding-block: map.get(variables.$spacers, 1);
+  padding-block: map.get(variables.$spacers-block, 1);
   padding-inline-start: $si-switch-inline-spacing;
 
   .form-check-input {

@@ -133,15 +133,15 @@
       // Gutters
       //
       // Make use of `.g-*`, `.gx-*` or `.gy-*` utilities to change spacing between the columns.
-      @each $key, $value in variables.$gutters {
+      @each $key, $block-value in variables.$gutters-block {
         .g#{$infix}-#{$key},
         .gx#{$infix}-#{$key} {
-          --#{variables.$variable-prefix}gutter-x: #{$value};
+          --#{variables.$variable-prefix}gutter-x: #{map.get(variables.$gutters-inline, $key)};
         }
 
         .g#{$infix}-#{$key},
         .gy#{$infix}-#{$key} {
-          --#{variables.$variable-prefix}gutter-y: #{$value};
+          --#{variables.$variable-prefix}gutter-y: #{$block-value};
         }
       }
     }

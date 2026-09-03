@@ -1,21 +1,27 @@
 @use 'sass:map';
 @use './spacers';
+@use './sizing';
 @use './animations';
 
 // Custom variables
 $si-caret-transition-duration: animations.element-transition-duration(0.4s);
-$si-icon-font-size: 1.25rem;
-$si-icon-font-size-sm: 1rem;
-$si-icon-font-size-lg: 1.5rem;
 
-$btn-width-normal: 80px;
+// Icon sizes
+$si-icon-font-size-sm: var(--si-sys-sizing-icon-sm);
+$si-icon-font-size-md: var(--si-sys-sizing-icon-md);
+$si-icon-font-size: $si-icon-font-size-md;
+$si-icon-font-size-lg: var(--si-sys-sizing-icon-lg);
+$si-icon-font-size-xl: var(--si-sys-sizing-icon-xl);
+$si-icon-font-size-xxl: var(--si-sys-sizing-icon-xxl);
+
+$btn-width-normal: map.get(sizing.$sizing, 120);
 
 // Component styling
 
-$si-application-header-height: calc(1.5rem + (2 * map.get(spacers.$spacers, 5) + 1px));
-$si-titlebar-padding-y: map.get(spacers.$spacers, 3);
+$si-application-header-height: calc(map.get(sizing.$sizing, 100) + 1px);
+$si-titlebar-padding-y: map.get(spacers.$spacers-block, 3);
 $si-titlebar-height: calc(1.5rem + 2 * $si-titlebar-padding-y);
-$si-system-banner-padding-y: map.get(spacers.$spacers, 1);
+$si-system-banner-padding-y: map.get(spacers.$spacers-block, 1);
 $si-system-banner-height: calc(1rem + 2 * $si-system-banner-padding-y);
 
 // allows adding a custom titlebar on top

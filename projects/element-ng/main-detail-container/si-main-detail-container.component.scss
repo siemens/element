@@ -15,7 +15,7 @@
 
       + {
         [slot='mainActions'] {
-          margin-inline-start: map.get(variables.$spacers, 5);
+          margin-inline-start: map.get(variables.$spacers-inline, 5);
         }
       }
     }
@@ -36,7 +36,7 @@
 
     .detail-heading {
       + [slot='detailActions'] {
-        margin-inline-start: map.get(variables.$spacers, 5);
+        margin-inline-start: map.get(variables.$spacers-inline, 5);
       }
     }
 
@@ -130,6 +130,6 @@
 
 .main-search-actions:not(:empty),
 .detail-heading-actions:not(:empty) {
-  min-block-size: calc(1lh + 2 * map.get(variables.$spacers, 4));
-  margin-block-end: map.get(variables.$spacers, 6);
+  min-block-size: calc(1lh + 2 * map.get(variables.$spacers-block, 4));
+  margin-block-end: map.get(variables.$spacers-block, 6);
 }
