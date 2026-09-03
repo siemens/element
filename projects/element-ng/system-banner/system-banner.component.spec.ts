@@ -2,11 +2,22 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { inputBinding, signal, WritableSignal } from '@angular/core';
+import { Component, inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ExtendedStatusType } from '@siemens/element-ng/common';
 
 import { SiSystemBannerComponent } from './system-banner.component';
+
+@Component({
+  imports: [SiSystemBannerComponent],
+  template: `
+    <si-system-banner>
+      <span>Update available</span>&nbsp;
+      <a href="https://element.siemens.io/">Learn more</a>
+    </si-system-banner>
+  `
+})
+class TestHostComponent {}
 
 describe('SiSystemBannerComponent', () => {
   let fixture: ComponentFixture<SiSystemBannerComponent>;
@@ -32,6 +43,16 @@ describe('SiSystemBannerComponent', () => {
     await fixture.whenStable();
 
     expect(element).toHaveTextContent('Test');
+  });
+
+  it('should display projected content instead of a message', async () => {
+    const hostFixture = TestBed.createComponent(TestHostComponent);
+    await hostFixture.whenStable();
+
+    const alert = hostFixture.nativeElement.querySelector('[role="alert"]');
+
+    expect(alert).toHaveTextContent(/Update available\s+Learn more/);
+    expect(alert.querySelector('a')).toHaveAttribute('href', 'https://element.siemens.io/');
   });
 
   it('should have default banner type', () => {
