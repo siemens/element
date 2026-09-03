@@ -483,7 +483,7 @@ describe('SiChatInputComponent', () => {
     disclaimer.set('This is a disclaimer');
     await fixture.whenStable();
 
-    const disclaimerElement = debugElement.query(By.css('.si-caption'));
+    const disclaimerElement = debugElement.query(By.css('.si-body-sm'));
     expect(disclaimerElement).toBeTruthy();
     expect(disclaimerElement.nativeElement).toHaveTextContent('This is a disclaimer');
   });

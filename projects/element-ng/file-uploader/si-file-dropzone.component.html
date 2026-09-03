@@ -5,7 +5,7 @@
   (dragover)="dragOverHandler($event)"
   (dragleave)="dragOver = false"
 >
-  <si-icon class="mb-6 si-display-bold" [icon]="icons.elementUpload" />
+  <si-icon class="mb-6 si-display-lg-sbold" [icon]="icons.elementUpload" />
   <span class="drag-and-drop-description si-h5 d-flex">
     <button type="button" class="select-file si-h5 mb-0" (click)="triggerFileSelect()">
       {{ uploadDropText() | translate }}
@@ -28,7 +28,7 @@
     />
   </span>
   @if (maxFileSize() || accept()) {
-    <div class="allowed si-caption mt-6 text-center">
+    <div class="allowed si-body-sm mt-6 text-center">
       @if (maxFileSize()) {
         {{ maxFileSizeText() | translate: { maxFileSize: maxFileSizeString() } }}
       }
