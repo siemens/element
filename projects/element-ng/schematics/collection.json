@@ -5,6 +5,11 @@
       "description": "A schematic to add the @siemens/element-ng to your project.",
       "factory": "./ng-add/index#ngAdd",
       "schema": "./ng-add/schema.json"
+    },
+    "migrate-tabs-legacy": {
+      "description": "Migrates legacy Element tabs to the current tabs API.",
+      "factory": "./migrate-tabs-legacy/index#migrateTabsLegacy",
+      "schema": "./migrate-tabs-legacy/schema.json"
     }
   }
 }

@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "migrateTabsLegacySchema",
+  "title": "Migrate legacy Element tabs to the current tabs API",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "Path to the directory where the migration should be applied.",
+      "format": "path",
+      "default": "/"
+    }
+  }
+}
