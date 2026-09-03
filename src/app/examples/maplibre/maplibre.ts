@@ -62,6 +62,7 @@ const buildPoint = (coordinates: number[], status: MarkerStatus): StatusPoint =>
     SiStatusMarkerComponent
   ],
   templateUrl: './maplibre.html',
+  styleUrl: './maplibre.scss',
   host: {
     class: 'h-100 d-flex flex-column p-5'
   }
@@ -80,6 +81,31 @@ export class SampleComponent {
     buildPoint([11.37774, 48.288848], 'caution'),
     buildPoint([11.52774, 48.280848], 'critical')
   ]);
+  protected readonly selectedPoint = signal<StatusPoint | undefined>(undefined);
+
+  private popupTrigger: HTMLButtonElement | undefined;
+
+  protected togglePopup(point: StatusPoint, trigger: HTMLButtonElement, event: MouseEvent): void {
+    event.stopPropagation();
+
+    if (this.selectedPoint() === point) {
+      this.closePopup();
+      return;
+    }
+
+    this.popupTrigger = trigger;
+    this.selectedPoint.set(point);
+  }
+
+  protected closePopup(event?: Event): void {
+    event?.stopPropagation();
+
+    const trigger = this.popupTrigger;
+    this.popupTrigger = undefined;
+    this.selectedPoint.set(undefined);
+
+    queueMicrotask(() => trigger?.focus());
+  }
 
   protected onError(event: ErrorEvent & EventData): void {
     if (event.error.message) {

@@ -19,20 +19,54 @@
       Only use this if you really need to use HTML/Angular component to render your symbol.
       These markers are slow compared to a Layer of symbol because they're not rendered using WebGL.
     -->
-    <mgl-marker #marker [feature]="point">
-      <si-status-marker [status]="point.properties.status" />
+    <mgl-marker [feature]="point">
+      <button
+        #markerButton
+        type="button"
+        class="marker-button"
+        aria-haspopup="dialog"
+        [ariaLabel]="`Show details for ${point.properties.name}, status ${point.properties.status}`"
+        [ariaExpanded]="selectedPoint() === point"
+        [attr.aria-controls]="selectedPoint() === point ? 'marker-details-dialog' : undefined"
+        (click)="togglePopup(point, markerButton, $event)"
+      >
+        <si-status-marker [status]="point.properties.status" />
+      </button>
     </mgl-marker>
-    <mgl-popup [marker]="marker">
-      <dl class="mb-0">
-        <dt>Name</dt>
-        <dd>{{ point.properties.name }}</dd>
-        <dt>Description</dt>
-        <dd>{{ point.properties.description }}</dd>
-        <dt>Status</dt>
-        <dd>{{ point.properties.status }}</dd>
-        <dt>Coordinates</dt>
-        <dd>{{ point.geometry.coordinates[0] }}, {{ point.geometry.coordinates[1] }}</dd>
-      </dl>
+  }
+  @if (selectedPoint(); as point) {
+    <mgl-popup
+      [feature]="point"
+      [closeButton]="false"
+      [focusAfterOpen]="true"
+      (popupClose)="closePopup()"
+    >
+      <div
+        id="marker-details-dialog"
+        role="dialog"
+        aria-labelledby="marker-details-title"
+        (keydown.escape)="closePopup($event)"
+      >
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <h2 id="marker-details-title" class="si-h5 mb-0">{{ point.properties.name }}</h2>
+          <button
+            type="button"
+            class="btn btn-icon btn-sm btn-tertiary-ghost element-cancel"
+            [attr.aria-label]="mapTranslations()['Popup.Close']"
+            (click)="closePopup($event)"
+          ></button>
+        </div>
+        <dl class="mb-0">
+          <dt>Name</dt>
+          <dd>{{ point.properties.name }}</dd>
+          <dt>Description</dt>
+          <dd>{{ point.properties.description }}</dd>
+          <dt>Status</dt>
+          <dd>{{ point.properties.status }}</dd>
+          <dt>Coordinates</dt>
+          <dd>{{ point.geometry.coordinates[0] }}, {{ point.geometry.coordinates[1] }}</dd>
+        </dl>
+      </div>
     </mgl-popup>
   }
 </mgl-map>
