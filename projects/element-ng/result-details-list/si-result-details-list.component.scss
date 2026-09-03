@@ -7,6 +7,7 @@ $si-result-details-list-timeline-width: 1px;
 si-loading-spinner {
   --loading-spinner-size: #{variables.$si-icon-font-size};
   --loading-spinner-color: #{variables.$si-sys-text-accent};
+  line-height: 0;
 }
 
 .result-description {
