@@ -16,9 +16,10 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
-import { firstValueFrom, Observable, of, zip } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, of, zip } from 'rxjs';
+import { page } from 'vitest/browser';
 
-import { TestingModule } from '../../../test/testing.module';
+import { createTestingWidget, TestingModule } from '../../../test/testing.module';
 import {
   provideDashboardToolbarItems,
   SI_DASHBOARD_CONFIGURATION
@@ -80,6 +81,7 @@ export class GridComponent {
   readonly gridConfig = input<GridConfig>();
   readonly dashboardId = input<string>();
   readonly widgetCatalog = input<Widget[]>([]);
+  readonly visibleWidgetInstances$ = new BehaviorSubject<WidgetConfig[]>([]);
   readonly hideProgressIndicator = input(false);
   readonly widgetInstanceEditorDialogComponent =
     input<Type<SiWidgetInstanceEditorDialogComponent>>();
@@ -174,6 +176,27 @@ describe('SiFlexibleDashboardComponent', () => {
       expect(widgetConfig).toBeDefined();
       expect(widgetConfig.widgetId).toEqual('widgetId');
       vi.useRealTimers();
+    });
+
+    it('should keep added widgets in the catalog by default', async () => {
+      fixture.componentRef.setInput('widgetCatalog', [createTestingWidget('First', 'first')]);
+      grid.visibleWidgetInstances$.next([{ id: 'instance-1', widgetId: 'first' }]);
+
+      component.showWidgetCatalog();
+      await fixture.whenStable();
+
+      expect(page.getByRole('option').elements()).toHaveLength(1);
+    });
+
+    it('should hide added widgets from the catalog when configured', async () => {
+      fixture.componentRef.setInput('widgetCatalog', [createTestingWidget('First', 'first')]);
+      fixture.componentRef.setInput('hideAddedWidgetsFromCatalog', true);
+      grid.visibleWidgetInstances$.next([{ id: 'instance-1', widgetId: 'first' }]);
+
+      component.showWidgetCatalog();
+      await fixture.whenStable();
+
+      expect(page.getByRole('option').elements()).toHaveLength(0);
     });
 
     it('addWidgetAction action shall call showWidgetCatalog()', () => {
