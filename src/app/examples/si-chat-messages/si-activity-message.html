@@ -1,0 +1,101 @@
+<div class="p-2">
+  <!-- separate independent traces by grouping inside a div or anything really -->
+  <div class="mb-4">
+    <si-activity-message heading="Analyzed the request" [icon]="icons.elementLightRgbBulb">
+      <si-markdown [markdown]="summary" />
+    </si-activity-message>
+    <si-activity-message state="running" heading="Searching additional sources">
+      <si-activity-message-part heading="Input" collapsible>
+        Search the operations report, maintenance history, and asset documentation for recent
+        service events, recurring issues, and changes in operating conditions.
+      </si-activity-message-part>
+      <si-activity-message-part heading="Output">
+        Reviewing service records and recent operational reports.
+      </si-activity-message-part>
+    </si-activity-message>
+    <si-activity-message state="failed" heading="Could not access maintenance history">
+      <si-activity-message-part heading="Input">
+        Maintenance history and operational reports
+      </si-activity-message-part>
+      <si-activity-message-part heading="Output">
+        The maintenance service did not respond. The remaining sources were analyzed successfully.
+      </si-activity-message-part>
+    </si-activity-message>
+    <si-activity-message heading="Activity without an icon">
+      <si-markdown [markdown]="summary" />
+    </si-activity-message>
+  </div>
+
+  <si-activity-trace heading="Follow-up analysis trace" class="mb-4">
+    <si-activity-message heading="Another request" [icon]="icons.elementLightRgbBulb">
+      <si-activity-message-part heading="Reasoning">
+        <si-markdown [markdown]="summary" />
+      </si-activity-message-part>
+
+      <si-activity-message-part heading="Sources" collapsible>
+        <ul class="mb-0">
+          <li>Operations report</li>
+          <li>Maintenance history</li>
+          <li>Asset documentation</li>
+        </ul>
+      </si-activity-message-part>
+    </si-activity-message>
+    <si-activity-message state="running" heading="Searching additional sources">
+      <si-activity-message-part heading="Input">
+        Operations report, maintenance history, and asset documentation
+      </si-activity-message-part>
+      <si-activity-message-part heading="Output">
+        Reviewing service records and recent operational reports.
+      </si-activity-message-part>
+    </si-activity-message>
+    <si-activity-message state="failed" heading="Could not access maintenance history">
+      <si-activity-message-part heading="Input">
+        Maintenance history and operational reports
+      </si-activity-message-part>
+      <si-activity-message-part heading="Output">
+        The maintenance service did not respond. The remaining sources were analyzed successfully.
+      </si-activity-message-part>
+    </si-activity-message>
+    <si-activity-message heading="Activity without an icon">
+      <si-markdown [markdown]="summary" />
+    </si-activity-message>
+  </si-activity-trace>
+
+  <si-activity-message heading="Nested activity messages" [icon]="icons.elementLightRgbBulb">
+    <si-activity-message heading="Another request" [icon]="icons.elementLightRgbBulb">
+      <si-activity-message-part heading="Reasoning">
+        <si-markdown [markdown]="summary" />
+      </si-activity-message-part>
+
+      <si-activity-message-part heading="Sources" collapsible>
+        <ul class="mb-0">
+          <li>Operations report</li>
+          <li>Maintenance history</li>
+          <li>Asset documentation</li>
+        </ul>
+      </si-activity-message-part>
+    </si-activity-message>
+    <si-activity-message state="running" heading="Searching additional sources">
+      <si-activity-message-part heading="Input">
+        Operations report, maintenance history, and asset documentation
+      </si-activity-message-part>
+      <si-activity-message-part heading="Output">
+        Reviewing service records and recent operational reports.
+      </si-activity-message-part>
+    </si-activity-message>
+    <si-activity-message state="failed" heading="Could not access maintenance history">
+      <si-activity-message-part heading="Input">
+        Maintenance history and operational reports
+      </si-activity-message-part>
+      <si-activity-message-part heading="Output">
+        The maintenance service did not respond. The remaining sources were analyzed successfully.
+      </si-activity-message-part>
+    </si-activity-message>
+    <si-activity-message heading="Activity without an icon">
+      <si-markdown [markdown]="summary" />
+    </si-activity-message>
+  </si-activity-message>
+  <si-activity-message heading="Processing document" [icon]="icons.elementDocument">
+    Document processed.
+  </si-activity-message>
+</div>

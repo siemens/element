@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 export * from './si-ai-message.component';
+export * from './si-activity-message.component';
+export * from './si-activity-message-part.component';
+export * from './si-activity-trace.component';
 export * from './si-attachment-list.component';
 export * from './si-chat-container.component';
 export * from './si-chat-container-input.directive';

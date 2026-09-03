@@ -1,0 +1,36 @@
+<button
+  type="button"
+  class="activity-toggle"
+  [attr.aria-expanded]="expanded()"
+  (click)="expanded.update(value => !value)"
+>
+  <span class="activity-marker">
+    @switch (state()) {
+      @case ('running') {
+        <si-loading-spinner class="activity-icon" />
+      }
+      @case ('failed') {
+        <si-icon class="activity-icon" [icon]="icons.elementIssue" />
+      }
+      @default {
+        <si-icon
+          class="activity-icon"
+          [class.default-icon]="!icon()"
+          [icon]="icon() ?? icons.elementCircleFilled"
+        />
+      }
+    }
+    <si-icon class="disclosure-icon" [class.expanded]="expanded()" [icon]="icons.elementRight2" />
+  </span>
+  <span class="activity-heading">{{ heading() | translate }}</span>
+</button>
+
+@if (expanded()) {
+  <div class="content-motion" animate.enter="content-enter" animate.leave="content-leave">
+    <div class="overflow-hidden">
+      <div class="activity-content">
+        <ng-content />
+      </div>
+    </div>
+  </div>
+}

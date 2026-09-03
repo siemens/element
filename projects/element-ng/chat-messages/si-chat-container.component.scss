@@ -4,6 +4,12 @@
 
 $container-max-inline-size: 720px;
 
+$gap-block: calc(map.get(variables.$spacers-block, 9) + map.get(variables.$spacers-block, 4));
+$gap-block-neg: calc(
+  -1 * (map.get(variables.$spacers-block, 9) + map.get(variables.$spacers-block, 4))
+);
+$gap-inline: calc(map.get(variables.$spacers-inline, 9) + map.get(variables.$spacers-inline, 4));
+
 :host {
   overflow-y: hidden;
   overflow-x: visible;
@@ -48,14 +54,12 @@ $container-max-inline-size: 720px;
   padding-inline: map.get(variables.$spacers-inline, 4);
   // Ensure the messages can still be seen on very short screens
   min-block-size: 5rem;
-  gap: calc(map.get(variables.$spacers-block, 9) + map.get(variables.$spacers-block, 4))
-    calc(map.get(variables.$spacers-inline, 9) + map.get(variables.$spacers-inline, 4));
+  gap: $gap-block $gap-inline;
 
   // Padding is included here, cancel out the gap on the messages container
-  ::ng-deep si-user-message:not(.last) {
-    margin-block-end: calc(
-      map.get(variables.$negative-spacers-block, 9) + map.get(variables.$negative-spacers-block, 4)
-    );
+  ::ng-deep si-user-message:not(.last),
+  > ::ng-deep si-activity-message:has(+ si-activity-message) {
+    margin-block-end: $gap-block-neg;
   }
 
   ::ng-deep &:not(:has(si-ai-welcome-screen)) {

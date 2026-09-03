@@ -40,6 +40,48 @@
           }
         </si-chat-message>
       }
+      @if (message.type === 'activity') {
+        <si-activity-message
+          [heading]="message.heading"
+          [icon]="message.icon"
+          [state]="message.state"
+        >
+          @if (message.content) {
+            <si-markdown [markdown]="message.content" [options]="markdownOptions" />
+          }
+          @for (part of message.parts ?? []; track part) {
+            <si-activity-message-part
+              [heading]="part.heading"
+              [collapsible]="part.collapsible ?? false"
+            >
+              <si-markdown [markdown]="part.content" [options]="markdownOptions" />
+            </si-activity-message-part>
+          }
+        </si-activity-message>
+      }
+      @if (message.type === 'activity-trace') {
+        <si-activity-trace [heading]="message.heading">
+          @for (activity of message.messages; track activity) {
+            <si-activity-message
+              [heading]="activity.heading"
+              [icon]="activity.icon"
+              [state]="activity.state"
+            >
+              @if (activity.content) {
+                <si-markdown [markdown]="activity.content" [options]="markdownOptions" />
+              }
+              @for (part of activity.parts ?? []; track part) {
+                <si-activity-message-part
+                  [heading]="part.heading"
+                  [collapsible]="part.collapsible ?? false"
+                >
+                  <si-markdown [markdown]="part.content" [options]="markdownOptions" />
+                </si-activity-message-part>
+              }
+            </si-activity-message>
+          }
+        </si-activity-trace>
+      }
     } @empty {
       <si-ai-welcome-screen
         [categories]="promptCategories"

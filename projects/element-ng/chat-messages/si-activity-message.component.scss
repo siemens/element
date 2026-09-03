@@ -1,0 +1,123 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+$marker-size: variables.$si-icon-font-size-sm;
+$marker-center: calc($marker-size / 2);
+$heading-height: calc($marker-size + 2 * map.get(variables.$spacers, 2));
+$line-marker-spacing: map.get(variables.$spacers, 2);
+$message-spacing: map.get(variables.$spacers-block, 2);
+
+:host {
+  position: relative;
+  display: block;
+  color: variables.$si-sys-text-secondary;
+  padding-block: map.get(variables.$spacers-block, 2);
+
+  &.failed {
+    color: variables.$si-sys-text-danger;
+  }
+
+  si-activity-message ~ & {
+    margin-block-start: $message-spacing;
+
+    &::before {
+      position: absolute;
+      content: '';
+      z-index: 0;
+      block-size: calc(
+        $message-spacing + map.get(variables.$spacers-block, 2) + $line-marker-spacing
+      );
+      inset-block-end: calc(100% - $line-marker-spacing);
+      inset-inline-start: $marker-center;
+      border-inline-start: 1px solid variables.$si-sys-border-3;
+    }
+  }
+}
+
+.activity-toggle {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: map.get(variables.$spacers-inline, 3);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  text-align: start;
+
+  &:is(:hover, :focus-visible) {
+    .activity-icon {
+      display: none;
+    }
+
+    .disclosure-icon {
+      display: inline-flex;
+    }
+  }
+}
+
+.activity-marker {
+  --loading-spinner-size: #{$marker-size};
+
+  display: inline-flex;
+  flex: 0 0 $marker-size;
+  align-items: center;
+  justify-content: center;
+  inline-size: $marker-size;
+  block-size: $marker-size;
+}
+
+.activity-icon,
+.disclosure-icon {
+  font-size: $marker-size;
+}
+
+.activity-heading {
+  display: flex;
+  align-items: center;
+  min-block-size: $heading-height;
+}
+
+.default-icon {
+  font-size: 6px;
+}
+
+.disclosure-icon {
+  display: none;
+  transition: transform variables.$element-default-transition-duration;
+
+  &.expanded {
+    transform: rotate(90deg);
+  }
+}
+
+.content-motion {
+  display: grid;
+  grid-template-rows: 1fr;
+  margin-inline-start: $marker-center;
+  padding-inline-start: calc($marker-center + map.get(variables.$spacers-inline, 3));
+  border-inline-start: 1px solid variables.$si-sys-border-3;
+
+  &:is(.content-enter, .content-leave) {
+    transition: grid-template-rows variables.$element-default-transition-duration;
+  }
+
+  &.content-enter {
+    @starting-style {
+      grid-template-rows: 0fr;
+    }
+  }
+
+  &.content-leave {
+    grid-template-rows: 0fr;
+  }
+}
+
+.activity-content {
+  overflow: hidden;
+  padding-block-start: map.get(variables.$spacers-block, 4);
+}

@@ -1,0 +1,30 @@
+@if (collapsible()) {
+  <button
+    type="button"
+    class="section-heading section-toggle"
+    [attr.aria-expanded]="expanded()"
+    (click)="expanded.update(value => !value)"
+  >
+    <si-icon
+      class="section-icon disclosure-icon"
+      [class.expanded]="expanded()"
+      [icon]="icons.elementRight2"
+    />
+    <span>{{ heading() | translate }}</span>
+  </button>
+} @else {
+  <div class="section-heading">
+    <si-icon class="section-icon default-icon" [icon]="icons.elementCircleFilled" />
+    <span>{{ heading() | translate }}</span>
+  </div>
+}
+
+@if (!collapsible() || expanded()) {
+  <div class="content-motion" animate.enter="content-enter" animate.leave="content-leave">
+    <div class="overflow-hidden">
+      <div class="section-content">
+        <ng-content />
+      </div>
+    </div>
+  </div>
+}
