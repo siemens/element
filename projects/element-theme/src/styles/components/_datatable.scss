@@ -28,7 +28,7 @@ $datatable-ghost-cell-strip-background: system-tokens.$si-sys-background-hover !
 $datatable-ghost-cell-strip-background-image: linear-gradient(
   90deg,
   system-tokens.$si-sys-background-hover 0%,
-  system-tokens.$si-sys-background-selected 25%,
+  system-tokens.$si-sys-background-active 25%,
   system-tokens.$si-sys-background-hover 50%
 ) !default;
 $datatable-ghost-cell-strip-radius: 0 !default;

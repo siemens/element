@@ -108,7 +108,7 @@ export const elementColorScheme: Part = createPart({
     },
     rowHoverColor: 'var(--si-sys-background-hover)',
     rowLoadingSkeletonEffectColor: 'var(--si-sys-background-1)',
-    selectedRowBackgroundColor: 'var(--si-sys-background-selected)',
+    selectedRowBackgroundColor: 'var(--si-sys-background-active)',
 
     // Dialog and footer styles
     footerRowBorder: {
@@ -166,7 +166,7 @@ export const elementColorScheme: Part = createPart({
     inputTextColor: 'var(--si-sys-text-primary)',
 
     // Icon styles
-    iconButtonActiveBackgroundColor: 'var(--si-sys-background-selected)',
+    iconButtonActiveBackgroundColor: 'var(--si-sys-background-active)',
     iconButtonActiveColor: 'var(--si-sys-background-accent-hover)',
     iconButtonActiveIndicatorColor: 'var(--si-sys-background-accent-hover)',
     iconButtonBackgroundColor: 'var(--si-sys-background-accent-secondary)',
@@ -183,10 +183,10 @@ export const elementColorScheme: Part = createPart({
 
     // Pinning styles
     pinnedColumnBorder: {
-      color: 'var(--si-sys-background-selected)'
+      color: 'var(--si-sys-background-active)'
     },
     pinnedRowBorder: {
-      color: 'var(--si-sys-background-selected)'
+      color: 'var(--si-sys-background-active)'
     },
 
     // Drag and drop styles
@@ -197,9 +197,9 @@ export const elementColorScheme: Part = createPart({
 
     // Range selection styles
     rangeHeaderHighlightColor: 'var(--si-sys-background-1)',
-    rangeSelectionBackgroundColor: 'var(--si-sys-background-selected)',
+    rangeSelectionBackgroundColor: 'var(--si-sys-background-active)',
     rangeSelectionBorderColor: 'var(--si-sys-background-accent-hover)',
-    rangeSelectionHighlightColor: 'var(--si-sys-background-selected)',
+    rangeSelectionHighlightColor: 'var(--si-sys-background-active)',
 
     // Sidebar styles
     sideBarBackgroundColor: 'var(--si-sys-background-1)',
@@ -211,9 +211,9 @@ export const elementColorScheme: Part = createPart({
     sideButtonBackgroundColor: 'var(--si-sys-background-accent-secondary)',
     sideButtonBarBackgroundColor: 'var(--si-sys-background-1)',
     sideButtonHoverBackgroundColor: 'var(--si-sys-background-hover)',
-    sideButtonSelectedBackgroundColor: 'var(--si-sys-background-selected)',
+    sideButtonSelectedBackgroundColor: 'var(--si-sys-background-active)',
     sideButtonSelectedBorder: 'var(--si-sys-border-accent)',
-    sideButtonSelectedUnderlineColor: 'var(--si-sys-background-selected)',
+    sideButtonSelectedUnderlineColor: 'var(--si-sys-background-active)',
 
     // Status bar styles
     statusBarLabelColor: 'var(--si-sys-text-primary)',
@@ -235,7 +235,7 @@ export const elementColorScheme: Part = createPart({
     // Value change styles
     valueChangeDeltaDownColor: 'var(--si-sys-background-danger)',
     valueChangeDeltaUpColor: 'var(--si-sys-background-success)',
-    valueChangeValueHighlightBackgroundColor: 'var(--si-sys-background-selected)',
+    valueChangeValueHighlightBackgroundColor: 'var(--si-sys-background-active)',
 
     // Tooltip styles
     tooltipBackgroundColor: 'var(--si-sys-background-inverse)',

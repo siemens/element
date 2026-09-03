@@ -10,7 +10,7 @@ export interface MicrochartProgressSeries {
   /**
    * Use a data-color. See: {@link https://element.siemens.io/fundamentals/colors/data-visualization-colors/#tokens}
    *
-   * @example "si-sys-data-categorial-10"
+   * @example "si-sys-data-categorical-10"
    */
   colorToken: string;
 }
@@ -33,7 +33,7 @@ export class SiMicrochartProgressComponent {
    * Example series can be:
    * @example
    * ```ts
-   * Series: MicrochartProgressSeries = { valuePercent: 80, colorToken: 'si-sys-data-categorial-7' };
+   * Series: MicrochartProgressSeries = { valuePercent: 80, colorToken: 'si-sys-data-categorical-7' };
    * ```
    */
   readonly series = input.required<MicrochartProgressSeries>();

@@ -43,8 +43,8 @@ describe('SiMapComponent', () => {
     document.documentElement.style.setProperty('--si-sys-data-sequential-red-2', '#D8371C');
     document.documentElement.style.setProperty('--si-sys-data-sequential-orange-4', '#FF7F00');
     document.documentElement.style.setProperty('--si-sys-data-sequential-green-2', '#00A04B');
-    document.documentElement.style.setProperty('--si-sys-data-categorial-1', '#007C7C');
-    document.documentElement.style.setProperty('--si-sys-data-categorial-17', '#004A87');
+    document.documentElement.style.setProperty('--si-sys-data-categorical-1', '#007C7C');
+    document.documentElement.style.setProperty('--si-sys-data-categorical-17', '#004A87');
   });
 
   beforeEach(() => {

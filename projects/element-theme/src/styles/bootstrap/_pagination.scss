@@ -32,7 +32,7 @@ $page-button-size: 1.5rem;
   border: 0;
 
   &:is(.active, :hover:not(:disabled)):not(.separator) {
-    background: system-tokens.$si-sys-background-selected;
+    background: system-tokens.$si-sys-background-active;
   }
 
   &:has(.icon) {

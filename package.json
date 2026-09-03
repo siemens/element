@@ -184,8 +184,8 @@
     "vitest": "4.1.11"
   },
   "optionalDependencies": {
-    "@siemens-ux/design-tokens": "1.0.0-rc.2",
-    "@simpl/brand": "4.0.0-rc.1",
+    "@siemens-ux/design-tokens": "1.0.0-rc.4",
+    "@simpl/brand": "4.0.0-rc.2",
     "@simpl/docs-composer": "12.0.2"
   }
 }

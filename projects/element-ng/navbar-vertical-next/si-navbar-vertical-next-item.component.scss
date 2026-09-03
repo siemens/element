@@ -43,7 +43,7 @@
 
   &.active {
     color: variables.$si-sys-text-accent-active;
-    background: variables.$si-sys-background-selected;
+    background: variables.$si-sys-background-active;
 
     &::after {
       content: '';

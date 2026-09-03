@@ -82,7 +82,9 @@ describe('SiAvatarComponent', () => {
     color.set(14);
     await fixture.whenStable();
 
-    expect(element.style.getPropertyValue('--background')).toBe('var(--si-sys-data-categorial-14)');
+    expect(element.style.getPropertyValue('--background')).toBe(
+      'var(--si-sys-data-categorical-14)'
+    );
   });
 
   it('should wrap data colors', async () => {
@@ -90,7 +92,7 @@ describe('SiAvatarComponent', () => {
     color.set(21);
     await fixture.whenStable();
 
-    expect(element.style.getPropertyValue('--background')).toBe('var(--si-sys-data-categorial-4)');
+    expect(element.style.getPropertyValue('--background')).toBe('var(--si-sys-data-categorical-4)');
   });
 
   it('should set color automatically', async () => {
@@ -98,12 +100,14 @@ describe('SiAvatarComponent', () => {
     autoColor.set(true);
     await fixture.whenStable();
 
-    expect(element.style.getPropertyValue('--background')).toBe('var(--si-sys-data-categorial-4)');
+    expect(element.style.getPropertyValue('--background')).toBe('var(--si-sys-data-categorical-4)');
 
     initials.set('DJ');
     await fixture.whenStable();
 
-    expect(element.style.getPropertyValue('--background')).toBe('var(--si-sys-data-categorial-10)');
+    expect(element.style.getPropertyValue('--background')).toBe(
+      'var(--si-sys-data-categorical-10)'
+    );
   });
 
   describe('auto-calculated initials', () => {

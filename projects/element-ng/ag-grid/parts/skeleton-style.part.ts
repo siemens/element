@@ -24,7 +24,7 @@ export const elementSkeletonStyle: Part = createPart({
       background: linear-gradient(
         90deg,
         var(--si-sys-background-hover) 0%,
-        var(--si-sys-background-selected) 25%,
+        var(--si-sys-background-active) 25%,
         var(--si-sys-background-hover) 50%
       );
       background-size: 200% 100%;
