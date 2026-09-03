@@ -22,7 +22,7 @@
   }
 
   &[aria-expanded='true'] {
-    background: variables.$si-sys-background-selected;
+    background: variables.$si-sys-background-active;
   }
 }
 

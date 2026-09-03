@@ -34,7 +34,7 @@ export class SampleComponent {
   showSegments = true;
 
   series: GaugeSeries[] = [
-    { name: 'Series 1', value: 350, colorToken: 'si-sys-data-categorial-5' }
+    { name: 'Series 1', value: 350, colorToken: 'si-sys-data-categorical-5' }
   ];
 
   setValues(val1: number): void {

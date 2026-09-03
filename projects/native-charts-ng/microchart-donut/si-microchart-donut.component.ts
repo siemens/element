@@ -14,7 +14,7 @@ export interface MicrochartDonutSeries {
   /**
    * Use a data-color. See: {@link https://element.siemens.io/fundamentals/colors/data-visualization-colors/#tokens}
    *
-   * @example "si-sys-data-categorial-10"
+   * @example "si-sys-data-categorical-10"
    */
   colorToken: string;
   /** ID exposed as `data-id` */
@@ -40,7 +40,7 @@ export class SiMicrochartDonutComponent {
    * Example series can be:
    * @example
    * ```ts
-   * Series: MicrochartDonutSeries[] = [{ valuePercent: 40, colorToken: 'si-sys-data-categorial-4' }];
+   * Series: MicrochartDonutSeries[] = [{ valuePercent: 40, colorToken: 'si-sys-data-categorical-4' }];
    * ```
    * @defaultValue []
    */

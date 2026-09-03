@@ -38,8 +38,8 @@ export const themeElement = {
           getProp(style, '--si-sys-background-caution'),
           getProp(style, '--si-sys-data-sequential-green-2'),
           getProp(style, '--si-sys-background-information'),
-          getProp(style, '--si-sys-data-categorial-1'),
-          getProp(style, '--si-sys-data-categorial-17')
+          getProp(style, '--si-sys-data-categorical-1'),
+          getProp(style, '--si-sys-data-categorical-17')
         ]
       } as ColorPalettes
     };

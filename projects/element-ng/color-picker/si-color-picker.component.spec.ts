@@ -14,7 +14,7 @@ import { SiColorPickerComponent as TestComponent } from './index';
 })
 class FormHostComponent {
   readonly colorPickerComp = viewChild.required(TestComponent);
-  colorPickerControl = new FormControl('si-sys-data-categorial-2');
+  colorPickerControl = new FormControl('si-sys-data-categorical-2');
 }
 
 describe('SiColorPickerComponent', () => {
@@ -26,7 +26,7 @@ describe('SiColorPickerComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TestComponent);
       componentRef = fixture.componentRef;
-      componentRef.setInput('color', 'si-sys-data-categorial-2');
+      componentRef.setInput('color', 'si-sys-data-categorical-2');
       element = fixture.nativeElement.querySelector('.input-color-box');
     });
 
@@ -36,13 +36,13 @@ describe('SiColorPickerComponent', () => {
 
     it('should use color as aria-label when ariaLabel input is not set', async () => {
       await fixture.whenStable();
-      expect(element.getAttribute('aria-label')).toBe('Selected color si-sys-data-categorial-2');
+      expect(element.getAttribute('aria-label')).toBe('Selected color si-sys-data-categorical-2');
     });
 
     it('should use translated ariaLabel with color param when ariaLabel is set', async () => {
       componentRef.setInput('ariaLabel', 'Color picker {{color}}');
       await fixture.whenStable();
-      expect(element.getAttribute('aria-label')).toBe('Color picker si-sys-data-categorial-2');
+      expect(element.getAttribute('aria-label')).toBe('Color picker si-sys-data-categorical-2');
     });
 
     it('should open color palette', () => {
@@ -76,7 +76,7 @@ describe('SiColorPickerComponent', () => {
       const firstColorBox = colorBoxes![0] as HTMLElement;
       firstColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
       fixture.detectChanges();
-      expect(changedColor).toEqual('si-sys-data-categorial-1');
+      expect(changedColor).toEqual('si-sys-data-categorical-1');
 
       // Traverse to the last when the at the edge
       const lastColorBox = colorBoxes![15] as HTMLElement;
@@ -84,7 +84,7 @@ describe('SiColorPickerComponent', () => {
       expect(document.activeElement).toBe(lastColorBox);
       lastColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
       fixture.detectChanges();
-      expect(changedColor).toEqual('si-sys-data-categorial-16');
+      expect(changedColor).toEqual('si-sys-data-categorical-16');
 
       // Traverse to the first when the at the edge
       lastColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
@@ -97,7 +97,7 @@ describe('SiColorPickerComponent', () => {
       expect(document.activeElement).toBe(fifthColorBox);
       fifthColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
       fixture.detectChanges();
-      expect(changedColor).toEqual('si-sys-data-categorial-5');
+      expect(changedColor).toEqual('si-sys-data-categorical-5');
 
       // Check if arrow up works
       fifthColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
@@ -119,7 +119,7 @@ describe('SiColorPickerComponent', () => {
       firstColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
       fixture.detectChanges();
 
-      expect(changedColor).toEqual('si-sys-data-categorial-1');
+      expect(changedColor).toEqual('si-sys-data-categorical-1');
       const overlay = document.querySelector('.colors');
       expect(overlay).toBeNull();
     });
@@ -151,7 +151,7 @@ describe('SiColorPickerComponent', () => {
       const fourthColorBox = colorBoxes![3] as HTMLElement;
       fourthColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
       fixture.detectChanges();
-      expect(host.colorPickerControl.value).toBe('si-sys-data-categorial-4');
+      expect(host.colorPickerControl.value).toBe('si-sys-data-categorical-4');
 
       element.dispatchEvent(new Event('blur'));
       fixture.detectChanges();
@@ -160,9 +160,9 @@ describe('SiColorPickerComponent', () => {
 
     it('should read and write the form value', () => {
       fixture.detectChanges();
-      host.colorPickerControl.setValue('si-sys-data-categorial-5');
+      host.colorPickerControl.setValue('si-sys-data-categorical-5');
       fixture.detectChanges();
-      expect(host.colorPickerComp().color()).toBe('si-sys-data-categorial-5');
+      expect(host.colorPickerComp().color()).toBe('si-sys-data-categorical-5');
 
       fixture.detectChanges();
       element.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
@@ -172,7 +172,7 @@ describe('SiColorPickerComponent', () => {
       const fourthColorBox = colorBoxes![6] as HTMLElement;
       fourthColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
       fixture.detectChanges();
-      expect(host.colorPickerControl.value).toBe('si-sys-data-categorial-7');
+      expect(host.colorPickerControl.value).toBe('si-sys-data-categorical-7');
     });
   });
 });

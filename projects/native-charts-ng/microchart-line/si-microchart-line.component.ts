@@ -11,7 +11,7 @@ export interface MicrochartLineSeries {
   /**
    * Use a data-color. See: {@link https://element.siemens.io/fundamentals/colors/data-visualization-colors/#tokens}
    *
-   * @example "si-sys-data-categorial-10"
+   * @example "si-sys-data-categorical-10"
    */
   colorToken: string;
 }
@@ -26,7 +26,7 @@ export class SiMicrochartLineComponent {
    * Example series can be:
    * @example
    * ```ts
-   * Series: MicrochartLineSeries = { values: [2, 3, 6, 5, 4, 7, 8], colorToken: 'si-sys-data-categorial-10' };
+   * Series: MicrochartLineSeries = { values: [2, 3, 6, 5, 4, 7, 8], colorToken: 'si-sys-data-categorical-10' };
    * ```
    */
   readonly series = input.required<MicrochartLineSeries>();
@@ -65,7 +65,7 @@ export class SiMicrochartLineComponent {
    * Marker color token. If not provided, uses the series color token.
    * Use a data-color. See: {@link https://element.siemens.io/fundamentals/colors/data-visualization-colors/#tokens}
    *
-   * @example "si-sys-data-categorial-2"
+   * @example "si-sys-data-categorical-2"
    */
   readonly markerColor = input<string>();
 

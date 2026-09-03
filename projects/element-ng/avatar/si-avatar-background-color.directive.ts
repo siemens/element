@@ -27,7 +27,7 @@ const ASCII_CODE_INDEX_A = 64;
 })
 export class SiAvatarBackgroundColorDirective implements OnChanges {
   /**
-   * The desired color index from $si-sys-data-categorial-* color tokens. This can be set to any kind of
+   * The desired color index from $si-sys-data-categorical-* color tokens. This can be set to any kind of
    * positive integer that is then mapped to a color index.
    * A better way to set a pseudo-random color is to set {@link autoColor} to `true`.
    *
@@ -44,7 +44,7 @@ export class SiAvatarBackgroundColorDirective implements OnChanges {
   readonly autoColor = input(false, { transform: booleanAttribute });
 
   protected readonly backgroundStyle = signal<string | undefined>(
-    'var(--si-sys-data-categorial-17)'
+    'var(--si-sys-data-categorical-17)'
   );
 
   ngOnChanges(changes: SimpleChanges<this>): void {
@@ -75,7 +75,7 @@ export class SiAvatarBackgroundColorDirective implements OnChanges {
     } else {
       const actualColor = color ?? DATA_COLOR_NEUTRAL;
       const colorIndex = ((actualColor - 1) % DATA_COLORS_MAX) + 1;
-      this.backgroundStyle.set(`var(--si-sys-data-categorial-${colorIndex})`);
+      this.backgroundStyle.set(`var(--si-sys-data-categorical-${colorIndex})`);
     }
   }
 }

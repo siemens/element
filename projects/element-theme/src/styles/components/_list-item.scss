@@ -168,7 +168,7 @@ ol:has(.list-item) {
     }
 
     &:active {
-      background-color: variables.$si-sys-background-selected;
+      background-color: variables.$si-sys-background-active;
     }
 
     &:focus-visible {

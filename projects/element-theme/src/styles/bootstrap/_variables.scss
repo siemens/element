@@ -265,7 +265,7 @@ $table-striped-color: $table-color !default;
 $table-striped-bg: system-tokens.$si-sys-background-0 !default;
 
 $table-active-color: $table-color !default;
-$table-active-bg: system-tokens.$si-sys-background-selected !default;
+$table-active-bg: system-tokens.$si-sys-background-active !default;
 
 $table-hover-color: $table-color !default;
 $table-hover-bg: system-tokens.$si-sys-background-hover !default;
@@ -622,7 +622,7 @@ $list-group-item-padding-x: map.get(spacers.$spacers-inline, 6) !default; // 1.2
 
 $list-group-hover-bg: system-tokens.$si-sys-background-hover !default;
 $list-group-active-color: $body-color !default;
-$list-group-active-bg: system-tokens.$si-sys-background-selected !default;
+$list-group-active-bg: system-tokens.$si-sys-background-active !default;
 $list-group-active-border-color: $border-color !default;
 
 $list-group-disabled-color: system-tokens.$si-sys-text-disabled !default;
@@ -668,7 +668,7 @@ $breadcrumb-border-radius: 0 !default;
 $code-font-size: typography.$si-font-size-body !default;
 $code-line-height: typography.$si-line-height-body !default;
 $code-color: system-tokens.$si-sys-text-primary !default;
-$code-background: system-tokens.$si-sys-background-selected !default;
+$code-background: system-tokens.$si-sys-background-active !default;
 $code-padding-y: map.get(spacers.$spacers-block, 1) !default;
 $code-padding-x: map.get(spacers.$spacers-inline, 2) !default;
 $code-border-radius: semantic-tokens.$element-radius-1 !default;

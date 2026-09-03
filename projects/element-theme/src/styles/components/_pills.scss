@@ -11,7 +11,7 @@
   max-inline-size: 100%;
 
   &.active {
-    background: variables.$si-sys-background-selected;
+    background: variables.$si-sys-background-active;
   }
 
   &.pill-interactive {
