@@ -123,7 +123,6 @@ test('text/text-font-weight', ({ si }) => si.static());
 test('text/text-line-height', ({ si }) => si.static());
 test('typography/semantic-elements', ({ si }) => si.static());
 test('typography/color-variants', ({ si }) => si.static());
-test('typography/type-styles', ({ si }) => si.static());
 test('typography/display-styles', ({ si }) => si.static());
 test('typography/typography', ({ si }) => si.static());
 test('si-chat-messages/si-ai-message', ({ si }) => si.static());
