@@ -30,7 +30,7 @@ export class SiSystemBannerComponent {
   /**
    * Message to be displayed in the system banner.
    */
-  readonly message = input.required<TranslatableString>();
+  readonly message = input<TranslatableString>();
 
   protected readonly bannerClass = computed(() => `banner-${this.status()}`);
 }
