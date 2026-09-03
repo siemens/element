@@ -7,10 +7,10 @@
 @use './skeleton';
 
 .si-value-widget-value {
-  @extend .si-display-bold;
+  @extend .si-display-lg-sbold;
   display: inline-block;
   min-block-size: calc(
-    #{variables.$si-font-size-display-bold} * #{variables.$si-line-height-display-bold}
+    #{variables.$si-font-size-display-lg-sbold} * #{variables.$si-line-height-display-lg-sbold}
   );
 }
 
@@ -19,10 +19,10 @@
 * the line height.
 */
 .si-value-widget-value-skeleton {
-  @extend .si-display-bold;
+  @extend .si-display-lg-sbold;
   @extend .si-skeleton;
   display: inline-block;
-  block-size: #{variables.$si-font-size-display-bold};
+  block-size: #{variables.$si-font-size-display-lg-sbold};
   vertical-align: middle;
   inline-size: 100%;
 }

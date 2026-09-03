@@ -7,7 +7,7 @@
 @mixin badge-text {
   min-inline-size: 0.875rem;
   border-radius: 0.4375rem;
-  font-size: typography.$si-font-size-caption;
+  font-size: typography.$si-font-size-body-sm;
   line-height: 0.875rem;
   padding-block: 0;
   padding-inline: map.get(spacers.$spacers-inline, 2);

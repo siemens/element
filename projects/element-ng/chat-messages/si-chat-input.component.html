@@ -91,7 +91,7 @@
 
 <div class="disclaimer-wrapper text-center mt-4 px-3">
   @if (disclaimer()) {
-    <span class="si-caption text-secondary d-block">{{ disclaimer() | translate }}</span>
+    <span class="si-body-sm text-secondary d-block">{{ disclaimer() | translate }}</span>
   }
   <ng-content select="[siChatInputDisclaimer]" />
 </div>

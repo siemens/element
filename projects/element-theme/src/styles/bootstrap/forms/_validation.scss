@@ -62,7 +62,7 @@
   font-size: variables.$form-feedback-font-size;
   display: none;
   inline-size: 100%;
-  line-height: typography.$si-line-height-caption;
+  line-height: typography.$si-line-height-body-sm;
   margin-block: map.get(spacers.$spacers-block, 1);
   margin-inline: map.get(spacers.$spacers-inline, 1);
 }

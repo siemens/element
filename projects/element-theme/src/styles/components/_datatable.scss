@@ -335,7 +335,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     align-content: flex-end;
     background-color: $datatable-footer-background-color;
     color: system-tokens.$si-sys-text-secondary;
-    font-size: typography.$si-font-size-caption;
+    font-size: typography.$si-font-size-body-sm;
     margin-block-start: -1px;
     position: relative;
     z-index: 11;
