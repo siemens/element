@@ -1,0 +1,4 @@
+.card {
+  // Prevent the projected content from defining the flex basis so this region owns the overflow.
+  block-size: 0;
+}
