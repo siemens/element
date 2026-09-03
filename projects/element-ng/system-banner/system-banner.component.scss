@@ -8,7 +8,12 @@
 
   .banner {
     padding-block: variables.$si-system-banner-padding-y;
-    padding-inline: map.get(variables.$spacers-inline, 5);
+    padding-inline: map.get(variables.$spacers-inline, 4);
+
+    ::ng-deep a {
+      color: inherit;
+      text-decoration: underline;
+    }
   }
 
   &.banner-info {
