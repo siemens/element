@@ -103,7 +103,7 @@ button {
 .btn-ghost {
   --btn-bg: #{system-tokens.$si-sys-background-1};
   --btn-bg-hover: #{system-tokens.$si-sys-background-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-selected};
+  --btn-bg-active: #{system-tokens.$si-sys-background-active};
   --btn-color: #{system-tokens.$si-sys-text-primary};
   --btn-color-hover: #{system-tokens.$si-sys-text-primary};
   --btn-color-active: #{system-tokens.$si-sys-text-primary};
@@ -164,7 +164,7 @@ button {
 .btn-secondary-ghost,
 .btn-tertiary-ghost {
   --btn-bg-hover: #{system-tokens.$si-sys-background-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-selected};
+  --btn-bg-active: #{system-tokens.$si-sys-background-active};
   --btn-color: #{system-tokens.$si-sys-text-primary};
   --btn-color-hover: #{system-tokens.$si-sys-text-primary};
   --btn-color-active: #{system-tokens.$si-sys-text-primary};
@@ -228,7 +228,7 @@ button {
   --btn-font-weight: #{typography.$si-font-weight-normal};
   --btn-bg: transparent;
   --btn-bg-hover: #{system-tokens.$si-sys-background-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-selected};
+  --btn-bg-active: #{system-tokens.$si-sys-background-active};
   --btn-color: #{system-tokens.$si-sys-text-primary};
   --btn-color-active: #{system-tokens.$si-sys-text-primary};
 

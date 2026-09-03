@@ -59,8 +59,8 @@ describe('SiNChartGaugeComponent', () => {
   let gaugeEl: HTMLElement;
 
   const defaultSeries: GaugeSeries[] = [
-    { value: 30, colorToken: 'si-sys-data-categorial-7', name: 'Series A' },
-    { value: 20, colorToken: 'si-sys-data-categorial-4', name: 'Series B' }
+    { value: 30, colorToken: 'si-sys-data-categorical-7', name: 'Series A' },
+    { value: 20, colorToken: 'si-sys-data-categorical-4', name: 'Series B' }
   ];
 
   const getSvg = (): SVGSVGElement => gaugeEl.querySelector('svg')!;
@@ -119,8 +119,8 @@ describe('SiNChartGaugeComponent', () => {
 
     it('should handle positive and negative series values', async () => {
       host.series.set([
-        { value: 40, colorToken: 'si-sys-data-categorial-7', name: 'Positive' },
-        { value: -20, colorToken: 'si-sys-data-categorial-1', name: 'Negative' }
+        { value: 40, colorToken: 'si-sys-data-categorical-7', name: 'Positive' },
+        { value: -20, colorToken: 'si-sys-data-categorical-1', name: 'Negative' }
       ]);
       await fixture.whenStable();
 
@@ -148,8 +148,8 @@ describe('SiNChartGaugeComponent', () => {
 
     it('should apply data-id attribute when provided', async () => {
       host.series.set([
-        { value: 30, colorToken: 'si-sys-data-categorial-7', name: 'A', id: 'gauge-a' },
-        { value: 20, colorToken: 'si-sys-data-categorial-4', name: 'B', id: 'gauge-b' }
+        { value: 30, colorToken: 'si-sys-data-categorical-7', name: 'A', id: 'gauge-a' },
+        { value: 20, colorToken: 'si-sys-data-categorical-4', name: 'B', id: 'gauge-b' }
       ]);
       await fixture.whenStable();
 
@@ -159,7 +159,7 @@ describe('SiNChartGaugeComponent', () => {
     });
 
     it('should not render data arc for series with value 0', async () => {
-      host.series.set([{ value: 0, colorToken: 'si-sys-data-categorial-7', name: 'Zero' }]);
+      host.series.set([{ value: 0, colorToken: 'si-sys-data-categorical-7', name: 'Zero' }]);
       await fixture.whenStable();
 
       // Value 0 produces same start/end angle, so path is empty string and the @if hides it
@@ -169,9 +169,9 @@ describe('SiNChartGaugeComponent', () => {
 
   describe('single mode', () => {
     const segments: GaugeSegment[] = [
-      { colorToken: 'si-sys-data-categorial-1', endValue: 0 },
-      { colorToken: 'si-sys-data-categorial-5', endValue: 50 },
-      { colorToken: 'si-sys-data-categorial-7', endValue: 100 }
+      { colorToken: 'si-sys-data-categorical-1', endValue: 0 },
+      { colorToken: 'si-sys-data-categorical-5', endValue: 50 },
+      { colorToken: 'si-sys-data-categorical-7', endValue: 100 }
     ];
 
     beforeEach(() => {
@@ -182,7 +182,7 @@ describe('SiNChartGaugeComponent', () => {
     });
 
     it('should render a single data arc', async () => {
-      host.series.set([{ value: 60, colorToken: 'si-sys-data-categorial-3', name: 'Value' }]);
+      host.series.set([{ value: 60, colorToken: 'si-sys-data-categorical-3', name: 'Value' }]);
       await fixture.whenStable();
 
       expect(getDataPaths()).toHaveLength(1);
@@ -271,7 +271,7 @@ describe('SiNChartGaugeComponent', () => {
       host.series.set([
         {
           value: 30,
-          colorToken: 'si-sys-data-categorial-7',
+          colorToken: 'si-sys-data-categorical-7',
           name: 'Series A',
           description: 'Some info'
         }
@@ -300,7 +300,7 @@ describe('SiNChartGaugeComponent', () => {
 
     it('should apply data-id on legend rows when provided', async () => {
       host.series.set([
-        { value: 30, colorToken: 'si-sys-data-categorial-7', name: 'A', id: 'row-a' }
+        { value: 30, colorToken: 'si-sys-data-categorical-7', name: 'A', id: 'row-a' }
       ]);
       await fixture.whenStable();
 
@@ -310,7 +310,7 @@ describe('SiNChartGaugeComponent', () => {
 
   describe('formatters', () => {
     it('should use custom valueFormatter', async () => {
-      host.series.set([{ value: 42.567, colorToken: 'si-sys-data-categorial-7', name: 'A' }]);
+      host.series.set([{ value: 42.567, colorToken: 'si-sys-data-categorical-7', name: 'A' }]);
       host.valueFormatter.set((val: number) => `${val.toFixed(1)} units`);
       await fixture.whenStable();
 
@@ -329,7 +329,7 @@ describe('SiNChartGaugeComponent', () => {
     });
 
     it('should respect minNumberOfDecimals and maxNumberOfDecimals', async () => {
-      host.series.set([{ value: 5, colorToken: 'si-sys-data-categorial-7', name: 'A' }]);
+      host.series.set([{ value: 5, colorToken: 'si-sys-data-categorical-7', name: 'A' }]);
       host.minNumberOfDecimals.set(2);
       host.maxNumberOfDecimals.set(2);
       await fixture.whenStable();
@@ -379,7 +379,7 @@ describe('SiNChartGaugeComponent', () => {
 
   describe('highlight', () => {
     it('should toggle highlight on data arc mouseenter/mouseleave', async () => {
-      host.series.set([{ value: 50, colorToken: 'si-sys-data-categorial-7', name: 'A' }]);
+      host.series.set([{ value: 50, colorToken: 'si-sys-data-categorical-7', name: 'A' }]);
       await fixture.whenStable();
 
       const dataPath = getDataPaths()[0];
@@ -395,7 +395,7 @@ describe('SiNChartGaugeComponent', () => {
     });
 
     it('should toggle highlight on legend color dot mouseenter/mouseleave', async () => {
-      host.series.set([{ value: 50, colorToken: 'si-sys-data-categorial-7', name: 'A' }]);
+      host.series.set([{ value: 50, colorToken: 'si-sys-data-categorical-7', name: 'A' }]);
       await fixture.whenStable();
 
       const colorDot = gaugeEl.querySelector('.legend-table .color') as HTMLElement;

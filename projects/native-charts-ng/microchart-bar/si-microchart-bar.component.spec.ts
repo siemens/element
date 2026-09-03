@@ -12,13 +12,13 @@ describe('SiMicrochartBarComponent', () => {
   let element: HTMLElement;
   const series = signal<MicrochartBarSeries>({
     values: [2, 4, 6, 8, 10],
-    colorToken: 'si-sys-data-categorial-7'
+    colorToken: 'si-sys-data-categorical-7'
   });
   const width = signal(64);
   const height = signal(24);
 
   beforeEach(() => {
-    series.set({ values: [2, 4, 6, 8, 10], colorToken: 'si-sys-data-categorial-7' });
+    series.set({ values: [2, 4, 6, 8, 10], colorToken: 'si-sys-data-categorical-7' });
     width.set(64);
     height.set(24);
     fixture = TestBed.createComponent(SiMicrochartBarComponent, {
@@ -42,7 +42,7 @@ describe('SiMicrochartBarComponent', () => {
   it('should apply color token to bar backgrounds', async () => {
     await fixture.whenStable();
     for (const bar of getBars()) {
-      expect(bar).toHaveStyle({ backgroundColor: 'var(--si-sys-data-categorial-7)' });
+      expect(bar).toHaveStyle({ backgroundColor: 'var(--si-sys-data-categorical-7)' });
     }
   });
 
@@ -76,7 +76,7 @@ describe('SiMicrochartBarComponent', () => {
   });
 
   it('should render all-negative values with bars growing downward from zero line', async () => {
-    series.set({ values: [-3, -6, -9], colorToken: 'si-sys-data-categorial-5' });
+    series.set({ values: [-3, -6, -9], colorToken: 'si-sys-data-categorical-5' });
     await fixture.whenStable();
 
     const bars = getBars();
@@ -91,7 +91,7 @@ describe('SiMicrochartBarComponent', () => {
   });
 
   it('should render mixed positive/negative values with zero line', async () => {
-    series.set({ values: [10, -10], colorToken: 'si-sys-data-categorial-3' });
+    series.set({ values: [10, -10], colorToken: 'si-sys-data-categorical-3' });
     await fixture.whenStable();
 
     const bars = getBars();
@@ -111,21 +111,21 @@ describe('SiMicrochartBarComponent', () => {
   it('should use negativeColorToken for negative values', async () => {
     series.set({
       values: [5, -5],
-      colorToken: 'si-sys-data-categorial-7',
-      negativeColorToken: 'si-sys-data-categorial-1'
+      colorToken: 'si-sys-data-categorical-7',
+      negativeColorToken: 'si-sys-data-categorical-1'
     });
     await fixture.whenStable();
 
     const bars = getBars();
-    expect(bars[0]).toHaveStyle({ backgroundColor: 'var(--si-sys-data-categorial-7)' });
-    expect(bars[1]).toHaveStyle({ backgroundColor: 'var(--si-sys-data-categorial-1)' });
+    expect(bars[0]).toHaveStyle({ backgroundColor: 'var(--si-sys-data-categorical-7)' });
+    expect(bars[1]).toHaveStyle({ backgroundColor: 'var(--si-sys-data-categorical-1)' });
   });
 
   it('should use main colorToken for negative values when no negativeColorToken', async () => {
-    series.set({ values: [5, -5], colorToken: 'si-sys-data-categorial-7' });
+    series.set({ values: [5, -5], colorToken: 'si-sys-data-categorical-7' });
     await fixture.whenStable();
 
     const bars = getBars();
-    expect(bars[1]).toHaveStyle({ backgroundColor: 'var(--si-sys-data-categorial-7)' });
+    expect(bars[1]).toHaveStyle({ backgroundColor: 'var(--si-sys-data-categorical-7)' });
   });
 });

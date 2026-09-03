@@ -37,68 +37,68 @@ import {
 })
 export class SampleComponent {
   donutSeries1: MicrochartDonutSeries[] = [
-    { valuePercent: 40, colorToken: 'si-sys-data-categorial-4' }
+    { valuePercent: 40, colorToken: 'si-sys-data-categorical-4' }
   ];
   donutSeries2: MicrochartDonutSeries[] = [
-    { valuePercent: 75, colorToken: 'si-sys-data-categorial-15' }
+    { valuePercent: 75, colorToken: 'si-sys-data-categorical-15' }
   ];
   donutSeriesMulti: MicrochartDonutSeries[] = [
-    { valuePercent: 25, colorToken: 'si-sys-data-categorial-10' },
-    { valuePercent: 50, colorToken: 'si-sys-data-categorial-5' }
+    { valuePercent: 25, colorToken: 'si-sys-data-categorical-10' },
+    { valuePercent: 50, colorToken: 'si-sys-data-categorical-5' }
   ];
   barSeries: MicrochartBarSeries = {
     values: [3, 7, 2, 8, 5, 9, 4, 6, 8, 7, 5, 9],
-    colorToken: 'si-sys-data-categorial-7'
+    colorToken: 'si-sys-data-categorical-7'
   };
 
   mixedSeries: MicrochartBarSeries = {
     values: [5, -12, 18, -25, 30, -8, 15, -20, 22, -15, 28, -18],
-    colorToken: 'si-sys-data-categorial-3'
+    colorToken: 'si-sys-data-categorical-3'
   };
 
   mixedSeries2: MicrochartBarSeries = {
     values: [5, -12, 18, -25, 30, -8, 15, -20, 22, -15, 28, -18],
-    colorToken: 'si-sys-data-categorial-3',
-    negativeColorToken: 'si-sys-data-categorial-10'
+    colorToken: 'si-sys-data-categorical-3',
+    negativeColorToken: 'si-sys-data-categorical-10'
   };
 
   whiskerChart: MicrochartBarSeries = {
     values: [25, 25, 25, -25, -25, 25, 25, -25, 25, 25, 25],
-    colorToken: 'si-sys-data-categorial-3',
-    negativeColorToken: 'si-sys-data-categorial-10'
+    colorToken: 'si-sys-data-categorical-3',
+    negativeColorToken: 'si-sys-data-categorical-10'
   };
 
   positiveSeries: MicrochartBarSeries = {
     values: [5, 8, 12, 18, 25, 30, 38, 42, 48, 55, 62, 70],
-    colorToken: 'si-sys-data-categorial-2'
+    colorToken: 'si-sys-data-categorical-2'
   };
 
   negativeSeries: MicrochartBarSeries = {
     values: [-5, -8, -12, -18, -25, -30, -38, -42, -48, -55, -62, -70],
-    colorToken: 'si-sys-data-categorial-9'
+    colorToken: 'si-sys-data-categorical-9'
   };
 
   lineSeries: MicrochartLineSeries = {
     values: [2, 3, 6, 5, 4, 7, 8],
-    colorToken: 'si-sys-data-categorial-10'
+    colorToken: 'si-sys-data-categorical-10'
   };
 
   lineMarkerSeries: MicrochartLineSeries = {
     values: [1, 3, 1, 9, 5, 10, 12],
-    colorToken: 'si-sys-data-categorial-1'
+    colorToken: 'si-sys-data-categorical-1'
   };
 
   lineAreaSeries: MicrochartLineSeries = {
     values: [1, 3, 1, 9, 5, 10, 12],
-    colorToken: 'si-sys-data-categorial-13'
+    colorToken: 'si-sys-data-categorical-13'
   };
 
   progressSeries1: MicrochartProgressSeries = {
     valuePercent: 40,
-    colorToken: 'si-sys-data-categorial-2'
+    colorToken: 'si-sys-data-categorical-2'
   };
   progressSeries2: MicrochartProgressSeries = {
     valuePercent: 80,
-    colorToken: 'si-sys-data-categorial-12'
+    colorToken: 'si-sys-data-categorical-12'
   };
 }

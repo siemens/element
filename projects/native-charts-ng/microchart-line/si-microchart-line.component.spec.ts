@@ -12,7 +12,7 @@ describe('SiMicrochartLineComponent', () => {
   let element: HTMLElement;
   const series = signal<MicrochartLineSeries>({
     values: [2, 4, 6, 8, 10],
-    colorToken: 'si-sys-data-categorial-10'
+    colorToken: 'si-sys-data-categorical-10'
   });
   const width = signal(64);
   const height = signal(24);
@@ -33,7 +33,7 @@ describe('SiMicrochartLineComponent', () => {
     element.querySelector('linearGradient');
 
   beforeEach(() => {
-    series.set({ values: [2, 4, 6, 8, 10], colorToken: 'si-sys-data-categorial-10' });
+    series.set({ values: [2, 4, 6, 8, 10], colorToken: 'si-sys-data-categorical-10' });
     width.set(64);
     height.set(24);
     showMarkers.set(false);
@@ -66,7 +66,7 @@ describe('SiMicrochartLineComponent', () => {
     await fixture.whenStable();
     const path = getLinePath();
     expect(path).toBeTruthy();
-    expect(path!).toHaveAttribute('stroke', 'var(--si-sys-data-categorial-10)');
+    expect(path!).toHaveAttribute('stroke', 'var(--si-sys-data-categorical-10)');
   });
 
   it('should apply default lineWidth of 2', async () => {
@@ -83,7 +83,7 @@ describe('SiMicrochartLineComponent', () => {
   });
 
   it('should return empty path for fewer than 2 values', async () => {
-    series.set({ values: [5], colorToken: 'si-sys-data-categorial-10' });
+    series.set({ values: [5], colorToken: 'si-sys-data-categorical-10' });
     await fixture.whenStable();
 
     const path = getLinePath();
@@ -107,17 +107,17 @@ describe('SiMicrochartLineComponent', () => {
     await fixture.whenStable();
 
     for (const marker of getMarkers()) {
-      expect(marker).toHaveAttribute('fill', 'var(--si-sys-data-categorial-10)');
+      expect(marker).toHaveAttribute('fill', 'var(--si-sys-data-categorical-10)');
     }
   });
 
   it('should use markerColor for markers when provided', async () => {
     showMarkers.set(true);
-    markerColor.set('si-sys-data-categorial-2');
+    markerColor.set('si-sys-data-categorical-2');
     await fixture.whenStable();
 
     for (const marker of getMarkers()) {
-      expect(marker).toHaveAttribute('fill', 'var(--si-sys-data-categorial-2)');
+      expect(marker).toHaveAttribute('fill', 'var(--si-sys-data-categorical-2)');
     }
   });
 

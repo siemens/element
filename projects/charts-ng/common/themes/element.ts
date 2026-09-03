@@ -79,30 +79,30 @@ export const themeElement = {
     // The order of colors is provided by ux.
     const colorPalettes = {
       default: [
-        getProp(style, '--si-sys-data-categorial-1'),
-        getProp(style, '--si-sys-data-categorial-2'),
-        getProp(style, '--si-sys-data-categorial-4'),
-        getProp(style, '--si-sys-data-categorial-6'),
-        getProp(style, '--si-sys-data-categorial-5'),
-        getProp(style, '--si-sys-data-categorial-7'),
-        getProp(style, '--si-sys-data-categorial-8'),
-        getProp(style, '--si-sys-data-categorial-9'),
-        getProp(style, '--si-sys-data-categorial-11'),
-        getProp(style, '--si-sys-data-categorial-12'),
-        getProp(style, '--si-sys-data-categorial-13'),
-        getProp(style, '--si-sys-data-categorial-16'),
-        getProp(style, '--si-sys-data-categorial-17'),
-        getProp(style, '--si-sys-data-categorial-3'),
-        getProp(style, '--si-sys-data-categorial-10'),
-        getProp(style, '--si-sys-data-categorial-14'),
-        getProp(style, '--si-sys-data-categorial-15')
+        getProp(style, '--si-sys-data-categorical-1'),
+        getProp(style, '--si-sys-data-categorical-2'),
+        getProp(style, '--si-sys-data-categorical-4'),
+        getProp(style, '--si-sys-data-categorical-6'),
+        getProp(style, '--si-sys-data-categorical-5'),
+        getProp(style, '--si-sys-data-categorical-7'),
+        getProp(style, '--si-sys-data-categorical-8'),
+        getProp(style, '--si-sys-data-categorical-9'),
+        getProp(style, '--si-sys-data-categorical-11'),
+        getProp(style, '--si-sys-data-categorical-12'),
+        getProp(style, '--si-sys-data-categorical-13'),
+        getProp(style, '--si-sys-data-categorical-16'),
+        getProp(style, '--si-sys-data-categorical-17'),
+        getProp(style, '--si-sys-data-categorical-3'),
+        getProp(style, '--si-sys-data-categorical-10'),
+        getProp(style, '--si-sys-data-categorical-14'),
+        getProp(style, '--si-sys-data-categorical-15')
       ]
     };
 
     const gradientColors = {
       default: [
-        getProp(style, '--si-sys-data-categorial-1'),
-        getProp(style, '--si-sys-data-categorial-2')
+        getProp(style, '--si-sys-data-categorical-1'),
+        getProp(style, '--si-sys-data-categorical-2')
       ]
     };
 

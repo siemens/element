@@ -55,7 +55,7 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
   }
 
   &:is(:active, .active) {
-    background: system-tokens.$si-sys-background-selected;
+    background: system-tokens.$si-sys-background-active;
   }
 
   &:is([disabled], .disabled) {
