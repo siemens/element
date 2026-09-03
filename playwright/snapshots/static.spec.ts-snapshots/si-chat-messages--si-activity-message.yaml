@@ -1,0 +1,6 @@
+- button "Analyzed the request"
+- button "Loading Searching additional sources":
+  - img "Loading"
+  - text: ""
+- button "Could not access maintenance history"
+- button "Activity without an icon"

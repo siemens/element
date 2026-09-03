@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import type { TranslatableString } from '@siemens/element-translate-ng/translate-types';
+import type { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 /**
  * Actions for messages representing an action with icon, label (for accessibility), and handler, for use within {@link SiAiMessageComponent} and {@link SiUserMessageComponent}.

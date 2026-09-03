@@ -1,0 +1,21 @@
+<button
+  type="button"
+  class="trace-toggle"
+  [attr.aria-expanded]="expanded()"
+  (click)="expanded.update(value => !value)"
+>
+  <span class="trace-marker">
+    <si-icon class="disclosure-icon" [class.expanded]="expanded()" [icon]="icons.elementRight2" />
+  </span>
+  <span class="trace-heading">{{ heading() | translate }}</span>
+</button>
+
+@if (expanded()) {
+  <div class="content-motion" animate.enter="content-enter" animate.leave="content-leave">
+    <div class="overflow-hidden">
+      <div class="trace-content">
+        <ng-content />
+      </div>
+    </div>
+  </div>
+}
