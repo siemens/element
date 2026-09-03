@@ -20,4 +20,5 @@ docs/_custom_theme/partials/toc.html
 **/schematics/**/files/**
 
 # Intentionally ignored files
+.agents/skills/gh-stack
 .agents/skills/playwright-cli
