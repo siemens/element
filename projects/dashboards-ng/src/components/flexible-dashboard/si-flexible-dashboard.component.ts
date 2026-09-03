@@ -99,6 +99,15 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
   readonly widgetCatalog = input<Widget[]>([]);
 
   /**
+   * Whether widgets already added to the dashboard are hidden from the widget catalog.
+   *
+   * @defaultValue false
+   */
+  readonly hideAddedWidgetsFromCatalog = input(false, {
+    transform: booleanAttribute
+  });
+
+  /**
    * Option to remove the add widget instance button from the primary toolbar.
    *
    * @defaultValue false
@@ -296,7 +305,17 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
         })
       ]
     });
-    catalogRef.instance.widgetList.set(this.widgetCatalog());
+    const widgetCatalog = this.widgetCatalog();
+    if (this.hideAddedWidgetsFromCatalog()) {
+      const addedWidgetIds = new Set(
+        this.grid().visibleWidgetInstances$.value.map(widget => widget.widgetId)
+      );
+      catalogRef.instance.widgetList.set(
+        widgetCatalog.filter(widget => !addedWidgetIds.has(widget.id))
+      );
+    } else {
+      catalogRef.instance.widgetList.set(widgetCatalog);
+    }
   }
 
   protected onModified(event: boolean): void {
