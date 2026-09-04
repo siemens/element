@@ -1,4 +1,4 @@
-- text: Form
+- text: Reactive Form
 - group "Role*":
   - text: ""
   - button "More information about the role"
@@ -9,7 +9,7 @@
 - text: Name*
 - button "More information about the name"
 - textbox "Name*"
-- text: Min. 3 characters A name must start with an uppercase letter. Description
+- text: Min. 3 characters Name must start with an uppercase letter. Description
 - textbox "Description"
 - text: Phone number
 - group "Phone number":
@@ -26,8 +26,8 @@
   - text: "-"
   - textbox "End date"
   - button "Open calendar"
-- text: Travel date is required. Arrival
-- group "Arrival":
+- text: Travel date is required. Arrival*
+- group "Arrival*":
   - textbox "Hours":
     - /placeholder: hh
     - text: /\d+/
@@ -37,8 +37,8 @@
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
-- text: Departure
-- group "Departure":
+- text: Departure*
+- group "Departure*":
   - textbox "Hours":
     - /placeholder: hh
     - text: /\d+/
@@ -70,24 +70,12 @@
   - text: Disable form
   - checkbox "Readonly form"
   - text: Readonly form
-- text: Validation Status INVALID Validation Details
-- list:
-  - listitem: "Control: name, error: minlength, minlength"
-  - listitem: "Control: name, error: pattern, pattern"
-  - listitem: "Control: role, error: required, required"
-  - listitem: "Control: phoneNumber, error: invalidPhoneNumberFormat, invalidPhoneNumberFormat"
-  - listitem: "Control: birthday, error: required, required"
-  - listitem: "Control: travelDate, error: required, required"
-  - listitem: "Control: departure, error: departureTime, departureTime"
-  - listitem: "Control: serviceClass, error: noEconomy, noEconomy"
-  - listitem: "Control: fellowPassengers, error: min, min"
-  - listitem: "Control: termsAccepted, error: required, required"
-  - listitem: "Control: privacyDeclined, error: required, required"
+- text: Validation Status INVALID
 - table:
   - rowgroup:
-    - row "Form Data Entity Data":
+    - row "Form Data Submitted":
       - columnheader "Form Data"
-      - columnheader "Entity Data"
+      - columnheader "Submitted"
   - rowgroup:
     - 'row /\{ "name": "a", "role": null, "description": "", "phoneNumber": "", "birthday": "", "travelDate": null, "arrival": "\d+-\d+-25T09:\d+:\d+\.000Z", "departure": "\d+-\d+-25T08:\d+:\d+\.000Z", "serviceClass": "economy", "fellowPassengers": 0, "termsAccepted": false, "privacyDeclined": false \} undefined/':
       - 'cell /\{ "name": "a", "role": null, "description": "", "phoneNumber": "", "birthday": "", "travelDate": null, "arrival": "\d+-\d+-25T09:\d+:\d+\.000Z", "departure": "\d+-\d+-25T08:\d+:\d+\.000Z", "serviceClass": "economy", "fellowPassengers": 0, "termsAccepted": false, "privacyDeclined": false \}/'

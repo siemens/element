@@ -1,4 +1,4 @@
-- heading "Signal form" [level=2]
+- text: Signal Form
 - group "Role*":
   - text: ""
   - button "More information about the role"
@@ -9,7 +9,7 @@
 - text: Name*
 - button "More information about the name"
 - textbox "Name*" [invalid]
-- text: Minimum 3 characters Name must start with an uppercase letter Description
+- text: Min. 3 characters Name must start with an uppercase letter. Description
 - textbox "Description"
 - text: Phone number
 - group "Phone number":
@@ -17,17 +17,17 @@
   - textbox "Enter phone number":
     - /placeholder: 21 234 56 78
     - text: "5"
-- text: Invalid phone number Day of birth
-- textbox "Day of birth" [invalid]
+- text: Invalid phone number Day of birth*
+- textbox "Day of birth*" [invalid]
 - button "Open calendar"
-- text: Day of birth required Travel date
-- group "Travel date":
+- text: Required Travel Date*
+- group "Travel Date*":
   - textbox "Start date"
   - text: "-"
   - textbox "End date"
   - button "Open calendar"
-- text: Travel dates are required Arrival
-- group "Arrival":
+- text: Travel date is required. Arrival*
+- group "Arrival*":
   - textbox "Hours":
     - /placeholder: hh
     - text: /\d+/
@@ -37,8 +37,8 @@
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
-- text: Departure
-- group "Departure":
+- text: Departure*
+- group "Departure*":
   - textbox "Hours":
     - /placeholder: hh
     - text: /\d+/
@@ -48,27 +48,33 @@
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
-- text: Departure must be after arrival Class of service
+- text: The departure time must be after arrival. Class of service
 - combobox "Class of service": Economy
 - text: You deserve better! Fellow passengers
 - spinbutton "Fellow passengers": "0"
-- text: Minimum 2
+- text: Min. 2
 - group "Accept terms":
   - text: ""
-  - checkbox "I confirm that I accept all and everything*" [invalid]
-  - text: I confirm that I accept all and everything*
+  - checkbox "I confirm that I accept all and everything.*" [invalid]
+  - text: I confirm that I accept all and everything.*
   - button "More information about the terms"
-  - text: Accept terms before joining
-  - checkbox "I confirm that I do not care about my privacy*" [invalid]
-  - text: I confirm that I do not care about my privacy* Accept the privacy policy before joining
+  - text: You need to accept all terms before joining.
+  - checkbox "I confirm that I do not care about my privacy.*" [invalid]
+  - text: I confirm that I do not care about my privacy.* Required
 - button "Cancel"
 - button "Save"
-- heading "Debugging" [level=2]
-- paragraph: "Validation status: INVALID"
+- text: Debugging
+- group "Actions":
+  - text: ""
+  - checkbox "Disable form"
+  - text: Disable form
+  - checkbox "Readonly form"
+  - text: Readonly form
+- text: Validation Status INVALID
 - table:
   - rowgroup:
-    - row "Model Submitted":
-      - columnheader "Model"
+    - row "Form Data Submitted":
+      - columnheader "Form Data"
       - columnheader "Submitted"
   - rowgroup:
     - 'row /\{ "name": "a", "description": "", "phoneNumber": "", "birthday": "", "travelDate": \{\}, "arrival": "\d+-\d+-25T09:\d+:\d+\.000Z", "departure": "\d+-\d+-25T08:\d+:\d+\.000Z", "serviceClass": "economy", "role": "", "fellowPassengers": 0, "termsAccepted": false, "privacyDeclined": false \} undefined/':

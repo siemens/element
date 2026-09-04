@@ -1,0 +1,82 @@
+- text: Template-driven Form
+- group "Role":
+  - text: ""
+  - button "More information about the role"
+  - radio "Engineer*"
+  - text: Engineer* Required
+  - radio "Installer*"
+  - text: Installer* Required
+- text: Name*
+- button "More information about the name"
+- textbox "Name*"
+- text: Min. 3 characters Name must start with an uppercase letter. Description
+- textbox "Description"
+- text: Phone number
+- group "Phone number":
+  - combobox /Select country Switzerland \+\d+/
+  - textbox "Enter phone number":
+    - /placeholder: 21 234 56 78
+    - text: "5"
+- text: Invalid phone number Day of birth*
+- textbox "Day of birth*"
+- button "Open calendar"
+- text: Required Travel Date*
+- group "Travel Date*":
+  - textbox "Start date"
+  - text: "-"
+  - textbox "End date"
+  - button "Open calendar"
+- text: Travel date is required. Arrival*
+- group "Arrival*":
+  - textbox "Hours":
+    - /placeholder: hh
+    - text: /\d+/
+  - textbox "Minutes":
+    - /placeholder: mm
+    - text: /\d+/
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
+- text: Departure*
+- group "Departure*":
+  - textbox "Hours":
+    - /placeholder: hh
+    - text: /\d+/
+  - textbox "Minutes":
+    - /placeholder: mm
+    - text: /\d+/
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
+- text: The departure time must be after arrival. Class of service
+- combobox "Class of service": Economy
+- text: You deserve better! Fellow passengers
+- spinbutton "Fellow passengers": "0"
+- text: Min. 2
+- group "Accept terms":
+  - text: ""
+  - checkbox "I confirm that I accept all and everything.*"
+  - text: I confirm that I accept all and everything.*
+  - button "More information about the terms"
+  - text: You need to accept all terms before joining.
+  - checkbox "I confirm that I do not care about my privacy.*"
+  - text: I confirm that I do not care about my privacy.* Required
+- button "Cancel"
+- button "Save"
+- text: Debugging
+- group "Actions":
+  - text: ""
+  - checkbox "Disable form"
+  - text: Disable form
+  - checkbox "Readonly form"
+  - text: Readonly form
+- text: Validation Status INVALID
+- table:
+  - rowgroup:
+    - row "Form Data Submitted":
+      - columnheader "Form Data"
+      - columnheader "Submitted"
+  - rowgroup:
+    - 'row /\{ "role": null, "name": "a", "description": "", "phoneNumber": "", "birthday": "", "travelDate": null, "arrival": "\d+-\d+-25T09:\d+:\d+\.000Z", "departure": "\d+-\d+-25T08:\d+:\d+\.000Z", "serviceClass": "economy", "fellowPassengers": 0, "termsAccepted": false, "privacyDeclined": false \} undefined/':
+      - 'cell /\{ "role": null, "name": "a", "description": "", "phoneNumber": "", "birthday": "", "travelDate": null, "arrival": "\d+-\d+-25T09:\d+:\d+\.000Z", "departure": "\d+-\d+-25T08:\d+:\d+\.000Z", "serviceClass": "economy", "fellowPassengers": 0, "termsAccepted": false, "privacyDeclined": false \}/'
+      - cell "undefined"
