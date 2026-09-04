@@ -1,4 +1,4 @@
-- heading "Signal form" [level=2]
+- text: Signal Form
 - group "Role*":
   - text: ""
   - button "More information about the role"
@@ -16,17 +16,17 @@
   - combobox /Select country Switzerland \+\d+/
   - textbox "Enter phone number":
     - /placeholder: 21 234 56 78
-- text: Day of birth
-- textbox "Day of birth"
+- text: Day of birth*
+- textbox "Day of birth*"
 - button "Open calendar"
-- text: Travel date
-- group "Travel date":
+- text: Travel Date*
+- group "Travel Date*":
   - textbox "Start date"
   - text: "-"
   - textbox "End date"
   - button "Open calendar"
-- text: Arrival
-- group "Arrival":
+- text: Arrival*
+- group "Arrival*":
   - textbox "Hours":
     - /placeholder: hh
   - textbox "Minutes":
@@ -34,8 +34,8 @@
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
-- text: Departure
-- group "Departure":
+- text: Departure*
+- group "Departure*":
   - textbox "Hours":
     - /placeholder: hh
   - textbox "Minutes":
@@ -49,19 +49,25 @@
 - spinbutton "Fellow passengers": "0"
 - group "Accept terms":
   - text: ""
-  - checkbox "I confirm that I accept all and everything*"
-  - text: I confirm that I accept all and everything*
+  - checkbox "I confirm that I accept all and everything.*"
+  - text: I confirm that I accept all and everything.*
   - button "More information about the terms"
-  - checkbox "I confirm that I do not care about my privacy*"
-  - text: I confirm that I do not care about my privacy*
+  - checkbox "I confirm that I do not care about my privacy.*"
+  - text: I confirm that I do not care about my privacy.*
 - button "Cancel"
 - button "Save"
-- heading "Debugging" [level=2]
-- paragraph: "Validation status: INVALID"
+- text: Debugging
+- group "Actions":
+  - text: ""
+  - checkbox "Disable form"
+  - text: Disable form
+  - checkbox "Readonly form"
+  - text: Readonly form
+- text: Validation Status INVALID
 - table:
   - rowgroup:
-    - row "Model Submitted":
-      - columnheader "Model"
+    - row "Form Data Submitted":
+      - columnheader "Form Data"
       - columnheader "Submitted"
   - rowgroup:
     - 'row "{ \"name\": \"\", \"description\": \"\", \"phoneNumber\": \"\", \"birthday\": \"\", \"travelDate\": {}, \"arrival\": null, \"departure\": null, \"serviceClass\": \"first\", \"role\": \"\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false } undefined"':

@@ -2,8 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -23,15 +22,13 @@ import {
   SiDateRangeComponent,
   SiTimepickerComponent
 } from '@siemens/element-ng/datepicker';
-import {
-  provideFormValidationErrorMapper,
-  SiFormModule,
-  SiFormValidationError
-} from '@siemens/element-ng/form';
+import { provideFormValidationErrorMapper, SiFormModule } from '@siemens/element-ng/form';
 import { SiHelpButtonComponent } from '@siemens/element-ng/help-button';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import { PhoneDetails, SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
 import { SelectOption, SiSelectModule } from '@siemens/element-ng/select';
+
+import { SiFormDebugComponent } from './si-form-debug';
 
 export type Role = 'ENGINEER' | 'INSTALLER';
 
@@ -85,12 +82,12 @@ export const noEconomy: ValidatorFn = control => {
 @Component({
   selector: 'app-sample',
   imports: [
-    JsonPipe,
     ReactiveFormsModule,
     SiCalendarButtonComponent,
     SiCardComponent,
     SiDatepickerDirective,
     SiDateRangeComponent,
+    SiFormDebugComponent,
     SiFormModule,
     SiHelpButtonComponent,
     SiNumberInputComponent,
@@ -99,14 +96,13 @@ export const noEconomy: ValidatorFn = control => {
     SiTimepickerComponent,
     TranslatePipe
   ],
-  templateUrl: './si-form.html',
+  templateUrl: './si-reactive-form.html',
   providers: [
-    JsonPipe,
     provideFormValidationErrorMapper({
-      'name.pattern': 'FORM.NAME_UPPERCASE',
+      'name.pattern': 'Name must start with an uppercase letter.',
       'name.required': 'FORM.NAME_REQUIRED',
       'termsAccepted.required': 'FORM.ACCEPT_TERMS_REQUIRED',
-      notEighteen: 'FORM.NOT_EIGHTEEN',
+      notEighteen: 'You must be at least 18 years old.',
       departureTime: 'FORM.DEPARTURE_AFTER_ARRIVAL',
       'travelDate.endBeforeStart': 'FORM.END_BEFORE_START',
       'travelDate.required': 'FORM.TRAVEL_DATE_REQUIRED',
@@ -140,7 +136,7 @@ export class SampleComponent {
     }
   ];
 
-  entity?: Entity;
+  submitted?: Entity;
 
   form = new FormGroup(
     {
@@ -150,8 +146,8 @@ export class SampleComponent {
       phoneNumber: new FormControl<PhoneDetails | null>(null),
       birthday: new FormControl<Date | string>('', is18Years),
       travelDate: new FormControl<DateRange | null>(null),
-      arrival: new FormControl<Date | null>(null),
-      departure: new FormControl<Date | null>(null),
+      arrival: new FormControl<Date | null>(null, Validators.required),
+      departure: new FormControl<Date | null>(null, Validators.required),
       serviceClass: new FormControl('first', noEconomy),
       fellowPassengers: new FormControl(0, Validators.min(2)),
       termsAccepted: new FormControl<boolean>(false),
@@ -160,13 +156,25 @@ export class SampleComponent {
     [arrivalDepartureTimeValidator]
   );
 
-  disabledFormControl = new FormControl(false, { nonNullable: true });
-  readonlyControl = new FormControl(false, { nonNullable: true });
+  readonly debugState = signal({ disabled: false, readonly: false });
   readonly = false;
 
   constructor() {
-    this.disabledFormControl.valueChanges.subscribe(v => this.toggleDisable(v));
-    this.readonlyControl.valueChanges.subscribe(v => this.toggleReadonly(v));
+    effect(() => {
+      const { disabled, readonly } = this.debugState();
+      this.readonly = readonly;
+
+      if (disabled) {
+        this.form.disable();
+      } else {
+        this.form.enable();
+        if (readonly) {
+          this.form.controls.role.disable();
+          this.form.controls.privacyDeclined.disable();
+          this.form.controls.termsAccepted.disable();
+        }
+      }
+    });
   }
 
   save(): void {
@@ -174,77 +182,11 @@ export class SampleComponent {
       this.form.markAllAsTouched();
       return;
     }
-    this.entity = new Entity();
-    Object.assign(this.entity, this.form.value);
+    this.submitted = new Entity();
+    Object.assign(this.submitted, this.form.getRawValue());
   }
 
   cancel(): void {
-    this.form.reset(this.entity);
-  }
-
-  toggleDisable(disabled: boolean): void {
-    if (disabled) {
-      this.form.disable();
-    } else {
-      this.form.enable();
-    }
-  }
-
-  toggleReadonly(readonly: boolean): void {
-    this.readonly = readonly;
-    if (readonly) {
-      this.form.controls.role.disable();
-      this.form.controls.privacyDeclined.disable();
-      this.form.controls.termsAccepted.disable();
-    } else {
-      this.form.controls.role.enable();
-      this.form.controls.privacyDeclined.enable();
-      this.form.controls.termsAccepted.enable();
-    }
-  }
-
-  getFormErrors(formControl?: AbstractControl): SiFormValidationError[] {
-    const control = formControl ?? this.form;
-    if (!control) {
-      return [];
-    }
-    const errors: SiFormValidationError[] = [];
-
-    // Get errors from the current control
-    if (control.errors) {
-      Object.keys(control.errors).forEach(errorCode => {
-        errors.push({
-          controlName: this.getControlName(control),
-          errorCode,
-          errorParams: control.errors![errorCode]
-        });
-      });
-    }
-
-    // Recursively get errors from child controls
-    if (control instanceof FormGroup) {
-      Object.keys(control.controls).forEach(controlName => {
-        const childControl = control.get(controlName);
-        if (childControl) {
-          const childErrors = this.getFormErrors(childControl);
-          errors.push(...childErrors);
-        }
-      });
-    }
-
-    return errors;
-  }
-
-  private getControlName(control: AbstractControl): string | undefined {
-    if (control === this.form) {
-      return undefined;
-    }
-
-    const formGroup = control.parent as FormGroup;
-    if (!formGroup) {
-      return undefined;
-    }
-
-    return Object.keys(formGroup.controls).find(name => formGroup.get(name) === control);
+    this.form.reset(this.submitted);
   }
 }

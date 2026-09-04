@@ -2,17 +2,19 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { JsonPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import {
+  disabled as disabledField,
   form,
   FormField,
   FormRoot,
   minLength,
   pattern,
+  readonly as readonlyField,
   required,
   validate
 } from '@angular/forms/signals';
+import { SiCardComponent } from '@siemens/element-ng/card';
 import {
   DateRange,
   SiCalendarButtonComponent,
@@ -23,14 +25,17 @@ import {
 import {
   provideSiFormFieldConfig,
   SiFormFieldComponent,
-  SiFormFieldsetComponent
+  SiFormFieldsetComponent,
+  SiFormItemComponent
 } from '@siemens/element-ng/form';
 import { SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
 
-export type Role = 'engineer' | 'installer';
+export type Role = 'ENGINEER' | 'INSTALLER';
 import { SiHelpButtonComponent } from '@siemens/element-ng/help-button';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import { SelectOption, SiSelectModule } from '@siemens/element-ng/select';
+
+import { SiFormDebugComponent } from './si-form-debug';
 
 export interface TravelRequest {
   name: string;
@@ -38,8 +43,8 @@ export interface TravelRequest {
   phoneNumber: string;
   birthday: Date | string;
   travelDate: DateRange;
-  arrival: Date;
-  departure: Date;
+  arrival: Date | null;
+  departure: Date | null;
   serviceClass: string;
   role: Role | '';
   fellowPassengers: number;
@@ -53,8 +58,8 @@ const emptyRequest: TravelRequest = {
   phoneNumber: '',
   birthday: '',
   travelDate: { start: undefined, end: undefined },
-  arrival: new Date(NaN),
-  departure: new Date(NaN),
+  arrival: null,
+  departure: null,
   serviceClass: 'first',
   role: '',
   fellowPassengers: 0,
@@ -65,12 +70,13 @@ const emptyRequest: TravelRequest = {
 @Component({
   selector: 'app-sample',
   imports: [
-    JsonPipe,
     FormField,
     FormRoot,
+    SiCardComponent,
     SiCalendarButtonComponent,
     SiDatepickerDirective,
     SiDateRangeComponent,
+    SiFormDebugComponent,
     SiFormFieldComponent,
     SiFormFieldsetComponent,
     SiHelpButtonComponent,
@@ -111,19 +117,26 @@ export class SampleComponent {
   protected readonly model = signal<TravelRequest>({ ...emptyRequest });
 
   protected readonly submitted = signal<TravelRequest | undefined>(undefined);
+  protected readonly debugState = signal({ disabled: false, readonly: false });
 
   protected readonly form = form(
     this.model,
     path => {
-      required(path.name, { message: 'Name required' });
-      minLength(path.name, 3, { message: 'Minimum 3 characters' });
+      disabledField(path, { when: () => this.debugState().disabled });
+      readonlyField(path, { when: () => this.debugState().readonly });
+      disabledField(path.role, { when: () => this.debugState().readonly });
+      disabledField(path.termsAccepted, { when: () => this.debugState().readonly });
+      disabledField(path.privacyDeclined, { when: () => this.debugState().readonly });
+      required(path.name, { message: 'Required' });
+      minLength(path.name, 3, { message: 'Min. 3 characters' });
       pattern(path.name, /^[A-Z].*/, {
-        message: 'Name must start with an uppercase letter'
+        message: 'Name must start with an uppercase letter.'
       });
+      required(path.birthday, { message: 'Required' });
       validate(path.birthday, ({ value }) => {
         const valueAsDate = value();
         if (!valueAsDate) {
-          return { kind: 'required', message: 'Day of birth required' };
+          return undefined;
         }
 
         const birthday = new Date(valueAsDate);
@@ -134,43 +147,46 @@ export class SampleComponent {
         const age = Date.now() - birthday.getTime();
         return age >= 18 * 31556952000
           ? undefined
-          : { kind: 'notEighteen', message: 'You must be at least 18 years old' };
+          : { kind: 'notEighteen', message: 'You must be at least 18 years old.' };
       });
+      required(path.travelDate, { message: 'Travel date is required.' });
       validate(path.travelDate, ({ value }) => {
         const { start, end } = value();
         return !start || !end
-          ? { kind: 'required', message: 'Travel dates are required' }
+          ? { kind: 'required', message: 'Travel date is required.' }
           : undefined;
       });
+      required(path.arrival, { message: 'Required' });
+      required(path.departure, { message: 'Required' });
       validate(path.departure, ({ value, valueOf }) => {
         const arrival = valueOf(path.arrival);
         const departure = value();
-        if (isNaN(arrival.getTime()) || isNaN(departure.getTime())) {
-          return { kind: 'required', message: 'Arrival and departure times are required' };
+        if (!arrival || !departure) {
+          return undefined;
         }
 
         return departure.getTime() >= arrival.getTime()
           ? undefined
-          : { kind: 'departureTime', message: 'Departure must be after arrival' };
+          : { kind: 'departureTime', message: 'The departure time must be after arrival.' };
       });
       validate(path.serviceClass, ({ value }) =>
         value() === 'economy' ? { kind: 'noEconomy', message: 'You deserve better!' } : undefined
       );
       required(path.role, { message: 'Role required' });
       validate(path.fellowPassengers, ({ value }) =>
-        value() >= 2 ? undefined : { kind: 'min', message: 'Minimum 2' }
+        value() >= 2 ? undefined : { kind: 'min', message: 'Min. 2' }
       );
       required(path.termsAccepted, {
-        message: 'Accept terms before joining'
+        message: 'You need to accept all terms before joining.'
       });
       required(path.privacyDeclined, {
-        message: 'Accept the privacy policy before joining'
+        message: 'Required'
       });
     },
     {
       submission: {
         action: async () => {
-          this.submitted.set(this.model());
+          this.submitted.set(structuredClone(this.model()));
           return undefined;
         }
       }
@@ -178,7 +194,7 @@ export class SampleComponent {
   );
 
   protected cancel(): void {
-    this.model.set({ ...emptyRequest });
-    this.submitted.set(undefined);
+    const submitted = this.submitted();
+    this.form().reset(structuredClone(submitted ?? emptyRequest));
   }
 }

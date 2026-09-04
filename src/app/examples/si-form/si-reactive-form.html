@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row gy-5">
     <div class="col">
-      <si-card heading="Form">
+      <si-card heading="Reactive Form">
         <div class="card-body" body>
           <form class="responsive-form-col-layout" [formGroup]="form" (ngSubmit)="save()">
             <si-form-fieldset label="FORM.ROLE" inline>
@@ -96,6 +96,7 @@
               <si-timepicker
                 id="arrival"
                 formControlName="arrival"
+                required
                 [hideLabels]="true"
                 [readonly]="readonly"
               />
@@ -104,6 +105,7 @@
               <si-timepicker
                 id="departure"
                 formControlName="departure"
+                required
                 [hideLabels]="true"
                 [readonly]="readonly"
               />
@@ -161,52 +163,11 @@
         </div>
       </si-card>
     </div>
-    <div class="col">
-      <si-card class="e2e-ignore" heading="Debugging">
-        <form class="card-body form-col-layout" style="--si-form-label-width: 140px" body>
-          <si-form-fieldset label="Actions" inline>
-            <si-form-item class="form-switch mb-2" label="Disable form">
-              <input class="form-check-input" type="checkbox" [formControl]="disabledFormControl" />
-            </si-form-item>
-            <si-form-item class="form-switch mb-2" label="Readonly form">
-              <input class="form-check-input" type="checkbox" [formControl]="readonlyControl" />
-            </si-form-item>
-          </si-form-fieldset>
-
-          <si-form-item label="Validation Status">{{ form.status }}</si-form-item>
-          <si-form-item label="Validation Details">
-            <ul>
-              @for (error of getFormErrors(); track $index) {
-                <li>
-                  @if (error.controlName) {
-                    <span>Control: {{ error.controlName }}, </span>
-                  }
-                  @if (error.errorCode) {
-                    <span
-                      >error: {{ error.errorCode }},
-                      <span>{{ error.errorCode | translate: error.errorParams }}</span>
-                    </span>
-                  }
-                </li>
-              }
-            </ul>
-          </si-form-item>
-          <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">Form Data</th>
-                <th scope="col">Entity Data</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="white-space: pre-wrap">{{ form.getRawValue() | json }}</td>
-                <td style="white-space: pre-wrap">{{ (entity | json) ?? 'undefined' }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
-      </si-card>
-    </div>
+    <app-form-debug
+      [formData]="form.getRawValue()"
+      [submitted]="submitted"
+      [validationStatus]="form.status"
+      [(state)]="debugState"
+    />
   </div>
 </div>

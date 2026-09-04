@@ -152,7 +152,7 @@ http://localhost:4200/#/viewer/preview?e=<relative-example-path>
 Example for si-form:
 
 ```
-http://localhost:4200/#/viewer/preview?e=si-form/si-form
+http://localhost:4200/#/viewer/preview?e=si-form/si-reactive-form
 ```
 
 ### Supported query params (see `projects/live-preview/components/si-example-viewer/si-example-viewer.component.ts`)
