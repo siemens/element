@@ -1,5 +1,7 @@
-import writerOpts from './tools/semantic-release/writer-opts.js';
-import { commitTypes, releaseRules } from './tools/semantic-release/config.js';
+import {
+  commitAnalyzerConfig,
+  releaseNotesGeneratorConfig
+} from './tools/semantic-release/config.js';
 
 const skipCommits = process.env.SKIP_COMMIT === 'true';
 
@@ -42,30 +44,8 @@ export default {
     }
   ],
   plugins: [
-    [
-      '@semantic-release/commit-analyzer',
-      {
-        preset: 'angular',
-        releaseRules,
-        parserOpts: {
-          noteKeywords: ['BREAKING CHANGE']
-        },
-        presetConfig: {
-          types: commitTypes
-        }
-      }
-    ],
-    [
-      '@semantic-release/release-notes-generator',
-      {
-        preset: 'angular',
-        parserOpts: {
-          noteKeywords: ['BREAKING CHANGE', 'NOTE', 'DEPRECATED'],
-          issuePrefixes: ['#', 'gh-', 'CVE-']
-        },
-        writerOpts
-      }
-    ],
+    ['@semantic-release/commit-analyzer', commitAnalyzerConfig],
+    ['@semantic-release/release-notes-generator', releaseNotesGeneratorConfig],
     ...(skipCommits ? [] : ['@semantic-release/changelog']),
     // All package.json where the version needs to be updated
     ...pnpmPackageRoots.map(pkgRoot => [
