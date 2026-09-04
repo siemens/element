@@ -31,9 +31,6 @@ export interface PartState {
 }
 
 // @public (undocumented)
-export type Scale = 'none' | 'auto';
-
-// @public (undocumented)
 export class SiSplitComponent {
     constructor();
     readonly gutterSize: _angular_core.InputSignal<number>;
@@ -64,7 +61,6 @@ export class SiSplitPartComponent {
     readonly heading: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly minSize: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly removeContentOnCollapse: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly scale: _angular_core.InputSignal<Scale>;
     readonly showHeader: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly size: _angular_core.InputSignalWithTransform<number, string | number>;
     readonly stateChange: _angular_core.OutputEmitterRef<PartState>;

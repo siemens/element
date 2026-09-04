@@ -69,9 +69,13 @@ const migrateSplitSizes = (template: string, offset: number, recorder: UpdateRec
         return;
       }
 
+      const hasUnit = parts[index]!.attrs.some(attribute =>
+        ['unit', '[unit]', 'bind-unit'].includes(attribute.name)
+      );
+      const unitAttribute = hasUnit ? '' : ' unit="fr"';
       const sizeAttribute = literalSizes
-        ? ` size="${literalSizes[index]}" unit="fr"`
-        : ` [size]="${getIndexedSizeExpression(sizes.value, index)}" unit="fr"`;
+        ? ` size="${literalSizes[index]}"${unitAttribute}`
+        : ` [size]="${getIndexedSizeExpression(sizes.value, index)}"${unitAttribute}`;
       const startTag = part.startSourceSpan.toString();
       const insertOffset = part.startSourceSpan.end.offset - (startTag.endsWith('/>') ? 2 : 1);
       recorder.insertLeft(insertOffset + offset, sizeAttribute);
@@ -138,7 +142,7 @@ const migrateMissingSplitUnit = (
 ): void => {
   findElement(template, element => element.name === 'si-split-part').forEach(part => {
     const hasSize = part.attrs.some(a => a.name === 'size' || a.name === '[size]');
-    const hasUnit = part.attrs.some(a => a.name === 'unit' || a.name === '[unit]');
+    const hasUnit = part.attrs.some(a => ['unit', '[unit]', 'bind-unit'].includes(a.name));
 
     if (!hasSize || hasUnit) {
       return;

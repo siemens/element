@@ -22,14 +22,7 @@ import { elementDoubleRight } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import {
-  Action,
-  CollapseTo,
-  PartState,
-  Scale,
-  SplitOrientation,
-  SplitUnit
-} from './si-split.interfaces';
+import { Action, CollapseTo, PartState, SplitOrientation, SplitUnit } from './si-split.interfaces';
 
 @Component({
   selector: 'si-split-part',
@@ -97,14 +90,6 @@ export class SiSplitPartComponent {
    * @defaultValue false
    */
   readonly removeContentOnCollapse = input(false, { transform: booleanAttribute });
-
-  /**
-   * Defines the behavior of the split part during scaling.
-   * E.g. when set to `none`, the spit part will keep its current size even when the parent container grows or shrinks.
-   *
-   * @defaultValue 'auto'
-   */
-  readonly scale = input<Scale>('auto');
 
   /**
    * Defines if the header of the split part is visible. Default is true.
