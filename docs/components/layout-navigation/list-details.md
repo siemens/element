@@ -148,6 +148,16 @@ Inside the `<si-details-pane>` the following child components can be used:
 
 It is highly advised to use at least the `<si-details-pane-header>` to show the back button in a responsive (mobile) view.
 
+When resizing is enabled, the underlying list split part uses the `listUnit`
+input, while the details split part always uses `unit="fr"`. The list pane uses
+`unit="px"` by default. Accordingly, `listWidth` defaults to `300` and
+represents pixels with the default configuration.
+
+Use `listUnit="fr"` to retain a relative split, where `listWidth` is the list
+pane's fractional weight. When resizing is disabled, `listWidth` continues to
+control the static layout as a percentage. Values outside the percentage range
+use the standard 32/68 static layout.
+
 If the content may exceed the available space, the `overflow-auto` class should be applied
 to the body components or a child inside them.
 
