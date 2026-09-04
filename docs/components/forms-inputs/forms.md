@@ -317,15 +317,19 @@ To customize the breakpoint, use the `responsive-form-col-layout` mixin within y
 }
 ```
 
+### Example
+
+<si-docs-component base="si-form" height="780">
+  <si-docs-tab example="si-signal-form" heading="Signal Form"></si-docs-tab>
+  <si-docs-tab example="si-reactive-form" heading="Reactive Form"></si-docs-tab>
+  <si-docs-tab example="si-template-driven-form" heading="Template-driven Form"></si-docs-tab>
+</si-docs-component>
+
 ### Si-Form-Container (deprecated)
 
 The `si-form-container` is an optional wrapper around a form.
 It provides additional responsive behavior for switching labels dependent
 on the available size from `block` (label is on top the input) to `inline` (label is on the same line).
-
-### Example
-
-<si-docs-component example="si-form/si-form" height="470"></si-docs-component>
 
 ### Angular Formly
 

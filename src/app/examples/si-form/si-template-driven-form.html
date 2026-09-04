@@ -1,0 +1,207 @@
+<div class="container-fluid">
+  <div class="row gy-5">
+    <div class="col-12 col-md">
+      <si-card heading="Template-driven Form">
+        <div class="card-body" body>
+          <form #form="ngForm" class="responsive-form-col-layout" (ngSubmit)="save(form)">
+            <si-form-fieldset label="Role" inline>
+              <si-form-item label="Engineer">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="role"
+                  value="ENGINEER"
+                  required
+                  [disabled]="debugState().disabled || debugState().readonly"
+                  [(ngModel)]="model.role"
+                />
+              </si-form-item>
+              <si-form-item label="Installer">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="role"
+                  value="INSTALLER"
+                  required
+                  [disabled]="debugState().disabled || debugState().readonly"
+                  [(ngModel)]="model.role"
+                />
+              </si-form-item>
+              <button
+                si-help-button
+                type="button"
+                siHelpTitle="More information"
+                siHelpContent="A role must be selected."
+                >More information about the role</button
+              >
+            </si-form-fieldset>
+
+            <si-form-item label="Name">
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                required
+                minlength="3"
+                pattern="^[A-Z].*"
+                [disabled]="debugState().disabled"
+                [readonly]="debugState().readonly"
+                [(ngModel)]="model.name"
+              />
+              <button
+                si-help-button
+                type="button"
+                siHelpTitle="More information"
+                siHelpContent="Full name must start with an uppercase letter and be at least 3 characters long."
+                >More information about the name</button
+              >
+            </si-form-item>
+
+            <si-form-item label="Description">
+              <input
+                type="text"
+                class="form-control"
+                name="description"
+                [disabled]="debugState().disabled"
+                [readonly]="debugState().readonly"
+                [(ngModel)]="model.description"
+              />
+            </si-form-item>
+
+            <si-form-item label="Phone number">
+              <si-phone-number-input
+                class="form-control"
+                name="phoneNumber"
+                defaultCountry="CH"
+                placeholderForSearch="Search"
+                selectCountryAriaLabel="Select country"
+                [disabled]="debugState().disabled"
+                [readonly]="debugState().readonly"
+                [supportedCountries]="['AU', 'CH', 'DE', 'FK', 'IN', 'US']"
+                [(ngModel)]="model.phoneNumber"
+              />
+            </si-form-item>
+
+            <si-form-item label="Day of birth">
+              <si-calendar-button class="w-100">
+                <input
+                  type="text"
+                  class="w-100 form-control"
+                  name="birthday"
+                  autocomplete="off"
+                  appMinimumAge
+                  siDatepicker
+                  required
+                  [disabled]="debugState().disabled"
+                  [readonly]="debugState().readonly"
+                  [(ngModel)]="model.birthday"
+                />
+              </si-calendar-button>
+            </si-form-item>
+
+            <si-form-item label="Travel Date">
+              <si-date-range
+                class="w-100"
+                name="travelDate"
+                required
+                [disabled]="debugState().disabled"
+                [readonly]="debugState().readonly"
+                [(ngModel)]="model.travelDate"
+              />
+            </si-form-item>
+
+            <si-form-item label="Arrival">
+              <si-timepicker
+                name="arrival"
+                required
+                [disabled]="debugState().disabled"
+                [hideLabels]="true"
+                [readonly]="debugState().readonly"
+                [(ngModel)]="model.arrival"
+              />
+            </si-form-item>
+
+            <si-form-item label="Departure">
+              <si-timepicker
+                name="departure"
+                required
+                [appDepartureAfter]="model.arrival"
+                [disabled]="debugState().disabled"
+                [hideLabels]="true"
+                [readonly]="debugState().readonly"
+                [(ngModel)]="model.departure"
+              />
+            </si-form-item>
+
+            <si-form-item label="Class of service">
+              <si-select
+                class="form-control"
+                name="serviceClass"
+                appNoEconomy
+                [disabled]="debugState().disabled"
+                [options]="optionsList"
+                [readonly]="debugState().readonly"
+                [(ngModel)]="model.serviceClass"
+              />
+            </si-form-item>
+
+            <si-form-item label="Fellow passengers">
+              <si-number-input
+                class="form-control"
+                name="fellowPassengers"
+                min="2"
+                [disabled]="debugState().disabled"
+                [readonly]="debugState().readonly"
+                [(ngModel)]="model.fellowPassengers"
+              />
+            </si-form-item>
+
+            <si-form-fieldset label="Accept terms">
+              <si-form-item label="I confirm that I accept all and everything.">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  name="termsAccepted"
+                  required
+                  [disabled]="debugState().disabled || debugState().readonly"
+                  [(ngModel)]="model.termsAccepted"
+                />
+                <button
+                  si-help-button
+                  type="button"
+                  siHelpTitle="More information"
+                  siHelpContent="Acceptance of the terms and conditions is required."
+                  >More information about the terms</button
+                >
+              </si-form-item>
+              <si-form-item label="I confirm that I do not care about my privacy.">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  name="privacyDeclined"
+                  required
+                  [disabled]="debugState().disabled || debugState().readonly"
+                  [(ngModel)]="model.privacyDeclined"
+                />
+              </si-form-item>
+            </si-form-fieldset>
+
+            <div class="d-flex justify-content-end mt-6">
+              <button type="button" class="btn btn-secondary me-6" (click)="cancel(form)">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+      </si-card>
+    </div>
+
+    <app-form-debug
+      [formData]="form.value"
+      [submitted]="submitted"
+      [validationStatus]="form.status"
+      [(state)]="debugState"
+    />
+  </div>
+</div>

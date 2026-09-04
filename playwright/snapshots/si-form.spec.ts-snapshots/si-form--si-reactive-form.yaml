@@ -1,4 +1,4 @@
-- text: Form
+- text: Reactive Form
 - group "Role*":
   - text: ""
   - button "More information about the role"
@@ -25,8 +25,8 @@
   - text: "-"
   - textbox "End date"
   - button "Open calendar"
-- text: Arrival
-- group "Arrival":
+- text: Arrival*
+- group "Arrival*":
   - textbox "Hours":
     - /placeholder: hh
   - textbox "Minutes":
@@ -34,8 +34,8 @@
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
-- text: Departure
-- group "Departure":
+- text: Departure*
+- group "Departure*":
   - textbox "Hours":
     - /placeholder: hh
   - textbox "Minutes":
@@ -63,20 +63,12 @@
   - text: Disable form
   - checkbox "Readonly form"
   - text: Readonly form
-- text: Validation Status INVALID Validation Details
-- list:
-  - listitem: "Control: name, error: required, required"
-  - listitem: "Control: role, error: required, required"
-  - listitem: "Control: birthday, error: required, required"
-  - listitem: "Control: travelDate, error: required, required"
-  - listitem: "Control: fellowPassengers, error: min, min"
-  - listitem: "Control: termsAccepted, error: required, required"
-  - listitem: "Control: privacyDeclined, error: required, required"
+- text: Validation Status INVALID
 - table:
   - rowgroup:
-    - row "Form Data Entity Data":
+    - row "Form Data Submitted":
       - columnheader "Form Data"
-      - columnheader "Entity Data"
+      - columnheader "Submitted"
   - rowgroup:
     - 'row "{ \"name\": \"\", \"role\": null, \"description\": \"\", \"phoneNumber\": null, \"birthday\": \"\", \"travelDate\": null, \"arrival\": null, \"departure\": null, \"serviceClass\": \"first\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false } undefined"':
       - 'cell "{ \"name\": \"\", \"role\": null, \"description\": \"\", \"phoneNumber\": null, \"birthday\": \"\", \"travelDate\": null, \"arrival\": null, \"departure\": null, \"serviceClass\": \"first\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false }"'

@@ -1,16 +1,15 @@
 <div class="container-fluid">
   <div class="row gy-5">
     <div class="col-12 col-md">
-      <h2>Signal form</h2>
-      <div class="card">
-        <div class="card-body">
+      <si-card heading="Signal Form">
+        <div class="card-body" body>
           <form class="responsive-form-col-layout" [formRoot]="form">
             <si-form-fieldset label="Role" inline>
               <si-form-field label="Engineer">
                 <input
                   type="radio"
                   class="form-check-input"
-                  value="engineer"
+                  value="ENGINEER"
                   [formField]="form.role"
                 />
               </si-form-field>
@@ -18,7 +17,7 @@
                 <input
                   type="radio"
                   class="form-check-input"
-                  value="installer"
+                  value="INSTALLER"
                   [formField]="form.role"
                 />
               </si-form-field>
@@ -69,7 +68,7 @@
               </si-calendar-button>
             </si-form-field>
 
-            <si-form-field label="Travel date">
+            <si-form-field label="Travel Date">
               <si-date-range class="w-100" [formField]="form.travelDate" />
             </si-form-field>
 
@@ -94,7 +93,7 @@
             </si-form-field>
 
             <si-form-fieldset label="Accept terms">
-              <si-form-field label="I confirm that I accept all and everything">
+              <si-form-field label="I confirm that I accept all and everything.">
                 <input type="checkbox" class="form-check-input" [formField]="form.termsAccepted" />
                 <button
                   si-help-button
@@ -105,7 +104,7 @@
                 >
               </si-form-field>
 
-              <si-form-field label="I confirm that I do not care about my privacy">
+              <si-form-field label="I confirm that I do not care about my privacy.">
                 <input
                   type="checkbox"
                   class="form-check-input"
@@ -122,26 +121,14 @@
             </div>
           </form>
         </div>
-      </div>
+      </si-card>
     </div>
 
-    <div class="col-12 col-md e2e-ignore">
-      <h2>Debugging</h2>
-      <p>Validation status: {{ form().valid() ? 'VALID' : 'INVALID' }}</p>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Model</th>
-            <th scope="col">Submitted</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="white-space: pre-wrap">{{ model() | json }}</td>
-            <td style="white-space: pre-wrap">{{ (submitted() | json) ?? 'undefined' }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <app-form-debug
+      [formData]="model()"
+      [submitted]="submitted()"
+      [validationStatus]="form().valid() ? 'VALID' : 'INVALID'"
+      [(state)]="debugState"
+    />
   </div>
 </div>
