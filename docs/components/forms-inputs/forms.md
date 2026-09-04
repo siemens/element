@@ -352,7 +352,7 @@ Internally, a form field is basically structured like this:
 For checkboxes and radios, it uses `form-check` instead of the `form-control` class:
 
 ```html
-<div class="form-check">
+<div class="form-check mb-2">
   <input class="form-check-input" id="input" type="checkbox|radio" />
   <label class="form-check-label" for="input">Label</label>
 </div>

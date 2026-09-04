@@ -1,5 +1,7 @@
 <si-form-fieldset [label]="label!" [labelWidth]="labelWidth" [required]="props.required">
-  <ng-template #fieldComponent />
+  <div class="d-flex flex-column gap-2 mt-n2">
+    <ng-template #fieldComponent />
+  </div>
   <div class="invalid-feedback" [class.d-block]="showError">
     <formly-validation-message [field]="field" />
   </div>
