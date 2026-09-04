@@ -3,10 +3,9 @@
     heading="Filters"
     stateId="filters"
     collapsible="to-start"
-    scale="none"
     class="background-1"
-    size="20"
-    unit="fr"
+    size="200"
+    unit="px"
     [actions]="[
       { iconClass: 'element-edit', click: logEvent, tooltip: 'edit' },
       { iconClass: 'element-delete', click: logEvent, tooltip: 'delete' }
@@ -16,31 +15,22 @@
     <p class="p-4 text-secondary">Split Part #1</p>
   </si-split-part>
 
-  <si-split-part
-    heading="Employees"
-    stateId="employees"
-    scale="auto"
-    class="background-1"
-    size="60"
-    unit="fr"
-  >
+  <si-split-part heading="Employees" stateId="employees" class="background-1" size="1" unit="fr">
     <si-split orientation="vertical" stateId="vertical-split">
       <si-split-part
-        scale="none"
         stateId="middle-top"
         class="background-1"
-        size="40"
-        unit="fr"
+        size="100"
+        unit="px"
         [showHeader]="false"
         (stateChange)="logEvent(format('middle', $event))"
       >
         <p class="p-4 text-secondary">Split Part #2.1</p>
       </si-split-part>
       <si-split-part
-        scale="auto"
         stateId="middle-bottom"
         class="background-1"
-        size="60"
+        size="1"
         unit="fr"
         [showHeader]="false"
       >
@@ -53,10 +43,9 @@
     heading="Details"
     stateId="details"
     collapsible="to-end"
-    scale="none"
     class="background-1"
-    size="20"
-    unit="fr"
+    size="200"
+    unit="px"
     (stateChange)="logEvent(format('right', $event))"
   >
     <p class="p-4 text-secondary">Split Part #3</p>

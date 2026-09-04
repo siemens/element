@@ -7,8 +7,6 @@ type CollapseTo = 'to-start' | 'to-end';
 type SplitOrientation = 'horizontal' | 'vertical';
 type SplitUnit = 'px' | 'fr';
 
-type Scale = 'none' | 'auto';
-
 interface Action {
   iconClass: string;
   tooltip: string;
@@ -20,4 +18,4 @@ interface PartState {
   size?: number;
 }
 
-export type { Action, CollapseTo, PartState, Scale, SplitOrientation, SplitUnit };
+export type { Action, CollapseTo, PartState, SplitOrientation, SplitUnit };
