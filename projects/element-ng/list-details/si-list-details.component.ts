@@ -24,7 +24,7 @@ import {
   ElementDimensions,
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
-import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/split';
+import { SiSplitComponent, SiSplitPartComponent, SplitUnit } from '@siemens/element-ng/split';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
 @Component({
@@ -41,7 +41,7 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 })
 export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private resizeSubs?: Subscription;
-  private elementRef = inject(ElementRef);
+  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private resizeObserver = inject(ResizeObserverService);
   private readonly listDetailsContainer = viewChild.required<ElementRef>('listDetailsContainer');
   protected readonly animationsGloballyDisabled = areAnimationsDisabled();
@@ -79,11 +79,21 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   readonly disableResizing = input(false, { transform: booleanAttribute });
 
   /**
-   * The percentage width of the list view of the overall component width.
+   * Unit used for the list split part when resizing is enabled.
    *
-   * @defaultValue 32
+   * @defaultValue 'px'
    */
-  readonly listWidth = model<number>(32);
+  readonly listUnit = input<SplitUnit>('px');
+
+  /**
+   * The initial size of the list split part when resizing is enabled.
+   * The value uses {@link listUnit}. With `listUnit="fr"`, the value is
+   * treated as a percentage-like fractional weight. In the static layout,
+   * numeric values continue to represent a percentage.
+   *
+   * @defaultValue 300
+   */
+  readonly listWidth = model<number>(300);
 
   /**
    * Sets the minimal width of the list component in pixel.
@@ -105,10 +115,20 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
    */
   readonly stateId = input<string>();
 
-  protected readonly splitSizes = computed<[number, number]>(() => [
-    this.listWidth(),
-    100 - this.listWidth()
-  ]);
+  /** @internal */
+  readonly staticListWidth = computed(() => {
+    const listWidth = this.listWidth();
+    return listWidth >= 0 && listWidth <= 100 ? listWidth : 32;
+  });
+
+  protected readonly splitSizes = computed<[number, number]>(() => {
+    if (this.listUnit() === 'fr') {
+      const relativeListWidth = this.staticListWidth();
+      return [relativeListWidth, 100 - relativeListWidth];
+    }
+
+    return [this.listWidth(), 1];
+  });
 
   protected readonly listStateId = computed(() => {
     const stateId = this.stateId();
@@ -168,7 +188,23 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private readonly resizeDimensions = signal<ElementDimensions | undefined>(undefined);
 
   protected onSplitSizesChange(sizes: number[]): void {
-    this.listWidth.set(sizes[0]);
+    if (this.listUnit() === 'px') {
+      this.listWidth.set(this.getListSizePx(sizes[0]));
+    } else {
+      this.listWidth.set(sizes[0]);
+    }
+  }
+
+  private getListSizePx(fallbackPercentage: number): number {
+    const listPart = this.elementRef.nativeElement.querySelector<HTMLElement>('si-split-part');
+    const listWidth = listPart?.getBoundingClientRect().width;
+    if (listWidth) {
+      return listWidth;
+    }
+
+    const split = this.elementRef.nativeElement.querySelector<HTMLElement>('si-split');
+    const splitWidth = split?.getBoundingClientRect().width;
+    return splitWidth ? (splitWidth * fallbackPercentage) / 100 : fallbackPercentage;
   }
 
   /** @internal */
