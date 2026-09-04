@@ -12,6 +12,7 @@ import { contentFormatterMigrationRule } from './migrate-content-formatter.js';
 import { markdownRendererMigrationRule } from './migrate-markdown-renderer.js';
 import { spacerMigrationRule } from './migrate-spacers.js';
 import { splitCollapseMigrationRule } from './migrate-split-collapse.js';
+import { splitScaleMigrationRule } from './migrate-split-scale.js';
 import { splitSizesMigrationRule } from './migrate-split-sizes.js';
 
 export const migrateToV51 = (): Rule => {
@@ -22,6 +23,7 @@ export const migrateToV51 = (): Rule => {
     return chain([
       elementMigrationRule(options, migrationData),
       missingTranslateMigrationRule(options),
+      splitScaleMigrationRule(options),
       splitSizesMigrationRule(options),
       splitCollapseMigrationRule(options),
       contentFormatterMigrationRule(options),

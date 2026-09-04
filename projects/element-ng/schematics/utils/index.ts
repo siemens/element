@@ -7,5 +7,6 @@ export * from './project-utils.js';
 export * from './ts-compiler-host.js';
 export * from './schematics-file-system.js';
 export * from './template-utils.js';
+export * from './template-edit-utils.js';
 export * from './testing.js';
 export * from './ts-utils.js';
