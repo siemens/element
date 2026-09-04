@@ -1,0 +1,22 @@
+/* Open the docs version selector on click, not hover.
+   MkDocs Material shows `.md-version__list` on :hover / :focus-within. */
+
+.md-version:hover .md-version__list,
+.md-version:focus-within .md-version__list {
+  max-height: 0;
+  opacity: 0;
+}
+
+.md-version.md-version--open .md-version__list {
+  max-height: 10rem;
+  opacity: 1;
+  transition:
+    max-height 0ms,
+    opacity 0.25s;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .md-version:hover .md-version__list {
+    animation: none;
+  }
+}
