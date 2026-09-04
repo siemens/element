@@ -24,6 +24,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
     readonly largeLayoutBreakpoint: _angular_core.InputSignal<number>;
     readonly mainContainerClass: _angular_core.InputSignal<string>;
     readonly mainContainerWidth: _angular_core.ModelSignal<number | "default">;
+    readonly mainUnit: _angular_core.InputSignal<SplitUnit>;
     readonly minDetailSize: _angular_core.InputSignal<number>;
     readonly minMainSize: _angular_core.InputSignal<number>;
     readonly resizableParts: _angular_core.InputSignalWithTransform<boolean, unknown>;

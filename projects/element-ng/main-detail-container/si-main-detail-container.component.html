@@ -2,13 +2,15 @@
   <div class="main-detail-layout d-flex flex-column" [class]="containerClass()">
     <ng-container *ngTemplateOutlet="headingTemplate" />
     <si-split
+      #splitComponent
       class="w-100 flex-grow-1"
       orientation="horizontal"
       [stateId]="stateId()"
       (sizesChange)="onSplitSizesChange($event)"
     >
       <si-split-part
-        unit="fr"
+        #mainSplitPart
+        [unit]="mainUnit()"
         [size]="splitSizes[0]"
         [showHeader]="false"
         [minSize]="minMainSize()"
