@@ -5,14 +5,16 @@
  * - Fetches versions.json from the root of the domain
  * - Supports absolute version URLs
  * - Preserves current page path when switching versions
- * - Opens the version menu on click (not hover)
+ * - Opens the version menu on click or keyboard, not hover
+ * - Follows WAI-ARIA APG disclosure navigation (real links, Tab + arrow keys)
  * - Gracefully degrades if versions.json is not found (no errors, just no selector)
  *
  * If versions.json is not available (404), the page loads normally without the version selector.
  * No errors are thrown to ensure documentation remains accessible.
  *
- * Based on MkDocs Material's version selector implementation
+ * Based on MkDocs Material's version selector markup
  * https://github.com/squidfunk/mkdocs-material
+ * Keyboard pattern: https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/
  */
 
 (function () {
@@ -103,41 +105,104 @@
     const current = versions.find(v => v.version === currentVersion) || versions[0];
     const visibleVersions = versions.filter(v => !v.hidden);
 
-    const html = `<div class="md-version"><button type="button" class="md-version__current" aria-label="Select version" aria-expanded="false" aria-haspopup="true" aria-controls="md-version-list">${current.title}</button><ul id="md-version-list" class="md-version__list">${visibleVersions.map(version => `<li class="md-version__item"><a href="${buildVersionURL(version.version, currentVersion)}" class="md-version__link">${version.title}</a></li>`).join('')}</ul></div>`;
+    const items = visibleVersions
+      .map(version => {
+        const isCurrent = version.version === currentVersion;
+        const currentAttr = isCurrent ? ' aria-current="page"' : '';
+        const href = buildVersionURL(version.version, currentVersion);
+        return `<li class="md-version__item"><a href="${href}" class="md-version__link"${currentAttr}>${version.title}</a></li>`;
+      })
+      .join('');
 
-    return html;
+    return `<div class="md-version"><button type="button" class="md-version__current" aria-expanded="false" aria-controls="md-version-list">${current.title}</button><ul id="md-version-list" class="md-version__list" hidden>${items}</ul></div>`;
   }
 
   /**
-   * Open/close the version menu on click (Material CSS uses hover).
+   * Disclosure navigation: click/keyboard open, no hover.
+   * Tab moves through real links; ArrowUp/Down/Home/End move between them.
    */
   function bindVersionSelector(versionEl) {
     const button = versionEl.querySelector('.md-version__current');
-    if (!button) {
+    const list = versionEl.querySelector('.md-version__list');
+    if (!button || !list) {
       return;
     }
 
-    const setOpen = open => {
+    const getLinks = () => Array.from(list.querySelectorAll('.md-version__link'));
+
+    const isOpen = () => !list.hidden;
+
+    const setOpen = (open, focusTarget) => {
       versionEl.classList.toggle('md-version--open', open);
       button.setAttribute('aria-expanded', String(open));
-    };
+      list.hidden = !open;
 
-    const isOpen = () => versionEl.classList.contains('md-version--open');
+      if (!open) {
+        if (focusTarget === 'button') {
+          button.focus();
+        }
+        return;
+      }
+
+      const links = getLinks();
+      const current = list.querySelector('.md-version__link[aria-current="page"]');
+      if (focusTarget === 'current') {
+        (current || links[0])?.focus();
+      } else if (focusTarget === 'first') {
+        links[0]?.focus();
+      } else if (focusTarget === 'last') {
+        links[links.length - 1]?.focus();
+      }
+    };
 
     button.addEventListener('click', () => {
       setOpen(!isOpen());
     });
 
-    document.addEventListener('click', event => {
-      if (isOpen() && !versionEl.contains(event.target)) {
+    button.addEventListener('keydown', event => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        setOpen(true, event.key === 'ArrowDown' ? 'current' : 'last');
+      } else if (event.key === 'Escape' && isOpen()) {
+        event.preventDefault();
         setOpen(false);
       }
     });
 
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && isOpen()) {
+    list.addEventListener('keydown', event => {
+      const links = getLinks();
+      const index = links.indexOf(document.activeElement);
+      if (index < 0) {
+        return;
+      }
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        links[(index + 1) % links.length].focus();
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        links[(index - 1 + links.length) % links.length].focus();
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        links[0]?.focus();
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        links[links.length - 1]?.focus();
+      } else if (event.key === 'Escape') {
+        event.preventDefault();
+        setOpen(false, 'button');
+      }
+    });
+
+    versionEl.addEventListener('focusout', event => {
+      if (!versionEl.contains(event.relatedTarget)) {
         setOpen(false);
-        button.focus();
+      }
+    });
+
+    document.addEventListener('pointerdown', event => {
+      if (isOpen() && !versionEl.contains(event.target)) {
+        setOpen(false);
       }
     });
   }
