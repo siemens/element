@@ -88,7 +88,7 @@ If a `si-form-item` component cannot be used, it is also possible to use
 a switch with native HTML elements only:
 
 ```html
-<div class="form-check form-switch">
+<div class="form-check mb-2 form-switch">
   <input type="checkbox" id="check-id" class="form-check-input" />
   <label for="check-id" class="form-check-label">Switch</label>
 </div>
