@@ -5,6 +5,7 @@
  * - Fetches versions.json from the root of the domain
  * - Supports absolute version URLs
  * - Preserves current page path when switching versions
+ * - Opens the version menu on click (not hover)
  * - Gracefully degrades if versions.json is not found (no errors, just no selector)
  *
  * If versions.json is not available (404), the page loads normally without the version selector.
@@ -102,9 +103,43 @@
     const current = versions.find(v => v.version === currentVersion) || versions[0];
     const visibleVersions = versions.filter(v => !v.hidden);
 
-    const html = `<div class="md-version"><button class="md-version__current" aria-label="Select version">${current.title}</button><ul class="md-version__list">${visibleVersions.map(version => `<li class="md-version__item"><a href="${buildVersionURL(version.version, currentVersion)}" class="md-version__link">${version.title}</a></li>`).join('')}</ul></div>`;
+    const html = `<div class="md-version"><button type="button" class="md-version__current" aria-label="Select version" aria-expanded="false" aria-haspopup="true" aria-controls="md-version-list">${current.title}</button><ul id="md-version-list" class="md-version__list">${visibleVersions.map(version => `<li class="md-version__item"><a href="${buildVersionURL(version.version, currentVersion)}" class="md-version__link">${version.title}</a></li>`).join('')}</ul></div>`;
 
     return html;
+  }
+
+  /**
+   * Open/close the version menu on click (Material CSS uses hover).
+   */
+  function bindVersionSelector(versionEl) {
+    const button = versionEl.querySelector('.md-version__current');
+    if (!button) {
+      return;
+    }
+
+    const setOpen = open => {
+      versionEl.classList.toggle('md-version--open', open);
+      button.setAttribute('aria-expanded', String(open));
+    };
+
+    const isOpen = () => versionEl.classList.contains('md-version--open');
+
+    button.addEventListener('click', () => {
+      setOpen(!isOpen());
+    });
+
+    document.addEventListener('click', event => {
+      if (isOpen() && !versionEl.contains(event.target)) {
+        setOpen(false);
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && isOpen()) {
+        setOpen(false);
+        button.focus();
+      }
+    });
   }
 
   /**
@@ -152,6 +187,11 @@
 
         // Append to .md-header
         header.appendChild(topicWrapper);
+
+        const versionEl = topicWrapper.querySelector('.md-version');
+        if (versionEl) {
+          bindVersionSelector(versionEl);
+        }
       })
       .catch(error => {
         console.error('[Version Selector] Failed to load:', error.message);

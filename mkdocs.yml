@@ -236,6 +236,7 @@ theme:
 extra_css:
   - '_src/dos-and-donts.css'
   - '_src/color-grid.css'
+  - '_src/version-selector.css'
 
 extra_javascript:
   - '//w3.siemens.com/ote/ote_config.js'
