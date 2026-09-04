@@ -17,7 +17,7 @@ import { SiListDetailsComponent } from '../si-list-details.component';
     '[attr.inert]': '!parent.hasLargeSize() && parent.detailsActive() ? "" : null',
     '[attr.tabindex]': '-1',
     '[style.flex-basis.%]':
-      'parent.hasLargeSize() && parent.disableResizing() ? parent.listWidth() : undefined'
+      'parent.hasLargeSize() && parent.disableResizing() ? parent.staticListWidth() : undefined'
   }
 })
 export class SiListPaneComponent {
