@@ -1,4 +1,4 @@
-import { noteTitleMap, noteTitles, commitTypes } from './config.js';
+import { commitTypes, noteTitleMap, noteTitles } from './commit-config.js';
 
 const COMMIT_HASH_LENGTH = 7;
 
@@ -21,7 +21,7 @@ function transform(commit) {
 
   const normalizedNotes = hasNotes
     ? commit.notes.map(note => ({
-        title: noteTitleMap[note.title],
+        title: noteTitleMap[note.title] ?? note.title,
         text: note.text.replace(/\n/g, '\n  ')
       }))
     : [];
