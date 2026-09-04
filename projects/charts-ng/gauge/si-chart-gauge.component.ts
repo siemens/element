@@ -46,6 +46,11 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
    * @defaultValue 0
    */
   readonly value = input(0);
+  /** The value at which the main value arc starts.
+   * Values outside the gauge range are clamped to `minValue` or `maxValue`.
+   * When not set, the value arc starts at `minValue`.
+   */
+  readonly valueArcStart = input<number>();
   /** The number of intervals displayed on the gauge axis. */
   readonly splitSteps = input<number>();
   /** Whether the number of gauge-axis intervals adapts to the component size.
@@ -160,13 +165,54 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
     }
     (this.actualOptions.series![0] as any).axisLine.show = hasIndicator;
 
-    this.setAxisLineColor(newColors, (this.actualOptions.series![2] as any).axisLine);
+    this.setAxisLineColor(
+      this.getValueArcColors(newColors),
+      (this.actualOptions.series![2] as any).axisLine
+    );
     this.refreshSeries();
   }
 
   private setAxisLineColor(colors: [number, string][], axisLine: any): void {
     axisLine.lineStyle = axisLine.lineStyle ?? {};
     axisLine.lineStyle.color = colors;
+  }
+
+  private getValueArcColors(colors: [number, string][]): [number, string][] {
+    const minValue = this.minValue();
+    const maxValue = this.maxValue();
+    const valueArcStart = this.valueArcStart();
+    if (
+      valueArcStart === undefined ||
+      valueArcStart <= minValue ||
+      valueArcStart >= maxValue ||
+      maxValue <= minValue
+    ) {
+      return colors;
+    }
+
+    const startRatio = (valueArcStart - minValue) / (maxValue - minValue);
+    return colors
+      .filter(([threshold]) => threshold > startRatio)
+      .map(([threshold, color]) => [(threshold - startRatio) / (1 - startRatio), color]);
+  }
+
+  private getValueArcOptions(): { min: number; startAngle: number; showProgress: boolean } {
+    const minValue = this.minValue();
+    const maxValue = this.maxValue();
+    const valueArcStart = this.valueArcStart();
+    if (valueArcStart === undefined || valueArcStart <= minValue || maxValue <= minValue) {
+      return { min: minValue, startAngle: 180, showProgress: true };
+    } 
+    if (valueArcStart >= maxValue) {
+      return { min: minValue, startAngle: 180, showProgress: false };
+    }
+
+    const startRatio = (valueArcStart - minValue) / (maxValue - minValue);
+    return {
+      min: valueArcStart,
+      startAngle: 180 * (1 - startRatio),
+      showProgress: true
+    };
   }
 
   private getResponsiveConfig(): {
@@ -240,6 +286,7 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
   protected override applyOptions(): void {
     const resp = this.getResponsiveConfig();
     const hasIndicator = !!this.segments().length;
+    const valueArcOptions = this.getValueArcOptions();
 
     const splitNumber =
       this.responsiveSplitSteps() && resp.splits ? resp.splits : this.splitSteps();
@@ -310,13 +357,13 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
       type: 'gauge',
       silent: false,
       radius: resp.outerRadius,
-      startAngle: 180,
+      startAngle: valueArcOptions.startAngle,
       endAngle: 0,
-      min: this.minValue(),
+      min: valueArcOptions.min,
       max: this.maxValue(),
       splitNumber,
       progress: {
-        show: true,
+        show: valueArcOptions.showProgress,
         itemStyle: { color: 'auto' },
         width: resp.progressWidth
       },
@@ -391,15 +438,20 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
     if (this.chart && (changes.palette || changes.colors || changes.segments)) {
       this.updateColors();
     }
+    const updateValueArcColors =
+      this.chart && (changes.minValue || changes.maxValue || changes.valueArcStart);
     changes.forceAll = new SimpleChange(false, true, false);
     super.ngOnChanges(changes);
+    if (updateValueArcColors) {
+      this.updateColors();
+    }
   }
 
   protected override applyDataZoom(): void {}
 
   protected override afterChartResize(): void {
     this.applyOptions();
-    this.refreshSeries();
+    this.updateColors();
   }
 
   /**
