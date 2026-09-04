@@ -168,6 +168,7 @@ export interface SiLivePreviewConfig {
     examplesBaseUrl: string;
     // (undocumented)
     landscapeToggle?: boolean;
+    maxLogMessages?: number;
     // (undocumented)
     rootFontSizes?: number[];
     // (undocumented)
