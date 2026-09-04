@@ -27,7 +27,7 @@ import {
   ElementDimensions,
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
-import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/split';
+import { SiSplitComponent, SiSplitPartComponent, SplitUnit } from '@siemens/element-ng/split';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { timer } from 'rxjs';
 
@@ -52,7 +52,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
   protected readonly icons = addIcons({ elementBack });
 
   private readonly animationDuration = 500;
-  private readonly elementRef = inject(ElementRef);
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly resizeObserver = inject(ResizeObserverService);
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
@@ -162,10 +162,26 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
   readonly detailContainerClass = input('pb-6');
 
   /**
-   * The percentage width of the main container from the overall component width.
-   * Can be a number or `'default'`, which is 32% when {@link resizableParts} is active, otherwise 50%.
+   * Unit used for the main split part when {@link resizableParts} is enabled.
    *
-   * @defaultValue 'default'
+   * @defaultValue 'px'
+   */
+  readonly mainUnit = input<SplitUnit>('px');
+
+  /**
+   * Unit used for the detail split part when {@link resizableParts} is enabled.
+   *
+   * @defaultValue 'fr'
+   */
+  readonly detailUnit = input<SplitUnit>('fr');
+
+  /**
+   * The initial size of the main split part when {@link resizableParts} is enabled.
+   * The value uses {@link mainUnit}. With `mainUnit="fr"` and `detailUnit="fr"`,
+   * the value is treated as a percentage-like fractional weight. In the static
+   * layout, numeric values continue to represent a percentage.
+   *
+   * @defaultValue 'default', which uses {@link minMainSize} for `px`, `32` for two `fr` parts, and `1` otherwise.
    */
   readonly mainContainerWidth = model<number | 'default'>('default');
   /**
@@ -194,17 +210,22 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
 
   private readonly actualMainContainerWidth = computed(() => {
     const mainContainerWidth = this.mainContainerWidth();
-    return mainContainerWidth === 'default'
-      ? this.resizableParts()
-        ? 32
-        : 50
-      : mainContainerWidth;
+    if (mainContainerWidth !== 'default') {
+      return mainContainerWidth;
+    }
+
+    if (!this.resizableParts()) {
+      return 50;
+    }
+
+    if (this.mainUnit() === 'px') {
+      return this.minMainSize();
+    }
+
+    return this.detailUnit() === 'fr' ? 32 : 1;
   });
 
-  protected splitSizes: [number, number] = [
-    this.actualMainContainerWidth(),
-    100 - this.actualMainContainerWidth()
-  ];
+  protected splitSizes: [number, number] = this.getSplitSizes();
   // The max size to limit the main container in the static flex layout (if less than 50%), otherwise not set.
   protected maxMainSize: string = this.getMaxSize(0);
   // The max size to limit the detail container in the static flex layout (if less than 50%), otherwise not set.
@@ -229,8 +250,15 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
       this.updateDetailsFocusable();
       this.doAnimation(changes.detailsActive.currentValue);
     }
-    if (changes.mainContainerWidth || changes.resizableParts) {
-      this.splitSizes = [this.actualMainContainerWidth(), 100 - this.actualMainContainerWidth()];
+    if (
+      changes.mainContainerWidth ||
+      changes.resizableParts ||
+      changes.mainUnit ||
+      changes.detailUnit ||
+      changes.minMainSize ||
+      changes.minDetailSize
+    ) {
+      this.splitSizes = this.getSplitSizes();
       this.maxMainSize = this.getMaxSize(0);
       this.maxDetailSize = this.getMaxSize(1);
     }
@@ -244,7 +272,11 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
   }
 
   protected onSplitSizesChange(sizes: number[]): void {
-    this.mainContainerWidth.set(sizes[0]);
+    if (this.mainUnit() === 'px') {
+      this.mainContainerWidth.set(this.getMainSizePx(sizes[0]));
+    } else {
+      this.mainContainerWidth.set(sizes[0]);
+    }
   }
 
   protected detailsBackClicked(): void {
@@ -256,12 +288,45 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
    * Get the max size to limit in the static flex layout (if less than 50%), otherwise not set
    */
   private getMaxSize(part: 0 | 1): string {
-    return this.resizableParts() ||
-      this.mainContainerWidth() === 'default' ||
+    const mainContainerWidth = this.mainContainerWidth();
+    if (
+      this.resizableParts() ||
+      mainContainerWidth === 'default' ||
       !this.hasLargeSize ||
-      this.splitSizes[part] > 50
-      ? ''
-      : this.splitSizes[part] + '%';
+      mainContainerWidth < 0 ||
+      mainContainerWidth > 100
+    ) {
+      return '';
+    }
+
+    const size = part === 0 ? mainContainerWidth : 100 - mainContainerWidth;
+    return size > 50 ? '' : size + '%';
+  }
+
+  private getSplitSizes(): [number, number] {
+    if (!this.resizableParts()) {
+      const mainSize = this.actualMainContainerWidth();
+      return mainSize >= 0 && mainSize <= 100 ? [mainSize, 100 - mainSize] : [50, 50];
+    }
+
+    const mainSize = this.actualMainContainerWidth();
+    if (this.mainUnit() === 'fr' && this.detailUnit() === 'fr') {
+      return mainSize >= 0 && mainSize <= 100 ? [mainSize, 100 - mainSize] : [32, 68];
+    }
+
+    return [mainSize, this.detailUnit() === 'px' ? this.minDetailSize() : 1];
+  }
+
+  private getMainSizePx(fallbackPercentage: number): number {
+    const mainPart = this.elementRef.nativeElement.querySelector<HTMLElement>('si-split-part');
+    const mainWidth = mainPart?.getBoundingClientRect().width;
+    if (mainWidth) {
+      return mainWidth;
+    }
+
+    const split = this.elementRef.nativeElement.querySelector<HTMLElement>('si-split');
+    const splitWidth = split?.getBoundingClientRect().width;
+    return splitWidth ? (splitWidth * fallbackPercentage) / 100 : fallbackPercentage;
   }
 
   private determineLayout(dimensions: ElementDimensions): void {

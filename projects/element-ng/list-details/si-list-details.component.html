@@ -6,8 +6,7 @@
     (sizesChange)="onSplitSizesChange($event)"
   >
     <si-split-part
-      scale="none"
-      unit="fr"
+      [unit]="listUnit()"
       [size]="splitSizes()[0]"
       [showHeader]="false"
       [minSize]="minListSize()"
@@ -16,8 +15,7 @@
       <ng-container *ngTemplateOutlet="listTemplate" />
     </si-split-part>
     <si-split-part
-      scale="auto"
-      unit="fr"
+      [unit]="detailsUnit()"
       [size]="splitSizes()[1]"
       [showHeader]="false"
       [minSize]="minDetailsSize()"

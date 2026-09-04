@@ -13,6 +13,7 @@ import {
   ElementDimensions,
   ResizeObserverService
 } from '../resize-observer';
+import { SiSplitPartComponent, SplitUnit } from '../split';
 import { SiMainDetailContainerComponent } from './si-main-detail-container.component';
 
 @Component({
@@ -27,6 +28,9 @@ import { SiMainDetailContainerComponent } from './si-main-detail-container.compo
       [hideBackButton]="hideBackButton()"
       [largeLayoutBreakpoint]="largeLayoutBreakpoint"
       [resizableParts]="resizableParts()"
+      [mainUnit]="mainUnit()"
+      [detailUnit]="detailUnit()"
+      [mainContainerWidth]="mainContainerWidth()"
       [(detailsActive)]="detailsActive"
       (hasLargeSizeChange)="hasLargeSizeChanged($event)"
       (mainContainerWidthChange)="mainContainerWidthChanged($event)"
@@ -47,6 +51,9 @@ class WrapperComponent {
   readonly detailsHeading = signal('details-heading');
   readonly hideBackButton = signal(false);
   readonly resizableParts = signal(false);
+  readonly mainUnit = signal<SplitUnit>('px');
+  readonly detailUnit = signal<SplitUnit>('fr');
+  readonly mainContainerWidth = signal<number | 'default'>('default');
   largeLayoutBreakpoint = BOOTSTRAP_BREAKPOINTS.mdMinimum;
   readonly detailsActive = signal(false);
 
@@ -125,6 +132,49 @@ describe('MainDetailContainerComponent', () => {
 
     expect(htmlElement.querySelector('si-split')).toBeInTheDocument();
     expect(htmlElement.querySelectorAll('si-split-part')).toHaveLength(2);
+  });
+
+  it('should use px for the main part and fr for the detail part by default', async () => {
+    component.resizableParts.set(true);
+    await fixture.whenStable();
+
+    const parts = debugElement.queryAll(By.directive(SiSplitPartComponent));
+    expect(parts[0]!.componentInstance.unit()).toBe('px');
+    expect(parts[0]!.componentInstance.size()).toBe(300);
+    expect(parts[1]!.componentInstance.unit()).toBe('fr');
+    expect(parts[1]!.componentInstance.size()).toBe(1);
+  });
+
+  it('should keep the existing relative split when both units are fr', async () => {
+    component.mainUnit.set('fr');
+    component.detailUnit.set('fr');
+    component.mainContainerWidth.set(40);
+    component.resizableParts.set(true);
+    await fixture.whenStable();
+
+    const parts = debugElement.queryAll(By.directive(SiSplitPartComponent));
+    expect(parts[0]!.componentInstance.size()).toBe(40);
+    expect(parts[1]!.componentInstance.size()).toBe(60);
+  });
+
+  it('should use minimum sizes for fixed parts and one fr for a flexible detail part', async () => {
+    component.mainContainerWidth.set(320);
+    component.mainUnit.set('px');
+    component.detailUnit.set('px');
+    component.resizableParts.set(true);
+    await fixture.whenStable();
+
+    const parts = debugElement.queryAll(By.directive(SiSplitPartComponent));
+    expect(parts[0]!.componentInstance.size()).toBe(320);
+    expect(parts[1]!.componentInstance.size()).toBe(300);
+  });
+
+  it('should keep the standard static layout for a px-sized main part', async () => {
+    component.mainContainerWidth.set(320);
+    await fixture.whenStable();
+
+    expect(getMainContainer().style.maxInlineSize).toBe('');
+    expect(getDetailContainer().style.maxInlineSize).toBe('');
   });
 
   it('should hide the heading component when heading input text is empty', async () => {

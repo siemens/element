@@ -168,7 +168,7 @@ export class SampleComponent {
     });
   }
 
-  onSplitChange(containerWidth: number | string): void {
+  onSplitChange(containerWidth: number | 'default'): void {
     this.logEvent(`Main width is ${containerWidth}%.`);
     // eslint-disable-next-line @typescript-eslint/no-deprecated
     this.table().recalculate();
