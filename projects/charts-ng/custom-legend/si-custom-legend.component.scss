@@ -113,10 +113,33 @@ $default-chart-padding: 32px;
   position: initial;
   width: calc(100% - 12px);
   max-width: fit-content;
+  // Reset native button styles
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
 
   &:hover {
     .tooltip {
       display: block;
+    }
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    .symbol-focus-target {
+      outline: none;
+    }
+
+    .symbol-focus-ring {
+      stroke: var(--element-focus-default);
+      stroke-width: 2;
+    }
+
+    .symbol-focus-gap {
+      stroke: var(--element-base-0);
     }
   }
 }
