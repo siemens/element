@@ -17,6 +17,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
     readonly detailsActive: _angular_core.ModelSignal<boolean>;
     readonly detailsBackButtonText: _angular_core.InputSignal<TranslatableString>;
     readonly detailsHeading: _angular_core.InputSignal<TranslatableString>;
+    readonly detailUnit: _angular_core.InputSignal<SplitUnit>;
     hasLargeSize: boolean;
     readonly hasLargeSizeChange: _angular_core.OutputEmitterRef<boolean>;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
@@ -24,6 +25,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
     readonly largeLayoutBreakpoint: _angular_core.InputSignal<number>;
     readonly mainContainerClass: _angular_core.InputSignal<string>;
     readonly mainContainerWidth: _angular_core.ModelSignal<number | "default">;
+    readonly mainUnit: _angular_core.InputSignal<SplitUnit>;
     readonly minDetailSize: _angular_core.InputSignal<number>;
     readonly minMainSize: _angular_core.InputSignal<number>;
     readonly resizableParts: _angular_core.InputSignalWithTransform<boolean, unknown>;
