@@ -1,18 +1,66 @@
-/* Open the docs version selector on click, not hover.
-   MkDocs Material shows `.md-version__list` on :hover / :focus-within. */
+/* Version selector: open on click/keyboard, not hover.
+   Overrides MkDocs Material's :hover / :focus-within open. */
 
 .md-version:hover .md-version__list,
 .md-version:focus-within .md-version__list {
   max-height: 0;
   opacity: 0;
+  visibility: hidden;
 }
 
-.md-version.md-version--open .md-version__list {
+.md-version.md-version--open .md-version__list,
+.md-version.md-version--open:hover .md-version__list,
+.md-version.md-version--open:focus-within .md-version__list {
+  /* Material places the list over the button; keep the toggle clickable. */
+  top: calc(100% + 0.15rem);
+  right: auto;
+  left: 0;
+  z-index: 20;
   max-height: 10rem;
+  margin: 0;
+  overflow: auto;
   opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  background-color: var(--md-default-bg-color);
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--md-default-fg-color) 8%, transparent),
+    color-mix(in srgb, var(--md-default-fg-color) 8%, transparent)
+  );
+  border: 1px solid var(--md-default-fg-color--lightest);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
   transition:
     max-height 0ms,
     opacity 0.25s;
+}
+
+[dir='rtl'] .md-version.md-version--open .md-version__list,
+[dir='rtl'] .md-version.md-version--open:hover .md-version__list,
+[dir='rtl'] .md-version.md-version--open:focus-within .md-version__list {
+  right: 0;
+  left: auto;
+}
+
+.md-version__list[hidden] {
+  display: none;
+}
+
+.md-version__current:focus,
+.md-version__current:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+}
+
+.md-version__link:focus,
+.md-version__link:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: -2px;
+  color: var(--md-accent-fg-color);
+  background-color: var(--md-default-fg-color--lightest);
+}
+
+.md-version__link[aria-current='page'] {
+  font-weight: 700;
 }
 
 @media (hover: none), (pointer: coarse) {
