@@ -1,0 +1,108 @@
+<si-list-details
+  class="p-6 px-md-9"
+  [expandBreakpoint]="expandBreakpoint"
+  [listWidth]="35"
+  [minListSize]="220"
+  [minDetailsSize]="320"
+  [(detailsActive)]="detailsActive"
+>
+  <si-list-pane class="card">
+    <si-list-pane-header>
+      <span class="si-h5">Users</span>
+    </si-list-pane-header>
+    <si-list-pane-body>
+      <div class="si-layout-fixed-height overflow-auto">
+        <div class="list-group list-group-flush">
+          @for (user of users; track user.id) {
+            <button
+              type="button"
+              class="list-group-item list-group-item-action d-flex align-items-center gap-4"
+              [class.active]="selectedUser().id === user.id"
+              [attr.aria-current]="selectedUser().id === user.id ? 'true' : null"
+              [attr.aria-label]="'Select ' + user.name"
+              (click)="selectUser(user)"
+            >
+              <si-avatar
+                size="small"
+                autoColor="true"
+                [initials]="user.initials"
+                [altText]="user.name"
+              />
+              <span class="d-flex flex-column text-start overflow-hidden">
+                <span class="si-body-sbold text-truncate">{{ user.name }}</span>
+                <span class="si-body-sm text-secondary text-truncate">{{ user.role }}</span>
+              </span>
+            </button>
+          }
+        </div>
+      </div>
+    </si-list-pane-body>
+  </si-list-pane>
+
+  <si-details-pane class="card">
+    <header class="flex-shrink-0">
+      <div class="d-flex align-items-center gap-4 p-6">
+        @if (showBackButton()) {
+          <button
+            #backButton
+            type="button"
+            class="btn btn-icon btn-tertiary flex-shrink-0"
+            aria-label="Back to users"
+            (click)="backToList()"
+          >
+            <si-icon class="icon" [icon]="icons.elementBack" />
+          </button>
+        }
+        <si-avatar
+          size="regular"
+          autoColor="true"
+          class="flex-shrink-0"
+          [initials]="selectedUser().initials"
+          [altText]="selectedUser().name"
+        />
+        <div class="flex-grow-1 overflow-hidden">
+          <h2 class="si-h4 text-truncate mb-1">{{ selectedUser().name }}</h2>
+          <p class="si-body-paragraph text-secondary text-wrap mb-0">
+            {{ selectedUser().description }}
+          </p>
+        </div>
+        <si-menu-bar class="flex-shrink-0" aria-label="User actions">
+          <si-menu-item [icon]="icons.elementEdit" (triggered)="editUser()">Edit</si-menu-item>
+          <si-menu-item [icon]="icons.elementDelete" (triggered)="deleteUser()"
+            >Delete</si-menu-item
+          >
+        </si-menu-bar>
+      </div>
+
+      <div class="nav-tabs d-flex align-items-center px-6">
+        <si-tabset #tabset class="flex-fill overflow-hidden">
+          <si-tab heading="General" [active]="true">
+            <div class="p-6">
+              <dl class="row mb-0">
+                <dt class="col-sm-4">Role</dt>
+                <dd class="col-sm-8">{{ selectedUser().role }}</dd>
+                <dt class="col-sm-4">Email</dt>
+                <dd class="col-sm-8">{{ selectedUser().email }}</dd>
+                <dt class="col-sm-4">Phone</dt>
+                <dd class="col-sm-8">{{ selectedUser().phone }}</dd>
+              </dl>
+            </div>
+          </si-tab>
+          <si-tab heading="Address">
+            <div class="p-6">
+              <address class="mb-0">
+                {{ selectedUser().street }}<br />
+                {{ selectedUser().city }}<br />
+                {{ selectedUser().country }}
+              </address>
+            </div>
+          </si-tab>
+        </si-tabset>
+      </div>
+    </header>
+
+    <si-details-pane-body>
+      <si-tab-portal class="si-layout-fixed-height overflow-auto" [tabset]="tabset" />
+    </si-details-pane-body>
+  </si-details-pane>
+</si-list-details>

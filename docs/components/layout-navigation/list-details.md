@@ -156,6 +156,16 @@ though it can also be moved to suite the design needs.
 
 <si-docs-component example="si-list-details/si-list-details" height="500"></si-docs-component>
 
+### Custom details header
+
+You can also use a custom header instead of `<si-details-pane-header>`. When using a custom header:
+
+- **Opening the pane:** The custom header must provide a responsive Back button and set focus to it immediately when opened.
+
+- **Closing the pane:** The si-list-details component automatically restores focus to the selected list item.
+
+<si-docs-component example="si-list-details/si-list-details-custom-header" height="500"></si-docs-component>
+
 <si-docs-api component="SiListDetailsComponent"></si-docs-api>
 
 <si-docs-api component="SiListPaneComponent"></si-docs-api>
