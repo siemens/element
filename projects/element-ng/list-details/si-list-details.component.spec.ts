@@ -14,6 +14,7 @@ import {
   ElementDimensions,
   ResizeObserverService
 } from '../resize-observer';
+import { SiSplitPartComponent, SplitUnit } from '../split';
 import { SiDetailsPaneBodyComponent } from './si-details-pane-body/si-details-pane-body.component';
 import { SiDetailsPaneFooterComponent } from './si-details-pane-footer/si-details-pane-footer.component';
 import { SiDetailsPaneHeaderComponent } from './si-details-pane-header/si-details-pane-header.component';
@@ -37,6 +38,9 @@ import { SiListPaneComponent } from './si-list-pane/si-list-pane.component';
       stateId="si-list-details-1"
       [expandBreakpoint]="expandBreakpoint"
       [disableResizing]="disableResizing()"
+      [listUnit]="listUnit()"
+      [detailsUnit]="detailsUnit()"
+      [listWidth]="listWidth()"
       [(detailsActive)]="detailsActive"
     >
       <si-list-pane>
@@ -62,6 +66,9 @@ class WrapperComponent {
   readonly listDetails = viewChild.required(SiListDetailsComponent);
   readonly hideBackButton = signal(false);
   readonly disableResizing = signal(true);
+  readonly listUnit = signal<SplitUnit>('px');
+  readonly detailsUnit = signal<SplitUnit>('fr');
+  readonly listWidth = signal(300);
   readonly expandBreakpoint = BOOTSTRAP_BREAKPOINTS.mdMinimum;
   readonly detailsActive = signal(false);
 }
@@ -166,6 +173,9 @@ describe('ListDetailsComponent', () => {
     });
 
     it('should change listWidth when split sizes change', async () => {
+      component.listUnit.set('fr');
+      component.detailsUnit.set('fr');
+      component.listWidth.set(32);
       component.disableResizing.set(false);
       await fixture.whenStable();
 
@@ -181,6 +191,60 @@ describe('ListDetailsComponent', () => {
       fixture.detectChanges();
       await fixture.whenStable();
       expect(component.listDetails().listWidth()).not.toBe(listWidth);
+    });
+
+    it('should use px for the list and fr for details by default', async () => {
+      component.disableResizing.set(false);
+      await fixture.whenStable();
+
+      const parts = debugElement.queryAll(By.directive(SiSplitPartComponent));
+      expect(parts[0]!.componentInstance.unit()).toBe('px');
+      expect(parts[0]!.componentInstance.size()).toBe(300);
+      expect(parts[1]!.componentInstance.unit()).toBe('fr');
+      expect(parts[1]!.componentInstance.size()).toBe(1);
+    });
+
+    it('should preserve relative sizing when both units are fr', async () => {
+      component.listUnit.set('fr');
+      component.detailsUnit.set('fr');
+      component.listWidth.set(40);
+      component.disableResizing.set(false);
+      await fixture.whenStable();
+
+      const parts = debugElement.queryAll(By.directive(SiSplitPartComponent));
+      expect(parts[0]!.componentInstance.size()).toBe(40);
+      expect(parts[1]!.componentInstance.size()).toBe(60);
+    });
+
+    it('should use minimum sizes when both panes are fixed', async () => {
+      component.listUnit.set('px');
+      component.detailsUnit.set('px');
+      component.listWidth.set(320);
+      component.disableResizing.set(false);
+      await fixture.whenStable();
+
+      const parts = debugElement.queryAll(By.directive(SiSplitPartComponent));
+      expect(parts[0]!.componentInstance.size()).toBe(320);
+      expect(parts[1]!.componentInstance.size()).toBe(300);
+    });
+
+    it('should use one fr when the list is flexible and details are fixed', async () => {
+      component.listUnit.set('fr');
+      component.detailsUnit.set('px');
+      component.disableResizing.set(false);
+      await fixture.whenStable();
+
+      const parts = debugElement.queryAll(By.directive(SiSplitPartComponent));
+      expect(parts[0]!.componentInstance.size()).toBe(1);
+      expect(parts[1]!.componentInstance.size()).toBe(300);
+    });
+
+    it('should keep percentage sizing for the static layout', async () => {
+      component.listWidth.set(300);
+      await fixture.whenStable();
+
+      expect(getListPane().style.flexBasis).toBe('32%');
+      expect(getDetailsPane().style.flexBasis).toBe('68%');
     });
 
     it('should unset detailsActive when back button is clicked', async () => {

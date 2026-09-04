@@ -39,10 +39,12 @@ export class SiDetailsPaneHeaderComponent {
 // @public (undocumented)
 export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
     readonly detailsActive: _angular_core.ModelSignal<boolean>;
+    readonly detailsUnit: _angular_core.InputSignal<SplitUnit>;
     readonly disableResizing: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly expandBreakpoint: _angular_core.InputSignal<number>;
     // (undocumented)
     readonly hasLargeSize: _angular_core.Signal<boolean>;
+    readonly listUnit: _angular_core.InputSignal<SplitUnit>;
     readonly listWidth: _angular_core.ModelSignal<number>;
     readonly minDetailsSize: _angular_core.InputSignal<number>;
     readonly minListSize: _angular_core.InputSignal<number>;
