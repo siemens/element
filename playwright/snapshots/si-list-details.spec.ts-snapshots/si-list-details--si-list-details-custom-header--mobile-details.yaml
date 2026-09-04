@@ -1,0 +1,22 @@
+- text: Users
+- button "Select Jane Smith": JS Jane Smith Automation Engineer
+- button "Select John Doe": JD John Doe Product Designer
+- button "Select Alex Johnson": AJ Alex Johnson Platform Architect
+- banner:
+  - button "Back to users"
+  - text: JS
+  - heading "Jane Smith" [level=2]
+  - paragraph: Automation engineer focused on industrial connectivity.
+  - menubar "User actions":
+    - menuitem "Edit"
+    - menuitem "Delete"
+  - tablist:
+    - tab "General" [selected]
+    - tab "Address"
+- tabpanel "General":
+  - term: Role
+  - definition: Automation Engineer
+  - term: Email
+  - definition: jane.smith@example.org
+  - term: Phone
+  - definition: /\+\d+ \d+ \d+ \d+ \d+/

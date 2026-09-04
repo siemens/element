@@ -112,4 +112,28 @@ test.describe('si-list-details', () => {
     await page.goBack();
     await expect(page.getByRole('cell', { name: 'Max Meier 2', exact: true })).toBeInViewport();
   });
+
+  test('with custom details header', async ({ page, si }, testInfo) => {
+    const customHeaderExample = 'si-list-details/si-list-details-custom-header';
+
+    await si.visitExample(customHeaderExample);
+    await si.runVisualAndA11yTests();
+
+    await page.getByRole('tab', { name: 'Address' }).click();
+    await expect(page.getByRole('tabpanel')).toContainText('Industriestrasse 10');
+
+    await page.setViewportSize({ width: 600, height: 800 });
+    await si.visitExample(customHeaderExample);
+
+    const firstUser = page.getByRole('button', { name: 'Select Jane Smith' });
+    const backButton = page.getByRole('button', { name: 'Back to users' });
+    await expect(firstUser).toBeInViewport();
+    await firstUser.click();
+    await expect(backButton).toBeFocused();
+    await expect(page.getByRole('heading', { name: 'Jane Smith', level: 2 })).toBeInViewport();
+    await si.runVisualAndA11yTests('mobile-details');
+
+    await backButton.click();
+    await expect(firstUser).toBeFocused();
+  });
 });
