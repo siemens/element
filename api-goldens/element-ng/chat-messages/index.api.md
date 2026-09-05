@@ -16,6 +16,7 @@ import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { Signal } from '@angular/core';
 import { StaticProvider } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
@@ -120,7 +121,8 @@ export class SiChatContainerInputDirective {
 }
 
 // @public
-export class SiChatInputComponent implements AfterViewInit {
+export class SiChatInputComponent implements AfterViewInit, OnDestroy {
+    constructor();
     readonly accept: _angular_core.InputSignal<string | undefined>;
     readonly actionParam: _angular_core.InputSignal<any>;
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
@@ -136,11 +138,13 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly followUpPromptSelected: _angular_core.OutputEmitterRef<string>;
     readonly interrupt: _angular_core.OutputEmitterRef<void>;
     readonly interruptButtonLabel: _angular_core.InputSignal<TranslatableString>;
-    readonly interruptible: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly interruptible: _angular_core.ModelSignal<boolean>;
     readonly label: _angular_core.InputSignal<string>;
     readonly maxFileSize: _angular_core.InputSignal<number>;
     readonly maxLength: _angular_core.InputSignal<number | undefined>;
     readonly placeholder: _angular_core.InputSignal<TranslatableString>;
+    // (undocumented)
+    registerParent(sending: Signal<boolean>, interruptible: Signal<boolean>, sendListener?: () => void): void;
     readonly removeAttachmentLabel: _angular_core.InputSignal<TranslatableString>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString>;
@@ -150,7 +154,7 @@ export class SiChatInputComponent implements AfterViewInit {
     }>;
     readonly sendButtonIcon: _angular_core.InputSignal<string>;
     readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString>;
-    readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly sending: _angular_core.ModelSignal<boolean>;
     readonly value: _angular_core.ModelSignal<string>;
 }
 
