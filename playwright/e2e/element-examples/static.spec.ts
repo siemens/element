@@ -4,6 +4,7 @@
  */
 import { test } from '../../support/test-helpers';
 
+test('ai-border/ai-border', ({ si }) => si.static());
 test('badges/badges', ({ si }) => si.static());
 test('buttons/buttons', ({ si }) => si.static());
 test('buttons/button-groups', ({ si }) => si.static());
