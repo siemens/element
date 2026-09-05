@@ -7,21 +7,72 @@
 import { AfterContentInit } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
+import { Definition } from 'mdast';
 import { ElementRef } from '@angular/core';
 import { EnvironmentInjector } from '@angular/core';
+import { FootnoteDefinition } from 'mdast';
 import { Injector } from '@angular/core';
+import { InputSignal } from '@angular/core';
+import { isSignal } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
+import { Node as Node_2 } from 'mdast';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { Parent } from 'mdast';
+import { PluggableList } from 'unified';
+import { Plugin as Plugin_2 } from 'unified';
+import { Preset } from 'unified';
+import { Processor } from 'unified';
 import { ReplaySubject } from 'rxjs';
+import { Root } from 'mdast';
+import { RootContent } from 'mdast';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { Signal } from '@angular/core';
 import { StaticProvider } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
+import { Transformer as Transformer_2 } from 'unified';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
+import { Type } from '@angular/core';
+
+// @public
+export interface ActivityChatMessage {
+    autoExpand?: boolean;
+    autoExpandInputs?: boolean | string[];
+    autoExpandOutputs?: boolean;
+    content?: string | Signal<string>;
+    icon?: string | false;
+    input?: string | string[] | Record<string, string>;
+    inputArgumentsLabel?: TranslatableString_2;
+    loading?: boolean | Signal<boolean>;
+    messages?: ActivityChatMessage[];
+    name?: TranslatableString_2;
+    output?: string;
+    outputLabel?: TranslatableString_2;
+    // (undocumented)
+    type: 'activity';
+}
+
+// @public
+export type ActivityDetailsDisplay = 'auto' | 'inputs' | 'outputs' | 'both';
+
+// @public
+export interface ActivityTraceChatMessage {
+    autoExpand?: boolean;
+    messages: ActivityChatMessage[];
+    name: TranslatableString_2;
+    // (undocumented)
+    type: 'activity-trace';
+}
+
+// @public
+export interface AiChatMessage extends BaseChatMessage {
+    actions?: MessageAction[];
+    content: string | Signal<string>;
+    type: 'ai';
+}
 
 // @public
 export interface Attachment {
@@ -30,11 +81,21 @@ export interface Attachment {
 }
 
 // @public
+export interface BaseChatMessage {
+    content?: string | Signal<string>;
+    loading?: boolean | Signal<boolean>;
+    type: 'user' | 'ai';
+}
+
+// @public
 export interface ChatInputAttachment extends Attachment {
     file: File;
     size: number;
     type: string;
 }
+
+// @public
+export type ChatMessage = UserChatMessage | AiChatMessage | ActivityChatMessage | ActivityTraceChatMessage | TemplateChatMessage;
 
 // @public
 export interface MessageAction {
@@ -75,6 +136,43 @@ export class SiActivityMessagePartComponent {
 export class SiActivityTraceComponent {
     readonly expanded: _angular_core.ModelSignal<boolean>;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
+}
+
+// @public
+export class SiAiChatContainerComponent {
+    constructor();
+    readonly activityInputArgumentsLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly activityOutputLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly activityReasoningLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly aiIcon: _angular_core.InputSignal<string>;
+    readonly autoExpand: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
+    readonly disableInterrupt: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    focus(): void;
+    readonly greeting: _angular_core.InputSignal<TranslatableString>;
+    readonly interrupting: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly markdownOptions: _angular_core.InputSignal<SiMarkdownOptions>;
+    readonly messages: _angular_core.InputSignal<ChatMessage[] | undefined>;
+    readonly messageSent: _angular_core.OutputEmitterRef<{
+        content: string;
+        attachments: ChatInputAttachment[];
+    }>;
+    readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly promptSuggestions: _angular_core.InputSignal<PromptSuggestion[] | Record<string, PromptSuggestion[]>>;
+    scrollToBottom(): void;
+    readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly show: _angular_core.InputSignal<ActivityDetailsDisplay>;
+    readonly statusAction: _angular_core.InputSignal<{
+        title: string;
+        href: string;
+        target?: string;
+    } | undefined>;
+    readonly statusHeading: _angular_core.InputSignal<string | undefined>;
+    readonly statusMessage: _angular_core.InputSignal<string | undefined>;
+    readonly statusSeverity: _angular_core.InputSignal<"info" | "success" | "warning" | "danger" | "caution" | "critical" | undefined>;
+    readonly welcomeMessage: _angular_core.InputSignal<TranslatableString>;
 }
 
 // @public
@@ -181,6 +279,20 @@ export class SiUserMessageComponent {
     readonly content: _angular_core.InputSignal<string>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+}
+
+// @public
+export interface TemplateChatMessage {
+    template: TemplateRef<any>;
+    templateContext?: any;
+}
+
+// @public
+export interface UserChatMessage extends BaseChatMessage {
+    actions?: MessageAction[];
+    attachments?: Attachment[];
+    content: string;
+    type: 'user';
 }
 
 // (No @packageDocumentation comment for this package)
