@@ -3,7 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { elementDocument, elementLightRgbBulb } from '@siemens/element-icons';
+import {
+  elementAi,
+  elementChecked,
+  elementDocument,
+  elementFunction,
+  elementGenerate,
+  elementMaintenance,
+  elementSearch,
+  elementSelfLearning,
+  elementSettings
+} from '@siemens/element-icons';
 import {
   SiActivityMessageComponent,
   SiActivityMessagePartComponent,
@@ -23,7 +33,17 @@ import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
   templateUrl: './si-activity-message.html'
 })
 export class SampleComponent {
-  protected readonly icons = addIcons({ elementDocument, elementLightRgbBulb });
+  protected readonly icons = addIcons({
+    elementAi,
+    elementChecked,
+    elementDocument,
+    elementFunction,
+    elementGenerate,
+    elementMaintenance,
+    elementSearch,
+    elementSelfLearning,
+    elementSettings
+  });
 
   protected readonly summary = `I reviewed the available information and identified the main points:
 

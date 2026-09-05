@@ -1,6 +1,27 @@
-- button "Analyzed the request"
-- button "Loading Searching additional sources":
+- button "Completed activity with details" [expanded]
+- paragraph: "I reviewed the available information and identified the main points:"
+- list:
+  - listitem: The request is focused on recent operational data
+  - listitem: Three relevant sources are available
+  - listitem: The final response should include a concise recommendation
+- button "Loading Running activity":
   - img "Loading"
   - text: ""
-- button "Could not access maintenance history"
-- button "Activity without an icon"
+- button "Failed activity"
+- button "Completed activity with the default icon"
+- button "Expanded activity trace" [expanded]
+- button "Reasoning"
+- button "Retrieval" [expanded]
+- text: Input Project requirements and available KPI definitions
+- button "Output" [expanded]
+- text: Found the relevant dashboard guidance and data sources.
+- button "Computation"
+- button "Generation"
+- button "System action"
+- button "Workflow"
+- button "Read"
+- button "Summary"
+- button "Generic"
+- 'button "Advanced: optional nested activities" [expanded]'
+- button "Validated source data"
+- button "Calculated recommendations"

@@ -11,15 +11,28 @@ Use activity messages to make multi-step AI activity transparent without exposin
 event. Show one message for each user-relevant step or phase and arrange related messages in
 execution order.
 
-- Use a concise `label` that describes the activity.
-- Set `state` to `running`, `completed`, or `failed` to communicate its current status.
+- Use a concise `heading` that describes the activity.
+- Set `state` to `running` or `failed`; omit it for a completed activity.
 - Set `icon` to customize the completed activity marker. It defaults to `element-record-filled`.
 - Project optional details such as Markdown, metadata, or tool output into the component. Users can
   expand and collapse this content from the activity header.
 - Use `expanded` to control the initial disclosure state or to synchronize it with application state.
 
 Avoid using activity messages for low-level implementation details that do not help users understand
-the AI's progress or result.
+the AI's progress or result. Always provide activity message content so the disclosure control
+reveals useful details.
+
+Choose icons based on the activity:
+
+- Reasoning: `element-self-learning`
+- Retrieval: `element-search`
+- Computation: `element-function`
+- Generation: `element-generate`
+- System action: `element-settings`
+- Workflow: `element-maintenance`
+- Read: `element-document`
+- Summary: `element-checked`
+- Generic: use the default icon
 
 ### Activity trace
 
@@ -32,15 +45,15 @@ Use `si-activity-message` for an individual activity. It has a heading, an optio
 collapsible content, and can communicate running and failed states. Content can be added directly or
 organized into parts.
 
-Activity messages can be used without a trace. They can also contain other activity messages
-when a step has its own intermediate activities.
+Activity messages can be used without a trace. Nesting activity messages is optional and should be
+reserved for niche, advanced cases where a step has meaningful intermediate activities.
 
 ### Activity message part
 
-Use `si-activity-message-part` to divide an activity into multiple titled parts,
-such as input and output. Parts are optional and can be made collapsible independently.
-
-When parts are used, provide at least two so that the subdivision adds meaningful structure.
+Use `si-activity-message-part` only when an activity needs multiple titled parts. Parts are optional
+and can be made collapsible independently. Use either one input and one output part, or one part per
+input and one combined output part. If an input is short and fits on one line, use only the part
+heading, omit its content, and keep the part non-collapsible.
 
 ## Code ---
 

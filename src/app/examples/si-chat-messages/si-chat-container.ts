@@ -6,13 +6,17 @@ import { Component, computed, inject, signal, TemplateRef, viewChild } from '@an
 import {
   elementAi,
   elementBookmark,
-  elementComparison,
+  elementChecked,
   elementCopy,
   elementDelete,
   elementExport,
   elementDocument,
+  elementFunction,
+  elementGenerate,
   elementRefresh,
+  elementSearch,
   elementShare,
+  elementSelfLearning,
   elementThumbsDown,
   elementThumbsUp,
   elementUser
@@ -107,8 +111,12 @@ export class SampleComponent {
     elementAi,
     elementUser,
     elementExport,
-    elementComparison,
+    elementChecked,
     elementDocument,
+    elementFunction,
+    elementGenerate,
+    elementSearch,
+    elementSelfLearning,
     elementDelete,
     elementThumbsUp,
     elementThumbsDown,
@@ -193,43 +201,9 @@ export class SampleComponent {
       ]
     },
     {
-      type: 'activity',
-      heading: 'Understanding the request',
-      icon: this.icons.elementAi,
-      content:
-        'I will inspect the files, compare their structures, and summarize the relevant findings.'
-    },
-    {
-      type: 'activity',
-      state: 'running',
-      heading: 'Searching the attached files',
-      parts: [
-        {
-          heading: 'Input',
-          content: '- `data-analysis.py`\n- `dataset.csv`',
-          collapsible: true
-        },
-        {
-          heading: 'Output',
-          content: 'Reviewing the script and dataset structure.'
-        }
-      ]
-    },
-    {
-      type: 'activity',
-      state: 'failed',
-      heading: 'Could not access one source',
-      parts: [
-        {
-          heading: 'Input',
-          content: 'Maintenance history service'
-        },
-        {
-          heading: 'Output',
-          content:
-            'The maintenance history service is temporarily unavailable. Analysis will continue with the available files.'
-        }
-      ]
+      type: 'ai',
+      content: 'I will inspect the files, compare their structures, and summarize the findings.',
+      actions: this.aiActions
     },
     {
       type: 'activity-trace',
@@ -237,14 +211,8 @@ export class SampleComponent {
       messages: [
         {
           type: 'activity',
-          heading: 'Reading source files',
-          icon: this.icons.elementDocument,
-          content: 'Loaded `data-analysis.py` and `dataset.csv`.'
-        },
-        {
-          type: 'activity',
-          heading: 'Comparing data structures',
-          icon: this.icons.elementComparison,
+          heading: 'Searching documentation',
+          icon: this.icons.elementSearch,
           parts: [
             {
               heading: 'Input',
@@ -258,17 +226,34 @@ export class SampleComponent {
         },
         {
           type: 'activity',
-          state: 'running',
-          heading: 'Preparing recommendations',
-          content: 'Evaluating performance considerations for large datasets.'
+          heading: 'Reading relevant files',
+          icon: this.icons.elementDocument,
+          content: 'Loaded `data-analysis.py` and `dataset.csv`.'
+        },
+        {
+          type: 'activity',
+          heading: 'Computing KPI values',
+          icon: this.icons.elementFunction,
+          content: 'Calculated the requested performance indicators.'
+        },
+        {
+          type: 'activity',
+          heading: 'Generating dashboard',
+          icon: this.icons.elementGenerate,
+          content: 'Created the dashboard layout and KPI cards.'
+        },
+        {
+          type: 'activity',
+          heading: 'Dashboard ready',
+          icon: this.icons.elementChecked,
+          content: 'Validated the generated dashboard.'
         }
       ]
     },
     {
       type: 'ai',
-      content: `I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
-
-  Let me examine the structure and provide guidance.`,
+      content:
+        'The script and dataset use compatible structures. The data-loading step is the main performance constraint.',
       actions: this.aiActions
     },
     {
@@ -285,8 +270,20 @@ export class SampleComponent {
       ]
     },
     {
+      type: 'activity',
+      heading: 'Reviewing performance constraints',
+      icon: this.icons.elementSelfLearning,
+      content: 'Checking memory usage and processing behavior for large datasets.'
+    },
+    {
+      type: 'activity',
+      heading: 'Preparing optimization guidance',
+      icon: this.icons.elementSelfLearning,
+      content: 'Prioritizing changes that reduce memory usage without changing the data structure.'
+    },
+    {
       type: 'ai',
-      content: "Great question! When analyzing large datasets, it's crucial to focus on...",
+      content: 'Process the CSV in chunks first, then profile the transformation steps.',
       actions: this.aiActions
     }
   ]);
@@ -303,6 +300,15 @@ export class SampleComponent {
   readonly interrupting = signal(false);
   readonly inputValue = signal('');
   readonly firstMessageSent = signal(false);
+
+  protected isLatestActivityMessage(message: ActivityMessage | ActivityTrace): boolean {
+    const messages = this.messages();
+    const messageIndex = messages.indexOf(message);
+
+    return !messages
+      .slice(messageIndex + 1)
+      .some(next => ['activity', 'activity-trace', 'user'].includes(next.type));
+  }
 
   inputActions: MessageAction[] = [
     {
