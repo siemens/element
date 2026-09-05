@@ -1,0 +1,132 @@
+<h3>Copy equipment templates into an empty configuration</h3>
+<p
+  >Drag a template from the left tree onto the right one to copy it in; templates stay on the left
+  so they can be reused. You can also reorder rows within either tree. Every row carries its own
+  custom content in the <code>trailing</code> slot while staying fully draggable, so reordering and
+  copying keep working and the drop indicator lands where you expect.</p
+>
+<div class="d-flex" style="width: 820px; height: 400px">
+  <div class="me-8">
+    <h4>Equipment templates</h4>
+    <si-tree-view
+      #templatesTree
+      ariaLabel="Equipment templates"
+      style="width: 380px; height: 340px"
+      [enableSelection]="false"
+      [items]="templates"
+      [flatTree]="false"
+    >
+      <div
+        cdkDropList
+        [cdkDropListConnectedTo]="selectionDropList"
+        [cdkDropListData]="templatesTree.dropListItems"
+        (cdkDropListDropped)="reorderTemplates($event)"
+      >
+        <ng-template let-item="treeItem" siTreeViewItem>
+          <si-tree-view-item cdkDrag [cdkDragData]="item">
+            <div slot="trailing" class="d-flex align-items-center ms-4">
+              @switch (item.customData?.control) {
+                @case ('count') {
+                  <si-number-input
+                    ariaLabel="Quantity"
+                    [value]="item.customData.count"
+                    [min]="1"
+                    [max]="10"
+                    [step]="1"
+                    (valueChange)="item.customData.count = $event ?? 1"
+                  />
+                }
+                @case ('ack') {
+                  <button
+                    type="button"
+                    class="btn btn-sm"
+                    [class]="item.customData.acknowledged ? 'btn-success' : 'btn-secondary'"
+                    (click)="toggleAcknowledged(item)"
+                  >
+                    {{ item.customData.acknowledged ? 'Acknowledged' : 'Acknowledge' }}
+                  </button>
+                }
+                @case ('status') {
+                  <span class="badge bg-success">Online</span>
+                }
+                @case ('menu') {
+                  <button
+                    type="button"
+                    class="btn btn-circle btn-sm btn-ghost element-options-vertical"
+                    aria-label="More options"
+                  ></button>
+                }
+              }
+            </div>
+            <si-tree-view-item *cdkDragPreview />
+          </si-tree-view-item>
+        </ng-template>
+      </div>
+    </si-tree-view>
+  </div>
+  <div>
+    <h4>Selected equipment</h4>
+    <si-tree-view
+      #selectionTree
+      ariaLabel="Selected equipment"
+      style="width: 380px; height: 340px"
+      [enableSelection]="true"
+      [items]="selection"
+      [flatTree]="false"
+    >
+      <div
+        #selectionDropList="cdkDropList"
+        cdkDropList
+        [cdkDropListData]="selectionTree.dropListItems"
+        (cdkDropListDropped)="dropInSelection($event)"
+      >
+        @if (!selection.length) {
+          <div
+            class="d-flex align-items-center justify-content-center text-secondary fst-italic p-8"
+          >
+            Drag equipment here
+          </div>
+        }
+        <ng-template let-item="treeItem" siTreeViewItem>
+          <si-tree-view-item cdkDrag [cdkDragData]="item">
+            <div slot="trailing" class="d-flex align-items-center ms-4">
+              @switch (item.customData?.control) {
+                @case ('count') {
+                  <si-number-input
+                    ariaLabel="Quantity"
+                    [value]="item.customData.count"
+                    [min]="1"
+                    [max]="10"
+                    [step]="1"
+                    (valueChange)="item.customData.count = $event ?? 1"
+                  />
+                }
+                @case ('ack') {
+                  <button
+                    type="button"
+                    class="btn btn-sm"
+                    [class]="item.customData.acknowledged ? 'btn-success' : 'btn-secondary'"
+                    (click)="toggleAcknowledged(item)"
+                  >
+                    {{ item.customData.acknowledged ? 'Acknowledged' : 'Acknowledge' }}
+                  </button>
+                }
+                @case ('status') {
+                  <span class="badge bg-success">Online</span>
+                }
+                @case ('menu') {
+                  <button
+                    type="button"
+                    class="btn btn-circle btn-sm btn-ghost element-options-vertical"
+                    aria-label="More options"
+                  ></button>
+                }
+              }
+            </div>
+            <si-tree-view-item *cdkDragPreview />
+          </si-tree-view-item>
+        </ng-template>
+      </div>
+    </si-tree-view>
+  </div>
+</div>
