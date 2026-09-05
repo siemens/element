@@ -23,6 +23,18 @@ test.describe('si-carousel', () => {
     );
   };
 
+  // Carousel navigation uses a requestAnimationFrame loop, which is not exposed
+  // through document.getAnimations(). In snapshot-update mode Playwright can
+  // therefore capture the page while the viewport is still scrolling. The
+  // component removes its temporary inline scroll behavior once that loop has
+  // settled, giving the test a deterministic completion signal.
+  const waitForNavigationToSettle = async (page: Page): Promise<void> => {
+    const viewport = page.locator('si-carousel .carousel-viewport');
+    await expect
+      .poll(() => viewport.evaluate(element => element.style.scrollSnapType))
+      .toBe('');
+  };
+
   test(example, async ({ page, si }) => {
     await si.visitExample(example, false);
     await expect(page.locator('si-carousel')).toBeVisible();
@@ -55,6 +67,7 @@ test.describe('si-carousel', () => {
     for (let i = 0; i < 5; i++) {
       await nextButton.click();
     }
+    await waitForNavigationToSettle(page);
     await expect(page.locator('button[aria-label^="Slide 6 of"] span').first()).toHaveClass(
       /active/
     );
@@ -64,6 +77,7 @@ test.describe('si-carousel', () => {
     for (let i = 0; i < 3; i++) {
       await nextButton.click();
     }
+    await waitForNavigationToSettle(page);
     await expect(page.locator('button[aria-label^="Slide 9 of"] span').first()).toHaveClass(
       /active/
     );
