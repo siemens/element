@@ -305,6 +305,17 @@ describe('SiTooltipDirective', () => {
         .element(page.getByRole('tooltip', { name: 'updated node tooltip' }))
         .toBeInTheDocument();
     });
+
+    it('should reposition on scroll by default', async () => {
+      const overlay = TestBed.inject(Overlay);
+      const reposition = vi.spyOn(overlay.scrollStrategies, 'reposition');
+
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
+      await fixture.whenStable();
+
+      expect(reposition).toHaveBeenCalledOnce();
+    });
   });
 
   describe('with scrollStrategy', () => {
