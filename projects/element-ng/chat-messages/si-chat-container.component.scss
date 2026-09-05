@@ -8,6 +8,7 @@ $gap-block: calc(map.get(variables.$spacers-block, 9) + map.get(variables.$space
 $gap-block-neg: calc(
   -1 * (map.get(variables.$spacers-block, 9) + map.get(variables.$spacers-block, 4))
 );
+$response-gap-block-neg: calc($gap-block-neg + map.get(variables.$spacers-block, 6));
 $gap-inline: calc(map.get(variables.$spacers-inline, 9) + map.get(variables.$spacers-inline, 4));
 
 :host {
@@ -60,6 +61,12 @@ $gap-inline: calc(map.get(variables.$spacers-inline, 9) + map.get(variables.$spa
   ::ng-deep si-user-message:not(.last),
   > ::ng-deep si-activity-message:has(+ si-activity-message) {
     margin-block-end: $gap-block-neg;
+  }
+
+  // Activity and AI messages are parts of the same response, with compact spacing between them
+  > ::ng-deep :is(si-activity-message, si-activity-trace):has(+ si-ai-message),
+  > ::ng-deep si-ai-message:has(+ :is(si-activity-message, si-activity-trace)) {
+    margin-block-end: $response-gap-block-neg;
   }
 
   ::ng-deep &:not(:has(si-ai-welcome-screen)) {
