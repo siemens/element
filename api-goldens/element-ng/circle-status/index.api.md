@@ -21,7 +21,7 @@ export class SiCircleStatusComponent implements OnChanges, OnDestroy {
     readonly eventIcon: _angular_core.InputSignal<string | undefined>;
     readonly eventOut: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
-    readonly size: _angular_core.InputSignal<"small" | "regular">;
+    readonly size: _angular_core.InputSignal<"regular" | "small">;
     readonly status: _angular_core.InputSignal<EntityStatusType | undefined>;
 }
 
