@@ -197,6 +197,15 @@ The `slot` attribute accepts one of the following values:
 - `details`: Details pane
 - `detailActions`: Content actions for the details pane
 
+When `resizableParts` is enabled, the main split part uses the `mainUnit`
+input (`unit="px"` by default), while the detail part always uses `unit="fr"`.
+The `mainContainerWidth` value is interpreted using `mainUnit`; for example,
+`300` means `300px` with the default configuration. Use `mainUnit="fr"` to
+retain a relative split, where `mainContainerWidth` is the main part's fractional weight.
+
+When the component is not resizable, `mainContainerWidth` continues to be
+interpreted as a percentage for the static layout.
+
 <si-docs-component example="si-main-detail-container/si-main-detail-container" height="500"></si-docs-component>
 
 <si-docs-api component="SiMainDetailContainerComponent"></si-docs-api>
