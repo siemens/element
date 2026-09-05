@@ -1,0 +1,45 @@
+- group:
+  - button "data-analysis.py"
+- group:
+  - button "dataset.csv"
+- paragraph: Can you help me analyze these files?
+- paragraph: I'm having trouble understanding the data structure and need assistance with the implementation.
+- group:
+  - button "Copy message"
+- paragraph: I can analyze the Python script and CSV dataset.
+- paragraph: I will inspect how the files are loaded and transformed.
+- group:
+  - button "Good response"
+  - button "Copy response"
+- button "Analyzing the attached files"
+- paragraph: The files use compatible structures. The eager data-loading step is the main performance constraint.
+- group:
+  - button "Good response"
+  - button "Copy response"
+- paragraph: What should I optimize first if the dataset can contain several million rows?
+- group:
+  - button "Copy message"
+  - button "Delete message"
+- button "Reasoning"
+- button "Computing performance impact" [expanded]
+- button "Files"
+- button "Focus" [expanded]
+- paragraph: performance
+- button "Output"
+- paragraph: Process the CSV in chunks first, then profile the transformation steps.
+- group:
+  - button "Good response"
+  - button "Copy response"
+- alert: Info AI responses are for demonstration purposes.
+- group:
+  - text: requirements.pdf
+  - button "Remove requirements.pdf"
+- group:
+  - text: mockup.png
+  - button "Remove mockup.png"
+- textbox "Chat input":
+  - /placeholder: Enter a command, question or topic…
+- group:
+  - button "Additional actions"
+- button "Send"
+- text: The content is AI generated. Always verify the information for accuracy.
