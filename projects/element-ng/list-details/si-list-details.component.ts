@@ -27,6 +27,8 @@ import {
 import { SiSplitComponent, SiSplitPartComponent, SplitUnit } from '@siemens/element-ng/split';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
+const DEFAULT_LIST_WIDTH_PERCENT = 32;
+
 @Component({
   selector: 'si-list-details',
   imports: [NgTemplateOutlet, SiSplitComponent, SiSplitPartComponent],
@@ -44,6 +46,12 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private resizeObserver = inject(ResizeObserverService);
   private readonly listDetailsContainer = viewChild.required<ElementRef>('listDetailsContainer');
+  private readonly listPart = viewChild(SiSplitPartComponent, {
+    read: ElementRef<HTMLElement>
+  });
+  private readonly split = viewChild(SiSplitComponent, {
+    read: ElementRef<HTMLElement>
+  });
   protected readonly animationsGloballyDisabled = areAnimationsDisabled();
 
   /**
@@ -118,7 +126,7 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   /** @internal */
   readonly staticListWidth = computed(() => {
     const listWidth = this.listWidth();
-    return listWidth >= 0 && listWidth <= 100 ? listWidth : 32;
+    return listWidth >= 0 && listWidth <= 100 ? listWidth : DEFAULT_LIST_WIDTH_PERCENT;
   });
 
   protected readonly splitSizes = computed<[number, number]>(() => {
@@ -196,14 +204,12 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private getListSizePx(fallbackPercentage: number): number {
-    const listPart = this.elementRef.nativeElement.querySelector<HTMLElement>('si-split-part');
-    const listWidth = listPart?.getBoundingClientRect().width;
+    const listWidth = this.listPart()?.nativeElement.getBoundingClientRect().width;
     if (listWidth) {
       return listWidth;
     }
 
-    const split = this.elementRef.nativeElement.querySelector<HTMLElement>('si-split');
-    const splitWidth = split?.getBoundingClientRect().width;
+    const splitWidth = this.split()?.nativeElement.getBoundingClientRect().width;
     return splitWidth ? (splitWidth * fallbackPercentage) / 100 : fallbackPercentage;
   }
 
