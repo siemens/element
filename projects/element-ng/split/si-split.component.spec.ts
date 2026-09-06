@@ -6,6 +6,7 @@ import { Component, ElementRef, Injectable, signal, viewChild } from '@angular/c
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideSiUiState, SI_UI_STATE_SERVICE, UIStateStorage } from '@siemens/element-ng/common';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { Mock } from 'vitest';
 
 import { CollapseTo, PartState, SiSplitModule, SplitOrientation, SplitUnit } from './index';
 import { SiSplitPartComponent } from './si-split-part.component';
@@ -329,6 +330,14 @@ describe('SiSplitComponent', () => {
   };
 
   describe('using ui state service', () => {
+    beforeEach(() => {
+      vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
     describe('without SiUIStateService', () => {
       setup();
 
@@ -337,6 +346,7 @@ describe('SiSplitComponent', () => {
         wrapperComponent = fixture.componentInstance;
         element = fixture.nativeElement;
         wrapperComponent.setSizes([20, 60, 20], 'fr');
+        vi.runAllTimers();
         await fixture.whenStable();
       });
 
@@ -364,6 +374,7 @@ describe('SiSplitComponent', () => {
           wrapperComponent = fixture.componentInstance;
           element = fixture.nativeElement;
           wrapperComponent.setSizes([20, 60, 20], 'fr');
+          vi.runAllTimers();
           await fixture.whenStable();
         });
 
@@ -382,8 +393,8 @@ describe('SiSplitComponent', () => {
         });
 
         it('should save ui state', async () => {
-          // cannot use jasmine.clock here
-          await new Promise(resolve => setTimeout(resolve));
+          vi.runAllTimers();
+          await fixture.whenStable();
           wrapperComponent.splitPart().toggleCollapse();
           const uiStateMock =
             await TestBed.inject(SI_UI_STATE_SERVICE).load<Record<string, any>>('split-test');
@@ -396,30 +407,39 @@ describe('SiSplitComponent', () => {
       });
 
       describe('with SiUIStateService and persisted state', () => {
-        beforeEach(() => {
+        let sizesSpy: Mock<(sizes: number[]) => void>;
+
+        beforeEach(async () => {
+          sizesSpy = vi.fn();
           const store = TestBed.inject(SI_UI_STATE_SERVICE);
-          store.save('split-test', {
-            one: { initialSize: 20, initialUnit: 'fr', size: 40, expanded: true },
-            two: { initialSize: 60, initialUnit: 'fr', size: 40, expanded: true },
-            three: { initialSize: 20, initialUnit: 'fr', size: 20, expanded: true }
+          await store.save('split-test', {
+            one: { initialSize: 99, initialUnit: 'fr', size: 40, expanded: true },
+            two: { initialSize: 99, initialUnit: 'fr', size: 40, expanded: true },
+            three: { initialSize: 99, initialUnit: 'fr', size: 20, expanded: true }
           });
 
           fixture = TestBed.createComponent(WrapperComponent);
           wrapperComponent = fixture.componentInstance;
+          wrapperComponent.split().sizesChange.subscribe(sizesSpy);
           wrapperComponent.setSizes([20, 60, 20], 'fr');
           // We need this here to run checks after async tasks completed.
           fixture.autoDetectChanges();
           element = fixture.nativeElement;
         });
 
-        it('should load and configure split parts', async () => {
-          // cannot use jasmine.clock here
-          await new Promise(resolve => setTimeout(resolve));
+        it('should load and configure split parts even if initialSize does not match part size', async () => {
+          vi.runAllTimers();
           await fixture.whenStable();
           expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
           expect(wrapperComponent.measureSize2()).toBeCloseTo(200, 0);
           expect(wrapperComponent.measureSize3()).toBeCloseTo(100, 0);
           expect(wrapperComponent.split().orientation()).toEqual('horizontal');
+        });
+
+        it('should emit sizesChange on restore', async () => {
+          vi.runAllTimers();
+          await fixture.whenStable();
+          expect(sizesSpy).toHaveBeenCalled();
         });
       });
     });
