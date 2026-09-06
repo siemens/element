@@ -14,7 +14,7 @@ import {
   ElementDimensions,
   ResizeObserverService
 } from '../resize-observer';
-import { SiSplitPartComponent, SplitUnit } from '../split';
+import { SiSplitComponent, SiSplitPartComponent, SplitUnit } from '../split';
 import { SiDetailsPaneBodyComponent } from './si-details-pane-body/si-details-pane-body.component';
 import { SiDetailsPaneFooterComponent } from './si-details-pane-footer/si-details-pane-footer.component';
 import { SiDetailsPaneHeaderComponent } from './si-details-pane-header/si-details-pane-header.component';
@@ -189,6 +189,36 @@ describe('ListDetailsComponent', () => {
       await fixture.whenStable();
       expect(component.listDetails().listWidth()).not.toBe(listWidth);
     });
+
+    it.each([
+      { measurement: 'list part', listPartWidth: 400, expectedWidth: 400 },
+      { measurement: 'split fallback', listPartWidth: 0, expectedWidth: 360 }
+    ])(
+      'should update listWidth in pixels using the $measurement',
+      async ({ listPartWidth, expectedWidth }) => {
+        component.disableResizing.set(false);
+        await fixture.whenStable();
+
+        const listPart = htmlElement.querySelector<HTMLElement>('si-split-part')!;
+        vi.spyOn(listPart, 'getBoundingClientRect').mockReturnValue(
+          new DOMRect(0, 0, listPartWidth, 500)
+        );
+        vi.spyOn(getSiSplit(), 'getBoundingClientRect').mockReturnValue(
+          new DOMRect(0, 0, 900, 500)
+        );
+        const split = debugElement
+          .query(By.directive(SiSplitComponent))
+          .injector.get(SiSplitComponent);
+        const widthChanged = vi.fn();
+        component.listDetails().listWidth.subscribe(widthChanged);
+
+        split.sizesChange.emit([40, 60]);
+        await fixture.whenStable();
+
+        expect(component.listDetails().listWidth()).toBe(expectedWidth);
+        expect(widthChanged).toHaveBeenCalledWith(expectedWidth);
+      }
+    );
 
     it('should use px for the list and fr for details by default', async () => {
       component.disableResizing.set(false);
