@@ -7,7 +7,8 @@ import { Directive } from '@angular/core';
 import { SelectOption } from './si-select.types';
 
 /**
- * The directive allows to template/customize the value option rendering.
+ * The directive allows to template/customize the option rendering in the dropdown.
+ * It is also used for rendering selected values in the input if no input template is provided.
  * This requires using the {@link SiSelectSimpleOptionsDirective} to specify options as input.
  *
  * @example

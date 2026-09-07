@@ -153,7 +153,8 @@ Options are provided as an array of `SelectItem<T>` objects:
 />
 ```
 
-Customize option rendering using a template:
+Customize option rendering using a template. This template is used for options in the dropdown and,
+when no input template is provided, for the selected value in the closed input as well:
 
 ```html
 <si-select
@@ -164,6 +165,22 @@ Customize option rendering using a template:
   ]"
 >
   <ng-template let-option siSelectOptionTemplate>{{ option.label | uppercase }}</ng-template>
+</si-select>
+```
+
+To use different templates for the dropdown options and the selected value in the closed input, provide
+an additional `siSelectValueTemplate` template. Both templates receive the `SelectOption<T>` as
+their implicit value:
+
+```html
+<si-select [options]="options">
+  <ng-template let-option siSelectOptionTemplate>
+    <div class="d-flex flex-column">
+      <span>{{ option.label }}</span>
+      <small class="text-secondary">Additional information</small>
+    </div>
+  </ng-template>
+  <ng-template let-option siSelectValueTemplate>{{ option.label }}</ng-template>
 </si-select>
 ```
 
