@@ -18,7 +18,7 @@ $message-spacing: map.get(variables.$spacers-block, 2);
     color: variables.$si-sys-text-danger;
   }
 
-  si-activity-message ~ & {
+  si-activity-message + & {
     margin-block-start: $message-spacing;
 
     &::before {
