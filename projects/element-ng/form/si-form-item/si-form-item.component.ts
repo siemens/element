@@ -171,6 +171,17 @@ export class SiFormItemComponent
   /** @internal */
   readonly control = computed(() => this.ngControl()?.control);
 
+  /** @internal */
+  readonly radioGroupName = computed(() => {
+    const element = this.controlElementRef()?.nativeElement;
+    if (element?.tagName === 'INPUT') {
+      const inputElement = element as HTMLInputElement;
+      return inputElement.type === 'radio' ? inputElement.name || undefined : undefined;
+    }
+
+    return undefined;
+  });
+
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.formErrorMapper) {
       this.updateValidationMessages();

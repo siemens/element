@@ -201,17 +201,40 @@ describe('SiForm', () => {
 
   describe('with template driven forms', () => {
     @Component({
-      imports: [SiFormItemComponent, FormsModule],
+      imports: [SiFormFieldsetComponent, SiFormItemComponent, FormsModule],
       template: `
         <form>
           <si-form-item label="Input">
             <input name="value" [required]="required()" [(ngModel)]="value" />
           </si-form-item>
+          <si-form-fieldset label="Role">
+            <si-form-item label="Engineer">
+              <input
+                type="radio"
+                class="form-check-input"
+                name="role"
+                value="engineer"
+                required
+                [(ngModel)]="role"
+              />
+            </si-form-item>
+            <si-form-item label="Installer">
+              <input
+                type="radio"
+                class="form-check-input"
+                name="role"
+                value="installer"
+                required
+                [(ngModel)]="role"
+              />
+            </si-form-item>
+          </si-form-fieldset>
         </form>
       `
     })
     class TestHostComponent {
       readonly value = signal('');
+      readonly role = signal('');
       readonly required = signal(true);
     }
 
@@ -233,6 +256,16 @@ describe('SiForm', () => {
       fixture.componentInstance.required.set(false);
       await fixture.whenStable();
       expect(await field.isRequired()).toBe(false);
+    });
+
+    it('should only have a required indicator on a radio fieldset', async () => {
+      const engineer = await loader.getHarness(SiFormItemHarness.with({ label: 'Engineer' }));
+      const installer = await loader.getHarness(SiFormItemHarness.with({ label: 'Installer' }));
+      const fieldset = await loader.getHarness(SiFormFieldsetHarness.with('Role'));
+
+      expect(await engineer.isRequired()).toBe(false);
+      expect(await installer.isRequired()).toBe(false);
+      expect(await fieldset.isRequired()).toBe(true);
     });
   });
 
