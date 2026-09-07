@@ -8,6 +8,7 @@ import type { SiFormError } from '../si-form-item/si-form-item.component';
 
 export interface SiFormFieldsetControl {
   readonly control: Signal<unknown>;
+  readonly radioGroupName?: Signal<string | undefined>;
   readonly required: Signal<boolean>;
   readonly touched: Signal<boolean>;
   readonly errors: Signal<readonly SiFormError[]>;
