@@ -1,11 +1,11 @@
 - text: Template-driven Form
-- group "Role":
+- group "Role*":
   - text: ""
   - button "More information about the role"
-  - radio "Engineer*"
-  - text: Engineer*
-  - radio "Installer*"
-  - text: Installer*
+  - radio "Engineer"
+  - text: Engineer
+  - radio "Installer"
+  - text: Installer
 - text: Name*
 - button "More information about the name"
 - textbox "Name*"

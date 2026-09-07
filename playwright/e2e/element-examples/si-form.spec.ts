@@ -91,11 +91,14 @@ for (const example of examples) {
     await expect(await si.getDescription(departurePeriod)).toHaveText(
       'The departure time must be after arrival.'
     );
+    await expect(serviceClass.locator('si-icon.status-danger')).toBeVisible();
     await expect(await si.getDescription(serviceClass)).toHaveText('You deserve better!');
 
-    await expect(await si.getDescription(page.getByLabel('Fellow passengers'))).toHaveText(
-      'Min. 2'
-    );
+    const fellowPassengers = page.getByLabel('Fellow passengers');
+    const numberInput = fellowPassengers.locator('..');
+    await expect(numberInput.locator('button.dec')).toBeEnabled();
+    await expect(numberInput.locator('button.inc')).toBeEnabled();
+    await expect(await si.getDescription(fellowPassengers)).toHaveText('Min. 2');
     await expect(
       await si.getDescription(page.getByLabel('I confirm that I accept all and everything.'))
     ).toHaveText('You need to accept all terms before joining.');
