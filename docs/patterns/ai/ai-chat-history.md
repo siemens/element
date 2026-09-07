@@ -7,13 +7,12 @@ The **chat history** displays previous conversations between the user and the AI
 Chat history helps users maintain context, revisit previous interactions, and continue
 conversations across longer tasks.
 
-This pattern is a combination of list item and the [side panel](../../components/layout-navigation/side-panel.md).
+This pattern is a combination of a [list](../../components/lists-tables-trees/list-item.md) and the [side panel](../../components/layout-navigation/side-panel.md).
 
 ![Chat history](images/chat-history.png)
 
 ### Best practices
 
-- Refer to [conversational design](https://ix.siemens.io/docs/guidelines/conversational-design/getting-started) guidelines.
 - Use auto-generated or user-defined titles for chat conversations,
   as they provide a stable reference for each conversation.
 - A preview may replace the title when conversations are short-lived or primarily accessed in recent context.
