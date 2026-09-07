@@ -306,6 +306,34 @@ describe('SiWidgetHostComponent', () => {
       expect(component.keyboardActive()).toBe(true);
     });
 
+    it('should only describe keyboard activation when not expanded', () => {
+      expect(cardEl).toHaveAttribute(
+        'aria-description',
+        expect.stringContaining('Press Enter or Space')
+      );
+
+      component.card().expand();
+      fixture.detectChanges();
+      expect(cardEl).not.toHaveAttribute('aria-description');
+
+      component.card().restore();
+      fixture.detectChanges();
+      expect(cardEl).toHaveAttribute(
+        'aria-description',
+        expect.stringContaining('Press Enter or Space')
+      );
+    });
+
+    it('should not activate keyboard mode when expanded', async () => {
+      component.card().expand();
+      cardEl.focus();
+
+      for (const key of ['{Enter}', ' ']) {
+        await userEvent.keyboard(key);
+        expect(component.keyboardActive()).toBe(false);
+      }
+    });
+
     it('should deactivate keyboard mode on Enter/Space when active', () => {
       component.keyboardActive.set(true);
       cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
