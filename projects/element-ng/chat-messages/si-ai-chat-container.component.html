@@ -1,0 +1,167 @@
+<si-chat-container [colorVariant]="colorVariant()" [noAutoScroll]="noAutoScroll() || isEmpty()">
+  @if (isEmpty()) {
+    <si-ai-welcome-screen
+      [categories]="promptCategories()"
+      [selectedCategory]="selectedCategory()"
+      [promptSuggestions]="resolvedPromptSuggestions()"
+      (selectedCategoryChange)="selectedCategory.set($event)"
+      (promptSelected)="onPromptSelected($event)"
+    >
+      <p class="h1 mb-0 text-white">
+        <strong>{{ greeting() | translate }}</strong>
+      </p>
+      <p class="h1 mb-0 text-white">{{ welcomeMessage() | translate }}</p>
+      <ng-content select="[welcomeScreen]" />
+    </si-ai-welcome-screen>
+  }
+
+  @if (displayMessages() !== undefined) {
+    @for (message of displayMessages(); track $index) {
+      @if (isTemplateMessage(message)) {
+        <ng-container
+          [ngTemplateOutlet]="message.template"
+          [ngTemplateOutletContext]="message.templateContext ?? message"
+        />
+      } @else {
+        @if (message.type === 'user') {
+          <si-user-message
+            [class.last]="$last"
+            [attachments]="message.attachments || []"
+            [actions]="getMessagePrimaryActions(message)"
+            [secondaryActions]="getMessageSecondaryActions(message)"
+            [actionParam]="message"
+            [secondaryActionsLabel]="secondaryActionsLabel()"
+          >
+            <si-markdown
+              [markdown]="getContentValue(message.content)"
+              [options]="markdownOptions()"
+            />
+          </si-user-message>
+        }
+
+        @if (message.type === 'ai') {
+          <si-ai-message
+            [loading]="
+              getLoadingState(message.loading, message.content, isLatestMessage(message), false)
+            "
+            [actions]="getMessagePrimaryActions(message)"
+            [secondaryActions]="getMessageSecondaryActions(message)"
+            [actionParam]="message"
+            [secondaryActionsLabel]="secondaryActionsLabel()"
+          >
+            <si-markdown
+              [markdown]="getContentValue(message.content)"
+              [options]="markdownOptions()"
+            />
+          </si-ai-message>
+        }
+
+        @if (message.type === 'activity') {
+          <ng-container
+            [ngTemplateOutlet]="activityMessageTemplate"
+            [ngTemplateOutletContext]="{
+              $implicit: message,
+              active: isLatestActivityMessage(message),
+              inheritedAutoExpand: autoExpand()
+            }"
+          />
+        }
+
+        @if (message.type === 'activity-trace') {
+          <si-activity-trace [heading]="message.name" [expanded]="shouldAutoExpandTrace(message)">
+            @for (activity of message.messages; track activity; let last = $last) {
+              <ng-container
+                [ngTemplateOutlet]="activityMessageTemplate"
+                [ngTemplateOutletContext]="{
+                  $implicit: activity,
+                  active: isLatestActivityMessage(message) && last,
+                  inheritedAutoExpand: message.autoExpand ?? autoExpand()
+                }"
+              />
+            }
+          </si-activity-trace>
+        }
+      }
+    }
+  }
+
+  <ng-template
+    #activityMessageTemplate
+    let-message
+    let-active="active"
+    let-inheritedAutoExpand="inheritedAutoExpand"
+  >
+    <si-activity-message
+      [heading]="message.name ?? activityReasoningLabel()"
+      [icon]="message.icon === false ? undefined : message.icon"
+      [state]="getLoadingValue(message.loading) ? 'running' : undefined"
+      [expanded]="shouldAutoExpandActivity(message, active, inheritedAutoExpand)"
+    >
+      @if (message.content) {
+        <si-markdown
+          [markdown]="getMarkdownContent(message.content)"
+          [options]="markdownOptions()"
+        />
+      }
+      @if (shouldShowActivityInputs(message)) {
+        @for (input of getActivityInputs(message); track input.key ?? $index) {
+          <si-activity-message-part
+            [heading]="input.heading"
+            [collapsible]="input.content !== undefined"
+            [expanded]="
+              shouldAutoExpandInput(
+                message,
+                input,
+                active && !message.messages?.length,
+                inheritedAutoExpand
+              )
+            "
+          >
+            @if (input.content !== undefined) {
+              <si-markdown [markdown]="input.content" [options]="markdownOptions()" />
+            }
+          </si-activity-message-part>
+        }
+      }
+      @if (shouldShowActivityOutput(message)) {
+        <si-activity-message-part
+          [heading]="message.outputLabel ?? activityOutputLabel()"
+          [collapsible]="true"
+          [expanded]="
+            shouldAutoExpandOutput(
+              message,
+              active && !message.messages?.length,
+              inheritedAutoExpand
+            )
+          "
+        >
+          <si-markdown [markdown]="message.output!" [options]="markdownOptions()" />
+        </si-activity-message-part>
+      }
+      @for (activity of message.messages ?? []; track activity) {
+        <ng-container
+          [ngTemplateOutlet]="activityMessageTemplate"
+          [ngTemplateOutletContext]="{
+            $implicit: activity,
+            active: active && $last,
+            inheritedAutoExpand: message.autoExpand ?? inheritedAutoExpand
+          }"
+        />
+      }
+    </si-activity-message>
+  </ng-template>
+
+  @if (statusSeverity() && statusMessage()) {
+    <si-inline-notification
+      class="mb-6 w-100 overflow-hidden"
+      [severity]="statusSeverity()!"
+      [heading]="statusHeading()"
+      [message]="statusMessage()!"
+      [action]="statusAction()"
+    />
+  }
+
+  <div siChatContainerInput class="w-100">
+    <ng-content select="si-chat-input" />
+  </div>
+</si-chat-container>

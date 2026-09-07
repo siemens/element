@@ -99,7 +99,61 @@ and clear them as soon as the user sends a new message.
 
 ## Code ---
 
-Use the chat container with the chat messages to build chat message interfaces.
+The **si-ai-chat-container** component provides a complete AI chat interface, it should be inserted into a layout with fixed height, if no fixed height is provided, please set a height in pixels.
+
+<si-docs-component example="si-chat-messages/si-ai-chat-container" height="750"></si-docs-component>
+
+<si-docs-api component="SiAiChatContainerComponent"></si-docs-api>
+
+Use `type: 'activity'` for tool calls, progress, and reasoning. `input` accepts a string, a list of
+short inputs, or a record of labeled inputs. `output` accepts a string. These values are rendered as
+activity message parts, while `content` is rendered directly as markdown. Prefer `content` when the
+activity does not need separate input and output sections.
+
+Use `type: 'activity-trace'` to group related or nested activity messages. By default, the latest
+activity or trace stays expanded until a newer activity or user message is added. Set the container's
+`autoExpand` input to change this globally, or set `autoExpand` on a trace, activity, or nested
+activity to override it. Use `autoExpandInputs` and `autoExpandOutputs` for part-level overrides;
+`autoExpandInputs` also accepts an array of record keys.
+
+The container's `show` input controls which parts are rendered. It accepts `auto`, `inputs`,
+`outputs`, or `both`. The default `auto` mode shows inputs when output is empty and otherwise shows
+the output.
+
+### Initial Screen
+
+The AI chat container includes a built-in initial welcome screen component that displays when there are no messages. It can be slotted into the **si-chat-container** component. It accepts prompt suggestions as an input.
+
+<si-docs-component example="si-chat-messages/si-ai-welcome-screen" height="600"></si-docs-component>
+
+<si-docs-api component="SiAiWelcomeScreenComponent"></si-docs-api>
+
+#### Prompt Suggestions
+
+Prompt suggestions can be provided as either:
+
+- A simple array of suggestions (no categories)
+- A record mapping category labels to arrays of suggestions
+
+When using a record, categories are automatically displayed as filter pills.
+
+```typescript
+// Simple array (no categories)
+promptSuggestions = [
+  { text: 'How do I optimize performance?' },
+  { text: 'What are best practices?' }
+];
+
+// Record with categories
+promptSuggestions = {
+  'All prompts': [{ text: 'How do I optimize performance?' }, { text: 'What are best practices?' }],
+  'Maintenance': [{ text: 'Schedule preventive maintenance' }, { text: 'Track equipment downtime' }]
+};
+```
+
+### Base Chat Container
+
+Use this base container with the chat messages to build custom chat message interfaces.
 
 The **si-chat-container** component is a wrapper component, it has slots for
 [chat messages](../../components/chat-messages/chat-message.md) and a
