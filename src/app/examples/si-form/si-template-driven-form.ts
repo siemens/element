@@ -9,7 +9,8 @@ import {
   NG_VALIDATORS,
   NgForm,
   ValidationErrors,
-  Validator
+  Validator,
+  Validators
 } from '@angular/forms';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import {
@@ -112,6 +113,24 @@ export class NoEconomyValidatorDirective implements Validator {
 }
 
 @Directive({
+  selector: '[appMinimumFellowPassengers]',
+  providers: [
+    {
+      provide: NG_VALIDATORS,
+      useFactory: () => inject(MinimumFellowPassengersValidatorDirective),
+      multi: true
+    }
+  ]
+})
+export class MinimumFellowPassengersValidatorDirective implements Validator {
+  private readonly validator = Validators.min(2);
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    return this.validator(control);
+  }
+}
+
+@Directive({
   selector: '[appMinimumAge]',
   providers: [
     {
@@ -142,6 +161,7 @@ export class MinimumAgeValidatorDirective implements Validator {
   imports: [
     FormsModule,
     DepartureAfterValidatorDirective,
+    MinimumFellowPassengersValidatorDirective,
     MinimumAgeValidatorDirective,
     NoEconomyValidatorDirective,
     SiCardComponent,
@@ -178,9 +198,27 @@ export class MinimumAgeValidatorDirective implements Validator {
 })
 export class SampleComponent {
   protected readonly optionsList: SelectOption<string>[] = [
-    { type: 'option', value: 'first', label: 'First class' },
-    { type: 'option', value: 'business', label: 'Business' },
-    { type: 'option', value: 'economy', label: 'Economy' }
+    {
+      type: 'option',
+      value: 'first',
+      icon: 'element-face-happy',
+      iconColor: 'status-success',
+      label: 'First class'
+    },
+    {
+      type: 'option',
+      value: 'business',
+      icon: 'element-face-neutral',
+      iconColor: 'status-warning',
+      label: 'Business'
+    },
+    {
+      type: 'option',
+      value: 'economy',
+      icon: 'element-face-unhappy',
+      iconColor: 'status-danger',
+      label: 'Economy'
+    }
   ];
 
   protected model = createEmptyRequest();

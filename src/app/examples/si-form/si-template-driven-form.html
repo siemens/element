@@ -149,7 +149,7 @@
               <si-number-input
                 class="form-control"
                 name="fellowPassengers"
-                min="2"
+                appMinimumFellowPassengers
                 [disabled]="debugState().disabled"
                 [readonly]="debugState().readonly"
                 [(ngModel)]="model.fellowPassengers"
