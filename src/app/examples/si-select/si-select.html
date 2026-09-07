@@ -72,8 +72,14 @@
     [(value)]="drinkValue"
     (valueChange)="logEvent($event)"
   >
-    <ng-template let-option siSelectOptionTemplate
-      >{{ option.label! | translate }} (Alc.:{{ option.value.alcohol | percent }})
+    <ng-template let-option siSelectOptionTemplate>
+      <div class="d-flex flex-column">
+        <span>{{ option.label! | translate }}</span>
+        <span class="si-body-sm text-secondary">Alc.: {{ option.value.alcohol | percent }}</span>
+      </div>
+    </ng-template>
+    <ng-template let-option siSelectValueTemplate>
+      {{ option.label! | translate }} (Alc.:{{ option.value.alcohol | percent }})
     </ng-template>
     <ng-template let-group siSelectGroupTemplate>{{
       group.label! | translate | titlecase
