@@ -677,9 +677,11 @@ export class SplitComponent {
     const tree = await runner.runSchematic('migration-v51', {}, appTree);
     const template = tree.readContent('/projects/app/src/split.component.html');
 
-    expect(template).toContain(`<si-split-part [unit]="(scale) === 'none' ? 'px' : 'fr'" size="1"`);
     expect(template).toContain(
-      `<si-split-part [unit]="(getScale()) === 'none' ? 'px' : 'fr'" size="240"`
+      `<si-split-part [unit]="['none', 'px'].includes(scale) ? 'px' : 'fr'" size="1"`
+    );
+    expect(template).toContain(
+      `<si-split-part [unit]="['none', 'px'].includes(getScale()) ? 'px' : 'fr'" size="240"`
     );
     expect(template).not.toContain('[scale]');
   });
@@ -847,8 +849,8 @@ export class UntypedComponent {
 
     expect(source).toContain('[unit]="scale()"');
     expect(source).toContain('[unit]="this.scale()"');
-    expect(source).toContain(`[unit]="(scale) === 'none' ? 'px' : 'fr'"`);
-    expect(source).toContain(`[unit]="(localScale) === 'none' ? 'px' : 'fr'"`);
+    expect(source).toContain(`[unit]="['none', 'px'].includes(scale) ? 'px' : 'fr'"`);
+    expect(source).toContain(`[unit]="['none', 'px'].includes(localScale) ? 'px' : 'fr'"`);
   });
 
   it('should not treat an unrelated object property as a migrated component member', async () => {
@@ -865,7 +867,7 @@ export class ObjectOwner {
     const tree = await runner.runSchematic('migration-v51', {}, appTree);
 
     expect(tree.readContent('/projects/app/src/object-owner.ts')).toContain(
-      `[unit]="(config.scale) === 'none' ? 'px' : 'fr'"`
+      `[unit]="['none', 'px'].includes(config.scale) ? 'px' : 'fr'"`
     );
   });
 
