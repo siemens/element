@@ -4,7 +4,7 @@
  */
 
 import { Rule, SchematicContext, Tree, UpdateRecorder } from '@angular-devkit/schematics';
-import type { Attribute } from '@angular/compiler';
+import { Element, type Attribute } from '@angular/compiler';
 import { dirname, join } from 'path/posix';
 import ts from 'typescript';
 
@@ -26,6 +26,7 @@ const unitAttributeNames = ['unit', '[unit]', 'bind-unit'];
 export const splitScaleMigrationRule = (options: { path: string }): Rule => {
   return async (tree: Tree, context: SchematicContext) => {
     const externalTemplates = new Map<string, Set<string>[]>();
+    const manualSizeMigrationPaths = new Set<string>();
 
     for await (const discoveredSourceFile of discoverSourceFiles(tree, context, options.path)) {
       const { path: filePath, sourceFile } = discoveredSourceFile;
@@ -43,12 +44,15 @@ export const splitScaleMigrationRule = (options: { path: string }): Rule => {
       for (const template of getComponentTemplates(sourceFile)) {
         const scaleMemberNames = collectScaleMemberNames(template.component, scaleTypeNames);
         if (template.kind === 'inline') {
-          migrateScaleTemplate(
+          const requiresManualSizeMigration = migrateScaleTemplate(
             sourceFile.text.substring(template.node.getStart() + 1, template.node.getEnd() - 1),
             template.node.getStart() + 1,
             recorder,
             [scaleMemberNames]
           );
+          if (requiresManualSizeMigration) {
+            manualSizeMigrationPaths.add(filePath);
+          }
         } else {
           const templatePath = join(dirname(filePath), template.url);
           const owners = externalTemplates.get(templatePath) ?? [];
@@ -65,8 +69,27 @@ export const splitScaleMigrationRule = (options: { path: string }): Rule => {
         continue;
       }
       const recorder = tree.beginUpdate(templatePath);
-      migrateScaleTemplate(tree.readText(templatePath), 0, recorder, owners);
+      const requiresManualSizeMigration = migrateScaleTemplate(
+        tree.readText(templatePath),
+        0,
+        recorder,
+        owners
+      );
+      if (requiresManualSizeMigration) {
+        manualSizeMigrationPaths.add(templatePath);
+      }
       tree.commitUpdate(recorder);
+    }
+
+    if (manualSizeMigrationPaths.size) {
+      context.logger.warn(
+        `The following files contain si-split-part elements with scale="none" whose relative size was supplied by [sizes]. Their relative size is preserved with unit="fr" because a pixel size cannot be inferred. Set size and unit="px" manually:\n${[
+          ...manualSizeMigrationPaths
+        ]
+          .sort()
+          .map(path => `- ${path}`)
+          .join('\n')}`
+      );
     }
 
     return tree;
@@ -78,8 +101,34 @@ const migrateScaleTemplate = (
   offset: number,
   recorder: UpdateRecorder,
   owners: Set<string>[]
-): void => {
-  findElement(template, element => element.name === 'si-split-part').forEach(element => {
+): boolean => {
+  const elements = findElement(
+    template,
+    element => element.name === 'si-split' || element.name === 'si-split-part'
+  );
+  const partsWithRelativeSizes = new Set<Element>();
+  for (const split of elements) {
+    if (split.name !== 'si-split' || !split.attrs.some(attribute => attribute.name === '[sizes]')) {
+      continue;
+    }
+
+    for (const child of split.children) {
+      if (
+        child instanceof Element &&
+        child.name === 'si-split-part' &&
+        !child.attrs.some(attribute => attribute.name === 'size' || attribute.name === '[size]')
+      ) {
+        partsWithRelativeSizes.add(child);
+      }
+    }
+  }
+
+  let requiresManualSizeMigration = false;
+  elements.forEach(element => {
+    if (element.name !== 'si-split-part') {
+      return;
+    }
+
     const scale = element.attrs.find(attribute => scaleAttributeNames.includes(attribute.name));
     if (!scale) {
       return;
@@ -91,20 +140,32 @@ const migrateScaleTemplate = (
       return;
     }
 
-    const replacements = new Set(owners.map(names => getUnitAttribute(scale, names)));
-    let replacement = replacements.values().next().value!;
-    if (replacements.size > 1) {
-      const expression =
-        scale.name === 'scale'
-          ? /^\s*{{([\s\S]*)}}\s*$/.exec(scale.value)![1]!.trim()
-          : scale.value;
-      replacement = formatBoundAttribute(
-        'unit',
-        `['none', 'px'].includes(${expression}) ? 'px' : 'fr'`
-      );
+    let replacement: string;
+    if (
+      partsWithRelativeSizes.has(element) &&
+      scale.name === 'scale' &&
+      scale.value.trim() === 'none'
+    ) {
+      replacement = 'unit="fr"';
+      requiresManualSizeMigration = true;
+    } else {
+      const replacements = new Set(owners.map(names => getUnitAttribute(scale, names)));
+      replacement = replacements.values().next().value!;
+      if (replacements.size > 1) {
+        const expression =
+          scale.name === 'scale'
+            ? /^\s*{{([\s\S]*)}}\s*$/.exec(scale.value)![1]!.trim()
+            : scale.value;
+        replacement = formatBoundAttribute(
+          'unit',
+          `['none', 'px'].includes(${expression}) ? 'px' : 'fr'`
+        );
+      }
     }
     replaceAttribute(scale, replacement, offset, recorder);
   });
+
+  return requiresManualSizeMigration;
 };
 
 const getUnitAttribute = (attribute: Attribute, scaleMemberNames: Set<string>): string => {

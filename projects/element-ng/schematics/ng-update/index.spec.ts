@@ -644,7 +644,10 @@ export class SplitComponent {
     expect(template).not.toContain('[scale]');
   });
 
-  it('should preserve scale-derived units when migrating split sizes', async () => {
+  it('should preserve relative split sizes and warn about manual fixed sizing', async () => {
+    const logSpy = vi.fn();
+    runner.logger.subscribe(logSpy);
+
     addTestFiles(appTree, {
       '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
 
@@ -661,10 +664,19 @@ export class SplitComponent {}`
     const tree = await runner.runSchematic('migration-v51', {}, appTree);
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
-    expect(component).toContain('<si-split-part unit="px" size="20"');
+    expect(component).toContain('<si-split-part unit="fr" size="20"');
     expect(component).toContain('<si-split-part unit="fr" size="80"');
     expect(component).not.toContain('[sizes]');
     expect(component).not.toContain('scale=');
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        level: 'warn',
+        message: expect.stringContaining('projects/app/src/split.component.ts')
+      })
+    );
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.objectContaining({ message: expect.stringContaining('scale="none"') })
+    );
   });
 
   it('should migrate Scale type imports and literals', async () => {
