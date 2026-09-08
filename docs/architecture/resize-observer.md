@@ -19,14 +19,26 @@ Prefer a pure CSS solution e.g.:
 
 ## Code ---
 
-The resize observer can be integrated into your application using either a service or a directive, depending on your requirements:
+The resize observer APIs share one root-provided registry and one native `ResizeObserver` instance. Choose the API based on how the size is consumed:
 
-- **Service approach:** Use the `ResizeObserverService` to programmatically observe size changes on any element. This is useful when you need fine-grained control or want to react to changes in code.
+- **Signal approach (experimental):** Use `elementSizeSignal` for components and directives that consume dimensions as signal state. It supports static and signal-based element sources and cleans up automatically.
+- **Service approach:** Use the `ResizeObserverService` when an RxJS stream, throttling, or immediate emissions are required.
 - **Directive approach:** Apply the `SiResizeObserverDirective` directly in your template to handle resize events declaratively. This is ideal for simple use cases where you want to bind resize logic directly to your component's view.
 
-Choose the method that best fits your application's architecture and complexity.
+**Use the resize observer signal:**
 
-**Use resize observer service:**
+```ts
+import { computed, ElementRef, inject } from '@angular/core';
+import { elementSizeSignal } from '@siemens/element-ng/resize-observer';
+
+private readonly element = inject(ElementRef<HTMLElement>);
+private readonly size = elementSizeSignal(this.element, { box: 'border-box' });
+readonly inlineSize = computed(() => this.size()?.inlineSize);
+```
+
+The returned signal contains the logical `inlineSize` and `blockSize` of the configured box (`content-box` by default). It is `undefined` until the first observation, while a signal source has no element, after switching sources until the new element is measured, when the selected box has no reported fragments, and when `ResizeObserver` is unavailable. Do not fall back to a synchronous layout read while it is `undefined`; wait for the signal to update.
+
+**Use the resize observer service:**
 
 ```ts
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -40,7 +52,7 @@ inject(ResizeObserverService)
   });
 ```
 
-**Use resize observer directive:**
+**Use the resize observer directive:**
 
 ```ts
 import { Component } from '@angular/core';

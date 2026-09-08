@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  afterNextRender,
   AfterViewInit,
   booleanAttribute,
   ChangeDetectorRef,
@@ -17,11 +18,12 @@ import {
   INJECTOR,
   input,
   OnChanges,
+  signal,
   SimpleChanges,
   untracked
 } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { observeElementSize } from '@siemens/element-ng/resize-observer';
+import { elementSizeSignal } from '@siemens/element-ng/resize-observer';
 import { Subscription } from 'rxjs';
 
 import { SiAutoCollapsableListAdditionalContentDirective } from './si-auto-collapsable-list-additional-content.directive';
@@ -91,10 +93,7 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges 
   private readonly container = computed(
     () => this.containerElement() ?? this.elementRef.nativeElement
   );
-  private readonly containerEntry = observeElementSize(this.container);
-  private readonly containerSize = computed(
-    () => this.containerEntry()?.contentBoxSize[0].inlineSize
-  );
+  private readonly containerSize = elementSizeSignal(this.container);
   private readonly itemSizes = computed(() =>
     this.items().map(item => ({
       size: item.inlineSize(),
@@ -105,22 +104,23 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges 
    * The same as {@link gap}, but automatically read from the computed styles.
    * Used if not set by user.
    */
-  private computedGap = 0;
+  private readonly computedGap = signal(0);
 
   constructor() {
+    afterNextRender(() => this.readGapSize());
     this.destroyRef.onDestroy(() => this.disableInitSubscription?.unsubscribe());
     effect(() => {
       if (!this.siAutoCollapsableList()) {
         return;
       }
-      const containerSize = this.containerSize();
+      const containerSize = this.containerSize()?.inlineSize;
       const itemSizes = this.itemSizes();
       const additionalContentSizes = this.additionalContent().map(item => item.inlineSize());
       const overflowItem = this.overflowItem();
       const overflowItemSize = overflowItem ? overflowItem.inlineSize() : 0;
-      const gap = this.gap() ?? this.computedGap;
-      // Ignore changes until all items are measured, otherwise wo  would latch the list into a wrong state.
-      // Size the items influence the size of the observed container.
+      const gap = this.gap() ?? this.computedGap();
+      // Ignore changes until all items are measured, otherwise we would latch the list into a wrong state.
+      // Since the items influence the size of the observed container.
       if (
         containerSize === undefined ||
         overflowItemSize === undefined ||
@@ -143,7 +143,6 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges 
   }
 
   ngAfterViewInit(): void {
-    this.readGapSize();
     if (!this.siAutoCollapsableList()) {
       this.reset();
     }
@@ -227,7 +226,7 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges 
   private readGapSize(): void {
     const { gap } = getComputedStyle(this.elementRef.nativeElement);
     if (gap.endsWith('px') || gap === '0') {
-      this.computedGap = parseFloat(gap);
+      this.computedGap.set(parseFloat(gap));
     }
   }
 }

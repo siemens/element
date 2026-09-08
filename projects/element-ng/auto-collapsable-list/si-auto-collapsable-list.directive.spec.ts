@@ -14,6 +14,7 @@ import { SiAutoCollapsableListModule } from './si-auto-collapsable-list.module';
     <div #containerElement [style.width.px]="containerWidth()" [style.height.px]="50">
       <div
         class="d-flex flex-align-start"
+        [style.gap.px]="hostGap()"
         [style.width.px]="width()"
         [siAutoCollapsableList]="!disabled()"
         [siAutoCollapsableListContainerElement]="
@@ -53,6 +54,7 @@ import { SiAutoCollapsableListModule } from './si-auto-collapsable-list.module';
 class TestComponent {
   readonly width = signal(600);
   readonly containerWidth = signal(700);
+  readonly hostGap = signal(0);
   readonly moreItems = signal<number[]>([]);
   readonly renderItems = signal(true);
   readonly showAdditionalContent = signal(false);
@@ -235,5 +237,14 @@ describe('SiAutoCollapsableListDirective', () => {
     component.useContainerElement.set(true);
     await detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'visible', 'visible']);
+  });
+
+  it('should read the gap from the host when using an external container', async () => {
+    component.hostGap.set(10);
+    component.useContainerElement.set(true);
+
+    await detectSizeChange({ containerWidth: 520 });
+
+    expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'hidden', 'hidden']);
   });
 });

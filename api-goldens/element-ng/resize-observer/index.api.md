@@ -37,15 +37,23 @@ export interface ElementDimensions {
 }
 
 // @public
-export const observeElementSize: (source: ObserveElementSizeSource, opt?: ObserveElementSizeOptions) => Signal<ResizeObserverEntry | undefined>;
+export interface ElementSize {
+    // (undocumented)
+    readonly blockSize: number;
+    // (undocumented)
+    readonly inlineSize: number;
+}
 
 // @public
-export interface ObserveElementSizeOptions {
+export const elementSizeSignal: (source: ElementSizeSignalSource, options?: ElementSizeSignalOptions) => Signal<ElementSize | undefined>;
+
+// @public
+export interface ElementSizeSignalOptions {
     box?: ResizeObserverBoxOptions;
 }
 
 // @public
-export type ObserveElementSizeSource = Element | ElementRef<Element> | Signal<Element | ElementRef<Element> | undefined | null>;
+export type ElementSizeSignalSource = SourceElement | Signal<SourceElement | undefined | null>;
 
 // @public
 export class ResizeObserverService {
