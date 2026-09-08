@@ -27,6 +27,7 @@ export const splitScaleMigrationRule = (options: { path: string }): Rule => {
   return async (tree: Tree, context: SchematicContext) => {
     const externalTemplates = new Map<string, Set<string>[]>();
     const manualSizeMigrationPaths = new Set<string>();
+    const conflictingUnitPaths = new Set<string>();
 
     for await (const discoveredSourceFile of discoverSourceFiles(tree, context, options.path)) {
       const { path: filePath, sourceFile } = discoveredSourceFile;
@@ -44,14 +45,17 @@ export const splitScaleMigrationRule = (options: { path: string }): Rule => {
       for (const template of getComponentTemplates(sourceFile)) {
         const scaleMemberNames = collectScaleMemberNames(template.component, scaleTypeNames);
         if (template.kind === 'inline') {
-          const requiresManualSizeMigration = migrateScaleTemplate(
+          const result = migrateScaleTemplate(
             sourceFile.text.substring(template.node.getStart() + 1, template.node.getEnd() - 1),
             template.node.getStart() + 1,
             recorder,
             [scaleMemberNames]
           );
-          if (requiresManualSizeMigration) {
+          if (result.requiresManualSizeMigration) {
             manualSizeMigrationPaths.add(filePath);
+          }
+          if (result.hasConflictingUnit) {
+            conflictingUnitPaths.add(filePath);
           }
         } else {
           const templatePath = join(dirname(filePath), template.url);
@@ -69,14 +73,12 @@ export const splitScaleMigrationRule = (options: { path: string }): Rule => {
         continue;
       }
       const recorder = tree.beginUpdate(templatePath);
-      const requiresManualSizeMigration = migrateScaleTemplate(
-        tree.readText(templatePath),
-        0,
-        recorder,
-        owners
-      );
-      if (requiresManualSizeMigration) {
+      const result = migrateScaleTemplate(tree.readText(templatePath), 0, recorder, owners);
+      if (result.requiresManualSizeMigration) {
         manualSizeMigrationPaths.add(templatePath);
+      }
+      if (result.hasConflictingUnit) {
+        conflictingUnitPaths.add(templatePath);
       }
       tree.commitUpdate(recorder);
     }
@@ -85,6 +87,17 @@ export const splitScaleMigrationRule = (options: { path: string }): Rule => {
       context.logger.warn(
         `The following files contain si-split-part elements with scale="none" whose relative size was supplied by [sizes]. Their relative size is preserved with unit="fr" because a pixel size cannot be inferred. Set size and unit="px" manually:\n${[
           ...manualSizeMigrationPaths
+        ]
+          .sort()
+          .map(path => `- ${path}`)
+          .join('\n')}`
+      );
+    }
+
+    if (conflictingUnitPaths.size) {
+      context.logger.warn(
+        `The following files contain si-split-part elements with conflicting scale and unit values. The existing unit was preserved and scale removed. Review these parts manually:\n${[
+          ...conflictingUnitPaths
         ]
           .sort()
           .map(path => `- ${path}`)
@@ -101,7 +114,7 @@ const migrateScaleTemplate = (
   offset: number,
   recorder: UpdateRecorder,
   owners: Set<string>[]
-): boolean => {
+): { requiresManualSizeMigration: boolean; hasConflictingUnit: boolean } => {
   const elements = findElement(
     template,
     element => element.name === 'si-split' || element.name === 'si-split-part'
@@ -124,6 +137,7 @@ const migrateScaleTemplate = (
   }
 
   let requiresManualSizeMigration = false;
+  let hasConflictingUnit = false;
   elements.forEach(element => {
     if (element.name !== 'si-split-part') {
       return;
@@ -134,8 +148,9 @@ const migrateScaleTemplate = (
       return;
     }
 
-    const hasUnit = element.attrs.some(attribute => unitAttributeNames.includes(attribute.name));
-    if (hasUnit) {
+    const unit = element.attrs.find(attribute => unitAttributeNames.includes(attribute.name));
+    if (unit) {
+      hasConflictingUnit ||= hasConflictingStaticUnit(scale, unit);
       removeAttribute(template, scale, offset, recorder);
       return;
     }
@@ -165,7 +180,19 @@ const migrateScaleTemplate = (
     replaceAttribute(scale, replacement, offset, recorder);
   });
 
-  return requiresManualSizeMigration;
+  return { requiresManualSizeMigration, hasConflictingUnit };
+};
+
+const hasConflictingStaticUnit = (scale: Attribute, unit: Attribute): boolean => {
+  const scaleValue = scale.value.trim();
+  const unitValue = unit.value.trim();
+  return (
+    scale.name === 'scale' &&
+    unit.name === 'unit' &&
+    (scaleValue === 'auto' || scaleValue === 'none') &&
+    (unitValue === 'fr' || unitValue === 'px') &&
+    getScaleUnit(scaleValue) !== unitValue
+  );
 };
 
 const getUnitAttribute = (attribute: Attribute, scaleMemberNames: Set<string>): string => {
