@@ -185,7 +185,7 @@
   },
   "optionalDependencies": {
     "@siemens-ux/design-tokens": "0.11.0",
-    "@simpl/brand": "4.0.0-rc.2",
+    "@simpl/brand": "4.0.0",
     "@simpl/docs-composer": "12.0.2"
   }
 }
