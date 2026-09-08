@@ -5,9 +5,10 @@
   - text: mockup.png
   - button "Remove mockup.png"
 - textbox "Chat input":
-  - /placeholder: Enter a command, question or topic...
+  - /placeholder: Enter a command, question or topic…
 - group:
   - button "Additional actions"
-  - button "Insert emoji"
+  - button "Take photo"
+- button "Insert emoji"
 - button "Send Message"
 - text: The content is AI generated. Always verify the information for accuracy.

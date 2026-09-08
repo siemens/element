@@ -125,7 +125,7 @@
       [maxFileSize]="5242880"
       [sending]="sending()"
       [interruptible]="loading() && !sending()"
-      [followUpPrompts]="followUpPrompts()"
+      [followUpPrompts]="messages().length ? followUpPrompts() : []"
       [(value)]="inputValue"
       (send)="onMessageSent($event)"
       (followUpPromptSelected)="onFollowUpPromptSelected($event)"
