@@ -42,6 +42,35 @@
     }
   }
 
+  > .list {
+    &:first-child {
+      @extend %card-inner-radius-top;
+    }
+
+    &:last-child {
+      @extend %card-inner-radius-bottom;
+    }
+
+    // Round the outer corners of the first and last item so that the item
+    // background of a hovered, filled or outlined list does not paint over the
+    // rounded corners of the card.
+    > :first-child {
+      &,
+      > .list-item {
+        border-start-start-radius: inherit;
+        border-start-end-radius: inherit;
+      }
+    }
+
+    > :last-child {
+      &,
+      > .list-item {
+        border-end-start-radius: inherit;
+        border-end-end-radius: inherit;
+      }
+    }
+  }
+
   &.accent-primary {
     border-inline-start: map.get(spacers.$spacers-inline, 4) solid
       system-tokens.$si-sys-border-accent;
@@ -153,7 +182,21 @@ button.card {
     }
   }
 
-  + :is(.list-group, .overflow-auto, [tabindex='0']) {
+  // Pairs with the inset `outline-offset` below: the inset focus ring is drawn
+  // on the list itself, so the list items have to be pushed behind it. Their
+  // hover, filled and outline backgrounds would paint over it otherwise.
+  // Targets the direct children because `.list-item` sits either on the `li`
+  // or on a wrapped `<button class="list-item list-item-action">`, and `z-index`
+  // only applies to the flex items of the list.
+  + .list {
+    z-index: 0;
+
+    > li {
+      z-index: -1;
+    }
+  }
+
+  + :is(.list-group, .list, .overflow-auto, [tabindex='0']) {
     outline-offset: focus.$focus-style-outline-inside-offset;
   }
 }

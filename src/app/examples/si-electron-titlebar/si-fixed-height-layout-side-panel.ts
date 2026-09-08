@@ -20,6 +20,7 @@ import {
 } from '@siemens/element-ng/application-header';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
+import { EntityStatusType } from '@siemens/element-ng/common';
 import { SiElectrontitlebarComponent } from '@siemens/element-ng/electron-titlebar';
 import {
   SiHeaderDropdownComponent,
@@ -175,6 +176,29 @@ export class SampleComponent implements OnDestroy {
   ];
 
   statusBarCompact: 'large' | 'compact' = 'large';
+
+  listItems: { status: EntityStatusType; icon: string; title: string; eventOut?: boolean }[] = [
+    {
+      status: 'info',
+      icon: 'element-door',
+      title: 'Use the content action bar to toggle side panel'
+    },
+    { status: 'danger', icon: 'element-lock', title: 'Dapibus ac facilisis in' },
+    { status: 'info', icon: 'element-cooling', title: 'Porta ac consectetur ac', eventOut: true },
+    { status: 'danger', icon: 'element-user', title: 'Vestibulum at eros' },
+    { status: 'info', icon: 'element-door', title: 'Cras justo odio', eventOut: true },
+    { status: 'danger', icon: 'element-lock', title: 'Dapibus ac facilisis in' },
+    { status: 'info', icon: 'element-cooling', title: 'Porta ac consectetur ac' },
+    { status: 'danger', icon: 'element-user', title: 'Vestibulum at eros' },
+    { status: 'info', icon: 'element-door', title: 'Cras justo odio' },
+    { status: 'danger', icon: 'element-lock', title: 'Dapibus ac facilisis in' },
+    { status: 'info', icon: 'element-cooling', title: 'Porta ac consectetur ac' },
+    { status: 'danger', icon: 'element-user', title: 'Vestibulum at eros' },
+    { status: 'info', icon: 'element-door', title: 'Cras justo odio' },
+    { status: 'danger', icon: 'element-lock', title: 'Dapibus ac facilisis in' },
+    { status: 'info', icon: 'element-cooling', title: 'Porta ac consectetur ac' },
+    { status: 'danger', icon: 'element-user', title: 'Vestibulum at eros' }
+  ];
 
   primaryActions = [{ title: 'Toggle panel', action: () => this.sidePanelService.open() }];
 

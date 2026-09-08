@@ -10,73 +10,22 @@
         <div class="px-6 py-4">
           <si-search-bar showIcon colorVariant="base-0" />
         </div>
-        <ul class="list-group list-group-lg">
-          <li class="list-group-item d-flex align-items-center">
-            <span class="badge bg-default mx-0">2</span>
-            <span class="ps-4 me-auto si-h5">Building B</span>
-            <span class="">10.7</span>
-            <button
-              type="button"
-              class="btn btn-icon btn-tertiary element-export ms-4"
-              aria-label="Action on building"
-              (click)="logEvent('Action on building')"
-            ></button>
-          </li>
-          <li class="list-group-item d-flex align-items-center">
-            <span class="badge bg-default mx-0">2</span>
-            <span class="ps-4 me-auto si-h5">Building B</span>
-            <span class="">10.7</span>
-            <button
-              type="button"
-              class="btn btn-icon btn-tertiary element-export ms-4"
-              aria-label="Action on building"
-              (click)="logEvent('Action on building')"
-            ></button>
-          </li>
-          <li class="list-group-item d-flex align-items-center">
-            <span class="badge bg-default mx-0">3</span>
-            <span class="ps-4 me-auto si-h5">Building B</span>
-            <span class="">10.7</span>
-            <button
-              type="button"
-              class="btn btn-icon btn-tertiary element-export ms-4"
-              aria-label="Action on building"
-              (click)="logEvent('Action on building')"
-            ></button>
-          </li>
-          <li class="list-group-item d-flex align-items-center">
-            <span class="badge bg-default mx-0">5</span>
-            <span class="ps-4 me-auto si-h5">Building B</span>
-            <span class="">10.7</span>
-            <button
-              type="button"
-              class="btn btn-icon btn-tertiary element-export ms-4"
-              aria-label="Action on building"
-              (click)="logEvent('Action on building')"
-            ></button>
-          </li>
-          <li class="list-group-item d-flex align-items-center">
-            <span class="badge bg-default mx-0">5</span>
-            <span class="ps-4 me-auto si-h5">Building B</span>
-            <span class="">10.7</span>
-            <button
-              type="button"
-              class="btn btn-icon btn-tertiary element-export ms-4"
-              aria-label="Action on building"
-              (click)="logEvent('Action on building')"
-            ></button>
-          </li>
-          <li class="list-group-item d-flex align-items-center">
-            <span class="badge bg-default mx-0">6</span>
-            <span class="ps-4 me-auto si-h5">Building B</span>
-            <span class="">10.7</span>
-            <button
-              type="button"
-              class="btn btn-icon btn-tertiary element-export ms-4"
-              aria-label="Action on building"
-              (click)="logEvent('Action on building')"
-            ></button>
-          </li>
+        <ul class="list list-divider">
+          @for (building of buildings; track $index) {
+            <li class="list-item">
+              <span class="list-item-indicator badge bg-default">{{ building.alarms }}</span>
+              <span class="list-item-title">{{ building.name }}</span>
+              <div class="list-item-primary-action d-flex align-items-center gap-4">
+                <span>{{ building.value }}</span>
+                <button
+                  type="button"
+                  class="btn btn-icon btn-tertiary element-export"
+                  aria-label="Action on building"
+                  (click)="logEvent('Action on building')"
+                ></button>
+              </div>
+            </li>
+          }
         </ul>
       </div>
 

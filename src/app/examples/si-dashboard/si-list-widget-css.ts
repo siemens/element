@@ -22,6 +22,15 @@ export class SampleComponent {
     link: '/'
   };
 
+  buildings = [
+    { name: 'Building B', alarms: 2, value: '10.7' },
+    { name: 'Building C', alarms: 2, value: '10.7' },
+    { name: 'Building D', alarms: 3, value: '10.7' },
+    { name: 'Building E', alarms: 5, value: '10.7' },
+    { name: 'Building F', alarms: 5, value: '10.7' },
+    { name: 'Building G', alarms: 6, value: '10.7' }
+  ];
+
   primaryActions: ContentActionBarMainItem[] = [
     {
       type: 'action',
