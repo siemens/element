@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+/* eslint-disable defaultValue/tsdoc-defaultValue-annotation */
 
 let resizeObserver: ResizeObserver;
 export interface ResizeOptions {
@@ -31,10 +32,8 @@ export const restoreResizeObserver = (): void => {
  * `ResizeObserver` mock for testing purposes.
  */
 export class MockResizeObserver {
-  /** @defaultValue [] */
   static instances: MockResizeObserver[] = [];
   private callback: ResizeObserverCallback;
-  /** @defaultValue [] */
   observed: [Element, ResizeObserverOptions | undefined][] = [];
 
   constructor(callback: ResizeObserverCallback) {
@@ -42,27 +41,8 @@ export class MockResizeObserver {
     MockResizeObserver.instances.push(this);
   }
 
-  /**
-   * @defaultValue
-   * ```
-   * vi.fn(() => (this.observed = []))
-   * ```
-   */
   disconnect = vi.fn(() => (this.observed = []));
 
-  /**
-   * @defaultValue
-   * ```
-   * vi.fn((target: Element, options?: ResizeObserverOptions) => {
-   *   const index = this.observed.findIndex(([element]) => element === target);
-   *   if (index === -1) {
-   *     this.observed.push([target, options]);
-   *   } else {
-   *     this.observed[index] = [target, options];
-   *   }
-   * })
-   * ```
-   */
   observe = vi.fn((target: Element, options?: ResizeObserverOptions) => {
     const index = this.observed.findIndex(([element]) => element === target);
     if (index === -1) {
@@ -72,14 +52,6 @@ export class MockResizeObserver {
     }
   });
 
-  /**
-   * @defaultValue
-   * ```
-   * vi.fn(
-  (target: Element) => (this.observed = this.observed.filter(x => x[0] !== target))
-  )
-   * ```
-   */
   unobserve = vi.fn(
     (target: Element) => (this.observed = this.observed.filter(x => x[0] !== target))
   );
