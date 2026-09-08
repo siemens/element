@@ -4,37 +4,36 @@
 // Codeflask/prism theme using Element Design System tokens
 // Automatically adapts to light and dark themes
 // Token mapping matches markdown syntax highlighting:
-// - Default text: element-text-primary
-// - Keywords: element-data-purple-2
-// - Operators: element-data-plum-2
-// - Variables: element-data-6
-// - Functions: element-text-caution
-// - Strings: element-text-warning
-// - Numbers: element-text-success
-// - Constants: element-data-13
-// - Comments: element-data-green-3
-// - Punctuation: element-data-17
-// - Tags: element-data-5
-// - Types: element-data-4
-// - Invalid: element-data-10
+// - Default text: si-sys-code-1
+// - Keywords, operators, and symbols: si-sys-code-2
+// - Constants: si-sys-code-3
+// - Variables and properties: si-sys-code-4
+// - Functions and built-ins: si-sys-code-5
+// - Strings and regular expressions: si-sys-code-6
+// - Numbers: si-sys-code-7
+// - Comments: si-sys-code-8
+// - Punctuation: si-sys-code-9
+// - Tags and attributes: si-sys-code-10
+// - Types and deletions: si-sys-code-11
+// - Insertions: si-sys-code-12
 
 // stylelint-disable selector-class-pattern
 
-$default: element-vars.$element-text-primary;
+$default: element-vars.$si-sys-code-1;
 $background: variables.$live-preview-editor-background-color;
 $background-readonly: variables.$live-preview-editor-background-color;
-$purple: element-vars.$element-data-purple-2;
-$caution: element-vars.$element-text-caution;
-$warning: element-vars.$element-text-warning;
-$success: element-vars.$element-text-success;
-$data-5: element-vars.$element-data-5;
-$data-6: element-vars.$element-data-6;
-$data-4: element-vars.$element-data-4;
-$data-13: element-vars.$element-data-13;
-$data-10: element-vars.$element-data-10;
-$data-plum-2: element-vars.$element-data-plum-2;
-$comment: element-vars.$element-data-green-3;
-$punctuation: element-vars.$element-data-17;
+$keyword: element-vars.$si-sys-code-2;
+$constant: element-vars.$si-sys-code-3;
+$variable: element-vars.$si-sys-code-4;
+$function: element-vars.$si-sys-code-5;
+$string: element-vars.$si-sys-code-6;
+$number: element-vars.$si-sys-code-7;
+$comment: element-vars.$si-sys-code-8;
+$punctuation: element-vars.$si-sys-code-9;
+$tag: element-vars.$si-sys-code-10;
+$attr: element-vars.$si-sys-code-3;
+$type: element-vars.$si-sys-code-11;
+$addition: element-vars.$si-sys-code-12;
 $lines-color: element-vars.$element-text-disabled;
 $lines-background: element-vars.$element-base-4;
 
@@ -115,69 +114,75 @@ $lines-background: element-vars.$element-base-4;
       color: $punctuation;
     }
 
-    // Constants and keywords
-    &.constant,
-    &.symbol,
-    &.keyword {
-      color: $purple;
+    // Keywords, operators, and symbols
+    &.keyword,
+    &.operator,
+    &.boolean,
+    &.symbol {
+      color: $keyword;
+    }
+
+    // Constants
+    &.constant {
+      color: $constant;
     }
 
     // Built-in functions
     &.builtin {
-      color: $data-4;
+      color: $function;
     }
 
     // Properties
     &.property {
-      color: $data-6;
+      color: $variable;
     }
 
     // Tags (HTML/XML)
-    &.tag {
-      color: $data-5;
-    }
-
-    // Booleans
-    &.boolean {
-      color: $data-13;
+    &.tag,
+    &.selector {
+      color: $tag;
     }
 
     // Numbers
     &.number {
-      color: $success;
+      color: $number;
     }
 
     // Attribute names
     &.attr-name {
-      color: $data-6;
+      color: $attr;
     }
 
     // Attribute values
     &.attr-value {
-      color: $warning;
+      color: $string;
     }
 
     // Strings
     &.string,
     &.char {
-      color: $warning;
+      color: $string;
     }
 
     // Functions
     &.function {
-      color: $caution;
+      color: $function;
     }
 
     // Class names and types
     &.class-name {
-      color: $data-4;
+      color: $type;
     }
 
     // Variables, regex, important
-    &.regex,
     &.important,
     &.variable {
-      color: $data-6;
+      color: $variable;
+    }
+
+    // Regular expressions
+    &.regex {
+      color: $string;
     }
 
     // Bold and important
@@ -198,12 +203,12 @@ $lines-background: element-vars.$element-base-4;
 
     // Insertions (diffs)
     &.inserted {
-      color: $comment;
+      color: $addition;
     }
 
     // Deletions (diffs)
     &.deleted {
-      color: $data-10;
+      color: $type;
     }
   }
 }
