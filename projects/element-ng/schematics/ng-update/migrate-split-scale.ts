@@ -704,14 +704,15 @@ const getMappedScaleExpression = (
     return undefined;
   }
 
+  const leadingWhitespaceLength = expression.length - expression.trimStart().length;
+  const syntheticSourcePrefixLength = initializer.getStart(source) - leadingWhitespaceLength;
   return replacements
     .sort((first, second) => second.start - first.start)
     .reduce((value, replacement) => {
-      const offset = initializer.getStart(source) - expression.indexOf(expression.trim());
       return (
-        value.slice(0, replacement.start - offset) +
+        value.slice(0, replacement.start - syntheticSourcePrefixLength) +
         replacement.value +
-        value.slice(replacement.end - offset)
+        value.slice(replacement.end - syntheticSourcePrefixLength)
       );
     }, expression);
 };
