@@ -46,35 +46,68 @@
   </div>
 
   <div class="d-flex align-items-center justify-content-between">
-    <div class="btn-group" role="group">
-      <input
-        #fileInput
-        type="file"
-        class="d-none"
-        siFileUpload
-        [accept]="accept()"
-        [maxFileSize]="maxFileSize()"
-        [multiple]="true"
-        (validFiles)="onFilesAdded($event)"
-        (fileError)="onFileError($event)"
-      />
+    <div class="d-flex align-items-center gap-0">
+      <div class="btn-group" role="group">
+        @if (allowAttachments()) {
+          <input
+            #fileInput
+            type="file"
+            class="d-none"
+            siFileUpload
+            [accept]="accept()"
+            [maxFileSize]="maxFileSize()"
+            [multiple]="true"
+            (validFiles)="onFilesAdded($event)"
+            (fileError)="onFileError($event)"
+          />
+        }
 
-      @if (hasMenuActions()) {
-        <button
-          type="button"
-          class="btn btn-tertiary-ghost btn-icon"
-          [cdkMenuTriggerFor]="allActionsMenu"
-          [attr.aria-label]="secondaryActionsLabel() | translate"
-          [attr.title]="secondaryActionsLabel() | translate"
-        >
-          <si-icon [icon]="icons.elementPlus" />
-        </button>
+        @if (allowAttachments() && !hasSecondaryActions()) {
+          <button
+            type="button"
+            class="btn btn-tertiary-ghost btn-icon"
+            [disabled]="disabled()"
+            [siTooltip]="attachFileLabel() | translate"
+            [attr.aria-label]="attachFileLabel() | translate"
+            (click)="triggerFileInput()"
+          >
+            <si-icon [icon]="icons.elementAttachment" />
+          </button>
+        }
 
-        <ng-template #allActionsMenu>
-          <si-menu-factory [items]="allMenuActions()" [actionParam]="actionParam()" />
-        </ng-template>
-      }
-      <ng-content />
+        @if (hasMenuActions()) {
+          <button
+            type="button"
+            class="btn btn-tertiary-ghost btn-icon"
+            [cdkMenuTriggerFor]="allActionsMenu"
+            [attr.aria-label]="secondaryActionsLabel() | translate"
+            [attr.title]="secondaryActionsLabel() | translate"
+          >
+            <si-icon [icon]="icons.elementPlus" />
+          </button>
+
+          <ng-template #allActionsMenu>
+            <si-menu-factory [items]="combinedMenuActions()" [actionParam]="actionParam()" />
+          </ng-template>
+        }
+        @if (hasActions()) {
+          @for (action of actions(); track $index) {
+            <button
+              type="button"
+              class="btn btn-tertiary-ghost btn-icon"
+              [disabled]="action.disabled"
+              [siTooltip]="action.label | translate"
+              [attr.aria-label]="action.label | translate"
+              (click)="action.action(actionParam(), action)"
+            >
+              <si-icon [icon]="action.icon" />
+            </button>
+          }
+        }
+      </div>
+      <div class="d-flex align-items-center gap-0">
+        <ng-content />
+      </div>
     </div>
 
     <button
