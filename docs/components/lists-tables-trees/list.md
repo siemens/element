@@ -107,3 +107,50 @@ Items within the metadata row can be separated with `.list-item-metadata-divider
 Use the `.unread` class on `.list-item-title` to indicate unread items with a bold title and a dot indicator.
 
 <si-docs-component example="list-item/list-item-unread" height="400"></si-docs-component>
+
+### Migrating from the list group
+
+The Bootstrap based list group (`.list-group`) is deprecated in favor of the list.
+The list group is only a bordered container and has no notion of the list anatomy,
+so migrating means restructuring the markup, it is not a plain class rename.
+
+| Deprecated                          | Replacement                                                                                                |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `.list-group`                       | `.list`, optionally with `.list-divider`, `.list-filled` or `.list-outline`                                |
+| `.list-group-item`                  | `.list-item`, wrap the content in the slot classes such as `.list-item-title` and `.list-item-description` |
+| `.list-group-item-action`           | `.list-item.list-item-action` on a `<button>` or `<a>`                                                     |
+| `.list-group-flush`                 | `.list.list-divider` to preserve dividers; otherwise `.list`, which has no outer border                    |
+| `.list-group-md`, `.list-group-lg`  | No replacement, the height of a list item follows its content                                              |
+| `.list-group-horizontal*`           | No replacement, use flex or grid utilities                                                                 |
+| `.list-group-numbered`              | No replacement, use an ordered list with a custom counter because `.list-item` removes list markers        |
+| `.list-group-item-*` color variants | No replacement, use the background and text utilities, or an [indicator](#indicator)                       |
+| `.list-header`                      | No replacement, use a heading element                                                                      |
+
+Start with the structural migration below, then choose the list style according to the application context.
+
+```html
+<!-- Before -->
+<ul class="list-group">
+  <li class="list-group-item">Item</li>
+</ul>
+
+<!-- After -->
+<ul class="list">
+  <li class="list-item">
+    <span class="list-item-title">Item</span>
+  </li>
+</ul>
+```
+
+#### Choosing the right style
+
+The new list does not have a default background.
+When replacing `.list-group` with `.list`, change the style according to the context.
+
+- If `.list-group` is placed in a side panel, card, or container with a `base-1` background,
+  use `.list` for a ghost style or `.list.list-divider` for a divider style.
+- If `.list-group` is placed directly on the application's bottom layer or on a `base-0`
+  background, use `.list.list-outline` or `.list.list-filled`.
+- To retain the exact same style as before, apply `.card` to `.list.list-divider`.
+
+![List group migration](images/list-group-migration.png)
