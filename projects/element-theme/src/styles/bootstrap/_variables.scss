@@ -2,6 +2,7 @@
 @use '../variables/system-tokens';
 @use '../variables/semantic-tokens';
 @use '../variables/spacers';
+@use '../variables/sizing';
 @use '../variables/typography';
 @use './functions';
 
@@ -363,15 +364,10 @@ $input-plaintext-color: $body-color !default;
 
 $input-height-border: $input-border-width * 2 !default;
 
-$input-height: calc(1lh + ($input-padding-y-full * 2));
+$input-height: map.get(sizing.$sizing, 80);
 
 // don't derive from $input-height as it generates a nested calc() expression
-$input-height-inner: calc($input-line-height + ($input-padding-y-full - 1px) * 2) !default;
-// Wrap in parenthesis: `*` binds tighter than `-`, so without them only the border term gets multiplied.
-// DEPRECATED: Calculate it yourself using $input-height-inner
-$input-height-inner-half: calc((#{$input-height-inner}) * 0.5) !default;
-// DEPRECATED: Calculate it yourself using $input-height-inner
-$input-height-inner-quarter: calc((#{$input-height-inner}) * 0.25) !default;
+$input-height-inner: calc(map.get(sizing.$sizing, 80) - (2 * 1px)) !default;
 
 $input-transition:
   border-color 0.15s ease-in-out,

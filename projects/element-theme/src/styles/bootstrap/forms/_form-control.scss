@@ -197,7 +197,6 @@ select:is(.form-control, .form-select):not([multiple]) {
       )
       center,
     right calc(map.get(spacers.$spacers-block, 2) - variables.$input-border-width) top 50%;
-  background-size: si-vars.$si-icon-font-size, variables.$form-feedback-icon-size;
 
   @include utilities.rtl {
     background-position: left
@@ -215,6 +214,7 @@ select:is(.form-control, .form-select)[multiple] {
   border-start-end-radius: 0;
   border-end-end-radius: 0;
   padding: 0;
+  block-size: unset;
 
   option {
     padding: map.get(spacers.$spacers-block, 4) map.get(spacers.$spacers-inline, 4);
