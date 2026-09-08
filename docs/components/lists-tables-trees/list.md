@@ -107,3 +107,24 @@ Items within the metadata row can be separated with `.list-item-metadata-divider
 Use the `.unread` class on `.list-item-title` to indicate unread items with a bold title and a dot indicator.
 
 <si-docs-component example="list-item/list-item-unread" height="400"></si-docs-component>
+
+### Migrating from the list group
+
+The Bootstrap based list group (`.list-group`) is deprecated in favor of the list.
+The list group is only a bordered container and has no notion of the list anatomy,
+so migrating means restructuring the markup, it is not a plain class rename.
+
+| Deprecated                          | Replacement                                                                                                |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `.list-group`                       | `.list`, optionally with `.list-divider`, `.list-filled` or `.list-outline`                                |
+| `.list-group-item`                  | `.list-item`, wrap the content in the slot classes such as `.list-item-title` and `.list-item-description` |
+| `.list-group-item-action`           | `.list-item-action` on a `<button>` or `<a>` inside the `.list-item`                                       |
+| `.list-group-flush`                 | `.list`, the list has no outer border                                                                      |
+| `.list-group-md`, `.list-group-lg`  | No replacement, the height of a list item follows its content                                              |
+| `.list-group-horizontal*`           | No replacement, use flex or grid utilities                                                                 |
+| `.list-group-numbered`              | No replacement, use an ordered list                                                                        |
+| `.list-group-item-*` color variants | No replacement, use the background and text utilities, or an [indicator](#indicator)                       |
+| `.list-header`                      | No replacement, use a heading element                                                                      |
+
+The list group styles remain available so existing applications keep working,
+but they are no longer recommended and will not receive further design updates.

@@ -1,3 +1,27 @@
+// @deprecated The Bootstrap list group is deprecated in favor of the Element list
+// (`.list` / `.list-item`, see `../components/_list-item.scss`).
+
+// The list group predates the Element list and is only a thin container with
+// borders. It has no notion of the Element list anatomy (indicator, title,
+// description, metadata, quick actions) and therefore cannot express the current
+// design. Do not use it for new code.
+
+// Rough mapping, the markup has to be restructured, this is not a class rename:
+// `.list-group` -> `.list`, optionally with `.list-divider`, `.list-filled` or `.list-outline`
+// `.list-group-item` -> `.list-item`, children need explicit slot classes
+//                       (`.list-item-title`, `.list-item-description`, ...)
+// `.list-group-item-action` -> `.list-item.list-item-action`
+// `.list-group-flush` -> `.list`, the Element list has no outer border
+// `.list-group-md` / `.list-group-lg` -> no replacement, the item height follows its content
+// `.list-group-horizontal*` -> no replacement, use flex or grid utilities
+// `.list-group-numbered` -> no replacement, use an ordered list
+// `.list-group-item-*` -> no replacement, use background and text utilities
+// `.list-header` -> no replacement, use a heading element
+
+// These styles remain available for existing applications and there is no removal
+// planned at this point. They will not receive further design updates and may be
+// removed in a future major version.
+
 @use 'sass:map';
 
 @use '../variables/focus';
@@ -6,6 +30,7 @@
 @use 'mixins/breakpoints';
 @use 'variables';
 
+// @deprecated Use `.list` instead.
 .list-group {
   display: flex;
   flex-direction: column;
@@ -13,6 +38,7 @@
   border-radius: variables.$list-group-border-radius;
 }
 
+// @deprecated No replacement, use an ordered list.
 .list-group-numbered {
   list-style-type: none;
   counter-reset: section;
@@ -24,6 +50,7 @@
   }
 }
 
+// @deprecated Use `.list-item.list-item-action` instead.
 .list-group-item-action {
   inline-size: 100%; // For `<button>`s (anchors become 100% by default though)
   color: variables.$list-group-action-color;
@@ -47,6 +74,7 @@
   }
 }
 
+// @deprecated Use `.list-item` instead.
 .list-group-item {
   position: relative;
   display: block;
@@ -100,14 +128,17 @@
   }
 }
 
+// @deprecated No replacement, the height of a `.list-item` follows its content.
 .list-group-lg .list-group-item {
   min-block-size: calc(3rem + 2 * variables.$list-group-item-padding-y);
 }
 
+// @deprecated No replacement, the height of a `.list-item` follows its content.
 .list-group-md .list-group-item {
   min-block-size: calc(2rem + 2 * variables.$list-group-item-padding-y);
 }
 
+// @deprecated No replacement, use a heading element.
 .list-header {
   font-size: typography.$si-font-size-body-sm;
   padding-block: variables.$list-group-item-padding-y;
@@ -117,6 +148,7 @@
   border: 1px solid variables.$list-group-border-color;
 }
 
+// @deprecated No replacement, use flex or grid utilities.
 @each $breakpoint in map.keys(variables.$grid-breakpoints) {
   @include breakpoints.media-breakpoint-up($breakpoint) {
     $infix: breakpoints.breakpoint-infix($breakpoint, variables.$grid-breakpoints);
@@ -154,6 +186,7 @@
   }
 }
 
+// @deprecated Use `.list` instead, the Element list has no outer border.
 .list-group-flush {
   border-radius: 0;
 
@@ -167,6 +200,8 @@
   }
 }
 
+// @deprecated No replacement for the `.list-group-item-*` variants below,
+// use the background and text utilities on a `.list-item` instead.
 .list-group-item-secondary {
   background-color: system-tokens.$si-sys-background-neutral;
   color: system-tokens.$si-sys-text-primary;

@@ -610,6 +610,8 @@ $progress-bar-animation-timing: 1s linear infinite !default;
 $progress-bar-transition: width animations.element-transition-duration(0.6s) ease;
 
 // List group
+// @deprecated All `$list-group-*` variables below belong to the deprecated
+// Bootstrap list group. Use the Element list (`.list` / `.list-item`) instead.
 
 $list-group-color: system-tokens.$si-sys-text-primary !default;
 $list-group-bg: system-tokens.$si-sys-background-1 !default;
