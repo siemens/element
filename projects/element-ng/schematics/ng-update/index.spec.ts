@@ -754,6 +754,33 @@ export class SplitComponent {
     expect(template).not.toContain("=== 'none'");
   });
 
+  it('should keep dynamic scale mappings valid after their values are migrated', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+import { Scale } from '@siemens/element-ng/split';
+
+const defaultScale: Scale = 'none';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part [scale]="assertedScale" />
+<si-split-part [scale]="inheritedScale" />\`
+})
+export class SplitComponent {
+  readonly assertedScale = 'none' as Scale;
+  readonly inheritedScale = defaultScale;
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toContain("const defaultScale: SplitUnit = 'px';");
+    expect(component).toContain("readonly assertedScale = 'px' as SplitUnit;");
+    expect(component).toContain(`[unit]="['none', 'px'].includes(assertedScale) ? 'px' : 'fr'"`);
+    expect(component).toContain(`[unit]="['none', 'px'].includes(inheritedScale) ? 'px' : 'fr'"`);
+  });
+
   it('should scope inline template bindings to their owning component', async () => {
     addTestFiles(appTree, {
       '/projects/app/src/owners.ts': `import { Component, signal } from '@angular/core';
