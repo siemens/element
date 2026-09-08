@@ -614,6 +614,46 @@ export class SplitComponent {}`
     expect(component).not.toContain('scale=');
   });
 
+  it('should warn when static scale and unit inputs conflict', async () => {
+    const logSpy = vi.fn();
+    runner.logger.subscribe(logSpy);
+
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split>
+  <si-split-part unit="fr" scale="none">Fixed conflict</si-split-part>
+  <si-split-part unit="px" scale="auto">Flexible conflict</si-split-part>
+  <si-split-part unit="fr" scale="auto">Matching</si-split-part>
+  <si-split-part [unit]="unit" [scale]="scale">Dynamic</si-split-part>
+</si-split>\`
+})
+export class SplitComponent {
+  readonly unit = 'fr';
+  readonly scale = 'auto';
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toMatch(/<si-split-part unit="fr"[^>]*>Fixed conflict<\/si-split-part>/);
+    expect(component).toMatch(/<si-split-part unit="px"[^>]*>Flexible conflict<\/si-split-part>/);
+    expect(component).toMatch(/<si-split-part unit="fr"[^>]*>Matching<\/si-split-part>/);
+    expect(component).toMatch(/<si-split-part \[unit\]="unit"[^>]*>Dynamic<\/si-split-part>/);
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        level: 'warn',
+        message: expect.stringContaining('projects/app/src/split.component.ts')
+      })
+    );
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.objectContaining({ message: expect.stringContaining('conflicting scale and unit') })
+    );
+  });
+
   it('should migrate dynamic split scale bindings in external templates', async () => {
     addTestFiles(appTree, {
       '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
