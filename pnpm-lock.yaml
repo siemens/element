@@ -431,8 +431,8 @@ importers:
         specifier: 0.11.0
         version: 0.11.0
       '@simpl/brand':
-        specifier: 4.0.0-rc.2
-        version: 4.0.0-rc.2
+        specifier: 4.0.0
+        version: 4.0.0
       '@simpl/docs-composer':
         specifier: 12.0.2
         version: 12.0.2(typescript@6.0.3)
@@ -3572,8 +3572,8 @@ packages:
     resolution: {integrity: sha512-qv7+G3J2cc6wwFj3yKvXOamzqhMwSk1ogPGmhpS8iXllcPrJaIIBA+4HbttlHVu1pqWTdmaCH/WE7UOC51kdoA==, tarball: https://registry.npmjs.org/@sigstore/verify/-/verify-3.1.1.tgz}
     engines: {node: ^20.17.0 || >=22.9.0}
 
-  '@simpl/brand@4.0.0-rc.2':
-    resolution: {integrity: sha1-ws2yPyKAy0efGC6z4ByP/nFBFKA=, tarball: https://code.siemens.com/api/v4/projects/732/packages/npm/@simpl/brand/-/@simpl/brand-4.0.0-rc.2.tgz}
+  '@simpl/brand@4.0.0':
+    resolution: {integrity: sha1-F3AWExAkc6Ic34rgRr18HR5QSRA=, tarball: https://code.siemens.com/api/v4/projects/732/packages/npm/@simpl/brand/-/@simpl/brand-4.0.0.tgz}
     peerDependencies:
       '@siemens/element-theme': workspace:*
 
@@ -12250,7 +12250,7 @@ snapshots:
       '@sigstore/core': 3.2.1
       '@sigstore/protobuf-specs': 0.5.1
 
-  '@simpl/brand@4.0.0-rc.2':
+  '@simpl/brand@4.0.0':
     optional: true
 
   '@simpl/docs-composer@12.0.2(typescript@6.0.3)':
