@@ -5,26 +5,26 @@
         {{ aboutTitle() }}
       </div>
 
-      <div class="list-group">
-        <div class="list-group-item text-center">
-          @let appIcon = iconName();
-          @if (icon()) {
-            <img
-              class="rounded-circle"
-              height="150"
-              [src]="icon()"
-              [alt]="logoAlt() | translate: { appName: appName() }"
-            />
-          } @else if (appIcon) {
-            <si-icon class="app-icon" [icon]="appIcon" />
-          }
-          <h3>{{ appName() }}</h3>
-          @for (item of subheading(); track $index) {
-            <p>{{ item }}</p>
-          }
-          <si-copyright-notice [copyright]="copyrightDetails()" />
-        </div>
+      <div class="about-branding text-center">
+        @let appIcon = iconName();
+        @if (icon()) {
+          <img
+            class="rounded-circle"
+            height="150"
+            [src]="icon()"
+            [alt]="logoAlt() | translate: { appName: appName() }"
+          />
+        } @else if (appIcon) {
+          <si-icon class="app-icon" [icon]="appIcon" />
+        }
+        <h3>{{ appName() }}</h3>
+        @for (item of subheading(); track $index) {
+          <p>{{ item }}</p>
+        }
+        <si-copyright-notice [copyright]="copyrightDetails()" />
+      </div>
 
+      <ul class="list list-divider">
         @if (imprintLink()) {
           <ng-container
             [ngTemplateOutlet]="linkTemplate"
@@ -61,7 +61,7 @@
             [ngTemplateOutletContext]="{ link: item }"
           />
         }
-      </div>
+      </ul>
     </div>
   </div>
 
@@ -110,11 +110,9 @@
 </div>
 
 <ng-template #linkTemplate let-link="link">
-  <a
-    class="list-group-item si-h5 text-primary focus-inside"
-    siLinkDefaultTarget="_blank"
-    [siLink]="link"
-  >
-    {{ link.title | translate }}
-  </a>
+  <li>
+    <a class="list-item list-item-action text-primary" siLinkDefaultTarget="_blank" [siLink]="link">
+      <span class="list-item-title">{{ link.title | translate }}</span>
+    </a>
+  </li>
 </ng-template>
