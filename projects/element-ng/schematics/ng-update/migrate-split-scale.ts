@@ -191,7 +191,7 @@ const getScaleUnit = (value: string): 'px' | 'fr' => (value.trim() === 'none' ? 
 
 const getUnitExpression = (expression: string): string => {
   const value = expression.trim();
-  return `(${value}) === 'none' ? 'px' : 'fr'`;
+  return `['none', 'px'].includes(${value}) ? 'px' : 'fr'`;
 };
 
 const formatUnitBinding = (
