@@ -92,7 +92,8 @@ $status-colors: (
   'caution-contrast': system-tokens.$si-sys-text-on-caution,
   'warning-contrast': system-tokens.$si-sys-text-on-warning,
   'danger-contrast': system-tokens.$si-sys-text-on-danger,
-  'critical-contrast': system-tokens.$si-sys-text-on-critical
+  'critical-contrast': system-tokens.$si-sys-text-on-critical,
+  'neutral-contrast': system-tokens.$si-sys-text-on-neutral
 ) !default;
 
 @each $color, $value in $status-colors {
