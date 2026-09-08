@@ -164,13 +164,11 @@ const migrateScaleTemplate = (
       replacement = 'unit="fr"';
       requiresManualSizeMigration = true;
     } else {
-      const replacements = new Set(owners.map(names => getUnitAttribute(scale, names)));
+      const expression =
+        scale.name === 'scale' ? getInterpolationExpression(scale.value) : scale.value;
+      const replacements = new Set(owners.map(names => getUnitAttribute(scale, names, expression)));
       replacement = replacements.values().next().value!;
-      if (replacements.size > 1) {
-        const expression =
-          scale.name === 'scale'
-            ? /^\s*{{([\s\S]*)}}\s*$/.exec(scale.value)![1]!.trim()
-            : scale.value;
+      if (replacements.size > 1 && expression !== undefined) {
         replacement = formatBoundAttribute(
           'unit',
           `['none', 'px'].includes(${expression}) ? 'px' : 'fr'`
@@ -195,23 +193,28 @@ const hasConflictingStaticUnit = (scale: Attribute, unit: Attribute): boolean =>
   );
 };
 
-const getUnitAttribute = (attribute: Attribute, scaleMemberNames: Set<string>): string => {
+const getInterpolationExpression = (value: string): string | undefined =>
+  /^\s*{{([\s\S]*)}}\s*$/.exec(value)?.[1]?.trim();
+
+const getUnitAttribute = (
+  attribute: Attribute,
+  scaleMemberNames: Set<string>,
+  expression: string | undefined
+): string => {
   if (attribute.name === 'scale') {
-    const interpolation = /^\s*{{([\s\S]*)}}\s*$/.exec(attribute.value);
-    if (interpolation) {
-      const expression = interpolation[1]!.trim();
+    if (expression !== undefined) {
       return formatUnitBinding(expression, scaleMemberNames, getExpression(expression));
     }
 
     return `unit="${getScaleUnit(attribute.value)}"`;
   }
 
-  const expression = getExpression(attribute.value);
-  if (expression && ts.isStringLiteral(expression)) {
-    return `unit="${getScaleUnit(expression.text)}"`;
+  const parsedExpression = getExpression(attribute.value);
+  if (parsedExpression && ts.isStringLiteral(parsedExpression)) {
+    return `unit="${getScaleUnit(parsedExpression.text)}"`;
   }
 
-  return formatUnitBinding(attribute.value, scaleMemberNames, expression);
+  return formatUnitBinding(attribute.value, scaleMemberNames, parsedExpression);
 };
 
 const getScaleUnit = (value: string): 'px' | 'fr' => (value.trim() === 'none' ? 'px' : 'fr');
