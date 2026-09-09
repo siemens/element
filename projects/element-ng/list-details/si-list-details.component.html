@@ -6,6 +6,7 @@
     (sizesChange)="onSplitSizesChange($event)"
   >
     <si-split-part
+      #listSplitPart
       [unit]="listUnit()"
       [size]="splitSizes()[0]"
       [showHeader]="false"
