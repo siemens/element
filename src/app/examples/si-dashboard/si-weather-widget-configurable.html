@@ -94,15 +94,17 @@
           }
           @if (suggestions().length) {
             <div class="col-12">
-              <ul class="list-group">
+              <ul class="list list-outline">
                 @for (city of suggestions(); track city.label) {
-                  <button
-                    type="button"
-                    class="list-group-item list-group-item-action"
-                    (click)="onSelectCity(city)"
-                  >
-                    {{ city.label }}
-                  </button>
+                  <li>
+                    <button
+                      type="button"
+                      class="list-item list-item-action"
+                      (click)="onSelectCity(city)"
+                    >
+                      <span class="list-item-title">{{ city.label }}</span>
+                    </button>
+                  </li>
                 }
               </ul>
             </div>

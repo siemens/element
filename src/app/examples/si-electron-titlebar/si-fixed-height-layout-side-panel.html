@@ -70,79 +70,18 @@
           class="si-layout-fixed-height"
           [primaryActions]="primaryActions"
         >
-          <ul class="list-group overflow-auto ms-6 mb-6 rounded-0 border-0" tabindex="0" body>
-            <li class="list-group-item d-flex align-items-center">
-              <si-circle-status status="info" icon="element-door" class="my-n4 me-5" />
-              Use the content action bar to toggle side panel
-            </li>
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="danger" icon="element-lock" class="my-n4 me-5" />Dapibus ac
-              facilisis in</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status
-                status="info"
-                icon="element-cooling"
-                class="my-n4 me-5"
-                [eventOut]="true"
-              />Porta ac consectetur ac</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="danger" icon="element-user" class="my-n4 me-5" />Vestibulum
-              at eros</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status
-                status="info"
-                icon="element-door"
-                class="my-n4 me-5"
-                [eventOut]="true"
-              />Cras justo odio</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="danger" icon="element-lock" class="my-n4 me-5" />Dapibus ac
-              facilisis in</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="info" icon="element-cooling" class="my-n4 me-5" />Porta ac
-              consectetur ac</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="danger" icon="element-user" class="my-n4 me-5" />Vestibulum
-              at eros</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="info" icon="element-door" class="my-n4 me-5" />Cras justo
-              odio</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="danger" icon="element-lock" class="my-n4 me-5" />Dapibus ac
-              facilisis in</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="info" icon="element-cooling" class="my-n4 me-5" />Porta ac
-              consectetur ac</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="danger" icon="element-user" class="my-n4 me-5" />Vestibulum
-              at eros</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="info" icon="element-door" class="my-n4 me-5" />Cras justo
-              odio</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="danger" icon="element-lock" class="my-n4 me-5" />Dapibus ac
-              facilisis in</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="info" icon="element-cooling" class="my-n4 me-5" />Porta ac
-              consectetur ac</li
-            >
-            <li class="list-group-item d-flex align-items-center"
-              ><si-circle-status status="danger" icon="element-user" class="my-n4 me-5" />Vestibulum
-              at eros</li
-            >
+          <ul class="list list-divider overflow-auto ms-6 mb-6" tabindex="0" body>
+            @for (item of listItems; track $index) {
+              <li class="list-item">
+                <si-circle-status
+                  class="list-item-indicator"
+                  [status]="item.status"
+                  [icon]="item.icon"
+                  [eventOut]="!!item.eventOut"
+                />
+                <span class="list-item-title">{{ item.title }}</span>
+              </li>
+            }
           </ul>
         </si-card>
       </div>
