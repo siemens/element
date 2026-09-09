@@ -4,7 +4,7 @@ const isLoopback = hostname =>
 const getTheme = () =>
   document.body.getAttribute('data-md-color-scheme') === 'dark' ? 'dark' : 'light';
 const getPreviewUrl = iframe => {
-  const source = iframe.getAttribute('data-src');
+  const source = iframe.getAttribute('data-preview-url');
   if (!source || !URL.canParse(source, document.baseURI)) {
     return;
   }
