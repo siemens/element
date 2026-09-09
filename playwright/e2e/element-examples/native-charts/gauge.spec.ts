@@ -49,6 +49,10 @@ test.describe('ncharts-gauge', () => {
 
     await si.runVisualAndA11yTests('outside-range-labels');
 
+    await page.getByLabel('Enable marker').check();
+    await si.runVisualAndA11yTests('marker');
+    await page.getByLabel('Enable marker').uncheck();
+
     await page.getByLabel('Show segments').uncheck();
     await si.runVisualAndA11yTests('no-segments');
   });

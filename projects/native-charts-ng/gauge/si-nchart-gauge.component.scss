@@ -40,6 +40,12 @@
     stroke-width: 0.5;
   }
 
+  .marker {
+    fill: variables.$element-ui-3;
+    stroke: variables.$element-base-1;
+    stroke-width: 0.4;
+  }
+
   .segments {
     stroke-width: 0.75;
     fill: none;
