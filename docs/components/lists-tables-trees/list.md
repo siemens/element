@@ -118,11 +118,11 @@ so migrating means restructuring the markup, it is not a plain class rename.
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | `.list-group`                       | `.list`, optionally with `.list-divider`, `.list-filled` or `.list-outline`                                |
 | `.list-group-item`                  | `.list-item`, wrap the content in the slot classes such as `.list-item-title` and `.list-item-description` |
-| `.list-group-item-action`           | `.list-item-action` on a `<button>` or `<a>` inside the `.list-item`                                       |
-| `.list-group-flush`                 | `.list`, the list has no outer border                                                                      |
+| `.list-group-item-action`           | `.list-item.list-item-action` on a `<button>` or `<a>`                                                     |
+| `.list-group-flush`                 | `.list.list-divider` to preserve dividers; otherwise `.list`, which has no outer border                    |
 | `.list-group-md`, `.list-group-lg`  | No replacement, the height of a list item follows its content                                              |
 | `.list-group-horizontal*`           | No replacement, use flex or grid utilities                                                                 |
-| `.list-group-numbered`              | No replacement, use an ordered list                                                                        |
+| `.list-group-numbered`              | No replacement, use an ordered list with a custom counter because `.list-item` removes list markers        |
 | `.list-group-item-*` color variants | No replacement, use the background and text utilities, or an [indicator](#indicator)                       |
 | `.list-header`                      | No replacement, use a heading element                                                                      |
 

@@ -11,10 +11,12 @@
 // `.list-group-item` -> `.list-item`, children need explicit slot classes
 //                       (`.list-item-title`, `.list-item-description`, ...)
 // `.list-group-item-action` -> `.list-item.list-item-action`
-// `.list-group-flush` -> `.list`, the Element list has no outer border
+// `.list-group-flush` -> `.list.list-divider` to preserve dividers; otherwise
+//                        `.list`, which has no outer border
 // `.list-group-md` / `.list-group-lg` -> no replacement, the item height follows its content
 // `.list-group-horizontal*` -> no replacement, use flex or grid utilities
-// `.list-group-numbered` -> no replacement, use an ordered list
+// `.list-group-numbered` -> no replacement, use an ordered list with a custom counter
+//                           because `.list-item` removes list markers
 // `.list-group-item-*` -> no replacement, use background and text utilities
 // `.list-header` -> no replacement, use a heading element
 
@@ -38,7 +40,8 @@
   border-radius: variables.$list-group-border-radius;
 }
 
-// @deprecated No replacement, use an ordered list.
+// @deprecated No replacement, use an ordered list with a custom counter because
+// `.list-item` removes list markers.
 .list-group-numbered {
   list-style-type: none;
   counter-reset: section;
