@@ -21,7 +21,7 @@ const disableResizingAttributeNames = [
   '[disableResizing]',
   'bind-disableResizing'
 ];
-const listUnitAttributeNames = ['listUnit', '[listUnit]', 'bind-listUnit'];
+const listWidthUnitAttributeNames = ['listWidthUnit', '[listWidthUnit]', 'bind-listWidthUnit'];
 
 export const listDetailsUnitsMigrationRule = (options: { path: string }): Rule => {
   return async (tree: Tree, context: SchematicContext) => {
@@ -86,12 +86,14 @@ const migrateListDetailsElement = (
     return;
   }
 
-  const hasListUnit = element.attrs.some(attr => listUnitAttributeNames.includes(attr.name));
-  if (hasListUnit) {
+  const hasListWidthUnit = element.attrs.some(attr =>
+    listWidthUnitAttributeNames.includes(attr.name)
+  );
+  if (hasListWidthUnit) {
     return;
   }
 
-  insertAttribute(template, element, 'listUnit="fr"', offset, recorder);
+  insertAttribute(template, element, 'listWidthUnit="fr"', offset, recorder);
 };
 
 const getStaticBooleanValue = (attribute: Attribute): boolean | undefined => {
