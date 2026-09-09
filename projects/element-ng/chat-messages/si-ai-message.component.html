@@ -7,35 +7,14 @@
 
   @let src = sources();
   @if (actions().length > 0 || secondaryActions().length > 0 || src?.length) {
-    <div class="btn-group ai-message-actions align-items-center" role="group" siChatMessageAction>
-      @for (action of actions(); track $index) {
-        <button
-          type="button"
-          class="btn btn-tertiary-ghost btn-icon"
-          [disabled]="action.disabled"
-          [attr.aria-label]="action.label | translate"
-          (click)="action.action(actionParam(), action)"
-        >
-          <si-icon [icon]="action.icon" />
-        </button>
-      }
-
-      @if (secondaryActions().length > 0) {
-        <button
-          type="button"
-          class="btn btn-tertiary-ghost btn-icon"
-          [cdkMenuTriggerFor]="secondaryActionsMenu"
-          [attr.aria-label]="secondaryActionsLabel() | translate"
-          [attr.title]="secondaryActionsLabel() | translate"
-        >
-          <si-icon [icon]="icons.elementOptionsVertical" />
-        </button>
-
-        <ng-template #secondaryActionsMenu>
-          <si-menu-factory [items]="secondaryActions()" [actionParam]="actionParam()" />
-        </ng-template>
-      }
-
+    <si-chat-message-actions
+      class="ai-message-actions"
+      siChatMessageAction
+      [actions]="actions()"
+      [secondaryActions]="secondaryActions()"
+      [actionParam]="actionParam()"
+      [secondaryActionsLabel]="secondaryActionsLabel()"
+    >
       @if (src?.length) {
         <si-source-chip
           showIcon
@@ -44,6 +23,6 @@
           (sourceClicked)="sourceClicked.emit($event)"
         />
       }
-    </div>
+    </si-chat-message-actions>
   }
 </si-chat-message>
