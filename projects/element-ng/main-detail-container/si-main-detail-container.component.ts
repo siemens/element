@@ -57,7 +57,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
   private readonly resizeObserver = inject(ResizeObserverService);
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly splitComponent = viewChild('splitComponent', { read: ElementRef });
+  private readonly splitElement = viewChild('splitElement', { read: ElementRef });
   private readonly mainSplitPart = viewChild('mainSplitPart', { read: SiSplitPartComponent });
 
   /**
@@ -317,7 +317,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
       return Math.round(mainPartSize);
     }
 
-    const splitWidth = this.splitComponent()?.nativeElement.getBoundingClientRect().width;
+    const splitWidth = this.splitElement()?.nativeElement.getBoundingClientRect().width;
     return splitWidth ? Math.round((splitWidth * fallbackPercentage) / 100) : this.minMainSize();
   }
 
