@@ -157,6 +157,7 @@ describe('MainDetailContainerComponent', () => {
   });
 
   it('should update mainContainerWidth in pixels when split sizes change with px unit', async () => {
+    vi.useRealTimers();
     const widthSpy = vi.spyOn(component, 'mainContainerWidthChanged');
     component.resizableParts.set(true);
     await fixture.whenStable();
@@ -166,12 +167,13 @@ describe('MainDetailContainerComponent', () => {
 
     const split = debugElement.query(By.directive(SiSplitComponent));
     split.componentInstance.sizesChange.emit([38.5, 61.5]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(widthSpy).toHaveBeenCalledWith(385);
   });
 
   it('should calculate pixel size from split width when mainSplitPart expandedSize is unavailable', async () => {
+    vi.useRealTimers();
     const widthSpy = vi.spyOn(component, 'mainContainerWidthChanged');
     component.resizableParts.set(true);
     await fixture.whenStable();
@@ -182,12 +184,13 @@ describe('MainDetailContainerComponent', () => {
     const split = debugElement.query(By.directive(SiSplitComponent));
     const splitWidth = split.nativeElement.getBoundingClientRect().width;
     split.componentInstance.sizesChange.emit([30, 70]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(widthSpy).toHaveBeenCalledWith(Math.round((splitWidth * 30) / 100));
   });
 
   it('should fallback to minMainSize when split width is 0 and expandedSize is unavailable', async () => {
+    vi.useRealTimers();
     const widthSpy = vi.spyOn(component, 'mainContainerWidthChanged');
     component.resizableParts.set(true);
     await fixture.whenStable();
@@ -198,12 +201,13 @@ describe('MainDetailContainerComponent', () => {
     const split = debugElement.query(By.directive(SiSplitComponent));
     vi.spyOn(split.nativeElement, 'getBoundingClientRect').mockReturnValue({ width: 0 } as DOMRect);
     split.componentInstance.sizesChange.emit([30, 70]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(widthSpy).toHaveBeenCalledWith(300);
   });
 
   it('should update mainContainerWidth as percentage when split sizes change with fr unit', async () => {
+    vi.useRealTimers();
     const widthSpy = vi.spyOn(component, 'mainContainerWidthChanged');
     component.mainContainerWidthUnit.set('fr');
     component.resizableParts.set(true);
@@ -211,12 +215,12 @@ describe('MainDetailContainerComponent', () => {
 
     const split = debugElement.query(By.directive(SiSplitComponent));
     split.componentInstance.sizesChange.emit([42, 58]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(widthSpy).toHaveBeenCalledWith(42);
   });
 
-  it('should keep the standard static layout for a px-sized main part', async () => {
+  it('should not apply max sizes when mainContainerWidth is outside 0-100', async () => {
     component.mainContainerWidth.set(320);
     await fixture.whenStable();
 
