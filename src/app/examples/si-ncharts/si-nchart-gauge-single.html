@@ -11,6 +11,7 @@
       [endAngle]="90"
       [min]="300"
       [max]="1500"
+      [markerValue]="markerValue"
       [minNumberOfDecimals]="minDecimals"
       [maxNumberOfDecimals]="maxDecimals"
       [axisNumberOfDecimals]="axisDecimals"
@@ -54,6 +55,27 @@
           [step]="1"
           [(ngModel)]="axisDecimals"
         />
+      </si-form-item>
+    </div>
+    <div class="col-sm-4">
+      <si-form-item label="Marker value">
+        <div class="d-flex align-items-center gap-4">
+          <input
+            type="checkbox"
+            class="form-check-input flex-shrink-0"
+            aria-label="Enable marker"
+            [ngModel]="markerValue !== undefined"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="setMarkerEnabled($event)"
+          />
+          <si-number-input
+            required
+            class="form-control"
+            [disabled]="markerValue === undefined"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="markerValue"
+          />
+        </div>
       </si-form-item>
     </div>
     <div class="col-sm-4">
