@@ -167,6 +167,10 @@ though it can also be moved to suite the design needs.
 
 <si-docs-component example="si-list-details/si-list-details" height="500"></si-docs-component>
 
+### Default pixel sizing
+
+<si-docs-component example="si-list-details/si-list-details-pixels" height="500"></si-docs-component>
+
 <si-docs-api component="SiListDetailsComponent"></si-docs-api>
 
 <si-docs-api component="SiListPaneComponent"></si-docs-api>
