@@ -87,10 +87,12 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   readonly disableResizing = input(false, { transform: booleanAttribute });
 
   /**
-   * The initial size of the list split part when resizing is enabled.
-   * The value uses {@link listUnit}. With `listUnit="fr"`, the value is
-   * treated as a percentage-like fractional weight. In the static layout,
-   * numeric values continue to represent a percentage.
+   * The list pane size, updated when the split is resized or restored.
+   * With resizing enabled, the value uses {@link listUnit}: pixels for `px`,
+   * or a percentage-based fractional weight for `fr`. With resizing disabled,
+   * the value is always interpreted as a percentage.
+   * Percentage values must be in the inclusive range 0-100; values outside this
+   * range fall back to a 32/68 list/details split.
    *
    * @defaultValue 300
    */
