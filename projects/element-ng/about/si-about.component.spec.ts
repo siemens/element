@@ -108,7 +108,7 @@ describe('SiAboutComponent', () => {
     const licenseText = element.querySelector('pre')!.innerHTML;
     const icon = element.querySelector('img')!.getAttribute('src');
     const heading = element.querySelector('img + h3')!.innerHTML;
-    const subheading = element.querySelector('.list-group-item:first-of-type')!.innerHTML;
+    const subheading = element.querySelector('.about-branding')!.innerHTML;
     const links = element.querySelector('.card:first-of-type')!.innerHTML;
 
     expect(title).toContain('About');
@@ -144,7 +144,7 @@ describe('SiAboutComponent', () => {
     const licenseText = element.querySelector('pre')!.innerHTML;
     const icon = element.querySelector('img')!.getAttribute('src');
     const heading = element.querySelector('img + h3')!.innerHTML;
-    const subheading = element.querySelector('.list-group-item:first-of-type')!.innerHTML;
+    const subheading = element.querySelector('.about-branding')!.innerHTML;
     const links = element.querySelector('.card:first-of-type')!.innerHTML;
 
     expect(title).toContain('About');

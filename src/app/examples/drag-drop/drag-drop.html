@@ -4,7 +4,7 @@
     <ul
       #cdkListOne="cdkDropList"
       aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown Cmd+X Cmd+V"
-      class="list-group list-group-flush"
+      class="list list-divider"
       cdkListbox
       cdkDropList
       [cdkDropListConnectedTo]="cdkListTwo"
@@ -15,7 +15,7 @@
       @for (item of listOne; track $index) {
         <li
           #listOneItem
-          class="list-group-item list-group-item-action"
+          class="list-item list-item-action"
           cdkDrag
           [cdkOption]="item"
           [cdkDragData]="item"
@@ -26,15 +26,16 @@
           (keydown)="keydown($event, { item: item, list: listOne, index: $index })"
           (keydown.alt.arrowUp)="moveWithinList(listOne, $index, $index - 1)"
           (keydown.alt.arrowDown)="moveWithinList(listOne, $index, $index + 1)"
-          >{{ item }}</li
         >
+          <span class="list-item-title">{{ item }}</span>
+        </li>
       }
     </ul>
 
     <ul
       #cdkListTwo="cdkDropList"
       aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown Cmd+X Cmd+V"
-      class="list-group list-group-flush"
+      class="list list-divider"
       cdkListbox
       cdkDropList
       [cdkDropListData]="listTwo"
@@ -44,7 +45,7 @@
       @for (item of listTwo; track $index) {
         <li
           #listTwoItem
-          class="list-group-item list-group-item-action"
+          class="list-item list-item-action"
           cdkDrag
           [cdkOption]="item"
           [cdkContextMenuTriggerFor]="contextMenu"
@@ -53,8 +54,9 @@
           (keydown)="keydown($event, { item: item, list: listTwo, index: $index })"
           (keydown.alt.arrowUp)="moveWithinList(listTwo, $index, $index - 1)"
           (keydown.alt.arrowDown)="moveWithinList(listTwo, $index, $index + 1)"
-          >{{ item }}</li
         >
+          <span class="list-item-title">{{ item }}</span>
+        </li>
       }
     </ul>
   </div>

@@ -2,17 +2,10 @@
 
 @use '@siemens/element-theme/src/styles/variables';
 
-.list-group-item {
-  border-width: 0 0 1px;
+.about-branding {
+  padding-block: map.get(variables.$spacers-block, 4);
   padding-inline: map.get(variables.$spacers-inline, 6);
-
-  &.with-border:first-child {
-    border-block-start-width: 1px;
-  }
-
-  &:last-child {
-    border-block-end-width: 0;
-  }
+  border-block-end: 1px solid variables.$si-sys-border-4;
 }
 
 .app-icon {
