@@ -251,6 +251,14 @@ describe('ListDetailsComponent', () => {
     );
 
     it('should keep percentage sizing for the static layout', async () => {
+      component.listWidth.set(40);
+      await fixture.whenStable();
+
+      expect(getListPane().style.flexBasis).toBe('40%');
+      expect(getDetailsPane().style.flexBasis).toBe('60%');
+    });
+
+    it('should fall back to 32/68 for an out-of-range static list width', async () => {
       component.listWidth.set(300);
       await fixture.whenStable();
 
