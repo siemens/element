@@ -126,12 +126,14 @@ test.describe('si-list-details', () => {
     expect(resizedWidth).toBeGreaterThan(initialWidth + 50);
 
     // Reload the example to verify state restoration
-    await page.goto(page.url() + '?e=' + encodeURIComponent(example));
+    await page.reload();
+    await si.visitExample(example);
+    await expect(listPart).toBeVisible();
 
     // Verify split state (width) is restored
-    const restoredWidth = (await listPart.boundingBox())!.width;
-    expect(restoredWidth).toBeGreaterThan(initialWidth + 50);
-    expect(Math.abs(restoredWidth - resizedWidth)).toBeLessThan(15);
+    await expect
+      .poll(async () => Math.abs((await listPart.boundingBox())!.width - resizedWidth))
+      .toBeLessThan(15);
   });
 
   test('with router in mobile mode', async ({ page, si }) => {
