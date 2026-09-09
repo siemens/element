@@ -21,7 +21,6 @@ const mainUnitAttributeNames = [
   '[mainContainerWidthUnit]',
   'bind-mainContainerWidthUnit'
 ];
-const detailUnitAttributeNames = ['detailUnit', '[detailUnit]', 'bind-detailUnit'];
 
 export const mainDetailUnitsMigrationRule = (options: { path: string }): Rule => {
   return async (tree: Tree, context: SchematicContext) => {
@@ -77,13 +76,6 @@ const migrateMainDetailContainerElement = (
   offset: number,
   recorder: UpdateRecorder
 ): void => {
-  const detailUnitAttribute = element.attrs.find(attr =>
-    detailUnitAttributeNames.includes(attr.name)
-  );
-  if (detailUnitAttribute) {
-    removeAttribute(template, detailUnitAttribute, offset, recorder);
-  }
-
   const resizableAttribute = element.attrs.find(attr =>
     resizableAttributeNames.includes(attr.name)
   );
@@ -115,31 +107,6 @@ const insertAttribute = (
   const insertOffset = element.startSourceSpan.end.offset - (selfClosing ? 2 : 1);
   const prefix = /\s/.test(template[insertOffset - 1] ?? '') ? '' : ' ';
   recorder.insertLeft(insertOffset + offset, `${prefix}${attribute}${selfClosing ? ' ' : ''}`);
-};
-
-const removeAttribute = (
-  template: string,
-  attribute: Attribute,
-  offset: number,
-  recorder: UpdateRecorder
-): void => {
-  const start = attribute.sourceSpan.start.offset;
-  const end = attribute.sourceSpan.end.offset;
-  const lineStart = template.lastIndexOf('\n', start - 1) + 1;
-  const lineEnd = template.indexOf('\n', end);
-  const endOfLine = lineEnd === -1 ? template.length : lineEnd;
-
-  if (
-    template.slice(lineStart, start).trim() === '' &&
-    template.slice(end, endOfLine).trim() === ''
-  ) {
-    const removeEnd = lineEnd === -1 ? endOfLine : lineEnd + 1;
-    recorder.remove(lineStart + offset, removeEnd - lineStart);
-    return;
-  }
-
-  const removeStart = start > 0 && /\s/.test(template[start - 1] ?? '') ? start - 1 : start;
-  recorder.remove(removeStart + offset, end - removeStart);
 };
 
 const getStaticBooleanValue = (attribute: Attribute): boolean | undefined => {
