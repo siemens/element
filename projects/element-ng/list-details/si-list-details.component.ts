@@ -123,15 +123,20 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
    */
   readonly stateId = input<string>();
 
-  /** @internal */
-  readonly staticListWidth = computed(() => {
+  /**
+   * Percentage width shared by static and resizable `fr` layouts.
+   * The migration sets `listUnit="fr"` without setting `listWidth`, so the default
+   * pixel width of 300 must fall back to 32 to preserve the legacy 32/68 split.
+   * @internal
+   */
+  readonly listWidthPercent = computed(() => {
     const listWidth = this.listWidth();
     return listWidth >= 0 && listWidth <= 100 ? listWidth : DEFAULT_LIST_WIDTH_PERCENT;
   });
 
   protected readonly splitSizes = computed<[number, number]>(() => {
     if (this.listUnit() === 'fr') {
-      const relativeListWidth = this.staticListWidth();
+      const relativeListWidth = this.listWidthPercent();
       return [relativeListWidth, 100 - relativeListWidth];
     }
 
