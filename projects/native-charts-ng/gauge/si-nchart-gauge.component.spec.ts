@@ -19,6 +19,7 @@ import { GaugeSegment, GaugeSeries, SiNChartGaugeComponent } from './si-nchart-g
       [mode]="mode()"
       [series]="series()"
       [segments]="segments()"
+      [markerValue]="markerValue()"
       [unit]="unit()"
       [showTicks]="showTicks()"
       [showLegend]="showLegend()"
@@ -41,6 +42,7 @@ class TestHostComponent {
   readonly mode = signal<'sum' | 'single'>('sum');
   readonly series = signal<GaugeSeries[]>([]);
   readonly segments = signal<GaugeSegment[]>([]);
+  readonly markerValue = signal<number | undefined>(undefined);
   readonly unit = signal('');
   readonly showTicks = signal(true);
   readonly showLegend = signal(true);
@@ -99,6 +101,19 @@ describe('SiNChartGaugeComponent', () => {
     const bgPath = getBackgroundPath();
     expect(bgPath).toBeTruthy();
     expect(bgPath!.getAttribute('d')).toBeTruthy();
+  });
+
+  it('should render an optional marker on top of the data arc', async () => {
+    host.series.set(defaultSeries);
+    await fixture.whenStable();
+    expect(gaugeEl.querySelector('g.marker')).not.toBeInTheDocument();
+
+    host.markerValue.set(0);
+    await fixture.whenStable();
+
+    const marker = gaugeEl.querySelector('g.marker');
+    expect(marker?.querySelector('path')).toHaveAttribute('d', 'M 50 12.5 L 50 7.5');
+    expect(marker?.previousElementSibling).toHaveClass('data');
   });
 
   describe('sum mode', () => {

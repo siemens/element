@@ -40,6 +40,11 @@
     stroke-width: 0.5;
   }
 
+  .marker {
+    stroke: variables.$si-sys-border-3;
+    stroke-width: 1;
+  }
+
   .segments {
     stroke-width: 0.75;
     fill: none;

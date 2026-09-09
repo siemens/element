@@ -30,6 +30,7 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
     readonly axisNumberOfDecimals: _angular_core.InputSignal<number>;
     readonly endAngle: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly legendPosition: _angular_core.InputSignal<"row" | "column">;
+    readonly markerValue: _angular_core.InputSignal<number | undefined>;
     readonly max: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly maxNumberOfDecimals: _angular_core.InputSignal<number>;
     readonly min: _angular_core.InputSignalWithTransform<number, unknown>;
