@@ -231,18 +231,24 @@ describe('ListDetailsComponent', () => {
       expect(parts[1]!.componentInstance.size()).toBe(1);
     });
 
-    it('should preserve relative sizing when listUnit is fr', async () => {
-      component.listUnit.set('fr');
-      component.listWidth.set(40);
-      component.disableResizing.set(false);
-      await fixture.whenStable();
+    it.each([
+      { listWidth: 40, listSize: 40, detailsSize: 60 },
+      { listWidth: 300, listSize: 32, detailsSize: 68 }
+    ])(
+      'should use $listSize/$detailsSize sizing for listWidth $listWidth when listUnit is fr',
+      async ({ listWidth, listSize, detailsSize }) => {
+        component.listUnit.set('fr');
+        component.listWidth.set(listWidth);
+        component.disableResizing.set(false);
+        await fixture.whenStable();
 
-      const parts = debugElement.queryAll(By.directive(SiSplitPartComponent));
-      expect(parts[0]!.componentInstance.unit()).toBe('fr');
-      expect(parts[0]!.componentInstance.size()).toBe(40);
-      expect(parts[1]!.componentInstance.unit()).toBe('fr');
-      expect(parts[1]!.componentInstance.size()).toBe(60);
-    });
+        const parts = debugElement.queryAll(By.directive(SiSplitPartComponent));
+        expect(parts[0]!.componentInstance.unit()).toBe('fr');
+        expect(parts[0]!.componentInstance.size()).toBe(listSize);
+        expect(parts[1]!.componentInstance.unit()).toBe('fr');
+        expect(parts[1]!.componentInstance.size()).toBe(detailsSize);
+      }
+    );
 
     it('should keep percentage sizing for the static layout', async () => {
       component.listWidth.set(300);
