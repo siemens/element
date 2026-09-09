@@ -36,6 +36,7 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
     readonly axisNumberOfDecimals: i0.InputSignal<number>;
     readonly endAngle: i0.InputSignalWithTransform<number, unknown>;
     readonly legendPosition: i0.InputSignal<"row" | "column">;
+    readonly markerValue: i0.InputSignal<number | undefined>;
     readonly max: i0.InputSignalWithTransform<number, unknown>;
     readonly maxNumberOfDecimals: i0.InputSignal<number>;
     readonly min: i0.InputSignalWithTransform<number, unknown>;

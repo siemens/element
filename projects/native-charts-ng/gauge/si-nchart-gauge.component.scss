@@ -40,6 +40,12 @@
     stroke-width: 0.5;
   }
 
+  .marker {
+    fill: variables.$si-sys-color-border-3;
+    stroke: variables.$si-sys-color-background-1;
+    stroke-width: 0.4;
+  }
+
   .segments {
     stroke-width: 0.75;
     fill: none;
