@@ -246,8 +246,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
       changes.mainContainerWidth ||
       changes.resizableParts ||
       changes.mainContainerWidthUnit ||
-      changes.minMainSize ||
-      changes.minDetailSize
+      changes.minMainSize
     ) {
       this.splitSizes = this.getSplitSizes();
       this.maxMainSize = this.getMaxSize(0);
