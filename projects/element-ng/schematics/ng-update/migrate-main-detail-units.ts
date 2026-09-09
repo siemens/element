@@ -12,7 +12,8 @@ import {
   discoverSourceFiles,
   findElement,
   getInlineTemplates,
-  getTemplateUrl
+  getTemplateUrl,
+  insertAttribute
 } from '../utils/index.js';
 
 const resizableAttributeNames = ['resizableParts', '[resizableParts]', 'bind-resizableParts'];
@@ -94,19 +95,6 @@ const migrateMainDetailContainerElement = (
   }
 
   insertAttribute(template, element, 'mainContainerWidthUnit="fr"', offset, recorder);
-};
-
-const insertAttribute = (
-  template: string,
-  element: Element,
-  attribute: string,
-  offset: number,
-  recorder: UpdateRecorder
-): void => {
-  const selfClosing = element.startSourceSpan.toString().endsWith('/>');
-  const insertOffset = element.startSourceSpan.end.offset - (selfClosing ? 2 : 1);
-  const prefix = /\s/.test(template[insertOffset - 1] ?? '') ? '' : ' ';
-  recorder.insertLeft(insertOffset + offset, `${prefix}${attribute}${selfClosing ? ' ' : ''}`);
 };
 
 const getStaticBooleanValue = (attribute: Attribute): boolean | undefined => {
