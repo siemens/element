@@ -80,8 +80,8 @@
             type="button"
             class="btn btn-tertiary-ghost btn-icon"
             [cdkMenuTriggerFor]="allActionsMenu"
+            [siTooltip]="secondaryActionsLabel() | translate"
             [attr.aria-label]="secondaryActionsLabel() | translate"
-            [attr.title]="secondaryActionsLabel() | translate"
           >
             <si-icon [icon]="icons.elementPlus" />
           </button>
