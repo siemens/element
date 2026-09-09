@@ -155,8 +155,9 @@ represents pixels with the default configuration.
 
 Use `listUnit="fr"` to retain a relative split, where `listWidth` is the list
 pane's fractional weight. When resizing is disabled, `listWidth` continues to
-control the static layout as a percentage. Values outside the percentage range
-use the standard 32/68 static layout.
+control the static layout as a percentage. For both resizable `listUnit="fr"`
+and static layouts, values outside the inclusive range 0-100 use the standard
+32/68 list/details split.
 
 If the content may exceed the available space, the `overflow-auto` class should be applied
 to the body components or a child inside them.
