@@ -191,21 +191,41 @@ describe('ListDetailsComponent', () => {
     });
 
     it.each([
-      { measurement: 'list part', listPartWidth: 400, expectedWidth: 400 },
-      { measurement: 'split fallback', listPartWidth: 0, expectedWidth: 360 }
+      {
+        measurement: 'cached fractional size',
+        listPartSize: 399.328125,
+        splitWidth: 900,
+        expectedWidth: 399.328125
+      },
+      { measurement: 'cached zero size', listPartSize: 0, splitWidth: 900, expectedWidth: 0 },
+      {
+        measurement: 'split fallback',
+        listPartSize: undefined,
+        splitWidth: 900.625,
+        expectedWidth: 360.25
+      },
+      {
+        measurement: 'minimum size fallback',
+        listPartSize: undefined,
+        splitWidth: 0,
+        expectedWidth: 300
+      }
     ])(
       'should update listWidth in pixels using the $measurement',
-      async ({ listPartWidth, expectedWidth }) => {
+      async ({ listPartSize, splitWidth, expectedWidth }) => {
+        component.listWidth.set(450);
         component.disableResizing.set(false);
         await fixture.whenStable();
 
-        const listPart = htmlElement.querySelector<HTMLElement>('si-split-part')!;
-        vi.spyOn(listPart, 'getBoundingClientRect').mockReturnValue(
-          new DOMRect(0, 0, listPartWidth, 500)
+        const listPart = debugElement.query(By.directive(SiSplitPartComponent));
+        listPart.injector.get(SiSplitPartComponent).expandedSize.set(listPartSize);
+        const listMeasurement = vi.spyOn(
+          listPart.nativeElement as HTMLElement,
+          'getBoundingClientRect'
         );
-        vi.spyOn(getSiSplit(), 'getBoundingClientRect').mockReturnValue(
-          new DOMRect(0, 0, 900, 500)
-        );
+        const splitMeasurement = vi
+          .spyOn(getSiSplit(), 'getBoundingClientRect')
+          .mockReturnValue(new DOMRect(0, 0, splitWidth, 500));
         const split = debugElement
           .query(By.directive(SiSplitComponent))
           .injector.get(SiSplitComponent);
@@ -213,6 +233,8 @@ describe('ListDetailsComponent', () => {
         component.listDetails().listWidth.subscribe(widthChanged);
 
         split.sizesChange.emit([40, 60]);
+        expect(listMeasurement).not.toHaveBeenCalled();
+        expect(splitMeasurement).toHaveBeenCalledTimes(listPartSize === undefined ? 1 : 0);
         await fixture.whenStable();
 
         expect(component.listDetails().listWidth()).toBe(expectedWidth);

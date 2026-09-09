@@ -47,7 +47,7 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private resizeObserver = inject(ResizeObserverService);
   private readonly listDetailsContainer = viewChild.required<ElementRef>('listDetailsContainer');
   private readonly listPart = viewChild('listSplitPart', {
-    read: ElementRef<HTMLElement>
+    read: SiSplitPartComponent
   });
   private readonly split = viewChild(SiSplitComponent, {
     read: ElementRef<HTMLElement>
@@ -211,13 +211,13 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private getListSizePx(fallbackPercentage: number): number {
-    const listWidth = this.listPart()?.nativeElement.getBoundingClientRect().width;
-    if (listWidth) {
+    const listWidth = this.listPart()?.expandedSize();
+    if (listWidth !== undefined) {
       return listWidth;
     }
 
     const splitWidth = this.split()?.nativeElement.getBoundingClientRect().width;
-    return splitWidth ? (splitWidth * fallbackPercentage) / 100 : fallbackPercentage;
+    return splitWidth ? (splitWidth * fallbackPercentage) / 100 : this.minListSize();
   }
 
   /** @internal */
