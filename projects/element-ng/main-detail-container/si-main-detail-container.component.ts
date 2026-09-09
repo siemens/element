@@ -174,14 +174,17 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
   /**
    * The size of the main container. When {@link resizableParts} is enabled,
    * the value is interpreted using {@link mainContainerWidthUnit} and updates as the splitter is moved.
-    * With `mainContainerWidthUnit="fr"`, numeric values must be from `0` to `100` (inclusive).
-    * The main and detail fractional weights are the value and `100 - value`;
-    * out-of-range values fall back to `32` and `68`.
-    * In the static layout, numeric values represent a percentage from `0` to `100`
-    * (inclusive); out-of-range values leave both containers without max-size constraints.
-    * Pixel widths are not limited to the `0` to `100` range.
+   * With `mainContainerWidthUnit="fr"`, numeric values must be from `0` to `100` (inclusive).
+   * The main and detail fractional weights are the value and `100 - value`;
+   * out-of-range values fall back to `32` and `68`.
+   * In the static layout, numeric values represent a percentage from `0` to `100`
+   * (inclusive); out-of-range values leave both containers without max-size constraints.
+   * Pixel widths are not limited to the `0` to `100` range.
    *
-   * @defaultValue 'default', which uses {@link minMainSize} for `px` and `32` for `fr`.
+   * With `'default'`, resizable pixel layouts use {@link minMainSize}, resizable fractional
+   * layouts use main and detail weights of `32` and `68`, and static layouts use `50%`.
+   *
+   * @defaultValue 'default'
    */
   readonly mainContainerWidth = model<number | 'default'>('default');
   /**
