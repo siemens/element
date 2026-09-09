@@ -88,7 +88,7 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   /**
    * The list pane size, updated when the split is resized or restored.
-   * With resizing enabled, the value uses {@link listUnit}: pixels for `px`,
+   * With resizing enabled, the value uses {@link listWidthUnit}: pixels for `px`,
    * or a percentage-based fractional weight for `fr`. With resizing disabled,
    * the value is always interpreted as a percentage.
    * Percentage values must be in the inclusive range 0-100; values outside this
@@ -103,7 +103,7 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
    *
    * @defaultValue 'px'
    */
-  readonly listUnit = input<SplitUnit>('px');
+  readonly listWidthUnit = input<SplitUnit>('px');
 
   /**
    * Sets the minimal width of the list component in pixel.
@@ -127,7 +127,7 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   /**
    * Percentage width shared by static and resizable `fr` layouts.
-   * The migration sets `listUnit="fr"` without setting `listWidth`, so the default
+   * The migration sets `listWidthUnit="fr"` without setting `listWidth`, so the default
    * pixel width of 300 must fall back to 32 to preserve the legacy 32/68 split.
    * @internal
    */
@@ -137,7 +137,7 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   });
 
   protected readonly splitSizes = computed<[number, number]>(() => {
-    if (this.listUnit() === 'fr') {
+    if (this.listWidthUnit() === 'fr') {
       const relativeListWidth = this.listWidthPercent();
       return [relativeListWidth, 100 - relativeListWidth];
     }
@@ -203,7 +203,7 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private readonly resizeDimensions = signal<ElementDimensions | undefined>(undefined);
 
   protected onSplitSizesChange(sizes: number[]): void {
-    if (this.listUnit() === 'px') {
+    if (this.listWidthUnit() === 'px') {
       this.listWidth.set(this.getListSizePx(sizes[0]));
     } else {
       this.listWidth.set(sizes[0]);

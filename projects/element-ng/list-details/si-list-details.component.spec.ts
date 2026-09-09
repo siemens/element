@@ -38,7 +38,7 @@ import { SiListPaneComponent } from './si-list-pane/si-list-pane.component';
       stateId="si-list-details-1"
       [expandBreakpoint]="expandBreakpoint"
       [disableResizing]="disableResizing()"
-      [listUnit]="listUnit()"
+      [listWidthUnit]="listWidthUnit()"
       [listWidth]="listWidth()"
       [(detailsActive)]="detailsActive"
     >
@@ -65,7 +65,7 @@ class WrapperComponent {
   readonly listDetails = viewChild.required(SiListDetailsComponent);
   readonly hideBackButton = signal(false);
   readonly disableResizing = signal(true);
-  readonly listUnit = signal<SplitUnit>('px');
+  readonly listWidthUnit = signal<SplitUnit>('px');
   readonly listWidth = signal(300);
   readonly expandBreakpoint = BOOTSTRAP_BREAKPOINTS.mdMinimum;
   readonly detailsActive = signal(false);
@@ -171,7 +171,7 @@ describe('ListDetailsComponent', () => {
     });
 
     it('should change listWidth when split sizes change', async () => {
-      component.listUnit.set('fr');
+      component.listWidthUnit.set('fr');
       component.listWidth.set(32);
       component.disableResizing.set(false);
       await fixture.whenStable();
@@ -257,9 +257,9 @@ describe('ListDetailsComponent', () => {
       { listWidth: 40, listSize: 40, detailsSize: 60 },
       { listWidth: 300, listSize: 32, detailsSize: 68 }
     ])(
-      'should use $listSize/$detailsSize sizing for listWidth $listWidth when listUnit is fr',
+      'should use $listSize/$detailsSize sizing for listWidth $listWidth when listWidthUnit is fr',
       async ({ listWidth, listSize, detailsSize }) => {
-        component.listUnit.set('fr');
+        component.listWidthUnit.set('fr');
         component.listWidth.set(listWidth);
         component.disableResizing.set(false);
         await fixture.whenStable();

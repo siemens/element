@@ -39,7 +39,7 @@ describe('list details units migration', () => {
     return tree;
   };
 
-  it('should add listUnit="fr" to resizable list-details in inline templates', async () => {
+  it('should add listWidthUnit="fr" to resizable list-details in inline templates', async () => {
     const initialContent = `import { Component } from '@angular/core';
 
 @Component({
@@ -62,7 +62,7 @@ export class TestComponent {}`;
 
 @Component({
   selector: 'app-test',
-  template: \`<si-list-details [listWidth]="40" listUnit="fr">
+  template: \`<si-list-details [listWidth]="40" listWidthUnit="fr">
     <si-list-pane>List</si-list-pane>
     <si-details-pane>Details</si-details-pane>
   </si-list-details>\`
@@ -71,7 +71,7 @@ export class TestComponent {}`
     );
   });
 
-  it('should add listUnit="fr" to list-details with [disableResizing]="false"', async () => {
+  it('should add listWidthUnit="fr" to list-details with [disableResizing]="false"', async () => {
     addTestFiles(appTree, {
       '/projects/app/src/test.component.ts': `import { Component } from '@angular/core';
 
@@ -89,7 +89,7 @@ export class TestComponent {}`,
     const tree = await runMigration();
 
     expect(tree.readContent('/projects/app/src/test.component.html')).toBe(
-      `<si-list-details [disableResizing]="false" [listWidth]="32" listUnit="fr">
+      `<si-list-details [disableResizing]="false" [listWidth]="32" listWidthUnit="fr">
   <si-list-pane>List</si-list-pane>
   <si-details-pane>Details</si-details-pane>
 </si-list-details>`
@@ -140,25 +140,28 @@ export class TestComponent {}`,
     expect(tree.readContent('/projects/app/src/test.component.html')).toBe(template);
   });
 
-  it('should not overwrite existing listUnit', async () => {
-    const template = `<si-list-details listUnit="px" [listWidth]="300">
+  it.each(['listWidthUnit="px"', '[listWidthUnit]="unit"', 'bind-listWidthUnit="unit"'])(
+    'should not overwrite existing %s',
+    async unitAttribute => {
+      const template = `<si-list-details ${unitAttribute} [listWidth]="300">
   <si-list-pane>List</si-list-pane>
   <si-details-pane>Details</si-details-pane>
 </si-list-details>`;
 
-    addTestFiles(appTree, {
-      '/projects/app/src/test.component.ts': `import { Component } from '@angular/core';
+      addTestFiles(appTree, {
+        '/projects/app/src/test.component.ts': `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html'
 })
 export class TestComponent {}`,
-      '/projects/app/src/test.component.html': template
-    });
+        '/projects/app/src/test.component.html': template
+      });
 
-    const tree = await runMigration();
+      const tree = await runMigration();
 
-    expect(tree.readContent('/projects/app/src/test.component.html')).toBe(template);
-  });
+      expect(tree.readContent('/projects/app/src/test.component.html')).toBe(template);
+    }
+  );
 });
