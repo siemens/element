@@ -46,7 +46,7 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private resizeObserver = inject(ResizeObserverService);
   private readonly listDetailsContainer = viewChild.required<ElementRef>('listDetailsContainer');
-  private readonly listPart = viewChild(SiSplitPartComponent, {
+  private readonly listPart = viewChild('listSplitPart', {
     read: ElementRef<HTMLElement>
   });
   private readonly split = viewChild(SiSplitComponent, {
