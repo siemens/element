@@ -1,0 +1,12 @@
+- heading "Equipment" [level=2]
+- button /Air handling unit AHU-\d+/
+- button /Room controller RC-\d+/
+- button /Heat pump HP-\d+/
+- button "Back"
+- text: Air handling unit
+- term: Equipment ID
+- definition: /AHU-\d+/
+- term: Location
+- definition: Roof, Building A
+- term: Status
+- definition: Running
