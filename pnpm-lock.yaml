@@ -108,6 +108,7 @@ settings:
 overrides:
   '@microsoft/api-extractor>typescript': 6.0.3
   '@simpl/brand>@siemens/element-theme': workspace:*
+  conventional-commits-parser: ^7.1.1
 
 importers:
 
@@ -1548,7 +1549,7 @@ packages:
     engines: {node: '>=22'}
     peerDependencies:
       conventional-commits-filter: ^6.0.1
-      conventional-commits-parser: ^7.0.1
+      conventional-commits-parser: ^7.1.1
     peerDependenciesMeta:
       conventional-commits-filter:
         optional: true
@@ -4747,11 +4748,6 @@ packages:
   conventional-commits-filter@5.0.0:
     resolution: {integrity: sha512-tQMagCOC59EVgNZcC5zl7XqO30Wki9i9J3acbUvkaosCT6JX3EeFwJD7Qqp4MCikRnzS18WXV3BLIQ66ytu6+Q==, tarball: https://registry.npmjs.org/conventional-commits-filter/-/conventional-commits-filter-5.0.0.tgz}
     engines: {node: '>=18'}
-
-  conventional-commits-parser@6.4.0:
-    resolution: {integrity: sha512-tvRg7FIBNlyPzjdG8wWRlPHQJJHI7DylhtRGeU9Lq+JuoPh5BKpPRX83ZdLrvXuOSu5Eo/e7SzOQhU4Hd2Miuw==, tarball: https://registry.npmjs.org/conventional-commits-parser/-/conventional-commits-parser-6.4.0.tgz}
-    engines: {node: '>=18'}
-    hasBin: true
 
   conventional-commits-parser@7.1.1:
     resolution: {integrity: sha512-B0f42jI++V5Vb7qK+DDw68r0dNxz5hk+RdKUkx2NOi39emc9hsHa3u2M3doF7QQhRFzCrAj7uM90teG+RBTaYQ==, tarball: https://registry.npmjs.org/conventional-commits-parser/-/conventional-commits-parser-7.1.1.tgz}
@@ -12057,7 +12053,7 @@ snapshots:
       conventional-changelog-angular: 8.3.1
       conventional-changelog-writer: 8.4.0
       conventional-commits-filter: 5.0.0
-      conventional-commits-parser: 6.4.0
+      conventional-commits-parser: 7.1.1
       debug: 4.4.3(supports-color@10.2.2)
       import-from-esm: 2.0.0(supports-color@10.2.2)
       lodash-es: 4.18.1
@@ -12142,7 +12138,7 @@ snapshots:
       conventional-changelog-angular: 8.3.1
       conventional-changelog-writer: 8.4.0
       conventional-commits-filter: 5.0.0
-      conventional-commits-parser: 6.4.0
+      conventional-commits-parser: 7.1.1
       debug: 4.4.3(supports-color@10.2.2)
       import-from-esm: 2.0.0(supports-color@10.2.2)
       lodash-es: 4.18.1
@@ -13670,11 +13666,6 @@ snapshots:
       semver: 7.8.5
 
   conventional-commits-filter@5.0.0: {}
-
-  conventional-commits-parser@6.4.0:
-    dependencies:
-      '@simple-libs/stream-utils': 1.2.0
-      meow: 13.2.0
 
   conventional-commits-parser@7.1.1:
     dependencies:

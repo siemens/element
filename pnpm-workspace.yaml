@@ -29,6 +29,11 @@ catalog:
 overrides:
   '@microsoft/api-extractor>typescript': 'catalog:'
   '@simpl/brand>@siemens/element-theme': 'workspace:*'
+  # semantic-release still resolves conventional-commits-parser 6.x, whose reference
+  # regex matches any `#word`. A `#id` inside a code sample in a commit body is
+  # therefore treated as an issue reference, which aborts the note and truncates the
+  # release notes. Fixed in 7.x.
+  conventional-commits-parser: '^7.1.1'
 
 allowBuilds:
   '@parcel/watcher': true
