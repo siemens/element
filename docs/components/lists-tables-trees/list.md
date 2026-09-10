@@ -82,7 +82,37 @@ How overflow is handled should change according to the layout constraints and in
 
 ## Code ---
 
-### Example
+### List styles
+
+Use `.list` for a ghost list, `.list.list-divider` to separate items with dividers,
+`.list.list-filled` to place items on a filled surface, or `.list.list-outline` to
+place each item in an outlined container.
+
+```html
+<!-- Ghost -->
+<ul class="list">
+  <li class="list-item">...</li>
+</ul>
+
+<!-- Divider -->
+<ul class="list list-divider">
+  <li class="list-item">...</li>
+</ul>
+
+<!-- Filled -->
+<ul class="list list-filled">
+  <li class="list-item">...</li>
+</ul>
+
+<!-- Outline -->
+<ul class="list list-outline">
+  <li class="list-item">...</li>
+</ul>
+```
+
+<si-docs-component example="list-item/list-variants" height="650"></si-docs-component>
+
+### List item configurations
 
 <si-docs-component example="list-item/list-item" height="400"></si-docs-component>
 
