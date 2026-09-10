@@ -3,7 +3,6 @@ import { commitTypes, noteTitleMap, noteTitles } from './commit-config.js';
 const COMMIT_HASH_LENGTH = 7;
 
 const commitGroups = commitTypes.map(t => t.section).filter(Boolean);
-const hiddenTypeCommitNotes = [];
 
 const hiddenTypes = new Set();
 const visibleTypes = {};
@@ -15,6 +14,32 @@ commitTypes.forEach(({ type, section, hidden }) => {
     visibleTypes[type] = section;
   }
 });
+
+/**
+ * Notes of hidden-type commits, collected while `transform` runs over the commits of a
+ * release and consumed by `finalizeContext` once that release is rendered.
+ *
+ * `finalizeContext` must always drain this buffer. semantic-release reuses a single
+ * writerOpts object for every `generateNotes` call - it runs once per release that is added
+ * to a channel plus once for the new release - so anything left behind would be re-emitted
+ * into the notes of the following release.
+ */
+let pendingHiddenTypeNotes = [];
+
+/** Identity of a note, used to drop notes that several commits describe identically. */
+const noteIdentity = note => `${note.title}\u0000${note.text}`;
+
+function commitGroupsSort(a, b) {
+  return commitGroups.indexOf(a.title) - commitGroups.indexOf(b.title);
+}
+
+function noteGroupsSort(a, b) {
+  return noteTitles.indexOf(a.title) - noteTitles.indexOf(b.title);
+}
+
+function notesSort(a, b) {
+  return a.title.localeCompare(b.title);
+}
 
 function transform(commit) {
   const hasNotes = Array.isArray(commit.notes) && commit.notes.length > 0;
@@ -32,9 +57,9 @@ function transform(commit) {
         ...note,
         text: `${commit.scope ? `**${commit.scope}:** ` : ''}${note.text}`
       }));
-      // Add to the hiddenTypeCommitNotes if there are notes and the type is hidden
+      // Add to the pending notes if there are notes and the type is hidden
       // The notes will be added to the context in finalizeContext
-      hiddenTypeCommitNotes.push(...transformedNotes);
+      pendingHiddenTypeNotes.push(...transformedNotes);
     }
     return;
   }
@@ -57,18 +82,47 @@ function transform(commit) {
 }
 
 /**
- *  Append collected notes that have a hidden type to the matching noteGroups
+ * Append the collected notes of hidden-type commits to the matching note groups, drop
+ * duplicates and restore the group and note order.
  */
 function finalizeContext(context) {
-  for (const note of hiddenTypeCommitNotes) {
+  const pending = pendingHiddenTypeNotes;
+  pendingHiddenTypeNotes = [];
+
+  const seen = new Set();
+
+  for (const group of context.noteGroups) {
+    group.notes = group.notes.filter(note => {
+      const identity = noteIdentity(note);
+      if (seen.has(identity)) {
+        return false;
+      }
+      seen.add(identity);
+      return true;
+    });
+  }
+
+  for (const note of pending) {
+    const identity = noteIdentity(note);
+    if (seen.has(identity)) {
+      continue;
+    }
+    seen.add(identity);
+
     let group = context.noteGroups.find(g => g.title === note.title);
     if (!group) {
       group = { title: note.title, notes: [] };
-      const insertIndex = noteTitles.findIndex(t => t === note.title);
-      context.noteGroups.splice(insertIndex, 0, group);
+      context.noteGroups.push(group);
     }
     group.notes.push(note);
   }
+
+  // The writer sorts note groups and notes before finalizeContext runs, so both have to be
+  // sorted again now that the hidden-type notes are merged in.
+  context.noteGroups = context.noteGroups.filter(group => group.notes.length > 0);
+  context.noteGroups.sort(noteGroupsSort);
+  context.noteGroups.forEach(group => group.notes.sort(notesSort));
+
   return context;
 }
 
@@ -81,14 +135,8 @@ export default {
   transform,
   finalizeContext,
   commitPartial,
-  commitGroupsSort(a, b) {
-    return commitGroups.indexOf(a.title) - commitGroups.indexOf(b.title);
-  },
+  commitGroupsSort,
   commitsSort: ['scope', 'subject'],
-  noteGroupsSort(a, b) {
-    return noteTitles.indexOf(a.title) - noteTitles.indexOf(b.title);
-  },
-  notesSort(a, b) {
-    return a.title.localeCompare(b.title);
-  }
+  noteGroupsSort,
+  notesSort
 };
