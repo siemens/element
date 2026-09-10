@@ -22,6 +22,7 @@ import { InternalCriterionDefinition } from './si-filtered-search-helper';
 })
 export class SiFilteredSearchInputComponent {
   private static readonly criterionRegex = /(.+?):(.*)$/;
+  private static readonly criterionSeparator = ';';
 
   /** Supplies the criterion definitions shown in the typeahead. */
   readonly dataSource = input.required<Observable<InternalCriterionDefinition[]>>();
@@ -105,6 +106,30 @@ export class SiFilteredSearchInputComponent {
 
   protected freeTextInputHandler(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
+
+    if (!this.disableSelectionByColonAndSemicolon() && value.includes(';')) {
+      const tokens = value.split(SiFilteredSearchInputComponent.criterionSeparator);
+      const incompleteToken = tokens.pop()!;
+      const unprocessedTokens: string[] = [];
+
+      for (const token of tokens) {
+        const match = token.match(SiFilteredSearchInputComponent.criterionRegex);
+        if (!this.onlySelectValue() && match) {
+          this.createCriterionByName.emit({ criterionName: match[1], value: match[2] });
+        } else if (this.freeTextCriterion() && this.allowFreeText() && token.length > 0) {
+          this.createFreeTextPill.emit(token);
+        } else {
+          unprocessedTokens.push(token);
+        }
+      }
+
+      const remainingValue = [...unprocessedTokens, incompleteToken].join(
+        SiFilteredSearchInputComponent.criterionSeparator
+      );
+      this.inputElement().nativeElement.value = remainingValue;
+      this.searchValue.set(remainingValue);
+      return;
+    }
 
     const match = value.match(SiFilteredSearchInputComponent.criterionRegex);
     if (!this.disableSelectionByColonAndSemicolon() && !this.onlySelectValue() && match) {
