@@ -4,3 +4,4 @@
  */
 export * from './si-image-cropper-style.component';
 export * from './si-photo-upload.component';
+export * from './si-photo-upload.model';
