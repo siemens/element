@@ -31,7 +31,8 @@ export class SampleComponent implements OnInit {
       label: 'Home',
       id: 'home',
       icon: 'element-home',
-      routerLink: 'home'
+      routerLink: 'home',
+      tooltip: 'Go to home page'
     },
     { type: 'header', label: 'Modules' },
     {

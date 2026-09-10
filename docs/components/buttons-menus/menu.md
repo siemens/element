@@ -21,6 +21,7 @@ They are one of the most effective and highly used command surfaces, and can be 
 - Keep disabled actions visible.
 - Do not use more than 2 submenus in a nested way.
 - Do not have a long and flat list of actions, which might not have space on a small screen.
+- Since tooltips are temporary, easy to miss and generally not accessible on touch devices, avoid using them or use them for non-essential information only.
 
 ## Design ---
 
