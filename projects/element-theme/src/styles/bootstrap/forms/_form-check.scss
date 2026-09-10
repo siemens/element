@@ -26,7 +26,6 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
 .form-check {
   padding-block: map.get(spacers.$spacers-block, 1);
   padding-inline-start: calc($form-check-size + map.get(spacers.$spacers-inline, 4));
-  margin-block-end: map.get(spacers.$spacers-block, 2);
 
   @extend %form-check-spacing;
 
@@ -37,7 +36,6 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
 
 .form-check-inline {
   display: inline-block;
-  margin-block-end: 0;
   margin-inline-end: variables.$form-check-inline-margin-end;
   @extend %form-check-spacing;
 }

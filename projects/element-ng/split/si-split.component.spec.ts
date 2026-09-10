@@ -6,8 +6,9 @@ import { Component, ElementRef, Injectable, signal, viewChild } from '@angular/c
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideSiUiState, SI_UI_STATE_SERVICE, UIStateStorage } from '@siemens/element-ng/common';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { Mock } from 'vitest';
 
-import { CollapseTo, PartState, Scale, SiSplitModule, SplitOrientation, SplitUnit } from './index';
+import { CollapseTo, PartState, SiSplitModule, SplitOrientation, SplitUnit } from './index';
 import { SiSplitPartComponent } from './si-split-part.component';
 import { SiSplitComponent as TestComponent } from './si-split.component';
 
@@ -49,7 +50,6 @@ class SynchronousMockStore implements UIStateStorage {
           [actions]="[]"
           [collapseToMinSize]="collapseToMinSize1()"
           [minSize]="minSize1()"
-          [scale]="scale1()"
           [size]="size1()"
           [unit]="unit1()"
           (collapseChanged)="collapseChanged1($event)"
@@ -69,7 +69,6 @@ class SynchronousMockStore implements UIStateStorage {
           [collapsible]="collapsible2()"
           [collapseToMinSize]="false"
           [minSize]="0"
-          [scale]="scale2()"
           [size]="size2()"
           [unit]="unit2()"
           [collapseOthers]="collapseOthers2()"
@@ -91,7 +90,6 @@ class SynchronousMockStore implements UIStateStorage {
             [collapsible]="collapsible3()"
             [collapseToMinSize]="false"
             [minSize]="minSize3()"
-            [scale]="scale3()"
             [size]="size3()"
             [unit]="unit3()"
             (collapseChanged)="collapseChanged3($event)"
@@ -115,18 +113,15 @@ class WrapperComponent {
   readonly splitPart1 = viewChild.required('splitPart1', { read: ElementRef });
   readonly collapseToMinSize1 = signal(false);
   readonly minSize1 = signal(0);
-  readonly scale1 = signal<Scale>('auto');
   readonly size1 = signal(0);
   readonly unit1 = signal<SplitUnit>('px');
   readonly splitPart2 = viewChild.required('splitPart2', { read: ElementRef });
   readonly collapsible2 = signal<CollapseTo>('to-start');
-  readonly scale2 = signal<Scale>('auto');
   readonly size2 = signal(0);
   readonly unit2 = signal<SplitUnit>('px');
   readonly splitPart3 = viewChild.required('splitPart3', { read: ElementRef });
   readonly collapsible3 = signal<CollapseTo>('to-start');
   readonly minSize3 = signal(0);
-  readonly scale3 = signal<Scale>('auto');
   readonly size3 = signal(0);
   readonly unit3 = signal<SplitUnit>('px');
   readonly showPart3 = signal(true);
@@ -335,6 +330,14 @@ describe('SiSplitComponent', () => {
   };
 
   describe('using ui state service', () => {
+    beforeEach(() => {
+      vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
     describe('without SiUIStateService', () => {
       setup();
 
@@ -343,6 +346,7 @@ describe('SiSplitComponent', () => {
         wrapperComponent = fixture.componentInstance;
         element = fixture.nativeElement;
         wrapperComponent.setSizes([20, 60, 20], 'fr');
+        vi.runAllTimers();
         await fixture.whenStable();
       });
 
@@ -370,6 +374,7 @@ describe('SiSplitComponent', () => {
           wrapperComponent = fixture.componentInstance;
           element = fixture.nativeElement;
           wrapperComponent.setSizes([20, 60, 20], 'fr');
+          vi.runAllTimers();
           await fixture.whenStable();
         });
 
@@ -388,8 +393,8 @@ describe('SiSplitComponent', () => {
         });
 
         it('should save ui state', async () => {
-          // cannot use jasmine.clock here
-          await new Promise(resolve => setTimeout(resolve));
+          vi.runAllTimers();
+          await fixture.whenStable();
           wrapperComponent.splitPart().toggleCollapse();
           const uiStateMock =
             await TestBed.inject(SI_UI_STATE_SERVICE).load<Record<string, any>>('split-test');
@@ -402,30 +407,39 @@ describe('SiSplitComponent', () => {
       });
 
       describe('with SiUIStateService and persisted state', () => {
-        beforeEach(() => {
+        let sizesSpy: Mock<(sizes: number[]) => void>;
+
+        beforeEach(async () => {
+          sizesSpy = vi.fn();
           const store = TestBed.inject(SI_UI_STATE_SERVICE);
-          store.save('split-test', {
-            one: { initialSize: 20, initialUnit: 'fr', size: 40, expanded: true },
-            two: { initialSize: 60, initialUnit: 'fr', size: 40, expanded: true },
-            three: { initialSize: 20, initialUnit: 'fr', size: 20, expanded: true }
+          await store.save('split-test', {
+            one: { initialSize: 99, initialUnit: 'fr', size: 40, expanded: true },
+            two: { initialSize: 99, initialUnit: 'fr', size: 40, expanded: true },
+            three: { initialSize: 99, initialUnit: 'fr', size: 20, expanded: true }
           });
 
           fixture = TestBed.createComponent(WrapperComponent);
           wrapperComponent = fixture.componentInstance;
+          wrapperComponent.split().sizesChange.subscribe(sizesSpy);
           wrapperComponent.setSizes([20, 60, 20], 'fr');
           // We need this here to run checks after async tasks completed.
           fixture.autoDetectChanges();
           element = fixture.nativeElement;
         });
 
-        it('should load and configure split parts', async () => {
-          // cannot use jasmine.clock here
-          await new Promise(resolve => setTimeout(resolve));
+        it('should load and configure split parts even if initialSize does not match part size', async () => {
+          vi.runAllTimers();
           await fixture.whenStable();
           expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
           expect(wrapperComponent.measureSize2()).toBeCloseTo(200, 0);
           expect(wrapperComponent.measureSize3()).toBeCloseTo(100, 0);
           expect(wrapperComponent.split().orientation()).toEqual('horizontal');
+        });
+
+        it('should emit sizesChange on restore', async () => {
+          vi.runAllTimers();
+          await fixture.whenStable();
+          expect(sizesSpy).toHaveBeenCalled();
         });
       });
     });
@@ -639,9 +653,6 @@ describe('SiSplitComponent', () => {
         wrapperComponent.gutterSize.set(32);
         wrapperComponent.containerWidth.set(564);
         wrapperComponent.minSize3.set(100);
-        wrapperComponent.scale1.set('none');
-        wrapperComponent.scale2.set('auto');
-        wrapperComponent.scale3.set('none');
         await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
@@ -803,9 +814,6 @@ describe('SiSplitComponent', () => {
         wrapperComponent.orientation.set('vertical');
         wrapperComponent.setSizes([200, 150, 150], 'px');
         wrapperComponent.minSize1.set(100);
-        wrapperComponent.scale1.set('none');
-        wrapperComponent.scale2.set('auto');
-        wrapperComponent.scale3.set('none');
         await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
@@ -820,12 +828,9 @@ describe('SiSplitComponent', () => {
         expect(wrapperComponent.measureSize3()).toBeCloseTo(150, 0);
       });
 
-      it('should display with set sizes and gutter size after changes with scale none', async () => {
+      it('should update configured pixel sizes after changes', async () => {
         wrapperComponent.orientation.set('vertical');
         wrapperComponent.setSizes([100, 300, 100], 'px');
-        wrapperComponent.scale1.set('none');
-        wrapperComponent.scale2.set('none');
-        wrapperComponent.scale3.set('none');
         await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(100, 0);

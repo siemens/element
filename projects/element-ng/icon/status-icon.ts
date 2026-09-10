@@ -121,7 +121,7 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           icon: 'elementCircleFilled',
           color: 'status-neutral',
           stacked: 'elementStateQuestionMark',
-          stackedColor: 'text-primary',
+          stackedColor: 'status-neutral-contrast',
           background: 'background-0',
           severity: 8,
           ariaLabel: t(() => $localize`:@@SI_ICON_STATUS.UNKNOWN:Unknown`)

@@ -89,19 +89,14 @@ ol:has(.list-item) {
     margin-block-end: 0;
 
     @include typography.si-font(
-      typography.$si-font-size-h5,
-      typography.$si-line-height-h5,
-      typography.$si-font-weight-h5
+      typography.$si-font-size-body-sbold,
+      typography.$si-line-height-body-sbold,
+      typography.$si-font-weight-body-sbold
     );
 
     &.unread {
       position: relative;
-
-      @include typography.si-font(
-        typography.$si-font-size-h5-bold,
-        typography.$si-line-height-h5-bold,
-        typography.$si-font-weight-h5-bold
-      );
+      font-weight: typography.$si-font-weight-bold;
 
       &::before {
         content: '';

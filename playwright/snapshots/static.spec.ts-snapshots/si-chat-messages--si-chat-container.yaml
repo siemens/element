@@ -6,34 +6,46 @@
 - paragraph: I'm having trouble understanding the data structure and need assistance with the implementation.
 - group:
   - button "Export message"
-- paragraph: I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
-- paragraph: Let me examine the structure and provide guidance.
+- paragraph: I will inspect the files, compare their structures, and summarize the findings.
 - group:
   - button "Good response"
   - button "Bad response"
   - button "Copy response"
-  - button "More actions"
+  - button "Additional actions"
+- button "Analyzing the attached files"
+- paragraph: The script and dataset use compatible structures. The data-loading step is the main performance constraint.
+- group:
+  - button "Good response"
+  - button "Bad response"
+  - button "Copy response"
+  - button "Additional actions"
 - paragraph: Perfect! What should I focus on first
 - paragraph: I also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?
 - group:
   - button "Export message"
-- paragraph: Great question! When analyzing large datasets, it's crucial to focus on...
+- button "Reviewing performance constraints"
+- button "Preparing optimization guidance" [expanded]
+- paragraph: Prioritizing changes that reduce memory usage without changing the data structure.
+- paragraph: Process the CSV in chunks first, then profile the transformation steps.
 - group:
   - button "Good response"
   - button "Bad response"
   - button "Copy response"
-  - button "More actions"
+  - button "Additional actions"
 - alert: Info AI responses are for demonstration purposes.
+- button "What are the risks if this insight is ignored?"
+- button "Show related insights from similar customer events."
+- button "Summarize this insight in 2 bullet points for presentation."
 - group:
   - text: requirements.pdf
-  - button "Remove attachment requirements.pdf"
+  - button "Remove requirements.pdf"
 - group:
   - text: mockup.png
-  - button "Remove attachment mockup.png"
-- textbox "Chat message input":
-  - /placeholder: Enter a command, question or topic...
+  - button "Remove mockup.png"
+- textbox "Chat input":
+  - /placeholder: Enter a command, question or topic…
 - group:
-  - button "More actions"
+  - button "Additional actions"
   - button "Show Welcome Screen"
 - button "Send"
 - text: The content is AI generated. Always verify the information for accuracy.

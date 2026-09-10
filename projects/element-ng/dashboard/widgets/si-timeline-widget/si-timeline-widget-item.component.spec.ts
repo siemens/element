@@ -62,7 +62,7 @@ describe('SiTimelineWidgetItemComponent', () => {
       icon: 'element-plant'
     });
     await fixture.whenStable();
-    expect(element.querySelector('.si-caption')!).toHaveTextContent('Today 23:59');
+    expect(element.querySelector('.si-body-sm')!).toHaveTextContent('Today 23:59');
   });
 
   it('should display the item label string', async () => {

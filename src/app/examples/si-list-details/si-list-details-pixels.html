@@ -1,0 +1,40 @@
+<si-list-details
+  stateId="si-list-details-pixels-demo"
+  class="p-6 px-md-9"
+  [(detailsActive)]="detailsActive"
+>
+  <si-list-pane class="card">
+    <si-list-pane-header>
+      <h2 class="si-h5 m-0">Equipment</h2>
+    </si-list-pane-header>
+    <si-list-pane-body class="overflow-auto">
+      <div class="list-group list-group-flush">
+        @for (item of equipment; track item.id) {
+          <button
+            type="button"
+            class="list-group-item list-group-item-action text-start"
+            [class.active]="selectedEquipment().id === item.id"
+            [attr.aria-current]="selectedEquipment().id === item.id ? 'true' : null"
+            (click)="selectEquipment(item)"
+          >
+            <span class="d-block fw-semibold">{{ item.name }}</span>
+            <span class="d-block si-caption">{{ item.id }}</span>
+          </button>
+        }
+      </div>
+    </si-list-pane-body>
+  </si-list-pane>
+  <si-details-pane class="card">
+    <si-details-pane-header [title]="selectedEquipment().name" />
+    <si-details-pane-body class="p-6 overflow-auto">
+      <dl class="m-0">
+        <dt>Equipment ID</dt>
+        <dd>{{ selectedEquipment().id }}</dd>
+        <dt>Location</dt>
+        <dd>{{ selectedEquipment().location }}</dd>
+        <dt>Status</dt>
+        <dd class="mb-0">{{ selectedEquipment().status }}</dd>
+      </dl>
+    </si-details-pane-body>
+  </si-details-pane>
+</si-list-details>

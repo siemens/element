@@ -14,6 +14,7 @@ import {
   ElementDimensions,
   ResizeObserverService
 } from '../resize-observer';
+import { SiSplitComponent, SiSplitPartComponent, SplitUnit } from '../split';
 import { SiDetailsPaneBodyComponent } from './si-details-pane-body/si-details-pane-body.component';
 import { SiDetailsPaneFooterComponent } from './si-details-pane-footer/si-details-pane-footer.component';
 import { SiDetailsPaneHeaderComponent } from './si-details-pane-header/si-details-pane-header.component';
@@ -37,6 +38,8 @@ import { SiListPaneComponent } from './si-list-pane/si-list-pane.component';
       stateId="si-list-details-1"
       [expandBreakpoint]="expandBreakpoint"
       [disableResizing]="disableResizing()"
+      [listWidthUnit]="listWidthUnit()"
+      [listWidth]="listWidth()"
       [(detailsActive)]="detailsActive"
     >
       <si-list-pane>
@@ -62,6 +65,8 @@ class WrapperComponent {
   readonly listDetails = viewChild.required(SiListDetailsComponent);
   readonly hideBackButton = signal(false);
   readonly disableResizing = signal(true);
+  readonly listWidthUnit = signal<SplitUnit>('px');
+  readonly listWidth = signal(300);
   readonly expandBreakpoint = BOOTSTRAP_BREAKPOINTS.mdMinimum;
   readonly detailsActive = signal(false);
 }
@@ -166,6 +171,8 @@ describe('ListDetailsComponent', () => {
     });
 
     it('should change listWidth when split sizes change', async () => {
+      component.listWidthUnit.set('fr');
+      component.listWidth.set(32);
       component.disableResizing.set(false);
       await fixture.whenStable();
 
@@ -181,6 +188,104 @@ describe('ListDetailsComponent', () => {
       fixture.detectChanges();
       await fixture.whenStable();
       expect(component.listDetails().listWidth()).not.toBe(listWidth);
+    });
+
+    it.each([
+      {
+        measurement: 'cached fractional size',
+        listPartSize: 399.328125,
+        splitWidth: 900,
+        expectedWidth: 399.328125
+      },
+      { measurement: 'cached zero size', listPartSize: 0, splitWidth: 900, expectedWidth: 0 },
+      {
+        measurement: 'split fallback',
+        listPartSize: undefined,
+        splitWidth: 900.625,
+        expectedWidth: 360.25
+      },
+      {
+        measurement: 'minimum size fallback',
+        listPartSize: undefined,
+        splitWidth: 0,
+        expectedWidth: 300
+      }
+    ])(
+      'should update listWidth in pixels using the $measurement',
+      async ({ listPartSize, splitWidth, expectedWidth }) => {
+        component.listWidth.set(450);
+        component.disableResizing.set(false);
+        await fixture.whenStable();
+
+        const listPart = debugElement.query(By.directive(SiSplitPartComponent));
+        listPart.injector.get(SiSplitPartComponent).expandedSize.set(listPartSize);
+        const listMeasurement = vi.spyOn(
+          listPart.nativeElement as HTMLElement,
+          'getBoundingClientRect'
+        );
+        const splitMeasurement = vi
+          .spyOn(getSiSplit(), 'getBoundingClientRect')
+          .mockReturnValue(new DOMRect(0, 0, splitWidth, 500));
+        const split = debugElement
+          .query(By.directive(SiSplitComponent))
+          .injector.get(SiSplitComponent);
+        const widthChanged = vi.fn();
+        component.listDetails().listWidth.subscribe(widthChanged);
+
+        split.sizesChange.emit([40, 60]);
+        expect(listMeasurement).not.toHaveBeenCalled();
+        expect(splitMeasurement).toHaveBeenCalledTimes(listPartSize === undefined ? 1 : 0);
+        await fixture.whenStable();
+
+        expect(component.listDetails().listWidth()).toBe(expectedWidth);
+        expect(widthChanged).toHaveBeenCalledWith(expectedWidth);
+      }
+    );
+
+    it('should use px for the list and fr for details by default', async () => {
+      component.disableResizing.set(false);
+      await fixture.whenStable();
+
+      const parts = debugElement.queryAll(By.directive(SiSplitPartComponent));
+      expect(parts[0]!.componentInstance.unit()).toBe('px');
+      expect(parts[0]!.componentInstance.size()).toBe(300);
+      expect(parts[1]!.componentInstance.unit()).toBe('fr');
+      expect(parts[1]!.componentInstance.size()).toBe(1);
+    });
+
+    it.each([
+      { listWidth: 40, listSize: 40, detailsSize: 60 },
+      { listWidth: 300, listSize: 32, detailsSize: 68 }
+    ])(
+      'should use $listSize/$detailsSize sizing for listWidth $listWidth when listWidthUnit is fr',
+      async ({ listWidth, listSize, detailsSize }) => {
+        component.listWidthUnit.set('fr');
+        component.listWidth.set(listWidth);
+        component.disableResizing.set(false);
+        await fixture.whenStable();
+
+        const parts = debugElement.queryAll(By.directive(SiSplitPartComponent));
+        expect(parts[0]!.componentInstance.unit()).toBe('fr');
+        expect(parts[0]!.componentInstance.size()).toBe(listSize);
+        expect(parts[1]!.componentInstance.unit()).toBe('fr');
+        expect(parts[1]!.componentInstance.size()).toBe(detailsSize);
+      }
+    );
+
+    it('should keep percentage sizing for the static layout', async () => {
+      component.listWidth.set(40);
+      await fixture.whenStable();
+
+      expect(getListPane().style.flexBasis).toBe('40%');
+      expect(getDetailsPane().style.flexBasis).toBe('60%');
+    });
+
+    it('should fall back to 32/68 for an out-of-range static list width', async () => {
+      component.listWidth.set(300);
+      await fixture.whenStable();
+
+      expect(getListPane().style.flexBasis).toBe('32%');
+      expect(getDetailsPane().style.flexBasis).toBe('68%');
     });
 
     it('should unset detailsActive when back button is clicked', async () => {

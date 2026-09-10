@@ -589,4 +589,408 @@ export class SplitComponent {}`
 })
 export class SplitComponent {}`);
   });
+
+  it('should migrate split scale inputs to units in inline templates', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split>
+  <si-split-part scale="auto" size="1">Flexible</si-split-part>
+  <si-split-part scale="none" size="240">Fixed</si-split-part>
+  <si-split-part scale="auto" size="2" unit="px">Explicit unit</si-split-part>
+</si-split>\`
+})
+export class SplitComponent {}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toContain('<si-split-part unit="fr" size="1"');
+    expect(component).toContain('<si-split-part unit="px" size="240"');
+    expect(component).toContain('<si-split-part size="2" unit="px"');
+    expect(component).not.toContain('scale=');
+  });
+
+  it('should warn when static scale and unit inputs conflict', async () => {
+    const logSpy = vi.fn();
+    runner.logger.subscribe(logSpy);
+
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split>
+  <si-split-part unit="fr" scale="none">Fixed conflict</si-split-part>
+  <si-split-part unit="px" scale="auto">Flexible conflict</si-split-part>
+  <si-split-part unit="fr" scale="auto">Matching</si-split-part>
+  <si-split-part [unit]="unit" [scale]="scale">Dynamic</si-split-part>
+</si-split>\`
+})
+export class SplitComponent {
+  readonly unit = 'fr';
+  readonly scale = 'auto';
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toMatch(/<si-split-part unit="fr"[^>]*>Fixed conflict<\/si-split-part>/);
+    expect(component).toMatch(/<si-split-part unit="px"[^>]*>Flexible conflict<\/si-split-part>/);
+    expect(component).toMatch(/<si-split-part unit="fr"[^>]*>Matching<\/si-split-part>/);
+    expect(component).toMatch(/<si-split-part \[unit\]="unit"[^>]*>Dynamic<\/si-split-part>/);
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        level: 'warn',
+        message: expect.stringContaining('projects/app/src/split.component.ts')
+      })
+    );
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.objectContaining({ message: expect.stringContaining('conflicting scale and unit') })
+    );
+  });
+
+  it('should migrate dynamic split scale bindings in external templates', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  templateUrl: './split.component.html'
+})
+export class SplitComponent {
+  readonly scale = 'auto';
+  getScale(): string {
+    return this.scale;
+  }
+}`,
+      '/projects/app/src/split.component.html': `<si-split>
+  <si-split-part [scale]="scale" size="1">Flexible</si-split-part>
+  <si-split-part [scale]="getScale()" size="240">Dynamic</si-split-part>
+</si-split>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const template = tree.readContent('/projects/app/src/split.component.html');
+
+    expect(template).toContain(
+      `<si-split-part [unit]="['none', 'px'].includes(scale) ? 'px' : 'fr'" size="1"`
+    );
+    expect(template).toContain(
+      `<si-split-part [unit]="['none', 'px'].includes(getScale()) ? 'px' : 'fr'" size="240"`
+    );
+    expect(template).not.toContain('[scale]');
+  });
+
+  it('should preserve relative split sizes and warn about manual fixed sizing', async () => {
+    const logSpy = vi.fn();
+    runner.logger.subscribe(logSpy);
+
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split [sizes]="[20, 80]">
+  <si-split-part scale="none">Fixed</si-split-part>
+  <si-split-part scale="auto">Flexible</si-split-part>
+</si-split>\`
+})
+export class SplitComponent {}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toContain('<si-split-part unit="fr" size="20"');
+    expect(component).toContain('<si-split-part unit="fr" size="80"');
+    expect(component).not.toContain('[sizes]');
+    expect(component).not.toContain('scale=');
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        level: 'warn',
+        message: expect.stringContaining('projects/app/src/split.component.ts')
+      })
+    );
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.objectContaining({ message: expect.stringContaining('scale="none"') })
+    );
+  });
+
+  it('should migrate Scale type imports and literals', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+import { Scale } from '@siemens/element-ng/split';
+
+@Component({
+  selector: 'app-split',
+  template: ''
+})
+export class SplitComponent {
+  readonly scale: Scale = 'auto';
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toContain("import { SplitUnit } from '@siemens/element-ng/split';");
+    expect(component).toContain("readonly scale: SplitUnit = 'fr';");
+    expect(component).not.toContain('Scale');
+  });
+
+  it('should retain an existing SplitUnit import when removing Scale', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+import { Scale, SplitUnit } from '@siemens/element-ng/split';
+
+@Component({
+  selector: 'app-split',
+  template: ''
+})
+export class SplitComponent {
+  readonly scale: Scale = 'none';
+  readonly unit: SplitUnit = 'px';
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toContain("import { SplitUnit } from '@siemens/element-ng/split';");
+    expect(component).toContain("readonly scale: SplitUnit = 'px';");
+    expect(component).not.toContain('Scale');
+  });
+
+  it('should bind typed scale members directly as units', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+import { Scale } from '@siemens/element-ng/split';
+
+@Component({
+  selector: 'app-split',
+  templateUrl: './split.component.html'
+})
+export class SplitComponent {
+  readonly scale: Scale = 'none';
+
+  getScale(): Scale {
+    return this.scale;
+  }
+}`,
+      '/projects/app/src/split.component.html': `<si-split>
+  <si-split-part [scale]="scale" size="240">Property</si-split-part>
+  <si-split-part [scale]="getScale()" size="240">Method</si-split-part>
+</si-split>`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const template = tree.readContent('/projects/app/src/split.component.html');
+
+    expect(template).toContain('<si-split-part [unit]="scale" size="240"');
+    expect(template).toContain('<si-split-part [unit]="getScale()" size="240"');
+    expect(template).not.toContain("=== 'none'");
+  });
+
+  it('should keep dynamic scale mappings valid after their values are migrated', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+import { Scale } from '@siemens/element-ng/split';
+
+const defaultScale: Scale = 'none';
+
+@Component({
+  selector: 'app-split',
+  template: \`<si-split-part [scale]="assertedScale" />
+<si-split-part [scale]="inheritedScale" />\`
+})
+export class SplitComponent {
+  readonly assertedScale = 'none' as Scale;
+  readonly inheritedScale = defaultScale;
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toContain("const defaultScale: SplitUnit = 'px';");
+    expect(component).toContain("readonly assertedScale = 'px' as SplitUnit;");
+    expect(component).toContain(`[unit]="['none', 'px'].includes(assertedScale) ? 'px' : 'fr'"`);
+    expect(component).toContain(`[unit]="['none', 'px'].includes(inheritedScale) ? 'px' : 'fr'"`);
+  });
+
+  it('should scope inline template bindings to their owning component', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/owners.ts': `import { Component, signal } from '@angular/core';
+import { Scale } from '@siemens/element-ng/split';
+
+const localScale: Scale = 'none';
+@Component({ template: \`<si-split-part [scale]="scale()" /><si-split-part [scale]="this.scale()" />\` })
+export class TypedComponent {
+  readonly scale = signal<Scale>('none');
+}
+@Component({ template: \`<si-split-part [scale]="scale" /><si-split-part [scale]="localScale" />\` })
+export class UntypedComponent {
+  scale = 'none';
+  localScale = 'none';
+  method() {
+    const scale: Scale = 'none';
+    return scale;
+  }
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const source = tree.readContent('/projects/app/src/owners.ts');
+
+    expect(source).toContain('[unit]="scale()"');
+    expect(source).toContain('[unit]="this.scale()"');
+    expect(source).toContain(`[unit]="['none', 'px'].includes(scale) ? 'px' : 'fr'"`);
+    expect(source).toContain(`[unit]="['none', 'px'].includes(localScale) ? 'px' : 'fr'"`);
+  });
+
+  it('should not treat an unrelated object property as a migrated component member', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/object-owner.ts': `import { Component } from '@angular/core';
+import { Scale } from '@siemens/element-ng/split';
+@Component({ template: \`<si-split-part [scale]="config.scale" />\` })
+export class ObjectOwner {
+  scale: Scale = 'none';
+  config = { scale: 'none' };
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+
+    expect(tree.readContent('/projects/app/src/object-owner.ts')).toContain(
+      `[unit]="['none', 'px'].includes(config.scale) ? 'px' : 'fr'"`
+    );
+  });
+
+  it.each([false, true])(
+    'should handle shared template owners regardless of order (reversed: %s)',
+    async reversed => {
+      const typed = `import { Component } from '@angular/core';
+import { Scale } from '@siemens/element-ng/split';
+@Component({ templateUrl: './shared.html' })
+export class TypedOwner { scale: Scale = 'none'; }`;
+      const untyped = `import { Component } from '@angular/core';
+@Component({ templateUrl: './shared.html' })
+export class UntypedOwner { scale = 'none'; }`;
+      addTestFiles(appTree, {
+        '/projects/app/src/first-owner.ts': reversed ? untyped : typed,
+        '/projects/app/src/second-owner.ts': reversed ? typed : untyped,
+        '/projects/app/src/shared.html': `<si-split-part [scale]="scale" />
+<si-split-part scale="{{scale}}" />
+<si-split-part scale="none" />`
+      });
+
+      const tree = await runner.runSchematic('migration-v51', {}, appTree);
+      const template = tree.readContent('/projects/app/src/shared.html');
+
+      expect(
+        template.match(/\[unit\]="\['none', 'px'\]\.includes\(scale\) \? 'px' : 'fr'"/g)
+      ).toHaveLength(2);
+      expect(template).toContain('unit="px"');
+      expect(template).not.toContain('scale=');
+    }
+  );
+
+  it('should keep direct bindings when shared template owners agree', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/shared-owners.ts': `import { Component } from '@angular/core';
+import { Scale } from '@siemens/element-ng/split';
+@Component({ templateUrl: './agreed.html' })
+export class FirstOwner { scale: Scale = 'none'; }
+@Component({ templateUrl: './agreed.html' })
+export class SecondOwner { scale: Scale = 'auto'; }`,
+      '/projects/app/src/agreed.html': '<si-split-part [scale]="scale" />'
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+
+    expect(tree.readContent('/projects/app/src/agreed.html')).toContain('[unit]="scale"');
+  });
+
+  it('should migrate Scale literals in class-field generic initializers', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component, signal } from '@angular/core';
+import { Scale } from '@siemens/element-ng/split';
+
+@Component({
+  selector: 'app-split',
+  template: ''
+})
+export class SplitComponent {
+  readonly scale = signal<Scale>('auto');
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toContain("readonly scale = signal<SplitUnit>('fr');");
+  });
+
+  it('should only migrate Scale-typed object properties', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+import { Scale } from '@siemens/element-ng/split';
+
+interface Config {
+  Scale: string;
+  scale: Scale;
+  objectFit: 'none' | 'contain';
+}
+
+const config: Config = {
+  scale: 'auto',
+  objectFit: 'none'
+};
+
+@Component({
+  selector: 'app-split',
+  template: ''
+})
+export class SplitComponent {
+  readonly config = config;
+}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toContain('Scale: string;');
+    expect(component).toContain('scale: SplitUnit;');
+    expect(component).toContain("scale: 'fr',");
+    expect(component).toContain("objectFit: 'none'");
+  });
+
+  it('should not rename unrelated Scale property names', async () => {
+    addTestFiles(appTree, {
+      '/projects/app/src/split.component.ts': `import { Component } from '@angular/core';
+import { Scale } from '@siemens/element-ng/split';
+
+interface Config {
+  Scale: string;
+  split: Scale;
+}
+
+@Component({
+  selector: 'app-split',
+  template: ''
+})
+export class SplitComponent {}`
+    });
+
+    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const component = tree.readContent('/projects/app/src/split.component.ts');
+
+    expect(component).toContain('Scale: string;');
+    expect(component).toContain('split: SplitUnit;');
+  });
 });

@@ -129,12 +129,12 @@
   th {
     @extend %square;
     padding: 0;
-    font-weight: variables.$si-font-weight-caption;
+    font-weight: variables.$si-font-weight-body-sm;
   }
 
   .week-num,
   th {
-    font-size: variables.$si-font-size-caption;
+    font-size: variables.$si-font-size-body-sm;
     color: variables.$si-sys-text-secondary;
     inline-size: 2rem;
     cursor: default;

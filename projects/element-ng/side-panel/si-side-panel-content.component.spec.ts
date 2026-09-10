@@ -4,6 +4,7 @@
  */
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { page, userEvent } from 'vitest/browser';
 
 import { SiSidePanelModule } from './si-side-panel.module';
 import { SiSidePanelService } from './si-side-panel.service';
@@ -16,11 +17,19 @@ import { SidePanelDisplayMode, SidePanelNavigateConfig } from './side-panel.mode
       heading="Title"
       [displayMode]="displayMode()"
       [navigateConfig]="navigateConfig"
-    />
+    >
+      @if (projectBackButton()) {
+        <button type="button" siSidePanelBackButton aria-label="Go back" (click)="back()">
+          Back
+        </button>
+      }
+    </si-side-panel-content>
   </si-side-panel>`
 })
 class TestHostComponent {
+  readonly projectBackButton = signal(false);
   readonly displayMode = signal<SidePanelDisplayMode | undefined>(undefined);
+  readonly back = vi.fn();
   readonly navigateConfig: SidePanelNavigateConfig = {
     type: 'link',
     label: 'Navigate',
@@ -53,6 +62,25 @@ describe('SiSidePanelContentComponent', () => {
     fixture.detectChanges();
 
     expect(sidePanelService.toggle).toHaveBeenCalled();
+  });
+
+  it('should project a custom back button into the header slot', async () => {
+    const backButton = page.getByRole('button', { name: 'Go back' });
+
+    await expect.element(backButton).not.toBeInTheDocument();
+
+    component.projectBackButton.set(true);
+    await fixture.whenStable();
+
+    await expect.element(backButton).toBeInTheDocument();
+    await expect
+      .element(backButton)
+      .toHaveClass('btn', 'btn-icon', 'btn-tertiary', 'ms-4', 'auto-hide');
+    await expect.element(backButton).toHaveTextContent('Back');
+
+    await userEvent.click(backButton);
+
+    expect(component.back).toHaveBeenCalledOnce();
   });
 
   it('should show fullscreen/navigation button based on display mode', () => {

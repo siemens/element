@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/all-variables';
 
-:host {
+:host(.si-form-input) {
   margin-block-end: map.get(all-variables.$spacers-block, 6);
 }
 

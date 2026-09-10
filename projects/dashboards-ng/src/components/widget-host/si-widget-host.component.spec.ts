@@ -13,6 +13,7 @@ import {
   SiActionDialogService
 } from '@siemens/element-ng/action-modal';
 import { MenuItemAction } from '@siemens/element-ng/menu';
+import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { GridItemHTMLElement } from 'gridstack';
 import { firstValueFrom, Observable, Subject } from 'rxjs';
 import { page, userEvent } from 'vitest/browser';
@@ -261,6 +262,18 @@ describe('SiWidgetHostComponent', () => {
 
     it('should set tabindex on card when editable', () => {
       expect(cardEl.getAttribute('tabindex')).toBe('0');
+    });
+
+    it('should use the translated heading as the card aria-label when editable', async () => {
+      const translateService = TestBed.runInInjectionContext(() => injectSiTranslateService());
+      vi.spyOn(translateService, 'translate').mockReturnValueOnce('Translated widget heading');
+      fixture.componentRef.setInput('widgetConfig', {
+        ...TEST_WIDGET_CONFIG_0,
+        heading: 'WIDGET.HEADING'
+      });
+      await fixture.whenStable();
+
+      expect(cardEl).toHaveAttribute('aria-label', 'Translated widget heading');
     });
 
     it('should not set tabindex on card when not editable', () => {

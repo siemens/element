@@ -21,6 +21,7 @@ $filtered-search-criteria-margin: map.get(variables.$spacers-block, 2);
 
   display: flex;
   align-items: center;
+  block-size: fit-content;
   line-height: $filtered-search-line-height;
   // This is necessary to prevent the filtered-search from overflowing when it is used within the main-detail-layout
   min-inline-size: 0;

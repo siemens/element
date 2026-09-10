@@ -40,6 +40,53 @@
           }
         </si-chat-message>
       }
+      @if (message.type === 'activity') {
+        <si-activity-message
+          [heading]="message.heading"
+          [icon]="message.icon"
+          [state]="message.state"
+          [expanded]="isLatestActivityMessage(message)"
+        >
+          @if (message.content) {
+            <si-markdown [markdown]="message.content" [options]="markdownOptions" />
+          }
+          @for (part of message.parts ?? []; track part) {
+            <si-activity-message-part
+              [heading]="part.heading"
+              [collapsible]="part.collapsible ?? false"
+            >
+              <si-markdown [markdown]="part.content" [options]="markdownOptions" />
+            </si-activity-message-part>
+          }
+        </si-activity-message>
+      }
+      @if (message.type === 'activity-trace') {
+        <si-activity-trace
+          [heading]="message.heading"
+          [expanded]="isLatestActivityMessage(message)"
+        >
+          @for (activity of message.messages; track activity) {
+            <si-activity-message
+              [heading]="activity.heading"
+              [icon]="activity.icon"
+              [state]="activity.state"
+              [expanded]="isLatestActivityMessage(message) && $last"
+            >
+              @if (activity.content) {
+                <si-markdown [markdown]="activity.content" [options]="markdownOptions" />
+              }
+              @for (part of activity.parts ?? []; track part) {
+                <si-activity-message-part
+                  [heading]="part.heading"
+                  [collapsible]="part.collapsible ?? false"
+                >
+                  <si-markdown [markdown]="part.content" [options]="markdownOptions" />
+                </si-activity-message-part>
+              }
+            </si-activity-message>
+          }
+        </si-activity-trace>
+      }
     } @empty {
       <si-ai-welcome-screen
         [categories]="promptCategories"
@@ -69,7 +116,7 @@
     <si-chat-input
       class="w-100"
       accept="image/*,.pdf,.doc,.docx,.txt"
-      placeholder="Enter a command, question or topic..."
+      placeholder="Enter a command, question or topic…"
       disclaimer="The content is AI generated. Always verify the information for accuracy."
       [allowAttachments]="true"
       [actions]="inputActions"
@@ -78,7 +125,7 @@
       [maxFileSize]="5242880"
       [sending]="sending()"
       [interruptible]="loading() && !sending()"
-      [followUpPrompts]="followUpPrompts()"
+      [followUpPrompts]="messages().length ? followUpPrompts() : []"
       [(value)]="inputValue"
       (send)="onMessageSent($event)"
       (followUpPromptSelected)="onFollowUpPromptSelected($event)"

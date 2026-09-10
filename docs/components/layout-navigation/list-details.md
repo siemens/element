@@ -148,6 +148,17 @@ Inside the `<si-details-pane>` the following child components can be used:
 
 It is highly advised to use at least the `<si-details-pane-header>` to show the back button in a responsive (mobile) view.
 
+When resizing is enabled, the underlying list split part uses the `listWidthUnit`
+input, while the details split part always uses `unit="fr"`. The list pane uses
+`unit="px"` by default. Accordingly, `listWidth` defaults to `300` and
+represents pixels with the default configuration.
+
+Use `listWidthUnit="fr"` to retain a relative split, where `listWidth` is the list
+pane's fractional weight. When resizing is disabled, `listWidth` continues to
+control the static layout as a percentage. For both resizable `listWidthUnit="fr"`
+and static layouts, values outside the inclusive range 0-100 use the standard
+32/68 list/details split.
+
 If the content may exceed the available space, the `overflow-auto` class should be applied
 to the body components or a child inside them.
 
@@ -155,6 +166,10 @@ In the standard layout, the `card` class should be applied to both the `<si-list
 though it can also be moved to suite the design needs.
 
 <si-docs-component example="si-list-details/si-list-details" height="500"></si-docs-component>
+
+### Default pixel sizing
+
+<si-docs-component example="si-list-details/si-list-details-pixels" height="500"></si-docs-component>
 
 <si-docs-api component="SiListDetailsComponent"></si-docs-api>
 
@@ -196,6 +211,15 @@ The `slot` attribute accepts one of the following values:
 - `mainData`: List/table to show the main data
 - `details`: Details pane
 - `detailActions`: Content actions for the details pane
+
+When `resizableParts` is enabled, the main split part uses the `mainContainerWidthUnit`
+input (`unit="px"` by default), while the detail part always uses `unit="fr"`.
+The `mainContainerWidth` value is interpreted using `mainContainerWidthUnit`; for example,
+`300` means `300px` with the default configuration. Use `mainContainerWidthUnit="fr"` to
+retain a relative split, where `mainContainerWidth` is the main part's fractional weight.
+
+When the component is not resizable, `mainContainerWidth` continues to be
+interpreted as a percentage for the static layout.
 
 <si-docs-component example="si-main-detail-container/si-main-detail-container" height="500"></si-docs-component>
 

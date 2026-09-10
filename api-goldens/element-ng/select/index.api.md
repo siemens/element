@@ -169,6 +169,10 @@ export class SiSelectSingleValueDirective<T> extends SiSelectSelectionStrategy<T
     allowMultiple: boolean;
 }
 
+// @public
+export class SiSelectValueTemplateDirective {
+}
+
 // (No @packageDocumentation comment for this package)
 
 ```

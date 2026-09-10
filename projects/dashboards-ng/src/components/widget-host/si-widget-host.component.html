@@ -30,7 +30,7 @@
     [attr.tabindex]="editable() ? 0 : null"
     [attr.role]="editable() ? 'application' : null"
     [attr.aria-roledescription]="editable() ? 'widget' : null"
-    [attr.aria-label]="editable() ? widgetConfig().heading : null"
+    [attr.aria-label]="editable() ? (widgetConfig().heading | translate) : null"
     [attr.aria-description]="editable() ? (a11yWidgetDescription | translate) : null"
     [expandText]="labelExpand"
     [restoreText]="labelRestore"

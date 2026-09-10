@@ -44,6 +44,7 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
     // (undocumented)
     readonly hasLargeSize: _angular_core.Signal<boolean>;
     readonly listWidth: _angular_core.ModelSignal<number>;
+    readonly listWidthUnit: _angular_core.InputSignal<SplitUnit>;
     readonly minDetailsSize: _angular_core.InputSignal<number>;
     readonly minListSize: _angular_core.InputSignal<number>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;

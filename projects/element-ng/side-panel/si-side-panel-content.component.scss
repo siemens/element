@@ -90,6 +90,14 @@
   justify-content: space-between;
 }
 
+.header-title {
+  margin-inline-start: map.get(all-variables.$spacers, 6);
+}
+
+.rpanel-header:has([siSidePanelBackButton]) .header-title {
+  margin-inline-start: map.get(all-variables.$spacers, 2);
+}
+
 .rpanel-wrapper {
   padding-block-start: map.get(all-variables.$spacers-block, 5);
 }

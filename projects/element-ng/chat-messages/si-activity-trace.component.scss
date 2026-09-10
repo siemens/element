@@ -1,0 +1,73 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+$marker-size: variables.$si-icon-font-size-sm;
+$heading-height: calc($marker-size + 2 * map.get(variables.$spacers, 2));
+
+:host {
+  display: block;
+  padding-block: map.get(variables.$spacers-block, 2);
+  color: variables.$si-sys-text-secondary;
+}
+
+.trace-toggle {
+  display: flex;
+  align-items: center;
+  gap: map.get(variables.$spacers-inline, 3);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  text-align: start;
+}
+
+.trace-marker {
+  display: inline-flex;
+  flex: 0 0 $marker-size;
+  align-items: center;
+  justify-content: center;
+  inline-size: $marker-size;
+  block-size: $marker-size;
+}
+
+.disclosure-icon {
+  font-size: $marker-size;
+  transition: transform variables.$element-default-transition-duration;
+
+  &.expanded {
+    transform: rotate(90deg);
+  }
+}
+
+.trace-heading {
+  display: flex;
+  align-items: center;
+  min-block-size: $heading-height;
+}
+
+.content-motion {
+  display: grid;
+  grid-template-rows: 1fr;
+
+  &:is(.content-enter, .content-leave) {
+    transition: grid-template-rows variables.$element-default-transition-duration;
+  }
+
+  &.content-enter {
+    @starting-style {
+      grid-template-rows: 0fr;
+    }
+  }
+
+  &.content-leave {
+    grid-template-rows: 0fr;
+  }
+}
+
+.trace-content {
+  overflow: hidden;
+  padding-block-start: map.get(variables.$spacers-block, 4);
+}

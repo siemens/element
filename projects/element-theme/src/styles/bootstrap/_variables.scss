@@ -2,6 +2,7 @@
 @use '../variables/system-tokens';
 @use '../variables/semantic-tokens';
 @use '../variables/spacers';
+@use '../variables/sizing';
 @use '../variables/typography';
 @use './functions';
 
@@ -168,7 +169,7 @@ $font-family-code: $font-family-monospace !default;
 // $font-size-base effects the font size of the body text
 $font-size-base: typography.$si-font-size-body !default;
 $font-size-lg: typography.$si-font-size-body-lg !default;
-$font-size-sm: typography.$si-font-size-caption !default;
+$font-size-sm: typography.$si-font-size-body-sm !default;
 
 $font-weight-lighter: typography.$si-font-weight-lighter;
 $font-weight-light: typography.$si-font-weight-light;
@@ -211,7 +212,7 @@ $lead-font-size: typography.$si-font-size-body-lg !default;
 $lead-line-height: typography.$si-line-height-body-lg !default;
 $lead-font-weight: typography.$si-font-weight-body-lg !default;
 
-$small-font-size: typography.$si-font-size-caption !default;
+$small-font-size: typography.$si-font-size-body-sm !default;
 
 $sub-sup-font-size: 0.75em !default;
 
@@ -363,15 +364,10 @@ $input-plaintext-color: $body-color !default;
 
 $input-height-border: $input-border-width * 2 !default;
 
-$input-height: calc(1lh + ($input-padding-y-full * 2));
+$input-height: map.get(sizing.$sizing, 80);
 
 // don't derive from $input-height as it generates a nested calc() expression
-$input-height-inner: calc($input-line-height + ($input-padding-y-full - 1px) * 2) !default;
-// Wrap in parenthesis: `*` binds tighter than `-`, so without them only the border term gets multiplied.
-// DEPRECATED: Calculate it yourself using $input-height-inner
-$input-height-inner-half: calc((#{$input-height-inner}) * 0.5) !default;
-// DEPRECATED: Calculate it yourself using $input-height-inner
-$input-height-inner-quarter: calc((#{$input-height-inner}) * 0.25) !default;
+$input-height-inner: calc(map.get(sizing.$sizing, 80) - (2 * 1px)) !default;
 
 $input-transition:
   border-color 0.15s ease-in-out,
@@ -464,7 +460,7 @@ $dropdown-font-size: $font-size-base !default;
 // this is to have room for icon and badges
 $dropdown-line-height: $badge-height;
 $dropdown-color: $body-color !default;
-$dropdown-bg: system-tokens.$si-sys-background-1 !default;
+$dropdown-bg: system-tokens.$si-sys-background-3 !default;
 $dropdown-border-radius: semantic-tokens.$element-radius-2 !default;
 $dropdown-divider-bg: system-tokens.$si-sys-border-4 !default;
 $dropdown-divider-margin-y: 4px !default;
@@ -610,6 +606,8 @@ $progress-bar-animation-timing: 1s linear infinite !default;
 $progress-bar-transition: width animations.element-transition-duration(0.6s) ease;
 
 // List group
+// @deprecated All `$list-group-*` variables below belong to the deprecated
+// Bootstrap list group. Use the Element list (`.list` / `.list-item`) instead.
 
 $list-group-color: system-tokens.$si-sys-text-primary !default;
 $list-group-bg: system-tokens.$si-sys-background-1 !default;

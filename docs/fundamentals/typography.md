@@ -7,17 +7,16 @@
 > not associated with Siemens branding. Please note that the default theme is
 > currently undocumented.
 
-Typographic hierarchy is defined by text size and color. Each style can use
-color variants if necessary.
+Typographic hierarchy is established through text size and color.
 
 ## Usage ---
 
 For a cohesive typography experience, Element's type scale uses the Siemens
 Sans typeface.
-Hierarchy is communicated through differences in font weight (Roman and Bold) and
+Hierarchy is communicated through differences in font weight (Roman and Semi bold) and
 size.
 
-<si-docs-component example="typography/typography" editor="false" height="380"></si-docs-component>
+<si-docs-component example="typography/typography" editor="false" height="980"></si-docs-component>
 
 ### Best practices
 
@@ -30,26 +29,28 @@ size.
 
 ## Design ---
 
-Element’s typography is divided into body, headings and display styles.
+Element’s typography is divided into body, headings, display, and code styles.
 
 ### Body
 
 Body text is used for the main content, often following a heading or as part of UI components.
 
-- Use `body` as the default style for most components and text blocks.
+- Use `body` for most components and labels.
+- Use `body-paragraph` for longer text blocks.
 - Use `body-lg` for larger and more prominent text.
-- Use `caption` for small, supportive text like annotations or metadata.
+- Use `body-sm` for small, supportive text like annotations or metadata.
 
 ![Body fonts usage](images/typography-body-usage.png)
 
-| Style     | Font size | Line height | Font weight |
-| --------- | --------- | ----------- | ----------- |
-| `body-lg` | 16 px     | 20 px       | 400 / Roman |
-| `body`    | 14 px     | 16 px       | 400 / Roman |
-| `caption` | 12 px     | 16 px       | 400 / Roman |
+| Style            | Font size | Line height | Font weight |
+| ---------------- | --------- | ----------- | ----------- |
+| `body-lg`        | 16 px     | 20 px       | 400 / Roman |
+| `body`           | 14 px     | 16 px       | 400 / Roman |
+| `body-paragraph` | 14 px     | 20 px       | 400 / Roman |
+| `body-sm`        | 12 px     | 16 px       | 400 / Roman |
 
-All body styles are also available in **bold** and _italic_.
-Bold is used to add emphasis or draw attention to key information, and is also applied in specific
+All body styles are also available in **semi bold** and _italic_.
+Semi bold is used to add emphasis or draw attention to key information, and is also applied in specific
 UI elements, such as button labels, or highlighted values in tables and lists.
 
 Italic is used sparingly, for cases like technical terms.
@@ -59,22 +60,23 @@ Italic is used sparingly, for cases like technical terms.
 Headings communicate the structure and visual hierarchy of content on the page.
 They are defined semantically from `h1` to `h6`.
 
-- Use `h1` as the visual style for the largest headings.
-- Use `h2` as main page headings.
-- Use `h3` as section headings.
-- Use `h4` as secondary section titles.
-- `h5/h6` share the same visual style, used for smaller content blocks like cards or tertiary titles.
+- Use `h1` for the largest headings.
+- Use `h2` for main page headings.
+- Use `h3` for section headings.
+- Use `h4` for secondary section titles.
+- Use `h5` for smaller content blocks such as cards or tertiary titles.
+- Use `h5-bold` to emphasize smaller headings, such as unread notification titles.
+- Use `h6` for the smallest heading level.
 
 | Style     | Font size | Line height | Font weight     |
 | --------- | --------- | ----------- | --------------- |
-| `h1-bold` | 30 px     | 36 px       | 700 / Bold      |
-| `h1`      | 30 px     | 36 px       | 400 / Roman     |
-| `h2`      | 20 px     | 24 px       | 600 / Semi Bold |
-| `h3`      | 18 px     | 24 px       | 600 / Semi Bold |
+| `h1`      | 28 px     | 36 px       | 600 / Semi Bold |
+| `h2`      | 24 px     | 32 px       | 600 / Semi Bold |
+| `h3`      | 20 px     | 24 px       | 600 / Semi Bold |
 | `h4`      | 16 px     | 20 px       | 600 / Semi Bold |
-| `h4-bold` | 16 px     | 20 px       | 700 / Bold      |
-| `h5`      | 14 px     | 16 px       | 600 / Semi Bold |
-| `h5-bold` | 14 px     | 16 px       | 700 / Bold      |
+| `h5`      | 14 px     | 20 px       | 600 / Semi Bold |
+| `h5-bold` | 14 px     | 20 px       | 700 / Bold      |
+| `h6`      | 12 px     | 16 px       | 600 / Semi Bold |
 
 In order to adhere to [accessibility best practices](https://www.w3.org/WAI/tutorials/page-structure/headings/),
 each page should be structured according to the semantic hierarchy `h1`, `h2`, ... `h6`, starting from
@@ -107,12 +109,27 @@ They should be used sparingly to maintain clarity.
 
 ![Display fonts usage](images/typography-display-usage.png)
 
-| CSS class          | Font size | Line height | Font weight |
-| ------------------ | --------- | ----------- | ----------- |
-| `.si-display-xl`   | 56 px     | 72 px       | 400 / Roman |
-| `.si-display-lg`   | 48 px     | 64 px       | 400 / Roman |
-| `.si-display-bold` | 40 px     | 52 px       | 700 / Bold  |
-| `.si-display`      | 40 px     | 52 px       | 400 / Roman |
+| Style         | Font size | Line height | Font weight |
+| ------------- | --------- | ----------- | ----------- |
+| `display-xxl` | 58 px     | 72 px       | 400 / Roman |
+| `display-xl`  | 48 px     | 64 px       | 400 / Roman |
+| `display-lg`  | 40 px     | 52 px       | 400 / Roman |
+| `display`     | 32 px     | 40 px       | 400 / Roman |
+
+All display styles are also available in **semi bold**.
+
+### Code
+
+Code styles are used for technical content such as code samples, inline code, and other monospaced text.
+Use them when you need to present commands, snippets, file names, or other technical values.
+
+![Code fonts usage](images/typography-code.png)
+
+| Style     | Font size | Line height | Font weight   |
+| --------- | --------- | ----------- | ------------- |
+| `code-lg` | 16 px     | 20 px       | 400 / Regular |
+| `code`    | 14 px     | 20 px       | 400 / Regular |
+| `code-sm` | 12 px     | 16 px       | 400 / Regular |
 
 ### Using the bounding box
 
@@ -162,22 +179,35 @@ Heading elements (`<h1>` through `<h6>`) are styled by default. For cases where 
 
 ```html
 <div class="si-h1">.si-h1 heading</div>
-<div class="si-h1-bold">.si-h1-bold heading bold</div>
 <div class="si-h2">.si-h2 heading</div>
 <div class="si-h3">.si-h3 heading</div>
 <div class="si-h4">.si-h4 heading</div>
-<div class="si-h4-bold">.si-h4-bold heading bold</div>
 <div class="si-h5">.si-h5 heading</div>
-<div class="si-h5-bold">.si-h5-bold heading bold</div>
+<div class="si-h5-bold">.si-h5-bold heading</div>
+<div class="si-h6">.si-h6 heading</div>
 ```
 
-<si-docs-component example="typography/headings" height="300"></si-docs-component>
+<si-docs-component example="typography/headings" height="330"></si-docs-component>
+
+### Body styles classes
+
+Body styles can be applied using classes prefixed with `.si-body`. Each style also has a semi bold variant with the `-sbold` suffix.
+
+<si-docs-component example="typography/body-styles" height="330"></si-docs-component>
+
+Use semantic elements such as `<strong>` and `<em>` when the emphasis has meaning. Use the `.fst-italic` utility when text only needs to be visually italicized.
 
 ### Display styles classes
 
-Apply display typography using CSS classes prefixed with `.si-display-`. These classes mirror the display typography scale defined in the design system and can be applied to any element.
+Apply display typography using CSS classes prefixed with `.si-display-`. These classes mirror the display typography scale defined in the design system and can be applied to any element. Semi bold variants use the `-sbold` suffix.
 
-<si-docs-component example="typography/display-styles" height="280"></si-docs-component>
+<si-docs-component example="typography/display-styles" height="590"></si-docs-component>
+
+### Code styles classes
+
+Use the code style classes for technical values that require the monospaced typeface. Prefer semantic `<code>` or `<pre>` elements when presenting code.
+
+<si-docs-component example="typography/code-styles" height="150"></si-docs-component>
 
 ### Lead
 

@@ -1,8 +1,16 @@
 # Gauge chart
 
-**Gauge charts** are data visualization elements that represent a value as a
-position on a radial scale. It displays a simple and concise single value in
-comparison to a maximum and minimum limit.
+**Gauge charts** are data visualization elements that represent one or more
+values as a position on a radial scale. They display a simple and concise
+value in comparison to a maximum and minimum limit.
+
+Element provides two gauge components:
+
+- **ECharts-based gauge chart** (`SiChartGaugeComponent`) — a full-featured
+  gauge built on [ECharts](https://echarts.apache.org/), part of
+  `@siemens/charts-ng`.
+- **Native gauge chart** (`SiNChartGaugeComponent`) — a lightweight,
+  dependency-free gauge, part of `@siemens/native-charts-ng`.
 
 ## Usage ---
 
@@ -30,7 +38,19 @@ currently falls into.
   `warning` or `caution`) provide additional visual cues, such as text labels
   or icons, to support accessibility.
 
+### Choosing a gauge component
+
+Both components cover the same basic use case — showing a value against a
+minimum/maximum range — but differ in features, dependencies and footprint.
+
+Use the **ECharts-based gauge chart** when you rely on ECharts-specific configuration options and when the application already uses ECharts for other charts.
+
+Use the **Native gauge chart** when bundle size or runtime performance is a concern, or when you need
+to visualize multiple stacked values within a single ring.
+
 ## Design ---
+
+### ECharts-based gauge chart
 
 A gauge chart displays data similar to a circle chart, but with a needle or dial
 to indicate where the data point(s) falls over a particular range.
@@ -39,9 +59,13 @@ to indicate where the data point(s) falls over a particular range.
 
 > 1. Progress, 2. Qualitative Range (Optional), 3. Base, 4. Unit, 5. Value, 6. Scale (Optional)
 
+### Native gauge chart
+
+T.B.D
+
 ## Code ---
 
-### Usage
+### ECharts-based gauge chart
 
 ??? info "Required Packages"
 
@@ -58,5 +82,29 @@ import { SiChartGaugeComponent } from '@siemens/charts-ng/gauge';
 <si-docs-component example="si-charts/gauge/si-chart-gauge" height="400"></si-docs-component>
 
 <si-docs-api component="SiChartGaugeComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+
+### Native gauge chart
+
+```ts
+import { SiNChartGaugeComponent } from '@siemens/native-charts-ng/gauge';
+
+@Component({
+  imports: [SiNChartGaugeComponent, ...]
+})
+```
+
+#### Sum mode
+
+Multiple series arcs are stacked on the gauge ring. The center shows their combined total.
+
+<si-docs-component example="si-ncharts/si-nchart-gauge" height="400"></si-docs-component>
+
+#### Single mode
+
+A single arc covers the ring. Colored background segments can be layered beneath the arc to indicate qualitative ranges.
+
+<si-docs-component example="si-ncharts/si-nchart-gauge-single" height="400"></si-docs-component>
+
+<si-docs-api component="SiNChartGaugeComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 
 <si-docs-types></si-docs-types>

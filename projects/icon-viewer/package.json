@@ -1,7 +1,7 @@
 {
   "name": "@siemens/icon-viewer",
   "description": "Element Icon Viewer application.",
-  "version": "48.9.0",
+  "version": "51.0.0",
   "license": "MIT",
   "private": true,
   "repository": {

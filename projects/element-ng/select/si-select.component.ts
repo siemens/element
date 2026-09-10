@@ -27,6 +27,7 @@ import { SiSelectSelectionStrategy } from './selection/si-select-selection-strat
 import { SiSelectActionsDirective } from './si-select-actions.directive';
 import { SiSelectGroupTemplateDirective } from './si-select-group-template.directive';
 import { SiSelectOptionTemplateDirective } from './si-select-option-template.directive';
+import { SiSelectValueTemplateDirective } from './si-select-value-template.directive';
 import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
 
 @Component({
@@ -115,6 +116,11 @@ export class SiSelectComponent<T> implements SiFormItemControl {
     SiSelectOptionTemplateDirective,
     TemplateRef<{ $implicit: SelectOption<T> }>
   >(SiSelectOptionTemplateDirective, { read: TemplateRef });
+
+  protected readonly selectedValueTemplate = contentChild<
+    SiSelectValueTemplateDirective,
+    TemplateRef<{ $implicit: SelectOption<T> }>
+  >(SiSelectValueTemplateDirective, { read: TemplateRef });
 
   protected readonly groupTemplate = contentChild<
     SiSelectGroupTemplateDirective,

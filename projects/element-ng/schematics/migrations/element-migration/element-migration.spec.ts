@@ -9,6 +9,7 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 
 import { addTestFiles, createTestApp } from '../../utils/index.js';
+import { getElementMigrationData } from '../data/element-migration-data.js';
 import { getElementMigrationTestData } from '../data/migration-test-data.js';
 import { elementMigrationRule } from './element-migration.js';
 
@@ -29,6 +30,7 @@ describe('to legacy migration', () => {
 
   const checkTemplateMigration = async (
     fileNames: string[],
+    migrationData = getElementMigrationTestData(),
     basePath = `/projects/app/src/components/test/`
   ): Promise<void> => {
     addTestFiles(
@@ -41,7 +43,6 @@ describe('to legacy migration', () => {
       )
     );
 
-    const migrationData = getElementMigrationTestData();
     const context = runner.engine.createContext(
       runner.engine.createSchematic('migration-v51', runner.engine.createCollection(collectionPath))
     );
@@ -161,6 +162,10 @@ describe('to legacy migration', () => {
 
   it('should migrate element classes in inline template', async () => {
     await checkTemplateMigration(['element-class-inline-template.ts']);
+  });
+
+  it('should preserve background classes on badges', async () => {
+    await checkTemplateMigration(['badge-class-inline-template.ts'], getElementMigrationData());
   });
 
   it('should add button classes to si-select without form-control', async () => {

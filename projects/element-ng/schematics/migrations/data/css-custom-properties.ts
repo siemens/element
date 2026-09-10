@@ -209,5 +209,27 @@ export const CSS_CUSTOM_PROPERTIES_MIGRATION: CssCustomPropertyInstruction[] = [
   {
     replace: '$element-elevation-4',
     replaceWith: '$si-sys-effects-shadow-4'
-  }
+  },
+  ...['font-size', 'line-height', 'font-weight'].flatMap(property => [
+    {
+      replace: `$si-${property}-h1-bold`,
+      replaceWith: `$si-${property}-h1`
+    },
+    {
+      replace: `$si-${property}-h4-bold`,
+      replaceWith: `$si-${property}-h4`
+    },
+    {
+      replace: `$si-${property}-body-lg-bold`,
+      replaceWith: `$si-${property}-body-lg-sbold`
+    },
+    {
+      replace: `$si-${property}-caption`,
+      replaceWith: `$si-${property}-body-sm`
+    },
+    {
+      replace: `$si-${property}-display-bold`,
+      replaceWith: `$si-${property}-display-lg-sbold`
+    }
+  ])
 ];

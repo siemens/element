@@ -4,7 +4,12 @@
   [labelWidth]="labelWidth"
   [required]="props.required"
 >
-  <div class="w-100" siFormlyFormFieldProvider [field]="field">
+  <div
+    class="w-100"
+    siFormlyFormFieldProvider
+    [class.mb-2]="field.type === 'checkbox'"
+    [field]="field"
+  >
     <ng-template #fieldComponent />
     <div class="invalid-feedback" [class.d-block]="showError">
       <!-- This string is hard-coded in the bootstrap fields. -->

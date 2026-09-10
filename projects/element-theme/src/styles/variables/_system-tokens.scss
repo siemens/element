@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) Siemens 2026
+ * Siemens Design Language Tokens
+ * Version 0.11.0
+ * Do not edit directly, this file was auto-generated.
+ */
+
 $si-sys-background-0: var(--si-sys-background-0);
 $si-sys-background-1: var(--si-sys-background-1);
 $si-sys-background-2: var(--si-sys-background-2);
@@ -9,6 +16,7 @@ $si-sys-background-accent-hover: var(--si-sys-background-accent-hover);
 $si-sys-background-accent-secondary: var(--si-sys-background-accent-secondary);
 $si-sys-background-accent-secondary-active: var(--si-sys-background-accent-secondary-active);
 $si-sys-background-accent-secondary-hover: var(--si-sys-background-accent-secondary-hover);
+$si-sys-background-active: var(--si-sys-background-active);
 $si-sys-background-caution: var(--si-sys-background-caution);
 $si-sys-background-caution-active: var(--si-sys-background-caution-active);
 $si-sys-background-caution-hover: var(--si-sys-background-caution-hover);
@@ -29,7 +37,8 @@ $si-sys-background-information-hover: var(--si-sys-background-information-hover)
 $si-sys-background-information-subtle: var(--si-sys-background-information-subtle);
 $si-sys-background-inverse: var(--si-sys-background-inverse);
 $si-sys-background-neutral: var(--si-sys-background-neutral);
-$si-sys-background-active: var(--si-sys-background-active);
+$si-sys-background-neutral-active: var(--si-sys-background-neutral-active);
+$si-sys-background-neutral-hover: var(--si-sys-background-neutral-hover);
 $si-sys-background-success: var(--si-sys-background-success);
 $si-sys-background-success-active: var(--si-sys-background-success-active);
 $si-sys-background-success-hover: var(--si-sys-background-success-hover);
@@ -57,9 +66,6 @@ $si-sys-border-success: var(--si-sys-border-success);
 $si-sys-border-warning: var(--si-sys-border-warning);
 $si-sys-border-warning-secondary: var(--si-sys-border-warning-secondary);
 $si-sys-code-1: var(--si-sys-code-1);
-$si-sys-code-10: var(--si-sys-code-10);
-$si-sys-code-11: var(--si-sys-code-11);
-$si-sys-code-12: var(--si-sys-code-12);
 $si-sys-code-2: var(--si-sys-code-2);
 $si-sys-code-3: var(--si-sys-code-3);
 $si-sys-code-4: var(--si-sys-code-4);
@@ -68,15 +74,10 @@ $si-sys-code-6: var(--si-sys-code-6);
 $si-sys-code-7: var(--si-sys-code-7);
 $si-sys-code-8: var(--si-sys-code-8);
 $si-sys-code-9: var(--si-sys-code-9);
+$si-sys-code-10: var(--si-sys-code-10);
+$si-sys-code-11: var(--si-sys-code-11);
+$si-sys-code-12: var(--si-sys-code-12);
 $si-sys-data-categorical-1: var(--si-sys-data-categorical-1);
-$si-sys-data-categorical-10: var(--si-sys-data-categorical-10);
-$si-sys-data-categorical-11: var(--si-sys-data-categorical-11);
-$si-sys-data-categorical-12: var(--si-sys-data-categorical-12);
-$si-sys-data-categorical-13: var(--si-sys-data-categorical-13);
-$si-sys-data-categorical-14: var(--si-sys-data-categorical-14);
-$si-sys-data-categorical-15: var(--si-sys-data-categorical-15);
-$si-sys-data-categorical-16: var(--si-sys-data-categorical-16);
-$si-sys-data-categorical-17: var(--si-sys-data-categorical-17);
 $si-sys-data-categorical-2: var(--si-sys-data-categorical-2);
 $si-sys-data-categorical-3: var(--si-sys-data-categorical-3);
 $si-sys-data-categorical-4: var(--si-sys-data-categorical-4);
@@ -85,6 +86,14 @@ $si-sys-data-categorical-6: var(--si-sys-data-categorical-6);
 $si-sys-data-categorical-7: var(--si-sys-data-categorical-7);
 $si-sys-data-categorical-8: var(--si-sys-data-categorical-8);
 $si-sys-data-categorical-9: var(--si-sys-data-categorical-9);
+$si-sys-data-categorical-10: var(--si-sys-data-categorical-10);
+$si-sys-data-categorical-11: var(--si-sys-data-categorical-11);
+$si-sys-data-categorical-12: var(--si-sys-data-categorical-12);
+$si-sys-data-categorical-13: var(--si-sys-data-categorical-13);
+$si-sys-data-categorical-14: var(--si-sys-data-categorical-14);
+$si-sys-data-categorical-15: var(--si-sys-data-categorical-15);
+$si-sys-data-categorical-16: var(--si-sys-data-categorical-16);
+$si-sys-data-categorical-17: var(--si-sys-data-categorical-17);
 $si-sys-data-rating-average: var(--si-sys-data-rating-average);
 $si-sys-data-rating-bad: var(--si-sys-data-rating-bad);
 $si-sys-data-rating-excellent: var(--si-sys-data-rating-excellent);
@@ -171,6 +180,7 @@ $si-sys-text-on-critical: var(--si-sys-text-on-critical);
 $si-sys-text-on-danger: var(--si-sys-text-on-danger);
 $si-sys-text-on-danger-secondary: var(--si-sys-text-on-danger-secondary);
 $si-sys-text-on-information: var(--si-sys-text-on-information);
+$si-sys-text-on-neutral: var(--si-sys-text-on-neutral);
 $si-sys-text-on-success: var(--si-sys-text-on-success);
 $si-sys-text-on-warning: var(--si-sys-text-on-warning);
 $si-sys-text-on-warning-secondary: var(--si-sys-text-on-warning-secondary);

@@ -69,6 +69,54 @@ class TestHostComponent {
 @Component({
   imports: [SiSelectModule],
   template: `
+    <si-select inputId="test-select" [options]="options" [(value)]="value">
+      <ng-template let-option siSelectOptionTemplate>
+        <span class="dropdown-option">{{ option.label }}</span>
+      </ng-template>
+      <ng-template let-option siSelectValueTemplate>
+        <span class="input-option">{{ option.label }} input</span>
+      </ng-template>
+    </si-select>
+  `
+})
+class TestHostTemplateComponent {
+  value = 'average';
+  readonly options = OPTIONS_LIST;
+}
+
+@Component({
+  imports: [SiSelectModule],
+  template: `
+    <si-select inputId="test-select" [options]="options" [(value)]="value">
+      <ng-template let-option siSelectOptionTemplate>
+        <span class="option-template">{{ option.label }} option</span>
+      </ng-template>
+    </si-select>
+  `
+})
+class TestHostOptionTemplateComponent {
+  readonly value = signal('average');
+  readonly options = OPTIONS_LIST;
+}
+
+@Component({
+  imports: [SiSelectModule],
+  template: `
+    <si-select multi inputId="test-select" [options]="options" [(value)]="values">
+      <ng-template let-option siSelectValueTemplate>
+        <span class="input-option">{{ option.label }} input</span>
+      </ng-template>
+    </si-select>
+  `
+})
+class TestHostMultiTemplateComponent {
+  readonly values = signal(['good', 'average']);
+  readonly options = OPTIONS_LIST;
+}
+
+@Component({
+  imports: [SiSelectModule],
+  template: `
     <si-select
       inputId="test-select"
       [options]="options()"
@@ -413,6 +461,49 @@ describe('SiSelectComponent', () => {
       expect(hostComponent.value()).toBe(2);
       // Ensure placeholder text is not visible when items are selected
       expect(await selectHarness.getPlaceholder()).toBeUndefined();
+    });
+  });
+
+  describe('with custom input and option templates', () => {
+    beforeEach(async () => {
+      fixture = TestBed.createComponent(TestHostTemplateComponent);
+      loader = TestbedHarnessEnvironment.loader(fixture);
+      await fixture.whenStable();
+      selectHarness = await loader.getHarness(SiSelectHarness);
+    });
+
+    it('uses the input template for the selected value', async () => {
+      expect(await selectHarness.getSelectedTexts()).toEqual(['Average input']);
+      expect(fixture.nativeElement.querySelector('.input-option')).toBeInTheDocument();
+      expect(fixture.nativeElement.querySelector('.dropdown-option')).not.toBeInTheDocument();
+    });
+
+    it('uses the option template in the dropdown', async () => {
+      await selectHarness.open();
+      const list = await selectHarness.getList();
+
+      expect(await list?.getAllItemTexts()).toEqual(['Good', 'Average', 'Poor']);
+      expect(document.querySelectorAll('.dropdown-option')).toHaveLength(3);
+    });
+
+    it('uses the option template for the selected value when no input template is provided', async () => {
+      fixture = TestBed.createComponent(TestHostOptionTemplateComponent);
+      loader = TestbedHarnessEnvironment.loader(fixture);
+      await fixture.whenStable();
+      selectHarness = await loader.getHarness(SiSelectHarness);
+
+      expect(await selectHarness.getSelectedTexts()).toEqual(['Average option']);
+      expect(fixture.nativeElement.querySelector('.option-template')).toBeInTheDocument();
+    });
+
+    it('uses the input template for multiple selected values', async () => {
+      fixture = TestBed.createComponent(TestHostMultiTemplateComponent);
+      loader = TestbedHarnessEnvironment.loader(fixture);
+      await fixture.whenStable();
+      selectHarness = await loader.getHarness(SiSelectHarness);
+
+      expect(await selectHarness.getSelectedTexts()).toEqual(['Good input', 'Average input']);
+      expect(fixture.nativeElement.querySelectorAll('.input-option')).toHaveLength(2);
     });
   });
 

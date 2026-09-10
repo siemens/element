@@ -104,6 +104,38 @@ test.describe('si-list-details', () => {
     });
   });
 
+  test(`${example} – restore split state after resize`, async ({ page, si }) => {
+    await si.visitExample(example);
+    const split = page.locator('si-split');
+    await expect(split).toHaveCount(1);
+
+    const listPart = page.locator('si-split > si-split-part').first();
+    const initialWidth = (await listPart.boundingBox())!.width;
+
+    // Resize the split by dragging gutter
+    const splitHandle = split.locator('.si-split-gutter');
+    const splitHandleBox = (await splitHandle.boundingBox())!;
+    const x = splitHandleBox.x + splitHandleBox.width / 2;
+    const y = splitHandleBox.y + splitHandleBox.height / 2;
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x + 100, y);
+    await page.mouse.up();
+
+    const resizedWidth = (await listPart.boundingBox())!.width;
+    expect(resizedWidth).toBeGreaterThan(initialWidth + 50);
+
+    // Reload the example to verify state restoration
+    await page.reload();
+    await si.visitExample(example);
+    await expect(listPart).toBeVisible();
+
+    // Verify split state (width) is restored
+    await expect
+      .poll(async () => Math.abs((await listPart.boundingBox())!.width - resizedWidth))
+      .toBeLessThan(15);
+  });
+
   test('with router in mobile mode', async ({ page, si }) => {
     await page.setViewportSize({ width: 600, height: 800 }); // mdMinimum is 768px
     await si.visitExample('si-list-details/si-list-details-router');
