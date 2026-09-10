@@ -13,6 +13,7 @@ import {
   SiTranslateService
 } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, of } from 'rxjs';
+import { userEvent } from 'vitest/browser';
 
 import {
   DisplayedCriteriaEventArgs,
@@ -2583,6 +2584,94 @@ describe('SiFilteredSearchComponent - With translation', () => {
   });
 
   describe('with free text pills enabled', () => {
+    it('should create a free text pill after typing a semicolon', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.searchCriteria.set({ value: '', criteria: [] });
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+      await freeTextSearch.focus();
+      await freeTextSearch.sendKeys('first pill;');
+      await tick();
+
+      expect(component.searchCriteria()).toEqual({
+        value: '',
+        criteria: [{ name: 'free-text', value: 'first pill' }]
+      });
+      expect(await freeTextSearch.getValue()).toBe('');
+    });
+
+    it('should create criteria and free text pills from pasted semicolon-separated text', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.criteria.set([
+        { name: 'status', label: 'Status' },
+        { name: 'owner', label: 'Owner' }
+      ]);
+      component.searchCriteria.set({ value: '', criteria: [] });
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+      await freeTextSearch.focus();
+      await tick();
+
+      const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
+        'input.value-input'
+      )!;
+      vi.useRealTimers();
+      await userEvent.fill(input, 'status:open;owner:team;urgent;needs review;');
+      await fixture.whenStable();
+
+      expect(component.searchCriteria()).toEqual({
+        value: '',
+        criteria: [
+          { name: 'status', value: 'open' },
+          { name: 'owner', value: 'team' },
+          { name: 'free-text', value: 'urgent' },
+          { name: 'free-text', value: 'needs review' }
+        ]
+      });
+      expect(await freeTextSearch.getValue()).toBe('');
+    });
+
+    it('should retain an unfinished pasted token in the input', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.searchCriteria.set({ value: '', criteria: [] });
+      await fixture.whenStable();
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+      const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
+        'input.value-input'
+      )!;
+      vi.useRealTimers();
+      await userEvent.fill(input, 'first pill;second pill');
+      await fixture.whenStable();
+
+      expect(component.searchCriteria()).toEqual({
+        value: '',
+        criteria: [{ name: 'free-text', value: 'first pill' }]
+      });
+      expect(await freeTextSearch.getValue()).toBe('second pill');
+    });
+
+    it('should retain semicolons when delimiter handling is disabled', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.disableSelectionByColonAndSemicolon = true;
+      component.searchCriteria.set({ value: '', criteria: [] });
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+      await freeTextSearch.focus();
+      await freeTextSearch.sendKeys('first pill;');
+      await tick();
+
+      expect(component.searchCriteria().criteria).toEqual([]);
+      expect(await freeTextSearch.getValue()).toBe('first pill;');
+    });
+
     it('should create a free text pill when typing text and blurring the input', async () => {
       component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
       component.searchCriteria.set({

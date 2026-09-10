@@ -104,18 +104,32 @@ export class SiFilteredSearchInputComponent {
   }
 
   protected freeTextInputHandler(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-
-    const match = value.match(SiFilteredSearchInputComponent.criterionRegex);
-    if (!this.disableSelectionByColonAndSemicolon() && !this.onlySelectValue() && match) {
-      const criterionName = match[1];
-      this.inputElement().nativeElement.value = '';
-      this.searchValue.set('');
-
-      this.createCriterionByName.emit({ criterionName: criterionName, value: match[2] });
-    } else {
-      this.searchValue.set(value);
+    const inputElement = event.target as HTMLInputElement;
+    if (this.disableSelectionByColonAndSemicolon()) {
+      this.searchValue.set(inputElement.value);
+      return;
     }
+
+    const tokens = inputElement.value.split(';');
+    const remainingTokens: string[] = [];
+    const canCreateFreeText = this.freeTextCriterion() && this.allowFreeText();
+
+    for (const [index, token] of tokens.entries()) {
+      const criterion = token.match(SiFilteredSearchInputComponent.criterionRegex);
+      if (!this.onlySelectValue() && criterion) {
+        this.createCriterionByName.emit({
+          criterionName: criterion[1],
+          value: criterion[2]
+        });
+      } else if (index < tokens.length - 1 && token && canCreateFreeText) {
+        this.createFreeTextPill.emit(token);
+      } else {
+        remainingTokens.push(token);
+      }
+    }
+
+    inputElement.value = remainingTokens.join(';');
+    this.searchValue.set(inputElement.value);
   }
 
   protected freeTextBlurHandler(): void {
