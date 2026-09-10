@@ -29,6 +29,12 @@ let pendingHiddenTypeNotes = [];
 /** Identity of a note, used to drop notes that several commits describe identically. */
 const noteIdentity = note => `${note.title}\u0000${note.text}`;
 
+/** The `**scope:**` prefix that `transform` puts in front of every note text. */
+const noteScope = note => {
+  const match = /^\*\*(.+?):\*\* /.exec(note.text);
+  return match ? match[1] : '';
+};
+
 function commitGroupsSort(a, b) {
   return commitGroups.indexOf(a.title) - commitGroups.indexOf(b.title);
 }
@@ -37,30 +43,31 @@ function noteGroupsSort(a, b) {
   return noteTitles.indexOf(a.title) - noteTitles.indexOf(b.title);
 }
 
+/**
+ * Notes are already grouped by title, so sorting by title would be a no-op. Sort by scope
+ * instead to keep entries about the same scope next to each other.
+ */
 function notesSort(a, b) {
-  return a.title.localeCompare(b.title);
+  return noteScope(a).localeCompare(noteScope(b)) || a.text.localeCompare(b.text);
 }
 
 function transform(commit) {
-  const hasNotes = Array.isArray(commit.notes) && commit.notes.length > 0;
+  // The default footer template renders a bare `* {{text}}`, so the scope has to be part of
+  // the note text. Doing this for every commit type keeps the notes consistently scoped and
+  // lets `notesSort` group them by scope.
+  const prefix = commit.scope ? `**${commit.scope}:** ` : '';
 
-  const normalizedNotes = hasNotes
+  const normalizedNotes = Array.isArray(commit.notes)
     ? commit.notes.map(note => ({
         title: noteTitleMap[note.title] ?? note.title,
-        text: note.text.replace(/\n/g, '\n  ')
+        text: `${prefix}${note.text.replace(/\n/g, '\n  ')}`
       }))
     : [];
 
   if (hiddenTypes.has(commit.type)) {
-    if (normalizedNotes.length > 0) {
-      const transformedNotes = normalizedNotes.map(note => ({
-        ...note,
-        text: `${commit.scope ? `**${commit.scope}:** ` : ''}${note.text}`
-      }));
-      // Add to the pending notes if there are notes and the type is hidden
-      // The notes will be added to the context in finalizeContext
-      pendingHiddenTypeNotes.push(...transformedNotes);
-    }
+    // Hidden commits are dropped from the changelog, but their notes still belong in it.
+    // finalizeContext merges them into the note groups once all commits are transformed.
+    pendingHiddenTypeNotes.push(...normalizedNotes);
     return;
   }
 
