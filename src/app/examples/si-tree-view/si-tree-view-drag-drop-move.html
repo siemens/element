@@ -25,6 +25,18 @@
       >
         <ng-template let-item="treeItem" siTreeViewItem>
           <si-tree-view-item cdkDrag [cdkDragDisabled]="item.level === 0" [cdkDragData]="item">
+            <div slot="trailing">
+              @if (item.state === 'leaf') {
+                <button
+                  type="button"
+                  class="btn btn-sm"
+                  [class]="isAcknowledged(item) ? 'btn-success' : 'btn-secondary'"
+                  (click)="toggleAcknowledged(item)"
+                >
+                  {{ isAcknowledged(item) ? 'Acknowledged' : 'Acknowledge' }}
+                </button>
+              }
+            </div>
             <si-tree-view-item *cdkDragPreview />
           </si-tree-view-item>
         </ng-template>
@@ -52,6 +64,18 @@
       >
         <ng-template let-item="treeItem" siTreeViewItem>
           <si-tree-view-item cdkDrag [cdkDragDisabled]="item.level === 0">
+            <div slot="trailing">
+              @if (item.state === 'leaf') {
+                <button
+                  type="button"
+                  class="btn btn-sm"
+                  [class]="isAcknowledged(item) ? 'btn-success' : 'btn-secondary'"
+                  (click)="toggleAcknowledged(item)"
+                >
+                  {{ isAcknowledged(item) ? 'Acknowledged' : 'Acknowledge' }}
+                </button>
+              }
+            </div>
             <si-tree-view-item *cdkDragPreview />
           </si-tree-view-item>
         </ng-template>

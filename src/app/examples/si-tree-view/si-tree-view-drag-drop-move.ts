@@ -27,6 +27,20 @@ export class SampleComponent {
   protected moveTreeOneList = treeItemsUnderMaintenance;
   protected moveTreeTwoList = treeItemsWithCompletedMaintenance;
 
+  private readonly acknowledged = new Set<TreeItem>();
+
+  protected isAcknowledged(item: TreeItem): boolean {
+    return this.acknowledged.has(item);
+  }
+
+  protected toggleAcknowledged(item: TreeItem): void {
+    if (this.acknowledged.has(item)) {
+      this.acknowledged.delete(item);
+    } else {
+      this.acknowledged.add(item);
+    }
+  }
+
   protected itemDroppedTreeOne(event: CdkDragDrop<TreeItem[]>): void {
     const targetIndex =
       event.currentIndex < event.previousIndex ? event.currentIndex - 1 : event.currentIndex;
