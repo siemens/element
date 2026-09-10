@@ -1,7 +1,7 @@
 {
   "name": "@siemens/dashboards-ng",
   "description": "Element Dashboards library.",
-  "version": "49.13.0",
+  "version": "51.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
