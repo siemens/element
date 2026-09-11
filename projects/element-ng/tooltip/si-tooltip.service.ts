@@ -187,11 +187,7 @@ class BrowserTooltipRef {
   }
 
   private show(): void {
-    if (this.config.canShow && !this.config.canShow()) {
-      return;
-    }
-
-    if (!this.hasContent()) {
+    if ((this.config.canShow && !this.config.canShow()) || !this.hasContent()) {
       return;
     }
 

@@ -414,7 +414,15 @@ describe('SiApplicationHeaderComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should not show an empty tooltip', async () => {
+    it('should show the aria-label as a tooltip', async () => {
+      button.dispatchEvent(new FocusEvent('focus'));
+      await fixture.whenStable();
+
+      await expect.element(page.getByRole('tooltip', { name: 'Action 1' })).toBeInTheDocument();
+    });
+
+    it('should not show a tooltip without a title or aria-label', async () => {
+      button.removeAttribute('aria-label');
       button.dispatchEvent(new FocusEvent('focus'));
       await fixture.whenStable();
 

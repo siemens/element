@@ -63,9 +63,16 @@ export abstract class SiHeaderActionIconItemBase
       placement: () => 'auto',
       canShow: this.canShowTooltip,
       // Subclass field initializers run after this base constructor. So we cannot directly pass `this.itemTitle`.
-      tooltip: () => this.itemTitle(),
+      tooltip: () => this.getTooltipContent(),
       tooltipContext: () => undefined
     });
+  }
+
+  private getTooltipContent(): string | ElementRef<Element> | null {
+    const itemTitle = this.itemTitle();
+    return itemTitle instanceof ElementRef && !itemTitle.nativeElement.textContent?.trim()
+      ? this.elementRef.nativeElement.getAttribute('aria-label')
+      : itemTitle;
   }
 
   ngOnChanges(changes: SimpleChanges<this>): void {
