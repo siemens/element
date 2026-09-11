@@ -708,7 +708,7 @@
 * **theme:** The spacers in `$spacers` are now derived from CSS
   variables. This means they cannot be used in simple math expressions
   like before but require a `calc()` operation.
-* **theme:** there's new spacers, chaning spacer-10 and spacer-11.
+* **theme:** there's new spacers, changing spacer-10 and spacer-11.
   
   - spacer-10 needs to be replaced with spacer-13
   - spacer-11 needs to be replaced with spacer-14
