@@ -155,6 +155,11 @@
   Use `secondaryActions` for menu-only ("+) actions.
 * **typography:** Element now uses the Siemens Design Language font definitions.
 * **navigation:** `si-application-header` and `si-navbar-vertical` now use the normal 20px icon size.
+* **tabs:** Applications using `si-tabset-legacy` and `si-tab-legacy` can migrate automatically to the current tabs API with:
+
+  ```shell
+  ng g @siemens/element-ng:migrate-tabs-legacy
+  ```
 * **theme:** The default root font size is now configurable when loading the
   Element theme. Pass the value via `$element-root-font-size`, or set it
   to `none` to use the browser default.
