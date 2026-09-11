@@ -71,6 +71,24 @@ jobs:
             echo "release_tag=" >> $GITHUB_OUTPUT
           fi
 
+  # Rebuilds the documentation from the release tag created by semantic-release.
+  # The "pages" artifact from build-and-test was produced before the release
+  # commit exists, so it still carries the previous CHANGELOG.md and the
+  # pre-bump package.json versions. Building from the tag keeps the published
+  # documentation in sync with the release.
+  build-documentation-release:
+    needs:
+      - publish
+      - build-and-test
+    if: success() && needs.publish.outputs.new_release == 'true' && github.ref_name != 'next'
+    uses: ./.github/workflows/build-documentation.yaml
+    with:
+      ref: ${{ needs.publish.outputs.release_tag }}
+      artifact-name: pages-release
+    secrets:
+      SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      SIEMENS_NPM_USER: ${{ secrets.SIEMENS_NPM_USER }}
+
   # Generates the versioned documentation and publishes it to S3.
   # This job only runs after a successful release unless the release is on the "next" branch.
   # In general, runs on main push to /latest/, while release branches (e.g., release/48.x) push to /v48/
@@ -84,7 +102,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs:
       - publish
-      - build-and-test
+      - build-documentation-release
     if: success() && needs.publish.outputs.new_release == 'true' && github.ref_name != 'next'
     permissions:
       id-token: write
@@ -97,7 +115,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          name: pages
+          name: pages-release
           path: pages
       - uses: aws-actions/configure-aws-credentials@cbe3b392738ccf3f987d68400dafcf4b0624a56c # v6.2.4
         with:
