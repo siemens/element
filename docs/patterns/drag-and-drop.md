@@ -163,6 +163,25 @@ fit. For example:
   <si-docs-tab example="si-tree-view-drag-drop-assign" heading="Assignment"></si-docs-tab>
 </si-docs-component>
 
+#### Trailing content in tree items
+
+A tree item can carry its own controls—buttons, inputs, badges, etc.—by projecting them into
+the `slot="trailing"` attribute. Trailing content renders after the item's label and icons and
+**outside the drag area**, so a drag only starts from the item's main content. This lets rows
+keep interactive content without interfering with drag-and-drop, as shown in the tree examples
+above.
+
+```html
+<si-tree-view [items]="items">
+  <ng-template let-item="treeItem" siTreeViewItem>
+    <si-tree-view-item cdkDrag [cdkDragData]="item">
+      <button type="button" slot="trailing" aria-label="Actions">…</button>
+      <si-tree-view-item *cdkDragPreview />
+    </si-tree-view-item>
+  </ng-template>
+</si-tree-view>
+```
+
 ### Datatable with reorderable rows
 
 <si-docs-component example="datatable/datatable-row-dragging" height="600">

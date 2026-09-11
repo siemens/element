@@ -255,3 +255,43 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     expect(debugElement.query(By.css('si-tree-view-item')).nativeElement.tabIndex).toBe(0);
   });
 });
+
+@Component({
+  imports: [SiTreeViewComponent, SiTreeViewItemComponent, SiTreeViewItemDirective, DragDropModule],
+  template: `<div class="d-flex" style="height: 300px">
+    <si-tree-view cdkDropList [items]="items()">
+      <ng-template siTreeViewItem>
+        <si-tree-view-item cdkDrag>
+          <button type="button" class="trailing-action" slot="trailing">Action</button>
+        </si-tree-view-item>
+      </ng-template>
+    </si-tree-view>
+  </div>`
+})
+class TrailingContentWrapperComponent {
+  readonly items = signal<TreeItem[]>([{ label: 'Company1' }]);
+}
+
+describe('SiTreeViewItemComponent trailing content', () => {
+  let fixture: ComponentFixture<TrailingContentWrapperComponent>;
+
+  const grabArea = (): HTMLElement =>
+    fixture.debugElement.query(By.css('.grab-area')).nativeElement;
+  const trailingButton = (): HTMLElement =>
+    fixture.debugElement.query(By.css('.trailing-action')).nativeElement;
+
+  beforeEach(async () => {
+    fixture = TestBed.createComponent(TrailingContentWrapperComponent);
+    await fixture.whenStable();
+  });
+
+  it('projects trailing content outside the grab-area', () => {
+    expect(trailingButton().textContent).toBe('Action');
+    expect(grabArea().contains(trailingButton())).toBe(false);
+  });
+
+  it('scopes dragging to the grab-area so trailing content cannot start a drag', () => {
+    expect(grabArea().classList).toContain('cdk-drag-handle');
+    expect(trailingButton().closest('.cdk-drag-handle')).toBeNull();
+  });
+});

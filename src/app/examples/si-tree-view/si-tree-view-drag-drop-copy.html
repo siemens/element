@@ -26,6 +26,11 @@
       >
         <ng-template let-item="treeItem" siTreeViewItem>
           <si-tree-view-item cdkDrag [cdkDragDisabled]="item.state !== 'leaf'" [cdkDragData]="item">
+            <div slot="trailing">
+              @if (item.state === 'leaf') {
+                <si-circle-status status="success" />
+              }
+            </div>
             <si-tree-view-item *cdkDragPreview />
           </si-tree-view-item>
         </ng-template>
@@ -52,6 +57,11 @@
       >
         <ng-template let-item="treeItem" siTreeViewItem>
           <si-tree-view-item cdkDrag cdkDragDisabled>
+            <div slot="trailing">
+              @if (item.state === 'leaf') {
+                <si-circle-status status="success" />
+              }
+            </div>
             <si-tree-view-item *cdkDragPreview />
           </si-tree-view-item>
         </ng-template>

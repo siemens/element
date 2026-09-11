@@ -29,6 +29,7 @@
 
       <div
         class="si-tree-view-item-main d-flex flex-grow-1 align-self-stretch grab-area"
+        cdkDragHandle
         (click)="onItemClicked($event)"
       >
         @if (showIcon()) {
@@ -40,7 +41,7 @@
           class="si-tree-view-item-object-data d-flex flex-column justify-content-center overflow-hidden"
         >
           @if (!templates().length) {
-            <ng-content select=":not(si-tree-view-item):not([dragPreview])"
+            <ng-content select=":not(si-tree-view-item):not([dragPreview]):not([slot=trailing])"
               ><div class="text-truncate" [class.si-h5]="enableSelection() && treeItem.selected">{{
                 treeItem.label | translate
               }}</div></ng-content
@@ -72,6 +73,7 @@
           }}</span>
         }
       </div>
+      <ng-content select="[slot=trailing]" />
       <div
         class="si-tree-view-item-end-icons d-flex ms-2 align-items-center"
         [class.si-tree-view-item-end-icons-sticky]="stickyEndItems()"

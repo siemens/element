@@ -4,6 +4,7 @@
  */
 import { CdkDrag, CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
+import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 import {
   reorderTreeItem,
   SiTreeViewComponent,
@@ -41,8 +42,18 @@ const templateCatalog: TreeItem[] = [
     state: 'expanded',
     customData: { locatorId: 'cat-security' },
     children: [
-      { label: 'Security camera', icon: 'element-security-cam', state: 'leaf' },
-      { label: 'Door sensor', icon: 'element-door', state: 'leaf' }
+      {
+        label: 'Security camera',
+        icon: 'element-security-cam',
+        state: 'leaf',
+        customData: { trailing: 'signal' }
+      },
+      {
+        label: 'Door sensor',
+        icon: 'element-door',
+        state: 'leaf',
+        customData: { trailing: 'status' }
+      }
     ]
   }
 ];
@@ -89,7 +100,13 @@ const siteConfiguration: TreeItem[] = [
 
 @Component({
   selector: 'app-sample',
-  imports: [SiTreeViewComponent, SiTreeViewItemComponent, SiTreeViewItemDirective, DragDropModule],
+  imports: [
+    SiTreeViewComponent,
+    SiTreeViewItemComponent,
+    SiTreeViewItemDirective,
+    DragDropModule,
+    SiCircleStatusComponent
+  ],
   templateUrl: './si-tree-view-drag-drop-copy.html',
   host: { class: 'p-5' }
 })
