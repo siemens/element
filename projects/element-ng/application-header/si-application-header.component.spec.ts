@@ -377,6 +377,51 @@ describe('SiApplicationHeaderComponent', () => {
     });
   });
 
+  describe('with aria-label-only icon action item', () => {
+    @Component({
+      imports: [
+        SiApplicationHeaderComponent,
+        SiHeaderActionItemComponent,
+        SiHeaderActionsDirective,
+        SiHeaderCollapsibleActionsComponent
+      ],
+      template: `
+        <si-application-header expandBreakpoint="never">
+          <si-header-actions>
+            <si-header-collapsible-actions>
+              <button
+                type="button"
+                si-header-action-item
+                icon="fake-icon"
+                aria-label="Action 1"
+              ></button>
+            </si-header-collapsible-actions>
+          </si-header-actions>
+        </si-application-header>
+      `
+    })
+    class TestHostComponent {}
+
+    let fixture: ComponentFixture<TestHostComponent>;
+    let button: HTMLButtonElement;
+
+    beforeEach(async () => {
+      fixture = TestBed.createComponent(TestHostComponent);
+      loader = TestbedHarnessEnvironment.loader(fixture);
+      headerHarness = await loader.getHarness(SiApplicationHeaderHarness);
+      button = fixture.nativeElement.querySelector('button[si-header-action-item]');
+      vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
+      fixture.detectChanges();
+    });
+
+    it('should not show an empty tooltip', async () => {
+      button.dispatchEvent(new FocusEvent('focus'));
+      await fixture.whenStable();
+
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+    });
+  });
+
   describe('with icon-only action item and custom tooltip', () => {
     @Component({
       imports: [

@@ -191,6 +191,10 @@ class BrowserTooltipRef {
       return;
     }
 
+    if (!this.hasContent()) {
+      return;
+    }
+
     const overlayRef = this.getOrCreateOverlay();
     if (overlayRef.hasAttached()) {
       return;
@@ -213,6 +217,17 @@ class BrowserTooltipRef {
     this.positionSubscription = positionStrategy?.positionChanges.subscribe(change =>
       tooltipRef.instance.updateTooltipPosition(change, this.config.element)
     );
+  }
+
+  private hasContent(): boolean {
+    const tooltip = this.config.tooltip();
+    if (typeof tooltip === 'string') {
+      return tooltip.trim().length > 0;
+    }
+    if (tooltip instanceof ElementRef) {
+      return !!tooltip.nativeElement.textContent?.trim();
+    }
+    return tooltip !== null && tooltip !== undefined;
   }
 
   private getPlacement(): keyof typeof positions {
