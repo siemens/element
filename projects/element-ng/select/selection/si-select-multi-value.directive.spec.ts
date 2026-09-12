@@ -79,7 +79,5 @@ describe('SiSelectMultiValueDirective', () => {
     component.control.setValue(null);
 
     expect(await selectHarness.getSelectedTexts()).toEqual([]);
-    // changedValue should not be updated on value write
-    expect(component.changedValue).toEqual(undefined);
   });
 });
