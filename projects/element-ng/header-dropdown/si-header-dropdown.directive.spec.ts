@@ -8,6 +8,8 @@ import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiHeaderDropdownItemComponent } from './si-header-dropdown-item.component';
+import { SiHeaderDropdownCheckItemComponent } from './si-header-dropdown-check-item.component';
+import { SiHeaderDropdownRadioItemComponent } from './si-header-dropdown-radio-item.component';
 import { SiHeaderDropdownTriggerDirective } from './si-header-dropdown-trigger.directive';
 import { SiHeaderDropdownComponent } from './si-header-dropdown.component';
 import { HeaderWithDropdowns, SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
@@ -17,6 +19,8 @@ import { SiHeaderDropdownTriggerHarness } from './testing/si-header-dropdown-tri
   imports: [
     SiHeaderDropdownComponent,
     SiHeaderDropdownItemComponent,
+    SiHeaderDropdownCheckItemComponent,
+    SiHeaderDropdownRadioItemComponent,
     SiHeaderDropdownTriggerDirective
   ],
   template: `
@@ -27,6 +31,8 @@ import { SiHeaderDropdownTriggerHarness } from './testing/si-header-dropdown-tri
     <ng-template #dropdown1>
       <si-header-dropdown>
         <si-header-dropdown-item>Item 1-1</si-header-dropdown-item>
+        <si-header-dropdown-check-item [(checked)]="checkItemChecked">Checked item</si-header-dropdown-check-item>
+        <si-header-dropdown-radio-item [(checked)]="radioItemChecked">Radio item</si-header-dropdown-radio-item>
         <si-header-dropdown-item #trigger2 [siHeaderDropdownTriggerFor]="dropdown2">
           Item 1-2
         </si-header-dropdown-item>
@@ -43,6 +49,8 @@ import { SiHeaderDropdownTriggerHarness } from './testing/si-header-dropdown-tri
 })
 class TestHostComponent implements HeaderWithDropdowns {
   readonly inlineDropdown = signal(false);
+  readonly checkItemChecked = signal(true);
+  readonly radioItemChecked = signal(false);
   readonly trigger1 = viewChild.required('trigger1', { read: SiHeaderDropdownTriggerDirective });
   readonly trigger2 = viewChild.required('trigger2', { read: SiHeaderDropdownTriggerDirective });
 }
@@ -117,6 +125,37 @@ describe('SiHeaderDropdown', () => {
         .then(item => item.click());
 
       expect(await trigger1Harness.isOpen()).toBe(false);
+    });
+
+    it('should render checked item alternatives with their semantic roles', async () => {
+      await trigger1Harness.toggle();
+
+      const dropdown = await trigger1Harness.getDropdown();
+      const checkedItem = await dropdown.getItem('Checked item');
+      const radioItem = await dropdown.getItem('Radio item');
+
+      expect(await checkedItem.host().then(host => host.getAttribute('role'))).toBe('checkbox');
+      expect(await checkedItem.host().then(host => host.getAttribute('aria-checked'))).toBe('true');
+      expect(await radioItem.host().then(host => host.getAttribute('role'))).toBe('radio');
+      expect(await radioItem.host().then(host => host.getAttribute('aria-checked'))).toBe('false');
+    });
+
+    it('should update checked models when selection items are activated', async () => {
+      await trigger1Harness.toggle();
+      await trigger1Harness
+        .getDropdown()
+        .then(dropdown => dropdown.getItem('Checked item'))
+        .then(item => item.click());
+
+      expect(fixture.componentInstance.checkItemChecked()).toBe(false);
+
+      await trigger1Harness.toggle();
+      await trigger1Harness
+        .getDropdown()
+        .then(dropdown => dropdown.getItem('Radio item'))
+        .then(item => item.click());
+
+      expect(fixture.componentInstance.radioItemChecked()).toBe(true);
     });
 
     it('should emit only once on close', async () => {
