@@ -21,8 +21,12 @@ export class SiSelectHarness extends ComponentHarness {
    * Clicks one or multiple items by their index. In the case of multi-select, this will toggle the selection state.
    */
   async clickItems(itemIndex: number | number[]): Promise<void> {
-    await this.open('click');
-    const list = await this.getList();
+    let list = await this.getList();
+    if (!list) {
+      await this.open('click');
+      list = await this.getList();
+    }
+
     for (const index of [itemIndex].flat()) {
       await list!.getItem(index).then(item => item.click());
     }
@@ -32,8 +36,11 @@ export class SiSelectHarness extends ComponentHarness {
    * Clicks one or multiple items by their text. In the case of multi-select, this will toggle the selection state.
    */
   async clickItemsByText(texts: string | string[]): Promise<void> {
-    await this.open('click');
-    const list = await this.getList();
+    let list = await this.getList();
+    if (!list) {
+      await this.open('click');
+      list = await this.getList();
+    }
 
     for (const text of [texts].flat()) {
       await list!.getItemByText(text).then(item => item.click());
