@@ -34,6 +34,8 @@ import { SiLivePreviewLocaleApi } from '../../interfaces/si-live-preview.api';
 import { SiLivePreviewIframeComponent } from '../si-live-preview-iframe/si-live-preview-iframe.component';
 import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.component';
 
+const MAX_LOG_MESSAGES = 100;
+
 @Component({
   selector: 'si-live-preview',
   imports: [KeyValuePipe, FormsModule, SiLivePreviewIframeComponent, SiStackblitzButtonDirective],
@@ -120,6 +122,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   private jsLoaded = false;
   private delayClearTimer: any;
   private webcomponentsList: string[] = [];
+  private maxLogMessages = this.config.maxLogMessages ?? MAX_LOG_MESSAGES;
 
   constructor() {
     this.compileSubject
@@ -514,7 +517,8 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
       clearTimeout(this.delayClearTimer);
       this.delayClearTimer = undefined;
     }
-    this.logMessages.set([...this.logMessages(), msg]);
+
+    this.logMessages.update(messages => [...messages.slice(-(this.maxLogMessages - 1)), msg]);
     this.newMsgs.set(true);
     setTimeout(() => {
       this.consoleElem().nativeElement.scrollTop = this.consoleElem().nativeElement.scrollHeight;
