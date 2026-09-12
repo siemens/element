@@ -18,7 +18,7 @@ nav:
     - Get started:                        'get-started/quickstart.md'
     - Build with AI:                      'get-started/element-mcp.md'
     - Update guides:
-        - Update to v49:                  'update-guides/update-v49.md'
+        - Update to v51:                  'update-guides/update-v51.md'
     - Changelog:                          'CHANGELOG.md'
   - Fundamentals:
     - Typography:                         'fundamentals/typography.md'
