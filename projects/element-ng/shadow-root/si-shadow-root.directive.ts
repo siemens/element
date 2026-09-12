@@ -4,6 +4,7 @@
  */
 import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
 import { Directive, ElementRef, inject, DOCUMENT, DestroyRef } from '@angular/core';
+import { SI_THEME_DOM_TARGET } from '@siemens/element-ng/theme';
 
 /**
  * This directive is intended to be used in applications that do NOT load element styles in the root HTML element.
@@ -39,11 +40,13 @@ export class SiShadowRootDirective extends OverlayContainer {
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private document = inject(DOCUMENT);
   private destroyRef = inject(DestroyRef);
+  private themeTarget = inject(SI_THEME_DOM_TARGET);
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   protected override _createContainer(): void {
     const sourceShadow = this.elementRef.nativeElement.shadowRoot!;
     const root = this.document.createElement('element-overlay-root');
+    const unregisterThemeTarget = this.themeTarget.registerElement?.(root);
     this.document.body.append(root);
     const shadow = root.attachShadow({ mode: 'open' });
     const shadowElement = this.document.createElement('div');
@@ -76,6 +79,7 @@ export class SiShadowRootDirective extends OverlayContainer {
     observer.observe(sourceShadow, { childList: true });
     this.destroyRef.onDestroy(() => {
       observer.disconnect();
+      unregisterThemeTarget?.();
       root.remove();
     });
 

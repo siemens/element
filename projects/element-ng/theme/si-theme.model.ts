@@ -49,7 +49,9 @@ export interface ThemeColorSchemes {
 
 export type ThemeColorScheme = { [key: string]: string };
 
-export type ThemeType = 'dark' | 'light' | 'auto';
+export type ColorScheme = 'light' | 'dark';
+
+export type ThemeType = ColorScheme | 'auto';
 
 export const ELEMENT_THEME_NAME = 'element';
 
