@@ -1,7 +1,11 @@
 # Update to Element v51
 
-Element v51 requires Angular 22 and changes the visual appearance of every component.
-The schematics handle most template and token rewrites. API removals still fail the build.
+Element v51 runs on Angular 22 and brings in the system tokens of the Siemens Design Language.
+Your components mostly keep their look. Typography is the change you will notice. The legacy
+utilities and Sass variables are deprecated, not removed, so they keep working. Only
+`text-primary` and `btn-ghost` changed their meaning.
+
+The update schematic does most of the work. This guide covers the rest.
 
 ## Before you start
 
@@ -23,8 +27,12 @@ Then align the remaining peer dependencies:
 | `@siemens/ngx-datatable` | `26` or `27` | See [their changelog](https://github.com/siemens/ngx-datatable/blob/main/CHANGELOG.md) |
 | `gridstack` | `13` | Only with `@siemens/dashboards-ng` |
 | `@siemens/map-styles` | matching Element version | New required peer dependency of `@siemens/maps-ng` |
+| `@ngx-formly/*` | `6` or `7.1` | Both are supported, see below |
 
-Keep `@ngx-formly/*` on your current version for now, see [Formly](#formly).
+Using Formly? `@siemens/element-ng/formly` is now based on ngx-formly v7.1. To stay on v6, keep
+`@ngx-formly/*` at 6 and import `SiFormlyModule` from `@siemens/element-ng/formly-legacy`. To
+move to v7.1, use the standalone `SiFormlyComponent` from `@siemens/element-ng/formly`. See
+[dynamic forms](../architecture/dynamic-forms.md).
 
 ## Update Element
 
@@ -33,20 +41,26 @@ npm i @simpl/brand@4.0.0 # Only for Siemens applications
 ng update @siemens/element-ng@51
 ```
 
-The `migration-v51` schematic covers:
+This runs the `migration-v51` schematic over your project. It applies all of the following
+changes, so you do not have to:
 
-- Typography classes and the `$si-font-size-*`, `$si-line-height-*`, `$si-font-weight-*` variables
-- Color, shadow and elevation utility classes, including the `btn-ghost` / `btn-primary-ghost` swap
-- `$box-shadow*` and `$element-elevation-*` replaced by `$si-sys-effects-shadow-*`
-- Spacer `10` and `11` renamed to `13` and `14`, including the `m*` / `p*` helpers
-- `si-split` sizing: `sizes`, `scale` and `collapseDirection`
-- `si-list-details` and `si-main-detail-container`: adds `listWidthUnit="fr"` / `mainContainerWidthUnit="fr"` to keep the current layout
-- `si-markdown-renderer` replaced by `si-markdown`
-- Chat messages: the `contentFormatter` input replaced by projected `si-markdown` content
-- `si-icon-status` replaced by `si-status-counter`
-- Removed `provideIconConfig()` and the removed inputs `showLessAppsText`, `uploadTextFileSelect` and `tabbable`
-- `si-map` `moreText` moved to `si-map-tooltip`
-- `--si-feedback-icon-offset` replaced by `--si-feedback-icon-size`
+- Renames the typography classes and the `$si-font-size-*`, `$si-line-height-*` and `$si-font-weight-*` variables to the new scale
+- Renames the `bg-*` and `text-*` utilities to their system token equivalents, including `text-primary` to `text-accent` and `text-body` to `text-primary`
+- Renames `btn-ghost` to `btn-tertiary-ghost` and `btn-primary-ghost` to `btn-ghost`
+- Renames `.shadow*`, `.elevation-*`, `$box-shadow*` and `$element-elevation-*` to the new shadow scale
+- Renames the spacers `10` and `11` to `13` and `14`, including their `m*` and `p*` helpers
+- Renames `--si-feedback-icon-offset` to `--si-feedback-icon-size`
+- Renames `si-markdown-renderer` to `si-markdown` and `si-icon-status` to `si-status-counter`
+- Moves the `moreText` input of `si-map` into `si-map-tooltip`
+- Replaces `scale`, `[sizes]`, `collapseDirection` and `showCollapseButton` on `si-split` with `size`, `unit` and `collapsible`
+- Replaces the `contentFormatter` input of chat messages with projected `si-markdown` content
+- Adds `listWidthUnit="fr"` to resizable `si-list-details`, and `mainContainerWidthUnit="fr"` to resizable `si-main-detail-container`, so your layout stays as it is
+- Adds `btn btn-ghost` to every `si-select` without a `form-control`, so it keeps its appearance
+- Adds Element's missing translation handler to `TranslateModule.forRoot()` and `provideTranslateService()`
+- Removes `provideIconConfig()` and the deleted inputs `showLessAppsText`, `uploadTextFileSelect` and `tabbable` from your code (`uploadTextFileSelect` needs a follow-up, see below)
+
+Watch the output of the run. For a few `si-split` parts the schematic cannot infer a pixel size
+and logs the files where you need to set `size` and `unit` yourself.
 
 Still using the legacy tabs? Migrate them with:
 
@@ -54,27 +68,26 @@ Still using the legacy tabs? Migrate them with:
 ng g @siemens/element-ng:migrate-tabs-legacy
 ```
 
-### Utility classes the schematic cannot see
+### Class names the schematic cannot see
 
-The schematic already rewrote static `class` attributes. A template-wide or workspace-wide
-replace inverts that work (`text-primary` and `btn-ghost` change meaning a second time).
+The schematic rewrites class names only in the static `class` attribute of your templates — not
+in stylesheets, in `[ngClass]`, `[class]` and `[class.*]` bindings, or in strings you build in
+TypeScript. CSS custom properties and Sass variables in your stylesheets are already rewritten.
 
-Two class pairs were repurposed. In stylesheets and in `[ngClass]`, `[class]` and
-`[class.*]` values only, apply these renames once, in this order:
+Rename the leftover class names yourself, using the same mappings the schematic applied to your
+templates. Most of them are a plain one-to-one replacement. Two pairs swapped their meaning, so
+apply those in this order:
 
-Text colors:
+1. `text-primary` → `text-accent`, then `text-body` → `text-primary`
+2. `btn-ghost` → `btn-tertiary-ghost`, then `btn-primary-ghost` → `btn-ghost`
 
-1. `text-primary` → `text-accent`
-2. `text-body` → `text-primary`
+Limit the search to the places listed above. A project wide find and replace would also hit the
+templates the schematic already migrated and rename them a second time.
 
-Ghost buttons:
+## Changes you apply yourself
 
-1. `btn-ghost` → `btn-tertiary-ghost`
-2. `btn-primary-ghost` → `btn-ghost`
-
-## Apply the remaining changes
-
-Compile your application and work through the errors:
+The schematic does not cover the changes below. They show up as build errors, except File
+uploader and Gauge chart:
 
 | Area | Change |
 | --- | --- |
@@ -82,27 +95,22 @@ Compile your application and work through the errors:
 | Application header | `SiHeaderSiemensLogoComponent` removed. Use the `siHeaderLogo` directive. |
 | Sort bar | `SiSortBarComponent` removed without replacement. |
 | Datepicker | `calenderWeekLabel` renamed to `calendarWeekLabel`. |
+| File uploader | The schematic removed `uploadTextFileSelect`. Move its text into `uploadDropText`, which now renders the whole button label. |
 | Filtered search | `datepickerConfig` no longer accepts `enableDateRange` and `enableTwoMonthDateRange`. Remove them. |
 | Status bar | `expandButtonText` and `collapseButtonText` replaced by `toggleButtonText`. Translation key: `SI_STATUS_BAR.TOGGLE`. |
 | Loading spinner | `LOADING_SPINNER_BLOCKING` and `LOADING_SPINNER_OVERLAY` removed. Use the `isBlockingSpinner` and `isSpinnerOverlay` inputs. |
-| Gauge chart | Use `valueFormatter` to format the value. `labelFormatter` now only formats axis labels. |
+| Gauge chart | `labelFormatter` now only formats the axis labels. Use `valueFormatter` for the value. |
 | Dashboards | `SiWidgetCatalogComponent.closed` now emits an array. |
 | Maps | `MapPoint.extraProps` replaced by `extraProperties`. `DEFAULT_FIT_PADDING` removed. |
 | Resize observer | `ResizeObserverService._checkAll` removed. Use `mockResizeObserver()` in tests. |
 | Theme | `$spacers` values are now CSS variables and need `calc()` in math expressions. |
 
-### Formly
-
-`@siemens/element-ng/formly` now requires ngx-formly v7.1. If you stay on v6, switch your
-imports to `@siemens/element-ng/formly-legacy` and keep your current ngx-formly version.
-See [dynamic forms](../architecture/dynamic-forms.md).
-
 ## Review the UI
 
-Run your application and check every screen. Nothing below fails the build.
+Your application builds again. What remains is visual — the compiler will not point you to it:
 
-**Typography.** Use the [page header](../fundamentals/layouts/header.md). The title is
-`h2.si-layout-title`.
+**Typography.** Headings are now semibold and font sizes follow a new 1.2 step scale. Use the
+[page header](../fundamentals/layouts/header.md); the title must be `h2.si-layout-title`.
 
 **Icons.** `si-application-header` and `si-navbar-vertical` now use the default 20px icons.
 Overrides of the `.element-*` icon font classes no longer affect Element. Provide custom
