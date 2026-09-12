@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectorRef, inject, OnDestroy, Pipe, PipeTransform } from '@angular/core';
+import { Translatable } from '@siemens/element-translate-ng/translate-types';
 import { Subscription } from 'rxjs';
 
+import { isBypassTranslation } from './si-bypass-translate';
 import { injectSiTranslateService } from './si-translate.inject';
 import { SiTranslateService } from './si-translate.service';
 
@@ -22,11 +24,11 @@ import { SiTranslateService } from './si-translate.service';
   pure: false
 })
 export class SiTranslatePipe implements PipeTransform, OnDestroy {
+  private readonly cdRef = inject(ChangeDetectorRef);
   private lastKeyParams?: string;
   private value = '';
   private subscription?: Subscription;
   private siTranslateService = injectSiTranslateService();
-  private cdRef = inject(ChangeDetectorRef);
 
   /**
    * Method which is called on any data passed to the pipe.
@@ -35,10 +37,13 @@ export class SiTranslatePipe implements PipeTransform, OnDestroy {
   // The first type is for cases when there is definitely defined string, so that we can use the pipe to assign values to a required variable.
   // The second type is for everything else, so that we can use the pipe for optional inputs
   transform(key: string, params?: any): string;
-  transform(key: string | null | undefined, params?: any): string | null | undefined;
-  transform(key: string | null | undefined, params?: any): string | null | undefined {
+  transform(key: Translatable | null | undefined, params?: any): string | null | undefined;
+  transform(key: Translatable | null | undefined, params?: any): string | null | undefined {
     if (!key) {
       return key;
+    }
+    if (isBypassTranslation(key)) {
+      return key.value;
     }
 
     const currentKeyParams = params ? `${key}-${JSON.stringify(params)}` : key;

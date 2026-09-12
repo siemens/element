@@ -13,6 +13,17 @@ import { OnDestroy } from '@angular/core';
 import { PipeTransform } from '@angular/core';
 import { Provider } from '@angular/core';
 
+// @public
+export interface BypassTranslation {
+    // (undocumented)
+    bypassTranslation: true;
+    // (undocumented)
+    value: string;
+}
+
+// @public
+export const bypassTranslation: (text: string) => BypassTranslation;
+
 // @public (undocumented)
 export const getBrowserCultureLanguage: () => string | undefined;
 
@@ -21,6 +32,9 @@ export const getBrowserLanguage: () => string | undefined;
 
 // @public (undocumented)
 export const injectSiTranslateService: () => SiTranslateService;
+
+// @public
+export const isBypassTranslation: (key: unknown) => key is BypassTranslation;
 
 // @public
 export const provideMissingTranslationHandlerForElement: (missingTranslationHandlerProvider?: Provider) => Provider;
@@ -45,8 +59,14 @@ export class SiTranslateNgLocalizeModule {
 export class SiTranslateNgxTModule {
 }
 
+// @public (undocumented)
+export type Translatable = TranslatableString | BypassTranslation;
+
 // @public
-export type TranslatableString = string & Translatable;
+export type TranslatableString = string & Translate;
+
+// @public
+export const translationKey: (t: Translatable) => string;
 
 // @public (undocumented)
 export type TranslationResult<T> = T extends string ? string : Record<string, string>;
