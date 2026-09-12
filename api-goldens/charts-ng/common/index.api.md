@@ -233,6 +233,7 @@ export interface SeriesUpdate<SeriesType> {
 // @public (undocumented)
 export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, OnDestroy {
     readonly additionalOptions: _angular_core.InputSignal<EChartOption | undefined>;
+    readonly ariaLabel: _angular_core.InputSignal<string | undefined>;
     readonly autoZoomSeriesIndex: _angular_core.InputSignal<number>;
     readonly axisPointer: _angular_core.InputSignal<string | boolean | undefined>;
     readonly chartContainerWrapper: _angular_core.Signal<ElementRef<any>>;
