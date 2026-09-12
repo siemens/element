@@ -278,7 +278,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   }
 
   protected onToggleActive(event: Event): void {
-    if (!this.editable() || event.target !== event.currentTarget) {
+    if (!this.editable() || this.card().isExpanded() || event.target !== event.currentTarget) {
       return;
     }
     event.preventDefault();
