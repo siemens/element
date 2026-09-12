@@ -22,7 +22,10 @@ system and component library APIs.
 
 ### Prerequisites
 
-- Node.js (20+ recommended)
+- Node.js (22+ recommended)
+
+> **Warning:** Intel-based Mac computers are no longer supported.
+
 - Create a free token at [https://my.siemens.com](https://my.siemens.com) with `llm` scope to get
   access to the `embeddings` API at
   [https://api.siemens.com/llm](https://api.siemens.com/llm).
