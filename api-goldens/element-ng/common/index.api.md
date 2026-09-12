@@ -7,13 +7,9 @@
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import { ElementRef } from '@angular/core';
-import { FlexibleConnectedPositionStrategy } from '@angular/cdk/overlay';
 import * as i0 from '@angular/core';
 import { InjectionToken } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
-import { Overlay } from '@angular/cdk/overlay';
-import { OverlayRef } from '@angular/cdk/overlay';
-import { PositionStrategy } from '@angular/cdk/overlay';
 import { Provider } from '@angular/core';
 import * as rxjs from 'rxjs';
 import { ScrollStrategy } from '@angular/cdk/overlay';
@@ -118,28 +114,10 @@ export const getContentPositionString: (params: {
 }) => string;
 
 // @public (undocumented)
-export function getOverlay(elementRef: ElementRef<any>, overlay: Overlay, hasBackdrop: boolean, placement: keyof typeof positions | ConnectionPositionPair[], constrain?: boolean, center?: boolean, scrollStrategy?: ScrollStrategy): OverlayRef;
-
-// @public (undocumented)
-export function getOverlayPositions(elementRef: ElementRef<any>, placement: keyof typeof positions | ConnectionPositionPair[], center?: boolean): ConnectionPositionPair[];
-
-// @public (undocumented)
-export function getPositionStrategy(overlayref: OverlayRef): FlexibleConnectedPositionStrategy | undefined;
-
-// @public (undocumented)
-export function hasTrigger(trigger: string, triggers?: string): boolean;
-
-// @public (undocumented)
 export const isRTL: (elem?: HTMLElement) => boolean;
 
 // @public
 export const listenGlobal: (eventName: string, handler: (e: any) => void, active?: boolean) => (() => void);
-
-// @public (undocumented)
-export function makeOverlay(positionStrategy: PositionStrategy, overlay: Overlay, hasBackdrop: boolean, scrollStrategy?: ScrollStrategy): OverlayRef;
-
-// @public
-export function makePositionStrategy(elementRef: ElementRef<any> | undefined, overlay: Overlay, placement: keyof typeof positions | ConnectionPositionPair[], constrain?: boolean, center?: boolean): PositionStrategy;
 
 // @public @deprecated
 export interface MenuItem extends Link {
@@ -163,7 +141,7 @@ export interface MenuItem extends Link {
 // @public (undocumented)
 export type NavbarItem = MenuItem;
 
-// @public (undocumented)
+// @public
 export interface OverlayArrowPosition {
     // (undocumented)
     left?: number;

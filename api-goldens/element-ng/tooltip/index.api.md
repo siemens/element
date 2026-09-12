@@ -18,8 +18,8 @@ import { Type } from '@angular/core';
 export class SiTooltipDirective {
     constructor();
     readonly isDisabled: i0.InputSignalWithTransform<boolean, unknown>;
-    readonly placement: i0.InputSignal<"auto" | "top" | "start" | "end" | "bottom">;
-    readonly siTooltip: i0.InputSignal<TemplateRef<any> | TranslatableString>;
+    readonly placement: i0.InputSignal<"start" | "end" | "top" | "bottom" | "auto">;
+    readonly siTooltip: i0.InputSignal<TranslatableString | TemplateRef<any>>;
     readonly tooltipContext: i0.InputSignal<unknown>;
     readonly tooltipScrollStrategy: i0.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
 }
