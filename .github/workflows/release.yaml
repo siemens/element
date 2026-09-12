@@ -12,13 +12,57 @@ jobs:
       SIEMENS_NPM_USER: ${{ secrets.SIEMENS_NPM_USER }}
       MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
 
+  determine-release:
+    runs-on: ubuntu-24.04
+    needs:
+      - build-and-test
+    outputs:
+      new_release: ${{ steps.predict_release.outputs.new_release }}
+      release_tag: ${{ steps.predict_release.outputs.release_tag }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0 # semantic-release needs this
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: lts/krypton
+          cache: 'pnpm'
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: dist
+          path: dist
+      - name: Set up registry authentication
+        run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
+        env:
+          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      # Publishing workspace packages with workspace:* peer dependencies requires pnpm to install those peers.
+      - run: pnpm install --no-frozen-lockfile
+      - id: predict_release
+        run: |
+          OUTPUT=$(pnpm exec semantic-release --dry-run 2>&1)
+          printf '%s\n' "$OUTPUT"
+
+          if [[ "$OUTPUT" =~ The\ next\ release\ version\ is\ ([0-9]+(\.[0-9]+){2}(-[0-9A-Za-z.-]+)?) ]]; then
+            echo "new_release=true" >> "$GITHUB_OUTPUT"
+            echo "release_tag=v${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+          else
+            echo "new_release=false" >> "$GITHUB_OUTPUT"
+            echo "release_tag=" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          SKIP_COMMIT: ${{ github.ref_name == 'next' && 'true' || '' }}
+          GITHUB_TOKEN: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }}
+
   publish:
+    name: Publish ${{ needs.determine-release.outputs.release_tag || 'no release' }}
     environment: release
     runs-on: ubuntu-24.04
     env:
       PNPM_CONFIG_AUTO_INSTALL_PEERS: true
     needs:
       - build-and-test
+      - determine-release
     permissions:
       id-token: write
     outputs:
