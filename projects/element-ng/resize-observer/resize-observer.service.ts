@@ -2,9 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { isPlatformBrowser } from '@angular/common';
-import { inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, NgZone } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
+
+import { ResizeObserverRegistry } from './resize-observer.registry';
 
 export interface ElementDimensions {
   width: number;
@@ -22,6 +23,7 @@ interface ResizeSubscriber {
 interface Listener {
   element: Element;
   subscribers: ResizeSubscriber[];
+  stopObserving?: () => void;
 }
 
 interface QueueEntry {
@@ -42,18 +44,12 @@ interface QueueEntry {
 })
 export class ResizeObserverService {
   private listeners = new Map<Element, Listener>();
-  private resizeObserver?: ResizeObserver;
   private timerQueue = new Map<number, QueueEntry[]>();
   private zone = inject(NgZone);
+  private readonly registry: ResizeObserverRegistry;
 
   constructor() {
-    const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-    if (!isBrowser || !ResizeObserver) {
-      return;
-    }
-    this.resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) =>
-      entries.forEach(entry => this.handleElement(entry.target))
-    );
+    this.registry = inject(ResizeObserverRegistry);
   }
 
   /**
@@ -69,11 +65,7 @@ export class ResizeObserverService {
     emitInitial?: boolean,
     emitImmediate?: boolean
   ): Observable<ElementDimensions> {
-    let entry = this.listeners.get(element);
-    if (!entry) {
-      entry = { element, subscribers: [] };
-      this.listeners.set(element, entry);
-    }
+    const entry = this.getListener(element);
 
     return new Observable<ElementDimensions>(subscriber => {
       const sub: ResizeSubscriber = {
@@ -83,9 +75,18 @@ export class ResizeObserverService {
         blocked: false,
         emitImmediate
       };
-      this.subscriberAdded(entry!, sub, emitInitial);
-      return () => this.subscriberRemoved(entry!, sub);
+      this.subscriberAdded(entry, sub, emitInitial);
+      return () => this.subscriberRemoved(entry, sub);
     });
+  }
+
+  private getListener(element: Element): Listener {
+    let listener = this.listeners.get(element);
+    if (!listener) {
+      listener = { element, subscribers: [] };
+      this.listeners.set(element, listener);
+    }
+    return listener;
   }
 
   private subscriberAdded(
@@ -95,7 +96,9 @@ export class ResizeObserverService {
   ): void {
     entry.subscribers.push(subscriber);
     if (entry.subscribers.length === 1) {
-      this.resizeObserver?.observe(entry.element);
+      entry.stopObserving = this.registry.observe(entry.element, 'content-box', resizeEntry =>
+        this.handleElement(resizeEntry.target)
+      );
     }
 
     if (emitInitial) {
@@ -109,8 +112,7 @@ export class ResizeObserverService {
       entry.subscribers.splice(index, 1);
     }
     if (entry.subscribers.length === 0) {
-      // no more subscribers, tear down everything
-      this.resizeObserver?.unobserve(entry.element);
+      entry.stopObserving?.();
       this.listeners.delete(entry.element);
     }
     this.unschedule(subscriber);
@@ -119,12 +121,11 @@ export class ResizeObserverService {
   }
 
   private handleElement(element: Element): void {
-    const entry = this.listeners.get(element);
-    if (!entry) {
-      this.resizeObserver?.unobserve(element);
+    const listener = this.listeners.get(element);
+    if (!listener) {
       return;
     }
-    entry.subscribers.forEach(sub => this.handleResizeSubscriber(element, sub));
+    listener.subscribers.forEach(sub => this.handleResizeSubscriber(element, sub));
   }
 
   private handleResizeSubscriber(element: Element, entry: ResizeSubscriber): void {

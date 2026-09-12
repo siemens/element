@@ -5,9 +5,11 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
+import { ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { Signal } from '@angular/core';
 
 // @public (undocumented)
 export const BOOTSTRAP_BREAKPOINTS: Breakpoints;
@@ -33,6 +35,25 @@ export interface ElementDimensions {
     // (undocumented)
     width: number;
 }
+
+// @public
+export interface ElementSize {
+    // (undocumented)
+    readonly blockSize: number;
+    // (undocumented)
+    readonly inlineSize: number;
+}
+
+// @public
+export const elementSizeSignal: (source: ElementSizeSignalSource, options?: ElementSizeSignalOptions) => Signal<ElementSize | undefined>;
+
+// @public
+export interface ElementSizeSignalOptions {
+    box?: ResizeObserverBoxOptions;
+}
+
+// @public
+export type ElementSizeSignalSource = SourceElement | Signal<SourceElement | undefined | null>;
 
 // @public
 export class ResizeObserverService {
