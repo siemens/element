@@ -69,6 +69,11 @@ interface Tick {
   textPos: Coordinate;
 }
 
+interface Marker {
+  position: Coordinate;
+  angle: number;
+}
+
 @Component({
   selector: 'si-nchart-gauge',
   templateUrl: './si-nchart-gauge.component.html',
@@ -122,6 +127,10 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
    * @defaultValue []
    */
   readonly segments = input<GaugeSegment[]>([]);
+  /**
+   * Optional value displayed as a marker bar across the value arc.
+   */
+  readonly markerValue = input<number>();
   /**
    * Unit
    *
@@ -199,6 +208,7 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
   protected totalSumString = '0';
   protected valignMiddle = false;
   protected internalSegments: InternalGaugeSegment[] = [];
+  protected marker?: Marker;
 
   private locale = inject(LOCALE_ID).toString();
   private numberFormat = new Intl.NumberFormat(this.locale, { maximumFractionDigits: 2 });
@@ -234,6 +244,7 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
       changes.showTicks ||
       changes.showRangeLabelsOutside ||
       changes.segments ||
+      changes.markerValue ||
       changes.axisLabelFormatter ||
       changes.valueFormatter
     ) {
@@ -266,6 +277,29 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
     } else {
       this.calcSeriesSingle();
     }
+    this.marker = this.calculateMarker();
+  }
+
+  private calculateMarker(): Marker | undefined {
+    const markerValue = this.markerValue();
+    if (markerValue === undefined) {
+      return undefined;
+    }
+
+    const angle = this.containAngle(
+      this.startAngle() +
+        valueToRelativeAngle(
+          this.startAngle(),
+          this.endAngle(),
+          this.min(),
+          this.max(),
+          markerValue
+        )
+    );
+    return {
+      position: polarToCartesian(this.center, this.radius, angle),
+      angle
+    };
   }
 
   private reset(): void {

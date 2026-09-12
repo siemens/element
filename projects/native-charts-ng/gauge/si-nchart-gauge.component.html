@@ -39,6 +39,14 @@
       }
     }
   </g>
+  @if (marker; as marker) {
+    <g
+      class="marker"
+      [attr.transform]="`translate(${marker.position.x} ${marker.position.y}) rotate(${marker.angle})`"
+    >
+      <rect x="-1.25" y="-3.5" width="1.25" height="7" rx="0.5" />
+    </g>
+  }
   <text
     class="text-primary value"
     x="50"

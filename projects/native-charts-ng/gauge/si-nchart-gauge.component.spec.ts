@@ -19,6 +19,7 @@ import { GaugeSegment, GaugeSeries, SiNChartGaugeComponent } from './si-nchart-g
       [mode]="mode()"
       [series]="series()"
       [segments]="segments()"
+      [markerValue]="markerValue()"
       [unit]="unit()"
       [showTicks]="showTicks()"
       [showLegend]="showLegend()"
@@ -41,6 +42,7 @@ class TestHostComponent {
   readonly mode = signal<'sum' | 'single'>('sum');
   readonly series = signal<GaugeSeries[]>([]);
   readonly segments = signal<GaugeSegment[]>([]);
+  readonly markerValue = signal<number | undefined>(undefined);
   readonly unit = signal('');
   readonly showTicks = signal(true);
   readonly showLegend = signal(true);
@@ -99,6 +101,24 @@ describe('SiNChartGaugeComponent', () => {
     const bgPath = getBackgroundPath();
     expect(bgPath).toBeTruthy();
     expect(bgPath!.getAttribute('d')).toBeTruthy();
+  });
+
+  it('should render an optional marker on top of the data arc', async () => {
+    host.series.set(defaultSeries);
+    await fixture.whenStable();
+    expect(gaugeEl.querySelector('g.marker')).not.toBeInTheDocument();
+
+    host.markerValue.set(50);
+    await fixture.whenStable();
+
+    const marker = gaugeEl.querySelector('g.marker');
+    expect(marker).toHaveAttribute('transform', expect.stringContaining('rotate(45)'));
+    expect(marker?.querySelector('rect')).toHaveAttribute('x', '-1.25');
+    expect(marker?.querySelector('rect')).toHaveAttribute('y', '-3.5');
+    expect(marker?.querySelector('rect')).toHaveAttribute('width', '1.25');
+    expect(marker?.querySelector('rect')).toHaveAttribute('height', '7');
+    expect(marker?.querySelector('rect')).toHaveAttribute('rx', '0.5');
+    expect(marker?.previousElementSibling).toHaveClass('data');
   });
 
   describe('sum mode', () => {
