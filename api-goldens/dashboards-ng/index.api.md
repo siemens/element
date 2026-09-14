@@ -197,6 +197,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     readonly editable: _angular_core.ModelSignal<boolean>;
     readonly grid: _angular_core.Signal<SiGridComponent>;
     readonly heading: _angular_core.InputSignal<string | undefined>;
+    readonly hideAddedWidgetsFromCatalog: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly hideAddWidgetInstanceButton: _angular_core.InputSignal<boolean>;
     readonly hideEditButton: _angular_core.InputSignal<boolean>;
     readonly hideProgressIndicator: _angular_core.InputSignal<boolean>;
