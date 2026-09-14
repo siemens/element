@@ -21,6 +21,10 @@ The content action bar groups primary and secondary actions and adjusts to the a
 - If the primary requirement is simply to have a menu that remains consistently collapsed,
   use a tertiary [circle button](../buttons-menus/buttons.md) with a [menu](../buttons-menus/menu.md).
 
+### Best practices
+
+- Since tooltips are temporary, easy to miss and generally not accessible on touch devices, avoid using them or use them for non-essential information only.
+
 ## Design ---
 
 ### Elements
