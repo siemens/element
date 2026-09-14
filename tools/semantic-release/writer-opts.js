@@ -3,7 +3,6 @@ import { commitTypes, noteTitleMap, noteTitles } from './commit-config.js';
 const COMMIT_HASH_LENGTH = 7;
 
 const commitGroups = commitTypes.map(t => t.section).filter(Boolean);
-const hiddenTypeCommitNotes = [];
 
 const hiddenTypes = new Set();
 const visibleTypes = {};
@@ -26,16 +25,8 @@ function transform(commit) {
       }))
     : [];
 
-  if (hiddenTypes.has(commit.type)) {
-    if (normalizedNotes.length > 0) {
-      const transformedNotes = normalizedNotes.map(note => ({
-        ...note,
-        text: `${commit.scope ? `**${commit.scope}:** ` : ''}${note.text}`
-      }));
-      // Add to the hiddenTypeCommitNotes if there are notes and the type is hidden
-      // The notes will be added to the context in finalizeContext
-      hiddenTypeCommitNotes.push(...transformedNotes);
-    }
+  const onlyFooter = hiddenTypes.has(commit.type);
+  if (onlyFooter && !hasNotes) {
     return;
   }
 
@@ -47,39 +38,24 @@ function transform(commit) {
   return {
     ...commit,
     notes: normalizedNotes,
+    onlyFooter,
     references: commit.references.map(reference => ({
       ...reference,
       isCve: reference.prefix === 'CVE-'
     })),
-    type: visibleTypes[commit.type],
+    // An empty type prevents a section heading for footer-only commits.
+    type: onlyFooter ? '' : visibleTypes[commit.type],
     shortHash
   };
 }
 
-/**
- *  Append collected notes that have a hidden type to the matching noteGroups
- */
-function finalizeContext(context) {
-  for (const note of hiddenTypeCommitNotes) {
-    let group = context.noteGroups.find(g => g.title === note.title);
-    if (!group) {
-      group = { title: note.title, notes: [] };
-      const insertIndex = noteTitles.findIndex(t => t === note.title);
-      context.noteGroups.splice(insertIndex, 0, group);
-    }
-    group.notes.push(note);
-  }
-  return context;
-}
-
-const commitPartial = `* {{#if scope}}**{{scope}}:** {{/if}}{{subject}}
+const commitPartial = `{{#unless onlyFooter}}* {{#if scope}}**{{scope}}:** {{/if}}{{subject}}
 {{~#if @root.linkReferences}} ([{{shortHash}}]({{#if @root.repository}}{{@root.host}}/{{@root.owner}}/{{@root.repository}}{{else}}{{@root.repoUrl}}{{/if}}/commit/{{hash}})){{else}} {{shortHash}}{{/if}}
 {{~#if references}}, closes{{#each references}} {{#if isCve}}[{{prefix}}{{issue}}](https://nvd.nist.gov/vuln/detail/{{prefix}}{{issue}}){{else}}[{{prefix}}{{issue}}]({{#if @root.repository}}{{@root.host}}/{{#if repository}}{{owner}}/{{repository}}{{else}}{{@root.owner}}/{{@root.repository}}{{/if}}{{else}}{{@root.repoUrl}}{{/if}}/issues/{{issue}}){{/if}}{{/each}}{{/if}}
-`;
+{{/unless}}`;
 
 export default {
   transform,
-  finalizeContext,
   commitPartial,
   commitGroupsSort(a, b) {
     return commitGroups.indexOf(a.title) - commitGroups.indexOf(b.title);
