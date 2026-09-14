@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { FlexibleConnectedPositionStrategy, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   booleanAttribute,
@@ -10,7 +10,6 @@ import {
   computed,
   Directive,
   ElementRef,
-  HostListener,
   inject,
   input,
   OnDestroy,
@@ -18,7 +17,7 @@ import {
   output,
   TemplateRef
 } from '@angular/core';
-import { getOverlay, getPositionStrategy, hasTrigger, positions } from '@siemens/element-ng/common';
+import { isRTL, positions } from '@siemens/element-ng/common';
 import { Subject, takeUntil } from 'rxjs';
 
 import { PopoverComponent } from './si-popover.component';
@@ -28,7 +27,15 @@ import { PopoverComponent } from './si-popover.component';
  */
 @Directive({
   selector: '[siPopoverLegacy]',
-  exportAs: 'si-popover'
+  exportAs: 'si-popover',
+  host: {
+    '(mouseenter)': "onTrigger('hover')",
+    '(mouseleave)': "onTrigger('hover')",
+    '(focus)': "onTrigger('focus')",
+    '(click)': "onTrigger('click')",
+    '(touchstart)': 'focusOut()',
+    '(focusout)': 'focusOut()'
+  }
 })
 export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
   /**
@@ -37,7 +44,7 @@ export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
   readonly siPopoverLegacy = input<string | TemplateRef<any>>();
 
   /**
-   * The placement of the popover. One of 'top', 'start', end', 'bottom'
+   * The placement of the popover. One of 'top', 'start', 'end', 'bottom'
    *
    * @defaultValue 'auto'
    */
@@ -118,6 +125,7 @@ export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
   readonly hidden = output<void>();
 
   private overlayref?: OverlayRef;
+  private positionStrategy?: FlexibleConnectedPositionStrategy;
   private overlay = inject(Overlay);
   private elementRef = inject(ElementRef);
   private destroyer = new Subject<void>();
@@ -141,13 +149,23 @@ export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
     if (!this.overlayref?.hasAttached()) {
       const triggers = this.triggers();
       const backdrop =
-        this.outsideClick() && !hasTrigger('focus', triggers) && !hasTrigger('hover', triggers);
-      this.overlayref = getOverlay(
-        this.elementRef,
-        this.overlay,
-        backdrop,
-        this.placementInternal()
-      );
+        this.outsideClick() &&
+        !this.hasTrigger('focus', triggers) &&
+        !this.hasTrigger('hover', triggers);
+      this.positionStrategy = this.overlay
+        .position()
+        .flexibleConnectedTo(this.elementRef)
+        .withPush(false)
+        .withGrowAfterOpen(true)
+        .withFlexibleDimensions(false)
+        .withPositions(positions[this.placementInternal()]);
+      this.overlayref = this.overlay.create({
+        positionStrategy: this.positionStrategy,
+        scrollStrategy: this.overlay.scrollStrategies.reposition(),
+        direction: isRTL() ? 'rtl' : 'ltr',
+        hasBackdrop: backdrop,
+        backdropClass: backdrop ? 'cdk-overlay-transparent-backdrop' : undefined
+      });
       if (backdrop) {
         this.overlayref
           .backdropClick()
@@ -168,8 +186,7 @@ export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
     popoverRef.setInput('containerClass', this.containerClass());
     popoverRef.setInput('popoverContext', this.popoverContext());
 
-    const positionStrategy = getPositionStrategy(this.overlayref);
-    positionStrategy?.positionChanges
+    this.positionStrategy?.positionChanges
       .pipe(takeUntil(this.destroyer))
       .subscribe(change => popoverRef.instance.updateArrow(change, this.elementRef));
 
@@ -194,12 +211,8 @@ export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
     this.overlayref?.updatePosition();
   }
 
-  @HostListener('mouseenter', ['"hover"'])
-  @HostListener('mouseleave', ['"hover"'])
-  @HostListener('focus', ['"focus"'])
-  @HostListener('click', ['"click"'])
   protected onTrigger(trigger: string): void {
-    if (hasTrigger(trigger, this.triggers())) {
+    if (this.hasTrigger(trigger, this.triggers())) {
       if (this.overlayref?.hasAttached()) {
         this.hide();
       } else {
@@ -208,13 +221,15 @@ export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('touchstart')
-  @HostListener('focusout')
   protected focusOut(): void {
-    if (hasTrigger('focus', this.triggers())) {
+    if (this.hasTrigger('focus', this.triggers())) {
       if (this.outsideClick()) {
         this.hide();
       }
     }
+  }
+
+  private hasTrigger(trigger: string, triggers?: string): boolean {
+    return (triggers?.split(/\s+/) ?? []).includes(trigger);
   }
 }
