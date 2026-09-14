@@ -18,8 +18,7 @@ import {
 } from '@angular/core';
 import {
   defaultConnectedOverlayScrollStrategy,
-  getOverlay,
-  getPositionStrategy,
+  isRTL,
   positions
 } from '@siemens/element-ng/common';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
@@ -45,7 +44,7 @@ export class SiPopoverDirective implements OnDestroy {
   readonly siPopover = input<TranslatableString | TemplateRef<unknown>>();
 
   /**
-   * The placement of the popover. One of 'top', 'start', end', 'bottom'
+   * The placement of the popover. One of 'top', 'start', 'end', 'bottom'
    *
    * @defaultValue 'auto'
    */
@@ -168,15 +167,18 @@ export class SiPopoverDirective implements OnDestroy {
   }
 
   private createOverlay(): OverlayRef {
-    const overlayRef = getOverlay(
-      this.elementRef,
-      this.overlay,
-      false,
-      this.placementInternal(),
-      false,
-      true,
-      this.scrollStrategy()
-    );
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.elementRef)
+      .withPush(false)
+      .withGrowAfterOpen(true)
+      .withFlexibleDimensions(false)
+      .withPositions(positions[this.placementInternal()]);
+    const overlayRef = this.overlay.create({
+      positionStrategy,
+      scrollStrategy: this.scrollStrategy(),
+      direction: isRTL() ? 'rtl' : 'ltr'
+    });
     overlayRef
       .detachments()
       .pipe(takeUntil(this.destroyer))
@@ -195,8 +197,8 @@ export class SiPopoverDirective implements OnDestroy {
           this.hide();
         }
       });
-    getPositionStrategy(overlayRef)
-      ?.positionChanges.pipe(takeUntil(this.destroyer))
+    positionStrategy.positionChanges
+      .pipe(takeUntil(this.destroyer))
       .subscribe(change => this.popoverRef?.instance.updateArrow(change, this.elementRef));
     return overlayRef;
   }
