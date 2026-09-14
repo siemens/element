@@ -594,6 +594,10 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
       return;
     }
 
+    const visualMapRanges = this.getOptionNoClone()?.visualMap?.map(
+      ({ range }: { range?: number[] }) => range?.slice()
+    );
+
     this.applyTheme();
     this.chart.setTheme(this.activeTheme);
 
@@ -607,12 +611,21 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
       this.applyColorsToCustomLegends();
     });
     this.chart.setOption(this.actualOptions);
+    this.restoreVisualMapRanges(visualMapRanges);
 
     if (this.externalZoomSlider()) {
       this.extZoomSliderChart.setTheme(this.activeTheme);
       this.extZoomSliderChart.setOption(this.extZoomSliderOptions);
     }
     this.cdRef.markForCheck();
+  }
+
+  private restoreVisualMapRanges(ranges?: (number[] | undefined)[]): void {
+    ranges?.forEach((selected, visualMapIndex) => {
+      if (selected) {
+        this.chart.dispatchAction({ type: 'selectDataRange', visualMapIndex, selected });
+      }
+    });
   }
 
   /**
