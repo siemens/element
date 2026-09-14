@@ -270,9 +270,18 @@ If the form-control contains custom icons at the end, like the dropdown arrow fo
 in a `form-control-actions` element.
 
 The `form-control-actions` element handles layout (height, vertical centering, spacing) and
-renders the validation feedback icon on its leading edge. It can be used in two ways:
+renders the validation feedback icon on its leading edge. It can be used in two ways.
 
-1. **Inside a `form-control`**: The wrapper owns the trailing space; no further adjustments are needed.
+When `form-control-actions` is a sibling of a `form-control`, wrap both elements in the same
+positioned container, for example one with `position-relative`.
+
+Do not add `form-control-actions` to a component that already renders it internally. This applies to
+`si-calendar-button`, `si-password-toggle`, `si-date-range`, `si-number-input`, `si-select`, and
+`si-select-combobox`. `si-calendar-button` and `si-password-toggle` also provide the positioned
+container required by the sibling pattern.
+
+1. **Inside a custom composite `form-control`**: The wrapper owns the trailing space, so no
+   `--si-action-icon-offset` is needed. The custom control is responsible for its internal layout.
 
    ```html
    <div class="form-control">
@@ -285,12 +294,14 @@ renders the validation feedback icon on its leading edge. It can be used in two 
 
 2. **As a sibling of the input**: The `form-control-actions` element is pinned to the top-right
    edge of the input. Set `--si-action-icon-offset` on the input to reserve space for the actions
-   so the input's content does not overlap them.
+   so the input's content does not overlap them. Wrap both elements in a positioned container.
 
    ```html
-   <input class="form-control" style="--si-action-icon-offset: 1.5rem;" />
-   <div class="form-control-actions">
-     <button type="button" class="my-action-button"></button>
+   <div class="position-relative">
+     <input class="form-control" style="--si-action-icon-offset: 1.5rem" />
+     <div class="form-control-actions">
+       <button type="button" class="my-action-button"></button>
+     </div>
    </div>
    ```
 
