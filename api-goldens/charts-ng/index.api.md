@@ -418,6 +418,7 @@ export { SiCandlestickSeriesOption as SimplCandlestickSeriesOption }
 // @public (undocumented)
 export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, OnDestroy {
     readonly additionalOptions: i0.InputSignal<EChartOption | undefined>;
+    readonly ariaLabel: i0.InputSignal<string | undefined>;
     readonly autoZoomSeriesIndex: i0.InputSignal<number>;
     readonly axisPointer: i0.InputSignal<string | boolean | undefined>;
     readonly chartContainerWrapper: i0.Signal<ElementRef<any>>;
