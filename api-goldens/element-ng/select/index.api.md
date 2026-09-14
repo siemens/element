@@ -91,6 +91,7 @@ export class SiSelectComboboxValueComponent {
 
 // @public (undocumented)
 export class SiSelectComponent<T> implements SiFormItemControl {
+    constructor();
     readonly ariaLabel: _angular_core.InputSignal<string | null>;
     close(): void;
     readonly errormessageId: _angular_core.InputSignal<string>;
