@@ -4,7 +4,6 @@
 
 ```ts
 
-import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
@@ -17,7 +16,8 @@ export type ContentActionBarMainItem = (MenuItemAction | MenuItemCheckbox | Menu
 };
 
 // @public (undocumented)
-export class SiContentActionBarComponent implements AfterViewInit {
+export class SiContentActionBarComponent {
+    constructor();
     readonly actionParam: _angular_core.InputSignal<any>;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly preventIconsInDropdownMenus: _angular_core.InputSignalWithTransform<boolean, unknown>;
