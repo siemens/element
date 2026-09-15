@@ -97,27 +97,62 @@ class ElementHtmlPreProcessor(Preprocessor):
     pass
 
 class ElementExamplePreProcessor(ElementHtmlPreProcessor):
-  def __init__(self, examples_base: str, page: str, *args: Any, **kwargs: Any) -> None:
+  def __init__(self, examples_base: str, page_path: str, docs_dir: str, *args: Any, **kwargs: Any) -> None:
     """Initialize.
 
     Args:
       examples_base: Base URL for examples. Should include trailing slash
                     for correct URL construction (e.g., '/element-examples/').
-      page: Current page's absolute URL from MkDocs context.
+      page_path: Current page's source URI from the documentation context.
+      docs_dir: Documentation source directory.
     """
-    self.examples_base = examples_base
-    self.page = page
+    self.configured_examples_base = examples_base
+    self.page_path = page_path
+    self.docs_dir = docs_dir
+    self.set_examples_base()
+    super().__init__('si-docs-component', *args, **kwargs)
+
+  def set_examples_base(self) -> None:
+    self.examples_base = self.configured_examples_base
     url = urlparse(self.examples_base)
     # If no scheme, we assume we need to build a relative path to the examples
     if url.scheme == '':
-      segments = self.page.lstrip('/').split('/')
+      page_path = PurePosixPath(self.page_path)
+      docs_path = PurePosixPath(self.docs_dir)
+      try:
+        page_path = page_path.relative_to(docs_path)
+      except ValueError:
+        if docs_path.name in page_path.parts:
+          page_path = PurePosixPath(*page_path.parts[page_path.parts.index(docs_path.name) + 1:])
+      segments = page_path.parts
       # Build a relative path to the root and join with the examples_base
       base = PurePosixPath('/'.join(['..' if segment else '' for segment in segments]))
       self.examples_base = str(base / self.examples_base.lstrip('/'))
-      if examples_base.endswith('/'):
+      if self.configured_examples_base.endswith('/'):
         self.examples_base += '/'
 
-    super().__init__('si-docs-component', *args, **kwargs)
+  def run(self, lines):
+    for extension in self.md.registeredExtensions:
+      page = getattr(extension, '_kwargs', {}).get('page')
+      file = getattr(page, 'file', None)
+      page_url = getattr(page, 'url', None)
+      if page_url is not None:
+        page_path = page_url.strip('/')
+        if page_path and not page_url.endswith('/'):
+          page_path = str(PurePosixPath(page_path).parent)
+        self.docs_dir = ''
+        self.page_path = page_path
+        self.set_examples_base()
+        break
+
+      page_path = getattr(file, 'src_uri', None) or getattr(page, 'path', None)
+      if page_path is not None:
+        config = getattr(extension, '_kwargs', {}).get('config', {})
+        self.docs_dir = config.get('docs_dir', self.docs_dir)
+        self.page_path = page_path
+        self.set_examples_base()
+        break
+    return super().run(lines)
 
   def convert_tag(self, line) -> str:
     examples = []
@@ -138,7 +173,7 @@ class ElementExamplePreProcessor(ElementHtmlPreProcessor):
     # on server: ../../../demo/index.html
     # dev: http://localhost:4200
     encode_object = {'base': examples_base if examples_base else '','e': list(map(lambda x: f'{x[0]};{x[1]}' if len(x) > 1 else x[0], examples))}
-    element.set('data-src', f'{self.examples_base}#/viewer/editor?{urlencode(encode_object, doseq=True)}')
+    element.set('data-preview-url', f"{self.examples_base.rstrip('/')}/#/viewer/editor?{urlencode(encode_object, doseq=True)}")
     element.set('height', f'{int(prev_height if prev_height else 204) + 411}px')
     element.set('width', f'100%')
     element.set('style', 'opacity: 0;')
@@ -162,8 +197,10 @@ class ElementDocsExtension(Extension):
     md_file_cfg = md_file_list[0] if md_file_list else ''
     mkdocs_config = getattr(md_file_cfg, 'config', None)
     current_page = getattr(mkdocs_config, '_current_page', None)
-    page = getattr(current_page, 'abs_url', '') or ''
-    md.preprocessors.register(ElementExamplePreProcessor(self.config.get('examples_base')[0], page, md), 'element_example', 10)
+    page_file = getattr(current_page, 'file', None)
+    page_path = getattr(page_file, 'src_uri', '') or ''
+    docs_dir = getattr(mkdocs_config, 'docs_dir', '') or ''
+    md.preprocessors.register(ElementExamplePreProcessor(self.config.get('examples_base')[0], page_path, docs_dir, md), 'element_example', 10)
     md.treeprocessors.register(ElementTabTreeProcessor(md), 'element_tabs', 10)
 
 
