@@ -378,6 +378,7 @@ export interface WidgetInstance {
     primaryEditActions?: (MenuItem | ContentActionBarMainItem)[];
     secondaryActions?: (MenuItem | MenuItem_2)[];
     secondaryEditActions?: (MenuItem | MenuItem_2)[];
+    widgetSlots?: WidgetSlotTargets | InputSignal<WidgetSlotTargets>;
 }
 
 // @public
@@ -407,6 +408,11 @@ export interface WidgetInstanceEditorWizardState {
 
 // @public
 export type WidgetPositionConfig = Pick<WidgetConfig, 'id' | 'x' | 'y' | 'width' | 'height'>;
+
+// @public
+export interface WidgetSlotTargets {
+    footer: HTMLElement;
+}
 
 // (No @packageDocumentation comment for this package)
 
