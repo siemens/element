@@ -30,8 +30,11 @@ export class SampleComponent {
   minDecimals = 0;
   maxDecimals = 2;
   axisDecimals = 0;
+  markerValue: number | undefined;
   showRangeLabelsOutside = false;
   showSegments = true;
+
+  private lastMarkerValue = 750;
 
   series: GaugeSeries[] = [
     { name: 'Series 1', value: 350, colorToken: 'si-sys-data-categorical-5' }
@@ -40,5 +43,14 @@ export class SampleComponent {
   setValues(val1: number): void {
     this.series[0].value = val1;
     this.series = this.series.slice();
+  }
+
+  setMarkerEnabled(enabled: boolean): void {
+    if (enabled) {
+      this.markerValue = this.lastMarkerValue;
+    } else {
+      this.lastMarkerValue = this.markerValue ?? this.lastMarkerValue;
+      this.markerValue = undefined;
+    }
   }
 }
