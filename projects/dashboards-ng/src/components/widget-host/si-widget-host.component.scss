@@ -69,6 +69,10 @@
   z-index: 100;
 }
 
+.widget-header-icon-host:empty {
+  display: none;
+}
+
 .card-footer {
   &:not(.has-widget-footer-template):has(> .widget-footer-host:empty) {
     display: none;

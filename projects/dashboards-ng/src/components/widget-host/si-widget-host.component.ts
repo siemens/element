@@ -111,6 +111,8 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   readonly card = viewChild.required<SiDashboardCardComponent>('card');
 
   readonly widgetHost = viewChild.required('widgetHost', { read: ViewContainerRef });
+  private readonly widgetHeaderIconHost =
+    viewChild.required<ElementRef<HTMLElement>>('widgetHeaderIconHost');
   private readonly widgetFooterHost =
     viewChild.required<ElementRef<HTMLElement>>('widgetFooterHost');
 
@@ -447,6 +449,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
           this.widgetInstance = widgetRef.instance;
           this.widgetRef = widgetRef;
           const widgetSlots: WidgetSlotTargets = {
+            headerIcon: this.widgetHeaderIconHost().nativeElement,
             footer: this.widgetFooterHost().nativeElement
           };
           if (isSignal(this.widgetInstance.widgetSlots)) {
@@ -485,6 +488,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
     this.widgetRef = undefined;
     this.widgetInstance = undefined;
     this.widgetInstanceFooter.set(undefined);
+    this.widgetHeaderIconHost().nativeElement.replaceChildren();
     this.widgetFooterHost().nativeElement.replaceChildren();
     this.widgetHost().clear();
   }

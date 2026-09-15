@@ -183,13 +183,15 @@ The Angular component should export the template as the public attribute `footer
 
 Web-component widgets receive a `widgetSlots` property containing DOM outlets owned by the
 dashboard. The widget body remains inside the custom element, while frameworks that support
-portals can render footer content into `widgetSlots.footer`. For example, a React widget can use:
+portals can render a header icon and footer content into the corresponding outlets. For example,
+a React widget can use:
 
 ```tsx
 function Widget({ widgetSlots }: { widgetSlots?: WidgetSlotTargets }) {
   return (
     <>
       <WidgetBody />
+      {widgetSlots && createPortal(<WidgetHeaderIcon />, widgetSlots.headerIcon)}
       {widgetSlots && createPortal(<WidgetFooter />, widgetSlots.footer)}
     </>
   );
@@ -197,8 +199,8 @@ function Widget({ widgetSlots }: { widgetSlots?: WidgetSlotTargets }) {
 ```
 
 The custom element must expose `widgetSlots` as a JavaScript property and pass updates to its
-framework component. The footer target itself remains owned by the dashboard and must not be
-removed by the widget.
+framework component. The targets themselves remain owned by the dashboard and must not be removed
+by the widget. Header icon content is displayed when the card has a heading or actions.
 
 ### Remote Widget Loading (Microfrontends)
 

@@ -318,6 +318,8 @@ export type WidgetConfigEvent = {
  * DOM outlets provided by the dashboard host to framework-agnostic widgets.
  */
 export interface WidgetSlotTargets {
+  /** The outlet in which the widget can render its header icon. */
+  headerIcon: HTMLElement;
   /** The outlet in which the widget can render its footer content. */
   footer: HTMLElement;
 }

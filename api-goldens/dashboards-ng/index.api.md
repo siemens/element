@@ -412,6 +412,7 @@ export type WidgetPositionConfig = Pick<WidgetConfig, 'id' | 'x' | 'y' | 'width'
 // @public
 export interface WidgetSlotTargets {
     footer: HTMLElement;
+    headerIcon: HTMLElement;
 }
 
 // (No @packageDocumentation comment for this package)
