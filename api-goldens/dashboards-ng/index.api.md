@@ -374,6 +374,7 @@ export interface WidgetInstance {
     configChange?: EventEmitter<WidgetConfigEvent>;
     editable?: boolean;
     footer?: TemplateRef<unknown>;
+    headerIcon?: TemplateRef<unknown>;
     primaryActions?: (MenuItem | ContentActionBarMainItem)[];
     primaryEditActions?: (MenuItem | ContentActionBarMainItem)[];
     secondaryActions?: (MenuItem | MenuItem_2)[];

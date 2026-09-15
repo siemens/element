@@ -173,13 +173,22 @@ that is used to load the widget when needed.
 The library ships with a [hello-widget](https://github.com/siemens/element/blob/main/projects/dashboards-demo/src/app/widgets/hello-widget/) example for illustration.
 
 E.g. a widget implements a user interface that is added at runtime into the body of a dashboard card.
-Optionally, the widget template may include a `<ng-template/>` to provides a footer implementation like
-`<ng-template #footer><a [siLink]="link">Go to issues</a></ng-template>` in the [value-widget](https://github.com/siemens/element/blob/main/projects/dashboards-demo/src/app/widgets/charts/value-widget.component.ts).
-The Angular component should export the template as the public attribute `footer`.
+Optionally, the widget template may include `<ng-template/>` elements that provide a header icon
+and footer. The Angular component should export these templates as the public attributes
+`headerIcon` and `footer`.
+
+```html
+<ng-template #headerIcon><si-icon icon="element-checked" /></ng-template>
+<ng-template #footer><a [siLink]="link">Go to issues</a></ng-template>
+```
 
 ```ts
+@ViewChild('headerIcon', { static: true }) headerIcon?: TemplateRef<unknown>;
 @ViewChild('footer', { static: true }) footer?: TemplateRef<unknown>;
 ```
+
+The [value-widget](https://github.com/siemens/element/blob/main/projects/dashboards-demo/src/app/widgets/charts/value-widget.component.ts)
+shows the footer pattern. Header icon content is displayed when the card has a heading or actions.
 
 Web-component widgets receive a `widgetSlots` property containing DOM outlets owned by the
 dashboard. The widget body remains inside the custom element, while frameworks that support
@@ -200,7 +209,7 @@ function Widget({ widgetSlots }: { widgetSlots?: WidgetSlotTargets }) {
 
 The custom element must expose `widgetSlots` as a JavaScript property and pass updates to its
 framework component. The targets themselves remain owned by the dashboard and must not be removed
-by the widget. Header icon content is displayed when the card has a heading or actions.
+by the widget.
 
 ### Remote Widget Loading (Microfrontends)
 

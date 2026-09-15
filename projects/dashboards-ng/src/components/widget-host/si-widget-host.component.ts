@@ -218,6 +218,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
     iconOnly: true,
     action: () => this.onRemove()
   };
+  protected readonly widgetInstanceHeaderIcon = signal<TemplateRef<unknown> | undefined>(undefined);
   protected readonly widgetInstanceFooter = signal<TemplateRef<unknown> | undefined>(undefined);
 
   protected readonly accentLine = computed(() => {
@@ -470,6 +471,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
           } else {
             this.widgetInstance.config = this.widgetConfig();
           }
+          this.widgetInstanceHeaderIcon.set(this.widgetInstance.headerIcon);
           this.widgetInstanceFooter.set(this.widgetInstance.footer);
           this.setupEditable(this.editable());
         },
@@ -487,6 +489,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
     this.widgetRef?.destroy();
     this.widgetRef = undefined;
     this.widgetInstance = undefined;
+    this.widgetInstanceHeaderIcon.set(undefined);
     this.widgetInstanceFooter.set(undefined);
     this.widgetHeaderIconHost().nativeElement.replaceChildren();
     this.widgetFooterHost().nativeElement.replaceChildren();

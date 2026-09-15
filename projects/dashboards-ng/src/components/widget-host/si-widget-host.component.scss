@@ -69,8 +69,14 @@
   z-index: 100;
 }
 
-.widget-header-icon-host:empty {
-  display: none;
+.widget-header-icon-host {
+  &:not(.has-widget-header-icon-template):has(> .widget-header-icon-target:empty) {
+    display: none;
+  }
+
+  .widget-header-icon-target {
+    display: contents;
+  }
 }
 
 .card-footer {

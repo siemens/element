@@ -59,7 +59,17 @@
     (keydown.shift.arrowDown)="onArrowKey($event)"
     (focusout)="onFocusOut()"
   >
-    <span #widgetHeaderIconHost class="icon me-3 widget-header-icon-host" headerIcon></span>
+    @let headerIcon = widgetInstanceHeaderIcon();
+    <span
+      class="icon me-3 widget-header-icon-host"
+      headerIcon
+      [class.has-widget-header-icon-template]="headerIcon && !setupPending()"
+    >
+      @if (headerIcon && !setupPending()) {
+        <ng-container *ngTemplateOutlet="headerIcon" />
+      }
+      <span #widgetHeaderIconHost class="widget-header-icon-target"></span>
+    </span>
     <div class="card-body overflow-auto" body>
       <ng-container #widgetHost />
       @if (setupPending()) {

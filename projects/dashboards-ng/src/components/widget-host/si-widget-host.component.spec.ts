@@ -103,10 +103,33 @@ describe('SiWidgetHostComponent', () => {
         vi.advanceTimersByTime(0);
         await fixture.whenStable();
 
-        const headerIcon = fixture.nativeElement.querySelector('.widget-header-icon-host');
+        const headerIcon = fixture.nativeElement.querySelector('.widget-header-icon-target');
         const footer = fixture.nativeElement.querySelector('.widget-footer-host');
         expect(component.widgetInstance?.widgetSlots).toEqual({ headerIcon, footer });
         vi.useRealTimers();
+      });
+
+      it('should render the widget header icon template', async () => {
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          heading: 'Test',
+          payload: {
+            ...TEST_WIDGET_CONFIG_0.payload,
+            headerIcon: true
+          }
+        });
+        fixture.detectChanges();
+        vi.useFakeTimers();
+        vi.advanceTimersByTime(0);
+        try {
+          await fixture.whenStable();
+          fixture.detectChanges();
+          expect(
+            fixture.nativeElement.querySelector('si-card-header .widget-header-icon-host')
+          ).toHaveTextContent('Angular header icon');
+        } finally {
+          vi.useRealTimers();
+        }
       });
 
       it('should not create widget instance without widget', async () => {
@@ -290,7 +313,7 @@ describe('SiWidgetHostComponent', () => {
     it('should clear web component slot content when detaching the widget', async () => {
       fixture.detectChanges();
       await fixture.whenStable();
-      const headerIcon = fixture.nativeElement.querySelector('.widget-header-icon-host');
+      const headerIcon = fixture.nativeElement.querySelector('.widget-header-icon-target');
       const footer = fixture.nativeElement.querySelector('.widget-footer-host');
 
       fixture.componentRef.setInput('widgetConfig', {

@@ -357,6 +357,10 @@ export interface WidgetInstance {
    */
   configChange?: EventEmitter<WidgetConfigEvent>;
   /**
+   * An optional header icon template that is added into the dashboard card's header.
+   */
+  headerIcon?: TemplateRef<unknown>;
+  /**
    * An optional footer template that is added into the dashboard card's footer.
    */
   footer?: TemplateRef<unknown>;
