@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { FocusableOption } from '@angular/cdk/a11y';
+import { CdkDragHandle } from '@angular/cdk/drag-drop';
 import { CdkContextMenuTrigger, CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgTemplateOutlet } from '@angular/common';
 import {
@@ -50,6 +51,7 @@ import {
   selector: 'si-tree-view-item',
   imports: [
     CdkContextMenuTrigger,
+    CdkDragHandle,
     CdkMenuTrigger,
     NgTemplateOutlet,
     SiIconComponent,
