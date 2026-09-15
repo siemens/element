@@ -15,8 +15,9 @@ import {
   input,
   model,
   output,
+  viewChild,
   signal,
-  viewChild
+  effect
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -37,6 +38,7 @@ import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-transla
 
 import { MessageAction } from './message-action.model';
 import { Attachment, SiAttachmentListComponent } from './si-attachment-list.component';
+import { SI_CHAT_INPUT_PARENT, SiChatInputParent } from './si-chat-input-token';
 
 /**
  * Attachment item interface for file attachments in chat messages, extension of {@link Attachment} for {@link SiAttachmentListComponent} to use within {@link SiChatInputComponent}.
@@ -46,7 +48,8 @@ import { Attachment, SiAttachmentListComponent } from './si-attachment-list.comp
  * @see {@link Attachment} for base attachment interface
  * @see {@link SiAttachmentListComponent} for the attachment list component
  * @see {@link SiChatInputComponent} for the chat input component
- * @see {@link SiChatContainerComponent} for the chat container component
+ * @see {@link SiChatContainerComponent} for the base chat container component where this can be used
+ * @see {@link SiAiChatContainerComponent} for the AI chat container where this needs to be used
  *
  * @experimental
  */
@@ -73,6 +76,7 @@ export interface ChatInputAttachment extends Attachment {
  * - Displaying primary and secondary actions.
  *
  * Additionally to the inputs and outputs documented here, the component supports content projection via the following slots:
+ *
  * - Default content: Custom action buttons to display inline, prefer using the `actions` input for buttons, can be used in addition.
  * - `siChatInputDisclaimer` selector: Custom disclaimer content to display below the input area, prefer using the `disclaimer` input for simple text disclaimers.
  *
@@ -108,6 +112,18 @@ export class SiChatInputComponent implements AfterViewInit {
     elementStopFilled
   });
 
+  private readonly parent = inject<SiChatInputParent>(SI_CHAT_INPUT_PARENT, { optional: true });
+
+  constructor() {
+    effect(() => {
+      const parent = this.parent;
+      if (parent) {
+        this.sending.set(parent.inputSending());
+        this.interruptible.set(parent.inputInterruptible());
+      }
+    });
+  }
+
   /**
    * Current input value
    * @defaultValue ''
@@ -136,7 +152,7 @@ export class SiChatInputComponent implements AfterViewInit {
    * Whether a message is currently being sent, also prevent the sending of new ones while still allowing the user to type
    * @defaultValue false
    */
-  readonly sending = input(false, { transform: booleanAttribute });
+  readonly sending = model(false);
 
   /**
    * Whether the input supports interrupting ongoing operations. When active,
@@ -144,7 +160,7 @@ export class SiChatInputComponent implements AfterViewInit {
    * If sending is true, the interrupt button will be disabled.
    * @defaultValue false
    */
-  readonly interruptible = input(false, { transform: booleanAttribute });
+  readonly interruptible = model(false);
 
   /**
    * Maximum number of characters allowed
@@ -384,6 +400,7 @@ export class SiChatInputComponent implements AfterViewInit {
         content: this.value(),
         attachments: this.attachments()
       });
+      this.parent?.onInputSend();
 
       this.value.set('');
       this.attachments.set([]);
