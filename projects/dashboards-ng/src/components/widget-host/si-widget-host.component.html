@@ -70,10 +70,11 @@
       }
     </div>
     @let footer = widgetInstanceFooter();
-    @if (footer && !setupPending()) {
-      <div class="card-footer" footer>
+    <div class="card-footer" footer [class.has-widget-footer-template]="footer && !setupPending()">
+      @if (footer && !setupPending()) {
         <ng-container *ngTemplateOutlet="footer" />
-      </div>
-    }
+      }
+      <div #widgetFooterHost class="widget-footer-host"></div>
+    </div>
   </si-dashboard-card>
 </div>

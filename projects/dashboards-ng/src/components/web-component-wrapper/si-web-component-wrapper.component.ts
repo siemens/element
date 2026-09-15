@@ -7,7 +7,7 @@ import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
 
-import { WidgetConfigEvent, WidgetInstance } from '../../model/widgets.model';
+import { WidgetConfigEvent, WidgetInstance, WidgetSlotTargets } from '../../model/widgets.model';
 import { SiWebComponentWrapperBaseComponent } from './si-web-component-wrapper-base.component';
 
 @Component({
@@ -18,6 +18,19 @@ export class SiWebComponentWrapperComponent
   extends SiWebComponentWrapperBaseComponent<WidgetInstance>
   implements WidgetInstance, AfterViewInit, OnDestroy
 {
+  private _widgetSlots?: WidgetSlotTargets;
+
+  get widgetSlots(): WidgetSlotTargets | undefined {
+    return this._widgetSlots;
+  }
+
+  set widgetSlots(widgetSlots: WidgetSlotTargets | undefined) {
+    this._widgetSlots = widgetSlots;
+    if (this.webComponent) {
+      this.webComponent.widgetSlots = widgetSlots;
+    }
+  }
+
   private _editable?: boolean;
   get editable(): boolean {
     return this._editable ?? false;
@@ -42,8 +55,11 @@ export class SiWebComponentWrapperComponent
 
   override ngAfterViewInit(): void {
     super.ngAfterViewInit();
-    this.webComponent?.addEventListener('configChange', this.webComponentEventListener);
-    this.webComponentHost().nativeElement.appendChild(this.webComponent);
+    if (this.webComponent) {
+      this.webComponent.widgetSlots = this.widgetSlots;
+      this.webComponent.addEventListener('configChange', this.webComponentEventListener);
+      this.webComponentHost().nativeElement.appendChild(this.webComponent);
+    }
   }
 
   ngOnDestroy(): void {
