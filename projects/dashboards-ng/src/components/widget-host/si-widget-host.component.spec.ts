@@ -33,6 +33,7 @@ class TestWidgetHostSlotsElement extends HTMLElement {
   config?: WidgetConfig;
 
   set widgetSlots(widgetSlots: WidgetSlotTargets | undefined) {
+    widgetSlots?.headerIcon.replaceChildren('Web component header icon');
     widgetSlots?.footer.replaceChildren('Web component footer');
   }
 }
@@ -92,15 +93,43 @@ describe('SiWidgetHostComponent', () => {
         vi.useRealTimers();
       });
 
-      it('should provide the widget footer slot target', async () => {
+      it('should provide the widget slot targets', async () => {
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          heading: 'Test'
+        });
         fixture.detectChanges();
         vi.useFakeTimers();
         vi.advanceTimersByTime(0);
         await fixture.whenStable();
 
+        const headerIcon = fixture.nativeElement.querySelector('.widget-header-icon-target');
         const footer = fixture.nativeElement.querySelector('.widget-footer-host');
-        expect(component.widgetInstance?.widgetSlots).toEqual({ footer });
+        expect(component.widgetInstance?.widgetSlots).toEqual({ headerIcon, footer });
         vi.useRealTimers();
+      });
+
+      it('should render the widget header icon template', async () => {
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          heading: 'Test',
+          payload: {
+            ...TEST_WIDGET_CONFIG_0.payload,
+            headerIcon: true
+          }
+        });
+        fixture.detectChanges();
+        vi.useFakeTimers();
+        vi.advanceTimersByTime(0);
+        try {
+          await fixture.whenStable();
+          fixture.detectChanges();
+          expect(
+            fixture.nativeElement.querySelector('si-card-header .widget-header-icon-host')
+          ).toHaveTextContent('Angular header icon');
+        } finally {
+          vi.useRealTimers();
+        }
       });
 
       it('should not create widget instance without widget', async () => {
@@ -253,7 +282,10 @@ describe('SiWidgetHostComponent', () => {
         componentName: testWebComponentTagName,
         url: 'data:text/javascript,'
       } satisfies WebComponent);
-      fixture.componentRef.setInput('widgetConfig', TEST_WIDGET_CONFIG_0);
+      fixture.componentRef.setInput('widgetConfig', {
+        ...TEST_WIDGET_CONFIG_0,
+        heading: 'Test'
+      });
       fixture.componentRef.setInput('grid', {
         update: vi.fn(),
         makeWidget: vi.fn()
@@ -269,9 +301,20 @@ describe('SiWidgetHostComponent', () => {
       );
     });
 
-    it('should clear web component footer content when detaching the widget', async () => {
+    it('should let the web component render into the header icon slot', async () => {
       fixture.detectChanges();
       await fixture.whenStable();
+
+      expect(
+        fixture.nativeElement.querySelector('si-card-header .widget-header-icon-host')
+      ).toHaveTextContent('Web component header icon');
+    });
+
+    it('should clear web component slot content when detaching the widget', async () => {
+      fixture.detectChanges();
+      await fixture.whenStable();
+      const headerIcon = fixture.nativeElement.querySelector('.widget-header-icon-target');
+      const footer = fixture.nativeElement.querySelector('.widget-footer-host');
 
       fixture.componentRef.setInput('widgetConfig', {
         ...TEST_WIDGET_CONFIG_0,
@@ -279,7 +322,8 @@ describe('SiWidgetHostComponent', () => {
       });
       await fixture.whenStable();
 
-      expect(fixture.nativeElement.querySelector('.widget-footer-host')).toBeEmptyDOMElement();
+      expect(headerIcon).toBeEmptyDOMElement();
+      expect(footer).toBeEmptyDOMElement();
     });
   });
 
