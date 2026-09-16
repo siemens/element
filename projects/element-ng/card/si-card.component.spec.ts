@@ -13,6 +13,7 @@ describe('SiCardComponent', () => {
   let fixture: ComponentFixture<SiCardComponent>;
   let element: HTMLElement;
   const heading = signal('');
+  const subHeading = signal('');
   const primaryActions = signal<ContentActionBarMainItem[]>([]);
   const secondaryActions = signal<MenuItem[]>([]);
   const actionBarViewType = signal<ViewType>('collapsible');
@@ -27,6 +28,7 @@ describe('SiCardComponent', () => {
 
   beforeEach(() => {
     heading.set('');
+    subHeading.set('');
     primaryActions.set([]);
     secondaryActions.set([]);
     actionBarViewType.set('collapsible');
@@ -39,6 +41,7 @@ describe('SiCardComponent', () => {
     fixture = TestBed.createComponent(SiCardComponent, {
       bindings: [
         inputBinding('heading', heading),
+        inputBinding('subHeading', subHeading),
         inputBinding('primaryActions', primaryActions),
         inputBinding('secondaryActions', secondaryActions),
         inputBinding('actionBarViewType', actionBarViewType),
@@ -57,6 +60,14 @@ describe('SiCardComponent', () => {
     heading.set('TITLE_KEY');
     await fixture.whenStable();
     expect(element.querySelector('.card-header')!).toHaveTextContent('TITLE_KEY');
+  });
+
+  it('should not assign undefined heading ids', async () => {
+    heading.set('TITLE_KEY');
+    subHeading.set('SUBTITLE_KEY');
+    await fixture.whenStable();
+    expect(element.querySelector('.si-h5')).not.toHaveAttribute('id');
+    expect(element.querySelector('.si-body')).not.toHaveAttribute('id');
   });
 
   describe('content action bar', () => {
