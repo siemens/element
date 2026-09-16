@@ -29,7 +29,7 @@ $list-header-filter-padding-vertical: map.get(all-variables.$spacers-block, 3);
   gap: var(--filter-pill-gap);
 
   .list-text {
-    color: all-variables.$si-sys-text-disabled;
+    color: all-variables.$si-sys-color-text-disabled;
   }
 
   .invisible {

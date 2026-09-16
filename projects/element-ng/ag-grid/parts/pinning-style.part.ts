@@ -14,11 +14,11 @@ import { createPart, type Part } from 'ag-grid-community';
 export const elementPinningStyle: Part = createPart({
   css: `
   .ag-grid-pinned-top-rows-container {
-    box-shadow: var(--si-sys-effects-shadow-2);
+    box-shadow: var(--si-sys-color-effects-shadow-2);
   }
 
   .ag-grid-pinned-bottom-rows-container {
-    box-shadow: var(--si-sys-effects-shadow-2);
+    box-shadow: var(--si-sys-color-effects-shadow-2);
   }
 `
 });

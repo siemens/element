@@ -5,14 +5,14 @@
   cursor: pointer;
   min-inline-size: 72px;
   block-size: 100%;
-  color: all-variables.$si-sys-text-primary;
+  color: all-variables.$si-sys-color-text-primary;
   padding-inline-end: calc(
     map.get(all-variables.$spacers-block, 2) - all-variables.$input-border-width +
       var(--si-feedback-icon-size, 0px)
   );
 
   &.disabled {
-    color: all-variables.$si-sys-text-disabled;
+    color: all-variables.$si-sys-color-text-disabled;
   }
 }
 

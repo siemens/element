@@ -28,11 +28,11 @@ $page-button-size: 1.5rem;
   background: transparent;
   font-size: typography.$si-font-size-h5;
   font-weight: typography.$si-font-weight-h5;
-  color: system-tokens.$si-sys-text-primary;
+  color: system-tokens.$si-sys-color-text-primary;
   border: 0;
 
   &:is(.active, :hover:not(:disabled)):not(.separator) {
-    background: system-tokens.$si-sys-background-active;
+    background: system-tokens.$si-sys-color-background-active;
   }
 
   &:has(.icon) {

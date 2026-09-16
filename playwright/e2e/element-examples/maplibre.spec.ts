@@ -18,9 +18,9 @@ test('maplibre/maplibre-cluster', ({ si }) =>
           );
           const gradientText = gradients.join('\n');
           return {
-            caution: gradientText.includes('var(--si-sys-background-caution)'),
-            danger: gradientText.includes('var(--si-sys-background-danger)'),
-            success: gradientText.includes('var(--si-sys-background-success)')
+            caution: gradientText.includes('var(--si-sys-color-background-caution)'),
+            danger: gradientText.includes('var(--si-sys-color-background-danger)'),
+            success: gradientText.includes('var(--si-sys-color-background-success)')
           };
         })
         .toEqual({ caution: true, danger: true, success: true });

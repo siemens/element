@@ -16,7 +16,7 @@ describe('cluster utils', () => {
 
     expect(configuration.segments).toHaveLength(4);
     expect(configuration.segments[0]).toEqual({
-      color: 'var(--si-sys-background-information)',
+      color: 'var(--si-sys-color-background-information)',
       property: 'si_group_0'
     });
     expect(configuration.clusterProperties.si_group_0).toEqual([
@@ -62,13 +62,13 @@ describe('cluster utils', () => {
     expect(gradient).toContain('conic-gradient(from -90deg');
     expect(gradient).toContain('red');
     expect(gradient).toContain('blue');
-    expect(gradient).toContain('var(--si-sys-background-accent)');
-    expect(gradient).toContain('var(--si-sys-background-1)');
+    expect(gradient).toContain('var(--si-sys-color-background-accent)');
+    expect(gradient).toContain('var(--si-sys-color-background-1)');
   });
 
   it('uses a neutral color when a cluster has no configured group', () => {
     expect(createClusterGradient(clusterFeature({ point_count: 2 }), [])).toBe(
-      'conic-gradient(from -90deg, var(--si-sys-background-accent) 0deg 360deg)'
+      'conic-gradient(from -90deg, var(--si-sys-color-background-accent) 0deg 360deg)'
     );
   });
 
@@ -84,14 +84,14 @@ describe('cluster utils', () => {
 
     expect(configuration.segments).toHaveLength(12);
     expect(configuration.segments.slice(4)).toEqual([
-      { color: 'var(--si-sys-background-information)', property: 'si_status_info' },
-      { color: 'var(--si-sys-background-success)', property: 'si_status_success' },
-      { color: 'var(--si-sys-background-warning)', property: 'si_status_warning' },
-      { color: 'var(--si-sys-background-danger)', property: 'si_status_danger' },
-      { color: 'var(--si-sys-background-caution)', property: 'si_status_caution' },
-      { color: 'var(--si-sys-background-critical)', property: 'si_status_critical' },
-      { color: 'var(--si-sys-background-accent)', property: 'si_status_default' },
-      { color: 'var(--si-sys-background-neutral)', property: 'si_status_unknown' }
+      { color: 'var(--si-sys-color-background-information)', property: 'si_status_info' },
+      { color: 'var(--si-sys-color-background-success)', property: 'si_status_success' },
+      { color: 'var(--si-sys-color-background-warning)', property: 'si_status_warning' },
+      { color: 'var(--si-sys-color-background-danger)', property: 'si_status_danger' },
+      { color: 'var(--si-sys-color-background-caution)', property: 'si_status_caution' },
+      { color: 'var(--si-sys-color-background-critical)', property: 'si_status_critical' },
+      { color: 'var(--si-sys-color-background-accent)', property: 'si_status_default' },
+      { color: 'var(--si-sys-color-background-neutral)', property: 'si_status_unknown' }
     ]);
     expect(configuration.clusterProperties.si_status_caution).toEqual([
       '+',
@@ -123,6 +123,6 @@ describe('cluster utils', () => {
 
     expect(gradient).toContain('red');
     expect(gradient).toContain('yellow');
-    expect(gradient).toContain('var(--si-sys-background-accent)');
+    expect(gradient).toContain('var(--si-sys-color-background-accent)');
   });
 });

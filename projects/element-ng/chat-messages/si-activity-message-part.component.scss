@@ -15,7 +15,7 @@
   display: flex;
   align-items: center;
   gap: map.get(variables.$spacers-inline, 2);
-  color: variables.$si-sys-text-secondary;
+  color: variables.$si-sys-color-text-secondary;
 }
 
 .section-toggle {
@@ -74,7 +74,7 @@
   padding-inline-start: calc(
     variables.$si-icon-font-size-sm + map.get(variables.$spacers-inline, 2)
   );
-  color: variables.$si-sys-text-secondary;
+  color: variables.$si-sys-color-text-secondary;
 
   &:empty {
     display: none;

@@ -13,7 +13,7 @@ $btn-icon-font-size: variables.$si-icon-font-size;
 
 // there are some non .btn buttons used in element
 button {
-  color: system-tokens.$si-sys-text-primary;
+  color: system-tokens.$si-sys-color-text-primary;
 }
 
 :is(.btn, .btn-close) {
@@ -74,55 +74,55 @@ button {
 }
 
 .btn-primary {
-  --btn-bg: #{system-tokens.$si-sys-background-accent};
-  --btn-bg-hover: #{system-tokens.$si-sys-background-accent-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-accent-active};
-  --btn-color: #{system-tokens.$si-sys-text-on-accent};
-  --btn-color-hover: #{system-tokens.$si-sys-text-on-accent};
-  --btn-color-active: #{system-tokens.$si-sys-text-on-accent};
+  --btn-bg: #{system-tokens.$si-sys-color-background-accent};
+  --btn-bg-hover: #{system-tokens.$si-sys-color-background-accent-hover};
+  --btn-bg-active: #{system-tokens.$si-sys-color-background-accent-active};
+  --btn-color: #{system-tokens.$si-sys-color-text-on-accent};
+  --btn-color-hover: #{system-tokens.$si-sys-color-text-on-accent};
+  --btn-color-active: #{system-tokens.$si-sys-color-text-on-accent};
 }
 
 .btn-danger {
-  --btn-bg: #{system-tokens.$si-sys-background-danger};
-  --btn-bg-hover: #{system-tokens.$si-sys-background-danger-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-danger-active};
-  --btn-color: #{system-tokens.$si-sys-text-on-danger};
-  --btn-color-hover: #{system-tokens.$si-sys-text-on-danger};
-  --btn-color-active: #{system-tokens.$si-sys-text-on-danger};
+  --btn-bg: #{system-tokens.$si-sys-color-background-danger};
+  --btn-bg-hover: #{system-tokens.$si-sys-color-background-danger-hover};
+  --btn-bg-active: #{system-tokens.$si-sys-color-background-danger-active};
+  --btn-color: #{system-tokens.$si-sys-color-text-on-danger};
+  --btn-color-hover: #{system-tokens.$si-sys-color-text-on-danger};
+  --btn-color-active: #{system-tokens.$si-sys-color-text-on-danger};
 }
 
 .btn-warning {
-  --btn-bg: #{system-tokens.$si-sys-background-warning};
-  --btn-bg-hover: #{system-tokens.$si-sys-background-warning-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-warning-active};
-  --btn-color: #{system-tokens.$si-sys-text-on-warning};
-  --btn-color-hover: #{system-tokens.$si-sys-text-on-warning};
-  --btn-color-active: #{system-tokens.$si-sys-text-on-warning};
+  --btn-bg: #{system-tokens.$si-sys-color-background-warning};
+  --btn-bg-hover: #{system-tokens.$si-sys-color-background-warning-hover};
+  --btn-bg-active: #{system-tokens.$si-sys-color-background-warning-active};
+  --btn-color: #{system-tokens.$si-sys-color-text-on-warning};
+  --btn-color-hover: #{system-tokens.$si-sys-color-text-on-warning};
+  --btn-color-active: #{system-tokens.$si-sys-color-text-on-warning};
 }
 
 .btn-ghost {
-  --btn-bg: #{system-tokens.$si-sys-background-1};
-  --btn-bg-hover: #{system-tokens.$si-sys-background-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-active};
-  --btn-color: #{system-tokens.$si-sys-text-primary};
-  --btn-color-hover: #{system-tokens.$si-sys-text-primary};
-  --btn-color-active: #{system-tokens.$si-sys-text-primary};
+  --btn-bg: #{system-tokens.$si-sys-color-background-1};
+  --btn-bg-hover: #{system-tokens.$si-sys-color-background-hover};
+  --btn-bg-active: #{system-tokens.$si-sys-color-background-active};
+  --btn-color: #{system-tokens.$si-sys-color-text-primary};
+  --btn-color-hover: #{system-tokens.$si-sys-color-text-primary};
+  --btn-color-active: #{system-tokens.$si-sys-color-text-primary};
 }
 
 .btn-secondary,
 .btn-secondary-warning,
 .btn-secondary-danger,
 .btn-secondary-ghost {
-  --btn-bg: #{system-tokens.$si-sys-background-accent-secondary};
-  --btn-bg-hover: #{system-tokens.$si-sys-background-accent-secondary-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-accent-secondary-active};
-  --btn-color: #{system-tokens.$si-sys-text-on-accent-secondary};
-  --btn-color-hover: #{system-tokens.$si-sys-text-on-accent-secondary-hover};
-  --btn-color-active: #{system-tokens.$si-sys-text-on-accent-secondary-active};
+  --btn-bg: #{system-tokens.$si-sys-color-background-accent-secondary};
+  --btn-bg-hover: #{system-tokens.$si-sys-color-background-accent-secondary-hover};
+  --btn-bg-active: #{system-tokens.$si-sys-color-background-accent-secondary-active};
+  --btn-color: #{system-tokens.$si-sys-color-text-on-accent-secondary};
+  --btn-color-hover: #{system-tokens.$si-sys-color-text-on-accent-secondary-hover};
+  --btn-color-active: #{system-tokens.$si-sys-color-text-on-accent-secondary-active};
   --btn-border-width: 1px;
-  --btn-border-color: #{system-tokens.$si-sys-border-accent};
-  --btn-border-color-hover: #{system-tokens.$si-sys-border-accent-hover};
-  --btn-border-color-active: #{system-tokens.$si-sys-border-accent-active};
+  --btn-border-color: #{system-tokens.$si-sys-color-border-accent};
+  --btn-border-color-hover: #{system-tokens.$si-sys-color-border-accent-hover};
+  --btn-border-color-active: #{system-tokens.$si-sys-color-border-accent-active};
 }
 
 .btn-tertiary,
@@ -130,45 +130,45 @@ button {
 .btn-tertiary-danger,
 .btn-tertiary-ghost {
   --btn-bg: transparent;
-  --btn-bg-hover: #{system-tokens.$si-sys-background-accent-secondary-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-accent-secondary-active};
-  --btn-color: #{system-tokens.$si-sys-text-on-accent-secondary};
-  --btn-color-hover: #{system-tokens.$si-sys-text-on-accent-secondary-hover};
-  --btn-color-active: #{system-tokens.$si-sys-text-on-accent-secondary-active};
+  --btn-bg-hover: #{system-tokens.$si-sys-color-background-accent-secondary-hover};
+  --btn-bg-active: #{system-tokens.$si-sys-color-background-accent-secondary-active};
+  --btn-color: #{system-tokens.$si-sys-color-text-on-accent-secondary};
+  --btn-color-hover: #{system-tokens.$si-sys-color-text-on-accent-secondary-hover};
+  --btn-color-active: #{system-tokens.$si-sys-color-text-on-accent-secondary-active};
 }
 
 .btn-secondary-warning,
 .btn-tertiary-warning {
-  --btn-bg-hover: #{system-tokens.$si-sys-background-warning-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-warning-active};
-  --btn-color: #{system-tokens.$si-sys-text-on-warning-secondary};
-  --btn-color-hover: #{system-tokens.$si-sys-text-on-warning};
-  --btn-color-active: #{system-tokens.$si-sys-text-on-warning};
-  --btn-border-color: #{system-tokens.$si-sys-border-warning-secondary};
+  --btn-bg-hover: #{system-tokens.$si-sys-color-background-warning-hover};
+  --btn-bg-active: #{system-tokens.$si-sys-color-background-warning-active};
+  --btn-color: #{system-tokens.$si-sys-color-text-on-warning-secondary};
+  --btn-color-hover: #{system-tokens.$si-sys-color-text-on-warning};
+  --btn-color-active: #{system-tokens.$si-sys-color-text-on-warning};
+  --btn-border-color: #{system-tokens.$si-sys-color-border-warning-secondary};
   --btn-border-color-hover: transparent;
   --btn-border-color-active: transparent;
 }
 
 .btn-secondary-danger,
 .btn-tertiary-danger {
-  --btn-bg-hover: #{system-tokens.$si-sys-background-danger-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-danger-active};
-  --btn-color: #{system-tokens.$si-sys-text-on-danger-secondary};
-  --btn-color-hover: #{system-tokens.$si-sys-text-on-danger};
-  --btn-color-active: #{system-tokens.$si-sys-text-on-danger};
-  --btn-border-color: #{system-tokens.$si-sys-border-danger-secondary};
+  --btn-bg-hover: #{system-tokens.$si-sys-color-background-danger-hover};
+  --btn-bg-active: #{system-tokens.$si-sys-color-background-danger-active};
+  --btn-color: #{system-tokens.$si-sys-color-text-on-danger-secondary};
+  --btn-color-hover: #{system-tokens.$si-sys-color-text-on-danger};
+  --btn-color-active: #{system-tokens.$si-sys-color-text-on-danger};
+  --btn-border-color: #{system-tokens.$si-sys-color-border-danger-secondary};
   --btn-border-color-hover: transparent;
   --btn-border-color-active: transparent;
 }
 
 .btn-secondary-ghost,
 .btn-tertiary-ghost {
-  --btn-bg-hover: #{system-tokens.$si-sys-background-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-active};
-  --btn-color: #{system-tokens.$si-sys-text-primary};
-  --btn-color-hover: #{system-tokens.$si-sys-text-primary};
-  --btn-color-active: #{system-tokens.$si-sys-text-primary};
-  --btn-border-color: #{system-tokens.$si-sys-border-3};
+  --btn-bg-hover: #{system-tokens.$si-sys-color-background-hover};
+  --btn-bg-active: #{system-tokens.$si-sys-color-background-active};
+  --btn-color: #{system-tokens.$si-sys-color-text-primary};
+  --btn-color-hover: #{system-tokens.$si-sys-color-text-primary};
+  --btn-color-active: #{system-tokens.$si-sys-color-text-primary};
+  --btn-border-color: #{system-tokens.$si-sys-color-border-3};
   --btn-border-color-hover: transparent;
   --btn-border-color-active: transparent;
 }
@@ -176,7 +176,7 @@ button {
 .btn-link {
   --btn-color: #{bootstrap-variables.$btn-link-color};
   --btn-color-hover: #{bootstrap-variables.$btn-link-hover-color};
-  --btn-color-active: #{system-tokens.$si-sys-text-accent-active};
+  --btn-color-active: #{system-tokens.$si-sys-color-text-accent-active};
   --btn-font-weight: #{typography.$si-font-weight-body};
   justify-content: flex-start;
   text-decoration: bootstrap-variables.$link-decoration;
@@ -227,17 +227,17 @@ button {
 .btn-close {
   --btn-font-weight: #{typography.$si-font-weight-normal};
   --btn-bg: transparent;
-  --btn-bg-hover: #{system-tokens.$si-sys-background-hover};
-  --btn-bg-active: #{system-tokens.$si-sys-background-active};
-  --btn-color: #{system-tokens.$si-sys-text-primary};
-  --btn-color-active: #{system-tokens.$si-sys-text-primary};
+  --btn-bg-hover: #{system-tokens.$si-sys-color-background-hover};
+  --btn-bg-active: #{system-tokens.$si-sys-color-background-active};
+  --btn-color: #{system-tokens.$si-sys-color-text-primary};
+  --btn-color-active: #{system-tokens.$si-sys-color-text-primary};
 
   &.btn-tertiary {
-    --btn-bg-hover: #{system-tokens.$si-sys-background-accent-secondary-hover};
-    --btn-bg-active: #{system-tokens.$si-sys-background-accent-secondary-active};
-    --btn-color: #{system-tokens.$si-sys-text-on-accent-secondary};
-    --btn-color-hover: #{system-tokens.$si-sys-text-on-accent-secondary-hover};
-    --btn-color-active: #{system-tokens.$si-sys-text-on-accent-secondary-active};
+    --btn-bg-hover: #{system-tokens.$si-sys-color-background-accent-secondary-hover};
+    --btn-bg-active: #{system-tokens.$si-sys-color-background-accent-secondary-active};
+    --btn-color: #{system-tokens.$si-sys-color-text-on-accent-secondary};
+    --btn-color-hover: #{system-tokens.$si-sys-color-text-on-accent-secondary-hover};
+    --btn-color-active: #{system-tokens.$si-sys-color-text-on-accent-secondary-active};
   }
 
   &::before {

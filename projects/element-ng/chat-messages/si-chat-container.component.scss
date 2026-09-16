@@ -16,11 +16,11 @@ $gap-inline: calc(map.get(variables.$spacers-inline, 9) + map.get(variables.$spa
   overflow-x: visible;
 
   &.base-0 {
-    background-color: variables.$si-sys-background-0;
+    background-color: variables.$si-sys-color-background-0;
   }
 
   &.base-1 {
-    background-color: variables.$si-sys-background-1;
+    background-color: variables.$si-sys-color-background-1;
   }
 }
 

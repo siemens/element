@@ -29,7 +29,7 @@ $blink-transition-duration: variables.$element-default-transition-duration;
 
 .status-bar-wrapper {
   padding-inline: $status-bar-padding-inline;
-  background-color: variables.$si-sys-background-1;
+  background-color: variables.$si-sys-color-background-1;
 
   > * {
     display: flex;
@@ -39,7 +39,7 @@ $blink-transition-duration: variables.$element-default-transition-duration;
 .mobile-spacer {
   margin-block: map.get(variables.$spacers-block, 2);
   margin-inline: 0;
-  background: variables.$si-sys-background-0;
+  background: variables.$si-sys-color-background-0;
   block-size: 1px;
 }
 
@@ -71,16 +71,16 @@ $blink-transition-duration: variables.$element-default-transition-duration;
 }
 
 .collapse-expand {
-  background-color: variables.$si-sys-background-1;
+  background-color: variables.$si-sys-color-background-1;
   border: 0;
   border-end-start-radius: 2rem;
   border-end-end-radius: 2rem;
   inline-size: calc(1.5rem + 2 * map.get(variables.$spacers-inline, 4));
-  color: variables.$si-sys-text-accent;
+  color: variables.$si-sys-color-text-accent;
   cursor: pointer;
 
   &.expanded {
-    box-shadow: variables.$si-sys-effects-shadow-2;
+    box-shadow: variables.$si-sys-color-effects-shadow-2;
 
     si-icon {
       transform: rotate(180deg);

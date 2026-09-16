@@ -43,7 +43,7 @@ The following color palettes are specific to the context of data visualization:
 They are used to indicate distinctly different categories. Use these color
 palettes for small areas such as lines, dashes, or dots (e.g. trend, line chart).
 
---8<-- "si-themes.md:si-sys-data-categorical"
+--8<-- "si-themes.md:si-sys-color-data-categorical"
 
 #### Data (deprecated)
 
@@ -72,7 +72,7 @@ palettes for small areas such as lines, dashes, or dots (e.g. trend, line chart)
 Use it to represent the status of a metric. It shows the quality or properties
 of the data in a scale such as poor, average, and good.
 
---8<-- "si-themes.md:si-sys-data-rating"
+--8<-- "si-themes.md:si-sys-color-data-rating"
 
 #### Rating scale (deprecated)
 
@@ -88,7 +88,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data avocado
 
---8<-- "si-themes.md:si-sys-data-sequential-avocado"
+--8<-- "si-themes.md:si-sys-color-data-sequential-avocado"
 
 #### Data avocado (deprecated)
 
@@ -101,7 +101,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data green
 
---8<-- "si-themes.md:si-sys-data-sequential-green"
+--8<-- "si-themes.md:si-sys-color-data-sequential-green"
 
 #### Data green (deprecated)
 
@@ -114,7 +114,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data turquoise
 
---8<-- "si-themes.md:si-sys-data-sequential-turquoise"
+--8<-- "si-themes.md:si-sys-color-data-sequential-turquoise"
 
 #### Data turquoise (deprecated)
 
@@ -127,7 +127,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data interactive coral
 
---8<-- "si-themes.md:si-sys-data-sequential-interactive-coral"
+--8<-- "si-themes.md:si-sys-color-data-sequential-interactive-coral"
 
 #### Data interactive coral (deprecated)
 
@@ -140,7 +140,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data blue
 
---8<-- "si-themes.md:si-sys-data-sequential-blue"
+--8<-- "si-themes.md:si-sys-color-data-sequential-blue"
 
 #### Data blue (deprecated)
 
@@ -153,7 +153,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data royal blue
 
---8<-- "si-themes.md:si-sys-data-sequential-royal-blue"
+--8<-- "si-themes.md:si-sys-color-data-sequential-royal-blue"
 
 #### Data royal blue (deprecated)
 
@@ -166,7 +166,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data purple
 
---8<-- "si-themes.md:si-sys-data-sequential-purple"
+--8<-- "si-themes.md:si-sys-color-data-sequential-purple"
 
 #### Data purple (deprecated)
 
@@ -179,7 +179,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data orchid
 
---8<-- "si-themes.md:si-sys-data-sequential-orchid"
+--8<-- "si-themes.md:si-sys-color-data-sequential-orchid"
 
 #### Data orchid (deprecated)
 
@@ -192,7 +192,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data plum
 
---8<-- "si-themes.md:si-sys-data-sequential-plum"
+--8<-- "si-themes.md:si-sys-color-data-sequential-plum"
 
 #### Data plum (deprecated)
 
@@ -205,7 +205,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data red
 
---8<-- "si-themes.md:si-sys-data-sequential-red"
+--8<-- "si-themes.md:si-sys-color-data-sequential-red"
 
 #### Data red (deprecated)
 
@@ -218,7 +218,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data orange
 
---8<-- "si-themes.md:si-sys-data-sequential-orange"
+--8<-- "si-themes.md:si-sys-color-data-sequential-orange"
 
 #### Data orange (deprecated)
 
@@ -231,7 +231,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data yellow
 
---8<-- "si-themes.md:si-sys-data-sequential-yellow"
+--8<-- "si-themes.md:si-sys-color-data-sequential-yellow"
 
 #### Data yellow (deprecated)
 
@@ -244,7 +244,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data sand
 
---8<-- "si-themes.md:si-sys-data-sequential-sand"
+--8<-- "si-themes.md:si-sys-color-data-sequential-sand"
 
 #### Data sand (deprecated)
 
@@ -257,7 +257,7 @@ of the data in a scale such as poor, average, and good.
 
 #### Data deep blue
 
---8<-- "si-themes.md:si-sys-data-sequential-deep-blue"
+--8<-- "si-themes.md:si-sys-color-data-sequential-deep-blue"
 
 #### Data deep blue (deprecated)
 

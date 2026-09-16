@@ -61,48 +61,48 @@ export const themeElement = {
   style: () => {
     const style = window.getComputedStyle(document.documentElement);
 
-    const backgroundAccent = getProp(style, '--si-sys-background-accent');
-    const backgroundAccentHover = getProp(style, '--si-sys-background-accent-hover');
-    const background1 = getProp(style, '--si-sys-background-1');
-    const background3 = getProp(style, '--si-sys-background-3');
-    const backgroundNeutral = getProp(style, '--si-sys-background-neutral');
-    const border1 = getProp(style, '--si-sys-border-1');
-    const border3 = getProp(style, '--si-sys-border-3');
-    const border4 = getProp(style, '--si-sys-border-4');
-    const borderNeutral = getProp(style, '--si-sys-border-neutral');
-    const borderAccent = getProp(style, '--si-sys-border-accent');
-    const textPrimary = getProp(style, '--si-sys-text-primary');
-    const textSecondary = getProp(style, '--si-sys-text-secondary');
-    const textInverse = getProp(style, '--si-sys-text-inverse');
-    const textDisabled = getProp(style, '--si-sys-text-disabled');
+    const backgroundAccent = getProp(style, '--si-sys-color-background-accent');
+    const backgroundAccentHover = getProp(style, '--si-sys-color-background-accent-hover');
+    const background1 = getProp(style, '--si-sys-color-background-1');
+    const background3 = getProp(style, '--si-sys-color-background-3');
+    const backgroundNeutral = getProp(style, '--si-sys-color-background-neutral');
+    const border1 = getProp(style, '--si-sys-color-border-1');
+    const border3 = getProp(style, '--si-sys-color-border-3');
+    const border4 = getProp(style, '--si-sys-color-border-4');
+    const borderNeutral = getProp(style, '--si-sys-color-border-neutral');
+    const borderAccent = getProp(style, '--si-sys-color-border-accent');
+    const textPrimary = getProp(style, '--si-sys-color-text-primary');
+    const textSecondary = getProp(style, '--si-sys-color-text-secondary');
+    const textInverse = getProp(style, '--si-sys-color-text-inverse');
+    const textDisabled = getProp(style, '--si-sys-color-text-disabled');
 
     // The order of colors is provided by ux.
     const colorPalettes = {
       default: [
-        getProp(style, '--si-sys-data-categorical-1'),
-        getProp(style, '--si-sys-data-categorical-2'),
-        getProp(style, '--si-sys-data-categorical-4'),
-        getProp(style, '--si-sys-data-categorical-6'),
-        getProp(style, '--si-sys-data-categorical-5'),
-        getProp(style, '--si-sys-data-categorical-7'),
-        getProp(style, '--si-sys-data-categorical-8'),
-        getProp(style, '--si-sys-data-categorical-9'),
-        getProp(style, '--si-sys-data-categorical-11'),
-        getProp(style, '--si-sys-data-categorical-12'),
-        getProp(style, '--si-sys-data-categorical-13'),
-        getProp(style, '--si-sys-data-categorical-16'),
-        getProp(style, '--si-sys-data-categorical-17'),
-        getProp(style, '--si-sys-data-categorical-3'),
-        getProp(style, '--si-sys-data-categorical-10'),
-        getProp(style, '--si-sys-data-categorical-14'),
-        getProp(style, '--si-sys-data-categorical-15')
+        getProp(style, '--si-sys-color-data-categorical-1'),
+        getProp(style, '--si-sys-color-data-categorical-2'),
+        getProp(style, '--si-sys-color-data-categorical-4'),
+        getProp(style, '--si-sys-color-data-categorical-6'),
+        getProp(style, '--si-sys-color-data-categorical-5'),
+        getProp(style, '--si-sys-color-data-categorical-7'),
+        getProp(style, '--si-sys-color-data-categorical-8'),
+        getProp(style, '--si-sys-color-data-categorical-9'),
+        getProp(style, '--si-sys-color-data-categorical-11'),
+        getProp(style, '--si-sys-color-data-categorical-12'),
+        getProp(style, '--si-sys-color-data-categorical-13'),
+        getProp(style, '--si-sys-color-data-categorical-16'),
+        getProp(style, '--si-sys-color-data-categorical-17'),
+        getProp(style, '--si-sys-color-data-categorical-3'),
+        getProp(style, '--si-sys-color-data-categorical-10'),
+        getProp(style, '--si-sys-color-data-categorical-14'),
+        getProp(style, '--si-sys-color-data-categorical-15')
       ]
     };
 
     const gradientColors = {
       default: [
-        getProp(style, '--si-sys-data-categorical-1'),
-        getProp(style, '--si-sys-data-categorical-2')
+        getProp(style, '--si-sys-color-data-categorical-1'),
+        getProp(style, '--si-sys-color-data-categorical-2')
       ]
     };
 

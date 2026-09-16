@@ -21,7 +21,7 @@ export const elementTextFilterStyle: Part = createPart({
 .ag-filter-add-select {
   .ag-text-field-input[type='text'] {
     border-width: 0;
-    background-color: var(--si-sys-background-4);
+    background-color: var(--si-sys-color-background-4);
   }
 }
 `

@@ -23,9 +23,9 @@ export const elementSkeletonStyle: Part = createPart({
     .ag-skeleton-effect {
       background: linear-gradient(
         90deg,
-        var(--si-sys-background-hover) 0%,
-        var(--si-sys-background-active) 25%,
-        var(--si-sys-background-hover) 50%
+        var(--si-sys-color-background-hover) 0%,
+        var(--si-sys-color-background-active) 25%,
+        var(--si-sys-color-background-hover) 50%
       );
       background-size: 200% 100%;
       background-position-x: 100%;

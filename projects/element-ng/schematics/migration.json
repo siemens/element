@@ -5,6 +5,11 @@
       "version": "51.0.0",
       "description": "Updates Siemens element to v51",
       "factory": "./ng-update/index#migrateToV51"
+    },
+    "migration-v51-0-1": {
+      "version": "51.0.1",
+      "description": "Renames Siemens Design Language color tokens to include the color group segment",
+      "factory": "./ng-update/index#migrateToV5101"
     }
   }
 }

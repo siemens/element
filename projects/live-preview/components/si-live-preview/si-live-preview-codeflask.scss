@@ -4,36 +4,36 @@
 // Codeflask/prism theme using Element Design System tokens
 // Automatically adapts to light and dark themes
 // Token mapping matches markdown syntax highlighting:
-// - Default text: si-sys-code-1
-// - Keywords, operators, and symbols: si-sys-code-2
-// - Constants: si-sys-code-3
-// - Variables and properties: si-sys-code-4
-// - Functions and built-ins: si-sys-code-5
-// - Strings and regular expressions: si-sys-code-6
-// - Numbers: si-sys-code-7
-// - Comments: si-sys-code-8
-// - Punctuation: si-sys-code-9
-// - Tags and attributes: si-sys-code-10
-// - Types and deletions: si-sys-code-11
-// - Insertions: si-sys-code-12
+// - Default text: si-sys-color-code-1
+// - Keywords, operators, and symbols: si-sys-color-code-2
+// - Constants: si-sys-color-code-3
+// - Variables and properties: si-sys-color-code-4
+// - Functions and built-ins: si-sys-color-code-5
+// - Strings and regular expressions: si-sys-color-code-6
+// - Numbers: si-sys-color-code-7
+// - Comments: si-sys-color-code-8
+// - Punctuation: si-sys-color-code-9
+// - Tags and attributes: si-sys-color-code-10
+// - Types and deletions: si-sys-color-code-11
+// - Insertions: si-sys-color-code-12
 
 // stylelint-disable selector-class-pattern
 
-$default: element-vars.$si-sys-code-1;
+$default: element-vars.$si-sys-color-code-1;
 $background: variables.$live-preview-editor-background-color;
 $background-readonly: variables.$live-preview-editor-background-color;
-$keyword: element-vars.$si-sys-code-2;
-$constant: element-vars.$si-sys-code-3;
-$variable: element-vars.$si-sys-code-4;
-$function: element-vars.$si-sys-code-5;
-$string: element-vars.$si-sys-code-6;
-$number: element-vars.$si-sys-code-7;
-$comment: element-vars.$si-sys-code-8;
-$punctuation: element-vars.$si-sys-code-9;
-$tag: element-vars.$si-sys-code-10;
-$attr: element-vars.$si-sys-code-3;
-$type: element-vars.$si-sys-code-11;
-$addition: element-vars.$si-sys-code-12;
+$keyword: element-vars.$si-sys-color-code-2;
+$constant: element-vars.$si-sys-color-code-3;
+$variable: element-vars.$si-sys-color-code-4;
+$function: element-vars.$si-sys-color-code-5;
+$string: element-vars.$si-sys-color-code-6;
+$number: element-vars.$si-sys-color-code-7;
+$comment: element-vars.$si-sys-color-code-8;
+$punctuation: element-vars.$si-sys-color-code-9;
+$tag: element-vars.$si-sys-color-code-10;
+$attr: element-vars.$si-sys-color-code-3;
+$type: element-vars.$si-sys-color-code-11;
+$addition: element-vars.$si-sys-color-code-12;
 $lines-color: element-vars.$element-text-disabled;
 $lines-background: element-vars.$element-base-4;
 

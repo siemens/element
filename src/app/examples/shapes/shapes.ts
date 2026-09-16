@@ -17,7 +17,7 @@ import { Component } from '@angular/core';
       }
       span {
         padding: 2rem;
-        background-color: var(--si-sys-background-information-subtle);
+        background-color: var(--si-sys-color-background-information-subtle);
       }
     }
   `,

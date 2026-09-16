@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
         margin: 0.5rem;
         max-inline-size: 200px;
         max-block-size: 80px;
-        background-color: var(--si-sys-background-1);
+        background-color: var(--si-sys-color-background-1);
       }
     }
   `,
