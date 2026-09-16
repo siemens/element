@@ -99,6 +99,22 @@
   }
 
   /**
+   * Restrict navigation to http(s) URLs. Rejects javascript: and other schemes
+   * that could otherwise be assigned to href/location.
+   */
+  function toHttpHref(url) {
+    try {
+      const parsed = new URL(url, window.location.origin);
+      if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+        return `${window.location.origin}/`;
+      }
+      return encodeURI(parsed.href);
+    } catch {
+      return `${window.location.origin}/`;
+    }
+  }
+
+  /**
    * True when the URL exists. Missing versioned docs objects are served as 403
    * by S3/CloudFront (not 404), so only HTTP 2xx counts as a hit.
    */
@@ -129,13 +145,15 @@
   }
 
   const pendingResolves = new WeakMap();
+  const linkVersions = new WeakMap();
+  const resolvedLinks = new WeakSet();
 
   /**
    * Point a version link at an existing page in that version.
    * Rewriting href also covers open-in-new-tab after the check completes.
    */
   function resolveVersionLink(link, currentVersion) {
-    if (link.dataset.versionResolved === 'true') {
+    if (resolvedLinks.has(link)) {
       return Promise.resolve(link.href);
     }
 
@@ -144,19 +162,20 @@
       return pending;
     }
 
-    const version = link.getAttribute('data-version') ?? '';
-    const preferredUrl = buildVersionURL(version, currentVersion, true);
-    const fallbackUrl = buildVersionURL(version, currentVersion, false);
+    const version = linkVersions.get(link) ?? '';
+    const preferredUrl = toHttpHref(buildVersionURL(version, currentVersion, true));
+    const fallbackUrl = toHttpHref(buildVersionURL(version, currentVersion, false));
     const resolve = resolveExistingUrl(preferredUrl, fallbackUrl)
       .then(url => {
-        link.href = url;
-        link.dataset.versionResolved = 'true';
+        const safeUrl = toHttpHref(url);
+        link.href = safeUrl;
+        resolvedLinks.add(link);
         pendingResolves.delete(link);
-        return url;
+        return safeUrl;
       })
       .catch(() => {
         link.href = fallbackUrl;
-        link.dataset.versionResolved = 'true';
+        resolvedLinks.add(link);
         pendingResolves.delete(link);
         return fallbackUrl;
       });
@@ -166,15 +185,45 @@
   }
 
   /**
-   * Render version selector HTML
+   * Render version selector with DOM APIs (no innerHTML).
    */
   function renderVersionSelector(versions, currentVersion) {
     const current = versions.find(v => v.version === currentVersion) || versions[0];
     const visibleVersions = versions.filter(v => !v.hidden);
 
-    const html = `<div class="md-version"><button type="button" class="md-version__current" aria-label="Select version" aria-expanded="false" aria-haspopup="true" aria-controls="md-version-list">${current.title}</button><ul id="md-version-list" class="md-version__list">${visibleVersions.map(version => `<li class="md-version__item"><a href="${buildVersionURL(version.version, currentVersion)}" data-version="${version.version}" class="md-version__link">${version.title}</a></li>`).join('')}</ul></div>`;
+    const root = document.createElement('div');
+    root.className = 'md-version';
 
-    return html;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'md-version__current';
+    button.setAttribute('aria-label', 'Select version');
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-haspopup', 'true');
+    button.setAttribute('aria-controls', 'md-version-list');
+    button.textContent = current.title;
+    root.appendChild(button);
+
+    const list = document.createElement('ul');
+    list.id = 'md-version-list';
+    list.className = 'md-version__list';
+
+    for (const version of visibleVersions) {
+      const item = document.createElement('li');
+      item.className = 'md-version__item';
+
+      const link = document.createElement('a');
+      link.className = 'md-version__link';
+      link.href = toHttpHref(buildVersionURL(version.version, currentVersion));
+      link.textContent = version.title;
+      linkVersions.set(link, version.version);
+
+      item.appendChild(link);
+      list.appendChild(item);
+    }
+
+    root.appendChild(list);
+    return root;
   }
 
   /**
@@ -214,10 +263,11 @@
 
     const navigateToResolved = (link, openInNewTab) => {
       resolveVersionLink(link, currentVersion).then(url => {
+        const safeUrl = toHttpHref(url);
         if (openInNewTab) {
-          window.open(url, '_blank', 'noopener');
+          window.open(safeUrl, '_blank', 'noopener');
         } else {
-          window.location.assign(url);
+          window.location.assign(safeUrl);
         }
       });
     };
@@ -230,7 +280,7 @@
 
       // href already points at a live page; let the browser handle navigation,
       // including modifier-key / new-tab clicks.
-      if (link.dataset.versionResolved === 'true') {
+      if (resolvedLinks.has(link)) {
         return;
       }
 
@@ -240,7 +290,7 @@
 
     versionEl.addEventListener('auxclick', event => {
       const link = event.target.closest('a.md-version__link');
-      if (!link || event.button !== 1 || link.dataset.versionResolved === 'true') {
+      if (!link || event.button !== 1 || resolvedLinks.has(link)) {
         return;
       }
 
@@ -249,9 +299,8 @@
     });
 
     versionEl.querySelectorAll('a.md-version__link').forEach(link => {
-      const version = link.getAttribute('data-version') ?? '';
-      if (version === currentVersion) {
-        link.dataset.versionResolved = 'true';
+      if ((linkVersions.get(link) ?? '') === currentVersion) {
+        resolvedLinks.add(link);
         return;
       }
 
@@ -296,19 +345,12 @@
           return;
         }
 
-        // Create .md-header__topic wrapper with version selector inside
-        const html = renderVersionSelector(versions, currentVersion);
+        const versionEl = renderVersionSelector(versions, currentVersion);
         const topicWrapper = document.createElement('div');
         topicWrapper.className = 'md-header__topic';
-        topicWrapper.innerHTML = html;
-
-        // Append to .md-header
+        topicWrapper.appendChild(versionEl);
         header.appendChild(topicWrapper);
-
-        const versionEl = topicWrapper.querySelector('.md-version');
-        if (versionEl) {
-          bindVersionSelector(versionEl, currentVersion);
-        }
+        bindVersionSelector(versionEl, currentVersion);
       })
       .catch(error => {
         console.error('[Version Selector] Failed to load:', error.message);
