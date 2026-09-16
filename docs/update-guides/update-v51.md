@@ -72,11 +72,11 @@ move to v7.1, use the standalone `SiFormlyComponent` from `@siemens/element-ng/f
 Then run the update:
 
 ```sh
-npm i @simpl/brand@4.0.0 # Only for Siemens applications
+npm i @simpl/brand@4.0.1 # Only for Siemens applications
 ng update @siemens/element-ng@51
 ```
 
-This command runs the `migration-v51` schematic.
+This command runs the `migration-v51` schematic, and from 51.0.1 also `migration-v51-0-1`.
 
 <a id="schematic-changes"></a>
 
@@ -86,6 +86,7 @@ This command runs the `migration-v51` schematic.
     - Renames the `bg-*` and `text-*` utilities to their system token equivalents, including `text-primary` to `text-accent` and `text-body` to `text-primary`
     - Renames `btn-ghost` to `btn-tertiary-ghost` and `btn-primary-ghost` to `btn-ghost`
     - Adds `btn btn-ghost` to every `si-select` without a `form-control`, so it keeps its appearance
+    - Renames `$si-sys-*`, `--si-sys-*`, and unprefixed `si-sys-*` color tokens (for example color-picker and chart `colorToken` values) to `$si-sys-color-*`, `--si-sys-color-*`, and `si-sys-color-*`
     - Renames `.shadow*`, `.elevation-*`, `$box-shadow*`, and `$element-elevation-*` to the new shadow scale
     - Renames the spacers `10` and `11` to `13` and `14`, including their `m*` and `p*` helpers
     - Renames `--si-feedback-icon-offset` to `--si-feedback-icon-size`
@@ -98,6 +99,14 @@ This command runs the `migration-v51` schematic.
     - Removes the obsolete inputs `SiLaunchpadFactoryComponent.showLessAppsText`, `SiFileUploaderComponent.uploadTextFileSelect`, `SiFileDropzoneComponent.uploadTextFileSelect`, and `SiSearchBarComponent.tabbable` from your code (`uploadTextFileSelect` needs a follow-up, see below)
     - Adds Element's missing translation handler to `TranslateModule.forRoot()` and `provideTranslateService()`
     - Removes `provideIconConfig()` from your code
+
+If you already updated to Element v51.0.0, install `@simpl/brand@4.0.1` and run `ng update`
+again so `migration-v51-0-1` rewrites the color token names. Typography tokens stay as they are.
+Utility classes such as `.background-0` are unchanged.
+
+If you import generated brand dist files, update those paths: `si-dark.*` and `si-light.*` become
+`si-sys-color.dark.*` and `si-sys-color.light.*`, `si-typography.*` becomes
+`si-sys-typography.default.*`, and `si-sys-classes.*` becomes `si-sys-color-classes.*`.
 
 If the schematic cannot infer a pixel size for `si-split`, or if `scale` and `unit` conflict, it
 logs the files where you need to set `size` and `unit`.
@@ -151,7 +160,7 @@ chart by hand because they do not fail the build:
 ## Migrate `$element` tokens
 
 Element v51 still ships the `$element-*` design-system tokens, but they are deprecated and will be
-removed in an upcoming major version. The Siemens Design Language tokens (`$si-sys-*`) replace them
+removed in an upcoming major version. The Siemens Design Language tokens (`$si-sys-color-*`) replace them
 and should be used from now on. There is not always a 1:1 mapping, because the token structure
 changed. The mapping files below include rules so the migration can be automated as much as possible.
 

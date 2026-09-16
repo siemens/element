@@ -60,7 +60,7 @@ si-select {
   display: flex;
   flex-direction: var(--direction-main);
   align-items: center;
-  color: variables.$si-sys-border-2;
+  color: variables.$si-sys-color-border-2;
   gap: map.get(variables.$spacers-block, 2) map.get(variables.$spacers-inline, 2);
 }
 
@@ -72,7 +72,7 @@ si-select {
 .dot {
   inline-size: $ths-dot-size;
   block-size: $ths-dot-size;
-  border: 1px solid variables.$si-sys-border-2;
+  border: 1px solid variables.$si-sys-color-border-2;
   border-radius: 50%;
 }
 

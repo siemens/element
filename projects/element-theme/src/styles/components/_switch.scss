@@ -5,10 +5,10 @@
 $si-switch-size: max(1.25rem, 20px) !default;
 $si-switch-inline-size: calc(2 * #{$si-switch-size});
 $si-switch-inline-spacing: calc($si-switch-inline-size + map.get(variables.$spacers-inline, 4));
-$si-switch-background-off-color: variables.$si-sys-background-1 !default;
-$si-switch-background-on-color: variables.$si-sys-background-accent !default;
+$si-switch-background-off-color: variables.$si-sys-color-background-1 !default;
+$si-switch-background-on-color: variables.$si-sys-color-background-accent !default;
 $si-switch-slider-margin: calc($si-switch-size / 5);
-$si-switch-slider-on-color: variables.$si-sys-text-on-accent !default;
+$si-switch-slider-on-color: variables.$si-sys-color-text-on-accent !default;
 $si-switch-transition-length: variables.element-transition-duration(0.4s) !default;
 
 $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin});
@@ -24,9 +24,9 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
     margin-inline-start: calc(-1 * $si-switch-inline-spacing);
     inline-size: $si-switch-inline-size !important; // stylelint-disable-line declaration-no-important
     block-size: #{$si-switch-size} !important; // stylelint-disable-line declaration-no-important
-    background-color: variables.$si-sys-background-1;
+    background-color: variables.$si-sys-color-background-1;
     transition: $si-switch-transition-length;
-    border: 1px solid variables.$si-sys-border-2;
+    border: 1px solid variables.$si-sys-color-border-2;
     border-radius: #{$si-switch-size};
     appearance: none;
 
@@ -37,7 +37,7 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
       inline-size: $si-switch-knob-size !important; // stylelint-disable-line declaration-no-important
       inset-inline-start: calc(#{$si-switch-slider-margin} - 1px);
       inset-block-end: calc(#{$si-switch-slider-margin} - 1px);
-      background-color: variables.$si-sys-text-secondary;
+      background-color: variables.$si-sys-color-text-secondary;
       transition: $si-switch-transition-length;
       border-radius: 50%;
     }
@@ -47,23 +47,23 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
     }
 
     &:hover {
-      background-color: variables.$si-sys-background-hover;
+      background-color: variables.$si-sys-color-background-hover;
     }
 
     &:is(:checked, .checked) {
-      background-color: variables.$si-sys-background-accent;
+      background-color: variables.$si-sys-color-background-accent;
 
       &:hover {
-        background-color: variables.$si-sys-background-accent-hover;
+        background-color: variables.$si-sys-color-background-accent-hover;
       }
 
       &:active {
-        background-color: variables.$si-sys-background-accent-active;
+        background-color: variables.$si-sys-color-background-accent-active;
       }
 
       &:is(:disabled, .disabled) {
-        background-color: variables.$si-sys-background-accent;
-        border-color: variables.$si-sys-border-accent;
+        background-color: variables.$si-sys-color-background-accent;
+        border-color: variables.$si-sys-color-border-accent;
       }
     }
 

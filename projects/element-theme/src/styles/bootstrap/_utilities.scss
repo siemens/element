@@ -37,10 +37,10 @@
 
 // Deprecated legacy utilities. Use system-token text utilities instead.
 $text-colors: (
-  'body': system-tokens.$si-sys-text-primary,
-  'tertiary': system-tokens.$si-sys-text-disabled,
-  'info': system-tokens.$si-sys-text-information,
-  'muted': system-tokens.$si-sys-text-disabled
+  'body': system-tokens.$si-sys-color-text-primary,
+  'tertiary': system-tokens.$si-sys-color-text-disabled,
+  'info': system-tokens.$si-sys-color-text-information,
+  'muted': system-tokens.$si-sys-color-text-disabled
 ) !default;
 
 @each $color, $value in $text-colors {
@@ -51,26 +51,26 @@ $text-colors: (
 
 // Deprecated legacy utilities. Use system-token background utilities instead.
 $background-colors: (
-  'primary': system-tokens.$si-sys-background-accent,
-  'secondary': system-tokens.$si-sys-text-secondary,
-  'tertiary': system-tokens.$si-sys-text-disabled,
-  'success': system-tokens.$si-sys-background-success,
-  'info': system-tokens.$si-sys-background-information,
-  'warning': system-tokens.$si-sys-background-warning,
-  'danger': system-tokens.$si-sys-background-danger,
-  'base-0': system-tokens.$si-sys-background-0,
-  'base-1': system-tokens.$si-sys-background-1,
-  'base-2': system-tokens.$si-sys-background-2,
-  'base-3': system-tokens.$si-sys-background-3,
-  'base-4': system-tokens.$si-sys-background-4,
-  'base-success': system-tokens.$si-sys-background-success-subtle,
-  'base-info': system-tokens.$si-sys-background-information-subtle,
-  'base-caution': system-tokens.$si-sys-background-caution-subtle,
-  'base-warning': system-tokens.$si-sys-background-warning-subtle,
-  'base-danger': system-tokens.$si-sys-background-danger-subtle,
-  'base-critical': system-tokens.$si-sys-background-critical-subtle,
-  'base-translucent-1': system-tokens.$si-sys-effects-backdrop,
-  'base-translucent-2': system-tokens.$si-sys-background-inverse
+  'primary': system-tokens.$si-sys-color-background-accent,
+  'secondary': system-tokens.$si-sys-color-text-secondary,
+  'tertiary': system-tokens.$si-sys-color-text-disabled,
+  'success': system-tokens.$si-sys-color-background-success,
+  'info': system-tokens.$si-sys-color-background-information,
+  'warning': system-tokens.$si-sys-color-background-warning,
+  'danger': system-tokens.$si-sys-color-background-danger,
+  'base-0': system-tokens.$si-sys-color-background-0,
+  'base-1': system-tokens.$si-sys-color-background-1,
+  'base-2': system-tokens.$si-sys-color-background-2,
+  'base-3': system-tokens.$si-sys-color-background-3,
+  'base-4': system-tokens.$si-sys-color-background-4,
+  'base-success': system-tokens.$si-sys-color-background-success-subtle,
+  'base-info': system-tokens.$si-sys-color-background-information-subtle,
+  'base-caution': system-tokens.$si-sys-color-background-caution-subtle,
+  'base-warning': system-tokens.$si-sys-color-background-warning-subtle,
+  'base-danger': system-tokens.$si-sys-color-background-danger-subtle,
+  'base-critical': system-tokens.$si-sys-color-background-critical-subtle,
+  'base-translucent-1': system-tokens.$si-sys-color-effects-backdrop,
+  'base-translucent-2': system-tokens.$si-sys-color-background-inverse
 ) !default;
 
 @each $color, $value in $background-colors {
@@ -80,20 +80,20 @@ $background-colors: (
 }
 
 $status-colors: (
-  'success': system-tokens.$si-sys-background-success,
-  'info': system-tokens.$si-sys-background-information,
-  'caution': system-tokens.$si-sys-background-caution,
-  'warning': system-tokens.$si-sys-background-warning,
-  'danger': system-tokens.$si-sys-background-danger,
-  'critical': system-tokens.$si-sys-background-critical,
-  'neutral': system-tokens.$si-sys-background-neutral,
-  'success-contrast': system-tokens.$si-sys-text-on-success,
-  'info-contrast': system-tokens.$si-sys-text-on-information,
-  'caution-contrast': system-tokens.$si-sys-text-on-caution,
-  'warning-contrast': system-tokens.$si-sys-text-on-warning,
-  'danger-contrast': system-tokens.$si-sys-text-on-danger,
-  'critical-contrast': system-tokens.$si-sys-text-on-critical,
-  'neutral-contrast': system-tokens.$si-sys-text-on-neutral
+  'success': system-tokens.$si-sys-color-background-success,
+  'info': system-tokens.$si-sys-color-background-information,
+  'caution': system-tokens.$si-sys-color-background-caution,
+  'warning': system-tokens.$si-sys-color-background-warning,
+  'danger': system-tokens.$si-sys-color-background-danger,
+  'critical': system-tokens.$si-sys-color-background-critical,
+  'neutral': system-tokens.$si-sys-color-background-neutral,
+  'success-contrast': system-tokens.$si-sys-color-text-on-success,
+  'info-contrast': system-tokens.$si-sys-color-text-on-information,
+  'caution-contrast': system-tokens.$si-sys-color-text-on-caution,
+  'warning-contrast': system-tokens.$si-sys-color-text-on-warning,
+  'danger-contrast': system-tokens.$si-sys-color-text-on-danger,
+  'critical-contrast': system-tokens.$si-sys-color-text-on-critical,
+  'neutral-contrast': system-tokens.$si-sys-color-text-on-neutral
 ) !default;
 
 @each $color, $value in $status-colors {

@@ -6,49 +6,49 @@
       {
         "old": "element.ui.0",
         "old-figma": "Ui/ui-0",
-        "new": "si.sys.background.accent | si.sys.text.accent | si.sys.border.accent",
+        "new": "si.sys.color.background.accent | si.sys.color.text.accent | si.sys.color.border.accent",
         "category": "ui",
-        "notes": "CONTEXT-DEPENDENT: Use si.sys.background.accent for backgrounds. Use si.sys.text.accent for text or si.sys.border.accent for strokes.",
+        "notes": "CONTEXT-DEPENDENT: Use si.sys.color.background.accent for backgrounds. Use si.sys.color.text.accent for text or si.sys.color.border.accent for strokes.",
         "rule": "If its applied on background, use background.accent; If it's applied on text, text.accent; if it's applied on a stroke, use border.accent"
       },
       {
         "old": "element.ui.0-hover",
         "old-figma": "Ui/ui-0-hover",
-        "new": "si.sys.background.accent-hover | si.sys.text.accent-hover | si.sys.border.accent-hover",
+        "new": "si.sys.color.background.accent-hover | si.sys.color.text.accent-hover | si.sys.color.border.accent-hover",
         "category": "ui",
-        "notes": "CONTEXT-DEPENDENT: Use si.sys.background.accent-hover for backgrounds. Use si.sys.text.accent-hover for text or si.sys.border.accent-hover for strokes.",
+        "notes": "CONTEXT-DEPENDENT: Use si.sys.color.background.accent-hover for backgrounds. Use si.sys.color.text.accent-hover for text or si.sys.color.border.accent-hover for strokes.",
         "rule": "If its applied on background, use background.accent-hover; If it's applied on text, text.accent-hover; if it's applied on a stroke, use border.accent-hover"
       },
       {
         "old": "element.ui.1",
         "old-figma": "Ui/ui-1",
-        "new": "si.sys.background.inverse | si.sys.text.primary | si.sys.border.1",
+        "new": "si.sys.color.background.inverse | si.sys.color.text.primary | si.sys.color.border.1",
         "category": "ui",
-        "notes": "CONTEXT-DEPENDENT: Use si.sys.background.inverse for backgrounds. Use si.sys.text.primary for text and icons, or si.sys.border.1 for strokes.",
+        "notes": "CONTEXT-DEPENDENT: Use si.sys.color.background.inverse for backgrounds. Use si.sys.color.text.primary for text and icons, or si.sys.color.border.1 for strokes.",
         "rule": "If its applied on background, use background.inverse; If it's applied on text, text.primary; if it's applied on a stroke, use border.1"
       },
       {
         "old": "element.ui.2",
         "old-figma": "Ui/ui-2",
-        "new": "si.sys.text.secondary | si.sys.border.2",
+        "new": "si.sys.color.text.secondary | si.sys.color.border.2",
         "category": "ui",
-        "notes": "CONTEXT-DEPENDENT: Use si.sys.text.secondary for text or si.sys.border.2 for strokes.",
+        "notes": "CONTEXT-DEPENDENT: Use si.sys.color.text.secondary for text or si.sys.color.border.2 for strokes.",
         "rule": "If it's applied on text, text.secondary; if it's applied on a stroke, use border.2"
       },
       {
         "old": "element.ui.3",
         "old-figma": "Ui/ui-3",
-        "new": "si.sys.background.neutral | si.sys.text.disabled | si.sys.border.3",
+        "new": "si.sys.color.background.neutral | si.sys.color.text.disabled | si.sys.color.border.3",
         "category": "ui",
-        "notes": "CONTEXT-DEPENDENT: Use si.sys.background.neutral for backgrounds. Use si.sys.text.disabled for text or si.sys.border.3 for strokes.",
+        "notes": "CONTEXT-DEPENDENT: Use si.sys.color.background.neutral for backgrounds. Use si.sys.color.text.disabled for text or si.sys.color.border.3 for strokes.",
         "rule": "If its applied on background, use background.neutral; If it's applied on text, text.disabled; if it's applied on a stroke, use border.3"
       },
       {
         "old": "element.ui.4",
         "old-figma": "Ui/ui-4",
-        "new": "si.sys.border.4",
+        "new": "si.sys.color.border.4",
         "category": "ui",
-        "notes": "CONTEXT-DEPENDENT: Use si.sys.border.4 for strokes.",
+        "notes": "CONTEXT-DEPENDENT: Use si.sys.color.border.4 for strokes.",
         "rule": "If it's applied on a stroke, use border.4"
       }
     ],
@@ -56,98 +56,98 @@
       {
         "old": "element.base.0",
         "old-figma": "Base/base-0",
-        "new": "si.sys.background.0",
+        "new": "si.sys.color.background.0",
         "category": "background",
         "notes": "Main application background"
       },
       {
         "old": "element.base.1",
         "old-figma": "Base/base-1",
-        "new": "si.sys.background.1",
+        "new": "si.sys.color.background.1",
         "category": "background",
         "notes": "Primary surface layer"
       },
       {
         "old": "element.base.1-hover",
         "old-figma": "Base/base-1-hover",
-        "new": "si.sys.background.hover",
+        "new": "si.sys.color.background.hover",
         "category": "background",
         "notes": "Hover state background"
       },
       {
         "old": "element.base.1-selected",
         "old-figma": "Base/base-1-selected",
-        "new": "si.sys.background.active",
+        "new": "si.sys.color.background.active",
         "category": "background",
         "notes": "Selected state background"
       },
       {
         "old": "element.base.2",
         "old-figma": "Base/base-2",
-        "new": "si.sys.background.2",
+        "new": "si.sys.color.background.2",
         "category": "background",
         "notes": "Secondary background, maps to base background"
       },
       {
         "old": "element.base.3",
         "old-figma": "Base/base-3",
-        "new": "si.sys.background.3",
+        "new": "si.sys.color.background.3",
         "category": "background",
         "notes": "Elevated surface (modals, popovers)"
       },
       {
         "old": "element.base.4",
         "old-figma": "Base/base-4",
-        "new": "si.sys.background.2",
+        "new": "si.sys.color.background.2",
         "category": "background",
         "notes": "Highlighted container background"
       },
       {
         "old": "element.base.input",
         "old-figma": "Base/base-input",
-        "new": "si.sys.background.4",
+        "new": "si.sys.color.background.4",
         "category": "background",
         "notes": "Background of input fields"
       },
       {
         "old": "element.base.information",
         "old-figma": "Base/base-information",
-        "new": "si.sys.background.information-subtle",
+        "new": "si.sys.color.background.information-subtle",
         "category": "background",
         "notes": "Information background"
       },
       {
         "old": "element.base.success",
         "old-figma": "Base/base-success",
-        "new": "si.sys.background.success-subtle",
+        "new": "si.sys.color.background.success-subtle",
         "category": "background",
         "notes": "Success background"
       },
       {
         "old": "element.base.caution",
         "old-figma": "Base/base-caution",
-        "new": "si.sys.background.caution-subtle",
+        "new": "si.sys.color.background.caution-subtle",
         "category": "background",
         "notes": "Caution background"
       },
       {
         "old": "element.base.warning",
         "old-figma": "Base/base-warning",
-        "new": "si.sys.background.warning-subtle",
+        "new": "si.sys.color.background.warning-subtle",
         "category": "background",
         "notes": "Warning background"
       },
       {
         "old": "element.base.danger",
         "old-figma": "Base/base-danger",
-        "new": "si.sys.background.danger-subtle",
+        "new": "si.sys.color.background.danger-subtle",
         "category": "background",
         "notes": "Danger background"
       },
       {
         "old": "element.base.critical",
         "old-figma": "Base/base-critical",
-        "new": "si.sys.background.critical-subtle",
+        "new": "si.sys.color.background.critical-subtle",
         "category": "background",
         "notes": "Critical background"
       }
@@ -156,84 +156,84 @@
       {
         "old": "element.text.primary",
         "old-figma": "Text/text-primary",
-        "new": "si.sys.text.primary",
+        "new": "si.sys.color.text.primary",
         "category": "text",
         "notes": "Primary text color"
       },
       {
         "old": "element.text.secondary",
         "old-figma": "Text/text-secondary",
-        "new": "si.sys.text.secondary",
+        "new": "si.sys.color.text.secondary",
         "category": "text",
         "notes": "Secondary text color"
       },
       {
         "old": "element.text.disabled",
         "old-figma": "Text/text-disabled",
-        "new": "si.sys.text.disabled",
+        "new": "si.sys.color.text.disabled",
         "category": "text",
         "notes": "Disabled text color"
       },
       {
         "old": "element.text.inverse",
         "old-figma": "Text/text-inverse",
-        "new": "si.sys.text.inverse",
+        "new": "si.sys.color.text.inverse",
         "category": "text",
         "notes": "Inverse text color"
       },
       {
         "old": "element.text.active",
         "old-figma": "Text/text-active",
-        "new": "si.sys.text.accent",
+        "new": "si.sys.color.text.accent",
         "category": "text",
         "notes": "Active/accent text color"
       },
       {
         "old": "element.text.information",
         "old-figma": "Text/text-information",
-        "new": "si.sys.text.information | si.sys.text.primary",
+        "new": "si.sys.color.text.information | si.sys.color.text.primary",
         "category": "text",
-        "notes": "CONTEXT-DEPENDENT: Use si.sys.text.information on default backgrounds. Use si.sys.text.primary when placed on si.sys.background.information-subtle.",
+        "notes": "CONTEXT-DEPENDENT: Use si.sys.color.text.information on default backgrounds. Use si.sys.color.text.primary when placed on si.sys.color.background.information-subtle.",
         "rule": "If background is *-subtle, use text.primary; otherwise use text.information"
       },
       {
         "old": "element.text.success",
         "old-figma": "Text/text-success",
-        "new": "si.sys.text.success | si.sys.text.primary",
+        "new": "si.sys.color.text.success | si.sys.color.text.primary",
         "category": "text",
-        "notes": "CONTEXT-DEPENDENT: Use si.sys.text.success on default backgrounds. Use si.sys.text.primary when placed on si.sys.background.success-subtle.",
+        "notes": "CONTEXT-DEPENDENT: Use si.sys.color.text.success on default backgrounds. Use si.sys.color.text.primary when placed on si.sys.color.background.success-subtle.",
         "rule": "If background is *-subtle, use text.primary; otherwise use text.success"
       },
       {
         "old": "element.text.caution",
         "old-figma": "Text/text-caution",
-        "new": "si.sys.text.caution | si.sys.text.primary",
+        "new": "si.sys.color.text.caution | si.sys.color.text.primary",
         "category": "text",
-        "notes": "CONTEXT-DEPENDENT: Use si.sys.text.caution on default backgrounds. Use si.sys.text.primary when placed on si.sys.background.caution-subtle.",
+        "notes": "CONTEXT-DEPENDENT: Use si.sys.color.text.caution on default backgrounds. Use si.sys.color.text.primary when placed on si.sys.color.background.caution-subtle.",
         "rule": "If background is *-subtle, use text.primary; otherwise use text.caution"
       },
       {
         "old": "element.text.warning",
         "old-figma": "Text/text-warning",
-        "new": "si.sys.text.warning | si.sys.text.primary",
+        "new": "si.sys.color.text.warning | si.sys.color.text.primary",
         "category": "text",
-        "notes": "CONTEXT-DEPENDENT: Use si.sys.text.warning on default backgrounds. Use si.sys.text.primary when placed on si.sys.background.warning-subtle.",
+        "notes": "CONTEXT-DEPENDENT: Use si.sys.color.text.warning on default backgrounds. Use si.sys.color.text.primary when placed on si.sys.color.background.warning-subtle.",
         "rule": "If background is *-subtle, use text.primary; otherwise use text.warning"
       },
       {
         "old": "element.text.danger",
         "old-figma": "Text/text-danger",
-        "new": "si.sys.text.danger | si.sys.text.primary",
+        "new": "si.sys.color.text.danger | si.sys.color.text.primary",
         "category": "text",
-        "notes": "CONTEXT-DEPENDENT: Use si.sys.text.danger on default backgrounds. Use si.sys.text.primary when placed on si.sys.background.danger-subtle.",
+        "notes": "CONTEXT-DEPENDENT: Use si.sys.color.text.danger on default backgrounds. Use si.sys.color.text.primary when placed on si.sys.color.background.danger-subtle.",
         "rule": "If background is *-subtle, use text.primary; otherwise use text.danger"
       },
       {
         "old": "element.text.critical",
         "old-figma": "Text/text-critical",
-        "new": "si.sys.text.critical | si.sys.text.primary",
+        "new": "si.sys.color.text.critical | si.sys.color.text.primary",
         "category": "text",
-        "notes": "CONTEXT-DEPENDENT: Use si.sys.text.critical on default backgrounds. Use si.sys.text.primary when placed on si.sys.background.critical-subtle.",
+        "notes": "CONTEXT-DEPENDENT: Use si.sys.color.text.critical on default backgrounds. Use si.sys.color.text.primary when placed on si.sys.color.background.critical-subtle.",
         "rule": "If background is *-subtle, use text.primary; otherwise use text.critical"
       }
     ],
@@ -241,119 +241,119 @@
       {
         "old": "element.action.primary",
         "old-figma": "Action/action-primary",
-        "new": "si.sys.background.accent",
+        "new": "si.sys.color.background.accent",
         "category": "action",
         "notes": "Primary action button background"
       },
       {
         "old": "element.action.primary-hover",
         "old-figma": "Action/action-primary-hover",
-        "new": "si.sys.background.accent-hover",
+        "new": "si.sys.color.background.accent-hover",
         "category": "action",
         "notes": "Primary action hover state"
       },
       {
         "old": "element.action.primary-text",
         "old-figma": "Action/action-primary-text",
-        "new": "si.sys.text.on-accent",
+        "new": "si.sys.color.text.on-accent",
         "category": "action",
         "notes": "Text on primary action"
       },
       {
         "old": "element.action.secondary",
         "old-figma": "Action/action-secondary",
-        "new": "si.sys.background.accent-secondary",
+        "new": "si.sys.color.background.accent-secondary",
         "category": "action",
         "notes": "Secondary action background"
       },
       {
         "old": "element.action.secondary-hover",
         "old-figma": "Action/action-secondary-hover",
-        "new": "si.sys.background.accent-secondary-hover",
+        "new": "si.sys.color.background.accent-secondary-hover",
         "category": "action",
         "notes": "Secondary action hover"
       },
       {
         "old": "element.action.secondary-text",
         "old-figma": "Action/action-secondary-text",
-        "new": "si.sys.text.accent",
+        "new": "si.sys.color.text.accent",
         "category": "action",
         "notes": "Secondary action text"
       },
       {
         "old": "element.action.secondary-text-hover",
         "old-figma": "Action/action-secondary-text-hover",
-        "new": "si.sys.text.accent-hover",
+        "new": "si.sys.color.text.accent-hover",
         "category": "action",
         "notes": "Secondary action text hover"
       },
       {
         "old": "element.action.secondary-border",
         "old-figma": "Action/action-secondary-border",
-        "new": "si.sys.border.accent",
+        "new": "si.sys.color.border.accent",
         "category": "action",
         "notes": "Secondary action border"
       },
       {
         "old": "element.action.secondary-border-hover",
         "old-figma": "Action/action-secondary-border-hover",
-        "new": "si.sys.border.accent-hover",
+        "new": "si.sys.color.border.accent-hover",
         "category": "action",
         "notes": "Secondary action border hover"
       },
       {
         "old": "element.action.warning",
         "old-figma": "Action/action-warning",
-        "new": "si.sys.background.warning",
+        "new": "si.sys.color.background.warning",
         "category": "action",
         "notes": "Warning action background"
       },
       {
         "old": "element.action.warning-hover",
         "old-figma": "Action/action-warning-hover",
-        "new": "si.sys.background.warning-hover",
+        "new": "si.sys.color.background.warning-hover",
         "category": "action",
         "notes": "Warning action hover"
       },
       {
         "old": "element.action.warning-text",
         "old-figma": "Action/action-warning-text",
-        "new": "si.sys.text.on-warning",
+        "new": "si.sys.color.text.on-warning",
         "category": "action",
         "notes": "Text on warning action"
       },
       {
         "old": "element.action.danger",
         "old-figma": "Action/action-danger",
-        "new": "si.sys.background.danger",
+        "new": "si.sys.color.background.danger",
         "category": "action",
         "notes": "Danger action background"
       },
       {
         "old": "element.action.danger-hover",
         "old-figma": "Action/action-danger-hover",
-        "new": "si.sys.background.danger-hover",
+        "new": "si.sys.color.background.danger-hover",
         "category": "action",
         "notes": "Danger action hover"
       },
       {
         "old": "element.action.danger-text",
         "old-figma": "Action/action-danger-text",
-        "new": "si.sys.text.on-danger",
+        "new": "si.sys.color.text.on-danger",
         "category": "action",
         "notes": "Text on danger action"
       },
       {
         "old": "element.action.secondary-warning",
         "old-figma": "Action/action-secondary-warning",
-        "new": "si.sys.background.warning-secondary",
+        "new": "si.sys.color.background.warning-secondary",
         "category": "action",
         "notes": "Secondary warning action"
       },
       {
         "old": "element.action.secondary-danger",
         "old-figma": "Action/action-secondary-danger",
-        "new": "si.sys.background.danger-secondary",
+        "new": "si.sys.color.background.danger-secondary",
         "category": "action",
         "notes": "Secondary danger action"
       }
@@ -362,28 +362,28 @@
       {
         "old": "element.ui.1",
         "old-figma": "Ui/ui-1",
-        "new": "si.sys.border.1",
+        "new": "si.sys.color.border.1",
         "category": "border",
         "notes": "Primary border color"
       },
       {
         "old": "element.ui.2",
         "old-figma": "Ui/ui-2",
-        "new": "si.sys.border.2",
+        "new": "si.sys.color.border.2",
         "category": "border",
         "notes": "Secondary border color"
       },
       {
         "old": "element.ui.3",
         "old-figma": "Ui/ui-3",
-        "new": "si.sys.border.3",
+        "new": "si.sys.color.border.3",
         "category": "border",
         "notes": "Tertiary border color"
       },
       {
         "old": "element.ui.4",
         "old-figma": "Ui/ui-4",
-        "new": "si.sys.border.4",
+        "new": "si.sys.color.border.4",
         "category": "border",
         "notes": "Default border color"
       }
@@ -392,84 +392,84 @@
       {
         "old": "element.status.information",
         "old-figma": "Status/status-information",
-        "new": "si.sys.background.information",
+        "new": "si.sys.color.background.information",
         "category": "status",
         "notes": "Information status background"
       },
       {
         "old": "element.status.information-contrast",
         "old-figma": "Status/status-information-contrast",
-        "new": "si.sys.text.on-information",
+        "new": "si.sys.color.text.on-information",
         "category": "status",
         "notes": "Text on information status"
       },
       {
         "old": "element.status.success",
         "old-figma": "Status/status-success",
-        "new": "si.sys.background.success",
+        "new": "si.sys.color.background.success",
         "category": "status",
         "notes": "Success status background"
       },
       {
         "old": "element.status.success-contrast",
         "old-figma": "Status/status-success-contrast",
-        "new": "si.sys.text.on-success",
+        "new": "si.sys.color.text.on-success",
         "category": "status",
         "notes": "Text on success status"
       },
       {
         "old": "element.status.caution",
         "old-figma": "Status/status-caution",
-        "new": "si.sys.background.caution",
+        "new": "si.sys.color.background.caution",
         "category": "status",
         "notes": "Caution status background"
       },
       {
         "old": "element.status.caution-contrast",
         "old-figma": "Status/status-caution-contrast",
-        "new": "si.sys.text.on-caution",
+        "new": "si.sys.color.text.on-caution",
         "category": "status",
         "notes": "Text on caution status"
       },
       {
         "old": "element.status.warning",
         "old-figma": "Status/status-warning",
-        "new": "si.sys.background.warning",
+        "new": "si.sys.color.background.warning",
         "category": "status",
         "notes": "Warning status background"
       },
       {
         "old": "element.status.warning-contrast",
         "old-figma": "Status/status-warning-contrast",
-        "new": "si.sys.text.on-warning",
+        "new": "si.sys.color.text.on-warning",
         "category": "status",
         "notes": "Text on warning status"
       },
       {
         "old": "element.status.danger",
         "old-figma": "Status/status-danger",
-        "new": "si.sys.background.danger",
+        "new": "si.sys.color.background.danger",
         "category": "status",
         "notes": "Danger status background"
       },
       {
         "old": "element.status.danger-contrast",
         "old-figma": "Status/status-danger-contrast",
-        "new": "si.sys.text.on-danger",
+        "new": "si.sys.color.text.on-danger",
         "category": "status",
         "notes": "Text on danger status"
       },
       {
         "old": "element.status.critical",
         "old-figma": "Status/status-critical",
-        "new": "si.sys.background.critical",
+        "new": "si.sys.color.background.critical",
         "category": "status",
         "notes": "Critical status background"
       },
       {
         "old": "element.status.critical-contrast",
         "old-figma": "Status/status-critical-contrast",
-        "new": "si.sys.text.on-critical",
+        "new": "si.sys.color.text.on-critical",
         "category": "status",
         "notes": "Text on critical status"
       }
@@ -478,378 +478,378 @@
       {
         "old": "element.data.1",
         "old-figma": "Data/Categorial/data-1",
-        "new": "si.sys.data.categorical.1",
+        "new": "si.sys.color.data.categorical.1",
         "category": "data",
         "notes": "Data visualization color 1"
       },
       {
         "old": "element.data.2",
         "old-figma": "Data/Categorial/data-2",
-        "new": "si.sys.data.categorical.2",
+        "new": "si.sys.color.data.categorical.2",
         "category": "data",
         "notes": "Data visualization color 2"
       },
       {
         "old": "element.data.3",
         "old-figma": "Data/Categorial/data-3",
-        "new": "si.sys.data.categorical.3",
+        "new": "si.sys.color.data.categorical.3",
         "category": "data",
         "notes": "Data visualization color 3"
       },
       {
         "old": "element.data.4",
         "old-figma": "Data/Categorial/data-4",
-        "new": "si.sys.data.categorical.4",
+        "new": "si.sys.color.data.categorical.4",
         "category": "data",
         "notes": "Data visualization color 4"
       },
       {
         "old": "element.data.5",
         "old-figma": "Data/Categorial/data-5",
-        "new": "si.sys.data.categorical.5",
+        "new": "si.sys.color.data.categorical.5",
         "category": "data",
         "notes": "Data visualization color 5"
       },
       {
         "old": "element.data.6",
         "old-figma": "Data/Categorial/data-6",
-        "new": "si.sys.data.categorical.6",
+        "new": "si.sys.color.data.categorical.6",
         "category": "data",
         "notes": "Data visualization color 6"
       },
       {
         "old": "element.data.7",
         "old-figma": "Data/Categorial/data-7",
-        "new": "si.sys.data.categorical.7",
+        "new": "si.sys.color.data.categorical.7",
         "category": "data",
         "notes": "Data visualization color 7"
       },
       {
         "old": "element.data.8",
         "old-figma": "Data/Categorial/data-8",
-        "new": "si.sys.data.categorical.8",
+        "new": "si.sys.color.data.categorical.8",
         "category": "data",
         "notes": "Data visualization color 8"
       },
       {
         "old": "element.data.9",
         "old-figma": "Data/Categorial/data-9",
-        "new": "si.sys.data.categorical.9",
+        "new": "si.sys.color.data.categorical.9",
         "category": "data",
         "notes": "Data visualization color 9"
       },
       {
         "old": "element.data.10",
         "old-figma": "Data/Categorial/data-10",
-        "new": "si.sys.data.categorical.10",
+        "new": "si.sys.color.data.categorical.10",
         "category": "data",
         "notes": "Data visualization color 10"
       },
       {
         "old": "element.data.11",
         "old-figma": "Data/Categorial/data-11",
-        "new": "si.sys.data.categorical.11",
+        "new": "si.sys.color.data.categorical.11",
         "category": "data",
         "notes": "Data visualization color 11"
       },
       {
         "old": "element.data.12",
         "old-figma": "Data/Categorial/data-12",
-        "new": "si.sys.data.categorical.12",
+        "new": "si.sys.color.data.categorical.12",
         "category": "data",
         "notes": "Data visualization color 12"
       },
       {
         "old": "element.data.13",
         "old-figma": "Data/Categorial/data-13",
-        "new": "si.sys.data.categorical.13",
+        "new": "si.sys.color.data.categorical.13",
         "category": "data",
         "notes": "Data visualization color 13"
       },
       {
         "old": "element.data.14",
         "old-figma": "Data/Categorial/data-14",
-        "new": "si.sys.data.categorical.14",
+        "new": "si.sys.color.data.categorical.14",
         "category": "data",
         "notes": "Data visualization color 14"
       },
       {
         "old": "element.data.15",
         "old-figma": "Data/Categorial/data-15",
-        "new": "si.sys.data.categorical.15",
+        "new": "si.sys.color.data.categorical.15",
         "category": "data",
         "notes": "Data visualization color 15"
       },
       {
         "old": "element.data.16",
         "old-figma": "Data/Categorial/data-16",
-        "new": "si.sys.data.categorical.16",
+        "new": "si.sys.color.data.categorical.16",
         "category": "data",
         "notes": "Data visualization color 16"
       },
       {
         "old": "element.data.17",
         "old-figma": "Data/Categorial/data-17",
-        "new": "si.sys.data.categorical.17",
+        "new": "si.sys.color.data.categorical.17",
         "category": "data",
         "notes": "Data visualization color 17"
       },
       {
         "old": "element.data.green.1",
         "old-figma": "Data/Sequential/data-green-1",
-        "new": "si.sys.data.sequential.green.1",
+        "new": "si.sys.color.data.sequential.green.1",
         "category": "data",
         "notes": "Sequential green scale 1"
       },
       {
         "old": "element.data.green.2",
         "old-figma": "Data/Sequential/data-green-2",
-        "new": "si.sys.data.sequential.green.2",
+        "new": "si.sys.color.data.sequential.green.2",
         "category": "data",
         "notes": "Sequential green scale 2"
       },
       {
         "old": "element.data.green.3",
         "old-figma": "Data/Sequential/data-green-3",
-        "new": "si.sys.data.sequential.green.3",
+        "new": "si.sys.color.data.sequential.green.3",
         "category": "data",
         "notes": "Sequential green scale 3"
       },
       {
         "old": "element.data.green.4",
         "old-figma": "Data/Sequential/data-green-4",
-        "new": "si.sys.data.sequential.green.4",
+        "new": "si.sys.color.data.sequential.green.4",
         "category": "data",
         "notes": "Sequential green scale 4"
       },
       {
         "old": "element.data.turquoise.1",
         "old-figma": "Data/Sequential/data-turquoise-1",
-        "new": "si.sys.data.sequential.turquoise.1",
+        "new": "si.sys.color.data.sequential.turquoise.1",
         "category": "data",
         "notes": "Sequential turquoise scale 1"
       },
       {
         "old": "element.data.turquoise.2",
         "old-figma": "Data/Sequential/data-turquoise-2",
-        "new": "si.sys.data.sequential.turquoise.2",
+        "new": "si.sys.color.data.sequential.turquoise.2",
         "category": "data",
         "notes": "Sequential turquoise scale 2"
       },
       {
         "old": "element.data.turquoise.3",
         "old-figma": "Data/Sequential/data-turquoise-3",
-        "new": "si.sys.data.sequential.turquoise.3",
+        "new": "si.sys.color.data.sequential.turquoise.3",
         "category": "data",
         "notes": "Sequential turquoise scale 3"
       },
       {
         "old": "element.data.turquoise.4",
         "old-figma": "Data/Sequential/data-turquoise-4",
-        "new": "si.sys.data.sequential.turquoise.4",
+        "new": "si.sys.color.data.sequential.turquoise.4",
         "category": "data",
         "notes": "Sequential turquoise scale 4"
       },
       {
         "old": "element.data.interactive-coral.1",
         "old-figma": "Data/Sequential/data-interactive-coral-1",
-        "new": "si.sys.data.sequential.interactive-coral.1",
+        "new": "si.sys.color.data.sequential.interactive-coral.1",
         "category": "data",
         "notes": "Sequential interactive-coral scale 1"
       },
       {
         "old": "element.data.interactive-coral.2",
         "old-figma": "Data/Sequential/data-interactive-coral-2",
-        "new": "si.sys.data.sequential.interactive-coral.2",
+        "new": "si.sys.color.data.sequential.interactive-coral.2",
         "category": "data",
         "notes": "Sequential interactive-coral scale 2"
       },
       {
         "old": "element.data.interactive-coral.3",
         "old-figma": "Data/Sequential/data-interactive-coral-3",
-        "new": "si.sys.data.sequential.interactive-coral.3",
+        "new": "si.sys.color.data.sequential.interactive-coral.3",
         "category": "data",
         "notes": "Sequential interactive-coral scale 3"
       },
       {
         "old": "element.data.interactive-coral.4",
         "old-figma": "Data/Sequential/data-interactive-coral-4",
-        "new": "si.sys.data.sequential.interactive-coral.4",
+        "new": "si.sys.color.data.sequential.interactive-coral.4",
         "category": "data",
         "notes": "Sequential interactive-coral scale 4"
       },
       {
         "old": "element.data.purple.1",
         "old-figma": "Data/Sequential/data-purple-1",
-        "new": "si.sys.data.sequential.purple.1",
+        "new": "si.sys.color.data.sequential.purple.1",
         "category": "data",
         "notes": "Sequential purple scale 1"
       },
       {
         "old": "element.data.purple.2",
         "old-figma": "Data/Sequential/data-purple-2",
-        "new": "si.sys.data.sequential.purple.2",
+        "new": "si.sys.color.data.sequential.purple.2",
         "category": "data",
         "notes": "Sequential purple scale 2"
       },
       {
         "old": "element.data.purple.3",
         "old-figma": "Data/Sequential/data-purple-3",
-        "new": "si.sys.data.sequential.purple.3",
+        "new": "si.sys.color.data.sequential.purple.3",
         "category": "data",
         "notes": "Sequential purple scale 3"
       },
       {
         "old": "element.data.purple.4",
         "old-figma": "Data/Sequential/data-purple-4",
-        "new": "si.sys.data.sequential.purple.4",
+        "new": "si.sys.color.data.sequential.purple.4",
         "category": "data",
         "notes": "Sequential purple scale 4"
       },
       {
         "old": "element.data.plum.1",
         "old-figma": "Data/Sequential/data-plum-1",
-        "new": "si.sys.data.sequential.plum.1",
+        "new": "si.sys.color.data.sequential.plum.1",
         "category": "data",
         "notes": "Sequential plum scale 1"
       },
       {
         "old": "element.data.plum.2",
         "old-figma": "Data/Sequential/data-plum-2",
-        "new": "si.sys.data.sequential.plum.2",
+        "new": "si.sys.color.data.sequential.plum.2",
         "category": "data",
         "notes": "Sequential plum scale 2"
       },
       {
         "old": "element.data.plum.3",
         "old-figma": "Data/Sequential/data-plum-3",
-        "new": "si.sys.data.sequential.plum.3",
+        "new": "si.sys.color.data.sequential.plum.3",
         "category": "data",
         "notes": "Sequential plum scale 3"
       },
       {
         "old": "element.data.plum.4",
         "old-figma": "Data/Sequential/data-plum-4",
-        "new": "si.sys.data.sequential.plum.4",
+        "new": "si.sys.color.data.sequential.plum.4",
         "category": "data",
         "notes": "Sequential plum scale 4"
       },
       {
         "old": "element.data.red.1",
         "old-figma": "Data/Sequential/data-red-1",
-        "new": "si.sys.data.sequential.red.1",
+        "new": "si.sys.color.data.sequential.red.1",
         "category": "data",
         "notes": "Sequential red scale 1"
       },
       {
         "old": "element.data.red.2",
         "old-figma": "Data/Sequential/data-red-2",
-        "new": "si.sys.data.sequential.red.2",
+        "new": "si.sys.color.data.sequential.red.2",
         "category": "data",
         "notes": "Sequential red scale 2"
       },
       {
         "old": "element.data.red.3",
         "old-figma": "Data/Sequential/data-red-3",
-        "new": "si.sys.data.sequential.red.3",
+        "new": "si.sys.color.data.sequential.red.3",
         "category": "data",
         "notes": "Sequential red scale 3"
       },
       {
         "old": "element.data.red.4",
         "old-figma": "Data/Sequential/data-red-4",
-        "new": "si.sys.data.sequential.red.4",
+        "new": "si.sys.color.data.sequential.red.4",
         "category": "data",
         "notes": "Sequential red scale 4"
       },
       {
         "old": "element.data.orange.1",
         "old-figma": "Data/Sequential/data-orange-1",
-        "new": "si.sys.data.sequential.orange.1",
+        "new": "si.sys.color.data.sequential.orange.1",
         "category": "data",
         "notes": "Sequential orange scale 1"
       },
       {
         "old": "element.data.orange.2",
         "old-figma": "Data/Sequential/data-orange-2",
-        "new": "si.sys.data.sequential.orange.2",
+        "new": "si.sys.color.data.sequential.orange.2",
         "category": "data",
         "notes": "Sequential orange scale 2"
       },
       {
         "old": "element.data.orange.3",
         "old-figma": "Data/Sequential/data-orange-3",
-        "new": "si.sys.data.sequential.orange.3",
+        "new": "si.sys.color.data.sequential.orange.3",
         "category": "data",
         "notes": "Sequential orange scale 3"
       },
       {
         "old": "element.data.orange.4",
         "old-figma": "Data/Sequential/data-orange-4",
-        "new": "si.sys.data.sequential.orange.4",
+        "new": "si.sys.color.data.sequential.orange.4",
         "category": "data",
         "notes": "Sequential orange scale 4"
       },
       {
         "old": "element.data.sand.1",
         "old-figma": "Data/Sequential/data-sand-1",
-        "new": "si.sys.data.sequential.sand.1",
+        "new": "si.sys.color.data.sequential.sand.1",
         "category": "data",
         "notes": "Sequential sand scale 1"
       },
       {
         "old": "element.data.sand.2",
         "old-figma": "Data/Sequential/data-sand-2",
-        "new": "si.sys.data.sequential.sand.2",
+        "new": "si.sys.color.data.sequential.sand.2",
         "category": "data",
         "notes": "Sequential sand scale 2"
       },
       {
         "old": "element.data.sand.3",
         "old-figma": "Data/Sequential/data-sand-3",
-        "new": "si.sys.data.sequential.sand.3",
+        "new": "si.sys.color.data.sequential.sand.3",
         "category": "data",
         "notes": "Sequential sand scale 3"
       },
       {
         "old": "element.data.sand.4",
         "old-figma": "Data/Sequential/data-sand-4",
-        "new": "si.sys.data.sequential.sand.4",
+        "new": "si.sys.color.data.sequential.sand.4",
         "category": "data",
         "notes": "Sequential sand scale 4"
       },
       {
         "old": "element.data.color.bad",
         "old-figma": "Data/Color/bad",
-        "new": "si.sys.data.rating.bad",
+        "new": "si.sys.color.data.rating.bad",
         "category": "data",
         "notes": "Rating scale: bad"
       },
       {
         "old": "element.data.color.poor",
         "old-figma": "Data/Color/poor",
-        "new": "si.sys.data.rating.poor",
+        "new": "si.sys.color.data.rating.poor",
         "category": "data",
         "notes": "Rating scale: poor"
       },
       {
         "old": "element.data.color.average",
         "old-figma": "Data/Color/average",
-        "new": "si.sys.data.rating.average",
+        "new": "si.sys.color.data.rating.average",
         "category": "data",
         "notes": "Rating scale: average"
       },
       {
         "old": "element.data.color.good",
         "old-figma": "Data/Color/good",
-        "new": "si.sys.data.rating.good",
+        "new": "si.sys.color.data.rating.good",
         "category": "data",
         "notes": "Rating scale: good"
       },
       {
         "old": "element.data.color.excellent",
         "old-figma": "Data/Color/excellent",
-        "new": "si.sys.data.rating.excellent",
+        "new": "si.sys.color.data.rating.excellent",
         "category": "data",
         "notes": "Rating scale: excellent"
       }
@@ -858,14 +858,14 @@
       {
         "old": "element.focus-default",
         "old-figma": "Action/focus",
-        "new": "si.sys.effects.focus",
+        "new": "si.sys.color.effects.focus",
         "category": "effects",
         "notes": "Focus ring/outline"
       },
       {
         "old": "element.base.base-translucent-1",
         "old-figma": "Base/base-translucent-1",
-        "new": "si.sys.effects.backdrop",
+        "new": "si.sys.color.effects.backdrop",
         "category": "effects",
         "notes": "backdrop effect for modals, popovers, and other overlays"
       }

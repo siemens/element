@@ -48,7 +48,7 @@ $thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers-block, 4
   position: relative;
   display: inline-block;
   white-space: nowrap;
-  color: variables.$si-sys-text-secondary;
+  color: variables.$si-sys-color-text-secondary;
 
   > span {
     display: inline-block;
@@ -64,7 +64,7 @@ $thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers-block, 4
     display: inline-flex;
     white-space: nowrap;
     inline-size: 100%;
-    color: variables.$si-sys-text-secondary;
+    color: variables.$si-sys-color-text-secondary;
 
     > span {
       display: inline-block;
@@ -93,7 +93,7 @@ $thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers-block, 4
     margin-block-start: calc($track-height / -2);
     block-size: $track-height;
     inline-size: 100%;
-    background: variables.$si-sys-border-4;
+    background: variables.$si-sys-color-border-4;
     pointer-events: none;
   }
 
@@ -124,7 +124,7 @@ $thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers-block, 4
   }
 
   .thumb {
-    --thumb-state-color: #{variables.$si-sys-text-accent};
+    --thumb-state-color: #{variables.$si-sys-color-text-accent};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -135,16 +135,16 @@ $thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers-block, 4
     min-inline-size: $thumb-size;
     border-radius: 50%;
     border: 1px solid var(--thumb-state-color);
-    box-shadow: variables.$si-sys-effects-shadow-1;
-    background: variables.$si-sys-background-1;
+    box-shadow: variables.$si-sys-color-effects-shadow-1;
+    background: variables.$si-sys-color-background-1;
 
     &:hover:not(.dragging) {
-      --thumb-state-color: #{variables.$si-sys-text-accent-hover};
-      background: variables.$si-sys-background-accent-secondary-hover;
+      --thumb-state-color: #{variables.$si-sys-color-text-accent-hover};
+      background: variables.$si-sys-color-background-accent-secondary-hover;
     }
 
     :host.disabled & {
-      --thumb-state-color: #{variables.$si-sys-text-disabled};
+      --thumb-state-color: #{variables.$si-sys-color-text-disabled};
     }
 
     si-icon {

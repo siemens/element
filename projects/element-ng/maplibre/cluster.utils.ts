@@ -8,14 +8,14 @@ import type { MarkerStatus } from './marker-types';
 type ClusterProperties = Record<string, ['+', unknown]>;
 
 const MARKER_STATUS_COLORS = {
-  info: 'var(--si-sys-background-information)',
-  success: 'var(--si-sys-background-success)',
-  warning: 'var(--si-sys-background-warning)',
-  danger: 'var(--si-sys-background-danger)',
-  caution: 'var(--si-sys-background-caution)',
-  critical: 'var(--si-sys-background-critical)',
-  default: 'var(--si-sys-background-accent)',
-  unknown: 'var(--si-sys-background-neutral)'
+  info: 'var(--si-sys-color-background-information)',
+  success: 'var(--si-sys-color-background-success)',
+  warning: 'var(--si-sys-color-background-warning)',
+  danger: 'var(--si-sys-color-background-danger)',
+  caution: 'var(--si-sys-color-background-caution)',
+  critical: 'var(--si-sys-color-background-critical)',
+  default: 'var(--si-sys-color-background-accent)',
+  unknown: 'var(--si-sys-color-background-neutral)'
 } satisfies Record<MarkerStatus, string>;
 
 // Keep the four-color status palette stable for numeric group IDs.
@@ -26,16 +26,16 @@ const GROUP_STATUS_COLORS = [
   MARKER_STATUS_COLORS.danger
 ];
 const ELEMENT_COLORS = [
-  'var(--si-sys-data-sequential-red-2)',
-  'var(--si-sys-data-sequential-orange-4)',
-  'var(--si-sys-background-caution)',
-  'var(--si-sys-data-sequential-green-2)',
-  'var(--si-sys-background-information)',
-  'var(--si-sys-data-categorial-1)',
-  'var(--si-sys-data-categorial-17)'
+  'var(--si-sys-color-data-sequential-red-2)',
+  'var(--si-sys-color-data-sequential-orange-4)',
+  'var(--si-sys-color-background-caution)',
+  'var(--si-sys-color-data-sequential-green-2)',
+  'var(--si-sys-color-background-information)',
+  'var(--si-sys-color-data-categorial-1)',
+  'var(--si-sys-color-data-categorial-17)'
 ];
-const UNGROUPED_COLOR = 'var(--si-sys-background-accent)';
-const SEPARATOR_COLOR = 'var(--si-sys-background-1)';
+const UNGROUPED_COLOR = 'var(--si-sys-color-background-accent)';
+const SEPARATOR_COLOR = 'var(--si-sys-color-background-1)';
 const CHART_FRAGMENTS = 20;
 const SEPARATOR_DEGREES = 2;
 

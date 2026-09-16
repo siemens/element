@@ -26,10 +26,10 @@
     var(--element-titlebar-spacing, 0px) + var(--element-system-banner-spacing, 0px)
   );
   z-index: zindex.$zindex-application-header;
-  background: system-tokens.$si-sys-background-1;
+  background: system-tokens.$si-sys-color-background-1;
   min-block-size: si-vars.$si-application-header-height;
   align-items: stretch;
-  border-block-end: 1px solid system-tokens.$si-sys-border-4;
+  border-block-end: 1px solid system-tokens.$si-sys-color-border-4;
 
   // hide border when mobile styles are applied and either the dropdown-menu is shown or navigation is expanded
   &:has(.dropdown-menu.show),
@@ -42,7 +42,7 @@
     order: 2;
     flex-basis: 100%;
     box-shadow: none;
-    border-block-start: 1px solid system-tokens.$si-sys-border-4;
+    border-block-start: 1px solid system-tokens.$si-sys-color-border-4;
     margin-block: 0;
     border-radius: 0;
   }
@@ -94,7 +94,7 @@
   display: flex;
   flex-flow: column;
   padding-block: map.get(spacers.$spacers-block, 4);
-  border-block-start: 1px solid system-tokens.$si-sys-border-4;
+  border-block-start: 1px solid system-tokens.$si-sys-color-border-4;
 }
 
 .header-navigation {
@@ -106,13 +106,13 @@
 
   .header-item {
     &.active {
-      --si-header-item-border: #{system-tokens.$si-sys-border-accent};
-      color: system-tokens.$si-sys-text-accent;
+      --si-header-item-border: #{system-tokens.$si-sys-color-border-accent};
+      color: system-tokens.$si-sys-color-text-accent;
     }
 
     &:hover {
-      --si-header-item-border: #{system-tokens.$si-sys-border-accent-hover};
-      color: system-tokens.$si-sys-text-accent-hover;
+      --si-header-item-border: #{system-tokens.$si-sys-color-border-accent-hover};
+      color: system-tokens.$si-sys-color-text-accent-hover;
     }
   }
 }
@@ -130,13 +130,13 @@
 }
 
 .header-toggle {
-  color: system-tokens.$si-sys-text-primary;
+  color: system-tokens.$si-sys-color-text-primary;
   border: 0;
   padding: map.get(spacers.$spacers-block, 5) map.get(spacers.$spacers-inline, 5);
   background-color: transparent; // remove default button style
 
   &:is(:hover, .show, :active) {
-    background: system-tokens.$si-sys-background-hover;
+    background: system-tokens.$si-sys-color-background-hover;
     text-decoration: none;
   }
 }
@@ -147,7 +147,7 @@
   flex-basis: 0;
   align-items: center;
   position: relative;
-  color: system-tokens.$si-sys-text-primary;
+  color: system-tokens.$si-sys-color-text-primary;
   inline-size: 100%;
   font-size: typography.$si-font-size-h4;
   line-height: typography.$si-line-height-h4;
@@ -176,8 +176,8 @@
   }
 
   &:hover {
-    color: system-tokens.$si-sys-text-primary;
-    background-color: system-tokens.$si-sys-background-hover;
+    color: system-tokens.$si-sys-color-text-primary;
+    background-color: system-tokens.$si-sys-color-background-hover;
     text-decoration: none;
   }
 
@@ -193,13 +193,13 @@
   }
 
   &.header-selection-item {
-    color: system-tokens.$si-sys-text-accent;
+    color: system-tokens.$si-sys-color-text-accent;
     font-size: typography.$si-font-size-h5;
     font-weight: typography.$si-font-weight-h5;
     line-height: typography.$si-line-height-h5;
 
     &:hover {
-      color: system-tokens.$si-sys-text-accent-hover;
+      color: system-tokens.$si-sys-color-text-accent-hover;
     }
   }
 }

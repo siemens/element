@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   min-inline-size: calc(1lh + 2 * map.get(variables.$spacers-inline, 4));
-  border: 1px solid variables.$si-sys-border-3;
+  border: 1px solid variables.$si-sys-color-border-3;
   border-radius: 1lh;
   padding-block: calc(map.get(variables.$spacers-block, 4) - 1px);
   padding-inline: map.get(variables.$spacers-inline, 4);
@@ -16,13 +16,13 @@
     cursor: pointer;
 
     &:not(.selected):hover {
-      background: variables.$si-sys-background-hover;
+      background: variables.$si-sys-color-background-hover;
     }
   }
 }
 
 .selected {
-  background: variables.$si-sys-background-active;
+  background: variables.$si-sys-color-background-active;
 }
 
 .disabled {

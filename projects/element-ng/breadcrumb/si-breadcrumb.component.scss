@@ -10,7 +10,7 @@
 }
 
 .separator {
-  color: variables.$si-sys-text-secondary;
+  color: variables.$si-sys-color-text-secondary;
   margin-block: 0;
   margin-inline: 0;
 }
@@ -18,5 +18,5 @@
 .disable-router-link,
 .disable-router-link:hover {
   pointer-events: none;
-  color: variables.$si-sys-text-disabled;
+  color: variables.$si-sys-color-text-disabled;
 }

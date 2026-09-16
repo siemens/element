@@ -8,8 +8,8 @@
   max-inline-size: max-content;
   padding-block: map.get(variables.$spacers-block, 2);
   padding-inline: map.get(variables.$spacers-inline, 4);
-  color: variables.$si-sys-text-inverse;
-  background-color: variables.$si-sys-background-inverse;
+  color: variables.$si-sys-color-text-inverse;
+  background-color: variables.$si-sys-color-background-inverse;
   border-radius: variables.$element-radius-1;
 
   &::before {

@@ -1,13 +1,13 @@
 @use 'system-tokens';
 
-// @deprecated Use $si-sys-effects-shadow-1 instead.
-$element-elevation-1: system-tokens.$si-sys-effects-shadow-1;
-// @deprecated Use $si-sys-effects-shadow-2 instead.
-$element-elevation-2: system-tokens.$si-sys-effects-shadow-2;
-// @deprecated Use $si-sys-effects-shadow-3 instead.
-$element-elevation-3: system-tokens.$si-sys-effects-shadow-3;
-// @deprecated Use $si-sys-effects-shadow-4 instead.
-$element-elevation-4: system-tokens.$si-sys-effects-shadow-4;
+// @deprecated Use $si-sys-color-effects-shadow-1 instead.
+$element-elevation-1: system-tokens.$si-sys-color-effects-shadow-1;
+// @deprecated Use $si-sys-color-effects-shadow-2 instead.
+$element-elevation-2: system-tokens.$si-sys-color-effects-shadow-2;
+// @deprecated Use $si-sys-color-effects-shadow-3 instead.
+$element-elevation-3: system-tokens.$si-sys-color-effects-shadow-3;
+// @deprecated Use $si-sys-color-effects-shadow-4 instead.
+$element-elevation-4: system-tokens.$si-sys-color-effects-shadow-4;
 
 // @deprecated There is no replacement.
 $element-elevation-inset-1:
