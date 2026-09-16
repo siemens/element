@@ -15,6 +15,7 @@ and directives. Applications remain responsible for configuring and composing th
 - When direct access to MapLibre features, sources, and layers is required.
 - When map controls and behavior need to be composed for a specific use case.
 - When vector-map rendering and MapLibre's ecosystem are preferred.
+- When 3D features such as pitched views, extruded buildings, or a globe are required.
 - When the high-level [Element Maps](element-maps.md) component does not provide enough flexibility.
 
 ## Code ---
@@ -140,6 +141,12 @@ contained points and their distribution by group or status.
 
 ### 3D buildings example
 
-The following example renders 3D buildings with a MapLibre fill-extrusion layer.
+MapLibre GL renders maps with WebGL, so the camera can be pitched and vector-tile
+buildings can be extruded into 3D. [Element Maps](element-maps.md) is based on
+OpenLayers and does not provide this kind of 3D rendering.
+
+The example pitches the map and adds a `fill-extrusion` layer on the OpenMapTiles
+`building` source. Building height animates in between zoom 15 and 16 using the
+`render_height` and `render_min_height` properties from the tiles.
 
 <si-docs-component example="maplibre/maplibre-3d-buildings" height="580"></si-docs-component>
