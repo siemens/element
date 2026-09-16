@@ -1,13 +1,23 @@
 # Update to Element v51
 
-!!! info "Ehm… what happened with Element v50?"
+??? info "Ehm… what happened with Element v50?"
 
-    ![](uap.svg){ align=right width="56" }
+    <svg aria-hidden="true" fill="currentColor" style="float: right; width: 56px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M357.76,159.19c-.38-52.08-47.21-94.19-101.26-94.19s-101.87,42.11-102.26,94.19c-71.99,9.07-121.24,27.45-121.24,48.66,0,30.2,99.84,54.68,223,54.68s223-24.48,223-54.68c0-21.21-49.25-39.6-121.24-48.66ZM329.73,167.38c-2.37,4.06-8.04,7.01-12.27,8.72l-8.19,3.31c-5.65,2.29-11.4,3.32-17.48,4.75h-.02c-19.85,4.68-52.47,4.52-72.14-.2-5.07-1.22-10.02-2.08-14.82-3.82-8.2-2.98-15.57-6.55-22.47-12.05-.62-11.16.1-23.07,4.91-32.99l3.63-7.48,4.11-6.89c8.57-14.38,25.42-24.78,41.57-29.9,13.35-4.23,26.56-4.23,39.76.2,3.23,1.08,6.61,1.84,9.56,3.42l9.23,4.93c14.64,9.3,26.21,23.78,31.42,40.52l3.01,12.94c.97,4.15.59,9.95.19,14.54Z"/><path d="M183.95,272s54.03,1.5,72.05,1.5,72.05-1.5,72.05-1.5c0,0-24.02,32-72.6,32s-71.5-32-71.5-32Z"/><path d="M176,432c-8.84,0-16-7.16-16-16v-96c0-8.84,7.16-16,16-16s16,7.16,16,16v96c0,8.84-7.16,16-16,16Z"/><path d="M336,432c-8.84,0-16-7.16-16-16v-96c0-8.84,7.16-16,16-16s16,7.16,16,16v96c0,8.84-7.16,16-16,16Z"/><path d="M256,448c-8.84,0-16-7.16-16-16v-96c0-8.84,7.16-16,16-16s16,7.16,16,16v96c0,8.84-7.16,16-16,16Z"/></svg>
 
-    The truth is, we don't fully know. Witnesses reported strange lights over the
-    release pipeline around 3am. By sunrise, v50 was gone: no crash report, no
-    rollback log, just a suspiciously neat crop circle shaped like a border-radius
-    token.
+    According to our investigation, aliens briefly infiltrated the release pipeline and
+    disguised a breaking change as an ordinary, unlabeled update. Before mission control
+    detected the extraterrestrial interference, Element 50 had already launched into npm
+    orbit far earlier than planned.
+
+    We removed the compromised release, but npm's intergalactic rules are absolute: once a
+    version number has been published, it can never be used again. The aliens knew exactly
+    what they were doing.
+
+    With Element 50 permanently classified, we secured the pipeline, swept the Figma files
+    for crop circles, and moved to the next available designation: Element 51.
+
+    The new release has now left the hangar—properly labeled, thoroughly inspected, and
+    mostly free of alien technology. Let us show you what's new.
 
 Element v51 requires Angular v22.
 It introduces the system tokens of the Siemens Design Language.
