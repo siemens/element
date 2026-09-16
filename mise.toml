@@ -1,4 +1,4 @@
 [tools]
 node = "24"
-pnpm = "11"
+pnpm = "12"
 uv = "0.12"

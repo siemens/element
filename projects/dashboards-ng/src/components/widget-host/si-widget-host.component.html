@@ -31,7 +31,9 @@
     [attr.role]="editable() ? 'application' : null"
     [attr.aria-roledescription]="editable() ? 'widget' : null"
     [attr.aria-label]="editable() ? (widgetConfig().heading | translate) : null"
-    [attr.aria-description]="editable() ? (a11yWidgetDescription | translate) : null"
+    [attr.aria-description]="
+      editable() && !card.isExpanded() ? (a11yWidgetDescription | translate) : null
+    "
     [expandText]="labelExpand"
     [restoreText]="labelRestore"
     [heading]="widgetConfig().heading"

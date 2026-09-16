@@ -15,6 +15,7 @@ and directives. Applications remain responsible for configuring and composing th
 - When direct access to MapLibre features, sources, and layers is required.
 - When map controls and behavior need to be composed for a specific use case.
 - When vector-map rendering and MapLibre's ecosystem are preferred.
+- When 3D features such as pitched views, extruded buildings, or a globe are required.
 - When the high-level [Element Maps](element-maps.md) component does not provide enough flexibility.
 
 ## Code ---
@@ -129,3 +130,22 @@ export class AppMapComponent {
 The following example combines the Element map style and translations with MapLibre controls.
 
 <si-docs-component example="maplibre/maplibre" height="580"></si-docs-component>
+
+### Cluster example
+
+The following example uses `SiClusterSourceComponent` to cluster GeoJSON points and
+`SiStatusMarkerComponent` for unclustered markers. Cluster markers show the number of
+contained points and their distribution by group or status.
+
+<si-docs-component example="maplibre/maplibre-cluster" height="580"></si-docs-component>
+
+### 3D buildings example
+
+MapLibre GL renders maps with WebGL, so the camera can be pitched and vector-tile
+buildings can be extruded into 3D.
+
+The example pitches the map and adds a `fill-extrusion` layer on the OpenMapTiles
+`building` source. Building height animates in between zoom 15 and 16 using the
+`render_height` and `render_min_height` properties from the tiles.
+
+<si-docs-component example="maplibre/maplibre-3d-buildings" height="580"></si-docs-component>
