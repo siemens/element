@@ -1,0 +1,1461 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>What's new in Element v51</title>
+    <style>
+      @font-face {
+        font-family: 'Siemens Sans';
+        src: url('../node_modules/@simpl/brand/assets/fonts/SiemensSansProVF_W_Wght.woff2')
+          format('woff2');
+        font-style: normal;
+        font-weight: 200 900;
+        font-display: swap;
+      }
+
+      :root {
+        --ink: #000028;
+        --ink-soft: #23233c;
+        --paper: #f3f3f3;
+        --surface: #ffffff;
+        --line: #d4d4d4;
+        --teal: #007993;
+        --cyan: #00cccc;
+        --mint: #00ffb9;
+        --blue: #297dff;
+        --orange: #d1731b;
+        --green: #2cbd72;
+        --code: #111325;
+        --slide-padding: 72px;
+        font-family: 'Siemens Sans', 'Avenir Next', sans-serif;
+        color: var(--ink);
+        background: var(--ink);
+        letter-spacing: 0;
+      }
+
+      * {
+        box-sizing: border-box;
+        letter-spacing: 0;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      body {
+        background: #080820;
+      }
+
+      button,
+      code,
+      pre {
+        font: inherit;
+      }
+
+      button {
+        color: inherit;
+      }
+
+      .deck {
+        width: 100%;
+        height: 100%;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: none;
+        min-width: 0;
+        overflow: auto;
+        background: var(--paper);
+      }
+
+      .slide.is-active {
+        display: block;
+        animation: reveal 260ms ease-out both;
+      }
+
+      .slide-shell {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        padding: var(--slide-padding);
+        padding-block-start: 24px;
+      }
+
+      .slide-shell::before {
+        position: absolute;
+        inset-block: 0;
+        inset-inline-start: 0;
+        width: 12px;
+        content: '';
+        background: var(--cyan);
+      }
+
+      .topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        min-height: 34px;
+        margin-block-end: 46px;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: var(--teal);
+        font-size: 20px;
+        font-weight: 800;
+      }
+
+      .brand span {
+        padding-inline-start: 14px;
+        border-inline-start: 1px solid var(--line);
+        color: var(--ink);
+        font-size: 16px;
+        font-weight: 650;
+      }
+
+      .section-label {
+        color: #595970;
+        font-size: 15px;
+        font-weight: 650;
+      }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--teal);
+        font-size: 18px;
+        font-weight: 750;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-block-start: 0;
+      }
+
+      h1 {
+        max-width: 930px;
+        margin-block-end: 26px;
+        font-size: 82px;
+        font-weight: 800;
+        line-height: 0.98;
+      }
+
+      h2 {
+        max-width: 1100px;
+        margin-block-end: 42px;
+        font-size: 54px;
+        font-weight: 760;
+        line-height: 1.04;
+      }
+
+      h3 {
+        margin-block-end: 12px;
+        font-size: 28px;
+        line-height: 1.15;
+      }
+
+      .lead {
+        max-width: 880px;
+        color: #4e4e62;
+        font-size: 30px;
+        line-height: 1.35;
+      }
+
+      .accent {
+        color: var(--teal);
+      }
+
+      .hero {
+        color: #ffffff;
+        background: var(--ink);
+      }
+
+      .hero .slide-shell {
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .hero .slide-shell::before {
+        width: 22px;
+        background: var(--mint);
+      }
+
+      .hero .brand,
+      .hero .eyebrow {
+        color: var(--mint);
+      }
+
+      .hero .brand span,
+      .hero .section-label {
+        color: #ffffff;
+        border-color: #5d5d75;
+      }
+
+      .hero .topline {
+        position: absolute;
+        inset-block-start: 24px;
+        inset-inline: var(--slide-padding);
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 1;
+        max-width: 930px;
+      }
+
+      .hero .lead {
+        color: #d7d7e2;
+      }
+
+      .version-mark {
+        position: absolute;
+        inset-block-end: -78px;
+        inset-inline-end: 34px;
+        color: transparent;
+        font-size: 410px;
+        font-weight: 850;
+        line-height: 0.8;
+        -webkit-text-stroke: 3px rgba(0, 255, 185, 0.34);
+        user-select: none;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-block-start: 36px;
+      }
+
+      .pill {
+        padding: 8px 13px;
+        border: 1px solid #5d5d75;
+        border-radius: 2px;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 650;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 36px;
+      }
+
+      .topic {
+        position: relative;
+        min-height: 340px;
+        padding: 36px;
+        border-block-start: 6px solid var(--teal);
+        background: var(--surface);
+      }
+
+      .topic:nth-child(2) {
+        border-color: var(--blue);
+      }
+
+      .topic-number {
+        display: block;
+        margin-block-end: 34px;
+        color: #a9a9b6;
+        font-size: 24px;
+        font-weight: 750;
+      }
+
+      .topic p {
+        color: #4e4e62;
+        font-size: 23px;
+        line-height: 1.38;
+      }
+
+      .topic strong {
+        color: var(--ink);
+      }
+
+      .version-strip {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: stretch;
+        margin-block: 18px 28px;
+      }
+
+      .version-block {
+        padding: 30px 34px;
+        border-block-start: 5px solid var(--orange);
+        background: var(--surface);
+      }
+
+      .version-block.current {
+        border-color: var(--green);
+      }
+
+      .version-block small {
+        display: block;
+        margin-block-end: 10px;
+        color: #69697c;
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .version-block strong {
+        display: block;
+        font-size: 28px;
+        line-height: 1.2;
+      }
+
+      .version-block code {
+        display: block;
+        margin-block-start: 12px;
+        color: var(--teal);
+        font-size: 19px;
+      }
+
+      .version-arrow {
+        display: grid;
+        place-items: center;
+        width: 86px;
+        color: var(--teal);
+        font-size: 44px;
+        font-weight: 300;
+      }
+
+      .legacy-lane {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 22px;
+        padding: 22px 26px;
+        border-inline-start: 5px solid var(--orange);
+        background: #fff3e6;
+      }
+
+      .legacy-lane strong {
+        color: #734213;
+        font-size: 18px;
+        text-transform: uppercase;
+      }
+
+      .legacy-lane code {
+        color: var(--ink);
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .legacy-lane span {
+        color: #734213;
+        font-size: 18px;
+        font-weight: 650;
+      }
+
+      .code-compare {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px;
+      }
+
+      .code-panel {
+        min-width: 0;
+        overflow: hidden;
+        border-block-start: 5px solid var(--orange);
+        background: var(--code);
+        color: #eef1f5;
+      }
+
+      .code-panel.after {
+        border-color: var(--mint);
+      }
+
+      .code-title {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 16px 22px;
+        border-block-end: 1px solid #34364c;
+        font-size: 17px;
+        font-weight: 750;
+      }
+
+      .code-title span {
+        color: #a9aabd;
+        font-weight: 500;
+      }
+
+      pre {
+        margin: 0;
+        padding: 22px;
+        overflow-x: auto;
+        font-family: 'SFMono-Regular', Consolas, monospace;
+        font-size: 18px;
+        line-height: 1.48;
+        tab-size: 2;
+      }
+
+      .kw {
+        color: #84b9ff;
+      }
+
+      .type {
+        color: #72e6a3;
+      }
+
+      .str {
+        color: #ffb168;
+      }
+
+      .comment {
+        color: #a9aabd;
+      }
+
+      .migration-note {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-block-start: 24px;
+        padding: 18px 22px;
+        border-inline-start: 5px solid var(--teal);
+        background: var(--surface);
+        color: #38384d;
+        font-size: 19px;
+      }
+
+      .migration-note code {
+        color: var(--teal);
+        font-family: 'SFMono-Regular', Consolas, monospace;
+        font-weight: 700;
+        overflow-wrap: anywhere;
+      }
+
+      .bulk-flow {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 76px minmax(0, 1fr);
+        align-items: center;
+        gap: 18px;
+        min-height: 0;
+      }
+
+      .feature-slide .slide-shell {
+        padding-block-end: 0;
+      }
+
+      .screenshot-frame {
+        min-width: 0;
+        margin: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: #ffffff;
+        box-shadow: 0 18px 44px rgba(0, 0, 40, 0.14);
+      }
+
+      .screenshot-window {
+        aspect-ratio: 1.6;
+        overflow: hidden;
+      }
+
+      .screenshot-window img {
+        display: block;
+        width: auto;
+        height: 100%;
+        max-width: none;
+      }
+
+      .bulk-shot .screenshot-window {
+        aspect-ratio: 1.932;
+      }
+
+      .bulk-shot .screenshot-window img {
+        width: 100%;
+        object-fit: cover;
+      }
+
+      .bulk-shot figcaption {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .bulk-shot figcaption strong {
+        color: var(--ink);
+        font-size: 18px;
+      }
+
+      .flow-arrow {
+        display: grid;
+        justify-items: center;
+        gap: 5px;
+        color: var(--teal);
+        font-size: 15px;
+        font-weight: 750;
+        text-transform: uppercase;
+      }
+
+      .flow-arrow span {
+        font-size: 42px;
+        font-weight: 300;
+        line-height: 1;
+      }
+
+      .setup-note {
+        margin-block-start: 22px;
+        padding: 17px 22px;
+        border-inline-start: 5px solid var(--teal);
+        background: var(--surface);
+        color: #4e4e62;
+        font-size: 19px;
+        line-height: 1.35;
+      }
+
+      .setup-note strong {
+        color: var(--ink);
+      }
+
+      figcaption {
+        padding: 12px 16px;
+        border-block-start: 1px solid var(--line);
+        color: #595970;
+        font-size: 15px;
+      }
+
+      .steps {
+        display: grid;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: steps;
+      }
+
+      .steps li {
+        position: relative;
+        min-height: 102px;
+        padding: 18px 0 18px 70px;
+        border-block-end: 1px solid var(--line);
+        color: #4e4e62;
+        font-size: 21px;
+        line-height: 1.3;
+        counter-increment: steps;
+      }
+
+      .steps li::before {
+        position: absolute;
+        inset-block-start: 17px;
+        inset-inline-start: 0;
+        display: grid;
+        width: 46px;
+        height: 46px;
+        place-items: center;
+        border: 2px solid var(--teal);
+        border-radius: 50%;
+        color: var(--teal);
+        content: counter(steps, decimal-leading-zero);
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .steps strong {
+        display: block;
+        margin-block-end: 4px;
+        color: var(--ink);
+        font-size: 23px;
+      }
+
+      .api-layout {
+        display: grid;
+        grid-template-columns: 0.78fr 1.22fr;
+        gap: 34px;
+      }
+
+      .setting {
+        padding: 30px;
+        border-block-start: 5px solid var(--teal);
+        background: var(--surface);
+      }
+
+      .setting p {
+        color: #4e4e62;
+        font-size: 20px;
+        line-height: 1.42;
+      }
+
+      .setting pre {
+        margin-block-start: 24px;
+        background: var(--code);
+        color: #eef1f5;
+      }
+
+      .api-code pre {
+        font-size: 17px;
+      }
+
+      .scope-note {
+        margin-block-start: 22px;
+        color: #595970;
+        font-size: 18px;
+        line-height: 1.4;
+      }
+
+      .compatibility-list {
+        margin: 0;
+        padding: 0;
+        border-block-start: 1px solid var(--line);
+        list-style: none;
+      }
+
+      .compatibility-list li {
+        display: grid;
+        grid-template-columns: 110px minmax(260px, 0.8fr) minmax(0, 1.2fr);
+        align-items: center;
+        min-height: 82px;
+        padding: 14px 22px;
+        border-block-end: 1px solid var(--line);
+        border-inline-start: 5px solid var(--teal);
+        background: var(--surface);
+      }
+
+      .compatibility-list li:nth-child(even) {
+        background: #f9f9fa;
+      }
+
+      .compatibility-version {
+        color: var(--teal);
+        font-size: 30px;
+        font-weight: 820;
+      }
+
+      .compatibility-package {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .compatibility-package strong {
+        font-size: 21px;
+      }
+
+      .compatibility-package code {
+        color: #595970;
+        font-family: 'SFMono-Regular', Consolas, monospace;
+        font-size: 15px;
+        overflow-wrap: anywhere;
+      }
+
+      .compatibility-list p {
+        margin: 0;
+        color: #4e4e62;
+        font-size: 19px;
+        line-height: 1.35;
+      }
+
+      .compatibility-list p strong {
+        color: var(--ink);
+      }
+
+      .upgrade-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+        gap: 46px;
+      }
+
+      .dependency {
+        display: flex;
+        min-height: 310px;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 34px;
+        border-block-start: 6px solid var(--blue);
+        background: var(--surface);
+        color: var(--ink);
+      }
+
+      .dependency .major {
+        color: var(--blue);
+        font-size: 112px;
+        font-weight: 850;
+        line-height: 0.9;
+      }
+
+      .dependency p {
+        margin: 0;
+        color: #4e4e62;
+        font-size: 21px;
+        line-height: 1.38;
+      }
+
+      .checklist {
+        display: grid;
+        gap: 14px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .checklist li {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        align-items: center;
+        min-height: 62px;
+        padding: 8px 18px;
+        border-block-end: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--ink);
+        font-size: 20px;
+      }
+
+      .checklist li::before {
+        color: var(--green);
+        content: '✓';
+        font-size: 24px;
+        font-weight: 800;
+      }
+
+      .checklist code {
+        color: var(--teal);
+        font-family: 'SFMono-Regular', Consolas, monospace;
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      .closing {
+        color: #ffffff;
+        background: var(--ink);
+      }
+
+      .closing .slide-shell::before {
+        background: var(--mint);
+      }
+
+      .closing .brand,
+      .closing .eyebrow {
+        color: var(--mint);
+      }
+
+      .closing .brand span,
+      .closing .section-label {
+        color: #ffffff;
+        border-color: #5d5d75;
+      }
+
+      .closing h2 {
+        max-width: 980px;
+        margin-block: auto 24px;
+        font-size: 70px;
+      }
+
+      .closing .lead {
+        margin-block-end: auto;
+        color: #d7d7e2;
+      }
+
+      .closing-grid {
+        position: absolute;
+        z-index: 0;
+        inset-block-end: 0;
+        inset-inline-end: 0;
+        display: grid;
+        width: 32%;
+        height: 42%;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        opacity: 0.55;
+      }
+
+      .closing .topline,
+      .closing .upgrade-layout {
+        position: relative;
+        z-index: 1;
+      }
+
+      .closing-grid span:nth-child(3n + 1) {
+        background: var(--teal);
+      }
+
+      .closing-grid span:nth-child(3n + 2) {
+        background: var(--blue);
+      }
+
+      .closing-grid span:nth-child(3n) {
+        background: var(--mint);
+      }
+
+      .controls {
+        position: fixed;
+        z-index: 10;
+        inset-block-end: 20px;
+        inset-inline-end: 24px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        border: 1px solid rgba(0, 0, 40, 0.15);
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 8px 22px rgba(0, 0, 40, 0.15);
+        backdrop-filter: blur(8px);
+      }
+
+      .control-button {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        place-items: center;
+        border: 1px solid #b7b7c2;
+        border-radius: 2px;
+        background: #ffffff;
+        cursor: pointer;
+        font-size: 23px;
+        line-height: 1;
+      }
+
+      .control-button:hover:not(:disabled) {
+        border-color: var(--teal);
+        color: var(--teal);
+      }
+
+      .control-button:focus-visible {
+        outline: 3px solid var(--blue);
+        outline-offset: 2px;
+      }
+
+      .control-button:disabled {
+        cursor: default;
+        opacity: 0.35;
+      }
+
+      .counter {
+        min-width: 66px;
+        color: #4e4e62;
+        font-variant-numeric: tabular-nums;
+        text-align: center;
+      }
+
+      .progress {
+        position: fixed;
+        z-index: 11;
+        inset-block-end: 0;
+        inset-inline: 0;
+        height: 5px;
+        background: rgba(115, 83, 229, 0.18);
+      }
+
+      .progress-value {
+        width: 16.667%;
+        height: 100%;
+        background: var(--cyan);
+        transition: width 220ms ease-out;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @keyframes reveal {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 900px) {
+        :root {
+          --slide-padding: 34px;
+        }
+
+        h1 {
+          font-size: 54px;
+        }
+
+        h2,
+        .closing h2 {
+          margin-block-end: 28px;
+          font-size: 38px;
+        }
+
+        .lead {
+          font-size: 23px;
+        }
+
+        .topline {
+          margin-block-end: 30px;
+        }
+
+        .grid-2,
+        .code-compare,
+        .bulk-flow,
+        .api-layout,
+        .upgrade-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .flow-arrow span {
+          transform: rotate(90deg);
+        }
+
+        .compatibility-list li {
+          grid-template-columns: 90px minmax(220px, 0.8fr) minmax(0, 1.2fr);
+        }
+
+        .topic {
+          min-height: 0;
+          padding: 24px;
+        }
+
+        .topic-number {
+          margin-block-end: 14px;
+        }
+
+        .version-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .version-arrow {
+          width: auto;
+          height: 52px;
+          transform: rotate(90deg);
+        }
+
+        .legacy-lane {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .screenshot-window {
+          max-height: 420px;
+        }
+
+        .controls {
+          inset-block-end: 14px;
+          inset-inline-end: 14px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        :root {
+          --slide-padding: 24px;
+        }
+
+        .slide-shell {
+          padding-block-end: 92px;
+        }
+
+        .slide-shell::before {
+          width: 7px;
+        }
+
+        .brand {
+          font-size: 17px;
+        }
+
+        .brand span,
+        .section-label {
+          font-size: 13px;
+        }
+
+        .eyebrow {
+          font-size: 15px;
+        }
+
+        h1 {
+          font-size: 44px;
+        }
+
+        h2,
+        .closing h2 {
+          font-size: 33px;
+        }
+
+        h3 {
+          font-size: 24px;
+        }
+
+        .hero .topline {
+          inset-block-start: var(--slide-padding);
+          inset-inline: var(--slide-padding);
+        }
+
+        .version-mark {
+          font-size: 250px;
+        }
+
+        .topic p,
+        .setting p,
+        .steps li,
+        .checklist li,
+        .compatibility-list p {
+          font-size: 18px;
+        }
+
+        .feature-slide .slide-shell {
+          padding-block-end: 92px;
+        }
+
+        .compatibility-list li {
+          grid-template-columns: 68px minmax(0, 1fr);
+          gap: 4px 12px;
+          padding: 14px;
+        }
+
+        .compatibility-version {
+          grid-row: span 2;
+          font-size: 26px;
+        }
+
+        .compatibility-list p {
+          grid-column: 2;
+        }
+
+        pre,
+        .api-code pre {
+          font-size: 14px;
+          overflow-wrap: anywhere;
+          white-space: pre-wrap;
+        }
+
+        .screenshot-window {
+          max-height: 300px;
+        }
+
+        .controls {
+          inset-inline: 14px;
+          justify-content: flex-end;
+        }
+
+        .counter {
+          margin-inline-end: auto;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .slide.is-active {
+          animation: none;
+        }
+
+        .progress-value {
+          transition: none;
+        }
+      }
+
+      @media print {
+        @page {
+          size: 16in 9in;
+          margin: 0;
+        }
+
+        html,
+        body {
+          overflow: visible;
+          background: #ffffff;
+        }
+
+        .slide,
+        .slide.is-active {
+          position: relative;
+          display: block;
+          width: 16in;
+          height: 9in;
+          overflow: hidden;
+          break-after: page;
+          animation: none;
+        }
+
+        .controls,
+        .progress {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="deck" aria-label="Element v51 workshop slides">
+      <section
+        class="slide hero is-active"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="1 of 6: What's new in Element v51"
+      >
+        <div class="slide-shell">
+          <header class="topline">
+            <div class="brand">SIEMENS <span>ELEMENT</span></div>
+            <div class="section-label">WORKSHOP · 10 SEP 2026</div>
+          </header>
+          <div class="hero-copy">
+            <p class="eyebrow">What's new</p>
+            <h1>Element<br />v51</h1>
+            <p class="lead">Focused migrations, faster dashboards, and a refreshed platform baseline.</p>
+            <div class="pill-row" aria-label="Topics">
+              <span class="pill">Formly 7.1</span>
+              <span class="pill">Bulk widget add</span>
+              <span class="pill">GridStack 13</span>
+              <span class="pill">Angular 22</span>
+            </div>
+          </div>
+          <div class="version-mark" aria-hidden="true">51</div>
+        </div>
+      </section>
+
+      <section
+        class="slide"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="2 of 6: Housekeeping and technical enhancements"
+      >
+        <div class="slide-shell">
+          <header class="topline">
+            <div class="brand">SIEMENS <span>ELEMENT</span></div>
+            <div class="section-label">PLATFORM BASELINE</div>
+          </header>
+          <p class="eyebrow">Housekeeping + technical enhancements</p>
+          <h2>Dependencies move forward with v51</h2>
+          <ul class="compatibility-list">
+            <li>
+              <span class="compatibility-version">v22</span>
+              <span class="compatibility-package">
+                <strong>Angular</strong>
+                <code>@angular/aria</code>
+              </span>
+              <p><strong>Required.</strong> Add Angular ARIA as a new required dependency.</p>
+            </li>
+            <li>
+              <span class="compatibility-version">v18</span>
+              <span class="compatibility-package">
+                <strong>ngx-translate</strong>
+                <code>@ngx-translate/core</code>
+              </span>
+              <p><strong>Supported.</strong> Version 16 support has been dropped.</p>
+            </li>
+            <li>
+              <span class="compatibility-version">v7</span>
+              <span class="compatibility-package">
+                <strong>Formly</strong>
+                <code>@ngx-formly/core</code>
+              </span>
+              <p><strong>Supported.</strong> Version 6 remains available only through the deprecated legacy path.</p>
+            </li>
+            <li>
+              <span class="compatibility-version">v36</span>
+              <span class="compatibility-package">
+                <strong>AG Grid</strong>
+                <code>ag-grid-community</code>
+              </span>
+              <p><strong>Supported.</strong> Element integrations are ready for the latest major.</p>
+            </li>
+            <li>
+              <span class="compatibility-version">v27</span>
+              <span class="compatibility-package">
+                <strong>ngx-datatable</strong>
+                <code>@siemens/ngx-datatable</code>
+              </span>
+              <p><strong>Supported.</strong> Version 26 is now the minimum supported release.</p>
+            </li>
+            <li>
+              <span class="compatibility-version">v13</span>
+              <span class="compatibility-package">
+                <strong>GridStack</strong>
+                <code>gridstack</code>
+              </span>
+              <p><strong>Required by dashboards-ng.</strong> Upgrade from <code>^12.3.3</code> to <code>^13.0.0</code>.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section
+        class="slide"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="3 of 6: Element Formly support moves to ngx-formly 7.1"
+      >
+        <div class="slide-shell">
+          <header class="topline">
+            <div class="brand">SIEMENS <span>ELEMENT</span></div>
+            <div class="section-label">ELEMENT FORMLY INTEGRATION</div>
+          </header>
+          <p class="eyebrow">ngx-formly compatibility</p>
+          <h2>Element's Formly entry point now targets ngx-formly v7.1</h2>
+          <div class="version-strip">
+            <div class="version-block">
+              <small>Element 50</small>
+              <strong>Formly v6 · NgModule</strong>
+              <code>@siemens/element-ng/formly</code>
+            </div>
+            <div class="version-arrow" aria-hidden="true">→</div>
+            <div class="version-block current">
+              <small>Element 51</small>
+              <strong>Formly v7.1 · standalone</strong>
+              <code>@siemens/element-ng/formly</code>
+            </div>
+          </div>
+          <div class="legacy-lane">
+            <strong>Temporary bridge</strong>
+            <code>@siemens/element-ng/formly-legacy</code>
+            <span>v6 · deprecated · planned for removal</span>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="slide"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="4 of 6: Formly before and after code"
+      >
+        <div class="slide-shell">
+          <header class="topline">
+            <div class="brand">SIEMENS <span>ELEMENT</span></div>
+            <div class="section-label">FORMLY MIGRATION</div>
+          </header>
+          <p class="eyebrow">Before → after</p>
+          <h2>Replace module setup with the standalone component</h2>
+          <div class="code-compare">
+            <article class="code-panel">
+              <div class="code-title">Before <span>Element 50 · Formly 6</span></div>
+              <pre><code><span class="kw">import</span> { <span class="type">SiFormlyModule</span> } <span class="kw">from</span>
+  <span class="str">'@siemens/element-ng/formly'</span>;
+
+@<span class="type">NgModule</span>({
+  imports: [<span class="type">SiFormlyModule</span>.forRoot()]
+})
+<span class="kw">export class</span> <span class="type">AppModule</span> {}</code></pre>
+            </article>
+            <article class="code-panel after">
+              <div class="code-title">After <span>Element 51 · Formly 7.1</span></div>
+              <pre><code><span class="kw">import</span> { <span class="type">SiFormlyComponent</span> } <span class="kw">from</span>
+  <span class="str">'@siemens/element-ng/formly'</span>;
+
+@<span class="type">Component</span>({
+  imports: [<span class="type">SiFormlyComponent</span>],
+  template: <span class="str">`&lt;si-formly [fields]="fields" /&gt;`</span>
+})
+<span class="kw">export class</span> <span class="type">ProfileForm</span> {}</code></pre>
+            </article>
+          </div>
+          <div class="migration-note">
+            Staying on v6 for now? Import <code>@siemens/element-ng/formly-legacy</code>, then plan
+            the v7.1 migration before the legacy package is removed.
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="slide feature-slide"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="5 of 6: Element Flexible Dashboard bulk widget add"
+      >
+        <div class="slide-shell">
+          <header class="topline">
+            <div class="brand">SIEMENS <span>ELEMENT</span></div>
+            <div class="section-label">ELEMENT FLEXIBLE DASHBOARD</div>
+          </header>
+          <p class="eyebrow">New bulk-add workflow</p>
+          <h2>Flexible Dashboard adds multiple widgets at once</h2>
+          <div class="bulk-flow">
+            <figure class="screenshot-frame bulk-shot">
+              <div class="screenshot-window">
+                <img
+                  src="images/element-v51-dashboard-bulk-select.png"
+                  alt="Flexible Dashboard widget catalog with Hello World and Contact selected"
+                />
+              </div>
+              <figcaption><strong>1. Select many</strong><span>Choose multiple catalog entries.</span></figcaption>
+            </figure>
+            <div class="flow-arrow" aria-label="Then click Add"><span aria-hidden="true">→</span>Add</div>
+            <figure class="screenshot-frame bulk-shot">
+              <div class="screenshot-window">
+                <img
+                  src="images/element-v51-dashboard-bulk-add-result.png"
+                  alt="Flexible Dashboard after bulk add with Hello World and Contact showing Setup required placeholders"
+                />
+              </div>
+              <figcaption><strong>2. Widgets appear</strong><span>All selections are added together.</span></figcaption>
+            </figure>
+          </div>
+          <p class="setup-note">
+            <strong>Configure later, where needed.</strong> Widgets that require additional settings
+            display <strong>Setup required</strong> until they are edited.
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="slide"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="6 of 6: Dashboard API migration"
+      >
+        <div class="slide-shell">
+          <header class="topline">
+            <div class="brand">SIEMENS <span>ELEMENT</span></div>
+            <div class="section-label">DASHBOARD API</div>
+          </header>
+          <p class="eyebrow">Opt in + adapt</p>
+          <h2>Bulk add changes the catalog result shape</h2>
+          <div class="api-layout">
+            <article class="setting">
+              <h3>Enable the workflow</h3>
+              <p><code>multiSelect</code> defaults to <code>false</code>, preserving current UX.</p>
+              <pre><code>&lt;<span class="type">si-flexible-dashboard</span>
+  [multiSelect]=<span class="str">"true"</span>
+  [widgetCatalog]=<span class="str">"widgets"</span>
+/&gt;</code></pre>
+            </article>
+            <div class="code-compare api-code">
+              <article class="code-panel">
+                <div class="code-title">Before <span>single config</span></div>
+                <pre><code>onClosed(
+  config:
+    | <span class="type">Omit&lt;WidgetConfig, 'id'&gt;</span>
+    | <span class="kw">undefined</span>
+) {
+  <span class="kw">if</span> (config) {
+    this.addWidget(config);
+  }
+}</code></pre>
+              </article>
+              <article class="code-panel after">
+                <div class="code-title">After <span>array of configs</span></div>
+                <pre><code>onClosed(
+  configs:
+    | <span class="type">Omit&lt;WidgetConfig, 'id'&gt;[]</span>
+    | <span class="kw">undefined</span>
+) {
+  configs?.forEach(config =&gt;
+    this.addWidget(config)
+  );
+}</code></pre>
+              </article>
+            </div>
+          </div>
+          <p class="scope-note">
+            This signature change matters when extending <code>SiWidgetCatalogComponent</code> or
+            consuming <code>(closed)</code> directly. In single-select mode, the array contains one item.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls" aria-label="Slide controls">
+      <span class="counter" aria-hidden="true"><span id="current">1</span> / <span id="total">6</span></span>
+      <button class="control-button" id="previous" type="button" aria-label="Previous slide" title="Previous slide">←</button>
+      <button class="control-button" id="next" type="button" aria-label="Next slide" title="Next slide">→</button>
+      <button class="control-button" id="fullscreen" type="button" aria-label="Enter fullscreen" title="Enter fullscreen">⛶</button>
+    </nav>
+    <div class="progress" aria-hidden="true"><div class="progress-value" id="progress"></div></div>
+    <p class="sr-only" id="announcement" aria-live="polite"></p>
+
+    <script>
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const currentLabel = document.querySelector('#current');
+      const totalLabel = document.querySelector('#total');
+      const progress = document.querySelector('#progress');
+      const announcement = document.querySelector('#announcement');
+      const previousButton = document.querySelector('#previous');
+      const nextButton = document.querySelector('#next');
+      const fullscreenButton = document.querySelector('#fullscreen');
+      let touchStartX = 0;
+
+      const requestedSlide = Number.parseInt(location.hash.slice(1), 10);
+      let current = Number.isFinite(requestedSlide)
+        ? Math.min(Math.max(requestedSlide - 1, 0), slides.length - 1)
+        : 0;
+
+      const showSlide = (index, updateHash = true) => {
+        current = Math.min(Math.max(index, 0), slides.length - 1);
+
+        slides.forEach((slide, slideIndex) => {
+          const active = slideIndex === current;
+          slide.classList.toggle('is-active', active);
+          slide.setAttribute('aria-hidden', String(!active));
+          slide.toggleAttribute('inert', !active);
+        });
+
+        currentLabel.textContent = String(current + 1);
+        totalLabel.textContent = String(slides.length);
+        progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+        previousButton.disabled = current === 0;
+        nextButton.disabled = current === slides.length - 1;
+        announcement.textContent = slides[current].getAttribute('aria-label') ?? '';
+
+        if (updateHash) history.replaceState(null, '', `#${current + 1}`);
+      };
+
+      const move = direction => showSlide(current + direction);
+
+      previousButton.addEventListener('click', () => move(-1));
+      nextButton.addEventListener('click', () => move(1));
+      fullscreenButton.addEventListener('click', async () => {
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        } else {
+          await document.documentElement.requestFullscreen();
+        }
+      });
+
+      document.addEventListener('fullscreenchange', () => {
+        const active = Boolean(document.fullscreenElement);
+        fullscreenButton.setAttribute('aria-label', active ? 'Exit fullscreen' : 'Enter fullscreen');
+        fullscreenButton.title = active ? 'Exit fullscreen' : 'Enter fullscreen';
+      });
+
+      document.addEventListener('keydown', event => {
+        if (['ArrowRight', 'PageDown', ' '].includes(event.key)) {
+          event.preventDefault();
+          move(1);
+        }
+        if (['ArrowLeft', 'PageUp'].includes(event.key)) {
+          event.preventDefault();
+          move(-1);
+        }
+        if (event.key === 'Home') showSlide(0);
+        if (event.key === 'End') showSlide(slides.length - 1);
+      });
+
+      document.addEventListener('touchstart', event => {
+        touchStartX = event.changedTouches[0].clientX;
+      });
+
+      document.addEventListener('touchend', event => {
+        const distance = event.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(distance) > 60) move(distance < 0 ? 1 : -1);
+      });
+
+      window.addEventListener('hashchange', () => {
+        const index = Number.parseInt(location.hash.slice(1), 10) - 1;
+        if (Number.isFinite(index)) showSlide(index, false);
+      });
+
+      showSlide(current, false);
+    </script>
+  </body>
+</html>
