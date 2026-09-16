@@ -6,6 +6,10 @@
 
 import * as i0 from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { Provider } from '@angular/core';
+
+// @public
+export const provideShadowRootThemeTarget: () => Provider;
 
 // @public
 export class SiShadowRootDirective extends OverlayContainer {
