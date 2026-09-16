@@ -5,6 +5,8 @@
  * - Fetches versions.json from the root of the domain
  * - Supports absolute version URLs
  * - Preserves current page path when switching versions
+ * - If that page is missing in the target version, falls back to the version
+ *   root (S3/CloudFront returns 403 for missing keys)
  * - Opens the version menu on click (not hover)
  * - Gracefully degrades if versions.json is not found (no errors, just no selector)
  *
@@ -97,21 +99,90 @@
   }
 
   /**
+   * True when the URL exists. Missing versioned docs objects are served as 403
+   * by S3/CloudFront (not 404), so only HTTP 2xx counts as a hit.
+   */
+  async function urlExists(url) {
+    try {
+      const head = await fetch(url, { method: 'HEAD', redirect: 'follow' });
+      if (head.status !== 405 && head.status !== 501) {
+        return head.ok;
+      }
+
+      const get = await fetch(url, { method: 'GET', redirect: 'follow' });
+      return get.ok;
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Keep the current page when it exists in the target version, otherwise the
+   * version root.
+   */
+  async function resolveExistingUrl(preferredUrl, fallbackUrl) {
+    if (preferredUrl === fallbackUrl || (await urlExists(preferredUrl))) {
+      return preferredUrl;
+    }
+
+    return fallbackUrl;
+  }
+
+  const pendingResolves = new WeakMap();
+
+  /**
+   * Point a version link at an existing page in that version.
+   * Rewriting href also covers open-in-new-tab after the check completes.
+   */
+  function resolveVersionLink(link, currentVersion) {
+    if (link.dataset.versionResolved === 'true') {
+      return Promise.resolve(link.href);
+    }
+
+    const pending = pendingResolves.get(link);
+    if (pending) {
+      return pending;
+    }
+
+    const version = link.getAttribute('data-version') ?? '';
+    const preferredUrl = buildVersionURL(version, currentVersion, true);
+    const fallbackUrl = buildVersionURL(version, currentVersion, false);
+    const resolve = resolveExistingUrl(preferredUrl, fallbackUrl)
+      .then(url => {
+        link.href = url;
+        link.dataset.versionResolved = 'true';
+        pendingResolves.delete(link);
+        return url;
+      })
+      .catch(() => {
+        link.href = fallbackUrl;
+        link.dataset.versionResolved = 'true';
+        pendingResolves.delete(link);
+        return fallbackUrl;
+      });
+
+    pendingResolves.set(link, resolve);
+    return resolve;
+  }
+
+  /**
    * Render version selector HTML
    */
   function renderVersionSelector(versions, currentVersion) {
     const current = versions.find(v => v.version === currentVersion) || versions[0];
     const visibleVersions = versions.filter(v => !v.hidden);
 
-    const html = `<div class="md-version"><button type="button" class="md-version__current" aria-label="Select version" aria-expanded="false" aria-haspopup="true" aria-controls="md-version-list">${current.title}</button><ul id="md-version-list" class="md-version__list">${visibleVersions.map(version => `<li class="md-version__item"><a href="${buildVersionURL(version.version, currentVersion)}" class="md-version__link">${version.title}</a></li>`).join('')}</ul></div>`;
+    const html = `<div class="md-version"><button type="button" class="md-version__current" aria-label="Select version" aria-expanded="false" aria-haspopup="true" aria-controls="md-version-list">${current.title}</button><ul id="md-version-list" class="md-version__list">${visibleVersions.map(version => `<li class="md-version__item"><a href="${buildVersionURL(version.version, currentVersion)}" data-version="${version.version}" class="md-version__link">${version.title}</a></li>`).join('')}</ul></div>`;
 
     return html;
   }
 
   /**
    * Open/close the version menu on click (Material CSS uses hover).
+   * Version links are rewritten to an existing page when the current path is
+   * missing in the target version.
    */
-  function bindVersionSelector(versionEl) {
+  function bindVersionSelector(versionEl, currentVersion) {
     const button = versionEl.querySelector('.md-version__current');
     if (!button) {
       return;
@@ -139,6 +210,52 @@
         setOpen(false);
         button.focus();
       }
+    });
+
+    const navigateToResolved = (link, openInNewTab) => {
+      resolveVersionLink(link, currentVersion).then(url => {
+        if (openInNewTab) {
+          window.open(url, '_blank', 'noopener');
+        } else {
+          window.location.assign(url);
+        }
+      });
+    };
+
+    versionEl.addEventListener('click', event => {
+      const link = event.target.closest('a.md-version__link');
+      if (!link || event.defaultPrevented || event.button !== 0) {
+        return;
+      }
+
+      // href already points at a live page; let the browser handle navigation,
+      // including modifier-key / new-tab clicks.
+      if (link.dataset.versionResolved === 'true') {
+        return;
+      }
+
+      event.preventDefault();
+      navigateToResolved(link, event.metaKey || event.ctrlKey || event.shiftKey);
+    });
+
+    versionEl.addEventListener('auxclick', event => {
+      const link = event.target.closest('a.md-version__link');
+      if (!link || event.button !== 1 || link.dataset.versionResolved === 'true') {
+        return;
+      }
+
+      event.preventDefault();
+      navigateToResolved(link, true);
+    });
+
+    versionEl.querySelectorAll('a.md-version__link').forEach(link => {
+      const version = link.getAttribute('data-version') ?? '';
+      if (version === currentVersion) {
+        link.dataset.versionResolved = 'true';
+        return;
+      }
+
+      resolveVersionLink(link, currentVersion);
     });
   }
 
@@ -190,7 +307,7 @@
 
         const versionEl = topicWrapper.querySelector('.md-version');
         if (versionEl) {
-          bindVersionSelector(versionEl);
+          bindVersionSelector(versionEl, currentVersion);
         }
       })
       .catch(error => {
