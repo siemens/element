@@ -22,7 +22,6 @@ import { InternalCriterionDefinition } from './si-filtered-search-helper';
 })
 export class SiFilteredSearchInputComponent {
   private static readonly criterionRegex = /(.+?):(.*)$/;
-  private static readonly criterionSeparator = ';';
 
   /** Supplies the criterion definitions shown in the typeahead. */
   readonly dataSource = input.required<Observable<InternalCriterionDefinition[]>>();
@@ -105,42 +104,32 @@ export class SiFilteredSearchInputComponent {
   }
 
   protected freeTextInputHandler(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-
-    if (!this.disableSelectionByColonAndSemicolon() && value.includes(';')) {
-      const tokens = value.split(SiFilteredSearchInputComponent.criterionSeparator);
-      const incompleteToken = tokens.pop()!;
-      const unprocessedTokens: string[] = [];
-
-      for (const token of tokens) {
-        const match = token.match(SiFilteredSearchInputComponent.criterionRegex);
-        if (!this.onlySelectValue() && match) {
-          this.createCriterionByName.emit({ criterionName: match[1], value: match[2] });
-        } else if (this.freeTextCriterion() && this.allowFreeText() && token.length > 0) {
-          this.createFreeTextPill.emit(token);
-        } else {
-          unprocessedTokens.push(token);
-        }
-      }
-
-      const remainingValue = [...unprocessedTokens, incompleteToken].join(
-        SiFilteredSearchInputComponent.criterionSeparator
-      );
-      this.inputElement().nativeElement.value = remainingValue;
-      this.searchValue.set(remainingValue);
+    const inputElement = event.target as HTMLInputElement;
+    if (this.disableSelectionByColonAndSemicolon()) {
+      this.searchValue.set(inputElement.value);
       return;
     }
 
-    const match = value.match(SiFilteredSearchInputComponent.criterionRegex);
-    if (!this.disableSelectionByColonAndSemicolon() && !this.onlySelectValue() && match) {
-      const criterionName = match[1];
-      this.inputElement().nativeElement.value = '';
-      this.searchValue.set('');
+    const tokens = inputElement.value.split(';');
+    const remainingTokens: string[] = [];
+    const canCreateFreeText = this.freeTextCriterion() && this.allowFreeText();
 
-      this.createCriterionByName.emit({ criterionName: criterionName, value: match[2] });
-    } else {
-      this.searchValue.set(value);
+    for (const [index, token] of tokens.entries()) {
+      const criterion = token.match(SiFilteredSearchInputComponent.criterionRegex);
+      if (!this.onlySelectValue() && criterion) {
+        this.createCriterionByName.emit({
+          criterionName: criterion[1],
+          value: criterion[2]
+        });
+      } else if (index < tokens.length - 1 && token && canCreateFreeText) {
+        this.createFreeTextPill.emit(token);
+      } else {
+        remainingTokens.push(token);
+      }
     }
+
+    inputElement.value = remainingTokens.join(';');
+    this.searchValue.set(inputElement.value);
   }
 
   protected freeTextBlurHandler(): void {
