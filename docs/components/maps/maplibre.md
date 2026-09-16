@@ -142,8 +142,7 @@ contained points and their distribution by group or status.
 ### 3D buildings example
 
 MapLibre GL renders maps with WebGL, so the camera can be pitched and vector-tile
-buildings can be extruded into 3D. [Element Maps](element-maps.md) is based on
-OpenLayers and does not provide this kind of 3D rendering.
+buildings can be extruded into 3D.
 
 The example pitches the map and adds a `fill-extrusion` layer on the OpenMapTiles
 `building` source. Building height animates in between zoom 15 and 16 using the
