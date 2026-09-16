@@ -141,6 +141,5 @@ contained points and their distribution by group or status.
 ### 3D buildings example
 
 The following example renders 3D buildings with a MapLibre fill-extrusion layer.
-The buildings use Element theme colors.
 
 <si-docs-component example="maplibre/maplibre-3d-buildings" height="580"></si-docs-component>
