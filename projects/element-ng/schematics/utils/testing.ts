@@ -5,6 +5,8 @@
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 
+const testAppCache = new Map<string, Promise<UnitTestTree>>();
+
 /**
  * Creates a sample workspace with two applications: 'app' (default) and 'second-app'
  */
@@ -13,10 +15,26 @@ export const createTestApp = async (
   appOptions = {},
   files?: { [path: string]: string }
 ): Promise<UnitTestTree> => {
-  let tree = await createWorkspace(runner);
+  const cacheKey = JSON.stringify(appOptions);
+  let cachedTree = testAppCache.get(cacheKey);
+  if (!cachedTree) {
+    cachedTree = createBaseTestApp(runner, appOptions);
+    testAppCache.set(cacheKey, cachedTree);
+  }
+
+  const tree = new UnitTestTree((await cachedTree).branch());
   if (files) {
     addTestFiles(tree, files);
   }
+
+  return tree;
+};
+
+const createBaseTestApp = async (
+  runner: SchematicTestRunner,
+  appOptions: object
+): Promise<UnitTestTree> => {
+  let tree = await createWorkspace(runner);
   tree = await runner.runExternalSchematic(
     '@schematics/angular',
     'application',
