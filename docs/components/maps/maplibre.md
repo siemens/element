@@ -129,3 +129,18 @@ export class AppMapComponent {
 The following example combines the Element map style and translations with MapLibre controls.
 
 <si-docs-component example="maplibre/maplibre" height="580"></si-docs-component>
+
+### Cluster example
+
+The following example uses `SiClusterSourceComponent` to cluster GeoJSON points and
+`SiStatusMarkerComponent` for unclustered markers. Cluster markers show the number of
+contained points and their distribution by group or status.
+
+<si-docs-component example="maplibre/maplibre-cluster" height="580"></si-docs-component>
+
+### 3D buildings example
+
+The following example renders 3D buildings with a MapLibre fill-extrusion layer.
+Building colors update with the Element theme.
+
+<si-docs-component example="maplibre/maplibre-3d-buildings" height="580"></si-docs-component>
