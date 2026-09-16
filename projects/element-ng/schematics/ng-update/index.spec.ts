@@ -3,23 +3,48 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Tree } from '@angular-devkit/schematics';
-import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
+import { callRule, chain, Rule } from '@angular-devkit/schematics';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
+import { getElementMigrationData } from '../migrations/data/index.js';
+import { elementMigrationRule } from '../migrations/element-migration/element-migration.js';
 import { addTestFiles, createTestApp } from '../utils/index.js';
+import { contentFormatterMigrationRule } from './migrate-content-formatter.js';
+import { spacerMigrationRule } from './migrate-spacers.js';
+import { splitCollapseMigrationRule } from './migrate-split-collapse.js';
+import { splitScaleMigrationRule } from './migrate-split-scale.js';
+import { splitSizesMigrationRule } from './migrate-split-sizes.js';
 
 const collectionPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../migration.json');
 
 describe('ng-update migration', () => {
   let runner: SchematicTestRunner;
-  let appTree: Tree;
+  let appTree: UnitTestTree;
 
   beforeEach(async () => {
     runner = new SchematicTestRunner('@siemens/element-ng', collectionPath);
     appTree = await createTestApp(runner, { style: 'scss' });
   });
+
+  const migrationOptions = { path: '/' };
+  const runMigrationRules = async (...rules: Rule[]): Promise<UnitTestTree> => {
+    const context = runner.engine.createContext(
+      runner.engine.createSchematic(
+        'migration-v51',
+        runner.engine.createCollection(collectionPath)
+      ),
+      { logger: runner.logger }
+    );
+    const tree = await callRule(chain(rules), appTree, context).toPromise();
+
+    if (!tree) {
+      throw new Error('Migration rule returned undefined');
+    }
+
+    return new UnitTestTree(tree);
+  };
 
   it('should run migration successfully', async () => {
     const tree = await runner.runSchematic('migration-v51', {}, appTree);
@@ -83,7 +108,7 @@ export class SpacersComponent {}`,
       '/outside/spacers.html': `<div class="mt-10"></div>`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(spacerMigrationRule(migrationOptions));
 
     expect(tree.readContent('/projects/app/src/spacers.component.ts')).toBe(
       `import { Component } from '@angular/core';
@@ -108,13 +133,6 @@ export class SpacersComponent {}`
     expect(tree.readContent('/outside/spacers.html')).toBe(`<div class="mt-13"></div>`);
   });
 
-  it('should handle empty project gracefully', async () => {
-    const emptyTree = await createTestApp(runner, { style: 'scss' });
-
-    const tree = await runner.runSchematic('migration-v51', {}, emptyTree);
-    expect(tree).toBeDefined();
-  });
-
   it('should remove provideIconConfig usage and its import', async () => {
     const originalContent = `import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
 import { provideIconConfig } from '@siemens/element-ng/icon';
@@ -127,7 +145,9 @@ export const appConfig: ApplicationConfig = {
       '/projects/app/src/app.config.ts': originalContent
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(
+      elementMigrationRule(migrationOptions, getElementMigrationData())
+    );
 
     const modifiedContent = tree.readContent('/projects/app/src/app.config.ts');
     expect(modifiedContent).not.toContain('provideIconConfig');
@@ -155,7 +175,9 @@ export class ExternalSearchComponent {}`,
 <div tabbable="false"></div>`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(
+      elementMigrationRule(migrationOptions, getElementMigrationData())
+    );
     const component = tree.readContent('/projects/app/src/search.component.ts');
     const template = tree.readContent('/projects/app/src/search.component.html');
 
@@ -180,7 +202,7 @@ export class ExternalSearchComponent {}`,
 export class SplitComponent {}`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitSizesMigrationRule(migrationOptions));
     const modifiedContent = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(modifiedContent).not.toContain('[sizes]');
@@ -204,7 +226,7 @@ export class SplitComponent {}`,
 </si-split>`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitSizesMigrationRule(migrationOptions));
     const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
 
     expect(modifiedContent).not.toContain('[sizes]');
@@ -235,7 +257,7 @@ export class AiMessageComponent {
 />`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(contentFormatterMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/ai-message.component.ts');
     const template = tree.readContent('/projects/app/src/ai-message.component.html');
 
@@ -273,7 +295,7 @@ export class UserMessageComponent {
 }`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(contentFormatterMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/user-message.component.ts');
 
     expect(component).toBe(`import { Component, inject } from '@angular/core';
@@ -309,24 +331,13 @@ export class UserMessageComponent {
 }`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(contentFormatterMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/user-message.component.ts');
 
     expect(component).toContain("import { DomSanitizer } from '@angular/platform-browser';");
     expect(component).toContain('readonly sanitizer = inject(DomSanitizer);');
     expect(component).not.toContain('getMarkdownRenderer');
     expect(component).not.toContain('readonly markdownRenderer');
-  });
-
-  it('should pass options to sub-migrations', async () => {
-    const customPath = '/custom/path';
-    const options = { path: customPath };
-
-    const tree = await runner.runSchematic('migration-v51', options, appTree);
-    expect(tree).toBeDefined();
-
-    // Verify the schematic ran with custom options
-    // In a real scenario, you'd verify the migration respected the path option
   });
 
   it('should add unit="px" to a split part with a literal size but no unit (inline template)', async () => {
@@ -343,7 +354,7 @@ export class UserMessageComponent {
 export class SplitComponent {}`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitSizesMigrationRule(migrationOptions));
     const modifiedContent = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(modifiedContent).toContain('<si-split-part size="300" unit="px"');
@@ -365,7 +376,7 @@ export class SplitComponent {}`,
 </si-split>`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitSizesMigrationRule(migrationOptions));
     const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
 
     expect(modifiedContent).toContain('<si-split-part [size]="leftSize" unit="px"');
@@ -380,7 +391,7 @@ export class SplitComponent {}`,
 </si-split>`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
     const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
 
     expect(modifiedContent).toContain('<si-split-part size="20" unit="fr"');
@@ -402,7 +413,7 @@ export class SplitComponent {}`,
 </si-split>`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitSizesMigrationRule(migrationOptions));
     const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
 
     expect(modifiedContent).not.toContain('[sizes]');
@@ -426,7 +437,7 @@ export class SplitComponent {}`,
 </si-split>`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitSizesMigrationRule(migrationOptions));
     const modifiedContent = tree.readContent('/projects/app/src/split.component.html');
 
     expect(modifiedContent).toContain('<si-split-part size="400" heading="Left"  unit="px"');
@@ -462,7 +473,7 @@ export class ExternalSplitComponent {}`,
 <div collapseDirection="start"></div>`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitCollapseMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
     const template = tree.readContent('/projects/app/src/split.component.html');
 
@@ -490,7 +501,7 @@ export class ExternalSplitComponent {}`,
 export class SplitComponent {}`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitCollapseMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(component).not.toContain('showCollapseButton');
@@ -524,7 +535,7 @@ export class ExternalSplitComponent {}`,
 </si-split-part>`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitCollapseMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
     const template = tree.readContent('/projects/app/src/split.component.html');
 
@@ -555,7 +566,7 @@ export class SplitComponent {
 }`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitCollapseMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
     const condition = `![false, null, undefined, 'false'].includes($any(canCollapse))`;
@@ -578,7 +589,7 @@ export class SplitComponent {
 export class SplitComponent {}`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitCollapseMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(component).toBe(`import { Component } from '@angular/core';
@@ -605,7 +616,7 @@ export class SplitComponent {}`);
 export class SplitComponent {}`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(component).toContain('<si-split-part unit="fr" size="1"');
@@ -636,7 +647,7 @@ export class SplitComponent {
 }`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(component).toMatch(/<si-split-part unit="fr"[^>]*>Fixed conflict<\/si-split-part>/);
@@ -674,7 +685,7 @@ export class SplitComponent {
 </si-split>`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
     const template = tree.readContent('/projects/app/src/split.component.html');
 
     expect(template).toContain(
@@ -703,7 +714,10 @@ export class SplitComponent {
 export class SplitComponent {}`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(
+      splitScaleMigrationRule(migrationOptions),
+      splitSizesMigrationRule(migrationOptions)
+    );
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(component).toContain('<si-split-part unit="fr" size="20"');
@@ -735,7 +749,7 @@ export class SplitComponent {
 }`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(component).toContain("import { SplitUnit } from '@siemens/element-ng/split';");
@@ -758,7 +772,7 @@ export class SplitComponent {
 }`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(component).toContain("import { SplitUnit } from '@siemens/element-ng/split';");
@@ -788,7 +802,7 @@ export class SplitComponent {
 </si-split>`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
     const template = tree.readContent('/projects/app/src/split.component.html');
 
     expect(template).toContain('<si-split-part [unit]="scale" size="240"');
@@ -814,7 +828,7 @@ export class SplitComponent {
 }`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(component).toContain("const defaultScale: SplitUnit = 'px';");
@@ -844,7 +858,7 @@ export class UntypedComponent {
 }`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
     const source = tree.readContent('/projects/app/src/owners.ts');
 
     expect(source).toContain('[unit]="scale()"');
@@ -864,7 +878,7 @@ export class ObjectOwner {
 }`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
 
     expect(tree.readContent('/projects/app/src/object-owner.ts')).toContain(
       `[unit]="['none', 'px'].includes(config.scale) ? 'px' : 'fr'"`
@@ -889,7 +903,7 @@ export class UntypedOwner { scale = 'none'; }`;
 <si-split-part scale="none" />`
       });
 
-      const tree = await runner.runSchematic('migration-v51', {}, appTree);
+      const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
       const template = tree.readContent('/projects/app/src/shared.html');
 
       expect(
@@ -911,7 +925,7 @@ export class SecondOwner { scale: Scale = 'auto'; }`,
       '/projects/app/src/agreed.html': '<si-split-part [scale]="scale" />'
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
 
     expect(tree.readContent('/projects/app/src/agreed.html')).toContain('[unit]="scale"');
   });
@@ -930,7 +944,7 @@ export class SplitComponent {
 }`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(component).toContain("readonly scale = signal<SplitUnit>('fr');");
@@ -961,7 +975,7 @@ export class SplitComponent {
 }`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(component).toContain('Scale: string;');
@@ -987,7 +1001,7 @@ interface Config {
 export class SplitComponent {}`
     });
 
-    const tree = await runner.runSchematic('migration-v51', {}, appTree);
+    const tree = await runMigrationRules(splitScaleMigrationRule(migrationOptions));
     const component = tree.readContent('/projects/app/src/split.component.ts');
 
     expect(component).toContain('Scale: string;');
