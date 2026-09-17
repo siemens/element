@@ -5,6 +5,30 @@ on:
 permissions: read-all
 
 jobs:
+  release-preview:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0 # semantic-release needs this
+      - name: Install Node.js and pnpm
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
+        with:
+          runtime: node@krypton
+          cache: true
+          install: false
+      - name: Set up registry authentication
+        run: pnpm config set "//code.siemens.com/:_authToken" "${SIEMENS_NPM_TOKEN}"
+        env:
+          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      - run: pnpm install
+      - name: Add release notes to workflow summary
+        run: |
+          node tools/semantic-release/preview.js > release-notes.md
+          echo '## Release preview' >> "$GITHUB_STEP_SUMMARY"
+          echo >> "$GITHUB_STEP_SUMMARY"
+          cat release-notes.md >> "$GITHUB_STEP_SUMMARY"
+
   build-and-test:
     uses: ./.github/workflows/build-and-test.yaml
     secrets:
@@ -13,12 +37,16 @@ jobs:
       MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
 
   publish:
-    environment: release
+    name: Publish release (review release preview summary before approval)
+    environment:
+      name: release
+      url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
     runs-on: ubuntu-24.04
     env:
       PNPM_CONFIG_AUTO_INSTALL_PEERS: true
     needs:
       - build-and-test
+      - release-preview
     permissions:
       id-token: write
     outputs:
