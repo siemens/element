@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Directive } from '@angular/core';
+import { Directive, model } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { SiSelectSelectionStrategy } from './si-select-selection-strategy';
@@ -38,6 +38,9 @@ export class SiSelectMultiValueDirective<T> extends SiSelectSelectionStrategy<T,
    * @defaultValue true
    */
   override readonly allowMultiple = true;
+
+  /** @defaultValue [] */
+  override readonly value = model<T[]>([]);
 
   protected fromArrayValue(value: T[]): T[] {
     return value;
