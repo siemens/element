@@ -1,14 +1,16 @@
 /* Version selector: open on click/keyboard, not hover.
    Overrides MkDocs Material's :hover / :focus-within open. */
 
-.md-version {
+.md-header .md-version {
   position: relative;
   display: inline-block;
+  align-self: center;
+  height: auto;
+  padding-top: 0;
   line-height: 1;
 }
 
-.md-version:hover .md-version__list,
-.md-version:focus-within .md-version__list {
+.md-version:not(.md-version--open) .md-version__list {
   max-height: 0;
   opacity: 0;
   visibility: hidden;

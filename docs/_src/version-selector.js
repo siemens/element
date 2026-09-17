@@ -155,13 +155,13 @@
       }
     });
 
-    // Defer: Safari often reports relatedTarget as null on focusout.
-    versionEl.addEventListener('focusout', () => {
-      queueMicrotask(() => {
-        if (!versionEl.contains(document.activeElement)) {
-          setOpen(false);
-        }
-      });
+    // Close after focus has moved outside. Do not use focusout: Chrome
+    // Tabs through body first, which would hide the list before the next
+    // link is focused. Safari click has a null relatedTarget on focusout.
+    document.addEventListener('focusin', event => {
+      if (!list.hidden && !versionEl.contains(event.target)) {
+        setOpen(false);
+      }
     });
 
     document.addEventListener('pointerdown', event => {
