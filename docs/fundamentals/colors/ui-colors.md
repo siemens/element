@@ -43,23 +43,23 @@ The following categories are defined in our system:
 
 ### Background
 
---8<-- "si-themes.md:si-sys-color-background"
+--8<-- "si-sys.md:si-sys-color-background"
 
 ### Border
 
---8<-- "si-themes.md:si-sys-color-border"
+--8<-- "si-sys.md:si-sys-color-border"
 
 ### Text
 
---8<-- "si-themes.md:si-sys-color-text"
+--8<-- "si-sys.md:si-sys-color-text"
 
 ### Effects
 
---8<-- "si-themes.md:si-sys-color-effects"
+--8<-- "si-sys.md:si-sys-color-effects"
 
 ### Code
 
---8<-- "si-themes.md:si-sys-color-code"
+--8<-- "si-sys.md:si-sys-color-code"
 
 ### UI (deprecated)
 
