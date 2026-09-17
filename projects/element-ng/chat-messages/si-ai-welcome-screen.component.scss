@@ -55,5 +55,5 @@ $welcome-screen-max-inline-size: 720px;
 ::ng-deep button[si-action-card] {
   background-color: transparent;
   border-radius: variables.$element-radius-2;
-  border: 1px solid variables.$si-sys-border-4;
+  border: 1px solid variables.$si-sys-color-border-4;
 }

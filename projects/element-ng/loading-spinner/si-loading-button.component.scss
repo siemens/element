@@ -34,25 +34,25 @@ button.loading {
 }
 
 :is(.btn-secondary, .btn-tertiary) + .spinner-wrapper {
-  --loading-spinner-color: #{variables.$si-sys-text-accent};
+  --loading-spinner-color: #{variables.$si-sys-color-text-accent};
 }
 
 .btn-danger + .spinner-wrapper {
-  --loading-spinner-color: #{variables.$si-sys-text-on-danger};
+  --loading-spinner-color: #{variables.$si-sys-color-text-on-danger};
 }
 
 .btn-warning + .spinner-wrapper {
-  --loading-spinner-color: #{variables.$si-sys-text-on-warning};
+  --loading-spinner-color: #{variables.$si-sys-color-text-on-warning};
 }
 
 :is(.btn-ghost, .btn-secondary-ghost, .btn-tertiary-ghost) + .spinner-wrapper {
-  --loading-spinner-color: #{variables.$si-sys-text-primary};
+  --loading-spinner-color: #{variables.$si-sys-color-text-primary};
 }
 
 :is(.btn-secondary-warning, .btn-tertiary-warning) + .spinner-wrapper {
-  --loading-spinner-color: #{variables.$si-sys-text-on-warning-secondary};
+  --loading-spinner-color: #{variables.$si-sys-color-text-on-warning-secondary};
 }
 
 :is(.btn-secondary-danger, .btn-tertiary-danger) + .spinner-wrapper {
-  --loading-spinner-color: #{variables.$si-sys-text-on-danger-secondary};
+  --loading-spinner-color: #{variables.$si-sys-color-text-on-danger-secondary};
 }

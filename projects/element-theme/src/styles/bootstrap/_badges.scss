@@ -15,7 +15,7 @@
 
 .badge {
   display: inline-block;
-  color: system-tokens.$si-sys-text-primary;
+  color: system-tokens.$si-sys-color-text-primary;
   padding-block: variables.$badge-padding-y;
   padding-inline: variables.$badge-padding-x;
   margin-block: 0;
@@ -41,89 +41,89 @@
   }
 
   &.bg-default {
-    background-color: system-tokens.$si-sys-background-0 !important;
-    color: system-tokens.$si-sys-text-primary;
-    outline: 1px solid system-tokens.$si-sys-border-4;
+    background-color: system-tokens.$si-sys-color-background-0 !important;
+    color: system-tokens.$si-sys-color-text-primary;
+    outline: 1px solid system-tokens.$si-sys-color-border-4;
   }
 
   &.bg-primary {
-    background-color: system-tokens.$si-sys-background-accent !important;
-    color: system-tokens.$si-sys-text-on-accent;
+    background-color: system-tokens.$si-sys-color-background-accent !important;
+    color: system-tokens.$si-sys-color-text-on-accent;
   }
 
   &.bg-secondary {
-    background-color: system-tokens.$si-sys-background-neutral !important;
-    color: system-tokens.$si-sys-text-on-neutral;
+    background-color: system-tokens.$si-sys-color-background-neutral !important;
+    color: system-tokens.$si-sys-color-text-on-neutral;
   }
 
   &.bg-info {
-    background-color: system-tokens.$si-sys-background-information-subtle !important;
-    color: system-tokens.$si-sys-text-information;
+    background-color: system-tokens.$si-sys-color-background-information-subtle !important;
+    color: system-tokens.$si-sys-color-text-information;
   }
 
   &.bg-success {
-    background-color: system-tokens.$si-sys-background-success-subtle !important;
-    color: system-tokens.$si-sys-text-success;
+    background-color: system-tokens.$si-sys-color-background-success-subtle !important;
+    color: system-tokens.$si-sys-color-text-success;
   }
 
   &.bg-caution {
-    background-color: system-tokens.$si-sys-background-caution-subtle !important;
-    color: system-tokens.$si-sys-text-caution;
+    background-color: system-tokens.$si-sys-color-background-caution-subtle !important;
+    color: system-tokens.$si-sys-color-text-caution;
   }
 
   &.bg-warning {
-    background-color: system-tokens.$si-sys-background-warning-subtle !important;
-    color: system-tokens.$si-sys-text-warning;
+    background-color: system-tokens.$si-sys-color-background-warning-subtle !important;
+    color: system-tokens.$si-sys-color-text-warning;
   }
 
   &.bg-danger {
-    background-color: system-tokens.$si-sys-background-danger-subtle !important;
-    color: system-tokens.$si-sys-text-danger;
+    background-color: system-tokens.$si-sys-color-background-danger-subtle !important;
+    color: system-tokens.$si-sys-color-text-danger;
   }
 
   &.bg-critical {
-    background-color: system-tokens.$si-sys-background-critical-subtle !important;
-    color: system-tokens.$si-sys-text-critical;
+    background-color: system-tokens.$si-sys-color-background-critical-subtle !important;
+    color: system-tokens.$si-sys-color-text-critical;
   }
 
   &.bg-inverse {
-    background-color: system-tokens.$si-sys-background-inverse !important;
-    color: system-tokens.$si-sys-text-inverse;
+    background-color: system-tokens.$si-sys-color-background-inverse !important;
+    color: system-tokens.$si-sys-color-text-inverse;
   }
 
   &.bg-info-emphasis {
-    background: system-tokens.$si-sys-background-information;
-    color: system-tokens.$si-sys-text-on-information;
+    background: system-tokens.$si-sys-color-background-information;
+    color: system-tokens.$si-sys-color-text-on-information;
     @extend %badge-text-emphasis;
   }
 
   &.bg-success-emphasis {
-    background: system-tokens.$si-sys-background-success;
-    color: system-tokens.$si-sys-text-on-success;
+    background: system-tokens.$si-sys-color-background-success;
+    color: system-tokens.$si-sys-color-text-on-success;
     @extend %badge-text-emphasis;
   }
 
   &.bg-warning-emphasis {
-    background: system-tokens.$si-sys-background-warning;
-    color: system-tokens.$si-sys-text-on-warning;
+    background: system-tokens.$si-sys-color-background-warning;
+    color: system-tokens.$si-sys-color-text-on-warning;
     @extend %badge-text-emphasis;
   }
 
   &.bg-danger-emphasis {
-    background: system-tokens.$si-sys-background-danger;
-    color: system-tokens.$si-sys-text-on-danger;
+    background: system-tokens.$si-sys-color-background-danger;
+    color: system-tokens.$si-sys-color-text-on-danger;
     @extend %badge-text-emphasis;
   }
 
   &.bg-critical-emphasis {
-    background: system-tokens.$si-sys-background-critical;
-    color: system-tokens.$si-sys-text-on-critical;
+    background: system-tokens.$si-sys-color-background-critical;
+    color: system-tokens.$si-sys-color-text-on-critical;
     @extend %badge-text-emphasis;
   }
 
   &.bg-caution-emphasis {
-    background: system-tokens.$si-sys-background-caution;
-    color: system-tokens.$si-sys-text-on-caution;
+    background: system-tokens.$si-sys-color-background-caution;
+    color: system-tokens.$si-sys-color-text-on-caution;
     @extend %badge-text-emphasis;
   }
 
@@ -146,14 +146,14 @@
     position: absolute;
     inset-block-start: 0;
     inset-inline-end: 0;
-    background-color: system-tokens.$si-sys-background-danger;
+    background-color: system-tokens.$si-sys-color-background-danger;
   }
 }
 
 .badge-text {
   @include badge-text.badge-text();
-  background-color: system-tokens.$si-sys-background-danger;
-  color: system-tokens.$si-sys-text-on-danger;
+  background-color: system-tokens.$si-sys-color-background-danger;
+  color: system-tokens.$si-sys-color-text-on-danger;
   position: relative;
 }
 

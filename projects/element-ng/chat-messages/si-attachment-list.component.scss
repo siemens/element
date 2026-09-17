@@ -2,14 +2,14 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 $attachment-list-bg: var(--attachment-list-bg, transparent);
-$attachment-name-color: var(--attachment-name-color, variables.$si-sys-text-secondary);
+$attachment-name-color: var(--attachment-name-color, variables.$si-sys-color-text-secondary);
 
 .attachment-item {
   border-radius: variables.$element-radius-2;
   overflow: hidden;
   background-color: $attachment-list-bg;
   color: $attachment-name-color;
-  border: 1px solid variables.$si-sys-border-4;
+  border: 1px solid variables.$si-sys-color-border-4;
 }
 
 .attachment-main {
@@ -28,7 +28,7 @@ $attachment-name-color: var(--attachment-name-color, variables.$si-sys-text-seco
   display: flex;
   align-items: center;
   justify-content: center;
-  color: variables.$si-sys-text-primary;
+  color: variables.$si-sys-color-text-primary;
 }
 
 .attachment-info {

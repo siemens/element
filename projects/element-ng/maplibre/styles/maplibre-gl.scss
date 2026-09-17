@@ -24,7 +24,7 @@ $icon-locate: url('@siemens/element-icons/icons/element-locate.svg');
 $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
 
 %base-control {
-  background: variables.$si-sys-background-3;
+  background: variables.$si-sys-color-background-3;
 }
 
 .maplibregl-map {
@@ -231,7 +231,7 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
       }
 
       .maplibregl-ctrl-icon {
-        background-color: variables.$si-sys-text-accent;
+        background-color: variables.$si-sys-color-text-accent;
         mask-image: $icon-compass;
       }
     }
@@ -269,13 +269,13 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
 
     &:not(:disabled) {
       &:hover {
-        background: variables.$si-sys-background-accent-secondary-hover;
-        color: variables.$si-sys-text-on-accent-secondary-hover;
+        background: variables.$si-sys-color-background-accent-secondary-hover;
+        color: variables.$si-sys-color-text-on-accent-secondary-hover;
       }
 
       &:active {
-        background-color: variables.$si-sys-background-accent-secondary-active;
-        color: variables.$si-sys-text-on-accent-secondary-active;
+        background-color: variables.$si-sys-color-background-accent-secondary-active;
+        color: variables.$si-sys-color-text-on-accent-secondary-active;
       }
     }
   }
@@ -283,7 +283,7 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
 
 .maplibregl-ctrl button {
   .maplibregl-ctrl-icon {
-    background-color: variables.$si-sys-text-accent;
+    background-color: variables.$si-sys-color-text-accent;
   }
 
   &.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon {
@@ -326,13 +326,13 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
   @extend %base-control;
   padding-block: 0;
   padding-inline: map.get(variables.$spacers-inline, 3);
-  color: variables.$si-sys-text-accent;
+  color: variables.$si-sys-color-text-accent;
   margin: 0;
 }
 
 .maplibregl-ctrl-attrib {
   a {
-    color: variables.$si-sys-text-accent;
+    color: variables.$si-sys-color-text-accent;
     text-decoration: none;
 
     &:hover {
@@ -344,7 +344,7 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
   @media screen {
     // Compact more when canvas size <= = 640px forced compact mode
     &.maplibregl-compact {
-      background: variables.$si-sys-background-3;
+      background: variables.$si-sys-color-background-3;
 
       min-block-size: 20px;
       padding-block: map.get(variables.$spacers-block, 1);
@@ -401,7 +401,7 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
         display: block;
         inline-size: 100%;
         block-size: 100%;
-        background-color: variables.$si-sys-text-accent;
+        background-color: variables.$si-sys-color-text-accent;
         mask-image: $icon-attribution;
         mask-repeat: no-repeat;
         mask-position: center;
@@ -435,10 +435,10 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
   white-space: nowrap;
   border-width: medium map.get(variables.$spacers-block, 1) map.get(variables.$spacers-block, 1);
   border-style: none solid solid;
-  border-color: variables.$si-sys-border-accent;
+  border-color: variables.$si-sys-color-border-accent;
   padding-block: 0;
   padding-inline: map.get(variables.$spacers-inline, 2);
-  color: variables.$si-sys-text-accent;
+  color: variables.$si-sys-color-text-accent;
   box-sizing: border-box;
 }
 
@@ -480,53 +480,53 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
   .maplibregl-popup-anchor-top & {
     align-self: center;
     border-block-start: none;
-    border-block-end-color: variables.$si-sys-background-3;
+    border-block-end-color: variables.$si-sys-color-background-3;
   }
 
   .maplibregl-popup-anchor-top-left & {
     align-self: flex-start;
     border-block-start: none;
     border-inline-start: none;
-    border-block-end-color: variables.$si-sys-background-3;
+    border-block-end-color: variables.$si-sys-color-background-3;
   }
 
   .maplibregl-popup-anchor-top-right & {
     align-self: flex-end;
     border-block-start: none;
     border-inline-end: none;
-    border-block-end-color: variables.$si-sys-background-3;
+    border-block-end-color: variables.$si-sys-color-background-3;
   }
 
   .maplibregl-popup-anchor-bottom & {
     align-self: center;
     border-block-end: none;
-    border-block-start-color: variables.$si-sys-background-3;
+    border-block-start-color: variables.$si-sys-color-background-3;
   }
 
   .maplibregl-popup-anchor-bottom-left & {
     align-self: flex-start;
     border-block-end: none;
     border-inline-start: none;
-    border-block-start-color: variables.$si-sys-background-3;
+    border-block-start-color: variables.$si-sys-color-background-3;
   }
 
   .maplibregl-popup-anchor-bottom-right & {
     align-self: flex-end;
     border-block-end: none;
     border-inline-end: none;
-    border-block-start-color: variables.$si-sys-background-3;
+    border-block-start-color: variables.$si-sys-color-background-3;
   }
 
   .maplibregl-popup-anchor-left & {
     align-self: center;
     border-inline-start: none;
-    border-inline-end-color: variables.$si-sys-background-3;
+    border-inline-end-color: variables.$si-sys-color-background-3;
   }
 
   .maplibregl-popup-anchor-right & {
     align-self: center;
     border-inline-end: none;
-    border-inline-start-color: variables.$si-sys-background-3;
+    border-inline-start-color: variables.$si-sys-color-background-3;
   }
 }
 
@@ -543,7 +543,7 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
   background-color: transparent;
 
   &:hover {
-    background-color: variables.$si-sys-background-accent-secondary-hover;
+    background-color: variables.$si-sys-color-background-accent-secondary-hover;
   }
 }
 

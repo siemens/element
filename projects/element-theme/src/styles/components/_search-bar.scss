@@ -12,23 +12,23 @@
     .search-bar-icon,
     .search-bar-input,
     .search-bar-input::placeholder {
-      color: system-tokens.$si-sys-text-disabled;
+      color: system-tokens.$si-sys-color-text-disabled;
     }
   }
 }
 
 .search-bar-input.form-control {
   transition: none;
-  background-color: system-tokens.$si-sys-background-1 !important; // stylelint-disable-line declaration-no-important
+  background-color: system-tokens.$si-sys-color-background-1 !important; // stylelint-disable-line declaration-no-important
   border-radius: semantic-tokens.$element-radius-2;
   border-width: 0;
 
   &::placeholder {
-    color: system-tokens.$si-sys-text-secondary;
+    color: system-tokens.$si-sys-color-text-secondary;
   }
 
   &:is(:hover, :focus)::placeholder {
-    color: system-tokens.$si-sys-text-primary;
+    color: system-tokens.$si-sys-color-text-primary;
   }
 
   .search-bar:has(.search-bar-icon) & {
@@ -45,7 +45,7 @@
   }
 
   .search-bar.variant-background-0 & {
-    background-color: system-tokens.$si-sys-background-2 !important; // stylelint-disable-line declaration-no-important
+    background-color: system-tokens.$si-sys-color-background-2 !important; // stylelint-disable-line declaration-no-important
   }
 }
 
@@ -55,7 +55,7 @@
   inset-inline-start: map.get(variables.$spacers-inline, 2);
   align-items: center;
   font-size: variables.$si-icon-font-size;
-  color: system-tokens.$si-sys-text-disabled;
+  color: system-tokens.$si-sys-color-text-disabled;
   pointer-events: none;
 }
 

@@ -132,7 +132,7 @@
   background-color: variables.$modal-content-bg;
   background-clip: padding-box;
   border-radius: variables.$modal-content-border-radius;
-  box-shadow: system-tokens.$si-sys-effects-shadow-3;
+  box-shadow: system-tokens.$si-sys-color-effects-shadow-3;
   // Remove focus outline from opened modal
   outline: 0;
 }
@@ -195,7 +195,7 @@
   }
 
   .modal-content {
-    box-shadow: system-tokens.$si-sys-effects-shadow-2;
+    box-shadow: system-tokens.$si-sys-color-effects-shadow-2;
   }
 
   .modal-sm {

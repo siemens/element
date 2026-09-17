@@ -2,5 +2,5 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 .is-invalid ~ .search-bar-clear {
-  color: variables.$si-sys-text-danger;
+  color: variables.$si-sys-color-text-danger;
 }

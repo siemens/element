@@ -206,31 +206,31 @@
 // @deprecated No replacement for the `.list-group-item-*` variants below,
 // use the background and text utilities on a `.list-item` instead.
 .list-group-item-secondary {
-  background-color: system-tokens.$si-sys-background-neutral;
-  color: system-tokens.$si-sys-text-on-neutral;
+  background-color: system-tokens.$si-sys-color-background-neutral;
+  color: system-tokens.$si-sys-color-text-on-neutral;
 }
 
 .list-group-item-success {
-  color: system-tokens.$si-sys-text-success;
-  background: system-tokens.$si-sys-background-success-subtle;
+  color: system-tokens.$si-sys-color-text-success;
+  background: system-tokens.$si-sys-color-background-success-subtle;
 }
 
 .list-group-item-warning {
-  color: system-tokens.$si-sys-text-warning;
-  background: system-tokens.$si-sys-background-warning-subtle;
+  color: system-tokens.$si-sys-color-text-warning;
+  background: system-tokens.$si-sys-color-background-warning-subtle;
 }
 
 .list-group-item-caution {
-  background-color: system-tokens.$si-sys-background-caution-subtle;
-  color: system-tokens.$si-sys-text-caution;
+  background-color: system-tokens.$si-sys-color-background-caution-subtle;
+  color: system-tokens.$si-sys-color-text-caution;
 }
 
 .list-group-item-danger {
-  color: system-tokens.$si-sys-text-danger;
-  background: system-tokens.$si-sys-background-danger-subtle;
+  color: system-tokens.$si-sys-color-text-danger;
+  background: system-tokens.$si-sys-color-background-danger-subtle;
 }
 
 .list-group-item-info {
-  color: system-tokens.$si-sys-text-information;
-  background: system-tokens.$si-sys-background-information-subtle;
+  color: system-tokens.$si-sys-color-text-information;
+  background: system-tokens.$si-sys-color-background-information-subtle;
 }

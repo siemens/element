@@ -11,8 +11,8 @@
   }
 
   &::file-selector-button {
-    color: system-tokens.$si-sys-text-on-accent-secondary;
-    background: system-tokens.$si-sys-background-accent-secondary;
+    color: system-tokens.$si-sys-color-text-on-accent-secondary;
+    background: system-tokens.$si-sys-color-background-accent-secondary;
     border-color: inherit;
     border-block-width: 0;
     border-inline-width: 0 1px;
@@ -23,12 +23,12 @@
   }
 
   &:hover::file-selector-button {
-    color: system-tokens.$si-sys-text-on-accent-secondary-hover;
-    background: system-tokens.$si-sys-background-accent-secondary-hover;
+    color: system-tokens.$si-sys-color-text-on-accent-secondary-hover;
+    background: system-tokens.$si-sys-color-background-accent-secondary-hover;
   }
 
   &:active::file-selector-button {
-    color: system-tokens.$si-sys-text-on-accent-secondary-active;
-    background: system-tokens.$si-sys-background-accent-secondary-active;
+    color: system-tokens.$si-sys-color-text-on-accent-secondary-active;
+    background: system-tokens.$si-sys-color-background-accent-secondary-active;
   }
 }

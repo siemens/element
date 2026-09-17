@@ -11,11 +11,11 @@ $message-spacing: map.get(variables.$spacers-block, 2);
 :host {
   position: relative;
   display: block;
-  color: variables.$si-sys-text-secondary;
+  color: variables.$si-sys-color-text-secondary;
   padding-block: map.get(variables.$spacers-block, 2);
 
   &.failed {
-    color: variables.$si-sys-text-danger;
+    color: variables.$si-sys-color-text-danger;
   }
 
   si-activity-message + & {
@@ -30,7 +30,7 @@ $message-spacing: map.get(variables.$spacers-block, 2);
       );
       inset-block-end: calc(100% - $line-marker-spacing);
       inset-inline-start: $marker-center;
-      border-inline-start: 1px solid variables.$si-sys-border-3;
+      border-inline-start: 1px solid variables.$si-sys-color-border-3;
     }
   }
 }
@@ -100,7 +100,7 @@ $message-spacing: map.get(variables.$spacers-block, 2);
   grid-template-rows: 1fr;
   margin-inline-start: $marker-center;
   padding-inline-start: calc($marker-center + map.get(variables.$spacers-inline, 3));
-  border-inline-start: 1px solid variables.$si-sys-border-3;
+  border-inline-start: 1px solid variables.$si-sys-color-border-3;
 
   &:is(.content-enter, .content-leave) {
     transition: grid-template-rows variables.$element-default-transition-duration;

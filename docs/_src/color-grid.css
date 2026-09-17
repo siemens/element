@@ -1,5 +1,5 @@
 :root {
-  --si-sys-border-4: var(--md-table-border-color);
+  --si-sys-color-border-4: var(--md-table-border-color);
 }
 
 .color-grid {

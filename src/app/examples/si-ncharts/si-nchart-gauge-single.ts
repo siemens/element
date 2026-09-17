@@ -20,11 +20,11 @@ import { GaugeSegment, GaugeSeries, SiNChartGaugeComponent } from '@siemens/nati
 export class SampleComponent {
   readonly logEvent = inject(LOG_EVENT);
   readonly segments: GaugeSegment[] = [
-    { colorToken: 'si-sys-data-rating-excellent', endValue: 400 },
-    { colorToken: 'si-sys-data-rating-good', endValue: 600 },
-    { colorToken: 'si-sys-data-rating-average', endValue: 900 },
-    { colorToken: 'si-sys-data-rating-bad', endValue: 1200 },
-    { colorToken: 'si-sys-background-critical', endValue: 1500 }
+    { colorToken: 'si-sys-color-data-rating-excellent', endValue: 400 },
+    { colorToken: 'si-sys-color-data-rating-good', endValue: 600 },
+    { colorToken: 'si-sys-color-data-rating-average', endValue: 900 },
+    { colorToken: 'si-sys-color-data-rating-bad', endValue: 1200 },
+    { colorToken: 'si-sys-color-background-critical', endValue: 1500 }
   ];
   showTicks = true;
   minDecimals = 0;
@@ -34,7 +34,7 @@ export class SampleComponent {
   showSegments = true;
 
   series: GaugeSeries[] = [
-    { name: 'Series 1', value: 350, colorToken: 'si-sys-data-categorical-5' }
+    { name: 'Series 1', value: 350, colorToken: 'si-sys-color-data-categorical-5' }
   ];
 
   setValues(val1: number): void {

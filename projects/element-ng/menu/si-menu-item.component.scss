@@ -19,7 +19,7 @@
 
 :host-context(si-menu-bar, si-content-action-bar) {
   :host {
-    --btn-bg: #{system-tokens.$si-sys-background-1};
+    --btn-bg: #{system-tokens.$si-sys-color-background-1};
     --btn-font-weight: #{variables.$si-font-weight-body};
     min-inline-size: auto !important; // stylelint-disable-line declaration-no-important
   }

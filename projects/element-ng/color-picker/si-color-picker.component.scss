@@ -29,24 +29,24 @@ $color-size: 1.5rem;
   border-radius: variables.$element-radius-1;
   border-width: 1px;
   border-style: solid;
-  border-color: variables.$si-sys-border-2;
-  background-color: variables.$si-sys-background-1;
+  border-color: variables.$si-sys-color-border-2;
+  background-color: variables.$si-sys-color-background-1;
 
   &:hover {
-    border-color: variables.$si-sys-border-1;
+    border-color: variables.$si-sys-color-border-1;
   }
 
   &:not(:hover) {
-    border-color: variables.$si-sys-border-2;
+    border-color: variables.$si-sys-color-border-2;
 
     &.is-open {
-      border-color: variables.$si-sys-border-1;
+      border-color: variables.$si-sys-color-border-1;
     }
   }
 
   &:disabled {
     cursor: default;
-    border-color: variables.$si-sys-border-3;
+    border-color: variables.$si-sys-color-border-3;
   }
 }
 
@@ -60,7 +60,7 @@ $color-size: 1.5rem;
   &:hover {
     box-shadow:
       0 0 0 1px variables.$element-button-focus-overlay-color,
-      0 0 0 2px variables.$si-sys-border-3;
+      0 0 0 2px variables.$si-sys-color-border-3;
   }
 }
 

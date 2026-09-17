@@ -43,23 +43,23 @@ The following categories are defined in our system:
 
 ### Background
 
---8<-- "si-themes.md:si-sys-background"
+--8<-- "si-sys.md:si-sys-color-background"
 
 ### Border
 
---8<-- "si-themes.md:si-sys-border"
+--8<-- "si-sys.md:si-sys-color-border"
 
 ### Text
 
---8<-- "si-themes.md:si-sys-text"
+--8<-- "si-sys.md:si-sys-color-text"
 
 ### Effects
 
---8<-- "si-themes.md:si-sys-effects"
+--8<-- "si-sys.md:si-sys-color-effects"
 
 ### Code
 
---8<-- "si-themes.md:si-sys-code"
+--8<-- "si-sys.md:si-sys-color-code"
 
 ### UI (deprecated)
 
@@ -173,11 +173,12 @@ si-docs-color {
 
 ## Code ---
 
-Colors can be consumed within applications either by semantic color
-(_e.g. `$element-ui-0`_) or design system color (_e.g. `$siemens-interactive-blue-500`_). It is
-recommended to use semantic colors whenever possible to reduce the impact on
-an application if the color system is getting updated. Use design system colors
-if a design specification specifically demands it.
+Colors can be consumed within applications either by system color token
+(_e.g. `$si-sys-color-background-accent`_) or reference color token
+(_e.g. `$si-ref-color-main-interactive-blue-700`_). It is recommended to use
+system color tokens whenever possible to reduce the impact on an application if
+the color system is updated. Use reference color tokens if a design
+specification specifically requires a palette value.
 
 ### Contextual colors
 
@@ -197,7 +198,7 @@ the Element Theme variables.
 ```scss
 @use '@siemens/element-theme/src/styles/variables';
 
-background-color: variables.$element-base-0;
-color: variables.$element-text-warning;
+background-color: variables.$si-sys-color-background-0;
+color: variables.$si-sys-color-text-warning;
 ...
 ```

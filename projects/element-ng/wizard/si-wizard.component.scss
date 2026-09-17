@@ -3,13 +3,13 @@
 
 @use '@siemens/element-theme/src/styles/variables';
 
-$wizard-default-color: variables.$si-sys-text-secondary;
-$wizard-default-border-color: variables.$si-sys-border-2;
-$wizard-active-color: variables.$si-sys-text-accent;
-$wizard-hover-color: variables.$si-sys-text-accent-hover;
+$wizard-default-color: variables.$si-sys-color-text-secondary;
+$wizard-default-border-color: variables.$si-sys-color-border-2;
+$wizard-active-color: variables.$si-sys-color-text-accent;
+$wizard-hover-color: variables.$si-sys-color-text-accent-hover;
 $wizard-vertical-min-inline-size: var(--wizard-vertical-min-size, 180px);
 $wizard-vertical-max-inline-size: var(--wizard-vertical-max-size, initial);
-$wizard-vertical-divider-border-color: variables.$si-sys-border-4;
+$wizard-vertical-divider-border-color: variables.$si-sys-color-border-4;
 
 :host.vertical {
   display: flex;
@@ -76,7 +76,7 @@ $wizard-vertical-divider-border-color: variables.$si-sys-border-4;
   }
 
   .completed-color {
-    color: variables.$si-sys-text-on-accent;
+    color: variables.$si-sys-color-text-on-accent;
   }
 }
 
@@ -203,11 +203,11 @@ $wizard-vertical-divider-border-color: variables.$si-sys-border-4;
     cursor: default;
 
     .title {
-      color: variables.$si-sys-text-disabled;
+      color: variables.$si-sys-color-text-disabled;
     }
 
     .step-icon {
-      color: variables.$si-sys-text-disabled;
+      color: variables.$si-sys-color-text-disabled;
     }
   }
 
@@ -221,11 +221,11 @@ $wizard-vertical-divider-border-color: variables.$si-sys-border-4;
 
   .completed {
     .title {
-      color: variables.$si-sys-text-primary;
+      color: variables.$si-sys-color-text-primary;
     }
 
     .step-icon {
-      color: variables.$si-sys-text-accent;
+      color: variables.$si-sys-color-text-accent;
     }
 
     .circle {

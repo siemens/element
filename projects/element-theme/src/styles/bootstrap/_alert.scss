@@ -36,37 +36,37 @@
 }
 
 .alert-success {
-  --color-bar: #{system-tokens.$si-sys-border-success};
-  color: system-tokens.$si-sys-text-success;
-  background: system-tokens.$si-sys-background-success-subtle;
+  --color-bar: #{system-tokens.$si-sys-color-border-success};
+  color: system-tokens.$si-sys-color-text-success;
+  background: system-tokens.$si-sys-color-background-success-subtle;
 }
 
 .alert-warning {
-  --color-bar: #{system-tokens.$si-sys-border-warning};
-  color: system-tokens.$si-sys-text-warning;
-  background: system-tokens.$si-sys-background-warning-subtle;
+  --color-bar: #{system-tokens.$si-sys-color-border-warning};
+  color: system-tokens.$si-sys-color-text-warning;
+  background: system-tokens.$si-sys-color-background-warning-subtle;
 }
 
 .alert-caution {
-  --color-bar: #{system-tokens.$si-sys-border-caution};
-  color: system-tokens.$si-sys-text-caution;
-  background: system-tokens.$si-sys-background-caution-subtle;
+  --color-bar: #{system-tokens.$si-sys-color-border-caution};
+  color: system-tokens.$si-sys-color-text-caution;
+  background: system-tokens.$si-sys-color-background-caution-subtle;
 }
 
 .alert-danger {
-  --color-bar: #{system-tokens.$si-sys-border-danger};
-  color: system-tokens.$si-sys-text-danger;
-  background: system-tokens.$si-sys-background-danger-subtle;
+  --color-bar: #{system-tokens.$si-sys-color-border-danger};
+  color: system-tokens.$si-sys-color-text-danger;
+  background: system-tokens.$si-sys-color-background-danger-subtle;
 }
 
 .alert-critical {
-  --color-bar: #{system-tokens.$si-sys-border-critical};
-  color: system-tokens.$si-sys-text-critical;
-  background: system-tokens.$si-sys-background-critical-subtle;
+  --color-bar: #{system-tokens.$si-sys-color-border-critical};
+  color: system-tokens.$si-sys-color-text-critical;
+  background: system-tokens.$si-sys-color-background-critical-subtle;
 }
 
 .alert-info {
-  --color-bar: #{system-tokens.$si-sys-border-information};
-  color: system-tokens.$si-sys-text-information;
-  background: system-tokens.$si-sys-background-information-subtle;
+  --color-bar: #{system-tokens.$si-sys-color-border-information};
+  color: system-tokens.$si-sys-color-text-information;
+  background: system-tokens.$si-sys-color-background-information-subtle;
 }

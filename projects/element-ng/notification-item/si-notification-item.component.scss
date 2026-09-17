@@ -6,7 +6,7 @@ div:empty {
 }
 
 div:has(.notification-item-content a):hover {
-  background-color: variables.$si-sys-background-hover;
+  background-color: variables.$si-sys-color-background-hover;
 }
 
 .notification-item {
@@ -90,7 +90,7 @@ div:has(.notification-item-content a):hover {
   block-size: map.get(variables.$spacers-block, 3);
   inline-size: map.get(variables.$spacers-inline, 3);
   border-radius: 50%;
-  background-color: variables.$si-sys-background-inverse;
+  background-color: variables.$si-sys-color-background-inverse;
   inset-inline-start: calc(
     map.get(variables.$negative-spacers-inline, 2) + map.get(variables.$negative-spacers-inline, 3)
   );

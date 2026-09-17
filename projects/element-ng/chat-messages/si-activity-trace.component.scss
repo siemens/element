@@ -8,7 +8,7 @@ $heading-height: calc($marker-size + 2 * map.get(variables.$spacers, 2));
 :host {
   display: block;
   padding-block: map.get(variables.$spacers-block, 2);
-  color: variables.$si-sys-text-secondary;
+  color: variables.$si-sys-color-text-secondary;
 }
 
 .trace-toggle {

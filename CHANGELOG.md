@@ -1,3 +1,27 @@
+## [51.0.1](https://github.com/siemens/element/compare/v51.0.0...v51.0.1) (2026-09-17)
+
+
+* Revert "refactor(notification-item): deprecate component" ([a9df4a9](https://github.com/siemens/element/commit/a9df4a940417bd4163bf66bcd6a6a31b2ff34a78))
+
+
+### Bug Fixes
+
+* **card:** align header icon with heading ([b854ca3](https://github.com/siemens/element/commit/b854ca3129f07553ae59f21b2cfcb79cd88af86c))
+* **card:** omit undefined heading ids ([690fd4b](https://github.com/siemens/element/commit/690fd4b8d00befdfeb14017bb60ad6c9e4f0f477))
+* **dashboards:** prevent widget move and resize in expanded mode ([02f9d1e](https://github.com/siemens/element/commit/02f9d1e45cca1be4e65a971915541e35bcb5100e))
+* **theme:** rename color tokens ([c5008c3](https://github.com/siemens/element/commit/c5008c3e43e994e25ac20085f40854fe38ee6a0d))
+
+
+### NOTES
+
+* **theme:** Semantic color tokens gained a color group segment.
+  
+  This is an emergency correction of the already released 51.0.0 names to align with the Siemens Design Language, shipped as a patch.
+  
+  Renamed every system color token from si.sys.<group>.* to si.sys.color.<group>.*, for example `$si-sys-background-0` to `$si-sys-color-background-0` and `--si-sys-text-primary` to `--si-sys-color-text-primary`.
+  
+  Run `ng update @siemens/element-ng` to apply the 51.0.1 schematic. If you import generated brand dist files, update `si-dark.*` and `si-light.*` to `si-sys-color.dark.*` and `si-sys-color.light.*`, `si-typography.*` to `si-sys-typography.default.*`, and `si-sys-classes.*` to `si-sys-color-classes.*`.
+
 # [51.0.0](https://github.com/siemens/element/compare/v50.0.0...v51.0.0) (2026-09-10)
 
 

@@ -8,7 +8,7 @@
   cursor: pointer;
 
   &[data-status='default'] {
-    color: variables.$si-sys-background-accent;
+    color: variables.$si-sys-color-background-accent;
   }
 
   &[data-status='success'] {

@@ -6,7 +6,10 @@ import { ATTRIBUTE_SELECTORS_MIGRATION } from './attribute-selectors.js';
 import { CLASS_MEMBER_REPLACEMENTS_MIGRATION } from './class-member-replacement.js';
 import { COMPONENT_PROPERTY_NAMES_MIGRATION } from './component-property-names.js';
 import { COMPONENT_PROPERTY_TO_CHILD_MIGRATION } from './component-property-to-child.js';
-import { CSS_CUSTOM_PROPERTIES_MIGRATION } from './css-custom-properties.js';
+import {
+  CSS_CUSTOM_PROPERTIES_MIGRATION,
+  SYS_COLOR_TOKEN_RENAMES
+} from './css-custom-properties.js';
 import { ELEMENT_CLASS_CHANGES_MIGRATION } from './element-class-changes.js';
 import { ELEMENT_SELECTORS_MIGRATION } from './element-selectors.js';
 import { PROVIDER_FUNCTION_REMOVALS_MIGRATION } from './provider-function-removals.js';
@@ -37,4 +40,17 @@ export const getElementMigrationData = (): ElementMigrationData => ({
   providerFunctionRemovalChanges: PROVIDER_FUNCTION_REMOVALS_MIGRATION,
   symbolRemovalChanges: SYMBOL_REMOVALS_MIGRATION,
   symbolRenamingChanges: SYMBOL_RENAMING_MIGRATION
+});
+
+export const getColorTokenRenameMigrationData = (): ElementMigrationData => ({
+  attributeSelectorChanges: [],
+  classMemberReplacementChanges: [],
+  componentPropertyNameChanges: [],
+  cssCustomPropertyChanges: SYS_COLOR_TOKEN_RENAMES,
+  componentPropertyToChildChanges: [],
+  elementClassChanges: [],
+  elementSelectorChanges: [],
+  providerFunctionRemovalChanges: [],
+  symbolRemovalChanges: [],
+  symbolRenamingChanges: []
 });

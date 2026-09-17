@@ -6,17 +6,17 @@ $filtered-search-line-height: map.get(variables.$spacers-block, 8);
 $filtered-search-criteria-margin: map.get(variables.$spacers-block, 2);
 
 :host {
-  --search-bar-icon-color: #{variables.$si-sys-text-primary};
-  --input-background-color: #{variables.$si-sys-background-1};
-  --input-background-hover-color: #{variables.$si-sys-background-1};
-  --filter-search-background-color: #{variables.$si-sys-background-1};
-  --filter-pill-background-color: #{variables.$si-sys-background-2};
+  --search-bar-icon-color: #{variables.$si-sys-color-text-primary};
+  --input-background-color: #{variables.$si-sys-color-background-1};
+  --input-background-hover-color: #{variables.$si-sys-color-background-1};
+  --filter-search-background-color: #{variables.$si-sys-color-background-1};
+  --filter-pill-background-color: #{variables.$si-sys-color-background-2};
 
   &.dark-background {
-    --input-background-color: #{variables.$si-sys-background-2};
-    --input-background-hover-color: #{variables.$si-sys-background-hover};
-    --filter-search-background-color: #{variables.$si-sys-background-2};
-    --filter-pill-background-color: #{variables.$si-sys-background-1};
+    --input-background-color: #{variables.$si-sys-color-background-2};
+    --input-background-hover-color: #{variables.$si-sys-color-background-hover};
+    --filter-search-background-color: #{variables.$si-sys-color-background-2};
+    --filter-pill-background-color: #{variables.$si-sys-color-background-1};
   }
 
   display: flex;
@@ -27,7 +27,7 @@ $filtered-search-criteria-margin: map.get(variables.$spacers-block, 2);
   min-inline-size: 0;
 
   &.disabled {
-    color: variables.$si-sys-text-disabled;
+    color: variables.$si-sys-color-text-disabled;
   }
 }
 
