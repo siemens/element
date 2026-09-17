@@ -38,8 +38,9 @@ We recommend using [semantic color tokens](../colors/ui-colors.md):
 @use '@siemens/element-theme/src/styles/variables';
 
 /* Pick the tokens you need: */
-color: variables.$element-text-primary;
-background-color: variables.$element-base-warning;
+color: variables.$si-sys-color-text-primary;
+background-color: variables.$si-sys-color-background-warning-subtle;
 ```
 
-For a complete list of available tokens, see [\_semantic-tokens](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/variables/_semantic-tokens.scss).
+For a complete list of system and reference tokens, see the
+[@siemens-ux/design-tokens documentation](https://code.siemens.com/ux/sdl).
