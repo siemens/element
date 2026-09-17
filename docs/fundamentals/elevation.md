@@ -60,7 +60,7 @@ illustrations, or animations to enhance depth and spatial relationships.
 - `shadow-3`: For elements requiring stronger visual prominence, such as multi-layered highlights.
 - `shadow-4`: Reserved for rare or critical cases requiring maximum elevation distinction.
 
---8<-- "si-themes.md:si-sys-color-effects-shadow"
+--8<-- "si-sys.md:si-sys-color-effects-shadow"
 
 ### Elevation (deprecated)
 
