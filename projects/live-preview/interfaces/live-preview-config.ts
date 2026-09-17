@@ -30,6 +30,8 @@ export interface SiLivePreviewConfig {
   landscapeToggle?: boolean;
   webcomponents?: boolean;
   rootFontSizes?: number[];
+  /** Maximum number of log messages to retain. */
+  maxLogMessages?: number;
 }
 
 export interface SiLivePreviewInternals {
