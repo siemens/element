@@ -190,7 +190,7 @@ test.describe('navbar vertical next', () => {
         await expect(page.getByRole('link', { name: 'Sub item 6' })).toBeVisible();
 
         await page.getByRole('link', { name: 'Sub item 4' }).click();
-        await expect(page).toHaveURL(/subItem4/);
+        await expect(page.getByRole('main')).toContainText("Content with path 'subItem4'");
 
         await page.getByRole('button', { name: 'Show side navigation', exact: true }).click();
         await expect(page.getByRole('group', { name: 'Documentation' })).toBeVisible();

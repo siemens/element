@@ -5,6 +5,6 @@
 - tabpanel "Test coverage":
   - text: "/Total test coverage: \\d+%/"
   - link "Check E2E coverage details":
-    - /url: "#/viewer/viewer/tab-3/e2e-coverage"
+    - /url: /tab-3/e2e-coverage
   - link "Check Unit tests coverage details":
-    - /url: "#/viewer/viewer/tab-3/unit-coverage"
+    - /url: /tab-3/unit-coverage

@@ -7,7 +7,7 @@
 - banner:
   - button "Launchpad"
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Application name" [level=1]
   - button "Layout"
   - button "Help"
@@ -19,9 +19,9 @@
   - button "Documentation"
   - group "Documentation"
   - link "Energy & Sustainability":
-    - /url: "#/viewer/viewer/energy"
+    - /url: /energy
   - link "Test Coverage":
-    - /url: "#/viewer/viewer/coverage"
+    - /url: /coverage
 - main:
   - button "Toggle"
   - button "Properties"

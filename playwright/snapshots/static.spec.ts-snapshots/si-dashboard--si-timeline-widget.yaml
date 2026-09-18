@@ -14,7 +14,7 @@
     - text: /Today \d+:\d+ Title Description/
     - button "Action"
 - link "Home":
-  - /url: "#/"
+  - /url: /
 - text: Heading
 - list:
   - listitem:
@@ -60,7 +60,7 @@
     - text: /Today \d+:\d+ Title Description/
     - button "Action"
 - link "Home":
-  - /url: "#/"
+  - /url: /
 - text: Heading
 - list:
   - listitem:
@@ -83,6 +83,6 @@
   - listitem:
     - text: /Yesterday \d+:\d+ Title/
     - link "Home":
-      - /url: "#/"
+      - /url: /
   - listitem: /Yesterday \d+:\d+ Title/
   - listitem: /Yesterday \d+:\d+ Title/

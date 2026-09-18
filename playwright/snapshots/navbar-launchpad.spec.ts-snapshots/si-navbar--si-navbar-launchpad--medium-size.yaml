@@ -3,9 +3,9 @@
   - heading "Application name" [level=1]
   - navigation "Header main":
     - link "Item 1":
-      - /url: "#/viewer/viewer/item1"
+      - /url: /item1
     - link "Item 2":
-      - /url: "#/viewer/viewer/item2"
+      - /url: /item2
   - button "Help"
   - button "Jane Smith": JS
 - dialog "Launchpad":

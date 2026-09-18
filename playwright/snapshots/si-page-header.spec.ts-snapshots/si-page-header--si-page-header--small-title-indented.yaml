@@ -3,7 +3,7 @@
 - button "Toggle"
 - banner:
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Page header" [level=1]
 - navigation:
   - button "Expand"

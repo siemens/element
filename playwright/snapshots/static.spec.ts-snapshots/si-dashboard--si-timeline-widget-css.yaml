@@ -5,7 +5,7 @@
   - listitem
   - listitem
 - link "Home":
-  - /url: "#/"
+  - /url: /
 - text: Heading
 - menubar:
   - menuitem "Expand"
@@ -35,7 +35,7 @@
   - listitem
   - listitem
 - link "Home":
-  - /url: "#/"
+  - /url: /
 - text: Heading
 - menubar:
   - menuitem "Share"

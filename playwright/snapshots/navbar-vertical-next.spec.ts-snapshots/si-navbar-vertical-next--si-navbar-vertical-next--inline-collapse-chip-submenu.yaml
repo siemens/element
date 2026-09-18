@@ -2,7 +2,7 @@
 - link "Jump to Navigation"
 - banner:
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Navbar Vertical Next Example" [level=1]
 - navigation:
   - button "Show side navigation"
@@ -16,20 +16,20 @@
   - text: Inline collapse
 - dialog "User management":
   - link "Sub item":
-    - /url: "#/viewer/viewer/subItem"
+    - /url: /subItem
   - link "Sub item 2":
-    - /url: "#/viewer/viewer/subItem2"
+    - /url: /subItem2
   - link "Sub item 3":
-    - /url: "#/viewer/viewer/subItem3"
+    - /url: /subItem3
 - dialog "User management":
   - link "Home":
-    - /url: "#/viewer/viewer/home"
+    - /url: /home
   - text: Modules
   - link "Energy & sustainability":
-    - /url: "#/viewer/viewer/energy"
+    - /url: /energy
   - button "User management" [expanded]
   - link "Test coverage":
-    - /url: "#/viewer/viewer/coverage"
+    - /url: /coverage
   - button "Documentation"
   - group "Documentation"
   - button "Action"
