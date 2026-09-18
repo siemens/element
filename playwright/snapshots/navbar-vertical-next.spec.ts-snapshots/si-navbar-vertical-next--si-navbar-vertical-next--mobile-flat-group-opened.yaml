@@ -2,7 +2,7 @@
 - link "Jump to Navigation"
 - banner:
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Navbar Vertical Next Example" [level=1]
 - navigation:
   - button "Show side navigation" [expanded]
@@ -10,11 +10,11 @@
     - button "Back"
     - text: ""
     - link "Sub item 4":
-      - /url: "#/viewer/viewer/subItem4"
+      - /url: /subItem4
     - link "Sub item 5":
-      - /url: "#/viewer/viewer/subItem5"
+      - /url: /subItem5
     - link "Sub item 6":
-      - /url: "#/viewer/viewer/subItem6"
+      - /url: /subItem6
 - main:
   - heading "Here is a title" [level=2]
   - text: Content with path 'home' Control panel

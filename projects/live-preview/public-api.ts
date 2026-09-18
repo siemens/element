@@ -4,6 +4,7 @@
  */
 // Public API Surface
 export * from './live-preview-routes';
+export { provideLivePreview, type SiLivePreviewProviderConfig } from './live-preview.provider';
 
 export * from './components/si-dummy.component';
 export * from './components/si-example-overview/si-example-overview.component';
@@ -12,6 +13,7 @@ export * from './components/si-live-preview/si-live-preview.component';
 export * from './components/si-live-preview-iframe/si-live-preview-iframe.component';
 export * from './components/si-live-preview-renderer/si-live-preview-renderer.component';
 export * from './components/si-live-preview-renderer/si-live-preview-runtime.component';
+export * from './components/si-live-preview-renderer/si-live-preview-application-runtime.component';
 export * from './components/si-live-preview-wrapper/si-live-preview-wrapper.component';
 export * from './components/si-live-preview-qr/si-live-preview-qr.component';
 export * from './components/stackblitz/stackblitz.provider';

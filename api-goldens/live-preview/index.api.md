@@ -7,10 +7,13 @@
 import { ActivatedRoute } from '@angular/router';
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
+import { EnvironmentProviders } from '@angular/core';
 import * as i1 from '@angular/router';
 import { InjectionToken } from '@angular/core';
+import { Injector } from '@angular/core';
 import { ModuleWithProviders } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
@@ -44,6 +47,9 @@ export const LOG_EVENT: InjectionToken<(...msg: any[]) => void>;
 
 // @public
 export const provideExampleRoutes: (routes: Route[]) => Provider;
+
+// @public
+export const provideLivePreview: (config: SiLivePreviewProviderConfig, isMobile?: boolean) => EnvironmentProviders;
 
 // @public
 export const provideStackblitzConfig: (config?: StackblitzConfig) => Provider;
@@ -82,6 +88,10 @@ export class SiExampleViewerComponent {
     constructor();
     // (undocumented)
     activateTab(index: number): void;
+}
+
+// @public
+export abstract class SiLivePreviewApplicationRuntimeComponent extends SiLivePreviewRuntimeComponent {
 }
 
 // @public (undocumented)
@@ -263,6 +273,11 @@ class SiLivePreviewModule {
 }
 export { SiLivePreviewModule }
 export { SiLivePreviewModule as SimplLivePreviewModule }
+
+// @public
+export interface SiLivePreviewProviderConfig extends SiLivePreviewConfig {
+    exampleApplicationConfig?: ApplicationConfig | ((injector: Injector) => ApplicationConfig);
+}
 
 // @public (undocumented)
 export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy {

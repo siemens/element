@@ -4,7 +4,7 @@
 - link "Jump to Target 4"
 - banner:
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Skip Links" [level=1]
   - navigation:
     - button "Item 1"

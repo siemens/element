@@ -13,7 +13,7 @@
     - button "Title link item 5"
 - main:
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Application name" [level=1]
   - button "Side panel"
   - button "Open side panel"

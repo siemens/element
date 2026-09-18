@@ -1,7 +1,7 @@
 - banner:
   - button "Launchpad" [expanded]
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
 - dialog "Launchpad":
   - paragraph: Switch app
   - button "Close launchpad"
@@ -11,7 +11,7 @@
   - link "Fischbach System name":
     - /url: .
   - link "Statistics System name":
-    - /url: "#/viewer/viewer/stats"
+    - /url: /stats
   - link "Rocket System name":
     - /url: .
   - button "Show more" [expanded]
@@ -20,7 +20,7 @@
   - link "Fischbach System name":
     - /url: .
   - link "Statistics System name":
-    - /url: "#/viewer/viewer/stats"
+    - /url: /stats
   - link "Rocket System name":
     - /url: .
   - link "This is a really long name Open in new tab System name":

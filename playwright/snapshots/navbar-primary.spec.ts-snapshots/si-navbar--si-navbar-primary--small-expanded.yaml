@@ -3,14 +3,14 @@
   - heading "Navbar primary" [level=1]
   - navigation "Header main":
     - link "item 1":
-      - /url: "#/viewer/viewer/item1"
+      - /url: /item1
     - button "item 2" [expanded]
     - group "item 2":
       - link "sub-item 1":
-        - /url: "#/viewer/viewer/subitem1"
+        - /url: /subitem1
       - link "sub-item 2":
-        - /url: "#/viewer/viewer/subitem2"
+        - /url: /subitem2
       - link "sub-item 3":
-        - /url: "#/viewer/viewer/subitem3"
+        - /url: /subitem3
   - button "Help"
   - button "Sandipan Chakraborty": SC

@@ -13,10 +13,10 @@
 - textbox "Password"
 - button "show password"
 - link "Forgot password":
-  - /url: "#/viewer/viewer"
+  - /url: /
 - button "Login"
 - link "Register now":
-  - /url: "#/viewer/viewer"
+  - /url: /
 - text: Productive data You are about to connect to productive data. Please note that changes will take effect immediately
 - contentinfo:
   - link "Corporate Information":
