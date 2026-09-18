@@ -219,4 +219,24 @@ describe('SiContentActionBarComponent', () => {
     await fixture.whenStable();
     expect(await harness.isMobile()).toBe(true);
   });
+
+  it('should release auto-collapsable-list resize observers when destroyed', async () => {
+    primaryActions.set([{ type: 'action', label: 'Item', action: () => {} }]);
+    const unobserve = vi.spyOn(ResizeObserver.prototype, 'unobserve');
+
+    await fixture.whenStable();
+    await new Promise(resolve => setTimeout(resolve));
+    const nativeElement = fixture.nativeElement as HTMLElement;
+    const listElement = nativeElement.querySelector<HTMLElement>('.position-relative')!;
+    const menuBarElement = nativeElement.querySelector<HTMLElement>('si-menu-bar')!;
+    const overflowItemElement = nativeElement.querySelector<HTMLElement>(
+      '[siAutoCollapsableListOverflowItem]'
+    )!;
+    fixture.destroy();
+
+    expect(unobserve).toHaveBeenCalledWith(listElement);
+    expect(unobserve).toHaveBeenCalledWith(menuBarElement);
+    expect(unobserve).toHaveBeenCalledWith(overflowItemElement);
+    unobserve.mockRestore();
+  });
 });

@@ -237,4 +237,30 @@ describe('SiAutoCollapsableListDirective', () => {
     await detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'visible', 'visible']);
   });
+
+  it('should release resize observers when destroyed', async () => {
+    const unobserve = vi.spyOn(ResizeObserver.prototype, 'unobserve');
+    fixture.detectChanges();
+    await waitForResizeObserver();
+    await fixture.whenStable();
+
+    const listElement = hostElement.querySelector<HTMLElement>('.position-relative')!;
+    fixture.destroy();
+
+    expect(unobserve).toHaveBeenCalledWith(listElement);
+    unobserve.mockRestore();
+  });
+
+  it('should release an item resize observer after its last subscriber unsubscribes', () => {
+    component.disabled.set(true);
+    fixture.detectChanges();
+    const unobserve = vi.spyOn(ResizeObserver.prototype, 'unobserve');
+    const itemElement = hostElement.querySelector<HTMLElement>('[siAutoCollapsableListItem]')!;
+    const itemSizeSubscription = component.items()[0].size$.subscribe();
+
+    itemSizeSubscription.unsubscribe();
+
+    expect(unobserve).toHaveBeenCalledWith(itemElement);
+    unobserve.mockRestore();
+  });
 });
