@@ -1,16 +1,16 @@
 - banner:
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "My application" [level=1]
   - navigation "Main navigation":
     - link "Module 1":
-      - /url: "#/viewer/viewer/m1"
+      - /url: /m1
     - button "Module 2" [expanded]
     - dialog "Module 2":
       - link "M2.1":
-        - /url: "#/viewer/viewer/m2/1"
+        - /url: /m2/1
       - link "M2.2":
-        - /url: "#/viewer/viewer/m2/2"
+        - /url: /m2/2
   - button "Tenant 2"
   - button "Notifications"
   - button /\+\d+ Support/

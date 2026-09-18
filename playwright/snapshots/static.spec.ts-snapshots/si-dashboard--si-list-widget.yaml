@@ -28,7 +28,7 @@
     - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral. 9.7
     - button "Building overview"
 - link "Home":
-  - /url: "#/"
+  - /url: /
 - text: Heading
 - menubar:
   - menuitem "Sort descending"
@@ -111,7 +111,7 @@
     - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral.
     - button "Building overview"
 - link "Home":
-  - /url: "#/"
+  - /url: /
 - text: Heading
 - menubar:
   - menuitem "Sort descending"
@@ -131,7 +131,7 @@
       - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
     - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral. 9.7
 - link "Home":
-  - /url: "#/"
+  - /url: /
 - text: Heading
 - menubar:
   - menuitem "Sort descending"
@@ -151,7 +151,7 @@
       - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
     - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral.
 - link "Home":
-  - /url: "#/"
+  - /url: /
 - text: Heading
 - menubar:
   - menuitem "Sort descending"
@@ -169,7 +169,7 @@
       - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
     - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral. 9.7
 - link "Home":
-  - /url: "#/"
+  - /url: /
 - text: Heading
 - menubar:
   - menuitem "Sort ascending"
@@ -187,11 +187,11 @@
   - listitem: Colosseum
   - listitem: Burj Khalifa
 - link "Home":
-  - /url: "#/"
+  - /url: /
 - text: Heading
 - menubar:
   - menuitem "Sort descending"
 - text: No buildings found.
 - paragraph: Please refine your search.
 - link "Home":
-  - /url: "#/"
+  - /url: /

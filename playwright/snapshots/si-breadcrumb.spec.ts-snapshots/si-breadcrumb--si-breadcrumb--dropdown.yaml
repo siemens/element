@@ -3,18 +3,18 @@
   - list:
     - listitem:
       - link "Root":
-        - /url: "#/viewer/viewer/root"
+        - /url: /root
     - listitem:
       - link "Level 1":
-        - /url: "#/viewer/viewer/root/level1"
+        - /url: /root/level1
     - listitem:
       - button "Level 2 with a really long..."
     - listitem:
       - link "Level 3":
-        - /url: "#/viewer/viewer/root/level1/level2/level3"
+        - /url: /root/level1/level2/level3
     - listitem:
       - link "Level 4":
-        - /url: "#/viewer/viewer/root/level1/level2/level3/level4"
+        - /url: /root/level1/level2/level3/level4
     - listitem:
       - button "..." [expanded]
       - menu:
@@ -25,28 +25,28 @@
       - button "Level 8 thisHasALongNonSepa..."
     - listitem:
       - link "Level 9":
-        - /url: "#/viewer/viewer"
+        - /url: /
 - heading "Root as text" [level=2]
 - navigation "root as text breadcrumbs":
   - list:
     - listitem:
       - link "Root":
-        - /url: "#/viewer/viewer/root"
+        - /url: /root
     - listitem:
       - link "Level 1":
-        - /url: "#/viewer/viewer/root/level1"
+        - /url: /root/level1
     - listitem:
       - button "Level 2 with a really long..."
     - listitem:
       - link "Level 3":
-        - /url: "#/viewer/viewer/root/level1/level2/level3"
+        - /url: /root/level1/level2/level3
     - listitem:
       - link "Level 4":
-        - /url: "#/viewer/viewer/root/level1/level2/level3/level4"
+        - /url: /root/level1/level2/level3/level4
     - listitem:
       - button "..."
     - listitem:
       - button "Level 8 thisHasALongNonSepa..."
     - listitem:
       - link "Level 9":
-        - /url: "#/viewer/viewer"
+        - /url: /

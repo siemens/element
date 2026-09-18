@@ -2,28 +2,28 @@
 - link "Jump to Navigation"
 - banner:
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Navbar vertical" [level=1]
-  - button "Jane Smith"
+  - button "Jane Smith": JS
 - navigation:
   - button "collapse" [expanded]
   - textbox "Search..."
   - link "Home":
-    - /url: "#/viewer/viewer/Home"
+    - /url: /Home
   - button "expand Home"
   - group "expand Home"
   - button "Documentation" [expanded]
   - group "Documentation":
     - link "Sub Item 4 1":
-      - /url: "#/viewer/viewer/subItem4"
+      - /url: /subItem4
     - link "Sub Item 5 2":
-      - /url: "#/viewer/viewer/subItem5"
+      - /url: /subItem5
     - link "Sub Item 6 3":
-      - /url: "#/viewer/viewer/subItem6"
+      - /url: /subItem6
   - link "Energy & Sustainability":
-    - /url: "#/viewer/viewer/energy"
+    - /url: /energy
   - link "Test Coverage":
-    - /url: "#/viewer/viewer/coverage"
+    - /url: /coverage
 - main:
   - heading "Here is a title" [level=2]
   - text: Here goes the content

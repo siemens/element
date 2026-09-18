@@ -1,14 +1,14 @@
 - banner:
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Navbar primary end" [level=1]
   - navigation "Header main":
     - link "Operation":
-      - /url: "#/viewer/viewer/operation"
+      - /url: /operation
     - link "Object view":
-      - /url: "#/viewer/viewer/objectView"
+      - /url: /objectView
   - link "Messages":
-    - /url: "#/viewer/viewer/messages"
+    - /url: /messages
     - text: ""
   - button "Help"
   - button "Jane Smith" [expanded]: JS
@@ -22,8 +22,8 @@
       - button "RSS Region B"
       - button "RSS Region C"
     - link "Messages 5":
-      - /url: "#/messages"
+      - /url: /messages
     - link "Profile":
-      - /url: "#/profile"
+      - /url: /profile
     - link "Logout":
-      - /url: "#/byebye"
+      - /url: /byebye

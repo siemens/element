@@ -9,7 +9,7 @@
 - region "Number three"
 - banner:
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Side panel" [level=1]
   - button "Layout"
 - button "Toggle side panel"

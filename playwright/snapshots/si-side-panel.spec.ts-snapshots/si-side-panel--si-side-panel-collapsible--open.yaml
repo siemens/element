@@ -17,7 +17,7 @@
 - region "Graphics"
 - banner:
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Side panel collapsible" [level=1]
   - button "Layout"
   - button "Help"

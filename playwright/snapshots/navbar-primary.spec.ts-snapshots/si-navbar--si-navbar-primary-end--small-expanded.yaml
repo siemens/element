@@ -3,14 +3,14 @@
   - heading "Navbar primary end" [level=1]
   - button "Show actions" [expanded]
   - link "Messages":
-    - /url: "#/viewer/viewer/messages"
+    - /url: /messages
     - text: ""
   - button "Help" [expanded]
   - group "Help":
     - link "Help":
-      - /url: "#/viewer/viewer/help"
+      - /url: /help
     - link "About":
-      - /url: "#/viewer/viewer/about"
+      - /url: /about
     - link "Corporate Information":
       - /url: http://www.siemens.com/corporate-information
   - button "Jane Smith": JS

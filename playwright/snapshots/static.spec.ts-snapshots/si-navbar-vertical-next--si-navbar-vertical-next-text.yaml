@@ -2,7 +2,7 @@
 - link "Jump to Navigation"
 - banner:
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Navbar vertical next text only" [level=1]
   - button "Jane Smith": JS
 - navigation:
@@ -13,11 +13,11 @@
   - group "Documentation"
   - text: All the rest
   - link "Energy & Operations":
-    - /url: "#/viewer/viewer/energy"
+    - /url: /energy
   - link "Test Coverage":
-    - /url: "#/viewer/viewer/coverage"
+    - /url: /coverage
   - link "Configuration":
-    - /url: "#/viewer/viewer/configuration"
+    - /url: /configuration
 - main:
   - heading "Here is a title" [level=2]
   - text: Here goes the content Control panel
