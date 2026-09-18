@@ -62,6 +62,9 @@ export abstract class SiLivePreviewRuntimeComponent implements AfterViewInit, Do
   }
 
   ngOnDestroy(): void {
+    this.componentRef?.destroy();
+    this.componentRef = undefined;
+
     const route = this.activatedRoute.routeConfig;
     if (route) {
       route.children = this.childRouteBackup;
