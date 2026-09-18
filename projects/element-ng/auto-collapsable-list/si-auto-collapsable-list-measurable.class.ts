@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Directive, ElementRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
 
@@ -21,13 +22,15 @@ export class SiAutoCollapsableListMeasurable {
    *       .pipe(
    *         map(size => size.width),
    *         distinctUntilChanged(),
-   *         shareReplay(1)
+   *         takeUntilDestroyed(),
+   *         shareReplay({ bufferSize: 1, refCount: true })
    *       )
    * ```
    */
   size$ = this.resizeObserverService.observe(this.elementRef.nativeElement, 0, true, true).pipe(
     map(size => size.width),
     distinctUntilChanged(),
-    shareReplay(1)
+    takeUntilDestroyed(),
+    shareReplay({ bufferSize: 1, refCount: true })
   );
 }

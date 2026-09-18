@@ -85,10 +85,10 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
   private injector = inject(INJECTOR);
 
   ngAfterViewInit(): void {
-    if (this.siAutoCollapsableList()) {
+    if (this.siAutoCollapsableList() && !this.resizeSubscription) {
       this.readGapSize();
       this.setupResizeListener();
-    } else {
+    } else if (!this.siAutoCollapsableList()) {
       this.reset();
     }
   }
@@ -99,6 +99,7 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
       if (!siAutoCollapsableList && this.resizeSubscription) {
         this.reset();
       } else if (siAutoCollapsableList && !this.resizeSubscription && this.items()) {
+        this.readGapSize();
         this.setupResizeListener();
       }
     }
