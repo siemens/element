@@ -583,6 +583,13 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   }
 
   ngOnDestroy(): void {
+    this.getEChartInner()?.removeEventListener('mousedown', this.echartMouseDown);
+    this.getEChartExternalSliderInner()?.removeEventListener(
+      'mousedown',
+      this.echartExtSliderMouseDown
+    );
+    window.removeEventListener('mouseup', this.echartMouseUp);
+    window.removeEventListener('mouseup', this.echartExtSliderMouseUp);
     this.disposeChart();
   }
 
@@ -976,11 +983,11 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   protected afterChartResize(): void {}
 
   private getEChartInner(): Element | null {
-    return this.echartElement.querySelector(':scope > div:first-child');
+    return this.echartElement?.querySelector(':scope > div:first-child') ?? null;
   }
 
   private getEChartExternalSliderInner(): Element | null {
-    return this.eChartExtSliderElement.querySelector(':scope > div:first-child');
+    return this.eChartExtSliderElement?.querySelector(':scope > div:first-child') ?? null;
   }
 
   private handleExtChartMouseDown(): void {
