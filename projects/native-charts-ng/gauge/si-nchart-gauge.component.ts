@@ -123,6 +123,10 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
    */
   readonly segments = input<GaugeSegment[]>([]);
   /**
+   * Optional value displayed as a marker bar across the value arc.
+   */
+  readonly markerValue = input<number>();
+  /**
    * Unit
    *
    * @defaultValue ''
@@ -199,6 +203,7 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
   protected totalSumString = '0';
   protected valignMiddle = false;
   protected internalSegments: InternalGaugeSegment[] = [];
+  protected markerPath = '';
 
   private locale = inject(LOCALE_ID).toString();
   private numberFormat = new Intl.NumberFormat(this.locale, { maximumFractionDigits: 2 });
@@ -234,6 +239,7 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
       changes.showTicks ||
       changes.showRangeLabelsOutside ||
       changes.segments ||
+      changes.markerValue ||
       changes.axisLabelFormatter ||
       changes.valueFormatter
     ) {
@@ -266,6 +272,29 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
     } else {
       this.calcSeriesSingle();
     }
+    this.markerPath = this.makeMarkerPath();
+  }
+
+  private makeMarkerPath(): string {
+    const markerValue = this.markerValue();
+    if (markerValue === undefined) {
+      return '';
+    }
+
+    const angle = this.containAngle(
+      this.startAngle() +
+        valueToRelativeAngle(
+          this.startAngle(),
+          this.endAngle(),
+          this.min(),
+          this.max(),
+          markerValue
+        )
+    );
+    return makeLine(
+      polarToCartesian(this.center, this.radius - 2.5, angle),
+      polarToCartesian(this.center, this.radius + 2.5, angle)
+    );
   }
 
   private reset(): void {

@@ -39,6 +39,11 @@
       }
     }
   </g>
+  @if (markerPath) {
+    <g class="marker">
+      <path [attr.d]="markerPath" />
+    </g>
+  }
   <text
     class="text-primary value"
     x="50"
