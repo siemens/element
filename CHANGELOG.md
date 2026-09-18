@@ -24,6 +24,8 @@
 
 # [51.0.0](https://github.com/siemens/element/compare/v50.0.0...v51.0.0) (2026-09-10)
 
+[Release blog post: "Welcome Element v51!"](https://blog.siemens.com/2026/09/welcome-element-51/)
+
 
 ### Features
 
