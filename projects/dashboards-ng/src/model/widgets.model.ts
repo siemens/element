@@ -315,6 +315,14 @@ export type WidgetConfigEvent = {
 };
 
 /**
+ * DOM outlets provided by the dashboard host to framework-agnostic widgets.
+ */
+export interface WidgetSlotTargets {
+  /** The outlet in which the widget can render its footer content. */
+  footer: HTMLElement;
+}
+
+/**
  * Every widget component implementation needs to implement the {@link WidgetInstance}
  * interface. It provides the interface between the component implementation and the
  * dashboard.
@@ -322,6 +330,9 @@ export type WidgetConfigEvent = {
 export interface WidgetInstance {
   /** The WidgetConfig is set after instantiating the widget component. */
   config: WidgetConfig | InputSignal<WidgetConfig>;
+
+  /** DOM outlets supplied by the dashboard host. */
+  widgetSlots?: WidgetSlotTargets | InputSignal<WidgetSlotTargets>;
 
   /**
    * The dashboard will set the editable property to `true`, if the dashboard
