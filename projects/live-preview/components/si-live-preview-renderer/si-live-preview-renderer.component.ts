@@ -346,14 +346,15 @@ export class SiLivePreviewRendererComponent implements OnDestroy {
   }
 
   private removeComponentInstance(): void {
+    this.componentRef?.destroy();
+    this.componentRef = undefined;
+
     try {
       this.renderedExample().remove();
     } catch (error: any) {
       // FIXME: there's no point in logging this as rendering error since it will be cleared right away
       console.warn('Error during ngOnDestroy():', error);
     }
-    this.componentRef?.destroy();
-    this.componentRef = undefined;
 
     // clear out render for component id:
     // - contains the styles
