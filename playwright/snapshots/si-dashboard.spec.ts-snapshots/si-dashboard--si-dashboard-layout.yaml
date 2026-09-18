@@ -3,7 +3,7 @@
 - banner:
   - button "Launchpad"
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Smart Buildings" [level=1]
   - button "API"
   - button "Jane Smith": JS
@@ -15,9 +15,9 @@
   - group "Documentation"
   - text: All the rest
   - link "Energy & Operations":
-    - /url: "#/viewer/viewer/energy"
+    - /url: /energy
   - link "Test Coverage":
-    - /url: "#/viewer/viewer/coverage"
+    - /url: /coverage
 - main:
   - heading "Dashboard" [level=2]
   - combobox "selection of day":

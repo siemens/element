@@ -5,9 +5,9 @@
   - heading "Application name" [level=1]
   - navigation "Header main":
     - link "Item 1":
-      - /url: "#/viewer/viewer/item1"
+      - /url: /item1
     - link "Item 2":
-      - /url: "#/viewer/viewer/item2"
+      - /url: /item2
   - button "Help"
   - button "Jane Smith" [expanded]: JS
   - dialog "Jane Smith":
@@ -15,8 +15,8 @@
     - separator
     - button "Company"
     - link "Messages 5":
-      - /url: "#/messages"
+      - /url: /messages
     - link "Profile":
-      - /url: "#/profile"
+      - /url: /profile
     - link "Logout":
-      - /url: "#/byebye"
+      - /url: /byebye

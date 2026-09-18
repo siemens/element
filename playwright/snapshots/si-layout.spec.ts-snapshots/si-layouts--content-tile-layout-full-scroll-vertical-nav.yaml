@@ -4,9 +4,9 @@
 - banner:
   - button "Launchpad"
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - heading "Application name" [level=1]
-  - button "Jane Smith"
+  - button "Jane Smith": JS
 - navigation:
   - button "collapse" [expanded]
   - button "Home"
@@ -14,9 +14,9 @@
   - button "Documentation"
   - group "Documentation"
   - link "Energy & Operations":
-    - /url: "#/viewer/viewer/energy"
+    - /url: /energy
   - link "Test Coverage":
-    - /url: "#/viewer/viewer/coverage"
+    - /url: /coverage
 - main:
   - text: /4 Emergency 0 Life safety 0 Security 0 Supervisory \d+ Trouble \d+ Success/
   - heading "Title describing what page content to expect" [level=2]

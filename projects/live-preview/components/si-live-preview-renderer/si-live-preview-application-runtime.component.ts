@@ -1,0 +1,152 @@
+/**
+ * Copyright (c) Siemens 2016 - 2026
+ * SPDX-License-Identifier: MIT
+ */
+import { Location, LocationChangeListener, LocationStrategy } from '@angular/common';
+import {
+  ApplicationRef,
+  ComponentRef,
+  createComponent,
+  Directive,
+  ErrorHandler,
+  inject,
+  Injector
+} from '@angular/core';
+import { createApplication } from '@angular/platform-browser';
+import { provideRouter, Router, withDisabledInitialNavigation } from '@angular/router';
+
+import { LOG_EVENT } from '../../helpers/log-event';
+import {
+  SI_LIVE_PREVIEW_CONFIG,
+  SI_LIVE_PREVIEW_EXAMPLE_ROUTES
+} from '../../interfaces/live-preview-config';
+import type { SiLivePreviewProviderConfig } from '../../live-preview.provider';
+import { SiDummyComponent } from '../si-dummy.component';
+import { SiLivePreviewRuntimeComponent } from './si-live-preview-runtime.component';
+
+/** A router location that is private to a rendered example application. */
+class ExampleLocationStrategy extends LocationStrategy {
+  private currentPath = '/';
+  private state: unknown = null;
+
+  path(): string {
+    return this.currentPath;
+  }
+
+  prepareExternalUrl(internal: string): string {
+    return internal;
+  }
+
+  getState(): unknown {
+    return this.state;
+  }
+
+  pushState(state: unknown, _title: string, url: string, queryParams: string): void {
+    this.state = state;
+    this.currentPath = url + queryParams;
+  }
+
+  replaceState(state: unknown, _title: string, url: string, queryParams: string): void {
+    this.state = state;
+    this.currentPath = url + queryParams;
+  }
+
+  forward(): void {}
+
+  back(): void {}
+
+  onPopState(_fn: LocationChangeListener): void {}
+
+  getBaseHref(): string {
+    return '';
+  }
+}
+
+/**
+ * Runtime shell that renders each example in an independent Angular application.
+ * The example application owns its router and does not modify the live-preview router.
+ */
+@Directive()
+export abstract class SiLivePreviewApplicationRuntimeComponent extends SiLivePreviewRuntimeComponent {
+  private readonly applicationConfig = inject(
+    SI_LIVE_PREVIEW_CONFIG
+  ) as SiLivePreviewProviderConfig;
+  private readonly parentInjector = inject(Injector);
+  private exampleComponentRef?: ComponentRef<unknown>;
+  private applicationRef?: ApplicationRef;
+  private hostElement?: HTMLElement;
+  private destroyed = false;
+
+  override ngAfterViewInit(): void {
+    void this.createExampleApplication();
+  }
+
+  override ngOnDestroy(): void {
+    this.destroyed = true;
+    this.applicationRef?.destroy();
+    this.hostElement?.remove();
+  }
+
+  private async createExampleApplication(): Promise<void> {
+    try {
+      const locationStrategy = new ExampleLocationStrategy();
+      const configuredApplication = this.applicationConfig.exampleApplicationConfig;
+      const exampleApplicationConfig =
+        typeof configuredApplication === 'function'
+          ? configuredApplication(this.parentInjector)
+          : configuredApplication;
+      this.applicationRef = await createApplication({
+        ...exampleApplicationConfig,
+        providers: [
+          ...(exampleApplicationConfig?.providers ?? []),
+          provideRouter([], withDisabledInitialNavigation()),
+          { provide: LocationStrategy, useValue: locationStrategy },
+          {
+            provide: Location,
+            useFactory: () => new Location(inject(LocationStrategy))
+          },
+          {
+            provide: LOG_EVENT,
+            useFactory: () => this.parentInjector.get(LOG_EVENT)
+          },
+          {
+            provide: ErrorHandler,
+            useValue: { handleError: (error: unknown) => this.handleError(error) }
+          }
+        ]
+      });
+
+      if (this.destroyed) {
+        this.applicationRef.destroy();
+        return;
+      }
+
+      this.exampleComponentRef = createComponent(this.component(), {
+        environmentInjector: this.applicationRef.injector
+      });
+      this.hostElement = this.exampleComponentRef.location.nativeElement as HTMLElement;
+      const anchor = this.container().element.nativeElement as Node;
+      anchor.parentNode?.insertBefore(this.hostElement, anchor);
+      const exampleRoutes = this.exampleComponentRef.injector.get(
+        SI_LIVE_PREVIEW_EXAMPLE_ROUTES,
+        undefined,
+        {
+          optional: true,
+          self: true
+        }
+      ) ??
+        this.applicationConfig.defaultRoutes ?? [{ path: '**', component: SiDummyComponent }];
+
+      this.applicationRef.injector.get(Router).resetConfig(exampleRoutes);
+      this.applicationRef.attachView(this.exampleComponentRef.hostView);
+      this.applicationRef.tick();
+      this.ready.emit();
+    } catch (error: unknown) {
+      this.handleError(error);
+    }
+  }
+
+  private handleError(error: unknown): void {
+    this.renderingError.emit(error instanceof Error ? error : new Error(String(error)));
+  }
+}
