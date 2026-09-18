@@ -98,6 +98,7 @@
     &.btn-icon {
       inline-size: auto;
       padding-inline: calc(map.get(spacers.$spacers-inline, 5) - 1px);
+      aspect-ratio: unset;
     }
 
     // @deprecated Will be removed in a future major version, use .btn-icon instead.
