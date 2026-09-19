@@ -103,6 +103,26 @@ describe('SiPaginationComponent', () => {
     expect(getCurrentItem()).toHaveTextContent('3');
   });
 
+  it('should disable navigation when totalPages and currentPage are zero', async () => {
+    fixture.componentRef.setInput('totalPages', 0);
+    fixture.componentRef.setInput('currentPage', 0);
+    await fixture.whenStable();
+
+    const buttons = getNavButtons();
+    expect(buttons.item(0)).toBeDisabled();
+    expect(buttons.item(1)).toBeDisabled();
+  });
+
+  it('should disable navigation when totalRowCount is zero and currentPage is one', async () => {
+    fixture.componentRef.setInput('totalRowCount', 0);
+    fixture.componentRef.setInput('currentPage', 1);
+    await fixture.whenStable();
+
+    const buttons = getNavButtons();
+    expect(buttons.item(0)).toBeDisabled();
+    expect(buttons.item(1)).toBeDisabled();
+  });
+
   it('should calculate total pages from pageSize and totalRowCount', () => {
     fixture.componentRef.setInput('pageSize', 10);
     fixture.componentRef.setInput('totalRowCount', 45);
