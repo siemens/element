@@ -5,6 +5,8 @@
  * - Fetches versions.json from the root of the domain
  * - Supports absolute version URLs
  * - Preserves current page path when switching versions
+ * - If that page is missing in the target version, falls back to the version
+ *   root (S3/CloudFront returns 403 for missing keys)
  * - Opens the version menu on click (not hover)
  * - Gracefully degrades if versions.json is not found (no errors, just no selector)
  *
@@ -97,21 +99,139 @@
   }
 
   /**
-   * Render version selector HTML
+   * Restrict navigation to http(s) URLs. Rejects javascript: and other schemes
+   * that could otherwise be assigned to href/location.
+   */
+  function toHttpHref(url) {
+    try {
+      const parsed = new URL(url, window.location.origin);
+      if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+        return `${window.location.origin}/`;
+      }
+      return encodeURI(parsed.href);
+    } catch {
+      return `${window.location.origin}/`;
+    }
+  }
+
+  /**
+   * True when the URL exists. Missing versioned docs objects are served as 403
+   * by S3/CloudFront (not 404), so only HTTP 2xx counts as a hit.
+   */
+  async function urlExists(url) {
+    try {
+      const head = await fetch(url, { method: 'HEAD', redirect: 'follow' });
+      if (head.status !== 405 && head.status !== 501) {
+        return head.ok;
+      }
+
+      const get = await fetch(url, { method: 'GET', redirect: 'follow' });
+      return get.ok;
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Keep the current page when it exists in the target version, otherwise the
+   * version root.
+   */
+  async function resolveExistingUrl(preferredUrl, fallbackUrl) {
+    if (preferredUrl === fallbackUrl || (await urlExists(preferredUrl))) {
+      return preferredUrl;
+    }
+
+    return fallbackUrl;
+  }
+
+  const pendingResolves = new WeakMap();
+  const linkVersions = new WeakMap();
+  const resolvedLinks = new WeakSet();
+
+  /**
+   * Point a version link at an existing page in that version.
+   * Rewriting href also covers open-in-new-tab after the check completes.
+   */
+  function resolveVersionLink(link, currentVersion) {
+    if (resolvedLinks.has(link)) {
+      return Promise.resolve(link.href);
+    }
+
+    const pending = pendingResolves.get(link);
+    if (pending) {
+      return pending;
+    }
+
+    const version = linkVersions.get(link) ?? '';
+    const preferredUrl = toHttpHref(buildVersionURL(version, currentVersion, true));
+    const fallbackUrl = toHttpHref(buildVersionURL(version, currentVersion, false));
+    const resolve = resolveExistingUrl(preferredUrl, fallbackUrl)
+      .then(url => {
+        const safeUrl = toHttpHref(url);
+        link.href = safeUrl;
+        resolvedLinks.add(link);
+        pendingResolves.delete(link);
+        return safeUrl;
+      })
+      .catch(() => {
+        link.href = fallbackUrl;
+        resolvedLinks.add(link);
+        pendingResolves.delete(link);
+        return fallbackUrl;
+      });
+
+    pendingResolves.set(link, resolve);
+    return resolve;
+  }
+
+  /**
+   * Render version selector with DOM APIs (no innerHTML).
    */
   function renderVersionSelector(versions, currentVersion) {
     const current = versions.find(v => v.version === currentVersion) || versions[0];
     const visibleVersions = versions.filter(v => !v.hidden);
 
-    const html = `<div class="md-version"><button type="button" class="md-version__current" aria-label="Select version" aria-expanded="false" aria-haspopup="true" aria-controls="md-version-list">${current.title}</button><ul id="md-version-list" class="md-version__list">${visibleVersions.map(version => `<li class="md-version__item"><a href="${buildVersionURL(version.version, currentVersion)}" class="md-version__link">${version.title}</a></li>`).join('')}</ul></div>`;
+    const root = document.createElement('div');
+    root.className = 'md-version';
 
-    return html;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'md-version__current';
+    button.setAttribute('aria-label', 'Select version');
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-haspopup', 'true');
+    button.setAttribute('aria-controls', 'md-version-list');
+    button.textContent = current.title;
+    root.appendChild(button);
+
+    const list = document.createElement('ul');
+    list.id = 'md-version-list';
+    list.className = 'md-version__list';
+
+    for (const version of visibleVersions) {
+      const item = document.createElement('li');
+      item.className = 'md-version__item';
+
+      const link = document.createElement('a');
+      link.className = 'md-version__link';
+      link.href = toHttpHref(buildVersionURL(version.version, currentVersion));
+      link.textContent = version.title;
+      linkVersions.set(link, version.version);
+
+      item.appendChild(link);
+      list.appendChild(item);
+    }
+
+    root.appendChild(list);
+    return root;
   }
 
   /**
    * Open/close the version menu on click (Material CSS uses hover).
+   * Version links are rewritten to an existing page when the current path is
+   * missing in the target version.
    */
-  function bindVersionSelector(versionEl) {
+  function bindVersionSelector(versionEl, currentVersion) {
     const button = versionEl.querySelector('.md-version__current');
     if (!button) {
       return;
@@ -139,6 +259,52 @@
         setOpen(false);
         button.focus();
       }
+    });
+
+    const navigateToResolved = (link, openInNewTab) => {
+      resolveVersionLink(link, currentVersion).then(url => {
+        const safeUrl = toHttpHref(url);
+        if (openInNewTab) {
+          window.open(safeUrl, '_blank', 'noopener');
+        } else {
+          window.location.assign(safeUrl);
+        }
+      });
+    };
+
+    versionEl.addEventListener('click', event => {
+      const link = event.target.closest('a.md-version__link');
+      if (!link || event.defaultPrevented || event.button !== 0) {
+        return;
+      }
+
+      // href already points at a live page; let the browser handle navigation,
+      // including modifier-key / new-tab clicks.
+      if (resolvedLinks.has(link)) {
+        return;
+      }
+
+      event.preventDefault();
+      navigateToResolved(link, event.metaKey || event.ctrlKey || event.shiftKey);
+    });
+
+    versionEl.addEventListener('auxclick', event => {
+      const link = event.target.closest('a.md-version__link');
+      if (!link || event.button !== 1 || resolvedLinks.has(link)) {
+        return;
+      }
+
+      event.preventDefault();
+      navigateToResolved(link, true);
+    });
+
+    versionEl.querySelectorAll('a.md-version__link').forEach(link => {
+      if ((linkVersions.get(link) ?? '') === currentVersion) {
+        resolvedLinks.add(link);
+        return;
+      }
+
+      resolveVersionLink(link, currentVersion);
     });
   }
 
@@ -179,19 +345,12 @@
           return;
         }
 
-        // Create .md-header__topic wrapper with version selector inside
-        const html = renderVersionSelector(versions, currentVersion);
+        const versionEl = renderVersionSelector(versions, currentVersion);
         const topicWrapper = document.createElement('div');
         topicWrapper.className = 'md-header__topic';
-        topicWrapper.innerHTML = html;
-
-        // Append to .md-header
+        topicWrapper.appendChild(versionEl);
         header.appendChild(topicWrapper);
-
-        const versionEl = topicWrapper.querySelector('.md-version');
-        if (versionEl) {
-          bindVersionSelector(versionEl);
-        }
+        bindVersionSelector(versionEl, currentVersion);
       })
       .catch(error => {
         console.error('[Version Selector] Failed to load:', error.message);
