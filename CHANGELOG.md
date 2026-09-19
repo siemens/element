@@ -15,12 +15,12 @@
 ### NOTES
 
 * **theme:** Semantic color tokens gained a color group segment.
-  
-  This is an emergency correction of the already released 51.0.0 names to align with the Siemens Design Language, shipped as a patch.
-  
-  Renamed every system color token from si.sys.<group>.* to si.sys.color.<group>.*, for example `$si-sys-background-0` to `$si-sys-color-background-0` and `--si-sys-text-primary` to `--si-sys-color-text-primary`.
-  
-  Run `ng update @siemens/element-ng` to apply the 51.0.1 schematic. If you import generated brand dist files, update `si-dark.*` and `si-light.*` to `si-sys-color.dark.*` and `si-sys-color.light.*`, `si-typography.*` to `si-sys-typography.default.*`, and `si-sys-classes.*` to `si-sys-color-classes.*`.
+
+    This is an emergency correction of the already released 51.0.0 names to align with the Siemens Design Language, shipped as a patch.
+
+    Renamed every system color token from si.sys.<group>.* to si.sys.color.<group>.*, for example `$si-sys-background-0` to `$si-sys-color-background-0` and `--si-sys-text-primary` to `--si-sys-color-text-primary`.
+
+    Run `ng update @siemens/element-ng` to apply the 51.0.1 schematic. If you import generated brand dist files, update `si-dark.*` and `si-light.*` to `si-sys-color.dark.*` and `si-sys-color.light.*`, `si-typography.*` to `si-sys-typography.default.*`, and `si-sys-classes.*` to `si-sys-color-classes.*`.
 
 # [51.0.0](https://github.com/siemens/element/compare/v50.0.0...v51.0.0) (2026-09-10)
 
@@ -177,741 +177,786 @@
 ### NOTES
 
 * **chat-messages:** In `si-chat-input`, the `actions` input
-  is displayed inline again.
-  Use `secondaryActions` for menu-only ("+) actions.
+    is displayed inline again.
+    Use `secondaryActions` for menu-only ("+) actions.
+
 * **navigation:** `si-application-header` and `si-navbar-vertical` now use the normal 20px icon size.
 * **tabs:** Applications using `si-tabset-legacy` and `si-tab-legacy` can migrate automatically to the current tabs API with:
 
-  ```shell
-  ng g @siemens/element-ng:migrate-tabs-legacy
-  ```
+    ```shell
+    ng g @siemens/element-ng:migrate-tabs-legacy
+    ```
+
 * **theme:** The default root font size is now configurable when loading the
-  Element theme. Pass the value via `$element-root-font-size`, or set it
-  to `none` to use the browser default.
-  
-  If nothing is provided, the default remains `16px`, so nothing breaks
-  and projects can opt in when ready. We recommend switching to `none / initial`
-  as soon as possible. Starting with Element v52, `initial` will be the
-  default.
-  
-  ```scss
-  @use '@siemens/element-theme/src/theme' with (
-    $element-root-font-size: initial
-  );
-  ```
-  
-  Furthermore, a series of helper classes are provided that can be applied
-  to the `<html>` tag to change the root font size:
-  - `rfs-none`: use the browser default, regardless of the configured default
-  - `rfs-16`: use 16px
-  - `rfs-20`: use 20px
-  - `rfs-24`: use 24px
-  
-  Any other value can be used by setting the CSS variable at the `<html>`
-  tag or using a `:root {}` CSS block: `--element-root-font-size`.
+    Element theme. Pass the value via `$element-root-font-size`, or set it
+    to `none` to use the browser default.
+
+    If nothing is provided, the default remains `16px`, so nothing breaks
+    and projects can opt in when ready. We recommend switching to `none / initial`
+    as soon as possible. Starting with Element v52, `initial` will be the
+    default.
+
+    ```scss
+    @use '@siemens/element-theme/src/theme' with (
+      $element-root-font-size: initial
+    );
+    ```
+
+    Furthermore, a series of helper classes are provided that can be applied
+    to the `<html>` tag to change the root font size:
+    - `rfs-none`: use the browser default, regardless of the configured default
+    - `rfs-16`: use 16px
+    - `rfs-20`: use 20px
+    - `rfs-24`: use 24px
+
+    Any other value can be used by setting the CSS variable at the `<html>`
+    tag or using a `:root {}` CSS block: `--element-root-font-size`.
+
 * **typography:** Our components now use the Siemens Design Language styles for typography.
-  
-  - All headings are consistently sbold style
-  - Consistent naming conventions for text styles
-  - Font-sizes steps follow a logical 1.2 factor, rounded to even pixel value
-  - Line-heights follow font size definitions
-  
-  Make sure to use the [page header](https://element.siemens.io/fundamentals/layouts/header/),
-  especially the `si-layout-title` on all `h2` to maintain a correct layout.
+
+    - All headings are consistently sbold style
+    - Consistent naming conventions for text styles
+    - Font-sizes steps follow a logical 1.2 factor, rounded to even pixel value
+    - Line-heights follow font size definitions
+
+    Make sure to use the [page header](https://element.siemens.io/fundamentals/layouts/header/),
+    especially the `si-layout-title` on all `h2` to maintain a correct layout.
 
 ### BREAKING CHANGES
 
 * **angular:** Angular 22+ is required.
-  Follow the Angular update guide to update your app: https://angular.dev/update-guide?v=21.0-22.0
+    Follow the Angular update guide to update your app: https://angular.dev/update-guide?v=21.0-22.0
+
 * **angular:** endpoint `@siemens/element-ng/translate` no longer re-exports `@siemens/element-translate-ng/translate`.
-  
-  Use `@siemens/element-translate-ng/translate` instead.
-  
-  Before:
-  
-  ```ts
-  import { ... } from '@siemens/element-ng/translate';
-  ```
-  
-  After:
-  
-  ```ts
-  import { ... } from '@siemens/element-translate-ng/translate';
-  ```
+
+    Use `@siemens/element-translate-ng/translate` instead.
+
+    Before:
+
+    ```ts
+    import { ... } from '@siemens/element-ng/translate';
+    ```
+
+    After:
+
+    ```ts
+    import { ... } from '@siemens/element-translate-ng/translate';
+    ```
+
 * **angular/aria:** `@angular/aria` is now required peer dependency for `@siemens/element-ng`.
 * **application-header:** Removed component `SiHeaderSiemensLogoComponent`. Use `SiHeaderLogoDirective` instead.
-  
-  ```html
-  <!-- Before -->
-  <a si-header-siemens-logo routerLink="/" aria-label="Siemens" class="d-none d-md-flex"></a>
-  
-  <!-- After -->
-  <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
-  ```
+
+    ```html
+    <!-- Before -->
+    <a si-header-siemens-logo routerLink="/" aria-label="Siemens" class="d-none d-md-flex"></a>
+
+    <!-- After -->
+    <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+    ```
+
 * **charts/gauge:** Input `SiChartGaugeComponent.labelFormatter` should no longer be used to format the value, it should be used only to format axis labels. For formatting values, use `SiChartGaugeComponent.valueFormatter` instead.
 * **chat-message:** For `si-ai-message` and `si-user-message`, the
-  `contentFormatter` input is no longer available. Instead use content projection.
-  For markdown content, use the new `si-markdown` component. There's a schematic
-  to automatically upgrade.
+    `contentFormatter` input is no longer available. Instead use content projection.
+    For markdown content, use the new `si-markdown` component. There's a schematic
+    to automatically upgrade.
+
 * **dashboards-ng:** `SiWidgetCatalogComponent.closed` signature changed
-  from `output<Omit<WidgetConfig, 'id'> | undefined>` to
-  `output<Omit<WidgetConfig, 'id'>[] | undefined>`. In single-select mode
-  the array always contains exactly one entry.
-  
-  This only affects code that either:
-    - subclasses `SiWidgetCatalogComponent` and overrides `closed` or
-      calls `this.closed.emit(...)`, or
-    - uses `<si-widget-catalog>` directly in a template and subscribes
-      to `(closed)`.
-  
-  Migration for subclasses:
-    - Update overridden output type to
-      `Omit<WidgetConfig, 'id'>[] | undefined`.
-    - Wrap `emit(config)` calls as `emit([config])`.
-  
-  Migration for direct template consumers:
-  
-    Before:
-  
-  ```
-      onClosed(config: Omit<WidgetConfig, 'id'> | undefined) {
-        if (config) this.addWidget(config);
-      }
-  ```
-  
-    After:
-  
-  ```
-      onClosed(configs: Omit<WidgetConfig, 'id'>[] | undefined) {
-        configs?.forEach(config => this.addWidget(config));
-      }
-  ```
+    from `output<Omit<WidgetConfig, 'id'> | undefined>` to
+    `output<Omit<WidgetConfig, 'id'>[] | undefined>`. In single-select mode
+    the array always contains exactly one entry.
+
+    This only affects code that either:
+      - subclasses `SiWidgetCatalogComponent` and overrides `closed` or
+        calls `this.closed.emit(...)`, or
+      - uses `<si-widget-catalog>` directly in a template and subscribes
+        to `(closed)`.
+
+    Migration for subclasses:
+      - Update overridden output type to
+        `Omit<WidgetConfig, 'id'>[] | undefined`.
+      - Wrap `emit(config)` calls as `emit([config])`.
+
+    Migration for direct template consumers:
+
+      Before:
+
+    ```
+        onClosed(config: Omit<WidgetConfig, 'id'> | undefined) {
+          if (config) this.addWidget(config);
+        }
+    ```
+
+      After:
+
+    ```
+        onClosed(configs: Omit<WidgetConfig, 'id'>[] | undefined) {
+          configs?.forEach(config => this.addWidget(config));
+        }
+    ```
+
 * **dashboards-ng:** GridStack `^13` is now required.
 * **datatable:** `@siemens/ngx-datatable` 26+ is required.
-  Read [their changelog](https://github.com/siemens/ngx-datatable/blob/main/CHANGELOG.md) and update your app.
+    Read [their changelog](https://github.com/siemens/ngx-datatable/blob/main/CHANGELOG.md) and update your app.
+
 * **datepicker:** Removed input `SiDatepickerComponent.calenderWeekLabel`. Use `SiDatepickerComponent.calendarWeekLabel` instead.
 * **file-uploader:** The `uploadTextFileSelect` input has been removed from
-  `SiFileUploaderComponent` and `SiFileDropzoneComponent`.
-  
-  The full text now lives in `uploadDropText`, which renders as the button. Remove `uploadTextFileSelect` and move its content into `uploadDropText`.
-  
-  Before:
-  
-  ```html
-  <si-file-uploader
-    uploadDropText="Drop files here or"
-    uploadTextFileSelect="click to upload"
-  />
-  ```
-  After:
-  
-  ```html
-  <si-file-uploader uploadDropText="Drop files here or click to upload" />
-  ```
+    `SiFileUploaderComponent` and `SiFileDropzoneComponent`.
+
+    The full text now lives in `uploadDropText`, which renders as the button. Remove `uploadTextFileSelect` and move its content into `uploadDropText`.
+
+    Before:
+
+    ```html
+    <si-file-uploader
+      uploadDropText="Drop files here or"
+      uploadTextFileSelect="click to upload"
+    />
+    ```
+    After:
+
+    ```html
+    <si-file-uploader uploadDropText="Drop files here or click to upload" />
+    ```
+
 * **filtered-search:** `CriterionDefinition.datepickerConfig` type narrowed
-  
-  The type of `datepickerConfig` in `CriterionDefinition` (filtered-search) changed from `DatepickerInputConfig` to `Omit<DatepickerInputConfig, 'enableDateRange' | 'enableTwoMonthDateRange'>`.
-  
-  The properties `enableDateRange` and `enableTwoMonthDateRange ` are no longer accepted in `datepickerConfig` when used with filtered-search criteria, as they had no effect in that context.
-  
-  Migration: Remove any `enableDateRange` and `enableTwoMonthDateRange` properties from your `datepickerConfig` objects passed to `CriterionDefinition`.
+
+    The type of `datepickerConfig` in `CriterionDefinition` (filtered-search) changed from `DatepickerInputConfig` to `Omit<DatepickerInputConfig, 'enableDateRange' | 'enableTwoMonthDateRange'>`.
+
+    The properties `enableDateRange` and `enableTwoMonthDateRange ` are no longer accepted in `datepickerConfig` when used with filtered-search criteria, as they had no effect in that context.
+
+    Migration: Remove any `enableDateRange` and `enableTwoMonthDateRange` properties from your `datepickerConfig` objects passed to `CriterionDefinition`.
+
 * **formly:** The `@siemens/element-ng/formly` entry point is now based on
-  ngx-formly v7.1 and exposes the standalone `SiFormlyComponent`. The v6
-  implementation moved to `@siemens/element-ng/formly-legacy`. Consumers still on
-  ngx-formly v6 must either migrate to v7.1 or change the import path to `@siemens/element-ng/formly-legacy` (`SiFormlyModule`). The legacy package is deprecated and will be removed in a future release.
+    ngx-formly v7.1 and exposes the standalone `SiFormlyComponent`. The v6
+    implementation moved to `@siemens/element-ng/formly-legacy`. Consumers still on
+    ngx-formly v6 must either migrate to v7.1 or change the import path to `@siemens/element-ng/formly-legacy` (`SiFormlyModule`). The legacy package is deprecated and will be removed in a future release.
+
 * **icon:** Removed `provideIconConfig()` provider without replacment.
-  
-  Element will now always render SVG icons internally.
-  Consumer which provide their own custom icons must use the `icons` property
-  of a theme: https://github.com/siemens/element/blob/main/projects/element-ng/theme/si-theme.model.ts#L42.
-  
-  As a consequence, overrides of the `.element-*` icon font classes no longer
-  affect Element components.
+
+    Element will now always render SVG icons internally.
+    Consumer which provide their own custom icons must use the `icons` property
+    of a theme: https://github.com/siemens/element/blob/main/projects/element-ng/theme/si-theme.model.ts#L42.
+
+    As a consequence, overrides of the `.element-*` icon font classes no longer
+    affect Element components.
+
 * **icon-status:** Removed component `SiIconStatusComponent`. Use `SiStatusCounterComponent` component instead.
 * **list-details:** The default sizing unit of the list split part in
-  `si-list-details` when resizing is enabled has changed from `fr` to `px`.
-  
-  When resizing is enabled:
-  - The list part now defaults to `unit="px"` (initial size of 300px), and the
-    details part takes the remaining space (`1fr`).
-  - `listWidth` is now interpreted in `listWidthUnit`. With the default
-    `listWidthUnit="px"`, numeric values are treated as pixels instead of percentages.
-  - `[(listWidth)]` now emits and accepts pixel values instead of percentage
-    values.
-  
-  To retain the previous relative percentage-based split behavior, explicitly set
-  `listWidthUnit="fr"`.
-  
-  Static layouts (`disableResizing="true"`) are unaffected and continue to
-  interpret `listWidth` as a percentage.
-  
-  Before:
-  
-  ```html
-  <si-list-details [listWidth]="50" />
-  ```
-  
-  After (retaining previous relative behavior):
-  
-  ```html
-  <si-list-details
-    [listWidth]="50"
-    listWidthUnit="fr"
-  />
-  ```
-  
-  After (adopting new fixed-width layout):
-  
-  ```html
-  <si-list-details [listWidth]="300" />
-  ```
+    `si-list-details` when resizing is enabled has changed from `fr` to `px`.
+
+    When resizing is enabled:
+    - The list part now defaults to `unit="px"` (initial size of 300px), and the
+      details part takes the remaining space (`1fr`).
+    - `listWidth` is now interpreted in `listWidthUnit`. With the default
+      `listWidthUnit="px"`, numeric values are treated as pixels instead of percentages.
+    - `[(listWidth)]` now emits and accepts pixel values instead of percentage
+      values.
+
+    To retain the previous relative percentage-based split behavior, explicitly set
+    `listWidthUnit="fr"`.
+
+    Static layouts (`disableResizing="true"`) are unaffected and continue to
+    interpret `listWidth` as a percentage.
+
+    Before:
+
+    ```html
+    <si-list-details [listWidth]="50" />
+    ```
+
+    After (retaining previous relative behavior):
+
+    ```html
+    <si-list-details
+      [listWidth]="50"
+      listWidthUnit="fr"
+    />
+    ```
+
+    After (adopting new fixed-width layout):
+
+    ```html
+    <si-list-details [listWidth]="300" />
+    ```
+
 * **live-preview:** `SampleModule` and the `modules` configuration are removed.
-  
-  Migrate every preview example to a standalone `SampleComponent`, declaring its dependencies in
-  the component `imports` and `providers`. Remove the `SampleModule` export and the `modules`
-  property from the preview configuration.
+
+    Migrate every preview example to a standalone `SampleComponent`, declaring its dependencies in
+    the component `imports` and `providers`. Remove the `SampleModule` export and the `modules`
+    property from the preview configuration.
+
 * **live-preview:** Built-in dummy routes are removed.
-  
-  Declare the routes required by an example in that example's `providers`:
-  
-  ```ts
-  import { Component } from "@angular/core";
-  import { Route } from "@angular/router";
-  import { provideExampleRoutes } from "@siemens/live-preview";
-  
-  const routes: Route[] = [
-    { path: "route1", component: RouteOneComponent },
-    { path: "route2", component: RouteTwoComponent }
-  ];
-  
-  @Component({
-    providers: [provideExampleRoutes(routes)]
-  })
-  export class SampleComponent {}
-  ```
-  
-  To retain shared fallback routes for examples that do not declare their own, configure
-  `defaultRoutes` in `SiLivePreviewModule.forRoot()`:
-  
-  ```ts
-  import { Route } from "@angular/router";
-  import { SiDummyComponent, SiLivePreviewModule } from "@siemens/live-preview";
-  
-  const defaultRoutes: Route[] = [
-    { path: "route1", component: SiDummyComponent },
-    { path: "route2", component: SiDummyComponent }
-  ];
-  
-  SiLivePreviewModule.forRoot({
-    // ...
-    defaultRoutes
-  });
-  ```
+
+    Declare the routes required by an example in that example's `providers`:
+
+    ```ts
+    import { Component } from "@angular/core";
+    import { Route } from "@angular/router";
+    import { provideExampleRoutes } from "@siemens/live-preview";
+
+    const routes: Route[] = [
+      { path: "route1", component: RouteOneComponent },
+      { path: "route2", component: RouteTwoComponent }
+    ];
+
+    @Component({
+      providers: [provideExampleRoutes(routes)]
+    })
+    export class SampleComponent {}
+    ```
+
+    To retain shared fallback routes for examples that do not declare their own, configure
+    `defaultRoutes` in `SiLivePreviewModule.forRoot()`:
+
+    ```ts
+    import { Route } from "@angular/router";
+    import { SiDummyComponent, SiLivePreviewModule } from "@siemens/live-preview";
+
+    const defaultRoutes: Route[] = [
+      { path: "route1", component: SiDummyComponent },
+      { path: "route2", component: SiDummyComponent }
+    ];
+
+    SiLivePreviewModule.forRoot({
+      // ...
+      defaultRoutes
+    });
+    ```
+
 * **live-preview:** Built-in Ionic runtime rendering is removed.
-  
-  Restore Ionic rendering with a custom `runtimeComponent` that extends
-  `SiLivePreviewRuntimeComponent`:
-  
-  ```ts
-  import { Component, ViewContainerRef, viewChild } from "@angular/core";
-  import { IonApp } from "@ionic/angular/standalone";
-  import { SiLivePreviewRuntimeComponent } from "@siemens/live-preview";
-  
-  @Component({
-    imports: [IonApp],
-    selector: "app-ionic-preview-runtime",
-    template: "<ion-app><ng-container #container /></ion-app>"
-  })
-  export class IonicPreviewRuntimeComponent extends SiLivePreviewRuntimeComponent {
-    readonly container = viewChild.required("container", { read: ViewContainerRef });
-  }
-  ```
-  
-  Configure it with `runtimeComponent: IonicPreviewRuntimeComponent`. The base class renders the
-  example into `container` and preserves route, ready, and error handling.
+
+    Restore Ionic rendering with a custom `runtimeComponent` that extends
+    `SiLivePreviewRuntimeComponent`:
+
+    ```ts
+    import { Component, ViewContainerRef, viewChild } from "@angular/core";
+    import { IonApp } from "@ionic/angular/standalone";
+    import { SiLivePreviewRuntimeComponent } from "@siemens/live-preview";
+
+    @Component({
+      imports: [IonApp],
+      selector: "app-ionic-preview-runtime",
+      template: "<ion-app><ng-container #container /></ion-app>"
+    })
+    export class IonicPreviewRuntimeComponent extends SiLivePreviewRuntimeComponent {
+      readonly container = viewChild.required("container", { read: ViewContainerRef });
+    }
+    ```
+
+    Configure it with `runtimeComponent: IonicPreviewRuntimeComponent`. The base class renders the
+    example into `container` and preserves route, ready, and error handling.
+
 * **live-preview:** The live-preview components were migrated to signal inputs.
 * **loading-spinner:** Removed `LOADING_SPINNER_BLOCKING` and `LOADING_SPINNER_OVERLAY`
-  injection tokens. Use the corresponding inputs of `si-loading-spinner` instead.
+    injection tokens. Use the corresponding inputs of `si-loading-spinner` instead.
+
 * **main-detail-container:** The default sizing unit of the main split part in
-  `si-main-detail-container` when `resizableParts` is enabled has changed from `fr`
-  to `px`.
-  
-  When `resizableParts` is enabled:
-  - The main part now defaults to `unit="px"` (initial size of `minMainSize`,
-    default 300px), and the detail part takes the remaining space (`1fr`).
-  - `mainContainerWidth` is now interpreted in `mainContainerWidthUnit`. With the default
-    `mainContainerWidthUnit="px"`, numeric values are treated as pixels instead of percentages.
-  - `[(mainContainerWidth)]` and `(mainContainerWidthChange)` now emit and accept
-    pixel values instead of percentage values.
-  - When adopting the new `px` default, main-part sizes saved via `stateId` with
-    `fr` are not restored on the first load after upgrading because the persisted
-    unit no longer matches. Keeping `mainContainerWidthUnit="fr"` preserves
-    compatible saved splitter positions.
-  
-  To retain the previous relative percentage-based split behavior, explicitly set
-  `mainContainerWidthUnit="fr"`.
-  
-  Static layouts (`resizableParts="false"`) are unaffected and continue to
-  interpret `mainContainerWidth` as a percentage.
-  
-  Before:
-  
-  ```html
-  <!-- Main part was 40% width, detail was 60% -->
-  <si-main-detail-container
-    resizableParts
-    [mainContainerWidth]="40"
-    [(detailsActive)]="detailsActive"
-  >
-    <div slot="mainData">...</div>
-    <div slot="details">...</div>
-  </si-main-detail-container>
-  ```
-  
-  After (retaining previous relative behavior):
-  
-  ```html
-  <!-- Set mainContainerWidthUnit="fr" to retain fractional/percentage sizing -->
-  <si-main-detail-container
-    resizableParts
-    mainContainerWidthUnit="fr"
-    [mainContainerWidth]="40"
-    [(detailsActive)]="detailsActive"
-  >
-    <div slot="mainData">...</div>
-    <div slot="details">...</div>
-  </si-main-detail-container>
-  ```
-  
-  After (adopting new fixed-width layout):
-  ```html
-  <!-- Main part is fixed pixel width (e.g. 360px), detail expands with remaining space -->
-  <si-main-detail-container
-    resizableParts
-    [mainContainerWidth]="360"
-    [(detailsActive)]="detailsActive"
-  >
-    <div slot="mainData">...</div>
-    <div slot="details">...</div>
-  </si-main-detail-container>
-  ```
+    `si-main-detail-container` when `resizableParts` is enabled has changed from `fr`
+    to `px`.
+
+    When `resizableParts` is enabled:
+    - The main part now defaults to `unit="px"` (initial size of `minMainSize`,
+      default 300px), and the detail part takes the remaining space (`1fr`).
+    - `mainContainerWidth` is now interpreted in `mainContainerWidthUnit`. With the default
+      `mainContainerWidthUnit="px"`, numeric values are treated as pixels instead of percentages.
+    - `[(mainContainerWidth)]` and `(mainContainerWidthChange)` now emit and accept
+      pixel values instead of percentage values.
+    - When adopting the new `px` default, main-part sizes saved via `stateId` with
+      `fr` are not restored on the first load after upgrading because the persisted
+      unit no longer matches. Keeping `mainContainerWidthUnit="fr"` preserves
+      compatible saved splitter positions.
+
+    To retain the previous relative percentage-based split behavior, explicitly set
+    `mainContainerWidthUnit="fr"`.
+
+    Static layouts (`resizableParts="false"`) are unaffected and continue to
+    interpret `mainContainerWidth` as a percentage.
+
+    Before:
+
+    ```html
+    <!-- Main part was 40% width, detail was 60% -->
+    <si-main-detail-container
+      resizableParts
+      [mainContainerWidth]="40"
+      [(detailsActive)]="detailsActive"
+    >
+      <div slot="mainData">...</div>
+      <div slot="details">...</div>
+    </si-main-detail-container>
+    ```
+
+    After (retaining previous relative behavior):
+
+    ```html
+    <!-- Set mainContainerWidthUnit="fr" to retain fractional/percentage sizing -->
+    <si-main-detail-container
+      resizableParts
+      mainContainerWidthUnit="fr"
+      [mainContainerWidth]="40"
+      [(detailsActive)]="detailsActive"
+    >
+      <div slot="mainData">...</div>
+      <div slot="details">...</div>
+    </si-main-detail-container>
+    ```
+
+    After (adopting new fixed-width layout):
+    ```html
+    <!-- Main part is fixed pixel width (e.g. 360px), detail expands with remaining space -->
+    <si-main-detail-container
+      resizableParts
+      [mainContainerWidth]="360"
+      [(detailsActive)]="detailsActive"
+    >
+      <div slot="mainData">...</div>
+      <div slot="details">...</div>
+    </si-main-detail-container>
+    ```
+
 * **map-styles:** `@siemens/maps-ng` now requires `@siemens/map-styles` as
-  a peer dependency.
-  
-  Consumers upgrading `@siemens/maps-ng` must also add
-  `@siemens/map-styles` to their project dependencies.
+    a peer dependency.
+
+    Consumers upgrading `@siemens/maps-ng` must also add
+    `@siemens/map-styles` to their project dependencies.
+
 * **maps:** Removed constant `DEFAULT_FIT_PADDING` without any replacement.
 * **maps:** Removed extraProps property handling in map feature points
-  
-  The `extraProps` property was never part of the official `MapPoint` interface and is no longer supported. Use `extraProperties` instead:
-  
-  Before:
-  
-  ```ts
-  const point: MapPoint = {
-    // ... other properties
-    extraProps: {
-      label: 'Custom Label',
-      value: 'Custom Value'
-    }
-  };
-  ```
-  
-  After:
-  
-  ```ts
-  const point: MapPoint = {
-    // ... other properties
-    extraProperties: {
-      label: 'Custom Label',
-      value: 'Custom Value'
-    }
-  };
-  ```
+
+    The `extraProps` property was never part of the official `MapPoint` interface and is no longer supported. Use `extraProperties` instead:
+
+    Before:
+
+    ```ts
+    const point: MapPoint = {
+      // ... other properties
+      extraProps: {
+        label: 'Custom Label',
+        value: 'Custom Value'
+      }
+    };
+    ```
+
+    After:
+
+    ```ts
+    const point: MapPoint = {
+      // ... other properties
+      extraProperties: {
+        label: 'Custom Label',
+        value: 'Custom Value'
+      }
+    };
+    ```
+
 * **maps:** Removed input `SiMapComponent.moreText`. Use `SiMapTooltipComponent.moreText` instead.
-  
-  Example:
-  ```html
-  <si-map ...><si-map-tooltip [moreText]="'KEY_MORE'" /></si-map>
-  ```
+
+    Example:
+    ```html
+    <si-map ...><si-map-tooltip [moreText]="'KEY_MORE'" /></si-map>
+    ```
+
 * **markdown-renderer:** si-markdown-renderer and getMarkdownRenderer have been
-  removed in favor of the new si-markdown component. There's a schematic
-  to replace the component.
+    removed in favor of the new si-markdown component. There's a schematic
+    to replace the component.
+
 * **resize-observer:** Removed method `ResizeObserverService._checkAll`. For testing purposes use the resize observer mock:
-  
-   ```ts
-    beforeEach(() => mockResizeObserver());
-    afterEach(() => restoreResizeObserver());
-    it('should trigger resize', () => {
-        // For all observed elements
-        MockResizeObserver.triggerResize({});
-        // For specific HTML element
-        MockResizeObserver.triggerResize({ target: myElement });
-   });
-  ```
+
+     ```ts
+      beforeEach(() => mockResizeObserver());
+      afterEach(() => restoreResizeObserver());
+      it('should trigger resize', () => {
+          // For all observed elements
+          MockResizeObserver.triggerResize({});
+          // For specific HTML element
+          MockResizeObserver.triggerResize({ target: myElement });
+     });
+    ```
+
 * **search-bar:** removed the `tabbable` input of `si-search-bar`
-  
-  Removed the `tabbable` input without any replacement.
-  Remove the input from your templates:
-  
-  ```html
-  <!-- before -->
-  <si-search-bar [tabbable]="false" />
-  
-  <!-- after -->
-  <si-search-bar />
-  ```
-  
-  The `migration-v51` schematic removes the input automatically.
+
+    Removed the `tabbable` input without any replacement.
+    Remove the input from your templates:
+
+    ```html
+    <!-- before -->
+    <si-search-bar [tabbable]="false" />
+
+    <!-- after -->
+    <si-search-bar />
+    ```
+
+    The `migration-v51` schematic removes the input automatically.
+
 * **select:** When using `si-select` withouth `.form-control`
-  the classes `.btn .btn-ghost` must be applied to keep a similar appreance.
+    the classes `.btn .btn-ghost` must be applied to keep a similar appreance.
+
 * **sort-bar:** Removed component `SiSortBarComponent` without any replacement.
 * **split:** Rename `si-split-part` replaced `collapseDirection` with `collapsible`.
-  
-  Migrate `CollapseTo` values:
-  - `start` -> `to-start`
-  - `end` -> `to-end`
-  
-  Before:
-  
-  ```html
-  <si-split-part collapseDirection="start" />
-  ```
-  After:
-  
-  ```html
-  <si-split-part collapsible="to-start" />
-  ```
+
+    Migrate `CollapseTo` values:
+    - `start` -> `to-start`
+    - `end` -> `to-end`
+
+    Before:
+
+    ```html
+    <si-split-part collapseDirection="start" />
+    ```
+    After:
+
+    ```html
+    <si-split-part collapsible="to-start" />
+    ```
+
 * **split:** si-split and si-split-part inputs were migrated to signal inputs
 * **split:** The `scale` input and exported `Scale` type have been removed from `si-split-part`.
-  
-  Use `unit="fr"` for split parts that scale with the available space and
-  `unit="px"` for split parts that keep a fixed size.
-  
-  Before:
-  
-  ```html
-  <si-split>
-    <si-split-part scale="auto">
-      Flexible content
-    </si-split-part>
-    <si-split-part scale="none">
-      Fixed content
-    </si-split-part>
-  </si-split>
-  ```
-  
-  After:
-  
-  ```html
-  <si-split>
-    <si-split-part size="1" unit="fr">
-      Flexible content
-    </si-split-part>
-    <si-split-part size="240" unit="px">
-      Fixed content
-    </si-split-part>
-  </si-split>
-  ```
-  
-  Replace typed Scale values with SplitUnit, mapping 'auto' to 'fr'
-  and 'none' to 'px'.
+
+    Use `unit="fr"` for split parts that scale with the available space and
+    `unit="px"` for split parts that keep a fixed size.
+
+    Before:
+
+    ```html
+    <si-split>
+      <si-split-part scale="auto">
+        Flexible content
+      </si-split-part>
+      <si-split-part scale="none">
+        Fixed content
+      </si-split-part>
+    </si-split>
+    ```
+
+    After:
+
+    ```html
+    <si-split>
+      <si-split-part size="1" unit="fr">
+        Flexible content
+      </si-split-part>
+      <si-split-part size="240" unit="px">
+        Fixed content
+      </si-split-part>
+    </si-split>
+    ```
+
+    Replace typed Scale values with SplitUnit, mapping 'auto' to 'fr'
+    and 'none' to 'px'.
+
 * **split:** The `showCollapseButton` input on si-split-part has been removed.
-  
-  The collapse button will now be rendered when the `collapsible` input is provided.
-  
-  Before:
-  
-  ```html
-  <si-split>
-    <si-split-part showCollapseButton="false" ... />
-    <si-split-part showCollapseButton="true" ... />
-  </si-split>
-  ```
-  
-  After:
-  
-  ```html
-  <si-split>
-    <!-- The collapse button won't be rendered when the collapsible input is not provided -->
-    <si-split-part ... />
-    <!-- The collapse button will be rendered when the collapsible input is provided -->
-    <si-split-part collapsible="to-start" ... />
-  </si-split>
-  ```
+
+    The collapse button will now be rendered when the `collapsible` input is provided.
+
+    Before:
+
+    ```html
+    <si-split>
+      <si-split-part showCollapseButton="false" ... />
+      <si-split-part showCollapseButton="true" ... />
+    </si-split>
+    ```
+
+    After:
+
+    ```html
+    <si-split>
+      <!-- The collapse button won't be rendered when the collapsible input is not provided -->
+      <si-split-part ... />
+      <!-- The collapse button will be rendered when the collapsible input is provided -->
+      <si-split-part collapsible="to-start" ... />
+    </si-split>
+    ```
+
 * **split:** The relative sizes of split parts are now configured on
-  each `si-split-part` via the required `size` and `unit`
-  input (`'px' | 'fr'`), instead of the `sizes` array on
-  `si-split`.
-  
-  The `sizes` input on `SiSplitComponent` has been removed and
-  `SiSplitPartComponent.size` is now required.
-  The `unit` input on `SiSplitPartComponent` is now required.
-  
-  - Remove `SiSplitComponent.sizes` input.
-  - Add `SiSplitPartComponent.unit` input (`'px' | 'fr'`).
-  - Make `SiSplitPartComponent.size` required.
-  
-  Migration: move the relative sizes from `[sizes]` on `si-split` onto the
-  `size`/`unit` inputs of each `si-split-part`.
-  
-  Before:
-  
-  ```html
-  <si-split [sizes]="[20, 60, 20]">
-    <si-split-part>Left</si-split-part>
-    <si-split-part>Center</si-split-part>
-    <si-split-part>Right</si-split-part>
-  </si-split>
-  ```
-  After:
-  ```html
-  <si-split>
-    <si-split-part size="20" unit="fr">Left</si-split-part>
-    <si-split-part size="60" unit="fr">Center</si-split-part>
-    <si-split-part size="20" unit="fr">Right</si-split-part>
-  </si-split>
-  ```
-  Fixed pixel sizes are now expressed directly on the part:
-  
-  ```html
-  <si-split>
-    <si-split-part size="200" unit="px">Fixed 200px</si-split-part>
-    <si-split-part size="1" unit="fr">Remaining space</si-split-part>
-  </si-split>
-  ```
+    each `si-split-part` via the required `size` and `unit`
+    input (`'px' | 'fr'`), instead of the `sizes` array on
+    `si-split`.
+
+    The `sizes` input on `SiSplitComponent` has been removed and
+    `SiSplitPartComponent.size` is now required.
+    The `unit` input on `SiSplitPartComponent` is now required.
+
+    - Remove `SiSplitComponent.sizes` input.
+    - Add `SiSplitPartComponent.unit` input (`'px' | 'fr'`).
+    - Make `SiSplitPartComponent.size` required.
+
+    Migration: move the relative sizes from `[sizes]` on `si-split` onto the
+    `size`/`unit` inputs of each `si-split-part`.
+
+    Before:
+
+    ```html
+    <si-split [sizes]="[20, 60, 20]">
+      <si-split-part>Left</si-split-part>
+      <si-split-part>Center</si-split-part>
+      <si-split-part>Right</si-split-part>
+    </si-split>
+    ```
+    After:
+    ```html
+    <si-split>
+      <si-split-part size="20" unit="fr">Left</si-split-part>
+      <si-split-part size="60" unit="fr">Center</si-split-part>
+      <si-split-part size="20" unit="fr">Right</si-split-part>
+    </si-split>
+    ```
+    Fixed pixel sizes are now expressed directly on the part:
+
+    ```html
+    <si-split>
+      <si-split-part size="200" unit="px">Fixed 200px</si-split-part>
+      <si-split-part size="1" unit="fr">Remaining space</si-split-part>
+    </si-split>
+    ```
+
 * **status-bar:** Changed the accessibility text inputs of `si-status-bar`
-  
-  The `expandButtonText` and `collapseButtonText` inputs were removed and
-  replaced by a single `toggleButtonText` input. Update usages that set these
-  inputs to use toggleButtonText instead. The associated translation keys
-  `SI_STATUS_BAR.EXPAND` and `SI_STATUS_BAR.COLLAPSE` were replaced by
-  `SI_STATUS_BAR.TOGGLE`.
+
+    The `expandButtonText` and `collapseButtonText` inputs were removed and
+    replaced by a single `toggleButtonText` input. Update usages that set these
+    inputs to use toggleButtonText instead. The associated translation keys
+    `SI_STATUS_BAR.EXPAND` and `SI_STATUS_BAR.COLLAPSE` were replaced by
+    `SI_STATUS_BAR.TOGGLE`.
+
 * **theme:** All `.si-*` typography utility classes were adapted to match the new typography system. Replace the following matches with their new counterparts:
-  
-  - Instead of `.si-h1-black`, use `.si-h1-bold` instead.
-  - Instead of `.si-title-1-bold`, use `.si-h4-bold` instead.
-  - Instead of `.si-title-1`, use `.si-h4` instead.
-  - Instead of `.si-title-2-bold`, use `.si-h5-bold` instead.
-  - Instead of `.si-title-2`, use `.si-h5` instead.
-  - Instead of `.si-body-1`, use `.si-body-lg` instead.
-  - Instead of `.si-body-2`, use `.si-body` instead.
-  - Instead of `.si-display-1`, use `.si-display-xl` instead.
-  - Instead of `.si-display-2`, use `.si-display-lg` instead.
-  - Instead of `.si-display-3`, use `.si-display-bold` instead.
-  - Instead of `.si-display-4`, use `.si-display` instead.
+
+    - Instead of `.si-h1-black`, use `.si-h1-bold` instead.
+    - Instead of `.si-title-1-bold`, use `.si-h4-bold` instead.
+    - Instead of `.si-title-1`, use `.si-h4` instead.
+    - Instead of `.si-title-2-bold`, use `.si-h5-bold` instead.
+    - Instead of `.si-title-2`, use `.si-h5` instead.
+    - Instead of `.si-body-1`, use `.si-body-lg` instead.
+    - Instead of `.si-body-2`, use `.si-body` instead.
+    - Instead of `.si-display-1`, use `.si-display-xl` instead.
+    - Instead of `.si-display-2`, use `.si-display-lg` instead.
+    - Instead of `.si-display-3`, use `.si-display-bold` instead.
+    - Instead of `.si-display-4`, use `.si-display` instead.
+
 * **theme:** All `$si-font-size-*`, `$si-line-height-*`, and `$si-font-weight-*`
-  variables were adapted to match the new typography system. Replace the following
-  matches with their new counterparts:
-  
-  - Instead of `$si-*-h1-black`, use `$si-*-h1-bold` instead.
-  - Instead of `$si-*-title-1-bold`, use `$si-*-h4-bold` instead.
-  - Instead of `$si-*-title-1`, use `$si-*-h4` instead.
-  - Instead of `$si-*-title-2-bold`, use `$si-*-h5-bold` instead.
-  - Instead of `$si-*-title-2`, use `$si-*-h5` instead.
-  - Instead of `$si-*-body-1`, use `$si-*-body-lg` instead.
-  - Instead of `$si-*-body-2`, use `$si-*-body` instead.
-  - Instead of `$si-*-caption-1`, use `$si-*-caption` instead.
-  - Instead of `$si-*-display-1`, use `$si-*-display-xl` instead.
-  - Instead of `$si-*-display-2`, use `$si-*-display-lg` instead.
-  - Instead of `$si-*-display-3`, use `$si-*-display-bold` instead.
-  - Instead of `$si-*-display-4`, use `$si-*-display` instead.
+    variables were adapted to match the new typography system. Replace the following
+    matches with their new counterparts:
+
+    - Instead of `$si-*-h1-black`, use `$si-*-h1-bold` instead.
+    - Instead of `$si-*-title-1-bold`, use `$si-*-h4-bold` instead.
+    - Instead of `$si-*-title-1`, use `$si-*-h4` instead.
+    - Instead of `$si-*-title-2-bold`, use `$si-*-h5-bold` instead.
+    - Instead of `$si-*-title-2`, use `$si-*-h5` instead.
+    - Instead of `$si-*-body-1`, use `$si-*-body-lg` instead.
+    - Instead of `$si-*-body-2`, use `$si-*-body` instead.
+    - Instead of `$si-*-caption-1`, use `$si-*-caption` instead.
+    - Instead of `$si-*-display-1`, use `$si-*-display-xl` instead.
+    - Instead of `$si-*-display-2`, use `$si-*-display-lg` instead.
+    - Instead of `$si-*-display-3`, use `$si-*-display-bold` instead.
+    - Instead of `$si-*-display-4`, use `$si-*-display` instead.
+
 * **theme:** Removed css property `--si-feedback-icon-offset`. Use `--si-feedback-icon-size` instead.
 * **theme:** Replace the CSS class `text-primary` with `text-accent` to preserve the previous color.
-  
-  The legacy `text-primary` selector conflicts with the new system token `text-primary` utility and cannot be retained.
-  Applications using `text-primary` must update templates or styles before upgrading.
+
+    The legacy `text-primary` selector conflicts with the new system token `text-primary` utility and cannot be retained.
+    Applications using `text-primary` must update templates or styles before upgrading.
+
 * **theme:** The .btn-ghost class now uses the primary ghost style instead of the tertiary style.
-  To maintain the current behavior in your application:
-  - rename: `.btn-ghost` to `.btn-tertiary-ghost`
-  - rename: `.btn-primary-ghost` to `.btn-ghost`
-  
-  In the past, only `.btn-ghost` existed which was style wise
-  appearing like a tertiary button.
-  In order to support the full button style features we introduced
-  a temporary `.btn-primary-ghost` class.
-  Now the ghost buttons are aligned.
+    To maintain the current behavior in your application:
+    - rename: `.btn-ghost` to `.btn-tertiary-ghost`
+    - rename: `.btn-primary-ghost` to `.btn-ghost`
+
+    In the past, only `.btn-ghost` existed which was style wise
+    appearing like a tertiary button.
+    In order to support the full button style features we introduced
+    a temporary `.btn-primary-ghost` class.
+    Now the ghost buttons are aligned.
+
 * **theme:** The spacers in `$spacers` are now derived from CSS
-  variables. This means they cannot be used in simple math expressions
-  like before but require a `calc()` operation.
+    variables. This means they cannot be used in simple math expressions
+    like before but require a `calc()` operation.
+
 * **theme:** there's new spacers, changing spacer-10 and spacer-11.
-  
-  - spacer-10 needs to be replaced with spacer-13
-  - spacer-11 needs to be replaced with spacer-14
-  
-  This also affect margin/padding helpers, e.g. `mt-10` becomes `mt-13`, etc.
-  There's a schematic provided to automatically update these.
+
+    - spacer-10 needs to be replaced with spacer-13
+    - spacer-11 needs to be replaced with spacer-14
+
+    This also affect margin/padding helpers, e.g. `mt-10` becomes `mt-13`, etc.
+    There's a schematic provided to automatically update these.
+
 * **translate:** `@ngx-translate/core@16` is no longer supported. Please update to `@ngx-translate/core@18`.
 
 ### DEPRECATIONS
 
 * **application-header:** `SiLaunchpadFactoryComponent.showLessAppsText` input is deprecated and no longer used.
-  `SiLaunchpadFactoryComponent.showMoreAppsText` is always displayed, independent of the state.
+    `SiLaunchpadFactoryComponent.showMoreAppsText` is always displayed, independent of the state.
+
 * **dashboards:** `widgetCatalog` property of `SiWidgetCatalogComponent` is deprecated, use the signal based `widgetList` property instead.
 * **dashboards-ng:** `SiWidgetCatalogComponent.selected` is deprecated in favor
-  of `selectedWidgets` and `hasSelection`. The old property only ever
-  holds the first selected widget and is not updated in multi-select
-  mode. It will be removed in one of the next major releases. Only
-  relevant if you extend `SiWidgetCatalogComponent`.
+    of `selectedWidgets` and `hasSelection`. The old property only ever
+    holds the first selected widget and is not updated in multi-select
+    mode. It will be removed in one of the next major releases. Only
+    relevant if you extend `SiWidgetCatalogComponent`.
+
 * **datatable:** import datatable config from ngx-datatable
-  
-  Deprecated `NgxDatatableConfig` and `INgxDatatableConfig` exports from `@siemens/element-ng/datatable`. Import `NgxDatatableConfig` from `@siemens/ngx-datatable` instead.
+
+    Deprecated `NgxDatatableConfig` and `INgxDatatableConfig` exports from `@siemens/element-ng/datatable`. Import `NgxDatatableConfig` from `@siemens/ngx-datatable` instead.
+
 * **formly:** The `@siemens/element-ng/formly-legacy` entry point (`SiFormlyModule`, `SiFormlyComponent`) is deprecated and will be removed in a future release.
-  Migrate to the standalone `SiFormlyComponent` from `@siemens/element-ng/formly` which is based on ngx-formly v7.
-  
-  Before (v6 — `@siemens/element-ng/formly-legacy`):
-  
-  ```ts
-  import { SiFormlyModule } from '@siemens/element-ng/formly-legacy';
-  
-  @NgModule({
-    imports: [SiFormlyModule.forRoot()]
-  })
-  export class AppModule {}
-  ```
-  
-  After (v7.1 — @siemens/element-ng/formly):
-  
-  ```ts
-  import { SiFormlyComponent } from '@siemens/element-ng/formly';
-  
-  @Component({
-    imports: [SiFormlyComponent]
-  })
-  export class MyComponent {}
-  ```
+    Migrate to the standalone `SiFormlyComponent` from `@siemens/element-ng/formly` which is based on ngx-formly v7.
+
+    Before (v6 — `@siemens/element-ng/formly-legacy`):
+
+    ```ts
+    import { SiFormlyModule } from '@siemens/element-ng/formly-legacy';
+
+    @NgModule({
+      imports: [SiFormlyModule.forRoot()]
+    })
+    export class AppModule {}
+    ```
+
+    After (v7.1 — @siemens/element-ng/formly):
+
+    ```ts
+    import { SiFormlyComponent } from '@siemens/element-ng/formly';
+
+    @Component({
+      imports: [SiFormlyComponent]
+    })
+    export class MyComponent {}
+    ```
+
 * **forms:** `si-form-container` should no longer be used.
-  
-  When providing a form wide error mapper, use the `provideFormValidationErrorMapper`.
-  ```ts
-  import { provideFormValidationErrorMapper } from '@siemens/element-ng/forms'
-  
-  @Component({
-    template: `<form>...</form>`
-    providers: [provideFormValidationErrorMapper({
-      'name.required': 'CUSTOM_REQUIRED_ERROR'
-    })]
-  })
-  class MyFormComponent {}
-  ```
-  
-  When using the column layout, use the `form-col-layout` classes.
-  
-  ```html
-  <!-- Responsive column layout -->
-  <form class="responsive-form-col-layout">...</form>
-  <!-- Always column layout -->
-  <form class="form-col-layout">...</form>
-  ```
-  
-  For a custom breakpoint use the SCSS mixin:
-  
-  ```scss
-  @use '@siemens/element-theme/src/styles/bootstrap/mixins/form-layout';
-  
-  // Custom responsive breakpoint
-  .custom-form-col-layout {
-    // Above 400px the column layout is used
-    @include form-layout.responsive-form-col-layout(400px);
-  }
-  ```
+
+    When providing a form wide error mapper, use the `provideFormValidationErrorMapper`.
+    ```ts
+    import { provideFormValidationErrorMapper } from '@siemens/element-ng/forms'
+
+    @Component({
+      template: `<form>...</form>`
+      providers: [provideFormValidationErrorMapper({
+        'name.required': 'CUSTOM_REQUIRED_ERROR'
+      })]
+    })
+    class MyFormComponent {}
+    ```
+
+    When using the column layout, use the `form-col-layout` classes.
+
+    ```html
+    <!-- Responsive column layout -->
+    <form class="responsive-form-col-layout">...</form>
+    <!-- Always column layout -->
+    <form class="form-col-layout">...</form>
+    ```
+
+    For a custom breakpoint use the SCSS mixin:
+
+    ```scss
+    @use '@siemens/element-theme/src/styles/bootstrap/mixins/form-layout';
+
+    // Custom responsive breakpoint
+    .custom-form-col-layout {
+      // Above 400px the column layout is used
+      @include form-layout.responsive-form-col-layout(400px);
+    }
+    ```
+
 * **native-charts-ng:** `SiNativeChartsNgModule` is deprecated, import individual components instead. Separate entry points are available for each component, allowing applications to import components from specific entry points.
 * **theme:** Legacy Bootstrap shadow variables and utilities, elevation APIs, and box shadow color custom properties have been deprecated.
-  
-  Replace deprecated APIs as follows:
-  
-  - .shadow -> .shadow-2
-  - .shadow-sm -> .shadow-1
-  - .shadow-lg -> .shadow-3
-  - $box-shadow -> $si-sys-effects-shadow-2
-  - $box-shadow-sm -> $si-sys-effects-shadow-1
-  - $box-shadow-lg -> $si-sys-effects-shadow-3
-  - $box-shadow-inset -> no replacement
-  - $input-box-shadow -> no replacement
-  - $popover-box-shadow -> $si-sys-effects-shadow-3
-  - $modal-content-box-shadow-xs -> $si-sys-effects-shadow-3
-  - $modal-content-box-shadow-sm-up -> $si-sys-effects-shadow-2
-  - $thumbnail-box-shadow -> $si-sys-effects-shadow-1
-  - .elevation-none -> .shadow-none
-  - .elevation-[1-4] -> .shadow-[1-4]
-  - $element-elevation-[1-4] -> $si-sys-effects-shadow-[1-4]
-  - $element-elevation-inset-[1-4] -> no replacement
-  - --element-box-shadow-color-[1-2] -> no replacement
+
+    Replace deprecated APIs as follows:
+
+    - .shadow -> .shadow-2
+    - .shadow-sm -> .shadow-1
+    - .shadow-lg -> .shadow-3
+    - $box-shadow -> $si-sys-effects-shadow-2
+    - $box-shadow-sm -> $si-sys-effects-shadow-1
+    - $box-shadow-lg -> $si-sys-effects-shadow-3
+    - $box-shadow-inset -> no replacement
+    - $input-box-shadow -> no replacement
+    - $popover-box-shadow -> $si-sys-effects-shadow-3
+    - $modal-content-box-shadow-xs -> $si-sys-effects-shadow-3
+    - $modal-content-box-shadow-sm-up -> $si-sys-effects-shadow-2
+    - $thumbnail-box-shadow -> $si-sys-effects-shadow-1
+    - .elevation-none -> .shadow-none
+    - .elevation-[1-4] -> .shadow-[1-4]
+    - $element-elevation-[1-4] -> $si-sys-effects-shadow-[1-4]
+    - $element-elevation-inset-[1-4] -> no replacement
+    - --element-box-shadow-color-[1-2] -> no replacement
+
 * **theme:** Legacy color utilities are deprecated in favor of system token utility classes.
-  
-  The following legacy utilities remain available during the deprecation period.
-  Replace them with system token utility classes.
-  Run the Element update schematic to migrate supported classes in Angular templates.
-  
-  | Deprecated utility | Replacement |
-  | --- | --- |
-  | bg-primary | background-accent |
-  | bg-secondary | background-neutral |
-  | bg-tertiary | background-4 |
-  | bg-success | background-success |
-  | bg-info | background-information |
-  | bg-warning | background-warning |
-  | bg-danger | background-danger |
-  | bg-base-0 | background-0 |
-  | bg-base-1 | background-1 |
-  | bg-base-2 | background-2 |
-  | bg-base-3 | background-3 |
-  | bg-base-4 | background-4 |
-  | bg-base-info | background-information-subtle |
-  | bg-base-success | background-success-subtle |
-  | bg-base-caution | background-caution-subtle |
-  | bg-base-warning | background-warning-subtle |
-  | bg-base-danger | background-danger-subtle |
-  | bg-base-critical | background-critical-subtle |
-  | text-body | text-primary |
-  | text-tertiary | text-disabled |
-  | text-muted | text-disabled |
-  | text-info | text-information |
+
+    The following legacy utilities remain available during the deprecation period.
+    Replace them with system token utility classes.
+    Run the Element update schematic to migrate supported classes in Angular templates.
+
+    | Deprecated utility | Replacement |
+    | --- | --- |
+    | bg-primary | background-accent |
+    | bg-secondary | background-neutral |
+    | bg-tertiary | background-4 |
+    | bg-success | background-success |
+    | bg-info | background-information |
+    | bg-warning | background-warning |
+    | bg-danger | background-danger |
+    | bg-base-0 | background-0 |
+    | bg-base-1 | background-1 |
+    | bg-base-2 | background-2 |
+    | bg-base-3 | background-3 |
+    | bg-base-4 | background-4 |
+    | bg-base-info | background-information-subtle |
+    | bg-base-success | background-success-subtle |
+    | bg-base-caution | background-caution-subtle |
+    | bg-base-warning | background-warning-subtle |
+    | bg-base-danger | background-danger-subtle |
+    | bg-base-critical | background-critical-subtle |
+    | text-body | text-primary |
+    | text-tertiary | text-disabled |
+    | text-muted | text-disabled |
+    | text-info | text-information |
+
 * **theme:** The list group styles are deprecated, use the Element list (`.list` / `.list-item`) instead. The list group is only a bordered container and has no notion of the list anatomy, so migrating means restructuring the markup, it is not a plain class rename.
-  
-  | Deprecated | Replacement |
-  | --- | --- |
-  | `.list-group` | `.list`, optionally with `.list-divider`, `.list-filled` or `.list-outline` |
-  | `.list-group-item` | `.list-item`, wrap the content in slot classes such as `.list-item-title` and `.list-item-description` |
-  | `.list-group-item-action` | `.list-item.list-item-action` on a `<button>` or `<a>` |
-  | `.list-group-flush` | `.list.list-divider` to preserve dividers; otherwise `.list`, which has no outer border |
-  | `.list-group-md`, `.list-group-lg` | No replacement, the height of a list item follows its content |
-  | `.list-group-horizontal*` | No replacement, use flex or grid utilities |
-  | `.list-group-numbered` | No replacement, use an ordered list with a custom counter because `.list-item` removes list markers |
-  | `.list-group-item-secondary`, `.list-group-item-success`, `.list-group-item-warning`, `.list-group-item-caution`, `.list-group-item-danger`, `.list-group-item-info` | No replacement, use background and text utilities, or a list item indicator |
-  | `.list-header` | No replacement, use a heading element |
-  | `$list-group-*` Sass variables | No replacement |
-  
-  Before:
-  
-      <ul class="list-group">
-        <li class="list-group-item">Item</li>
-      </ul>
-  
-  After:
-  
-      <ul class="list">
-        <li class="list-item">
-          <span class="list-item-title">Item</span>
-        </li>
-      </ul>
-  
-  Choose the list style according to the application context. See the "Choosing the right style" section in the list documentation for the appropriate migration guidance.
-  
-  The deprecated styles remain available and there is no removal planned at this point, so applications can keep using them. They will not receive further design updates and may be removed in a future major version. See the list documentation for the full migration guide.
+
+    | Deprecated | Replacement |
+    | --- | --- |
+    | `.list-group` | `.list`, optionally with `.list-divider`, `.list-filled` or `.list-outline` |
+    | `.list-group-item` | `.list-item`, wrap the content in slot classes such as `.list-item-title` and `.list-item-description` |
+    | `.list-group-item-action` | `.list-item.list-item-action` on a `<button>` or `<a>` |
+    | `.list-group-flush` | `.list.list-divider` to preserve dividers; otherwise `.list`, which has no outer border |
+    | `.list-group-md`, `.list-group-lg` | No replacement, the height of a list item follows its content |
+    | `.list-group-horizontal*` | No replacement, use flex or grid utilities |
+    | `.list-group-numbered` | No replacement, use an ordered list with a custom counter because `.list-item` removes list markers |
+    | `.list-group-item-secondary`, `.list-group-item-success`, `.list-group-item-warning`, `.list-group-item-caution`, `.list-group-item-danger`, `.list-group-item-info` | No replacement, use background and text utilities, or a list item indicator |
+    | `.list-header` | No replacement, use a heading element |
+    | `$list-group-*` Sass variables | No replacement |
+
+    Before:
+
+        <ul class="list-group">
+          <li class="list-group-item">Item</li>
+        </ul>
+
+    After:
+
+        <ul class="list">
+          <li class="list-item">
+            <span class="list-item-title">Item</span>
+          </li>
+        </ul>
+
+    Choose the list style according to the application context. See the "Choosing the right style" section in the list documentation for the appropriate migration guidance.
+
+    The deprecated styles remain available and there is no removal planned at this point, so applications can keep using them. They will not receive further design updates and may be removed in a future major version. See the list documentation for the full migration guide.
+
 * **typography:** The former bold and caption typography styles have been replaced.
-  
-  The following typography utilities and Sass variables are deprecated. Replace them as follows:
-  
-  - `.si-h1-bold` -> `.si-h1`
-  - `.si-h4-bold` -> `.si-h4`
-  - `.si-caption` -> `.si-body-sm`
-  - `.si-display-bold` -> `.si-display-lg-sbold`
-  - `$si-(font-size|line-height|font-weight)-h1-bold` -> `$si-(font-size|line-height|font-weight)-h1`
-  - `$si-(font-size|line-height|font-weight)-h4-bold` -> `$si-(font-size|line-height|font-weight)-h4`
-  - `$si-(font-size|line-height|font-weight)-body-lg-bold` -> `$si-(font-size|line-height|font-weight)-body-lg-sbold`
-  - `$si-(font-size|line-height|font-weight)-caption` -> `$si-(font-size|line-height|font-weight)-body-sm`
-  - `$si-(font-size|line-height|font-weight)-display-bold` -> `$si-(font-size|line-height|font-weight)-display-lg-sbold`
+
+    The following typography utilities and Sass variables are deprecated. Replace them as follows:
+
+    - `.si-h1-bold` -> `.si-h1`
+    - `.si-h4-bold` -> `.si-h4`
+    - `.si-caption` -> `.si-body-sm`
+    - `.si-display-bold` -> `.si-display-lg-sbold`
+    - `$si-(font-size|line-height|font-weight)-h1-bold` -> `$si-(font-size|line-height|font-weight)-h1`
+    - `$si-(font-size|line-height|font-weight)-h4-bold` -> `$si-(font-size|line-height|font-weight)-h4`
+    - `$si-(font-size|line-height|font-weight)-body-lg-bold` -> `$si-(font-size|line-height|font-weight)-body-lg-sbold`
+    - `$si-(font-size|line-height|font-weight)-caption` -> `$si-(font-size|line-height|font-weight)-body-sm`
+    - `$si-(font-size|line-height|font-weight)-display-bold` -> `$si-(font-size|line-height|font-weight)-display-lg-sbold`
 
 # [49.13.0](https://github.com/siemens/element/compare/v49.12.0...v49.13.0) (2026-07-02)
 
@@ -940,8 +985,8 @@
 ### DEPRECATIONS
 
 * **dashboards:** The `SimplDashboardsNgModule` should no longer be used. Use
-  `SiDashboardsNgModule` instead. The `Simpl` prefix is deprecated and will be
-  removed in v51.
+    `SiDashboardsNgModule` instead. The `Simpl` prefix is deprecated and will be
+    removed in v51.
 
 # [49.12.0](https://github.com/siemens/element/compare/v49.11.0...v49.12.0) (2026-06-23)
 
@@ -1135,10 +1180,10 @@
 ### NOTES
 
 * **element-theme:** The ghost button naming deviates from the usual button naming convention to avoid breaking changes.
-  The `.btn-primary-ghost` class has been added to represent the updated ghost button style,
-  while the `.btn-ghost` class continues to represent the tertiary ghost style buttons.
-  
-  With the next major release, the ghost button naming will be updated to match the button naming conventions.
+    The `.btn-primary-ghost` class has been added to represent the updated ghost button style,
+    while the `.btn-ghost` class continues to represent the tertiary ghost style buttons.
+
+    With the next major release, the ghost button naming will be updated to match the button naming conventions.
 
 # [49.4.0](https://github.com/siemens/element/compare/v49.3.0...v49.4.0) (2026-03-26)
 
@@ -1174,25 +1219,25 @@
 ### DEPRECATIONS
 
 * **side-panel:** The input `SiSidePanelContentComponent.statusActions` should no longer be used.
-  Use the new `<si-side-panel-actions>` instead:
-  
-  ```html
-  <si-side-panel-content>
-    <si-side-panel-actions>
-        <button
-          type="button"
-          si-side-panel-action
-          icon="element-alarm-background-filled"
-          iconColor="status-danger"
-          stackedIcon="element-alarm-tick"
-          stackedIconColor="text-body"
-          (click)="action()"
-        >
-          Action
-        </button>
-    </si-side-panel-actions>
-  </si-side-panel-content>
-  ```
+    Use the new `<si-side-panel-actions>` instead:
+
+    ```html
+    <si-side-panel-content>
+      <si-side-panel-actions>
+          <button
+            type="button"
+            si-side-panel-action
+            icon="element-alarm-background-filled"
+            iconColor="status-danger"
+            stackedIcon="element-alarm-tick"
+            stackedIconColor="text-body"
+            (click)="action()"
+          >
+            Action
+          </button>
+      </si-side-panel-actions>
+    </si-side-panel-content>
+    ```
 
 # [49.2.0](https://github.com/siemens/element/compare/v49.1.0...v49.2.0) (2026-03-18)
 
@@ -1320,515 +1365,547 @@
 ### NOTES
 
 * **icons:** We updated the icons’ underlying grid.
-  The geometry has been improved to allow proportional scaling at 16, 20, and 24 px,
-  with line thickness adjusted accordingly.
-  This also allows scaling up, if needed, in 4 px increments.
-  The new icon set also has reduced built-in margins around the icons,
-  improving visual balance with surrounding elements.
+    The geometry has been improved to allow proportional scaling at 16, 20, and 24 px,
+    with line thickness adjusted accordingly.
+    This also allows scaling up, if needed, in 4 px increments.
+    The new icon set also has reduced built-in margins around the icons,
+    improving visual balance with surrounding elements.
+
 * **navbar-vertical:** The badge behavior in the vertical navbar has been updated. Badge
-  colors are now consistent in both collapsed and expanded states, text-only
-  badges are detected and rendered as a simple dot in collapsed mode.
-  In addition, a new input property `hideBadgeWhenCollapsed` allows
-  to optionally hide the badge when the navbar is collapsed (by default,
-  badges remain visible in both states), improving flexibility and visual consistency.
+    colors are now consistent in both collapsed and expanded states, text-only
+    badges are detected and rendered as a simple dot in collapsed mode.
+    In addition, a new input property `hideBadgeWhenCollapsed` allows
+    to optionally hide the badge when the navbar is collapsed (by default,
+    badges remain visible in both states), improving flexibility and visual consistency.
+
 * **launchpad:** The `subtitleText` input no longer shows "Access all your apps" by default.
-  To maintain the previous behavior, explicitly set the input.
+    To maintain the previous behavior, explicitly set the input.
+
 * **buttons:** The new square icon buttons (`.btn-icon`) are introduced as the
-  new default style for icon buttons. The existing circle buttons (`.btn-circle`)
-  are now reserved for cases where a circular shape is explicitly required.
+    new default style for icon buttons. The existing circle buttons (`.btn-circle`)
+    are now reserved for cases where a circular shape is explicitly required.
+
 * **buttons:** The minimum inline size for standard buttons (excluding circle, link, close, and icon variants) has been reduced from `100px` to `80px`. This provides more flexibility for compact layouts and the buttons appear narrower compared to earlier versions.
 * **side-panel:** Backdrop support has been added to the side-panel. By default, the side-panel will now render a modal backdrop that blocks background interactions
-  and closes the panel on click. To restore the previous behavior (without a backdrop), set `disableBackdrop` to `true`.
+    and closes the panel on click. To restore the previous behavior (without a backdrop), set `disableBackdrop` to `true`.
+
 * **typeahead:** The typeahead multi selection which is also used in the `filtered-search`
-  no longer selects values when pressing `space`.
-  Instead `space` is treated as a normal search value.
+    no longer selects values when pressing `space`.
+    Instead `space` is treated as a normal search value.
+
 * **angular:** The whitespace character between time and meridian in date/time formats has changed with Angular 21.
-  The format now uses a narrow no-break space (U+202F) instead of a regular space. 
-  See https://github.com/angular/angular/issues/65707 for more details.
+    The format now uses a narrow no-break space (U+202F) instead of a regular space. 
+    See https://github.com/angular/angular/issues/65707 for more details.
 
 ### BREAKING CHANGES
 
 * **icon:** `<si-icon>` now renders icons by default as SVG instead of using the icon-font.
-  `element-*` icon classes are not affected by this change.
-  
-  SVG icons render slightly differently so VRT snapshots may need to be updated.
-  
-  To restore the previous behavior, opt-out SVG icons.
-  ```ts
-  provideIconConfig({ disableSvgIcons: true })
-  ```
+    `element-*` icon classes are not affected by this change.
+
+    SVG icons render slightly differently so VRT snapshots may need to be updated.
+
+    To restore the previous behavior, opt-out SVG icons.
+    ```ts
+    provideIconConfig({ disableSvgIcons: true })
+    ```
+
 * **landing-page:** The `registerNowIntroText` input has been removed to align with UX guidelines.
-  Remove all usages.
+    Remove all usages.
+
 * **file-uploader:** File uploader translation strings now require interpolation placeholders.
-  
-  The `SiFileUploaderComponent` and `SiFileDropzoneComponent` inputs:
-  
-  - `maxFileSizeText` requires the placeholder `{{maxFileSize}}` to display the maximum file size.
-  - `acceptText` requires the placeholder `{{accept}}` to display the accepted file types.
-  - `maxFilesReachedText` requires the placeholder `{{maxFiles}}` to display the maximum number of files allowed.
-  
-  Migration guide for english default translation keys:
-  
-  Before:
-  ```json
-  {
-    "SI_FILE_UPLOADER.MAX_SIZE": "Maximum upload size",
-    "SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES": "Accepted file types",
-    "SI_FILE_UPLOADER.MAX_FILE_REACHED": "Maximum number of files reached"
-  }
-  ```
-  
-  After:
-  ```json
-  {
-    "SI_FILE_UPLOADER.MAX_SIZE": "Max. {{maxFileSize}} upload size.",
-    "SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES": "Accepted file types: {{accept}}.",
-    "SI_FILE_UPLOADER.MAX_FILE_REACHED": "Max. {{maxFiles}} files"
-  }
-  ```
-* **element-ng:** Animations can no longer be disabled using
-  `@angular/animations` specific features like:
-  - `NoopAnimationsModule`
-  - `BrowserAnimationsModule.withConfig({disableAnimations: false})`
-  - `provideNoopAnimations`
-  - `provideAnimationsAsync('noop')`
-  
-  Use CSS to disable animations. See: https://element.siemens.io/architecture/motion-animation/
-* **icons:** `@simpl/element-icons` package replaced by `@siemens/element-icons`.
-  
-  The new icon set implements the new icon style, which has a reduced margin
-  around the icons.
-  
-  Replace the package:
-  1. Uninstall `@simpl/element-icons`
-  2. Install `@siemens/element-icons`
-  3. Adjust import in style sheet.
-     Before: `@use '@simpl/element-icons/dist/style/simpl-element-icons';`
-     After: `@use '@siemens/element-icons/dist/style/siemens-element-icons';`
-  4. Adjust SVG imports:
-     Before: `import { ... } from '@simpl/element-ng/ionic';`
-     Before: `import { ... } from '@simpl/element-ng/svg';`
-     After: `import { ... } from '@siemens/element-icons';`
-  
-  Adjust styles:
-  Always use the correct classes for sizing an icon:
-  - (small: 16px): `<si-icon class="icon-sm" icon="..." />`
-  - (default: 20px): `<si-icon class="icon" icon="..." />`
-  - (large: 24px): `<si-icon class="icon-lg" icon="..." />`
-  
-  As the icons new have a reduced built-in margin, spacings must be adjusted:
-  - remove negative margins, which previously were needed to remove the spacing overhead
-  - add extra spacing-1 between icons and inline-text
-  
-  Element components have those changes automatically applied (including buttons).
-  When updating follow Element recommendations, always use the `icon` classes
-  and remove custom overrides.
-* **tooltip:** The `triggers` input has been removed to align the behavior with accessibility guidelines.
-  Remove all usages. The tooltip will always be shown if the target element is focused or hovered.
-* **buttons:** Removed the class `btn-xs`, use instead `btn-sm` for icon buttons.
-  
-  Button heights has been standardized to fix misalignment between text buttons and icon buttons.
-  
-  All button sizes now follow the same specifications:
-  - Default: 32px
-  - Large (btn-lg): 40px
-  - Small (btn-sm): 24px (reduced from 28px for text buttons)
-  
-  Changes:
-  * btn-sm reduced to 24px to preserve the 8px increment scale (24 → 32 → 40)
-  * icon buttons now match text button heights
-  
-  Update your code if it relies on previous `.btn-circle` sizing:
-  
-  Before:
-  ```html
-  <!-- Circle buttons had inconsistent height mapping -->
-  <button class="btn btn-circle">...</button> <!-- was 40px -->
-  <button class="btn btn-circle btn-sm">...</button> <!-- was 32px -->
-  <button class="btn btn-circle btn-xs">...</button> <!-- was 24px -->
-  ```
-  
-  After:
-  ```html
-  <!-- Circle buttons now align with text button sizes -->
-  <button class="btn btn-circle btn-lg">...</button> <!-- 40px - add btn-lg -->
-  <button class="btn btn-circle">...</button> <!-- 32px - now default -->
-  <button class="btn btn-circle btn-sm">...</button> <!-- 24px - now matches text btn-sm -->
-  <!-- btn-xs has been removed - use btn-sm for 24px buttons -->
-  ```
-  
-  If you were using `btn-xs`, replace it with `btn-sm` to maintain the same 24px size.
-* **npm:** `ngx-translate` now requires an explicit `missingTranslationHandler` to provide default translations for Element.
-  
-  Add `provideMissingTranslationHandlerForElement()` to your `TranslateModule` or provider configuration:
-  
-  ```ts
-  <!-- Before with TranslateModule -->
-  TranslateModule.forRoot({
-    ...
-  });
-  <!-- After -->
-  TranslateModule.forRoot({
-    // Translate configuration
-    ...,
-    missingTranslationHandler: provideMissingTranslationHandlerForElement()
-  });
-  
-  <!-- Before with TranslateModule and missing translation handler -->
-  TranslateModule.forRoot({
-    ...,
-    missingTranslationHandler: {
-      provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler
+
+    The `SiFileUploaderComponent` and `SiFileDropzoneComponent` inputs:
+
+    - `maxFileSizeText` requires the placeholder `{{maxFileSize}}` to display the maximum file size.
+    - `acceptText` requires the placeholder `{{accept}}` to display the accepted file types.
+    - `maxFilesReachedText` requires the placeholder `{{maxFiles}}` to display the maximum number of files allowed.
+
+    Migration guide for english default translation keys:
+
+    Before:
+    ```json
+    {
+      "SI_FILE_UPLOADER.MAX_SIZE": "Maximum upload size",
+      "SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES": "Accepted file types",
+      "SI_FILE_UPLOADER.MAX_FILE_REACHED": "Maximum number of files reached"
     }
-  });
-  <!-- After -->
-  TranslateModule.forRoot({
-    // Translate configuration
-    ...,
-    missingTranslationHandler: provideMissingTranslationHandlerForElement({
-      provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler
-    })
-  });
-  
-  <!-- Before with provider function -->
-  provideTranslateService({
-    // Translate configuration
-    ...
-  });
-  <!-- After -->
-  provideTranslateService({
-    ...,
-    missingTranslationHandler: provideMissingTranslationHandlerForElement()
-  });
-  ```
+    ```
+
+    After:
+    ```json
+    {
+      "SI_FILE_UPLOADER.MAX_SIZE": "Max. {{maxFileSize}} upload size.",
+      "SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES": "Accepted file types: {{accept}}.",
+      "SI_FILE_UPLOADER.MAX_FILE_REACHED": "Max. {{maxFiles}} files"
+    }
+    ```
+
+* **element-ng:** Animations can no longer be disabled using
+    `@angular/animations` specific features like:
+    - `NoopAnimationsModule`
+    - `BrowserAnimationsModule.withConfig({disableAnimations: false})`
+    - `provideNoopAnimations`
+    - `provideAnimationsAsync('noop')`
+
+    Use CSS to disable animations. See: https://element.siemens.io/architecture/motion-animation/
+
+* **icons:** `@simpl/element-icons` package replaced by `@siemens/element-icons`.
+
+    The new icon set implements the new icon style, which has a reduced margin
+    around the icons.
+
+    Replace the package:
+    1. Uninstall `@simpl/element-icons`
+    2. Install `@siemens/element-icons`
+    3. Adjust import in style sheet.
+       Before: `@use '@simpl/element-icons/dist/style/simpl-element-icons';`
+       After: `@use '@siemens/element-icons/dist/style/siemens-element-icons';`
+    4. Adjust SVG imports:
+       Before: `import { ... } from '@simpl/element-ng/ionic';`
+       Before: `import { ... } from '@simpl/element-ng/svg';`
+       After: `import { ... } from '@siemens/element-icons';`
+
+    Adjust styles:
+    Always use the correct classes for sizing an icon:
+    - (small: 16px): `<si-icon class="icon-sm" icon="..." />`
+    - (default: 20px): `<si-icon class="icon" icon="..." />`
+    - (large: 24px): `<si-icon class="icon-lg" icon="..." />`
+
+    As the icons new have a reduced built-in margin, spacings must be adjusted:
+    - remove negative margins, which previously were needed to remove the spacing overhead
+    - add extra spacing-1 between icons and inline-text
+
+    Element components have those changes automatically applied (including buttons).
+    When updating follow Element recommendations, always use the `icon` classes
+    and remove custom overrides.
+
+* **tooltip:** The `triggers` input has been removed to align the behavior with accessibility guidelines.
+    Remove all usages. The tooltip will always be shown if the target element is focused or hovered.
+
+* **buttons:** Removed the class `btn-xs`, use instead `btn-sm` for icon buttons.
+
+    Button heights has been standardized to fix misalignment between text buttons and icon buttons.
+
+    All button sizes now follow the same specifications:
+    - Default: 32px
+    - Large (btn-lg): 40px
+    - Small (btn-sm): 24px (reduced from 28px for text buttons)
+
+    Changes:
+    * btn-sm reduced to 24px to preserve the 8px increment scale (24 → 32 → 40)
+    * icon buttons now match text button heights
+
+    Update your code if it relies on previous `.btn-circle` sizing:
+
+    Before:
+    ```html
+    <!-- Circle buttons had inconsistent height mapping -->
+    <button class="btn btn-circle">...</button> <!-- was 40px -->
+    <button class="btn btn-circle btn-sm">...</button> <!-- was 32px -->
+    <button class="btn btn-circle btn-xs">...</button> <!-- was 24px -->
+    ```
+
+    After:
+    ```html
+    <!-- Circle buttons now align with text button sizes -->
+    <button class="btn btn-circle btn-lg">...</button> <!-- 40px - add btn-lg -->
+    <button class="btn btn-circle">...</button> <!-- 32px - now default -->
+    <button class="btn btn-circle btn-sm">...</button> <!-- 24px - now matches text btn-sm -->
+    <!-- btn-xs has been removed - use btn-sm for 24px buttons -->
+    ```
+
+    If you were using `btn-xs`, replace it with `btn-sm` to maintain the same 24px size.
+
+* **npm:** `ngx-translate` now requires an explicit `missingTranslationHandler` to provide default translations for Element.
+
+    Add `provideMissingTranslationHandlerForElement()` to your `TranslateModule` or provider configuration:
+
+    ```ts
+    <!-- Before with TranslateModule -->
+    TranslateModule.forRoot({
+      ...
+    });
+    <!-- After -->
+    TranslateModule.forRoot({
+      // Translate configuration
+      ...,
+      missingTranslationHandler: provideMissingTranslationHandlerForElement()
+    });
+
+    <!-- Before with TranslateModule and missing translation handler -->
+    TranslateModule.forRoot({
+      ...,
+      missingTranslationHandler: {
+        provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler
+      }
+    });
+    <!-- After -->
+    TranslateModule.forRoot({
+      // Translate configuration
+      ...,
+      missingTranslationHandler: provideMissingTranslationHandlerForElement({
+        provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler
+      })
+    });
+
+    <!-- Before with provider function -->
+    provideTranslateService({
+      // Translate configuration
+      ...
+    });
+    <!-- After -->
+    provideTranslateService({
+      ...,
+      missingTranslationHandler: provideMissingTranslationHandlerForElement()
+    });
+    ```
+
 * **angular:** Angular 21+ is required.
-  Follow the Angular update guide to update your app: <https://angular.dev/update-guide?v=20.0-21.0>
+    Follow the Angular update guide to update your app: <https://angular.dev/update-guide?v=20.0-21.0>
+
 * **dashboards-ng:** New widgets are now assigned IDs upon creation using the `SiWidgetIdProvider.generateWidgetId`, rather than using temporary `NEW_WIDGET_PREFIX` IDs that are replaced on save.
-  
-  The `save()` method signature in the abstract class `SiWidgetStorage` has been modified to separate existing widgets from new widgets:
-  
-  Before:
-  
-  ```ts
-  abstract save(
-    widgets: (WidgetConfig | Omit<WidgetConfig, 'id'>)[],
-    removedWidgets?: WidgetConfig[],
-    dashboardId?: string
-  ): Observable<WidgetConfig[]>;
-  ```
-  
-  After:
-  ```ts
-  abstract save(
-    modifiedWidgets: WidgetConfig[],
-    addedWidgets: WidgetConfig[],
-    removedWidgets?: WidgetConfig[],
-    dashboardId?: string
-  ): Observable<WidgetConfig[]>;
-  ```
-  
-  `addedWidgets` array will contain new widgets with ids generated by `SiWidgetIdProvider.generateWidgetId`.
+
+    The `save()` method signature in the abstract class `SiWidgetStorage` has been modified to separate existing widgets from new widgets:
+
+    Before:
+
+    ```ts
+    abstract save(
+      widgets: (WidgetConfig | Omit<WidgetConfig, 'id'>)[],
+      removedWidgets?: WidgetConfig[],
+      dashboardId?: string
+    ): Observable<WidgetConfig[]>;
+    ```
+
+    After:
+    ```ts
+    abstract save(
+      modifiedWidgets: WidgetConfig[],
+      addedWidgets: WidgetConfig[],
+      removedWidgets?: WidgetConfig[],
+      dashboardId?: string
+    ): Observable<WidgetConfig[]>;
+    ```
+
+    `addedWidgets` array will contain new widgets with ids generated by `SiWidgetIdProvider.generateWidgetId`.
+
 * **element-ng:** Dropped support for @siemens/ngx-datatable versions 22-24. Only version 25 is now supported as a peer dependency.
 * **filtered-search:** Empty `value` fields of criterion options
-  are no longer replaced with the value from the `label`.
-  
-  Always provide a correct `value`.
+    are no longer replaced with the value from the `label`.
+
+    Always provide a correct `value`.
+
 * **typescript:** Element now requires ECMA script 2024 or newer.
-  This is implemented by all evergreen browsers for more than two years.
+    This is implemented by all evergreen browsers for more than two years.
+
 * **form:** The input `SiFormItemComponent.label` is now required. This change ensures that `si-form-item` components meet accessibility standards as inputs always require a label. Provide a label that describes the input properly. Do NOT provide an empty string.
 * **form:** The property `SiFormItemControl.errormessageId` is now required. All implementations of `SiFormItemControl` must provide this property to ensure proper accessibility support for error messages.
 * **split:** The default value of `SiSplitPartComponent.collapseOthers` input has been changed from `true` to `false`. Previously, when a split part was collapsed, all split parts between it and the end of the split in the respective direction would also collapse automatically. Now, by default, only the individual split part will collapse.
 * **toast-notification:** Removed type `ToastStateName`, use type `StatusType` which can be imported from `@siemens/element-ng/common` instead. The `StatusType` omits the `connection` state which was legacy code and should not be used anymore. This change affects below interfaces/apis where the above type should be adapted accordingly.
-  
-  - `SiToastNotificationService.queueToastNotification`
-  - `SiToast` interface
-  - `SiToastNotificationService.showToastNotification`
-  - `SiToastNotificationService.hideToastNotification`
+
+    - `SiToastNotificationService.queueToastNotification`
+    - `SiToast` interface
+    - `SiToastNotificationService.showToastNotification`
+    - `SiToastNotificationService.hideToastNotification`
+
 * **filtered-search:** Removed type `Criterion`. Use more specific types `CriterionValue` or `CriterionDefinition` instead for below inputs and output.
-  
-  - `SiFilteredSearchComponent.lazyCriterionProvider`
-  - `SiFilteredSearchComponent.criteria`
-  - `SiFilteredSearchComponent.doSearch`
-  
-  ```ts
-  <!-- Before -->
-    readonly lazyCriterionProvider =
-      input<(typed: string, searchCriteria?: SearchCriteria) => Observable<Criterion[] | CriterionDefinition[]>>();
-  
-  <!-- After -->
-    readonly lazyCriterionProvider =
-      input<(typed: string, searchCriteria?: SearchCriteria) => Observable<CriterionDefinition[]>>();
-  ```
-  
-  ```ts
-  <!-- Before -->
-    readonly criteria = input<Criterion[] | CriterionDefinition[]>([]);
-  
-  <!-- After -->
-    readonly criteria = input<CriterionDefinition[]>([]);
-  ```
-  
-  ```ts
-  <!-- Before -->
-    onSearch(searchCriteria: SearchCriteria) {
-      const criterionValues: Criterion[] = searchCriteria.criteria;
-    }
-  
-  <!-- After -->
-    onSearch(searchCriteria: SearchCriteria) {
-      const criterionValues: CriterionValue[] = searchCriteria.criteria;
-    }
-  ```
+
+    - `SiFilteredSearchComponent.lazyCriterionProvider`
+    - `SiFilteredSearchComponent.criteria`
+    - `SiFilteredSearchComponent.doSearch`
+
+    ```ts
+    <!-- Before -->
+      readonly lazyCriterionProvider =
+        input<(typed: string, searchCriteria?: SearchCriteria) => Observable<Criterion[] | CriterionDefinition[]>>();
+
+    <!-- After -->
+      readonly lazyCriterionProvider =
+        input<(typed: string, searchCriteria?: SearchCriteria) => Observable<CriterionDefinition[]>>();
+    ```
+
+    ```ts
+    <!-- Before -->
+      readonly criteria = input<Criterion[] | CriterionDefinition[]>([]);
+
+    <!-- After -->
+      readonly criteria = input<CriterionDefinition[]>([]);
+    ```
+
+    ```ts
+    <!-- Before -->
+      onSearch(searchCriteria: SearchCriteria) {
+        const criterionValues: Criterion[] = searchCriteria.criteria;
+      }
+
+    <!-- After -->
+      onSearch(searchCriteria: SearchCriteria) {
+        const criterionValues: CriterionValue[] = searchCriteria.criteria;
+      }
+    ```
+
 * **filtered-search:** Removed `SiFilteredSearchComponent.readonly` input. Use `SiFilteredSearchComponent.disabled` instead.
 * **select:** Removed deprecated interface `SelectOptionLegacy`. Use interface `SelectOption` instead.
-  
-  The options can be converted like below:
-  
-  Before:
-  
-  ```ts
-  const options: SelectOptionLegacy[] = [
-    { id: '1', title: 'Option 1' },
-    { id: '2', title: 'Option 2', icon: 'check', color: 'text-success', disabled: false }
-  ];
-  ```
-  
-  After:
-  
-  ```ts
-  const options: SelectOption<string>[] = [
-    { type: 'option', value: '1', label: 'Option 1' },
-    { type: 'option', value: '2', label: 'Option 2', icon: 'check', iconColor: 'text-success', disabled: false }
-  ];
-  ```
+
+    The options can be converted like below:
+
+    Before:
+
+    ```ts
+    const options: SelectOptionLegacy[] = [
+      { id: '1', title: 'Option 1' },
+      { id: '2', title: 'Option 2', icon: 'check', color: 'text-success', disabled: false }
+    ];
+    ```
+
+    After:
+
+    ```ts
+    const options: SelectOption<string>[] = [
+      { type: 'option', value: '1', label: 'Option 1' },
+      { type: 'option', value: '2', label: 'Option 2', icon: 'check', iconColor: 'text-success', disabled: false }
+    ];
+    ```
+
 * **select:** Removed deprecated output `SiSelectComponent.dropdownClose`. Use output `SiSelectComponent.openChange` instead.
 * **unauthorized-page:** Removed the deprecated `SiUnauthorizedPageComponent` component. Use the `SiInfoPageComponent` component with the `si-info-page` element instead. The `SiInfoPageComponent` is a superset of this component and supports the same use cases and more.
-  
-  Before:
-  
-  ```html
-  <si-unauthorized-page
-    heading="Access denied"
-    subHeading="You are not authorized to access this section."
-    description="Contact your administrator"
-    [link]="{ title: 'Go back', link: '/' }"
-  />
-  ```
-  
-  After:
-  
-  ```html
-  <si-info-page
-    icon="element-warning-filled"
-    iconColor="status-warning"
-    titleText="Access denied"
-    copyText="You are not authorized to access this section."
-    instructions="Contact your administrator"
-    [link]="{ title: 'Go back', link: '/' }"
-  />
-  ```
+
+    Before:
+
+    ```html
+    <si-unauthorized-page
+      heading="Access denied"
+      subHeading="You are not authorized to access this section."
+      description="Contact your administrator"
+      [link]="{ title: 'Go back', link: '/' }"
+    />
+    ```
+
+    After:
+
+    ```html
+    <si-info-page
+      icon="element-warning-filled"
+      iconColor="status-warning"
+      titleText="Access denied"
+      copyText="You are not authorized to access this section."
+      instructions="Contact your administrator"
+      [link]="{ title: 'Go back', link: '/' }"
+    />
+    ```
+
 * **dashboards:** Removed injection token `CONFIG_TOKEN`. Use `SI_DASHBOARD_CONFIGURATION` injection token instead.
 * **dashboards-ng:** Removed property `WidgetConfig.invalid`. Use `WidgetInstanceEditor.statusChanges` emitter instead.
-  
-  Example usage:
-  ```ts
-   this.statusChanges.emit({
-      invalid: this.isInvalid
-   });
-  ```
+
+    Example usage:
+    ```ts
+     this.statusChanges.emit({
+        invalid: this.isInvalid
+     });
+    ```
+
 * **dashboards-ng:** Removed module configuration `SiDashboardsNgModule.forRoot`. Use injection tokens `SI_DASHBOARD_CONFIGURATION` and `SI_WIDGET_STORE` directly in your app configuration.
-  
-  Before:
-  
-  ```ts
-  imports: [
-    SiDashboardsNgModule.forRoot({
-      config: {},
-      dashboardApi: {
-        provide: SiWidgetStorage,
-        useClass: CustomWidgetStorage
-      }
-    })
-  ]
-  ```
-  
-  After:
-  
-  ```ts
-  imports: [SiDashboardsNgModule],
-  providers: [
-    { provide: SI_WIDGET_STORE, useClass: AppWidgetStorage },
-    { provide: SI_DASHBOARD_CONFIGURATION, useValue: config }
-  ]
-  ```
+
+    Before:
+
+    ```ts
+    imports: [
+      SiDashboardsNgModule.forRoot({
+        config: {},
+        dashboardApi: {
+          provide: SiWidgetStorage,
+          useClass: CustomWidgetStorage
+        }
+      })
+    ]
+    ```
+
+    After:
+
+    ```ts
+    imports: [SiDashboardsNgModule],
+    providers: [
+      { provide: SI_WIDGET_STORE, useClass: AppWidgetStorage },
+      { provide: SI_DASHBOARD_CONFIGURATION, useValue: config }
+    ]
+    ```
+
 * **modal:** Removed property `ModalOptions.initialState`. Use `ModalOptions.inputValues` instead. Note that `inputValues` only binds to component inputs, unlike `initialState`, which could set any property on the component instance.
 * **dashboards/grid:** Removed property `SiGridComponent.loadingService`. Use `SiGridComponent.isLoading` instead to indicate load and save operations.
 * **common:** Removed `buildTrackByIdentity()` function. Use Angular's new control-flow syntax instead.
 * **common:** Removed `buildTrackByIndex()` function. Use Angular's new control-flow syntax instead.
 * **buttons:** Changed selection-buttons sizing.
-  
-  The sizing has been aligned with regular buttons. The sizing classes are now consistent with standard button classes:
-  - Use `btn-lg` for large selection buttons
-  - Use `btn` (no modifier) for default size selection buttons
-  - Use `btn-sm` for small selection buttons
-  
-  This change affects the HTML structure of selection button groups. Previously, selection buttons had different size mappings compared to regular buttons.
-  
-  Before:
-  ```html
-  <!-- Small selection buttons (visually same as default regular buttons) -->
-  <div class="btn-group">
-    <label>
-      <input type="radio" class="btn-check" name="example" />
-      <span class="btn btn-sm">Option 1</span>
-    </label>
-  </div>
-  ```
-  
-  After:
-  ```html
-  <!-- Default selection buttons (now visually same as default regular buttons) -->
-  <div class="btn-group">
-    <label>
-      <input type="radio" class="btn-check" name="example" />
-      <span class="btn">Option 1</span>
-    </label>
-  </div>
-  ```
+
+    The sizing has been aligned with regular buttons. The sizing classes are now consistent with standard button classes:
+    - Use `btn-lg` for large selection buttons
+    - Use `btn` (no modifier) for default size selection buttons
+    - Use `btn-sm` for small selection buttons
+
+    This change affects the HTML structure of selection button groups. Previously, selection buttons had different size mappings compared to regular buttons.
+
+    Before:
+    ```html
+    <!-- Small selection buttons (visually same as default regular buttons) -->
+    <div class="btn-group">
+      <label>
+        <input type="radio" class="btn-check" name="example" />
+        <span class="btn btn-sm">Option 1</span>
+      </label>
+    </div>
+    ```
+
+    After:
+    ```html
+    <!-- Default selection buttons (now visually same as default regular buttons) -->
+    <div class="btn-group">
+      <label>
+        <input type="radio" class="btn-check" name="example" />
+        <span class="btn">Option 1</span>
+      </label>
+    </div>
+    ```
+
 * **maps:** Removed the deprecated `SiMapComponent.onResize()` method. It had no impact.
 * **resize-observer:** Removed following deprecated properties from `SiResponsiveContainerDirective` in favor of signal-based properties:
-  
-  `isXs` -> Use `xs` instead
-  `isSm` -> Use `sm` instead
-  `isMd` -> Use `md` instead
-  `isLg` -> Use `lg` instead
-  `isXl` -> Use `xl` instead
-  `isXxl` -> Use `xxl` instead
+
+    `isXs` -> Use `xs` instead
+    `isSm` -> Use `sm` instead
+    `isMd` -> Use `md` instead
+    `isLg` -> Use `lg` instead
+    `isXl` -> Use `xl` instead
+    `isXxl` -> Use `xxl` instead
+
 * **select:** Removed the `[complexOptions]` input of `si-select`. Instead use the `[options]` input which supports
-  - grouping of options
-  - providing values of any type
-  
-  Complex options can be converted like below:
-  
-  ```html
-  <!-- Before -->
-  <si-select
-    [complexOptions]="{group1: [{myLabel: 'My Label', uniqueData: uniqueData}]}"
-    [valueProvider]="valueProvider"
-    [groupProvider]="groupProvider"
-    [optionEqualCheckFn]="uniqueDataEqual"
-  />
-  
-  <!-- After -->
-  <si-select
-    [options]="[
-      {
-        type: 'group',
-        label: 'Group-1',
-        key: 'group1 (optional)',
-        options: [{type: 'option', label: 'My Label', value: uniqueData}]
-      }
-    ]"
-    [optionEqualCheckFn]="uniqueDataEqual"
-  />
-  ```
+    - grouping of options
+    - providing values of any type
+
+    Complex options can be converted like below:
+
+    ```html
+    <!-- Before -->
+    <si-select
+      [complexOptions]="{group1: [{myLabel: 'My Label', uniqueData: uniqueData}]}"
+      [valueProvider]="valueProvider"
+      [groupProvider]="groupProvider"
+      [optionEqualCheckFn]="uniqueDataEqual"
+    />
+
+    <!-- After -->
+    <si-select
+      [options]="[
+        {
+          type: 'group',
+          label: 'Group-1',
+          key: 'group1 (optional)',
+          options: [{type: 'option', label: 'My Label', value: uniqueData}]
+        }
+      ]"
+      [optionEqualCheckFn]="uniqueDataEqual"
+    />
+    ```
+
 * **charts/gauge:** Removed input `SiChartGaugeComponent.numberOfDecimals`. Use `SiChartGaugeComponent.minNumberOfDecimals` or `SiChartGaugeComponent.maxNumberOfDecimals` inputs instead.
 * **tour:** Removed property `attachTo.on` of `TourStep` interface. It has no effect, position is automatic.
 
 ### DEPRECATIONS
 
 * **dashboards:** `SiWidgetStorage.getToolbarMenuItems` is deprecated. Use `provideDashboardToolbarItems` in your app configuration for global toolbar items, and/or use the `primaryEditActions` and `secondaryEditActions` inputs on `SiFlexibleDashboardComponent` for dashboard specific toolbar items.
-  
-  Before (deprecated approach):
-  
-  ```ts
-  export class AppWidgetStorage extends SiDefaultWidgetStorage {
-    override getToolbarMenuItems = (dashboardId?: string) => ({
-      primary: of([{
-        type: 'action',
-        label: 'Custom Action',
-        action: (grid) => alert('Action!')
-      }]),
-      secondary: of([{
-        type: 'action',
-        label: 'Settings',
-        action: (grid) => this.openSettings()
-      }])
-    });
-  }
-  ```
-  
-  After
-  
-  ```ts
-  // For global toolbar items (shared across all dashboards):
-  
-  // standalone setup
-  export const appConfig: ApplicationConfig = {
-    providers: [
-      provideDashboardToolbarItems({
-        primary: [{
+
+    Before (deprecated approach):
+
+    ```ts
+    export class AppWidgetStorage extends SiDefaultWidgetStorage {
+      override getToolbarMenuItems = (dashboardId?: string) => ({
+        primary: of([{
           type: 'action',
           label: 'Custom Action',
           action: (grid) => alert('Action!')
-        }],
-        secondary: [{
+        }]),
+        secondary: of([{
           type: 'action',
           label: 'Settings',
           action: (grid) => this.openSettings()
-        }]
-      })
-    ]
-  };
-  
-  // For module-based apps:
-  @NgModule({
-    providers: [
-      provideDashboardToolbarItems({
-        primary: [{
-          type: 'action',
-          label: 'Custom Action',
-          action: (grid) => alert('Action!')
-        }],
-        secondary: [{
-          type: 'action',
-          label: 'Settings',
-          action: (grid) => this.openSettings()
-        }]
-      })
-    ]
-  })
-  export class AppModule { }
-  
-  // For dashboard-specific toolbar items:
-  <si-flexible-dashboard
-    [primaryEditActions]="primaryActions"
-    [secondaryEditActions]="secondaryActions"
-  />
-  ```
+        }])
+      });
+    }
+    ```
+
+    After
+
+    ```ts
+    // For global toolbar items (shared across all dashboards):
+
+    // standalone setup
+    export const appConfig: ApplicationConfig = {
+      providers: [
+        provideDashboardToolbarItems({
+          primary: [{
+            type: 'action',
+            label: 'Custom Action',
+            action: (grid) => alert('Action!')
+          }],
+          secondary: [{
+            type: 'action',
+            label: 'Settings',
+            action: (grid) => this.openSettings()
+          }]
+        })
+      ]
+    };
+
+    // For module-based apps:
+    @NgModule({
+      providers: [
+        provideDashboardToolbarItems({
+          primary: [{
+            type: 'action',
+            label: 'Custom Action',
+            action: (grid) => alert('Action!')
+          }],
+          secondary: [{
+            type: 'action',
+            label: 'Settings',
+            action: (grid) => this.openSettings()
+          }]
+        })
+      ]
+    })
+    export class AppModule { }
+
+    // For dashboard-specific toolbar items:
+    <si-flexible-dashboard
+      [primaryEditActions]="primaryActions"
+      [secondaryEditActions]="secondaryActions"
+    />
+    ```
+
 * **sort-bar:** `SiSortBarComponent` and `SiSortBarModule` are deprecated.
-  They originate from the older design system and do not align with current
-  design guidelines. No known use case exists for this component.
-  Both will be removed in v50.
+    They originate from the older design system and do not align with current
+    design guidelines. No known use case exists for this component.
+    Both will be removed in v50.
+
 * The type alias with `Simpl` prefix are deprecated, use types with `Si` prefix instead as per below
-  
-  - `SimplLineSeriesOption` -> Use `SiLineSeriesOption` instead
-  - `SimplBarSeriesOption` -> Use `SiBarSeriesOption` instead
-  - `SimplHeatmapSeriesOption` -> Use `SiHeatmapSeriesOption` instead
-  - `SimplScatterSeriesOption` -> Use `SiScatterSeriesOption`  instead
-  - `SimplCandlestickSeriesOption` -> Use `SiCandlestickSeriesOption` instead
+
+    - `SimplLineSeriesOption` -> Use `SiLineSeriesOption` instead
+    - `SimplBarSeriesOption` -> Use `SiBarSeriesOption` instead
+    - `SimplHeatmapSeriesOption` -> Use `SiHeatmapSeriesOption` instead
+    - `SimplScatterSeriesOption` -> Use `SiScatterSeriesOption`  instead
+    - `SimplCandlestickSeriesOption` -> Use `SiCandlestickSeriesOption` instead
+
 * **buttons:** The `NotificationItemActionCircleButton` interface and 'action-circle-button' type are
-  deprecated. Use `NotificationItemActionIconButton` and 'action-icon-button'
-  instead. Both interfaces render square icon buttons (.btn-icon) and remain
-  fully backward compatible.
+    deprecated. Use `NotificationItemActionIconButton` and 'action-icon-button'
+    instead. Both interfaces render square icon buttons (.btn-icon) and remain
+    fully backward compatible.
+
 * The type alias with `Simpl` prefix are deprecated, use types with `Si` prefix instead as per below
-  
-  `SimplChartsNgModule` -> Use `SiChartsNgModule` instead
-  `SimplSeriesOption` -> Use `SiSeriesOption` instead
-  `SimplLivePreviewRoutingModule` -> Use `SiLivePreviewRoutingModule` instead
-  `SimplLivePreviewModule` -> Use `SiLivePreviewModule`  instead
-  `SimplMapsNgModule` -> Use `SiMapsNgModule` instead
-  `SimplNativeChartsNgModule` -> Use `SiNativeChartsNgModule` instead
+
+    `SimplChartsNgModule` -> Use `SiChartsNgModule` instead
+    `SimplSeriesOption` -> Use `SiSeriesOption` instead
+    `SimplLivePreviewRoutingModule` -> Use `SiLivePreviewRoutingModule` instead
+    `SimplLivePreviewModule` -> Use `SiLivePreviewModule`  instead
+    `SimplMapsNgModule` -> Use `SiMapsNgModule` instead
+    `SimplNativeChartsNgModule` -> Use `SiNativeChartsNgModule` instead
+
 * **charts:** `SiChartsNgModule` is deprecated, import individual components instead. Starting with v49, separate entry points are available for each component, allowing applications to import components from specific entry points, which helps reduce the application bundle size.
 * **chart:** The method `SiChartComponent.resetChart` is deprecated and should not be used by the consumer directly.
 
@@ -1851,7 +1928,7 @@
 ### NOTES
 
 * **angular:** Angular without ZoneJS (Zoneless) is generally supported but due to incomplete of testing,
-  it might not work in all cases.
+    it might not work in all cases.
 
 # [48.8.0](https://github.com/siemens/element/compare/v48.7.0...v48.8.0) (2025-12-17)
 
@@ -1987,47 +2064,48 @@
 ### DEPRECATIONS
 
 * **accordion:** `SiCollapsiblePanelComponent.colorVariant` input has no effect
-  and is deprecated.
+    and is deprecated.
 
 * **tree-view:** `siTreeViewItemTemplate` is deprecated in favor of `siTreeViewItem`.
-  
-  Currently there are 2 directives `siTreeViewItemTemplate` for providing custom template and `siTreeViewItem` for applying custom directives (e.g cdkDrag) on tree item.
-  
-  the `siTreeViewItemTemplate` has 2 main DX problems:
-  
-  - Every tree item needs to specify templateName in its json structure.
-  - For every unique custom template there needs a separate ng-template with exact mapping of that templateName which doesn't provide type safety.
-  
-  Migration Guide:
-  
-  Before (deprecated):
-  ```html
-  <si-tree-view>
-    <ng-template siTreeViewItemTemplate="root" let-item>
-      <div class="custom-item">Root {{ item.name }}</div>
-    </ng-template>
-    <ng-template siTreeViewItemTemplate="child" let-item>
-      <div class="custom-item">Child {{ item.name }}</div>
-    </ng-template>
-  </si-tree-view>
-  ```
-  
-  After (recommended):
-  ```html
-  <si-tree-view>
-    <ng-template siTreeViewItem let-item="treeItem">
-      <si-tree-view-item>
-        <div class="custom-item">
-        @if (item.level === 0) {
-          Root {{ item.name }}
-        } @else {
-          Child {{ item.name }}
-        }
-        </div>
-      </si-tree-view-item>
-    </ng-template>
-  </si-tree-view>
-  ```
+
+    Currently there are 2 directives `siTreeViewItemTemplate` for providing custom template and `siTreeViewItem` for applying custom directives (e.g cdkDrag) on tree item.
+
+    the `siTreeViewItemTemplate` has 2 main DX problems:
+
+    - Every tree item needs to specify templateName in its json structure.
+    - For every unique custom template there needs a separate ng-template with exact mapping of that templateName which doesn't provide type safety.
+
+    Migration Guide:
+
+    Before (deprecated):
+    ```html
+    <si-tree-view>
+      <ng-template siTreeViewItemTemplate="root" let-item>
+        <div class="custom-item">Root {{ item.name }}</div>
+      </ng-template>
+      <ng-template siTreeViewItemTemplate="child" let-item>
+        <div class="custom-item">Child {{ item.name }}</div>
+      </ng-template>
+    </si-tree-view>
+    ```
+
+    After (recommended):
+    ```html
+    <si-tree-view>
+      <ng-template siTreeViewItem let-item="treeItem">
+        <si-tree-view-item>
+          <div class="custom-item">
+          @if (item.level === 0) {
+            Root {{ item.name }}
+          } @else {
+            Child {{ item.name }}
+          }
+          </div>
+        </si-tree-view-item>
+      </ng-template>
+    </si-tree-view>
+    ```
+
 * **resize-observer:** `ResizeObserverService._checkAll` method is deprecated without replacement.
 
 # [48.2.0](https://github.com/siemens/element/compare/v48.1.0...v48.2.0) (2025-10-27)
@@ -2128,16 +2206,16 @@
 ### DEPRECATIONS
 
 * **datatable:** `INgxDatatableConfig` is deprecated in favor of upstream `NgxDatatableConfig`.
-  
-  Replace `INgxDatatableConfig` imports with `NgxDatatableConfig` from @siemens/ngx-datatable:
-  
-  ```ts
-  // Before
-  import { INgxDatatableConfig } from '@siemens/element-ng/datatable';
-  
-  // After
-  import { NgxDatatableConfig } from '@siemens/ngx-datatable';
-  ```
+
+    Replace `INgxDatatableConfig` imports with `NgxDatatableConfig` from @siemens/ngx-datatable:
+
+    ```ts
+    // Before
+    import { INgxDatatableConfig } from '@siemens/element-ng/datatable';
+
+    // After
+    import { NgxDatatableConfig } from '@siemens/ngx-datatable';
+    ```
 
 # [48.0.0](https://github.com/siemens/element/compare/v47.8.0...v48.0.0) (2025-08-26)
 
@@ -2209,29 +2287,29 @@
 
 * **header-dropdown:** The `si-header-dropdown-item` no longer shows a filled icon when the dropdown is open.
 * **theme:** The colors for the "critical" status have changed. If this
-  change is not desired, the old colors can be restored using this snippet in the
-  application's main `styles.scss`:
-  
-  ```scss
-  @use '@siemens/element-theme/src/theme/base-colors';
-  
-  // load theme here as usual
-  @use '@siemens/element-theme/src/theme';
-  @use '@siemens/element-ng/element-ng';
-  
-  // add overrides
-  :root {
-    --element-base-critical: #{base-colors.$color-red-100};
-    --element-status-critical: #{base-colors.$color-red-900};
-    --element-text-critical: #{base-colors.$color-red-700};
-  }
-  
-  :root.app--dark {
-    --element-base-critical: #{base-colors.$color-red-900};
-    --element-status-critical: #{base-colors.$color-red-700};
-    --element-text-critical: #{base-colors.$color-red-100};
-  }
-  ```
+    change is not desired, the old colors can be restored using this snippet in the
+    application's main `styles.scss`:
+
+    ```scss
+    @use '@siemens/element-theme/src/theme/base-colors';
+
+    // load theme here as usual
+    @use '@siemens/element-theme/src/theme';
+    @use '@siemens/element-ng/element-ng';
+
+    // add overrides
+    :root {
+      --element-base-critical: #{base-colors.$color-red-100};
+      --element-status-critical: #{base-colors.$color-red-900};
+      --element-text-critical: #{base-colors.$color-red-700};
+    }
+
+    :root.app--dark {
+      --element-base-critical: #{base-colors.$color-red-900};
+      --element-status-critical: #{base-colors.$color-red-700};
+      --element-text-critical: #{base-colors.$color-red-100};
+    }
+    ```
 
 
 ### BREAKING CHANGES
@@ -2239,261 +2317,275 @@
 * **accordion:** Removed `SiAccordionComponent.colorVariant` input without any replacement.
 * **action-modal:** Removed `AlertDialogResult`, `EditDiscardDialogResult`, `ConfirmationDialogResult` and `DeleteConfirmationDialogResult` as const objects. Use them only as type.
 * **action-modal:** Removed deprecated methods:
-  
-  - `SiActionDialogService.showAlertDialog`
-  - `SiActionDialogService.showConfirmationDialog`
-  - `SiActionDialogService.showEditDiscardDialog`
-  - `SiActionDialogService.showDeleteConfirmationDialog`
-  
-  Use `SiActionDialogService.showActionDialog` instead.
+
+    - `SiActionDialogService.showAlertDialog`
+    - `SiActionDialogService.showConfirmationDialog`
+    - `SiActionDialogService.showEditDiscardDialog`
+    - `SiActionDialogService.showDeleteConfirmationDialog`
+
+    Use `SiActionDialogService.showActionDialog` instead.
+
 * **angular:** Angular 20+ is required.
-  Follow the Angular update guide to update your app: <https://angular.dev/update-guide?v=19.0-20.0>
+    Follow the Angular update guide to update your app: <https://angular.dev/update-guide?v=19.0-20.0>
+
 * **charts-ng:** The `@siemens/charts-ng` package now requires ECharts version 6.0.0 or higher. Please update your dependencies accordingly. For details on ECharts 6, see: https://github.com/apache/echarts/releases/tag/6.0.0
 * **collapsible-panel:** Removed `SiCollapsiblePanelComponent.toggle` output use `SiCollapsiblePanelComponent.panelToggle` instead.
 * **dashboards-ng:** gridstack.js v12 is required. To migrate to v12,
-  update the package and drop the inclusion of `gridstack-extra.css`
-  in `angular.json`
+    update the package and drop the inclusion of `gridstack-extra.css`
+    in `angular.json`
+
 * **datepicker:** Removed `SiDatepickerOverlayComponent.isFocused` and `SiDatepickerOverlayDirective.isFocused` without any replacement.
 * **datepicker:** Removed `SiDatepickerOverlayDirective.toggleOverlay` method. Use `SiDatepickerOverlayDirective.showOverlay` or `SiDatepickerOverlayDirective.closeOverlay` methods instead.
 * **datepicker:** Removed `SiDateInputDirective.dateInputDebounceTime`, `SiDateRangeComponent .debounceTime` and `SiDatepickerDirective.triggeringInput` inputs without any replacement as they had no effect.
 * **element-theme:** The `make-theme` SCSS mixin no longer prefixes
-  variables with `element-` hence custom build-time OEM themes have
-  to be adapted accordingly, see:
-  https://element.siemens.io/architecture/theming/#build-time-custom-theme.
+    variables with `element-` hence custom build-time OEM themes have
+    to be adapted accordingly, see:
+    https://element.siemens.io/architecture/theming/#build-time-custom-theme.
+
 * **filtered-search:** Removed following deprecated inputs:
 
-  - `SiFilteredSearchComponent.showIcon` without any replacement.
-  - `SiFilteredSearchComponent.selectedCriteriaIndex`. Instead of preselecting the most relevant option, sort the options by relevance.
-  - `SiFilteredSearchComponent.noMatchingCriteriaText` without any replacement.
-  - `SiFilteredSearchComponent.submitText`. Use `SiFilteredSearchComponent.submitButtonLabel` instead.
-  - `SiFilteredSearchComponent.items`. Use `SiFilteredSearchComponent.itemCountText` instead.
+    - `SiFilteredSearchComponent.showIcon` without any replacement.
+    - `SiFilteredSearchComponent.selectedCriteriaIndex`. Instead of preselecting the most relevant option, sort the options by relevance.
+    - `SiFilteredSearchComponent.noMatchingCriteriaText` without any replacement.
+    - `SiFilteredSearchComponent.submitText`. Use `SiFilteredSearchComponent.submitButtonLabel` instead.
+    - `SiFilteredSearchComponent.items`. Use `SiFilteredSearchComponent.itemCountText` instead.
+
 * **form:** Removed deprecated `SiFormContainerComponent.getValidationErrors` method.
-  
-  Use the built-in mechanism of the `si-form-item` to show validation errors.
-  See: https://element.siemens.io/components/forms-inputs/forms/#error-messages  
+
+    Use the built-in mechanism of the `si-form-item` to show validation errors.
+    See: https://element.siemens.io/components/forms-inputs/forms/#error-messages  
+
 * **form:** Removed `SiFormItemComponent.inputId` and `SiFormItemComponent.readonly` inputs without any replacement.
 * **form:** Removed `siFormItemControl` directive.
-  
-  Replace this directive with either the class form-control or form-check-input:
-  
-  ```
-  <!-- Before -->
-  <input type="checkbox" siFormItemControl>
-  <input siFormItemControl>
-  
-  <!-- After -->
-  <input type="checkbox" class="form-check-input">
-  <input class="form-control">
-  ```
+
+    Replace this directive with either the class form-control or form-check-input:
+
+    ```
+    <!-- Before -->
+    <input type="checkbox" siFormItemControl>
+    <input siFormItemControl>
+
+    <!-- After -->
+    <input type="checkbox" class="form-check-input">
+    <input class="form-control">
+    ```
+
 * **form:** Checkboxes and radio inputs (`<input type="checkbox">` or `<input type="radio">`) must now be wrapped in a `.form-check` container.
-  
-  Additionally, when using Bootstrap’s grid system (bs-grid), each `.form-check` must be placed
-  inside a `.col-*` element and cannot be a direct child of a `.row`.
-  This change is necessary to ensure proper alignment and spacing, especially for long or multiline
-  labels.
-  
-  Before:
-  
-  ```html
-  <input type="checkbox" class="form-check-input">
-  <label class="form-check-label">Label</label>
-  ```
-  
-  After:
-  
-  ```html
-  <div class="form-check">
+
+    Additionally, when using Bootstrap’s grid system (bs-grid), each `.form-check` must be placed
+    inside a `.col-*` element and cannot be a direct child of a `.row`.
+    This change is necessary to ensure proper alignment and spacing, especially for long or multiline
+    labels.
+
+    Before:
+
+    ```html
     <input type="checkbox" class="form-check-input">
     <label class="form-check-label">Label</label>
-  </div>
-  ```
+    ```
+
+    After:
+
+    ```html
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input">
+      <label class="form-check-label">Label</label>
+    </div>
+    ```
+
 * **form:** Using multiple form-controls within a single si-form-item is no longer supported.
-  Use si-form-fieldset to group multiple si-form-item components.
+    Use si-form-fieldset to group multiple si-form-item components.
 
-  Before:
+    Before:
 
-  ```html
-  <si-form-item label="Group label">
-    <div class="form-check">
-      <input type="checkbox" id="check-1" class="form-check-input" [formControl]="check1" />
-      <label for="check-1">Label 1</label>
-    </div>
-    <div class="form-check">
-      <input type="checkbox" id="check-2" class="form-check-input" [formControl]="check2" />
-      <label for="check-2">Label 2</label>
-    </div>
-  </si-form-item>
-  ```
-
-  After:
-  
-  ```html
-  <si-form-fieldset label="Group label">
-    <si-form-item label="Label 1">
-      <input type="checkbox" class="form-check-input" [formControl]="check1" />
+    ```html
+    <si-form-item label="Group label">
+      <div class="form-check">
+        <input type="checkbox" id="check-1" class="form-check-input" [formControl]="check1" />
+        <label for="check-1">Label 1</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="check-2" class="form-check-input" [formControl]="check2" />
+        <label for="check-2">Label 2</label>
+      </div>
     </si-form-item>
-    <si-form-item label="Label 2">
-      <input type="checkbox" class="form-check-input" [formControl]="check2" />
-    </si-form-item>
-  </si-form-fieldset>
-  ```
+    ```
+
+    After:
+
+    ```html
+    <si-form-fieldset label="Group label">
+      <si-form-item label="Label 1">
+        <input type="checkbox" class="form-check-input" [formControl]="check1" />
+      </si-form-item>
+      <si-form-item label="Label 2">
+        <input type="checkbox" class="form-check-input" [formControl]="check2" />
+      </si-form-item>
+    </si-form-fieldset>
+    ```
+
 * **icon:** The `si-icon` component has been completely re-implemented
-  including breaking changes in the API. The main motivation of this change is
-  support for SVG icons and to ensure a similar behavior compared to the direct
-  use via CSS classes, making icon usage more interchangeable.
-  
-  We recommend adjusting your code to the new `si-icon`. Alternatively, you may
-  use `si-icon-legacy` to preserve the previous behavior.
-  
-  The most notable changes are:
-  - Dropped all inputs other than the `icon` input. Use CSS classes instead.
-  - Dropped the default size along with the `size` input. Use CSS class `icon`
-    to apply the default size via CSS or use any other
-    [text size](https://element.siemens.io/fundamentals/typography/#type-styles-classes) class.
-  - The content of this component is hidden in the a11y tree. If needed, set
-    proper labels e.g. `aria-label="Close"`.
-  - Dropped support for stacked icons via inputs. Use HTML and the `icon-stack`
-    class to construct layered icons.
+    including breaking changes in the API. The main motivation of this change is
+    support for SVG icons and to ensure a similar behavior compared to the direct
+    use via CSS classes, making icon usage more interchangeable.
 
-  Single colored icons can be converted as follows:
-  
-  ```html
-  <!-- before -->
-  <si-icon icon="element-user" color="text-danger" />
-  <!-- after -->
-  <si-icon icon="element-user" class="icon text-danger" />
-  ```
+    We recommend adjusting your code to the new `si-icon`. Alternatively, you may
+    use `si-icon-legacy` to preserve the previous behavior.
 
-  **Important:** Previously, the class icon was automatically applied. Unless not needed,
-  it must now be applied manually.
-  The icon class sets a fixed size of 1.5rem.
-  
-  Stacked (composite) icons need to be constructed using HTML.
+    The most notable changes are:
+    - Dropped all inputs other than the `icon` input. Use CSS classes instead.
+    - Dropped the default size along with the `size` input. Use CSS class `icon`
+      to apply the default size via CSS or use any other
+      [text size](https://element.siemens.io/fundamentals/typography/#type-styles-classes) class.
+    - The content of this component is hidden in the a11y tree. If needed, set
+      proper labels e.g. `aria-label="Close"`.
+    - Dropped support for stacked icons via inputs. Use HTML and the `icon-stack`
+      class to construct layered icons.
 
-  ```html
-  <!-- before -->
-  <si-icon
-    icon="element-alarm-background-filled"
+    Single colored icons can be converted as follows:
+
+    ```html
+    <!-- before -->
+    <si-icon icon="element-user" color="text-danger" />
+    <!-- after -->
+    <si-icon icon="element-user" class="icon text-danger" />
+    ```
+
+    **Important:** Previously, the class icon was automatically applied. Unless not needed,
+    it must now be applied manually.
+    The icon class sets a fixed size of 1.5rem.
+
+    Stacked (composite) icons need to be constructed using HTML.
+
+    ```html
+    <!-- before -->
+    <si-icon
+      icon="element-alarm-background-filled"
+      color="status-danger"
+      stackedIcon="element-alarm-tick"
+      stackedColor="text-secondary"
+      size="display-2"
+    />
+
+    <!-- after -->
+    <span class="icon icon-stack">
+      <si-icon class="si-display-lg status-danger" icon="element-alarm-background-filled" />
+      <si-icon class="si-display-lg text-secondary" icon="element-alarm-tick" />
+    </span>
+    ```
+
+    For status icons, the new `si-status-icon` component simplifies usage even more:
+
+    ```html
+    <!-- before -->
+    <si-icon
+    icon="element-circle-filled"
     color="status-danger"
-    stackedIcon="element-alarm-tick"
-    stackedColor="text-secondary"
+    stackedIcon="element-state-exclamation-mark"
+    stackedColor="status-danger-contrast"
     size="display-2"
-  />
+    />
 
-  <!-- after -->
-  <span class="icon icon-stack">
-    <si-icon class="si-display-lg status-danger" icon="element-alarm-background-filled" />
-    <si-icon class="si-display-lg text-secondary" icon="element-alarm-tick" />
-  </span>
-  ```
+    <!-- after -->
+    <si-status-icon class="si-display-lg" status="danger" />
+    ```
 
-  For status icons, the new `si-status-icon` component simplifies usage even more:
-
-  ```html
-  <!-- before -->
-  <si-icon
-  icon="element-circle-filled"
-  color="status-danger"
-  stackedIcon="element-state-exclamation-mark"
-  stackedColor="status-danger-contrast"
-  size="display-2"
-  />
-
-  <!-- after -->
-  <si-status-icon class="si-display-lg" status="danger" />
-  ```
 * **maps-ng:** The `@siemens/maps-ng` package now requires ol-mapbox-style version 13.1.0 or higher. Please update your dependencies accordingly. For details on ol-mapbox-style 13, see: https://github.com/openlayers/ol-mapbox-style/releases/tag/v13.0.0
 * **navbar-vertical:** Removed `SiNavbarVerticalComponent.autoCollapseDelay` input without any replacement.
 * **popover:** The `siPopover` directive has been completely re-implemented,
-  including breaking changes in the API.
-  The main highlight is a complete accessibility support and
-  unified interaction.
+    including breaking changes in the API.
+    The main highlight is a complete accessibility support and
+    unified interaction.
 
-  The most notable changes are:
-  - the triggers opening or closing a popover can no longer be modified
-  - instead of having two `shown`/`hidden` events there is one `visibilityChange` event
-  - all inputs and outputs are prefixed with `siPopover` to avoid name conflicts
-  - a popover always receives the focus on open
+    The most notable changes are:
+    - the triggers opening or closing a popover can no longer be modified
+    - instead of having two `shown`/`hidden` events there is one `visibilityChange` event
+    - all inputs and outputs are prefixed with `siPopover` to avoid name conflicts
+    - a popover always receives the focus on open
 
-  The new popover was already available as a preview via `siPopoverNext` in v47 and is now fully
-  replacing the old popover with v48. If you are already using `siPopoverNext`, you can do a simple
-  search & replace removing the `next` suffix.
+    The new popover was already available as a preview via `siPopoverNext` in v47 and is now fully
+    replacing the old popover with v48. If you are already using `siPopoverNext`, you can do a simple
+    search & replace removing the `next` suffix.
 
-  The "old" popover is still available with via the legacy entrypoint
-  `@siemens/element-ng/popover-legacy`.
-  Classes and selectors were renamed accordingly:
-  - `siPopover` --> `siPopoverLegacy`
-  - `SiPopoverDirective` --> `SiPopoverLegacyDirective`
-  - `SiPopoverModule` --> `SiPopoverLegacyModule`
+    The "old" popover is still available with via the legacy entrypoint
+    `@siemens/element-ng/popover-legacy`.
+    Classes and selectors were renamed accordingly:
+    - `siPopover` --> `siPopoverLegacy`
+    - `SiPopoverDirective` --> `SiPopoverLegacyDirective`
+    - `SiPopoverModule` --> `SiPopoverLegacyModule`
 
-  Usually, the migration to new popover is simple.
+    Usually, the migration to new popover is simple.
 
-  If the `trigger` or `outsideClick` was modified, please read the
-  [popover documentation](https://element.siemens.io/components/status-notifications/popover/)
-  on how to properly use a popover.
+    If the `trigger` or `outsideClick` was modified, please read the
+    [popover documentation](https://element.siemens.io/components/status-notifications/popover/)
+    on how to properly use a popover.
 
-  In all other cases, it is sufficient to replace `shown` / `hidden` events with `visibilityChange`
-  and prefix all input / outputs with `siPopover`.
+    In all other cases, it is sufficient to replace `shown` / `hidden` events with `visibilityChange`
+    and prefix all input / outputs with `siPopover`.
+
 * **result-details-list:** Removed `ResultDetailStepState` as object. Use `ResultDetailStepState` as type with direct string values.
 * **search-bar:** `SiSearchBarComponent.searchChange` is not emitted during initialisation with `value` input
 * **split:** Removed unused `SiSplitPartComponent.headerStatusColor` and `SiSplitPartComponent.headerStatusIconClass` inputs without any replacement.
 * **tabs:** The `si-tabs` component has been completely re-implemented
-  including breaking changes in the API. The main highlights are enhanced
-  accessibility, improved responsive behavior, and Angular router support.
-  
-  The most notable changes are:
-  - replacing the `selectedIndex` with an `active` input in the `si-tab`
-  - dropping `iconAltText` in favor of enforcing `heading`
-  - if an icon is provided, the heading is always visually hidden
-  - no tab is selected by default
-  - dropping `deselect` and `selectedTabIndexChange` in favor of using `activeChange` on the `si-tab`
-  
-  The new tabs were already available as a preview via `si-tabs-next` in v47 and are now fully
-  replacing the old tabs with v48. If you are already using `si-tabs-next`, you can do a simple
-  search & replace removing the `-next` suffix.
-  
-  The "old" tabs are still available via legacy entrypoint `@siemens/element-ng/tabs-legacy`.
-  Classes and selectors were renamed accordingly:
-  - `si-tabset` --> `si-tabset-legacy`
-  - `SiTabsetComponent` --> `SiTabsetLegacyComponent`
-  - `si-tab` --> `si-tab-legacy`
-  - `SiTabComponent` --> `SiTabLegacyComponent`
-  - `SiTabModule` --> `SiTabLegacyModule`
-  
-  When migrating to the new tabs, we recommend checking whether using the
-  [router based approach](https://element.siemens.io/components/layout-navigation/tabs/#tabs-with-angular-router)
-  is applicable.
-  
-  Otherwise, code needs to be changed to use the new `active` input
-  and renaming `iconAltText` to `heading`:
+    including breaking changes in the API. The main highlights are enhanced
+    accessibility, improved responsive behavior, and Angular router support.
 
-  ```html
-  <!-- before -->
-  <si-tabset selectedTabIndex="0" (selectedTabIndexChange)="changedTab($event)">
-    <si-tab iconAltText="Favorites" icon="element-favorite">...</si-tab>
-  </si-tabset>
+    The most notable changes are:
+    - replacing the `selectedIndex` with an `active` input in the `si-tab`
+    - dropping `iconAltText` in favor of enforcing `heading`
+    - if an icon is provided, the heading is always visually hidden
+    - no tab is selected by default
+    - dropping `deselect` and `selectedTabIndexChange` in favor of using `activeChange` on the `si-tab`
 
-  <!-- after -->
-  <si-tabset>
-    <si-tab heading="Favorites" icon="element-favorite" [active]="true" (activeChange)="changedTab($event)">...</si-tab>
-  </si-tabset>
-  ```
+    The new tabs were already available as a preview via `si-tabs-next` in v47 and are now fully
+    replacing the old tabs with v48. If you are already using `si-tabs-next`, you can do a simple
+    search & replace removing the `-next` suffix.
 
-  Please note, the implementation of `changedTab` must also be adjusted.
+    The "old" tabs are still available via legacy entrypoint `@siemens/element-ng/tabs-legacy`.
+    Classes and selectors were renamed accordingly:
+    - `si-tabset` --> `si-tabset-legacy`
+    - `SiTabsetComponent` --> `SiTabsetLegacyComponent`
+    - `si-tab` --> `si-tab-legacy`
+    - `SiTabComponent` --> `SiTabLegacyComponent`
+    - `SiTabModule` --> `SiTabLegacyModule`
+
+    When migrating to the new tabs, we recommend checking whether using the
+    [router based approach](https://element.siemens.io/components/layout-navigation/tabs/#tabs-with-angular-router)
+    is applicable.
+
+    Otherwise, code needs to be changed to use the new `active` input
+    and renaming `iconAltText` to `heading`:
+
+    ```html
+    <!-- before -->
+    <si-tabset selectedTabIndex="0" (selectedTabIndexChange)="changedTab($event)">
+      <si-tab iconAltText="Favorites" icon="element-favorite">...</si-tab>
+    </si-tabset>
+
+    <!-- after -->
+    <si-tabset>
+      <si-tab heading="Favorites" icon="element-favorite" [active]="true" (activeChange)="changedTab($event)">...</si-tab>
+    </si-tabset>
+    ```
+
+    Please note, the implementation of `changedTab` must also be adjusted.
+
 * **tree-view:** Removed `SiTreeViewComponent.disableFilledIcons` input.
 
-  Tree items no longer show a filled icon on selection.
+    Tree items no longer show a filled icon on selection.
+
 * **tree-view:** Removed `SiTreeViewComponent.trackByFunction` input which had no effect.
 * **typeahead:** Removed `SiTypeaheadDirective.typeaheadOnMultiselectClose` and `SiTypeaheadDirective.typeaheadClosed` output. Use `SiTypeaheadDirective.typeaheadOpenChange` instead.
 * **wizard:** The `si-wizard` now has the navigation buttons by default in the footer.
 
-  To restore the old behavior set `SiWizardComponent.inlineNavigation` to `true`:
+    To restore the old behavior set `SiWizardComponent.inlineNavigation` to `true`:
 
-  ```
-  <si-wizard inlineNavigation>
-     ...
-  </si-wizard>
-  ```
+    ```
+    <si-wizard inlineNavigation>
+       ...
+    </si-wizard>
+    ```
+
 * **wizard:** Removed `SiWizardComponent.hasNavigation` input and `SiWizardComponent.cancel` output. Use `SiWizardComponent.hideNavigation` and  `SiWizardComponent.wizardCancel` respectively instead.
 
 
@@ -2502,44 +2594,46 @@
 * **charts/gauge:** Input `labelFormatter` should no longer be used to format the value. Use `valueFormatter` instead.
 * **datepicker:** `SiDatepickerComponent.calenderWeekLabel` input is deprecated. Use `SiDatepickerComponent.calendarWeekLabel` instead.
 * **element-theme:** All `.si-*` typography utility classes were adapted to match the
-  new typography system. Replace the following matches with their new
-  counterparts:
+    new typography system. Replace the following matches with their new
+    counterparts:
 
-  - Instead of `.si-h1-black`, use `.si-h1-bold` instead.
-  - Instead of `.si-title-1-bold`, use `.si-h4-bold` instead.
-  - Instead of `.si-title-1`, use `.si-h4` instead.
-  - Instead of `.si-title-2-bold`, use `.si-h5-bold` instead.
-  - Instead of `.si-title-2`, use `.si-h5` instead.
-  - Instead of `.si-body-1`, use `.si-body-lg` instead.
-  - Instead of `.si-body-2`, use `.si-body` instead.
-  - Instead of `.si-display-1`, use `.si-display-xl` instead.
-  - Instead of `.si-display-2`, use `.si-display-lg` instead.
-  - Instead of `.si-display-3`, use `.si-display-bold` instead.
-  - Instead of `.si-display-4`, use `.si-display` instead.
+    - Instead of `.si-h1-black`, use `.si-h1-bold` instead.
+    - Instead of `.si-title-1-bold`, use `.si-h4-bold` instead.
+    - Instead of `.si-title-1`, use `.si-h4` instead.
+    - Instead of `.si-title-2-bold`, use `.si-h5-bold` instead.
+    - Instead of `.si-title-2`, use `.si-h5` instead.
+    - Instead of `.si-body-1`, use `.si-body-lg` instead.
+    - Instead of `.si-body-2`, use `.si-body` instead.
+    - Instead of `.si-display-1`, use `.si-display-xl` instead.
+    - Instead of `.si-display-2`, use `.si-display-lg` instead.
+    - Instead of `.si-display-3`, use `.si-display-bold` instead.
+    - Instead of `.si-display-4`, use `.si-display` instead.
+
 * **element-theme:** All `$si-font-size-*`, `$si-line-height-*`, and `$si-font-weight-*`
-  variables were adapted to match the new typography system. Replace the following
-  matches with their new counterparts:
+    variables were adapted to match the new typography system. Replace the following
+    matches with their new counterparts:
 
-  - Instead of `$si-*-h1-black`, use `$si-*-h1-bold` instead.
-  - Instead of `$si-*-title-1-bold`, use `$si-*-h4-bold` instead.
-  - Instead of `$si-*-title-1`, use `$si-*-h4` instead.
-  - Instead of `$si-*-title-2-bold`, use `$si-*-h5-bold` instead.
-  - Instead of `$si-*-title-2`, use `$si-*-h5` instead.
-  - Instead of `$si-*-body-1`, use `$si-*-body-lg` instead.
-  - Instead of `$si-*-body-2`, use `$si-*-body` instead.
-  - Instead of `$si-*-caption-1`, use `$si-*-caption` instead.
-  - Instead of `$si-*-display-1`, use `$si-*-display-xl` instead.
-  - Instead of `$si-*-display-2`, use `$si-*-display-lg` instead.
-  - Instead of `$si-*-display-3`, use `$si-*-display-bold` instead.
-  - Instead of `$si-*-display-4`, use `$si-*-display` instead.
+    - Instead of `$si-*-h1-black`, use `$si-*-h1-bold` instead.
+    - Instead of `$si-*-title-1-bold`, use `$si-*-h4-bold` instead.
+    - Instead of `$si-*-title-1`, use `$si-*-h4` instead.
+    - Instead of `$si-*-title-2-bold`, use `$si-*-h5-bold` instead.
+    - Instead of `$si-*-title-2`, use `$si-*-h5` instead.
+    - Instead of `$si-*-body-1`, use `$si-*-body-lg` instead.
+    - Instead of `$si-*-body-2`, use `$si-*-body` instead.
+    - Instead of `$si-*-caption-1`, use `$si-*-caption` instead.
+    - Instead of `$si-*-display-1`, use `$si-*-display-xl` instead.
+    - Instead of `$si-*-display-2`, use `$si-*-display-lg` instead.
+    - Instead of `$si-*-display-3`, use `$si-*-display-bold` instead.
+    - Instead of `$si-*-display-4`, use `$si-*-display` instead.
+
 * **status-counter:** The component `si-icon-status` has been renamed to
-  `si-status-counter`. The class name changes from `SiIconStatusComponent`
-  to `SiStatusCounterComponent`. The old names still work and will
-  be removed in future release.
+    `si-status-counter`. The class name changes from `SiIconStatusComponent`
+    to `SiStatusCounterComponent`. The old names still work and will
+    be removed in future release.
 
-  To migrate to the new names, change imports from `SiIconStatusComponent`
-  or `SiIconStatusModule` to `SiStatusCounterComponent` and replace
-  `si-icon-status` with `si-status-counter` in all templates.
+    To migrate to the new names, change imports from `SiIconStatusComponent`
+    or `SiIconStatusModule` to `SiStatusCounterComponent` and replace
+    `si-icon-status` with `si-status-counter` in all templates.
 
 
 # [47.8.0](https://github.com/siemens/element/compare/v47.7.0...v47.8.0) (2025-07-22)

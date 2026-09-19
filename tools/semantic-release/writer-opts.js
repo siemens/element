@@ -21,7 +21,11 @@ function transform(commit) {
   const normalizedNotes = hasNotes
     ? commit.notes.map(note => ({
         title: noteTitleMap[note.title] ?? note.title,
-        text: note.text.replace(/\n/g, '\n  ')
+        // PyMarkdown used in MKDocs is very strict with list formatting. Text bodies must be
+        // indented by 4 spaces and there must be an empty line before the next list item.
+        text: `${note.text
+          .replace(/\r?\n[ \t]*(?=\r?\n|$)/g, '\n') // empty lines can stay empty
+          .replace(/\r?\n(?=[^\r\n])/g, '\n    ')}\n`
       }))
     : [];
 
