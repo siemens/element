@@ -18,3 +18,15 @@ export interface ClusterSegment {
   // The generated cluster property name to count the points for this segment.
   property: string;
 }
+
+/** Content of the current cluster popup page. */
+export interface ClusterPopoverContext {
+  $implicit: readonly ClusterPoint[];
+  features: readonly ClusterPoint[];
+  total: number;
+  loading: boolean;
+  error: unknown;
+  cluster: ClusterPoint;
+  featureLabelProperty: string;
+  close: () => void;
+}

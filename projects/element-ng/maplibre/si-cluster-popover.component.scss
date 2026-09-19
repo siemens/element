@@ -1,0 +1,14 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+.cluster-feature-list {
+  max-block-size: 240px;
+
+  li {
+    margin-block-end: map.get(variables.$spacers-block, 5);
+  }
+}
+
+.cluster-popover {
+  min-inline-size: 200px;
+}
