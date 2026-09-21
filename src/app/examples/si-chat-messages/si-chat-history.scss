@@ -1,0 +1,4 @@
+:host ::ng-deep si-chat-container .chat-container {
+  // stylelint-disable-next-line declaration-no-important
+  padding-inline: var(--si-sys-sizing-spacing-x-60) !important;
+}
