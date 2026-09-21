@@ -1,3 +1,20 @@
+# [51.1.0](https://github.com/siemens/element/compare/v51.0.1...v51.1.0) (2026-09-21)
+
+
+### Features
+
+* **navbar-vertical-next:** implement mobile flat group functionality ([7c44799](https://github.com/siemens/element/commit/7c447999f5080fd8cbe36288ecb9c9a0d40f77fa))
+
+
+### Bug Fixes
+
+* **auto-collapsible-list:** fix memory leak ([1e54467](https://github.com/siemens/element/commit/1e54467f3515891901bd2fd2cb86b9cfb0db4128))
+* **charts:** fix potential memory leak due to event listeners ([434c8af](https://github.com/siemens/element/commit/434c8af0c712e8d07238fb38f92c54fb0862ba4e))
+* **live-preview:** fix memory leak ([0525730](https://github.com/siemens/element/commit/05257304dc759145f8cee6a5276ac3269969bb8e))
+* **resize-observer:** fix memory leak when never subscribed to observer ([ba35136](https://github.com/siemens/element/commit/ba351362c5363a1a7df092dd603de7d291420766))
+* **schematics:** remove test files and imports ([b5a2b66](https://github.com/siemens/element/commit/b5a2b669be3ce9371cf990131783198cee90adf5)), closes [#2795](https://github.com/siemens/element/issues/2795)
+* **theme:** fix selection buttons with only icons on Firefox ([43af0e7](https://github.com/siemens/element/commit/43af0e7fcca10818290cf763af746db6c407c9af))
+
 ## [51.0.1](https://github.com/siemens/element/compare/v51.0.0...v51.0.1) (2026-09-17)
 
 
