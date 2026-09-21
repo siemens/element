@@ -14,7 +14,7 @@ import {
   ClassMemberReplacementInstruction,
   ElementClassChangeInstruction,
   CssCustomPropertyInstruction
-} from './index.js';
+} from '../migrations/data/index.js';
 
 const CSS_CUSTOM_PROPERTIES_MIGRATION: CssCustomPropertyInstruction[] = [
   {

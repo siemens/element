@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
 
 import { getElementMigrationData } from '../migrations/data/index.js';
 import { elementMigrationRule } from '../migrations/element-migration/element-migration.js';
-import { addTestFiles, createTestApp } from '../utils/index.js';
+import { addTestFiles, createTestApp } from '../testing/index.js';
 import { contentFormatterMigrationRule } from './migrate-content-formatter.js';
 import { spacerMigrationRule } from './migrate-spacers.js';
 import { splitCollapseMigrationRule } from './migrate-split-collapse.js';

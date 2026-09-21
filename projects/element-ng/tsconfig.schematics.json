@@ -11,5 +11,10 @@
     "types": ["node"]
   },
   "include": ["schematics/**/*.ts"],
-  "exclude": ["schematics/**/files/", "**/*.spec.ts", "schematics/vitest-setup.ts"]
+  "exclude": [
+    "schematics/**/files/",
+    "**/*.spec.ts",
+    "schematics/**/testing/",
+    "schematics/vitest-setup.ts"
+  ]
 }

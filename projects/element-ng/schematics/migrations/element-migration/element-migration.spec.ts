@@ -8,9 +8,8 @@ import { readFileSync } from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
-import { addTestFiles, createTestApp } from '../../utils/index.js';
+import { addTestFiles, getElementMigrationTestData, createTestApp } from '../../testing/index.js';
 import { getElementMigrationData } from '../data/element-migration-data.js';
-import { getElementMigrationTestData } from '../data/migration-test-data.js';
 import { elementMigrationRule } from './element-migration.js';
 
 const buildRelativeFromFile = (relativePath: string): string =>

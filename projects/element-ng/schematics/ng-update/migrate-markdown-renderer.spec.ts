@@ -9,7 +9,7 @@ import { readFileSync } from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
-import { addTestFiles, createTestApp } from '../utils/index.js';
+import { addTestFiles, createTestApp } from '../testing/index.js';
 import { markdownRendererMigrationRule } from './migrate-markdown-renderer.js';
 
 const collectionPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../migration.json');
