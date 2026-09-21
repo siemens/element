@@ -8,7 +8,7 @@ import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
-import { addTestFiles, createTestApp } from '../utils/index.js';
+import { addTestFiles, createTestApp } from '../testing/index.js';
 import { mainDetailUnitsMigrationRule } from './migrate-main-detail-units.js';
 
 const collectionPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../migration.json');
