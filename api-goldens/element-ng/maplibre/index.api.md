@@ -26,11 +26,13 @@ export interface ClusterPopoverContext {
     // (undocumented)
     cluster: ClusterPoint;
     // (undocumented)
+    descriptionProperty: string;
+    // (undocumented)
     error: unknown;
     // (undocumented)
-    featureLabelProperty: string;
-    // (undocumented)
     features: readonly ClusterPoint[];
+    // (undocumented)
+    labelProperty: string;
     // (undocumented)
     loading: boolean;
     // (undocumented)
@@ -72,8 +74,9 @@ export class SiClusterSourceComponent {
 export class SiMaplibreClusterPopoverComponent {
     constructor();
     readonly closeOnMove: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly featureLabelProperty: _angular_core.InputSignal<string>;
+    readonly descriptionProperty: _angular_core.InputSignal<string>;
     readonly focusAfterOpen: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly labelProperty: _angular_core.InputSignal<string>;
     readonly maxWidth: _angular_core.InputSignal<string>;
     readonly pageSize: _angular_core.InputSignalWithTransform<number, unknown>;
 }

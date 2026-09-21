@@ -30,7 +30,7 @@
         </button>
       </div>
       <div
-        class="popover-body"
+        class="p-2"
         [siLoading]="context.loading"
         [blocking]="true"
         [attr.aria-busy]="context.loading"
@@ -48,9 +48,16 @@
                 {{ retryText | translate }}
               </button>
             }
-            <ul class="cluster-feature-list list-unstyled mb-0 overflow-auto si-body">
+            <ul class="list-unstyled mb-0">
               @for (feature of context.features; track feature.id ?? $index) {
-                <li>{{ feature.properties?.[context.featureLabelProperty] }}</li>
+                <li class="list-item p-4">
+                  <div class="list-item-title pt-0">
+                    {{ feature.properties?.[context.labelProperty] }}
+                  </div>
+                  <div class="list-item-description mb-0">
+                    {{ feature.properties?.[context.descriptionProperty] }}
+                  </div>
+                </li>
               }
             </ul>
           }

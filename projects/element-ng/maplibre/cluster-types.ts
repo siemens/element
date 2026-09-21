@@ -27,6 +27,7 @@ export interface ClusterPopoverContext {
   loading: boolean;
   error: unknown;
   cluster: ClusterPoint;
-  featureLabelProperty: string;
+  labelProperty: string;
+  descriptionProperty: string;
   close: () => void;
 }

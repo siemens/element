@@ -125,15 +125,15 @@ describe('SiMaplibreClusterPopoverComponent', () => {
     expect(getClusterLeaves).toHaveBeenCalledExactlyOnceWith(42, 1, 0);
 
     expect(page.getByRole('dialog', { name: 'Cluster with 2 locations' })).toBeInTheDocument();
-    expect(element.querySelector('.cluster-feature-list')).toHaveTextContent('First location');
+    expect(element.querySelector('.list-unstyled')).toHaveTextContent('First location');
 
     getClusterLeaves.mockResolvedValue([secondFeature]);
     await userEvent.click(page.getByRole('button', { name: 'Forward' }));
     await fixture.whenStable();
 
     expect(getClusterLeaves).toHaveBeenLastCalledWith(42, 1, 1);
-    expect(element.querySelector('.cluster-feature-list')).toHaveTextContent('Second location');
-    expect(element.querySelector('.cluster-feature-list')).not.toHaveTextContent('First location');
+    expect(element.querySelector('.list-unstyled')).toHaveTextContent('Second location');
+    expect(element.querySelector('.list-unstyled')).not.toHaveTextContent('First location');
   });
 
   it('keeps the rendered page and popup height while the next page loads under an overlay', async () => {
@@ -141,24 +141,24 @@ describe('SiMaplibreClusterPopoverComponent', () => {
     await fixture.whenStable();
     const dialog = page.getByRole('dialog').element();
     const height = dialog.getBoundingClientRect().height;
-    const row = element.querySelector('.cluster-feature-list li');
+    const row = element.querySelector('.list-unstyled li');
     let resolvePage!: (features: ClusterPoint[]) => void;
     getClusterLeaves.mockReturnValueOnce(new Promise(resolve => (resolvePage = resolve)));
 
     await userEvent.click(page.getByRole('button', { name: 'Forward' }));
     await expect.poll(() => element.querySelector('[aria-busy="true"]')).toBeInTheDocument();
 
-    expect(element.querySelector('.cluster-feature-list li')).toBe(row);
+    expect(element.querySelector('.list-unstyled li')).toBe(row);
     expect(dialog.getBoundingClientRect().height).toBe(height);
     await expect.poll(() => element.querySelector('.spinner-overlay')).toBeInTheDocument();
-    expect(element.querySelector('.cluster-feature-list')).toHaveTextContent('First location');
+    expect(element.querySelector('.list-unstyled')).toHaveTextContent('First location');
     expect(dialog.getBoundingClientRect().height).toBe(height);
 
     resolvePage([secondFeature]);
     await fixture.whenStable();
 
     expect(element.querySelector('[aria-busy]')).toHaveAttribute('aria-busy', 'false');
-    expect(element.querySelector('.cluster-feature-list')).toHaveTextContent('Second location');
+    expect(element.querySelector('.list-unstyled')).toHaveTextContent('Second location');
     expect(element.querySelector('[inert]')).not.toBeInTheDocument();
   });
 
@@ -171,14 +171,14 @@ describe('SiMaplibreClusterPopoverComponent', () => {
     await fixture.whenStable();
 
     expect(element.querySelector('[role="alert"]')).toHaveTextContent('Could not load locations.');
-    expect(element.querySelector('.cluster-feature-list')).toHaveTextContent('First location');
+    expect(element.querySelector('.list-unstyled')).toHaveTextContent('First location');
 
     getClusterLeaves.mockResolvedValueOnce([secondFeature]);
     await userEvent.click(page.getByRole('button', { name: 'Retry' }));
     await fixture.whenStable();
 
     expect(getClusterLeaves).toHaveBeenLastCalledWith(42, 1, 1);
-    expect(element.querySelector('.cluster-feature-list')).toHaveTextContent('Second location');
+    expect(element.querySelector('.list-unstyled')).toHaveTextContent('Second location');
     expect(element.querySelector('[role="alert"]')).not.toBeInTheDocument();
   });
 
@@ -197,11 +197,11 @@ describe('SiMaplibreClusterPopoverComponent', () => {
     );
     await expect.poll(() => element.querySelector('[aria-busy="true"]')).toBeInTheDocument();
 
-    expect(element.querySelector('.cluster-feature-list')).not.toHaveTextContent('First location');
+    expect(element.querySelector('.list-unstyled')).not.toHaveTextContent('First location');
 
     resolvePage([secondFeature]);
     await fixture.whenStable();
-    expect(element.querySelector('.cluster-feature-list')).toHaveTextContent('Second location');
+    expect(element.querySelector('.list-unstyled')).toHaveTextContent('Second location');
   });
 
   it('resets pagination when another cluster is selected', async () => {
@@ -243,8 +243,8 @@ describe('SiMaplibreClusterPopoverComponent', () => {
     resolveFirst([firstFeature]);
     await fixture.whenStable();
 
-    expect(element.querySelector('.cluster-feature-list')).toHaveTextContent('Second location');
-    expect(element.querySelector('.cluster-feature-list')).not.toHaveTextContent('First location');
+    expect(element.querySelector('.list-unstyled')).toHaveTextContent('Second location');
+    expect(element.querySelector('.list-unstyled')).not.toHaveTextContent('First location');
   });
 
   it('keeps the popup closed when an outstanding request completes', async () => {
@@ -270,7 +270,7 @@ describe('SiMaplibreClusterPopoverComponent', () => {
     await fixture.whenStable();
 
     expect(element.querySelector('[role="alert"]')).not.toBeInTheDocument();
-    expect(element.querySelector('.cluster-feature-list')).toHaveTextContent('First location');
+    expect(element.querySelector('.list-unstyled')).toHaveTextContent('First location');
   });
 
   it.each(['data', 'statusProperty'])('closes when source %s changes', async property => {

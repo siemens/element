@@ -79,7 +79,12 @@ export class SiMaplibreClusterPopoverComponent {
    * Feature property displayed in the default list.
    * @defaultValue 'name'
    */
-  readonly featureLabelProperty = input('name');
+  readonly labelProperty = input('name');
+  /**
+   * Feature property displayed as the description in the default list.
+   * @defaultValue 'description'
+   */
+  readonly descriptionProperty = input('description');
 
   private readonly dialog = viewChild<ElementRef<HTMLElement>>('dialog');
   private readonly selectedCluster = linkedSignal<ClusterPoint | undefined>(() => {
@@ -145,7 +150,8 @@ export class SiMaplibreClusterPopoverComponent {
       loading: this.leaves.isLoading(),
       error: this.leaves.error(),
       cluster,
-      featureLabelProperty: this.featureLabelProperty(),
+      labelProperty: this.labelProperty(),
+      descriptionProperty: this.descriptionProperty(),
       close: this.close
     };
   });

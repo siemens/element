@@ -20,7 +20,7 @@
   <mgl-control mglNavigation position="bottom-right" />
 
   <si-cluster-source sourceId="cluster-source" statusProperty="status" [data]="geoJson">
-    <si-cluster-popover maxWidth="420px" pageSize="4">
+    <si-cluster-popover maxWidth="420px" pageSize="5">
       <ng-template
         let-features
         let-loading="loading"
@@ -37,21 +37,23 @@
           }
           <ul class="list-unstyled mb-0">
             @for (feature of features; track feature.id) {
-              <li class="list-item">
-                <h5 class="list-item-title">
-                  {{ feature.properties?.name }}
-                </h5>
-                <p class="list-item-description">{{ feature.properties?.description }}</p>
-                <div class="list-item-primary-action">
-                  <button
-                    type="button"
-                    class="btn btn-secondary btn-sm"
-                    [attr.aria-label]="`Select '${feature.properties?.name}'`"
-                    (click)="selectFeature(feature); close()"
-                  >
-                    Select
-                  </button>
-                </div>
+              <li>
+                <button
+                  type="button"
+                  class="list-item list-item-action p-4"
+                  (click)="selectFeature(feature)"
+                >
+                  <si-status-marker
+                    class="list-item-indicator"
+                    [status]="feature.properties?.status"
+                  />
+                  <h5 class="list-item-title">
+                    {{ feature.properties?.name }}
+                  </h5>
+                  <div class="list-item-description mb-0 si-body">{{
+                    feature.properties?.description
+                  }}</div>
+                </button>
               </li>
             }
           </ul>
