@@ -153,6 +153,13 @@ The standard way to provide content for the side panel is by placing the
 
 <si-docs-component example="si-side-panel/si-side-panel" height="500"></si-docs-component>
 
+### Side panel with inner navigation
+
+Use the `siSidePanelBackButton` directive to navigate from a detail view back to the
+previous view within the side panel:
+
+<si-docs-component example="si-side-panel/si-side-panel-inner-navigation" height="500"></si-docs-component>
+
 ### Flexible content injection via cdkPortal and SiSidePanelService
 
 A more flexible way is to use the `cdkPortal` directive from the
