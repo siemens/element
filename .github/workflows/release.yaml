@@ -23,6 +23,8 @@ jobs:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: pnpm install
       - name: Add release notes to workflow summary
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           node tools/semantic-release/preview.js > release-notes.md
           echo '## Release preview' >> "$GITHUB_STEP_SUMMARY"
