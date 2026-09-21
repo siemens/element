@@ -79,3 +79,10 @@ Additional grouping methods or filters can be used when further organization is 
   quick overview of grouped conversations
 
 ![Chat history organization](images/chat-history-organization.png)
+
+## Code ---
+
+Use the side panel inner navigation pattern to switch between the chat history and a selected
+conversation while keeping both views in the same panel.
+
+<si-docs-component example="si-chat-messages/si-chat-history" height="600"></si-docs-component>

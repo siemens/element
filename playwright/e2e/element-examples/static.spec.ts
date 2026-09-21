@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { test } from '../../support/test-helpers';
+import { expect, test } from '../../support/test-helpers';
 
 test('badges/badges', ({ si }) => si.static());
 test('buttons/buttons', ({ si }) => si.static());
@@ -137,6 +137,14 @@ test('si-chat-messages/si-activity-message', ({ si }) => si.static());
 // FIXME: test is unstable
 test.skip('si-chat-messages/si-chat-container', ({ si }) => si.static());
 test('si-chat-messages/si-ai-welcome-screen', ({ si }) => si.static());
+test('si-chat-messages/si-chat-history', async ({ page, si }) => {
+  await si.visitExample('si-chat-messages/si-chat-history');
+  await si.runVisualAndA11yTests();
+
+  await page.locator('button[aria-label="Chat history"]').click();
+  await expect(page.locator('.header-title')).toHaveText('Chat history');
+  await si.runVisualAndA11yTests('history');
+});
 test('ag-grid/ag-grid-empty-state', async ({ si }) => {
   await si.static({ disabledA11yRules: ['aria-required-children'] });
 });
