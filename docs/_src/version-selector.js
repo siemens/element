@@ -5,12 +5,13 @@
  * - Fetches versions.json from the root of the domain
  * - Supports absolute version URLs
  * - Preserves current page path when switching versions
+ * - Opens the version menu on click or keyboard, not hover
  * - Gracefully degrades if versions.json is not found (no errors, just no selector)
  *
  * If versions.json is not available (404), the page loads normally without the version selector.
  * No errors are thrown to ensure documentation remains accessible.
  *
- * Based on MkDocs Material's version selector implementation
+ * Based on MkDocs Material's version selector markup
  * https://github.com/squidfunk/mkdocs-material
  */
 
@@ -102,9 +103,70 @@
     const current = versions.find(v => v.version === currentVersion) || versions[0];
     const visibleVersions = versions.filter(v => !v.hidden);
 
-    const html = `<div class="md-version"><button class="md-version__current" aria-label="Select version">${current.title}</button><ul class="md-version__list">${visibleVersions.map(version => `<li class="md-version__item"><a href="${buildVersionURL(version.version, currentVersion)}" class="md-version__link">${version.title}</a></li>`).join('')}</ul></div>`;
+    const items = visibleVersions
+      .map(version => {
+        const isCurrent = version.version === currentVersion;
+        const currentAttr = isCurrent ? ' aria-current="page"' : '';
+        const href = buildVersionURL(version.version, currentVersion);
+        return `<li class="md-version__item"><a href="${href}" class="md-version__link"${currentAttr}>${version.title}</a></li>`;
+      })
+      .join('');
 
-    return html;
+    return `<div class="md-version"><button type="button" class="md-version__current" aria-expanded="false" aria-controls="md-version-list" aria-label="Select version, current: ${current.title}">${current.title}</button><ul id="md-version-list" class="md-version__list" hidden>${items}</ul></div>`;
+  }
+
+  /**
+   * Click/keyboard disclosure: no hover. Tab uses native link order.
+   */
+  function bindVersionSelector(versionEl) {
+    const button = versionEl.querySelector('.md-version__current');
+    const list = versionEl.querySelector('.md-version__list');
+    if (!button || !list) {
+      return;
+    }
+
+    const setOpen = open => {
+      versionEl.classList.toggle('md-version--open', open);
+      button.setAttribute('aria-expanded', String(open));
+      list.hidden = !open;
+    };
+
+    button.addEventListener('click', () => setOpen(list.hidden));
+
+    button.addEventListener('keydown', event => {
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
+        return;
+      }
+      event.preventDefault();
+      setOpen(true);
+      (
+        list.querySelector('.md-version__link[aria-current="page"]') ||
+        list.querySelector('.md-version__link')
+      )?.focus();
+    });
+
+    versionEl.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !list.hidden) {
+        event.preventDefault();
+        setOpen(false);
+        button.focus();
+      }
+    });
+
+    // Close after focus has moved outside. Do not use focusout: Chrome
+    // Tabs through body first, which would hide the list before the next
+    // link is focused. Safari click has a null relatedTarget on focusout.
+    document.addEventListener('focusin', event => {
+      if (!list.hidden && !versionEl.contains(event.target)) {
+        setOpen(false);
+      }
+    });
+
+    document.addEventListener('pointerdown', event => {
+      if (!list.hidden && !versionEl.contains(event.target)) {
+        setOpen(false);
+      }
+    });
   }
 
   /**
@@ -152,6 +214,11 @@
 
         // Append to .md-header
         header.appendChild(topicWrapper);
+
+        const versionEl = topicWrapper.querySelector('.md-version');
+        if (versionEl) {
+          bindVersionSelector(versionEl);
+        }
       })
       .catch(error => {
         console.error('[Version Selector] Failed to load:', error.message);
