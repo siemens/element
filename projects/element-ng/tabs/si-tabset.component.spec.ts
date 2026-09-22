@@ -322,6 +322,28 @@ describe('SiTabset', () => {
     expect(await tabsetHarness.isTabVisible(3)).toBe(true);
   });
 
+  it('should keep the menu button visible when it reduces the available width', async () => {
+    vi.setTimerTickMode('nextTimerAsync');
+    testComponent.tabs = ['Tab 1', 'Tab 2', 'Tab 3'];
+    await fixture.whenStable();
+    const tabScrollContainer = page.getByRole('tablist').element() as HTMLElement;
+    const menuButtonLocator = page.getByRole('button', { includeHidden: true });
+    vi.spyOn(tabScrollContainer, 'clientWidth', 'get').mockImplementation(() =>
+      menuButtonLocator.elements().length ? 254 : 298
+    );
+    vi.spyOn(tabScrollContainer, 'scrollWidth', 'get').mockReturnValue(299);
+
+    MockResizeObserver.triggerResize({});
+    await fixture.whenStable();
+    await expect.element(menuButtonLocator).toBeInTheDocument();
+
+    const menuButton = menuButtonLocator.element() as HTMLElement;
+    vi.spyOn(menuButton, 'offsetWidth', 'get').mockReturnValue(44);
+    MockResizeObserver.triggerResize({});
+    await fixture.whenStable();
+    await expect.element(menuButtonLocator).toBeInTheDocument();
+  });
+
   it('should always scroll active tab into view', async () => {
     testComponent.tabButtonMaxWidth.set(90);
     testComponent.tabs = [
