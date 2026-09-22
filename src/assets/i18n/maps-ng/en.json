@@ -1,1 +1,7 @@
-{}
+{
+  "SI_MAPS.ATTRIBUTIONS_BUTTON": "Show/Hide Copyright Notice of map",
+  "SI_MAPS.TOOLTIP_MORE_TEXT": "+ {{length}} locations",
+  "SI_MAPS.ZOOM_IN_BUTTON": "Zoom in",
+  "SI_MAPS.ZOOM_OUT_BUTTON": "Zoom out",
+  "SI_MAPS.ZOOM_TO_DEFAULT_BUTTON": "Reset zoom"
+}
