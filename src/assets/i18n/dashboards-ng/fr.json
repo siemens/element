@@ -1,1 +1,11 @@
-{}
+{
+  "DASHBOARD.ADD_WIDGET": "Créer un widget",
+  "DASHBOARD.CANCEL": "Annuler",
+  "DASHBOARD.EDIT": "Éditer",
+  "DASHBOARD.SAVE": "Enregistrer",
+  "DASHBOARD.WIDGET.EDIT": "Éditer",
+  "DASHBOARD.WIDGET.REMOVE": "Supprimer",
+  "DASHBOARD.WIDGET_EDITOR_DIALOG.CANCEL": "Annuler",
+  "DASHBOARD.WIDGET_EDITOR_DIALOG.SAVE": "Enregistrer",
+  "DASHBOARD.WIDGET_LIBRARY.TITLE": "Bibliothèque de widget"
+}

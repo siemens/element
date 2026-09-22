@@ -1,1 +1,7 @@
-{}
+{
+  "SI_MAPS.ATTRIBUTIONS_BUTTON": "Copyright-Hinweis der Karte anzeigen/verbergen",
+  "SI_MAPS.TOOLTIP_MORE_TEXT": "+ {{length}} Orte",
+  "SI_MAPS.ZOOM_IN_BUTTON": "Vergrössern",
+  "SI_MAPS.ZOOM_OUT_BUTTON": "Verkleinern",
+  "SI_MAPS.ZOOM_TO_DEFAULT_BUTTON": "Zoom zurücksetzen"
+}
