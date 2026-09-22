@@ -14,12 +14,14 @@ export class BundlerTranslateLoader implements TranslateLoader {
         import(`../assets/i18n/element-ng/${lang}.json`),
         import(`../assets/i18n/dashboards-ng/${lang}.json`),
         import(`../assets/i18n/maps-ng/${lang}.json`),
+        import(`../assets/i18n/common/template-i18n.json`), // fallback for incomplete en translations
         import(`../assets/i18n/common/${lang}.json`),
         import(`../assets/i18n/${lang}.json`)
-      ]).then(([element, dashboards, maps, common, app]) => ({
+      ]).then(([element, dashboards, maps, commonFallback, common, app]) => ({
         ...element,
         ...dashboards,
         ...maps,
+        ...commonFallback,
         ...common,
         ...app
       }))
