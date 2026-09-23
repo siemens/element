@@ -109,7 +109,6 @@ describe('MainDetailContainerComponent', () => {
     debugElement = fixture.debugElement;
     htmlElement = debugElement.nativeElement;
     fixture.detectChanges();
-    // @ts-expect-error accessing private method for testing purposes
     doAnimationSpy = vi.spyOn(component.mainDetail(), 'doAnimation');
     resizeObserver.next({ width: 800, height: 500 });
 

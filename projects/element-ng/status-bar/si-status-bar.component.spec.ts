@@ -40,8 +40,8 @@ describe('SiStatusBarComponent', () => {
       { title: 'Failure', status: 'danger', value: 404 }
     ]);
     await fixture.whenStable();
-    expect(element.querySelectorAll('si-status-bar-item')[0]).toHaveTextContent('200');
-    expect(element.querySelectorAll('si-status-bar-item')[1]).toHaveTextContent('404');
+    expect(element.querySelectorAll('si-status-bar-item')[0]).toMatchTextContent('200');
+    expect(element.querySelectorAll('si-status-bar-item')[1]).toMatchTextContent('404');
   });
 
   it('should handle item click', async () => {

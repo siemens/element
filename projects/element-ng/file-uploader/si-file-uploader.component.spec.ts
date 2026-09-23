@@ -141,10 +141,10 @@ describe('SiFileUploaderComponent', () => {
     await handleFiles(createFileListWithFileSizeOf1200Bytes(['first.png', 'second.png']));
     const files = getFiles();
     expect(files).toHaveLength(2);
-    expect(files[0]).toHaveTextContent('first.png');
-    expect(files[0]).toHaveTextContent('1.17KB');
-    expect(files[1]).toHaveTextContent('second.png');
-    expect(files[1]).toHaveTextContent('1.17KB');
+    expect(files[0]).toMatchTextContent('first.png');
+    expect(files[0]).toMatchTextContent('1.17KB');
+    expect(files[1]).toMatchTextContent('second.png');
+    expect(files[1]).toMatchTextContent('1.17KB');
   });
 
   it('should filter duplicates', async () => {
@@ -179,14 +179,14 @@ describe('SiFileUploaderComponent', () => {
     accept.set('fmwz');
     errorTextFileType.set('Incorrect type');
     await handleFiles(createFileList(['notMatching.fmwr']));
-    expect(getError()!).toHaveTextContent('Incorrect type');
+    expect(getError()!).toMatchTextContent('Incorrect type');
   });
 
   it('should allow files that match a file extension', async () => {
     accept.set('.fmwr');
     errorTextFileType.set('Incorrect type');
     await handleFiles(createFileList(['matching.fmwr']));
-    expect(element.querySelector('.file')!).toHaveTextContent('matching.fmwr');
+    expect(element.querySelector('.file')!).toMatchTextContent('matching.fmwr');
     expect(getUploadButton()).toBeEnabled();
   });
 
@@ -194,7 +194,7 @@ describe('SiFileUploaderComponent', () => {
     accept.set('.blub');
     errorTextFileType.set('Incorrect type');
     await handleFiles(createFileList(['wrong.fmwr']));
-    expect(element.querySelector('.file')!).toHaveTextContent('wrong.fmwr');
+    expect(element.querySelector('.file')!).toMatchTextContent('wrong.fmwr');
     expect(getUploadButton()).toBeDisabled();
   });
 
@@ -203,8 +203,8 @@ describe('SiFileUploaderComponent', () => {
     errorTextFileType.set('Incorrect type');
     await handleFiles(createFileList(['matching.png', 'bla.fmwr'], ['image/png']));
     const files = element.querySelectorAll<HTMLElement>('.file');
-    expect(files[0]!).toHaveTextContent('bla.fmwr');
-    expect(files[1]!).toHaveTextContent('matching.png');
+    expect(files[0]!).toMatchTextContent('bla.fmwr');
+    expect(files[1]!).toMatchTextContent('matching.png');
     expect(getError()).not.toBeInTheDocument();
   });
 
@@ -212,7 +212,7 @@ describe('SiFileUploaderComponent', () => {
     accept.set('.blub');
     errorTextFileType.set('Incorrect type');
     await handleFiles(createFileList(['matching.blub']));
-    expect(element.querySelector('.file')!).toHaveTextContent('matching.blub');
+    expect(element.querySelector('.file')!).toMatchTextContent('matching.blub');
     expect(getError()).not.toBeInTheDocument();
   });
 
@@ -234,14 +234,14 @@ describe('SiFileUploaderComponent', () => {
     maxFileSize.set(1024);
     errorTextFileMaxSize.set('File exceeds allowed maximum size of {{maxFileSize}}');
     await handleFiles(createFileListWithFileSizeOf1200Bytes(['notMatching.fmwr']));
-    expect(getError()!).toHaveTextContent('File exceeds allowed maximum size of 1KB');
+    expect(getError()!).toMatchTextContent('File exceeds allowed maximum size of 1KB');
   });
 
   it('should accept files that less than or equal to "maxFileSize" parameter', async () => {
     maxFileSize.set(50000);
     errorTextFileMaxSize.set('File exceeds allowed maximum size');
     await handleFiles(createFileListWithFileSizeOf1200Bytes(['matching.fmwr']));
-    expect(element.querySelector('.file')!).toHaveTextContent('matching.fmwr');
+    expect(element.querySelector('.file')!).toMatchTextContent('matching.fmwr');
     expect(getError()).not.toBeInTheDocument();
   });
 
@@ -251,8 +251,8 @@ describe('SiFileUploaderComponent', () => {
     await handleFiles(createFileList(['file1.png', 'file2.png']));
     const files = getFiles();
     expect(files).toHaveLength(2);
-    expect(files[0]!).toHaveTextContent('file1.png');
-    expect(files[1]!).toHaveTextContent('file2.png');
+    expect(files[0]!).toMatchTextContent('file1.png');
+    expect(files[1]!).toMatchTextContent('file2.png');
     expect(element.querySelector('si-inline-notification')).not.toBeInTheDocument();
     expect(getError()).not.toBeInTheDocument();
   });
@@ -263,9 +263,9 @@ describe('SiFileUploaderComponent', () => {
     await handleFiles(createFileList(['file1.png', 'file2.png', 'file3.png']));
     const files = getFiles();
     expect(files).toHaveLength(2);
-    expect(files[0]!).toHaveTextContent('file1.png');
-    expect(files[1]!).toHaveTextContent('file2.png');
-    expect(element.querySelector('si-inline-notification')!).toHaveTextContent(
+    expect(files[0]!).toMatchTextContent('file1.png');
+    expect(files[1]!).toMatchTextContent('file2.png');
+    expect(element.querySelector('si-inline-notification')!).toMatchTextContent(
       'Max number of files reached'
     );
     expect(getError()).not.toBeInTheDocument();
@@ -525,7 +525,7 @@ describe('SiFileUploaderComponent', () => {
 
     fixture.detectChanges();
 
-    expect(element.querySelector('.error.text-danger')!).toHaveTextContent('failed');
+    expect(element.querySelector('.error.text-danger')!).toMatchTextContent('failed');
     retryButton().click();
 
     const reqOk = httpMock.expectOne('/api/attachments');

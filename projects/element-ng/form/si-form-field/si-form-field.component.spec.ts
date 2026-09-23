@@ -51,9 +51,9 @@ describe('SiFormFieldComponent', () => {
   let component: TestHostComponent;
   let fixture: ComponentFixture<TestHostComponent>;
 
-  const nameField = page.getByRole('textbox', { name: 'Name' });
-  const birthdayField = page.getByLabelText('Day of birth');
-  const termsField = page.getByRole('checkbox', { name: 'Terms' });
+  const nameField = page.getByRole('textbox', { name: 'Name*' });
+  const birthdayField = page.getByRole('textbox', { name: 'Day of birth*' });
+  const termsField = page.getByRole('checkbox', { name: 'Terms*' });
 
   const blur = async (element: Element): Promise<void> => {
     (element as HTMLElement).focus();
@@ -173,9 +173,9 @@ describe('SiFormFieldComponent validation error resolution', () => {
 
   let fixture: ComponentFixture<TestHostComponent>;
 
-  const nameField = page.getByRole('textbox', { name: 'Name' });
+  const nameField = page.getByRole('textbox', { name: 'Name*' });
   const ageField = page.getByRole('spinbutton', { name: 'Age' });
-  const cityField = page.getByRole('textbox', { name: 'City' });
+  const cityField = page.getByRole('textbox', { name: 'City*' });
 
   describe('with a global error mapper', () => {
     beforeEach(async () => {

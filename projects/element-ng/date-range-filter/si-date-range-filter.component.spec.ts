@@ -415,7 +415,7 @@ describe('SiDateRangeFilterComponent', () => {
     enableTimeSelection.set(true);
     await fixture.whenStable();
 
-    const toInput = page.getByRole('textbox', { name: 'To' });
+    const toInput = page.getByRole('textbox', { name: 'To Open calendar' });
     await expect.element(toInput).toBeInTheDocument();
     // Shouldn't throw error via DatePipe when invalid date is entered
     await userEvent.fill(toInput, '08/14/2023, 12:40 A');

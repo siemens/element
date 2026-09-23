@@ -87,7 +87,7 @@ describe('formly date range type', () => {
     await fixture.whenStable();
     expect(document.querySelector('si-datepicker-overlay')).toBeInTheDocument();
 
-    expect(document.querySelector<HTMLElement>('si-day-selection')!).toHaveTextContent(
+    expect(document.querySelector<HTMLElement>('si-day-selection')!).toMatchTextContent(
       monthOfSelection
     );
   });

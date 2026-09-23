@@ -32,7 +32,7 @@ describe('SiMarkdownMermaidComponent', () => {
     const mermaid = element.querySelector('si-markdown-mermaid');
 
     expect(mermaid).not.toBeNull();
-    expect(mermaid?.querySelector('svg')).toHaveTextContent(/Start.*End/);
+    expect(mermaid?.querySelector('svg')).toMatchTextContent(/Start.*End/);
     expect(element.querySelector('si-markdown-code')).toBeNull();
   });
 });

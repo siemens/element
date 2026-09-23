@@ -276,7 +276,8 @@ describe('SiDatepickerDirective', () => {
     await fixture.whenStable();
     await expect.element(meridianCombo).toBeVisible();
 
-    await userEvent.click(page.getByRole('switch', { name: 'Consider Time' }));
+    const picker = await rootLoader.getHarness(SiDatepickerComponentHarness);
+    await (await picker.considerTimeSwitch()).toggle();
     await fixture.whenStable();
 
     await backdropClick(fixture);
@@ -284,7 +285,8 @@ describe('SiDatepickerDirective', () => {
     await userEvent.click(getInput());
     await fixture.whenStable();
 
-    await userEvent.click(page.getByRole('switch', { name: 'Ignore time' }));
+    const reopenedPicker = await rootLoader.getHarness(SiDatepickerComponentHarness);
+    await (await reopenedPicker.considerTimeSwitch()).toggle();
     await fixture.whenStable();
 
     await expect.element(meridianCombo).toBeVisible();
