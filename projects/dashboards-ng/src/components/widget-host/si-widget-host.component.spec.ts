@@ -24,7 +24,22 @@ import {
   TEST_WIDGET_STANDALONE
 } from '../../../test/test-widget/test-widget';
 import { TestingModule } from '../../../test/testing.module';
+import { WebComponent, WidgetConfig, WidgetSlotTargets } from '../../model/widgets.model';
 import { SiWidgetHostComponent } from './si-widget-host.component';
+
+const testWebComponentTagName = 'si-test-widget-host-slots';
+
+class TestWidgetHostSlotsElement extends HTMLElement {
+  config?: WidgetConfig;
+
+  set widgetSlots(widgetSlots: WidgetSlotTargets | undefined) {
+    widgetSlots?.footer.replaceChildren('Web component footer');
+  }
+}
+
+if (!customElements.get(testWebComponentTagName)) {
+  customElements.define(testWebComponentTagName, TestWidgetHostSlotsElement);
+}
 
 class SiActionDialogMockService {
   result = new Subject<DeleteConfirmationDialogResult>();
@@ -74,6 +89,17 @@ describe('SiWidgetHostComponent', () => {
         vi.advanceTimersByTime(0);
         await fixture.whenStable();
         expect(component.widgetHost()).toHaveLength(1);
+        vi.useRealTimers();
+      });
+
+      it('should provide the widget footer slot target', async () => {
+        fixture.detectChanges();
+        vi.useFakeTimers();
+        vi.advanceTimersByTime(0);
+        await fixture.whenStable();
+
+        const footer = fixture.nativeElement.querySelector('.widget-footer-host');
+        expect(component.widgetInstance?.widgetSlots).toEqual({ footer });
         vi.useRealTimers();
       });
 
@@ -208,6 +234,52 @@ describe('SiWidgetHostComponent', () => {
           expect(component.widgetInstance!.editable).toBe(true);
         });
       });
+    });
+  });
+
+  describe('with web component', () => {
+    let fixture: ComponentFixture<SiWidgetHostComponent>;
+
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [BrowserModule, CommonModule, TestingModule, SiWidgetHostComponent],
+        providers: [{ provide: SiActionDialogService, useClass: SiActionDialogMockService }],
+        schemas: [NO_ERRORS_SCHEMA]
+      }).compileComponents();
+
+      fixture = TestBed.createComponent(SiWidgetHostComponent);
+      fixture.componentRef.setInput('componentFactory', {
+        factoryType: 'web-component',
+        componentName: testWebComponentTagName,
+        url: 'data:text/javascript,'
+      } satisfies WebComponent);
+      fixture.componentRef.setInput('widgetConfig', TEST_WIDGET_CONFIG_0);
+      fixture.componentRef.setInput('grid', {
+        update: vi.fn(),
+        makeWidget: vi.fn()
+      });
+    });
+
+    it('should let the web component render into the footer slot', async () => {
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      expect(fixture.nativeElement.querySelector('.card-footer')).toHaveTextContent(
+        'Web component footer'
+      );
+    });
+
+    it('should clear web component footer content when detaching the widget', async () => {
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      fixture.componentRef.setInput('widgetConfig', {
+        ...TEST_WIDGET_CONFIG_0,
+        setupPending: true
+      });
+      await fixture.whenStable();
+
+      expect(fixture.nativeElement.querySelector('.widget-footer-host')).toBeEmptyDOMElement();
     });
   });
 
