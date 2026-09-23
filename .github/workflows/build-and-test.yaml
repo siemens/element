@@ -40,7 +40,7 @@ jobs:
       - run: pnpm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
       - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
       - run: pnpm run build:examples --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
-      - run: pnpm run dashboards-demo:build-all --progress=false
+      - run: pnpm run dashboards-demo:build-all --no-progress
       - run: pnpm run dashboards-demo:build-all:esm
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
@@ -74,14 +74,14 @@ jobs:
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: pnpm install
-      - run: pnpm run translate:test --watch=false --progress=false --coverage
-      - run: pnpm run lib:test --watch=false --progress=false --coverage
-      - run: pnpm run schematics:test
-      - run: pnpm run charts:test --watch=false --progress=false --coverage
-      - run: pnpm run dashboards:test --watch=false --progress=false --coverage
-      - run: pnpm run map-styles:test --watch=false --progress=false --coverage
-      - run: pnpm run maps:test --watch=false --progress=false --coverage
-      - run: pnpm run native-charts:test --watch=false --progress=false --coverage
+      - run: pnpm run translate:test --no-watch --headless --no-progress --coverage
+      - run: pnpm run lib:test --no-watch --headless --no-progress --coverage
+      - run: pnpm run schematics:test --no-watch
+      - run: pnpm run charts:test --no-watch --headless --no-progress --coverage
+      - run: pnpm run dashboards:test --no-watch --headless --no-progress --coverage
+      - run: pnpm run map-styles:test --no-watch --headless --no-progress --coverage
+      - run: pnpm run maps:test --no-watch --headless --no-progress --coverage
+      - run: pnpm run native-charts:test --no-watch --headless --no-progress --coverage
       - name: Generate coverage summary
         uses: irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95 # v1.3.0
         with:
