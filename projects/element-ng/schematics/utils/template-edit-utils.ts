@@ -61,3 +61,21 @@ export const removeAttribute = (
   const removeStart = start > 0 && /\s/.test(template[start - 1] ?? '') ? start - 1 : start;
   recorder.remove(removeStart + offset, end - removeStart);
 };
+
+/** Removes static attributes and property/attribute bindings with the given names. */
+export const removeAttributesFromElement = (
+  template: string,
+  element: Element,
+  names: string[],
+  offset: number,
+  recorder: UpdateRecorder
+): void => {
+  for (const attribute of element.attrs) {
+    const matches = names.some(name =>
+      [name, `[${name}]`, `attr.${name}`, `[attr.${name}]`].includes(attribute.name)
+    );
+    if (matches) {
+      removeAttribute(template, attribute, offset, recorder);
+    }
+  }
+};

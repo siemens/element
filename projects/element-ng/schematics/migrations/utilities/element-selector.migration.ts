@@ -6,7 +6,12 @@
 import { UpdateRecorder } from '@angular-devkit/schematics';
 import { join, dirname } from 'path/posix';
 
-import { findElement, getInlineTemplates, getTemplateUrl } from '../../utils/index.js';
+import {
+  findElement,
+  getInlineTemplates,
+  getTemplateUrl,
+  removeAttributesFromElement
+} from '../../utils/index.js';
 import { ElementSelectorInstruction } from '../data/index.js';
 import { MigrationContext, RenameElementTagParams } from './migration.interface.js';
 
@@ -30,7 +35,8 @@ export const applyElementSelectorMigration = (
       filePath,
       fromName: change.replace,
       toName: change.replaceWith,
-      defaultAttributes: change.defaultAttributes
+      defaultAttributes: change.defaultAttributes,
+      removeAttributes: change.removeAttributes
     });
   }
 };
@@ -42,7 +48,8 @@ const renameElementTag = ({
   recorder,
   fromName,
   toName,
-  defaultAttributes
+  defaultAttributes,
+  removeAttributes
 }: RenameElementTagParams): void => {
   getInlineTemplates(sourceFile).forEach(template =>
     renameElementTagInTemplate({
@@ -51,11 +58,16 @@ const renameElementTag = ({
       toName,
       fromName,
       recorder,
-      defaultAttributes
+      defaultAttributes,
+      removeAttributes
     })
   );
   getTemplateUrl(sourceFile).forEach(templateUrl => {
     const templatePath = join(dirname(filePath), templateUrl);
+    if (!tree.exists(templatePath)) {
+      return;
+    }
+
     const templateContent = tree.read(templatePath)!.toString('utf-8');
     const templateRecorder = tree.beginUpdate(templatePath);
     renameElementTagInTemplate({
@@ -64,7 +76,8 @@ const renameElementTag = ({
       toName,
       fromName,
       recorder: templateRecorder,
-      defaultAttributes
+      defaultAttributes,
+      removeAttributes
     });
     tree.commitUpdate(templateRecorder);
   });
@@ -76,7 +89,8 @@ const renameElementTagInTemplate = ({
   recorder,
   fromName,
   toName,
-  defaultAttributes
+  defaultAttributes,
+  removeAttributes
 }: {
   recorder: UpdateRecorder;
   template: string;
@@ -84,24 +98,31 @@ const renameElementTagInTemplate = ({
   fromName: string;
   toName: string;
   defaultAttributes?: { name: string; value: string }[];
+  removeAttributes?: string[];
 }): void => {
-  findElement(template, element => element.name === fromName).forEach(el => {
-    recorder.remove(el.startSourceSpan.start.offset + 1 + offset, fromName.length);
-    recorder.insertLeft(el.startSourceSpan.start.offset + 1 + offset, toName);
-    if (el.endSourceSpan && el.startSourceSpan.start !== el.endSourceSpan.start) {
-      recorder.remove(el.endSourceSpan?.start.offset + 2 + offset, fromName.length);
-      recorder.insertLeft(el.endSourceSpan?.start.offset + 2 + offset, toName);
+  for (const element of findElement(template, node => node.name === fromName)) {
+    const openingNameStart = element.startSourceSpan.start.offset + 1 + offset;
+    recorder.remove(openingNameStart, fromName.length);
+    recorder.insertLeft(openingNameStart, toName);
+
+    const closingTag = element.endSourceSpan;
+    if (closingTag && closingTag.start.offset !== element.startSourceSpan.start.offset) {
+      const closingNameStart = closingTag.start.offset + 2 + offset;
+      recorder.remove(closingNameStart, fromName.length);
+      recorder.insertLeft(closingNameStart, toName);
     }
 
     if (defaultAttributes && defaultAttributes.length > 0) {
-      const existingAttrNames = new Set(el.attrs.map(attr => attr.name));
+      const existingAttrNames = new Set(element.attrs.map(attr => attr.name));
       const attrsToAdd = defaultAttributes.filter(attr => !existingAttrNames.has(attr.name));
 
       if (attrsToAdd.length > 0) {
-        const insertPosition = el.startSourceSpan.start.offset + 1 + offset + toName.length;
+        const insertPosition = element.startSourceSpan.start.offset + 1 + offset + toName.length;
         const attrsString = attrsToAdd.map(attr => ` ${attr.name}="${attr.value}"`).join('');
         recorder.insertLeft(insertPosition, attrsString);
       }
     }
-  });
+
+    removeAttributesFromElement(template, element, removeAttributes ?? [], offset, recorder);
+  }
 };
