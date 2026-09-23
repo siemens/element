@@ -35,13 +35,14 @@ import {
   t,
   TranslatableString
 } from '@siemens/element-translate-ng/translate';
-import { merge, Observable, Subject, switchMap } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { merge, Observable, of, Subject, switchMap } from 'rxjs';
+import { catchError, debounceTime, map, take } from 'rxjs/operators';
 
 import {
   differenceByName,
   getISODateString,
   InternalCriterionDefinition,
+  toOptionCriteria,
   toInternalCriteria
 } from './si-filtered-search-helper';
 import { SiFilteredSearchInputComponent } from './si-filtered-search-input.component';
@@ -588,9 +589,23 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     return correctedCriteria;
   }
 
-  private addCriterion(config: InternalCriterionDefinition, value?: string): void {
+  private addCriterion(
+    config: InternalCriterionDefinition,
+    value?: string,
+    editOnCreation = true
+  ): void {
     if (config.multiSelect) {
-      this.values.update(v => [...v, { value: { value: [], name: config.name }, config }]);
+      const normalizedValue = this.normalizeCriterionValue(value, config.options);
+      this.values.update(v => [
+        ...v,
+        {
+          value: {
+            value: normalizedValue ? [normalizedValue] : [],
+            name: config.name
+          },
+          config
+        }
+      ]);
     } else if (config.validationType === 'date' || config.validationType === 'date-time') {
       const validationType = config.validationType;
       this.values.update(v => [
@@ -605,11 +620,68 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
         }
       ]);
     } else {
-      this.values.update(v => [...v, { value: { value: value ?? '', name: config.name }, config }]);
+      this.values.update(v => [
+        ...v,
+        {
+          value: {
+            value: this.normalizeCriterionValue(value, config.options) ?? '',
+            name: config.name
+          },
+          config
+        }
+      ]);
     }
 
-    this.autoEditCriteria = true;
+    this.autoEditCriteria = editOnCreation;
     this.emitChangeEvent();
+  }
+
+  private normalizeCriterionValue(
+    value: string | undefined,
+    options?: OptionType[]
+  ): string | undefined {
+    const trimmedValue = value?.trim();
+    if (!trimmedValue || !options?.length) {
+      return trimmedValue;
+    }
+
+    const normalizedValue = trimmedValue.toLocaleLowerCase();
+    const matchingOption = toOptionCriteria(options).find(option => {
+      const translatedLabel = option.label
+        ? this.translateService.translateSync(option.label)
+        : option.value;
+      return (
+        option.value.toLocaleLowerCase() === normalizedValue ||
+        translatedLabel.toLocaleLowerCase() === normalizedValue ||
+        (typeof option.label === 'string' && option.label.toLocaleLowerCase() === normalizedValue)
+      );
+    });
+    return matchingOption?.value ?? trimmedValue;
+  }
+
+  private getAllowedCriteria(
+    values: { config: InternalCriterionDefinition; value: CriterionValue }[],
+    exclusiveCriteria: boolean
+  ): InternalCriterionDefinition[] {
+    const allowedCriteria = !exclusiveCriteria
+      ? this.internalCriterionDefinitions
+      : differenceByName(this.internalCriterionDefinitions, values);
+
+    let allowedCriterionNames = allowedCriteria.map(c => c.name);
+    if (allowedCriteria.length > 0) {
+      this.interceptDisplayedCriteria.emit({
+        criteria: allowedCriterionNames,
+        searchCriteria: this.convertToExternalModel(),
+        allow: (criteriaNamesToDisplay, allowFreeTextSearch) => {
+          allowedCriterionNames = criteriaNamesToDisplay;
+          if (allowFreeTextSearch !== undefined) {
+            this.allowFreeTextCache.set(allowFreeTextSearch);
+          }
+        }
+      });
+    }
+
+    return allowedCriteria.filter(c => allowedCriterionNames.includes(c.name));
   }
 
   /**
@@ -622,31 +694,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     exclusiveCriteria: boolean
   ): InternalCriterionDefinition[] {
     if (maxCriteria === undefined || values.length < maxCriteria) {
-      const allowedCriteria = !exclusiveCriteria
-        ? this.internalCriterionDefinitions
-        : differenceByName(this.internalCriterionDefinitions, values);
-
-      let allowedCriteriaCache: string[] | undefined;
-      if (allowedCriteria.length > 0) {
-        // Call interceptor to allow applications to customize the list of available criteria
-        const available = allowedCriteria.map(c => c.name);
-        // Ensure that all entries are allowed in case the consumer doesn't use the allow callback
-        allowedCriteriaCache = available;
-        this.interceptDisplayedCriteria.emit({
-          criteria: available,
-          searchCriteria: this.convertToExternalModel(),
-          allow: (criteriaNamesToDisplay, allowFreeTextSearch) => {
-            if (criteriaNamesToDisplay) {
-              allowedCriteriaCache = criteriaNamesToDisplay;
-            }
-            if (allowFreeTextSearch !== undefined) {
-              this.allowFreeTextCache.set(allowFreeTextSearch);
-            }
-          }
-        });
-      }
-
-      return allowedCriteria.filter(c => allowedCriteriaCache?.includes(c.name));
+      return this.getAllowedCriteria(values, exclusiveCriteria);
     } else {
       return [];
     }
@@ -702,16 +750,57 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     this.addCriterion(event.criterion, event.value);
   }
 
-  protected onCreateCriterionByName(event: { criterionName: string; value?: string }): void {
+  protected onCreateCriterionByName(event: {
+    criterionName: string;
+    value?: string;
+    editOnCreation?: boolean;
+  }): void {
     const nameLowerCase = event.criterionName.toLocaleLowerCase();
-    const criterion = this.internalCriterionDefinitions.find(
-      ic => ic.translatedLabel.toLocaleLowerCase() === nameLowerCase
-    ) ?? {
+    const configuredCriterion = this.internalCriterionDefinitions.find(
+      ic =>
+        ic.name.toLocaleLowerCase() === nameLowerCase ||
+        ic.translatedLabel.toLocaleLowerCase() === nameLowerCase ||
+        (typeof ic.label === 'string' && ic.label.toLocaleLowerCase() === nameLowerCase)
+    );
+    if (!configuredCriterion && this.strictCriterionOrValue()) {
+      return;
+    }
+    if (
+      configuredCriterion &&
+      !this.getAllowedCriteria(this.values(), this.exclusiveCriteria()).includes(
+        configuredCriterion
+      )
+    ) {
+      return;
+    }
+    const criterion = configuredCriterion ?? {
       name: event.criterionName,
       label: event.criterionName,
       translatedLabel: event.criterionName
     };
-    this.addCriterion(criterion, event.value);
+    this.addCriterion(criterion, event.value, event.editOnCreation);
+    const createdCriterion = this.values().at(-1);
+
+    if (configuredCriterion && createdCriterion && event.value && this.lazyValueProvider()) {
+      this.lazyValueProvider()!(configuredCriterion.name, event.value)
+        .pipe(
+          take(1),
+          catchError(() => of([])),
+          takeUntilDestroyed(this.destroyRef)
+        )
+        .subscribe(options => {
+          const normalizedValue = this.normalizeCriterionValue(event.value, options);
+          const resolvedValue = configuredCriterion.multiSelect
+            ? normalizedValue
+              ? [normalizedValue]
+              : []
+            : (normalizedValue ?? '');
+          if (createdCriterion.value.value !== resolvedValue) {
+            createdCriterion.value.value = resolvedValue;
+            this.emitChangeEvent();
+          }
+        });
+    }
   }
 
   protected onSearchValueChange(): void {
@@ -754,7 +843,12 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   protected createFreeTextPill(query: string): void {
     const freeTextDefinition = this.internalFreeTextCriterion();
     const maxCriteria = this.maxCriteria();
-    if (!freeTextDefinition || (maxCriteria && this.values().length >= maxCriteria)) {
+    this.getAllowedCriteria(this.values(), this.exclusiveCriteria());
+    if (
+      !freeTextDefinition ||
+      !this.allowFreeTextCache() ||
+      (maxCriteria && this.values().length >= maxCriteria)
+    ) {
       return;
     }
     this.values.update(v => [
