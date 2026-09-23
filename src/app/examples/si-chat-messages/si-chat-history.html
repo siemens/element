@@ -27,7 +27,6 @@
     </main>
 
     <si-side-panel-content
-      class="border-start"
       searchPlaceholder="Search conversations"
       [heading]="activeView() === 'history' ? 'Chat history' : heading()"
       [primaryActions]="primaryActions()"
@@ -80,34 +79,37 @@
           }
         </div>
       } @else {
-        <si-chat-container colorVariant="base-0">
-          @for (message of messages(); track $index) {
-            @if (message.role === 'user') {
-              <si-user-message>
-                <si-markdown [markdown]="message.content" [options]="markdownOptions" />
-              </si-user-message>
-            } @else {
-              <si-ai-message>
-                <si-markdown [markdown]="message.content" [options]="markdownOptions" />
-              </si-ai-message>
+        <div class="si-layout-inner h-100 overflow-hidden px-6 py-6 bg-base-1">
+          <div class="d-flex flex-column flex-grow-1 overflow-auto gap-9 px-4" tabindex="0">
+            @for (message of messages(); track $index) {
+              @if (message.role === 'user') {
+                <si-user-message>
+                  <si-markdown [markdown]="message.content" [options]="markdownOptions" />
+                </si-user-message>
+              } @else {
+                <si-ai-message>
+                  <si-markdown [markdown]="message.content" [options]="markdownOptions" />
+                </si-ai-message>
+              }
+            } @empty {
+              <div class="d-flex flex-column align-items-center justify-content-center h-100 p-6">
+                <h2 class="si-h4">How can I help?</h2>
+                <p class="text-secondary text-center"
+                  >Start a new conversation about your building.</p
+                >
+              </div>
             }
-          } @empty {
-            <div class="d-flex flex-column align-items-center justify-content-center h-100 p-6">
-              <h2 class="si-h4">How can I help?</h2>
-              <p class="text-secondary text-center"
-                >Start a new conversation about your building.</p
-              >
-            </div>
-          }
+          </div>
 
           <si-chat-input
+            class="align-self-center mt-6 pb-3 w-100"
             placeholder="Enter a command, question or topic…"
             disclaimer="The content is AI generated. Always verify the information for accuracy."
             [allowAttachments]="false"
             [(value)]="inputValue"
             (send)="sendMessage($event)"
           />
-        </si-chat-container>
+        </div>
       }
     </si-side-panel-content>
   </si-side-panel>

@@ -22,7 +22,6 @@ import {
 import {
   ChatInputAttachment,
   SiAiMessageComponent,
-  SiChatContainerComponent,
   SiChatInputComponent,
   SiUserMessageComponent
 } from '@siemens/element-ng/chat-messages';
@@ -56,7 +55,6 @@ interface ChatMessage {
     RouterLink,
     SiAiMessageComponent,
     SiApplicationHeaderComponent,
-    SiChatContainerComponent,
     SiChatInputComponent,
     SiHeaderActionItemComponent,
     SiHeaderActionsDirective,
@@ -137,17 +135,18 @@ These faults must be addressed immediately to maintain safety and compliance.`
       ? [
           {
             type: 'action',
-            label: 'New chat',
-            icon: 'element-edit',
-            iconOnly: true,
-            action: () => this.startNewChat()
-          },
-          {
-            type: 'action',
             label: 'Chat history',
             icon: 'element-clock',
             iconOnly: true,
-            action: () => this.showHistory()
+            action: () => this.showHistory(),
+
+          },
+          {
+            type: 'action',
+            label: 'New chat',
+            icon: 'element-edit-bulk',
+            iconOnly: true,
+            action: () => this.startNewChat()
           }
         ]
       : []
