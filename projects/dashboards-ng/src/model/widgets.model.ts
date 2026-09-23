@@ -35,6 +35,7 @@ export interface Widget {
     | 'minWidth'
     | 'minHeight'
     | 'heading'
+    | 'headingIcon'
     | 'expandable'
     | 'immutable'
     | 'image'
@@ -182,6 +183,8 @@ export interface WidgetConfig {
    * grid item header text.
    */
   heading?: TranslatableString;
+  /** Icon name or a single-entry map of camelCase icon name to SVG data URI. */
+  headingIcon?: string | Record<string, string>;
   /** Defines whether the widget instance component can be expanded and enlarged over the dashboard. */
   expandable?: boolean;
   /** A widget specific payload object. Placeholder to pass in additional configuration. */

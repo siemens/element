@@ -59,6 +59,10 @@
     (keydown.shift.arrowDown)="onArrowKey($event)"
     (focusout)="onFocusOut()"
   >
+    @let headingIcon = headingIconName();
+    @if (headingIcon) {
+      <si-icon headerIcon class="icon me-3" [icon]="headingIcon" />
+    }
     <div class="card-body overflow-auto" body>
       <ng-container #widgetHost />
       @if (setupPending()) {
