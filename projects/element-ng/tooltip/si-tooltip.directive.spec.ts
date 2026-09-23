@@ -141,7 +141,7 @@ describe('SiTooltipDirective', () => {
 
     it('should hide a hover-visible tooltip on focusout', async () => {
       button.dispatchEvent(new MouseEvent('mouseenter'));
-      vi.advanceTimersByTime(500);
+      await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
       await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
 
@@ -152,7 +152,7 @@ describe('SiTooltipDirective', () => {
 
     it('should hide the tooltip on touchstart', async () => {
       button.dispatchEvent(new MouseEvent('mouseenter'));
-      vi.advanceTimersByTime(500);
+      await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
       await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
 
@@ -208,6 +208,7 @@ describe('SiTooltipDirective', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TestHostComponent);
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+      button.style.pointerEvents = 'none';
       vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
       fixture.detectChanges();
     });
@@ -227,7 +228,7 @@ describe('SiTooltipDirective', () => {
       fixture.componentInstance.tooltipContext.set({ tooltip: 'test' });
       await fixture.whenStable();
       button.dispatchEvent(new FocusEvent('focus'));
-      await vi.advanceTimersByTimeAsync(500);
+      await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
       await expect.element(page.getByRole('tooltip')).toHaveTextContent('Template content test');
       button.dispatchEvent(new FocusEvent('focusout'));
