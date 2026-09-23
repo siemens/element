@@ -26,6 +26,7 @@ class TestWidgetWithSlotsElement extends HTMLElement {
 
   set widgetSlots(widgetSlots: WidgetSlotTargets | undefined) {
     this._widgetSlots = widgetSlots;
+    widgetSlots?.headerIcon.replaceChildren('Web component header icon');
     widgetSlots?.footer.replaceChildren('Web component footer');
   }
 }
@@ -64,8 +65,9 @@ describe('SiWidgetHostComponent', () => {
   });
 
   it('should provide slot targets to the web component', () => {
+    const headerIcon = document.createElement('span');
     const footer = document.createElement('div');
-    const widgetSlots = { footer };
+    const widgetSlots = { headerIcon, footer };
 
     fixture.componentRef.setInput('config', TEST_WIDGET_CONFIG_0);
     fixture.componentRef.setInput('elementTagName', testElementTagName);
@@ -77,6 +79,7 @@ describe('SiWidgetHostComponent', () => {
       testElementTagName
     ) as TestWidgetWithSlotsElement;
     expect(webComponent.widgetSlots).toBe(widgetSlots);
+    expect(headerIcon).toHaveTextContent('Web component header icon');
     expect(footer).toHaveTextContent('Web component footer');
   });
 });

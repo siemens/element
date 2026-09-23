@@ -318,6 +318,8 @@ export type WidgetConfigEvent = {
  * DOM outlets provided by the dashboard host to framework-agnostic widgets.
  */
 export interface WidgetSlotTargets {
+  /** The outlet in which the widget can render its header icon. */
+  headerIcon: HTMLElement;
   /** The outlet in which the widget can render its footer content. */
   footer: HTMLElement;
 }
@@ -354,6 +356,10 @@ export interface WidgetInstance {
    * events after changing the instance configuration like the actions.
    */
   configChange?: EventEmitter<WidgetConfigEvent>;
+  /**
+   * An optional header icon template that is added into the dashboard card's header.
+   */
+  headerIcon?: TemplateRef<unknown>;
   /**
    * An optional footer template that is added into the dashboard card's footer.
    */

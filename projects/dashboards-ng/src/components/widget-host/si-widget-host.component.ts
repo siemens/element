@@ -111,6 +111,8 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   readonly card = viewChild.required<SiDashboardCardComponent>('card');
 
   readonly widgetHost = viewChild.required('widgetHost', { read: ViewContainerRef });
+  private readonly widgetHeaderIconHost =
+    viewChild.required<ElementRef<HTMLElement>>('widgetHeaderIconHost');
   private readonly widgetFooterHost =
     viewChild.required<ElementRef<HTMLElement>>('widgetFooterHost');
 
@@ -216,6 +218,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
     iconOnly: true,
     action: () => this.onRemove()
   };
+  protected readonly widgetInstanceHeaderIcon = signal<TemplateRef<unknown> | undefined>(undefined);
   protected readonly widgetInstanceFooter = signal<TemplateRef<unknown> | undefined>(undefined);
 
   protected readonly accentLine = computed(() => {
@@ -447,6 +450,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
           this.widgetInstance = widgetRef.instance;
           this.widgetRef = widgetRef;
           const widgetSlots: WidgetSlotTargets = {
+            headerIcon: this.widgetHeaderIconHost().nativeElement,
             footer: this.widgetFooterHost().nativeElement
           };
           if (isSignal(this.widgetInstance.widgetSlots)) {
@@ -467,6 +471,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
           } else {
             this.widgetInstance.config = this.widgetConfig();
           }
+          this.widgetInstanceHeaderIcon.set(this.widgetInstance.headerIcon);
           this.widgetInstanceFooter.set(this.widgetInstance.footer);
           this.setupEditable(this.editable());
         },
@@ -484,7 +489,9 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
     this.widgetRef?.destroy();
     this.widgetRef = undefined;
     this.widgetInstance = undefined;
+    this.widgetInstanceHeaderIcon.set(undefined);
     this.widgetInstanceFooter.set(undefined);
+    this.widgetHeaderIconHost().nativeElement.replaceChildren();
     this.widgetFooterHost().nativeElement.replaceChildren();
     this.widgetHost().clear();
   }

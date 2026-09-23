@@ -374,6 +374,7 @@ export interface WidgetInstance {
     configChange?: EventEmitter<WidgetConfigEvent>;
     editable?: boolean;
     footer?: TemplateRef<unknown>;
+    headerIcon?: TemplateRef<unknown>;
     primaryActions?: (MenuItem | ContentActionBarMainItem)[];
     primaryEditActions?: (MenuItem | ContentActionBarMainItem)[];
     secondaryActions?: (MenuItem | MenuItem_2)[];
@@ -412,6 +413,7 @@ export type WidgetPositionConfig = Pick<WidgetConfig, 'id' | 'x' | 'y' | 'width'
 // @public
 export interface WidgetSlotTargets {
     footer: HTMLElement;
+    headerIcon: HTMLElement;
 }
 
 // (No @packageDocumentation comment for this package)
