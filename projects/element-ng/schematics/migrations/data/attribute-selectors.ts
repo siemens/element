@@ -7,6 +7,15 @@ export interface AttributeSelectorInstruction {
   replace: string;
   /** The new name for the attribute. */
   replaceWith: string;
+  /** Attribute names to remove from elements using the selector. */
+  removeAttributes?: string[];
 }
 
-export const ATTRIBUTE_SELECTORS_MIGRATION: AttributeSelectorInstruction[] = [];
+export const ATTRIBUTE_SELECTORS_MIGRATION: AttributeSelectorInstruction[] = [
+  // v49 to v51
+  {
+    replace: 'si-header-siemens-logo',
+    replaceWith: 'siHeaderLogo',
+    removeAttributes: ['aria-label']
+  }
+];

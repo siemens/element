@@ -9,6 +9,16 @@ export interface SymbolRenamingInstruction {
 }
 
 export const SYMBOL_RENAMING_MIGRATION: SymbolRenamingInstruction[] = [
+  // v49 to v51
+  {
+    module: /^@(siemens|simpl)\/element-ng\/application-header$/,
+    symbolRenamings: [
+      {
+        replace: 'SiHeaderSiemensLogoComponent',
+        replaceWith: 'SiHeaderLogoDirective'
+      }
+    ]
+  },
   {
     module: /@siemens\/element-ng\/icon-status$/,
     toModule: '@siemens/element-ng/status-counter',

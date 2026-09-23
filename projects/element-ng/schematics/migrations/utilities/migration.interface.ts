@@ -24,6 +24,7 @@ export interface RenameElementTagParams {
   fromName: string;
   toName: string;
   defaultAttributes?: { name: string; value: string }[];
+  removeAttributes?: string[];
 }
 
 export interface Replacement {
