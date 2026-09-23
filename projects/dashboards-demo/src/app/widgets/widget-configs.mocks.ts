@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { WidgetConfig } from '@siemens/dashboards-ng';
+import { elementCloud } from '@siemens/element-icons';
 
 export const WIDGET: WidgetConfig[] = [
   {
@@ -133,6 +134,7 @@ export const WIDGETS: WidgetConfig[] = [
   {
     id: '8',
     heading: 'Weather',
+    headingIcon: { elementCloud },
     widgetId: '@siemens/dashboards-demo/weather',
     minWidth: 3,
     width: 4,

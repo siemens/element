@@ -68,6 +68,47 @@ describe('SiWidgetHostComponent', () => {
         expect(component).toBeTruthy();
       });
 
+      it('should show the configured heading icon only when provided', async () => {
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          heading: 'Weather',
+          headingIcon: 'element-cloud'
+        });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('si-card-header si-icon')).toHaveAttribute(
+          'data-icon',
+          'element-cloud'
+        );
+
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          heading: 'Weather'
+        });
+        await fixture.whenStable();
+
+        expect(
+          fixture.nativeElement.querySelector('si-card-header si-icon')
+        ).not.toBeInTheDocument();
+      });
+
+      it('should render an SVG heading icon from widget config', async () => {
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          heading: 'Weather',
+          headingIcon: {
+            elementCloud: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"></svg>'
+          }
+        });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const icon = fixture.nativeElement.querySelector('si-card-header si-icon');
+        expect(icon).toHaveAttribute('data-icon', 'elementCloud');
+        expect(icon.querySelector('.svg-element-icon')).toBeInTheDocument();
+      });
+
       it('should instantiate and attach widget instance', async () => {
         fixture.detectChanges();
         vi.useFakeTimers();

@@ -305,7 +305,7 @@ export type WebComponent = CommonFactoryFields & {
 // @public
 export interface Widget {
     componentFactory: WidgetComponentFactory;
-    defaults?: Pick<WidgetConfig, 'width' | 'height' | 'minWidth' | 'minHeight' | 'heading' | 'expandable' | 'immutable' | 'image' | 'accentLine'>;
+    defaults?: Pick<WidgetConfig, 'width' | 'height' | 'minWidth' | 'minHeight' | 'heading' | 'headingIcon' | 'expandable' | 'immutable' | 'image' | 'accentLine'>;
     description?: TranslatableString;
     iconClass?: string;
     id: string;
@@ -327,6 +327,7 @@ export interface WidgetConfig {
     actionBarViewType?: ViewType;
     expandable?: boolean;
     heading?: TranslatableString;
+    headingIcon?: string | Record<string, string>;
     height?: number;
     id: string;
     image?: WidgetImage;

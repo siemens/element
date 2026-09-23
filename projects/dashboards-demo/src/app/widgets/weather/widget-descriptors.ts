@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Widget } from '@siemens/dashboards-ng';
+import { elementCloud } from '@siemens/element-icons';
 
 import { DEFAULT_WEATHER_PAYLOAD } from './weather-widget.mocks';
 
@@ -28,6 +29,7 @@ export const WEATHER_WIDGET: Widget = {
     width: 4,
     height: 6,
     heading: 'Weather',
+    headingIcon: { elementCloud },
     expandable: true
   },
   payload: { ...DEFAULT_WEATHER_PAYLOAD }

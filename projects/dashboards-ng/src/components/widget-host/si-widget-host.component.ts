@@ -18,6 +18,7 @@ import {
   isSignal,
   OnChanges,
   output,
+  runInInjectionContext,
   signal,
   SimpleChanges,
   TemplateRef,
@@ -34,7 +35,7 @@ import type { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { addIcons } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem } from '@siemens/element-ng/menu';
 import {
   injectSiTranslateService,
@@ -54,7 +55,13 @@ import { setupWidgetInstance } from '../../widget-loader';
 
 @Component({
   selector: 'si-widget-host',
-  imports: [SiDashboardCardComponent, SiEmptyStateComponent, NgTemplateOutlet, SiTranslatePipe],
+  imports: [
+    SiDashboardCardComponent,
+    SiEmptyStateComponent,
+    NgTemplateOutlet,
+    SiTranslatePipe,
+    SiIconComponent
+  ],
   templateUrl: './si-widget-host.component.html',
   styleUrl: './si-widget-host.component.scss',
   host: {
@@ -220,11 +227,19 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
     return accentLine && !this.setupPending() ? 'accent-' + accentLine : '';
   });
   protected readonly setupPending = computed(() => !!this.widgetConfig().setupPending);
+  protected readonly headingIconName = computed(() => {
+    const icon = this.widgetConfig().headingIcon;
+    return typeof icon === 'string' ? icon : icon && Object.keys(icon)[0];
+  });
 
   private moveInProgress = false;
 
   ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.widgetConfig) {
+      const headingIcon = this.widgetConfig().headingIcon;
+      if (headingIcon && typeof headingIcon !== 'string') {
+        runInInjectionContext(this.injector, () => addIcons(headingIcon));
+      }
       const options = {
         ...this.widgetConfig(),
         w: this.widgetConfig().width,
