@@ -9,162 +9,21 @@
 </section>
 
 @if (isMobile) {
-  <section class="settings-selection">
-    <select class="device-selection" [(ngModel)]="selectedDevice" (ngModelChange)="deviceChanged()">
-      @for (device of availableDevices; track $index) {
-        <option [ngValue]="device">
-          {{ device.name }}
-        </option>
-      }
-    </select>
-    <div class="toggle-wrapper">
-      @if (landscapeEnabled) {
-        <button
-          type="button"
-          title="Rotate phone"
-          [disabled]="!supportsLandscape()"
-          (click)="toggleLandscape()"
-        >
-          @if (!landscape()) {
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              <path
-                d="M105.34,240.51c.27.27.56.53.85.77s.29.22.44.33.33.25.51.37l.52.32.48.28c.18.1.37.18.55.27l.52.24.54.19c.19.07.37.14.57.2a5.36,5.36,0,0,0,.54.14c.2,0,.39.11.6.15s.42.06.63.09l.53.08a11.63,11.63,0,0,0,2.36,0l.53-.08c.21,0,.43-.05.63-.09l.6-.15a5.36,5.36,0,0,0,.54-.14c.2-.06.38-.13.57-.2l.54-.19.52-.24c.18-.09.37-.17.55-.27l.48-.28.52-.32c.18-.12.34-.25.51-.37l.44-.33c.29-.24.58-.5.85-.77l0,0,41.87-41.88a12,12,0,1,0-17-17L125.8,203V131.5A21.52,21.52,0,0,1,147.3,110h58.62a12,12,0,0,0,0-24H147.3a45.55,45.55,0,0,0-45.5,45.5V203L80.41,181.64a12,12,0,0,0-17,17l41.87,41.88Z"
-              />
-              <path d="M100.8,400a12,12,0,1,0,0,24h100a12,12,0,0,0,0-24Z" />
-              <path d="M336.11,348h-.22a16,16,0,0,0,0,32h.22a16,16,0,0,0,0-32Z" />
-              <path
-                d="M407.43,88H264.57C242.2,88,224,107.38,224,131.2V380.8c0,23.82,18.2,43.2,40.57,43.2H407.43C429.8,424,448,404.62,448,380.8V131.2C448,107.38,429.8,88,407.43,88ZM424,380.8c0,10.59-7.43,19.2-16.57,19.2H264.57c-9.14,0-16.57-8.61-16.57-19.2V131.2c0-10.59,7.43-19.2,16.57-19.2H274a12,12,0,0,0,12,12H386a12,12,0,0,0,12-12h9.43c9.14,0,16.57,8.61,16.57,19.2Z"
-              />
-            </svg>
-          } @else {
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              <path
-                d="M86,147.3v58.62a12,12,0,0,0,24,0V147.3a21.52,21.52,0,0,1,21.5-21.5H203l-21.39,21.39a12,12,0,0,0,17,17l41.88-41.87,0,0c.27-.27.53-.56.77-.85l.32-.43c.13-.17.26-.34.38-.52s.21-.34.31-.52.2-.32.29-.48.18-.36.26-.54.17-.35.25-.53.13-.35.19-.53.14-.38.2-.58a4.58,4.58,0,0,0,.14-.53c0-.2.11-.4.15-.61s.06-.41.09-.61.06-.36.08-.55a10.88,10.88,0,0,0,.06-1.14v-.08a10.88,10.88,0,0,0-.06-1.14c0-.19-.05-.37-.08-.55s-.05-.41-.09-.61-.1-.41-.15-.61a4.58,4.58,0,0,0-.14-.53c-.06-.2-.13-.39-.2-.58s-.12-.36-.19-.53-.16-.35-.25-.53-.16-.36-.26-.54-.19-.32-.29-.48-.2-.35-.31-.52-.25-.35-.38-.52l-.32-.43c-.24-.29-.5-.58-.77-.85l0,0L198.61,63.44a12,12,0,0,0-17,17L203,101.8H131.5A45.55,45.55,0,0,0,86,147.3Z"
-              />
-              <path
-                d="M412,88.8a12,12,0,0,0-12,12v100a12,12,0,0,0,24,0v-100A12,12,0,0,0,412,88.8Z"
-              />
-              <path d="M362.11,320h-.22a16,16,0,0,0,0,32h.22a16,16,0,0,0,0-32Z" />
-              <path
-                d="M380.8,224H131.2C107.38,224,88,242.2,88,264.57V407.43C88,429.8,107.38,448,131.2,448H380.8c23.82,0,43.2-18.2,43.2-40.57V264.57C424,242.2,404.62,224,380.8,224ZM400,407.43c0,9.14-8.61,16.57-19.2,16.57H131.2c-10.59,0-19.2-7.43-19.2-16.57V398a12,12,0,0,0,12-12V286a12,12,0,0,0-12-12v-9.43c0-9.14,8.61-16.57,19.2-16.57H380.8c10.59,0,19.2,7.43,19.2,16.57Z"
-              />
-            </svg>
-          }
-        </button>
-      }
-      @if (switcherEnabled) {
-        <button type="button" title="Toggle theme" (click)="toggleTheme()">
-          @if (theme() === 'dark') {
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              <path
-                d="M256,349.82A93.82,93.82,0,1,0,162.18,256,93.93,93.93,0,0,0,256,349.82Zm0-163.64A69.82,69.82,0,1,1,186.18,256,69.9,69.9,0,0,1,256,186.18Z"
-              />
-              <path
-                d="M256,120.73a12,12,0,0,0,12-12V76a12,12,0,0,0-24,0v32.73A12,12,0,0,0,256,120.73Z"
-              />
-              <path d="M268,436V403.27a12,12,0,0,0-24,0V436a12,12,0,0,0,24,0Z" />
-              <path d="M143.44,160.41a12,12,0,1,0,17-17l-23.23-23.23a12,12,0,1,0-17,17Z" />
-              <path
-                d="M351.59,351.59a12,12,0,0,0,0,17l23.23,23.23a12,12,0,0,0,17-17l-23.23-23.23A12,12,0,0,0,351.59,351.59Z"
-              />
-              <path
-                d="M120.73,256a12,12,0,0,0-12-12H76a12,12,0,0,0,0,24h32.73A12,12,0,0,0,120.73,256Z"
-              />
-              <path d="M436,244H403.27a12,12,0,0,0,0,24H436a12,12,0,0,0,0-24Z" />
-              <path
-                d="M137.18,391.79l23.23-23.23a12,12,0,1,0-17-17l-23.23,23.23a12,12,0,1,0,17,17Z"
-              />
-              <path
-                d="M360.07,163.93a12,12,0,0,0,8.49-3.52l23.23-23.23a12,12,0,1,0-17-17l-23.23,23.23a12,12,0,0,0,8.48,20.49Z"
-              />
-            </svg>
-          } @else {
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              <path
-                d="M360.07,147.88a12,12,0,0,0,5.89-21.1,168.05,168.05,0,0,0-214.71,0C80,186,70.19,292.1,129.38,363.35a166.9,166.9,0,0,0,113.77,59.93q7.9.74,15.75.73A166.74,166.74,0,0,0,366,385.22a12,12,0,0,0-5.89-21.1,109.33,109.33,0,0,1,0-216.24ZM244.43,275.77A133.48,133.48,0,0,0,330,381.08,144.11,144.11,0,0,1,147.84,348C97.1,287,105.51,196,166.58,145.24A144.08,144.08,0,0,1,330,130.94C272,152.38,234.91,212.29,244.43,275.77Z"
-              />
-            </svg>
-          }
-        </button>
-      }
-      <button type="button" title="Show QR code" class="qr-button" (click)="openQrMenu()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <path
-            d="M100 180a12 12 0 01-12-12v-56a24 24 0 0124-24h56a12 12 0 010 24h-56v56a12 12 0 01-12 12zM412 180a12 12 0 01-12-12v-56h-56a12 12 0 010-24h56a24 24 0 0124 24v56a12 12 0 01-12 12zM168 424h-56a24 24 0 01-24-24v-56a12 12 0 0124 0v56h56a12 12 0 010 24zM400 424h-56a12 12 0 010-24h56v-56a12 12 0 0124 0v56a24 24 0 01-24 24zM176.11 172.11h27.79v27.79h-27.79zM424 304H88a12 12 0 010-24h336a12 12 0 010 24z"
-          />
-          <path
-            d="M244.37 377.69H137.4V318h24v35.69h82.97v24zM374.36 193.69h-24V158h-49.87v-24h73.87v59.69z"
-          />
-          <path
-            d="M189.34 318h48.05v24h-48.05zM350.37 318v35.69H333.1V318h-67.54v24h43.54v11.69h-23.86v24h89.13V318h-24zM242 238H138V134h104zm-80-24h56v-56h-56zM261.33 134h24v44.54h-24zM350.36 225.06h24v44.54h-24zM301.77 169h30.29v24h-30.29zM328.18 267h-64v-64h64zm-40-24h16v-16h-16z"
-          />
-        </svg>
-        @if (showQrMenu()) {
-          <si-live-preview-qr
-            title=""
-            [url]="plainUrl()"
-            [urlShort]="plainUrlShort()"
-            (closed)="showQrMenu.set(false)"
-          />
-        }
-      </button>
-    </div>
-  </section>
-
-  <div
-    class="device"
-    [class.md]="mode() !== 'ios'"
-    [class.ios]="mode() === 'ios' && !showNotch()"
-    [class.ios-with-notch]="mode() === 'ios' && showNotch()"
-    [class.dark]="theme() === 'dark'"
-    [class.landscape]="landscape()"
-  >
-    @if (mode() !== 'ios') {
-      <div class="wrapper">
-        <svg class="md-bar" viewBox="0 0 130 40.3" [class.dark]="theme() === 'dark'">
-          <path
-            d="m 16,4.2 h 64 c 8.8,0 16,7.2 16,16 0,8.8 -7.2,16 -16,16 H 16 C 7.2,36.2 0,29 0,20.2 0,11.4 7.2,4.2 16,4.2 Z"
-          />
-        </svg>
-        <svg class="md-bar" viewBox="0 0 199.99999 40.3" [class.dark]="theme() === 'dark'">
-          <path
-            d="M 155,5.0124996 173.8,37.3125 c 0.8,1.3 2.7,1.3 3.5,0 L 196,5.0124996 c 0.8,-1.3 -0.2,-3 -1.7,-3 h -37.6 c -1.5,0 -2.5,1.7 -1.7,3 z"
-          />
-          <circle r="20" cy="20.15" cx="111" class="st0" />
-          <path
-            d="m 25,1.1499996 h 30 c 2.2,0 4,1.8 4,4 V 35.15 c 0,2.2 -1.8,4 -4,4 H 25 c -2.2,0 -4,-1.8 -4,-4 V 5.1499996 c 0,-2.3 1.8,-4 4,-4 z"
-          />
-        </svg>
-      </div>
-    } @else {
-      @if (showNotch()) {
-        <!-- iOS devices with notch -->
-        <div class="notch">
-          <div class="camera"></div>
-          <div class="speaker"></div>
-        </div>
-        <div class="sleep"></div>
-        <div class="volume"></div>
-      } @else {
-        <!-- iOS devices without notch -->
-        <div class="camera"></div>
-        <div class="speaker"></div>
-        <div class="sensor"></div>
-        <div class="sleep"></div>
-        <div class="volume"></div>
-        <div class="home"></div>
-      }
-    }
-
-    <div class="screen">
-      <iframe
-        #previewIframe
-        src="#/iframe"
-        [height]="currentIFrameHeight()"
-        [width]="currentIFrameWidth()"
-      ></iframe>
-    </div>
-  </div>
+  <si-live-preview-mobile-mode
+    [exampleUrl]="exampleUrl()"
+    [template]="template()"
+    [theme]="theme()"
+    [locale]="locale()"
+    [rootFontSize]="rootFontSize()"
+    [isRTL]="isRTL()"
+    [templateModified]="templateModified()"
+    [supportsLandscape]="supportsLandscape()"
+    [iFrameHeight]="iFrameHeight()"
+    [iFrameWidth]="iFrameWidth()"
+    (iframeChange)="setPreviewIframe($event)"
+    (viewportChange)="setViewport($event)"
+    (themeToggle)="toggleTheme()"
+  />
 } @else {
-  <iframe #previewIframe src="#/iframe" title="Example view"></iframe>
+  <si-live-preview-iframe-mode (iframeChange)="setPreviewIframe($event)" />
 }
