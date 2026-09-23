@@ -1,9 +1,5 @@
 @use '../../styles/variables';
 @use '../../styles/components/links';
-@use '../../styles/components/focus';
-@use 'ios';
-@use 'ios-with-notch';
-@use 'md';
 
 $font-size-small: 11px;
 
@@ -17,15 +13,6 @@ $font-size-small: 11px;
 
   &:not(.is-mobile) {
     flex: 1;
-  }
-}
-
-iframe {
-  border: 0;
-  display: block;
-
-  :host:not(.is-mobile) & {
-    block-size: 100%;
   }
 }
 
@@ -63,90 +50,5 @@ iframe {
     white-space: nowrap;
     flex: 1 1 0;
     inline-size: 0;
-  }
-}
-
-.settings-selection {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-block: 10px 20px;
-  margin-inline: 0;
-
-  .toggle-wrapper {
-    display: flex;
-
-    button {
-      background: variables.$live-preview-button-background-color;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      block-size: 40px;
-      inline-size: 40px;
-      border: 1px solid variables.$live-preview-border-color;
-      border-radius: 50%;
-      margin-inline-start: 10px;
-      position: relative;
-
-      > svg {
-        block-size: 24px;
-        fill: variables.$live-preview-control-fill-color;
-
-        &:hover {
-          fill: variables.$live-preview-link-hover-color;
-        }
-      }
-
-      &:disabled {
-        > svg {
-          fill: variables.$live-preview-link-inactive-color;
-        }
-      }
-    }
-  }
-}
-
-.device-selection {
-  appearance: none;
-  background-color: variables.$live-preview-background-color;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M352.79 203.21a12.45 12.45 0 011.44 15.86l-1.44 1.72-88 88a12.45 12.45 0 01-15.86 1.44l-1.72-1.44-88-88a12.43 12.43 0 0115.86-19l1.72 1.44L256 282.42l79.21-79.21a12.45 12.45 0 0115.86-1.44z'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 2px top 50%;
-  color: variables.$live-preview-font-color;
-  block-size: 35px;
-  min-inline-size: 200px;
-  border-radius: 2px;
-  border: 1px solid variables.$live-preview-border-color;
-  padding: 6px;
-  margin-block: 0;
-  display: flex;
-  flex: 1;
-}
-
-.device {
-  position: relative;
-  box-sizing: content-box;
-
-  .screen {
-    background: variables.$live-preview-background-color;
-    box-shadow: 0 0 0 3px #111; // stylelint-disable-line color-no-hex
-    border-radius: 1px;
-    block-size: 100%;
-    inline-size: 100%;
-    position: relative;
-    overflow: hidden;
-    display: block;
-  }
-
-  &.md {
-    @include md.md;
-  }
-
-  &.ios-with-notch {
-    @include ios-with-notch.ios-with-notch;
-  }
-
-  &.ios {
-    @include ios.ios;
   }
 }
