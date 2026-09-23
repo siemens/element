@@ -1,0 +1,19 @@
+- paragraph: Content title 1
+- button "Close"
+- list:
+  - listitem:
+    - button "Title link item 1"
+  - listitem:
+    - button "Title link item 2"
+  - listitem:
+    - button "Title link item 3"
+  - listitem:
+    - button "Title link item 4"
+  - listitem:
+    - button "Title link item 5"
+- main:
+  - link "Siemens logo":
+    - /url: "#/"
+  - heading "Application name" [level=1]
+  - button "Side panel"
+  - button "Open side panel"

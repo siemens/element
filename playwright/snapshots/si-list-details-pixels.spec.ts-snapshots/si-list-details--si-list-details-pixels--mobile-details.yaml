@@ -1,0 +1,12 @@
+- heading "Equipment" [level=2]
+- button /Air handling unit AHU-\d+/
+- button /Room controller RC-\d+/
+- button /Heat pump HP-\d+/
+- button "Back"
+- text: Room controller
+- term: Equipment ID
+- definition: /RC-\d+/
+- term: Location
+- definition: /Room \d+, Building A/
+- term: Status
+- definition: Connected

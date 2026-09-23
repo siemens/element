@@ -1,0 +1,62 @@
+<div class="p-2">
+  <div class="mb-6">
+    <si-activity-message heading="Completed activity with details" [expanded]="true">
+      <si-markdown [markdown]="summary" />
+    </si-activity-message>
+    <si-activity-message state="running" heading="Running activity">
+      Searching the available data sources.
+    </si-activity-message>
+    <si-activity-message state="failed" heading="Failed activity">
+      The activity could not access the maintenance service.
+    </si-activity-message>
+    <si-activity-message heading="Completed activity with the default icon">
+      Completed a general processing step.
+    </si-activity-message>
+  </div>
+
+  <si-activity-trace class="mb-6" heading="Expanded activity trace" [expanded]="true">
+    <si-activity-message heading="Reasoning" [icon]="icons.elementSelfLearning">
+      Reading specific files and identifying relevant content.
+    </si-activity-message>
+    <si-activity-message heading="Retrieval" [icon]="icons.elementSearch" [expanded]="true">
+      <si-activity-message-part heading="Input">
+        Project requirements and available KPI definitions
+      </si-activity-message-part>
+      <si-activity-message-part heading="Output" collapsible>
+        Found the relevant dashboard guidance and data sources.
+      </si-activity-message-part>
+    </si-activity-message>
+    <si-activity-message heading="Computation" [icon]="icons.elementFunction">
+      Transforming and processing the collected data.
+    </si-activity-message>
+    <si-activity-message heading="Generation" [icon]="icons.elementGenerate">
+      Creating the requested content.
+    </si-activity-message>
+    <si-activity-message heading="System action" [icon]="icons.elementSettings">
+      Applying changes and running commands.
+    </si-activity-message>
+    <si-activity-message heading="Workflow" [icon]="icons.elementMaintenance">
+      Orchestrating the required tools.
+    </si-activity-message>
+    <si-activity-message heading="Read" [icon]="icons.elementDocument">
+      Reading a specific file.
+    </si-activity-message>
+    <si-activity-message heading="Summary" [icon]="icons.elementChecked">
+      Preparing the final high-level result.
+    </si-activity-message>
+    <si-activity-message heading="Generic">Completing a general activity.</si-activity-message>
+  </si-activity-trace>
+
+  <si-activity-message
+    heading="Advanced: optional nested activities"
+    [icon]="icons.elementAi"
+    [expanded]="true"
+  >
+    <si-activity-message heading="Validated source data">
+      Checked the source fields and value ranges.
+    </si-activity-message>
+    <si-activity-message heading="Calculated recommendations">
+      Ranked the available actions by expected impact.
+    </si-activity-message>
+  </si-activity-message>
+</div>

@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
       div {
         padding: 0.5rem;
         margin: 0.5rem;
-        background-color: var(--si-sys-background-1);
+        background-color: var(--si-sys-color-background-1);
       }
     }
   `,

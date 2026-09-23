@@ -83,7 +83,7 @@ describe('SiAvatarComponent', () => {
     await fixture.whenStable();
 
     expect(element.style.getPropertyValue('--background')).toBe(
-      'var(--si-sys-data-categorical-14)'
+      'var(--si-sys-color-data-categorical-14)'
     );
   });
 
@@ -92,7 +92,9 @@ describe('SiAvatarComponent', () => {
     color.set(21);
     await fixture.whenStable();
 
-    expect(element.style.getPropertyValue('--background')).toBe('var(--si-sys-data-categorical-4)');
+    expect(element.style.getPropertyValue('--background')).toBe(
+      'var(--si-sys-color-data-categorical-4)'
+    );
   });
 
   it('should set color automatically', async () => {
@@ -100,13 +102,15 @@ describe('SiAvatarComponent', () => {
     autoColor.set(true);
     await fixture.whenStable();
 
-    expect(element.style.getPropertyValue('--background')).toBe('var(--si-sys-data-categorical-4)');
+    expect(element.style.getPropertyValue('--background')).toBe(
+      'var(--si-sys-color-data-categorical-4)'
+    );
 
     initials.set('DJ');
     await fixture.whenStable();
 
     expect(element.style.getPropertyValue('--background')).toBe(
-      'var(--si-sys-data-categorical-10)'
+      'var(--si-sys-color-data-categorical-10)'
     );
   });
 

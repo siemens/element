@@ -50,7 +50,7 @@
       padding-inline: map.get(all-variables.$spacers-inline, 5);
 
       &:not(.dot-outer):hover {
-        background: all-variables.$si-sys-background-hover;
+        background: all-variables.$si-sys-color-background-hover;
       }
 
       &.dot-outer {
@@ -90,6 +90,14 @@
   justify-content: space-between;
 }
 
+.header-title {
+  margin-inline-start: map.get(all-variables.$spacers, 6);
+}
+
+.rpanel-header:has([siSidePanelBackButton]) .header-title {
+  margin-inline-start: map.get(all-variables.$spacers, 2);
+}
+
 .rpanel-wrapper {
   padding-block-start: map.get(all-variables.$spacers-block, 5);
 }
@@ -112,11 +120,11 @@
 
   span {
     white-space: pre-wrap;
-    color: all-variables.$si-sys-text-primary;
+    color: all-variables.$si-sys-color-text-primary;
   }
 
   &:hover span {
-    color: all-variables.$si-sys-text-accent;
+    color: all-variables.$si-sys-color-text-accent;
   }
 }
 
@@ -146,8 +154,8 @@
       border-end-start-radius: all-variables.$border-radius;
       border-start-end-radius: 0 !important; // stylelint-disable-line declaration-no-important
       border-end-end-radius: 0 !important; // stylelint-disable-line declaration-no-important
-      background: all-variables.$si-sys-background-1;
-      box-shadow: all-variables.$si-sys-effects-shadow-1;
+      background: all-variables.$si-sys-color-background-1;
+      box-shadow: all-variables.$si-sys-color-effects-shadow-1;
       z-index: 2;
     }
   }

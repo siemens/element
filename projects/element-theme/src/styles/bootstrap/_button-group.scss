@@ -88,16 +88,17 @@
   .btn-check + .btn,
   label.btn:has(.btn-check) {
     --btn-border-width: 1px;
-    --btn-border-color: #{system-tokens.$si-sys-border-4};
-    --btn-border-color-hover: #{system-tokens.$si-sys-border-4};
+    --btn-border-color: #{system-tokens.$si-sys-color-border-4};
+    --btn-border-color-hover: #{system-tokens.$si-sys-color-border-4};
     cursor: pointer;
     background: transparent;
-    color: system-tokens.$si-sys-text-primary;
+    color: system-tokens.$si-sys-color-text-primary;
     transition: none;
 
     &.btn-icon {
       inline-size: auto;
       padding-inline: calc(map.get(spacers.$spacers-inline, 5) - 1px);
+      aspect-ratio: unset;
     }
 
     // @deprecated Will be removed in a future major version, use .btn-icon instead.
@@ -114,20 +115,20 @@
 
   .btn-check + .btn:hover,
   label:has(.btn-check:not(:checked)):hover > * {
-    color: system-tokens.$si-sys-text-accent-hover;
+    color: system-tokens.$si-sys-color-text-accent-hover;
   }
 
   .btn-check:checked {
     + .btn {
-      background: system-tokens.$si-sys-background-accent-secondary-active;
-      border-color: system-tokens.$si-sys-border-accent-active;
-      color: system-tokens.$si-sys-text-accent-active;
+      background: system-tokens.$si-sys-color-background-accent-secondary-active;
+      border-color: system-tokens.$si-sys-color-border-accent-active;
+      color: system-tokens.$si-sys-color-text-accent-active;
       z-index: 2;
     }
 
     + .btn:hover,
     &:hover + .btn {
-      color: system-tokens.$si-sys-text-primary;
+      color: system-tokens.$si-sys-color-text-primary;
     }
   }
 

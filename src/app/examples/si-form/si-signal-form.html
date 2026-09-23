@@ -1,0 +1,134 @@
+<div class="container-fluid">
+  <div class="row gy-5">
+    <div class="col-12 col-md">
+      <si-card heading="Signal Form">
+        <div class="card-body" body>
+          <form class="responsive-form-col-layout" [formRoot]="form">
+            <si-form-fieldset label="Role" inline>
+              <si-form-field label="Engineer">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  value="ENGINEER"
+                  [formField]="form.role"
+                />
+              </si-form-field>
+              <si-form-field label="Installer">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  value="INSTALLER"
+                  [formField]="form.role"
+                />
+              </si-form-field>
+              <button
+                si-help-button
+                type="button"
+                siHelpTitle="More information"
+                siHelpContent="A role must be selected."
+                >More information about the role</button
+              >
+            </si-form-fieldset>
+
+            <si-form-field label="Name">
+              <input type="text" class="form-control" [formField]="form.name" />
+              <button
+                si-help-button
+                type="button"
+                siHelpTitle="More information"
+                siHelpContent="Full name must start with an uppercase letter and be at least 3 characters long."
+                >More information about the name</button
+              >
+            </si-form-field>
+
+            <si-form-field label="Description">
+              <input type="text" class="form-control" [formField]="form.description" />
+            </si-form-field>
+
+            <si-form-field label="Phone number">
+              <si-phone-number-input
+                class="form-control"
+                defaultCountry="CH"
+                placeholderForSearch="Search"
+                selectCountryAriaLabel="Select country"
+                [formField]="form.phoneNumber"
+                [supportedCountries]="['AU', 'CH', 'DE', 'FK', 'IN', 'US']"
+              />
+            </si-form-field>
+
+            <si-form-field label="Day of birth">
+              <si-calendar-button class="w-100">
+                <input
+                  type="text"
+                  class="w-100 form-control"
+                  autocomplete="off"
+                  siDatepicker
+                  [formField]="form.birthday"
+                />
+              </si-calendar-button>
+            </si-form-field>
+
+            <si-form-field label="Travel Date">
+              <si-date-range class="w-100" [formField]="form.travelDate" />
+            </si-form-field>
+
+            <si-form-field label="Arrival">
+              <si-timepicker [hideLabels]="true" [formField]="form.arrival" />
+            </si-form-field>
+
+            <si-form-field label="Departure">
+              <si-timepicker [hideLabels]="true" [formField]="form.departure" />
+            </si-form-field>
+
+            <si-form-field label="Class of service">
+              <si-select
+                class="form-control"
+                [options]="optionsList"
+                [formField]="form.serviceClass"
+              />
+            </si-form-field>
+
+            <si-form-field label="Fellow passengers">
+              <si-number-input class="form-control" [formField]="form.fellowPassengers" />
+            </si-form-field>
+
+            <si-form-fieldset label="Accept terms">
+              <si-form-field label="I confirm that I accept all and everything.">
+                <input type="checkbox" class="form-check-input" [formField]="form.termsAccepted" />
+                <button
+                  si-help-button
+                  type="button"
+                  siHelpTitle="More information"
+                  siHelpContent="Acceptance of terms and conditions is required to join."
+                  >More information about the terms</button
+                >
+              </si-form-field>
+
+              <si-form-field label="I confirm that I do not care about my privacy.">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  [formField]="form.privacyDeclined"
+                />
+              </si-form-field>
+            </si-form-fieldset>
+
+            <div class="d-flex justify-content-end mt-6">
+              <button type="button" class="btn btn-secondary me-6" (click)="cancel()">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+      </si-card>
+    </div>
+
+    <app-form-debug
+      [formData]="model()"
+      [submitted]="submitted()"
+      [validationStatus]="form().valid() ? 'VALID' : 'INVALID'"
+      [(state)]="debugState"
+    />
+  </div>
+</div>

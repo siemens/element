@@ -1,0 +1,110 @@
+<si-side-panel [collapsed]="collapsed()" (closed)="collapsed.set(true)">
+  <main class="has-navbar-fixed-top px-6">
+    <si-application-header>
+      <si-header-brand>
+        <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+        <h1 class="application-name">Application name</h1>
+      </si-header-brand>
+
+      <si-header-actions>
+        <button
+          type="button"
+          si-header-action-item
+          icon="element-menu"
+          (click)="collapsed.set(false)"
+        >
+          Side panel
+        </button>
+      </si-header-actions>
+    </si-application-header>
+
+    <div class="pt-6">
+      <button type="button" class="btn btn-secondary" (click)="collapsed.set(false)">
+        Open side panel
+      </button>
+    </div>
+  </main>
+
+  <si-side-panel-content [heading]="selectedItem()?.detailTitle ?? 'Content title 1'">
+    @if (selectedItem()) {
+      <button
+        #backButton
+        type="button"
+        siSidePanelBackButton
+        aria-label="Back to main view"
+        (click)="showNavigation()"
+      ></button>
+    }
+    @if (selectedItem()) {
+      <form class="p-6">
+        <si-form-item label="Property 1">
+          <input class="form-control" type="text" placeholder="Placeholder" required />
+        </si-form-item>
+        <si-form-item class="mt-5" label="Property 2">
+          <input class="form-control" type="text" placeholder="Placeholder" required />
+        </si-form-item>
+        <si-form-item class="mt-5" label="Property 3">
+          <select class="form-select" aria-label="Property 3" required>
+            <option value="" selected disabled>Placeholder</option>
+            <option>Option 1</option>
+            <option>Option 2</option>
+          </select>
+        </si-form-item>
+        <si-form-item class="mt-5" label="Property 4">
+          <si-number-input
+            inputId="exampleInput"
+            class="form-control"
+            unit="°C"
+            placeholder="Value"
+            [min]="0"
+            [max]="100"
+            [step]="1"
+            [showButtons]="true"
+            [class.text-end]="false"
+          />
+        </si-form-item>
+        <si-form-item class="mt-5 mb-2" label="Group label">
+          <div class="form-check">
+            <input id="role-editor" class="form-check-input" type="checkbox" />
+            <label class="form-check-label" for="role-editor">Label</label>
+          </div>
+          <div class="form-check">
+            <input id="role-editor" class="form-check-input" type="checkbox" />
+            <label class="form-check-label" for="role-editor">Label</label>
+          </div>
+        </si-form-item>
+        <si-form-item class="mt-5 mb-2" label="Group label">
+          <div class="form-check">
+            <input id="role-editor" class="form-check-input" type="radio" />
+            <label class="form-check-label" for="role-editor">Label</label>
+          </div>
+          <div class="form-check">
+            <input id="role-editor" class="form-check-input" type="radio" />
+            <label class="form-check-label" for="role-editor">Label</label>
+          </div>
+        </si-form-item>
+        <si-form-item class="mt-5 mb-2" label="Section title">
+          <div class="form-check form-switch">
+            <input type="checkbox" class="form-check-input" role="switch" id="switch4" />
+            <label for="switch4" class="form-check-label">Toggle label</label>
+          </div>
+        </si-form-item>
+      </form>
+    } @else {
+      <ul>
+        @for (item of navigationItems; track item.id) {
+          <li class="py-2">
+            <button
+              #navigationButton
+              type="button"
+              class="list-item list-item-action"
+              (click)="showDetails(item, $index)"
+            >
+              <span class="list-item-title py-0">{{ item.title }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  </si-side-panel-content>
+</si-side-panel>

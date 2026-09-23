@@ -13,6 +13,7 @@ import {
   SiActionDialogService
 } from '@siemens/element-ng/action-modal';
 import { MenuItemAction } from '@siemens/element-ng/menu';
+import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { GridItemHTMLElement } from 'gridstack';
 import { firstValueFrom, Observable, Subject } from 'rxjs';
 import { page, userEvent } from 'vitest/browser';
@@ -263,6 +264,18 @@ describe('SiWidgetHostComponent', () => {
       expect(cardEl.getAttribute('tabindex')).toBe('0');
     });
 
+    it('should use the translated heading as the card aria-label when editable', async () => {
+      const translateService = TestBed.runInInjectionContext(() => injectSiTranslateService());
+      vi.spyOn(translateService, 'translate').mockReturnValueOnce('Translated widget heading');
+      fixture.componentRef.setInput('widgetConfig', {
+        ...TEST_WIDGET_CONFIG_0,
+        heading: 'WIDGET.HEADING'
+      });
+      await fixture.whenStable();
+
+      expect(cardEl).toHaveAttribute('aria-label', 'Translated widget heading');
+    });
+
     it('should not set tabindex on card when not editable', () => {
       fixture.componentRef.setInput('editable', false);
       fixture.detectChanges();
@@ -291,6 +304,34 @@ describe('SiWidgetHostComponent', () => {
     it('should activate keyboard mode on Space', () => {
       cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
       expect(component.keyboardActive()).toBe(true);
+    });
+
+    it('should only describe keyboard activation when not expanded', () => {
+      expect(cardEl).toHaveAttribute(
+        'aria-description',
+        expect.stringContaining('Press Enter or Space')
+      );
+
+      component.card().expand();
+      fixture.detectChanges();
+      expect(cardEl).not.toHaveAttribute('aria-description');
+
+      component.card().restore();
+      fixture.detectChanges();
+      expect(cardEl).toHaveAttribute(
+        'aria-description',
+        expect.stringContaining('Press Enter or Space')
+      );
+    });
+
+    it('should not activate keyboard mode when expanded', async () => {
+      component.card().expand();
+      cardEl.focus();
+
+      for (const key of ['{Enter}', ' ']) {
+        await userEvent.keyboard(key);
+        expect(component.keyboardActive()).toBe(false);
+      }
     });
 
     it('should deactivate keyboard mode on Enter/Space when active', () => {

@@ -106,6 +106,20 @@ Run the unit tests using the corresponding pnpm script:
 pnpm run <module-name>:test
 ```
 
+## Previewing release notes
+
+To preview the release notes that semantic-release would generate from the
+currently checked-out branch, run:
+
+```shell
+node tools/semantic-release/preview.js
+```
+
+The script detects the current branch and prints the prospective release notes
+to standard output. It runs semantic-release in dry-run mode without prepare,
+publish, Git, or GitHub plugins, so it does not modify files, create tags, or
+publish a release.
+
 ## E2E Tests
 
 Our E2E tests are built with [Playwright](https://playwright.dev/).

@@ -47,11 +47,16 @@ export class SiFormFieldsetComponent {
   /** @internal */
   readonly hasOnlyRadios = computed(() => {
     // Check if the fieldset only contains radio buttons.
-    // We can safely assume that, if all items reference the same control and if there are at least 2 items.
+    // Reactive and signal form radios share a control, while template-driven radios share a name.
     const items = this.formItems();
     if (items.length > 1) {
       const first = items[0].control();
-      return first != null && items.every(item => item.control() === first);
+      const firstRadioGroupName = items[0].radioGroupName?.();
+      return (
+        (first != null && items.every(item => item.control() === first)) ||
+        (firstRadioGroupName != null &&
+          items.every(item => item.radioGroupName?.() === firstRadioGroupName))
+      );
     }
 
     return false;

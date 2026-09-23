@@ -25,7 +25,7 @@
 
   .fi.fi-xx {
     background-image: none;
-    background-color: all-variables.$si-sys-background-neutral;
+    background-color: all-variables.$si-sys-color-background-neutral;
   }
 
   &:disabled {
@@ -48,7 +48,7 @@
   }
 
   &:disabled {
-    color: all-variables.$si-sys-text-disabled;
+    color: all-variables.$si-sys-color-text-disabled;
 
     &::placeholder {
       color: all-variables.$input-placeholder-disabled-color;
@@ -56,6 +56,6 @@
   }
 
   &::placeholder {
-    color: all-variables.$si-sys-text-secondary;
+    color: all-variables.$si-sys-color-text-secondary;
   }
 }

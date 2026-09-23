@@ -64,7 +64,7 @@ export type StaticTestOptions = {
 
 // Playwright since 1.48 has the mouse cursor at 0/0 causing any element at this coordinate to be
 // in hover state. This leads to unexpected state in snapshots. To work around this, simply
-// move the mouse outside the viewport. Since this is executed before any test code runs,
+// move the mouse outside the viewport. Since this is executed right after loading the example,
 // tests using the mouse are not affected.
 const hoverFix = async (page: Page): Promise<void> => page.mouse.move(-10, -10);
 
@@ -134,6 +134,7 @@ class SiTestHelpers {
           ? `#/viewer/viewer${urlParamsString}`
           : `#/${name}${urlParamsString}`;
         await this.page.goto(newHash);
+        await hoverFix(this.page);
 
         await this.page.evaluate(() => document.fonts.ready);
 
@@ -312,10 +313,7 @@ export const test = baseTest.extend<{
   si: SiTestHelpers;
 }>({
   si: [
-    async ({ page }, use, testInfo) => {
-      await hoverFix(page);
-      await use(new SiTestHelpers(page, testInfo));
-    },
+    async ({ page }, use, testInfo) => await use(new SiTestHelpers(page, testInfo)),
     { box: true }
   ]
 });

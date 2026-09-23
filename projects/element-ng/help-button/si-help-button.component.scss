@@ -5,16 +5,16 @@
   vertical-align: middle;
   font-size: 1rem;
   border-radius: 100%;
-  color: system-tokens.$si-sys-text-secondary;
+  color: system-tokens.$si-sys-color-text-secondary;
   border: 0;
   background: transparent;
   padding: 0;
 
   &:is(:hover, :active) {
-    color: system-tokens.$si-sys-text-primary;
+    color: system-tokens.$si-sys-color-text-primary;
   }
 
   &:disabled {
-    color: system-tokens.$si-sys-text-disabled;
+    color: system-tokens.$si-sys-color-text-disabled;
   }
 }

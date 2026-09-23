@@ -1,19 +1,19 @@
-- button "Selected color si-sys-data-categorical-7"
+- button "Selected color si-sys-color-data-categorical-7"
 - grid:
-  - row "si-sys-data-categorical-1 si-sys-data-categorical-2 si-sys-data-categorical-3 si-sys-data-categorical-4 si-sys-data-categorical-5 si-sys-data-categorical-6 si-sys-data-categorical-7 si-sys-data-categorical-8":
-    - gridcell "si-sys-data-categorical-1":
-      - radio "si-sys-data-categorical-1"
-    - gridcell "si-sys-data-categorical-2":
-      - radio "si-sys-data-categorical-2"
-    - gridcell "si-sys-data-categorical-3":
-      - radio "si-sys-data-categorical-3"
-    - gridcell "si-sys-data-categorical-4":
-      - radio "si-sys-data-categorical-4"
-    - gridcell "si-sys-data-categorical-5":
-      - radio "si-sys-data-categorical-5"
-    - gridcell "si-sys-data-categorical-6":
-      - radio "si-sys-data-categorical-6"
-    - gridcell "si-sys-data-categorical-7":
-      - radio "si-sys-data-categorical-7" [checked]
-    - gridcell "si-sys-data-categorical-8":
-      - radio "si-sys-data-categorical-8"
+  - row "si-sys-color-data-categorical-1 si-sys-color-data-categorical-2 si-sys-color-data-categorical-3 si-sys-color-data-categorical-4 si-sys-color-data-categorical-5 si-sys-color-data-categorical-6 si-sys-color-data-categorical-7 si-sys-color-data-categorical-8":
+    - gridcell "si-sys-color-data-categorical-1":
+      - radio "si-sys-color-data-categorical-1"
+    - gridcell "si-sys-color-data-categorical-2":
+      - radio "si-sys-color-data-categorical-2"
+    - gridcell "si-sys-color-data-categorical-3":
+      - radio "si-sys-color-data-categorical-3"
+    - gridcell "si-sys-color-data-categorical-4":
+      - radio "si-sys-color-data-categorical-4"
+    - gridcell "si-sys-color-data-categorical-5":
+      - radio "si-sys-color-data-categorical-5"
+    - gridcell "si-sys-color-data-categorical-6":
+      - radio "si-sys-color-data-categorical-6"
+    - gridcell "si-sys-color-data-categorical-7":
+      - radio "si-sys-color-data-categorical-7" [checked]
+    - gridcell "si-sys-color-data-categorical-8":
+      - radio "si-sys-color-data-categorical-8"

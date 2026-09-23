@@ -1,0 +1,31 @@
+- button "Back to main view"
+- paragraph: Content detail 1
+- button "Close"
+- text: Property 1
+- textbox "Placeholder"
+- text: Property 2
+- textbox "Placeholder"
+- text: Property 3
+- combobox "Property 3":
+  - option "Placeholder" [disabled] [selected]
+  - option "Option 1"
+  - option "Option 2"
+- text: Property 4
+- spinbutton "Property 4"
+- text: °C Group label
+- checkbox "Label Label Label Label"
+- text: Label
+- checkbox
+- text: Label Group label
+- radio
+- text: Label
+- radio
+- text: Label Section title
+- switch "Toggle label"
+- text: Toggle label
+- main:
+  - link "Siemens logo":
+    - /url: "#/"
+  - heading "Application name" [level=1]
+  - button "Side panel"
+  - button "Open side panel"

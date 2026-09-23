@@ -7,6 +7,7 @@ import { expect, test } from '../../support/test-helpers';
 test.describe('si-side-panel', () => {
   const example = 'si-side-panel/si-side-panel';
   const exampleCollapsible = 'si-side-panel/si-side-panel-collapsible';
+  const exampleInnerNavigation = 'si-side-panel/si-side-panel-inner-navigation';
 
   const exampleCollapsibleLegacyStatusActions =
     'si-side-panel/si-side-panel-collapsible-legacy-status-actions';
@@ -86,5 +87,22 @@ test.describe('si-side-panel', () => {
     await expect(page.locator('si-side-panel:not(.rpanel-collapsed)')).toBeVisible();
     await expect(page.locator('si-side-panel .fullscreen-button')).toBeHidden();
     await si.runVisualAndA11yTests();
+  });
+
+  test(exampleInnerNavigation, async ({ page, si }) => {
+    await si.visitExample(exampleInnerNavigation);
+
+    await page.getByRole('button', { name: 'Open side panel' }).click();
+    const firstItem = page.getByRole('button', { name: 'Title link item 1' });
+    await firstItem.click();
+
+    const backButton = page.getByRole('button', { name: 'Back to main view' });
+    await expect(backButton).toBeFocused();
+    await expect(page.getByText('Content detail 1', { exact: true })).toBeVisible();
+    await si.runVisualAndA11yTests('detail');
+
+    await backButton.click();
+    await expect(firstItem).toBeFocused();
+    await si.runVisualAndA11yTests('list');
   });
 });

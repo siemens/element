@@ -26,6 +26,8 @@ interface TabData {
   icon?: string;
   closable?: true;
   routerLinkUrl?: string;
+  active?: boolean;
+  disabled?: boolean;
   canDeactivate?: () => boolean;
   canActivate?: () => boolean;
 }
@@ -44,10 +46,11 @@ class SiTabRouteComponent {}
         <si-tabset>
           @for (tab of tabsObject(); track tab) {
             <si-tab
-              [active]="activeTab() === $index"
+              [active]="tab.active ?? activeTab() === $index"
               [heading]="tab.heading"
               [icon]="tab.icon"
               [closable]="!!tab.closable"
+              [disabled]="tab.disabled ?? false"
               [style.max-width.px]="tabButtonMaxWidth()"
               [canDeactivate]="tab.canDeactivate"
               [canActivate]="tab.canActivate"
@@ -219,6 +222,35 @@ describe('SiTabset', () => {
     await expect.element(page.getByRole('tooltip', { name: 'Tab 1' })).toBeInTheDocument();
   });
 
+  it('should activate the first tab when no active tab is provided', async () => {
+    testComponent.tabs = ['1', '2', '3'];
+    fixture.detectChanges();
+
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(true);
+    expect(await (await tabsetHarness.getTabItemButtonAt(0)).getAttribute('tabindex')).toBe('0');
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
+    expect(await tabsetHarness.isTabItemActive(2)).toBe(false);
+  });
+
+  it('should activate the first non-disabled tab when no active tab is provided', async () => {
+    testComponent.tabs = [{ heading: '1', disabled: true }, '2', '3'];
+    fixture.detectChanges();
+
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(false);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(true);
+    expect(await (await tabsetHarness.getTabItemButtonAt(1)).getAttribute('tabindex')).toBe('0');
+    expect(await tabsetHarness.isTabItemActive(2)).toBe(false);
+  });
+
+  it('should not override an app-provided active tab', async () => {
+    testComponent.tabs = ['1', { heading: '2', active: true }, '3'];
+    fixture.detectChanges();
+
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(false);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(true);
+    expect(await tabsetHarness.isTabItemActive(2)).toBe(false);
+  });
+
   it('should remove tab on destroy', async () => {
     testComponent.tabs = ['1', '2', '3'];
     fixture.detectChanges();
@@ -288,6 +320,28 @@ describe('SiTabset', () => {
     vi.advanceTimersByTime(10);
     expect(await tabsetHarness.getOptionsMenuButton()).toBeNull();
     expect(await tabsetHarness.isTabVisible(3)).toBe(true);
+  });
+
+  it('should keep the menu button visible when it reduces the available width', async () => {
+    vi.setTimerTickMode('nextTimerAsync');
+    testComponent.tabs = ['Tab 1', 'Tab 2', 'Tab 3'];
+    await fixture.whenStable();
+    const tabScrollContainer = page.getByRole('tablist').element() as HTMLElement;
+    const menuButtonLocator = page.getByRole('button', { includeHidden: true });
+    vi.spyOn(tabScrollContainer, 'clientWidth', 'get').mockImplementation(() =>
+      menuButtonLocator.elements().length ? 254 : 298
+    );
+    vi.spyOn(tabScrollContainer, 'scrollWidth', 'get').mockReturnValue(299);
+
+    MockResizeObserver.triggerResize({});
+    await fixture.whenStable();
+    await expect.element(menuButtonLocator).toBeInTheDocument();
+
+    const menuButton = menuButtonLocator.element() as HTMLElement;
+    vi.spyOn(menuButton, 'offsetWidth', 'get').mockReturnValue(44);
+    MockResizeObserver.triggerResize({});
+    await fixture.whenStable();
+    await expect.element(menuButtonLocator).toBeInTheDocument();
   });
 
   it('should always scroll active tab into view', async () => {

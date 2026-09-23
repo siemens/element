@@ -1,10 +1,10 @@
 <ng-content select="[headerIcon]" />
 <div class="heading">
   @if (heading()) {
-    <div class="text-truncate si-h5" [id]="headingId()">{{ heading() | translate }}</div>
+    <div class="text-truncate si-h5" [attr.id]="headingId()">{{ heading() | translate }}</div>
   }
   @if (subHeading()) {
-    <div class="text-truncate si-body text-secondary pt-2" [id]="subHeadingId()">
+    <div class="text-truncate si-body text-secondary pt-2" [attr.id]="subHeadingId()">
       {{ subHeading() | translate }}
     </div>
   }

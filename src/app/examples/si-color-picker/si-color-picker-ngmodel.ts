@@ -16,15 +16,15 @@ import { LOG_EVENT } from '@siemens/live-preview';
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
   palette = [
-    'si-sys-data-categorical-1',
-    'si-sys-data-categorical-2',
-    'si-sys-data-categorical-3',
-    'si-sys-data-categorical-4',
-    'si-sys-data-categorical-5',
-    'si-sys-data-categorical-6',
-    'si-sys-data-categorical-7',
-    'si-sys-data-categorical-8 '
+    'si-sys-color-data-categorical-1',
+    'si-sys-color-data-categorical-2',
+    'si-sys-color-data-categorical-3',
+    'si-sys-color-data-categorical-4',
+    'si-sys-color-data-categorical-5',
+    'si-sys-color-data-categorical-6',
+    'si-sys-color-data-categorical-7',
+    'si-sys-color-data-categorical-8 '
   ];
 
-  selectedColor = 'si-sys-data-categorical-7';
+  selectedColor = 'si-sys-color-data-categorical-7';
 }

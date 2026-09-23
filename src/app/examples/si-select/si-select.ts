@@ -15,6 +15,7 @@ import {
   SiSelectGroupTemplateDirective,
   SiSelectMultiValueDirective,
   SiSelectOptionTemplateDirective,
+  SiSelectValueTemplateDirective,
   SiSelectSimpleOptionsDirective,
   SiSelectSingleValueDirective
 } from '@siemens/element-ng/select';
@@ -33,6 +34,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiSelectActionsDirective,
     SiSelectActionDirective,
     SiSelectOptionTemplateDirective,
+    SiSelectValueTemplateDirective,
     SiSelectGroupTemplateDirective,
     TitleCasePipe,
     TranslatePipe

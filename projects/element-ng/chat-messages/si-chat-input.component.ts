@@ -32,6 +32,7 @@ import {
 } from '@siemens/element-ng/file-uploader';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
@@ -89,7 +90,8 @@ export interface ChatInputAttachment extends Attachment {
     SiTranslatePipe,
     SiAttachmentListComponent,
     SiMenuFactoryComponent,
-    SiFileUploadDirective
+    SiFileUploadDirective,
+    SiTooltipDirective
   ],
   templateUrl: './si-chat-input.component.html',
   styleUrl: './si-chat-input.component.scss'
@@ -158,8 +160,7 @@ export class SiChatInputComponent implements AfterViewInit {
   readonly disclaimer = input<TranslatableString>();
 
   /**
-   * Primary actions available in the input (attach files, etc.)
-   * All actions displayed inline
+   * Primary actions available in the input. Provide at most one action.
    * @defaultValue []
    */
   readonly actions = input<MessageAction[]>([]);
@@ -317,7 +318,7 @@ export class SiChatInputComponent implements AfterViewInit {
   protected readonly hasAttachments = computed(() => this.attachments().length > 0);
   protected readonly hasActions = computed(() => this.actions().length > 0);
   protected readonly hasSecondaryActions = computed(() => this.secondaryActions().length > 0);
-  protected readonly allMenuActions = computed<MenuItem[]>(() => [
+  protected readonly combinedMenuActions = computed<MenuItem[]>(() => [
     ...(this.allowAttachments()
       ? [
           {
@@ -329,19 +330,10 @@ export class SiChatInputComponent implements AfterViewInit {
           } satisfies MenuItem
         ]
       : []),
-    ...this.actions().map((a): MenuItem => ({
-      type: 'action' as const,
-      label: a.label,
-      icon: a.icon,
-      disabled: a.disabled,
-      action: (param: unknown) => a.action(param, a)
-    })),
     ...this.secondaryActions()
   ]);
 
-  protected readonly hasMenuActions = computed(
-    () => this.allowAttachments() || this.hasActions() || this.hasSecondaryActions()
-  );
+  protected readonly hasMenuActions = computed(() => this.hasSecondaryActions());
 
   protected triggerFileInput(): void {
     this.fileInput()?.nativeElement.click();

@@ -19,8 +19,8 @@ import * as _siemens_element_translate_ng_translate from '@siemens/element-trans
 import { StaticProvider } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
-import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
-import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
 
 // @public
 export interface Attachment {
@@ -46,13 +46,34 @@ export interface MessageAction {
 // @public (undocumented)
 export interface PromptCategory {
     // (undocumented)
-    label: TranslatableString_2;
+    label: TranslatableString;
 }
 
 // @public (undocumented)
 export interface PromptSuggestion {
     // (undocumented)
-    text: TranslatableString_2;
+    text: TranslatableString;
+}
+
+// @public
+export class SiActivityMessageComponent {
+    readonly expanded: _angular_core.ModelSignal<boolean>;
+    readonly heading: _angular_core.InputSignal<TranslatableString>;
+    readonly icon: _angular_core.InputSignal<string | undefined>;
+    readonly state: _angular_core.InputSignal<"running" | "failed" | undefined>;
+}
+
+// @public
+export class SiActivityMessagePartComponent {
+    readonly collapsible: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly expanded: _angular_core.ModelSignal<boolean>;
+    readonly heading: _angular_core.InputSignal<TranslatableString>;
+}
+
+// @public
+export class SiActivityTraceComponent {
+    readonly expanded: _angular_core.ModelSignal<boolean>;
+    readonly heading: _angular_core.InputSignal<TranslatableString>;
 }
 
 // @public
@@ -104,31 +125,31 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly actionParam: _angular_core.InputSignal<any>;
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
     readonly allowAttachments: _angular_core.InputSignal<boolean>;
-    readonly attachFileLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly attachFileLabel: _angular_core.InputSignal<TranslatableString>;
     readonly attachments: _angular_core.ModelSignal<ChatInputAttachment[]>;
     readonly autoFocus: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly disclaimer: _angular_core.InputSignal<TranslatableString_2 | undefined>;
+    readonly disclaimer: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly fileError: _angular_core.OutputEmitterRef<FileUploadError>;
     focus(): void;
     readonly followUpPrompts: _angular_core.InputSignal<string[]>;
     readonly followUpPromptSelected: _angular_core.OutputEmitterRef<string>;
     readonly interrupt: _angular_core.OutputEmitterRef<void>;
-    readonly interruptButtonLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly interruptButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly interruptible: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly label: _angular_core.InputSignal<string>;
     readonly maxFileSize: _angular_core.InputSignal<number>;
     readonly maxLength: _angular_core.InputSignal<number | undefined>;
-    readonly placeholder: _angular_core.InputSignal<TranslatableString_2>;
-    readonly removeAttachmentLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly placeholder: _angular_core.InputSignal<TranslatableString>;
+    readonly removeAttachmentLabel: _angular_core.InputSignal<TranslatableString>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
-    readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString>;
     readonly send: _angular_core.OutputEmitterRef<{
         content: string;
         attachments: ChatInputAttachment[];
     }>;
     readonly sendButtonIcon: _angular_core.InputSignal<string>;
-    readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly value: _angular_core.ModelSignal<string>;
 }

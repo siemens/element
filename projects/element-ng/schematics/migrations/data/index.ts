@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 export type { ElementMigrationData } from './element-migration-data.js';
-export { getElementMigrationData } from './element-migration-data.js';
+export {
+  getColorTokenRenameMigrationData,
+  getElementMigrationData
+} from './element-migration-data.js';
 
 export type { AttributeSelectorInstruction } from './attribute-selectors.js';
 export type { ClassMemberReplacementInstruction } from './class-member-replacement.js';

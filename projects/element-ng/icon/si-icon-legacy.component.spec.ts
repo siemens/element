@@ -26,10 +26,10 @@ describe('SiIconLegacyComponent', () => {
 
   it('should set color class', () => {
     component.setInput('icon', 'element-alarm');
-    component.setInput('color', 'si-sys-text-accent');
+    component.setInput('color', 'si-sys-color-text-accent');
     fixture.detectChanges();
     const icon = fixture.nativeElement.querySelector('.element-alarm');
-    expect(icon).toHaveClass('si-sys-text-accent');
+    expect(icon).toHaveClass('si-sys-color-text-accent');
   });
 
   it('should set alt text', () => {

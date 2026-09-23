@@ -69,13 +69,12 @@ export class ResizeObserverService {
     emitInitial?: boolean,
     emitImmediate?: boolean
   ): Observable<ElementDimensions> {
-    let entry = this.listeners.get(element);
-    if (!entry) {
-      entry = { element, subscribers: [] };
-      this.listeners.set(element, entry);
-    }
-
     return new Observable<ElementDimensions>(subscriber => {
+      let entry = this.listeners.get(element);
+      if (!entry) {
+        entry = { element, subscribers: [] };
+        this.listeners.set(element, entry);
+      }
       const sub: ResizeSubscriber = {
         sub: subscriber,
         dim: undefined,
@@ -83,8 +82,8 @@ export class ResizeObserverService {
         blocked: false,
         emitImmediate
       };
-      this.subscriberAdded(entry!, sub, emitInitial);
-      return () => this.subscriberRemoved(entry!, sub);
+      this.subscriberAdded(entry, sub, emitInitial);
+      return () => this.subscriberRemoved(entry, sub);
     });
   }
 

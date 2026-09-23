@@ -1,7 +1,4 @@
-@use 'sass:map';
-
 @use '@siemens/element-theme/src/styles/bootstrap/variables';
-@use '@siemens/element-theme/src/styles/variables/spacers';
 
 .text-truncate {
   flex: 0 1 auto;
@@ -15,9 +12,4 @@
 .cab {
   flex: 1 0 0;
   min-inline-size: calc(1lh + 2 * variables.$card-cap-padding-y);
-}
-
-::ng-deep .icon[headerIcon] {
-  // The icon would be 8px too high without this.
-  margin-block: map.get(spacers.$negative-spacers-block, 2);
 }

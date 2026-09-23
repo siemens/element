@@ -20,15 +20,15 @@
 }
 
 .btn.dropdown {
-  color: variables.$si-sys-text-primary;
+  color: variables.$si-sys-color-text-primary;
   min-inline-size: 0;
-  border-block-end: 1px solid variables.$si-sys-border-4;
+  border-block-end: 1px solid variables.$si-sys-color-border-4;
   padding-inline: map.get(variables.$spacers-inline, 5);
   flex-shrink: 0;
 
   &:hover {
-    border-color: variables.$si-sys-border-4;
-    color: variables.$si-sys-text-accent-hover;
+    border-color: variables.$si-sys-color-border-4;
+    color: variables.$si-sys-color-text-accent-hover;
   }
 }
 
