@@ -59,6 +59,7 @@ describe('SiPhoneNumberInputComponent', () => {
       SiSelectFilterListHarness.with('test-phone-listbox')
     );
   };
+  const countrySelect = page.getByRole('combobox', { name: /^Select/ });
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({}).compileComponents();
@@ -75,17 +76,17 @@ describe('SiPhoneNumberInputComponent', () => {
   });
 
   it('should show the correct country code on selecting a country from dropdown', async () => {
-    await userEvent.click(page.getByRole('combobox', { name: 'Select' }));
+    await userEvent.click(countrySelect);
     await fixture.whenStable();
     const displaySelectedCountry = element.querySelector(
       '.dropdown-toggle .si-body'
     ) as HTMLElement;
-    expect(displaySelectedCountry).toHaveTextContent('+49');
+    expect(displaySelectedCountry).toMatchTextContent('+49');
   });
 
   it('should show sorted country list in dropdown, irrespective of order passed in supportedCountryList', async () => {
     // We have passed ['IN','US','AE','CH','DE'] as input to supportedCountryList from WrapperComponent
-    await userEvent.click(page.getByRole('combobox', { name: 'Select' }));
+    await userEvent.click(countrySelect);
     await fixture.whenStable();
     const list = await getFilterListHarness();
 
@@ -99,7 +100,7 @@ describe('SiPhoneNumberInputComponent', () => {
   });
 
   it('should filter the appropriate countries when user searches for one', async () => {
-    await userEvent.click(page.getByRole('combobox', { name: 'Select' }));
+    await userEvent.click(countrySelect);
     const list = await getFilterListHarness();
     // Querying for "Switz" will display only "Switzerland +41" in the list
     await list.sendKeys('Switz');
@@ -110,11 +111,11 @@ describe('SiPhoneNumberInputComponent', () => {
     const displaySelectedCountry = element.querySelector(
       '.dropdown-toggle .si-body'
     ) as HTMLElement;
-    expect(displaySelectedCountry).toHaveTextContent('+41');
+    expect(displaySelectedCountry).toMatchTextContent('+41');
   });
 
   it('should display all the countries  when user clears the search countries input', async () => {
-    await userEvent.click(page.getByRole('combobox', { name: 'Select' }));
+    await userEvent.click(countrySelect);
     const list = await getFilterListHarness();
     await list.sendKeys('S');
     await list.clear();
@@ -149,7 +150,7 @@ describe('SiPhoneNumberInputComponent', () => {
     const displaySelectedCountry = element.querySelector(
       '.dropdown-toggle .si-body'
     ) as HTMLElement;
-    expect(displaySelectedCountry).toHaveTextContent('+91');
+    expect(displaySelectedCountry).toMatchTextContent('+91');
     expect(inputElement.value).toEqual('1234 567 890');
   });
 
@@ -168,11 +169,10 @@ describe('SiPhoneNumberInputComponent', () => {
     component.form.controls.workPhone.setValue('+911234567890');
     await fixture.whenStable();
 
-    const countryButton = page.getByRole('combobox', { name: 'Select' });
-    await expect.element(countryButton).toHaveTextContent('+91');
+    await expect.element(countrySelect).toMatchTextContent('+91');
     component.form.reset();
     await fixture.whenStable();
-    await expect.element(countryButton).toHaveTextContent('+41');
+    await expect.element(countrySelect).toMatchTextContent('+41');
   });
 
   it('should update both the country code and phone number when manually entering a valid country code and phone number in the input', async () => {
@@ -196,7 +196,7 @@ describe('SiPhoneNumberInputComponent', () => {
   it('should update country dropdown list on changing supportedCountryList', async () => {
     component.supportedCountries.set(['CA', 'NZ']);
     await fixture.whenStable();
-    await userEvent.click(page.getByRole('combobox', { name: 'Select' }));
+    await userEvent.click(countrySelect);
     await fixture.whenStable();
     const list = await getFilterListHarness();
     expect(await list.getAllItemTexts()).toEqual(['Canada +1', 'New Zealand +64']);
@@ -207,7 +207,7 @@ describe('SiPhoneNumberInputComponent', () => {
     await fixture.whenStable();
 
     const countryCode = element.querySelector<HTMLElement>('span.si-body');
-    expect(countryCode).toHaveTextContent('+1');
+    expect(countryCode).toMatchTextContent('+1');
   });
 
   it('should reflect country when not part of supportedCountries', async () => {
@@ -215,7 +215,7 @@ describe('SiPhoneNumberInputComponent', () => {
     await fixture.whenStable();
 
     const countryCode = element.querySelector<HTMLElement>('span.si-body');
-    expect(countryCode).toHaveTextContent('+61');
+    expect(countryCode).toMatchTextContent('+61');
   });
 
   it('should be invalid if the country code is allowed but not the actual region (+1 but not CA)', async () => {

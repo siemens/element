@@ -44,8 +44,8 @@ describe('SiSourceChipComponent', () => {
     await fixture.whenStable();
     await userEvent.click(chip);
 
-    expect(document.querySelector('.popover')).toHaveTextContent(source.name);
-    expect(document.querySelector('.popover')).toHaveTextContent(source.description!);
+    expect(document.querySelector('.popover')).toMatchTextContent(source.name);
+    expect(document.querySelector('.popover')).toMatchTextContent(source.description!);
 
     await userEvent.click(chip);
     await fixture.whenStable();

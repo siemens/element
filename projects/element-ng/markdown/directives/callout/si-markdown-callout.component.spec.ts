@@ -37,7 +37,7 @@ Warning content.
     const callouts = element.querySelectorAll('si-markdown-callout');
 
     expect(callouts).toHaveLength(3);
-    expect(callouts[0]).toHaveTextContent('Note content.');
+    expect(callouts[0]).toMatchTextContent('Note content.');
     expect(callouts[0].querySelector('.card')).toHaveClass('accent-info');
     expect(callouts[0].querySelector('si-status-icon')).toBeInTheDocument();
     expect(callouts[1].querySelector('.card')).toHaveClass('accent-success');

@@ -91,6 +91,6 @@ describe('ElementFormComponent', () => {
     const rows = fixture.debugElement.queryAll(By.css('.row'));
     expect(rows).toBeTruthy();
     expect(rows).toHaveLength(1);
-    expect(rows[0].nativeElement).toHaveTextContent('test set 1');
+    expect(rows[0].nativeElement).toMatchTextContent('test set 1');
   });
 });

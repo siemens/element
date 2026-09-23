@@ -38,16 +38,16 @@ describe('SiCopyrightNoticeComponent', () => {
   it('should fetch from injector and assign default company', () => {
     fixture.detectChanges();
 
-    expect(element).toHaveTextContent('Sample Company');
-    expect(element).toHaveTextContent('2012');
-    expect(element).toHaveTextContent('-');
+    expect(element).toMatchTextContent('Sample Company');
+    expect(element).toMatchTextContent('2012');
+    expect(element).toMatchTextContent('-');
   });
 
   it('should print the correct last updated year when globally injected', () => {
     fixture.detectChanges();
 
-    expect(element).toHaveTextContent('-');
-    expect(element).toHaveTextContent('2019');
+    expect(element).toMatchTextContent('-');
+    expect(element).toMatchTextContent('2019');
   });
 });
 
@@ -76,16 +76,16 @@ describe('SiCopyrightNoticeComponentWithInput', () => {
   it('should reflect input changes', () => {
     fixture.detectChanges();
 
-    expect(element).toHaveTextContent('My Company');
-    expect(element).toHaveTextContent('2020');
-    expect(element).toHaveTextContent('-');
+    expect(element).toMatchTextContent('My Company');
+    expect(element).toMatchTextContent('2020');
+    expect(element).toMatchTextContent('-');
   });
 
   it('should print the correct last updated year', () => {
     fixture.detectChanges();
 
-    expect(element).toHaveTextContent('-');
-    expect(element).toHaveTextContent('2021');
+    expect(element).toMatchTextContent('-');
+    expect(element).toMatchTextContent('2021');
   });
 
   it('should print default copyright notice when no input is given', () => {
@@ -95,8 +95,8 @@ describe('SiCopyrightNoticeComponentWithInput', () => {
     expect(window.getComputedStyle(element.querySelector('.company')!, ':after').content).toContain(
       'ExampleOrg'
     );
-    expect(element).toHaveTextContent('©');
-    expect(element).toHaveTextContent(new Date().getFullYear() + '');
-    expect(element).not.toHaveTextContent('-');
+    expect(element).toMatchTextContent('©');
+    expect(element).toMatchTextContent(new Date().getFullYear() + '');
+    expect(element).not.toMatchTextContent('-');
   });
 });

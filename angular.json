@@ -190,7 +190,8 @@
               "lines": 80
             },
             "coverageExclude": [
-              "**/element-translate-ng/",
+              ".angular/cache/**",
+              "**/element-translate-ng/**",
               "**/index.ts",
               "**/*.module.ts",
               "**/testing/**/*.ts"
@@ -229,7 +230,13 @@
           "options": {
             "tsConfig": "projects/element-translate-ng/tsconfig.spec.json",
             "browsers": ["chromium"],
-            "coverageExclude": ["**/*.module.ts", "**/*.d.ts", "**/*.mock.ts", "public-api.ts"],
+            "coverageExclude": [
+              ".angular/cache/**",
+              "**/*.module.ts",
+              "**/*.d.ts",
+              "**/*.mock.ts",
+              "public-api.ts"
+            ],
             "coverageReporters": ["cobertura", "html", "text"]
           }
         },
@@ -293,7 +300,7 @@
           "options": {
             "tsConfig": "projects/charts-ng/tsconfig.spec.json",
             "browsers": ["chromium"],
-            "coverageExclude": ["**/*.module.ts", "docs.ts", "public-api.ts"],
+            "coverageExclude": [".angular/cache/**", "**/*.module.ts", "docs.ts", "public-api.ts"],
             "coverageReporters": ["cobertura", "html", "text"]
           }
         },
@@ -328,7 +335,13 @@
           "options": {
             "tsConfig": "projects/native-charts-ng/tsconfig.spec.json",
             "browsers": ["chromium"],
-            "coverageExclude": ["**/index.ts", "**/*.module.ts", "docs.ts", "public-api.ts"],
+            "coverageExclude": [
+              ".angular/cache/**",
+              "**/index.ts",
+              "**/*.module.ts",
+              "docs.ts",
+              "public-api.ts"
+            ],
             "coverageReporters": ["cobertura", "html", "text"]
           }
         },
@@ -367,8 +380,9 @@
             "tsConfig": "projects/maps-ng/tsconfig.spec.json",
             "browsers": ["chromium"],
             "coverageExclude": [
-              "**/mocks/",
-              "**/element-translate-ng/",
+              ".angular/cache/**",
+              "**/mocks/**",
+              "**/element-translate-ng/**",
               "**/index.ts",
               "**/*.module.ts",
               "**/*.d.ts",
@@ -408,7 +422,12 @@
           "options": {
             "tsConfig": "projects/map-styles/tsconfig.spec.json",
             "browsers": ["chromium"],
-            "coverageExclude": ["**/index.ts", "**/*.module.ts", "public-api.ts"],
+            "coverageExclude": [
+              ".angular/cache/**",
+              "**/index.ts",
+              "**/*.module.ts",
+              "public-api.ts"
+            ],
             "coverageReporters": ["cobertura", "html", "text"]
           }
         },
@@ -457,9 +476,10 @@
             "buildTarget": "dashboards-ng:test-target",
             "browsers": ["chromium"],
             "coverageExclude": [
-              "**/element-ng/",
-              "**/element-translate-ng/",
-              "**/test/",
+              ".angular/cache/**",
+              "**/element-ng/**",
+              "**/element-translate-ng/**",
+              "**/test/**",
               "**/*.module.ts",
               "public-api.ts",
               "test-main.ts"

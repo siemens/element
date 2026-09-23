@@ -17,6 +17,10 @@ import { mockGeoJson } from '../../../../../src/app/mocks/geojson.mock';
 import { mockPoints, singlePoint } from '../../../../../src/app/mocks/points.mock';
 import { MapService } from './services/map.service';
 
+vi.mock('ol-mapbox-style', () => ({
+  apply: vi.fn((map, _) => Promise.resolve(map))
+}));
+
 const mockFeature = new Feature({
   geometry: new Point([4456989.943596791, 1369860.9690134972]),
   name: 'name',
@@ -56,11 +60,6 @@ describe('SiMapComponent', () => {
     });
     fixture = TestBed.createComponent(SiMapComponent);
     component = fixture.componentInstance;
-
-    // Mock mapbox apply to prevent errors since the tiles can not be loaded in the test environment
-    vi.mock('ol-mapbox-style', () => ({
-      apply: vi.fn((map, _) => Promise.resolve(map))
-    }));
 
     // gives the map a dimension, otherwise ol spams the log with warnings
     const host: HTMLElement = fixture.nativeElement;

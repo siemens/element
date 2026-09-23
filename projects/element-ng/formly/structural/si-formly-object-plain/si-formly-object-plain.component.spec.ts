@@ -83,7 +83,7 @@ describe('ElementFormComponent', () => {
 
     const field = fixture.debugElement.query(By.css('si-formly-object-plain'));
     expect(field).toBeTruthy();
-    expect(field.nativeElement).toHaveTextContent('Object Plain Example');
+    expect(field.nativeElement).toMatchTextContent('Object Plain Example');
   });
 
   it('should apply object-plain with property key', () => {

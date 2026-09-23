@@ -331,7 +331,7 @@ describe('SiForm', () => {
 
     let fixture: ComponentFixture<TestHostComponent>;
 
-    const fieldset = page.getByRole('group', { name: 'Choose' });
+    const fieldset = page.getByRole('group', { name: 'Choose*' });
     const fieldsetLabel = page.getByText('Choose');
     const errorMessage = fieldset.getByText('A choice is required');
 

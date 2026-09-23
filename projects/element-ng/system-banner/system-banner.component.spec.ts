@@ -51,7 +51,7 @@ describe('SiSystemBannerComponent', () => {
 
     const alert = hostFixture.nativeElement.querySelector('[role="alert"]');
 
-    expect(alert).toHaveTextContent(/Update available\s+Learn more/);
+    expect(alert).toMatchTextContent(/Update available\s+Learn more/);
     expect(alert.querySelector('a')).toHaveAttribute('href', 'https://element.siemens.io/');
   });
 

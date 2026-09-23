@@ -43,8 +43,8 @@ describe('SiAiWelcomeScreenComponent', () => {
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement;
-    expect(compiled).toHaveTextContent('Category 1');
-    expect(compiled).toHaveTextContent('Category 2');
+    expect(compiled).toMatchTextContent('Category 1');
+    expect(compiled).toMatchTextContent('Category 2');
   });
 
   it('should display prompt suggestions when provided', async () => {
@@ -52,8 +52,8 @@ describe('SiAiWelcomeScreenComponent', () => {
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement;
-    expect(compiled).toHaveTextContent('Suggestion 1');
-    expect(compiled).toHaveTextContent('Suggestion 2');
+    expect(compiled).toMatchTextContent('Suggestion 1');
+    expect(compiled).toMatchTextContent('Suggestion 2');
   });
 
   it('should emit categorySelected when category is clicked', async () => {
