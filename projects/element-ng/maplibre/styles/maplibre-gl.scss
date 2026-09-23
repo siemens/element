@@ -20,6 +20,7 @@ $icon-fullscreen: url('@siemens/element-icons/icons/element-zoom.svg');
 $icon-shrink: url('@siemens/element-icons/icons/element-pinch.svg');
 $icon-compass: url('@siemens/element-icons/icons/element-compass-needle.svg');
 $icon-glob: url('@siemens/element-icons/icons/element-global.svg');
+$icon-map: url('@siemens/element-icons/icons/element-map.svg');
 $icon-locate: url('@siemens/element-icons/icons/element-locate.svg');
 $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
 
@@ -303,10 +304,15 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
     mask-image: $icon-shrink;
   }
 
-  &.maplibregl-ctrl-globe,
-  &.maplibregl-ctrl-globe-enabled {
+  &.maplibregl-ctrl-globe {
     .maplibregl-ctrl-icon {
       mask-image: $icon-glob;
+    }
+  }
+
+  &.maplibregl-ctrl-globe-enabled {
+    .maplibregl-ctrl-icon {
+      mask-image: $icon-map;
     }
   }
 

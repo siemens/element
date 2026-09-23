@@ -11,6 +11,7 @@ import {
   Component,
   computed,
   contentChildren,
+  ElementRef,
   effect,
   inject,
   INJECTOR,
@@ -88,6 +89,7 @@ export class SiTabsetComponent {
 
   /** @internal */
   protected readonly showMenuButton = signal(false);
+  private readonly menuButton = viewChild<ElementRef<HTMLButtonElement>>('menuButton');
 
   protected tabIsLink(tab: unknown): tab is SiTabLinkComponent {
     return tab instanceof SiTabLinkComponent;
@@ -151,8 +153,8 @@ export class SiTabsetComponent {
   }
 
   protected resizeContainer(width: number, scrollWidth: number): void {
-    // 48px is the width of the menu button.
-    this.showMenuButton.set(scrollWidth > width + (this.showMenuButton() ? 48 : 0));
+    const totalWidth = width + (this.menuButton()?.nativeElement.offsetWidth ?? 0);
+    this.showMenuButton.set(scrollWidth > totalWidth);
   }
 
   protected keydown(event: KeyboardEvent): void {

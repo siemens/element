@@ -11,11 +11,17 @@ export class BundlerTranslateLoader implements TranslateLoader {
     // So we clone it.
     return from(
       Promise.all([
-        import(`../assets/i18n/${lang}.json`),
-        import('../assets/i18n-common/en.json')
-      ]).then(([translations, commonTranslations]) => ({
-        ...translations,
-        ...commonTranslations
+        import(`../assets/i18n/element-ng/${lang}.json`),
+        import(`../assets/i18n/dashboards-ng/${lang}.json`),
+        import(`../assets/i18n/maps-ng/${lang}.json`),
+        import(`../assets/i18n/common/${lang}.json`),
+        import(`../assets/i18n/${lang}.json`)
+      ]).then(([element, dashboards, maps, common, app]) => ({
+        ...element,
+        ...dashboards,
+        ...maps,
+        ...common,
+        ...app
       }))
     );
   }
