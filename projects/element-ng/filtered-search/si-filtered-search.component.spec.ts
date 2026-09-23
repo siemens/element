@@ -2587,89 +2587,190 @@ describe('SiFilteredSearchComponent - With translation', () => {
     it('should create a free text pill after typing a semicolon', async () => {
       component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
       component.searchCriteria.set({ value: '', criteria: [] });
-      await runOnPushChangeDetection(fixture);
-
-      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
-      const freeTextSearch = await filteredSearch.freeTextSearch();
-      await freeTextSearch.focus();
-      await freeTextSearch.sendKeys('first pill;');
-      await tick();
-
-      expect(component.searchCriteria()).toEqual({
-        value: '',
-        criteria: [{ name: 'free-text', value: 'first pill' }]
-      });
-      expect(await freeTextSearch.getValue()).toBe('');
-    });
-
-    it('should create criteria and free text pills from pasted semicolon-separated text', async () => {
-      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
-      component.criteria.set([
-        { name: 'status', label: 'Status' },
-        { name: 'owner', label: 'Owner' }
-      ]);
-      component.searchCriteria.set({ value: '', criteria: [] });
-      await runOnPushChangeDetection(fixture);
-
-      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
-      const freeTextSearch = await filteredSearch.freeTextSearch();
-      await freeTextSearch.focus();
-      await tick();
+      fixture.detectChanges();
+      await fixture.whenStable();
 
       const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
         'input.value-input'
       )!;
       vi.useRealTimers();
-      await userEvent.fill(input, 'status:open;owner:team;urgent;needs review;');
+      await userEvent.type(input, 'first pill;');
       await fixture.whenStable();
 
       expect(component.searchCriteria()).toEqual({
         value: '',
-        criteria: [
+        criteria: [{ name: 'free-text', value: 'first pill' }]
+      });
+      expect(input.value).toBe('');
+    });
+
+    it.for([
+      [
+        'status:open;owner:team;urgent;needs review;',
+        [
           { name: 'status', value: 'open' },
           { name: 'owner', value: 'team' },
           { name: 'free-text', value: 'urgent' },
           { name: 'free-text', value: 'needs review' }
-        ]
-      });
-      expect(await freeTextSearch.getValue()).toBe('');
-    });
+        ],
+        ''
+      ],
+      ['Country: Germany;', [{ name: 'country-code', value: 'DE' }], ''],
+      ['Country: DE;', [{ name: 'country-code', value: 'DE' }], ''],
+      ['Score: Good;', [{ name: 'score', value: ['good'] }], ''],
+      ['Location:Lünen;', [{ name: 'location', value: 'Lünen' }], ''],
+      ['plain text;', [{ name: 'free-text', value: 'plain text' }], ''],
+      ['unknown:value;', [{ name: 'unknown', value: 'value' }], ''],
+      ['first pill;second pill', [{ name: 'free-text', value: 'first pill' }], 'second pill']
+    ])(
+      'should parse pasted input %s',
+      async ([pastedValue, expectedCriteria, expectedInputValue]) => {
+        component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+        component.criteria.set([
+          { name: 'status', label: 'Status' },
+          { name: 'owner', label: 'Owner' },
+          {
+            name: 'country-code',
+            label: 'Country',
+            options: [{ value: 'DE', label: 'Germany' }]
+          },
+          {
+            name: 'score',
+            label: 'Score',
+            multiSelect: true,
+            options: [{ value: 'good', label: 'Good' }]
+          },
+          { name: 'location', label: 'Location', options: ['Lünen'] }
+        ]);
+        component.searchCriteria.set({ value: '', criteria: [] });
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    it('should retain an unfinished pasted token in the input', async () => {
-      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+        const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
+          'input.value-input'
+        )!;
+        vi.useRealTimers();
+        await userEvent.fill(input, pastedValue as string);
+        await fixture.whenStable();
+
+        expect(component.searchCriteria()).toEqual({
+          value: '',
+          criteria: expectedCriteria
+        });
+        expect(input.value).toBe(expectedInputValue);
+      }
+    );
+
+    it('should retain free text focus after creating a complete pasted criterion', async () => {
+      component.criteria.set([{ name: 'location', label: 'Location', options: ['Lünen'] }]);
       component.searchCriteria.set({ value: '', criteria: [] });
+      fixture.detectChanges();
       await fixture.whenStable();
 
-      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
-      const freeTextSearch = await filteredSearch.freeTextSearch();
       const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
         'input.value-input'
       )!;
       vi.useRealTimers();
-      await userEvent.fill(input, 'first pill;second pill');
+      await userEvent.fill(input, 'Location:Lünen;');
       await fixture.whenStable();
 
+      expect(document.activeElement).toBe(input);
+    });
+
+    it('should normalize lazy multi-select options after pasting', async () => {
+      component.criteria.set([{ name: 'score', label: 'Score', multiSelect: true }]);
+      component.lazyValueProvider = vi.fn().mockReturnValue(of([{ value: 'good', label: 'Good' }]));
+      component.searchCriteria.set({ value: '', criteria: [] });
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
+        'input.value-input'
+      )!;
+      vi.useRealTimers();
+      await userEvent.fill(input, 'Score: Good;');
+      await fixture.whenStable();
+
+      expect(component.lazyValueProvider).toHaveBeenCalledWith('score', 'Good');
       expect(component.searchCriteria()).toEqual({
         value: '',
-        criteria: [{ name: 'free-text', value: 'first pill' }]
+        criteria: [{ name: 'score', value: ['good'] }]
       });
-      expect(await freeTextSearch.getValue()).toBe('second pill');
+    });
+
+    it('should not add an exclusive criterion a second time from pasted input', async () => {
+      component.exclusiveCriteria = true;
+      component.criteria.set([{ name: 'country-code', label: 'Country' }]);
+      component.searchCriteria.set({
+        value: '',
+        criteria: [{ name: 'country-code', value: 'DE' }]
+      });
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
+        'input.value-input'
+      )!;
+      vi.useRealTimers();
+      await userEvent.fill(input, 'Country: US;');
+      await fixture.whenStable();
+
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'country-code', value: 'DE' }]);
+    });
+
+    it('should respect interceptor restrictions for pasted criteria and free text', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.criteria.set([{ name: 'country-code', label: 'Country' }]);
+      vi.spyOn(component, 'showCriteria').mockImplementation(event => {
+        event.allow([], false);
+      });
+      component.searchCriteria.set({ value: '', criteria: [] });
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
+        'input.value-input'
+      )!;
+      vi.useRealTimers();
+      await userEvent.fill(input, 'Country: DE;plain text;');
+      await fixture.whenStable();
+
+      expect(component.searchCriteria().criteria).toEqual([]);
+    });
+
+    it('should reject unknown pasted criteria in strict mode', async () => {
+      component.strictCriterion = true;
+      component.criteria.set([{ name: 'country-code', label: 'Country' }]);
+      component.searchCriteria.set({ value: '', criteria: [] });
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
+        'input.value-input'
+      )!;
+      vi.useRealTimers();
+      await userEvent.fill(input, 'unknown:value;');
+      await fixture.whenStable();
+
+      expect(component.searchCriteria().criteria).toEqual([]);
     });
 
     it('should retain semicolons when delimiter handling is disabled', async () => {
       component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
       component.disableSelectionByColonAndSemicolon = true;
       component.searchCriteria.set({ value: '', criteria: [] });
-      await runOnPushChangeDetection(fixture);
+      fixture.detectChanges();
+      await fixture.whenStable();
 
-      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
-      const freeTextSearch = await filteredSearch.freeTextSearch();
-      await freeTextSearch.focus();
-      await freeTextSearch.sendKeys('first pill;');
-      await tick();
+      const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
+        'input.value-input'
+      )!;
+      vi.useRealTimers();
+      await userEvent.fill(input, 'first pill;');
+      await fixture.whenStable();
 
       expect(component.searchCriteria().criteria).toEqual([]);
-      expect(await freeTextSearch.getValue()).toBe('first pill;');
+      expect(input.value).toBe('first pill;');
     });
 
     it('should create a free text pill when typing text and blurring the input', async () => {

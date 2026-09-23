@@ -68,7 +68,11 @@ export class SiFilteredSearchInputComponent {
   readonly createCriterion = output<{ criterion: InternalCriterionDefinition; value?: string }>();
 
   /** Emits a criterion name and optional value parsed from the input text. */
-  readonly createCriterionByName = output<{ criterionName: string; value?: string }>();
+  readonly createCriterionByName = output<{
+    criterionName: string;
+    value?: string;
+    editOnCreation?: boolean;
+  }>();
 
   /** Emits when Backspace is pressed in an empty search input. */
   readonly backspaceOverflow = output();
@@ -118,8 +122,9 @@ export class SiFilteredSearchInputComponent {
       const criterion = token.match(SiFilteredSearchInputComponent.criterionRegex);
       if (!this.onlySelectValue() && criterion) {
         this.createCriterionByName.emit({
-          criterionName: criterion[1],
-          value: criterion[2]
+          criterionName: criterion[1].trim(),
+          value: criterion[2].trim(),
+          editOnCreation: index === tokens.length - 1
         });
       } else if (index < tokens.length - 1 && token && canCreateFreeText) {
         this.createFreeTextPill.emit(token);
