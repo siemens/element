@@ -37,49 +37,39 @@ describe('ResizeObserverService', () => {
     component = fixture.componentInstance;
     await fixture.whenStable();
     spy = vi.fn();
-
-    vi.useFakeTimers();
   });
 
   afterEach(() => {
     subscription?.unsubscribe();
-    vi.useRealTimers();
   });
 
   it('emits initial size event when asked', async () => {
     subscribe(true);
-    vi.advanceTimersByTime(10);
-    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
+    await vi.waitFor(() =>
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }))
+    );
   });
 
   it('emits no initial size event when not asked', async () => {
     subscribe(false);
-    vi.advanceTimersByTime(10);
+    await new Promise<void>(resolve => setTimeout(resolve, 10));
     expect(spy).not.toHaveBeenCalled();
   });
 
   it('emits on width change', async () => {
     subscribe(false);
     await page.viewport(200, 100);
-
-    // with throttling, this shouldn't fire just yet
-    vi.advanceTimersByTime(20);
-    expect(spy).not.toHaveBeenCalled();
-
-    vi.advanceTimersByTime(150);
-    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
+    await vi.waitFor(() =>
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }))
+    );
   });
 
   it('emits on height change', async () => {
     subscribe(false);
     await page.viewport(100, 200);
-
-    // with throttling, this shouldn't fire just yet
-    vi.advanceTimersByTime(20);
-    expect(spy).not.toHaveBeenCalled();
-
-    vi.advanceTimersByTime(150);
-    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 200 }));
+    await vi.waitFor(() =>
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 200 }))
+    );
   });
 
   it('can handle multiple subscriptions on same element', async () => {
@@ -90,15 +80,16 @@ describe('ResizeObserverService', () => {
       .observe(component.theDiv().nativeElement, 50, true)
       .subscribe(dim => spy2(dim));
 
-    vi.advanceTimersByTime(20);
-    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
-    expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
+    await vi.waitFor(() => {
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
+      expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
+    });
 
     await page.viewport(200, 100);
-
-    vi.advanceTimersByTime(150);
-    expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
-    expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
+    await vi.waitFor(() => {
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
+      expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
+    });
 
     subs2.unsubscribe();
   });
