@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { AsyncPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -14,8 +13,7 @@ import {
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import {
   SI_LIVE_PREVIEW_CONFIG,
@@ -31,7 +29,7 @@ interface TreeItem {
 
 @Component({
   selector: 'si-example-overview',
-  imports: [AsyncPipe, ReactiveFormsModule, RouterLink, RouterLinkActive, SiLivePreviewComponent],
+  imports: [ReactiveFormsModule, RouterLink, RouterLinkActive, SiLivePreviewComponent],
   templateUrl: './si-example-overview.component.html',
   styleUrl: './si-example-overview.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager
@@ -47,10 +45,8 @@ export class SiExampleOverviewComponent implements OnInit, OnDestroy {
   private mediaQueryListener = (): void => this.toggleDark(this.darkMediaQuery.matches);
   private cdRef = inject(ChangeDetectorRef);
 
-  protected activeExampleRoute!: Observable<string>;
   protected tree: TreeItem[] = [];
   protected baseUrl = this.config.examplesBaseUrl;
-  protected ticketBaseUrl = this.config.ticketBaseUrl;
   protected isCollapsed = localStorage.getItem('si-live-preview-examples-collapsed') === 'true';
   protected showContent = !this.isCollapsed;
 
@@ -63,11 +59,6 @@ export class SiExampleOverviewComponent implements OnInit, OnDestroy {
       .sort()
       .map(component => component.replace(this.baseUrl, ''));
     this.makeTree();
-
-    this.activeExampleRoute = this.route.url.pipe(
-      filter(segments => !!segments.length),
-      map(segments => segments.join('/'))
-    );
 
     // Handle the filter query parameter
     this.route.queryParams.subscribe(search => {

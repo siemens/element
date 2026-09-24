@@ -9,13 +9,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  effect,
   inject,
-  input,
-  model,
-  OnChanges,
   OnInit,
   signal,
-  SimpleChanges,
+  untracked,
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -30,7 +28,11 @@ import {
 } from '../../interfaces/live-preview-config';
 import 'prismjs/components/prism-typescript';
 
-import { SiLivePreviewLocaleApi } from '../../interfaces/si-live-preview.api';
+import { SiLivePreviewLocaleApi, ThemeType } from '../../interfaces/si-live-preview.api';
+import {
+  LivePreviewFramework,
+  LivePreviewStateService
+} from '../../services/live-preview-state.service';
 import { SiLivePreviewIframeComponent } from '../si-live-preview-iframe/si-live-preview-iframe.component';
 import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.component';
 
@@ -47,63 +49,43 @@ import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.
     '(document:webkitfullscreenchange)': 'onFullscreenChange()'
   }
 })
-export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges {
+export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
   private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private readonly self = inject(ElementRef);
   private readonly http = inject(HttpClient);
   protected readonly localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
+  protected readonly state = inject(LivePreviewStateService);
 
   protected readonly templateElem = viewChild.required<ElementRef>('codeTemplate');
   protected readonly typescriptElem = viewChild.required<ElementRef>('codeTypescript');
   protected readonly reactVueElem = viewChild.required<ElementRef>('codeReactVue');
   protected readonly consoleElem = viewChild.required<ElementRef>('consoleContainer');
 
-  readonly baseUrl = input.required<string>();
-  readonly example = input<string | null | undefined>();
-  readonly template = model('');
-  readonly theme = model<string>('light');
-  readonly locale = model<string | null | undefined>();
-  readonly isRTL = model<boolean>(false);
-  readonly ticketBaseUrl = input('');
-  readonly templateReact = model('');
-  readonly templateVue = model('');
-  readonly templateJs = model('');
+  protected readonly baseUrl = this.config.examplesBaseUrl;
 
   protected readonly isFullscreen = signal(false);
   protected readonly isMobile = this.internalConfig.isMobile;
 
   private templateTs = '';
-  protected readonly renderingError = signal<any>(null);
-  protected readonly logMessages = signal<string[]>([]);
   protected readonly activeTab = signal<string>('template');
   protected readonly showCopied = signal(false);
-  protected readonly inProgress = signal(false);
   protected readonly allowFullscreen =
     !!document.fullscreenEnabled || !!(document as any).webkitFullscreenEnabled;
   protected readonly exampleFullscreen = signal(false);
   protected readonly allowCopy = !!navigator.clipboard;
-  protected readonly loadReact = signal(false);
-  protected readonly loadVue = signal(false);
-  protected readonly loadJs = signal(false);
   protected readonly switcherEnabled = this.config.themeSwitcher;
   protected readonly rtlSwitcher = this.config.rtlSwitcher;
   protected readonly rootFontSizes = this.config.rootFontSizes ?? [];
-  protected readonly rootFontSize = signal<number | 'initial'>(0);
   protected readonly webcomponents = this.config.webcomponents;
-  protected readonly frameworks = new Map([['Angular', 'angular']]);
-  protected selectedFramework = localStorage.getItem('si-live-preview-framework') ?? 'angular';
+  protected readonly frameworks = new Map<string, LivePreviewFramework>([['Angular', 'angular']]);
 
   readonly availableLocales = this.localeApi?.availableLocales() ?? [];
-
-  ticketLinkBug!: string;
-  ticketLinkFeature!: string;
 
   protected readonly editorCollapsed = signal(
     localStorage.getItem('si-live-preview-editor-collapsed') === 'true' && !this.isMobile
   );
   protected readonly showEditor = signal(!this.editorCollapsed());
-  protected readonly newMsgs = signal(false);
 
   private compileSubject = new Subject<string>();
 
@@ -113,60 +95,70 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   private flaskTypescript: any;
   private flaskReactVue: any;
   private savedScrollPos = { top: 0, left: 0 };
-  private inProgressCounter = 0;
   private tsLoaded = false;
   private reactLoaded = false;
   private vueLoaded = false;
   private jsLoaded = false;
-  private delayClearTimer: any;
   private webcomponentsList: string[] = [];
 
   constructor() {
+    const storedFramework = localStorage.getItem('si-live-preview-framework');
+    if (storedFramework === 'react' || storedFramework === 'vue' || storedFramework === 'js') {
+      this.state.framework.set(storedFramework);
+    }
     this.compileSubject
       .pipe(throttleTime(500, undefined, { leading: true, trailing: true }))
       .pipe(takeUntilDestroyed())
       .subscribe(template => {
-        this.template.set(template);
+        this.state.template.set(template);
       });
     this.webcomponentsList = this.config.componentLoader.webcomponentsList;
-  }
-
-  ngOnChanges(changes: SimpleChanges<this>): void {
-    this.activeTab.set(this.activeTab() !== 'typescript' ? 'template' : this.activeTab());
-    if (changes.template?.currentValue) {
-      this.skipInitialLoad = !!changes.template.isFirstChange;
-      this.templateModified = true;
-      this.templateReact.set('');
-      this.templateVue.set('');
-      this.templateJs.set('');
-    } else {
-      this.skipInitialLoad = !!(
-        changes.templateReact?.currentValue ??
-        changes.templateVue?.currentValue ??
-        changes.templateJs?.currentValue
-      );
-    }
-    if (changes.example?.currentValue) {
-      this.loadFromUrl(changes.example.firstChange && this.skipInitialLoad);
-      if (this.webcomponents) {
-        this.checkWebComponentsAvailable();
+    let previousExample: string | undefined;
+    effect(() => {
+      const example = this.state.example();
+      if (!example || example === previousExample) {
+        return;
       }
-    }
-    if (this.webcomponents) {
-      this.reactLoaded = false;
-      this.vueLoaded = false;
-      this.jsLoaded = false;
-      this.loadReact.set(false);
-      this.loadVue.set(false);
-      this.loadJs.set(false);
-    }
-    this.createTicketLinks();
+      const firstLoad = previousExample === undefined;
+      previousExample = example;
+      untracked(() => {
+        this.activeTab.set(this.activeTab() !== 'typescript' ? 'template' : this.activeTab());
+        this.skipInitialLoad =
+          firstLoad &&
+          !!(
+            this.state.template() ||
+            this.state.templateReact() ||
+            this.state.templateVue() ||
+            this.state.templateJs()
+          );
+        this.templateModified = !!this.state.template();
+        this.loadFromUrl(this.skipInitialLoad);
+        if (this.webcomponents) {
+          this.reactLoaded = false;
+          this.vueLoaded = false;
+          this.jsLoaded = false;
+          this.state.stopWebComponentLoading();
+          this.checkWebComponentsAvailable();
+        }
+      });
+    });
+    effect(() => localStorage.setItem('si-live-preview-theme', this.state.theme()));
+    effect(() => {
+      if (this.state.logMessages().length) {
+        setTimeout(() => {
+          this.consoleElem().nativeElement.scrollTop =
+            this.consoleElem().nativeElement.scrollHeight;
+        });
+      }
+    });
   }
 
   ngOnInit(): void {
-    this.theme.set(localStorage.getItem('si-live-preview-theme') ?? 'light');
+    this.state.theme.set(
+      localStorage.getItem('si-live-preview-theme') === 'dark' ? 'dark' : 'light'
+    );
     const rfs = localStorage.getItem('si-live-preview-rfs') ?? '';
-    this.rootFontSize.set(rfs === 'initial' ? rfs : rfs ? parseInt(rfs, 10) : 0);
+    this.state.rootFontSize.set(rfs === 'initial' ? rfs : rfs ? parseInt(rfs, 10) : 0);
   }
 
   ngAfterViewInit(): void {
@@ -198,7 +190,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     });
 
     this.flaskTemplate.onUpdate((code: string) => {
-      if (code !== this.template()) {
+      if (code !== this.state.template()) {
         this.templateModified = true;
       }
       this.compileSubject.next(code);
@@ -206,30 +198,30 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
 
     this.flaskReactVue.onUpdate((code: string) => {
       if (this.activeTab() === 'react') {
-        this.templateReact.set(code);
-        this.loadReact.set(true);
+        this.state.templateReact.set(code);
+        this.state.loadReact.set(true);
       } else if (this.activeTab() === 'vue') {
-        this.templateVue.set(code);
-        this.loadVue.set(true);
+        this.state.templateVue.set(code);
+        this.state.loadVue.set(true);
       } else if (this.activeTab() === 'js') {
-        this.templateJs.set(code);
-        this.loadJs.set(true);
+        this.state.templateJs.set(code);
+        this.state.loadJs.set(true);
       }
     });
 
     if (this.skipInitialLoad) {
-      if (this.templateReact()) {
+      if (this.state.templateReact()) {
         this.reactLoaded = true;
         this.changeFramework('react');
-      } else if (this.templateVue()) {
+      } else if (this.state.templateVue()) {
         this.vueLoaded = true;
         this.changeFramework('vue');
-      } else if (this.templateJs()) {
+      } else if (this.state.templateJs()) {
         this.jsLoaded = true;
         this.changeFramework('js');
       } else {
-        this.flaskTemplate.updateCode(this.template());
-        this.compileSubject.next(this.template());
+        this.flaskTemplate.updateCode(this.state.template());
+        this.compileSubject.next(this.state.template());
       }
       this.skipInitialLoad = false;
     }
@@ -240,9 +232,9 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
 
     let saveScroll: ElementRef;
     let restoreScroll: ElementRef;
-    this.loadReact.set(false);
-    this.loadVue.set(false);
-    this.loadJs.set(false);
+    this.state.loadReact.set(false);
+    this.state.loadVue.set(false);
+    this.state.loadJs.set(false);
     if (tab === 'template') {
       saveScroll = this.typescriptElem();
       restoreScroll = this.templateElem();
@@ -264,16 +256,16 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     });
   }
 
-  themeChange(theme: string): void {
-    this.theme.set(theme);
-    localStorage.setItem('si-live-preview-theme', this.theme());
+  themeChange(theme: ThemeType): void {
+    this.state.theme.set(theme);
+    localStorage.setItem('si-live-preview-theme', this.state.theme());
   }
 
   private updateTemplate(template: string): void {
     this.templateModified = false;
-    this.template.set(template);
+    this.state.template.set(template);
     if (this.flaskTemplate) {
-      this.flaskTemplate.updateCode(this.template());
+      this.flaskTemplate.updateCode(this.state.template());
     }
   }
 
@@ -285,26 +277,26 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   private updateReact(ts: string): void {
-    this.templateReact.set(ts);
+    this.state.templateReact.set(ts);
     if (this.flaskReactVue) {
-      this.flaskReactVue.updateCode(this.templateReact());
-      this.loadReact.set(true);
+      this.flaskReactVue.updateCode(this.state.templateReact());
+      this.state.loadReact.set(true);
     }
   }
 
   private updateVue(ts: string): void {
-    this.templateVue.set(ts);
+    this.state.templateVue.set(ts);
     if (this.flaskReactVue) {
-      this.flaskReactVue.updateCode(this.templateVue());
-      this.loadVue.set(true);
+      this.flaskReactVue.updateCode(this.state.templateVue());
+      this.state.loadVue.set(true);
     }
   }
 
   private updateJs(js: string): void {
-    this.templateJs.set(js);
+    this.state.templateJs.set(js);
     if (this.flaskReactVue) {
-      this.flaskReactVue.updateCode(this.templateJs());
-      this.loadJs.set(true);
+      this.flaskReactVue.updateCode(this.state.templateJs());
+      this.state.loadJs.set(true);
     }
   }
 
@@ -314,8 +306,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     }
     this.updateTs('');
     this.savedScrollPos = { top: 0, left: 0 };
-    this.inProgressCounter = 0;
-    this.inProgress.set(false);
+    this.state.resetRenderingProgress();
     this.tsLoaded = false;
 
     if (this.activeTab() === 'typescript') {
@@ -324,13 +315,13 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   private loadTemplateFromUrl(): void {
-    const example = this.example();
+    const example = this.state.example();
     if (!example) {
       return;
     }
     this.handleInProgressEvent(true);
     this.http
-      .get(this.baseUrl() + example + '.html', { responseType: 'text' })
+      .get(this.baseUrl + example + '.html', { responseType: 'text' })
       .pipe(timeout(3000), retry(1))
       .subscribe({
         next: data => {
@@ -346,13 +337,13 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   private loadTsFromUrl(): void {
-    const example = this.example();
+    const example = this.state.example();
     if (!example) {
       return;
     }
     this.handleInProgressEvent(true);
     this.http
-      .get(this.baseUrl() + example + '.ts', { responseType: 'text' })
+      .get(this.baseUrl + example + '.ts', { responseType: 'text' })
       .pipe(timeout(3000), retry(1))
       .subscribe({
         next: data => {
@@ -370,42 +361,43 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   checkWebComponentsAvailable(): void {
-    const baseUrl = this.baseUrl();
-    const example = this.example() ?? '';
+    const baseUrl = this.baseUrl;
+    const example = this.state.example() ?? '';
     if (this.webcomponentsList.includes(baseUrl + example + '-react')) {
       this.frameworks.set('React', 'react');
     } else {
-      if (this.selectedFramework === 'react') {
-        this.selectedFramework = 'angular';
+      if (this.state.framework() === 'react') {
+        this.state.framework.set('angular');
       }
       this.frameworks.delete('React');
     }
     if (this.webcomponentsList.includes(baseUrl + example + '-vue')) {
       this.frameworks.set('Vue', 'vue');
     } else {
-      if (this.selectedFramework === 'vue') {
-        this.selectedFramework = 'angular';
+      if (this.state.framework() === 'vue') {
+        this.state.framework.set('angular');
       }
       this.frameworks.delete('Vue');
     }
     if (this.webcomponentsList.includes(baseUrl + example + '-js')) {
       this.frameworks.set('Js', 'js');
     } else {
-      if (this.selectedFramework === 'js') {
-        this.selectedFramework = 'angular';
+      if (this.state.framework() === 'js') {
+        this.state.framework.set('angular');
       }
       this.frameworks.delete('Js');
     }
 
-    this.changeFramework(this.selectedFramework);
+    this.changeFramework(this.state.framework());
   }
 
-  changeFramework(framework: string): void {
+  changeFramework(framework: LivePreviewFramework): void {
     this.activeTab.set(framework);
+    this.state.framework.set(framework);
     localStorage.setItem('si-live-preview-framework', framework);
-    this.loadReact.set(false);
-    this.loadVue.set(false);
-    this.loadJs.set(false);
+    this.state.loadReact.set(false);
+    this.state.loadVue.set(false);
+    this.state.loadJs.set(false);
     let fileType = 'vue';
     if (framework === 'angular') {
       this.activeTab.set('template');
@@ -413,37 +405,37 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     } else if (framework === 'react') {
       fileType = 'tsx';
       if (this.reactLoaded) {
-        this.updateReact(this.templateReact());
+        this.updateReact(this.state.templateReact());
         return;
       }
     } else if (framework === 'vue' && this.vueLoaded) {
-      this.updateVue(this.templateVue());
+      this.updateVue(this.state.templateVue());
       return;
     } else if (framework === 'js') {
       fileType = 'html';
       if (this.jsLoaded) {
-        this.updateJs(this.templateJs());
+        this.updateJs(this.state.templateJs());
         return;
       }
     }
     this.handleInProgressEvent(true);
-    const baseUrl = this.baseUrl();
-    const example = this.example() ?? '';
+    const baseUrl = this.baseUrl;
+    const example = this.state.example() ?? '';
     this.http
       .get(`${baseUrl}${example}-${framework}.${fileType}`, { responseType: 'text' })
       .subscribe({
         next: (res: any) => {
           if (framework === 'react') {
             this.updateReact(res);
-            this.templateReact.set(res);
+            this.state.templateReact.set(res);
             this.reactLoaded = true;
           } else if (framework === 'vue') {
             this.updateVue(res);
-            this.templateVue.set(res);
+            this.state.templateVue.set(res);
             this.vueLoaded = true;
           } else if (framework === 'js') {
             this.updateJs(res);
-            this.templateJs.set(res);
+            this.state.templateJs.set(res);
             this.jsLoaded = true;
           }
           setTimeout(() => {
@@ -467,7 +459,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   templateFromComponent(template?: string): void {
-    if (this.template()) {
+    if (this.state.template()) {
       return;
     }
     if (template === undefined) {
@@ -480,45 +472,23 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   handleInProgressEvent(inProgress: boolean): void {
-    if (inProgress) {
-      this.inProgressCounter++;
-    } else {
-      this.inProgressCounter--;
-    }
-    this.inProgress.set(!!this.inProgressCounter);
+    this.state.setRenderingProgress(inProgress);
   }
 
   logClear(delayed = false): void {
-    if (delayed && this.logMessages().length) {
-      this.delayClearTimer = setTimeout(() => {
-        this.delayClearTimer = undefined;
-        this.doLogClear();
-      }, 100);
-      return;
-    }
-    this.doLogClear();
-  }
-
-  private doLogClear(): void {
-    if (this.logMessages().length) {
-      this.logMessages.set([]);
-      setTimeout(() => {
-        this.consoleElem().nativeElement.scrollTop = 0;
-      });
+    if (this.state.logMessages().length) {
+      this.state.clearLogs(delayed);
+      setTimeout(
+        () => {
+          this.consoleElem().nativeElement.scrollTop = 0;
+        },
+        delayed ? 100 : 0
+      );
     }
   }
 
   logEvent(msg: string): void {
-    if (this.delayClearTimer) {
-      this.logMessages.set([]);
-      clearTimeout(this.delayClearTimer);
-      this.delayClearTimer = undefined;
-    }
-    this.logMessages.set([...this.logMessages(), msg]);
-    this.newMsgs.set(true);
-    setTimeout(() => {
-      this.consoleElem().nativeElement.scrollTop = this.consoleElem().nativeElement.scrollHeight;
-    });
+    this.state.addLog(msg);
   }
 
   private showCopiedLabel(): void {
@@ -558,18 +528,18 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     } else {
       setTimeout(() => {
         this.showEditor.set(true);
-        this.newMsgs.set(false);
+        this.state.newMessages.set(false);
         window.dispatchEvent(new Event('resize'));
       }, 500);
     }
   }
 
   toggleRTL(): void {
-    this.isRTL.set(!this.isRTL());
+    this.state.isRTL.set(!this.state.isRTL());
   }
 
   toggleTheme(): void {
-    this.themeChange(this.theme() === 'dark' ? 'light' : 'dark');
+    this.themeChange(this.state.theme() === 'dark' ? 'light' : 'dark');
   }
 
   localeSelectionChanged(target: EventTarget | null): void {
@@ -578,25 +548,29 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   rfsSelectionChanges(value: string): void {
-    this.rootFontSize.set(value === 'initial' ? value : parseInt(value, 10));
-    localStorage.setItem('si-live-preview-rfs', this.rootFontSize().toString());
+    this.state.rootFontSize.set(value === 'initial' ? value : parseInt(value, 10));
+    localStorage.setItem('si-live-preview-rfs', this.state.rootFontSize().toString());
   }
 
   changeLocale(locale: string | null | undefined): void {
-    this.locale.set(locale);
+    this.state.locale.set(locale ?? undefined);
+  }
+
+  protected renderingErrorMessage(): string {
+    return String(this.state.renderingError());
   }
 
   copyTemplate(): void {
-    this.clipboardCopy(this.template());
+    this.clipboardCopy(this.state.template());
   }
 
   copyCode(): void {
     if (this.activeTab() === 'react') {
-      this.clipboardCopy(this.templateReact());
+      this.clipboardCopy(this.state.templateReact());
     } else if (this.activeTab() === 'vue') {
-      this.clipboardCopy(this.templateVue());
+      this.clipboardCopy(this.state.templateVue());
     } else if (this.activeTab() === 'js') {
-      this.clipboardCopy(this.templateJs());
+      this.clipboardCopy(this.state.templateJs());
     } else {
       this.clipboardCopy(this.templateTs);
     }
@@ -618,41 +592,34 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   private createTemplateLink(mode: string): string {
-    const locale = this.locale();
+    const locale = this.state.locale();
     let url = `${window.location.protocol}//${window.location.host}`;
     url += window.location.pathname;
     url += `#/viewer/${mode}?`;
-    url += 'theme=' + this.theme();
-    if (this.isRTL()) {
+    url += 'theme=' + this.state.theme();
+    if (this.state.isRTL()) {
       url += '&isRTL=true';
     }
     if (locale) {
       url += '&locale=' + locale;
     }
-    if (this.rootFontSize()) {
-      url += '&rfs=' + this.rootFontSize();
+    if (this.state.rootFontSize()) {
+      url += '&rfs=' + this.state.rootFontSize();
     }
     if (this.activeTab() === 'react') {
-      url += '&t=' + encodeURIComponent(this.templateReact()) + '&framework=react';
+      url += '&t=' + encodeURIComponent(this.state.templateReact()) + '&framework=react';
     } else if (this.activeTab() === 'vue') {
-      url += '&t=' + encodeURIComponent(this.templateVue()) + '&framework=vue';
+      url += '&t=' + encodeURIComponent(this.state.templateVue()) + '&framework=vue';
     } else if (this.activeTab() === 'js') {
-      url += '&t=' + encodeURIComponent(this.templateJs()) + '&framework=js';
+      url += '&t=' + encodeURIComponent(this.state.templateJs()) + '&framework=js';
     } else if (this.templateModified) {
-      url += '&t=' + encodeURIComponent(this.template());
+      url += '&t=' + encodeURIComponent(this.state.template());
     }
-    const example = this.example();
+    const example = this.state.example();
     if (example) {
       url += '&e=' + encodeURIComponent(example);
     }
     return url;
-  }
-
-  private createTicketLinks(): void {
-    const ticketBaseUrl = this.ticketBaseUrl();
-    const example = this.example() ?? '';
-    this.ticketLinkBug = `${ticketBaseUrl}?issue%5Btitle%5D=%3C${example}%3E:&issuable_template=Bug`;
-    this.ticketLinkFeature = `${ticketBaseUrl}?issue%5Btitle%5D=%3C${example}%3E:&issuable_template=Feature Request`;
   }
 
   protected onFullscreenChange(): void {

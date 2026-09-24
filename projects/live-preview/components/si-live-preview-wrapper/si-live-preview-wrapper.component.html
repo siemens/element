@@ -1,8 +1,6 @@
 <si-live-preview-renderer
   #renderer
-  [hidden]="loadReact() || loadVue() || loadJs()"
-  [template]="template()"
-  [exampleUrl]="exampleUrl()"
+  [hidden]="state.loadReact() || state.loadVue() || state.loadJs()"
   (templateFromComponent)="sendMessage('templateFromComponent', $event)"
   (logClear)="sendMessage('clear')"
   (logMessage)="sendMessage('log', $event)"
