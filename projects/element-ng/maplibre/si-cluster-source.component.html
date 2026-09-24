@@ -1,0 +1,22 @@
+<mgl-geojson-source
+  #source
+  [id]="sourceId()"
+  [data]="data()"
+  [cluster]="true"
+  [clusterRadius]="clusterRadius()"
+  [clusterMaxZoom]="clusterMaxZoom()"
+  [clusterMinPoints]="clusterMinPoints()"
+  [clusterProperties]="clusterConfiguration().clusterProperties"
+/>
+
+<mgl-markers-for-clusters [source]="sourceId()">
+  <ng-template let-feature mglClusterPoint>
+    <si-cluster-marker
+      [feature]="feature"
+      [segments]="clusterConfiguration().segments"
+      (markerClick)="selectCluster(feature)"
+    />
+  </ng-template>
+</mgl-markers-for-clusters>
+
+<ng-content select="si-cluster-popover,[siClusterPopoverOutlet]" />

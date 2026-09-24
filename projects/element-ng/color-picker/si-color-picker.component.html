@@ -27,7 +27,7 @@
   (backdropClick)="overlayDetach()"
   (detach)="overlayDetach()"
 >
-  <div #colorPaletteRef role="grid" class="colors elevation-1 rounded-2 background-1 p-4 mt-1">
+  <div #colorPaletteRef role="grid" class="colors shadow-3 rounded-2 background-1 p-4 mt-1">
     <div role="row" class="colors-row gap-4">
       @for (paint of colorPalette(); track $index) {
         <div role="gridcell" class="swatch">

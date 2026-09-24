@@ -112,6 +112,7 @@ h1,
   );
 }
 
+// DEPRECATED: Use .si-h1 instead.
 .si-h1-bold {
   @include typography.si-font(
     typography.$si-font-size-h1-bold,
@@ -140,6 +141,7 @@ h3,
   );
 }
 
+// DEPRECATED: Use .si-h4 instead.
 .si-h4-bold {
   @include typography.si-font(
     typography.$si-font-size-h4-bold,
@@ -250,6 +252,7 @@ h6,
   );
 }
 
+// DEPRECATED: Use .si-body-sm instead.
 .si-caption {
   @include typography.si-font(
     typography.$si-font-size-caption,
@@ -308,6 +311,7 @@ h6,
   );
 }
 
+// DEPRECATED: Use .si-display-lg-sbold instead of .si-display-bold.
 .si-display-bold,
 .display-3 {
   @include typography.si-font(

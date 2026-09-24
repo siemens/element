@@ -343,9 +343,9 @@ table {
 
 caption {
   @include typography.si-font(
-    typography.$si-font-size-caption,
-    typography.$si-line-height-caption,
-    typography.$si-font-weight-caption
+    typography.$si-font-size-body-sm,
+    typography.$si-line-height-body-sm,
+    typography.$si-font-weight-body-sm
   );
   padding-block: variables.$table-cell-padding-y;
   color: variables.$table-caption-color;

@@ -22,3 +22,6 @@ docs/_custom_theme/partials/toc.html
 # Intentionally ignored files
 .agents/skills/gh-stack
 .agents/skills/playwright-cli
+
+# Updated from outside
+src/assets/i18n/**/*.json

@@ -203,7 +203,6 @@ export class SiSplitComponent {
     const startPosition = this.getPosition(event);
     const minDelta = -1 * (beforeSize - gutter.before.minSize());
     const maxDelta = afterSize - afterPart.minSize();
-    const containerSize = this.measureContainerSize();
     event.preventDefault(); // prevents text-selection
 
     this.ngZone.runOutsideAngular(() => {
@@ -254,15 +253,20 @@ export class SiSplitComponent {
                 this.gridTemplateColumns()
               );
             }
-            this.ngZone.run(() =>
-              this.sizesChange.emit(
-                this.parts().map(part => (part.actualSize() * 100) / containerSize)
-              )
-            );
+            this.emitSizesChange();
           },
           complete: () => this.saveUIState()
         });
     });
+  }
+
+  private emitSizesChange(): void {
+    const containerSize = this.measureContainerSize();
+    if (containerSize > 0) {
+      this.ngZone.run(() =>
+        this.sizesChange.emit(this.parts().map(part => (part.actualSize() * 100) / containerSize))
+      );
+    }
   }
 
   private measureContainerSize(): number {
@@ -318,16 +322,16 @@ export class SiSplitComponent {
         return;
       }
 
+      let restored = false;
       this.parts()
         .filter(part => part.stateId())
         .map(part => ({ part, state: uiState[part.stateId()!] }))
         .filter(
           (item): item is { part: SiSplitPartComponent; state: SplitPartState } =>
-            !!item.state &&
-            item.state.initialSize === item.part.size() &&
-            item.state.initialUnit === item.part.unit()
+            !!item.state && item.state.initialUnit === item.part.unit()
         )
         .forEach(({ part, state }) => {
+          restored = true;
           if (part.unit() === 'px') {
             part.expandedSize.set(state.size);
           } else {
@@ -335,7 +339,12 @@ export class SiSplitComponent {
           }
           part.collapsedState.set(!state.expanded);
         });
-      setTimeout(() => this.refreshAllPartSizes());
+      setTimeout(() => {
+        this.refreshAllPartSizes();
+        if (restored) {
+          this.emitSizesChange();
+        }
+      });
     });
   }
 }

@@ -49,7 +49,7 @@
           @if (subheading()) {
             <div class="si-h2">{{ subheading() | translate }}</div>
           }
-          <h1 class="si-h1-bold my-2">{{ heading() | translate }}</h1>
+          <h1 class="si-h1 my-2">{{ heading() | translate }}</h1>
           <div class="position-relative">
             <h2 class="mt-13 si-h2" [class.invisible]="loginAlert">{{ subtitle() | translate }}</h2>
             @if (loginAlert) {
@@ -97,7 +97,7 @@
                 </span>
               }
             </div>
-            <div class="si-caption mt-4 mb-6 text-secondary d-flex flex-wrap">
+            <div class="si-body-sm mt-4 mb-6 text-secondary d-flex flex-wrap">
               @if (version()) {
                 <span class="me-6">{{ version() }}</span>
               }

@@ -2,7 +2,7 @@
   <ng-content select=".si-info-image">
     <si-icon class="icon-size" [class]="iconColor()" [icon]="icon()" />
   </ng-content>
-  <h1 class="si-h1-bold si-info-page-title">{{ titleText() | translate }}</h1>
+  <h1 class="si-h1 si-info-page-title">{{ titleText() | translate }}</h1>
   @if (copyText()) {
     <h2 class="mt-6 mb-0"> {{ copyText() | translate }} </h2>
   }

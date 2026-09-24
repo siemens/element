@@ -63,7 +63,7 @@
   }
 
   blockquote {
-    border-inline-start: 4px solid variables.$si-sys-border-4;
+    border-inline-start: 4px solid variables.$si-sys-color-border-4;
     padding-inline-start: map.get(variables.$spacers-inline, 4);
 
     p {

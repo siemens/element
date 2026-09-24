@@ -1,6 +1,6 @@
 - banner:
   - link "Siemens logo":
-    - /url: "#/"
+    - /url: /
   - text: Application name
   - button "Tenant 1"
   - button "5 Notifications" [expanded]

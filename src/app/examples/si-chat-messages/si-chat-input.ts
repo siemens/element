@@ -33,15 +33,16 @@ export class SampleComponent {
       label: 'Take photo',
       icon: 'element-camera',
       action: () => this.logEvent('Camera clicked')
-    },
-    {
-      label: 'Text formatting',
-      icon: 'element-brush',
-      action: () => this.logEvent('Text formatting clicked')
     }
   ];
 
   secondaryActions: MenuItemAction[] = [
+    {
+      type: 'action',
+      label: 'Text formatting',
+      icon: 'element-brush',
+      action: () => this.logEvent('Text formatting clicked')
+    },
     {
       type: 'action',
       label: 'Schedule message',

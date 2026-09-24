@@ -92,7 +92,7 @@ If a `si-form-item` component cannot be used, it is also possible to use
 the checkbox with native HTML elements only:
 
 ```html
-<div class="form-check">
+<div class="form-check mb-2">
   <input type="checkbox" id="check-id" class="form-check-input" />
   <label for="check-id" class="form-check-label">Checkbox</label>
 </div>

@@ -72,10 +72,12 @@ export class SiPaginationComponent {
     return this.totalPages() ?? Math.ceil((this.totalRowCount() ?? 0) / safePageSize);
   });
 
-  protected readonly prevDisabled = computed(() => this.currentPage() === 1);
+  protected readonly prevDisabled = computed(
+    () => this.calculatedTotalPages() <= 0 || this.currentPage() === 1
+  );
 
   protected readonly nextDisabled = computed(
-    () => this.currentPage() === this.calculatedTotalPages()
+    () => this.calculatedTotalPages() <= 0 || this.currentPage() === this.calculatedTotalPages()
   );
 
   protected readonly pageButtons = computed(() => {

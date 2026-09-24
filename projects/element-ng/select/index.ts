@@ -9,6 +9,7 @@ export * from './options/si-select-option.source';
 export * from './selection/si-select-single-value.directive';
 export * from './selection/si-select-multi-value.directive';
 export * from './si-select-option-template.directive';
+export * from './si-select-value-template.directive';
 export * from './si-select-group-template.directive';
 export * from './si-select.module';
 export * from './select-list/si-select-list-has-filter.component';

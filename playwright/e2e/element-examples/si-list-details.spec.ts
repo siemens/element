@@ -104,6 +104,38 @@ test.describe('si-list-details', () => {
     });
   });
 
+  test(`${example} – restore split state after resize`, async ({ page, si }) => {
+    await si.visitExample(example);
+    const split = page.locator('si-split');
+    await expect(split).toHaveCount(1);
+
+    const listPart = page.locator('si-split > si-split-part').first();
+    const initialWidth = (await listPart.boundingBox())!.width;
+
+    // Resize the split by dragging gutter
+    const splitHandle = split.locator('.si-split-gutter');
+    const splitHandleBox = (await splitHandle.boundingBox())!;
+    const x = splitHandleBox.x + splitHandleBox.width / 2;
+    const y = splitHandleBox.y + splitHandleBox.height / 2;
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x + 100, y);
+    await page.mouse.up();
+
+    const resizedWidth = (await listPart.boundingBox())!.width;
+    expect(resizedWidth).toBeGreaterThan(initialWidth + 50);
+
+    // Reload the example to verify state restoration
+    await page.reload();
+    await si.visitExample(example);
+    await expect(listPart).toBeVisible();
+
+    // Verify split state (width) is restored
+    await expect
+      .poll(async () => Math.abs((await listPart.boundingBox())!.width - resizedWidth))
+      .toBeLessThan(15);
+  });
+
   test('with router in mobile mode', async ({ page, si }) => {
     await page.setViewportSize({ width: 600, height: 800 }); // mdMinimum is 768px
     await si.visitExample('si-list-details/si-list-details-router');
@@ -111,5 +143,29 @@ test.describe('si-list-details', () => {
     await expect(page.getByText(`"name": "Max Meier 2"`)).toBeInViewport();
     await page.goBack();
     await expect(page.getByRole('cell', { name: 'Max Meier 2', exact: true })).toBeInViewport();
+  });
+
+  test('with custom details header', async ({ page, si }, testInfo) => {
+    const customHeaderExample = 'si-list-details/si-list-details-custom-header';
+
+    await si.visitExample(customHeaderExample);
+    await si.runVisualAndA11yTests();
+
+    await page.getByRole('tab', { name: 'Address' }).click();
+    await expect(page.getByRole('tabpanel')).toContainText('Industriestrasse 10');
+
+    await page.setViewportSize({ width: 600, height: 800 });
+    await si.visitExample(customHeaderExample);
+
+    const firstUser = page.getByRole('button', { name: 'Select Jane Smith' });
+    const backButton = page.getByRole('button', { name: 'Back to users' });
+    await expect(firstUser).toBeInViewport();
+    await firstUser.click();
+    await expect(backButton).toBeFocused();
+    await expect(page.getByRole('heading', { name: 'Jane Smith', level: 2 })).toBeInViewport();
+    await si.runVisualAndA11yTests('mobile-details');
+
+    await backButton.click();
+    await expect(firstUser).toBeFocused();
   });
 });

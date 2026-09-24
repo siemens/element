@@ -60,6 +60,10 @@ export class SiSidePanelActionComponent {
 export class SiSidePanelActionsComponent {
 }
 
+// @public
+export class SiSidePanelBackButtonComponent {
+}
+
 // @public (undocumented)
 export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     constructor();

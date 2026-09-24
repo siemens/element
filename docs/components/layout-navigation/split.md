@@ -108,11 +108,17 @@ import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/spli
 })
 ```
 
-### Horizontal split with auto scale
+### Sizing
+
+Each `si-split-part` requires a numeric `size` and a `unit`. Use `unit="fr"`
+for a part that should scale with the available space. Use `unit="px"` for a
+part that should keep a fixed size while the split container changes size.
+
+### Horizontal split with fractional sizing
 
 <si-docs-component example="si-split/si-split-auto"></si-docs-component>
 
-### Horizontal split with mixed scale (none/auto)
+### Horizontal split with mixed fixed and fractional sizing
 
 <si-docs-component example="si-split/si-split-mixed"></si-docs-component>
 

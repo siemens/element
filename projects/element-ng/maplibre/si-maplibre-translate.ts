@@ -34,8 +34,8 @@ const createDefaultLocale = (): Record<string, string> => ({
   'ScaleControl.Kilometers': t(() => $localize`:@@SI_MAP.SCALE_KILOMETERS:km`),
   'ScaleControl.Miles': t(() => $localize`:@@SI_MAP.SCALE_MILES:mi`),
   'ScaleControl.NauticalMiles': t(() => $localize`:@@SI_MAP.SCALE_NAUTICAL_MILES:nm`),
-  'GlobeControl.Enable': t(() => $localize`:@@SI_MAP.GLOBE_ENABLE:Enable globe`),
-  'GlobeControl.Disable': t(() => $localize`:@@SI_MAP.GLOBE_DISABLE:Disable globe`),
+  'GlobeControl.Enable': t(() => $localize`:@@SI_MAP.GLOBE_ENABLE:Switch to globe view`),
+  'GlobeControl.Disable': t(() => $localize`:@@SI_MAP.GLOBE_DISABLE:Switch to flat view`),
   'TerrainControl.Enable': t(() => $localize`:@@SI_MAP.TERRAIN_ENABLE:Enable terrain`),
   'TerrainControl.Disable': t(() => $localize`:@@SI_MAP.TERRAIN_DISABLE:Disable terrain`),
   'CooperativeGesturesHandler.WindowsHelpText': t(

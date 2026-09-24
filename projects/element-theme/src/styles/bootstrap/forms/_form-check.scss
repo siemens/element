@@ -26,7 +26,6 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
 .form-check {
   padding-block: map.get(spacers.$spacers-block, 1);
   padding-inline-start: calc($form-check-size + map.get(spacers.$spacers-inline, 4));
-  margin-block-end: map.get(spacers.$spacers-block, 2);
 
   @extend %form-check-spacing;
 
@@ -37,7 +36,6 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
 
 .form-check-inline {
   display: inline-block;
-  margin-block-end: 0;
   margin-inline-end: variables.$form-check-inline-margin-end;
   @extend %form-check-spacing;
 }
@@ -45,21 +43,21 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
 %form-check-base {
   position: relative;
   appearance: none;
-  background-color: system-tokens.$si-sys-background-1;
-  border: 1px solid system-tokens.$si-sys-border-2;
+  background-color: system-tokens.$si-sys-color-background-1;
+  border: 1px solid system-tokens.$si-sys-color-border-2;
   flex-shrink: 0;
   float: inline-start;
 
   &:is(:hover, .hover) {
-    background: system-tokens.$si-sys-background-hover;
+    background: system-tokens.$si-sys-color-background-hover;
   }
 
   &:is(:active, .active) {
-    background: system-tokens.$si-sys-background-selected;
+    background: system-tokens.$si-sys-color-background-active;
   }
 
   &:is([disabled], .disabled) {
-    border-color: system-tokens.$si-sys-text-disabled;
+    border-color: system-tokens.$si-sys-color-text-disabled;
     background-color: transparent;
   }
 }
@@ -82,27 +80,27 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
   }
 
   &:is(:checked, .checked, :indeterminate) {
-    background-color: system-tokens.$si-sys-background-accent;
+    background-color: system-tokens.$si-sys-color-background-accent;
     border-color: transparent;
 
     &:hover {
-      background-color: system-tokens.$si-sys-background-accent-hover;
+      background-color: system-tokens.$si-sys-color-background-accent-hover;
       border-color: transparent;
     }
 
     &:active {
-      background-color: system-tokens.$si-sys-background-accent-active;
+      background-color: system-tokens.$si-sys-color-background-accent-active;
       border-color: transparent;
     }
 
     &::after {
-      background-color: system-tokens.$si-sys-text-on-accent;
+      background-color: system-tokens.$si-sys-color-text-on-accent;
       opacity: 1;
     }
 
     &[disabled] {
       border-color: transparent;
-      background-color: system-tokens.$si-sys-text-disabled;
+      background-color: system-tokens.$si-sys-color-text-disabled;
     }
   }
 
@@ -137,26 +135,26 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
 
   &:checked {
     border-color: transparent;
-    background-color: system-tokens.$si-sys-background-accent;
+    background-color: system-tokens.$si-sys-color-background-accent;
 
     &::after {
       border-color: transparent;
-      background-color: system-tokens.$si-sys-text-on-accent;
+      background-color: system-tokens.$si-sys-color-text-on-accent;
     }
 
     &:hover {
       border-color: transparent;
-      background-color: system-tokens.$si-sys-background-accent-hover;
+      background-color: system-tokens.$si-sys-color-background-accent-hover;
     }
 
     &:active {
       border-color: transparent;
-      background-color: system-tokens.$si-sys-border-accent-active;
+      background-color: system-tokens.$si-sys-color-border-accent-active;
     }
 
     &[disabled] {
       border-color: transparent;
-      background-color: system-tokens.$si-sys-text-disabled;
+      background-color: system-tokens.$si-sys-color-text-disabled;
     }
   }
 }
@@ -165,7 +163,7 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
   display: inline-block;
   position: relative;
   padding-inline-end: $form-check-padding-x;
-  color: system-tokens.$si-sys-text-primary;
+  color: system-tokens.$si-sys-color-text-primary;
 }
 
 .form-check-input {
@@ -176,7 +174,7 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
   }
 
   &[disabled] ~ .form-check-label {
-    color: system-tokens.$si-sys-text-disabled;
+    color: system-tokens.$si-sys-color-text-disabled;
   }
 
   &:is([type='checkbox'], .si-form-checkbox) {
@@ -211,7 +209,7 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
     + .btn {
       pointer-events: none;
       filter: none;
-      color: system-tokens.$si-sys-text-disabled;
+      color: system-tokens.$si-sys-color-text-disabled;
     }
   }
 }
@@ -243,7 +241,7 @@ formly-field-multicheckbox {
     }
 
     &[disabled] ~ label {
-      color: system-tokens.$si-sys-text-disabled;
+      color: system-tokens.$si-sys-color-text-disabled;
     }
   }
 }
@@ -258,7 +256,7 @@ formly-field-radio {
     }
 
     &[disabled] ~ label {
-      color: system-tokens.$si-sys-text-disabled;
+      color: system-tokens.$si-sys-color-text-disabled;
     }
   }
 }

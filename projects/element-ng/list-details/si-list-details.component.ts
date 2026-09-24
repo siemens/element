@@ -24,8 +24,10 @@ import {
   ElementDimensions,
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
-import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/split';
+import { SiSplitComponent, SiSplitPartComponent, SplitUnit } from '@siemens/element-ng/split';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+
+const DEFAULT_LIST_WIDTH_PERCENT = 32;
 
 @Component({
   selector: 'si-list-details',
@@ -41,9 +43,15 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 })
 export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private resizeSubs?: Subscription;
-  private elementRef = inject(ElementRef);
+  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private resizeObserver = inject(ResizeObserverService);
   private readonly listDetailsContainer = viewChild.required<ElementRef>('listDetailsContainer');
+  private readonly listPart = viewChild('listSplitPart', {
+    read: SiSplitPartComponent
+  });
+  private readonly split = viewChild(SiSplitComponent, {
+    read: ElementRef<HTMLElement>
+  });
   protected readonly animationsGloballyDisabled = areAnimationsDisabled();
 
   /**
@@ -79,11 +87,23 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   readonly disableResizing = input(false, { transform: booleanAttribute });
 
   /**
-   * The percentage width of the list view of the overall component width.
+   * The list pane size, updated when the split is resized or restored.
+   * With resizing enabled, the value uses {@link listWidthUnit}: pixels for `px`,
+   * or a percentage-based fractional weight for `fr`. With resizing disabled,
+   * the value is always interpreted as a percentage.
+   * Percentage values must be in the inclusive range 0-100; values outside this
+   * range fall back to a 32/68 list/details split.
    *
-   * @defaultValue 32
+   * @defaultValue 300
    */
-  readonly listWidth = model<number>(32);
+  readonly listWidth = model<number>(300);
+
+  /**
+   * Unit used for the list split part when resizing is enabled.
+   *
+   * @defaultValue 'px'
+   */
+  readonly listWidthUnit = input<SplitUnit>('px');
 
   /**
    * Sets the minimal width of the list component in pixel.
@@ -105,10 +125,25 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
    */
   readonly stateId = input<string>();
 
-  protected readonly splitSizes = computed<[number, number]>(() => [
-    this.listWidth(),
-    100 - this.listWidth()
-  ]);
+  /**
+   * Percentage width shared by static and resizable `fr` layouts.
+   * The migration sets `listWidthUnit="fr"` without setting `listWidth`, so the default
+   * pixel width of 300 must fall back to 32 to preserve the legacy 32/68 split.
+   * @internal
+   */
+  readonly listWidthPercent = computed(() => {
+    const listWidth = this.listWidth();
+    return listWidth >= 0 && listWidth <= 100 ? listWidth : DEFAULT_LIST_WIDTH_PERCENT;
+  });
+
+  protected readonly splitSizes = computed<[number, number]>(() => {
+    if (this.listWidthUnit() === 'fr') {
+      const relativeListWidth = this.listWidthPercent();
+      return [relativeListWidth, 100 - relativeListWidth];
+    }
+
+    return [this.listWidth(), 1];
+  });
 
   protected readonly listStateId = computed(() => {
     const stateId = this.stateId();
@@ -168,7 +203,21 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private readonly resizeDimensions = signal<ElementDimensions | undefined>(undefined);
 
   protected onSplitSizesChange(sizes: number[]): void {
-    this.listWidth.set(sizes[0]);
+    if (this.listWidthUnit() === 'px') {
+      this.listWidth.set(this.getListSizePx(sizes[0]));
+    } else {
+      this.listWidth.set(sizes[0]);
+    }
+  }
+
+  private getListSizePx(fallbackPercentage: number): number {
+    const listWidth = this.listPart()?.expandedSize();
+    if (listWidth !== undefined) {
+      return listWidth;
+    }
+
+    const splitWidth = this.split()?.nativeElement.getBoundingClientRect().width;
+    return splitWidth ? (splitWidth * fallbackPercentage) / 100 : this.minListSize();
   }
 
   /** @internal */

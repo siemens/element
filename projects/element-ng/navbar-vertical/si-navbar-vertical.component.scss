@@ -60,7 +60,7 @@ nav {
   text-align: end;
   border: 0;
   inline-size: $vertical-nav-collapsed-width;
-  color: all-variables.$si-sys-text-primary;
+  color: all-variables.$si-sys-color-text-primary;
   padding-block: 4px;
   padding-inline: 8px;
   margin-block-start: 8px;
@@ -105,10 +105,10 @@ si-search-bar {
 :host.nav-collapsed {
   .mobile-drawer {
     border: 0;
-    color: all-variables.$si-sys-text-primary;
-    background: all-variables.$si-sys-background-1;
+    color: all-variables.$si-sys-color-text-primary;
+    background: all-variables.$si-sys-color-background-1;
     text-align: end;
-    box-shadow: all-variables.$element-elevation-1;
+    box-shadow: all-variables.$si-sys-color-effects-shadow-1;
   }
 
   si-search-bar {

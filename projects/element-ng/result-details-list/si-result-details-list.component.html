@@ -4,37 +4,35 @@
       class="position-relative d-flex align-items-center timeline px-6 py-5"
       [class.text-accent]="step.state === 'running'"
     >
-      @if (step.state === 'running') {
-        <si-loading-spinner class="me-4" />
-      } @else {
-        @if (step.icon) {
-          <si-icon class="me-4 icon" [icon]="step.icon" />
+      <div class="icon-stack icon me-4">
+        @if (step.state === 'running') {
+          <si-loading-spinner />
         } @else {
-          @switch (step.state) {
-            @case ('passed') {
-              <span class="me-4 icon icon-stack">
+          @if (step.icon) {
+            <si-icon [icon]="step.icon" />
+          } @else {
+            @switch (step.state) {
+              @case ('passed') {
                 <si-icon class="status-success" [icon]="icons.elementCircleFilled" />
                 <si-icon class="status-critical-contrast" [icon]="icons.elementStateTick" />
-              </span>
-            }
-            @case ('failed') {
-              <span class="me-4 icon icon-stack">
+              }
+              @case ('failed') {
                 <si-icon class="status-danger" [icon]="icons.elementCircleFilled" />
                 <si-icon
                   class="status-critical-contrast"
                   [icon]="icons.elementStateExclamationMark"
                 />
-              </span>
-            }
-            @case ('not-started') {
-              <si-icon class="me-4 icon" [icon]="icons.elementNotChecked" />
-            }
-            @default {
-              <si-icon class="me-4 icon" [icon]="icons.elementOutOfService" />
+              }
+              @case ('not-started') {
+                <si-icon [icon]="icons.elementNotChecked" />
+              }
+              @default {
+                <si-icon [icon]="icons.elementOutOfService" />
+              }
             }
           }
         }
-      }
+      </div>
 
       <div class="d-flex flex-column justify-content-center w-100 overflow-hidden">
         <div class="d-flex">

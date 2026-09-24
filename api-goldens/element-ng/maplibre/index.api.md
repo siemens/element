@@ -4,9 +4,24 @@
 
 ```ts
 
-import * as i0 from '@angular/core';
+import * as _angular_core from '@angular/core';
+import * as geojson from 'geojson';
 import { Signal } from '@angular/core';
 import { StyleSpecification } from 'maplibre-gl';
+
+// @public
+export type ClusterColors = 'status' | 'element' | Record<number, string>;
+
+// @public
+export type ClusterPoint = GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties>;
+
+// @public
+export interface ClusterSegment {
+    // (undocumented)
+    color: string;
+    // (undocumented)
+    property: string;
+}
 
 // @public
 export const injectSiMapStyle: (key: string) => Signal<StyleSpecification>;
@@ -14,12 +29,25 @@ export const injectSiMapStyle: (key: string) => Signal<StyleSpecification>;
 // @public
 export const injectSiMapTranslations: () => Signal<Record<string, string>>;
 
-// @public (undocumented)
-export type MarkerStatus = 'default' | 'unknown' | 'success' | 'info' | 'warning' | 'danger' | 'caution' | 'critical';
+// @public
+export type MarkerStatus = ExtendedStatusType | 'default';
+
+// @public
+export class SiClusterSourceComponent {
+    readonly clusterClick: _angular_core.OutputEmitterRef<ClusterPoint>;
+    readonly clusterMaxZoom: _angular_core.InputSignal<number | undefined>;
+    readonly clusterMinPoints: _angular_core.InputSignal<number>;
+    readonly clusterRadius: _angular_core.InputSignal<number>;
+    readonly data: _angular_core.InputSignal<geojson.FeatureCollection<geojson.Point, geojson.GeoJsonProperties>>;
+    readonly groupColors: _angular_core.InputSignal<ClusterColors>;
+    readonly groupProperty: _angular_core.InputSignal<string>;
+    readonly sourceId: _angular_core.InputSignal<string>;
+    readonly statusProperty: _angular_core.InputSignal<string | undefined>;
+}
 
 // @public (undocumented)
 export class SiStatusMarkerComponent {
-    readonly status: i0.InputSignal<MarkerStatus>;
+    readonly status: _angular_core.InputSignal<MarkerStatus>;
 }
 
 // (No @packageDocumentation comment for this package)

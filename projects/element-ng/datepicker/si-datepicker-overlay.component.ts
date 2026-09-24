@@ -84,7 +84,7 @@ import { DatepickerConfig, DateRange } from './si-datepicker.model';
   `,
   styleUrl: './si-datepicker-overlay.component.scss',
   host: {
-    class: 'mt-md-1 d-flex elevation-2 rounded-2 overflow-auto align-items-stretch',
+    class: 'mt-md-1 d-flex shadow-3 rounded-2 overflow-auto align-items-stretch',
     '[class.flex-wrap]': 'isMobile()',
     '[class.mobile-datepicker-overlay]': 'isMobile()',
     '[class.fade]': 'isMobile()',

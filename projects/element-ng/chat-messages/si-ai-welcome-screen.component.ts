@@ -28,7 +28,6 @@ export interface PromptSuggestion {
  * - Clickable prompt suggestion cards
  * - Optional refresh button to regenerate suggestions
  *
- * @see {@link SiAiChatContainerComponent} for the AI chat container which uses this component
  * @see {@link SiChatContainerComponent} for the base chat container
  *
  * @experimental

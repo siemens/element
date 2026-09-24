@@ -15,7 +15,6 @@ import { By } from '@angular/platform-browser';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
-import { page } from 'vitest/browser';
 
 import { MessageAction } from './message-action.model';
 import {
@@ -483,12 +482,12 @@ describe('SiChatInputComponent', () => {
     disclaimer.set('This is a disclaimer');
     await fixture.whenStable();
 
-    const disclaimerElement = debugElement.query(By.css('.si-caption'));
+    const disclaimerElement = debugElement.query(By.css('.si-body-sm'));
     expect(disclaimerElement).toBeTruthy();
     expect(disclaimerElement.nativeElement).toHaveTextContent('This is a disclaimer');
   });
 
-  it('should render action buttons when actions are provided', async () => {
+  it('should render primary actions inline without an actions menu', async () => {
     actions.set([
       {
         label: 'Attach',
@@ -498,10 +497,36 @@ describe('SiChatInputComponent', () => {
     ]);
     await fixture.whenStable();
 
-    const menuTrigger = page.getByRole('button', { name: 'Additional actions' });
-    await menuTrigger.click();
+    const actionButtons = fixture.nativeElement.querySelectorAll('button');
+    expect(actionButtons).toHaveLength(2);
+    expect(actionButtons[0]).toHaveAttribute('aria-label', 'Attach');
+    expect(actionButtons[0]).toHaveAttribute('aria-describedby');
+    expect(fixture.nativeElement.querySelector('button.cdk-menu-trigger')).toBeFalsy();
+  });
 
-    await expect.element(page.getByRole('menuitem', { name: 'Attach' })).toBeVisible();
+  it('should render the attachment button inline when there are no secondary actions', async () => {
+    allowAttachments.set(true);
+    await fixture.whenStable();
+
+    const actionButtons = fixture.nativeElement.querySelectorAll('button');
+    expect(actionButtons).toHaveLength(2);
+    expect(actionButtons[0]).toHaveAttribute('aria-label', 'Attach file');
+    expect(fixture.nativeElement.querySelector('button.cdk-menu-trigger')).toBeFalsy();
+  });
+
+  it('should render the attachment button in the menu when secondary actions exist', async () => {
+    allowAttachments.set(true);
+    secondaryActions.set([
+      {
+        type: 'action',
+        label: 'Schedule message',
+        action: () => {}
+      }
+    ]);
+    await fixture.whenStable();
+
+    expect(fixture.nativeElement.querySelector('button.cdk-menu-trigger')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('button[aria-label="Attach file"]')).toBeFalsy();
   });
 
   it('should have focus method', async () => {

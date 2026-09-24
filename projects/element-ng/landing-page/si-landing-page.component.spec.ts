@@ -37,7 +37,7 @@ describe('SiLandingPageComponent', () => {
     subtitle.set('my subtitle');
     await fixture.whenStable();
 
-    const headingEl = element.querySelector('.landing-page-main .si-h1-bold');
+    const headingEl = element.querySelector('.landing-page-main .si-h1');
     expect(headingEl).toHaveTextContent('my heading');
   });
 

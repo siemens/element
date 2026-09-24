@@ -23,11 +23,11 @@ export const elementToggleStyle: Part = createPart({
     }
 
     .ag-toggle-button-input-wrapper:not(.ag-checked):hover {
-      background-color: var(--si-sys-background-neutral);
+      background-color: var(--si-sys-color-background-neutral);
     }
 
     .ag-toggle-button-input-wrapper.ag-checked:hover {
-      background-color: var(--si-sys-background-accent-hover);
+      background-color: var(--si-sys-color-background-accent-hover);
     }
 
     .ag-toggle-button-input-wrapper.ag-checked::before {

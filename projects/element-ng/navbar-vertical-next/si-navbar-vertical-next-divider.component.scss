@@ -4,7 +4,11 @@
 :host {
   display: block;
   block-size: 1px;
-  background-color: variables.$si-sys-border-4;
+  background-color: variables.$si-sys-color-border-4;
   margin-block: map.get(variables.$spacers-block, 3);
   margin-inline: map.get(variables.$spacers-inline, 5);
+}
+
+:host-context(.nav-flat-group-open) {
+  display: none;
 }

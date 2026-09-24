@@ -20,6 +20,7 @@ import { SiActionCardHarness } from './testing/si-action-card.harnes';
         si-action-card
         [disabled]="disabled()"
         [heading]="heading"
+        [subHeading]="subHeading"
         [selectable]="selectable()"
         >Action card</button
       >
@@ -28,6 +29,7 @@ import { SiActionCardHarness } from './testing/si-action-card.harnes';
 })
 class WrapperComponent {
   heading = 'Test';
+  subHeading = 'Description';
   readonly selectable = input(false);
   readonly disabled = input(false);
 }
@@ -70,5 +72,17 @@ describe('SiActionCardComponent', () => {
     expect(await actionCardHarness.isSelected()).toBe(false);
     await actionCardHarness.clickActionButton();
     expect(await actionCardHarness.isSelected()).toBe(false);
+  });
+
+  it('should reference generated heading and content ids', async () => {
+    await fixture.whenStable();
+    const actionCard: HTMLElement = fixture.nativeElement.querySelector('[si-action-card]');
+    const labelledBy = actionCard.getAttribute('aria-labelledby')!;
+    const describedBy = actionCard.getAttribute('aria-describedby')!.split(' ');
+
+    expect(actionCard.querySelector(`[id="${labelledBy}"]`)).toHaveTextContent('Test');
+    expect(describedBy).toHaveLength(2);
+    expect(actionCard.querySelector(`[id="${describedBy[0]}"]`)).toHaveTextContent('Description');
+    expect(actionCard.querySelector(`[id="${describedBy[1]}"]`)).not.toBeNull();
   });
 });

@@ -24,7 +24,7 @@
 - link "Home":
   - /url: https://www.siemens.com
 - link "Home":
-  - /url: "#/"
+  - /url: /
 - text: JD
 - link "John reported an issue link":
   - /url: https://www.siemens.com
@@ -35,13 +35,13 @@
 - button "Delete"
 - heading "Custom Action Integration" [level=2]
 - text: /Today at \d+:\d+ Approval Request Important system notification requiring your attention\. Please review the details and take appropriate action if needed\./
-- button "Approve request"
-- button "Reject request"
+- button "Approve request": 
+- button "Reject request": 
 - text: /Today at \d+:\d+ Meeting Invitation - Weekly team sync Important system notification requiring your attention\. Please review the details and take appropriate action if needed\./
 - button "Accept"
 - button "Decline"
 - text: /Today at \d+:\d+ Project milestone reached Important system notification requiring your attention\. Please review the details and take appropriate action if needed\./
-- button "View achievement details"
+- button "View achievement details": 
 - text: Interactive Demo Controls
 - checkbox "Unread (indicator and emphasis)"
 - text: Unread (indicator and emphasis)

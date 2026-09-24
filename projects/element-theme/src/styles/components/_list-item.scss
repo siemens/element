@@ -16,7 +16,7 @@ ol:has(.list-item) {
 
 .list {
   &.list-divider > li:not(:last-child) {
-    border-block-end: 1px solid variables.$si-sys-border-4;
+    border-block-end: 1px solid variables.$si-sys-color-border-4;
   }
 
   &.list-filled,
@@ -25,12 +25,12 @@ ol:has(.list-item) {
   }
 
   &.list-filled .list-item {
-    background-color: variables.$si-sys-background-1;
+    background-color: variables.$si-sys-color-background-1;
     border-radius: variables.$element-radius-2;
   }
 
   &.list-outline .list-item {
-    border: 1px solid variables.$si-sys-border-4;
+    border: 1px solid variables.$si-sys-color-border-4;
     border-radius: variables.$element-radius-2;
   }
 }
@@ -79,7 +79,7 @@ ol:has(.list-item) {
 
   .list-item-timestamp {
     grid-area: timestamp;
-    color: variables.$si-sys-text-secondary;
+    color: variables.$si-sys-color-text-secondary;
     margin-block-end: 0;
   }
 
@@ -89,19 +89,14 @@ ol:has(.list-item) {
     margin-block-end: 0;
 
     @include typography.si-font(
-      typography.$si-font-size-h5,
-      typography.$si-line-height-h5,
-      typography.$si-font-weight-h5
+      typography.$si-font-size-body-sbold,
+      typography.$si-line-height-body-sbold,
+      typography.$si-font-weight-body-sbold
     );
 
     &.unread {
       position: relative;
-
-      @include typography.si-font(
-        typography.$si-font-size-h5-bold,
-        typography.$si-line-height-h5-bold,
-        typography.$si-font-weight-h5-bold
-      );
+      font-weight: typography.$si-font-weight-bold;
 
       &::before {
         content: '';
@@ -109,7 +104,7 @@ ol:has(.list-item) {
         block-size: 0.375rem;
         inline-size: 0.375rem;
         border-radius: 50%;
-        background-color: variables.$si-sys-background-inverse;
+        background-color: variables.$si-sys-color-background-inverse;
         inset-inline-start: -0.625rem;
         inset-block-start: 50%;
         translate: 0 -50%;
@@ -132,11 +127,11 @@ ol:has(.list-item) {
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: variables.$si-sys-text-secondary;
+    color: variables.$si-sys-color-text-secondary;
     margin-block-end: map.get(variables.$spacers-block, 4);
 
     a:not(:hover) {
-      color: variables.$si-sys-text-secondary;
+      color: variables.$si-sys-color-text-secondary;
     }
 
     .badge {
@@ -147,7 +142,7 @@ ol:has(.list-item) {
       inline-size: 0.125rem;
       block-size: 0.125rem;
       border-radius: 50%;
-      background-color: variables.$si-sys-text-secondary;
+      background-color: variables.$si-sys-color-text-secondary;
       margin-inline: map.get(variables.$spacers-inline, 2);
     }
   }
@@ -164,11 +159,11 @@ ol:has(.list-item) {
     color: inherit;
 
     &:hover {
-      background-color: variables.$si-sys-background-hover;
+      background-color: variables.$si-sys-color-background-hover;
     }
 
     &:active {
-      background-color: variables.$si-sys-background-selected;
+      background-color: variables.$si-sys-color-background-active;
     }
 
     &:focus-visible {

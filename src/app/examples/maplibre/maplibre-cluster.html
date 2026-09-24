@@ -1,0 +1,30 @@
+<mgl-map
+  class="h-100"
+  [attributionControl]="false"
+  [locale]="mapTranslations()"
+  [mapStyle]="mapStyle()"
+  [center]="[8.0, 47.1]"
+  [canvasContextAttributes]="{ preserveDrawingBuffer: true }"
+  [zoom]="4"
+  (mapError)="onError($event)"
+>
+  <mgl-control mglFullscreen />
+  <mgl-control mglGlobe position="top-right" />
+  <mgl-control mglScale unit="metric" position="top-right" />
+  <mgl-control mglAttribution position="bottom-left" />
+  <mgl-control mglNavigation position="bottom-right" />
+  <mgl-control mglGeolocate position="bottom-right" (geolocate)="onGeolocate($event)" />
+
+  <si-cluster-source
+    sourceId="cluster-source"
+    statusProperty="status"
+    [data]="geoJson"
+    (clusterClick)="selectCluster($event)"
+  />
+
+  <mgl-markers-for-clusters source="cluster-source">
+    <ng-template let-feature mglPoint>
+      <si-status-marker [status]="feature.properties?.status" />
+    </ng-template>
+  </mgl-markers-for-clusters>
+</mgl-map>

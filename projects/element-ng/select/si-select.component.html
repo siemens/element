@@ -3,7 +3,7 @@
   cdkOverlayOrigin
   [baseId]="id()"
   [labelledby]="labelledby()"
-  [optionTemplate]="optionTemplate()"
+  [optionTemplate]="selectedValueTemplate() ?? optionTemplate()"
   [ariaLabel]="ariaLabel()"
   [controls]="id() + '-listbox'"
   [open]="isOpen()"

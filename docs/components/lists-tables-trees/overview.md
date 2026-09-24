@@ -80,7 +80,7 @@ Avoid layering tables within non-functional container elements.
 When tables are placed inside other containers, such as [modals](../layout-navigation/modals.md)
 and [side panel](../layout-navigation/side-panel.md), no elevation should be applied.
 Additionally, in these contexts, avoid using tables with more than two or three columns to prevent overcrowding.
-Consider using [list group](../lists-tables-trees/list-group.md) instead.
+Consider using a [list](../lists-tables-trees/list.md) instead.
 
 ![Table placement](images/table-placement.png)
 

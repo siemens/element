@@ -36,7 +36,8 @@ import { SiLandingPageComponent } from '../si-landing-page.component';
 @Component({
   selector: 'si-explicit-legal-acknowledge',
   imports: [SiTranslatePipe],
-  templateUrl: './si-explicit-legal-acknowledge.component.html'
+  templateUrl: './si-explicit-legal-acknowledge.component.html',
+  styleUrl: './si-explicit-legal-acknowledge.component.scss'
 })
 export class SiExplicitLegalAcknowledgeComponent implements OnInit, OnDestroy {
   /**

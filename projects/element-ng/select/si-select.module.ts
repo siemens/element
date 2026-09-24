@@ -11,6 +11,7 @@ import { SiSelectActionDirective } from './si-select-action.directive';
 import { SiSelectActionsDirective } from './si-select-actions.directive';
 import { SiSelectGroupTemplateDirective } from './si-select-group-template.directive';
 import { SiSelectOptionTemplateDirective } from './si-select-option-template.directive';
+import { SiSelectValueTemplateDirective } from './si-select-value-template.directive';
 import { SiSelectComponent } from './si-select.component';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { SiSelectComponent } from './si-select.component';
     SiSelectGroupTemplateDirective,
     SiSelectMultiValueDirective,
     SiSelectOptionTemplateDirective,
+    SiSelectValueTemplateDirective,
     SiSelectSimpleOptionsDirective,
     SiSelectSingleValueDirective
   ],
@@ -31,6 +33,7 @@ import { SiSelectComponent } from './si-select.component';
     SiSelectGroupTemplateDirective,
     SiSelectMultiValueDirective,
     SiSelectOptionTemplateDirective,
+    SiSelectValueTemplateDirective,
     SiSelectSimpleOptionsDirective,
     SiSelectSingleValueDirective
   ]

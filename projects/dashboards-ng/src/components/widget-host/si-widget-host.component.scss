@@ -28,7 +28,7 @@
   .ui-draggable-dragging,
   .ui-resizable-resizing {
     .dragging-card {
-      box-shadow: variables.$element-elevation-2 !important; // stylelint-disable-line declaration-no-important
+      box-shadow: variables.$si-sys-color-effects-shadow-3 !important; // stylelint-disable-line declaration-no-important
     }
 
     > .grid-stack-item-content {
@@ -55,7 +55,7 @@
 
 .resize-handle {
   inset-block-end: map.get(variables.$spacers-block, 3);
-  color: variables.$si-sys-text-secondary;
+  color: variables.$si-sys-color-text-secondary;
   pointer-events: none;
   position: absolute;
   inset-inline-end: map.get(variables.$spacers-inline, 3);

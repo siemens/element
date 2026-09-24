@@ -14,7 +14,7 @@
   }
   <si-tab heading="Deselectable" [canDeactivate]="canDeactivate">
     <p class="mt-4">Uncheck to prevent switching to another tab.</p>
-    <label class="form-check">
+    <label class="form-check mb-2">
       <input type="checkbox" class="form-check-input" [(ngModel)]="deselectable" />
       <span class="form-check-label">Enable tab switching</span>
     </label>
@@ -22,7 +22,7 @@
 </si-tabset>
 
 <div class="e2e-ignore">
-  <label class="form-check">
+  <label class="form-check mb-2">
     <input type="checkbox" class="form-check-input" [(ngModel)]="activable" />
     <span class="form-check-label">Allow Lobby tab activation</span>
   </label>

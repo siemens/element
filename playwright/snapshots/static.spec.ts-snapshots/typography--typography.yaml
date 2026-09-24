@@ -3,16 +3,28 @@
 - heading "H3 Heading" [level=3]
 - heading "H4 Heading" [level=4]
 - heading "H5 Heading" [level=5]
+- heading "H6 Heading" [level=6]
 - separator
-- paragraph: H1 Heading Bold
 - paragraph: H1 Heading
 - paragraph: H2 Heading
 - paragraph: H3 Heading
-- paragraph: H4 Heading Bold
 - paragraph: H4 Heading
-- paragraph: H5 Heading Bold
 - paragraph: H5 Heading
+- paragraph: H5 Heading Bold
+- paragraph: H6 Heading
 - separator
 - paragraph: Body Large
+- paragraph: Body Large Semi Bold
 - paragraph: Body
-- paragraph: Caption
+- paragraph: Body Semi Bold
+- paragraph: Body Paragraph
+- paragraph: Body Paragraph Semi Bold
+- paragraph: Body Small
+- paragraph: Body Small Semi Bold
+- separator
+- paragraph:
+  - code: Code Large
+- paragraph:
+  - code: Code
+- paragraph:
+  - code: Code Small

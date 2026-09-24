@@ -4,18 +4,28 @@
  */
 import { Component, computed, inject, signal, TemplateRef, viewChild } from '@angular/core';
 import {
+  elementAi,
   elementBookmark,
+  elementChecked,
   elementCopy,
   elementDelete,
   elementExport,
+  elementDocument,
+  elementFunction,
+  elementGenerate,
   elementRefresh,
+  elementSearch,
   elementShare,
+  elementSelfLearning,
   elementThumbsDown,
   elementThumbsUp,
   elementUser
 } from '@siemens/element-icons';
 import {
   SiChatContainerComponent,
+  SiActivityMessageComponent,
+  SiActivityMessagePartComponent,
+  SiActivityTraceComponent,
   SiAiMessageComponent,
   SiUserMessageComponent,
   SiChatInputComponent,
@@ -39,17 +49,43 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 import { markdownOptions } from './markdown-options';
 
-interface ChatMessage {
+interface ContentMessage {
   type: 'user' | 'ai' | 'custom';
   content: string;
   attachments?: Attachment[];
   actions?: MessageAction[];
 }
 
+interface ActivityPart {
+  heading: string;
+  content: string;
+  collapsible?: boolean;
+}
+
+interface ActivityMessage {
+  type: 'activity';
+  heading: string;
+  icon?: string;
+  state?: 'running' | 'failed';
+  content?: string;
+  parts?: ActivityPart[];
+}
+
+interface ActivityTrace {
+  type: 'activity-trace';
+  heading: string;
+  messages: ActivityMessage[];
+}
+
+type ChatMessage = ContentMessage | ActivityMessage | ActivityTrace;
+
 @Component({
   selector: 'app-sample',
   imports: [
     SiChatContainerComponent,
+    SiActivityMessageComponent,
+    SiActivityMessagePartComponent,
+    SiActivityTraceComponent,
     SiAiMessageComponent,
     SiUserMessageComponent,
     SiInlineNotificationComponent,
@@ -72,8 +108,15 @@ export class SampleComponent {
   protected markdownOptions = markdownOptions;
 
   protected readonly icons = addIcons({
+    elementAi,
     elementUser,
     elementExport,
+    elementChecked,
+    elementDocument,
+    elementFunction,
+    elementGenerate,
+    elementSearch,
+    elementSelfLearning,
     elementDelete,
     elementThumbsUp,
     elementThumbsDown,
@@ -87,32 +130,32 @@ export class SampleComponent {
     {
       label: 'Good response',
       icon: this.icons.elementThumbsUp,
-      action: (_message: ChatMessage) => this.logEvent('Thumbs up for AI message')
+      action: (_message: ContentMessage) => this.logEvent('Thumbs up for AI message')
     },
     {
       label: 'Bad response',
       icon: this.icons.elementThumbsDown,
-      action: (_message: ChatMessage) => this.logEvent('Thumbs down for AI message')
+      action: (_message: ContentMessage) => this.logEvent('Thumbs down for AI message')
     },
     {
       label: 'Copy response',
       icon: this.icons.elementCopy,
-      action: (_message: ChatMessage) => this.logEvent('Copy AI message')
+      action: (_message: ContentMessage) => this.logEvent('Copy AI message')
     },
     {
       label: 'Retry response',
       icon: this.icons.elementRefresh,
-      action: (_message: ChatMessage) => this.logEvent('Retry AI message')
+      action: (_message: ContentMessage) => this.logEvent('Retry AI message')
     },
     {
       label: 'Bookmark',
       icon: this.icons.elementBookmark,
-      action: (_message: ChatMessage) => this.logEvent('Bookmark AI message')
+      action: (_message: ContentMessage) => this.logEvent('Bookmark AI message')
     },
     {
       label: 'Share',
       icon: this.icons.elementShare,
-      action: (_message: ChatMessage) => this.logEvent('Share AI message')
+      action: (_message: ContentMessage) => this.logEvent('Share AI message')
     }
   ];
 
@@ -152,16 +195,65 @@ export class SampleComponent {
         {
           label: 'Export message',
           icon: this.icons.elementExport,
-          action: (message: ChatMessage) =>
+          action: (message: ContentMessage) =>
             this.logEvent(`Export user message ${message.content.slice(0, 20)}...`)
         }
       ]
     },
     {
       type: 'ai',
-      content: `I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
-
-  Let me examine the structure and provide guidance.`,
+      content: 'I will inspect the files, compare their structures, and summarize the findings.',
+      actions: this.aiActions
+    },
+    {
+      type: 'activity-trace',
+      heading: 'Analyzing the attached files',
+      messages: [
+        {
+          type: 'activity',
+          heading: 'Searching documentation',
+          icon: this.icons.elementSearch,
+          parts: [
+            {
+              heading: 'Input',
+              content: 'Python processing logic and CSV column definitions'
+            },
+            {
+              heading: 'Output',
+              content: 'Mapped each transformation to its corresponding dataset columns.'
+            }
+          ]
+        },
+        {
+          type: 'activity',
+          heading: 'Reading relevant files',
+          icon: this.icons.elementDocument,
+          content: 'Loaded `data-analysis.py` and `dataset.csv`.'
+        },
+        {
+          type: 'activity',
+          heading: 'Computing KPI values',
+          icon: this.icons.elementFunction,
+          content: 'Calculated the requested performance indicators.'
+        },
+        {
+          type: 'activity',
+          heading: 'Generating dashboard',
+          icon: this.icons.elementGenerate,
+          content: 'Created the dashboard layout and KPI cards.'
+        },
+        {
+          type: 'activity',
+          heading: 'Dashboard ready',
+          icon: this.icons.elementChecked,
+          content: 'Validated the generated dashboard.'
+        }
+      ]
+    },
+    {
+      type: 'ai',
+      content:
+        'The script and dataset use compatible structures. The data-loading step is the main performance constraint.',
       actions: this.aiActions
     },
     {
@@ -172,14 +264,26 @@ export class SampleComponent {
         {
           label: 'Export message',
           icon: this.icons.elementExport,
-          action: (_message: ChatMessage) =>
+          action: (_message: ContentMessage) =>
             this.logEvent(`Export user message ${_message.content.slice(0, 20)}...`)
         }
       ]
     },
     {
+      type: 'activity',
+      heading: 'Reviewing performance constraints',
+      icon: this.icons.elementSelfLearning,
+      content: 'Checking memory usage and processing behavior for large datasets.'
+    },
+    {
+      type: 'activity',
+      heading: 'Preparing optimization guidance',
+      icon: this.icons.elementSelfLearning,
+      content: 'Prioritizing changes that reduce memory usage without changing the data structure.'
+    },
+    {
       type: 'ai',
-      content: "Great question! When analyzing large datasets, it's crucial to focus on...",
+      content: 'Process the CSV in chunks first, then profile the transformation steps.',
       actions: this.aiActions
     }
   ]);
@@ -197,6 +301,15 @@ export class SampleComponent {
   readonly inputValue = signal('');
   readonly firstMessageSent = signal(false);
 
+  protected isLatestActivityMessage(message: ActivityMessage | ActivityTrace): boolean {
+    const messages = this.messages();
+    const messageIndex = messages.indexOf(message);
+
+    return !messages
+      .slice(messageIndex + 1)
+      .some(next => ['activity', 'activity-trace', 'user'].includes(next.type));
+  }
+
   inputActions: MessageAction[] = [
     {
       label: 'Clear messages',
@@ -209,13 +322,13 @@ export class SampleComponent {
     {
       label: 'Export message',
       icon: this.icons.elementExport,
-      action: (_message: ChatMessage) =>
+      action: (_message: ContentMessage) =>
         this.logEvent(`Export user message ${_message.content.slice(0, 20)}...`)
     },
     {
       label: 'Delete message',
       icon: this.icons.elementDelete,
-      action: (_message: ChatMessage) =>
+      action: (_message: ContentMessage) =>
         this.logEvent(`Delete user message ${_message.content.slice(0, 20)}...`)
     }
   ];
@@ -358,11 +471,11 @@ export class SampleComponent {
   }
 
   private readonly messageActionsCache = new WeakMap<
-    ChatMessage,
+    ContentMessage,
     { primary: MessageAction[]; secondary: MenuItem[] }
   >();
 
-  private getMessageActions(message: ChatMessage): {
+  private getMessageActions(message: ContentMessage): {
     primary: MessageAction[];
     secondary: MenuItem[];
   } {
@@ -388,11 +501,11 @@ export class SampleComponent {
     return result;
   }
 
-  protected getMessagePrimaryActions(message: ChatMessage): MessageAction[] {
+  protected getMessagePrimaryActions(message: ContentMessage): MessageAction[] {
     return this.getMessageActions(message).primary;
   }
 
-  protected getMessageSecondaryActions(message: ChatMessage): MenuItem[] {
+  protected getMessageSecondaryActions(message: ContentMessage): MenuItem[] {
     return this.getMessageActions(message).secondary;
   }
 }

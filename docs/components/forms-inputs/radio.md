@@ -97,7 +97,7 @@ If a `si-form-item` component cannot be used, it is also possible to use
 a radio button with native HTML elements only:
 
 ```html
-<div class="form-check">
+<div class="form-check mb-2">
   <input type="radio" id="check-id" class="form-check-input" />
   <label for="check-id" class="form-check-label">Radio button</label>
 </div>

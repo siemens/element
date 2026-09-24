@@ -1,0 +1,463 @@
+{
+  "version": "1.0.0",
+  "description": "Migration map from element-theme typography (SiemensSans Pro) to si-sys typography tokens (SiemensSans Pro VF). Sizes and line heights of the new styles refer to the Default density mode of si.sys.typography.*; the Compact mode is a mode switch on the same style and needs no separate mapping.",
+  "fontFamily": {
+    "old": "SiemensSans Pro",
+    "new": "SiemensSans Pro VF",
+    "notes": "The whole type system moves to the variable font. Weights: Roman = 400, SBold = 600, Bold = 700. Element used Roman/Semi Bold/Bold with the same numeric values, so only the family name changes."
+  },
+  "mappings": {
+    "body": [
+      {
+        "old": "caption",
+        "old-css": ".si-caption",
+        "old-scss": "$si-font-size-caption",
+        "old-spec": { "fontSize": 12, "lineHeight": 16, "fontWeight": 400, "weightName": "Roman" },
+        "new": "si.sys.typography.body-sm",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 12,
+          "lineHeight": 16,
+          "fontWeight": 400,
+          "weightName": "Roman"
+        },
+        "category": "body",
+        "notes": "1:1. Only the name changes, caption is now body-sm.",
+        "rule": "Replace caption with body-sm."
+      },
+      {
+        "old": "caption-bold",
+        "old-css": ".si-caption.fw-bold",
+        "old-spec": { "fontSize": 12, "lineHeight": 16, "fontWeight": 700, "weightName": "Bold" },
+        "new": "si.sys.typography.body-sm-sbold",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 12,
+          "lineHeight": 16,
+          "fontWeight": 600,
+          "weightName": "SBold"
+        },
+        "category": "body",
+        "notes": "WEIGHT CHANGE: emphasis in body text is Semi Bold (600) now, not Bold (700).",
+        "rule": "Replace caption-bold with body-sm-sbold. Do not keep the 700 weight."
+      },
+      {
+        "old": "body",
+        "old-css": ".si-body",
+        "old-scss": "$si-font-size-body",
+        "old-spec": { "fontSize": 14, "lineHeight": 16, "fontWeight": 400, "weightName": "Roman" },
+        "new": "si.sys.typography.body | si.sys.typography.body-paragraph",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 14,
+          "lineHeight": 16,
+          "fontWeight": 400,
+          "weightName": "Roman"
+        },
+        "category": "body",
+        "notes": "CONTEXT-DEPENDENT: body keeps 16px line height for single-line UI text. body-paragraph is the same size with 20px line height for running, multi-line text.",
+        "rule": "If the text is a single line (labels, controls, table cells), use body. If it is multi-line running text, use body-paragraph."
+      },
+      {
+        "old": "body-bold",
+        "old-css": ".si-body.fw-bold",
+        "old-spec": { "fontSize": 14, "lineHeight": 16, "fontWeight": 700, "weightName": "Bold" },
+        "new": "si.sys.typography.body-sbold | si.sys.typography.body-paragraph-sbold",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 14,
+          "lineHeight": 16,
+          "fontWeight": 600,
+          "weightName": "SBold"
+        },
+        "category": "body",
+        "notes": "CONTEXT-DEPENDENT + WEIGHT CHANGE: emphasis is Semi Bold (600) now. Same single-line vs. multi-line split as body.",
+        "rule": "Single line, use body-sbold. Multi-line running text, use body-paragraph-sbold. Do not keep the 700 weight."
+      },
+      {
+        "old": "body-lg",
+        "old-css": ".si-body-lg",
+        "old-scss": "$si-font-size-body-lg",
+        "old-spec": { "fontSize": 16, "lineHeight": 20, "fontWeight": 400, "weightName": "Roman" },
+        "new": "si.sys.typography.body-lg",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 16,
+          "lineHeight": 20,
+          "fontWeight": 400,
+          "weightName": "Roman"
+        },
+        "category": "body",
+        "notes": "1:1.",
+        "rule": "Replace body-lg with body-lg."
+      },
+      {
+        "old": "body-lg-bold",
+        "old-css": ".si-body-lg.fw-bold",
+        "old-spec": { "fontSize": 16, "lineHeight": 20, "fontWeight": 700, "weightName": "Bold" },
+        "new": "si.sys.typography.body-lg-sbold",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 16,
+          "lineHeight": 20,
+          "fontWeight": 600,
+          "weightName": "SBold"
+        },
+        "category": "body",
+        "notes": "WEIGHT CHANGE: Semi Bold (600) instead of Bold (700).",
+        "rule": "Replace body-lg-bold with body-lg-sbold."
+      }
+    ],
+    "heading": [
+      {
+        "old": "h6",
+        "old-css": "h6, .h6",
+        "old-spec": {
+          "fontSize": 14,
+          "lineHeight": 16,
+          "fontWeight": 600,
+          "weightName": "Semi Bold"
+        },
+        "new": "si.sys.typography.h6",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 12,
+          "lineHeight": 16,
+          "fontWeight": 600,
+          "weightName": "SBold"
+        },
+        "category": "heading",
+        "notes": "SIZE CHANGE 14 -> 12. In Element h6 shared the h5 style, in SDL it is its own smallest heading step.",
+        "rule": "Replace h6 with h6. Expect the text to get smaller."
+      },
+      {
+        "old": "h5",
+        "old-css": "h5, .h5, .si-h5",
+        "old-scss": "$si-font-size-h5",
+        "old-spec": {
+          "fontSize": 14,
+          "lineHeight": 16,
+          "fontWeight": 600,
+          "weightName": "Semi Bold"
+        },
+        "new": "si.sys.typography.h5",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 14,
+          "lineHeight": 20,
+          "fontWeight": 600,
+          "weightName": "SBold"
+        },
+        "category": "heading",
+        "notes": "Same size, line height grows 16 -> 20.",
+        "rule": "Replace h5 with h5."
+      },
+      {
+        "old": "h5-bold",
+        "old-css": ".si-h5-bold, .si-title-2-bold",
+        "old-scss": "$si-font-size-h5-bold",
+        "old-spec": { "fontSize": 14, "lineHeight": 16, "fontWeight": 700, "weightName": "Bold" },
+        "new": "si.sys.typography.h5-bold",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 14,
+          "lineHeight": 20,
+          "fontWeight": 700,
+          "weightName": "Bold"
+        },
+        "category": "heading",
+        "notes": "The only heading that keeps a Bold (700) variant. Line height grows 16 -> 20.",
+        "rule": "Replace h5-bold with h5-bold."
+      },
+      {
+        "old": "h4",
+        "old-css": "h4, .h4, .si-h4, .si-title-1",
+        "old-scss": "$si-font-size-h4",
+        "old-spec": {
+          "fontSize": 16,
+          "lineHeight": 20,
+          "fontWeight": 600,
+          "weightName": "Semi Bold"
+        },
+        "new": "si.sys.typography.h4",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 16,
+          "lineHeight": 20,
+          "fontWeight": 600,
+          "weightName": "SBold"
+        },
+        "category": "heading",
+        "notes": "1:1.",
+        "rule": "Replace h4 with h4."
+      },
+      {
+        "old": "h4-bold",
+        "old-css": ".si-h4-bold, .si-title-1-bold",
+        "old-scss": "$si-font-size-h4-bold",
+        "old-spec": { "fontSize": 16, "lineHeight": 20, "fontWeight": 700, "weightName": "Bold" },
+        "new": "si.sys.typography.h4",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 16,
+          "lineHeight": 20,
+          "fontWeight": 600,
+          "weightName": "SBold"
+        },
+        "category": "heading",
+        "notes": "COLLAPSED: there is no h4-bold in SDL. Headings are Semi Bold only.",
+        "rule": "Replace h4-bold with h4. The Bold variant is dropped, do not recreate it."
+      },
+      {
+        "old": "h3",
+        "old-css": "h3, .h3, .si-h3",
+        "old-scss": "$si-font-size-h3",
+        "old-spec": {
+          "fontSize": 18,
+          "lineHeight": 24,
+          "fontWeight": 600,
+          "weightName": "Semi Bold"
+        },
+        "new": "si.sys.typography.h3",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 20,
+          "lineHeight": 24,
+          "fontWeight": 600,
+          "weightName": "SBold"
+        },
+        "category": "heading",
+        "notes": "SIZE CHANGE 18 -> 20. Semantic level is kept, the scale step moves.",
+        "rule": "Replace h3 with h3. Map by heading level, not by pixel size."
+      },
+      {
+        "old": "h2",
+        "old-css": "h2, .h2, .si-h2",
+        "old-scss": "$si-font-size-h2",
+        "old-spec": {
+          "fontSize": 20,
+          "lineHeight": 24,
+          "fontWeight": 600,
+          "weightName": "Semi Bold"
+        },
+        "new": "si.sys.typography.h2",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 24,
+          "lineHeight": 32,
+          "fontWeight": 600,
+          "weightName": "SBold"
+        },
+        "category": "heading",
+        "notes": "SIZE CHANGE 20 -> 24. Do not map old h2 (20px) onto new h3 just because the numbers match, keep the semantic level.",
+        "rule": "Replace h2 with h2."
+      },
+      {
+        "old": "h1",
+        "old-css": "h1, .h1, .si-h1",
+        "old-scss": "$si-font-size-h1",
+        "old-spec": { "fontSize": 30, "lineHeight": 36, "fontWeight": 400, "weightName": "Roman" },
+        "new": "si.sys.typography.h1",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 28,
+          "lineHeight": 36,
+          "fontWeight": 600,
+          "weightName": "SBold"
+        },
+        "category": "heading",
+        "notes": "SIZE CHANGE 30 -> 28 and WEIGHT CHANGE Roman (400) -> SBold (600). Element h1 was Roman, SDL h1 is Semi Bold like every other heading.",
+        "rule": "Replace h1 with h1."
+      },
+      {
+        "old": "h1-bold",
+        "old-css": ".si-h1-bold, .si-h1-black",
+        "old-scss": "$si-font-size-h1-bold",
+        "old-spec": { "fontSize": 30, "lineHeight": 36, "fontWeight": 700, "weightName": "Bold" },
+        "new": "si.sys.typography.h1",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 28,
+          "lineHeight": 36,
+          "fontWeight": 600,
+          "weightName": "SBold"
+        },
+        "category": "heading",
+        "notes": "COLLAPSED: h1 and h1-bold merge into one h1 at Semi Bold.",
+        "rule": "Replace h1-bold with h1. The Bold variant is dropped."
+      }
+    ],
+    "display": [
+      {
+        "old": "display",
+        "old-css": ".si-display, .display-4, .si-display-4",
+        "old-scss": "$si-font-size-display",
+        "old-spec": { "fontSize": 40, "lineHeight": 52, "fontWeight": 400, "weightName": "Roman" },
+        "new": "si.sys.typography.display-lg",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 40,
+          "lineHeight": 52,
+          "fontWeight": 400,
+          "weightName": "Roman"
+        },
+        "category": "display",
+        "notes": "RENAME, same metrics. The whole display scale shifts up by one name because SDL adds a smaller display step at 32px.",
+        "rule": "Replace display with display-lg. Do not use the new si.sys.typography.display, that one is 32px and has no Element counterpart."
+      },
+      {
+        "old": "display-bold",
+        "old-css": ".si-display-bold, .display-3, .si-display-3",
+        "old-scss": "$si-font-size-display-bold",
+        "old-spec": { "fontSize": 40, "lineHeight": 52, "fontWeight": 700, "weightName": "Bold" },
+        "new": "si.sys.typography.display-lg-sbold",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 40,
+          "lineHeight": 52,
+          "fontWeight": 600,
+          "weightName": "SBold"
+        },
+        "category": "display",
+        "notes": "RENAME + WEIGHT CHANGE: Semi Bold (600) instead of Bold (700).",
+        "rule": "Replace display-bold with display-lg-sbold."
+      },
+      {
+        "old": "display-lg",
+        "old-css": ".si-display-lg, .display-2, .si-display-2",
+        "old-scss": "$si-font-size-display-lg",
+        "old-spec": { "fontSize": 48, "lineHeight": 64, "fontWeight": 400, "weightName": "Roman" },
+        "new": "si.sys.typography.display-xl",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 48,
+          "lineHeight": 64,
+          "fontWeight": 400,
+          "weightName": "Roman"
+        },
+        "category": "display",
+        "notes": "RENAME, same metrics. Watch out: the new display-lg is 40px, it is NOT the counterpart of the old display-lg.",
+        "rule": "Replace display-lg with display-xl."
+      },
+      {
+        "old": "display-xl",
+        "old-css": ".si-display-xl, .display-1, .si-display-1",
+        "old-scss": "$si-font-size-display-xl",
+        "old-spec": { "fontSize": 56, "lineHeight": 72, "fontWeight": 400, "weightName": "Roman" },
+        "new": "si.sys.typography.display-xxl",
+        "new-spec": {
+          "fontFamily": "SiemensSans Pro VF",
+          "fontSize": 58,
+          "lineHeight": 72,
+          "fontWeight": 400,
+          "weightName": "Roman"
+        },
+        "category": "display",
+        "notes": "RENAME + SIZE CHANGE 56 -> 58, line height stays 72. The new display-xl is 48px, it is NOT the counterpart of the old display-xl.",
+        "rule": "Replace display-xl with display-xxl."
+      }
+    ]
+  },
+  "additions": [
+    {
+      "new": "si.sys.typography.display",
+      "new-spec": {
+        "fontFamily": "SiemensSans Pro VF",
+        "fontSize": 32,
+        "lineHeight": 40,
+        "fontWeight": 400,
+        "weightName": "Roman"
+      },
+      "notes": "New 32px display step. No Element equivalent, do not migrate anything onto it automatically."
+    },
+    {
+      "new": "si.sys.typography.display-sbold | si.sys.typography.display-xl-sbold | si.sys.typography.display-xxl-sbold",
+      "notes": "New Semi Bold display variants without an Element counterpart."
+    },
+    {
+      "new": "si.sys.typography.code-sm | si.sys.typography.code | si.sys.typography.code-lg",
+      "new-spec": {
+        "fontFamily": "JetBrains Mono",
+        "fontSize": [12, 14, 16],
+        "lineHeight": [16, 20, 20],
+        "fontWeight": 400,
+        "weightName": "Roman"
+      },
+      "notes": "New monospace styles. Element had no code text style, monospace text was hand rolled."
+    },
+    {
+      "new": "Compact density mode",
+      "notes": "si.sys.typography.font-size.* and line-height.* carry a Default and a Compact mode. The composite styles bind to them, so density is a mode switch on the frame or the CSS scope, never a different style. Nothing in Element maps to this."
+    }
+  ],
+  "deprecations": [
+    {
+      "old": "title-1 / si-title-1",
+      "replacement": "h4",
+      "notes": "Already deprecated in Element, migrate via h4."
+    },
+    {
+      "old": "title-1-bold / si-title-1-bold",
+      "replacement": "h4",
+      "notes": "Already deprecated in Element, Bold variant is dropped."
+    },
+    {
+      "old": "title-2 / si-title-2",
+      "replacement": "h5",
+      "notes": "Already deprecated in Element, migrate via h5."
+    },
+    {
+      "old": "title-2-bold / si-title-2-bold",
+      "replacement": "h5-bold",
+      "notes": "Already deprecated in Element."
+    },
+    {
+      "old": "body-1 / si-body-1",
+      "replacement": "body-lg",
+      "notes": "Already deprecated in Element."
+    },
+    {
+      "old": "body-2 / si-body-2",
+      "replacement": "body | body-paragraph",
+      "notes": "Already deprecated in Element, context dependent."
+    },
+    {
+      "old": "caption-1 / si-caption-1",
+      "replacement": "body-sm",
+      "notes": "Already deprecated in Element."
+    },
+    {
+      "old": "h1-black / si-h1-black",
+      "replacement": "h1",
+      "notes": "Already deprecated in Element, Bold variant is dropped."
+    },
+    {
+      "old": "display-1 / si-display-1",
+      "replacement": "display-xxl",
+      "notes": "Already deprecated in Element."
+    },
+    {
+      "old": "display-2 / si-display-2",
+      "replacement": "display-xl",
+      "notes": "Already deprecated in Element."
+    },
+    {
+      "old": "display-3 / si-display-3",
+      "replacement": "display-lg-sbold",
+      "notes": "Already deprecated in Element."
+    },
+    {
+      "old": "display-4 / si-display-4",
+      "replacement": "display-lg",
+      "notes": "Already deprecated in Element."
+    }
+  ],
+  "globalRules": [
+    "Font family always becomes SiemensSans Pro VF (si.ref.typography.font-family.sans). Monospace becomes JetBrains Mono.",
+    "Bold (700) only survives on h5-bold. Everywhere else Element's Bold becomes SBold (600).",
+    "Map headings by semantic level, not by pixel size. Several old and new steps share numbers by coincidence.",
+    "The display scale shifted one name up: old display -> display-lg, old display-lg -> display-xl, old display-xl -> display-xxl.",
+    "Never consume si.ref.typography.* directly, always go through si.sys.typography.*.",
+    "All new sizes and line heights listed here are the Default density mode."
+  ]
+}

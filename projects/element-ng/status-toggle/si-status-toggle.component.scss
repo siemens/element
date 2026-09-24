@@ -4,9 +4,9 @@
 
 :host {
   display: block;
-  border: 1px solid variables.$si-sys-border-4;
+  border: 1px solid variables.$si-sys-color-border-4;
   border-radius: variables.$element-radius-2;
-  background: variables.$si-sys-background-1;
+  background: variables.$si-sys-color-background-1;
   padding: calc(map.get(variables.$spacers-block, 2) - 1px)
     calc(map.get(variables.$spacers-inline, 2) - 1px);
 }
@@ -28,7 +28,7 @@
     }
 
     .status-toggle-item {
-      color: variables.$si-sys-text-disabled;
+      color: variables.$si-sys-color-text-disabled;
     }
   }
 }
@@ -39,18 +39,18 @@
   justify-content: center;
   flex-direction: column;
   z-index: 10;
-  color: variables.$si-sys-text-secondary;
+  color: variables.$si-sys-color-text-secondary;
   border-radius: 1px;
   cursor: pointer;
   padding-block: map.get(variables.$spacers-block, 1);
 
   &.active {
-    color: variables.$si-sys-text-primary !important; // stylelint-disable-line declaration-no-important
+    color: variables.$si-sys-color-text-primary !important; // stylelint-disable-line declaration-no-important
   }
 
   &.disabled {
     cursor: default;
-    color: variables.$si-sys-text-disabled !important; // stylelint-disable-line declaration-no-important
+    color: variables.$si-sys-color-text-disabled !important; // stylelint-disable-line declaration-no-important
   }
 
   span {
@@ -74,5 +74,5 @@
   inline-size: 100%;
   block-size: 100%;
   border-radius: 1px;
-  background: variables.$si-sys-background-selected;
+  background: variables.$si-sys-color-background-active;
 }

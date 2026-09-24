@@ -33,6 +33,7 @@ $si-font-size-h1: var(--si-sys-typography-font-size-h1);
 $si-line-height-h1: var(--si-sys-typography-line-height-h1);
 $si-font-weight-h1: $si-font-weight-sbold;
 
+// DEPRECATED: Use the $si-*-h1 variables instead.
 $si-font-size-h1-bold: $si-font-size-h1;
 $si-line-height-h1-bold: $si-line-height-h1;
 $si-font-weight-h1-bold: $si-font-weight-bold;
@@ -49,6 +50,7 @@ $si-font-size-h4: var(--si-sys-typography-font-size-h4);
 $si-line-height-h4: var(--si-sys-typography-line-height-h4);
 $si-font-weight-h4: $si-font-weight-sbold;
 
+// DEPRECATED: Use the $si-*-h4 variables instead.
 $si-font-size-h4-bold: $si-font-size-h4;
 $si-line-height-h4-bold: $si-line-height-h4;
 $si-font-weight-h4-bold: $si-font-weight-bold;
@@ -69,6 +71,7 @@ $si-font-size-body-lg: var(--si-sys-typography-font-size-body-lg);
 $si-line-height-body-lg: var(--si-sys-typography-line-height-body-lg);
 $si-font-weight-body-lg: $si-font-weight-normal;
 
+// DEPRECATED: Use the $si-*-body-lg-sbold variables instead.
 $si-font-size-body-lg-bold: var(--si-sys-typography-font-size-body-lg);
 $si-line-height-body-lg-bold: $si-line-height-body-lg;
 $si-font-weight-body-lg-bold: $si-font-weight-sbold;
@@ -101,6 +104,7 @@ $si-font-size-body-sm-sbold: $si-font-size-body-sm;
 $si-line-height-body-sm-sbold: $si-line-height-body-sm;
 $si-font-weight-body-sm-sbold: $si-font-weight-sbold;
 
+// DEPRECATED: Use the $si-*-body-sm variables instead.
 $si-font-size-caption: $si-font-size-body-sm;
 $si-line-height-caption: $si-line-height-body-sm;
 $si-font-weight-caption: $si-font-weight-normal;
@@ -129,6 +133,7 @@ $si-font-size-display-lg-sbold: $si-font-size-display-lg;
 $si-line-height-display-lg-sbold: $si-line-height-display-lg;
 $si-font-weight-display-lg-sbold: $si-font-weight-sbold;
 
+// DEPRECATED: Use the $si-*-display-lg-sbold variables instead.
 $si-font-size-display-bold: $si-font-size-display-lg;
 $si-line-height-display-bold: $si-line-height-display-lg;
 $si-font-weight-display-bold: $si-font-weight-bold;

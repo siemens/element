@@ -42,7 +42,7 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
           <si-icon [class]="stackedIconColor()" [icon]="stackedIcon" />
         }
       </span>
-      <span class="ms-2 auto-hide si-caption text-start">
+      <span class="ms-2 auto-hide si-body-sm text-start">
         <ng-content />
       </span>
     }

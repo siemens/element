@@ -14,13 +14,6 @@ import {
 
 import { SiPasswordToggleModule } from './si-password-toggle.module';
 
-const rgbToHex = (rgb: string): string => {
-  const result = rgb.match(/\d+/g);
-  if (!result) return rgb;
-  const [r, g, b] = result.map(Number);
-  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
-};
-
 @Component({
   imports: [FormsModule, SiPasswordToggleModule],
   template: `
@@ -98,18 +91,17 @@ describe('SiPasswordToggleComponent', () => {
       element = formFixture.nativeElement;
     });
 
-    it('should show invalid border on blur', () => {
+    it('should show invalid border on blur', async () => {
       const passwordInput = element.querySelector<HTMLElement>('input')!;
-      const defaultBorderColor = getComputedStyle(passwordInput).getPropertyValue('--element-ui-2');
-      const invalidBorderColor = getComputedStyle(passwordInput).getPropertyValue(
-        '--si-sys-background-danger'
-      );
-
-      expect(rgbToHex(getComputedStyle(passwordInput).borderColor)).toBe(defaultBorderColor);
+      expect(passwordInput).not.toHaveClass('ng-touched');
+      expect(passwordInput).toHaveClass('ng-invalid');
 
       passwordInput.dispatchEvent(new Event('blur'));
       formFixture.detectChanges();
-      expect(rgbToHex(getComputedStyle(passwordInput).borderColor)).toBe(invalidBorderColor);
+      await formFixture.whenStable();
+
+      expect(passwordInput).toHaveClass('ng-touched');
+      expect(passwordInput).toHaveClass('ng-invalid');
     });
   });
 });

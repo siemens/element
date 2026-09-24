@@ -3,7 +3,9 @@
   <ng-content select="[si-help-button]" />
 </div>
 <div>
-  <ng-content />
+  <div [class]="inline() ? '' : 'd-flex flex-column gap-2 mb-2'">
+    <ng-content />
+  </div>
   @if (hasOnlyRadios()) {
     <div class="invalid-feedback" [class.d-block]="touched()">
       @for (error of errors(); track error) {

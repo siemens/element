@@ -9,15 +9,21 @@ import { registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {
   ApplicationConfig,
-  importProvidersFrom,
   inject,
   Injectable,
+  Injector,
   LOCALE_ID,
   provideAppInitializer,
   ɵLocaleDataIndex
 } from '@angular/core';
+import { provideMaplibreWorker } from '@maplibre/ngx-maplibre-gl/config';
 import { provideFormlyCore } from '@ngx-formly/core';
-import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
+import {
+  MissingTranslationHandler,
+  provideTranslateService,
+  TranslateLoader,
+  TranslateService
+} from '@ngx-translate/core';
 import { provideSiAgGridConfig } from '@siemens/element-ng/ag-grid';
 import { provideSiUiState } from '@siemens/element-ng/common';
 import { provideSiDatatableConfig } from '@siemens/element-ng/datatable';
@@ -31,11 +37,11 @@ import {
   provideMissingTranslationHandlerForElement,
   provideNgxTranslateForElement
 } from '@siemens/element-translate-ng/ngx-translate';
+import { SiTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 import {
   SiLivePreviewLocaleApi,
   SiLivePreviewThemeApi,
-  SiLivePreviewModule,
-  SiLivePreviewRoutingModule,
+  provideLivePreview,
   provideStackblitzConfig
 } from '@siemens/live-preview';
 import { setWorkerUrl } from 'maplibre-gl';
@@ -88,12 +94,12 @@ const localeConfig: SiLocaleConfig = {
   defaultLocale: 'en',
   localeInitializer: genericLocaleInitializer,
   dynamicLanguageChange: false,
-  fallbackEnabled: false
+  fallbackEnabled: true
 };
 
 @Injectable()
 class LivePreviewLocaleApiService extends SiLivePreviewLocaleApi {
-  private localeService = inject(SiLocaleService);
+  private readonly localeService = inject(SiLocaleService);
 
   setLocale(locale: string): void {
     this.localeService.locale = locale;
@@ -113,49 +119,25 @@ export const appInitializerFactory =
   () =>
     lastValueFrom(localeService.localePackageLoaded$.pipe(take(1)));
 
-export const APP_CONFIG: ApplicationConfig = {
+const createExampleAppConfig = (injector: Injector): ApplicationConfig => ({
   providers: [
-    importProvidersFrom(
-      SiLivePreviewRoutingModule,
-      // App internal
-      SiLivePreviewModule.forRoot(
-        {
-          componentLoader,
-          examplesBaseUrl: 'app/examples/',
-          ticketBaseUrl: 'https://github.com/siemens/element/issues/new',
-          themeSwitcher: true,
-          rtlSwitcher: true,
-          webcomponents: true,
-          rootFontSizes: [12, 14, 16, 20, 24]
-        },
-        false
-      )
-    ),
-    provideAppInitializer(() => {
-      const initializerFn = appInitializerFactory(inject(SiLocaleService));
-      return initializerFn();
-    }),
-    { provide: LOCALE_ID, useClass: SiLocaleId, deps: [SiLocaleService] },
-    { provide: SI_LOCALE_CONFIG, useValue: localeConfig },
-    { provide: SiLivePreviewThemeApi, useClass: LivePreviewThemeApiService },
-    { provide: SiLivePreviewLocaleApi, useClass: LivePreviewLocaleApiService },
+    { provide: SiLocaleService, useValue: injector.get(SiLocaleService) },
+    { provide: TranslateService, useValue: injector.get(TranslateService) },
+    {
+      provide: MissingTranslationHandler,
+      useValue: injector.get(MissingTranslationHandler)
+    },
+    {
+      provide: SiTranslateServiceBuilder,
+      useValue: injector.get(SiTranslateServiceBuilder)
+    },
+    { provide: LOCALE_ID, useValue: injector.get(LOCALE_ID) },
+    { provide: SI_LOCALE_CONFIG, useValue: injector.get(SI_LOCALE_CONFIG) },
     { provide: HTTP_INTERCEPTORS, useExisting: FileUploadInterceptor, multi: true },
     provideHttpClient(withInterceptorsFromDi()),
-    provideTranslateService(
-      // Npm dependencies
-      {
-        missingTranslationHandler: provideMissingTranslationHandlerForElement(),
-        loader: {
-          provide: TranslateLoader,
-          useClass: BundlerTranslateLoader
-        }
-      }
-    ),
-    provideNgxTranslateForElement(),
     provideSiDatatableConfig(),
     provideSiUiState(),
     provideSiAgGridConfig(),
-    provideStackblitzConfig(),
     provideFormlyCore({
       wrappers: [
         {
@@ -166,6 +148,40 @@ export const APP_CONFIG: ApplicationConfig = {
       extras: {
         resetFieldOnHide: false
       }
-    })
+    }),
+    provideMaplibreWorker('assets/maplibre/maplibre-gl-worker.mjs')
+  ]
+});
+
+export const APP_CONFIG: ApplicationConfig = {
+  providers: [
+    provideLivePreview({
+      componentLoader,
+      examplesBaseUrl: 'app/examples/',
+      ticketBaseUrl: 'https://github.com/siemens/element/issues/new',
+      themeSwitcher: true,
+      rtlSwitcher: true,
+      webcomponents: true,
+      rootFontSizes: [12, 14, 16, 20, 24],
+      exampleApplicationConfig: createExampleAppConfig
+    }),
+    provideAppInitializer(() => {
+      const initializerFn = appInitializerFactory(inject(SiLocaleService));
+      return initializerFn();
+    }),
+    { provide: LOCALE_ID, useClass: SiLocaleId, deps: [SiLocaleService] },
+    { provide: SI_LOCALE_CONFIG, useValue: localeConfig },
+    provideTranslateService({
+      missingTranslationHandler: provideMissingTranslationHandlerForElement(),
+      loader: {
+        provide: TranslateLoader,
+        useClass: BundlerTranslateLoader
+      }
+    }),
+    provideNgxTranslateForElement(),
+    provideHttpClient(),
+    { provide: SiLivePreviewThemeApi, useClass: LivePreviewThemeApiService },
+    { provide: SiLivePreviewLocaleApi, useClass: LivePreviewLocaleApiService },
+    provideStackblitzConfig()
   ]
 };

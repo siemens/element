@@ -76,8 +76,7 @@ documentation.
 - [Language switcher](forms-inputs/language-switcher.md)
 - [Launchpad](layout-navigation/launchpad.md)
 - [Line Chart](charts/line-chart.md)
-- [List Group](lists-tables-trees/list-group.md)
-- [List Item](lists-tables-trees/list-item.md)
+- [List](lists-tables-trees/list.md)
 
 ## M
 
