@@ -55,6 +55,9 @@ export class SiFilteredSearchValueComponent implements OnInit {
   /** Current criterion value. Supports two-way binding through `valueChange`. */
   readonly value = model.required<CriterionValue>();
 
+  /** Original text used to resolve a newly entered criterion value. */
+  readonly initialValueText = input<string>();
+
   /** Definition that configures the criterion label, operators, and value type. */
   readonly definition = input.required<InternalCriterionDefinition>();
 
@@ -119,8 +122,8 @@ export class SiFilteredSearchValueComponent implements OnInit {
   private readonly operatorInput = viewChild<ElementRef<HTMLInputElement>>('operatorInput');
   private readonly valueInput = viewChild(SiFilteredSearchValueBase);
 
+  /** Selects the editor from the pill kind, validation type and selection mode. */
   readonly type = computed(() => {
-    // Check if this is a free text criterion first
     const definition = this.definition();
     if (definition.type === 'free-text') {
       return 'free-text';
