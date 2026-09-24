@@ -9,7 +9,6 @@ import {
   effect,
   ElementRef,
   inject,
-  input,
   OnDestroy,
   OnInit,
   output,
@@ -19,9 +18,9 @@ import {
 import { FormsModule } from '@angular/forms';
 
 import { SI_LIVE_PREVIEW_CONFIG } from '../../interfaces/live-preview-config';
+import { LivePreviewStateService } from '../../services/live-preview-state.service';
 import { SiLivePreviewQrComponent } from '../si-live-preview-qr/si-live-preview-qr.component';
 import { availableDevices, Device } from './devices';
-import { LivePreviewViewport } from './live-preview-mode';
 
 @Component({
   selector: 'si-live-preview-mobile-mode',
@@ -32,21 +31,9 @@ import { LivePreviewViewport } from './live-preview-mode';
 export class SiLivePreviewMobileModeComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly previewIframe = viewChild.required<ElementRef>('previewIframe');
   private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
-
-  readonly exampleUrl = input.required<string>();
-  readonly template = input.required<string>();
-  readonly theme = input.required<string>();
-  readonly locale = input<string | null | undefined>();
-  readonly rootFontSize = input.required<number | 'initial'>();
-  readonly isRTL = input<boolean>();
-  readonly templateModified = input.required<boolean>();
-  readonly supportsLandscape = input.required<boolean>();
-  readonly iFrameHeight = input<string>();
-  readonly iFrameWidth = input<string>();
+  protected readonly state = inject(LivePreviewStateService);
 
   readonly iframeChange = output<ElementRef | undefined>();
-  readonly viewportChange = output<LivePreviewViewport>();
-  readonly themeToggle = output<void>();
 
   protected readonly switcherEnabled = this.config.themeSwitcher;
   protected readonly landscapeEnabled = this.config.landscapeToggle;
@@ -60,16 +47,16 @@ export class SiLivePreviewMobileModeComponent implements OnInit, AfterViewInit, 
   protected readonly showNotch = computed(() => this.selectedDevice()?.notch ?? false);
   protected readonly currentIFrameHeight = computed(() => {
     const device = this.selectedDevice();
-    return device ? (this.landscape() ? device.width : device.height) : this.iFrameHeight();
+    return device ? (this.landscape() ? device.width : device.height) : this.state.iFrameHeight();
   });
   protected readonly currentIFrameWidth = computed(() => {
     const device = this.selectedDevice();
-    return device ? (this.landscape() ? device.height : device.width) : this.iFrameWidth();
+    return device ? (this.landscape() ? device.height : device.width) : this.state.iFrameWidth();
   });
 
   constructor() {
     effect(() => {
-      if (!this.supportsLandscape() && this.landscape()) {
+      if (!this.state.supportsLandscape() && this.landscape()) {
         this.landscape.set(false);
         this.emitViewport();
       }
@@ -114,7 +101,7 @@ export class SiLivePreviewMobileModeComponent implements OnInit, AfterViewInit, 
   private emitViewport(): void {
     const device = this.selectedDevice();
     const safeArea = this.landscape() ? device?.safeAreaLandscape : device?.safeAreaPortrait;
-    this.viewportChange.emit({
+    this.state.viewport.set({
       mode: this.mode(),
       safeAreaTop: safeArea?.top,
       safeAreaBottom: safeArea?.bottom,
@@ -127,22 +114,22 @@ export class SiLivePreviewMobileModeComponent implements OnInit, AfterViewInit, 
     let url = `${window.location.protocol}//${window.location.host}`;
     url += window.location.pathname;
     url += '#/viewer/plain?';
-    url += 'theme=' + this.theme();
+    url += 'theme=' + this.state.theme();
     url += '&mode=' + this.mode();
-    if (this.isRTL()) {
+    if (this.state.isRTL()) {
       url += '&isRTL=true';
     }
-    const locale = this.locale();
+    const locale = this.state.locale();
     if (locale) {
       url += '&locale=' + locale;
     }
-    if (this.rootFontSize()) {
-      url += '&rfs=' + this.rootFontSize();
+    if (this.state.rootFontSize()) {
+      url += '&rfs=' + this.state.rootFontSize();
     }
-    if (this.templateModified() && !skipTemplate) {
-      url += '&t=' + this.encode(this.template());
+    if (this.state.templateModified() && !skipTemplate) {
+      url += '&t=' + this.encode(this.state.template());
     }
-    const exampleUrl = this.exampleUrl();
+    const exampleUrl = this.state.example();
     if (exampleUrl) {
       url += '&e=' + this.encode(exampleUrl);
     }

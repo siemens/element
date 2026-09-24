@@ -2,31 +2,10 @@
 <div class="example" [class.fullscreen]="exampleFullscreen()" [class.is-mobile]="isMobile">
   <div class="preview-iframe" [class.is-mobile]="isMobile">
     <si-live-preview-iframe
-      [template]="template()"
-      [baseUrl]="baseUrl()"
-      [exampleUrl]="example() ?? ''"
-      [ticketLinkBug]="ticketLinkBug"
-      [ticketLinkFeature]="ticketLinkFeature"
       [isFullscreen]="isFullscreen()"
-      [theme]="theme()"
-      [locale]="locale()"
-      [rootFontSize]="rootFontSize()"
-      [isRTL]="isRTL()"
-      [loadReact]="loadReact()"
-      [loadVue]="loadVue()"
-      [loadJs]="loadJs()"
-      [reactVueTemplate]="
-        active === 'react' ? templateReact() : active === 'vue' ? templateVue() : templateJs()
-      "
       (templateFromComponent)="templateFromComponent($event)"
-      (logClear)="logClear(true)"
-      (logMessage)="logEvent($event)"
-      (logRenderingError)="renderingError.set($event)"
-      (inProgress)="handleInProgressEvent($event)"
-      (themeChange)="themeChange($event)"
-      (localeChange)="changeLocale($event)"
     />
-    @if (inProgress()) {
+    @if (state.inProgress()) {
       <div class="progress-container">
         <div class="progress-inner">
           <div class="progress-dots"></div>
@@ -108,11 +87,11 @@
         <select
           aria-label="Select framework"
           class="btn-command locale-selection"
-          [(ngModel)]="selectedFramework"
+          [ngModel]="state.framework()"
           (ngModelChange)="changeFramework($event)"
         >
           @for (aFramework of frameworks | keyvalue; track $index) {
-            <option [value]="aFramework.value" [selected]="selectedFramework === aFramework.value">
+            <option [value]="aFramework.value" [selected]="state.framework() === aFramework.value">
               {{ aFramework.key }}
             </option>
           }
@@ -124,7 +103,7 @@
           aria-label="Root font size"
           title="Root font size"
           class="btn-command rfs-selection"
-          [(ngModel)]="rootFontSize"
+          [ngModel]="state.rootFontSize()"
           (ngModelChange)="rfsSelectionChanges($event)"
         >
           <option value="0">none</option>
@@ -143,7 +122,7 @@
           (change)="localeSelectionChanged($event.target)"
         >
           @for (aLocale of availableLocales; track $index) {
-            <option [value]="aLocale" [selected]="locale() === aLocale">
+            <option [value]="aLocale" [selected]="state.locale() === aLocale">
               {{ aLocale }}
             </option>
           }
@@ -153,23 +132,25 @@
         <button
           type="button"
           class="btn-command rtl-selection"
-          [title]="isRTL() ? 'Right-to-left layout' : 'Left-to-right layout'"
-          [attr.aria-label]="isRTL() ? 'Right-to-left layout' : 'Left-to-right layout'"
+          [title]="state.isRTL() ? 'Right-to-left layout' : 'Left-to-right layout'"
+          [attr.aria-label]="state.isRTL() ? 'Right-to-left layout' : 'Left-to-right layout'"
           (click)="toggleRTL()"
         >
-          {{ isRTL() ? 'RTL' : 'LTR' }}
+          {{ state.isRTL() ? 'RTL' : 'LTR' }}
         </button>
       }
       @if (
-        !isMobile && !showEditor() && (renderingError() || (logMessages().length && newMsgs()))
+        !isMobile &&
+        !showEditor() &&
+        (state.renderingError() || (state.logMessages().length && state.newMessages()))
       ) {
         <button
           type="button"
           class="btn-command"
           title="Show console"
           aria-label="Show console"
-          [class.alert]="renderingError()"
-          [class.info]="logMessages().length"
+          [class.alert]="state.renderingError()"
+          [class.info]="state.logMessages().length"
           (click)="toggleCollapse()"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -188,7 +169,7 @@
           aria-label="Toggle theme"
           (click)="toggleTheme()"
         >
-          @if (theme() === 'dark') {
+          @if (state.theme() === 'dark') {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
               <path
                 d="M256,349.82A93.82,93.82,0,1,0,162.18,256,93.93,93.93,0,0,0,256,349.82Zm0-163.64A69.82,69.82,0,1,1,186.18,256,69.9,69.9,0,0,1,256,186.18Z"
@@ -255,9 +236,9 @@
         siStackblitz
         class="btn-command"
         type="button"
-        [baseUrl]="baseUrl()"
-        [framework]="selectedFramework"
-        [example]="example()"
+        [baseUrl]="baseUrl"
+        [framework]="state.framework()"
+        [example]="state.example()"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
           <path
@@ -411,9 +392,9 @@
       <label for="reactVueEditor">React and Vue code editor</label>
       <fieldset #codeReactVue class="codeflask-editor"></fieldset>
     </fieldset>
-    <div class="console" [hidden]="!renderingError() && !logMessages().length">
+    <div class="console" [hidden]="!state.renderingError() && !state.logMessages().length">
       <div class="buttons">
-        @if (logMessages().length) {
+        @if (state.logMessages().length) {
           <button
             type="button"
             class="btn-command btn-clear"
@@ -432,14 +413,12 @@
         }
       </div>
       <div #consoleContainer class="scroller">
-        @if (renderingError()) {
-          <pre
-            class="alert-danger"
-          ><code class="bg-none">{{ renderingError().toString() }}</code></pre>
+        @if (state.renderingError()) {
+          <pre class="alert-danger"><code class="bg-none">{{ renderingErrorMessage() }}</code></pre>
         }
-        @if (!renderingError() && logMessages().length) {
+        @if (!state.renderingError() && state.logMessages().length) {
           <ul>
-            @for (msg of logMessages(); track $index) {
+            @for (msg of state.logMessages(); track $index) {
               <li>{{ msg }}</li>
             }
           </ul>

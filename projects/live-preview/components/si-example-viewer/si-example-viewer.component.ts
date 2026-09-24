@@ -13,15 +13,13 @@ import {
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { setDeviceMode, setDirectionRtl, setRootFontSize } from '../../helpers/utils';
-import {
-  SI_LIVE_PREVIEW_CONFIG,
-  SI_LIVE_PREVIEW_INTERNALS
-} from '../../interfaces/live-preview-config';
+import { SI_LIVE_PREVIEW_INTERNALS } from '../../interfaces/live-preview-config';
 import {
   SiLivePreviewLocaleApi,
   SiLivePreviewThemeApi,
   ThemeType
 } from '../../interfaces/si-live-preview.api';
+import { LivePreviewStateService } from '../../services/live-preview-state.service';
 import { SiLivePreviewRendererComponent } from '../si-live-preview-renderer/si-live-preview-renderer.component';
 import { SiLivePreviewComponent } from '../si-live-preview/si-live-preview.component';
 
@@ -39,24 +37,13 @@ import { SiLivePreviewComponent } from '../si-live-preview/si-live-preview.compo
 export class SiExampleViewerComponent {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
   private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private readonly themeApi = inject(SiLivePreviewThemeApi, { optional: true });
   private readonly localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
+  protected readonly state = inject(LivePreviewStateService);
 
   protected readonly renderer = viewChild.required<SiLivePreviewRendererComponent>('renderer');
-  protected readonly ticketBaseUrl = this.config.ticketBaseUrl;
-  protected readonly baseUrl = this.config.examplesBaseUrl;
-  protected readonly exampleUrl = signal('');
-  protected readonly dataId = signal('');
   protected readonly mode = signal('viewer');
-  protected readonly theme = signal('light');
-  protected readonly locale = signal('');
-  protected readonly isRTL = signal(false);
-  protected readonly template = signal('');
-  protected readonly reactTemplate = signal('');
-  protected readonly vueTemplate = signal('');
-  protected readonly jsTemplate = signal('');
   protected readonly tabs = signal<{ heading: string; base: string; example: string }[]>([]);
   protected readonly hasTabs = computed(() => this.tabs().length > 1);
   protected readonly hasTabsMobile = computed(
@@ -75,10 +62,12 @@ export class SiExampleViewerComponent {
 
     const base = params.base ? params.base + '/' : '';
     if (params.e) {
-      const prevUrl = this.exampleUrl();
+      const prevUrl = this.state.example();
+      const previousTemplate = this.state.template();
       this.tabs.set([]);
       this.activeTabIndex.set(0);
-      this.exampleUrl.set('');
+      this.state.example.set('');
+      this.state.clearTemplates();
 
       const examples = Array.isArray(params.e) ? params.e : [params.e];
       examples.forEach(element => {
@@ -95,19 +84,19 @@ export class SiExampleViewerComponent {
 
       if (this.tabs().length) {
         this.activateTab(0);
-        recompile = prevUrl === this.exampleUrl();
+        recompile = prevUrl === this.state.example();
       }
 
       if (this.tabs().length <= 1 && params.t) {
         if (params.framework === 'react') {
-          this.reactTemplate.set(params.t);
+          this.state.templateReact.set(params.t);
         } else if (params.framework === 'vue') {
-          this.vueTemplate.set(params.t);
+          this.state.templateVue.set(params.t);
         } else if (params.framework === 'js') {
-          this.jsTemplate.set(params.t);
+          this.state.templateJs.set(params.t);
         } else {
-          recompile = recompile || this.template() !== params.t;
-          this.template.set(params.t);
+          recompile = recompile || previousTemplate !== params.t;
+          this.state.template.set(params.t);
         }
       }
 
@@ -141,8 +130,8 @@ export class SiExampleViewerComponent {
     }
 
     if (params.id) {
-      recompile = this.dataId() !== params.id;
-      this.dataId.set(params.id);
+      recompile = this.state.dataId() !== params.id;
+      this.state.dataId.set(params.id);
     }
 
     if (recompile) {
@@ -157,7 +146,7 @@ export class SiExampleViewerComponent {
 
   private setTheme(theme: ThemeType): void {
     if (this.mode() === 'editor') {
-      this.theme.set(theme);
+      this.state.theme.set(theme);
     }
 
     if (this.themeApi) {
@@ -167,7 +156,7 @@ export class SiExampleViewerComponent {
   }
 
   private setRTL(rtl: boolean): void {
-    this.isRTL.set(rtl);
+    this.state.isRTL.set(rtl);
     if (this.mode() !== 'editor') {
       setDirectionRtl(rtl);
     }
@@ -175,7 +164,7 @@ export class SiExampleViewerComponent {
 
   private setLocale(locale: string): void {
     if (this.mode() === 'editor') {
-      this.locale.set(locale);
+      this.state.locale.set(locale);
       return;
     }
 
@@ -187,6 +176,6 @@ export class SiExampleViewerComponent {
   activateTab(index: number): void {
     const example = this.tabs()[index].example;
     this.activeTabIndex.set(index);
-    this.exampleUrl.set(this.tabs()[index].base + example);
+    this.state.example.set(this.tabs()[index].base + example);
   }
 }

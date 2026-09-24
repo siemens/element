@@ -9,7 +9,6 @@ import {
   ElementRef,
   inject,
   NgZone,
-  signal,
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -25,6 +24,7 @@ import {
   SiLivePreviewThemeApi,
   ThemeType
 } from '../../interfaces/si-live-preview.api';
+import { LivePreviewStateService } from '../../services/live-preview-state.service';
 import { SiLivePreviewRendererComponent } from '../si-live-preview-renderer/si-live-preview-renderer.component';
 import { SiLivePreviewWebComponentService } from '../si-live-preview-renderer/webcomponent/si-live-webcomponent.service';
 
@@ -44,20 +44,7 @@ export class SiLivePreviewWrapperComponent {
   private readonly renderer = viewChild.required<SiLivePreviewRendererComponent>('renderer');
   private readonly webcomponentRenderer = viewChild.required<ElementRef>('webcomponentRenderer');
 
-  protected readonly exampleUrl = signal('');
-  protected readonly template = signal('');
-  protected readonly loadReact = signal(false);
-  protected readonly loadVue = signal(false);
-  protected readonly loadJs = signal(false);
-  protected readonly webcomponentTemplateCode = signal('');
-  private isMobile = false;
-  private theme!: ThemeType;
-  private isRTL = false;
-  private mode!: string;
-  private locale?: string;
-  private rootFontSize?: number | 'initial';
-  private initialUrl: string;
-
+  protected readonly state = inject(LivePreviewStateService);
   private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
   private readonly themeApi = inject(SiLivePreviewThemeApi, { optional: true });
   private readonly localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
@@ -68,21 +55,24 @@ export class SiLivePreviewWrapperComponent {
   });
   private readonly cdRef = inject(ChangeDetectorRef);
 
+  private isMobile = false;
+  private initialUrl: string;
+
   constructor() {
     this.themeApi
       ?.getApplicationThemeObservable()
       .pipe(takeUntilDestroyed())
       .subscribe(theme => {
-        this.theme = theme;
-        this.sendMessage('theme', this.theme);
+        this.state.theme.set(theme);
+        this.sendMessage('theme', theme);
       });
     this.localeApi
       ?.getLocale()
       .pipe(takeUntilDestroyed())
       .subscribe(locale => {
-        if (this.locale !== locale) {
-          this.locale = locale;
-          this.sendMessage('locale', this.locale);
+        if (this.state.locale() !== locale) {
+          this.state.locale.set(locale);
+          this.sendMessage('locale', locale);
         }
       });
     this.initialUrl = window.location.toString();
@@ -110,26 +100,22 @@ export class SiLivePreviewWrapperComponent {
   }
 
   private onMessageInZone(event: MessageEvent): void {
-    this.exampleUrl.set(event.data.exampleUrl);
-    this.template.set(event.data.template);
-    this.loadReact.set(event.data.loadReact);
-    this.loadVue.set(event.data.loadVue);
-    this.loadJs.set(event.data.loadJs);
-    this.webcomponentTemplateCode.set(event.data.reactVueTemplate);
+    const modeChanged = this.state.viewport().mode !== event.data.mode;
+    this.state.applyRenderRequest(event.data);
 
-    if (this.theme !== event.data.theme) {
+    if (this.state.theme() !== event.data.theme) {
       this.setTheme(event.data.theme);
     }
 
-    if (this.locale !== event.data.locale) {
+    if (this.state.locale() !== event.data.locale) {
       this.setLocale(event.data.locale);
     }
-    if (this.rootFontSize !== event.data.rootFontSize) {
-      this.rootFontSize = event.data.rootFontSize;
+    if (this.state.rootFontSize() !== event.data.rootFontSize) {
+      this.state.rootFontSize.set(event.data.rootFontSize);
       setRootFontSize(event.data.rootFontSize);
     }
 
-    if (this.isRTL !== event.data.isRTL) {
+    if (this.state.isRTL() !== event.data.isRTL) {
       this.setRTL(event.data.isRTL);
     }
 
@@ -142,22 +128,24 @@ export class SiLivePreviewWrapperComponent {
       );
     }
 
-    if (this.mode !== event.data.mode && this.isMobile) {
-      this.mode = event.data.mode;
-      setDeviceMode(this.mode);
+    if (modeChanged && this.isMobile) {
+      setDeviceMode(event.data.mode);
       this.renderer().recompile();
     }
 
     const webcomponentRenderer = this.webcomponentRenderer();
-    if (webcomponentRenderer && (this.loadReact() || this.loadVue() || this.loadJs())) {
+    if (
+      webcomponentRenderer &&
+      (this.state.loadReact() || this.state.loadVue() || this.state.loadJs())
+    ) {
       this.webcomponentService?.injectComponent(
         webcomponentRenderer,
         {
-          exampleUrl: this.exampleUrl(),
-          loadReact: this.loadReact(),
-          loadJs: this.loadJs(),
-          webcomponentTemplateCode: this.webcomponentTemplateCode(),
-          loadVue: this.loadVue(),
+          exampleUrl: this.config.examplesBaseUrl + this.state.example(),
+          loadReact: this.state.loadReact(),
+          loadJs: this.state.loadJs(),
+          webcomponentTemplateCode: this.state.activeWebComponentTemplate(),
+          loadVue: this.state.loadVue(),
           config: this.config
         },
         {
@@ -187,17 +175,17 @@ export class SiLivePreviewWrapperComponent {
   }
 
   private setTheme(theme: ThemeType): void {
-    this.theme = theme;
+    this.state.theme.set(theme);
     if (this.themeApi) {
-      this.themeApi.setThemeFromPreviewer(this.theme);
+      this.themeApi.setThemeFromPreviewer(theme);
     } else {
-      document.documentElement.classList.toggle('app--dark', this.theme === 'dark');
-      document.documentElement.classList.toggle('app--light', this.theme === 'light');
+      document.documentElement.classList.toggle('app--dark', theme === 'dark');
+      document.documentElement.classList.toggle('app--light', theme === 'light');
     }
   }
 
   private setRTL(rtl: boolean): void {
-    this.isRTL = rtl;
+    this.state.isRTL.set(rtl);
     setDirectionRtl(rtl);
   }
 
@@ -206,9 +194,9 @@ export class SiLivePreviewWrapperComponent {
       return;
     }
 
-    this.locale = locale;
+    this.state.locale.set(locale);
     if (this.localeApi) {
-      this.localeApi.setLocale(this.locale);
+      this.localeApi.setLocale(locale);
     }
   }
 
