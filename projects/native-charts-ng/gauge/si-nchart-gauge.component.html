@@ -33,7 +33,7 @@
           [attr.d]="series.path"
           [attr.data-id]="series.series.id"
           [style.stroke]="series.colorVar"
-          (mouseenter)="series.highlight = true"
+          (mouseenter)="series.highlight = mode() === 'sum'"
           (mouseleave)="series.highlight = false"
         />
       }
