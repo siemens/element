@@ -22,6 +22,30 @@
   border-end-end-radius: variables.$card-inner-border-radius;
 }
 
+%card-list-radius-top {
+  @extend %card-inner-radius-top;
+
+  > :first-child {
+    &,
+    > .list-item {
+      border-start-start-radius: inherit;
+      border-start-end-radius: inherit;
+    }
+  }
+}
+
+%card-list-radius-bottom {
+  @extend %card-inner-radius-bottom;
+
+  > :last-child {
+    &,
+    > .list-item {
+      border-end-start-radius: inherit;
+      border-end-end-radius: inherit;
+    }
+  }
+}
+
 .card {
   position: relative;
   display: flex;
@@ -40,6 +64,26 @@
     &:last-child {
       @extend %card-inner-radius-bottom;
     }
+  }
+
+  // A list that meets a card edge adopts that edge's inner radius, and so do
+  // the item corners on that edge. Otherwise a hover, filled or outline
+  // background paints over the card's rounded corners.
+  //
+  // `si-card` projects `[body]` into `.content-container`, and `si-action-card`
+  // wraps that projection in `.d-contents`. `:first-child` / `:last-child` are
+  // required on every ancestor so a list below a header or image does not
+  // inherit a square top, and a filled item below a header keeps its own radius.
+  > .list:first-child,
+  > .content-container:first-child > .list:first-child,
+  > .content-container:first-child > .d-contents:first-child > .list:first-child {
+    @extend %card-list-radius-top;
+  }
+
+  > .list:last-child,
+  > .content-container:last-child > .list:last-child,
+  > .content-container:last-child > .d-contents > .list:last-child {
+    @extend %card-list-radius-bottom;
   }
 
   &.accent-primary {
@@ -154,7 +198,23 @@ button.card {
     }
   }
 
-  + :is(.list-group, .overflow-auto, [tabindex='0']) {
+  // Pairs with the inset `outline-offset` below: the inset focus ring is drawn
+  // on the list itself, so the list items have to be pushed behind it. Their
+  // hover, filled and outline backgrounds would paint over it otherwise.
+  // `isolation` creates the stacking context even when the list is not a flex
+  // item. Direct children cover both `<li class="list-item">` and a wrapped
+  // `<li><button class="list-item">`. `.d-contents` is the action-card wrapper.
+  + .list,
+  + .d-contents > .list {
+    isolation: isolate;
+
+    > * {
+      z-index: -1;
+    }
+  }
+
+  + :is(.list-group, .list, .overflow-auto, [tabindex='0']),
+  + .d-contents > :is(.list, .overflow-auto, [tabindex='0']) {
     outline-offset: focus.$focus-style-outline-inside-offset;
   }
 }
