@@ -25,6 +25,11 @@
   rebaseWhen: "conflicted",
   packageRules: [
     {
+      description: ["Hold module federation packages at 2.8.2 due to an upstream bug"],
+      matchPackageNames: ["@module-federation/enhanced", "@module-federation/runtime"],
+      enabled: false
+    },
+    {
       groupName: "Siemens lint dependencies",
       description: ["Update Siemens lint packages together"],
       matchSourceUrls: ["https://github.com/siemens/lint"]
