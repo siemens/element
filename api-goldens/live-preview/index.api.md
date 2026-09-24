@@ -6,34 +6,26 @@
 
 import { ActivatedRoute } from '@angular/router';
 import { AfterViewInit } from '@angular/core';
-import * as _angular_core from '@angular/core';
 import { ApplicationConfig } from '@angular/core';
 import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { EnvironmentProviders } from '@angular/core';
+import * as i0 from '@angular/core';
 import * as i1 from '@angular/router';
 import { InjectionToken } from '@angular/core';
 import { Injector } from '@angular/core';
 import { ModuleWithProviders } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
-import { OnInit } from '@angular/core';
 import { Provider } from '@angular/core';
 import { Route } from '@angular/router';
 import { Routes } from '@angular/router';
 import { Signal } from '@angular/core';
-import { SimpleChanges } from '@angular/core';
 import { Type } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
 import { ViewContainerRef } from '@angular/core';
 
 // @public
 export const angularTemplateProject: () => AssetProject;
-
-// @public (undocumented)
-export class DummyAppSampleComponent {
-}
 
 // @public (undocumented)
 export class LandscapeSupportService {
@@ -75,92 +67,8 @@ export class SiDummyComponent {
     path: string;
 }
 
-// @public (undocumented)
-export class SiExampleOverviewComponent implements OnInit, OnDestroy {
-    // (undocumented)
-    resetSearchBar(): void;
-    // (undocumented)
-    toggleCollapse(): void;
-}
-
-// @public (undocumented)
-export class SiExampleViewerComponent {
-    constructor();
-    // (undocumented)
-    activateTab(index: number): void;
-}
-
 // @public
 export abstract class SiLivePreviewApplicationRuntimeComponent extends SiLivePreviewRuntimeComponent {
-}
-
-// @public (undocumented)
-export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges {
-    constructor();
-    // (undocumented)
-    activateTab(tab: string): void;
-    // (undocumented)
-    readonly availableLocales: string[];
-    // (undocumented)
-    readonly baseUrl: _angular_core.InputSignal<string>;
-    // (undocumented)
-    changeFramework(framework: string): void;
-    // (undocumented)
-    changeLocale(locale: string | null | undefined): void;
-    // (undocumented)
-    checkWebComponentsAvailable(): void;
-    // (undocumented)
-    copyCode(): void;
-    // (undocumented)
-    copyTemplate(): void;
-    // (undocumented)
-    createLink(): void;
-    // (undocumented)
-    readonly example: _angular_core.InputSignal<string | null | undefined>;
-    // (undocumented)
-    handleInProgressEvent(inProgress: boolean): void;
-    // (undocumented)
-    readonly isRTL: _angular_core.ModelSignal<boolean>;
-    // (undocumented)
-    readonly locale: _angular_core.ModelSignal<string | null | undefined>;
-    // (undocumented)
-    localeSelectionChanged(target: EventTarget | null): void;
-    // (undocumented)
-    logClear(delayed?: boolean): void;
-    // (undocumented)
-    logEvent(msg: string): void;
-    // (undocumented)
-    openTab(): void;
-    // (undocumented)
-    rfsSelectionChanges(value: string): void;
-    // (undocumented)
-    readonly template: _angular_core.ModelSignal<string>;
-    // (undocumented)
-    templateFromComponent(template?: string): void;
-    // (undocumented)
-    readonly templateJs: _angular_core.ModelSignal<string>;
-    // (undocumented)
-    readonly templateReact: _angular_core.ModelSignal<string>;
-    // (undocumented)
-    readonly templateVue: _angular_core.ModelSignal<string>;
-    // (undocumented)
-    readonly theme: _angular_core.ModelSignal<string>;
-    // (undocumented)
-    themeChange(theme: string): void;
-    // (undocumented)
-    readonly ticketBaseUrl: _angular_core.InputSignal<string>;
-    // (undocumented)
-    ticketLinkBug: string;
-    // (undocumented)
-    ticketLinkFeature: string;
-    // (undocumented)
-    toggleCollapse(): void;
-    // (undocumented)
-    toggleFullscreen(exampleOnly?: boolean): void;
-    // (undocumented)
-    toggleRTL(): void;
-    // (undocumented)
-    toggleTheme(): void;
 }
 
 // @public
@@ -189,63 +97,6 @@ export interface SiLivePreviewConfig {
     ticketBaseUrl: string;
     // (undocumented)
     webcomponents?: boolean;
-}
-
-// @public (undocumented)
-export class SiLivePreviewIframeComponent implements OnInit {
-    constructor();
-    // (undocumented)
-    readonly baseUrl: _angular_core.InputSignal<string>;
-    // (undocumented)
-    deviceChanged(): void;
-    // (undocumented)
-    readonly exampleUrl: _angular_core.InputSignal<string>;
-    // (undocumented)
-    readonly iFrameHeight: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    readonly iFrameWidth: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    readonly inProgress: _angular_core.OutputEmitterRef<boolean>;
-    // (undocumented)
-    readonly isFullscreen: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    readonly isRTL: _angular_core.InputSignal<boolean | undefined>;
-    // (undocumented)
-    readonly loadJs: _angular_core.InputSignal<boolean | undefined>;
-    // (undocumented)
-    readonly loadReact: _angular_core.InputSignal<boolean | undefined>;
-    // (undocumented)
-    readonly loadVue: _angular_core.InputSignal<boolean | undefined>;
-    // (undocumented)
-    readonly locale: _angular_core.ModelSignal<string | null | undefined>;
-    // (undocumented)
-    readonly logClear: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
-    readonly logMessage: _angular_core.OutputEmitterRef<string>;
-    // (undocumented)
-    readonly logRenderingError: _angular_core.OutputEmitterRef<any>;
-    // (undocumented)
-    openQrMenu(): void;
-    // (undocumented)
-    readonly previewIframe: _angular_core.Signal<ElementRef<any> | undefined>;
-    // (undocumented)
-    readonly reactVueTemplate: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    readonly rootFontSize: _angular_core.InputSignal<number | "initial">;
-    // (undocumented)
-    readonly template: _angular_core.InputSignal<string>;
-    // (undocumented)
-    readonly templateFromComponent: _angular_core.OutputEmitterRef<string | undefined>;
-    // (undocumented)
-    readonly theme: _angular_core.ModelSignal<string>;
-    // (undocumented)
-    readonly ticketLinkBug: _angular_core.InputSignal<string>;
-    // (undocumented)
-    readonly ticketLinkFeature: _angular_core.InputSignal<string>;
-    // (undocumented)
-    toggleLandscape(): void;
-    // (undocumented)
-    toggleTheme(): void;
 }
 
 // @public (undocumented)
@@ -280,49 +131,6 @@ export interface SiLivePreviewProviderConfig extends SiLivePreviewConfig {
 }
 
 // @public (undocumented)
-export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy {
-    // (undocumented)
-    readonly closed: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
-    readonly qrImg: _angular_core.Signal<string | null>;
-    // (undocumented)
-    readonly qrShort: _angular_core.Signal<boolean>;
-    // (undocumented)
-    readonly url: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    readonly urlShort: _angular_core.InputSignal<string | undefined>;
-}
-
-// @public (undocumented)
-export class SiLivePreviewRendererComponent implements OnDestroy {
-    constructor();
-    // (undocumented)
-    readonly dataId: _angular_core.InputSignal<string>;
-    // (undocumented)
-    readonly exampleUrl: _angular_core.InputSignal<string>;
-    // (undocumented)
-    readonly inProgress: _angular_core.OutputEmitterRef<boolean>;
-    // (undocumented)
-    readonly logClear: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
-    readonly logMessage: _angular_core.OutputEmitterRef<string>;
-    // (undocumented)
-    readonly logRenderingError: _angular_core.OutputEmitterRef<any>;
-    // (undocumented)
-    readonly react: _angular_core.Signal<ElementRef<any>>;
-    // (undocumented)
-    recompile(): void;
-    // (undocumented)
-    readonly renderedExample: _angular_core.Signal<ViewContainerRef>;
-    // (undocumented)
-    readonly supportsLandscapeMode: _angular_core.OutputEmitterRef<boolean>;
-    // (undocumented)
-    readonly template: _angular_core.InputSignal<string>;
-    // (undocumented)
-    readonly templateFromComponent: _angular_core.OutputEmitterRef<string | undefined>;
-}
-
-// @public (undocumented)
 class SiLivePreviewRoutingModule {
 }
 export { SiLivePreviewRoutingModule }
@@ -331,11 +139,11 @@ export { SiLivePreviewRoutingModule as SimplLivePreviewRoutingModule }
 // @public
 export abstract class SiLivePreviewRuntimeComponent implements AfterViewInit, DoCheck, OnDestroy {
     // (undocumented)
-    readonly component: _angular_core.InputSignal<Type<unknown>>;
+    readonly component: i0.InputSignal<Type<unknown>>;
     // (undocumented)
-    readonly ready: _angular_core.OutputEmitterRef<void>;
+    readonly ready: i0.OutputEmitterRef<void>;
     // (undocumented)
-    readonly renderingError: _angular_core.OutputEmitterRef<Error>;
+    readonly renderingError: i0.OutputEmitterRef<Error>;
 }
 
 // @public (undocumented)
@@ -352,15 +160,6 @@ export abstract class SiLivePreviewWebComponentService {
     abstract destroyComponent(): void;
     // (undocumented)
     abstract injectComponent(element: ElementRef, inputs?: any, outputs?: any): any;
-}
-
-// @public (undocumented)
-export class SiLivePreviewWrapperComponent {
-    constructor();
-    // (undocumented)
-    onClick(event: MouseEvent): void;
-    // (undocumented)
-    sendMessage(type: string, message?: any): void;
 }
 
 // @public
