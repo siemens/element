@@ -6,11 +6,12 @@ import { computed, DestroyRef, Directive, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
-import { debounceTime, first, map, tap } from 'rxjs/operators';
+import { debounceTime, map, take, tap } from 'rxjs/operators';
 
 import {
   InternalCriterionDefinition,
   toOptionCriteria,
+  toTranslatedOptions,
   TypeaheadOptionCriterion
 } from '../si-filtered-search-helper';
 import { OptionCriterion, OptionType } from '../si-filtered-search.model';
@@ -93,14 +94,9 @@ export abstract class SiFilteredSearchOptionValueBase extends SiFilteredSearchVa
     return optionsStream?.pipe(
       switchMap(options => {
         const keys: string[] = options.map(option => option.label!).filter(label => !!label);
-        return this.translateService.translateAsync(keys).pipe(
-          map(translations =>
-            options.map(option => ({
-              ...option,
-              translatedLabel: translations[option.label!] ?? option.label ?? option.value
-            }))
-          )
-        );
+        return this.translateService
+          .translateAsync(keys)
+          .pipe(map(translations => toTranslatedOptions(options, label => translations[label])));
       })
     );
   }
@@ -109,7 +105,7 @@ export abstract class SiFilteredSearchOptionValueBase extends SiFilteredSearchVa
     if (this.criterionValue().value?.length) {
       // resolve options for initial values
       this.options()!
-        .pipe(first())
+        .pipe(take(1), takeUntilDestroyed(this.destroyRef))
         .subscribe(options => this.processTypeaheadOptions(options));
     }
   }

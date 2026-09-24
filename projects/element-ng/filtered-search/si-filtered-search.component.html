@@ -34,7 +34,7 @@
     [placeholder]="placeholder()"
     [searchLabel]="searchLabel()"
     [freeTextCriterion]="!!freeTextCriterion()"
-    [maxCriteriaReached]="!!maxCriteria() && values().length >= maxCriteria()!"
+    [maxCriteriaReached]="maxCriteriaReached()"
     [allowFreeText]="allowFreeTextCache()"
     [searchForFreeTextLabel]="searchForFreeTextLabel()"
     [scrollStrategyFactory]="scrollStrategy()"

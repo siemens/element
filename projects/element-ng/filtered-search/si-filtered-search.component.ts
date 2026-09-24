@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { formatDate } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -28,6 +29,7 @@ import {
   defaultConnectedOverlayScrollStrategyFactory,
   isRTL
 } from '@siemens/element-ng/common';
+import { getDatepickerFormat, isValid, parseDate } from '@siemens/element-ng/datepicker';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import {
   injectSiTranslateService,
@@ -35,15 +37,14 @@ import {
   t,
   TranslatableString
 } from '@siemens/element-translate-ng/translate';
-import { merge, Observable, of, Subject, switchMap } from 'rxjs';
+import { EMPTY, merge, Observable, Subject, switchMap } from 'rxjs';
 import { catchError, debounceTime, map, take } from 'rxjs/operators';
 
 import {
   differenceByName,
-  getISODateString,
   InternalCriterionDefinition,
-  toOptionCriteria,
-  toInternalCriteria
+  toInternalCriteria,
+  toTranslatedOptions
 } from './si-filtered-search-helper';
 import { SiFilteredSearchInputComponent } from './si-filtered-search-input.component';
 import { SiFilteredSearchValueComponent } from './si-filtered-search-value.component';
@@ -54,6 +55,11 @@ import {
   OptionType,
   SearchCriteria
 } from './si-filtered-search.model';
+
+interface InternalCriterion {
+  config: InternalCriterionDefinition;
+  value: CriterionValue;
+}
 
 @Component({
   selector: 'si-filtered-search',
@@ -327,9 +333,11 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   protected dataSource: Observable<InternalCriterionDefinition[]>;
 
   protected autoEditCriteria = false;
-  protected readonly values = signal<
-    { config: InternalCriterionDefinition; value: CriterionValue }[]
-  >([]);
+  protected readonly values = signal<InternalCriterion[]>([]);
+  protected readonly maxCriteriaReached = computed(() => {
+    const maxCriteria = this.maxCriteria();
+    return maxCriteria !== undefined && this.values().length >= maxCriteria;
+  });
   protected readonly searchValue = signal('');
   /** Internal criteria model */
   protected internalCriterionDefinitions: InternalCriterionDefinition[] = [];
@@ -493,17 +501,9 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
           value = value !== '' ? [value] : [];
         }
 
-        let dateValue: Date | undefined;
-        if (config.validationType === 'date' || config.validationType === 'date-time') {
-          dateValue = value ? new Date(value.toString()) : new Date();
-          value ??= getISODateString(
-            dateValue,
-            config.validationType === 'date' || config.datepickerConfig?.disabledTime
-              ? 'date'
-              : 'date-time',
-            this.locale
-          );
-        }
+        const dateValue = this.isDateCriterion(config)
+          ? (c.dateValue ?? this.parseModelDate(value))
+          : undefined;
 
         return {
           value: {
@@ -593,74 +593,85 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     config: InternalCriterionDefinition,
     value?: string,
     editOnCreation = true
-  ): void {
-    if (config.multiSelect) {
-      const normalizedValue = this.normalizeCriterionValue(value, config.options);
-      this.values.update(v => [
-        ...v,
-        {
-          value: {
-            value: normalizedValue ? [normalizedValue] : [],
-            name: config.name
-          },
-          config
-        }
-      ]);
-    } else if (config.validationType === 'date' || config.validationType === 'date-time') {
-      const validationType = config.validationType;
-      this.values.update(v => [
-        ...v,
-        {
-          value: {
-            dateValue: new Date(),
-            value: getISODateString(new Date(), validationType, this.locale),
-            name: config.name
-          },
-          config
-        }
-      ]);
-    } else {
-      this.values.update(v => [
-        ...v,
-        {
-          value: {
-            value: this.normalizeCriterionValue(value, config.options) ?? '',
-            name: config.name
-          },
-          config
-        }
-      ]);
+  ): InternalCriterion | undefined {
+    if (this.maxCriteriaReached()) {
+      return;
     }
 
+    const criterionValue: CriterionValue = {
+      name: config.name,
+      value: this.resolveValue(value, config)
+    };
+    if (this.isDateCriterion(config)) {
+      const dateValue = this.parseInputDate(value, config);
+      if (!dateValue) {
+        return;
+      }
+      criterionValue.dateValue = dateValue;
+      criterionValue.value = value
+        ? value.trim()
+        : formatDate(
+            dateValue,
+            getDatepickerFormat(this.locale, config.datepickerConfig),
+            this.locale
+          );
+    }
+
+    const criterion = { config, value: criterionValue };
+    this.values.update(values => [...values, criterion]);
     this.autoEditCriteria = editOnCreation;
     this.emitChangeEvent();
+    return criterion;
   }
 
-  private normalizeCriterionValue(
+  private resolveValue(
     value: string | undefined,
-    options?: OptionType[]
-  ): string | undefined {
-    const trimmedValue = value?.trim();
-    if (!trimmedValue || !options?.length) {
-      return trimmedValue;
+    config: InternalCriterionDefinition,
+    options = config.options
+  ): string | string[] {
+    const trimmedValue = value?.trim() ?? '';
+    const matchingOption = trimmedValue
+      ? toTranslatedOptions(options, label => this.translateService.translateSync(label)).find(
+          option => this.matchesText(trimmedValue, option.translatedLabel)
+        )
+      : undefined;
+    const normalizedValue = matchingOption?.value ?? trimmedValue;
+    if (config.multiSelect) {
+      return normalizedValue ? [normalizedValue] : [];
     }
+    return normalizedValue;
+  }
 
-    const normalizedValue = trimmedValue.toLocaleLowerCase();
-    const matchingOption = toOptionCriteria(options).find(option => {
-      const translatedLabel = option.label
-        ? this.translateService.translateSync(option.label)
-        : option.value;
-      return (
-        option.value.toLocaleLowerCase() === normalizedValue ||
-        translatedLabel.toLocaleLowerCase() === normalizedValue ||
-        (typeof option.label === 'string' && option.label.toLocaleLowerCase() === normalizedValue)
-      );
-    });
-    return matchingOption?.value ?? trimmedValue;
+  private isDateCriterion(
+    config: InternalCriterionDefinition
+  ): config is InternalCriterionDefinition & { validationType: 'date' | 'date-time' } {
+    return config.validationType === 'date' || config.validationType === 'date-time';
+  }
+
+  private parseModelDate(value: CriterionValue['value']): Date | undefined {
+    const dateValue = value ? new Date(value.toString()) : new Date();
+    return isValid(dateValue) ? dateValue : undefined;
+  }
+
+  private parseInputDate(
+    value: string | undefined,
+    config: InternalCriterionDefinition
+  ): Date | undefined {
+    if (!value) {
+      return new Date();
+    }
+    const format = getDatepickerFormat(this.locale, config.datepickerConfig);
+    const dateValue = parseDate(value, format, this.locale);
+    return isValid(dateValue) ? dateValue : undefined;
+  }
+
+  private matchesText(query: string, ...candidates: (string | undefined)[]): boolean {
+    const normalizedQuery = query.toLocaleLowerCase();
+    return candidates.some(candidate => candidate?.toLocaleLowerCase() === normalizedQuery);
   }
 
   private getAllowedCriteria(
-    values: { config: InternalCriterionDefinition; value: CriterionValue }[],
+    values: InternalCriterion[],
     exclusiveCriteria: boolean
   ): InternalCriterionDefinition[] {
     const allowedCriteria = !exclusiveCriteria
@@ -668,7 +679,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       : differenceByName(this.internalCriterionDefinitions, values);
 
     let allowedCriterionNames = allowedCriteria.map(c => c.name);
-    if (allowedCriteria.length > 0) {
+    if (allowedCriteria.length > 0 && !this.lazyCriterionProvider()) {
       this.interceptDisplayedCriteria.emit({
         criteria: allowedCriterionNames,
         searchCriteria: this.convertToExternalModel(),
@@ -690,7 +701,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    */
   private getFilteredTypeaheadCriteria(
     maxCriteria: number | undefined,
-    values: { config: InternalCriterionDefinition; value: CriterionValue }[],
+    values: InternalCriterion[],
     exclusiveCriteria: boolean
   ): InternalCriterionDefinition[] {
     if (maxCriteria === undefined || values.length < maxCriteria) {
@@ -754,13 +765,13 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     criterionName: string;
     value?: string;
     editOnCreation?: boolean;
+    accept: () => void;
   }): void {
-    const nameLowerCase = event.criterionName.toLocaleLowerCase();
-    const configuredCriterion = this.internalCriterionDefinitions.find(
-      ic =>
-        ic.name.toLocaleLowerCase() === nameLowerCase ||
-        ic.translatedLabel.toLocaleLowerCase() === nameLowerCase ||
-        (typeof ic.label === 'string' && ic.label.toLocaleLowerCase() === nameLowerCase)
+    if (this.maxCriteriaReached()) {
+      return;
+    }
+    const configuredCriterion = this.internalCriterionDefinitions.find(criterion =>
+      this.matchesText(event.criterionName, criterion.translatedLabel)
     );
     if (!configuredCriterion && this.strictCriterionOrValue()) {
       return;
@@ -773,34 +784,55 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     ) {
       return;
     }
-    const criterion = configuredCriterion ?? {
-      name: event.criterionName,
-      label: event.criterionName,
-      translatedLabel: event.criterionName
-    };
-    this.addCriterion(criterion, event.value, event.editOnCreation);
-    const createdCriterion = this.values().at(-1);
-
-    if (configuredCriterion && createdCriterion && event.value && this.lazyValueProvider()) {
-      this.lazyValueProvider()!(configuredCriterion.name, event.value)
-        .pipe(
-          take(1),
-          catchError(() => of([])),
-          takeUntilDestroyed(this.destroyRef)
-        )
-        .subscribe(options => {
-          const normalizedValue = this.normalizeCriterionValue(event.value, options);
-          const resolvedValue = configuredCriterion.multiSelect
-            ? normalizedValue
-              ? [normalizedValue]
-              : []
-            : (normalizedValue ?? '');
-          if (createdCriterion.value.value !== resolvedValue) {
-            createdCriterion.value.value = resolvedValue;
-            this.emitChangeEvent();
-          }
-        });
+    const config = configuredCriterion ?? toInternalCriteria({ name: event.criterionName });
+    const criterion = this.addCriterion(config, event.value, event.editOnCreation);
+    if (!criterion) {
+      return;
     }
+    event.accept();
+    if (configuredCriterion && event.value && !criterion.value.dateValue) {
+      this.resolveLazyCriterionValue(criterion, event.value);
+    }
+  }
+
+  private resolveLazyCriterionValue(criterion: InternalCriterion, typedValue: string): void {
+    const provider = this.lazyValueProvider();
+    if (!provider) {
+      return;
+    }
+
+    const initialValue = criterion.value;
+    const initialSelection = initialValue.value?.slice();
+    provider(criterion.config.name, typedValue)
+      .pipe(
+        take(1),
+        catchError(() => EMPTY),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(options => {
+        // A delayed lookup must not overwrite subsequent edits or emit changes for removed pills.
+        if (
+          !options.length ||
+          !this.values().includes(criterion) ||
+          criterion.value !== initialValue ||
+          !this.criterionValuesEqual(initialValue.value, initialSelection)
+        ) {
+          return;
+        }
+        const resolvedValue = this.resolveValue(typedValue, criterion.config, options);
+        if (this.criterionValuesEqual(initialValue.value, resolvedValue)) {
+          return;
+        }
+        criterion.value = { ...initialValue, value: resolvedValue };
+        this.values.update(values => [...values]);
+        this.emitChangeEvent();
+      });
+  }
+
+  private criterionValuesEqual(a: CriterionValue['value'], b: CriterionValue['value']): boolean {
+    return Array.isArray(a) && Array.isArray(b)
+      ? a.length === b.length && a.every((value, index) => value === b[index])
+      : a === b;
   }
 
   protected onSearchValueChange(): void {
@@ -810,10 +842,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     }
   }
 
-  protected valueChange(
-    value: CriterionValue,
-    criterion: { config: InternalCriterionDefinition; value: CriterionValue }
-  ): void {
+  protected valueChange(value: CriterionValue, criterion: InternalCriterion): void {
     criterion.value = value;
     this.emitChangeEvent();
   }
@@ -840,15 +869,13 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     }
   }
 
-  protected createFreeTextPill(query: string): void {
+  protected createFreeTextPill(event: { query: string; accept: () => void }): void {
     const freeTextDefinition = this.internalFreeTextCriterion();
-    const maxCriteria = this.maxCriteria();
+    if (!freeTextDefinition || this.maxCriteriaReached()) {
+      return;
+    }
     this.getAllowedCriteria(this.values(), this.exclusiveCriteria());
-    if (
-      !freeTextDefinition ||
-      !this.allowFreeTextCache() ||
-      (maxCriteria && this.values().length >= maxCriteria)
-    ) {
+    if (!this.allowFreeTextCache()) {
       return;
     }
     this.values.update(v => [
@@ -856,11 +883,12 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       {
         value: {
           name: freeTextDefinition.name,
-          value: query
+          value: event.query
         },
         config: freeTextDefinition
       }
     ]);
     this.emitChangeEvent();
+    event.accept();
   }
 }

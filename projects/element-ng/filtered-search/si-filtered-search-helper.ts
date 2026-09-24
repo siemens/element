@@ -4,6 +4,7 @@
  */
 import { formatDate } from '@angular/common';
 import { isValid } from '@siemens/element-ng/datepicker';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { CriterionDefinition, OptionCriterion, OptionType } from './si-filtered-search.model';
 
@@ -25,6 +26,17 @@ export const toOptionCriteria = (values?: OptionType[]): OptionCriterion[] =>
       ? { value: v }
       : { label: v.label, value: v.value, iconClass: v.iconClass }
   ) ?? [];
+
+/** Build the display labels used for both pasted values and typeahead options. */
+export const toTranslatedOptions = (
+  values: OptionType[] | undefined,
+  translate: (label: TranslatableString) => string | undefined
+): TypeaheadOptionCriterion[] =>
+  toOptionCriteria(values).map(option => ({
+    ...option,
+    translatedLabel:
+      (option.label ? translate(option.label) : undefined) ?? option.label ?? option.value
+  }));
 
 /*
  * Update selected state the matching is based on value since plain
