@@ -139,16 +139,9 @@ $datatable-ghost-cell-strip-radius: 0 !default;
   :is(.datatable-header-cell, .datatable-body-cell) {
     label.datatable-checkbox {
       display: inline-flex;
-      inline-size: 13px;
-      block-size: 13px;
       margin-block: 0;
-      margin-inline: 0 map.get(spacers.$spacers-inline, 6);
+      margin-inline: 0 map.get(spacers.$spacers-inline, 4);
       position: relative;
-
-      > input {
-        inline-size: 100%;
-        block-size: 100%;
-      }
     }
   }
 
@@ -187,20 +180,16 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       display: flex;
       align-items: center;
       padding-block: 0;
-      padding-inline: 4px;
+      padding-inline: map.get(spacers.$spacers-inline, 4);
       min-inline-size: $datatable-cell-min-width;
       line-height: typography.$si-line-height-body;
 
-      > div {
-        padding: 4px;
-      }
-
       &:first-child {
-        padding-inline-start: map.get(spacers.$spacers-inline, 5);
+        padding-inline-start: map.get(spacers.$spacers-inline, 6);
       }
 
       &:last-child {
-        padding-inline-end: map.get(spacers.$spacers-inline, 5);
+        padding-inline-end: map.get(spacers.$spacers-inline, 6);
       }
     }
 
@@ -208,7 +197,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       .datatable-header-cell-template-wrap {
         display: flex;
         align-items: center;
-        overflow: hidden;
+        min-inline-size: 0;
 
         .datatable-header-cell-wrapper {
           @include text-truncate.text-truncate;
@@ -234,14 +223,29 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       margin-inline-start: map.get(spacers.$spacers-inline, 1);
     }
 
+    .datatable-header-cell.resizeable {
+      padding-inline-end: 0;
+    }
+
     // Resizable handle
-    .resizeable:hover {
-      .resize-handle {
-        background-color: system-tokens.$si-sys-color-background-0;
-        inline-size: 2px;
-        border-radius: 2px;
-        padding-block: 0;
-        padding-inline: 2px;
+    .resize-handle {
+      position: relative;
+      visibility: visible;
+      inline-size: 8px;
+      border-radius: 2px;
+      padding-block: 0;
+      padding-inline: 0;
+      block-size: 100%;
+      margin-inline-start: auto;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset-block: map.get(spacers.$spacers-block, 5);
+        inset-inline: 0;
+        margin-inline: auto;
+        inline-size: map.get(spacers.$spacers-inline, 1);
+        background-color: system-tokens.$si-sys-color-border-4;
       }
     }
 
