@@ -138,6 +138,26 @@ Use the `.unread` class on `.list-item-title` to indicate unread items with a bo
 
 <si-docs-component example="list-item/list-item-unread" height="400"></si-docs-component>
 
+### List in a card
+
+A list can be placed directly inside a [card](../layout-navigation/cards.md),
+including an `si-card` or `si-action-card` body.
+The card provides the surrounding container, so use the plain `.list`,
+optionally with `.list-divider`, instead of `.list-outline` or `.list-filled`.
+A list that meets a card edge adopts that edge's rounded corners, and its items
+align with the card header and footer padding. Do not add extra inline margin
+on the list — `.list-item` already uses the card's inline padding.
+
+```html
+<div class="card">
+  <div class="card-header">Header text</div>
+  <ul class="list list-divider">
+    <li class="list-item"><span class="list-item-title">An item</span></li>
+    <li class="list-item"><span class="list-item-title">A second item</span></li>
+  </ul>
+</div>
+```
+
 ### Migrating from the list group
 
 The Bootstrap based list group (`.list-group`) is deprecated in favor of the list.

@@ -198,27 +198,28 @@ This automatically rounds the image's top or bottom corners to match the card's 
 </div>
 ```
 
-Create organized lists within cards using flush list groups that integrate seamlessly with card styling.
+Create organized lists within cards using the [list](../lists-tables-trees/list.md), which
+integrates seamlessly with card styling.
 
 ```html
 <div class="card">
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">An item</li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
+  <ul class="list list-divider">
+    <li class="list-item"><span class="list-item-title">An item</span></li>
+    <li class="list-item"><span class="list-item-title">A second item</span></li>
+    <li class="list-item"><span class="list-item-title">A third item</span></li>
   </ul>
 </div>
 ```
 
-Combine list groups with card headers for better content organization.
+Combine lists with card headers for better content organization.
 
 ```html
 <div class="card">
   <div class="card-header">Header text</div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">An item</li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
+  <ul class="list list-divider">
+    <li class="list-item"><span class="list-item-title">An item</span></li>
+    <li class="list-item"><span class="list-item-title">A second item</span></li>
+    <li class="list-item"><span class="list-item-title">A third item</span></li>
   </ul>
 </div>
 ```
@@ -227,10 +228,10 @@ Add footers to provide additional context or actions for list content.
 
 ```html
 <div class="card">
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">An item</li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
+  <ul class="list list-divider">
+    <li class="list-item"><span class="list-item-title">An item</span></li>
+    <li class="list-item"><span class="list-item-title">A second item</span></li>
+    <li class="list-item"><span class="list-item-title">A third item</span></li>
   </ul>
   <div class="card-footer">Card footer</div>
 </div>
