@@ -5,6 +5,7 @@
 import { CdkPortalOutlet, DomPortal, PortalModule } from '@angular/cdk/portal';
 import { ViewportScroller } from '@angular/common';
 import {
+  afterNextRender,
   AfterViewInit,
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -15,6 +16,7 @@ import {
   DOCUMENT,
   ElementRef,
   inject,
+  Injector,
   input,
   OnChanges,
   signal,
@@ -105,6 +107,7 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
   private scrollbarHelper = inject(ScrollbarHelper);
   private cdRef = inject(ChangeDetectorRef);
   private document = inject(DOCUMENT);
+  private injector = inject(Injector);
   private readonly hideMenubarInternal = signal(false);
 
   constructor() {
@@ -154,6 +157,7 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
           if (expand) {
             this.expand(card);
           } else {
+            this.restoreCardFocus(card);
             this.restoreDashboard();
           }
           this.cdRef.markForCheck();
@@ -186,6 +190,7 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
         this.hideMenubarInternal.set(true);
       }
       this.isExpandedSignal.set(true);
+      this.restoreCardFocus(card);
       this.expandedPortalOutlet().detach();
       this.expandedPortalOutlet().attach(new DomPortal(card.element.nativeElement));
     }
@@ -231,6 +236,23 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
       this.cdRef.markForCheck();
     });
     this.isExpandedSignal.set(false);
+  }
+
+  private restoreCardFocus(card: SiDashboardCardComponent): void {
+    const focusedElement = this.document.activeElement;
+    if (
+      focusedElement instanceof HTMLElement &&
+      card.element.nativeElement.contains(focusedElement)
+    ) {
+      afterNextRender(
+        () => {
+          if (this.document.activeElement === this.document.body) {
+            focusedElement.focus({ preventScroll: true });
+          }
+        },
+        { injector: this.injector }
+      );
+    }
   }
 
   private toggleCardsHide(expand: boolean): void {

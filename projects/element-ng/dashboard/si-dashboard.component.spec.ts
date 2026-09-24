@@ -97,6 +97,30 @@ describe('SiDashboardComponent', () => {
       });
     });
 
+    it('keeps focus on the expand and restore action', async () => {
+      const card = component.cardComponents()[0];
+      const cardElement: HTMLElement = card.element.nativeElement;
+      cardElement
+        .querySelector<HTMLElement>('si-menu-bar')!
+        .style.setProperty('visibility', 'visible', 'important');
+      const expandButton = cardElement.querySelector<HTMLButtonElement>(
+        'button[aria-label="Expand"]'
+      )!;
+      expandButton.focus();
+      expect(document.activeElement).toBe(expandButton);
+      expandButton.click();
+      await fixture.whenStable();
+
+      const restoreButton = cardElement.querySelector<HTMLButtonElement>(
+        'button[aria-label="Restore"]'
+      )!;
+      expect(document.activeElement).toBe(restoreButton);
+
+      restoreButton.click();
+      await fixture.whenStable();
+      expect(document.activeElement).toBe(expandButton);
+    });
+
     it('should register on cards and call dashboard expand when card expand is invoked', () => {
       const expandSpy = vi.spyOn(component.dashboard(), 'expand');
       component.cardComponents().forEach(c => {
