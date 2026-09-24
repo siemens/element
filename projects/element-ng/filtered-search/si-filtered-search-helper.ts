@@ -4,6 +4,7 @@
  */
 import { formatDate } from '@angular/common';
 import { isValid } from '@siemens/element-ng/datepicker';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { CriterionDefinition, OptionCriterion, OptionType } from './si-filtered-search.model';
 
@@ -12,9 +13,14 @@ export interface TypeaheadOptionCriterion extends OptionCriterion {
   translatedLabel: string;
 }
 
+/** Criterion definition normalized for internal rendering and input handling. */
 export interface InternalCriterionDefinition extends CriterionDefinition {
   label: string;
   translatedLabel: string;
+  /**
+   * Identifies free-text pills, displayed without a criterion label using a plain-text editor.
+   * Omitted for regular criteria. Internal only; not included in the search model.
+   */
   type?: 'free-text';
 }
 
@@ -38,6 +44,16 @@ export const findOption = (
   const valueMatch = options.find(option => option.value === value);
   return preferLabel ? (labelMatch ?? valueMatch) : (valueMatch ?? labelMatch);
 };
+
+/** Build the display labels used for both pasted values and typeahead options. */
+export const toTranslatedOptions = (
+  values: OptionType[] | undefined,
+  translate: (label: TranslatableString) => string | undefined
+): TypeaheadOptionCriterion[] =>
+  toOptionCriteria(values).map(option => ({
+    ...option,
+    translatedLabel: (option.label ? translate(option.label) : undefined) ?? option.value
+  }));
 
 /*
  * Update selected state the matching is based on value since plain

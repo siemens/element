@@ -2,7 +2,12 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { selectOptions, toInternalCriteria, toOptionCriteria } from './si-filtered-search-helper';
+import {
+  selectOptions,
+  toInternalCriteria,
+  toOptionCriteria,
+  toTranslatedOptions
+} from './si-filtered-search-helper';
 import { ValidationType } from './si-filtered-search.model';
 
 describe('si-filtered-search-helper', () => {
@@ -58,6 +63,47 @@ describe('si-filtered-search-helper', () => {
   describe('with toOptionCriteria', () => {
     it('should return empty list', () => {
       expect(toOptionCriteria(undefined)).toEqual([]);
+    });
+  });
+
+  describe('with toTranslatedOptions', () => {
+    it('should use the translated label', () => {
+      const translate = vi.fn().mockReturnValue('Deutschland');
+
+      const options = toTranslatedOptions([{ label: 'Germany', value: 'DE' }], translate);
+
+      expect(options).toMatchObject([{ translatedLabel: 'Deutschland', value: 'DE' }]);
+      expect(translate).toHaveBeenCalledExactlyOnceWith('Germany');
+    });
+
+    it('should preserve the label when translation returns the original key', () => {
+      const options = toTranslatedOptions([{ label: 'Germany', value: 'DE' }], label => label);
+
+      expect(options).toMatchObject([{ translatedLabel: 'Germany', value: 'DE' }]);
+    });
+
+    it('should fall back to the option value when translation is undefined', () => {
+      const options = toTranslatedOptions([{ label: 'Germany', value: 'DE' }], () => undefined);
+
+      expect(options).toMatchObject([{ translatedLabel: 'DE', value: 'DE' }]);
+    });
+
+    it('should use the option value without translating when no label is provided', () => {
+      const translate = vi.fn();
+
+      const options = toTranslatedOptions([{ value: 'DE' }], translate);
+
+      expect(options).toMatchObject([{ translatedLabel: 'DE', value: 'DE' }]);
+      expect(translate).not.toHaveBeenCalled();
+    });
+
+    it('should use the option value without translating an empty label', () => {
+      const translate = vi.fn();
+
+      const options = toTranslatedOptions([{ label: '', value: 'DE' }], translate);
+
+      expect(options).toMatchObject([{ translatedLabel: 'DE', value: 'DE' }]);
+      expect(translate).not.toHaveBeenCalled();
     });
   });
 });
