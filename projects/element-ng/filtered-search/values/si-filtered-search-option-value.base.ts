@@ -6,7 +6,7 @@ import { computed, DestroyRef, Directive, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
-import { debounceTime, first, map, tap } from 'rxjs/operators';
+import { debounceTime, map, take, tap } from 'rxjs/operators';
 
 import {
   InternalCriterionDefinition,
@@ -109,7 +109,7 @@ export abstract class SiFilteredSearchOptionValueBase extends SiFilteredSearchVa
     if (this.criterionValue().value?.length) {
       // resolve options for initial values
       this.options()!
-        .pipe(first())
+        .pipe(take(1), takeUntilDestroyed(this.destroyRef))
         .subscribe(options => this.processTypeaheadOptions(options));
     }
   }

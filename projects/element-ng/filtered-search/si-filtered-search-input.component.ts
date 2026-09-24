@@ -72,13 +72,14 @@ export class SiFilteredSearchInputComponent {
     criterionName: string;
     value?: string;
     editOnCreation?: boolean;
+    accept: () => void;
   }>();
 
   /** Emits when Backspace is pressed in an empty search input. */
   readonly backspaceOverflow = output();
 
   /** Emits the text used to create a free-text criterion. */
-  readonly createFreeTextPill = output<string>();
+  readonly createFreeTextPill = output<{ query: string; accept: () => void }>();
 
   /** Emits when the search input receives focus. */
   readonly inputFocus = output();
@@ -115,32 +116,38 @@ export class SiFilteredSearchInputComponent {
     }
 
     const tokens = inputElement.value.split(';');
-    const remainingTokens: string[] = [];
-    const canCreateFreeText = this.freeTextCriterion() && this.allowFreeText();
+    let consumedTokenCount = 0;
 
     for (const [index, token] of tokens.entries()) {
-      const criterion = token.match(SiFilteredSearchInputComponent.criterionRegex);
-      if (!this.onlySelectValue() && criterion) {
-        this.createCriterionByName.emit({
-          criterionName: criterion[1].trim(),
-          value: criterion[2].trim(),
-          editOnCreation: index === tokens.length - 1
-        });
-      } else if (index < tokens.length - 1 && token && canCreateFreeText) {
-        this.createFreeTextPill.emit(token);
-      } else {
-        remainingTokens.push(token);
+      const isLastToken = index === tokens.length - 1;
+      const criterionMatch = token.match(SiFilteredSearchInputComponent.criterionRegex);
+      if (isLastToken && !criterionMatch) {
+        if (!token) {
+          consumedTokenCount++;
+        }
+        break;
       }
+
+      let accepted = false;
+      if (!this.onlySelectValue() && criterionMatch) {
+        accepted = this.requestCriterionByName(criterionMatch, isLastToken);
+      } else if (token && this.freeTextCriterion() && this.allowFreeText()) {
+        accepted = this.requestFreeTextPill(token);
+      }
+      if (!accepted) {
+        break;
+      }
+      consumedTokenCount++;
     }
 
-    inputElement.value = remainingTokens.join(';');
+    inputElement.value = tokens.slice(consumedTokenCount).join(';');
     this.searchValue.set(inputElement.value);
   }
 
   protected freeTextBlurHandler(): void {
     queueMicrotask(() => {
       if (this.freeTextCriterion() && this.searchValue().length > 0) {
-        this.createFreeTextPill.emit(this.searchValue());
+        this.requestFreeTextPill(this.searchValue());
       }
     });
   }
@@ -154,7 +161,28 @@ export class SiFilteredSearchInputComponent {
   }
 
   protected createFreeTextPillHandler(query: string): void {
-    this.createFreeTextPill.emit(query);
-    this.searchValue.set('');
+    if (this.requestFreeTextPill(query)) {
+      this.searchValue.set('');
+    }
+  }
+
+  private requestCriterionByName(
+    criterionMatch: RegExpMatchArray,
+    editOnCreation: boolean
+  ): boolean {
+    let accepted = false;
+    this.createCriterionByName.emit({
+      criterionName: criterionMatch[1].trim(),
+      value: criterionMatch[2].trim(),
+      editOnCreation,
+      accept: () => (accepted = true)
+    });
+    return accepted;
+  }
+
+  private requestFreeTextPill(query: string): boolean {
+    let accepted = false;
+    this.createFreeTextPill.emit({ query, accept: () => (accepted = true) });
+    return accepted;
   }
 }
