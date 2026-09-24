@@ -70,10 +70,13 @@
   // the item corners on that edge. Otherwise a hover, filled or outline
   // background paints over the card's rounded corners.
   //
-  // `si-card` projects `[body]` into `.content-container`, and `si-action-card`
-  // wraps that projection in `.d-contents`. `:first-child` / `:last-child` are
-  // required on every ancestor so a list below a header or image does not
-  // inherit a square top, and a filled item below a header keeps its own radius.
+  // `si-card` projects `[body]` into `.content-container`. `si-action-card`
+  // wraps that projection in `.d-contents`, but a list there is invalid HTML
+  // (the host is a `<button>`). The `.d-contents` selectors only keep a
+  // projected list from painting over the card radius; they do not make that
+  // placement supported. `:first-child` / `:last-child` are required on every
+  // ancestor so a list below a header or image does not inherit a square top,
+  // and a filled item below a header keeps its own radius.
   > .list:first-child,
   > .content-container:first-child > .list:first-child,
   > .content-container:first-child > .d-contents:first-child > .list:first-child {
@@ -203,9 +206,10 @@ button.card {
   // hover, filled and outline backgrounds would paint over it otherwise.
   // `isolation` creates the stacking context even when the list is not a flex
   // item. Direct children cover both `<li class="list-item">` and a wrapped
-  // `<li><button class="list-item">`. `.d-contents` is the action-card wrapper.
-  + .list,
-  + .d-contents > .list {
+  // `<li><button class="list-item">`. No `.d-contents` branch: that wrapper
+  // only exists inside `si-action-card`, whose host is a `<button>`. A
+  // focusable list there is nested interactive content.
+  + .list {
     isolation: isolate;
 
     > * {
@@ -213,8 +217,7 @@ button.card {
     }
   }
 
-  + :is(.list-group, .list, .overflow-auto, [tabindex='0']),
-  + .d-contents > :is(.list, .overflow-auto, [tabindex='0']) {
+  + :is(.list-group, .list, .overflow-auto, [tabindex='0']) {
     outline-offset: focus.$focus-style-outline-inside-offset;
   }
 }
