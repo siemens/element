@@ -8,10 +8,10 @@ import {
   Compiler,
   Component,
   ComponentRef,
+  computed,
   effect,
   ElementRef,
   inject,
-  input,
   Injector,
   inputBinding,
   OnDestroy,
@@ -29,6 +29,7 @@ import { ɵDomRendererFactory2 as DomRendererFactory2 } from '@angular/platform-
 import { LOG_EVENT } from '../../helpers/log-event';
 import { SI_LIVE_PREVIEW_CONFIG } from '../../interfaces/live-preview-config';
 import { LandscapeSupportService } from '../../services/landscape-support.service';
+import { LivePreviewStateService } from '../../services/live-preview-state.service';
 import { SiDefaultLivePreviewRuntimeComponent } from './si-default-live-preview-runtime.component';
 import { SiLivePreviewRuntimeComponent } from './si-live-preview-runtime.component';
 
@@ -61,16 +62,30 @@ export class DummyAppSampleComponent {}
   host: {
     '[class.live-preview-done]': 'renderingDone()',
     '[attr.data-example]': 'exampleUrl()',
-    '[attr.data-id]': 'dataId()'
+    '[attr.data-id]': 'state.dataId()'
   }
 })
 export class SiLivePreviewRendererComponent implements OnDestroy {
   readonly renderedExample = viewChild.required('renderedExample', { read: ViewContainerRef });
   readonly react = viewChild.required('react', { read: ElementRef });
 
-  readonly exampleUrl = input.required<string>();
-  readonly dataId = input('');
-  readonly template = input('');
+  protected readonly state = inject(LivePreviewStateService);
+  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
+  private readonly compiler = inject(Compiler);
+  private readonly injector = Injector.create({
+    parent: inject(Injector),
+    providers: [
+      {
+        provide: LOG_EVENT,
+        useValue: (...msg: any[]) => this.logMessage.emit(this.stringifyLog(msg))
+      }
+    ]
+  });
+  private readonly rendererFactory = inject(DomRendererFactory2);
+  private readonly cdRef = inject(ChangeDetectorRef);
+
+  readonly exampleUrl = computed(() => this.config.examplesBaseUrl + this.state.example());
 
   protected readonly renderingDone = signal(false);
 
@@ -89,22 +104,6 @@ export class SiLivePreviewRendererComponent implements OnDestroy {
   private componentTsFirstLoad = true;
   private compiledTemplate?: string;
 
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
-  private readonly compiler = inject(Compiler);
-  private readonly injector = Injector.create({
-    parent: inject(Injector),
-    providers: [
-      {
-        provide: LOG_EVENT,
-        useValue: (...msg: any[]) => this.logMessage.emit(this.stringifyLog(msg))
-      }
-    ]
-  });
-
-  private readonly rendererFactory = inject(DomRendererFactory2);
-  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
-  private readonly cdRef = inject(ChangeDetectorRef);
-
   constructor() {
     effect(() => {
       const url = this.exampleUrl();
@@ -114,8 +113,8 @@ export class SiLivePreviewRendererComponent implements OnDestroy {
     });
 
     effect(() => {
-      const template = this.template();
-      // when the initial template is pushed from the renderer to the editor, this.template is
+      const template = this.state.template();
+      // when the initial template is pushed from the renderer to the editor, this.state.template is
       // initially empty, but later changes to what the renderer has pushed out. In this case
       // don't compile
       if (template && template !== this.compiledTemplate) {
@@ -174,7 +173,7 @@ export class SiLivePreviewRendererComponent implements OnDestroy {
           this.componentTsSampleComponent = m.SampleComponent;
           this.dynamicComponent = m.SampleComponent;
           this.compileWhenReady();
-          if (!this.componentTsSampleComponent && !this.template()) {
+          if (!this.componentTsSampleComponent && !this.state.template()) {
             afterNextRender(
               () => {
                 this.setInProgress(false);
@@ -215,11 +214,11 @@ export class SiLivePreviewRendererComponent implements OnDestroy {
         // TS, but code not yet loaded
         return;
       }
-      if (!this.componentTsFirstLoad && !this.template()) {
+      if (!this.componentTsFirstLoad && !this.state.template()) {
         // TS, first load done, template not yet available
         return;
       }
-    } else if (!this.template()) {
+    } else if (!this.state.template()) {
       // no TS, no template
       return;
     }
@@ -268,16 +267,16 @@ export class SiLivePreviewRendererComponent implements OnDestroy {
         const supportsLandscape = ann.providers?.includes(LandscapeSupportService);
         this.supportsLandscapeMode.emit(supportsLandscape);
 
-        if (this.componentTsFirstLoad && !this.template()) {
+        if (this.componentTsFirstLoad && !this.state.template()) {
           // skipping compile on first load
           this.compiledTemplate = ann.template;
           this.templateFromComponent.emit(ann.template);
-        } else if (ann.template !== this.template()) {
+        } else if (ann.template !== this.state.template()) {
           // recompile with new template
           this.componentTsFirstLoad = false;
           this.cloneComponentWithoutIvyStuff();
-          ann.template = this.template();
-          this.compiledTemplate = this.template();
+          ann.template = this.state.template();
+          this.compiledTemplate = this.state.template();
           compileComponent(this.dynamicComponent, ann);
           this.reuseResolvedScopeOfOriginalComponent();
         }
