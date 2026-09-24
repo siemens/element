@@ -1,0 +1,127 @@
+- table:
+  - rowgroup:
+    - row "Select all rows Component Location Status Energy Consumption (kWh)":
+      - columnheader "Select all rows":
+        - checkbox "Select all rows"
+      - columnheader "Component"
+      - columnheader "Location"
+      - columnheader "Status"
+      - columnheader "Energy Consumption (kWh)"
+  - rowgroup:
+    - row "Select row group Collapse group HVAC":
+      - cell "Select row group Collapse group HVAC":
+        - checkbox "Select row group"
+        - button "Collapse group"
+        - text: ""
+    - row /Select row Air Conditioner Floor 1 Operational \d+/:
+      - cell
+      - cell "Select row Air Conditioner":
+        - checkbox "Select row"
+        - text: ""
+      - cell "Floor 1"
+      - cell "Operational"
+      - cell /\d+/
+    - row /Select row Heater Floor 2 Operational \d+/:
+      - cell
+      - cell "Select row Heater":
+        - checkbox "Select row"
+        - text: ""
+      - cell "Floor 2"
+      - cell "Operational"
+      - cell /\d+/
+    - row /Select row Ventilation Fan Roof Maintenance Required \d+/:
+      - cell
+      - cell "Select row Ventilation Fan":
+        - checkbox "Select row"
+        - text: ""
+      - cell "Roof"
+      - cell "Maintenance Required"
+      - cell /\d+/
+    - row "Select row group Collapse group Lighting":
+      - cell "Select row group Collapse group Lighting":
+        - checkbox "Select row group"
+        - button "Collapse group"
+        - text: ""
+    - row /Select row LED Panel Conference Room Operational \d+/:
+      - cell
+      - cell "Select row LED Panel":
+        - checkbox "Select row"
+        - text: ""
+      - cell "Conference Room"
+      - cell "Operational"
+      - cell /\d+/
+    - row /Select row Smart Bulb Office A Operational \d+/:
+      - cell
+      - cell "Select row Smart Bulb":
+        - checkbox "Select row"
+        - text: ""
+      - cell "Office A"
+      - cell "Operational"
+      - cell /\d+/
+    - row "Select row Emergency Light Corridor Operational 5":
+      - cell
+      - cell "Select row Emergency Light":
+        - checkbox "Select row"
+        - text: ""
+      - cell "Corridor"
+      - cell "Operational"
+      - cell "5"
+    - row "Select row group Collapse group Security":
+      - cell "Select row group Collapse group Security":
+        - checkbox "Select row group"
+        - button "Collapse group"
+        - text: ""
+    - row /Select row CCTV Camera Main Entrance Operational \d+/:
+      - cell
+      - cell "Select row CCTV Camera":
+        - checkbox "Select row"
+        - text: ""
+      - cell "Main Entrance"
+      - cell "Operational"
+      - cell /\d+/
+    - row /Select row Access Control Server Room Operational \d+/:
+      - cell
+      - cell "Select row Access Control":
+        - checkbox "Select row"
+        - text: ""
+      - cell "Server Room"
+      - cell "Operational"
+      - cell /\d+/
+    - row /Select row Motion Sensor Parking Lot Operational \d+/:
+      - cell
+      - cell "Select row Motion Sensor":
+        - checkbox "Select row"
+        - text: ""
+      - cell "Parking Lot"
+      - cell "Operational"
+      - cell /\d+/
+    - row "Select row group Collapse group Energy Management":
+      - cell "Select row group Collapse group Energy Management":
+        - checkbox "Select row group"
+        - button "Collapse group"
+        - text: ""
+    - row "Select row Smart Meter Utility Room Operational 5":
+      - cell
+      - cell "Select row Smart Meter":
+        - checkbox "Select row"
+        - text: ""
+      - cell "Utility Room"
+      - cell "Operational"
+      - cell "5"
+    - row /Select row Solar Panel Rooftop Operational -\d+/:
+      - cell
+      - cell "Select row Solar Panel":
+        - checkbox "Select row"
+        - text: ""
+      - cell "Rooftop"
+      - cell "Operational"
+      - cell /-\d+/
+    - row /Select row Battery Storage Basement Operational \d+/:
+      - cell
+      - cell "Select row Battery Storage":
+        - checkbox "Select row"
+        - text: ""
+      - cell "Basement"
+      - cell "Operational"
+      - cell /\d+/
+- text: /0 selected \/ \d+ total/

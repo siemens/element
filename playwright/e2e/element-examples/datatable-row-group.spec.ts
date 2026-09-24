@@ -61,4 +61,25 @@ test.describe('datatable', () => {
       ]
     });
   });
+
+  test(example + 'component column overflow', async ({ page, si }) => {
+    await si.visitExample(example);
+    const column = page.getByRole('columnheader', { name: 'Component' });
+    const handle = column.locator('.resize-handle');
+    const columnBox = (await column.boundingBox())!;
+    const handleBox = (await handle.boundingBox())!;
+    const x = handleBox.x + handleBox.width / 2;
+    const y = handleBox.y + handleBox.height / 2;
+
+    await handle.hover();
+    await page.mouse.down();
+    // The resize drag measures clientWidth, while boundingBox includes the 1px border.
+    await page.mouse.move(x + 59 - columnBox.width, y, { steps: 10 });
+    await page.mouse.up();
+
+    await expect.poll(async () => (await column.boundingBox())!.width).toBeCloseTo(60, 0);
+    await si.runVisualAndA11yTests('component-column-overflow', {
+      axeRulesSet: [{ id: 'aria-required-children', enabled: false }]
+    });
+  });
 });
