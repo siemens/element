@@ -53,8 +53,15 @@ ol:has(.list-item) {
     typography.$si-font-weight-body
   );
 
+  // A plain item is just text. Grid is only needed once a slot is present.
+  &:not(:has(> [class*='list-item-'])) {
+    display: block;
+  }
+
+  // Unslotted content sits in the title cell but keeps the item's regular
+  // type style. `.list-item-title` is optional and is what makes text semibold.
   > * {
-    grid-column: 3 / -1;
+    grid-area: title;
   }
 
   .list-item-check {
