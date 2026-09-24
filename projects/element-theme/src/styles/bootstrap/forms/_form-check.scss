@@ -218,7 +218,6 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
   .datatable-checkbox {
     inline-size: $form-check-size !important; // stylelint-disable-line declaration-no-important
     block-size: $form-check-size !important; // stylelint-disable-line declaration-no-important
-    inset-block-start: 0.0625rem !important; // stylelint-disable-line declaration-no-important
 
     input[type='checkbox'] {
       @extend %form-check-base;
