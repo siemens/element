@@ -140,8 +140,11 @@ Use the `.unread` class on `.list-item-title` to indicate unread items with a bo
 
 ### List in a card
 
-A list can be placed directly inside a [card](../layout-navigation/cards.md),
-including an `si-card` or `si-action-card` body.
+A list can be placed directly inside a [card](../layout-navigation/cards.md)
+or an `si-card` body.
+Do not put a list inside `si-action-card`: its host is a `<button>`, which may
+only contain phrasing content. A list there loses its list semantics, and a
+scrollable or actionable list becomes interactive content nested in a button.
 The card provides the surrounding container, so use the plain `.list`,
 optionally with `.list-divider`, instead of `.list-outline` or `.list-filled`.
 A list that meets a card edge adopts that edge's rounded corners, and its items
