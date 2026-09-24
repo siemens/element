@@ -14,7 +14,7 @@ jobs:
         with:
           fetch-depth: 0 # semantic-release needs this
       - name: Install Node.js and pnpm
-        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
         with:
           runtime: node@krypton
           cache: true
@@ -149,7 +149,7 @@ jobs:
         with:
           name: pages-release
           path: pages
-      - uses: aws-actions/configure-aws-credentials@cbe3b392738ccf3f987d68400dafcf4b0624a56c # v6.2.4
+      - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
         with:
           role-to-assume: arn:aws:iam::974483672234:role/simpl-element-release
           role-session-name: element-release-docs
