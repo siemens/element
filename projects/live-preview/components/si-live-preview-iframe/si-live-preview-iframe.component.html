@@ -157,14 +157,45 @@
     }
 
     <div class="screen">
-      <iframe
-        #previewIframe
-        src="#/iframe"
-        [height]="currentIFrameHeight()"
-        [width]="currentIFrameWidth()"
-      ></iframe>
+      @if (directlyEmbedExamples) {
+        <ng-container [ngTemplateOutlet]="preview" />
+      } @else {
+        <iframe
+          #previewIframe
+          src="#/iframe"
+          title="Example view"
+          [height]="currentIFrameHeight()"
+          [width]="currentIFrameWidth()"
+        ></iframe>
+      }
     </div>
   </div>
 } @else {
-  <iframe #previewIframe src="#/iframe" title="Example view"></iframe>
+  @if (directlyEmbedExamples) {
+    <ng-container [ngTemplateOutlet]="preview" />
+  } @else {
+    <iframe #previewIframe src="#/iframe" title="Example view"></iframe>
+  }
 }
+
+<ng-template #preview>
+  <div
+    class="rendered-preview"
+    [style.height.px]="isMobile ? currentIFrameHeight() : null"
+    [style.width.px]="isMobile ? currentIFrameWidth() : null"
+  >
+    <si-live-preview-renderer
+      #renderer
+      [hidden]="loadReact() || loadVue() || loadJs()"
+      [exampleUrl]="baseUrl() + exampleUrl()"
+      [template]="template()"
+      (templateFromComponent)="onTemplateFromComponent($event)"
+      (logClear)="logClear.emit()"
+      (logMessage)="logMessage.emit($event)"
+      (logRenderingError)="logRenderingError.emit($event)"
+      (inProgress)="onRendererProgress($event)"
+      (supportsLandscapeMode)="landscapeSupportChanged($event)"
+    />
+    <div #webcomponentRenderer></div>
+  </div>
+</ng-template>
