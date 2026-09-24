@@ -204,9 +204,9 @@ integrates seamlessly with card styling.
 ```html
 <div class="card">
   <ul class="list list-divider">
-    <li class="list-item"><span class="list-item-title">An item</span></li>
-    <li class="list-item"><span class="list-item-title">A second item</span></li>
-    <li class="list-item"><span class="list-item-title">A third item</span></li>
+    <li class="list-item">An item</li>
+    <li class="list-item">A second item</li>
+    <li class="list-item">A third item</li>
   </ul>
 </div>
 ```
@@ -217,9 +217,9 @@ Combine lists with card headers for better content organization.
 <div class="card">
   <div class="card-header">Header text</div>
   <ul class="list list-divider">
-    <li class="list-item"><span class="list-item-title">An item</span></li>
-    <li class="list-item"><span class="list-item-title">A second item</span></li>
-    <li class="list-item"><span class="list-item-title">A third item</span></li>
+    <li class="list-item">An item</li>
+    <li class="list-item">A second item</li>
+    <li class="list-item">A third item</li>
   </ul>
 </div>
 ```
@@ -229,9 +229,9 @@ Add footers to provide additional context or actions for list content.
 ```html
 <div class="card">
   <ul class="list list-divider">
-    <li class="list-item"><span class="list-item-title">An item</span></li>
-    <li class="list-item"><span class="list-item-title">A second item</span></li>
-    <li class="list-item"><span class="list-item-title">A third item</span></li>
+    <li class="list-item">An item</li>
+    <li class="list-item">A second item</li>
+    <li class="list-item">A third item</li>
   </ul>
   <div class="card-footer">Card footer</div>
 </div>
