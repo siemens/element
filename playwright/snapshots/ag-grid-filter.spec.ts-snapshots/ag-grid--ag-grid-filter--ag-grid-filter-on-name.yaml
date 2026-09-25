@@ -7,10 +7,11 @@
       - columnheader "Age"
       - columnheader "Company"
       - columnheader "Date of Joining"
-    - row "Max Meier 1 Open Filter Menu Open Filter Menu Open calendar Open Filter Menu":
+    - row "Max Meier 1 Clear Open Filter Menu Open Filter Menu Open calendar Open Filter Menu":
       - gridcell
-      - gridcell "Max Meier 1 Open Filter Menu":
+      - gridcell "Max Meier 1 Clear Open Filter Menu":
         - textbox "Name Filter Input": Max Meier 1
+        - button "Clear"
         - button "Open Filter Menu"
       - gridcell
       - gridcell "Open Filter Menu":

@@ -7,14 +7,15 @@
       - columnheader "Age"
       - columnheader "Company"
       - columnheader "Date of Joining"
-    - row "Open Filter Menu Open Filter Menu Open calendar Open Filter Menu":
+    - row "Open Filter Menu Clear Open Filter Menu Open calendar Open Filter Menu":
       - gridcell
       - gridcell "Open Filter Menu":
         - textbox "Name Filter Input"
         - button "Open Filter Menu"
       - gridcell
-      - gridcell "Open Filter Menu":
+      - gridcell "Clear Open Filter Menu":
         - spinbutton "Age Filter Input": /\d+/
+        - button "Clear"
         - button "Open Filter Menu"
       - gridcell
       - gridcell "Open calendar Open Filter Menu":
