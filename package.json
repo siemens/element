@@ -153,8 +153,8 @@
     "@types/json-schema": "7.0.15",
     "@types/mdast": "4.0.4",
     "@types/node": "24.13.6",
-    "@vitest/browser-playwright": "4.1.11",
-    "@vitest/coverage-v8": "4.1.11",
+    "@vitest/browser-playwright": "5.0.1",
+    "@vitest/coverage-v8": "5.0.1",
     "@vitest/eslint-plugin": "1.6.27",
     "angular-eslint": "22.5.0",
     "axe-html-reporter": "2.2.11",
@@ -181,7 +181,7 @@
     "tsx": "4.23.15",
     "typescript": "6.0.3",
     "typescript-eslint": "8.70.0",
-    "vitest": "4.1.11"
+    "vitest": "5.0.1"
   },
   "optionalDependencies": {
     "@siemens-ux/design-tokens": "0.12.0",
