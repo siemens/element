@@ -20,7 +20,6 @@ export default defineConfig(
       parserOptions: {
         project: [
           'projects/element-ng/tsconfig.docs.json',
-          'projects/element-ng/tsconfig.lib.json',
           'projects/element-ng/tsconfig.spec.json',
           'projects/element-ng/tsconfig.schematics.json',
           'projects/element-ng/tsconfig.schematics.spec.json'
