@@ -188,14 +188,6 @@ button.card {
   padding-block-end: variables.$card-cap-padding-x;
 }
 
-:is(.card-header, .card-body):first-child {
-  @extend %card-inner-radius-top;
-}
-
-:is(.card-body, .card-footer):last-child {
-  @extend %card-inner-radius-bottom;
-}
-
 .card-img-overlay {
   position: absolute;
   inset: 0;
