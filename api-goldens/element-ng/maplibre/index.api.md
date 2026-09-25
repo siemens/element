@@ -6,14 +6,38 @@
 
 import * as _angular_core from '@angular/core';
 import * as geojson from 'geojson';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { Signal } from '@angular/core';
 import { StyleSpecification } from 'maplibre-gl';
+import { TemplateRef } from '@angular/core';
 
 // @public
 export type ClusterColors = 'status' | 'element' | Record<number, string>;
 
 // @public
 export type ClusterPoint = GeoJSON.Feature<GeoJSON.Point, GeoJSON.GeoJsonProperties>;
+
+// @public
+export interface ClusterPopoverContext {
+    // (undocumented)
+    $implicit: readonly ClusterPoint[];
+    // (undocumented)
+    close: () => void;
+    // (undocumented)
+    cluster: ClusterPoint;
+    // (undocumented)
+    descriptionProperty: string;
+    // (undocumented)
+    error: unknown;
+    // (undocumented)
+    features: readonly ClusterPoint[];
+    // (undocumented)
+    labelProperty: string;
+    // (undocumented)
+    loading: boolean;
+    // (undocumented)
+    total: number;
+}
 
 // @public
 export interface ClusterSegment {
@@ -39,10 +63,26 @@ export class SiClusterSourceComponent {
     readonly clusterMinPoints: _angular_core.InputSignal<number>;
     readonly clusterRadius: _angular_core.InputSignal<number>;
     readonly data: _angular_core.InputSignal<geojson.FeatureCollection<geojson.Point, geojson.GeoJsonProperties>>;
+    getClusterLeaves(clusterId: number, limit: number, offset: number): Promise<ClusterPoint[]>;
     readonly groupColors: _angular_core.InputSignal<ClusterColors>;
     readonly groupProperty: _angular_core.InputSignal<string>;
     readonly sourceId: _angular_core.InputSignal<string>;
     readonly statusProperty: _angular_core.InputSignal<string | undefined>;
+}
+
+// @public
+export class SiMaplibreClusterPopoverComponent {
+    constructor();
+    readonly closeOnMove: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly descriptionProperty: _angular_core.InputSignal<string>;
+    readonly focusAfterOpen: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly labelProperty: _angular_core.InputSignal<string>;
+    readonly maxWidth: _angular_core.InputSignal<string>;
+    readonly pageSize: _angular_core.InputSignalWithTransform<number, unknown>;
+}
+
+// @public
+export class SiMaplibreClusterPopoverDirective {
 }
 
 // @public (undocumented)

@@ -139,6 +139,19 @@ contained points and their distribution by group or status.
 
 <si-docs-component example="maplibre/maplibre-cluster" height="580"></si-docs-component>
 
+### Custom cluster popover example
+
+Use an `ng-template` with `siMaplibreClusterPopover` to customize the current page of
+cluster features. This example displays each location's name and description with a
+Select button. Selecting a location updates the status above the map, logs the feature,
+and closes the popover using the template's `close` callback.
+
+The template handles initial loading and error states. Pagination and the loading overlay
+are managed by `si-cluster-popover`, with four locations per page. The previous page stays
+visible while the next page loads, with feature actions temporarily disabled.
+
+<si-docs-component example="maplibre/maplibre-cluster-custom-popover" height="580"></si-docs-component>
+
 ### 3D buildings example
 
 MapLibre GL renders maps with WebGL, so the camera can be pitched and vector-tile

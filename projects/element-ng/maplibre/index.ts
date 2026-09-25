@@ -6,5 +6,7 @@ export * from './cluster-types';
 export * from './marker-types';
 export * from './si-maplibre-style';
 export * from './si-cluster-source.component';
+export * from './si-cluster-popover.component';
+export * from './si-cluster-popover.directive';
 export * from './si-maplibre-translate';
 export * from './si-status-marker.component';

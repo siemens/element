@@ -1,0 +1,75 @@
+@if (context(); as context) {
+  <mgl-popup
+    [maxWidth]="maxWidth()"
+    [lngLat]="context.cluster.geometry.coordinates"
+    [closeOnMove]="closeOnMove()"
+    [focusAfterOpen]="focusAfterOpen()"
+    [closeButton]="false"
+    (popupClose)="context.close()"
+  >
+    <section
+      #dialog
+      class="cluster-popover"
+      role="dialog"
+      cdkTrapFocus
+      [cdkTrapFocusAutoCapture]="focusAfterOpen()"
+      [attr.aria-label]="clusterPopoverTitle | translate: { count: context.total }"
+      (keydown.escape)="$event.stopPropagation(); context.close()"
+    >
+      <div class="popover-header">
+        <strong class="flex-grow-1">
+          {{ clusterPopoverTitle | translate: { count: context.total } }}
+        </strong>
+        <button
+          type="button"
+          class="btn btn-circle btn-sm btn-ghost ms-2"
+          [attr.aria-label]="closeText | translate"
+          (click)="context.close()"
+        >
+          <si-icon [icon]="icons.elementCancel" />
+        </button>
+      </div>
+      <div
+        class="p-2"
+        [siLoading]="context.loading"
+        [blocking]="true"
+        [attr.aria-busy]="context.loading"
+      >
+        <div [inert]="context.loading">
+          @if (template(); as customTemplate) {
+            <ng-container [ngTemplateOutlet]="customTemplate" [ngTemplateOutletContext]="context" />
+          } @else {
+            @if (context.loading && !context.features.length) {
+              <p class="mb-0">{{ loadingText | translate }}</p>
+            }
+            @if (context.error) {
+              <p role="alert">{{ errorText | translate }}</p>
+              <button type="button" class="btn btn-secondary" (click)="leaves.reload()">
+                {{ retryText | translate }}
+              </button>
+            }
+            <ul class="list-unstyled mb-0">
+              @for (feature of context.features; track feature.id ?? $index) {
+                <li class="list-item p-4">
+                  <div class="list-item-title pt-0">
+                    {{ feature.properties?.[context.labelProperty] }}
+                  </div>
+                  <div class="list-item-description mb-0">
+                    {{ feature.properties?.[context.descriptionProperty] }}
+                  </div>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+        @if (context.total > pageSize()) {
+          <si-pagination
+            [pageSize]="pageSize()"
+            [totalRowCount]="context.total"
+            [(currentPage)]="currentPage"
+          />
+        }
+      </div>
+    </section>
+  </mgl-popup>
+}

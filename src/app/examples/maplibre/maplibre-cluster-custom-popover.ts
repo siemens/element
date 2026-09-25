@@ -2,52 +2,30 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   AttributionControlDirective,
   ControlComponent,
   EventData,
   FullscreenControlDirective,
-  GeolocateControlDirective,
-  GlobeControlDirective,
   MapComponent,
   MarkersForClustersComponent,
   NavigationControlDirective,
-  PointDirective,
-  Position,
-  ScaleControlDirective
+  PointDirective
 } from '@maplibre/ngx-maplibre-gl';
 import {
+  ClusterPoint,
   injectSiMapStyle,
   injectSiMapTranslations,
-  ClusterPoint,
-  SiMaplibreClusterPopoverComponent,
   SiClusterSourceComponent,
+  SiMaplibreClusterPopoverComponent,
+  SiMaplibreClusterPopoverDirective,
   SiStatusMarkerComponent
 } from '@siemens/element-ng/maplibre';
 import { LOG_EVENT } from '@siemens/live-preview';
-import { MapPoint } from '@siemens/maps-ng';
 
 import { environment } from '../../../environments/environment';
 import { mockPoints } from '../../mocks/points.mock';
-
-const buildGeoJSON = (points: MapPoint[]): GeoJSON.FeatureCollection<GeoJSON.Point> => ({
-  type: 'FeatureCollection',
-  features: points.map(point => ({
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [point.lon, point.lat]
-    },
-    properties: {
-      description: point.description,
-      group: point.group,
-      marker: point.marker?.type ?? 'default',
-      name: point.name,
-      status: point.marker?.status
-    }
-  }))
-});
 
 @Component({
   selector: 'app-sample',
@@ -55,18 +33,17 @@ const buildGeoJSON = (points: MapPoint[]): GeoJSON.FeatureCollection<GeoJSON.Poi
     AttributionControlDirective,
     ControlComponent,
     FullscreenControlDirective,
-    GeolocateControlDirective,
-    GlobeControlDirective,
     MapComponent,
     MarkersForClustersComponent,
     NavigationControlDirective,
     PointDirective,
-    ScaleControlDirective,
-    SiMaplibreClusterPopoverComponent,
     SiClusterSourceComponent,
+    SiMaplibreClusterPopoverComponent,
+    SiMaplibreClusterPopoverDirective,
     SiStatusMarkerComponent
   ],
-  templateUrl: './maplibre-cluster.html',
+  templateUrl: './maplibre-cluster-custom-popover.html',
+  styleUrl: './maplibre-cluster-custom-popover.scss',
   host: {
     class: 'h-100 d-flex flex-column p-5'
   }
@@ -75,11 +52,28 @@ export class SampleComponent {
   protected readonly logEvent = inject(LOG_EVENT);
   protected readonly mapStyle = injectSiMapStyle(environment.maptilerKey);
   protected readonly mapTranslations = injectSiMapTranslations();
+  protected readonly selectedFeature = signal<ClusterPoint | undefined>(undefined);
+  protected readonly geoJson: GeoJSON.FeatureCollection<GeoJSON.Point> = {
+    type: 'FeatureCollection',
+    features: mockPoints.map((point, index) => ({
+      type: 'Feature',
+      id: index,
+      geometry: {
+        type: 'Point',
+        coordinates: [point.lon, point.lat]
+      },
+      properties: {
+        name: point.name,
+        description: point.description,
+        group: point.group,
+        status: point.marker?.status
+      }
+    }))
+  };
 
-  protected readonly geoJson = buildGeoJSON(mockPoints);
-
-  protected selectCluster(feature: ClusterPoint): void {
-    this.logEvent('cluster click', feature.properties);
+  protected selectFeature(feature: ClusterPoint): void {
+    this.selectedFeature.set(feature);
+    this.logEvent('select location', feature);
   }
 
   protected onError(event: ErrorEvent & EventData): void {
@@ -88,9 +82,5 @@ export class SampleComponent {
     } else {
       this.logEvent('map error', event.error);
     }
-  }
-
-  protected onGeolocate(position: Position): void {
-    this.logEvent('geolocate', position);
   }
 }

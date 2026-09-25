@@ -563,6 +563,10 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
   padding-inline: 10px;
   pointer-events: auto;
 
+  &:has(.cluster-popover) {
+    padding: 0;
+  }
+
   .maplibregl-popup-anchor-top-left & {
     border-start-start-radius: 0;
   }

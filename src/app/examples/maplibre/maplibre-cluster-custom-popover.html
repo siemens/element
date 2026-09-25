@@ -1,0 +1,70 @@
+<p class="mb-4" role="status">
+  @if (selectedFeature(); as feature) {
+    Selected location: {{ feature.properties?.name }}
+  } @else {
+    Open a cluster and select a location from its popover.
+  }
+</p>
+<mgl-map
+  class="flex-grow-1"
+  [attributionControl]="false"
+  [locale]="mapTranslations()"
+  [mapStyle]="mapStyle()"
+  [center]="[8.0, 47.1]"
+  [canvasContextAttributes]="{ preserveDrawingBuffer: true }"
+  [zoom]="4"
+  (mapError)="onError($event)"
+>
+  <mgl-control mglFullscreen />
+  <mgl-control mglAttribution position="bottom-left" />
+  <mgl-control mglNavigation position="bottom-right" />
+
+  <si-cluster-source sourceId="cluster-source" statusProperty="status" [data]="geoJson">
+    <si-cluster-popover maxWidth="420px" pageSize="5">
+      <ng-template
+        let-features
+        let-loading="loading"
+        let-error="error"
+        let-close="close"
+        siMaplibreClusterPopover
+      >
+        <div class="cluster-popover-content overflow-auto">
+          @if (loading && !features.length) {
+            <p class="mb-0">Loading locations...</p>
+          }
+          @if (error) {
+            <p role="alert">Could not load locations. Close the popover and try again.</p>
+          }
+          <ul class="list-unstyled mb-0">
+            @for (feature of features; track feature.id) {
+              <li>
+                <button
+                  type="button"
+                  class="list-item list-item-action p-4"
+                  (click)="selectFeature(feature)"
+                >
+                  <si-status-marker
+                    class="list-item-indicator"
+                    [status]="feature.properties?.status"
+                  />
+                  <h5 class="list-item-title">
+                    {{ feature.properties?.name }}
+                  </h5>
+                  <div class="list-item-description mb-0 si-body">{{
+                    feature.properties?.description
+                  }}</div>
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
+      </ng-template>
+    </si-cluster-popover>
+  </si-cluster-source>
+
+  <mgl-markers-for-clusters source="cluster-source">
+    <ng-template let-feature mglPoint>
+      <si-status-marker [status]="feature.properties?.status" />
+    </ng-template>
+  </mgl-markers-for-clusters>
+</mgl-map>

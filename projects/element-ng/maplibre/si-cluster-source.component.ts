@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, input, output, viewChild } from '@angular/core';
 import {
   ClusterPointDirective,
   GeoJSONSourceComponent,
@@ -111,11 +111,13 @@ export class SiClusterSourceComponent {
   protected readonly clusterConfiguration = computed(() =>
     createClusterConfiguration(this.groupColors(), this.groupProperty(), this.statusProperty())
   );
-  /** Stores selection for the projected cluster-popover integration. */
-  protected readonly selectedCluster = signal<ClusterPoint | undefined>(undefined);
+  private readonly source = viewChild.required(GeoJSONSourceComponent);
 
-  protected async selectCluster(feature: ClusterPoint): Promise<void> {
-    this.clusterClick.emit(feature);
-    this.selectedCluster.set({ ...feature, geometry: feature.geometry });
+  /**
+   * Returns a page of original points belonging to a cluster.
+   * @see https://maplibre.org/maplibre-gl-js/docs/API/classes/GeoJSONSource/#getclusterleaves
+   */
+  getClusterLeaves(clusterId: number, limit: number, offset: number): Promise<ClusterPoint[]> {
+    return this.source().getClusterLeaves(clusterId, limit, offset) as Promise<ClusterPoint[]>;
   }
 }
