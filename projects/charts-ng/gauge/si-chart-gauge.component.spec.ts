@@ -14,6 +14,7 @@ import { SiChartGaugeComponent } from './si-chart-gauge.component';
     [minValue]="minValue"
     [maxValue]="maxValue"
     [value]="value"
+    [valueArcStart]="valueArcStart"
     [title]="title"
     [subTitle]="subTitle"
   />`
@@ -23,6 +24,7 @@ class TestHostComponent {
   minValue!: number;
   maxValue!: number;
   value!: number;
+  valueArcStart?: number;
   title?: string;
   subTitle?: string;
 }
@@ -76,5 +78,35 @@ describe('SiChartGaugeComponent', () => {
     const { component } = createChartWithTestData();
     component.chartGaugeComponent().setValue(5);
     expect(getOption(component.chartGaugeComponent()).series[2].data[0].value).toEqual(5);
+  });
+
+  it('should start the value arc at a custom value without changing the gauge range', () => {
+    const fixture = TestBed.createComponent(TestHostComponent);
+    const component = fixture.componentInstance;
+    component.minValue = 0;
+    component.maxValue = 200;
+    component.valueArcStart = 45;
+    component.value = 90;
+    fixture.detectChanges();
+
+    const options = getOption(component.chartGaugeComponent());
+    expect(options.series[0]).toMatchObject({ min: 0, max: 200, startAngle: 180 });
+    expect(options.series[2]).toMatchObject({
+      min: 45,
+      max: 200,
+      startAngle: 139.5,
+      endAngle: 0,
+      data: [{ value: 90 }]
+    });
+  });
+
+  it('should start the value arc at the minimum value by default', () => {
+    const { component } = createChartWithTestData();
+    expect(getOption(component.chartGaugeComponent()).series[2]).toMatchObject({
+      min: 0,
+      max: 50,
+      startAngle: 180,
+      data: [{ value: 2 }]
+    });
   });
 });
