@@ -8,7 +8,6 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { SiPopoverDirective } from '@siemens/element-ng/popover';
-import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTypeaheadDirective } from '@siemens/element-ng/typeahead';
 
 @Component({
