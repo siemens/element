@@ -7,7 +7,7 @@ permissions: read-all
 jobs:
   # This ensures that the next branch is update to date with main.
   update-next:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -22,7 +22,7 @@ jobs:
   trigger-release:
     needs:
       - update-next
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Dispatch release workflow on updated next
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
