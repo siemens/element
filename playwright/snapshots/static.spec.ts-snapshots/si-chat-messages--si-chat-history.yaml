@@ -1,0 +1,29 @@
+- paragraph: Building faults
+- menubar:
+  - menuitem "New chat"
+  - menuitem "Chat history"
+- button "Close"
+- paragraph: Show me the high priority faults in my building A.
+- paragraph: "I've identified several high-priority issues in Building A that need urgent attention:"
+- list:
+  - listitem:
+    - strong: The HVAC systems on the 3rd and 5th floors are failing to maintain stable temperatures
+    - text: ", creating discomfort and potential equipment risks."
+  - listitem:
+    - strong: There's a water leakage problem in the basement pump room
+    - text: that could lead to electrical hazards if ignored.
+  - listitem:
+    - strong: "Elevator Unit #2 has been stalling during busy hours"
+    - text: ", and several smoke detectors in Block A-East are currently offline."
+- paragraph: These faults must be addressed immediately to maintain safety and compliance.
+- textbox "Chat input":
+  - /placeholder: Enter a command, question or topic…
+- group
+- button "Send" [disabled]
+- text: The content is AI generated. Always verify the information for accuracy.
+- main:
+  - link "Siemens logo":
+    - /url: "#/"
+  - heading "Application name" [level=1]
+  - button "AI assistant"
+  - button "Open AI assistant"
