@@ -19,7 +19,6 @@ export default defineConfig(
       parserOptions: {
         project: [
           'projects/native-charts-ng/tsconfig.docs.json',
-          'projects/native-charts-ng/tsconfig.lib.json',
           'projects/native-charts-ng/tsconfig.spec.json'
         ]
       }

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, ElementRef, viewChild } from '@angular/core';
+import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
@@ -18,7 +18,7 @@ import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
 })
 export class SiFilteredSearchFreeTextComponent extends SiFilteredSearchValueBase {
   protected readonly valueInput = viewChild<ElementRef<HTMLInputElement>>('freeTextInput');
-  protected readonly validValue = computed(() => true);
+  protected readonly validValue = signal(true).asReadonly();
 
   protected freeTextValueChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement;

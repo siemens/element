@@ -158,9 +158,9 @@ export class SampleComponent {
       });
       required(path.arrival, { message: 'Required' });
       required(path.departure, { message: 'Required' });
-      validate(path.departure, ({ value, valueOf }) => {
-        const arrival = valueOf(path.arrival);
-        const departure = value();
+      validate(path.departure, ctx => {
+        const arrival = ctx.valueOf(path.arrival);
+        const departure = ctx.value();
         if (!arrival || !departure) {
           return undefined;
         }
