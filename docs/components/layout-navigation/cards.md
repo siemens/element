@@ -198,8 +198,7 @@ This automatically rounds the image's top or bottom corners to match the card's 
 </div>
 ```
 
-Create organized lists within cards using the [list](../lists-tables-trees/list.md), which
-integrates seamlessly with card styling.
+Create organized lists within cards using the [list](../lists-tables-trees/list.md).
 
 ```html
 <div class="card">
@@ -211,7 +210,7 @@ integrates seamlessly with card styling.
 </div>
 ```
 
-Combine lists with card headers for better content organization.
+Combine lists with card headers.
 
 ```html
 <div class="card">
