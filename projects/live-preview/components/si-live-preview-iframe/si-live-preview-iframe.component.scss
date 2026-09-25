@@ -20,6 +20,17 @@ $font-size-small: 11px;
   }
 }
 
+.rendered-preview {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+
+  :host:not(.is-mobile) & {
+    block-size: 100%;
+    flex: 1;
+  }
+}
+
 iframe {
   border: 0;
   display: block;
@@ -27,6 +38,14 @@ iframe {
   :host:not(.is-mobile) & {
     block-size: 100%;
   }
+}
+
+si-live-preview-renderer {
+  flex: 1;
+}
+
+[hidden] {
+  display: none !important; // stylelint-disable-line declaration-no-important
 }
 
 .header-links {

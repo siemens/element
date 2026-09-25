@@ -162,6 +162,7 @@ export const APP_CONFIG: ApplicationConfig = {
       themeSwitcher: true,
       rtlSwitcher: true,
       webcomponents: true,
+      directlyEmbedExamples: true,
       rootFontSizes: [12, 14, 16, 20, 24],
       exampleApplicationConfig: createExampleAppConfig
     }),

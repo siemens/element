@@ -29,6 +29,8 @@ export interface SiLivePreviewConfig {
   rtlSwitcher?: boolean;
   landscapeToggle?: boolean;
   webcomponents?: boolean;
+  /** Render examples in the editor without an iframe. Defaults to false. */
+  directlyEmbedExamples?: boolean;
   rootFontSizes?: number[];
 }
 

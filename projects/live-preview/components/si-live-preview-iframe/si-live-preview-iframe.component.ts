@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -23,25 +24,41 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 
+import { setDeviceMode, setDirectionRtl, setRootFontSize } from '../../helpers/utils';
 import {
   SI_LIVE_PREVIEW_CONFIG,
   SI_LIVE_PREVIEW_INTERNALS
 } from '../../interfaces/live-preview-config';
+import {
+  SiLivePreviewLocaleApi,
+  SiLivePreviewThemeApi,
+  ThemeType
+} from '../../interfaces/si-live-preview.api';
 import { SiLivePreviewQrComponent } from '../si-live-preview-qr/si-live-preview-qr.component';
+import { SiLivePreviewRendererComponent } from '../si-live-preview-renderer/si-live-preview-renderer.component';
+import { SiLivePreviewWebComponentService } from '../si-live-preview-renderer/webcomponent/si-live-webcomponent.service';
 import { availableDevices, Device } from './devices';
 
 @Component({
   selector: 'si-live-preview-iframe',
-  imports: [FormsModule, SiLivePreviewQrComponent],
+  imports: [
+    FormsModule,
+    NgTemplateOutlet,
+    SiLivePreviewQrComponent,
+    SiLivePreviewRendererComponent
+  ],
   templateUrl: './si-live-preview-iframe.component.html',
   styleUrl: './si-live-preview-iframe.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: {
-    '[class.is-mobile]': 'isMobile'
+    '[class.is-mobile]': 'isMobile',
+    '(click)': 'onPreviewClick($event)'
   }
 })
 export class SiLivePreviewIframeComponent implements OnInit {
-  readonly previewIframe = viewChild<ElementRef>('previewIframe');
+  readonly previewIframe = viewChild<ElementRef<HTMLIFrameElement>>('previewIframe');
+  private readonly renderer = viewChild<SiLivePreviewRendererComponent>('renderer');
+  private readonly webcomponentRenderer = viewChild<ElementRef>('webcomponentRenderer');
 
   readonly baseUrl = input.required<string>();
   readonly exampleUrl = input.required<string>();
@@ -68,15 +85,21 @@ export class SiLivePreviewIframeComponent implements OnInit {
 
   private originalTemplate = '';
   private templateModified = false;
+  private previousMode?: string;
   private rendererInProgress = false;
-
   private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
-  private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
-  private readonly ngZone = inject(NgZone);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly ngZone = inject(NgZone);
   private readonly cdRef = inject(ChangeDetectorRef);
+  private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
+  private readonly themeApi = inject(SiLivePreviewThemeApi, { optional: true });
+  private readonly localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
+  private readonly webcomponentService = inject(SiLivePreviewWebComponentService, {
+    optional: true
+  });
 
   protected readonly isMobile = this.internalConfig.isMobile;
+  protected readonly directlyEmbedExamples = this.config.directlyEmbedExamples ?? false;
 
   /** iframe height, seeded from the {@link iFrameHeight} input and mutable in mobile mode. */
   protected readonly currentIFrameHeight = linkedSignal(() => this.iFrameHeight());
@@ -99,25 +122,120 @@ export class SiLivePreviewIframeComponent implements OnInit {
   protected readonly plainUrlShort = signal('');
 
   constructor() {
+    if (this.directlyEmbedExamples) {
+      this.destroyRef.onDestroy(() => this.webcomponentService?.destroyComponent());
+      this.themeApi
+        ?.getApplicationThemeObservable()
+        .pipe(takeUntilDestroyed())
+        .subscribe(theme => {
+          if (this.theme() !== theme) {
+            this.theme.set(theme);
+          }
+        });
+      this.localeApi
+        ?.getLocale()
+        .pipe(takeUntilDestroyed())
+        .subscribe(locale => {
+          if (this.locale() !== locale) {
+            this.locale.set(locale);
+          }
+        });
+    }
     effect(() => {
-      // recompute on template changes and re-send whenever any rendered input changes
       this.templateModified = this.originalTemplate !== this.template();
-      if (this.previewIframe()) {
+      if (!this.directlyEmbedExamples && this.previewIframe()) {
         this.sendMessage();
+      }
+    });
+    effect(() => {
+      if (!this.directlyEmbedExamples) {
+        return;
+      }
+      const theme = this.theme() as ThemeType;
+      if (this.themeApi) {
+        this.themeApi.setThemeFromPreviewer(theme);
+      } else {
+        document.documentElement.classList.toggle('app--dark', theme === 'dark');
+        document.documentElement.classList.toggle('app--light', theme === 'light');
+      }
+    });
+    effect(() => {
+      if (!this.directlyEmbedExamples) {
+        return;
+      }
+      const locale = this.locale();
+      if (locale) {
+        this.localeApi?.setLocale(locale);
+      }
+    });
+    effect(() => {
+      if (!this.directlyEmbedExamples) {
+        return;
+      }
+      setRootFontSize(this.rootFontSize());
+      setDirectionRtl(!!this.isRTL());
+    });
+    effect(() => {
+      if (!this.directlyEmbedExamples) {
+        return;
+      }
+      const mode = this.mode();
+      if (this.isMobile) {
+        setDeviceMode(mode);
+        if (this.previousMode && this.previousMode !== mode) {
+          this.renderer()?.recompile();
+        }
+        this.previousMode = mode;
+      }
+    });
+    effect(() => {
+      if (!this.directlyEmbedExamples) {
+        return;
+      }
+      const landscape = this.landscape();
+      const device = this.selectedDevice();
+      if (this.isMobile) {
+        const area = landscape ? device?.safeAreaLandscape : device?.safeAreaPortrait;
+        const html = document.documentElement;
+        html.style.setProperty('--ion-safe-area-top', `${area?.top ?? 0}px`);
+        html.style.setProperty('--ion-safe-area-bottom', `${area?.bottom ?? 0}px`);
+        html.style.setProperty('--ion-safe-area-left', `${area?.left ?? 0}px`);
+        html.style.setProperty('--ion-safe-area-right', `${area?.right ?? 0}px`);
+      }
+    });
+    effect(() => {
+      if (!this.directlyEmbedExamples) {
+        return;
+      }
+      const element = this.webcomponentRenderer();
+      const loadReact = this.loadReact();
+      const loadVue = this.loadVue();
+      const loadJs = this.loadJs();
+      const exampleUrl = this.baseUrl() + this.exampleUrl();
+      const webcomponentTemplateCode = this.reactVueTemplate();
+      if (element && (loadReact || loadVue || loadJs)) {
+        this.webcomponentService?.injectComponent(
+          element,
+          { exampleUrl, loadReact, loadVue, loadJs, webcomponentTemplateCode, config: this.config },
+          { inProgress: (_type: string, value: boolean) => this.onRendererProgress(value) }
+        );
+      } else {
+        this.webcomponentService?.destroyComponent();
       }
     });
   }
 
   ngOnInit(): void {
-    this.ngZone.runOutsideAngular(() =>
-      fromEvent<MessageEvent>(window, 'message')
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(message => {
-          this.onMessage(message);
-          this.cdRef.markForCheck();
-        })
-    );
-
+    if (!this.directlyEmbedExamples) {
+      this.ngZone.runOutsideAngular(() =>
+        fromEvent<MessageEvent>(window, 'message')
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(message => {
+            this.onMessage(message);
+            this.cdRef.markForCheck();
+          })
+      );
+    }
     if (this.isMobile) {
       const deviceId = localStorage.getItem('si-live-preview-selected-device');
       this.selectedDevice.set(
@@ -139,14 +257,18 @@ export class SiLivePreviewIframeComponent implements OnInit {
     this.showNotch.set(selectedDevice.notch ?? false);
     this.mode.set(selectedDevice.mode);
     localStorage.setItem('si-live-preview-selected-device', selectedDevice.id);
-    this.sendMessage();
+    if (!this.directlyEmbedExamples) {
+      this.sendMessage();
+    }
   }
 
   private onMessage(event: MessageEvent): void {
-    if (event.data?.src !== 'renderer') {
+    if (
+      event.data?.src !== 'renderer' ||
+      event.source !== this.previewIframe()?.nativeElement.contentWindow
+    ) {
       return;
     }
-
     this.ngZone.run(() => this.onMessageInZone(event));
   }
 
@@ -156,11 +278,7 @@ export class SiLivePreviewIframeComponent implements OnInit {
         this.sendMessage();
         break;
       case 'landscapeMode':
-        this.supportsLandscape.set(event.data.message);
-        if (!this.supportsLandscape() && this.landscape()) {
-          this.landscape.set(false);
-          this.deviceChanged();
-        }
+        this.landscapeSupportChanged(event.data.message);
         break;
       case 'clear':
         this.logClear.emit();
@@ -172,19 +290,10 @@ export class SiLivePreviewIframeComponent implements OnInit {
         this.logRenderingError.emit(event.data.message);
         break;
       case 'progress':
-        {
-          const progress: boolean = event.data.message;
-          if (progress !== this.rendererInProgress) {
-            // only emit changes since live-previewer does counting
-            this.rendererInProgress = progress;
-            this.inProgress.emit(progress);
-          }
-        }
+        this.onRendererProgress(event.data.message);
         break;
       case 'templateFromComponent':
-        this.originalTemplate = event.data.message;
-        this.templateModified = false;
-        this.templateFromComponent.emit(event.data.message);
+        this.onTemplateFromComponent(event.data.message);
         break;
       case 'theme':
         this.theme.set(event.data.message);
@@ -195,9 +304,50 @@ export class SiLivePreviewIframeComponent implements OnInit {
     }
   }
 
+  landscapeSupportChanged(supported: boolean): void {
+    this.supportsLandscape.set(supported);
+    if (!supported && this.landscape()) {
+      this.landscape.set(false);
+      this.deviceChanged();
+    }
+  }
+
+  onTemplateFromComponent(template: string | undefined): void {
+    this.originalTemplate = template ?? '';
+    this.templateModified = false;
+    this.templateFromComponent.emit(template);
+  }
+
+  onRendererProgress(progress: boolean): void {
+    if (progress !== this.rendererInProgress) {
+      this.rendererInProgress = progress;
+      this.inProgress.emit(progress);
+    }
+  }
+
+  onPreviewClick(event: MouseEvent): void {
+    if (!this.directlyEmbedExamples) {
+      return;
+    }
+    const target = (event.target as HTMLElement).closest('a');
+    if (
+      target &&
+      !event.defaultPrevented &&
+      ['', '_self', '_top', '_parent'].includes(target.target)
+    ) {
+      const url = target.href;
+      if (url && !url.startsWith(window.location.toString())) {
+        event.preventDefault();
+        window.open(url, '_blank');
+      }
+    }
+  }
+
   toggleTheme(): void {
     this.theme.set(this.theme() === 'dark' ? 'light' : 'dark');
-    this.sendMessage();
+    if (!this.directlyEmbedExamples) {
+      this.sendMessage();
+    }
   }
 
   toggleLandscape(): void {
@@ -206,7 +356,9 @@ export class SiLivePreviewIframeComponent implements OnInit {
     const selectedDevice = this.selectedDevice();
     this.currentIFrameHeight.set(landscape ? selectedDevice?.width : selectedDevice?.height);
     this.currentIFrameWidth.set(landscape ? selectedDevice?.height : selectedDevice?.width);
-    this.sendMessage();
+    if (!this.directlyEmbedExamples) {
+      this.sendMessage();
+    }
   }
 
   openQrMenu(): void {
@@ -249,7 +401,7 @@ export class SiLivePreviewIframeComponent implements OnInit {
   private sendMessage(): void {
     const landscape = this.landscape();
     const selectedDevice = this.selectedDevice();
-    this.previewIframe()?.nativeElement.contentWindow.postMessage(
+    this.previewIframe()?.nativeElement.contentWindow?.postMessage(
       {
         src: 'editor',
         exampleUrl: this.baseUrl() + this.exampleUrl(),
