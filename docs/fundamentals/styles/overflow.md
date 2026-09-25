@@ -7,6 +7,7 @@ Choose the appropriate class:
 - `overflow-hidden`
 - `overflow-visible`
 - `overflow-scroll`
+- `overflow-clip`
 
 These classes apply the specified overflow behavior to an element, but are not responsive by default.
 
@@ -15,6 +16,7 @@ These classes apply the specified overflow behavior to an element, but are not r
 <div class="overflow-hidden">...</div>
 <div class="overflow-visible">...</div>
 <div class="overflow-scroll">...</div>
+<div class="overflow-clip">...</div>
 ```
 
 <si-docs-component example="overflow/overflow" height="300"></si-docs-component>
