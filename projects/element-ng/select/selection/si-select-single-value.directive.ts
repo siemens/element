@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Directive } from '@angular/core';
+import { Directive, model } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { SiSelectSelectionStrategy } from './si-select-selection-strategy';
@@ -32,12 +32,15 @@ import { SiSelectSelectionStrategy } from './si-select-selection-strategy';
     }
   ]
 })
-export class SiSelectSingleValueDirective<T> extends SiSelectSelectionStrategy<T, T> {
+export class SiSelectSingleValueDirective<T> extends SiSelectSelectionStrategy<T, T | undefined> {
   /**
    * {@inheritDoc SiSelectSelectionStrategy#allowMultiple}
    * @defaultValue false
    */
   override allowMultiple = false;
+
+  /** @defaultValue [] */
+  override readonly value = model<T>();
 
   protected toArrayValue(value: T | undefined): readonly T[] {
     return value !== undefined ? [value] : [];
