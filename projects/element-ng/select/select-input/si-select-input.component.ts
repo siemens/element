@@ -114,7 +114,7 @@ export class SiSelectInputComponent<T> {
 
   protected blur(): void {
     if (!this.open()) {
-      this.selectionStrategy.onTouched();
+      this.selectionStrategy.touch.emit();
     }
   }
 
