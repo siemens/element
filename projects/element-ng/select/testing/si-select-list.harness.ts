@@ -7,7 +7,7 @@ import { HarnessPredicate, TestKey } from '@angular/cdk/testing';
 import { SiSelectListBaseHarness } from '../../select/testing/si-select-list-base.harness';
 
 export class SiSelectListHarness extends SiSelectListBaseHarness {
-  static hostSelector = '.cdk-listbox';
+  static hostSelector = '[ngListbox]';
 
   static with(id: string): HarnessPredicate<SiSelectListHarness> {
     return new HarnessPredicate(SiSelectListHarness, { selector: `#${CSS.escape(id)}` });
