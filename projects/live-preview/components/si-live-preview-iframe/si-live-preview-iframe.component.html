@@ -1,5 +1,5 @@
 <section class="header-links">
-  <h1 class="example-text">Example: {{ exampleUrl() }}</h1>
+  <h1 class="example-text">Example: {{ state.example() }}</h1>
   @if (!isMobile || !isFullscreen()) {
     <div class="ticket-links">
       <a target="_blank" [href]="ticketLinkBug()">Report a bug</a> |
@@ -9,21 +9,7 @@
 </section>
 
 @if (isMobile) {
-  <si-live-preview-mobile-mode
-    [exampleUrl]="exampleUrl()"
-    [template]="template()"
-    [theme]="theme()"
-    [locale]="locale()"
-    [rootFontSize]="rootFontSize()"
-    [isRTL]="isRTL()"
-    [templateModified]="templateModified()"
-    [supportsLandscape]="supportsLandscape()"
-    [iFrameHeight]="iFrameHeight()"
-    [iFrameWidth]="iFrameWidth()"
-    (iframeChange)="setPreviewIframe($event)"
-    (viewportChange)="setViewport($event)"
-    (themeToggle)="toggleTheme()"
-  />
+  <si-live-preview-mobile-mode (iframeChange)="setPreviewIframe($event)" />
 } @else {
   <si-live-preview-iframe-mode (iframeChange)="setPreviewIframe($event)" />
 }

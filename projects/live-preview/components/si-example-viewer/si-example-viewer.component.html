@@ -1,12 +1,15 @@
 <div class="wrapper">
-  @if (!exampleUrl() && !template()) {
+  @if (!state.example() && !state.template()) {
     <p class="text-information" style="margin: 1em">
       No example specified. Head to
       <strong><a href="#/overview">/overview</a></strong>
       for a list of them.
     </p>
   }
-  @if ((template() || reactTemplate() || vueTemplate() || jsTemplate()) && mode() === 'editor') {
+  @if (
+    (state.template() || state.templateReact() || state.templateVue() || state.templateJs()) &&
+    mode() === 'editor'
+  ) {
     <p class="text-information" style="margin: 1em">
       This is an adopted example built from the URL. Head to
       <strong><a href="#/overview">/overview</a></strong> for a list of examples.
@@ -33,23 +36,7 @@
 </div>
 
 @if (mode() !== 'editor') {
-  <si-live-preview-renderer
-    #renderer
-    [exampleUrl]="baseUrl + exampleUrl()"
-    [dataId]="dataId()"
-    [template]="template()"
-  />
+  <si-live-preview-renderer #renderer />
 } @else {
-  <si-live-preview
-    [ticketBaseUrl]="ticketBaseUrl"
-    [baseUrl]="baseUrl"
-    [example]="exampleUrl()"
-    [template]="template()"
-    [templateReact]="reactTemplate()"
-    [templateVue]="vueTemplate()"
-    [templateJs]="jsTemplate()"
-    [theme]="theme()"
-    [locale]="locale()"
-    [isRTL]="isRTL()"
-  />
+  <si-live-preview />
 }
