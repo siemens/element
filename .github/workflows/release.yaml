@@ -6,7 +6,7 @@ permissions: read-all
 
 jobs:
   release-preview:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       contents: write # semantic-release verifies push access even in dry-run mode.
     steps:
@@ -45,7 +45,7 @@ jobs:
     environment:
       name: release
       url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     env:
       PNPM_CONFIG_AUTO_INSTALL_PEERS: true
     needs:
@@ -131,7 +131,7 @@ jobs:
   # 2. The first release of a new major version.
   #    In this case, we need to move the existing /latest/ to the previous major version folder.
   publish-documentation-release:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - publish
       - build-documentation-release

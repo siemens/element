@@ -17,7 +17,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -49,7 +49,7 @@ jobs:
           path: dist
 
   test:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     # We use playwright browser to run tests
     container: mcr.microsoft.com/playwright:v1.62.1-noble@sha256:dcc5531e97840b9b5e794f2814476b21571c5124a3fca2267d73041f56e7580e
     env:
@@ -110,7 +110,7 @@ jobs:
           retention-days: 30
 
   verification:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - build
     steps:
@@ -137,7 +137,7 @@ jobs:
       - run: pnpm run api-goldens:test
 
   e2e:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     container: mcr.microsoft.com/playwright:v1.62.1-noble@sha256:dcc5531e97840b9b5e794f2814476b21571c5124a3fca2267d73041f56e7580e
     needs:
       - build
