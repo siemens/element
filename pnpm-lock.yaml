@@ -214,11 +214,11 @@ importers:
         specifier: 2.8.2
         version: 2.8.2
       '@ngx-formly/bootstrap':
-        specifier: 7.1.0
-        version: 7.1.0(@ngx-formly/core@7.1.0(@angular/forms@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2))
+        specifier: 8.0.0
+        version: 8.0.0(@ngx-formly/core@8.0.0(@angular/forms@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2))
       '@ngx-formly/core':
-        specifier: 7.1.0
-        version: 7.1.0(@angular/forms@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)
+        specifier: 8.0.0
+        version: 8.0.0(@angular/forms@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)
       '@ngx-translate/core':
         specifier: 18.0.0
         version: 18.0.0(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2)
@@ -2728,16 +2728,16 @@ packages:
       typescript: '>=6.0 <6.1'
       webpack: ^5.54.0
 
-  '@ngx-formly/bootstrap@7.1.0':
-    resolution: {integrity: sha512-cy2Qo1iw7K6FtWY9URah+12cZ6LoKoYytEN2uBSGnTPOEhRQ41HK7SQ0wxz98cujmbtFzlLjOD2HF59MWJkQ8Q==, tarball: https://registry.npmjs.org/@ngx-formly/bootstrap/-/bootstrap-7.1.0.tgz}
+  '@ngx-formly/bootstrap@8.0.0':
+    resolution: {integrity: sha512-uCYFBCM2u0C0ZEcxZ8ZHsDqNowuKOsFYJLOGh4seT2hk4BN8DmiUqwwBVIawbfxv6oi3qgaKCdymsfX9dUQMpQ==, tarball: https://registry.npmjs.org/@ngx-formly/bootstrap/-/bootstrap-8.0.0.tgz}
     peerDependencies:
-      '@ngx-formly/core': 7.1.0
+      '@ngx-formly/core': 8.0.0
       bootstrap: ^5.0.0
 
-  '@ngx-formly/core@7.1.0':
-    resolution: {integrity: sha512-uyHibGYEW0MBEvWdMm39cUWrs/oWwUOKL5v24EDAEeh0oG1LJS0avAcpUBrMMcXT2TU1yCx5E1dJ6ihTsDZOcw==, tarball: https://registry.npmjs.org/@ngx-formly/core/-/core-7.1.0.tgz}
+  '@ngx-formly/core@8.0.0':
+    resolution: {integrity: sha512-VGWzHuWMg8vNQ26tnS43AjkDG4kQfGvFosrnxKjiTXA4GqXV8Af42CSuFqm2ZPZIFKQJ1FjJWPdcXq+HyXFZIA==, tarball: https://registry.npmjs.org/@ngx-formly/core/-/core-8.0.0.tgz}
     peerDependencies:
-      '@angular/forms': '>=13.2.0'
+      '@angular/forms': '>=19.0.0'
       rxjs: ^6.5.3 || ^7.0.0
 
   '@ngx-translate/core@18.0.0':
@@ -11550,12 +11550,12 @@ snapshots:
       typescript: 6.0.3
       webpack: 5.106.2(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.28)(uglify-js@3.19.3)
 
-  '@ngx-formly/bootstrap@7.1.0(@ngx-formly/core@7.1.0(@angular/forms@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2))':
+  '@ngx-formly/bootstrap@8.0.0(@ngx-formly/core@8.0.0(@angular/forms@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2))':
     dependencies:
-      '@ngx-formly/core': 7.1.0(@angular/forms@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)
+      '@ngx-formly/core': 8.0.0(@angular/forms@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)
       tslib: 2.8.1
 
-  '@ngx-formly/core@7.1.0(@angular/forms@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)':
+  '@ngx-formly/core@8.0.0(@angular/forms@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2))(rxjs@7.8.2)':
     dependencies:
       '@angular/forms': 22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2)
       rxjs: 7.8.2
