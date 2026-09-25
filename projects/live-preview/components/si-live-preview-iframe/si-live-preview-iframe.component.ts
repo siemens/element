@@ -6,33 +6,29 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   DestroyRef,
   effect,
   ElementRef,
   inject,
   input,
-  linkedSignal,
   model,
   NgZone,
   OnInit,
   output,
-  signal,
-  viewChild
+  signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormsModule } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 
-import {
-  SI_LIVE_PREVIEW_CONFIG,
-  SI_LIVE_PREVIEW_INTERNALS
-} from '../../interfaces/live-preview-config';
-import { SiLivePreviewQrComponent } from '../si-live-preview-qr/si-live-preview-qr.component';
-import { availableDevices, Device } from './devices';
+import { SI_LIVE_PREVIEW_INTERNALS } from '../../interfaces/live-preview-config';
+import { LivePreviewViewport } from './live-preview-mode';
+import { SiLivePreviewIframeModeComponent } from './si-live-preview-iframe-mode.component';
+import { SiLivePreviewMobileModeComponent } from './si-live-preview-mobile-mode.component';
 
 @Component({
   selector: 'si-live-preview-iframe',
-  imports: [FormsModule, SiLivePreviewQrComponent],
+  imports: [SiLivePreviewIframeModeComponent, SiLivePreviewMobileModeComponent],
   templateUrl: './si-live-preview-iframe.component.html',
   styleUrl: './si-live-preview-iframe.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -41,8 +37,6 @@ import { availableDevices, Device } from './devices';
   }
 })
 export class SiLivePreviewIframeComponent implements OnInit {
-  readonly previewIframe = viewChild<ElementRef>('previewIframe');
-
   readonly baseUrl = input.required<string>();
   readonly exampleUrl = input.required<string>();
   readonly template = input.required<string>();
@@ -66,42 +60,25 @@ export class SiLivePreviewIframeComponent implements OnInit {
   readonly logRenderingError = output<any>();
   readonly inProgress = output<boolean>();
 
-  private originalTemplate = '';
-  private templateModified = false;
+  private readonly originalTemplate = signal('');
+  protected readonly templateModified = computed(() => this.originalTemplate() !== this.template());
   private rendererInProgress = false;
+  private readonly previewIframeRef = signal<ElementRef | undefined>(undefined);
 
-  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  readonly previewIframe = this.previewIframeRef.asReadonly();
+
   private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private readonly ngZone = inject(NgZone);
   private readonly destroyRef = inject(DestroyRef);
   private readonly cdRef = inject(ChangeDetectorRef);
 
   protected readonly isMobile = this.internalConfig.isMobile;
-
-  /** iframe height, seeded from the {@link iFrameHeight} input and mutable in mobile mode. */
-  protected readonly currentIFrameHeight = linkedSignal(() => this.iFrameHeight());
-  /** iframe width, seeded from the {@link iFrameWidth} input and mutable in mobile mode. */
-  protected readonly currentIFrameWidth = linkedSignal(() => this.iFrameWidth());
-
-  protected readonly mode = signal('ios');
-  protected readonly landscape = signal(false);
-
-  protected readonly switcherEnabled = this.config.themeSwitcher;
-
-  protected readonly landscapeEnabled = this.config.landscapeToggle;
   protected readonly supportsLandscape = signal(false);
-
-  protected readonly availableDevices = availableDevices;
-  protected readonly selectedDevice = signal<Device | undefined>(undefined);
-  protected readonly showNotch = signal(false);
-  protected readonly showQrMenu = signal(false);
-  protected readonly plainUrl = signal('');
-  protected readonly plainUrlShort = signal('');
+  protected readonly viewport = signal<LivePreviewViewport>({ mode: 'ios' });
 
   constructor() {
     effect(() => {
       // recompute on template changes and re-send whenever any rendered input changes
-      this.templateModified = this.originalTemplate !== this.template();
       if (this.previewIframe()) {
         this.sendMessage();
       }
@@ -117,29 +94,6 @@ export class SiLivePreviewIframeComponent implements OnInit {
           this.cdRef.markForCheck();
         })
     );
-
-    if (this.isMobile) {
-      const deviceId = localStorage.getItem('si-live-preview-selected-device');
-      this.selectedDevice.set(
-        this.availableDevices.find(dev => dev.id === deviceId) ?? this.availableDevices[0]
-      );
-      this.deviceChanged();
-    }
-  }
-
-  deviceChanged(): void {
-    let selectedDevice = this.selectedDevice();
-    if (!selectedDevice) {
-      selectedDevice = this.availableDevices[0];
-      this.selectedDevice.set(selectedDevice);
-    }
-    const landscape = this.landscape();
-    this.currentIFrameHeight.set(landscape ? selectedDevice.width : selectedDevice.height);
-    this.currentIFrameWidth.set(landscape ? selectedDevice.height : selectedDevice.width);
-    this.showNotch.set(selectedDevice.notch ?? false);
-    this.mode.set(selectedDevice.mode);
-    localStorage.setItem('si-live-preview-selected-device', selectedDevice.id);
-    this.sendMessage();
   }
 
   private onMessage(event: MessageEvent): void {
@@ -157,10 +111,6 @@ export class SiLivePreviewIframeComponent implements OnInit {
         break;
       case 'landscapeMode':
         this.supportsLandscape.set(event.data.message);
-        if (!this.supportsLandscape() && this.landscape()) {
-          this.landscape.set(false);
-          this.deviceChanged();
-        }
         break;
       case 'clear':
         this.logClear.emit();
@@ -182,8 +132,7 @@ export class SiLivePreviewIframeComponent implements OnInit {
         }
         break;
       case 'templateFromComponent':
-        this.originalTemplate = event.data.message;
-        this.templateModified = false;
+        this.originalTemplate.set(event.data.message);
         this.templateFromComponent.emit(event.data.message);
         break;
       case 'theme':
@@ -200,55 +149,16 @@ export class SiLivePreviewIframeComponent implements OnInit {
     this.sendMessage();
   }
 
-  toggleLandscape(): void {
-    const landscape = !this.landscape();
-    this.landscape.set(landscape);
-    const selectedDevice = this.selectedDevice();
-    this.currentIFrameHeight.set(landscape ? selectedDevice?.width : selectedDevice?.height);
-    this.currentIFrameWidth.set(landscape ? selectedDevice?.height : selectedDevice?.width);
-    this.sendMessage();
+  protected setPreviewIframe(iframe: ElementRef | undefined): void {
+    this.previewIframeRef.set(iframe);
   }
 
-  openQrMenu(): void {
-    this.plainUrl.set(this.createTemplateLink('plain'));
-    this.plainUrlShort.set(this.createTemplateLink('plain', true));
-    this.showQrMenu.set(true);
-  }
-
-  private createTemplateLink(mode: string, skipTemplate = false): string {
-    let url = `${window.location.protocol}//${window.location.host}`;
-    url += window.location.pathname;
-    url += `#/viewer/${mode}?`;
-    url += 'theme=' + this.theme();
-    url += '&mode=' + this.mode();
-    if (this.isRTL()) {
-      url += '&isRTL=true';
-    }
-    const locale = this.locale();
-    if (locale) {
-      url += '&locale=' + locale;
-    }
-    if (this.rootFontSize()) {
-      url += '&rfs=' + this.rootFontSize();
-    }
-    if (this.templateModified && !skipTemplate) {
-      url += '&t=' + this.encode(this.template());
-    }
-    const exampleUrl = this.exampleUrl();
-    if (exampleUrl) {
-      url += '&e=' + this.encode(exampleUrl);
-    }
-    return url;
-  }
-
-  private encode(value: string): string {
-    // using `+` for space is shorter than `%20`
-    return encodeURIComponent(value).replace(/%20/g, '+');
+  protected setViewport(viewport: LivePreviewViewport): void {
+    this.viewport.set(viewport);
   }
 
   private sendMessage(): void {
-    const landscape = this.landscape();
-    const selectedDevice = this.selectedDevice();
+    const viewport = this.viewport();
     this.previewIframe()?.nativeElement.contentWindow.postMessage(
       {
         src: 'editor',
@@ -262,19 +172,11 @@ export class SiLivePreviewIframeComponent implements OnInit {
         locale: this.locale(),
         rootFontSize: this.rootFontSize(),
         isRTL: this.isRTL(),
-        mode: this.mode(),
-        safeAreaTop: landscape
-          ? selectedDevice?.safeAreaLandscape?.top
-          : selectedDevice?.safeAreaPortrait?.top,
-        safeAreaBottom: landscape
-          ? selectedDevice?.safeAreaLandscape?.bottom
-          : selectedDevice?.safeAreaPortrait?.bottom,
-        safeAreaLeft: landscape
-          ? selectedDevice?.safeAreaLandscape?.left
-          : selectedDevice?.safeAreaPortrait?.left,
-        safeAreaRight: landscape
-          ? selectedDevice?.safeAreaLandscape?.right
-          : selectedDevice?.safeAreaPortrait?.right
+        mode: viewport.mode,
+        safeAreaTop: viewport.safeAreaTop,
+        safeAreaBottom: viewport.safeAreaBottom,
+        safeAreaLeft: viewport.safeAreaLeft,
+        safeAreaRight: viewport.safeAreaRight
       },
       '*'
     );
