@@ -2,13 +2,17 @@
   <pre class="code-preview">Model: {{ selected | json }}</pre>
   <si-search-bar
     placeholder="Placeholder"
-    aria-label="States"
-    [siTypeahead]="states"
-    [typeaheadSkipSortingMatches]="false"
-    [typeaheadTokenize]="false"
     [colorVariant]="variant"
     [disabled]="disable"
     [showIcon]="showIcon"
     [(ngModel)]="selected"
-  />
+  >
+    <input
+      siSearchBarInput
+      aria-label="States"
+      [siTypeahead]="states"
+      [typeaheadSkipSortingMatches]="false"
+      [typeaheadTokenize]="false"
+    />
+  </si-search-bar>
 </app-filter-settings>

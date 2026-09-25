@@ -7,7 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { userEvent } from 'vitest/browser';
 
-import { SiSearchBarComponent } from './index';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from './index';
 
 describe('SiSearchBarComponent', () => {
   const getInput = (element: HTMLElement): HTMLInputElement => element.querySelector('input')!;
@@ -227,6 +227,80 @@ describe('SiSearchBarComponent', () => {
       expect(searchChange).toHaveBeenCalledWith('world');
 
       vi.useRealTimers();
+    });
+  });
+
+  describe('with projected input', () => {
+    @Component({
+      imports: [ReactiveFormsModule, SiSearchBarComponent, SiSearchBarInputDirective],
+      template: `
+        <si-search-bar
+          [formControl]="search"
+          [placeholder]="placeholder()"
+          [showIcon]="true"
+          [readonly]="readonly()"
+          [maxlength]="12"
+          [debounceTime]="0"
+        >
+          <input class="projected-input" siSearchBarInput aria-label="Projected search" />
+        </si-search-bar>
+      `
+    })
+    class ProjectedInputTestComponent {
+      readonly placeholder = signal('Search users');
+      readonly readonly = signal(false);
+      readonly search = new FormControl('Initial value');
+      readonly searchBar = viewChild.required(SiSearchBarComponent);
+    }
+
+    let fixture: ComponentFixture<ProjectedInputTestComponent>;
+    let testComponent: ProjectedInputTestComponent;
+    let element: HTMLElement;
+
+    beforeEach(async () => {
+      fixture = TestBed.createComponent(ProjectedInputTestComponent);
+      testComponent = fixture.componentInstance;
+      element = fixture.nativeElement;
+      await fixture.whenStable();
+    });
+
+    it('should use the projected input instead of the default input', () => {
+      const input = getInput(element);
+
+      expect(element.querySelectorAll('input')).toHaveLength(1);
+      expect(input.classList).toContain('projected-input');
+      expect(input.classList).toContain('form-control');
+      expect(input.placeholder).toBe('Search users');
+      expect(input.maxLength).toBe(12);
+      expect(input.value).toBe('Initial value');
+    });
+
+    it('should connect the projected input to the form control and clear button', async () => {
+      const input = getInput(element);
+
+      await userEvent.fill(input, 'New value');
+      await fixture.whenStable();
+      expect(testComponent.search.value).toBe('New value');
+
+      element.querySelector<HTMLButtonElement>('button')!.click();
+      await fixture.whenStable();
+      expect(testComponent.search.value).toBe('');
+      expect(input.value).toBe('');
+    });
+
+    it('should forward state and focus to the projected input', async () => {
+      const input = getInput(element);
+
+      testComponent.readonly.set(true);
+      testComponent.search.disable();
+      await fixture.whenStable();
+      expect(input).toBeDisabled();
+      expect(input.readOnly).toBe(true);
+
+      testComponent.search.enable();
+      await fixture.whenStable();
+      testComponent.searchBar().focus();
+      expect(input).toHaveFocus();
     });
   });
 });

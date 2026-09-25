@@ -4,10 +4,11 @@
  */
 import { NgModule } from '@angular/core';
 
+import { SiSearchBarInputDirective } from './si-search-bar-input.directive';
 import { SiSearchBarComponent } from './si-search-bar.component';
 
 @NgModule({
-  imports: [SiSearchBarComponent],
-  exports: [SiSearchBarComponent]
+  imports: [SiSearchBarComponent, SiSearchBarInputDirective],
+  exports: [SiSearchBarComponent, SiSearchBarInputDirective]
 })
 export class SiSearchBarModule {}

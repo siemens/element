@@ -1,6 +1,5 @@
 - text: "Model:"
-- combobox "States":
-  - textbox "Placeholder" [disabled]
+- combobox "States" [disabled]
 - text: Settings Color Variant
 - combobox "Color Variant":
   - option "base-1" [selected]
