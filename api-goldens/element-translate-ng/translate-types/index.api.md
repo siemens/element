@@ -5,7 +5,18 @@
 ```ts
 
 // @public
-export type TranslatableString = string & Translatable;
+export interface BypassTranslation {
+    // (undocumented)
+    bypassTranslation: true;
+    // (undocumented)
+    value: string;
+}
+
+// @public (undocumented)
+export type Translatable = TranslatableString | BypassTranslation;
+
+// @public
+export type TranslatableString = string & Translate;
 
 // (No @packageDocumentation comment for this package)
 

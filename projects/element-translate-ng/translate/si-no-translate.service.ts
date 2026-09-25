@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { Injectable } from '@angular/core';
+import { Translatable } from '@siemens/element-translate-ng/translate-types';
 import { Observable, of } from 'rxjs';
 
+import { isBypassTranslation } from './si-bypass-translate';
 import { SiTranslateService, TranslationResult } from './si-translate.service';
 
 const arrayToRecord = (keys: string[]): Record<string, string> =>
@@ -52,9 +54,12 @@ export class SiNoTranslateService extends SiTranslateService {
   override setDefaultLanguage(lang: string): void {}
 
   override translate<T extends string | string[]>(
-    keys: T,
+    keys: T | Translatable,
     _params?: Record<string, unknown>
   ): TranslationResult<T> {
+    if (isBypassTranslation(keys)) {
+      return keys.value as unknown as TranslationResult<T>;
+    }
     const translateKey = (key: string): string => {
       return _params ? replacePlaceholders(key, _params) : key;
     };
@@ -68,14 +73,14 @@ export class SiNoTranslateService extends SiTranslateService {
   }
 
   override translateSync<T extends string | string[]>(
-    keys: T,
+    keys: T | Translatable,
     params?: Record<string, unknown>
   ): TranslationResult<T> {
     return this.translate(keys, params);
   }
 
   override translateAsync<T extends string | string[]>(
-    keys: T,
+    keys: T | Translatable,
     params?: Record<string, unknown>
   ): Observable<TranslationResult<T>> {
     return of(this.translate(keys, params));

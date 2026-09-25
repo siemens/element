@@ -4,7 +4,13 @@
  */
 import { inputBinding, signal, twoWayBinding, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { provideTranslateService, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import {
+  provideMissingTranslationHandlerForElement,
+  provideNgxTranslateForElement
+} from '@siemens/element-translate-ng/ngx-translate';
+import { bypassTranslation, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { firstValueFrom, of } from 'rxjs';
 
 import { Filter, SiFilterBarComponent } from './index';
 
@@ -22,7 +28,28 @@ describe('SiFilterBarComponent', () => {
   const removeButtons = (): HTMLElement[] =>
     Array.from(element.querySelectorAll<HTMLElement>('[aria-label="Remove"]'));
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideTranslateService({
+          missingTranslationHandler: provideMissingTranslationHandlerForElement(),
+          loader: {
+            provide: TranslateLoader,
+            useValue: {
+              getTranslation: () =>
+                of({
+                  'FILTER.CITY': 'Translated city',
+                  'FILTER.DESCRIPTION': 'Translated description'
+                })
+            } as TranslateLoader
+          }
+        }),
+        provideNgxTranslateForElement()
+      ]
+    });
+
+    await firstValueFrom(TestBed.inject(TranslateService).use('test'));
+
     filters = signal<Filter[]>([]);
     allowReset = signal(false);
     resetText = signal<TranslatableString>('');
@@ -52,6 +79,22 @@ describe('SiFilterBarComponent', () => {
     ]);
     await fixture.whenStable();
     expect(filters().length).toBeTruthy();
+  });
+
+  it('should display bypassed filter translations', async () => {
+    filters.set([
+      {
+        filterName: 'city',
+        title: bypassTranslation('FILTER.CITY'),
+        description: 'FILTER.DESCRIPTION'
+      }
+    ]);
+    await fixture.whenStable();
+
+    const filterPill = element.querySelector('si-filter-pill')!;
+
+    expect(filterPill.querySelector('.name')).toHaveTextContent('FILTER.CITY');
+    expect(filterPill.querySelector('.value')).toHaveTextContent('Translated description');
   });
 
   it('should not display reset button when responsive is set and allow reset is false', async () => {
