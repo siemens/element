@@ -25,8 +25,7 @@ import {
 import {
   provideSiFormFieldConfig,
   SiFormFieldComponent,
-  SiFormFieldsetComponent,
-  SiFormItemComponent
+  SiFormFieldsetComponent
 } from '@siemens/element-ng/form';
 import { SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
 
