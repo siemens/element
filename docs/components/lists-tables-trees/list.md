@@ -138,23 +138,46 @@ Use the `.unread` class on `.list-item-title` to indicate unread items with a bo
 
 <si-docs-component example="list-item/list-item-unread" height="400"></si-docs-component>
 
+### List in a card
+
+A list can be placed directly inside a [card](../layout-navigation/cards.md)
+or an `si-card` body.
+Do not put a list inside `si-action-card`: its host is a `<button>`, which may
+only contain phrasing content. A list there loses its list semantics, and a
+scrollable or actionable list becomes interactive content nested in a button.
+The card provides the surrounding container, so use the plain `.list`,
+optionally with `.list-divider`, instead of `.list-outline` or `.list-filled`.
+A list that meets a card edge adopts that edge's rounded corners, and its items
+align with the card header and footer padding. Do not add extra inline margin
+on the list — `.list-item` already uses the card's inline padding.
+
+```html
+<div class="card">
+  <div class="card-header">Header text</div>
+  <ul class="list list-divider">
+    <li class="list-item">An item</li>
+    <li class="list-item">A second item</li>
+  </ul>
+</div>
+```
+
 ### Migrating from the list group
 
 The Bootstrap based list group (`.list-group`) is deprecated in favor of the list.
 The list group is only a bordered container and has no notion of the list anatomy,
 so migrating means restructuring the markup, it is not a plain class rename.
 
-| Deprecated                          | Replacement                                                                                                |
-| ----------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `.list-group`                       | `.list`, optionally with `.list-divider`, `.list-filled` or `.list-outline`                                |
-| `.list-group-item`                  | `.list-item`, wrap the content in the slot classes such as `.list-item-title` and `.list-item-description` |
-| `.list-group-item-action`           | `.list-item.list-item-action` on a `<button>` or `<a>`                                                     |
-| `.list-group-flush`                 | `.list.list-divider` to preserve dividers; otherwise `.list`, which has no outer border                    |
-| `.list-group-md`, `.list-group-lg`  | No replacement, the height of a list item follows its content                                              |
-| `.list-group-horizontal*`           | No replacement, use flex or grid utilities                                                                 |
-| `.list-group-numbered`              | No replacement, use an ordered list with a custom counter because `.list-item` removes list markers        |
-| `.list-group-item-*` color variants | No replacement, use the background and text utilities, or an [indicator](#indicator)                       |
-| `.list-header`                      | No replacement, use a heading element                                                                      |
+| Deprecated                          | Replacement                                                                                                                           |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `.list-group`                       | `.list`, optionally with `.list-divider`, `.list-filled` or `.list-outline`                                                           |
+| `.list-group-item`                  | `.list-item`. Keep the existing text. Slot classes are optional; `.list-item-title` is semibold, so do not use it for plain item text |
+| `.list-group-item-action`           | `.list-item.list-item-action` on a `<button>` or `<a>`                                                                                |
+| `.list-group-flush`                 | `.list.list-divider` to preserve dividers; otherwise `.list`, which has no outer border                                               |
+| `.list-group-md`, `.list-group-lg`  | No replacement, the height of a list item follows its content                                                                         |
+| `.list-group-horizontal*`           | No replacement, use flex or grid utilities                                                                                            |
+| `.list-group-numbered`              | No replacement, use an ordered list with a custom counter because `.list-item` removes list markers                                   |
+| `.list-group-item-*` color variants | No replacement, use the background and text utilities, or an [indicator](#indicator)                                                  |
+| `.list-header`                      | No replacement, use a heading element                                                                                                 |
 
 Start with the structural migration below, then choose the list style according to the application context.
 
@@ -166,11 +189,13 @@ Start with the structural migration below, then choose the list style according 
 
 <!-- After -->
 <ul class="list">
-  <li class="list-item">
-    <span class="list-item-title">Item</span>
-  </li>
+  <li class="list-item">Item</li>
 </ul>
 ```
+
+`.list-item-title` is only the heading slot. It is semibold and adds its own block padding.
+A plain migration does not need it, and using it makes the old item text bold.
+Next to an indicator or action, put the text in a plain element. It is placed in the title cell and keeps the regular item style.
 
 #### Choosing the right style
 
