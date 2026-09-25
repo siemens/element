@@ -2,7 +2,6 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 :host {
-  background-color: variables.$si-sys-color-background-1;
   flex: auto;
   overflow: hidden;
 }
