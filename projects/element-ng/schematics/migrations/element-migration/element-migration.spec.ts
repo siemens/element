@@ -167,6 +167,28 @@ describe('to legacy migration', () => {
     await checkTemplateMigration(['badge-class-inline-template.ts'], getElementMigrationData());
   });
 
+  it('should migrate header logo imports and inline templates', async () => {
+    await checkTemplateMigration(['header-logo-inline-template.ts'], getElementMigrationData());
+  });
+
+  it('should migrate header logo imports and external templates', async () => {
+    await checkTemplateMigration(
+      ['header-logo-template.ts', 'header-logo-template.html'],
+      getElementMigrationData()
+    );
+  });
+
+  it('should preserve header logo import aliases', async () => {
+    await checkTemplateMigration(['header-logo-alias.ts'], getElementMigrationData());
+  });
+
+  it('should reuse an existing header logo directive import', async () => {
+    await checkTemplateMigration(
+      ['header-logo-existing-import.ts', 'header-logo-separate-import.ts'],
+      getElementMigrationData()
+    );
+  });
+
   it('should add button classes to si-select without form-control', async () => {
     await checkTemplateMigration(['select-class-inline-template.ts']);
   });

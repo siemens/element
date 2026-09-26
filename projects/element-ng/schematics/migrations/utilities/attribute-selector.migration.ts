@@ -6,7 +6,12 @@
 import { UpdateRecorder } from '@angular-devkit/schematics';
 import { join, dirname } from 'path/posix';
 
-import { findAttribute, getInlineTemplates, getTemplateUrl } from '../../utils/index.js';
+import {
+  findElement,
+  getInlineTemplates,
+  getTemplateUrl,
+  removeAttributesFromElement
+} from '../../utils/index.js';
 import { AttributeSelectorInstruction } from '../data/index.js';
 import { MigrationContext, RenameElementTagParams } from './migration.interface.js';
 
@@ -29,7 +34,8 @@ export const applyAttributeSelectorMigration = (
       sourceFile,
       filePath,
       fromName: change.replace,
-      toName: change.replaceWith
+      toName: change.replaceWith,
+      removeAttributes: change.removeAttributes
     });
   }
 };
@@ -40,7 +46,8 @@ const renameAttribute = ({
   sourceFile,
   recorder,
   fromName,
-  toName
+  toName,
+  removeAttributes
 }: RenameElementTagParams): void => {
   getInlineTemplates(sourceFile).forEach(template =>
     renameAttributeInTemplate({
@@ -48,11 +55,16 @@ const renameAttribute = ({
       offset: template.getStart() + 1,
       toName,
       fromName,
-      recorder
+      recorder,
+      removeAttributes
     })
   );
   getTemplateUrl(sourceFile).forEach(templateUrl => {
     const templatePath = join(dirname(filePath), templateUrl);
+    if (!tree.exists(templatePath)) {
+      return;
+    }
+
     const templateContent = tree.read(templatePath)!.toString('utf-8');
     const templateRecorder = tree.beginUpdate(templatePath);
     renameAttributeInTemplate({
@@ -60,7 +72,8 @@ const renameAttribute = ({
       offset: 0,
       toName,
       fromName,
-      recorder: templateRecorder
+      recorder: templateRecorder,
+      removeAttributes
     });
     tree.commitUpdate(templateRecorder);
   });
@@ -71,16 +84,34 @@ const renameAttributeInTemplate = ({
   offset,
   recorder,
   fromName,
-  toName
+  toName,
+  removeAttributes
 }: {
   recorder: UpdateRecorder;
   template: string;
   offset: number;
   fromName: string;
   toName: string;
+  removeAttributes?: string[];
 }): void => {
-  findAttribute(template, element => element.name === fromName).forEach(el => {
-    recorder.remove(el.sourceSpan.start.offset + offset, fromName.length);
-    recorder.insertLeft(el.sourceSpan.start.offset + offset, toName);
-  });
+  const elements = findElement(template, element =>
+    element.attrs.some(attribute => matchesSelectorAttribute(attribute.name, fromName))
+  );
+  for (const element of elements) {
+    for (const attribute of element.attrs) {
+      if (!matchesSelectorAttribute(attribute.name, fromName)) {
+        continue;
+      }
+
+      const replacement = attribute.name === fromName ? toName : `[${toName}]`;
+      const start = attribute.sourceSpan.start.offset + offset;
+      recorder.remove(start, attribute.name.length);
+      recorder.insertLeft(start, replacement);
+    }
+
+    removeAttributesFromElement(template, element, removeAttributes ?? [], offset, recorder);
+  }
 };
+
+const matchesSelectorAttribute = (attributeName: string, selector: string): boolean =>
+  attributeName === selector || attributeName === `[${selector}]`;

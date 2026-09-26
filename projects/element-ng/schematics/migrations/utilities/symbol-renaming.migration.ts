@@ -6,8 +6,9 @@
 import * as ts from 'typescript';
 import { EmitHint } from 'typescript';
 
-import { findImportSpecifier } from '../../utils/index.js';
+import { findImportSpecifier, getImportSpecifiers } from '../../utils/index.js';
 import { SymbolRenamingInstruction } from '../data/index.js';
+import { removeImportSpecifiers } from './import-removal.js';
 import { ChangeInstruction, MigrationContext } from './migration.interface.js';
 
 export const applySymbolRenamingMigration = (
@@ -20,11 +21,12 @@ export const applySymbolRenamingMigration = (
     return;
   }
 
-  const { sourceFile } = discoveredSourceFile;
+  const { sourceFile, typeChecker } = discoveredSourceFile;
 
   const changeInstructions = [
     ...renameIdentifier({
       sourceFile,
+      typeChecker,
       renamingInstructions: changes
     })
   ];
@@ -46,9 +48,11 @@ export const applySymbolRenamingMigration = (
 
 function* renameIdentifier({
   sourceFile,
+  typeChecker,
   renamingInstructions
 }: {
   sourceFile: ts.SourceFile;
+  typeChecker: ts.TypeChecker;
   renamingInstructions: SymbolRenamingInstruction[];
 }): Generator<ChangeInstruction> {
   for (const node of sourceFile.statements) {
@@ -64,6 +68,11 @@ function* renameIdentifier({
       if (!(
         node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)
       )) {
+        continue;
+      }
+
+      if (!renamingInstruction.toModule) {
+        yield* renameSymbolsInPlace(sourceFile, typeChecker, node, renamingInstruction);
         continue;
       }
 
@@ -211,4 +220,118 @@ function* renameIdentifier({
       }
     }
   }
+}
+
+function* renameSymbolsInPlace(
+  sourceFile: ts.SourceFile,
+  typeChecker: ts.TypeChecker,
+  declaration: ts.ImportDeclaration,
+  instruction: SymbolRenamingInstruction
+): Generator<ChangeInstruction> {
+  const importClause = declaration.importClause!;
+  const bindings = importClause.namedBindings as ts.NamedImports;
+  const replacements = new Map<ts.ImportSpecifier, string>();
+  const references = new Map<ts.Symbol, string>();
+  const redundantImports: ts.ImportSpecifier[] = [];
+
+  for (const specifier of bindings.elements) {
+    const importedName = specifier.propertyName ?? specifier.name;
+    const rename = instruction.symbolRenamings.find(change => change.replace === importedName.text);
+    if (!rename) {
+      continue;
+    }
+
+    // Aliases keep their local name and only change the imported symbol.
+    if (specifier.propertyName) {
+      replacements.set(specifier, rename.replaceWith);
+      continue;
+    }
+
+    const existingImport = getImportSpecifiers(
+      sourceFile,
+      (declaration.moduleSpecifier as ts.StringLiteral).text,
+      rename.replaceWith
+    ).find(candidate => {
+      const isTypeOnly = candidate.isTypeOnly || candidate.parent.parent.isTypeOnly;
+      return !isTypeOnly || specifier.isTypeOnly || importClause.isTypeOnly;
+    });
+    if (existingImport) {
+      redundantImports.push(specifier);
+    } else {
+      replacements.set(specifier, rename.replaceWith);
+    }
+
+    const symbol = typeChecker.getSymbolAtLocation(specifier.name);
+    if (symbol) {
+      references.set(symbol, existingImport?.name.text ?? rename.replaceWith);
+    }
+  }
+
+  if (redundantImports.length) {
+    const edit = removeImportSpecifiers(sourceFile, declaration, redundantImports);
+    const remaining = bindings.elements.filter(specifier => !redundantImports.includes(specifier));
+    const updatedBindings = ts.factory.updateNamedImports(
+      bindings,
+      remaining.map(specifier => {
+        const replacement = replacements.get(specifier);
+        if (!replacement) {
+          return specifier;
+        }
+        return ts.factory.updateImportSpecifier(
+          specifier,
+          specifier.isTypeOnly,
+          specifier.propertyName ? ts.factory.createIdentifier(replacement) : undefined,
+          specifier.propertyName ? specifier.name : ts.factory.createIdentifier(replacement)
+        );
+      })
+    );
+    yield {
+      start: edit.start,
+      width: edit.width,
+      newNode: edit.newNode
+        ? ts.factory.updateImportDeclaration(
+            declaration,
+            declaration.modifiers,
+            ts.factory.updateImportClause(
+              importClause,
+              importClause.isTypeOnly,
+              importClause.name,
+              updatedBindings
+            ),
+            declaration.moduleSpecifier,
+            declaration.attributes
+          )
+        : ts.factory.createIdentifier('')
+    };
+  } else {
+    for (const [specifier, replacement] of replacements) {
+      const importedName = specifier.propertyName ?? specifier.name;
+      yield {
+        start: importedName.getStart(),
+        width: importedName.getWidth(),
+        newNode: ts.factory.createIdentifier(replacement)
+      };
+    }
+  }
+
+  const visit = function* (node: ts.Node): Generator<ChangeInstruction> {
+    if (ts.isImportDeclaration(node)) {
+      return;
+    }
+    if (ts.isIdentifier(node)) {
+      const symbol = typeChecker.getSymbolAtLocation(node);
+      const replacement = symbol && references.get(symbol);
+      if (replacement) {
+        yield {
+          start: node.getStart(),
+          width: node.getWidth(),
+          newNode: ts.factory.createIdentifier(replacement)
+        };
+      }
+    }
+    for (const child of node.getChildren()) {
+      yield* visit(child);
+    }
+  };
+  yield* visit(sourceFile);
 }
