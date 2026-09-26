@@ -27,7 +27,7 @@ catalog:
   typescript: 6.0.3
 
 overrides:
-  '@angular-architects/native-federation>esbuild': 0.28.1
+  '@angular-architects/native-federation>esbuild': 0.28.2
   '@microsoft/api-extractor>typescript': 'catalog:'
   '@simpl/brand>@siemens/element-theme': 'workspace:*'
 
