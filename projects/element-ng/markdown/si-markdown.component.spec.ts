@@ -66,7 +66,7 @@ Second line
     expect(element.querySelector('.h4')).toHaveTextContent('Heading 4');
     expect(element.querySelector('.h5')).toHaveTextContent('Heading 5');
     expect(element.querySelector('.h6')).toHaveTextContent('Heading 6');
-    expect(element.querySelector('p')).toHaveTextContent(
+    expect(element.querySelector('p')).toMatchTextContent(
       'A paragraph with a link, emphasized, important, and deleted text.'
     );
     expect(element.querySelector('blockquote')).toHaveTextContent('A quoted paragraph.');

@@ -271,12 +271,12 @@ describe('SiFileDropzoneComponent', () => {
   it('should display max allowed file size with abbreviation', async () => {
     maxFileSize.set(1_572_864); // 1.5mb
     await fixture.whenStable();
-    expect(element.querySelector('.allowed')!).toHaveTextContent('1.5MB');
+    expect(element.querySelector('.allowed')!).toMatchTextContent('1.5MB');
 
     maxFileSize.set(1_572_864 * 1024); // 1.5gb
     await fixture.whenStable();
 
-    expect(element.querySelector('.allowed')!).toHaveTextContent('1.5GB');
+    expect(element.querySelector('.allowed')!).toMatchTextContent('1.5GB');
   });
 
   it('should allow directory upload when using drag and drop', async () => {

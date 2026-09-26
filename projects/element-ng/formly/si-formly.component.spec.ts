@@ -93,13 +93,13 @@ describe('ElementFormComponent', () => {
     schemaInput.set(schema);
     await fixture.whenStable();
 
-    expect(element.querySelector('b')!).toHaveTextContent('title');
-    expect(element.querySelector('label')!).toHaveTextContent('field1');
+    expect(element.querySelector('b')!).toMatchTextContent('title');
+    expect(element.querySelector('label')!).toMatchTextContent('field1');
     expect(element.querySelector('input[type=text]')).toBeInTheDocument();
   });
 
   it('should initially not display anything', () => {
-    expect(element).not.toHaveTextContent('formly-form');
+    expect(element).not.toMatchTextContent('formly-form');
   });
 
   it('should display the form if formgroup and fieldconfig are present', async () => {
@@ -137,8 +137,8 @@ describe('ElementFormComponent', () => {
     labelWidthInput.set(500);
     await fixture.whenStable();
 
-    expect(element.querySelector('b')!).toHaveTextContent('title');
-    expect(element.querySelector('label')!).toHaveTextContent('field1');
+    expect(element.querySelector('b')!).toMatchTextContent('title');
+    expect(element.querySelector('label')!).toMatchTextContent('field1');
     expect(
       getComputedStyle(element.querySelector('label')!).getPropertyValue('--si-form-label-width')
     ).toBe('500px');
@@ -195,8 +195,8 @@ describe('ElementFormComponent', () => {
     schemaInput.set(schema);
     await fixture.whenStable();
 
-    expect(element.querySelector('b')!).toHaveTextContent('title');
-    expect(element.querySelector('label')!).toHaveTextContent('field1');
+    expect(element.querySelector('b')!).toMatchTextContent('title');
+    expect(element.querySelector('label')!).toMatchTextContent('field1');
     expect(
       getComputedStyle(element.querySelector('label')!).getPropertyValue('--si-form-label-width')
     ).toBe('500px');

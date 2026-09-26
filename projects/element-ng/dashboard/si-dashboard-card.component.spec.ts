@@ -51,7 +51,7 @@ describe('SiDashboardCardComponent', () => {
     heading.set('TITLE_KEY');
     subHeading.set('SUB_TITLE_KEY');
     await fixture.whenStable();
-    expect(element.querySelector('.card-header .heading')!).toHaveTextContent('SUB_TITLE_KEY');
+    expect(element.querySelector('.card-header .heading')!).toMatchTextContent('SUB_TITLE_KEY');
   });
 
   it('should not render subHeading when not set', async () => {

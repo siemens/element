@@ -104,8 +104,8 @@ describe('SiBreadcrumbComponent', () => {
     fixture.detectChanges();
 
     const breadcrumb = element.querySelector('.breadcrumb')!;
-    expect(breadcrumb).toHaveTextContent('Level 1');
-    expect(breadcrumb).toHaveTextContent('Level 2');
+    expect(breadcrumb).toMatchTextContent('Level 1');
+    expect(breadcrumb).toMatchTextContent('Level 2');
   });
 
   it('should contain items with correct active state', async () => {
@@ -148,12 +148,12 @@ describe('SiBreadcrumbComponent', () => {
 
     fixture.detectChanges();
 
-    expect(element.querySelector('.breadcrumb')!).toHaveTextContent('test title in english');
+    expect(element.querySelector('.breadcrumb')!).toMatchTextContent('test title in english');
 
     ngxTranslate.use('test');
     fixture.detectChanges();
 
-    expect(element.querySelector('.breadcrumb')!).toHaveTextContent(
+    expect(element.querySelector('.breadcrumb')!).toMatchTextContent(
       'test title in another language'
     );
   });
@@ -183,8 +183,8 @@ describe('SiBreadcrumbComponent', () => {
     fixture.detectChanges();
 
     const breadcrumb = element.querySelector('.breadcrumb')!;
-    expect(breadcrumb).toHaveTextContent('Level 1');
-    expect(breadcrumb).toHaveTextContent('Level 2');
+    expect(breadcrumb).toMatchTextContent('Level 1');
+    expect(breadcrumb).toMatchTextContent('Level 2');
 
     items.set([
       { title: 'Root', link: '/' },
@@ -193,10 +193,10 @@ describe('SiBreadcrumbComponent', () => {
     ]);
     fixture.detectChanges();
 
-    expect(breadcrumb).toHaveTextContent('Sub 1');
-    expect(breadcrumb).toHaveTextContent('Sub 2');
-    expect(breadcrumb).not.toHaveTextContent('Level 1');
-    expect(breadcrumb).not.toHaveTextContent('Level 2');
+    expect(breadcrumb).toMatchTextContent('Sub 1');
+    expect(breadcrumb).toMatchTextContent('Sub 2');
+    expect(breadcrumb).not.toMatchTextContent('Level 1');
+    expect(breadcrumb).not.toMatchTextContent('Level 2');
   });
 
   it('should dynamically resize', async () => {
@@ -265,7 +265,7 @@ describe('SiBreadcrumbComponent', () => {
     fixture.detectChanges();
 
     const shownItems = element.querySelectorAll('.breadcrumb .item:not(.breadcrumb-ellipses-item)');
-    expect(shownItems.item(shownItems.length - 2)).toHaveTextContent('Level 8');
+    expect(shownItems.item(shownItems.length - 2)).toMatchTextContent('Level 8');
     expect(shownItems.item(shownItems.length - 1)).toHaveTextContent('Level 9');
   });
 
@@ -343,7 +343,7 @@ describe('SiBreadcrumbComponent', () => {
       shortenedElement.querySelector<HTMLElement>('button.btn.btn-link');
     const dropdownElement = shortenedElement.querySelector('.dropdown-menu');
 
-    expect(shortenedBreadcrumbItemElement).toHaveTextContent('Level 8');
+    expect(shortenedBreadcrumbItemElement).toMatchTextContent('Level 8');
     expect(shortenedBreadcrumbItemElement?.innerText).not.toContain(
       'Level 8 thisHasALongNonSeparableTitle'
     );

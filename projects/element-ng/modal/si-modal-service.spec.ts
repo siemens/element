@@ -75,7 +75,7 @@ describe('SiModalService', () => {
 
       const modal = document.querySelector('si-modal');
       expect(modal).toBeTruthy();
-      expect(modal).toHaveTextContent('test component');
+      expect(modal).toMatchTextContent('test component');
 
       modalRef.hide();
       appRef.tick();
@@ -90,10 +90,10 @@ describe('SiModalService', () => {
 
       const modal = document.querySelector('si-modal');
       expect(modal).toBeTruthy();
-      expect(modal).toHaveTextContent('input value');
+      expect(modal).toMatchTextContent('input value');
       modalRef.setInput('inputProp', 'new input value');
       appRef.tick();
-      expect(modal).toHaveTextContent('new input value');
+      expect(modal).toMatchTextContent('new input value');
       modalRef.hide();
       appRef.tick();
     });

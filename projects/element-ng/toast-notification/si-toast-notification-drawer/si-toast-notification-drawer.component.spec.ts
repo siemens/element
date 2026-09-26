@@ -37,7 +37,7 @@ describe('SiToastNotificationDrawerComponent', () => {
 
     const domToasts = element.querySelectorAll('si-toast-notification');
     expect(domToasts).toHaveLength(2);
-    expect(domToasts[0]).toHaveTextContent('danger message');
-    expect(domToasts[1]).toHaveTextContent('info message');
+    expect(domToasts[0]).toMatchTextContent('danger message');
+    expect(domToasts[1]).toMatchTextContent('info message');
   });
 });
