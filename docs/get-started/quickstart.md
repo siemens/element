@@ -105,7 +105,6 @@ update the imports in the `app.ts` accordingly.
       name="Jane Smith"
       [siHeaderDropdownTriggerFor]="account"
     >
-      Account
     </button>
   </si-header-actions>
 </si-application-header>

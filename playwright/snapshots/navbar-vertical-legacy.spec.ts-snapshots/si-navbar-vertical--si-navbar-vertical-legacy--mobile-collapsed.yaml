@@ -2,7 +2,7 @@
 - link "Jump to Navigation"
 - banner:
   - heading "Navbar vertical" [level=1]
-  - button "Jane Smith"
+  - button "Account of Jane Smith"
 - navigation:
   - button "expand"
 - main:

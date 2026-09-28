@@ -3,8 +3,8 @@
   - heading "My application" [level=1]
   - button "Notifications"
   - button "Show actions"
-  - button "Lars Vegas" [expanded]: LV
-  - group "Lars Vegas":
+  - button "Account of Lars Vegas" [expanded]
+  - group "Account of Lars Vegas":
     - text: Lars Vegas lars.vegas@siemens.com Siemens AG Admin
     - button "Language" [expanded]
     - group "Language":
