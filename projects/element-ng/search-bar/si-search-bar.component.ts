@@ -63,6 +63,12 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
    */
   readonly placeholder = input('');
   /**
+   * Accessible name for the search input.
+   *
+   * @defaultValue undefined
+   */
+  readonly ariaLabel = input<string | undefined>(undefined, { alias: 'aria-label' });
+  /**
    * Display search icon before search input.
    *
    * @defaultValue false

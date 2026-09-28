@@ -21,6 +21,7 @@ describe('SiSearchBarComponent', () => {
     @Component({
       imports: [ReactiveFormsModule, SiSearchBarComponent],
       template: `<si-search-bar
+        aria-label="Search users"
         [placeholder]="placeholder()"
         [showIcon]="true"
         [formControl]="search"
@@ -48,6 +49,10 @@ describe('SiSearchBarComponent', () => {
       testComponent.placeholder.set('Users');
       await fixture.whenStable();
       expect(getInput(element).placeholder).toBe('Users');
+    });
+
+    it('should apply the accessible name to its input', () => {
+      expect(getInput(element)).toHaveAttribute('aria-label', 'Search users');
     });
 
     it('should reset search and focus input when clicking cancel button', async () => {
