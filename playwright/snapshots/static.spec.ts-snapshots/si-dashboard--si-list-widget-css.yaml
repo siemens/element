@@ -1,0 +1,26 @@
+- text: Heading
+- menubar:
+  - menuitem "Sort up"
+- textbox "Search buildings":
+  - /placeholder: ""
+- list:
+  - listitem:
+    - text: /2 Building B \d+\.\d+/
+    - button "Export Building B": 
+  - listitem:
+    - text: /2 Building C \d+\.\d+/
+    - button "Export Building C": 
+  - listitem:
+    - text: /3 Building D \d+\.\d+/
+    - button "Export Building D": 
+  - listitem:
+    - text: /5 Building E \d+\.\d+/
+    - button "Export Building E": 
+  - listitem:
+    - text: /5 Building F \d+\.\d+/
+    - button "Export Building F": 
+  - listitem:
+    - text: /6 Building G \d+\.\d+/
+    - button "Export Building G": 
+- link "Link":
+  - /url: /
