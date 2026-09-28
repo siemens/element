@@ -2,9 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { expect, test } from '../../support/test-helpers';
+import { testMap } from '../../support/maptiler-mock';
+import { expect } from '../../support/test-helpers';
 
-test('maplibre/maplibre-cluster', ({ si }) =>
+testMap('maplibre/maplibre-cluster', ({ si }) =>
   si.static({
     skipAriaSnapshot: true,
     waitCallback: async page => {
@@ -25,4 +26,5 @@ test('maplibre/maplibre-cluster', ({ si }) =>
         })
         .toEqual({ caution: true, danger: true, success: true });
     }
-  }));
+  })
+);
