@@ -66,6 +66,7 @@ test.describe('si-weather-widget', () => {
       await page.route('https://api.openweathermap.org/data/2.5/weather?**', route =>
         route.fulfill({
           json: {
+            dt: 1767254400,
             weather: [{ id: 800, main: 'Clear', description: 'clear sky', icon: '01d' }],
             main: { temp: 21.2, temp_min: 18.4, temp_max: 23.8, humidity: 52 },
             wind: { speed: 2.5 },
@@ -92,9 +93,10 @@ test.describe('si-weather-widget', () => {
       );
 
       await si.visitExample(configurableExample);
-      await page.getByLabel('OpenWeather').click();
+      await page.getByText('OpenWeather', { exact: true }).click();
       await page.getByLabel('OpenWeather API key').fill('dummy-api-key');
-      await page.getByRole('button', { name: 'Search' }).click();
+      const search = page.getByRole('button', { name: 'Search' });
+      await search.click();
 
       const suggestion = page.getByRole('button', { name: 'Zug, Canton of Zug, CH' });
       await expect(suggestion).toBeVisible();
@@ -104,11 +106,15 @@ test.describe('si-weather-widget', () => {
         })
       ).toHaveCount(1);
 
-      await suggestion.focus();
+      await expect(search).toBeFocused();
+      await page.keyboard.press('Tab');
+      await expect(suggestion).toBeFocused();
+      await si.runVisualAndA11yTests('suggestions');
       await page.keyboard.press('Enter');
 
       await expect(page.getByText('Showing: Zug, Canton of Zug, CH')).toBeVisible();
       await expect(page.locator('.si-weather-widget-temperature')).toContainText('21°C');
+      await expect(suggestion).toBeHidden();
     }
   );
 });
