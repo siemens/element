@@ -85,6 +85,7 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
 
 // @public
 export class SiHeaderAccountItemComponent extends SiHeaderActionIconItemBase {
+    readonly accountItemLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly imageUrl: _angular_core.InputSignal<string | undefined>;
     readonly initials: _angular_core.InputSignal<string | undefined>;
     readonly name: _angular_core.InputSignal<string>;
