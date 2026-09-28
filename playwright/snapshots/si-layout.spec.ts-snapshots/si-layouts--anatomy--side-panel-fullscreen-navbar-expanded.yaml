@@ -8,7 +8,7 @@
   - heading "Application name" [level=1]
   - button "Support"
   - button "Settings"
-  - button "Lars Vegas": LV
+  - button "Account of Lars Vegas"
 - navigation:
   - button "collapse" [expanded]
   - button "Home"
