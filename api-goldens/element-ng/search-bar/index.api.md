@@ -9,12 +9,13 @@ import { ControlValueAccessor } from '@angular/forms';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAccessor, OnChanges {
-    readonly clearButtonAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly ariaLabel: _angular_core.InputSignal<TranslatableString | undefined>;
+    readonly clearButtonAriaLabel: _angular_core.InputSignal<TranslatableString>;
     readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
     readonly debounceTime: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
