@@ -49,6 +49,13 @@ changes after a user stops typing. (Type: `number`, Default value: `400`).
 
 Input `[showIcon]` defines if a search icon is displayed (false by default).
 
+Use `aria-label` to name the internal search input when no visible label is associated.
+It is independent of the placeholder.
+
+```html
+<si-search-bar aria-label="Search buildings" placeholder="Search" />
+```
+
 ### Usage
 
 ```ts

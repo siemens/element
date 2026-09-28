@@ -11,7 +11,7 @@
     [class.is-invalid]="isInvalid"
     [class.icon-end]="searchValue()"
     [attr.maxlength]="maxlength()"
-    [attr.aria-label]="ariaLabel()"
+    [attr.aria-label]="ariaLabel() | translate"
     [readonly]="readonly()"
     (blur)="onBlur()"
     (input)="input($event)"
