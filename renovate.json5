@@ -25,6 +25,12 @@
   rebaseWhen: "conflicted",
   packageRules: [
     {
+      description: ["Keep the native federation esbuild override pinned"],
+      matchFileNames: ["pnpm-workspace.yaml"],
+      matchDepNames: ["@angular-architects/native-federation>esbuild"],
+      enabled: false
+    },
+    {
       description: ["Hold module federation packages at 2.8.2 due to an upstream bug"],
       matchPackageNames: ["@module-federation/enhanced", "@module-federation/runtime"],
       enabled: false
