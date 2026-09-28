@@ -197,6 +197,7 @@ When replacing `.list-group` with `.list`, change the style according to the con
   use `.list` for a ghost style or `.list.list-divider` for a divider style.
 - If `.list-group` is placed directly on the application's bottom layer or on a `base-0`
   background, use `.list.list-outline` or `.list.list-filled`.
-- To retain the exact same style as before, apply `.card` to `.list.list-divider`.
+- A `.card` can provide a surface for a `.list.list-divider`, but choose the list style for
+  the spacing, borders, and hierarchy required in its context.
 
 ![List group migration](images/list-group-migration.png)

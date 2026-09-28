@@ -154,15 +154,7 @@ button.card {
     }
   }
 
-  + .list {
-    z-index: 0;
-
-    > * {
-      z-index: -1;
-    }
-  }
-
-  + :is(.list-group, .list, .overflow-auto, [tabindex='0']) {
+  + :is(.list-group, .overflow-auto, [tabindex='0']) {
     outline-offset: focus.$focus-style-outline-inside-offset;
   }
 }

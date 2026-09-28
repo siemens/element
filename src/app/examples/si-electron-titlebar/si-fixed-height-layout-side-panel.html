@@ -70,16 +70,20 @@
           class="si-layout-fixed-height"
           [primaryActions]="primaryActions"
         >
-          <ul class="list list-divider overflow-auto mb-6" tabindex="0" body>
+          <ul
+            class="list list-divider overflow-auto ms-6 mb-6 rounded-0 border-0"
+            tabindex="0"
+            body
+          >
             @for (item of listItems; track $index) {
-              <li class="list-item">
+              <li class="list-item d-flex align-items-center">
                 <si-circle-status
-                  class="list-item-indicator"
+                  class="my-n4 me-5"
                   [status]="item.status"
                   [icon]="item.icon"
                   [eventOut]="!!item.eventOut"
                 />
-                <span class="list-item-title">{{ item.title }}</span>
+                <span>{{ item.title }}</span>
               </li>
             }
           </ul>
