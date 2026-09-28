@@ -55,60 +55,60 @@ test.describe('si-weather-widget', () => {
     await si.runVisualAndA11yTests('mobile');
   });
 
-  test(configurableExample + ' selects an OpenWeather suggestion with the keyboard', async ({
-    page,
-    si
-  }) => {
-    await page.route('https://api.openweathermap.org/geo/1.0/direct?**', route =>
-      route.fulfill({
-        json: [{ name: 'Zug', state: 'Canton of Zug', country: 'CH', lat: 47.1662, lon: 8.5155 }]
-      })
-    );
-    await page.route('https://api.openweathermap.org/data/2.5/weather?**', route =>
-      route.fulfill({
-        json: {
-          weather: [{ id: 800, main: 'Clear', description: 'clear sky', icon: '01d' }],
-          main: { temp: 21.2, temp_min: 18.4, temp_max: 23.8, humidity: 52 },
-          wind: { speed: 2.5 },
-          clouds: { all: 5 },
-          sys: { sunrise: 0, sunset: 0 },
-          name: 'Zug'
-        }
-      })
-    );
-    await page.route('https://api.openweathermap.org/data/2.5/forecast?**', route =>
-      route.fulfill({
-        json: {
-          list: [
-            {
-              dt: 1767254400,
-              dt_txt: '2026-01-01 12:00:00',
-              weather: [{ id: 800, main: 'Clear', description: 'clear sky', icon: '01d' }],
-              main: { temp: 21.2, temp_min: 18.4, temp_max: 23.8 }
-            }
-          ],
-          city: { sunrise: 0, sunset: 0 }
-        }
-      })
-    );
+  test(
+    configurableExample + ' selects an OpenWeather suggestion with the keyboard',
+    async ({ page, si }) => {
+      await page.route('https://api.openweathermap.org/geo/1.0/direct?**', route =>
+        route.fulfill({
+          json: [{ name: 'Zug', state: 'Canton of Zug', country: 'CH', lat: 47.1662, lon: 8.5155 }]
+        })
+      );
+      await page.route('https://api.openweathermap.org/data/2.5/weather?**', route =>
+        route.fulfill({
+          json: {
+            weather: [{ id: 800, main: 'Clear', description: 'clear sky', icon: '01d' }],
+            main: { temp: 21.2, temp_min: 18.4, temp_max: 23.8, humidity: 52 },
+            wind: { speed: 2.5 },
+            clouds: { all: 5 },
+            sys: { sunrise: 0, sunset: 0 },
+            name: 'Zug'
+          }
+        })
+      );
+      await page.route('https://api.openweathermap.org/data/2.5/forecast?**', route =>
+        route.fulfill({
+          json: {
+            list: [
+              {
+                dt: 1767254400,
+                dt_txt: '2026-01-01 12:00:00',
+                weather: [{ id: 800, main: 'Clear', description: 'clear sky', icon: '01d' }],
+                main: { temp: 21.2, temp_min: 18.4, temp_max: 23.8 }
+              }
+            ],
+            city: { sunrise: 0, sunset: 0 }
+          }
+        })
+      );
 
-    await si.visitExample(configurableExample);
-    await page.getByLabel('OpenWeather').click();
-    await page.getByLabel('OpenWeather API key').fill('dummy-api-key');
-    await page.getByRole('button', { name: 'Search' }).click();
+      await si.visitExample(configurableExample);
+      await page.getByLabel('OpenWeather').click();
+      await page.getByLabel('OpenWeather API key').fill('dummy-api-key');
+      await page.getByRole('button', { name: 'Search' }).click();
 
-    const suggestion = page.getByRole('button', { name: 'Zug, Canton of Zug, CH' });
-    await expect(suggestion).toBeVisible();
-    await expect(
-      page.locator('ul.list.list-divider.card > li > button', {
-        hasText: 'Zug, Canton of Zug, CH'
-      })
-    ).toHaveCount(1);
+      const suggestion = page.getByRole('button', { name: 'Zug, Canton of Zug, CH' });
+      await expect(suggestion).toBeVisible();
+      await expect(
+        page.locator('ul.list.list-divider.card > li > button', {
+          hasText: 'Zug, Canton of Zug, CH'
+        })
+      ).toHaveCount(1);
 
-    await suggestion.focus();
-    await page.keyboard.press('Enter');
+      await suggestion.focus();
+      await page.keyboard.press('Enter');
 
-    await expect(page.getByText('Showing: Zug, Canton of Zug, CH')).toBeVisible();
-    await expect(page.locator('.si-weather-widget-temperature')).toContainText('21°C');
-  });
+      await expect(page.getByText('Showing: Zug, Canton of Zug, CH')).toBeVisible();
+      await expect(page.locator('.si-weather-widget-temperature')).toContainText('21°C');
+    }
+  );
 });
