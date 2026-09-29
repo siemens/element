@@ -230,6 +230,32 @@ describe('SiFilteredSearchComponent', () => {
       expect(await loader.getAllHarnesses(SiFilteredSearchCriterionHarness)).toHaveLength(0);
     });
 
+    it('should update the typeahead position when clearing a pill while the free-text input is focused', async () => {
+      component.criteria.set([{ name: 'foo' }, { name: 'other' }]);
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+
+      await freeTextSearch.focus();
+      await tick();
+      const input = element.querySelector<HTMLInputElement>('input.value-input')!;
+      const initialInputLeft = input.getBoundingClientRect().left;
+      const initialOverlayLeft = (await freeTextSearch.getTypeaheadDimensions())!.left;
+
+      const [criterion] = await filteredSearch.getCriteria();
+      await criterion.clickClearButton();
+      await fixture.whenStable();
+
+      expect(await filteredSearch.getCriteria()).toHaveLength(0);
+      expect(await freeTextSearch.isFocused()).toBeTruthy();
+      const updatedInputLeft = input.getBoundingClientRect().left;
+      const updatedOverlayLeft = (await freeTextSearch.getTypeaheadDimensions())!.left;
+      expect(updatedInputLeft).toBeLessThan(initialInputLeft);
+      expect(updatedOverlayLeft).toBeLessThan(initialOverlayLeft);
+      expect(updatedOverlayLeft - initialOverlayLeft).toBeCloseTo(
+        updatedInputLeft - initialInputLeft
+      );
+    });
+
     it('should clear input value if clear is pressed while criterion is active', async () => {
       // Having an option used to be responsible for preventing the criterion text to be cleared.
       component.criteria.set([{ name: 'foo', options: [{ value: 'bar', label: 'Bar' }] }]);
