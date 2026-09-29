@@ -4,10 +4,13 @@
  */
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
+  inject,
+  Injector,
   input,
   model,
   output,
@@ -96,9 +99,14 @@ export class SiFilteredSearchInputComponent {
   private readonly inputElement =
     viewChild.required<ElementRef<HTMLInputElement>>('freeTextInputElement');
 
+  private readonly typeahead = viewChild.required(SiTypeaheadDirective);
+
+  private readonly injector = inject(Injector);
+
   /** Public method to focus the input element */
   focus(): void {
     this.inputElement().nativeElement.focus();
+    afterNextRender(() => this.typeahead().updateOverlayPosition(), { injector: this.injector });
   }
 
   protected readonly typeaheadCreateOption = computed(() =>
