@@ -33,7 +33,7 @@ export class SiNumberInputComponent implements OnChanges, ControlValueAccessor, 
     readonly showButtons: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly step: _angular_core.InputSignal<number | "any">;
     readonly unit: _angular_core.InputSignal<string | undefined>;
-    readonly value: _angular_core.InputSignal<number | undefined>;
+    readonly value: _angular_core.InputSignal<number | null | undefined>;
     readonly valueChange: _angular_core.OutputEmitterRef<number | undefined>;
 }
 
