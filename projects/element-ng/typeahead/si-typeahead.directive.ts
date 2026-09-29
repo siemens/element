@@ -432,6 +432,16 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     }
   }
 
+  /**
+   * @internal
+   *
+   * Updates the position of the typeahead overlay when already rendered.
+   * This can be useful if the input position/dimension changed.
+   */
+  updateOverlayPosition(): void {
+    this.overlayRef?.updatePosition();
+  }
+
   // Clear the current input timeout (if set) and remove the component when the focus of the host is lost.
   protected onBlur(): void {
     this.clearTimer();

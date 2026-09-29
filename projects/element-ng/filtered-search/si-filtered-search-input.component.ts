@@ -3,7 +3,18 @@
  * SPDX-License-Identifier: MIT
  */
 import { ScrollStrategy } from '@angular/cdk/overlay';
-import { Component, computed, ElementRef, input, model, output, viewChild } from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  Injector,
+  input,
+  model,
+  output,
+  viewChild
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiTypeaheadDirective, TypeaheadOption } from '@siemens/element-ng/typeahead';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -85,9 +96,14 @@ export class SiFilteredSearchInputComponent {
   private readonly inputElement =
     viewChild.required<ElementRef<HTMLInputElement>>('freeTextInputElement');
 
+  private readonly typeahead = viewChild.required(SiTypeaheadDirective);
+
+  private readonly injector = inject(Injector);
+
   /** Public method to focus the input element */
   focus(): void {
     this.inputElement().nativeElement.focus();
+    afterNextRender(() => this.typeahead().updateOverlayPosition(), { injector: this.injector });
   }
 
   protected readonly typeaheadCreateOption = computed(() =>
