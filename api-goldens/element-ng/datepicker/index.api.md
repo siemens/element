@@ -322,7 +322,7 @@ export class SiDateInputDirective implements ControlValueAccessor, OnChanges, Va
     // (undocumented)
     validate(c: AbstractControl): ValidationErrors | null;
     // (undocumented)
-    writeValue(value?: Date | string): void;
+    writeValue(value?: Date | string | null): void;
 }
 
 // @public (undocumented)

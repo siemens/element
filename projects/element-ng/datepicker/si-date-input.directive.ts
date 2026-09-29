@@ -188,7 +188,8 @@ export class SiDateInputDirective
     this.stateChange.emit();
   }
 
-  writeValue(value?: Date | string): void {
+  writeValue(value?: Date | string | null): void {
+    value ??= undefined;
     // remove date when user input is empty
     let emptyString = false;
     // Flag to define invalid string
@@ -237,7 +238,8 @@ export class SiDateInputDirective
     const hasChanged = !(parsedDate === this.date);
     if (hasChanged) {
       this.date = parsedDate;
-      this.onModelChange(this.date);
+      // Emit `null` for an empty input, as `undefined` is not supported by Angular signal forms.
+      this.onModelChange(this.date ?? null);
       this.dateChange.emit(this.date);
     }
   }
@@ -261,7 +263,7 @@ export class SiDateInputDirective
     // update input element
     this.writeValue(date);
     // update the Forms ngModel
-    this.onModelChange(this.date);
+    this.onModelChange(this.date ?? null);
   }
 
   /**

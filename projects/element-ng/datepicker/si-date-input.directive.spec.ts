@@ -5,6 +5,7 @@
 import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
+import { form, FormField, required } from '@angular/forms/signals';
 import { userEvent } from 'vitest/browser';
 
 import { SiDateInputDirective } from './si-date-input.directive';
@@ -41,6 +42,42 @@ class WrapperComponent {
     this.date.set(d);
   }
 }
+
+@Component({
+  imports: [FormField, SiDatepickerModule],
+  template: `<input
+    type="text"
+    siDateInput
+    [formField]="form.date"
+    [siDatepickerConfig]="{ dateFormat: 'yyyy-MM-dd', disabledTime: true }"
+  />`
+})
+class SignalFormWrapperComponent {
+  readonly model = signal<{ date: Date | null }>({ date: new Date('2022-03-12') });
+  readonly form = form(this.model, path => required(path.date));
+}
+
+describe('SiDateInputDirective with a signal form field', () => {
+  it('should set the model to null when the input is cleared', async () => {
+    const fixture = TestBed.createComponent(SignalFormWrapperComponent);
+    await fixture.whenStable();
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+
+    input.value = '';
+    input.dispatchEvent(new Event('input'));
+    await fixture.whenStable();
+
+    const { model, form: signalForm } = fixture.componentInstance;
+    expect(model().date).toBeNull();
+    expect(signalForm.date).toBeDefined();
+    expect(signalForm.date().errors()).toEqual([expect.objectContaining({ kind: 'required' })]);
+
+    input.value = '2023-01-02';
+    input.dispatchEvent(new Event('input'));
+    await fixture.whenStable();
+    expect(model().date).toEqual(new Date(2023, 0, 2));
+  });
+});
 
 describe('SiDateInputDirective', () => {
   let fixture: ComponentFixture<WrapperComponent>;
