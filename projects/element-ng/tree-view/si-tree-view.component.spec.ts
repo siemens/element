@@ -468,7 +468,7 @@ describe('SiTreeViewComponent', () => {
     // Option boxes don't work on the first level. So expand the tree first
     debugElement
       .query(By.css('.si-tree-view-root-ul .si-tree-view-li-item .si-tree-view-item-toggle'))
-      .triggerEventHandler('click', null);
+      .nativeElement.click();
     await fixture.whenStable();
     const input = element.querySelector<HTMLInputElement>('.form-check-input')!;
     // Click on the now expanded optionbox. (Second item in the list)
@@ -482,7 +482,7 @@ describe('SiTreeViewComponent', () => {
     await fixture.whenStable();
     debugElement
       .query(By.css('.si-tree-view-root-ul .si-tree-view-li-item .si-tree-view-item-toggle'))
-      .triggerEventHandler('click', null);
+      .nativeElement.click();
 
     const item = element.querySelectorAll('.si-tree-view-item')[1];
     expect(item.querySelector('.si-tree-view-item-object-data div')).toHaveTextContent('Milano');
@@ -505,9 +505,7 @@ describe('SiTreeViewComponent', () => {
     const spy = vi.spyOn(component.treeViewComponent() as any, 'onFlatTreeNavigateUp');
     await fixture.whenStable();
     expect(element.querySelectorAll('.si-tree-view-item-toggle').length).toBeGreaterThan(0);
-    debugElement
-      .queryAll(By.css('.si-tree-view-item-toggle'))[0]
-      .triggerEventHandler('click', null);
+    debugElement.queryAll(By.css('.si-tree-view-item-toggle'))[0].nativeElement.click();
     await fixture.whenStable();
     const item = element.querySelectorAll('.si-tree-view-item-toggle')[1];
     item.dispatchEvent(new Event('click'));
@@ -552,9 +550,23 @@ describe('SiTreeViewComponent', () => {
     const treeViewComponent = component.treeViewComponent();
     vi.spyOn(treeViewComponent.treeItemClicked, 'emit');
     await fixture.whenStable();
-    element.querySelectorAll('.si-tree-view-item-main')[0].dispatchEvent(new Event('click'));
+    element.querySelector<HTMLElement>('.si-tree-view-item-main')!.click();
 
     expect(treeViewComponent.treeItemClicked.emit).toHaveBeenCalled();
+  });
+
+  it('should not call item click for tree item controls', async () => {
+    component.enableCheckbox.set(true);
+    const treeViewComponent = component.treeViewComponent();
+    vi.spyOn(treeViewComponent.treeItemClicked, 'emit');
+    await fixture.whenStable();
+
+    const contextMenuButton = page.getByRole('button', { includeHidden: true }).element();
+    await userEvent.click(element.querySelector<HTMLElement>('.si-tree-view-item-toggle')!);
+    await userEvent.click(page.getByRole('checkbox', { name: 'Company1' }));
+    await userEvent.click(contextMenuButton);
+
+    expect(treeViewComponent.treeItemClicked.emit).not.toHaveBeenCalled();
   });
 
   it('should contain custom menu items', async () => {
@@ -714,7 +726,7 @@ describe('SiTreeViewComponent', () => {
     vi.spyOn(treeViewComponent.treeItemsSelected, 'emit');
     component.enableSelection.set(true);
     await fixture.whenStable();
-    element.querySelectorAll('.si-tree-view-item-main')[0].dispatchEvent(new Event('click'));
+    element.querySelector<HTMLElement>('.si-tree-view-item-main')!.click();
 
     expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items()[0]]);
   });
@@ -867,9 +879,9 @@ describe('SiTreeViewComponent', () => {
     ];
     debugElement
       .queryAll(By.css('.si-tree-view-item-toggle'))
-      [lastVisibleNode].triggerEventHandler('click', null);
+      [lastVisibleNode].nativeElement.click();
 
-    nextNode.triggerEventHandler('click', null);
+    nextNode.nativeElement.click();
     await vi.advanceTimersByTimeAsync(0);
     expect(scrollObserver).toHaveBeenCalled();
   });
@@ -1431,12 +1443,24 @@ describe('SiTreeViewComponent', () => {
       vi.spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
 
       const collapsedItem = Array.from(
-        element.querySelectorAll<HTMLElement>('si-tree-view-item .si-tree-view-item-main')
+        element.querySelectorAll<HTMLElement>('si-tree-view-item .si-tree-view-li-item')
       ).at(0)!;
       collapsedItem.click();
 
       expect(component.items()[0].state).toBe('expanded');
       expect(treeViewComponent.treeItemFolderStateChanged.emit).toHaveBeenCalled();
+    });
+
+    it('should only toggle through the folder control when it is clicked', () => {
+      const treeViewComponent = component.treeViewComponent();
+      vi.spyOn(treeViewComponent.treeItemClicked, 'emit');
+      vi.spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
+
+      element.querySelector<HTMLElement>('.si-tree-view-item-toggle')!.click();
+
+      expect(component.items()[0].state).toBe('expanded');
+      expect(treeViewComponent.treeItemFolderStateChanged.emit).toHaveBeenCalledTimes(1);
+      expect(treeViewComponent.treeItemClicked.emit).not.toHaveBeenCalled();
     });
 
     it('should collapse node', () => {

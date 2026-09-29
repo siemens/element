@@ -1,7 +1,7 @@
 @if (!isGroupedItem) {
   <div
     #contextMenuTrigger="cdkContextMenuTriggerFor"
-    class="si-tree-view-li si-tree-view-li-item focus-direct-sub-inside"
+    class="si-tree-view-li si-tree-view-li-item focus-direct-sub-inside grab-area"
     [class.si-tree-view-item-context-menu-visible]="
       !!(contextMenuTrigger.isOpen() || menuTrigger()?.isOpen())
     "
@@ -13,6 +13,7 @@
     [cdkContextMenuDisabled]="!isContextMenuButtonVisible() || !treeItem.selectable"
     (cdkContextMenuOpened)="onToggleContextMenuOpen()"
     (cdkContextMenuClosed)="onToggleContextMenuClose()"
+    (click)="onItemClicked($event)"
   >
     <div class="si-tree-view-item" (mousedown)="onMouseDownTreeItem($event)">
       @if (showFolderStateStart && treeItem.state !== 'leaf') {
@@ -27,10 +28,7 @@
       }
       <ng-container [ngTemplateOutlet]="checkboxOrOption" />
 
-      <div
-        class="si-tree-view-item-main d-flex flex-grow-1 align-self-stretch grab-area"
-        (click)="onItemClicked($event)"
-      >
+      <div class="si-tree-view-item-main d-flex flex-grow-1 align-self-stretch">
         @if (showIcon()) {
           <div class="si-tree-stretch-center">
             <si-icon class="si-tree-view-item-icon" [icon]="treeItem.icon!" />
@@ -94,6 +92,7 @@
               [cdkMenuTriggerFor]="contextMenu"
               (cdkMenuOpened)="onToggleContextMenuOpen()"
               (cdkMenuClosed)="onToggleContextMenuClose()"
+              (click)="$event.stopPropagation()"
             >
               <i
                 aria-hidden="true"
@@ -150,7 +149,7 @@
 
 <ng-template #checkboxOrOption let-classNames="classNames">
   @if (showCheckOrOptionBox) {
-    <a class="input-box" tabindex="-1" [class]="classNames">
+    <a class="input-box" tabindex="-1" [class]="classNames" (click)="$event.stopPropagation()">
       <input
         class="form-check-input"
         tabindex="-1"
@@ -180,7 +179,7 @@
     [class.disabled]="!folderStateClass"
     [style.margin-inline-start]="biggerPaddingStart"
     [style.padding-inline-start]="paddingStart"
-    (click)="onItemFolderClicked()"
+    (click)="onItemFolderClicked(); $event.stopPropagation()"
   >
     @if (isExpanding) {
       <si-loading-spinner />
