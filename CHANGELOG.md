@@ -1,3 +1,16 @@
+# [49.17.0](https://github.com/siemens/element/compare/v49.16.1...v49.17.0) (2026-09-29)
+
+
+### Features
+
+* **native-charts:** optional marker for nchart-gauge ([4c4097a](https://github.com/siemens/element/commit/4c4097a011df5e11c347eff92cbe9cbeb707e846))
+
+
+### Bug Fixes
+
+* **result-details-list:** ensure running state changes don't cause a layout shifts ([7a67872](https://github.com/siemens/element/commit/7a67872d45cd7c1683276a006a57a878da17fa4a))
+* **tabs:** prevent overflow menu button from flickering during resize ([d4a22a4](https://github.com/siemens/element/commit/d4a22a40ee9e3039b28b20fea5bc916bdc923af7)), closes [#2732](https://github.com/siemens/element/issues/2732)
+
 ## [49.16.1](https://github.com/siemens/element/compare/v49.16.0...v49.16.1) (2026-08-26)
 
 
