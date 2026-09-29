@@ -1,3 +1,34 @@
+# [51.2.0](https://github.com/siemens/element/compare/v51.1.0...v51.2.0) (2026-09-29)
+
+
+
+
+### Features
+
+* **dashboards-ng:** support gridstack v14 ([e6a85e0](https://github.com/siemens/element/commit/e6a85e0bd4286c274f9c5fca43a105661c381293))
+* **dashboards:** add support for module federation v22 ([9a982f8](https://github.com/siemens/element/commit/9a982f8aaab2f7a9c25b261af9d360e088d7da3a))
+* **dashboards:** support icon in widget heading ([f636c03](https://github.com/siemens/element/commit/f636c0338604cdb4197523018fea4e4bf6a6acb6))
+* **live-preview:** support rendering examples in dedicated application ([7ac5f7f](https://github.com/siemens/element/commit/7ac5f7f0dce88f77d1fa529d7afaaee72afa8bb0))
+* **maplibre:** toggle icon between map and globe mode ([65e0e5f](https://github.com/siemens/element/commit/65e0e5f07a63ed8780fe334ebf70352af6b3193a))
+* **native-charts:** optional marker for nchart-gauge ([d5668ac](https://github.com/siemens/element/commit/d5668ac90d0b03e7ce6d5f107246db73010a17c9))
+* **utilities:** support overflow clip ([6957fe1](https://github.com/siemens/element/commit/6957fe1e0874d699100dfbecc48adec9df6ae515))
+
+
+### Bug Fixes
+
+* **dashboards:** make @module-federation/runtime peer Dep optional ([cf4d8a0](https://github.com/siemens/element/commit/cf4d8a0d1b6e7aeb806de3f7f9be15afb10e8e5b))
+* **dashboards:** preserve focus on card expand collapse ([d56ff26](https://github.com/siemens/element/commit/d56ff263fa2deb9737fc14f6d2ebfd2d3bcda236))
+* **datatable:** align header with UX ([ece272d](https://github.com/siemens/element/commit/ece272d770eafd716b2858306c6b0b759f4d3e5e))
+* **overlay:** use native origin edge alignment ([382194f](https://github.com/siemens/element/commit/382194f3fe3f995dc4a753cd12ce7df632a310eb)), closes [#808](https://github.com/siemens/element/issues/808)
+* **pagination:** disable navigation when no pages exist ([6f4d406](https://github.com/siemens/element/commit/6f4d406c3afc8054cb0c140e17318cd151e7517f)), closes [#2766](https://github.com/siemens/element/issues/2766)
+* **tabs:** prevent overflow menu button from flickering during resize ([49947a3](https://github.com/siemens/element/commit/49947a3ce28f462fabdfdd995fa1b2f6e64b9be1)), closes [#2732](https://github.com/siemens/element/issues/2732)
+
+
+### NOTES
+
+* **live-preview:** Several symbols from the live-preview removed from the public API.
+    Those were never intended for public usage, thus this is not a breaking change.
+
 # [51.1.0](https://github.com/siemens/element/compare/v51.0.1...v51.1.0) (2026-09-21)
 
 
