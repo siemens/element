@@ -363,6 +363,11 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
    * Holds the time as date object that is presented by this control.
    */
   private time?: Date;
+  /**
+   * Whether `null` was emitted due to an incomplete or invalid input.
+   * The next valid time must be emitted, even if it equals the previous `time`.
+   */
+  private invalidTimeEmitted = false;
   private periodDefaults: string[];
 
   constructor() {
@@ -393,6 +398,7 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
     const time = this.parseTime(obj);
     if (!time || this.isValidDate(time)) {
       this.time = time;
+      this.invalidTimeEmitted = false;
       this.updateUI(this.time);
     }
   }
@@ -477,6 +483,7 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
   private updateTime(): void {
     if (this.hasInvalidUnit()) {
       this.isValid.emit(false);
+      this.invalidTimeEmitted = true;
       this.onChange(null);
       return;
     }
@@ -490,7 +497,8 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
    * @param time - The new time to be set.
    */
   private setTime(time?: Date | undefined): void {
-    if (this.time?.getTime() !== time?.getTime()) {
+    if (this.invalidTimeEmitted || this.time?.getTime() !== time?.getTime()) {
+      this.invalidTimeEmitted = false;
       this.time = time;
       this.updateUI(this.time);
       this.onChange(this.time);

@@ -178,6 +178,17 @@ describe('SiTimepickerComponent', () => {
       expect(component.time.value).toEqual(new Date('2022-01-12 15:03:06.999'));
     });
 
+    it('should update time when re-entering a previously cleared time component', () => {
+      component.time.setValue(new Date('2022-01-12 16:23'));
+      fixture.detectChanges();
+
+      enterValue(getHours(), '');
+      expect(component.time.value).toBeNull();
+
+      enterValue(getHours(), '04');
+      expect(component.time.value).toEqual(new Date('2022-01-12 16:23'));
+    });
+
     it('should determine the meridian', () => {
       component.time.setValue('2022-01-12 16:23:59.435');
       fixture.detectChanges();
