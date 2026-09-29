@@ -347,6 +347,15 @@ describe('SiForm', () => {
       await expect.element(errorMessage).toBeVisible();
     });
 
+    it('should not render the error container once touched without errors', async () => {
+      fixture.componentInstance.model.set({ choice: 'a' });
+      fixture.componentInstance.form().markAsTouched();
+      await fixture.whenStable();
+
+      const feedback = fieldset.element().querySelector('.invalid-feedback');
+      expect(feedback).not.toHaveClass('d-block');
+    });
+
     it('should only have a required indicator on the fieldset', async () => {
       await expect.element(fieldsetLabel).toHaveClass('required');
     });
