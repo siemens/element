@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { form, FormField, required } from '@angular/forms/signals';
 
 import { SiNumberInputComponent } from './si-number-input.component';
 
@@ -42,6 +43,15 @@ class FormHostComponent {
 })
 class AttributeComponent {
   readonly siNumberInput = viewChild.required(SiNumberInputComponent);
+}
+
+@Component({
+  imports: [FormField, SiNumberInputComponent],
+  template: `<si-number-input [formField]="form.pieces" />`
+})
+class SignalFormHostComponent {
+  readonly model = signal<{ pieces: number | null }>({ pieces: 5 });
+  readonly form = form(this.model, path => required(path.pieces));
 }
 
 describe('SiNumberInputComponent', () => {
@@ -305,6 +315,32 @@ describe('SiNumberInputComponent', () => {
       fixture.detectChanges();
       expect(component.siNumberInput().inputElement().nativeElement).not.toHaveAttribute('min');
       expect(component.siNumberInput().inputElement().nativeElement).toHaveAttribute('max', '100');
+    });
+  });
+
+  describe('with a signal form field', () => {
+    let fixture: ComponentFixture<SignalFormHostComponent>;
+
+    beforeEach(async () => {
+      fixture = TestBed.createComponent(SignalFormHostComponent);
+      element = fixture.nativeElement;
+      await fixture.whenStable();
+    });
+
+    it('should set the model to null when the input is cleared', async () => {
+      const input = element.querySelector<HTMLInputElement>('input')!;
+      input.value = '';
+      input.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+
+      const { model, form: signalForm } = fixture.componentInstance;
+      expect(model().pieces).toBeNull();
+      expect(signalForm.pieces).toBeDefined();
+      expect(signalForm.pieces().errors()).toEqual([expect.objectContaining({ kind: 'required' })]);
+
+      fakeClick('.inc');
+      await fixture.whenStable();
+      expect(model().pieces).toBe(1);
     });
   });
 });

@@ -98,7 +98,7 @@ export class SiNumberInputComponent
    */
   readonly step = input<number | 'any'>(1);
   /** The value */
-  readonly value = input<number>();
+  readonly value = input<number | null>();
   /** Optional unit label */
   readonly unit = input<string>();
   /**
@@ -216,7 +216,7 @@ export class SiNumberInputComponent
   }
 
   /** @internal */
-  writeValue(value: number | undefined): void {
+  writeValue(value: number | null | undefined): void {
     this.writeValueToInput(value);
     this.updateStepButtons();
     this.changeDetectorRef.markForCheck();
@@ -238,7 +238,8 @@ export class SiNumberInputComponent
       : undefined;
     this.internalValue = value;
     this.updateStepButtons();
-    this.onChange(value);
+    // Emit `null` for an empty input, as `undefined` is not supported by Angular signal forms.
+    this.onChange(value ?? null);
     this.valueChange.emit(value);
   }
 
@@ -283,8 +284,8 @@ export class SiNumberInputComponent
     this.modelChanged();
   }
 
-  private writeValueToInput(value: number | undefined): void {
+  private writeValueToInput(value: number | null | undefined): void {
     this.inputElement().nativeElement.value = value == null ? '' : value.toString();
-    this.internalValue = value;
+    this.internalValue = value ?? undefined;
   }
 }
