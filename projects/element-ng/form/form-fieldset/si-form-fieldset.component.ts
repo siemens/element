@@ -63,7 +63,9 @@ export class SiFormFieldsetComponent {
   });
 
   protected readonly errors = computed(() => this.formItems()[0].errors());
-  protected readonly touched = computed(() => this.formItems().some(item => item.touched()));
+  protected readonly showErrors = computed(
+    () => this.formItems().some(item => item.touched()) && this.errors().length > 0
+  );
   protected readonly isRequired = computed(
     () =>
       this.required() || (this.hasOnlyRadios() && this.formItems().every(item => item.required()))

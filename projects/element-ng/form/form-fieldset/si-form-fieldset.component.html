@@ -7,7 +7,7 @@
     <ng-content />
   </div>
   @if (hasOnlyRadios()) {
-    <div class="invalid-feedback" [class.d-block]="touched()">
+    <div class="invalid-feedback" [class.d-block]="showErrors()">
       @for (error of errors(); track error) {
         <div>
           {{ error.message | translate: error.params }}
