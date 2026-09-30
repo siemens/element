@@ -145,6 +145,10 @@ fit. For example:
   We recommend to use our [flexible dashboard](../components/dashboards/flexible-dashboards.md)
   which is based on [gridstack](https://gridstackjs.com/).
 
+Add `drop-line-placeholder` to a destination `cdkDropList` to show an insertion line
+instead of the default filled placeholder. Tree view items apply this style to their
+placeholders automatically.
+
 ### Usage
 
 #### List
@@ -159,6 +163,7 @@ fit. For example:
 <si-docs-component base="si-tree-view" height="400">
   <si-docs-tab example="si-tree-view-drag-drop-move" heading="Moving between trees"></si-docs-tab>
   <si-docs-tab example="si-tree-view-drag-drop-copy" heading="Copying between trees"></si-docs-tab>
+  <si-docs-tab example="si-tree-view-drag-drop-copy-from-list" heading="Copying from a list to a tree"></si-docs-tab>
   <si-docs-tab example="si-tree-view-drag-drop-reorder" heading="Reordering"></si-docs-tab>
   <si-docs-tab example="si-tree-view-drag-drop-assign" heading="Assignment"></si-docs-tab>
 </si-docs-component>

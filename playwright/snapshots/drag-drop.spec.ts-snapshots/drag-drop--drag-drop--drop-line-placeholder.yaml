@@ -1,0 +1,18 @@
+- heading "Reorder within list or Move between list" [level=2]
+- switch "Use drop line placeholder" [checked]
+- text: Use drop line placeholder
+- listbox "List one":
+  - option "Cras justo odio"
+  - option "Dapibus ac facilisis in"
+  - option "Morbi leo risus"
+  - option "Porta ac consectetur ac"
+  - option "Vestibulum at eros"
+- listbox "List two":
+  - 'option "Buy groceries: milk, bread, eggs, and cheese."'
+  - 'option "Weekend tasks: clean the house, do laundry, and mow the lawn."'
+  - 'option "Packing list: passport, toothbrush, sunscreen, and camera."'
+  - 'option "Project steps: research, planning, execution, and review."'
+  - 'option "Shopping list: apples, oranges, bananas, and grapes."'
+  - 'option "Daily routine: wake up, exercise, breakfast, and work."'
+- option "Cras justo odio"
+- option "Cras justo odio"

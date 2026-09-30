@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../variables';
 @use '../selectors';
 
@@ -77,6 +78,37 @@
   font-size: 0; // hide direct text
   * {
     visibility: hidden;
+  }
+}
+
+// Opt in on the destination list or the draggable item to show an insertion line.
+// Keep the placeholder visible in copy-source lists until it becomes an anchor.
+.cdk-drop-list.drop-line-placeholder:not([cdkDropListHasAnchor])
+  > .cdk-drag-placeholder:not(.cdk-drag-anchor),
+.cdk-drop-list:not([cdkDropListHasAnchor])
+  .cdk-drag-placeholder.drop-line-placeholder:not(.cdk-drag-anchor) {
+  block-size: 0;
+  min-block-size: 0;
+  inline-size: auto;
+  margin-inline: map.get(variables.$spacers-inline, 4);
+  margin-block: 0;
+  padding: 0;
+  border: 0;
+  opacity: 1;
+  background-color: transparent !important;
+  position: relative;
+  z-index: 999;
+
+  &::after {
+    position: absolute;
+    inline-size: 100%;
+    block-size: map.get(variables.$spacers-block, 1);
+    content: '';
+    background-color: variables.$si-sys-color-effects-focus;
+  }
+
+  > * {
+    display: none;
   }
 }
 

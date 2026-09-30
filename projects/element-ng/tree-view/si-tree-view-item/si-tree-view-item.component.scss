@@ -3,61 +3,11 @@
 @use '@siemens/element-theme/src/styles/variables';
 @use '../si-tree-view-variables';
 
-:host-context(.cdk-drop-list[cdkDropListHasAnchor]) {
-  :host.cdk-drag-placeholder {
-    block-size: auto !important; // stylelint-disable-line declaration-no-important
-    margin-inline: 0;
-    margin-block: revert !important; // stylelint-disable-line declaration-no-important
-    min-block-size: revert;
-    position: static;
-    z-index: auto;
-
-    &::after {
-      content: none !important; // stylelint-disable-line declaration-no-important
-    }
-
-    > * {
-      display: revert;
-    }
-  }
-}
-
 :host {
   display: block;
 
-  &.cdk-drag-placeholder {
-    block-size: 0;
-    margin-inline: 8px;
-    margin-block: 0 !important; // stylelint-disable-line declaration-no-important
-    opacity: 1 !important; // stylelint-disable-line declaration-no-important
-    min-block-size: 0 !important; // stylelint-disable-line declaration-no-important
-    position: relative;
-    z-index: 999;
-
-    &::after {
-      position: absolute;
-      inline-size: 100%;
-      block-size: 2px;
-      content: '';
-      background-color: variables.$si-sys-color-effects-focus !important; // stylelint-disable-line declaration-no-important
-    }
-
-    > * {
-      display: none;
-    }
-  }
-
   &.cdk-drag:not(.cdk-drag-placeholder) {
     transform: none !important; // stylelint-disable-line declaration-no-important
-  }
-
-  &.cdk-drop-list-dragging,
-  .cdk-drop-list-dragging {
-    *:hover,
-    .si-tree-view-item-end-icons,
-    .si-tree-view-item-context-menu-visible {
-      background-color: transparent !important; // stylelint-disable-line declaration-no-important
-    }
   }
 
   &.cdk-drag-preview {
@@ -78,6 +28,15 @@
     .si-tree-view-li.si-tree-view-li-item {
       background-color: variables.$si-sys-color-background-3 !important; // stylelint-disable-line declaration-no-important
     }
+  }
+}
+
+:host-context(.cdk-drop-list-dragging),
+:host .cdk-drop-list-dragging {
+  *:hover,
+  .si-tree-view-item-end-icons,
+  .si-tree-view-item-context-menu-visible {
+    background-color: transparent !important; // stylelint-disable-line declaration-no-important
   }
 }
 
