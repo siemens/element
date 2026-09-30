@@ -1,20 +1,22 @@
 @if (!flatTree() && expandCollapseAll()) {
   <div class="si-tree-view-expand-collapse-container p-4">
     <button
-      class="btn btn-icon btn-tertiary element-expand-all"
+      class="btn btn-icon btn-tertiary"
       type="button"
       [title]="expandAllTooltip() | translate"
       [attr.aria-label]="expandAllTooltip() | translate"
       (click)="expandAll()"
     >
+      <si-icon [icon]="svgIcons.elementExpandAll" />
     </button>
     <button
-      class="btn btn-icon btn-tertiary ms-4 element-collapse-all"
+      class="btn btn-icon btn-tertiary ms-4"
       type="button"
       [title]="collapseAllTooltip() | translate"
       [attr.aria-label]="collapseAllTooltip() | translate"
       (click)="collapseAll()"
     >
+      <si-icon [icon]="svgIcons.elementCollapseAll" />
     </button>
   </div>
 }

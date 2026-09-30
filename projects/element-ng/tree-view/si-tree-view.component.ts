@@ -36,7 +36,9 @@ import {
   viewChildren
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { elementCollapseAll, elementExpandAll } from '@siemens/element-icons';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { ElementDimensions, ResizeObserverService } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -107,7 +109,13 @@ const rootDefaults: TreeItem = {
  */
 @Component({
   selector: 'si-tree-view',
-  imports: [SiTranslatePipe, SiTreeViewItemComponent, CdkScrollableModule, SiTreeViewItemDirective],
+  imports: [
+    SiTranslatePipe,
+    SiTreeViewItemComponent,
+    CdkScrollableModule,
+    SiTreeViewItemDirective,
+    SiIconComponent
+  ],
   templateUrl: './si-tree-view.component.html',
   styleUrl: './si-tree-view.component.scss',
   providers: [
@@ -415,6 +423,8 @@ export class SiTreeViewComponent
   private virtualRoot: TreeItem = { ...rootDefaults };
 
   private readonly _items = signal(this.items());
+
+  protected readonly svgIcons = addIcons({ elementExpandAll, elementCollapseAll });
 
   private updateTreeItemDefaults(item: TreeItem): void {
     item.showCheckbox ??= this.enableCheckbox();
