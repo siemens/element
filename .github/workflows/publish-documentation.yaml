@@ -57,6 +57,11 @@ jobs:
         with:
           name: pages
           path: pages
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: coverage-reports
+          path: pages/coverage
+      - run: cp pages/coverage/coverage-summary.json pages/coverage-summary.json
       - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
         with:
           role-to-assume: arn:aws:iam::974483672234:role/simpl-element-release
