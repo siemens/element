@@ -75,12 +75,12 @@ for (const example of examples) {
     await expect(await si.getDescription(page.getByLabel('Day of birth'))).toHaveText('Required');
 
     const travelDate = page.getByRole('group', { name: 'Travel Date' });
-    await expect(await si.getDescription(travelDate.getByLabel('Start date'))).toHaveText(
-      'Travel date is required.'
-    );
-    await expect(await si.getDescription(travelDate.getByLabel('End date'))).toHaveText(
-      'Travel date is required.'
-    );
+    await expect(
+      await si.getDescription(travelDate.getByRole('textbox', { name: 'Start' }))
+    ).toHaveText('Travel date is required.');
+    await expect(
+      await si.getDescription(travelDate.getByRole('textbox', { name: 'End' }))
+    ).toHaveText('Travel date is required.');
 
     await expect(await si.getDescription(departureHours)).toHaveText(
       'The departure time must be after arrival.'

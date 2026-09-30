@@ -8,7 +8,9 @@ test.describe('si-pills-input with overflowing item', () => {
   const example = 'si-pills-input/si-pills-input';
   test('si-pills-input', async ({ page, si }) => {
     await si.visitExample(example);
-    const newItemInput = page.getByLabel('Tags', { exact: true }).getByLabel('Create Item');
+    const newItemInput = page
+      .getByLabel('Tags', { exact: true })
+      .getByLabel('Enter text to create entry');
     await newItemInput.fill(new Array(150).fill('a').join(''));
     await newItemInput.press('Enter');
     await si.runVisualAndA11yTests('', {
