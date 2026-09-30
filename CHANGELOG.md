@@ -1,3 +1,20 @@
+# [51.3.0](https://github.com/siemens/element/compare/v51.2.0...v51.3.0) (2026-09-30)
+
+
+### Features
+
+* **drag-drop:** add optional drop-line-placeholder style ([6cced69](https://github.com/siemens/element/commit/6cced69a0af3ca47742003350eb6177f5787eaa6)), closes [#2692](https://github.com/siemens/element/issues/2692)
+
+
+### Bug Fixes
+
+* **datepicker:** emit null instead of undefined for empty date input ([9b94e5c](https://github.com/siemens/element/commit/9b94e5cb526ee15756d5fc054c742ffeff77d272)), closes [#2850](https://github.com/siemens/element/issues/2850)
+* **filtered-search:** reposition typeahead after clearing a pill ([c75e39c](https://github.com/siemens/element/commit/c75e39cc7931187a83a4396db76b3be9b626516b))
+* **form:** avoid layout shift of radio fieldsets without errors ([50637da](https://github.com/siemens/element/commit/50637daa2fd21a37ab99184d1b3411de893d8886))
+* **number-input:** emit null instead of undefined for empty value ([019b0b5](https://github.com/siemens/element/commit/019b0b551ab9b23658745cf302d42680df2912d0)), closes [#2850](https://github.com/siemens/element/issues/2850)
+* **schematics:** migrate SiHeaderSiemensLogoComponent to SiHeaderLogoDirective ([fb5eba4](https://github.com/siemens/element/commit/fb5eba436d397ff2c542005806c6a6f7648d7046)), closes [#2810](https://github.com/siemens/element/issues/2810)
+* **timepicker:** emit time after re-entering a cleared time component ([47618d9](https://github.com/siemens/element/commit/47618d955dde6fa6d9d589c57f8477910097b921)), closes [#2850](https://github.com/siemens/element/issues/2850)
+
 # [51.2.0](https://github.com/siemens/element/compare/v51.1.0...v51.2.0) (2026-09-29)
 
 
