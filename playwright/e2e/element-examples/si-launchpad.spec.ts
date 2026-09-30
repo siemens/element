@@ -10,7 +10,7 @@ test.describe('launchpad', () => {
   test('on a large screen', async ({ page, si }) => {
     await si.visitExample(example);
     await page.getByLabel('Launchpad').click();
-    await page.getByText('Show more').click();
+    await page.getByText('More').click();
     await si.runVisualAndA11yTests();
 
     await page.getByRole('link', { name: 'Fischbach' }).first().locator('.favorite-icon').click();
@@ -21,7 +21,7 @@ test.describe('launchpad', () => {
     await si.visitExample(example);
     await page.setViewportSize({ width: 500, height: 660 });
     await page.getByLabel('Launchpad').click();
-    await page.getByText('Show more').click();
+    await page.getByText('More').click();
     await si.runVisualAndA11yTests('mobile');
   });
 });

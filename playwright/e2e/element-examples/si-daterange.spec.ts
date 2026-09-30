@@ -58,7 +58,7 @@ test.describe('si-datepicker', () => {
     await si.visitExample(example);
     await page.getByLabel('Open calendar').first().click();
     await si.runVisualAndA11yTests('ignore-time-1');
-    await page.getByText('Consider time').first().click();
+    await page.getByText('Include time').first().click();
     await si.runVisualAndA11yTests('ignore-time-2');
   });
 
@@ -76,7 +76,7 @@ test.describe('si-datepicker', () => {
       await button!.click();
     }
     await si.runVisualAndA11yTests('click-through-months-1');
-    await page.locator('.second-datepicker').first().getByLabel('Previous').click();
+    await page.locator('.second-datepicker').first().getByLabel('Back').click();
     await si.runVisualAndA11yTests('click-through-months-2');
   });
 

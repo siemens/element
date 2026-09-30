@@ -58,7 +58,7 @@ test.describe('navbar launchpad', () => {
     await si.visitExample(exampleWithCategories);
     await page.getByLabel('Launchpad').click();
     await expect(page.locator('si-launchpad-factory .app-switcher')).toBeVisible();
-    const showMore = page.getByText('Show more');
+    const showMore = page.getByText('More');
     await showMore.click();
     await si.runVisualAndA11yTests(undefined, {
       axeRulesSet: [{ id: 'scrollable-region-focusable', enabled: false }]
