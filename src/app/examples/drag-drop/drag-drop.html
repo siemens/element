@@ -1,12 +1,17 @@
 <div class="p-5">
   <h2>Reorder within list or Move between list</h2>
+  <si-form-field class="form-switch mb-5" label="Use drop line placeholder">
+    <input type="checkbox" class="form-check-input" role="switch" [formField]="useDropLineField" />
+  </si-form-field>
   <div class="d-flex gap-8">
     <ul
       #cdkListOne="cdkDropList"
+      aria-label="List one"
       aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown Cmd+X Cmd+V"
       class="list-group list-group-flush"
       cdkListbox
       cdkDropList
+      [class.drop-line-placeholder]="useDropLine()"
       [cdkDropListConnectedTo]="cdkListTwo"
       [cdkDropListData]="listOne"
       [tabindex]="0"
@@ -33,10 +38,12 @@
 
     <ul
       #cdkListTwo="cdkDropList"
+      aria-label="List two"
       aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown Cmd+X Cmd+V"
       class="list-group list-group-flush"
       cdkListbox
       cdkDropList
+      [class.drop-line-placeholder]="useDropLine()"
       [cdkDropListData]="listTwo"
       [cdkDropListConnectedTo]="cdkListOne"
       (cdkDropListDropped)="itemDropped($event)"

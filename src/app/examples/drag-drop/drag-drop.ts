@@ -11,6 +11,8 @@ import {
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import { CdkContextMenuTrigger, CdkMenuModule } from '@angular/cdk/menu';
 import { Component, signal, viewChildren } from '@angular/core';
+import { form, FormField } from '@angular/forms/signals';
+import { provideSiFormFieldConfig, SiFormFieldComponent } from '@siemens/element-ng/form';
 import { SiMenuModule } from '@siemens/element-ng/menu';
 
 @Component({
@@ -21,11 +23,17 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
     CdkOption,
     SiMenuModule,
     CdkContextMenuTrigger,
-    CdkMenuModule
+    CdkMenuModule,
+    FormField,
+    SiFormFieldComponent
   ],
-  templateUrl: './drag-drop.html'
+  templateUrl: './drag-drop.html',
+  providers: [provideSiFormFieldConfig()]
 })
 export class SampleComponent {
+  protected readonly useDropLine = signal(false);
+  protected readonly useDropLineField = form(this.useDropLine);
+
   protected listOne = [
     'Cras justo odio',
     'Dapibus ac facilisis in',

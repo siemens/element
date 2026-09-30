@@ -61,6 +61,7 @@ import {
   styleUrl: './si-tree-view-item.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: {
+    class: 'drop-line-placeholder',
     role: 'treeitem',
     '[attr.tabindex]':
       'treeItemContext.record.currentIndex === treeViewComponent.activeIndex ? 0 : -1',
