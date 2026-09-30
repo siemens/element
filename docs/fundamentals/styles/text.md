@@ -66,6 +66,19 @@ Transform text in components with text capitalization classes.
 
 <si-docs-component example="text/text-transform" height="150"></si-docs-component>
 
+## Text truncation
+
+Use the `.text-truncate` utility to truncate long text with an ellipsis.
+
+> **Note:** The .text-truncate requires `display: inline-block` or `display: block`.
+
+```html
+<!-- Truncate text -->
+<span class="d-inline-block text-truncate" style="max-width: 100px;">
+  Some really long string which overflow th actual content inline-size.
+</span>
+```
+
 ## Font size
 
 Adjust the font size of text using the utility classes `fs-1` to `fs-6`.
