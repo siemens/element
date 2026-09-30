@@ -2,10 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-/*
- * WARNING: Parts of this component are made to be used in conjunction with Bootstrap.
- * Bootstrap is not included with this package and has to be installed separately.
- */
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { CdkScrollableModule } from '@angular/cdk/scrolling';
 import {
