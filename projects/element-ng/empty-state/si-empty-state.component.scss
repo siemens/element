@@ -1,18 +1,134 @@
 @use 'sass:map';
-
 @use '@siemens/element-theme/src/styles/variables';
 
+$empty-state-padding-block-default: 1rem;
+$empty-state-heading-line-height: 1.5rem; // si-h3
+$empty-state-description-line-height: 1.25rem; // si-body-paragraph
+$empty-state-icon-size: 4rem;
+$empty-state-icon-gap: 1rem;
+$empty-state-description-gap: 0.5rem;
+$empty-state-actions-gap: 1.5rem;
+$empty-state-actions-height: 2rem;
+
+$empty-state-padding-block-total: 2 * $empty-state-padding-block-default;
+$empty-state-min-height-without-actions: $empty-state-heading-line-height +
+  $empty-state-padding-block-total;
+$empty-state-description-height-without-actions: $empty-state-min-height-without-actions +
+  $empty-state-description-gap + $empty-state-description-line-height;
+$empty-state-full-height-without-actions: $empty-state-description-height-without-actions +
+  $empty-state-icon-size + $empty-state-icon-gap;
+
+$empty-state-min-height-with-actions: $empty-state-min-height-without-actions +
+  $empty-state-actions-gap + $empty-state-actions-height;
+$empty-state-description-height-with-actions: $empty-state-description-height-without-actions +
+  $empty-state-actions-gap + $empty-state-actions-height;
+$empty-state-full-height-with-actions: $empty-state-full-height-without-actions +
+  $empty-state-actions-gap + $empty-state-actions-height;
+
+$empty-state-full-query-height-with-actions: $empty-state-full-height-with-actions -
+  $empty-state-padding-block-total;
+$empty-state-description-query-height-with-actions: $empty-state-description-height-with-actions -
+  $empty-state-padding-block-total;
+$empty-state-full-query-height-without-actions: $empty-state-full-height-without-actions -
+  $empty-state-padding-block-total;
+$empty-state-description-query-height-without-actions: $empty-state-description-height-without-actions -
+  $empty-state-padding-block-total;
+
 .list-group-item-empty {
-  min-block-size: 100%;
+  block-size: 100%;
+  min-block-size: $empty-state-min-height-without-actions;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-inline: map.get(variables.$spacers-inline, 8);
-  padding-block: map.get(variables.$spacers-block, 9);
-}
+  padding-block: map.get(variables.$spacers-block, 6);
 
-.state-icon {
-  color: variables.$si-sys-color-text-secondary;
-  font-size: 4rem;
+  .state-icon {
+    font-size: $empty-state-icon-size;
+    margin-block-end: map.get(variables.$spacers-block, 6);
+  }
+
+  .state-heading {
+    margin-block: 0;
+
+    @include variables.si-font(
+      variables.$si-font-size-h3,
+      variables.$si-line-height-h3,
+      variables.$si-font-weight-h3
+    );
+  }
+
+  .state-content {
+    margin-block: map.get(variables.$spacers-block, 4) 0;
+
+    @include variables.si-font(
+      variables.$si-font-size-body-paragraph,
+      variables.$si-line-height-body-paragraph,
+      variables.$si-font-weight-body-paragraph
+    );
+  }
+
+  .state-actions {
+    margin-block-start: map.get(variables.$spacers-block, 8);
+
+    &:not(:has(*)) {
+      display: none;
+    }
+  }
+
+  &.auto-responsive {
+    container-type: size;
+    container-name: empty-state;
+    // Keep spacing aligned with the default-density query thresholds.
+    padding-block: $empty-state-padding-block-default;
+
+    .state-icon {
+      margin-block-end: $empty-state-icon-gap;
+    }
+
+    .state-content {
+      margin-block-start: $empty-state-description-gap;
+    }
+
+    .state-actions {
+      margin-block-start: $empty-state-actions-gap;
+    }
+
+    .state-heading,
+    .state-content {
+      max-inline-size: 100%;
+      flex-shrink: 0;
+    }
+  }
+
+  &:has(.state-actions > *) {
+    min-block-size: $empty-state-min-height-with-actions;
+
+    @container empty-state (height < #{$empty-state-full-query-height-with-actions}) {
+      .state-icon {
+        display: none;
+      }
+    }
+
+    @container empty-state (height < #{$empty-state-description-query-height-with-actions}) {
+      .state-content {
+        display: none;
+      }
+    }
+  }
+
+  &:not(:has(.state-actions > *)) {
+    @container empty-state (height < #{$empty-state-full-query-height-without-actions}) {
+      .state-icon {
+        display: none;
+      }
+    }
+
+    @container empty-state (height < #{$empty-state-description-query-height-without-actions}) {
+      .state-content {
+        display: none;
+      }
+    }
+  }
 }
