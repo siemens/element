@@ -31,12 +31,14 @@ if command -v getenforce &> /dev/null && [ "$(getenforce)" = "Enforcing" ]; then
 fi
 
 LOCAL_ADDRESS=$BRIDGE_ADDRESS
+BROWSER_ADDRESS=host.e2e.localhost
 NETWORK_MODE=bridge
 DISPLAY=$LOCAL_ADDRESS:0
 
 case "$OS" in
   Linux*)
     LOCAL_ADDRESS=localhost
+    BROWSER_ADDRESS=$LOCAL_ADDRESS
     NETWORK_MODE=host
     DISPLAY=$DISPLAY
     ;;
@@ -56,6 +58,7 @@ if [ x$1 = "xshell" ]; then
   $DOCKER run -it --rm \
     -e DISPLAY=$DISPLAY \
     -e LOCAL_ADDRESS=$LOCAL_ADDRESS \
+    -e PLAYWRIGHT_BROWSER_ADDRESS=$BROWSER_ADDRESS \
     -e PORT=$PORT \
     -e PLAYWRIGHT_CONTAINER=true \
     -e PLAYWRIGHT_isvrt=true \
@@ -99,6 +102,7 @@ else
   # The reason is if the container is started but network isn't ready yet
   $DOCKER run -it --rm \
     -e LOCAL_ADDRESS=$LOCAL_ADDRESS \
+    -e PLAYWRIGHT_BROWSER_ADDRESS=$BROWSER_ADDRESS \
     -e PORT=$PORT \
     -e PLAYWRIGHT_CONTAINER=true \
     -e PLAYWRIGHT_isa11y=$PLAYWRIGHT_isa11y \

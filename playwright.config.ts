@@ -9,7 +9,8 @@ const port = process.env.PORT ?? '4200';
 const dashboardsPort = process.env.DASHBOARDS_PORT ?? '4201';
 const dashboardsEsmPort = process.env.DASHBOARDS_ESM_PORT ?? '4204';
 const localAddress = process.env.LOCAL_ADDRESS ?? 'localhost';
-const onDifferentLocalAddress = localAddress !== 'localhost';
+const browserAddress = process.env.PLAYWRIGHT_BROWSER_ADDRESS ?? localAddress;
+const onDifferentLocalAddress = browserAddress !== 'localhost';
 const isCI = !!process.env.CI;
 const workers = process.env.PW_WORKERS ? parseInt(process.env.PW_WORKERS, 10) : 4;
 const webServerCommand = 'npx http-server dist/element-examples -s -p 4200 -a 127.0.0.1';
@@ -60,7 +61,10 @@ const chromeLaunchOptions = {
     '--disable-low-res-tiling',
     '--disable-oop-rasterization',
     '--disable-composited-antialiasing',
-    '--disable-smooth-scrolling'
+    '--disable-smooth-scrolling',
+    ...(browserAddress !== localAddress
+      ? [`--host-resolver-rules=MAP ${browserAddress} ${localAddress}`]
+      : [])
   ]
 };
 
@@ -126,7 +130,7 @@ const config: PlaywrightTestConfig = {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: `http://${localAddress}:${port}`,
+    baseURL: `http://${browserAddress}:${port}`,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: isCI ? 'on-first-retry' : 'retain-on-failure',
@@ -155,7 +159,7 @@ const config: PlaywrightTestConfig = {
       name: `dashboards-demo/chromium/light`,
       metadata: { theme: 'light', isA11y, isVrt, isESM: false },
       use: {
-        baseURL: `http://${localAddress}:${dashboardsPort}`
+        baseURL: `http://${browserAddress}:${dashboardsPort}`
       },
       testDir: './playwright/e2e/dashboards-demo'
     },
@@ -163,7 +167,7 @@ const config: PlaywrightTestConfig = {
       name: `dashboards-demo/chromium/dark`,
       metadata: { theme: 'dark', skipAriaSnapshot: true, isA11y, isVrt, isESM: false },
       use: {
-        baseURL: `http://${localAddress}:${dashboardsPort}`
+        baseURL: `http://${browserAddress}:${dashboardsPort}`
       },
       testDir: './playwright/e2e/dashboards-demo'
     },
@@ -171,7 +175,7 @@ const config: PlaywrightTestConfig = {
       name: `dashboards-demo-esm/chromium/light`,
       metadata: { theme: 'light', isA11y, isVrt, isESM: true },
       use: {
-        baseURL: `http://${localAddress}:${dashboardsEsmPort}`
+        baseURL: `http://${browserAddress}:${dashboardsEsmPort}`
       },
       testDir: './playwright/e2e/dashboards-demo'
     },
@@ -179,7 +183,7 @@ const config: PlaywrightTestConfig = {
       name: `dashboards-demo-esm/chromium/dark`,
       metadata: { theme: 'dark', skipAriaSnapshot: true, isA11y, isVrt, isESM: true },
       use: {
-        baseURL: `http://${localAddress}:${dashboardsEsmPort}`
+        baseURL: `http://${browserAddress}:${dashboardsEsmPort}`
       },
       testDir: './playwright/e2e/dashboards-demo'
     }
