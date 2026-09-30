@@ -10,8 +10,8 @@
   <a href="https://www.npmjs.com/@siemens/element-ng">
     <img src="https://img.shields.io/npm/v/@siemens/element-ng.svg?logo=npm&logoColor=fff&label=NPM+package&color=limegreen" alt="Element on npm" />
   </a>
-  <a href="https://element.siemens.io/coverage/element-ng/index.html">
-    <img src="https://img.shields.io/endpoint?url=https://element.siemens.io/coverage-summary.json" alt="Code Coverage">
+  <a href="https://element.siemens.io/development/coverage/element-ng/index.html">
+    <img src="https://img.shields.io/endpoint?url=https://element.siemens.io/development/coverage-summary.json" alt="Code Coverage">
   </a>
 </p>
 
