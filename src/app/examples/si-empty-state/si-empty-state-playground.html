@@ -1,0 +1,64 @@
+<div class="d-flex flex-column h-100">
+  <div
+    class="card flex-shrink-0 mt-8 mx-6"
+    style="min-block-size: min-content"
+    [style.block-size.px]="settings().containerHeight"
+  >
+    <si-empty-state
+      class="d-block h-100"
+      style="min-block-size: min-content"
+      icon="element-users"
+      heading="No users"
+      content="There are no users within this group. Add users to get started."
+      [responsiveMode]="settings().responsiveMode"
+    >
+      @if (settings().showActions) {
+        <button
+          type="button"
+          class="btn btn-secondary me-6"
+          (click)="logEvent('Learn more button clicked')"
+          >Learn more</button
+        >
+        <button type="button" class="btn btn-primary" (click)="logEvent('Add user button clicked')"
+          >Add user</button
+        >
+      }
+    </si-empty-state>
+  </div>
+  <div class="flex-grow-1 e2e-ignore" aria-hidden="true"></div>
+  <div class="card flex-shrink-0 e2e-ignore mx-6 my-8">
+    <div class="card-header">Control Panel</div>
+    <div class="card-body">
+      <div class="form-check mb-6">
+        <input
+          id="responsive-mode"
+          type="checkbox"
+          class="form-check-input"
+          [formField]="settingsForm.responsiveMode"
+        />
+        <label class="form-check-label" for="responsive-mode">Responsive mode</label>
+      </div>
+      <div class="mb-6">
+        <label class="form-label" for="container-height">
+          Container height: {{ settings().containerHeight }} px
+        </label>
+        <input
+          id="container-height"
+          type="range"
+          class="form-range"
+          step="1"
+          [formField]="settingsForm.containerHeight"
+        />
+      </div>
+      <div class="form-check">
+        <input
+          id="show-actions"
+          type="checkbox"
+          class="form-check-input"
+          [formField]="settingsForm.showActions"
+        />
+        <label class="form-check-label" for="show-actions">Show actions</label>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,18 +1,75 @@
 @use 'sass:map';
-
 @use '@siemens/element-theme/src/styles/variables';
 
+$empty-state-padding-block: 1rem;
+$empty-state-padding-block-total: 2 * $empty-state-padding-block;
+
+$empty-state-full-height-with-actions: 13.75rem;
+$empty-state-description-height-with-actions: 8.75rem;
+$empty-state-min-height-with-actions: 7rem;
+$empty-state-full-height-without-actions: 10.25rem;
+$empty-state-description-height-without-actions: 5.25rem;
+$empty-state-min-height-without-actions: 3.75rem;
+
+$empty-state-full-query-height-with-actions: $empty-state-full-height-with-actions -
+  $empty-state-padding-block-total;
+$empty-state-description-query-height-with-actions: $empty-state-description-height-with-actions -
+  $empty-state-padding-block-total;
+$empty-state-full-query-height-without-actions: $empty-state-full-height-without-actions -
+  $empty-state-padding-block-total;
+$empty-state-description-query-height-without-actions: $empty-state-description-height-without-actions -
+  $empty-state-padding-block-total;
+
 .list-group-item-empty {
-  min-block-size: 100%;
+  block-size: 100%;
+  min-block-size: $empty-state-min-height-without-actions;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-inline: map.get(variables.$spacers-inline, 8);
-  padding-block: map.get(variables.$spacers-block, 9);
-}
+  padding-block: $empty-state-padding-block;
 
-.state-icon {
-  color: variables.$si-sys-color-text-secondary;
-  font-size: 4rem;
+  .state-icon {
+    font-size: 4rem;
+  }
+
+  .state-actions:not(:has(*)) {
+    display: none;
+  }
+
+  &.auto-responsive {
+    container-type: size;
+    container-name: empty-state;
+  }
+
+  &:has(.state-actions > *) {
+    min-block-size: $empty-state-min-height-with-actions;
+
+    @container empty-state (height < #{$empty-state-full-query-height-with-actions}) {
+      .state-icon {
+        display: none;
+      }
+    }
+
+    @container empty-state (height < #{$empty-state-description-query-height-with-actions}) {
+      .state-content {
+        display: none;
+      }
+    }
+  }
+
+  &:not(:has(.state-actions > *)) {
+    @container empty-state (height < #{$empty-state-full-query-height-without-actions}) {
+      .state-icon {
+        display: none;
+      }
+    }
+
+    @container empty-state (height < #{$empty-state-description-query-height-without-actions}) {
+      .state-content {
+        display: none;
+      }
+    }
+  }
 }

@@ -1,8 +1,16 @@
-<div class="list-group-item-empty">
-  <si-icon class="state-icon" [icon]="icon()" />
-  <span class="si-h3 my-6 text-center">{{ heading() | translate }}</span>
-  @if (content()) {
-    <p class="text-pre-wrap text-center mb-6">{{ content() | translate }}</p>
+@let iconValue = icon();
+@let contentValue = content();
+<div class="list-group-item-empty" [class.auto-responsive]="responsiveMode()">
+  @if (iconValue) {
+    <si-icon class="state-icon text-secondary mb-6" [icon]="iconValue" />
   }
-  <ng-content />
+  <span class="si-h3 text-center mb-0">{{ heading() | translate }}</span>
+  @if (contentValue) {
+    <p class="state-content text-pre-wrap si-body-paragraph text-center text-secondary mt-4 mb-0">{{
+      contentValue | translate
+    }}</p>
+  }
+  <span class="state-actions mt-8">
+    <ng-content />
+  </span>
 </div>

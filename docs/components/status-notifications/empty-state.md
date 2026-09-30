@@ -29,7 +29,15 @@ import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 })
 ```
 
-<si-docs-component example="si-empty-state/si-empty-state" height="230"></si-docs-component>
+<si-docs-component example="si-empty-state/si-empty-state" height="240"></si-docs-component>
+
+### Responsive behavior
+
+The responsive behavior can be adjusted to adapt the empty state to the available
+container height. Use the playground settings to explore this behavior, toggle
+actions, and resize the container.
+
+<si-docs-component example="si-empty-state/si-empty-state-playground" height="550"></si-docs-component>
 
 <si-docs-api component="SiEmptyStateComponent"></si-docs-api>
 
