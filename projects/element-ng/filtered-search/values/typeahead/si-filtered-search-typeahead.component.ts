@@ -19,7 +19,7 @@ import {
 import { SiTypeaheadDirective, TypeaheadMatch } from '@siemens/element-ng/typeahead';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
-import { TypeaheadOptionCriterion } from '../../si-filtered-search-helper';
+import { findOption, TypeaheadOptionCriterion } from '../../si-filtered-search-helper';
 import { OptionCriterion } from '../../si-filtered-search.model';
 import { SiFilteredSearchOptionValueBase } from '../si-filtered-search-option-value.base';
 import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
@@ -88,16 +88,22 @@ export class SiFilteredSearchTypeaheadComponent
       } else {
         value = newValue;
       }
-      this.optionValue.set(undefined);
-      this.criterionValue.update(v => ({ ...v, value }));
-      this.inputChange.next(newValue);
+      const option = findOption(value, this.loadedOptions() ?? [], true);
+      value = option?.value ?? value;
+      this.optionValue.set(option);
+      if (this.criterionValue().value !== value) {
+        this.criterionValue.update(v => ({ ...v, value }));
+        this.inputChange.next(newValue);
+      }
     }
   }
 
   protected valueTypeaheadFullMatch(match: TypeaheadMatch): void {
     const option = match.option as TypeaheadOptionCriterion;
     this.optionValue.set(option);
-    this.criterionValue.update(v => ({ ...v, value: option.value }));
+    if (this.criterionValue().value !== option.value) {
+      this.criterionValue.update(v => ({ ...v, value: option.value }));
+    }
   }
 
   protected valueTypeaheadSelect(match: TypeaheadMatch): void {
