@@ -8,7 +8,7 @@ import {
   SiTranslateService,
   provideMockTranslateServiceBuilder
 } from '@siemens/element-translate-ng/translate';
-import { of } from 'rxjs';
+import { firstValueFrom, Observable, of } from 'rxjs';
 
 import { SiFormlyTranslateExtension } from './si-formly-translate.extension';
 
@@ -119,15 +119,16 @@ describe('Formly translations', () => {
     expect(cfg.expressions?.['props.placeholder']).toBeTruthy();
   });
 
-  it('should translate options', () => {
+  it('should translate options', async () => {
+    const options = [
+      { label: 'l1', value: '1' },
+      { label: 'l2', value: '1' },
+      { label: 'l3', value: '1' },
+      { label: 'l4', value: '1' }
+    ];
     const cfg: FormlyFieldConfig = {
       props: {
-        options: [
-          { label: 'l1', value: '1' },
-          { label: 'l2', value: '1' },
-          { label: 'l3', value: '1' },
-          { label: 'l4', value: '1' }
-        ]
+        options
       }
     };
     extension.prePopulate(cfg);
@@ -140,6 +141,14 @@ describe('Formly translations', () => {
     expect(cfg.expressions?.['props.options.1.label']).toBeTruthy();
     expect(cfg.expressions?.['props.options.2.label']).toBeTruthy();
     expect(cfg.expressions?.['props.options.3.label']).toBeTruthy();
+    const labels = cfg.expressions!['props.options.0.label'] as Observable<string>;
+    expect(await firstValueFrom(labels)).toBe('translated');
+
+    expect(cfg.props!.options).toBe(options);
+    options[0].label = 'translated';
+    const onTranslation = vi.fn();
+    labels.subscribe(onTranslation).unsubscribe();
+    expect(onTranslation).not.toHaveBeenCalled();
   });
 
   it('should translate validation messages', () => {
