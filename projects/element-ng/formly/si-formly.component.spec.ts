@@ -145,18 +145,44 @@ describe('ElementFormComponent', () => {
     expect(element.querySelector('input[type=text]')).toBeInTheDocument();
   });
 
-  it('should apply a field config', async () => {
+  it('should apply a field config and indexed option property overrides', async () => {
     const cfg: FormlyFieldConfig[] = [
       {
         key: 'foo',
         type: 'input'
+      },
+      {
+        key: 'choice',
+        type: 'select',
+        props: {
+          options: [
+            { label: 'First', value: 'first', disabled: false },
+            { label: 'Second', value: 'second', disabled: false }
+          ]
+        },
+        expressions: {
+          'props.options.0.disabled': field => field.model.disableFirst
+        }
       }
     ];
+    modelInput.set({ disableFirst: true, choice: 'second' });
     fieldsInput.set(cfg);
     await fixture.whenStable();
 
     expect(element.querySelector('input[type=text]')).toBeInTheDocument();
     expect(element.querySelector('input[type=text]')?.id).toContain('foo');
+    const select = element.querySelector('select')!;
+    expect(select.options[0]).toMatchTextContent('translated=>First');
+    expect(select.options[0]).toBeDisabled();
+    expect(select.options[1]).not.toBeDisabled();
+    expect(select.selectedOptions[0]).toMatchTextContent('translated=>Second');
+
+    modelInput.set({ disableFirst: false, choice: 'second' });
+    await fixture.whenStable();
+
+    expect(select.options[0]).not.toBeDisabled();
+    expect(select.options[0]).toMatchTextContent('translated=>First');
+    expect(select.selectedOptions[0]).toMatchTextContent('translated=>Second');
   });
 
   it('should apply a field config with labelWidth', async () => {

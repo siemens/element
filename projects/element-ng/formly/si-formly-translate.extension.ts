@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlySelectOption } from '@ngx-formly/core/select';
 import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
+import { filter } from 'rxjs';
 
 export class SiFormlyTranslateExtension {
   private translate = injectSiTranslateService();
@@ -20,14 +22,19 @@ export class SiFormlyTranslateExtension {
       field.expressions['props.label'] = this.translate.translateAsync(to.label);
     }
 
-    if (to.options) {
-      // e.g. a select
-      let i = -1;
-      to.options.forEach((val: any) => {
-        i++;
-        if (field.expressions) {
-          field.expressions[`props.options.${i}.label`] = this.translate.translateAsync(val.label);
-        }
+    if (Array.isArray(to.options)) {
+      const options: FormlySelectOption[] = to.options;
+      options.forEach((option, index) => {
+        field.expressions![`props.options.${index}.label`] = this.translate
+          .translateAsync(option.label)
+          // Compare against the current option rather than the previous emission:
+          // Formly can recreate subscriptions when Bootstrap option nodes change.
+          .pipe(
+            filter(label => {
+              const currentOptions = field.props?.options;
+              return !Array.isArray(currentOptions) || label !== currentOptions[index]?.label;
+            })
+          );
       });
     }
 
