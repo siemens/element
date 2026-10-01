@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { computed, DestroyRef, Directive, inject, input } from '@angular/core';
+import { computed, DestroyRef, Directive, inject, input, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
@@ -41,6 +41,7 @@ export abstract class SiFilteredSearchOptionValueBase extends SiFilteredSearchVa
   readonly isStrictOrOnlySelectValue = input.required<boolean>();
 
   protected readonly inputChange = new BehaviorSubject('');
+  protected readonly loadedOptions = signal<TypeaheadOptionCriterion[] | undefined>(undefined);
 
   private readonly destroyRef = inject(DestroyRef);
   protected readonly translateService = injectSiTranslateService();
@@ -101,7 +102,8 @@ export abstract class SiFilteredSearchOptionValueBase extends SiFilteredSearchVa
             }))
           )
         );
-      })
+      }),
+      tap(options => this.loadedOptions.set(options))
     );
   }
 
