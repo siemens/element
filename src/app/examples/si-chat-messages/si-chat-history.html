@@ -46,7 +46,7 @@
       @if (activeView() === 'history') {
         <div class="pb-6">
           @for (group of filteredConversationGroups(); track group.group) {
-            <h2 class="si-h6 text-secondary px-6 pt-6 mb-2">{{ group.group }}</h2>
+            <h2 class="si-h6 text-secondary px-6 py-4 mb-0">{{ group.group }}</h2>
             <ul>
               @for (conversation of group.conversations; track conversation.id) {
                 <li class="position-relative">
@@ -74,8 +74,6 @@
                 </li>
               }
             </ul>
-          } @empty {
-            <p class="text-secondary px-6 pt-6">No conversations found.</p>
           }
         </div>
       } @else {
@@ -93,9 +91,7 @@
               }
             } @empty {
               <si-ai-welcome-screen
-                [categories]="promptCategories"
-                [promptSuggestions]="currentPromptSuggestions()"
-                [(selectedCategory)]="selectedCategory"
+                [promptSuggestions]="promptSuggestions"
                 (promptSelected)="onPromptSelected($event)"
               >
                 <p class="h1 mb-0"> <strong>Hello</strong>, </p>

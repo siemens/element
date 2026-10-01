@@ -75,8 +75,7 @@ interface ChatMessage {
     SiSidePanelContentComponent,
     SiUserMessageComponent
   ],
-  templateUrl: './si-chat-history.html',
-  styleUrl: './si-chat-history.scss'
+  templateUrl: './si-chat-history.html'
 })
 export class SampleComponent {
   protected readonly markdownOptions = markdownOptions;
@@ -180,35 +179,11 @@ These faults must be addressed immediately to maintain safety and compliance.`
     read: ElementRef<HTMLButtonElement>
   });
 
-  readonly promptCategories: PromptCategory[] = [
-    { label: 'All prompts' },
-    { label: 'Maintenance' },
-    { label: 'Analytics' }
+  readonly promptSuggestions: PromptSuggestion[] = [
+    { text: 'How do I optimize performance for large datasets?' },
+    { text: 'What are the best practices for data validation?' },
+    { text: 'Help me troubleshoot this error message' }
   ];
-
-  readonly selectedCategory = signal<string | undefined>('All prompts');
-
-  readonly promptSuggestions: Record<string, PromptSuggestion[]> = {
-    'All prompts': [
-      { text: 'How do I optimize performance for large datasets?' },
-      { text: 'What are the best practices for data validation?' },
-      { text: 'Help me troubleshoot this error message' },
-      { text: 'Explain the difference between async and sync operations' }
-    ],
-    'Maintenance': [
-      { text: 'How do I update system dependencies?' },
-      { text: 'What are best practices for database maintenance?' }
-    ],
-    'Troubleshooting': [
-      { text: 'Help me troubleshoot this error message' },
-      { text: 'Why is my query running slowly?' }
-    ]
-  };
-
-  readonly currentPromptSuggestions = computed(() => {
-    const category = this.selectedCategory() ?? 'All prompts';
-    return this.promptSuggestions[category] || [];
-  });
 
   constructor() {
     afterRenderEffect(() => {
