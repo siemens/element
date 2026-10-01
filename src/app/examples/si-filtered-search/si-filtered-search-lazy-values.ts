@@ -20,17 +20,20 @@ import { SiFilterSettingsComponent } from '../si-filter-settings/si-filter-setti
   templateUrl: './si-filtered-search-lazy-values.html'
 })
 export class SampleComponent {
+  readonly logEvent = inject(LOG_EVENT);
   variant: BackgroundColorVariant = 'base-1';
   disable = false;
   disableFreeTextSearch = false;
-  logEvent = inject(LOG_EVENT);
 
-  public filteredSearch = {
+  readonly filteredSearch = {
     criteria: [
       {
         name: 'company',
         label: 'Company',
-        options: ['Foo', 'Bar']
+        options: [
+          { value: 'company-1', label: 'Company 1' },
+          { value: 'company-2', label: 'Company 2' }
+        ]
       },
       {
         name: 'location',
