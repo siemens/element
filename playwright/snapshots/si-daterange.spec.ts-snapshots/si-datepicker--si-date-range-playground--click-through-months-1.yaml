@@ -45,7 +45,7 @@
 - text: "/From Wed Mar \\d+ \\d+ \\d+:\\d+:\\d+ GMT\\+\\d+ \\(Coordinated Universal Time\\) to Fri Dec \\d+ \\d+ \\d+:\\d+:\\d+ GMT\\+\\d+ \\(Coordinated Universal Time\\) \\{\"start\":\"\\d+-\\d+-15T07:\\d+:\\d+\\.000Z\",\"end\":\"\\d+-\\d+-15T06:\\d+:\\d+\\.000Z\"\\}/"
 - heading "Validation:" [level=4]
 - text: Date range is VALID
-- button "Previous"
+- button "Back"
 - button "January"
 - button /\d+/
 - button "Next"
@@ -158,8 +158,8 @@
       - gridcell /Sat Feb \d+ \d+/:
         - button /Sat Feb \d+ \d+/
 - button "Today"
-- switch "Consider time" [checked]
-- text: Consider time From
+- switch "Include time" [checked]
+- text: Include time From
 - group:
   - textbox "Hours":
     - /placeholder: hh
@@ -170,7 +170,7 @@
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
-- button "Previous"
+- button "Back"
 - button "February"
 - button /\d+/
 - button "Next"

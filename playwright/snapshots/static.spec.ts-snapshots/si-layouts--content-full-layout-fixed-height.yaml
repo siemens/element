@@ -64,4 +64,4 @@
     - listitem:
       - button /\d+/
     - listitem:
-      - button "Forward"
+      - button "Next"

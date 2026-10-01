@@ -1,4 +1,4 @@
-- button "Previous"
+- button "Back"
 - text: /\d+ - \d+/
 - button "Next"
 - grid:
@@ -45,7 +45,7 @@
         - button /\d+/
       - gridcell /\d+/:
         - button /\d+/
-- button "Previous"
+- button "Back"
 - button "March"
 - button /\d+/
 - button "Next"

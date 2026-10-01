@@ -1,7 +1,7 @@
 - alert: System is currently under maintenance
 - alert: Warning System is currently under maintenance
 - img "Element App's Background"
-- combobox "Language switcher":
+- combobox "Switch language":
   - option "English" [selected]
   - option "Deutsch"
   - option "Français"
@@ -11,7 +11,7 @@
 - textbox "Username"
 - text: Password
 - textbox "Password"
-- button "show password"
+- button "Show password"
 - link "Forgot password":
   - /url: /
 - button "Login"

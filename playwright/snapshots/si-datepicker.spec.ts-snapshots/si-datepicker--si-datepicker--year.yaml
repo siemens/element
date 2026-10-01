@@ -1,4 +1,4 @@
-- button "Previous" [disabled]
+- button "Back" [disabled]
 - text: /\d+ - \d+/
 - button "Next"
 - grid:
@@ -64,7 +64,7 @@
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
-- button "Previous"
+- button "Back"
 - button "March"
 - button /\d+/
 - button "Next"
@@ -177,8 +177,8 @@
       - gridcell /Sat Apr \d+ \d+/:
         - button /Sat Apr \d+ \d+/
 - button "Today"
-- switch "Consider time" [checked]
-- text: Consider time
+- switch "Include time" [checked]
+- text: Include time
 - group:
   - text: hh
   - textbox "Hours":

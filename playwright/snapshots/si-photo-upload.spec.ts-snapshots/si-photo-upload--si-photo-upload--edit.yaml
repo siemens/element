@@ -4,7 +4,7 @@
   - menuitem "Cancel"
 - img "Photo alt text"
 - button "Change"
-- button "Remove"
+- button "Delete"
 - text: Max Xantos Control panel
 - checkbox "Rounded Mask" [checked]
 - text: Rounded Mask

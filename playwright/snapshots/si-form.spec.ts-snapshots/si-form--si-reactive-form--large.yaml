@@ -21,9 +21,9 @@
 - button "Open calendar"
 - text: Travel Date*
 - group "Travel Date*":
-  - textbox "Start date"
+  - textbox "Start"
   - text: "-"
-  - textbox "End date"
+  - textbox "End"
   - button "Open calendar"
 - text: Arrival*
 - group "Arrival*":

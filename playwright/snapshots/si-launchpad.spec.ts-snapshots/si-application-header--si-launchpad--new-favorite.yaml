@@ -12,7 +12,7 @@
     - /url: /stats
   - link "Rocket System name":
     - /url: .
-  - button "Show more" [expanded]
+  - button "More" [expanded]
   - link "Assets System name":
     - /url: .
   - link "Fischbach System name":

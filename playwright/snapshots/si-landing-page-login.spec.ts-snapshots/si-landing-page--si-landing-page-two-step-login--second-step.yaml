@@ -1,5 +1,5 @@
 - img
-- combobox "Language switcher":
+- combobox "Switch language":
   - option "English" [selected]
   - option "Deutsch"
   - option "Français"
@@ -10,7 +10,7 @@
 - textbox "Username": name@siemens.com
 - text: Password
 - textbox "Password"
-- button "show password"
+- button "Show password"
 - link "Forgot password":
   - /url: https://myid.siemens.com/help/
 - button "Back"

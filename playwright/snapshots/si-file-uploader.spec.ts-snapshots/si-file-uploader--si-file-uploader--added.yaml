@@ -1,15 +1,15 @@
-- button "Drop files here or click to upload"
-- text: "/Upload max\\. [\\d,.]+[bkmBKM]+ Accepted file types: image\\/\\*\\. siemens-healthineers-logo\\.svg [\\d,.]+[bkmBKM]+ 0 %/"
-- progressbar "Uploading"
-- button "Remove"
+- button "Drag files here or select files to upload"
+- text: "/Upload max\\. [\\d,.]+[bkmBKM]+ Supported file types: image\\/\\* siemens-healthineers-logo\\.svg [\\d,.]+[bkmBKM]+ 0 %/"
+- progressbar "Uploading…"
+- button "Delete"
 - text: /simpl-44x44\.png [\d,.]+[bkmBKM]+ 0 %/
-- progressbar "Uploading"
-- button "Remove"
+- progressbar "Uploading…"
+- button "Delete"
 - text: /simpl-logo\.svg [\d,.]+[bkmBKM]+ 0 %/
-- progressbar "Uploading"
-- button "Remove"
+- progressbar "Uploading…"
+- button "Delete"
 - text: /test-file-for-vrt\.txt [\d,.]+[bkmBKM]+ Warning Invalid file type/
-- button "Remove"
+- button "Delete"
 - button "Clear"
 - button "Upload"
 - text: si-file-uploader settings

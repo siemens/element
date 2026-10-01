@@ -22,9 +22,9 @@
 - button "Open calendar"
 - text: Required Travel Date*
 - group "Travel Date*":
-  - textbox "Start date"
+  - textbox "Start"
   - text: "-"
-  - textbox "End date"
+  - textbox "End"
   - button "Open calendar"
 - text: Travel date is required. Arrival*
 - group "Arrival*":

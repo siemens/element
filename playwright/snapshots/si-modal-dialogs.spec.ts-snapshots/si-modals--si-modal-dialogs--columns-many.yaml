@@ -21,7 +21,7 @@
   - text: ""
   - button "Cancel"
   - paragraph: Customize view by selecting or ordering
-  - listbox "List of possible columns. Items can be moved using Alt+ArrowUp or Alt+ArrowDown. Press Enter to rename supported items.":
+  - listbox "List of possible elements. Elements can be moved using Alt + Up Arrow or Alt + Down Arrow. Press Enter to rename elements where allowed.":
     - option "Row 1 - not draggable"
     - option "Row 2 - not draggable"
     - option "Row 3 - not draggable" [disabled] [selected]

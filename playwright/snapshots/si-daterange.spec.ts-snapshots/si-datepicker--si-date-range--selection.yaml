@@ -1,14 +1,14 @@
 - text: Date range
 - group "Date range":
-  - textbox "Start date"
+  - textbox "Start"
   - text: ""
-  - textbox "End date": /2\/6\/\d+/
+  - textbox "End"
   - button "Open calendar"
 - heading "Date range value" [level=4]
 - text: "/\\{ \"start\": \"\\d+-\\d+-01T00:\\d+:\\d+\\.000Z\", \"end\": \"\\d+-\\d+-06T00:\\d+:\\d+\\.000Z\" \\}/"
 - heading "Validation:" [level=4]
 - text: Date range is VALID
-- button "Previous"
+- button "Back"
 - button "February"
 - button /\d+/
 - button "Next"

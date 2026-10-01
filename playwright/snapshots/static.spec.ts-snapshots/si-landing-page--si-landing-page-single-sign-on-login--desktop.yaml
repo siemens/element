@@ -1,5 +1,5 @@
 - img
-- combobox "Language switcher":
+- combobox "Switch language":
   - option "English" [selected]
   - option "Deutsch"
   - option "Français"

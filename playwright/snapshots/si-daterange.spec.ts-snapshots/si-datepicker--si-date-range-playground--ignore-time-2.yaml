@@ -45,7 +45,7 @@
 - text: "/From Wed Mar \\d+ \\d+ to Fri Dec \\d+ \\d+ \\{\"start\":\"\\d+-\\d+-15T07:\\d+:\\d+\\.000Z\",\"end\":\"\\d+-\\d+-15T06:\\d+:\\d+\\.000Z\"\\}/"
 - heading "Validation:" [level=4]
 - text: Date range is VALID
-- button "Previous"
+- button "Back"
 - button "March"
 - button /\d+/
 - button "Next"
@@ -170,7 +170,7 @@
   - combobox "Period" [disabled]:
     - option "AM" [selected]
     - option "PM"
-- button "Previous"
+- button "Back"
 - button "December"
 - button /\d+/
 - button "Next"

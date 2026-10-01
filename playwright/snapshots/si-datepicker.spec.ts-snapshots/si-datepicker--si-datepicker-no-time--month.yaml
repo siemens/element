@@ -1,4 +1,4 @@
-- button "Previous"
+- button "Back"
 - button /\d+/
 - button "Next"
 - grid:
@@ -33,7 +33,7 @@
         - button /November \d+/
       - gridcell /December \d+/:
         - button /December \d+/
-- button "Previous"
+- button "Back"
 - button "March"
 - button /\d+/
 - button "Next"

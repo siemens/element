@@ -1,5 +1,5 @@
 - button "Presets" [expanded]
-- button "Previous"
+- button "Back"
 - button "April"
 - button /\d+/
 - button "Next"
@@ -126,7 +126,7 @@
 - text: Hide advanced mode
 - checkbox "Reverse input fields"
 - text: "/Reverse input fields object \\(JSON\\.stringify\\(\\)\\): \\{ \"point1\": \"\\d+-\\d+-17T00:\\d+:\\d+\\.000Z\", \"point2\": \"\\d+-\\d+-05T00:\\d+:\\d+\\.000Z\" \\} resolved: Apr 5, \\d+, \\d+:\\d+:\\d+ AM - Aug \\d+, \\d+, \\d+:\\d+:\\d+ AM/"
-- textbox "Search"
+- textbox "Search…"
 - listbox "Presets":
   - option /last \d+[hmsp]+/
   - option "last 7 days"
