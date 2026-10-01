@@ -80,6 +80,7 @@
     @case ('multi-select') {
       <si-filtered-search-multi-select
         [definition]="definition()"
+        [initialValueText]="initialValueText()"
         [disabled]="disabled()"
         [searchLabel]="searchLabel()"
         [scrollStrategy]="multiSelectScrollStrategy()"
@@ -101,6 +102,7 @@
     @case ('typeahead') {
       <si-filtered-search-typeahead
         [definition]="definition()"
+        [initialValueText]="initialValueText()"
         [disabled]="disabled()"
         [searchLabel]="searchLabel()"
         [scrollStrategy]="typeaheadScrollStrategy()"

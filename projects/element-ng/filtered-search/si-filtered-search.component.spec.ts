@@ -4,7 +4,15 @@
  */
 import { HarnessLoader, parallel, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectorRef, Component, inject, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  inputBinding,
+  outputBinding,
+  signal,
+  viewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CriterionDefinition } from '@siemens/element-ng/filtered-search';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
@@ -12,7 +20,8 @@ import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
 } from '@siemens/element-translate-ng/translate';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, delay, Observable, of, Subject, throwError } from 'rxjs';
+import { page, userEvent } from 'vitest/browser';
 
 import {
   DisplayedCriteriaEventArgs,
@@ -2209,6 +2218,26 @@ describe('SiFilteredSearchComponent', () => {
       expect(items).toBeNull();
     });
 
+    it('should recheck interceptor restrictions before creating a selected criterion', async () => {
+      component.searchCriteria.set({ criteria: [], value: '' });
+      const interceptor = vi.spyOn(component, 'showCriteria').mockImplementation(event => {
+        event.allow(event.criteria);
+      });
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('Fo');
+      await tick();
+      expect(await freeTextSearch.getItems()).toEqual(['Foo']);
+      interceptor.mockImplementation(event => event.allow([]));
+
+      await freeTextSearch.select({ text: 'Foo' });
+      await fixture.whenStable();
+
+      expect(component.searchCriteria().criteria).toEqual([]);
+      expect(await freeTextSearch.getValue()).toBe('Fo');
+    });
+
     describe('with only one foo criterion', () => {
       let spy: ReturnType<typeof vi.spyOn>;
       beforeEach(() => {
@@ -2233,7 +2262,7 @@ describe('SiFilteredSearchComponent', () => {
         await tick();
         await freeTextSearch.focus();
         await tick();
-        expect(spy).toHaveBeenCalledTimes(2);
+        expect(spy).toHaveBeenCalledTimes(3);
         expect(await freeTextSearch.getItems()).toEqual(['Bar']);
       });
 
@@ -2318,6 +2347,53 @@ describe('SiFilteredSearchComponent', () => {
   });
 });
 
+describe('SiFilteredSearchComponent - with lazy values and doSearch on input event', () => {
+  it('should emit doSearch once with the remaining value when the first criterion is cleared', async () => {
+    const searchCriteria = signal<SearchCriteria>({
+      criteria: [
+        { name: 'company', value: '1' },
+        { name: 'company', value: '2' }
+      ],
+      value: ''
+    });
+    const lazyValueProvider = (): Observable<OptionType[]> =>
+      of([
+        { value: '1', label: 'Foo' },
+        { value: '2', label: 'Bar' }
+      ]).pipe(delay(10));
+    const doSearch = vi.fn<(criteria: SearchCriteria) => void>();
+    const fixture = TestBed.createComponent(SiFilteredSearchComponent, {
+      bindings: [
+        inputBinding(
+          'criteria',
+          signal<CriterionDefinition[]>([{ name: 'company', label: 'Company' }])
+        ),
+        inputBinding('searchCriteria', searchCriteria),
+        inputBinding('lazyValueProvider', () => lazyValueProvider),
+        inputBinding('doSearchOnInputChange', () => true),
+        outputBinding('doSearch', doSearch)
+      ]
+    });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await expect.element(page.getByText('Foo', { exact: true })).toBeVisible();
+    await expect.element(page.getByText('Bar', { exact: true })).toBeVisible();
+    expect(doSearch).not.toHaveBeenCalled();
+
+    await userEvent.click(page.getByRole('button', { name: 'Clear' }).first());
+    await fixture.whenStable();
+    await expect.element(page.getByRole('option', { name: 'Bar', exact: true })).toBeVisible();
+    await fixture.whenStable();
+
+    await expect
+      .poll(() => doSearch)
+      .toHaveBeenCalledExactlyOnceWith({
+        criteria: [{ name: 'company', value: '2' }],
+        value: ''
+      });
+  });
+});
+
 const replacePlaceholders = (str: string, params: Record<string, unknown>): string => {
   return str.replace(/{{\s*([^}]+)\s*}}/g, (match, p1) => {
     return params[p1] !== undefined ? String(params[p1]) : match;
@@ -2328,8 +2404,10 @@ describe('SiFilteredSearchComponent - With translation', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
   let loader: HarnessLoader;
+  let missingTranslations: string[];
 
   beforeEach(() => {
+    missingTranslations = [];
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
       providers: [
@@ -2337,6 +2415,9 @@ describe('SiFilteredSearchComponent - With translation', () => {
           () =>
             ({
               translate: (key: string, params: Record<string, any>) => {
+                if (missingTranslations.includes(key)) {
+                  return key;
+                }
                 if (params && Object.keys(params).length > 0) {
                   return `${replacePlaceholders(key, params)} translated`;
                 }
@@ -2348,13 +2429,16 @@ describe('SiFilteredSearchComponent - With translation', () => {
                 } = {};
                 if (Array.isArray(keys)) {
                   keys.forEach(val => {
-                    myRecord[val] = `translated(${val})`;
+                    if (!missingTranslations.includes(val)) {
+                      myRecord[val] = `translated(${val})`;
+                    }
                   });
                   return of(myRecord);
                 }
                 return of(`translated(${keys})`);
               },
-              translateSync: (key: string) => `translated(${key})`
+              translateSync: (key: string) =>
+                missingTranslations.includes(key) ? key : `translated(${key})`
             }) as SiTranslateService
         )
       ]
@@ -2606,6 +2690,743 @@ describe('SiFilteredSearchComponent - With translation', () => {
       criteriaValid.map(criterion => criterion.value().then(value => value!.text()))
     );
     expect(validValues).toEqual(['translated(GermanyKey)']);
+  });
+
+  describe('with delimited input', () => {
+    beforeEach(() => {
+      vi.useRealTimers();
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.criteria.set([
+        { name: 'status', label: 'Status' },
+        { name: 'owner', label: 'Owner' },
+        {
+          name: 'country-code',
+          label: 'Country',
+          options: [{ value: 'DE', label: 'Germany' }]
+        },
+        {
+          name: 'score',
+          label: 'Score',
+          multiSelect: true,
+          options: [{ value: 'good', label: 'Good' }]
+        },
+        { name: 'location', label: 'Location', options: ['Lünen'] },
+        {
+          name: 'date',
+          label: 'Date',
+          validationType: 'date',
+          datepickerConfig: { dateFormat: 'MM/dd/yyyy' }
+        },
+        {
+          name: 'timestamp',
+          label: 'Timestamp',
+          validationType: 'date-time',
+          datepickerConfig: {
+            showTime: true,
+            dateTimeFormat: 'MM/dd/yyyy HH:mm:ss'
+          }
+        }
+      ]);
+      component.searchCriteria.set({ value: '', criteria: [] });
+    });
+
+    const renderInput = async (): Promise<HTMLInputElement> => {
+      fixture.detectChanges();
+      await fixture.whenStable();
+      return (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
+        'input.value-input'
+      )!;
+    };
+
+    const pasteInput = async (text: string): Promise<HTMLInputElement> => {
+      const input = await renderInput();
+      await userEvent.fill(input, text);
+      await fixture.whenStable();
+      return input;
+    };
+
+    it('should create a free text pill after typing a semicolon', async () => {
+      const input = await renderInput();
+      await userEvent.type(input, 'first pill;');
+      await fixture.whenStable();
+
+      expect(component.searchCriteria()).toEqual({
+        value: '',
+        criteria: [{ name: 'free-text', value: 'first pill' }]
+      });
+      expect(input.value).toBe('');
+    });
+
+    it('should preserve literal free text regardless of option and multi-select configuration', async () => {
+      component.freeTextCriterion = {
+        name: 'query',
+        label: 'Free Text',
+        multiSelect: true,
+        options: [{ value: 'DE', label: 'Germany' }]
+      };
+
+      await pasteInput('  translated(Germany)  ;');
+
+      expect(component.searchCriteria().criteria).toEqual([
+        { name: 'query', value: '  translated(Germany)  ' }
+      ]);
+      expect(
+        (fixture.nativeElement as HTMLElement).querySelectorAll('.criterion-label')
+      ).toHaveLength(0);
+    });
+
+    it('should not parse free-text values as dates', async () => {
+      component.freeTextCriterion = { name: 'query', validationType: 'date' };
+
+      await pasteInput('not-a-date;');
+
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'query', value: 'not-a-date' }]);
+    });
+
+    it('should allow configured free-text pills in strict criterion mode', async () => {
+      component.strictCriterion = true;
+      component.freeTextCriterion = { name: 'query' };
+
+      await pasteInput('urgent;');
+
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'query', value: 'urgent' }]);
+    });
+
+    it.for<[string, SearchCriteria['criteria'], string]>([
+      [
+        'translated(Status):open;translated(Owner):team;urgent;needs review;',
+        [
+          { name: 'status', value: 'open' },
+          { name: 'owner', value: 'team' },
+          { name: 'free-text', value: 'urgent' },
+          { name: 'free-text', value: 'needs review' }
+        ],
+        ''
+      ],
+      ['translated(Country): Germany;', [{ name: 'country-code', value: 'Germany' }], ''],
+      ['translated(Country): de;', [{ name: 'country-code', value: 'de' }], ''],
+      ['translated(Country): translated(Germany);', [{ name: 'country-code', value: 'DE' }], ''],
+      ['translated(Score): translated(Good);', [{ name: 'score', value: ['good'] }], ''],
+      ['translated(Location):Lünen;', [{ name: 'location', value: 'Lünen' }], ''],
+      ['translated(location): lÜNEN;', [{ name: 'location', value: 'Lünen' }], ''],
+      [
+        'translated(Date):08/28/2020;',
+        [{ name: 'date', value: '08/28/2020', dateValue: new Date(2020, 7, 28) }],
+        ''
+      ],
+      [
+        'translated(Timestamp):08/28/2020 08:30:00;',
+        [
+          {
+            name: 'timestamp',
+            value: '08/28/2020 08:30:00',
+            dateValue: new Date(2020, 7, 28, 8, 30)
+          }
+        ],
+        ''
+      ],
+      ['plain text;', [{ name: 'free-text', value: 'plain text' }], ''],
+      ['unknown:value;', [{ name: 'unknown', value: 'value' }], ''],
+      ['first pill;second pill', [{ name: 'free-text', value: 'first pill' }], 'second pill']
+    ])(
+      'should parse pasted input %s',
+      async ([pastedValue, expectedCriteria, expectedInputValue]) => {
+        const input = await pasteInput(pastedValue);
+
+        expect(component.searchCriteria()).toEqual({
+          value: '',
+          criteria: expectedCriteria
+        });
+        expect(input.value).toBe(expectedInputValue);
+      }
+    );
+
+    it.for<{
+      options: OptionType[] | undefined;
+      text: string;
+      value: string;
+      untranslated?: string[];
+    }>([
+      { options: [{ value: 'DE', label: 'Germany' }], text: 'translated(Germany)', value: 'DE' },
+      {
+        options: [{ value: 'DE', label: 'Germany' }],
+        text: 'Germany',
+        value: 'DE',
+        untranslated: ['Germany']
+      },
+      { options: ['Berlin'], text: 'Berlin', value: 'Berlin', untranslated: ['Berlin'] },
+      { options: [{ value: 'CH' }], text: 'CH', value: 'CH', untranslated: ['CH'] },
+      { options: undefined, text: 'Custom', value: 'Custom' }
+    ])(
+      'should display $text and emit $value for pasted options',
+      async ({ options, text, value, untranslated = [] }) => {
+        missingTranslations = untranslated;
+        component.criteria.set([{ name: 'country-code', label: 'Country', options }]);
+        const changes = vi.spyOn(component, 'searchCriteriaChange');
+
+        await pasteInput(`translated(Country):${text};`);
+
+        const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+        const [criterion] = await filteredSearch.getCriteria();
+        expect(await criterion.label()).toBe('translated(Country)');
+        expect(await (await criterion.value())!.text()).toBe(text);
+        expect(changes).toHaveBeenCalledExactlyOnceWith({
+          value: '',
+          criteria: [{ name: 'country-code', value }]
+        });
+
+        await criterion.clickLabel();
+        expect(await (await criterion.value())!.getValue()).toBe(text);
+      }
+    );
+
+    it.for(['country-code', 'Country'])(
+      'should not match criterion name or untranslated label %s in strict mode',
+      async criterionName => {
+        component.strictCriterion = true;
+
+        const text = `${criterionName}: translated(Germany);remaining text;`;
+        const input = await pasteInput(text);
+
+        expect(component.searchCriteria().criteria).toEqual([]);
+        expect(input.value).toBe(text);
+      }
+    );
+
+    it('should match a displayed label even when another option has the same raw value', async () => {
+      component.criteria.set([
+        {
+          name: 'country-code',
+          label: 'Country',
+          options: [
+            { value: 'translated(Germany)', label: 'Austria' },
+            { value: 'DE', label: 'Germany' }
+          ]
+        }
+      ]);
+
+      await pasteInput('translated(Country): translated(Germany);');
+
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'country-code', value: 'DE' }]);
+    });
+
+    it('should preserve canonical model values that also match another displayed label', async () => {
+      component.criteria.set([
+        {
+          name: 'country-code',
+          label: 'Country',
+          options: [
+            { value: 'DE', label: 'Germany' },
+            { value: 'translated(Germany)', label: 'Austria' }
+          ]
+        }
+      ]);
+      component.searchCriteria.set({
+        value: '',
+        criteria: [{ name: 'country-code', value: 'translated(Germany)' }]
+      });
+      const changes = vi.spyOn(component, 'searchCriteriaChange');
+
+      await renderInput();
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const [criterion] = await filteredSearch.getCriteria();
+      expect(await (await criterion.value())!.text()).toBe('translated(Austria)');
+      expect(changes).not.toHaveBeenCalled();
+    });
+
+    it('should emit normalized initial multi-select values without mutating the supplied model', async () => {
+      component.criteria.set([
+        {
+          name: 'country-code',
+          label: 'Country',
+          multiSelect: true,
+          options: [
+            { value: 'DE', label: 'Germany' },
+            { value: 'CH', label: 'Switzerland' }
+          ]
+        }
+      ]);
+      const originalModel: SearchCriteria = {
+        value: '',
+        criteria: [
+          { name: 'country-code', value: ['translated(Switzerland)', 'translated(Germany)'] }
+        ]
+      };
+      component.searchCriteria.set(originalModel);
+      const changes = vi.spyOn(component, 'searchCriteriaChange');
+
+      await renderInput();
+
+      expect(originalModel.criteria[0].value).toEqual([
+        'translated(Switzerland)',
+        'translated(Germany)'
+      ]);
+      expect(changes).toHaveBeenCalledExactlyOnceWith({
+        value: '',
+        criteria: [{ name: 'country-code', value: ['DE', 'CH'] }]
+      });
+    });
+
+    it('should remove duplicate initial multi-select values without mutating the supplied array', async () => {
+      const values = ['good', 'good'];
+      component.searchCriteria.set({
+        value: '',
+        criteria: [{ name: 'score', value: values }]
+      });
+
+      await renderInput();
+
+      expect(values).toEqual(['good', 'good']);
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'score', value: ['good'] }]);
+    });
+
+    it('should display a pasted date after the emitted criteria are set again', async () => {
+      await pasteInput('translated(Timestamp):08/28/2020 08:30:00;');
+      const criteria = component.searchCriteria().criteria.map(criterion => ({ ...criterion }));
+      component.searchCriteria.set({ value: '', criteria });
+      await fixture.whenStable();
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const [criterion] = await filteredSearch.getCriteria();
+      expect(await (await criterion.value())!.text()).toBe('08/28/2020 08:30:00');
+      expect(component.searchCriteria().criteria).toEqual([
+        {
+          name: 'timestamp',
+          value: '08/28/2020 08:30:00',
+          dateValue: new Date(2020, 7, 28, 8, 30)
+        }
+      ]);
+    });
+
+    it('should format a new default date using the configured date format', async () => {
+      await pasteInput('translated(Date):');
+
+      expect(component.searchCriteria().criteria).toEqual([
+        {
+          name: 'date',
+          value: expect.stringMatching(/^\d{2}\/\d{2}\/\d{4}$/),
+          dateValue: expect.any(Date)
+        }
+      ]);
+    });
+
+    it('should retain an invalid date and the remaining pasted input', async () => {
+      const input = await pasteInput('translated(Date):not-a-date;translated(Location):Lünen');
+
+      expect(component.searchCriteria().criteria).toEqual([]);
+      expect(input.value).toBe('translated(Date):not-a-date;translated(Location):Lünen');
+    });
+
+    it('should retain free text focus after creating a complete pasted criterion', async () => {
+      const input = await pasteInput('translated(Location):Lünen;');
+
+      expect(document.activeElement).toBe(input);
+    });
+
+    it('should only focus the final unterminated pasted criterion', async () => {
+      const input = await renderInput();
+      const focusedCriteria: string[] = [];
+      (fixture.nativeElement as HTMLElement).addEventListener('focusin', event => {
+        const criterion = (event.target as HTMLElement).closest('si-filtered-search-value');
+        if (criterion) {
+          focusedCriteria.push(criterion.querySelector('.criterion-label')!.textContent!.trim());
+        }
+      });
+
+      await userEvent.fill(input, 'translated(Status):open;translated(Owner):team');
+      await fixture.whenStable();
+
+      expect(focusedCriteria).toEqual(['translated(Owner)']);
+    });
+
+    it('should emit the resolved value when lazy options arrive after pasting', async () => {
+      const options = new Subject<OptionType[]>();
+      component.criteria.set([{ name: 'country-code', label: 'Country' }]);
+      component.lazyValueProvider = vi.fn().mockReturnValue(options);
+
+      await pasteInput('translated(Country): translated(Germany);');
+
+      expect(component.lazyValueProvider).toHaveBeenCalledExactlyOnceWith(
+        'country-code',
+        'translated(Germany)'
+      );
+      expect(component.searchCriteria().criteria).toEqual([
+        { name: 'country-code', value: 'translated(Germany)' }
+      ]);
+      const changes = vi.spyOn(component, 'searchCriteriaChange');
+
+      options.next([{ value: 'DE', label: 'Germany' }]);
+      await fixture.whenStable();
+
+      expect(changes).toHaveBeenCalledExactlyOnceWith({
+        value: '',
+        criteria: [{ name: 'country-code', value: 'DE' }]
+      });
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'country-code', value: 'DE' }]);
+    });
+
+    it('should normalize lazy multi-select options after pasting', async () => {
+      component.criteria.set([{ name: 'score', label: 'Score', multiSelect: true }]);
+      component.lazyValueProvider = vi.fn().mockReturnValue(of([{ value: 'good', label: 'Good' }]));
+
+      await pasteInput('translated(Score): translated(Good);');
+
+      expect(component.lazyValueProvider).toHaveBeenCalledExactlyOnceWith(
+        'score',
+        'translated(Good)'
+      );
+      expect(component.searchCriteria()).toEqual({
+        value: '',
+        criteria: [{ name: 'score', value: ['good'] }]
+      });
+    });
+
+    it('should share a pending lookup with an automatically opened value editor', async () => {
+      const options = new Subject<OptionType[]>();
+      component.criteria.set([{ name: 'country-code', label: 'Country' }]);
+      component.lazyValueProvider = vi.fn().mockReturnValue(options);
+
+      await pasteInput('translated(Country): translated(Germany)');
+
+      expect(component.lazyValueProvider).toHaveBeenCalledExactlyOnceWith(
+        'country-code',
+        'translated(Germany)'
+      );
+      const changes = vi.spyOn(component, 'searchCriteriaChange');
+
+      options.next([{ value: 'DE', label: 'Germany' }]);
+      await fixture.whenStable();
+
+      expect(changes).toHaveBeenCalledExactlyOnceWith({
+        value: '',
+        criteria: [{ name: 'country-code', value: 'DE' }]
+      });
+    });
+
+    it('should prefer displayed labels when lazy pasted options contain a raw-value collision', async () => {
+      component.criteria.set([{ name: 'country-code', label: 'Country' }]);
+      component.lazyValueProvider = vi.fn().mockReturnValue(
+        of([
+          { value: 'translated(Germany)', label: 'Austria' },
+          { value: 'DE', label: 'Germany' }
+        ])
+      );
+
+      await pasteInput('translated(Country): translated(Germany);');
+
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'country-code', value: 'DE' }]);
+    });
+
+    it('should not mutate an earlier change event when lazy values are normalized', async () => {
+      const options = new Subject<OptionType[]>();
+      component.criteria.set([{ name: 'country-code', label: 'Country' }]);
+      component.lazyValueProvider = vi.fn().mockReturnValue(options);
+      const changes = vi.spyOn(component, 'searchCriteriaChange');
+      await pasteInput('translated(Country): translated(Germany);');
+      const initialEvent = changes.mock.calls[0][0];
+
+      options.next([{ value: 'DE', label: 'Germany' }]);
+      await fixture.whenStable();
+
+      expect(initialEvent.criteria).toEqual([
+        { name: 'country-code', value: 'translated(Germany)' }
+      ]);
+      expect(changes).toHaveBeenLastCalledWith({
+        value: '',
+        criteria: [{ name: 'country-code', value: 'DE' }]
+      });
+    });
+
+    it('should not add an exclusive criterion a second time from pasted input', async () => {
+      missingTranslations = ['Country'];
+      component.exclusiveCriteria = true;
+      component.criteria.set([{ name: 'country-code', label: 'Country' }]);
+      component.searchCriteria.set({
+        value: '',
+        criteria: [{ name: 'country-code', value: 'DE' }]
+      });
+
+      await pasteInput('Country: US;');
+
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'country-code', value: 'DE' }]);
+    });
+
+    it('should retain rejected criteria and the remaining pasted input', async () => {
+      component.criteria.set([{ name: 'foo', label: 'Foo' }]);
+      vi.spyOn(component, 'showCriteria').mockImplementation(event => {
+        event.allow(event.searchCriteria.criteria.length ? [] : event.criteria);
+      });
+
+      const input = await pasteInput('translated(Foo):1;translated(Foo):2');
+
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'foo', value: '1' }]);
+      expect(input.value).toBe('translated(Foo):2');
+    });
+
+    it('should retain invalid criteria and the remaining pasted input in strict mode', async () => {
+      component.strictCriterion = true;
+      component.criteria.set([
+        { name: 'location', label: 'Location', options: ['Lünen'] },
+        { name: 'name', label: 'Name' }
+      ]);
+
+      const input = await pasteInput('translated(Location):Lünen;Dummy:1;translated(Name):Harald');
+
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'location', value: 'Lünen' }]);
+      expect(input.value).toBe('Dummy:1;translated(Name):Harald');
+    });
+
+    it('should respect interceptor restrictions for pasted criteria and free text', async () => {
+      missingTranslations = ['Country'];
+      vi.spyOn(component, 'showCriteria').mockImplementation(event => {
+        event.allow([], false);
+      });
+
+      await pasteInput('Country: DE;plain text;');
+
+      expect(component.searchCriteria().criteria).toEqual([]);
+      expect((await renderInput()).value).toBe('Country: DE;plain text;');
+    });
+
+    it('should reject unknown pasted criteria in strict mode', async () => {
+      component.strictCriterion = true;
+
+      await pasteInput('unknown:value;');
+
+      expect(component.searchCriteria().criteria).toEqual([]);
+    });
+
+    it('should retain semicolons when delimiter handling is disabled', async () => {
+      component.disableSelectionByColonAndSemicolon = true;
+
+      const input = await pasteInput('first pill;');
+
+      expect(component.searchCriteria().criteria).toEqual([]);
+      expect(input.value).toBe('first pill;');
+    });
+
+    it.for([0, 1, 2])(
+      'should enforce maxCriteria=%i for mixed pasted tokens',
+      async maxCriteria => {
+        component.maxCriteria = maxCriteria;
+
+        await pasteInput('translated(Status):open;unknown:value;plain text;');
+
+        expect(component.searchCriteria().criteria).toEqual(
+          [
+            { name: 'status', value: 'open' },
+            { name: 'unknown', value: 'value' }
+          ].slice(0, maxCriteria)
+        );
+        expect((await renderInput()).value).toBe(
+          [
+            'translated(Status):open;unknown:value;plain text;',
+            'unknown:value;plain text;',
+            'plain text;'
+          ][maxCriteria]
+        );
+      }
+    );
+
+    it('should recheck free text restrictions between pasted tokens', async () => {
+      vi.spyOn(component, 'showCriteria').mockImplementation(event => {
+        event.allow(event.criteria, event.searchCriteria.criteria.length === 0);
+      });
+
+      await pasteInput('first pill;second pill;');
+
+      expect(component.searchCriteria().criteria).toEqual([
+        { name: 'free-text', value: 'first pill' }
+      ]);
+    });
+
+    it('should accept free text enabled by a preceding pasted criterion', async () => {
+      vi.spyOn(component, 'showCriteria').mockImplementation(event => {
+        event.allow(event.criteria, event.searchCriteria.criteria.length > 0);
+      });
+
+      const input = await pasteInput('translated(Status):open;urgent;');
+
+      expect(component.searchCriteria().criteria).toEqual([
+        { name: 'status', value: 'open' },
+        { name: 'free-text', value: 'urgent' }
+      ]);
+      expect(input.value).toBe('');
+    });
+
+    it('should recheck free text restrictions when exclusive criteria are exhausted', async () => {
+      component.exclusiveCriteria = true;
+      component.criteria.set([{ name: 'status', label: 'Status' }]);
+      vi.spyOn(component, 'showCriteria').mockImplementation(event => {
+        event.allow(event.criteria, event.searchCriteria.criteria.length === 0);
+      });
+
+      const input = await pasteInput('translated(Status):open;urgent;');
+
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'status', value: 'open' }]);
+      expect(input.value).toBe('urgent;');
+    });
+
+    it('should respect free text restrictions without predefined criteria', async () => {
+      component.criteria.set([]);
+      vi.spyOn(component, 'showCriteria').mockImplementation(event => {
+        event.allow([], false);
+      });
+
+      const input = await pasteInput('blocked;');
+
+      expect(component.searchCriteria().criteria).toEqual([]);
+      expect(input.value).toBe('blocked;');
+    });
+
+    it('should clear accepted free text on blur without creating it again', async () => {
+      const input = await pasteInput('urgent');
+      const changes = vi.spyOn(component, 'searchCriteriaChange');
+
+      input.blur();
+      await fixture.whenStable();
+      input.focus();
+      input.blur();
+      await fixture.whenStable();
+
+      expect(input.value).toBe('');
+      expect(changes).toHaveBeenCalledExactlyOnceWith({
+        value: '',
+        criteria: [{ name: 'free-text', value: 'urgent' }]
+      });
+    });
+
+    it('should retain rejected free text and the remaining pasted input', async () => {
+      vi.spyOn(component, 'showCriteria').mockImplementation(event => {
+        event.allow(event.criteria, event.searchCriteria.criteria.length === 0);
+      });
+
+      const input = await pasteInput('first pill;second pill;third pill');
+
+      expect(component.searchCriteria().criteria).toEqual([
+        { name: 'free-text', value: 'first pill' }
+      ]);
+      expect(input.value).toBe('second pill;third pill');
+    });
+
+    it('should retain the remaining input when free text pills are unavailable', async () => {
+      component.freeTextCriterion = undefined;
+
+      const input = await pasteInput('plain text;translated(Location):Lünen');
+
+      expect(component.searchCriteria().criteria).toEqual([]);
+      expect(input.value).toBe('plain text;translated(Location):Lünen');
+    });
+
+    it('should match translated lazy criteria without invoking the interceptor', async () => {
+      const definitions = new Subject<CriterionDefinition[]>();
+      component.lazyCriterionProvider = vi.fn().mockReturnValue(definitions);
+      component.strictCriterion = true;
+      const interceptor = vi.spyOn(component, 'showCriteria');
+      const input = await renderInput();
+      await userEvent.click(input);
+      await fixture.whenStable();
+
+      expect(component.lazyCriterionProvider).toHaveBeenCalled();
+      definitions.next([{ name: 'building-id', label: 'Building' }]);
+      await fixture.whenStable();
+
+      await userEvent.fill(input, 'translated(Building):HQ;plain text;');
+      await fixture.whenStable();
+
+      expect(interceptor).not.toHaveBeenCalled();
+      expect(component.searchCriteria().criteria).toEqual([
+        { name: 'building-id', value: 'HQ' },
+        { name: 'free-text', value: 'plain text' }
+      ]);
+    });
+
+    it.for(['empty', 'error'])(
+      'should preserve normalized values on lazy lookup %s',
+      async result => {
+        component.lazyValueProvider = (...[, typed]: [string, string]) => {
+          if (typed === 'translated(Germany)') {
+            return result === 'error' ? throwError(() => new Error('Lookup failed')) : of([]);
+          }
+          return of([{ value: 'DE', label: 'Germany' }]);
+        };
+
+        await pasteInput('translated(Country): translated(Germany);');
+
+        expect(component.searchCriteria().criteria).toEqual([
+          { name: 'country-code', value: 'DE' }
+        ]);
+      }
+    );
+
+    it.for(['empty', 'error'])(
+      'should retain unmatched multi-select input on lazy lookup %s',
+      async result => {
+        component.criteria.set([{ name: 'score', label: 'Score', multiSelect: true }]);
+        component.lazyValueProvider = vi
+          .fn()
+          .mockReturnValue(
+            result === 'error' ? throwError(() => new Error('Lookup failed')) : of([])
+          );
+
+        await pasteInput('translated(Score): Custom;');
+
+        expect(component.searchCriteria().criteria).toEqual([{ name: 'score', value: ['Custom'] }]);
+      }
+    );
+
+    it('should not emit a redundant change when lazy multi-select values already match', async () => {
+      const options = new Subject<OptionType[]>();
+      component.lazyValueProvider = (...[, typed]: [string, string]) =>
+        typed === 'translated(Good)' ? options : of([{ value: 'good', label: 'Good' }]);
+      await pasteInput('translated(Score): translated(Good);');
+      const changes = vi.spyOn(component, 'searchCriteriaChange');
+
+      options.next([{ value: 'good', label: 'Good' }]);
+      await fixture.whenStable();
+
+      expect(changes).not.toHaveBeenCalled();
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'score', value: ['good'] }]);
+    });
+
+    it('should not overwrite a value edited while a lazy lookup is pending', async () => {
+      const options = new Subject<OptionType[]>();
+      component.criteria.set([{ name: 'country-code', label: 'Country' }]);
+      component.lazyValueProvider = (...[, typed]: [string, string]) =>
+        typed === 'translated(Germany)' ? options : of([]);
+      await pasteInput('translated(Country): translated(Germany);');
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const [criterion] = await filteredSearch.getCriteria();
+      await criterion.clickLabel();
+      const input = (fixture.nativeElement as HTMLElement).querySelector<HTMLInputElement>(
+        'si-filtered-search-typeahead input'
+      )!;
+      await userEvent.fill(input, 'US');
+      await fixture.whenStable();
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'country-code', value: 'US' }]);
+
+      options.next([{ value: 'DE', label: 'Germany' }]);
+      await fixture.whenStable();
+
+      expect(component.searchCriteria().criteria).toEqual([{ name: 'country-code', value: 'US' }]);
+    });
+
+    it('should ignore lazy results after the pasted criterion is removed', async () => {
+      const options = new Subject<OptionType[]>();
+      component.lazyValueProvider = (...[, typed]: [string, string]) =>
+        typed === 'translated(Germany)' ? options : of([]);
+      await pasteInput('translated(Country): translated(Germany);');
+      component.filteredSearch().deleteAllCriteria();
+      await fixture.whenStable();
+      const changes = vi.spyOn(component, 'searchCriteriaChange');
+
+      options.next([{ value: 'DE', label: 'Germany' }]);
+      await fixture.whenStable();
+
+      expect(changes).not.toHaveBeenCalled();
+      expect(component.searchCriteria().criteria).toEqual([]);
+    });
   });
 
   describe('with free text pills enabled', () => {

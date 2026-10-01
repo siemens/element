@@ -19,7 +19,11 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { selectOptions, TypeaheadOptionCriterion } from '../../si-filtered-search-helper';
+import {
+  findOption,
+  selectOptions,
+  TypeaheadOptionCriterion
+} from '../../si-filtered-search-helper';
 import { OptionCriterion } from '../../si-filtered-search.model';
 import { SiFilteredSearchOptionValueBase } from '../si-filtered-search-option-value.base';
 import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
@@ -50,6 +54,9 @@ export class SiFilteredSearchMultiSelectComponent
   );
 
   ngOnChanges(changes: SimpleChanges<this>): void {
+    if (changes.active && this.active() && !changes.active.firstChange) {
+      this.inputChange.next('');
+    }
     if (
       changes.criterionValue &&
       this.criterionValue().value?.length !== this.optionValue().length
@@ -60,7 +67,7 @@ export class SiFilteredSearchMultiSelectComponent
   }
 
   ngOnInit(): void {
-    this.inputChange.next('');
+    this.inputChange.next(this.initialValueText() ?? '');
     this.selectionChange.next(this.criterionValue().value as string[]);
     this.buildOptionValue();
   }
@@ -83,11 +90,11 @@ export class SiFilteredSearchMultiSelectComponent
     this.selectionChange.next(this.criterionValue().value as string[]);
   }
 
-  protected override buildOptions(): Observable<TypeaheadOptionCriterion[]> | undefined {
+  protected override buildOptions(): Observable<TypeaheadOptionCriterion[]> {
     const translatedOptions = super.buildOptions();
-    return translatedOptions?.pipe(
+    return translatedOptions.pipe(
       switchMap(options =>
-        this.selectionChange!.pipe(
+        this.selectionChange.pipe(
           tap(value => {
             selectOptions(options, value);
           }),
@@ -97,20 +104,21 @@ export class SiFilteredSearchMultiSelectComponent
     );
   }
 
-  protected processTypeaheadOptions(options: TypeaheadOptionCriterion[]): void {
+  protected processTypeaheadOptions(options: TypeaheadOptionCriterion[]): string[] | undefined {
     const value = this.criterionValue().value as string[];
-    this.optionValue.set(
-      options.filter(
-        option =>
-          value.includes(option.value) ||
-          // TODO: remove this. I don't know why, but it seems like previously FS accepted labels as well
-          value.includes(option.translatedLabel)
-      )
+    const matchingOptions = value.map(item =>
+      findOption(item, options, this.initialValueText() === item)
     );
-    // Sneaky patch the value.
-    // We did not emit a change, as no user interaction happened.
-    // We should consider dropping this, but there is currently a unit test checking this behavior.
-    value.splice(0, value.length, ...this.optionValue().map(option => option.value));
+    this.optionValue.set(options.filter(option => matchingOptions.includes(option)));
+    const normalizedValue = [
+      ...this.optionValue().map(option => option.value),
+      ...value.filter((_, index) => !matchingOptions[index])
+    ];
+    this.selectionChange.next(normalizedValue);
+    return normalizedValue.length === value.length &&
+      normalizedValue.every((item, index) => item === value[index])
+      ? undefined
+      : normalizedValue;
   }
 
   protected hasOptionValue(): boolean {
