@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlySelectOption } from '@ngx-formly/core/select';
 import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
+import { distinctUntilChanged, map, of } from 'rxjs';
 
 export class SiFormlyTranslateExtension {
   private translate = injectSiTranslateService();
@@ -20,15 +22,21 @@ export class SiFormlyTranslateExtension {
       field.expressions['props.label'] = this.translate.translateAsync(to.label);
     }
 
-    if (to.options) {
-      // e.g. a select
-      let i = -1;
-      to.options.forEach((val: any) => {
-        i++;
-        if (field.expressions) {
-          field.expressions[`props.options.${i}.label`] = this.translate.translateAsync(val.label);
-        }
-      });
+    if (Array.isArray(to.options)) {
+      const options: FormlySelectOption[] = to.options;
+      const labels = options.map(option => option.label);
+      // Keep option translations out of Formly's expression subscriptions, which can be
+      // recreated when Bootstrap controls register with their parent field.
+      to.options = labels.length
+        ? this.translate.translateAsync(labels).pipe(
+            distinctUntilChanged((previous, current) =>
+              labels.every(label => previous[label] === current[label])
+            ),
+            map(translations =>
+              options.map(option => ({ ...option, label: translations[option.label] }))
+            )
+          )
+        : of([]);
     }
 
     if (to.placeholder) {

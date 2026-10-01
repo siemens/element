@@ -8,7 +8,7 @@ import {
   SiTranslateService,
   provideMockTranslateServiceBuilder
 } from '@siemens/element-translate-ng/translate';
-import { of } from 'rxjs';
+import { firstValueFrom, Observable, of } from 'rxjs';
 
 import { SiFormlyTranslateExtension } from './si-formly-translate.extension';
 
@@ -119,7 +119,10 @@ describe('Formly translations', () => {
     expect(cfg.expressions?.['props.placeholder']).toBeTruthy();
   });
 
-  it('should translate options', () => {
+  it('should translate options', async () => {
+    translateAsyncSpy.mockReturnValue(
+      of({ l1: 'translated1', l2: 'translated2', l3: 'translated3', l4: 'translated4' })
+    );
     const cfg: FormlyFieldConfig = {
       props: {
         options: [
@@ -131,15 +134,13 @@ describe('Formly translations', () => {
       }
     };
     extension.prePopulate(cfg);
-    expect(translateAsyncSpy.mock.calls[0]).toEqual(['l1']);
-    expect(translateAsyncSpy.mock.calls[1]).toEqual(['l2']);
-    expect(translateAsyncSpy.mock.calls[2]).toEqual(['l3']);
-    expect(translateAsyncSpy.mock.calls[3]).toEqual(['l4']);
-
-    expect(cfg.expressions?.['props.options.0.label']).toBeTruthy();
-    expect(cfg.expressions?.['props.options.1.label']).toBeTruthy();
-    expect(cfg.expressions?.['props.options.2.label']).toBeTruthy();
-    expect(cfg.expressions?.['props.options.3.label']).toBeTruthy();
+    expect(translateAsyncSpy).toHaveBeenCalledWith(['l1', 'l2', 'l3', 'l4']);
+    expect(await firstValueFrom(cfg.props!.options as Observable<unknown>)).toEqual([
+      { label: 'translated1', value: '1' },
+      { label: 'translated2', value: '1' },
+      { label: 'translated3', value: '1' },
+      { label: 'translated4', value: '1' }
+    ]);
   });
 
   it('should translate validation messages', () => {
