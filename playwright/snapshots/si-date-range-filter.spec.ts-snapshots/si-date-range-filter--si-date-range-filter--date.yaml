@@ -1,4 +1,4 @@
-- textbox "Search"
+- textbox "Search…"
 - listbox "Presets":
   - option /last \d+[hmsp]+/
   - option "last 7 days"

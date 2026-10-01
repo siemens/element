@@ -5,7 +5,7 @@
 - button "Create full-screen modal"
 - button "Create nested modal"
 - button "Create modal with custom component"
-- text: Info
+- text: Information
 - paragraph: Manual close toast
 - paragraph: This notification remains visible until it is closed.
 - button "Close"

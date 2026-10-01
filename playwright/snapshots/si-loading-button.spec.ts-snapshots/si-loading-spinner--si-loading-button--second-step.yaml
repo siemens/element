@@ -1,23 +1,23 @@
 - button "Primary" [disabled]
-- img "Loading"
+- img "Loading…"
 - button "Secondary" [disabled]
-- img "Loading"
+- img "Loading…"
 - button "Secondary" [disabled]
-- img "Loading"
+- img "Loading…"
 - button "Secondary" [disabled]
-- img "Loading"
+- img "Loading…"
 - button "Tertiary" [disabled]
-- img "Loading"
+- img "Loading…"
 - button "Warning" [disabled]
-- img "Loading"
+- img "Loading…"
 - button "Danger" [disabled]
-- img "Loading"
+- img "Loading…"
 - button "Default" [disabled]
-- img "Loading"
+- img "Loading…"
 - button "clock" [disabled]
-- img "Loading"
+- img "Loading…"
 - button "clock" [disabled]
-- img "Loading"
+- img "Loading…"
 - text: Control panel
 - checkbox "Toggle loading" [checked]
 - text: Toggle loading

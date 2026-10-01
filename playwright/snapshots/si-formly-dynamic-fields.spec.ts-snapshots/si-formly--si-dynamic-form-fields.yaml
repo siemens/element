@@ -12,7 +12,7 @@
 - spinbutton "Number input"
 - text: Password input*
 - textbox "Password input*"
-- button "show password"
+- button "Show password"
 - text: Please enter a stronger password Email input
 - textbox "Email input": john.doe@example.org
 - text: Number Input
@@ -36,9 +36,9 @@
 - button "Open calendar"
 - text: Daterange
 - group:
-  - textbox "Start date"
+  - textbox "Start"
   - text: "-"
-  - textbox "End date": /8\/\d+\/\d+/
+  - textbox "End": /8\/\d+\/\d+/
   - button "Open calendar"
 - paragraph:
   - text: The time component is derived from

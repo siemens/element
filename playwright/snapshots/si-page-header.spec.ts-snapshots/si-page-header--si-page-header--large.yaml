@@ -1,6 +1,6 @@
 - link "Jump to Main content"
 - link "Jump to Navigation"
-- button "Toggle"
+- button "Show side pane"
 - banner:
   - link "Siemens logo":
     - /url: /

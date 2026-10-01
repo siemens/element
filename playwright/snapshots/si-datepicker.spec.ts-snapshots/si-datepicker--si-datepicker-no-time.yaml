@@ -1,4 +1,4 @@
-- button "Previous"
+- button "Back"
 - button "March"
 - button /\d+/
 - button "Next"
@@ -111,7 +111,7 @@
       - gridcell /Sat Apr \d+ \d+/:
         - button /Sat Apr \d+ \d+/
 - button "Today"
-- button "Previous"
+- button "Back"
 - button "March"
 - button /\d+/
 - button "Next"

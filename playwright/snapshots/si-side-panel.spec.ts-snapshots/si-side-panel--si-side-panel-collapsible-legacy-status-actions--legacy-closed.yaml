@@ -1,4 +1,4 @@
-- button "Toggle"
+- button "Show side pane"
 - link "Out of Service":
   - /url: ""
 - link "Event source active, ack":

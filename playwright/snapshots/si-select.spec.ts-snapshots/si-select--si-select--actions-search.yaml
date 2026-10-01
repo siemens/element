@@ -19,7 +19,7 @@
 - text: With filter
 - combobox "Select with actions" [expanded]
 - listbox "Select with actions":
-  - option "No results found" [disabled]
+  - option "Nothing found" [disabled]
 - button "Clear selection"
 - button "Create \"New option\" item"
 - button "Close"

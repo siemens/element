@@ -22,8 +22,8 @@
 - button "Do something"
 - text: Heading
 - list:
-  - listitem: Progress Just now In Progress
-  - listitem: /Info \d+ minutes ago Info/
+  - listitem: Processing… Just now In Progress
+  - listitem: /Information \d+ minutes ago Info/
   - listitem: Caution 3 hours ago Caution
   - listitem: Danger 4 hours ago Danger
 - text: Heading
@@ -40,7 +40,7 @@
 - menubar:
   - menuitem "Share"
 - list:
-  - listitem: Info 2 minutes ago Title Description
+  - listitem: Information 2 minutes ago Title Description
   - listitem: /Warning \d+ minutes ago Title Description/
   - listitem: /Danger \d+ minutes ago Title Description/
 - button "Do something"

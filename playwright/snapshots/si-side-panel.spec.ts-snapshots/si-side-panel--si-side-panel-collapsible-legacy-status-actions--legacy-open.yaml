@@ -2,9 +2,9 @@
 - menubar:
   - menuitem "Path"
   - menuitem "Edit"
-  - menuitem "Toggle"
+  - menuitem "Show side pane"
 - button "Full screen"
-- button "Toggle" [expanded]
+- button "Show side pane" [expanded]
 - link "Out of Service":
   - /url: ""
 - link "Event source active, ack":

@@ -4,8 +4,8 @@
   - listitem: The request is focused on recent operational data
   - listitem: Three relevant sources are available
   - listitem: The final response should include a concise recommendation
-- button "Loading Running activity":
-  - img "Loading"
+- button "Loading… Running activity":
+  - img "Loading…"
   - text: ""
 - button "Failed activity"
 - button "Completed activity with the default icon"

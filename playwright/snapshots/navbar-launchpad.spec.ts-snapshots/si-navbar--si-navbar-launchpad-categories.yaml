@@ -12,12 +12,12 @@
   - button "Jane Smith": JS
 - dialog "Launchpad":
   - paragraph: Switch app
-  - paragraph: Access all your apps
+  - paragraph: Access all of your apps
   - button "Close launchpad"
   - text: Favorites
   - link "Water":
     - /url: .
-  - button "Show more" [expanded]
+  - button "More" [expanded]
   - text: Phishing Apps
   - link "Water":
     - /url: .

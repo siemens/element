@@ -1,5 +1,5 @@
 - alert:
-  - text: Info
+  - text: Information
   - strong: Update Available
   - text: New software version 3.2.1 is now available for download.
   - link "Read More":

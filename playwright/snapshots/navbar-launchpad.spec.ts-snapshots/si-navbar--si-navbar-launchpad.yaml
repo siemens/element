@@ -12,7 +12,7 @@
   - button "Jane Smith": JS
 - dialog "Launchpad":
   - paragraph: Switch app
-  - paragraph: Access all your apps
+  - paragraph: Access all of your apps
   - button "Close launchpad"
   - link "Assets":
     - /url: .

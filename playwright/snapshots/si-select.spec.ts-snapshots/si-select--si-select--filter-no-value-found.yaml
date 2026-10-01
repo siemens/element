@@ -19,4 +19,4 @@
 - text: With filter
 - combobox "FormControl" [expanded]: no-value-found
 - listbox "FormControl":
-  - option "No results found" [disabled]
+  - option "Nothing found" [disabled]

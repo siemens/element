@@ -1,4 +1,4 @@
-- textbox "Search"
+- textbox "Search…"
 - listbox "Presets":
   - option /last \d+[hmsp]+/
   - option "last 7 days"
@@ -7,13 +7,13 @@
   - option /last \d+ days/
   - option "last year"
   - option "past month"
-- text: Reference point
-- textbox "Reference point Open calendar":
+- text: Reference
+- textbox "Reference Open calendar":
   - /placeholder: Select date
   - text: ""
 - button "Open calendar"
 - checkbox "Today"
-- text: Today Range
+- text: Today Period
 - spinbutton "Value"
 - combobox "Unit": Unit Days
 - radio "Before"

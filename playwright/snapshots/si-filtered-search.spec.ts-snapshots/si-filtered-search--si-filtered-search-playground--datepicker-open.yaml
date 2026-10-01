@@ -35,7 +35,7 @@
 - textbox "Search criteria input":
   - /placeholder: "Enter and assign search criteria as JSON e.g. { \"criterias\": [], \"value\": \"test\" }"
   - text: "{ \"criteria\": [{\"name\":\"location\", \"value\":\"Munich\"}], \"value\": \"\" }"
-- button "Previous"
+- button "Back"
 - button "February"
 - button /\d+/
 - button "Next"

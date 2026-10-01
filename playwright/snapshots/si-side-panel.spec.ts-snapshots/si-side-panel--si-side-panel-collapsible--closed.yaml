@@ -1,4 +1,4 @@
-- button "Toggle"
+- button "Show side pane"
 - button "Out of Service"
 - button "•" [disabled]
 - button "Event source active, ack"

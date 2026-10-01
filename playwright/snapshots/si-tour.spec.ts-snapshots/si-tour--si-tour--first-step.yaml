@@ -18,7 +18,7 @@
   - link "Test Coverage":
     - /url: /coverage
 - main:
-  - button "Toggle"
+  - button "Show side pane"
   - button "Properties"
   - button "Documents"
   - button "Graphics"
@@ -46,5 +46,5 @@
   - text: 1 of 7 Status bar
   - button "Close"
   - text: Information about events or actions that requires user attention.
-  - button "Skip tour"
+  - button "Skip"
   - button "Next"
