@@ -4,9 +4,10 @@
 >
   @for (criterion of values(); track criterion) {
     <si-filtered-search-value
-      [editOnCreation]="autoEditCriteria"
+      [editOnCreation]="criterion.editOnCreation"
       [definition]="criterion.config"
       [value]="criterion.value"
+      [initialValueText]="criterion.initialValueText"
       [invalidCriterion]="!validateCriterionLabel(criterion.config)"
       [disabled]="disabled()"
       [clearButtonLabel]="clearButtonLabel()"

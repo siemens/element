@@ -15,7 +15,6 @@ import {
   output,
   viewChild
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { SiTypeaheadDirective, TypeaheadOption } from '@siemens/element-ng/typeahead';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Observable } from 'rxjs';
@@ -24,7 +23,7 @@ import { InternalCriterionDefinition } from './si-filtered-search-helper';
 
 @Component({
   selector: 'si-filtered-search-input',
-  imports: [FormsModule, SiTypeaheadDirective, SiTranslatePipe],
+  imports: [SiTypeaheadDirective, SiTranslatePipe],
   templateUrl: './si-filtered-search-input.component.html',
   styleUrl: './si-filtered-search-input.component.scss',
   host: {
@@ -76,7 +75,11 @@ export class SiFilteredSearchInputComponent {
   readonly onlySelectValue = input.required<boolean>();
 
   /** Emits the selected criterion and an optional value typed with it. */
-  readonly createCriterion = output<{ criterion: InternalCriterionDefinition; value?: string }>();
+  readonly createCriterion = output<{
+    criterion: InternalCriterionDefinition;
+    value?: string;
+    accept: () => void;
+  }>();
 
   /** Emits a criterion name and optional value parsed from the input text. */
   readonly createCriterionByName = output<{
@@ -147,7 +150,7 @@ export class SiFilteredSearchInputComponent {
       let accepted = false;
       if (!this.onlySelectValue() && criterionMatch) {
         accepted = this.requestCriterionByName(criterionMatch, isLastToken);
-      } else if (token && this.freeTextCriterion() && this.allowFreeText()) {
+      } else if (token && this.freeTextCriterion()) {
         accepted = this.requestFreeTextPill(token);
       }
       if (!accepted) {
@@ -163,17 +166,20 @@ export class SiFilteredSearchInputComponent {
   protected freeTextBlurHandler(): void {
     queueMicrotask(() => {
       if (this.freeTextCriterion() && this.searchValue().length > 0) {
-        this.requestFreeTextPill(this.searchValue());
+        this.createFreeTextPillHandler(this.searchValue());
       }
     });
   }
 
   protected typeaheadOnSelectCriterionHandler(event: TypeaheadOption): void {
     const criterion = event as InternalCriterionDefinition;
+    const inputElement = this.inputElement().nativeElement;
     // Removes the focus border before creating a new criterion to prevent the impression of jumping content.
-    this.inputElement().nativeElement.blur();
-    this.createCriterion.emit({ criterion });
-    this.searchValue.set('');
+    inputElement.blur();
+    let accepted = false;
+    this.createCriterion.emit({ criterion, accept: () => (accepted = true) });
+    inputElement.value = accepted ? '' : this.typeahead().query();
+    this.searchValue.set(inputElement.value);
   }
 
   protected createFreeTextPillHandler(query: string): void {

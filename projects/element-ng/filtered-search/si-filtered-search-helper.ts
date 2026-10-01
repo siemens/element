@@ -13,10 +13,15 @@ export interface TypeaheadOptionCriterion extends OptionCriterion {
   translatedLabel: string;
 }
 
+/** Criterion definition normalized for internal rendering and input handling. */
 export interface InternalCriterionDefinition extends CriterionDefinition {
   label: string;
   translatedLabel: string;
-  type?: 'free-text';
+  /**
+   * Identifies free-text pills, displayed without a criterion label using a plain-text editor.
+   * Omitted for regular criteria. Internal only; not included in the search model.
+   */
+  kind?: 'free-text';
 }
 
 /** Convert options to option criterions */
@@ -37,6 +42,19 @@ export const toTranslatedOptions = (
     translatedLabel:
       (option.label ? translate(option.label) : undefined) ?? option.label ?? option.value
   }));
+
+export const findOption = (
+  value: string,
+  options: readonly TypeaheadOptionCriterion[],
+  preferLabel = false
+): TypeaheadOptionCriterion | undefined => {
+  const normalizedValue = value.toLocaleLowerCase();
+  const labelMatch = options.find(
+    option => option.translatedLabel.toLocaleLowerCase() === normalizedValue
+  );
+  const valueMatch = options.find(option => option.value === value);
+  return preferLabel ? (labelMatch ?? valueMatch) : (valueMatch ?? labelMatch);
+};
 
 /*
  * Update selected state the matching is based on value since plain

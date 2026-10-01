@@ -18,7 +18,7 @@ import {
 import { SiTypeaheadDirective, TypeaheadMatch } from '@siemens/element-ng/typeahead';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
-import { TypeaheadOptionCriterion } from '../../si-filtered-search-helper';
+import { findOption, TypeaheadOptionCriterion } from '../../si-filtered-search-helper';
 import { OptionCriterion } from '../../si-filtered-search.model';
 import { SiFilteredSearchOptionValueBase } from '../si-filtered-search-option-value.base';
 import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
@@ -86,16 +86,22 @@ export class SiFilteredSearchTypeaheadComponent
       } else {
         value = newValue;
       }
-      this.optionValue.set(undefined);
-      this.criterionValue.update(v => ({ ...v, value }));
-      this.inputChange.next(newValue);
+      const option = findOption(value, this.loadedOptions() ?? [], true);
+      value = option?.value ?? value;
+      this.optionValue.set(option);
+      if (this.criterionValue().value !== value) {
+        this.criterionValue.update(v => ({ ...v, value }));
+        this.inputChange.next(newValue);
+      }
     }
   }
 
   protected valueTypeaheadFullMatch(match: TypeaheadMatch): void {
     const option = match.option as TypeaheadOptionCriterion;
     this.optionValue.set(option);
-    this.criterionValue.update(v => ({ ...v, value: option.value }));
+    if (this.criterionValue().value !== option.value) {
+      this.criterionValue.update(v => ({ ...v, value: option.value }));
+    }
   }
 
   protected valueTypeaheadSelect(match: TypeaheadMatch): void {
@@ -114,22 +120,11 @@ export class SiFilteredSearchTypeaheadComponent
     }
   }
 
-  protected processTypeaheadOptions(options: TypeaheadOptionCriterion[]): void {
-    this.optionValue.set(
-      options.find(
-        option =>
-          option.value === this.criterionValue().value ||
-          // TODO: remove this. I don't know why, but it seems like previously FS accepted labels as well
-          option.translatedLabel === this.criterionValue().value
-      )
-    );
-    // Sneaky patch the value.
-    // We did not emit a change, as no user interaction happened.
-    // We should consider dropping this, but there is currently a unit test checking this behavior.
-    const optionValue = this.optionValue();
-    if (optionValue) {
-      this.criterionValue().value = optionValue.value;
-    }
+  protected processTypeaheadOptions(options: TypeaheadOptionCriterion[]): string | undefined {
+    const value = this.criterionValue().value as string;
+    const option = findOption(value, options, this.initialValueText() === value);
+    this.optionValue.set(option);
+    return option && option.value !== value ? option.value : undefined;
   }
 
   protected hasOptionValue(): boolean {
