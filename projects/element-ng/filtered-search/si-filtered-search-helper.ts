@@ -26,6 +26,19 @@ export const toOptionCriteria = (values?: OptionType[]): OptionCriterion[] =>
       : { label: v.label, value: v.value, iconClass: v.iconClass }
   ) ?? [];
 
+export const findOption = (
+  value: string,
+  options: readonly TypeaheadOptionCriterion[],
+  preferLabel = false
+): TypeaheadOptionCriterion | undefined => {
+  const normalizedValue = value.toLocaleLowerCase();
+  const labelMatch = options.find(
+    option => option.translatedLabel.toLocaleLowerCase() === normalizedValue
+  );
+  const valueMatch = options.find(option => option.value === value);
+  return preferLabel ? (labelMatch ?? valueMatch) : (valueMatch ?? labelMatch);
+};
+
 /*
  * Update selected state the matching is based on value since plain
  * string options will automatically fill the value attribute with the
