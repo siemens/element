@@ -107,6 +107,15 @@ export class SiTreeViewItemComponent implements OnInit, AfterViewInit, Focusable
 
   protected icons = this.treeViewComponent.computedIcons;
 
+  /** Only the default collapsed icons in flat or start position are directional. */
+  protected readonly flipCollapsedIcon = computed(() => {
+    const usesDefault = this.treeViewComponent.usesDefaultIcon();
+    if (this.treeViewComponent.flatTree()) {
+      return usesDefault.itemCollapsedFlat;
+    }
+    return this.treeViewComponent.folderStateStart() && usesDefault.itemCollapsedLeft;
+  });
+
   private savedElement: ElementRef | undefined;
   private indentLevel = this.treeItem.level ?? 0;
   private nextSiblingElement!: HTMLElement;
@@ -267,7 +276,7 @@ export class SiTreeViewItemComponent implements OnInit, AfterViewInit, Focusable
     });
   }
 
-  protected getItemFolderStateClass(): string {
+  protected getItemFolderStateIcon(): string {
     if (this.treeItem.state === 'collapsed') {
       if (this.treeViewComponent.flatTree()) {
         // flat tree mode
