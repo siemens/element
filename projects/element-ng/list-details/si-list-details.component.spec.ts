@@ -501,6 +501,8 @@ describe('ListDetailsComponent', () => {
     let routerHarness: RouterTestingHarness;
     let debugElement: DebugElement;
 
+    afterEach(() => vi.restoreAllMocks());
+
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [

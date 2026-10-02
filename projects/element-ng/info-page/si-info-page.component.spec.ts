@@ -36,6 +36,11 @@ describe('SiInfoPageComponent', () => {
     element = fixture.nativeElement;
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
   it('should contain all passed strings', async () => {
     icon.set('element-sun');
     titleText.set('Title');
@@ -58,6 +63,7 @@ describe('SiInfoPageComponent', () => {
     await fixture.whenStable();
 
     element.querySelector<HTMLElement>('a.btn-primary')!.click();
+    await fixture.whenStable();
 
     expect(router.navigateByUrl).toHaveBeenCalled();
   });

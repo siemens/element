@@ -4,7 +4,6 @@
  */
 import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { page, userEvent } from 'vitest/browser';
 
 import { SiPopoverLegacyDirective } from './si-popover-legacy.directive';
 
@@ -31,27 +30,37 @@ describe('SiPopoverDirective', () => {
     wrapperComponent = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
   it('should open on click', async () => {
     await fixture.whenStable();
-    await userEvent.click(page.getByRole('button', { name: 'Test' }));
+    const button = fixture.nativeElement.querySelector('button')!;
+    button.click();
+    await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeInTheDocument();
     expect(document.querySelector('.popover')).toHaveTextContent('test popover content');
 
-    fixture.nativeElement.querySelector('button').click();
+    button.click();
+    await fixture.whenStable();
     expect(document.querySelector('.popover')).not.toBeInTheDocument();
   });
 
   it('should close when move focus outside', async () => {
     wrapperComponent.triggers.set('focus');
     await fixture.whenStable();
+    const button = fixture.nativeElement.querySelector('button')!;
 
-    await userEvent.tab();
+    button.focus();
     await fixture.whenStable();
     expect(document.querySelector('.popover')).toBeInTheDocument();
     expect(document.querySelector('.popover')).toHaveTextContent('test popover content');
 
-    await userEvent.tab();
+    button.blur();
+    await fixture.whenStable();
 
     expect(document.querySelector('.popover')).not.toBeInTheDocument();
   });

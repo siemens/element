@@ -87,11 +87,15 @@ describe('SiTabset', () => {
   });
 
   beforeEach(async () => {
-    vi.useFakeTimers();
+    vi.useFakeTimers({ shouldAdvanceTime: true });
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    vi.restoreAllMocks();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   it('should be possible to create a tabComponent instance', async () => {
@@ -200,6 +204,7 @@ describe('SiTabset', () => {
   it.skipIf(!document.hasFocus())('should handle focus correctly', async () => {
     testComponent.tabs = ['1', '2', '3'];
     fixture.detectChanges();
+    await vi.advanceTimersByTimeAsync(1000);
     await fixture.whenStable();
     getElement(0).focus();
     await fixture.whenStable();

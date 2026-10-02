@@ -31,6 +31,7 @@ describe('ResizeObserverService', () => {
   };
 
   beforeEach(async () => {
+    vi.useRealTimers();
     await page.viewport(100, 100);
     service = TestBed.inject(ResizeObserverService);
     fixture = TestBed.createComponent(TestHostComponent);
@@ -41,6 +42,8 @@ describe('ResizeObserverService', () => {
 
   afterEach(() => {
     subscription?.unsubscribe();
+    vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
   it('emits initial size event when asked', async () => {

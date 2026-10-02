@@ -37,7 +37,10 @@ describe('SiFormValidationTooltipDirective', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   it('should show tooltip when control is hovered and becomes touched', async () => {

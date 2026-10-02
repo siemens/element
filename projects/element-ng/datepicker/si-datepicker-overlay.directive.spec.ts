@@ -80,6 +80,10 @@ describe('SiDatepickerOverlayDirective', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('should open', async () => {
     await show();
   });

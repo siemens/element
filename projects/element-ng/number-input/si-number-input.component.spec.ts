@@ -66,6 +66,13 @@ describe('SiNumberInputComponent', () => {
     button!.dispatchEvent(new MouseEvent('mouseup'));
   };
 
+  afterEach(() => {
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   const incButton = (): HTMLButtonElement | null =>
     element.querySelector<HTMLButtonElement>('button.inc');
   const decButton = (): HTMLButtonElement | null =>
@@ -101,6 +108,13 @@ describe('SiNumberInputComponent', () => {
         ]
       });
       element = fixture.nativeElement;
+    });
+
+    afterEach(() => {
+      if (vi.isFakeTimers()) {
+        vi.clearAllTimers();
+        vi.useRealTimers();
+      }
     });
 
     it('should support short press increments', async () => {

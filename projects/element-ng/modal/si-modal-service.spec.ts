@@ -36,7 +36,10 @@ describe('SiModalService', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   describe('with template', () => {
@@ -49,7 +52,7 @@ describe('SiModalService', () => {
     });
 
     it('shows and hides the dialog', () => {
-      const modalRef = service.show(templateRef, {});
+      const modalRef = service.show(templateRef, { animated: false });
       const bodyStyle = getComputedStyle(document.body);
 
       appRef.tick();
@@ -69,7 +72,7 @@ describe('SiModalService', () => {
 
   describe('with component', () => {
     it('shows and hides the dialog', () => {
-      const modalRef = service.show(DialogComponent, {});
+      const modalRef = service.show(DialogComponent, { animated: false });
 
       appRef.tick();
 
@@ -84,7 +87,10 @@ describe('SiModalService', () => {
     });
 
     it('set input using setInputs', () => {
-      const modalRef = service.show(DialogComponent, { inputValues: { inputProp: 'input value' } });
+      const modalRef = service.show(DialogComponent, {
+        animated: false,
+        inputValues: { inputProp: 'input value' }
+      });
 
       appRef.tick();
 

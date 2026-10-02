@@ -8,7 +8,6 @@ import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectOption } from '@siemens/element-ng/select';
 import { SiSelectHarness } from '@siemens/element-ng/select/testing';
-import { userEvent } from 'vitest/browser';
 
 import { SiThresholdComponent, ThresholdStep } from './index';
 
@@ -111,6 +110,11 @@ describe('SiThresholdComponent', () => {
     await fixture.whenStable();
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
   it('should create component', () => {
     expect(component).toBeTruthy();
   });
@@ -136,7 +140,7 @@ describe('SiThresholdComponent', () => {
     vi.spyOn(component, 'thresholdStepsChange');
     await fixture.whenStable();
     const add2 = element.querySelectorAll<HTMLElement>('[aria-label="Add step"]')[1];
-    await userEvent.click(add2);
+    add2.click();
     await fixture.whenStable();
 
     expect(component.thresholdStepsChange).toHaveBeenCalled();
@@ -150,7 +154,7 @@ describe('SiThresholdComponent', () => {
 
     await fixture.whenStable();
     const remove2 = element.querySelectorAll<HTMLElement>('[aria-label="Remove step"]')[1];
-    await userEvent.click(remove2);
+    remove2.click();
     await fixture.whenStable();
 
     expect(component.thresholdStepsChange).toHaveBeenCalled();

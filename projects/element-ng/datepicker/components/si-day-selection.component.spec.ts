@@ -37,6 +37,10 @@ describe('SiDaySelectionComponent', () => {
     fixture.detectChanges();
   };
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   describe('When Single Select View', () => {
     let focusedDate: WritableSignal<Date>;
     let startDate: WritableSignal<Date>;

@@ -9,13 +9,19 @@ import { SiMarkdownComponent } from '../../si-markdown.component';
 describe('SiMarkdownTableComponent', () => {
   let fixture: ComponentFixture<SiMarkdownComponent>;
   let element: HTMLElement;
+  let realSetTimeout: typeof setTimeout;
 
   beforeEach(() => {
+    vi.useRealTimers();
+    realSetTimeout = globalThis.setTimeout;
     fixture = TestBed.createComponent(SiMarkdownComponent);
     element = fixture.nativeElement;
   });
 
-  afterEach(() => vi.useRealTimers());
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
 
   it('renders a table with cell alignment and source-line attributes', async () => {
     fixture.componentRef.setInput(
@@ -25,7 +31,7 @@ describe('SiMarkdownTableComponent', () => {
 | One | Two | Three |`
     );
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
+    await new Promise(resolve => realSetTimeout(resolve));
     await fixture.whenStable();
 
     const tableExtension = element.querySelector('si-markdown-table');
@@ -50,7 +56,6 @@ describe('SiMarkdownTableComponent', () => {
   });
 
   it('copies rendered table cells as CSV', async () => {
-    vi.useFakeTimers();
     const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
     fixture.componentRef.setInput(
       'markdown',
@@ -58,8 +63,8 @@ describe('SiMarkdownTableComponent', () => {
 | --- | --- |
 | "Ada, Inc." | Ready |`
     );
-    fixture.detectChanges();
-    await vi.runAllTimersAsync();
+    await fixture.whenStable();
+    await new Promise(resolve => realSetTimeout(resolve));
     await fixture.whenStable();
 
     const copyButton = element.querySelector<HTMLButtonElement>(
@@ -86,7 +91,7 @@ describe('SiMarkdownTableComponent', () => {
 | Ada | Ready |`
     );
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
+    await new Promise(resolve => realSetTimeout(resolve));
     await fixture.whenStable();
 
     element.querySelector<HTMLButtonElement>('button[aria-label="Download table as CSV"]')?.click();

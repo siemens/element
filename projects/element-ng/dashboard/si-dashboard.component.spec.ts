@@ -85,6 +85,10 @@ describe('SiDashboardComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   describe('with enableExpandInteraction', () => {
     beforeEach(async () => {
       component.enableExpandInteractions.set(true);

@@ -100,6 +100,10 @@ describe('SiDateInputDirective', () => {
     await fixture.whenStable();
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   const getTestDate = (): Date => {
     const dateTime = new Date();
     dateTime.setDate(12);

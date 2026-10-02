@@ -46,6 +46,14 @@ describe('SiListWidgetBodyComponent', () => {
     element = fixture.nativeElement;
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   it('should show 6 skeletons as default without value', () => {
     fixture.detectChanges();
     expect(element.querySelector('.si-link-widget-skeleton')).toBeDefined();
@@ -248,6 +256,13 @@ describe('SiListWidgetBodyComponent with translations', () => {
       ]
     });
     element = fixture.nativeElement;
+  });
+
+  afterEach(() => {
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   it('should filter by translated label, not translation key', async () => {

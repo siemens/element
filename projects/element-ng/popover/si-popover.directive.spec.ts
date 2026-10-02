@@ -6,7 +6,7 @@ import { Overlay } from '@angular/cdk/overlay';
 import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
-import { page, userEvent } from 'vitest/browser';
+import { page } from 'vitest/browser';
 
 import { SiPopoverDirective } from './si-popover.directive';
 
@@ -50,17 +50,26 @@ describe('SiPopoverNextDirective', () => {
     wrapperComponent = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   it('should open/close on click', async () => {
     await fixture.whenStable();
-    const toggleButton = page.getByRole('button', { name: 'Test' });
-    await userEvent.click(toggleButton);
+    const toggleButton = fixture.nativeElement.querySelector('button')!;
+    toggleButton.click();
+    await fixture.whenStable();
 
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
     expect(popover).toHaveTextContent('test popover content');
 
     // Closes on button click
-    await userEvent.click(toggleButton);
+    toggleButton.click();
 
     expect(document.querySelector('.popover')).not.toBeInTheDocument();
   });
@@ -73,8 +82,8 @@ describe('SiPopoverNextDirective', () => {
 
   it('should close on ESC press', async () => {
     await fixture.whenStable();
-    const toggleButton = page.getByRole('button', { name: 'Test' });
-    await userEvent.click(toggleButton);
+    fixture.nativeElement.querySelector('button')!.click();
+    await fixture.whenStable();
 
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
@@ -88,7 +97,7 @@ describe('SiPopoverNextDirective', () => {
 
   it('should close on outside click', async () => {
     await fixture.whenStable();
-    await userEvent.click(page.getByRole('button', { name: 'Test' }));
+    fixture.nativeElement.querySelector('button')!.click();
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
@@ -104,7 +113,7 @@ describe('SiPopoverNextDirective', () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     fixture.detectChanges();
 
-    await userEvent.click(page.getByRole('button', { name: 'Test' }));
+    fixture.nativeElement.querySelector('button')!.click();
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
@@ -112,7 +121,7 @@ describe('SiPopoverNextDirective', () => {
 
     popover.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true, cancelable: true }));
     document.body.dispatchEvent(new MouseEvent('pointerup', { bubbles: true, cancelable: true }));
-    vi.advanceTimersByTime(10);
+    await vi.advanceTimersByTimeAsync(10);
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeInTheDocument();
@@ -123,7 +132,7 @@ describe('SiPopoverNextDirective', () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     fixture.detectChanges();
 
-    await userEvent.click(page.getByRole('button', { name: 'Test' }));
+    fixture.nativeElement.querySelector('button')!.click();
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
@@ -131,7 +140,7 @@ describe('SiPopoverNextDirective', () => {
 
     document.body.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true, cancelable: true }));
     popover.dispatchEvent(new MouseEvent('pointerup', { bubbles: true, cancelable: true }));
-    vi.advanceTimersByTime(10);
+    await vi.advanceTimersByTimeAsync(10);
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeInTheDocument();
@@ -142,14 +151,14 @@ describe('SiPopoverNextDirective', () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     fixture.detectChanges();
 
-    await userEvent.click(page.getByRole('button', { name: 'Test' }));
+    fixture.nativeElement.querySelector('button')!.click();
     await fixture.whenStable();
 
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
     expect(popover).toHaveTextContent('test popover content');
 
-    vi.advanceTimersByTime(10);
+    await vi.advanceTimersByTimeAsync(10);
     await fixture.whenStable();
 
     expect(document.activeElement).toBe(document.querySelector('.popover'));
@@ -165,16 +174,24 @@ describe('with custom template', () => {
     fixture = TestBed.createComponent(CustomTemplateHostComponent);
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   it('should focus on the first interactive element', async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     fixture.detectChanges();
 
-    await userEvent.click(page.getByRole('button', { name: 'Test with custom template' }));
+    fixture.nativeElement.querySelector('button')!.click();
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeInTheDocument();
 
-    vi.advanceTimersByTime(10);
+    await vi.advanceTimersByTimeAsync(10);
     await fixture.whenStable();
 
     await expect.element(page.getByRole('textbox', { name: 'Input' })).toHaveFocus();
@@ -205,7 +222,9 @@ describe('with scrollStrategy', () => {
     fixture.componentInstance.scrollStrategy.set(overlay.scrollStrategies.close());
     await fixture.whenStable();
 
-    await userEvent.click(page.getByRole('button', { name: 'Test' }));
+    const button = fixture.nativeElement.querySelector('button')!;
+    button.click();
+    await fixture.whenStable();
     expect(document.querySelector('.popover')).toBeInTheDocument();
 
     document.dispatchEvent(new Event('scroll', { bubbles: true }));
@@ -218,17 +237,18 @@ describe('with scrollStrategy', () => {
     const overlay = TestBed.inject(Overlay);
     fixture.componentInstance.scrollStrategy.set(overlay.scrollStrategies.close());
     await fixture.whenStable();
-    const button = page.getByRole('button', { name: 'Test' });
+    const button = fixture.nativeElement.querySelector('button')!;
 
-    await userEvent.click(button);
+    button.click();
     document.dispatchEvent(new Event('scroll', { bubbles: true }));
     await fixture.whenStable();
 
-    await userEvent.click(button);
+    button.click();
+    await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeInTheDocument();
-    await expect.element(button).toHaveAttribute('aria-expanded', 'true');
+    expect(button).toHaveAttribute('aria-expanded', 'true');
 
-    await userEvent.click(button);
+    button.click();
   });
 });
