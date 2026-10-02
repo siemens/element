@@ -2,16 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { booleanAttribute, Component, input, output } from '@angular/core';
-import { elementOptionsVertical } from '@siemens/element-icons';
-import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
+import { MenuItem } from '@siemens/element-ng/menu';
 import { SourceReference, SiSourceChipComponent } from '@siemens/element-ng/source-chip';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { t } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
 import { SiChatMessageActionDirective } from './si-chat-message-action.directive';
+import { SiChatMessageActionsComponent } from './si-chat-message-actions.component';
 import { SiChatMessageComponent } from './si-chat-message.component';
 
 /**
@@ -36,20 +34,15 @@ import { SiChatMessageComponent } from './si-chat-message.component';
 @Component({
   selector: 'si-ai-message',
   imports: [
-    CdkMenuTrigger,
     SiChatMessageComponent,
-    SiIconComponent,
-    SiMenuFactoryComponent,
     SiChatMessageActionDirective,
-    SiTranslatePipe,
+    SiChatMessageActionsComponent,
     SiSourceChipComponent
   ],
   templateUrl: './si-ai-message.component.html',
   styleUrl: './si-ai-message.component.scss'
 })
 export class SiAiMessageComponent {
-  protected readonly icons = addIcons({ elementOptionsVertical });
-
   /**
    * The AI-generated message content
    * @defaultValue ''
