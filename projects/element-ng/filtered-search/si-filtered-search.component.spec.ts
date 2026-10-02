@@ -4,7 +4,15 @@
  */
 import { HarnessLoader, parallel, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectorRef, Component, inject, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  inputBinding,
+  outputBinding,
+  signal,
+  viewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CriterionDefinition } from '@siemens/element-ng/filtered-search';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
@@ -12,7 +20,8 @@ import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
 } from '@siemens/element-translate-ng/translate';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, delay, Observable, of } from 'rxjs';
+import { page, userEvent } from 'vitest/browser';
 
 import {
   DisplayedCriteriaEventArgs,
@@ -2319,6 +2328,53 @@ describe('SiFilteredSearchComponent', () => {
       value = await criteria[0].value();
       expect(await value?.text()).toBe('new pill');
     });
+  });
+});
+
+describe('SiFilteredSearchComponent - with lazy values and doSearch on input event', () => {
+  it('should emit doSearch once with the remaining value when the first criterion is cleared', async () => {
+    const searchCriteria = signal<SearchCriteria>({
+      criteria: [
+        { name: 'company', value: '1' },
+        { name: 'company', value: '2' }
+      ],
+      value: ''
+    });
+    const lazyValueProvider = (): Observable<OptionType[]> =>
+      of([
+        { value: '1', label: 'Foo' },
+        { value: '2', label: 'Bar' }
+      ]).pipe(delay(10));
+    const doSearch = vi.fn<(criteria: SearchCriteria) => void>();
+    const fixture = TestBed.createComponent(SiFilteredSearchComponent, {
+      bindings: [
+        inputBinding(
+          'criteria',
+          signal<CriterionDefinition[]>([{ name: 'company', label: 'Company' }])
+        ),
+        inputBinding('searchCriteria', searchCriteria),
+        inputBinding('lazyValueProvider', () => lazyValueProvider),
+        inputBinding('doSearchOnInputChange', () => true),
+        outputBinding('doSearch', doSearch)
+      ]
+    });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await expect.element(page.getByText('Foo', { exact: true })).toBeVisible();
+    await expect.element(page.getByText('Bar', { exact: true })).toBeVisible();
+    expect(doSearch).not.toHaveBeenCalled();
+
+    await userEvent.click(page.getByRole('button', { name: 'Clear' }).first());
+    await fixture.whenStable();
+    await expect.element(page.getByRole('option', { name: 'Bar', exact: true })).toBeVisible();
+    await fixture.whenStable();
+
+    await expect
+      .poll(() => doSearch)
+      .toHaveBeenCalledExactlyOnceWith({
+        criteria: [{ name: 'company', value: '2' }],
+        value: ''
+      });
   });
 });
 
