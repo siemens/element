@@ -143,7 +143,7 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
 
     let newColors: [number, string][];
     if (hasIndicator) {
-      newColors = this.segments().map((threshold, index) => {
+      newColors = this.segments().map((threshold: [number, string], index: number) => {
         const color = colors[index % colors.length];
         return [threshold, color];
       });
@@ -156,15 +156,15 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
     }
 
     if (hasIndicator) {
-      this.setAxisLineColor(newColors, (this.actualOptions.series![0] as any).axisLine);
+      this.setAxisLineColor(newColors, (this.actualOptions.series![0]).axisLine);
     }
-    (this.actualOptions.series![0] as any).axisLine.show = hasIndicator;
+    (this.actualOptions.series![0]).axisLine.show = hasIndicator;
 
-    this.setAxisLineColor(newColors, (this.actualOptions.series![2] as any).axisLine);
+    this.setAxisLineColor(newColors, (this.actualOptions.series![2]).axisLine);
     this.refreshSeries();
   }
 
-  private setAxisLineColor(colors: [number, string][], axisLine: any): void {
+  private setAxisLineColor(colors: [number, string][], axisLine: {[key: string]: any}): void {
     axisLine.lineStyle = axisLine.lineStyle ?? {};
     axisLine.lineStyle.color = colors;
   }

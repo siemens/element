@@ -44,11 +44,11 @@ export class SiChartCircleComponent extends SiChartBaseComponent {
         ? this.getThemeCustomValue(['subTitle', 'legend', 'top'], 0)
         : 0;
     const top = 32 + offset;
-    this.series()?.forEach(series => {
+    this.series()?.forEach((series: PieSeriesOption) => {
       const s: PieSeriesOption = { type: 'pie', top, ...series };
       optionSeries.push(s);
       if (this.showLegend()) {
-        series.data.forEach(data => {
+        series.data.forEach((data: {name?: string, [key: string]: any}) => {
           if (data.name) {
             this.addLegendItem(data.name);
           }
