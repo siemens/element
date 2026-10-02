@@ -2,10 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input } from '@angular/core';
+import { Component, ElementRef, input, viewChild } from '@angular/core';
 import { SiAvatarComponent } from '@siemens/element-ng/avatar';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTooltipService } from '@siemens/element-ng/tooltip';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.directive';
 
@@ -13,7 +14,7 @@ import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.di
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'button[si-header-account-item]',
-  imports: [SiAvatarComponent, SiIconComponent],
+  imports: [SiAvatarComponent, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-header-account-item.component.html',
   styleUrl: './si-header-account-item.component.scss',
   providers: [SiTooltipService],
@@ -23,12 +24,22 @@ import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.di
   }
 })
 export class SiHeaderAccountItemComponent extends SiHeaderActionIconItemBase {
+  protected readonly itemTitle = viewChild.required('itemTitle', { read: ElementRef });
   /** Name of the account. */
   readonly name = input.required<string>();
   /** Initials of the account. If not provided, they will be calculated. */
   readonly initials = input<string>();
   /** URL to an image which should be shown instead of the initials. */
   readonly imageUrl = input<string>();
-
-  protected readonly itemTitle = this.name;
+  /**
+   * Accessible label for the account item.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_APPLICATION_HEADER.ACCOUNT:Show account settings for {{name}}`)
+   * ```
+   */
+  readonly accountItemLabel = input(
+    t(() => $localize`:@@SI_APPLICATION_HEADER.ACCOUNT:Show account settings for {{name}}`)
+  );
 }

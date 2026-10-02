@@ -4,7 +4,7 @@
   - link "Siemens logo":
     - /url: /
   - heading "Navbar vertical text only" [level=1]
-  - button "Jane Smith": JS
+  - button "Show account settings for Jane Smith"
 - navigation:
   - button "collapse" [expanded]
   - button "Home"

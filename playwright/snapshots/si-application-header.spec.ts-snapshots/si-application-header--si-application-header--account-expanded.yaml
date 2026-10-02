@@ -10,8 +10,8 @@
   - button "Notifications"
   - button /\+\d+ Support/
   - button "Settings"
-  - button "Lars Vegas" [expanded]: LV
-  - dialog "Lars Vegas":
+  - button "Show account settings for Lars Vegas" [expanded]
+  - dialog "Show account settings for Lars Vegas":
     - text: Lars Vegas lars.vegas@siemens.com Siemens AG Admin
     - button "Language" [expanded]
     - dialog "Language":

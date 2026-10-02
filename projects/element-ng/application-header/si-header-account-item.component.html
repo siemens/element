@@ -1,12 +1,13 @@
 <si-avatar
   size="small"
   color="0"
+  aria-hidden="true"
   [altText]="name()"
   [initials]="initials()"
   [imageUrl]="imageUrl()"
 />
-<div class="item-title" aria-hidden="true" [class.d-none]="visuallyHideTitle()">
-  {{ name() }}
+<div #itemTitle class="item-title" [class.visually-hidden]="visuallyHideTitle()">
+  <ng-content>{{ accountItemLabel() | translate: { name: name() } }}</ng-content>
 </div>
 @if (badgeValue()) {
   <div class="badge-text">{{ badgeValue() }}</div>

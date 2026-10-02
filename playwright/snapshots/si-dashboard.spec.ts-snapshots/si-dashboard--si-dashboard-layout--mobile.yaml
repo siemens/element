@@ -4,7 +4,7 @@
   - button "Launchpad"
   - heading "Smart Buildings" [level=1]
   - button "API"
-  - button "Jane Smith": JS
+  - button "Show account settings for Jane Smith"
 - navigation:
   - button "expand"
 - main:
