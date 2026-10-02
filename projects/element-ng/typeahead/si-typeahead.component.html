@@ -19,15 +19,15 @@
 <ul
   #typeahead
   class="typeahead dropdown-menu"
-  [class.empty-loading]="parent.typeaheadLoading() && matches().length === 0"
-  [siLoading]="parent.typeaheadLoading() && matches().length === 0"
+  [class.empty-loading]="parent.loading() && matches().length === 0"
+  [siLoading]="parent.loading() && matches().length === 0"
   [initialDelay]="false"
   [siAutocompleteListboxFor]="autocompleteDirective"
   [siAutocompleteDefaultIndex]="parent.typeaheadAutoSelectIndex()"
   [attr.aria-label]="parent.typeaheadAutocompleteListLabel() | translate"
   (siAutocompleteOptionSubmitted)="selectMatch($event)"
 >
-  @if (parent.typeaheadLoading() && matches().length) {
+  @if (parent.loading() && matches().length) {
     <li class="dropdown-item" [siLoading]="true" [initialDelay]="false"></li>
   }
   <!-- Loop through every match and bind events, the mousedown prevent default is to prevent the host from losing focus on click -->
