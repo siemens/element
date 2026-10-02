@@ -38,9 +38,18 @@ export abstract class SiHeaderActionIconItemBase
   private readonly tooltipService = inject(SiTooltipService);
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly existingTooltip = inject(SiTooltipDirective, { optional: true, host: true });
+  private readonly tooltipContent = computed(() => {
+    const itemTitle = this.itemTitle();
+    const hasTitle =
+      typeof itemTitle === 'string'
+        ? !!itemTitle.trim()
+        : !!itemTitle.nativeElement.textContent?.trim();
+    return hasTitle ? itemTitle : this.elementRef.nativeElement.getAttribute('aria-label');
+  });
   private readonly canShowTooltip = computed(
     () =>
       this.visuallyHideTitle() &&
+      !!this.tooltipContent() &&
       (!this.existingTooltip ||
         this.existingTooltip.isDisabled() ||
         !this.existingTooltip.siTooltip())
@@ -63,7 +72,7 @@ export abstract class SiHeaderActionIconItemBase
       placement: () => 'auto',
       canShow: this.canShowTooltip,
       // Subclass field initializers run after this base constructor. So we cannot directly pass `this.itemTitle`.
-      tooltip: () => this.itemTitle(),
+      tooltip: this.tooltipContent,
       tooltipContext: () => undefined
     });
   }
