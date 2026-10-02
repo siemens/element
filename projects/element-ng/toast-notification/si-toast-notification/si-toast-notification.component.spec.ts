@@ -68,6 +68,7 @@ describe('SiToastNotificationComponent', () => {
     );
     const toastEl = element.querySelector<HTMLElement>('si-toast-notification')!;
     toastEl.dispatchEvent(new MouseEvent('mouseenter'));
+    fixture.detectChanges();
     await fixture.whenStable();
 
     expect(component.siToastComponent().paused.emit).toHaveBeenCalledTimes(1);
@@ -75,6 +76,7 @@ describe('SiToastNotificationComponent', () => {
     expect(timerBar?.style.getPropertyValue('--play-state')).toBe('paused');
 
     toastEl.dispatchEvent(new MouseEvent('mouseleave'));
+    fixture.detectChanges();
     await fixture.whenStable();
 
     expect(component.siToastComponent().resumed.emit).toHaveBeenCalledTimes(1);
