@@ -12,16 +12,20 @@
     <p class="mt-14">Sweet home {{ selectedOption }}</p>
   }
   <si-search-bar
-    typeaheadMatchAllTokens="once"
-    typeaheadFullWidth
-    aria-label="States"
     placeholder="Placeholder"
-    [siTypeahead]="states"
     [colorVariant]="variant"
     [disabled]="disable"
     [showIcon]="showIcon"
-    [typeaheadItemTemplate]="newItemTemplate"
     [(ngModel)]="selected"
-    (typeaheadOnSelect)="onOptionSelected($event)"
-  />
+  >
+    <input
+      siSearchBarInput
+      aria-label="States"
+      typeaheadMatchAllTokens="once"
+      typeaheadFullWidth
+      [siTypeahead]="states"
+      [typeaheadItemTemplate]="newItemTemplate"
+      (typeaheadOnSelect)="onOptionSelected($event)"
+    />
+  </si-search-bar>
 </app-filter-settings>
