@@ -163,104 +163,98 @@ describe('SiDatatableInteractionDirective', () => {
     );
   });
 
-  it(
-    'should navigate into and inside arrow keys when using virtualization',
-    async () => {
-      wrapperComponent.virtualization.set(true);
-      await refresh();
-      getTableElement().focus();
+  it('should navigate into and inside arrow keys when using virtualization', async () => {
+    wrapperComponent.virtualization.set(true);
+    await refresh();
+    getTableElement().focus();
 
-      expect(document.activeElement).toBe(getTableElement());
+    expect(document.activeElement).toBe(getTableElement());
 
-      await arrowDown();
+    await arrowDown();
 
-      expect(document.activeElement).toBe(
-        getTableElement().querySelector('.datatable-row-wrapper > .datatable-body-row')
-      );
+    expect(document.activeElement).toBe(
+      getTableElement().querySelector('.datatable-row-wrapper > .datatable-body-row')
+    );
 
-      await arrowDown(8);
+    await arrowDown(8);
 
-      const scrollTopBeforeDown = getTableElement().querySelector('.datatable-grid')!.scrollTop;
+    const scrollTopBeforeDown = getTableElement().querySelector('.datatable-grid')!.scrollTop;
 
-      await arrowDown();
+    await arrowDown();
 
-      expect(getTableElement().querySelector('.datatable-grid')!.scrollTop).not.toBe(
-        scrollTopBeforeDown
-      );
+    expect(getTableElement().querySelector('.datatable-grid')!.scrollTop).not.toBe(
+      scrollTopBeforeDown
+    );
 
-      getTableElement().focus();
+    getTableElement().focus();
 
-      expect(document.activeElement).toBe(getTableElement());
+    expect(document.activeElement).toBe(getTableElement());
 
-      await arrowUp();
+    await arrowUp();
 
-      expect(document.activeElement).toBe(
-        getTableElement().querySelector('.datatable-row-wrapper:last-child > .datatable-body-row')
-      );
+    expect(document.activeElement).toBe(
+      getTableElement().querySelector('.datatable-row-wrapper:last-child > .datatable-body-row')
+    );
 
-      await arrowUp(7);
+    await arrowUp(7);
 
-      const scrollTopBeforeUp = getTableElement().querySelector('.datatable-grid')!.scrollTop;
+    const scrollTopBeforeUp = getTableElement().querySelector('.datatable-grid')!.scrollTop;
 
-      await arrowUp();
+    await arrowUp();
 
-      expect(getTableElement().querySelector('.datatable-grid')!.scrollTop).not.toBe(
-        scrollTopBeforeUp
-      );
-    }
-  );
+    expect(getTableElement().querySelector('.datatable-grid')!.scrollTop).not.toBe(
+      scrollTopBeforeUp
+    );
+  });
 
-  it(
-    'should navigate into and inside table using arrow keys when using virtualization and cell selection',
-    async () => {
-      wrapperComponent.selectionType.set('cell');
-      wrapperComponent.virtualization.set(true);
-      await refresh();
-      getTableElement().focus();
+  it('should navigate into and inside table using arrow keys when using virtualization and cell selection', async () => {
+    wrapperComponent.selectionType.set('cell');
+    wrapperComponent.virtualization.set(true);
+    await refresh();
+    getTableElement().focus();
 
-      expect(document.activeElement).toBe(getTableElement());
+    expect(document.activeElement).toBe(getTableElement());
 
-      await arrowDown();
+    await arrowDown();
 
-      expect(document.activeElement).toBe(
-        getTableElement().querySelector(
-          '.datatable-row-wrapper > .datatable-body-row .datatable-body-cell'
-        )
-      );
+    expect(document.activeElement).toBe(
+      getTableElement().querySelector(
+        '.datatable-row-wrapper > .datatable-body-row .datatable-body-cell'
+      )
+    );
 
-      await arrowDown(8);
+    await arrowDown(8);
 
-      const scrollTopBeforeDown = getTableElement().querySelector('.datatable-grid')!.scrollTop;
+    const scrollTopBeforeDown = getTableElement().querySelector('.datatable-grid')!.scrollTop;
 
-      await arrowDown();
+    await arrowDown();
 
-      expect(getTableElement().querySelector('.datatable-grid')!.scrollTop).not.toBe(
-        scrollTopBeforeDown
-      );
+    expect(getTableElement().querySelector('.datatable-grid')!.scrollTop).not.toBe(
+      scrollTopBeforeDown
+    );
 
-      getTableElement().focus();
+    getTableElement().focus();
 
-      expect(document.activeElement).toBe(getTableElement());
+    expect(document.activeElement).toBe(getTableElement());
 
-      await arrowUp();
+    await arrowUp();
 
-      expect(document.activeElement).toBe(
-        getTableElement().querySelector(
-          '.datatable-row-wrapper:last-child > .datatable-body-row .datatable-body-cell'
-        )
-      );
+    expect(document.activeElement).toBe(
+      getTableElement().querySelector(
+        '.datatable-row-wrapper:last-child > .datatable-body-row .datatable-body-cell'
+      )
+    );
 
-      await arrowUp(7);
+    await arrowUp(7);
 
-      const scrollTopBeforeUp = getTableElement().querySelector('.datatable-grid')!.scrollTop;
+    const scrollTopBeforeUp = getTableElement().querySelector('.datatable-grid')!.scrollTop;
 
-      await arrowUp();
+    await arrowUp();
 
-      expect(getTableElement().querySelector('.datatable-grid')!.scrollTop).not.toBe(
-        scrollTopBeforeUp
-      );
-    }
-  );
+    expect(getTableElement().querySelector('.datatable-grid')!.scrollTop).not.toBe(
+      scrollTopBeforeUp
+    );
+  });
 
   it('should auto select on focus when enabled', async () => {
     wrapperComponent.selectionType.set('single');
@@ -285,45 +279,40 @@ describe('SiDatatableInteractionDirective', () => {
     );
   });
 
-  it(
-    'should not auto select on mouse click when enabled',
-    async () => {
-      wrapperComponent.selectionType.set('single');
-      wrapperComponent.datatableInteractionAutoSelect.set(true);
-      await refresh();
-      expect(wrapperComponent.selected()).toHaveLength(0);
+  it('should not auto select on mouse click when enabled', async () => {
+    wrapperComponent.selectionType.set('single');
+    wrapperComponent.datatableInteractionAutoSelect.set(true);
+    await refresh();
+    expect(wrapperComponent.selected()).toHaveLength(0);
 
-      const table = getTableElement();
+    const table = getTableElement();
 
-      table.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    table.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
 
-      await refresh();
+    await refresh();
 
-      const row = table.querySelector(
-        '.datatable-row-wrapper > .datatable-body-row'
-      ) as HTMLElement;
-      row.dispatchEvent(new Event('focusin', { bubbles: true }));
+    const row = table.querySelector('.datatable-row-wrapper > .datatable-body-row') as HTMLElement;
+    row.dispatchEvent(new Event('focusin', { bubbles: true }));
 
-      await refresh();
+    await refresh();
 
-      expect(wrapperComponent.selected()).toHaveLength(0);
+    expect(wrapperComponent.selected()).toHaveLength(0);
 
-      table.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    table.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
 
-      await refresh();
+    await refresh();
 
-      row.dispatchEvent(new Event('focusin', { bubbles: true }));
+    row.dispatchEvent(new Event('focusin', { bubbles: true }));
 
-      await refresh();
+    await refresh();
 
-      expect(wrapperComponent.selected()).toContainEqual(
-        expect.objectContaining({
-          id: 1,
-          firstname: 'First 1',
-          lastname: 'Last 1',
-          age: 50
-        })
-      );
-    }
-  );
+    expect(wrapperComponent.selected()).toContainEqual(
+      expect.objectContaining({
+        id: 1,
+        firstname: 'First 1',
+        lastname: 'Last 1',
+        age: 50
+      })
+    );
+  });
 });
