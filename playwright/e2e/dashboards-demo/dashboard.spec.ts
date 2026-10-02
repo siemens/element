@@ -309,6 +309,32 @@ test.describe('dashboard', () => {
     await si.runVisualAndA11yTests('web-component-note-widget');
   });
 
+  test(example + ' native web-component note widget', async ({ page, si }) => {
+    await si.visitExample(example, undefined);
+    await openWidgetCatalog(page);
+
+    await page.getByRole('option', { name: 'Note (native web-component)' }).click();
+    await page.getByText('Next', { exact: true }).click();
+
+    const editor = page.locator('native-note-widget-editor');
+    await expect(editor).toBeVisible();
+    await editor.getByRole('textbox', { name: 'Title' }).fill('Team notes');
+    await editor.getByRole('textbox', { name: 'Message' }).fill('Review the launch checklist');
+
+    const addBtn = page.getByText('Add', { exact: true });
+    await expect(addBtn).toBeEnabled();
+    await addBtn.click();
+
+    const widgetHost = page.locator('si-widget-host', { has: page.locator('native-note-widget') });
+    await expect(widgetHost.getByText('Team notes')).toBeVisible();
+    await expect(widgetHost.locator('native-note-widget .message')).toHaveText(
+      'Review the launch checklist'
+    );
+    await widgetHost.scrollIntoViewIfNeeded();
+
+    await si.runVisualAndA11yTests('native-web-component-note-widget');
+  });
+
   test(example + ' weather widget preplaced', async ({ page, si }) => {
     await si.visitExample(example, undefined);
     const weatherHost = page.locator('si-widget-host', { hasText: 'Weather' }).first();

@@ -12,6 +12,7 @@ import { SiThemeService } from '@siemens/element-ng/theme';
 import { ChartWidgetComponent } from './chart-widget/chart-widget.component';
 import { ContactWidgetEditorComponent } from './contact-widget-editor/contact-widget-editor.component';
 import { ContactWidgetComponent } from './contact-widget/contact-widget.component';
+import './native-note-widget/native-note-widget';
 import { NoteWidgetEditorComponent } from './note-widget-editor/note-widget-editor.component';
 import { NoteWidgetComponent } from './note-widget/note-widget.component';
 
