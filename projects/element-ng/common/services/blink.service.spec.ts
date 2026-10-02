@@ -16,7 +16,10 @@ describe('BlinkService', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   it('triggers on/off pulses', () => {

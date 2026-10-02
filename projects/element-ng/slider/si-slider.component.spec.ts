@@ -81,7 +81,10 @@ describe('SiSliderComponent', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   describe('direct usage', () => {

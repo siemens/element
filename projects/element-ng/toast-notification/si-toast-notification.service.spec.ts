@@ -17,6 +17,14 @@ describe('SiToastNotificationService', () => {
 
   beforeEach(() => (service = TestBed.inject(SiToastNotificationService)));
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
@@ -84,7 +92,6 @@ describe('SiToastNotificationService', () => {
     vi.advanceTimersByTime(6000);
 
     expect(service.activeToasts).toHaveLength(0);
-    vi.useRealTimers();
   });
 
   it('should respect the disableAutoClose flag', () => {
@@ -95,6 +102,5 @@ describe('SiToastNotificationService', () => {
     vi.advanceTimersByTime(6000);
 
     expect(service.activeToasts).toHaveLength(1);
-    vi.useRealTimers();
   });
 });

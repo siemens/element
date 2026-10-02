@@ -40,34 +40,29 @@ describe('SiResizeObserverDirective', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     spy = vi.spyOn(component, 'resizeHandler');
-    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    spy.mockClear();
     vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
   it('emits initial size event', async () => {
+    const resize = new Promise<ElementDimensions>(resolve => spy.mockImplementation(resolve));
     await fixture.whenStable();
-    vi.advanceTimersByTime(100);
-    expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 100 });
+    await expect(resize).resolves.toEqual({ width: 100, height: 100 });
   });
 
   it('emits on width change', async () => {
+    const resize = new Promise<ElementDimensions>(resolve => spy.mockImplementation(resolve));
     await page.viewport(200, 100);
-    expect(component.resizeHandler).not.toHaveBeenCalled();
-
-    vi.advanceTimersByTime(100);
-    expect(component.resizeHandler).toHaveBeenCalledWith({ width: 200, height: 100 });
+    await expect(resize).resolves.toEqual({ width: 200, height: 100 });
   });
 
   it('emits on height change', async () => {
+    const resize = new Promise<ElementDimensions>(resolve => spy.mockImplementation(resolve));
     await page.viewport(100, 200);
-    expect(component.resizeHandler).not.toHaveBeenCalled();
-
-    vi.advanceTimersByTime(100);
-    expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 200 });
+    await expect(resize).resolves.toEqual({ width: 100, height: 200 });
   });
 });
 
@@ -85,7 +80,7 @@ describe('SiResizeObserverDirective with emitInitial=false', () => {
   });
 
   afterEach(() => {
-    spy.mockClear();
+    vi.restoreAllMocks();
   });
 
   it('does not emit initial size event', () => {

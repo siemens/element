@@ -109,7 +109,14 @@ describe('SiTypeaheadDirective', () => {
     loader = TestbedHarnessEnvironment.loader(fixture);
     rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
   });
-  afterEach(() => vi.useRealTimers());
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
 
   const tick = async (ms = 0): Promise<void> => {
     vi.advanceTimersByTime(ms);

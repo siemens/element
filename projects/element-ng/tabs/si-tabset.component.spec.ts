@@ -157,7 +157,11 @@ describe('SiTabset', () => {
 
   afterEach(() => {
     restoreResizeObserver();
-    vi.useRealTimers();
+    vi.restoreAllMocks();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   it('should be possible to create a tabComponent instance', async () => {
@@ -683,7 +687,11 @@ describe('SiTabset with custom tooltip', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    vi.restoreAllMocks();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   it('should not add an own tooltip when an active siTooltip directive is present', async () => {

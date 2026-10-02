@@ -17,6 +17,7 @@ describe('SiFooterComponent', () => {
   let links: WritableSignal<Link[] | undefined>;
 
   beforeEach(() => {
+    vi.useRealTimers();
     copyright = signal('test copyright');
     links = signal<Link[] | undefined>([
       {

@@ -9,16 +9,24 @@ import { SiMarkdownComponent } from '../../si-markdown.component';
 describe('SiMarkdownCodeComponent', () => {
   let fixture: ComponentFixture<SiMarkdownComponent>;
   let element: HTMLElement;
+  let realSetTimeout: typeof setTimeout;
 
   beforeEach(() => {
+    vi.useRealTimers();
+    realSetTimeout = globalThis.setTimeout;
     fixture = TestBed.createComponent(SiMarkdownComponent);
     element = fixture.nativeElement;
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
   it('renders a fenced code block without a highlighter', async () => {
     fixture.componentRef.setInput('markdown', '```typescript\nconst answer = 42;\n```');
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
+    await new Promise(resolve => realSetTimeout(resolve));
     await fixture.whenStable();
 
     const codeBlock = element.querySelector('si-markdown-code');
@@ -30,11 +38,10 @@ describe('SiMarkdownCodeComponent', () => {
   });
 
   it('shows a copied confirmation for 1.5 seconds after copying the code block content', async () => {
-    vi.useFakeTimers();
     const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
     fixture.componentRef.setInput('markdown', '```typescript\nconst answer = 42;\n```');
-    fixture.detectChanges();
-    await vi.runAllTimersAsync();
+    await fixture.whenStable();
+    await new Promise(resolve => realSetTimeout(resolve));
     await fixture.whenStable();
 
     const copyButton = element.querySelector('si-markdown-code button') as HTMLButtonElement;
@@ -46,7 +53,7 @@ describe('SiMarkdownCodeComponent', () => {
     expect(writeText).toHaveBeenCalledWith('const answer = 42;');
     expect(copied).toHaveTextContent('Copied');
 
-    await vi.advanceTimersByTimeAsync(1500);
+    await new Promise(resolve => realSetTimeout(resolve, 1500));
     fixture.detectChanges();
 
     const restoredCopyButton = element.querySelector('si-markdown-code button');
@@ -55,20 +62,19 @@ describe('SiMarkdownCodeComponent', () => {
   });
 
   it('cancels the copied confirmation timeout when destroyed', async () => {
-    vi.useFakeTimers();
     const clearTimeout = vi.spyOn(globalThis, 'clearTimeout');
     vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
     fixture.componentRef.setInput('markdown', '```typescript\nconst answer = 42;\n```');
-    fixture.detectChanges();
-    await vi.runAllTimersAsync();
+    await fixture.whenStable();
+    await new Promise(resolve => realSetTimeout(resolve));
     await fixture.whenStable();
 
-    const setTimeout = vi.spyOn(globalThis, 'setTimeout');
+    const setTimeoutSpy = vi.spyOn(globalThis, 'setTimeout');
 
     const copyButton = element.querySelector('si-markdown-code button') as HTMLButtonElement;
     copyButton.click();
     await Promise.resolve();
-    const copyTimeout = setTimeout.mock.results.at(-1)?.value;
+    const copyTimeout = setTimeoutSpy.mock.results.at(-1)?.value;
 
     fixture.destroy();
 

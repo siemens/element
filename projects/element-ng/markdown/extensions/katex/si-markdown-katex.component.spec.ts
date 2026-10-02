@@ -11,8 +11,11 @@ import { siMarkdownMathKaTeX } from './si-markdown-katex.extension';
 describe('SiMarkdownKatexComponent', () => {
   let fixture: ComponentFixture<SiMarkdownComponent>;
   let element: HTMLElement;
+  let realSetTimeout: typeof setTimeout;
 
   beforeEach(() => {
+    vi.useRealTimers();
+    realSetTimeout = globalThis.setTimeout;
     fixture = TestBed.createComponent(SiMarkdownComponent);
     element = fixture.nativeElement;
   });
@@ -24,7 +27,7 @@ describe('SiMarkdownKatexComponent', () => {
     );
     fixture.componentRef.setInput('markdown', 'Inline math: $x^2$.\n\n$$\ny^2\n$$');
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
+    await new Promise(resolve => realSetTimeout(resolve));
     await fixture.whenStable();
 
     const inlineMath = element.querySelector('si-markdown-katex:not(.d-block)');

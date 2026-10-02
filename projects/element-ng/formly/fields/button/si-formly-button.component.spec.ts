@@ -68,6 +68,8 @@ describe('formly button type', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => vi.restoreAllMocks());
+
   it('should have a button of type button', () => {
     component.fields.set([
       {

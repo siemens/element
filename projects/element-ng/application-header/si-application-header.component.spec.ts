@@ -31,6 +31,8 @@ describe('SiApplicationHeaderComponent', () => {
   let loader: HarnessLoader;
   let headerHarness: SiApplicationHeaderHarness;
 
+  afterEach(() => vi.restoreAllMocks());
+
   describe('with all types of dropdowns in mobile mode', () => {
     @Component({
       imports: [

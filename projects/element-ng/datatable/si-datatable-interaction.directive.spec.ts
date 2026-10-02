@@ -92,11 +92,16 @@ describe('SiDatatableInteractionDirective', () => {
   let wrapperElement: HTMLElement;
 
   beforeEach(() => vi.useFakeTimers());
-  afterEach(() => vi.useRealTimers());
+  afterEach(() => {
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
 
   const refresh = async (): Promise<void> => {
-    vi.advanceTimersByTime(10000);
     fixture.detectChanges();
+    vi.advanceTimersByTime(10000);
     await fixture.whenStable();
   };
 
@@ -270,12 +275,14 @@ describe('SiDatatableInteractionDirective', () => {
 
     await refresh();
 
-    expect(wrapperComponent.selected()).toContain({
-      id: 1,
-      firstname: 'First 1',
-      lastname: 'Last 1',
-      age: 50
-    });
+    expect(wrapperComponent.selected()).toContainEqual(
+      expect.objectContaining({
+        id: 1,
+        firstname: 'First 1',
+        lastname: 'Last 1',
+        age: 50
+      })
+    );
   });
 
   it.skipIf(!document.hasFocus())(
@@ -309,12 +316,14 @@ describe('SiDatatableInteractionDirective', () => {
 
       await refresh();
 
-      expect(wrapperComponent.selected()).toContain({
-        id: 1,
-        firstname: 'First 1',
-        lastname: 'Last 1',
-        age: 50
-      });
+      expect(wrapperComponent.selected()).toContainEqual(
+        expect.objectContaining({
+          id: 1,
+          firstname: 'First 1',
+          lastname: 'Last 1',
+          age: 50
+        })
+      );
     }
   );
 });

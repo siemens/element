@@ -105,6 +105,13 @@ describe('SiFileUploaderComponent', () => {
     element = fixture.nativeElement;
   });
 
+  afterEach(() => {
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   const createFileList = (files: string[], type?: string[]): DataTransfer => {
     const dt = new DataTransfer();
     files.forEach((f, i) => dt.items.add(new File(['blub'], f, { type: type?.[i] })));

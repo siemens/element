@@ -60,6 +60,10 @@ describe('SiTimepickerComponent', () => {
     return event;
   };
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   describe('with default configuration', () => {
     let fixture: ComponentFixture<TestComponent>;
 

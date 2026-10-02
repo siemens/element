@@ -9,10 +9,18 @@ import { SiMarkdownComponent } from './si-markdown.component';
 describe('SiMarkdownComponent', () => {
   let fixture: ComponentFixture<SiMarkdownComponent>;
   let element: HTMLElement;
+  let realSetTimeout: typeof setTimeout;
 
   beforeEach(() => {
+    vi.useRealTimers();
+    realSetTimeout = globalThis.setTimeout;
     fixture = TestBed.createComponent(SiMarkdownComponent);
     element = fixture.nativeElement;
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
   it('does not render a fragment for empty markdown', async () => {
@@ -57,7 +65,7 @@ Second line
     );
     await fixture.whenStable();
     // need a real tick here!
-    await new Promise(resolve => setTimeout(resolve));
+    await new Promise(resolve => realSetTimeout(resolve));
     await fixture.whenStable();
 
     expect(element.querySelector('.h1')).toHaveTextContent('Heading 1');
@@ -111,7 +119,7 @@ The reference can be used multiple times like here [foo]
 ![imageref][]`
     );
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
+    await new Promise(resolve => realSetTimeout(resolve));
     await fixture.whenStable();
 
     const links = element.querySelectorAll('a');
@@ -136,7 +144,7 @@ The reference can be used multiple times like here [foo]
       '<img class="unsafe-html" src="image.png" onerror="alert()">'
     );
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
+    await new Promise(resolve => realSetTimeout(resolve));
     await fixture.whenStable();
 
     const unsafeImage = element.querySelector('.unsafe-html');

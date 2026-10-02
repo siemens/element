@@ -335,7 +335,10 @@ describe('SiSplitComponent', () => {
     });
 
     afterEach(() => {
-      vi.useRealTimers();
+      if (vi.isFakeTimers()) {
+        vi.clearAllTimers();
+        vi.useRealTimers();
+      }
     });
 
     describe('without SiUIStateService', () => {

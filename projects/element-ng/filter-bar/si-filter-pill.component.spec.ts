@@ -17,6 +17,7 @@ describe('SiFilterPillComponent', () => {
   let deleteFiltersSpy: (event: Filter) => void;
 
   beforeEach(() => {
+    vi.useRealTimers();
     filter = signal<Filter>({
       filterName: '',
       title: '',

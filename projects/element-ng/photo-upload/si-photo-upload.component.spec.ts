@@ -61,6 +61,7 @@ describe(`SiPhotoUploadComponent`, () => {
   });
 
   afterEach(() => {
+    vi.restoreAllMocks();
     if (originalFileReader) {
       window.FileReader = originalFileReader;
     }

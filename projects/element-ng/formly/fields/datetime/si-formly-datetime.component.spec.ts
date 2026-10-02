@@ -60,7 +60,10 @@ describe('formly datetime-type', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   it('should have a timezoned display value - as short value', () => {
