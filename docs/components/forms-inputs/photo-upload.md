@@ -46,12 +46,11 @@ The image mask can be set to a square or rounded shape according to the layout.
 
 ![Photo upload shapes](images/photo-upload-shape.png)
 
-### Validation
+### Validation and image processing
 
-If the user tries to upload a file that exceeds the allowed limit, the component
-will not upload the new image and will display an error message.
-
-![Photo upload validation](images/photo-upload-validation.png)
+To keep photo uploads simple, applications should automatically check image dimensions,
+file size, and format. Resize and compress images as needed, and convert them to a supported
+format such as JPEG or PNG when necessary. Preserve visual quality during these adjustments.
 
 ## Code ---
 
