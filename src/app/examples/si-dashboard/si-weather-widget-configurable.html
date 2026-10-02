@@ -40,7 +40,12 @@
           />
           <small class="form-text">
             Get one at
-            <a href="https://home.openweathermap.org/api_keys" target="_blank" rel="noopener">
+            <a
+              href="https://home.openweathermap.org/api_keys"
+              class="link-text"
+              target="_blank"
+              rel="noopener"
+            >
               openweathermap.org
             </a>
             . Stored only in your browser's localStorage.
@@ -94,15 +99,17 @@
           }
           @if (suggestions().length) {
             <div class="col-12">
-              <ul class="list-group">
+              <ul class="list list-divider card">
                 @for (city of suggestions(); track city.label) {
-                  <button
-                    type="button"
-                    class="list-group-item list-group-item-action"
-                    (click)="onSelectCity(city)"
-                  >
-                    {{ city.label }}
-                  </button>
+                  <li>
+                    <button
+                      type="button"
+                      class="list-item list-item-action"
+                      (click)="onSelectCity(city)"
+                    >
+                      {{ city.label }}
+                    </button>
+                  </li>
                 }
               </ul>
             </div>

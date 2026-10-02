@@ -5,6 +5,7 @@
 import { Component, inputBinding, outputBinding, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { userEvent } from 'vitest/browser';
 
 import { SiSearchBarComponent } from './index';
@@ -134,12 +135,14 @@ describe('SiSearchBarComponent', () => {
     let element: HTMLElement;
 
     const value = signal<string | undefined>('Initial Value');
+    const ariaLabel = signal<TranslatableString | undefined>(undefined);
     const disabled = signal(false);
     const debounceTime = signal(0);
     const searchChange = vi.fn();
 
     beforeEach(async () => {
       value.set('Initial Value');
+      ariaLabel.set(undefined);
       disabled.set(false);
       debounceTime.set(0);
       searchChange.mockClear();
@@ -147,6 +150,7 @@ describe('SiSearchBarComponent', () => {
       fixture = TestBed.createComponent(SiSearchBarComponent, {
         bindings: [
           inputBinding('value', value),
+          inputBinding('aria-label', ariaLabel),
           inputBinding('disabled', disabled),
           inputBinding('debounceTime', debounceTime),
           outputBinding('searchChange', searchChange)
@@ -173,6 +177,18 @@ describe('SiSearchBarComponent', () => {
       disabled.set(false);
       await fixture.whenStable();
       expect(getInput(element)).toBeEnabled();
+    });
+
+    it('should apply and update the accessible name on its input', async () => {
+      expect(getInput(element)).not.toHaveAttribute('aria-label');
+
+      ariaLabel.set('Search users');
+      await fixture.whenStable();
+      expect(getInput(element)).toHaveAttribute('aria-label', 'Search users');
+
+      ariaLabel.set('Search buildings');
+      await fixture.whenStable();
+      expect(getInput(element)).toHaveAttribute('aria-label', 'Search buildings');
     });
   });
 

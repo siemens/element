@@ -1,6 +1,8 @@
 - paragraph: Home sweet home
 - combobox "States" [expanded]:
-  - textbox "Placeholder": al
+  - textbox "States":
+    - /placeholder: Placeholder
+    - text: al
   - button "Clear"
 - text: Settings Color Variant
 - combobox "Color Variant":

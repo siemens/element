@@ -1,0 +1,48 @@
+- complementary:
+  - heading "Data source" [level=5]
+  - group "Data source":
+    - radio "Manual"
+    - text: Manual
+    - radio "OpenWeather" [checked]
+    - text: OpenWeather
+  - text: OpenWeather API key
+  - textbox "OpenWeather API key":
+    - /placeholder: paste your free API key
+    - text: dummy-api-key
+  - text: Get one at
+  - link "openweathermap.org":
+    - /url: https://home.openweathermap.org/api_keys
+  - text: . Stored only in your browser's localStorage. Location
+  - textbox "Location": Zug, Switzerland
+  - text: Units
+  - combobox "Units":
+    - option "metric" [selected]
+    - option "imperial"
+  - button "Search"
+  - button "Reload" [disabled]
+  - list:
+    - listitem:
+      - button "Zug, Canton of Zug, CH"
+  - text: Layout
+  - combobox "Layout":
+    - option "vertical" [selected]
+    - option "horizontal"
+    - option "compact"
+  - text: Accent line
+  - combobox "Accent line":
+    - option "(none)" [selected]
+    - option "primary"
+    - option "success"
+    - option "warning"
+    - option "caution"
+    - option "danger"
+  - checkbox "Show additional data" [checked]
+  - text: Show additional data
+  - checkbox "Show forecast" [checked]
+  - text: Show forecast
+  - checkbox "Show forecast extra columns (vertical, manual mode)" [checked]
+  - text: Show forecast extra columns (vertical, manual mode)
+  - checkbox "Show loading indicator"
+  - text: Show loading indicator Extra forecast columns (2 of 5)
+  - slider "Extra forecast columns (2 of 5)"
+- text: Zug, Switzerland

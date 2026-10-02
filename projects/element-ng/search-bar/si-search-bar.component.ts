@@ -21,7 +21,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { elementCancel, elementSearch } from '@siemens/element-icons';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -62,6 +62,12 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
    * @defaultValue ''
    */
   readonly placeholder = input('');
+  /**
+   * Accessible name for the search input.
+   *
+   * @defaultValue undefined
+   */
+  readonly ariaLabel = input<TranslatableString>(undefined, { alias: 'aria-label' });
   /**
    * Display search icon before search input.
    *
