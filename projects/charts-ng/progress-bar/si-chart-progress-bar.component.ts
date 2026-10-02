@@ -18,6 +18,12 @@ import { LegacyGridContainLabel } from 'echarts/features';
 
 import { ProgressBarChartSeries, ProgressBarValueUpdate } from './si-chart-progress-bar.interface';
 
+interface SeriesItemInterface {
+  percent: number;
+  name: string;
+  [key: string]: any;
+}
+
 echarts.use([BarChart, GridComponent, LegacyGridContainLabel]);
 
 @Component({
@@ -123,7 +129,7 @@ export class SiChartProgressBarComponent extends SiChartBaseComponent {
     const series = this.series();
     if (series) {
       const optionSeries = this.actualOptions.series as BarSeriesOption[];
-      (this.actualOptions.yAxis as any).data = series.map(item => item.name);
+      (this.actualOptions.yAxis as any).data = series.map((item: SeriesItemInterface) => item.name);
 
       const dataItem: BarSeriesOption = {
         type: 'bar',
@@ -131,7 +137,7 @@ export class SiChartProgressBarComponent extends SiChartBaseComponent {
         z: 3,
         barWidth: itemWidth,
         label: this.labelPositionOption,
-        data: series.map(item => item.percent)
+        data: series.map((item: SeriesItemInterface) => item.percent)
       };
 
       const fillerItem: BarSeriesOption = {
@@ -142,7 +148,7 @@ export class SiChartProgressBarComponent extends SiChartBaseComponent {
         itemStyle: {
           color: grey
         },
-        data: series.map(item => this.maxValue - item.percent)
+        data: series.map((item: SeriesItemInterface) => this.maxValue - item.percent)
       };
 
       optionSeries.push(dataItem);
