@@ -1,4 +1,4 @@
-- text:   Company1
+- text: Company1
 - tree "Company locations":
   - treeitem "Milano MIL" [level=2]:
     - text: ""
@@ -54,6 +54,6 @@
 - text: Apply class .tree-sm (32px row height)
 - checkbox "Apply class .tree-xs (24px row height)"
 - text: Apply class .tree-xs (24px row height) Number of leaf items
-- spinbutton "Number of leaf items"
+- spinbutton "Number of leaf items": /\d+/
 - text: Number of folder items
-- spinbutton "Number of folder items"
+- spinbutton "Number of folder items": "2"

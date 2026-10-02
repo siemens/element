@@ -10,7 +10,10 @@ test.describe('si-tree-view', () => {
   test(example + ' base tree', async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.locator('i.si-tree-view-item-dropdown-caret').first().click();
+    await page
+      .locator('a.si-tree-view-item-toggle si-icon[data-icon="itemCollapsedLeft"]')
+      .first()
+      .click();
     await page.locator('.si-tree-view-item-object-data').getByText('Pune').click();
 
     await si.runVisualAndA11yTests('base-tree');
@@ -20,7 +23,10 @@ test.describe('si-tree-view', () => {
     await si.visitExample(example);
 
     await page.getByLabel('Enable data field 2').check();
-    await page.locator('i.si-tree-view-item-dropdown-caret').first().click();
+    await page
+      .locator('a.si-tree-view-item-toggle si-icon[data-icon="itemCollapsedLeft"]')
+      .first()
+      .click();
     await page.locator('.si-tree-view-item-object-data').getByText('Pune').click();
 
     await si.runVisualAndA11yTests('base-tree-with-data-field-2');
@@ -30,7 +36,10 @@ test.describe('si-tree-view', () => {
     await si.visitExample(example);
 
     await page.getByLabel('Enable checkboxes').check();
-    await page.locator('i.si-tree-view-item-dropdown-caret').first().click();
+    await page
+      .locator('a.si-tree-view-item-toggle si-icon[data-icon="itemCollapsedLeft"]')
+      .first()
+      .click();
     await page.locator('.si-tree-view-item-object-data').getByText('Pune').click();
 
     await si.runVisualAndA11yTests('base-tree-with-checkbox');
@@ -40,7 +49,10 @@ test.describe('si-tree-view', () => {
     await si.visitExample(example);
 
     await page.getByLabel('Show expand/collapse all buttons').check();
-    await page.locator('i.si-tree-view-item-dropdown-caret').first().click();
+    await page
+      .locator('a.si-tree-view-item-toggle si-icon[data-icon="itemCollapsedLeft"]')
+      .first()
+      .click();
     await page.locator('.si-tree-view-item-object-data').getByText('Pune').click();
 
     await si.runVisualAndA11yTests('expand-collapse');
@@ -60,7 +72,10 @@ test.describe('si-tree-view', () => {
     await si.visitExample(example);
 
     await page.getByLabel('Grouped list').check();
-    await page.locator('i.si-tree-view-item-icon').first().click();
+    await page
+      .locator('a.si-tree-view-item-toggle si-icon[data-icon="itemCollapsedLeft"]')
+      .first()
+      .click();
     await page.locator('.si-tree-view-item-object-data').getByText('Pune').click();
 
     await si.runVisualAndA11yTests('grouped-tree');
