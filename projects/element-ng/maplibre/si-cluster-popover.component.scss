@@ -1,0 +1,6 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+.cluster-popover {
+  min-inline-size: 200px;
+}

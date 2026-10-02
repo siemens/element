@@ -20,7 +20,9 @@
     statusProperty="status"
     [data]="geoJson"
     (clusterClick)="selectCluster($event)"
-  />
+  >
+    <si-cluster-popover />
+  </si-cluster-source>
 
   <mgl-markers-for-clusters source="cluster-source">
     <ng-template let-feature mglPoint>

@@ -14,9 +14,9 @@
     <si-cluster-marker
       [feature]="feature"
       [segments]="clusterConfiguration().segments"
-      (markerClick)="selectCluster(feature)"
+      (markerClick)="clusterClick.emit(feature)"
     />
   </ng-template>
 </mgl-markers-for-clusters>
 
-<ng-content select="si-cluster-popover,[siClusterPopoverOutlet]" />
+<ng-content />
