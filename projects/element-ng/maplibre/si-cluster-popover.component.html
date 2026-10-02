@@ -1,0 +1,86 @@
+@if (context(); as context) {
+  <mgl-popup
+    [maxWidth]="maxWidth()"
+    [lngLat]="popupCoordinates()"
+    [closeOnMove]="closeOnMove()"
+    [focusAfterOpen]="false"
+    [closeButton]="false"
+    (popupClose)="context.close()"
+  >
+    <section
+      #dialog
+      class="cluster-popover d-flex flex-column"
+      role="dialog"
+      [attr.aria-labelledby]="titleId"
+      [style.--_si-cluster-popover-available-block-size.px]="availableBlockSize()"
+      (keydown.escape)="$event.stopPropagation(); context.close()"
+    >
+      <div class="popover-header flex-shrink-0">
+        <strong class="flex-grow-1" [id]="titleId">
+          {{ clusterPopoverTitle | translate: { count: context.total } }}
+        </strong>
+        <button
+          type="button"
+          class="btn btn-circle btn-sm btn-ghost ms-2"
+          [attr.aria-label]="closeText | translate"
+          (click)="context.close()"
+        >
+          <si-icon [icon]="icons.elementCancel" />
+        </button>
+      </div>
+      <div
+        class="cluster-popover-body d-flex flex-column p-2"
+        [siLoading]="context.loading"
+        [blocking]="true"
+      >
+        <div
+          #scrollRegion
+          class="cluster-popover-scroll overflow-auto"
+          role="region"
+          tabindex="0"
+          [attr.aria-label]="locationsLabel | translate"
+        >
+          <div [inert]="context.loading" [attr.aria-busy]="context.loading">
+            @if (template(); as customTemplate) {
+              <ng-container
+                [ngTemplateOutlet]="customTemplate"
+                [ngTemplateOutletContext]="context"
+              />
+            } @else {
+              <ul class="list-unstyled mb-0">
+                @for (feature of context.features; track feature.id ?? $index) {
+                  <li class="list-item p-4">
+                    <div class="list-item-title pt-0">
+                      {{ feature.properties?.[labelProperty()] }}
+                    </div>
+                    <div class="list-item-description mb-0">
+                      {{ feature.properties?.[descriptionProperty()] }}
+                    </div>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+          @if (context.error && !context.loading) {
+            <p role="alert" class="mt-4 mb-0">{{ errorText | translate }}</p>
+          }
+          @if (
+            context.error ||
+            (context.features.length > 0 && context.features.length < context.total)
+          ) {
+            <button
+              #batchButton
+              type="button"
+              class="btn btn-link d-flex w-100 justify-content-center p-4 focus-inside"
+              [class.disabled]="context.loading"
+              [attr.aria-disabled]="context.loading"
+              (click)="loadBatch()"
+            >
+              {{ (context.error ? retryText : loadMoreText) | translate }}
+            </button>
+          }
+        </div>
+      </div>
+    </section>
+  </mgl-popup>
+}
