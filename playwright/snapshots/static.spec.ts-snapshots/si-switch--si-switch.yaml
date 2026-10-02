@@ -4,4 +4,8 @@
 - switch "This one's disabled in off state" [disabled]
 - text: This one's disabled in off state Disabled (on)
 - switch "This one's disabled in on state" [checked] [disabled]
-- text: This one's disabled in on state
+- text: This one's disabled in on state Indeterminate
+- switch "This one's indeterminate" [checked=mixed]
+- text: This one's indeterminate Indeterminate (disabled)
+- switch "This one's disabled and indeterminate" [checked=mixed] [disabled]
+- text: This one's disabled and indeterminate
