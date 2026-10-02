@@ -139,7 +139,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.tableBody = this.element.querySelector('datatable-body') as HTMLElement;
+    this.tableBody = this.element.querySelector('.datatable-grid') as HTMLElement;
     if (this.tableBody) {
       this.tableBody.tabIndex = -1;
     }

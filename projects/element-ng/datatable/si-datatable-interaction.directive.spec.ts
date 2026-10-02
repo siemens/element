@@ -140,7 +140,7 @@ describe('SiDatatableInteractionDirective', () => {
     wrapperElement = fixture.nativeElement;
   });
 
-  it.skipIf(!document.hasFocus())('should navigate into table using arrow keys', async () => {
+  it('should navigate into table using arrow keys', async () => {
     await refresh();
     getTableElement().focus();
 
@@ -163,7 +163,7 @@ describe('SiDatatableInteractionDirective', () => {
     );
   });
 
-  it.skipIf(!document.hasFocus())(
+  it(
     'should navigate into and inside arrow keys when using virtualization',
     async () => {
       wrapperComponent.virtualization.set(true);
@@ -180,11 +180,11 @@ describe('SiDatatableInteractionDirective', () => {
 
       await arrowDown(8);
 
-      const scrollTopBeforeDown = getTableElement().querySelector('.datatable-body')!.scrollTop;
+      const scrollTopBeforeDown = getTableElement().querySelector('.datatable-grid')!.scrollTop;
 
       await arrowDown();
 
-      expect(getTableElement().querySelector('.datatable-body')!.scrollTop).not.toBe(
+      expect(getTableElement().querySelector('.datatable-grid')!.scrollTop).not.toBe(
         scrollTopBeforeDown
       );
 
@@ -200,17 +200,17 @@ describe('SiDatatableInteractionDirective', () => {
 
       await arrowUp(7);
 
-      const scrollTopBeforeUp = getTableElement().querySelector('.datatable-body')!.scrollTop;
+      const scrollTopBeforeUp = getTableElement().querySelector('.datatable-grid')!.scrollTop;
 
       await arrowUp();
 
-      expect(getTableElement().querySelector('.datatable-body')!.scrollTop).not.toBe(
+      expect(getTableElement().querySelector('.datatable-grid')!.scrollTop).not.toBe(
         scrollTopBeforeUp
       );
     }
   );
 
-  it.skipIf(!document.hasFocus())(
+  it(
     'should navigate into and inside table using arrow keys when using virtualization and cell selection',
     async () => {
       wrapperComponent.selectionType.set('cell');
@@ -230,11 +230,11 @@ describe('SiDatatableInteractionDirective', () => {
 
       await arrowDown(8);
 
-      const scrollTopBeforeDown = getTableElement().querySelector('.datatable-body')!.scrollTop;
+      const scrollTopBeforeDown = getTableElement().querySelector('.datatable-grid')!.scrollTop;
 
       await arrowDown();
 
-      expect(getTableElement().querySelector('.datatable-body')!.scrollTop).not.toBe(
+      expect(getTableElement().querySelector('.datatable-grid')!.scrollTop).not.toBe(
         scrollTopBeforeDown
       );
 
@@ -252,17 +252,17 @@ describe('SiDatatableInteractionDirective', () => {
 
       await arrowUp(7);
 
-      const scrollTopBeforeUp = getTableElement().querySelector('.datatable-body')!.scrollTop;
+      const scrollTopBeforeUp = getTableElement().querySelector('.datatable-grid')!.scrollTop;
 
       await arrowUp();
 
-      expect(getTableElement().querySelector('.datatable-body')!.scrollTop).not.toBe(
+      expect(getTableElement().querySelector('.datatable-grid')!.scrollTop).not.toBe(
         scrollTopBeforeUp
       );
     }
   );
 
-  it.skipIf(!document.hasFocus())('should auto select on focus when enabled', async () => {
+  it('should auto select on focus when enabled', async () => {
     wrapperComponent.selectionType.set('single');
     wrapperComponent.datatableInteractionAutoSelect.set(true);
     await refresh();
@@ -285,7 +285,7 @@ describe('SiDatatableInteractionDirective', () => {
     );
   });
 
-  it.skipIf(!document.hasFocus())(
+  it(
     'should not auto select on mouse click when enabled',
     async () => {
       wrapperComponent.selectionType.set('single');
