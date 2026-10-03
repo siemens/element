@@ -1,5 +1,10 @@
-<si-side-panel [collapsed]="collapsed()" [mode]="mode()" [size]="size()">
-  <div class="has-navbar-fixed-top" [class.has-system-banner]="!hideSystemBanner()">
+<si-side-panel
+  [class.has-system-banner]="!hideSystemBanner()"
+  [collapsed]="collapsed()"
+  [mode]="mode()"
+  [size]="size()"
+>
+  <div class="has-navbar-fixed-top">
     @if (!hideSystemBanner()) {
       <si-system-banner
         class="fixed-top"
