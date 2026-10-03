@@ -1,0 +1,19 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+.cluster-popover {
+  min-inline-size: 200px;
+  max-block-size: calc(
+    var(--_si-cluster-popover-available-block-size, 100dvb) -
+      #{map.get(variables.$spacers-block, 6)} * 2
+  );
+}
+
+.cluster-popover-body,
+.cluster-popover-scroll {
+  min-block-size: 0;
+}
+
+.cluster-popover-scroll {
+  overscroll-behavior-block: contain;
+}

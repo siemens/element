@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { testMap } from '../../support/maptiler-mock';
-import { expect } from '../../support/test-helpers';
+import { expect, test } from '../../support/test-helpers';
 
 testMap('maplibre/maplibre-cluster', ({ si }) =>
   si.static({
@@ -28,3 +28,20 @@ testMap('maplibre/maplibre-cluster', ({ si }) =>
     }
   })
 );
+
+testMap('maplibre cluster popover', async ({ page, si }) => {
+  await si.visitExample('maplibre/maplibre-cluster');
+  const name = 'Cluster with 11 locations';
+  await page.getByRole('button', { name, exact: true }).click();
+
+  const popover = page.getByRole('dialog', { name, exact: true });
+  await expect(popover).toBeVisible();
+
+  const scrollRegion = page.getByRole('region', { name: 'Cluster locations' });
+  const lastItem = scrollRegion.getByRole('listitem').last();
+  await lastItem.scrollIntoViewIfNeeded();
+  await expect(popover.getByRole('button', { name: 'Load more', exact: true })).toBeEnabled();
+
+  await page.mouse.move(-10, -10);
+  await si.runVisualAndA11yTests('popover', { skipAriaSnapshot: true });
+});

@@ -149,3 +149,30 @@ The example pitches the map and adds a `fill-extrusion` layer on the OpenMapTile
 `render_height` and `render_min_height` properties from the tiles.
 
 <si-docs-component example="maplibre/maplibre-3d-buildings" height="580"></si-docs-component>
+
+### Custom cluster popover
+
+Use an `ng-template` with `siClusterPopoverTemplate` to customize the list of loaded
+cluster features. This example displays each location's name, description, and status as a
+selectable list item. Selecting a location updates the status above the map and logs the feature.
+
+The popover handles loading and error states for both default and custom content. The "Load more"
+button appears after the first batch is loaded. If a request fails, an alert appears at the end of
+the list and the same button becomes "Retry", preserving focus and already loaded locations.
+Retrying reloads only the failed batch.
+
+The `pageSize` input controls how many locations are loaded initially and with each click.
+Loaded locations stay visible while the next batch loads, with feature actions temporarily
+disabled. New locations are appended to the list.
+
+Both default and custom content scroll below the fixed header. The centered "Load more" button
+sits at the end of the scrolling content and moves below newly appended locations. By default,
+the close button receives initial focus. Focus stays on "Load more" while loading and after items are
+appended, keeping the button visible. When all locations are loaded and the button disappears,
+focus moves to the scrolling region, so pressing Enter again does not close the popover.
+
+<si-docs-component example="maplibre/maplibre-cluster-custom-popover" height="580"></si-docs-component>
+
+<si-docs-api component="SiClusterSourceComponent"></si-docs-api>
+<si-docs-api component="SiClusterPopoverComponent"></si-docs-api>
+<si-docs-api directive="SiClusterPopoverTemplateDirective"></si-docs-api>
