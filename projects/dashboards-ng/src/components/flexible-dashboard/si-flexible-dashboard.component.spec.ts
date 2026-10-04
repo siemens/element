@@ -170,17 +170,12 @@ describe('SiFlexibleDashboardComponent', () => {
     });
 
     it('showWidgetCatalog() should show a widget catalog and add the widget config added to the grid', async () => {
-      vi.useFakeTimers();
       fixture.componentRef.setInput('widgetCatalogComponent', SiWidgetCatalogMockComponent);
       fixture.detectChanges();
       component.showWidgetCatalog();
       fixture.detectChanges();
       SiWidgetCatalogMockComponent.staticClosed?.emit([{ widgetId: 'widgetId' }]);
-      vi.advanceTimersByTime(200);
-      await fixture.whenStable();
-      expect(widgetConfig).toBeDefined();
-      expect(widgetConfig.widgetId).toEqual('widgetId');
-      vi.useRealTimers();
+      await expect.poll(() => widgetConfig).toMatchObject({ widgetId: 'widgetId' });
     });
 
     it('addWidgetAction action shall call showWidgetCatalog()', () => {

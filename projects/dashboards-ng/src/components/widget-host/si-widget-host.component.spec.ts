@@ -37,10 +37,6 @@ class SiActionDialogMockService {
 describe('SiWidgetHostComponent', () => {
   afterEach(() => {
     vi.restoreAllMocks();
-    if (vi.isFakeTimers()) {
-      vi.clearAllTimers();
-      vi.useRealTimers();
-    }
   });
 
   [
@@ -119,20 +115,14 @@ describe('SiWidgetHostComponent', () => {
 
       it('should instantiate and attach widget instance', async () => {
         fixture.detectChanges();
-        vi.useFakeTimers();
-        vi.advanceTimersByTime(0);
-        await fixture.whenStable();
-        expect(component.widgetHost()).toHaveLength(1);
-        vi.useRealTimers();
+        await vi.waitFor(() => expect(component.widgetHost()).toHaveLength(1));
       });
 
       it('should not create widget instance without widget', async () => {
         fixture.componentRef.setInput('componentFactory', undefined);
-        vi.useFakeTimers();
-        vi.advanceTimersByTime(0);
+        fixture.detectChanges();
         await fixture.whenStable();
         expect(component.widgetHost()).toHaveLength(0);
-        vi.useRealTimers();
       });
 
       it('should show configuration placeholder when widget requires configuration', async () => {
@@ -163,11 +153,7 @@ describe('SiWidgetHostComponent', () => {
         });
         fixture.detectChanges();
 
-        vi.useFakeTimers();
-        vi.advanceTimersByTime(0);
-        await fixture.whenStable();
-        expect(component.widgetHost()).toHaveLength(1);
-        vi.useRealTimers();
+        await vi.waitFor(() => expect(component.widgetHost()).toHaveLength(1));
       });
 
       it('#onEdit() should emit #widgetConfig', async () => {
@@ -181,10 +167,7 @@ describe('SiWidgetHostComponent', () => {
 
       it('#removeAction should call onRemove', async () => {
         fixture.detectChanges();
-        vi.useFakeTimers();
-        vi.advanceTimersByTime(0);
-        await fixture.whenStable();
-        vi.useRealTimers();
+        await vi.waitFor(() => expect(component.widgetHost()).toHaveLength(1));
         const spy = vi.spyOn(component, 'onRemove');
         ((component.removeAction as MenuItemAction).action! as (param?: any) => void)();
 

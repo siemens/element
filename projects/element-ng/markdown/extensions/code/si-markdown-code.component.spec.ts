@@ -45,6 +45,9 @@ describe('SiMarkdownCodeComponent', () => {
     await fixture.whenStable();
 
     const copyButton = element.querySelector('si-markdown-code button') as HTMLButtonElement;
+
+    // Use fake timers for the component's 1500ms reset timeout to avoid a real wait.
+    vi.useFakeTimers();
     copyButton.click();
     await Promise.resolve();
     fixture.detectChanges();
@@ -53,7 +56,7 @@ describe('SiMarkdownCodeComponent', () => {
     expect(writeText).toHaveBeenCalledWith('const answer = 42;');
     expect(copied).toHaveTextContent('Copied');
 
-    await new Promise(resolve => realSetTimeout(resolve, 1500));
+    await vi.advanceTimersByTimeAsync(1500);
     fixture.detectChanges();
 
     const restoredCopyButton = element.querySelector('si-markdown-code button');

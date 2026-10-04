@@ -91,17 +91,8 @@ describe('SiDatatableInteractionDirective', () => {
   let wrapperComponent: WrapperComponent;
   let wrapperElement: HTMLElement;
 
-  beforeEach(() => vi.useFakeTimers());
-  afterEach(() => {
-    if (vi.isFakeTimers()) {
-      vi.clearAllTimers();
-      vi.useRealTimers();
-    }
-  });
-
   const refresh = async (): Promise<void> => {
     fixture.detectChanges();
-    vi.advanceTimersByTime(10000);
     await fixture.whenStable();
   };
 
@@ -269,7 +260,7 @@ describe('SiDatatableInteractionDirective', () => {
 
     await refresh();
 
-    expect(wrapperComponent.selected()).toContainEqual(
+    await expect.poll(() => wrapperComponent.selected()).toContainEqual(
       expect.objectContaining({
         id: 1,
         firstname: 'First 1',
@@ -306,7 +297,7 @@ describe('SiDatatableInteractionDirective', () => {
 
     await refresh();
 
-    expect(wrapperComponent.selected()).toContainEqual(
+    await expect.poll(() => wrapperComponent.selected()).toContainEqual(
       expect.objectContaining({
         id: 1,
         firstname: 'First 1',

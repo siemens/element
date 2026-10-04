@@ -386,29 +386,19 @@ describe('SiWizardComponent', () => {
   });
 
   describe('steps with lazy loading', () => {
-    afterEach(() => {
-      if (vi.isFakeTimers()) {
-        vi.clearAllTimers();
-        vi.useRealTimers();
-      }
-    });
-
     it('should render steps if they are loaded lazily', async () => {
       hostComponent.steps.set([]);
       await fixture.whenStable();
       const steps = element.querySelectorAll('.step');
       expect(steps).toHaveLength(0);
-      vi.useFakeTimers();
       setTimeout(() => {
         hostComponent.generateSteps(3);
         fixture.detectChanges();
       }, 100);
-      vi.advanceTimersByTime(100);
 
-      await fixture.whenStable();
-      const updatedSteps = element.querySelectorAll('.step');
-      expect(updatedSteps).toHaveLength(3);
-      vi.useRealTimers();
+      await vi.waitFor(() => {
+        expect(element.querySelectorAll('.step')).toHaveLength(3);
+      });
     });
   });
 

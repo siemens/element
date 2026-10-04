@@ -102,7 +102,6 @@ describe('SiTypeaheadDirective', () => {
   const testList = ['sweet', 'home', 'alabama', 'where', 'the', 'skies', 'are', 'so', 'blue'];
 
   beforeEach(() => {
-    vi.useFakeTimers();
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
     wrapperElement = fixture.nativeElement;
@@ -119,7 +118,11 @@ describe('SiTypeaheadDirective', () => {
   });
 
   const tick = async (ms = 0): Promise<void> => {
-    vi.advanceTimersByTime(ms);
+    if (vi.isFakeTimers()) {
+      vi.advanceTimersByTime(ms);
+    } else {
+      await new Promise(resolve => setTimeout(resolve, ms));
+    }
     fixture.detectChanges();
     await fixture.whenStable();
   };
@@ -288,6 +291,7 @@ describe('SiTypeaheadDirective', () => {
     let source: TypeaheadOptionSource;
 
     beforeEach(() => {
+      vi.useFakeTimers();
       optionsSubject = new Subject<string[]>();
       source = vi.fn().mockReturnValue(optionsSubject);
       wrapperComponent.items.set(source);
@@ -443,6 +447,7 @@ describe('SiTypeaheadDirective', () => {
   });
 
   it('should wait specified number of milliseconds', async () => {
+    vi.useFakeTimers();
     wrapperComponent.minLength.set(0);
     wrapperComponent.waitMs.set(333);
 

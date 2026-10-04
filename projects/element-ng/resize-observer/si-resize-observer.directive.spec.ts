@@ -48,21 +48,24 @@ describe('SiResizeObserverDirective', () => {
   });
 
   it('emits initial size event', async () => {
-    const resize = new Promise<ElementDimensions>(resolve => spy.mockImplementation(resolve));
     await fixture.whenStable();
-    await expect(resize).resolves.toEqual({ width: 100, height: 100 });
+    await vi.waitFor(() =>
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }))
+    );
   });
 
   it('emits on width change', async () => {
-    const resize = new Promise<ElementDimensions>(resolve => spy.mockImplementation(resolve));
     await page.viewport(200, 100);
-    await expect(resize).resolves.toEqual({ width: 200, height: 100 });
+    await vi.waitFor(() =>
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }))
+    );
   });
 
   it('emits on height change', async () => {
-    const resize = new Promise<ElementDimensions>(resolve => spy.mockImplementation(resolve));
     await page.viewport(100, 200);
-    await expect(resize).resolves.toEqual({ width: 100, height: 200 });
+    await vi.waitFor(() =>
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 200 }))
+    );
   });
 });
 

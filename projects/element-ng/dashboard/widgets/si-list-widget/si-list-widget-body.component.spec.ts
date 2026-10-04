@@ -258,13 +258,6 @@ describe('SiListWidgetBodyComponent with translations', () => {
     element = fixture.nativeElement;
   });
 
-  afterEach(() => {
-    if (vi.isFakeTimers()) {
-      vi.clearAllTimers();
-      vi.useRealTimers();
-    }
-  });
-
   it('should filter by translated label, not translation key', async () => {
     value.set([
       { label: 'KEY_APPLE' as any },
@@ -274,24 +267,21 @@ describe('SiListWidgetBodyComponent with translations', () => {
     search.set(true);
     await fixture.whenStable();
 
-    vi.useFakeTimers();
     // Searching by translated value should find the item
     await userEvent.fill(searchInput(), 'Banana');
-    vi.advanceTimersByTime(400);
-    await fixture.whenStable();
-
-    let items = element.querySelectorAll('si-list-widget-item');
-    expect(items).toHaveLength(1);
-    expect(items.item(0).textContent).toContain('Banana');
+    await vi.waitFor(() => {
+      fixture.detectChanges();
+      expect(element.querySelectorAll('si-list-widget-item')).toHaveLength(1);
+    });
+    const renderedItems = element.querySelectorAll('si-list-widget-item');
+    expect(renderedItems.item(0).textContent).toContain('Banana');
 
     // Searching by translation key should NOT find the item
     await userEvent.fill(searchInput(), 'KEY_BANANA');
-    vi.advanceTimersByTime(400);
-    await fixture.whenStable();
-
-    items = element.querySelectorAll('si-list-widget-item');
-    expect(items).toHaveLength(0);
-    vi.useRealTimers();
+    await vi.waitFor(() => {
+      fixture.detectChanges();
+      expect(element.querySelectorAll('si-list-widget-item')).toHaveLength(0);
+    });
   });
 
   it('should sort by translated label, not translation key', async () => {
@@ -322,14 +312,13 @@ describe('SiListWidgetBodyComponent with translations', () => {
     search.set(true);
     await fixture.whenStable();
 
-    vi.useFakeTimers();
     await userEvent.fill(searchInput(), 'Cherry');
-    vi.advanceTimersByTime(400);
-    await fixture.whenStable();
+    await vi.waitFor(() => {
+      fixture.detectChanges();
+      expect(element.querySelectorAll('si-list-widget-item')).toHaveLength(1);
+    });
 
-    const items = element.querySelectorAll('si-list-widget-item');
-    expect(items).toHaveLength(1);
-    expect(items.item(0).textContent).toContain('Cherry');
-    vi.useRealTimers();
+    const renderedItems = element.querySelectorAll('si-list-widget-item');
+    expect(renderedItems.item(0).textContent).toContain('Cherry');
   });
 });

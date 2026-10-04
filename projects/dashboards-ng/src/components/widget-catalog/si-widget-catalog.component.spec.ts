@@ -157,9 +157,7 @@ describe('SiWidgetCatalogComponent', () => {
         buttonsByName('Next')[0].nativeElement.click();
         fixture.detectChanges();
 
-        // cannot use jasmine.clock here.
-        await new Promise(resolve => setTimeout(resolve, 100));
-        expect(component.view()).toBe('editor');
+        await vi.waitFor(() => expect(component.view()).toBe('editor'));
         expect(
           fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
             .tagName
@@ -298,12 +296,12 @@ describe('SiWidgetCatalogComponent', () => {
       await fixture.whenStable();
 
       expect(component.view()).toBe('editor');
-      // cannot use jasmine.clock here.
-      await new Promise(resolve => setTimeout(resolve, 100));
-      expect(
-        fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
-          .tagName
-      ).toBe('SI-TEST-WIDGET-EDITOR');
+      await vi.waitFor(() =>
+        expect(
+          fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
+            .tagName
+        ).toBe('SI-TEST-WIDGET-EDITOR')
+      );
 
       buttonsByName('Previous')[0].nativeElement.click();
       fixture.detectChanges();

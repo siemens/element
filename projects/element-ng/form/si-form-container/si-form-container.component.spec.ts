@@ -152,23 +152,14 @@ describe('SiFormContainerComponent', () => {
     let fixture: ComponentFixture<TestHostWithNestingComponent>;
 
     beforeEach(() => {
-      vi.useFakeTimers();
       fixture = TestBed.createComponent(TestHostWithNestingComponent);
       fixture.detectChanges();
     });
 
-    afterEach(() => {
-      if (vi.isFakeTimers()) {
-        vi.clearAllTimers();
-        vi.useRealTimers();
-      }
-    });
-
     it('should create', async () => {
       const spy = vi.spyOn(SiResponsiveContainerDirective.prototype as any, 'setResponsiveSize');
-      await vi.advanceTimersByTimeAsync(100);
 
-      expect(spy).toHaveBeenCalledTimes(1);
+      await vi.waitFor(() => expect(spy).toHaveBeenCalledTimes(1));
       expect(spy).toHaveBeenCalledWith(100, 26);
     });
   });

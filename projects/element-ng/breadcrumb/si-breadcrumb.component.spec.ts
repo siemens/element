@@ -80,22 +80,11 @@ describe('SiBreadcrumbComponent', () => {
     });
     element = fixture.nativeElement;
     router = TestBed.inject(Router);
-    vi.useFakeTimers();
   });
 
   afterEach(() => {
     restoreResizeObserver();
-    if (vi.isFakeTimers()) {
-      vi.clearAllTimers();
-      vi.useRealTimers();
-    }
   });
-
-  const tick = async (ms = 100): Promise<void> => {
-    vi.advanceTimersByTime(ms);
-    fixture.detectChanges();
-    await fixture.whenStable();
-  };
 
   it('should contain items', () => {
     items.set([
@@ -210,27 +199,29 @@ describe('SiBreadcrumbComponent', () => {
     for (const [i, size] of testSizes.entries()) {
       element.style.width = size + 'px';
 
-      await tick();
+      fixture.detectChanges();
+      await fixture.whenStable();
       if (i !== 0) {
         MockResizeObserver.triggerResize({});
       }
 
-      await tick();
+      // eslint-disable-next-line @typescript-eslint/no-loop-func
+      await vi.waitFor(() => {
+        const breadcrumb = element.querySelector('.breadcrumb')!;
+        const computedStyle = getComputedStyle(breadcrumb);
 
-      const breadcrumb = element.querySelector('.breadcrumb')!;
-      const computedStyle = getComputedStyle(breadcrumb);
+        let currentWidth = 0;
+        const maxWidth =
+          breadcrumb.clientWidth -
+          (parseFloat(computedStyle.getPropertyValue('padding-left')) +
+            parseFloat(computedStyle.getPropertyValue('padding-right')));
 
-      let currentWidth = 0;
-      const maxWidth =
-        breadcrumb!.clientWidth -
-        (parseFloat(computedStyle.getPropertyValue('padding-left')) +
-          parseFloat(computedStyle.getPropertyValue('padding-right')));
+        breadcrumb.querySelectorAll<HTMLElement>('.item').forEach(childElement => {
+          currentWidth += childElement.offsetWidth;
+        });
 
-      breadcrumb!.querySelectorAll<HTMLElement>('.item').forEach(childElement => {
-        currentWidth += childElement.offsetWidth;
+        expect(currentWidth).toBeLessThan(maxWidth);
       });
-
-      expect(currentWidth).toBeLessThan(maxWidth);
     }
   });
 

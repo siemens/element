@@ -30,16 +30,8 @@ describe('SiModalService', () => {
   let appRef!: ApplicationRef;
 
   beforeEach(async () => {
-    vi.useFakeTimers();
     service = TestBed.inject(SiModalService);
     appRef = TestBed.inject(ApplicationRef);
-  });
-
-  afterEach(() => {
-    if (vi.isFakeTimers()) {
-      vi.clearAllTimers();
-      vi.useRealTimers();
-    }
   });
 
   describe('with template', () => {

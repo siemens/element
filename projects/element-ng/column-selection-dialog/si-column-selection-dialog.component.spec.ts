@@ -268,8 +268,8 @@ describe('ColumnDialogComponent', () => {
       'si-column-selection-editor input.form-control'
     )!;
     expect(inputField).toBeInTheDocument();
-    // Wait for setTimeout in startEdit() to complete
-    await new Promise(resolve => setTimeout(resolve, 100));
+    // Wait for setTimeout in startEdit() to focus the input field
+    await vi.waitFor(() => expect(document.activeElement).toBe(inputField));
     inputField.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     await fixture.whenStable();
     expect(

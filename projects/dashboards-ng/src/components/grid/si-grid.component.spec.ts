@@ -53,13 +53,6 @@ describe('SiGridComponent', () => {
   let widgetStorage: SiWidgetStorage;
   let widgetStorageLoadSpy: Mock;
 
-  afterEach(() => {
-    if (vi.isFakeTimers()) {
-      vi.clearAllTimers();
-      vi.useRealTimers();
-    }
-  });
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SiGridComponent],
@@ -138,8 +131,7 @@ describe('SiGridComponent', () => {
     expect(component.markedForRemoval).toEqual([]);
   });
 
-  it('should restoreSavedState on setting editable to false', () => {
-    vi.useFakeTimers();
+  it('should restoreSavedState on setting editable to false', async () => {
     fixture.componentRef.setInput('editable', true);
 
     const savedWidgets = [...component.persistedWidgetInstances];
@@ -147,19 +139,18 @@ describe('SiGridComponent', () => {
     expect(component.visibleWidgetInstances$.value).toHaveLength(savedWidgets.length + 1);
 
     // Simulate grid modification so restoreSavedState actually restores
+    const modifiedSpy = vi.spyOn(component.isModified, 'emit');
     fixture.debugElement
       .query(By.css('si-gridstack-wrapper'))
       .triggerEventHandler('gridEvent', { event: { type: 'added' } });
-    vi.advanceTimersByTime(0);
+    await vi.waitFor(() => expect(modifiedSpy).toHaveBeenCalledWith(true));
 
     fixture.componentRef.setInput('editable', false);
     fixture.detectChanges();
     expect(component.visibleWidgetInstances$.value).toEqual(savedWidgets);
-    vi.useRealTimers();
   });
 
-  it('should restoreSavedState on calling cancel()', () => {
-    vi.useFakeTimers();
+  it('should restoreSavedState on calling cancel()', async () => {
     component.edit();
 
     const savedWidgets = [...component.persistedWidgetInstances];
@@ -167,15 +158,15 @@ describe('SiGridComponent', () => {
     expect(component.visibleWidgetInstances$.value).toHaveLength(savedWidgets.length + 1);
 
     // Simulate grid modification so restoreSavedState actually restores
+    const modifiedSpy = vi.spyOn(component.isModified, 'emit');
     fixture.debugElement
       .query(By.css('si-gridstack-wrapper'))
       .triggerEventHandler('gridEvent', { event: { type: 'added' } });
-    vi.advanceTimersByTime(0);
+    await vi.waitFor(() => expect(modifiedSpy).toHaveBeenCalledWith(true));
 
     component.cancel();
     fixture.detectChanges();
     expect(component.visibleWidgetInstances$.value).toEqual(savedWidgets);
-    vi.useRealTimers();
   });
 
   it('#addWidget() shall add a new WidgetConfig to the visible widgets of the grid and assign unique ids', () => {
@@ -203,7 +194,6 @@ describe('SiGridComponent', () => {
 
   describe('#editWidgetInstance()', () => {
     it('shall open the editor and update the visible widgets with the edited configuration', async () => {
-      vi.useFakeTimers();
       fixture.componentRef.setInput('widgetCatalog', [TEST_WIDGET]);
       fixture.detectChanges();
       component.addWidgetInstance({ widgetId: TEST_WIDGET.id });
@@ -217,10 +207,9 @@ describe('SiGridComponent', () => {
       component.editWidgetInstance(widgetConfig);
       const editedWidgetConfig: WidgetConfig = { ...widgetConfig, minHeight: 2 };
       SiWidgetEditorDialogMockComponent.staticClosed?.emit(editedWidgetConfig);
-      vi.advanceTimersByTime(200);
-      fixture.detectChanges();
-      expect(component.visibleWidgetInstances$.value[0].minHeight).toBe(2);
-      vi.useRealTimers();
+      await expect
+        .poll(() => component.visibleWidgetInstances$.value[0].minHeight)
+        .toBe(2);
     });
 
     it('shall emit an edit event if #emitWidgetInstanceEditEvents is set to true', async () => {
@@ -243,17 +232,16 @@ describe('SiGridComponent', () => {
     });
   });
 
-  it('#handleGridEvent() shall update visible widgets and mark grid as modified', () => {
+  it('#handleGridEvent() shall update visible widgets and mark grid as modified', async () => {
     component.addWidgetInstance({ widgetId: 'id' });
     component.save();
     component.edit();
 
-    component.isModified.subscribe(modified => {
-      expect(modified).toBe(true);
-    });
+    const modifiedSpy = vi.spyOn(component.isModified, 'emit');
     fixture.debugElement
       .query(By.css('si-gridstack-wrapper'))
       .triggerEventHandler('gridEvent', { event: { type: 'added' } });
+    await vi.waitFor(() => expect(modifiedSpy).toHaveBeenCalledWith(true));
   });
 
   it('#handleGridEvent() should capture auto-positioned layout so cancel restores it', () => {
