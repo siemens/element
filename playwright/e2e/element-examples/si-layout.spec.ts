@@ -5,6 +5,17 @@
 import { test } from '../../support/test-helpers';
 
 test.describe('si-layouts', () => {
+  test('si-layouts/anatomy - fullscreen side panel', async ({ page, si }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await si.visitExample('si-layouts/anatomy');
+
+    await page.getByRole('button', { name: 'Show side pane', exact: true }).click();
+    await page.getByRole('button', { name: 'Full screen', exact: true }).click();
+    await si.runVisualAndA11yTests('side-panel-fullscreen-navbar-expanded');
+    await page.getByRole('button', { name: 'collapse', exact: true }).click();
+    await si.runVisualAndA11yTests('side-panel-fullscreen');
+  });
+
   const example = 'si-layouts/content-tile-layout-full-scroll-vertical-nav';
 
   test(example, async ({ page, si }) => {

@@ -11,6 +11,7 @@ import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { Signal } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -80,7 +81,7 @@ export interface NavbarVerticalItemRouterLink extends NavbarVerticalItemBase {
 export type NavbarVerticalSubItem = NavbarVerticalItemRouterLink | NavbarVerticalItemLink | NavbarVerticalItemAction;
 
 // @public (undocumented)
-export class SiNavbarVerticalComponent implements OnChanges, OnInit {
+export class SiNavbarVerticalComponent implements OnChanges, OnInit, SiNavbarVerticalLayout {
     constructor();
     collapse(): void;
     readonly collapsed: _angular_core.ModelSignal<boolean>;

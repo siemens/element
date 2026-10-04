@@ -4,5 +4,6 @@
  */
 export * from './color-variant.model';
 export * from './menu.model';
+export * from './navbar-vertical-layout.model';
 export * from './status-type.model';
 export * from './positions.model';
