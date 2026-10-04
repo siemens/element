@@ -10,6 +10,7 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  contentChild,
   DestroyRef,
   DOCUMENT,
   effect,
@@ -27,6 +28,7 @@ import {
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SI_NAVBAR_VERTICAL_LAYOUT } from '@siemens/element-ng/common';
 import {
   BOOTSTRAP_BREAKPOINTS,
   Breakpoints,
@@ -60,6 +62,9 @@ import { SidePanelMode, SidePanelSize } from './side-panel.model';
     '[class.collapsible-temp]': 'collapsible() && this.showTempContent()',
     '[class.rpanel-hidden]': 'isHidden()',
     '[class.rpanel-fullscreen-overlay]': 'isFullscreenOverlay()',
+    '[class.rpanel-navbar-collapsed]': 'navbarLayout()?.collapsed()',
+    '[class.rpanel-navbar-text-only]': 'navbarLayout()?.textOnly()',
+    '[class.rpanel-navbar-hidden]': '!navbarLayout()?.visible()',
     '[class.rpanel-resize-xs]': 'isXs()',
     '[class.rpanel-resize-sm]': 'isSm()',
     '[class.rpanel-resize-md]': 'isMd()',
@@ -177,7 +182,10 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
   protected readonly isHidden = signal(false);
   protected readonly isFullscreenOverlay = signal(false);
   protected readonly showTempContent = signal(false);
+  protected readonly navbarLayout = computed(() => this.enclosingNavbar ?? this.projectedNavbar());
 
+  private readonly enclosingNavbar = inject(SI_NAVBAR_VERTICAL_LAYOUT, { optional: true });
+  private readonly projectedNavbar = contentChild(SI_NAVBAR_VERTICAL_LAYOUT);
   private readonly panelElement = viewChild.required<ElementRef>('sidePanel');
   private readonly contentElement = viewChild.required<ElementRef>('content');
   private readonly portalOutlet = viewChild.required<CdkPortalOutlet, CdkPortalOutlet>(
