@@ -280,7 +280,7 @@ When `closeTriggered` is emitted, you need to handle the removal of the tab in y
 ### Tab access control and guarding
 
 By default, tabs should be hidden when the feature is irrelevant to the user’s role.
-However if there’s a clear reason for the user to see the tab 
+However if there’s a clear reason for the user to see the tab
 (for example: to request access, or contact an admin), the tab may remain visible.
 In this case, navigation should still work but lead to a screen with an info page component with something like:
 "You don’t have access to this feature."
