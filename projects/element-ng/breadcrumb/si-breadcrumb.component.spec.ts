@@ -241,22 +241,30 @@ describe('SiBreadcrumbComponent', () => {
     expect(element.querySelector('.breadcrumb .breadcrumb-ellipses-item')).toBeInTheDocument();
   });
 
-  it('should move hidden items into a dropdown', () => {
+  it('should move hidden items into a dropdown', async () => {
     element.style.width = '500px';
     items.set(TEST_ITEMS);
 
-    fixture.detectChanges();
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
 
+    const breadcrumb = page.getByRole('navigation', { name: 'Breadcrumb navigation' });
     const itemsShown = element.querySelectorAll(
       '.breadcrumb .item:not(.breadcrumb-ellipses-item)'
     ).length;
 
     expect(itemsShown).toBeLessThan(items().length);
 
-    const dropdownItems = element.querySelectorAll(
-      '.breadcrumb .breadcrumb-ellipses-item .dropdown-menu .dropdown-item'
-    ).length;
-    expect(dropdownItems).toBe(items().length - itemsShown);
+    const toggle = breadcrumb.getByRole('button', { name: 'Hidden breadcrumb items' });
+    (toggle.element() as HTMLElement).click();
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
+
+    const dropdownItems = page
+      .getByRole('menu', { name: 'Hidden breadcrumb items' })
+      .getByRole('menuitem')
+      .elements();
+    expect(dropdownItems).toHaveLength(items().length - itemsShown);
   });
 
   it('should display a certain number of items at the end if possible', () => {
@@ -282,54 +290,89 @@ describe('SiBreadcrumbComponent', () => {
     expect(itemsShown).toBe(1);
   });
 
-  it('should open and close a dropdown on click', () => {
+  it('should open and close a dropdown on click', async () => {
     element.style.width = '500px';
     items.set(TEST_ITEMS);
 
-    fixture.detectChanges();
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
 
-    const ellipsesElement = element.querySelector('.breadcrumb .breadcrumb-ellipses-item')!;
-    const dropdownToggleElement =
-      ellipsesElement.querySelector<HTMLButtonElement>('button.btn.btn-link')!;
-    const dropdownElement = ellipsesElement.querySelector('.dropdown-menu');
-    const dropdownElementComputedStyle = window.getComputedStyle(dropdownElement!);
+    const toggle = page.getByRole('button', { name: 'Hidden breadcrumb items' });
+    const dropdown = page.getByRole('menu', { name: 'Hidden breadcrumb items' });
 
-    expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
+    await expect.element(dropdown).not.toBeInTheDocument();
 
-    dropdownToggleElement.click();
-    fixture.detectChanges();
+    (toggle.element() as HTMLElement).click();
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
 
-    expect(dropdownElementComputedStyle.getPropertyValue('display')).not.toEqual('none');
+    await expect.element(dropdown).toBeVisible();
 
-    dropdownToggleElement.click();
-    fixture.detectChanges();
+    (toggle.element() as HTMLElement).click();
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
 
-    expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
+    await expect.element(dropdown).not.toBeInTheDocument();
   });
 
-  it('should close a dropdown on click anywhere else', () => {
+  it('should close a dropdown on click anywhere else', async () => {
     element.style.width = '500px';
     items.set(TEST_ITEMS);
 
-    fixture.detectChanges();
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
 
-    const ellipsesElement = element.querySelector('.breadcrumb .breadcrumb-ellipses-item')!;
-    const dropdownToggleElement =
-      ellipsesElement.querySelector<HTMLButtonElement>('button.btn.btn-link')!;
-    const dropdownElement = ellipsesElement.querySelector('.dropdown-menu');
-    const dropdownElementComputedStyle = window.getComputedStyle(dropdownElement!);
+    const toggle = page.getByRole('button', { name: 'Hidden breadcrumb items' });
+    const dropdown = page.getByRole('menu', { name: 'Hidden breadcrumb items' });
 
-    expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
+    await expect.element(dropdown).not.toBeInTheDocument();
 
-    dropdownToggleElement.click();
-    fixture.detectChanges();
+    (toggle.element() as HTMLElement).click();
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
 
-    expect(dropdownElementComputedStyle.getPropertyValue('display')).not.toEqual('none');
+    await expect.element(dropdown).toBeVisible();
 
     element.click();
-    fixture.detectChanges();
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
 
-    expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
+    await expect.element(dropdown).not.toBeInTheDocument();
+  });
+
+  it('should disable hidden items without a navigation target or action', async () => {
+    element.style.width = '70px';
+    items.set([{ title: 'Root', link: '/' }, { title: 'Disabled item' }]);
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
+
+    element.querySelector<HTMLButtonElement>('.breadcrumb-ellipses-item button')!.click();
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
+
+    await expect
+      .element(page.getByRole('menuitem', { name: 'Disabled item' }))
+      .toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('should close the overflow menu when the breadcrumb resizes', async () => {
+    element.style.width = '500px';
+    items.set(TEST_ITEMS);
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
+
+    element.querySelector<HTMLButtonElement>('.breadcrumb-ellipses-item button')!.click();
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
+    const menu = page.getByRole('menu', { name: 'Hidden breadcrumb items' });
+    await expect.element(menu).toBeVisible();
+
+    element.style.width = '1000px';
+    MockResizeObserver.triggerResize({});
+    await vi.runAllTimersAsync();
+    await fixture.whenStable();
+
+    await expect.element(menu).not.toBeInTheDocument();
   });
 
   it('should truncate long items with CSS and show their full title in a tooltip on focus', async () => {
