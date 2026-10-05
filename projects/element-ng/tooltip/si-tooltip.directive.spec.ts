@@ -75,6 +75,68 @@ describe('SiTooltipDirective', () => {
       await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
     });
 
+    it('should hide a hover-visible tooltip on global Escape', async () => {
+      button.dispatchEvent(new MouseEvent('mouseenter'));
+      await vi.advanceTimersByTimeAsync(500);
+      await fixture.whenStable();
+      await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+      await fixture.whenStable();
+
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+    });
+
+    it('should keep the tooltip visible on other global key presses', async () => {
+      button.dispatchEvent(new FocusEvent('focus'));
+      await fixture.whenStable();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      await fixture.whenStable();
+
+      await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
+    });
+
+    it('should not close the tooltip on the Escape press that opened it', async () => {
+      button.addEventListener('keydown', () => button.dispatchEvent(new FocusEvent('focus')), {
+        once: true
+      });
+
+      button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      await fixture.whenStable();
+
+      await expect.element(page.getByRole('tooltip', { name: 'test tooltip' })).toBeInTheDocument();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+      await fixture.whenStable();
+
+      await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+    });
+
+    it.each(['focusout', 'destroy'])(
+      'should listen only while visible and remove the global key listener on %s',
+      async close => {
+        const addListener = vi.spyOn(document, 'addEventListener');
+        const removeListener = vi.spyOn(document, 'removeEventListener');
+        await fixture.whenStable();
+        expect(addListener.mock.calls.filter(([type]) => type === 'keydown')).toHaveLength(0);
+
+        button.dispatchEvent(new FocusEvent('focus'));
+        await fixture.whenStable();
+        const keydownListeners = addListener.mock.calls.filter(([type]) => type === 'keydown');
+        expect(keydownListeners).toHaveLength(1);
+
+        if (close === 'destroy') {
+          fixture.destroy();
+        } else {
+          button.dispatchEvent(new FocusEvent('focusout'));
+          await fixture.whenStable();
+        }
+
+        expect(removeListener).toHaveBeenCalledWith('keydown', keydownListeners[0][1], undefined);
+      }
+    );
+
     it('should not show tooltip when disabled', async () => {
       component.isDisabled.set(true);
       await fixture.whenStable();
