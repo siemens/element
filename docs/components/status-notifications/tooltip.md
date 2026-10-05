@@ -36,7 +36,7 @@ They may also reveal truncated text **only when the element is focusable**, for 
 - When implementing tooltips on touch devices, ensure they appear on tap and that this interaction
   does not conflict with other functionalities.
 - Always use the tooltip component, not the browser’s native tooltip.
-- Use a 500ms show delay and dismiss on pointer leave or focus loss.
+- Use a 500ms show delay and allow dismissal on pointer leave, focus loss or pressing **Escape**.
 
 ## Design ---
 
@@ -90,18 +90,19 @@ If space is limited, ensure the legend is accessible elsewhere for users to unde
 
 For information that needs detailed explanation, use [popovers](../status-notifications/popover.md), which are triggered explicitly and can hold more content.
 
-| Component         | Tooltip                                            | Popover                                                  |
-| ----------------- | -------------------------------------------------- | -------------------------------------------------------- |
-| **Purpose**       | Provides supplementary, non-essential information. | Displays contextual information or interactive elements. |
-| **Interaction**   | Appears on **hover**.                              | Opens on **selection**.                                  |
-| **Dismissal**     | Disappears when the cursor moves away.             | Requires user interaction to close.                      |
-| **Interactivity** | Non-interactive, only displays text.               | Can contain buttons, links, and inputs.                  |
+| Component         | Tooltip                                                        | Popover                                                  |
+| ----------------- | -------------------------------------------------------------- | -------------------------------------------------------- |
+| **Purpose**       | Provides supplementary, non-essential information.             | Displays contextual information or interactive elements. |
+| **Interaction**   | Appears on **hover or keyboard focus**.                        | Opens on **selection**.                                  |
+| **Dismissal**     | Dismisses on pointer leave, focus loss or pressing **Escape**. | Requires user interaction to close.                      |
+| **Interactivity** | Non-interactive, only displays text.                           | Can contain buttons, links, and inputs.                  |
 
 ## Code ---
 
 Element supports several ways to show tooltips depending on the use case, but all share the following constraints:
 
 - **Display Triggers:** Tooltips appear on element hover or keyboard focus.
+- **Dismissal:** Press **Escape** to dismiss a visible tooltip, even while its trigger remains hovered or focused.
 - **No Interactive Content:** Interactive elements (links, buttons, inputs) are not permitted inside a tooltip.
 - **Need Interactivity?** Use a [popover](popover.md) component instead of a tooltip.
 

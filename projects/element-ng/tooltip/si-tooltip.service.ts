@@ -4,8 +4,9 @@
  */
 import { Overlay, OverlayRef, ScrollStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
+  afterNextRender,
   ComponentRef,
   DestroyRef,
   effect,
@@ -50,7 +51,9 @@ class NoopTooltipRef {
  * @internal
  */
 class BrowserTooltipRef {
+  private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly injector = inject(Injector);
   private readonly destroy$ = new Subject<void>();
   private isFocused = false;
   private isHovered = false;
@@ -207,6 +210,29 @@ class BrowserTooltipRef {
       inputBinding('tooltipContext', this.config.tooltipContext)
     ]);
     const tooltipRef: ComponentRef<TooltipComponent> = overlayRef.attach(toolTipPortal);
+
+    // Wait until rendering so an Escape press that opens the tooltip (e.g. by
+    // restoring focus) does not also dismiss it as the same event bubbles.
+    afterNextRender(
+      () => {
+        if (tooltipRef.hostView.destroyed) {
+          return;
+        }
+
+        fromEvent<KeyboardEvent>(this.document, 'keydown')
+          .pipe(
+            filter(event => event.key === 'Escape'),
+            takeUntil(overlayRef.detachments()),
+            takeUntil(this.destroy$)
+          )
+          .subscribe(() => {
+            this.isFocused = false;
+            this.isHovered = false;
+            this.hide();
+          });
+      },
+      { injector: this.injector }
+    );
 
     const positionStrategy = getPositionStrategy(overlayRef);
     this.positionSubscription?.unsubscribe();
