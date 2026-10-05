@@ -37,9 +37,8 @@ export class SiTooltipOverflowDirective {
   }
 
   private canShow(): boolean {
-    return (
-      this.element.scrollWidth > this.element.clientWidth ||
-      this.element.scrollHeight > this.element.clientHeight
-    );
+    // text-truncate uses horizontal ellipsis. Font metrics can cause vertical
+    // overflow even when the full label is visible.
+    return this.element.scrollWidth > this.element.clientWidth;
   }
 }
