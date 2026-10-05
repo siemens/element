@@ -7,6 +7,11 @@
 .item {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
+}
+
+.item:not(.current-item) .breadcrumb-link {
+  max-inline-size: 24ch;
 }
 
 .separator {

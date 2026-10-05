@@ -2,38 +2,12 @@
   <ol #breadcrumb class="breadcrumb" (siResizeObserver)="resetBreadcrumb()">
     @for (item of itemsShown; track $index; let isFirst = $first) {
       @if (!breadcrumbShortened || item.level !== ellipsesLevel) {
-        @if (item.shortened) {
-          <li #breadcrumbItem class="item text-nowrap shortened">
-            @if (!isFirst) {
-              <si-icon class="d-block separator flip-rtl" [icon]="icons.elementRight2" />
-            }
-            <div class="breadcrumb-dropdown-wrapper">
-              <ng-container
-                *ngTemplateOutlet="
-                  toggleTemplate;
-                  context: { item: item, title: item.shortenedTitle }
-                "
-              />
-              @if (addExpandDropdown) {
-                <div
-                  class="dropdown-menu"
-                  role="menu"
-                  [id]="controlId + item.level"
-                  [class.show]="breadcrumbDropdownOpen === item.level"
-                >
-                  <ng-container *ngTemplateOutlet="dropdownTemplate; context: { item: item }" />
-                </div>
-              }
-            </div>
-          </li>
-        } @else {
-          <li #breadcrumbItem class="item">
-            @if (!isFirst) {
-              <si-icon class="d-block icon-sm separator flip-rtl" [icon]="icons.elementRight2" />
-            }
-            <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item }" />
-          </li>
-        }
+        <li #breadcrumbItem class="item" [class.current-item]="item.lastItem">
+          @if (!isFirst) {
+            <si-icon class="d-block icon-sm separator flip-rtl" [icon]="icons.elementRight2" />
+          }
+          <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item }" />
+        </li>
       }
       @if (breadcrumbShortened && item.level === ellipsesLevel) {
         <li class="item breadcrumb-ellipses-item">
@@ -41,7 +15,7 @@
             <si-icon class="d-block icon-sm separator flip-rtl" [icon]="icons.elementRight2" />
           }
           <div class="breadcrumb-dropdown-wrapper">
-            <ng-container *ngTemplateOutlet="toggleTemplate; context: { item: item, title: '' }" />
+            <ng-container *ngTemplateOutlet="toggleTemplate; context: { item: item }" />
             <div
               class="dropdown-menu"
               role="menu"
@@ -64,6 +38,7 @@
     class="breadcrumb-link text-nowrap"
     activeClass="active"
     ariaCurrent="page"
+    siTooltipOverflow
     [class.disable-router-link]="!item.link && !item.action && !item.href"
     [class.text-secondary]="item.lastItem"
     [siLink]="item"
@@ -79,7 +54,7 @@
   </a>
 </ng-template>
 
-<ng-template #toggleTemplate let-item="item" let-title="title" siBreadcrumbItemTemplate>
+<ng-template #toggleTemplate let-item="item" siBreadcrumbItemTemplate>
   <button
     type="button"
     class="btn btn-link"
@@ -87,7 +62,7 @@
     [attr.aria-controls]="controlId + item.level"
     [attr.aria-expanded]="breadcrumbDropdownOpen === item.level"
     (click)="toggleBreadcrumbDropdown(item.level)"
-    >{{ title }}...</button
+    >...</button
   >
 </ng-template>
 

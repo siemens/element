@@ -10,6 +10,7 @@ import {
   provideMissingTranslationHandlerForElement,
   provideNgxTranslateForElement
 } from '@siemens/element-translate-ng/ngx-translate';
+import { page } from 'vitest/browser';
 
 import { SiBreadcrumbComponent as TestComponent } from '.';
 import {
@@ -331,60 +332,35 @@ describe('SiBreadcrumbComponent', () => {
     expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
   });
 
-  it('should shorten long items and add a dropdown', () => {
+  it('should truncate long items with CSS and show their full title in a tooltip on focus', async () => {
+    const title = 'A really long breadcrumb title that must be truncated visually';
     element.style.width = '740px';
+    items.set([{ title: 'Root', link: '/' }, { title, href: '/pages/' }, { title: 'Current' }]);
 
-    items.set(TEST_ITEMS);
+    await fixture.whenStable();
 
-    fixture.detectChanges();
+    const link = page.getByRole('link', { name: title, exact: true }).element() as HTMLElement;
+    expect(link).toHaveAttribute('href', '/pages/');
+    expect(getComputedStyle(link).textOverflow).toBe('ellipsis');
+    expect(link.scrollWidth).toBeGreaterThan(link.clientWidth);
 
-    const shortenedElement = element.querySelectorAll('.breadcrumb .shortened')[1]!;
-    const shortenedBreadcrumbItemElement =
-      shortenedElement.querySelector<HTMLElement>('button.btn.btn-link');
-    const dropdownElement = shortenedElement.querySelector('.dropdown-menu');
+    link.focus();
+    await vi.advanceTimersByTimeAsync(0);
+    await fixture.whenStable();
 
-    expect(shortenedBreadcrumbItemElement).toMatchTextContent('Level 8');
-    expect(shortenedBreadcrumbItemElement?.innerText).not.toContain(
-      'Level 8 thisHasALongNonSeparableTitle'
-    );
-    expect(dropdownElement).toHaveTextContent('Level 8 thisHasALongNonSeparableTitle');
+    await expect.element(page.getByRole('tooltip')).toHaveTextContent(title);
   });
 
-  it('should close on dropdown on open of another one', () => {
-    element.style.width = '500px';
-    items.set(TEST_ITEMS);
+  it('should keep the current item title untruncated', () => {
+    const title = 'A really long current breadcrumb title that should remain visible';
+    element.style.width = '1000px';
+    items.set([{ title: 'Root', link: '/' }, { title }]);
 
     fixture.detectChanges();
 
-    const shortenedElement = element.querySelector('.breadcrumb .shortened')!;
-    const ellipsesElement = element
-      .querySelector('.breadcrumb')!
-      .querySelector('.breadcrumb-ellipses-item')!;
-    const shortenedDropdownToggleElement =
-      shortenedElement.querySelector<HTMLButtonElement>('button.btn.btn-link')!;
-    const ellipsesDropdownToggleElement =
-      ellipsesElement.querySelector<HTMLButtonElement>('button.btn.btn-link')!;
-    const shortenedDropdownElement = shortenedElement.querySelector('.dropdown-menu');
-    const shortenedDropdownElementComputedStyle = window.getComputedStyle(
-      shortenedDropdownElement!
-    );
-    const ellipsesDropdownElement = ellipsesElement.querySelector('.dropdown-menu');
-    const ellipsesDropdownElementComputedStyle = window.getComputedStyle(ellipsesDropdownElement!);
-
-    expect(shortenedDropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
-    expect(ellipsesDropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
-
-    shortenedDropdownToggleElement.click();
-    fixture.detectChanges();
-
-    expect(shortenedDropdownElementComputedStyle.getPropertyValue('display')).not.toEqual('none');
-    expect(ellipsesDropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
-
-    ellipsesDropdownToggleElement.click();
-    fixture.detectChanges();
-
-    expect(shortenedDropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
-    expect(ellipsesDropdownElementComputedStyle.getPropertyValue('display')).not.toEqual('none');
+    const link = page.getByLabelText(title, { exact: true }).element();
+    expect(link).toHaveTextContent(title);
+    expect(link.scrollWidth).toBe(link.clientWidth);
   });
 
   it('should display root as text when enabled', () => {
