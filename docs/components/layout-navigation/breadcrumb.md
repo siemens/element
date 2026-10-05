@@ -56,7 +56,8 @@ Super long entity names are truncated.
 
 ![Breadcrumb](images/breadcrumb-usage-truncation-dropdown.png)
 
-In order to see the full entity label, the user can click on it and the full label will be shown, as a clickable menu element. Clicking somewhere on the screen will hide the menu.
+Truncated entity labels show their full text in a tooltip on hover or keyboard focus.
+Clicking the label navigates directly to the entity.
 
 ### Long breadcrumb
 

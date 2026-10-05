@@ -21,6 +21,7 @@ import { elementBreadcrumbRoot, elementRight2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
+import { SiTooltipOverflowDirective } from '@siemens/element-ng/tooltip';
 import {
   injectSiTranslateService,
   SiTranslatePipe,
@@ -38,19 +39,6 @@ import { SiBreadcrumbItemTemplateDirective } from './si-breadcrumb-item-template
 const NUMBER_OF_SHOWN_ITEMS_AT_END = 2;
 
 /**
- * Defines how long a display item can be without it being shortened.
- * Cannot be lower than 4.
- * If this is 0, titles will not be shortened
- */
-const ITEM_MAX_LENGTH = 30;
-
-/**
- * Defines how many characters of an item are always displayed in the beginning.
- * Must be at least 2 less than ITEM_MAX_LENGTH
- */
-const ITEM_CHARACTERS_ALWAYS_DISPLAYED_IN_BEGINNING = 10;
-
-/**
  * Defines the width of the root icon in pixels.
  */
 const ROOT_ICON_WIDTH = 24;
@@ -64,6 +52,7 @@ let controlIdCounter = 1;
     SiIconComponent,
     SiLinkDirective,
     SiResizeObserverDirective,
+    SiTooltipOverflowDirective,
     SiTranslatePipe,
     SiBreadcrumbItemTemplateDirective
   ],
@@ -100,7 +89,6 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
   protected ellipsesLevel = 0;
   // Record to allow for -1 (root).
   protected breadcrumbDropdownOpen: number | undefined = undefined;
-  protected addExpandDropdown = false;
   protected controlId = `__si-breadcrumb-${controlIdCounter++}-`;
   protected readonly icons = addIcons({ elementBreadcrumbRoot, elementRight2 });
 
@@ -127,31 +115,11 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
       this.translationSubscription = merge(this.translate.translationChange, of(undefined))
         .pipe(switchMap(() => this.translate.translateAsync(this.items().map(item => item.title))))
         .subscribe(translatedTitles => {
-          // Add the level to the items and check if they need to be shortened.
-          // If they need to be shortened, shorten them at a convenient place.
-          // Set the lastItem tag to true for the last item
+          // Add the level and mark the last item, keeping the full translated titles.
           let counter = -1;
           const enumeratedItems = this.items().map(item => {
             counter++;
             const title = translatedTitles[item.title];
-            let shortened = false;
-            let shortenedTitle = title;
-            // If this is not the last item and the title too long, shorten the title
-            if (counter !== this.numberOfItems - 1 && title && title.length > ITEM_MAX_LENGTH) {
-              shortened = true;
-              // This regex gets the last space, dash or underscore.
-              const regexMatch = title
-                .slice(ITEM_CHARACTERS_ALWAYS_DISPLAYED_IN_BEGINNING, ITEM_MAX_LENGTH - 2)
-                .match(/^.*[- _](?=.*?$)/);
-              if (regexMatch) {
-                shortenedTitle = title.slice(
-                  0,
-                  ITEM_CHARACTERS_ALWAYS_DISPLAYED_IN_BEGINNING + regexMatch[0].length - 1
-                );
-              } else {
-                shortenedTitle = title.slice(0, ITEM_MAX_LENGTH - 3);
-              }
-            }
 
             // If the root element should be displayed as text, set level not to 0.
             // This is used to distinguish in the template between icon and text.
@@ -162,8 +130,6 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
               title,
               level,
               hide: false,
-              shortened,
-              shortenedTitle,
               lastItem: counter === this.numberOfItems - 1
             };
           });
@@ -184,12 +150,7 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
     }
   }
 
-  /*
-   * Toggle dropdown (on click of ellipses), either for
-   * the general dropdown list if itemLevel is at ellipsesLevel
-   * or otherwise the name expansion at the specified item level.
-   * Close any open dropdown before opening a new one.
-   */
+  /** Toggle the ellipses dropdown to show the hidden breadcrumb levels. */
   protected toggleBreadcrumbDropdown(itemLevel: number): void {
     this.breadcrumbDropdownOpen = this.breadcrumbDropdownOpen === itemLevel ? undefined : itemLevel;
   }
@@ -209,8 +170,7 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
     if (this.itemsProcessed) {
       this.numberOfItems = this.items().length;
       // Add an additional the ellipses item to the end of the shownItems (breadcrumb items).
-      // Disable addExpandDropdown for now, to make every item a proper SiBreadcrumbItemComponent.
-      const ellipsesItem = { title: '...', level: this.numberOfItems, shortenedTitle: '' };
+      const ellipsesItem = { title: '...', level: this.numberOfItems };
       this.itemsShown.push(ellipsesItem);
       if (this.breadcrumbShortened) {
         // If the breadcrumb was shortened before, remove the ellipses and add back itemsHidden (breadcrumb dropdown items).
@@ -218,7 +178,6 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
         this.itemsShown.splice(this.ellipsesLevel, 1, ...this.itemsHidden);
         this.itemsHidden = [];
       }
-      this.addExpandDropdown = false;
       // Wait for the next change detection cycle to measure the updated item length.
       this.changeDetector.detectChanges();
       this.calculateBreadcrumb();
@@ -226,7 +185,6 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
   }
 
   private calculateBreadcrumb(): void {
-    this.addExpandDropdown = true;
     const maxWidth = this.breadcrumbElement().nativeElement.clientWidth;
     const breadcrumbElementsList = this.breadcrumbElements().map(item => item);
     // Measure the length of the last additional ellipses item, then remove it from itemsShown (breadcrumb items).
@@ -284,7 +242,7 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
     if (this.breadcrumbShortened) {
       this.ellipsesLevel = counter;
       this.itemsHidden = this.itemsShown.slice(this.ellipsesLevel, reverseCounter);
-      const ellipsesItem = { title: '...', level: this.ellipsesLevel, shortenedTitle: '' };
+      const ellipsesItem = { title: '...', level: this.ellipsesLevel };
       this.itemsShown.splice(this.ellipsesLevel, reverseCounter - this.ellipsesLevel, ellipsesItem);
     }
     // Manually detect changes to prevent them from not being detected on language change

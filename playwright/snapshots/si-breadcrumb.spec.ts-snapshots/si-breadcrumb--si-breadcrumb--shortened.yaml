@@ -8,19 +8,16 @@
       - link "Level 1":
         - /url: /root/level1
     - listitem:
-      - button "Level 2 with a really long..." [expanded]
-      - menu:
-        - menuitem "Level 2 with a really long title"
+      - link "Level 2 with a really long title":
+        - /url: /root/level1/level2
     - listitem:
       - link "Level 3":
         - /url: /root/level1/level2/level3
     - listitem:
-      - link "Level 4":
-        - /url: /root/level1/level2/level3/level4
-    - listitem:
       - button "..."
     - listitem:
-      - button "Level 8 thisHasALongNonSepa..."
+      - link "Level 8 thisHasALongNonSeparableTitle":
+        - /url: /root/level1/level2/level3/level4/level5/level6/level7/level8
     - listitem:
       - link "Level 9":
         - /url: /
@@ -34,17 +31,17 @@
       - link "Level 1":
         - /url: /root/level1
     - listitem:
-      - button "Level 2 with a really long..."
+      - link "Level 2 with a really long title":
+        - /url: /root/level1/level2
     - listitem:
       - link "Level 3":
         - /url: /root/level1/level2/level3
     - listitem:
-      - link "Level 4":
-        - /url: /root/level1/level2/level3/level4
-    - listitem:
       - button "..."
     - listitem:
-      - button "Level 8 thisHasALongNonSepa..."
+      - link "Level 8 thisHasALongNonSeparableTitle":
+        - /url: /root/level1/level2/level3/level4/level5/level6/level7/level8
     - listitem:
       - link "Level 9":
         - /url: /
+- tooltip "Level 8 thisHasALongNonSeparableTitle"
