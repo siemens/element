@@ -155,17 +155,21 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
       newColors = [[1, dataColor]];
     }
 
+    const series = this.actualOptions.series as GaugeSeriesOption[];
     if (hasIndicator) {
-      this.setAxisLineColor(newColors, (this.actualOptions.series![0] as any).axisLine);
+      this.setAxisLineColor(newColors, series[0].axisLine!);
     }
-    (this.actualOptions.series![0] as any).axisLine.show = hasIndicator;
+    series[0].axisLine!.show = hasIndicator;
 
-    this.setAxisLineColor(newColors, (this.actualOptions.series![2] as any).axisLine);
+    this.setAxisLineColor(newColors, series[2].axisLine!);
     this.refreshSeries();
   }
 
-  private setAxisLineColor(colors: [number, string][], axisLine: any): void {
-    axisLine.lineStyle = axisLine.lineStyle ?? {};
+  private setAxisLineColor(
+    colors: [number, string][],
+    axisLine: NonNullable<GaugeSeriesOption['axisLine']>
+  ): void {
+    axisLine.lineStyle ??= {};
     axisLine.lineStyle.color = colors;
   }
 
