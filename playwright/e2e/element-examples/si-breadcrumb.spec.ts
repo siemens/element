@@ -11,10 +11,10 @@ test.describe('si-breadcrumb', () => {
     await page.setViewportSize({ width: 760, height: 600 });
     await si.visitExample(example, false);
     const breadcrumb = page.getByRole('navigation', { name: 'root as icon breadcrumbs' });
-    const toggle = breadcrumb.getByRole('button', { name: '...', exact: true });
+    const toggle = breadcrumb.getByRole('button', { name: 'Hidden breadcrumb items' });
     await toggle.click();
     await toggle.blur();
-    await expect(toggle.locator('..').locator('.dropdown-menu')).toBeVisible();
+    await expect(page.getByRole('dialog', { name: 'Hidden breadcrumb items' })).toBeVisible();
 
     await si.runVisualAndA11yTests('dropdown');
   });

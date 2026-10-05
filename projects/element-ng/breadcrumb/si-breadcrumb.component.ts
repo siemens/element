@@ -9,7 +9,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostListener,
   inject,
   input,
   OnChanges,
@@ -20,6 +19,7 @@ import {
 import { elementBreadcrumbRoot, elementRight2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
+import { SiPopoverDirective, SiPopoverTitleDirective } from '@siemens/element-ng/popover';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { SiTooltipOverflowDirective } from '@siemens/element-ng/tooltip';
 import {
@@ -43,14 +43,14 @@ const NUMBER_OF_SHOWN_ITEMS_AT_END = 2;
  */
 const ROOT_ICON_WIDTH = 24;
 
-let controlIdCounter = 1;
-
 @Component({
   selector: 'si-breadcrumb',
   imports: [
     NgTemplateOutlet,
     SiIconComponent,
     SiLinkDirective,
+    SiPopoverDirective,
+    SiPopoverTitleDirective,
     SiResizeObserverDirective,
     SiTooltipOverflowDirective,
     SiTranslatePipe,
@@ -87,13 +87,14 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
   protected itemsHidden: EnumeratedBreadcrumbItem[] = [];
   protected breadcrumbShortened = false;
   protected ellipsesLevel = 0;
-  // Record to allow for -1 (root).
-  protected breadcrumbDropdownOpen: number | undefined = undefined;
-  protected controlId = `__si-breadcrumb-${controlIdCounter++}-`;
+  protected readonly hiddenItemsLabel = t(
+    () => $localize`:@@SI_BREADCRUMB.HIDDEN_ITEMS:Hidden breadcrumb items`
+  );
   protected readonly icons = addIcons({ elementBreadcrumbRoot, elementRight2 });
 
   private readonly breadcrumbElement = viewChild.required<ElementRef>('breadcrumb');
   private readonly breadcrumbElements = viewChildren<ElementRef>('breadcrumbItem');
+  private readonly breadcrumbPopover = viewChild(SiPopoverDirective);
 
   private changeDetector = inject(ChangeDetectorRef);
   private translate = injectSiTranslateService();
@@ -136,7 +137,6 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
           this.itemsShown = enumeratedItems;
           this.itemsHidden = [];
           this.breadcrumbShortened = false;
-          this.breadcrumbDropdownOpen = undefined;
           this.itemsProcessed = true;
           this.resetBreadcrumb();
         });
@@ -144,36 +144,24 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
       this.itemsShown = [];
       this.itemsHidden = [];
       this.breadcrumbShortened = false;
-      this.breadcrumbDropdownOpen = undefined;
       this.itemsProcessed = true;
       this.resetBreadcrumb();
     }
   }
 
-  /** Toggle the ellipses dropdown to show the hidden breadcrumb levels. */
-  protected toggleBreadcrumbDropdown(itemLevel: number): void {
-    this.breadcrumbDropdownOpen = this.breadcrumbDropdownOpen === itemLevel ? undefined : itemLevel;
-  }
-
-  // Close dropdown on click anywhere else
-  @HostListener('document:click', ['$event.target'])
-  protected documentClick(targetElement: any): void {
-    if (this.breadcrumbDropdownOpen) {
-      if (!this.breadcrumbElement().nativeElement.contains(targetElement)) {
-        // Close all dropdowns.
-        this.breadcrumbDropdownOpen = undefined;
-      }
-    }
+  protected closeBreadcrumbPopover(): void {
+    this.breadcrumbPopover()?.hide();
   }
 
   protected resetBreadcrumb(): void {
+    this.closeBreadcrumbPopover();
     if (this.itemsProcessed) {
       this.numberOfItems = this.items().length;
       // Add an additional the ellipses item to the end of the shownItems (breadcrumb items).
       const ellipsesItem = { title: '...', level: this.numberOfItems };
       this.itemsShown.push(ellipsesItem);
       if (this.breadcrumbShortened) {
-        // If the breadcrumb was shortened before, remove the ellipses and add back itemsHidden (breadcrumb dropdown items).
+        // If the breadcrumb was shortened before, remove the ellipses and add back itemsHidden (breadcrumb popover items).
         this.breadcrumbShortened = false;
         this.itemsShown.splice(this.ellipsesLevel, 1, ...this.itemsHidden);
         this.itemsHidden = [];
@@ -238,7 +226,7 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
         }
       }
     });
-    // If breadcrumbShortened is true, move the items that do not fit to itemsHidden (breadcrumb dropdown items) and add ellipses item.
+    // If breadcrumbShortened is true, move the items that do not fit to itemsHidden (breadcrumb popover items) and add ellipses item.
     if (this.breadcrumbShortened) {
       this.ellipsesLevel = counter;
       this.itemsHidden = this.itemsShown.slice(this.ellipsesLevel, reverseCounter);
