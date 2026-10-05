@@ -227,6 +227,11 @@ describe('SiNavbarVerticalNext', () => {
     harnessLoader = TestbedHarnessEnvironment.loader(fixture);
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
   describe('without SiUIStateService', () => {
     let harness: SiNavbarVerticalNextHarness;
     beforeEach(async () => (harness = await harnessLoader.getHarness(SiNavbarVerticalNextHarness)));
@@ -389,7 +394,7 @@ describe('SiNavbarVerticalNext', () => {
         expect(navbarHost).toHaveClass('nav-flat-group-open');
         await expect.element(page.getByRole('link', { name: 'sub-item1' })).toHaveFocus();
 
-        await userEvent.click(backButton);
+        (backButton.element() as HTMLElement).click();
         await fixture.whenStable();
 
         await expect.element(backButton).not.toBeInTheDocument();
@@ -516,17 +521,20 @@ describe('SiNavbarVerticalNext', () => {
 
       // Collapsing the navbar switches to flyout overlays — inline expansion
       // is hidden but the underlying state must be retained.
-      await userEvent.click(collapseToggle);
+      (collapseToggle.element() as HTMLElement).click();
       await fixture.whenStable();
       expect(collapseToggle.element()).toHaveAttribute('aria-expanded', 'false');
       const flyoutId = item.element().getAttribute('aria-controls');
       expect(document.querySelector(`#${flyoutId} .dropdown-menu`)).toBeNull();
 
       // Re-expanding the navbar restores the previous inline expansion.
-      await userEvent.click(collapseToggle);
+      (collapseToggle.element() as HTMLElement).click();
       await fixture.whenStable();
       expect(collapseToggle.element()).toHaveAttribute('aria-expanded', 'true');
-      expect(item.element()).toHaveAttribute('aria-expanded', 'true');
+      expect(page.getByRole('button', { name: 'item1' }).element()).toHaveAttribute(
+        'aria-expanded',
+        'true'
+      );
     });
   });
 

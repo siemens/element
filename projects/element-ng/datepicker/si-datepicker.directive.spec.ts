@@ -93,6 +93,10 @@ describe('SiDatepickerDirective', () => {
     await fixture.whenStable();
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   describe('with minDate and maxDate', () => {
     beforeEach(async () => {
       await updateConfig({

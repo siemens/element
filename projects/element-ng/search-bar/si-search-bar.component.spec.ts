@@ -12,6 +12,13 @@ import { SiSearchBarComponent } from './index';
 describe('SiSearchBarComponent', () => {
   const getInput = (element: HTMLElement): HTMLInputElement => element.querySelector('input')!;
 
+  afterEach(() => {
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   describe('as form control', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: SiSearchBarComponent;
@@ -182,6 +189,13 @@ describe('SiSearchBarComponent', () => {
       input.value = text;
       input.dispatchEvent(new Event('input'));
     };
+
+    afterEach(() => {
+      if (vi.isFakeTimers()) {
+        vi.clearAllTimers();
+        vi.useRealTimers();
+      }
+    });
 
     it('should default to 400ms', () => {
       vi.useFakeTimers();

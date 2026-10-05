@@ -125,7 +125,10 @@ describe('SiTreeViewComponent', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
-    vi.useRealTimers();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   const createTreeItems = (count: number, extraProperties?: Partial<TreeItem>): TreeItem[] => {

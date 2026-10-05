@@ -118,7 +118,11 @@ describe('SiFilteredSearchComponent', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    vi.restoreAllMocks();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   const tick = async (ms = 100): Promise<void> => {
@@ -2446,7 +2450,10 @@ describe('SiFilteredSearchComponent - With translation', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   const tick = async (ms = 100): Promise<void> => {

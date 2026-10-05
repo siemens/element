@@ -119,6 +119,13 @@ describe('SiFlexibleDashboardComponent', () => {
   let fixture: ComponentFixture<SiFlexibleDashboardComponent>;
   let grid: GridComponent;
 
+  afterEach(() => {
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   describe('with new menu item config', () => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({

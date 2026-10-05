@@ -40,7 +40,11 @@ describe('SiLoadingSpinnerDirective', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    vi.restoreAllMocks();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   it('should not display spinner before initial delay', async () => {
@@ -71,25 +75,30 @@ describe('SiLoadingSpinnerDirective', () => {
   it('should show and hide spinner', async () => {
     await vi.advanceTimersByTimeAsync(initialDelay);
     await vi.advanceTimersByTimeAsync(initialDelay);
+    await fixture.whenStable();
     expect(isLoading()).toBe(true);
 
     component.loading.set(false);
     await vi.advanceTimersByTimeAsync(0);
+    await fixture.whenStable();
     expect(isLoading()).toBe(false);
   });
 
   it('should propagate blocking change to si-loading-spinner component', async () => {
     await vi.advanceTimersByTimeAsync(initialDelay);
     await vi.advanceTimersByTimeAsync(initialDelay);
+    await fixture.whenStable();
     expect(isLoading()).toBe(true);
     expect(fixture.nativeElement.querySelector('.blocking-spinner')).not.toBeInTheDocument();
 
     component.blocking.set(true);
     await vi.advanceTimersByTimeAsync(0);
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.blocking-spinner')).toBeInTheDocument();
 
     component.blocking.set(false);
     await vi.advanceTimersByTimeAsync(0);
+    await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('.blocking-spinner')).not.toBeInTheDocument();
   });
 });

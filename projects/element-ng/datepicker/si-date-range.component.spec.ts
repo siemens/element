@@ -60,6 +60,10 @@ describe('SiDateRangeComponent', () => {
     await fixture.whenStable();
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('should create', () => {
     component.siDatepickerConfig.set({
       dateFormat: 'dd-MM-yyyy'

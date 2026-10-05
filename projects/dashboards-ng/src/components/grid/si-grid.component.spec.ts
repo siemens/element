@@ -53,6 +53,13 @@ describe('SiGridComponent', () => {
   let widgetStorage: SiWidgetStorage;
   let widgetStorageLoadSpy: Mock;
 
+  afterEach(() => {
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SiGridComponent],

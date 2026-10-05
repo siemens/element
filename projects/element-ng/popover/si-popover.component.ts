@@ -56,6 +56,7 @@ export class PopoverComponent implements OnInit, OnDestroy {
   private elementRef = inject(ElementRef);
   private focusTrapFactory = inject(ConfigurableFocusTrapFactory);
   private focusTrap?: ConfigurableFocusTrap;
+  private focusTimeout?: ReturnType<typeof setTimeout>;
   private readonly previouslyActiveElement = inject(DOCUMENT).activeElement;
 
   ngOnInit(): void {
@@ -71,6 +72,7 @@ export class PopoverComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    clearTimeout(this.focusTimeout);
     this.focusTrap?.destroy();
     if (
       this.previouslyActiveElement &&
@@ -96,7 +98,7 @@ export class PopoverComponent implements OnInit, OnDestroy {
 
   private applyFocus(): void {
     // Using setTimeout ensures that SR first read `expanded` before we move the focus.
-    setTimeout(async () => {
+    this.focusTimeout = setTimeout(async () => {
       const popoverWrapperEl = this.popoverWrapper().nativeElement;
       this.focusTrap = this.focusTrapFactory.create(this.popoverWrapper().nativeElement);
       const moved = await this.focusTrap.focusFirstTabbableElementWhenReady();

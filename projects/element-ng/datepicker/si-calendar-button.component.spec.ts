@@ -51,6 +51,11 @@ describe('SiCalendarButtonComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
   it('should show datepicker overlay', async () => {
     calendarToggleButton().click();
     fixture.detectChanges();

@@ -35,15 +35,34 @@ describe('SiResponsiveContainerDirective', () => {
     element = fixture.nativeElement;
   });
 
-  const testSize = async (size: string | number, clazz: string | number): Promise<void> => {
-    vi.useFakeTimers();
-    await page.viewport(parseInt(size as string, 10), 100);
-
-    vi.advanceTimersByTime(100);
-    await fixture.whenStable();
-
-    expect(element.querySelector<HTMLElement>('div')!).toHaveClass(clazz.toString());
+  afterEach(() => {
     vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
+  const testSize = async (size: string | number, clazz: string | number): Promise<void> => {
+    const container = element.querySelector<HTMLElement>('div')!;
+    const expectedClass = clazz.toString();
+    const classChanged = new Promise<void>(resolve => {
+      if (container.classList.contains(expectedClass)) {
+        resolve();
+        return;
+      }
+
+      const observer = new MutationObserver(() => {
+        if (container.classList.contains(expectedClass)) {
+          observer.disconnect();
+          resolve();
+        }
+      });
+      observer.observe(container, { attributes: true, attributeFilter: ['class'] });
+    });
+
+    await page.viewport(parseInt(size as string, 10), 100);
+    await fixture.whenStable();
+    await classChanged;
+
+    expect(container).toHaveClass(expectedClass);
   };
 
   it.for([

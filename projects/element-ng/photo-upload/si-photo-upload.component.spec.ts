@@ -61,6 +61,7 @@ describe(`SiPhotoUploadComponent`, () => {
   });
 
   afterEach(() => {
+    vi.restoreAllMocks();
     if (originalFileReader) {
       window.FileReader = originalFileReader;
     }
@@ -143,6 +144,9 @@ describe(`SiPhotoUploadComponent`, () => {
     await fixture.whenStable();
     // expect.poll auto-retries until the cropping lib has decoded the image
     await expect.poll(() => document.querySelector('si-modal img')).toBeInTheDocument();
+
+    getButton(document.querySelector('si-modal')!, 'Cancel').click();
+    await fixture.whenStable();
   });
 
   it('should apply photo', async () => {

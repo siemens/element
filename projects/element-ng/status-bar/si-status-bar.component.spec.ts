@@ -83,7 +83,10 @@ describe('SiStatusBarComponent', () => {
     });
 
     afterEach(() => {
-      vi.useRealTimers();
+      if (vi.isFakeTimers()) {
+        vi.clearAllTimers();
+        vi.useRealTimers();
+      }
     });
 
     const applySize = (outerSize: number): void => {

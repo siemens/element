@@ -135,7 +135,10 @@ describe('SiCarouselComponent', () => {
 
   describe('Auto play', () => {
     afterEach(() => {
-      vi.useRealTimers();
+      if (vi.isFakeTimers()) {
+        vi.clearAllTimers();
+        vi.useRealTimers();
+      }
     });
 
     it('should automatically navigate to the next slide with default duration', async () => {

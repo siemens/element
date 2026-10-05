@@ -56,6 +56,13 @@ describe('formly number type', () => {
     fixture = TestBed.createComponent(FormlyTestComponent);
   });
 
+  afterEach(() => {
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   it('should display the number input based on props provided', async () => {
     vi.useFakeTimers();
     const componentInstance = fixture.componentInstance;

@@ -106,7 +106,12 @@ describe('SiAutoCollapsableListDirective', () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
   });
 
-  afterEach(() => vi.useRealTimers());
+  afterEach(() => {
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
 
   it('should not flicker on initial render', async () => {
     fixture.detectChanges();

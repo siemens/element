@@ -89,7 +89,10 @@ describe('signal utilities', () => {
     });
 
     afterEach(() => {
-      vi.useRealTimers();
+      if (vi.isFakeTimers()) {
+        vi.clearAllTimers();
+        vi.useRealTimers();
+      }
     });
 
     it('immediately emits the first source change by default', () => {

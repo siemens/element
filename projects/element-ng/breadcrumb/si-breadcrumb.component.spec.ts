@@ -85,7 +85,10 @@ describe('SiBreadcrumbComponent', () => {
 
   afterEach(() => {
     restoreResizeObserver();
-    vi.useRealTimers();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   const tick = async (ms = 100): Promise<void> => {

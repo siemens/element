@@ -46,7 +46,10 @@ describe('SiThemeService', () => {
   };
 
   beforeEach(() => (themeSwitchSpy = vi.fn()));
-  afterEach(() => localStorage.removeItem(SI_THEME_LOCAL_STORAGE_KEY));
+  afterEach(() => {
+    vi.restoreAllMocks();
+    localStorage.removeItem(SI_THEME_LOCAL_STORAGE_KEY);
+  });
 
   describe('with theme type auto', () => {
     it('should set theme to `light` if preferred', () => {

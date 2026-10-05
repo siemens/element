@@ -158,7 +158,10 @@ describe('SiFormContainerComponent', () => {
     });
 
     afterEach(() => {
-      vi.useRealTimers();
+      if (vi.isFakeTimers()) {
+        vi.clearAllTimers();
+        vi.useRealTimers();
+      }
     });
 
     it('should create', async () => {

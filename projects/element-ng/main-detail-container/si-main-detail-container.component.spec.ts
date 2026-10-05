@@ -116,7 +116,10 @@ describe('MainDetailContainerComponent', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
   });
 
   it('should not contain si-split when #resizableParts is false', () => {

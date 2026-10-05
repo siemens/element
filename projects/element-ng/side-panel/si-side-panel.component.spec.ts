@@ -67,6 +67,13 @@ describe('SiSidePanelComponent', () => {
     service = TestBed.inject(SiSidePanelService);
   });
 
+  afterEach(() => {
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

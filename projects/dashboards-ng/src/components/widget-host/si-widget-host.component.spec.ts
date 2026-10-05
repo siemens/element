@@ -35,6 +35,14 @@ class SiActionDialogMockService {
 }
 
 describe('SiWidgetHostComponent', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    if (vi.isFakeTimers()) {
+      vi.clearAllTimers();
+      vi.useRealTimers();
+    }
+  });
+
   [
     { widget: TEST_WIDGET, name: 'TEST_WIDGET' },
     { widget: TEST_WIDGET_STANDALONE, name: 'TEST_WIDGET_STANDALONE' }
