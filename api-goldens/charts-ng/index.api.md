@@ -516,6 +516,7 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
     readonly unit: i0.InputSignal<string>;
     readonly unitsOnSplit: i0.InputSignal<boolean>;
     readonly value: i0.InputSignal<number>;
+    readonly valueArcStart: i0.InputSignal<number | undefined>;
     readonly valueFormatter: i0.InputSignal<((val: number) => string) | undefined>;
 }
 

@@ -19,6 +19,8 @@ export class SampleComponent implements OnDestroy {
     unit: ' km/h',
     minValue: 0,
     maxValue: 180,
+    value: 90,
+    valueArcStart: 45,
     splitSteps: 12,
     colors: ['#28bf66', '#f3cb55', '#d92b48', '#9544ed'],
     segments: [0.2, 0.5, 0.7, 1],
@@ -43,7 +45,8 @@ export class SampleComponent implements OnDestroy {
   startLive(): void {
     this.chartData.liveUpdate = true;
     this.liveSubscription = interval(1000).subscribe(() => {
-      this.chart().setValue(Math.random() * this.chart().maxValue());
+      this.chartData.value = Math.random() * this.chart().maxValue();
+      this.chart().setValue(this.chartData.value);
     });
   }
 }
