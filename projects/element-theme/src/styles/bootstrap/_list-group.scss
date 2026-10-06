@@ -8,8 +8,8 @@
 
 // Rough mapping, the markup has to be restructured, this is not a class rename:
 // `.list-group` -> `.list`, optionally with `.list-divider`, `.list-filled` or `.list-outline`
-// `.list-group-item` -> `.list-item`, children need explicit slot classes
-//                       (`.list-item-title`, `.list-item-description`, ...)
+// `.list-group-item` -> `.list-item`, slot classes such as `.list-item-title`
+//                       and `.list-item-description` are optional
 // `.list-group-item-action` -> `.list-item.list-item-action`
 // `.list-group-flush` -> `.list.list-divider` to preserve dividers; otherwise
 //                        `.list`, which has no outer border
