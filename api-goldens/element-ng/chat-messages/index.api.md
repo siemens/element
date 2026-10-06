@@ -16,6 +16,7 @@ import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { Signal } from '@angular/core';
 import { StaticProvider } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
