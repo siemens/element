@@ -68,7 +68,6 @@ describe('SiMarkdownHightlightJsComponent', () => {
     );
     fixture.componentRef.setInput('markdown', '```\ninterface User { name: string; }\n```');
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
 
     await vi.waitFor(() => {
       expect(element.querySelector('.code-language')).toHaveTextContent('TypeScript');

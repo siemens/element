@@ -41,18 +41,16 @@ describe('SiMarkdownDirectiveComponent', () => {
     );
     fixture.componentRef.setInput('markdown', ':::custom\nCustom content.\n:::');
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
-
-    expect(element.querySelector('.custom-directive')).toHaveTextContent('Custom content.');
+    await vi.waitFor(() =>
+      expect(element.querySelector('.custom-directive')).toHaveTextContent('Custom content.')
+    );
   });
 
   it('renders the content of unhandled directives as Markdown', async () => {
     fixture.componentRef.setInput('markdown', ':::unknown\n**Fallback content.**\n:::');
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
-
-    expect(element.querySelector('strong')).toHaveTextContent('Fallback content.');
+    await vi.waitFor(() =>
+      expect(element.querySelector('strong')).toHaveTextContent('Fallback content.')
+    );
   });
 });

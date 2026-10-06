@@ -35,13 +35,11 @@ Second tab content.
 ::::`
     );
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
+    await expect.poll(() => element.querySelectorAll('si-tab')).toHaveLength(2);
 
     const tabs = element.querySelectorAll<HTMLElement>('si-tab');
 
     expect(element.querySelector('si-tabset')).toBeInTheDocument();
-    expect(tabs).toHaveLength(2);
     expect(tabs[0]).toHaveTextContent('First tab');
     expect(tabs[0]).not.toHaveClass('disabled');
 

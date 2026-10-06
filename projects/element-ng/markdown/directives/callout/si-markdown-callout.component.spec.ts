@@ -31,12 +31,10 @@ Warning content.
 :::`
     );
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
+    await expect.poll(() => element.querySelectorAll('si-markdown-callout')).toHaveLength(3);
 
     const callouts = element.querySelectorAll('si-markdown-callout');
 
-    expect(callouts).toHaveLength(3);
     expect(callouts[0]).toMatchTextContent('Note content.');
     expect(callouts[0].querySelector('.card')).toHaveClass('accent-info');
     expect(callouts[0].querySelector('si-status-icon')).toBeInTheDocument();

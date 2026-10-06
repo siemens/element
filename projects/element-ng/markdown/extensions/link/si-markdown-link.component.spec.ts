@@ -21,13 +21,11 @@ describe('SiMarkdownLinkComponent', () => {
       `[Direct](https://example.com/direct "Direct title")`
     );
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
+    await expect.poll(() => element.querySelectorAll('si-markdown-link a')).toHaveLength(1);
 
     const links = element.querySelectorAll('si-markdown-link a');
 
     expect(element.querySelectorAll('si-markdown-link')).toHaveLength(1);
-    expect(links).toHaveLength(1);
     expect(links[0]).toHaveTextContent('Direct');
     expect(links[0]).toHaveAttribute('href', 'https://example.com/direct');
     expect(links[0]).toHaveAttribute('title', 'Direct title');
@@ -41,12 +39,10 @@ describe('SiMarkdownLinkComponent', () => {
 [](file:///Users/dritz/another-file.ts#1)`
     );
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
+    await expect.poll(() => element.querySelectorAll('si-markdown-link .filename')).toHaveLength(2);
 
     const links = element.querySelectorAll<HTMLElement>('si-markdown-link .filename');
 
-    expect(links).toHaveLength(2);
     expect(links[0]).toHaveTextContent('Open file');
     expect(links[0]).toHaveAttribute('href', 'file:///Users/dritz/some-file.ts#40-55');
     expect(links[1]).toHaveTextContent('another-file.ts');

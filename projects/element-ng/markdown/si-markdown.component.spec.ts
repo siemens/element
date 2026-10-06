@@ -56,9 +56,7 @@ Second line
 `
     );
     await fixture.whenStable();
-    // need a real tick here!
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
+    await vi.waitFor(() => expect(element.querySelectorAll('td')).toHaveLength(3));
 
     expect(element.querySelector('.h1')).toHaveTextContent('Heading 1');
     expect(element.querySelector('.h2')).toHaveTextContent('Heading 2');
@@ -84,7 +82,6 @@ Second line
     expect(element.querySelector('si-markdown-table')).not.toBeNull();
     expect(element.querySelector('table')).toHaveClass('markdown-table', 'table', 'mb-0');
     expect(element.querySelectorAll('th')).toHaveLength(3);
-    expect(element.querySelectorAll('td')).toHaveLength(3);
     expect(element.querySelectorAll('th')[0]).toHaveStyle({ textAlign: 'left' });
     expect(element.querySelectorAll('th')[1]).toHaveStyle({ textAlign: 'center' });
     expect(element.querySelectorAll('th')[2]).toHaveStyle({ textAlign: 'right' });
@@ -111,8 +108,7 @@ The reference can be used multiple times like here [foo]
 ![imageref][]`
     );
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
+    await expect.poll(() => element.querySelectorAll('img')).toHaveLength(2);
 
     const links = element.querySelectorAll('a');
     const images = element.querySelectorAll('img');
@@ -123,7 +119,6 @@ The reference can be used multiple times like here [foo]
     expect(links[0]).toHaveAttribute('title', 'title');
     expect(links[1]).toHaveTextContent('foo');
     expect(links[1]).toHaveAttribute('href', '/url');
-    expect(images).toHaveLength(2);
     expect(images[0]).toHaveAttribute('src', './assets/images/building-1.webp');
     expect(images[0]).toHaveAttribute('alt', 'Building image as reference');
     expect(images[1]).toHaveAttribute('src', './assets/images/building-1.webp');
@@ -136,12 +131,10 @@ The reference can be used multiple times like here [foo]
       '<img class="unsafe-html" src="image.png" onerror="alert()">'
     );
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
+    await expect.poll(() => element.querySelector('.unsafe-html')).toBeInTheDocument();
 
     const unsafeImage = element.querySelector('.unsafe-html');
 
-    expect(unsafeImage).not.toBeNull();
     expect(unsafeImage).not.toHaveAttribute('onerror');
   });
 });
