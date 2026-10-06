@@ -599,10 +599,7 @@ describe('SiSelectComponent', () => {
       );
       await fixture.whenStable();
 
-      // cannot use jasmine.clock here
-      await new Promise(resolve => setTimeout(resolve, 100));
-
-      expect(await selectHarness.getOverflowCount()).toBe(3);
+      await vi.waitFor(async () => expect(await selectHarness.getOverflowCount()).toBe(3));
     });
 
     it('should filter in grouped options', async () => {

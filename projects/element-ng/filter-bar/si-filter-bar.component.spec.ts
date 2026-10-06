@@ -11,8 +11,6 @@ import { Filter, SiFilterBarComponent } from './index';
 describe('SiFilterBarComponent', () => {
   let fixture: ComponentFixture<SiFilterBarComponent>;
   let element: HTMLElement;
-  const timeout = async (ms?: number): Promise<void> =>
-    new Promise(resolve => setTimeout(resolve, ms));
 
   let filters: WritableSignal<Filter[]>;
   let allowReset: WritableSignal<boolean>;
@@ -233,8 +231,11 @@ describe('SiFilterBarComponent', () => {
       }
     ]);
     fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
+    await vi.waitFor(() => {
+      fixture.detectChanges();
+      const values = element.querySelectorAll<HTMLElement>('si-filter-pill .value');
+      expect(values[values.length - 1]).toHaveTextContent('+ 2 criteria');
+    });
     expect(filters()).toHaveLength(5);
     removeButtons().at(-1)!.click();
 
@@ -276,10 +277,11 @@ describe('SiFilterBarComponent', () => {
       }
     ]);
     fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
-    const values = element.querySelectorAll<HTMLElement>('si-filter-pill .value');
-    expect(values[values.length - 1]).toHaveTextContent('+ 1 criteria');
+    await vi.waitFor(() => {
+      fixture.detectChanges();
+      const values = element.querySelectorAll<HTMLElement>('si-filter-pill .value');
+      expect(values[values.length - 1]).toHaveTextContent('+ 1 criteria');
+    });
   });
 
   it('should not display too many filters when responsive is enabled and allow reset disabled', async () => {
@@ -318,9 +320,10 @@ describe('SiFilterBarComponent', () => {
     ]);
     allowReset.set(false);
     fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
-    const values = element.querySelectorAll<HTMLElement>('si-filter-pill .value');
-    expect(values[values.length - 1]).toHaveTextContent('+ 2 criteria');
+    await vi.waitFor(() => {
+      fixture.detectChanges();
+      const values = element.querySelectorAll<HTMLElement>('si-filter-pill .value');
+      expect(values[values.length - 1]).toHaveTextContent('+ 2 criteria');
+    });
   });
 });

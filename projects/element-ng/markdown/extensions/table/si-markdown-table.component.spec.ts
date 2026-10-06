@@ -25,8 +25,9 @@ describe('SiMarkdownTableComponent', () => {
 | One | Two | Three |`
     );
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
+    await vi.waitFor(() =>
+      expect(element.querySelector('table')).toHaveClass('markdown-table', 'table', 'mb-0')
+    );
 
     const tableExtension = element.querySelector('si-markdown-table');
     const tableContainer = tableExtension?.querySelector('.markdown-table-container');
@@ -39,7 +40,6 @@ describe('SiMarkdownTableComponent', () => {
     expect(tableExtension).not.toBeNull();
     expect(tableContainer).toHaveClass('mb-6');
     expect(tableWrapper).toHaveClass('markdown-table-wrapper');
-    expect(table).toHaveClass('markdown-table', 'table', 'mb-0');
     expect(table).toHaveAttribute('data-line', '1');
     expect(headers).toHaveLength(3);
     expect(cells).toHaveLength(3);
@@ -86,8 +86,9 @@ describe('SiMarkdownTableComponent', () => {
 | Ada | Ready |`
     );
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
+    await expect
+      .poll(() => element.querySelector('button[aria-label="Download table as CSV"]'))
+      .toBeInTheDocument();
 
     element.querySelector<HTMLButtonElement>('button[aria-label="Download table as CSV"]')?.click();
 

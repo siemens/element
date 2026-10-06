@@ -18,12 +18,10 @@ describe('SiMarkdownCodeComponent', () => {
   it('renders a fenced code block without a highlighter', async () => {
     fixture.componentRef.setInput('markdown', '```typescript\nconst answer = 42;\n```');
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
+    await expect.poll(() => element.querySelector('si-markdown-code')).toBeInTheDocument();
 
     const codeBlock = element.querySelector('si-markdown-code');
 
-    expect(codeBlock).not.toBeNull();
     expect(codeBlock).toHaveClass('d-flex', 'flex-column');
     expect(codeBlock?.querySelector('.code-language')).toHaveTextContent('typescript');
     expect(codeBlock?.querySelector('pre code')).toHaveTextContent('const answer = 42;');

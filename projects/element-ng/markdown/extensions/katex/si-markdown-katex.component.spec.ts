@@ -24,8 +24,7 @@ describe('SiMarkdownKatexComponent', () => {
     );
     fixture.componentRef.setInput('markdown', 'Inline math: $x^2$.\n\n$$\ny^2\n$$');
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
-    await fixture.whenStable();
+    await vi.waitFor(() => expect(element.querySelectorAll('si-markdown-katex')).toHaveLength(2));
 
     const inlineMath = element.querySelector('si-markdown-katex:not(.d-block)');
     const displayMath = element.querySelector('si-markdown-katex.d-block');

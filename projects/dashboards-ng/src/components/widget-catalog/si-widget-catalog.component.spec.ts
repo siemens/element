@@ -54,6 +54,8 @@ describe('SiWidgetCatalogComponent', () => {
     component = fixture.componentInstance;
   });
 
+  afterEach(() => vi.useRealTimers());
+
   it('should create', () => {
     fixture.detectChanges();
     expect(component).toBeTruthy();
@@ -157,9 +159,7 @@ describe('SiWidgetCatalogComponent', () => {
         buttonsByName('Next')[0].nativeElement.click();
         fixture.detectChanges();
 
-        // cannot use jasmine.clock here.
-        await new Promise(resolve => setTimeout(resolve, 100));
-        expect(component.view()).toBe('editor');
+        await vi.waitFor(() => expect(component.view()).toBe('editor'));
         expect(
           fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
             .tagName
@@ -238,6 +238,7 @@ describe('SiWidgetCatalogComponent', () => {
       it('shall keep the search term and result after clicking `Next` to widget editor and `Previous` to catalog', async () => {
         expect(buttonsByName('Next')).toHaveLength(0);
 
+        vi.useFakeTimers();
         let searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
         searchInput.value = 'zwei';
         searchInput.dispatchEvent(new Event('input'));
@@ -246,9 +247,9 @@ describe('SiWidgetCatalogComponent', () => {
         const searchBarEl = fixture.debugElement.query(By.css('si-search-bar'));
         const searchBarComponent = searchBarEl.componentInstance as SiSearchBarComponent;
         const debounceTime = searchBarComponent.debounceTime();
-        // cannot use jasmine.clock here.
-        await new Promise(resolve => setTimeout(resolve, debounceTime + 1)); // wait for debounce time + extra 1 ms to avoid flaky test
-        await fixture.whenStable();
+        await vi.advanceTimersByTimeAsync(debounceTime);
+        fixture.detectChanges();
+        vi.useRealTimers();
 
         expect(buttonsByName('Next')).toHaveLength(1);
         expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
@@ -298,12 +299,12 @@ describe('SiWidgetCatalogComponent', () => {
       await fixture.whenStable();
 
       expect(component.view()).toBe('editor');
-      // cannot use jasmine.clock here.
-      await new Promise(resolve => setTimeout(resolve, 100));
-      expect(
-        fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
-          .tagName
-      ).toBe('SI-TEST-WIDGET-EDITOR');
+      await vi.waitFor(() =>
+        expect(
+          fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
+            .tagName
+        ).toBe('SI-TEST-WIDGET-EDITOR')
+      );
 
       buttonsByName('Previous')[0].nativeElement.click();
       fixture.detectChanges();
