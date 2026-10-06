@@ -1,0 +1,43 @@
+- text: Card header
+- heading "Special title treatment" [level=5]
+- paragraph: With supporting text below as a natural lead-in to additional content.
+- link "Go somewhere":
+  - /url: "#"
+- text: Card footer
+- heading "Card title" [level=5]
+- heading "Card subtitle" [level=6]
+- paragraph: Some quick example text to build on the card title and make up the bulk of the card’s content.
+- text: This is some text within a card body.
+- img "Beach landscape with blue sky"
+- heading "Image card" [level=5]
+- paragraph: Some quick example text to build on the card title and make up the bulk of the card’s content.
+- link "Go somewhere":
+  - /url: "#"
+- text: Quote
+- figure "— Someone famous in Source Title":
+  - blockquote:
+    - paragraph: A well-known quote, contained in a blockquote element.
+  - text: ""
+- img "Beach landscape with blue sky"
+- heading "Card title" [level=5]
+- paragraph: Some quick example text to build on the card title and make up the bulk of the card’s content.
+- list:
+  - listitem: An item
+  - listitem: A second item
+  - listitem: A third item
+- heading "Lists" [level=4]
+- heading "Create lists of content in a card with a list." [level=5]
+- list:
+  - listitem: An item
+  - listitem: A second item
+  - listitem: A third item
+- text: Header text
+- list:
+  - listitem: An item
+  - listitem: A second item
+  - listitem: A third item
+- list:
+  - listitem: An item
+  - listitem: A second item
+  - listitem: A third item
+- text: Card footer
