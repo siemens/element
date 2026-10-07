@@ -11,12 +11,9 @@ import {
   ElementRef,
   inject,
   input,
-  output,
-  signal,
   TemplateRef,
   viewChild
 } from '@angular/core';
-import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -25,6 +22,7 @@ import { SiSelectListHasFilterComponent } from './select-list/si-select-list-has
 import { SiSelectListComponent } from './select-list/si-select-list.component';
 import { SiSelectSelectionStrategy } from './selection/si-select-selection-strategy';
 import { SiSelectActionsDirective } from './si-select-actions.directive';
+import { SiSelectBaseDirective } from './si-select-base.directive';
 import { SiSelectGroupTemplateDirective } from './si-select-group-template.directive';
 import { SiSelectOptionTemplateDirective } from './si-select-option-template.directive';
 import { SiSelectValueTemplateDirective } from './si-select-value-template.directive';
@@ -42,23 +40,27 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
   styleUrl: './si-select.component.scss',
   providers: [{ provide: SI_FORM_ITEM_CONTROL, useExisting: SiSelectComponent }],
   host: {
-    class: 'dropdown',
-    '[class.readonly]': 'readonly()',
-    '[class.open]': 'isOpen()',
     '[class.si-select-has-filter]': 'hasFilter()'
-  }
+  },
+  hostDirectives: [
+    {
+      directive: SiSelectBaseDirective,
+      inputs: ['id', 'readonly', 'scrollStrategy', 'errormessageId'],
+      outputs: ['openChange']
+    }
+  ]
 })
 export class SiSelectComponent<T> implements SiFormItemControl {
-  private static idCounter = 0;
+  private readonly base = inject(SiSelectBaseDirective);
   /**
    * Unique identifier.
    *
    * @defaultValue
    * ```
-   * `__si-select-${SiSelectComponent.idCounter++}`
+   * `__si-select-${SiSelectBaseDirective.idCounter++}`
    * ```
    */
-  readonly id = input(`__si-select-${SiSelectComponent.idCounter++}`);
+  readonly id = this.base.id;
   /**
    * Aria label of the select.
    *
@@ -94,23 +96,23 @@ export class SiSelectComponent<T> implements SiFormItemControl {
   /** Placeholder text to display when no options are selected. */
   readonly placeholder = input<TranslatableString>();
   /**
-   * Readonly state. Similar to disabled but with higher contrast *
+   * Readonly state. Similar to disabled but with higher contrast.
    *
    * @defaultValue false
    */
-  readonly readonly = input(false, { transform: booleanAttribute });
+  readonly readonly = this.base.readonly;
 
   /**
    * Optional CDK scroll strategy used for the select overlay.
    *
    * @defaultValue defaultConnectedOverlayScrollStrategy()
    */
-  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy());
+  readonly scrollStrategy = this.base.scrollStrategy;
 
   /** Emits when the dropdown open state changes. */
-  readonly openChange = output<boolean>();
+  readonly openChange = this.base.openChange;
 
-  protected readonly isOpen = signal(false);
+  protected readonly isOpen = this.base.isOpen;
 
   protected readonly optionTemplate = contentChild<
     SiSelectOptionTemplateDirective,
@@ -151,7 +153,7 @@ export class SiSelectComponent<T> implements SiFormItemControl {
    * `${this.id()}-errormessage`
    * ```
    */
-  readonly errormessageId = input(`${this.id()}-errormessage`);
+  readonly errormessageId = this.base.errormessageId;
 
   protected rows: readonly SelectItem<T>[] = [];
   protected overlayWidth = 0;

@@ -15,17 +15,21 @@ import {
   inject,
   input,
   model,
-  output,
   PLATFORM_ID,
   signal,
   ViewContainerRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { filter, merge, Subject, takeUntil } from 'rxjs';
 
+import { SiSelectBaseDirective } from './si-select-base.directive';
+import {
+  SI_SELECT_COMBOBOX_TRIGGER_STATE,
+  SiSelectComboboxTriggerDirective,
+  SiSelectComboboxTriggerState
+} from './si-select-combobox-trigger.directive';
 import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
 
 /**
@@ -72,45 +76,45 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
   selector: '[siCustomSelect]',
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: SiCustomSelectDirective, multi: true },
-    { provide: SI_FORM_ITEM_CONTROL, useExisting: SiCustomSelectDirective }
+    { provide: SI_FORM_ITEM_CONTROL, useExisting: SiCustomSelectDirective },
+    {
+      provide: SI_SELECT_COMBOBOX_TRIGGER_STATE,
+      useFactory: () => inject(SiCustomSelectDirective).comboboxState
+    }
   ],
   host: {
-    class: 'dropdown',
     '[style.--si-action-icon-offset.rem]': '1.5',
-    role: 'combobox',
-    'aria-autocomplete': 'none',
-    '[attr.aria-haspopup]': 'haspopup()',
-    '[attr.aria-labelledby]': 'labelledby()',
     '[attr.aria-describedby]': 'errormessageId()',
-    '[attr.aria-controls]': 'isOpen() ? dropdownId() : null',
-    '[attr.aria-expanded]': 'isOpen()',
-    '[attr.aria-disabled]': 'disabled()',
     '[attr.id]': 'id()',
-    '[attr.tabindex]': 'disabled() ? "-1" : "0"',
-    '[class.disabled]': 'disabled()',
     '[class.pe-none]': 'disabled()',
-    '[class.readonly]': 'readonly()',
-    '[class.open]': 'isOpen()',
-    '[class.show]': 'isOpen()',
-    '(click)': 'open()',
-    '(keydown.enter)': 'open()',
-    '(keydown.space)': 'open($event)',
-    '(keydown.arrowDown)': 'open($event)',
-    '(keydown.arrowUp)': 'open($event)'
-  }
+    '[class.show]': 'isOpen()'
+  },
+  hostDirectives: [
+    {
+      directive: SiSelectBaseDirective,
+      inputs: [
+        'id',
+        'readonly',
+        'scrollStrategy: siCustomSelectScrollStrategy',
+        'errormessageId'
+      ],
+      outputs: ['openChange']
+    },
+    SiSelectComboboxTriggerDirective
+  ]
 })
 export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormItemControl {
-  private static idCounter = 0;
+  private readonly base = inject(SiSelectBaseDirective);
 
   /**
    * Unique identifier.
    *
    * @defaultValue
    * ```
-   * `__si-custom-select-${SiCustomSelectDirective.idCounter++}`
+   * `__si-select-${SiSelectBaseDirective.idCounter++}`
    * ```
    */
-  readonly id = input(`__si-custom-select-${SiCustomSelectDirective.idCounter++}`);
+  readonly id = this.base.id;
 
   /**
    * Whether the select input is disabled.
@@ -125,19 +129,17 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    *
    * @defaultValue false
    */
-  readonly readonly = input(false, { transform: booleanAttribute });
+  readonly readonly = this.base.readonly;
 
   /**
    * Optional CDK scroll strategy used for the custom select overlay.
    *
    * @defaultValue defaultConnectedOverlayScrollStrategy()
    */
-  readonly scrollStrategy = input(defaultConnectedOverlayScrollStrategy(), {
-    alias: 'siCustomSelectScrollStrategy'
-  });
+  readonly scrollStrategy = this.base.scrollStrategy;
 
   /** Emits when the dropdown open state changes. */
-  readonly openChange = output<boolean>();
+  readonly openChange = this.base.openChange;
 
   /**
    * The current value, supports two-way binding via `[(value)]`.
@@ -151,7 +153,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    *
    * @defaultValue false
    */
-  readonly isOpen = signal(false);
+  readonly isOpen = this.base.isOpen;
 
   /** @internal */
   readonly labelledby = computed(() => `${this.id()}-label ${this.id()}-combobox`);
@@ -178,10 +180,21 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    * `${this.id()}-errormessage`
    * ```
    */
-  readonly errormessageId = input(`${this.id()}-errormessage`);
+  readonly errormessageId = this.base.errormessageId;
 
   /** Combined disabled state from input and form control. */
   readonly disabled = computed(() => this.disabledInput() || this.disabledByForm());
+
+  /** State exposed to the composed {@link SiSelectComboboxTriggerDirective}. @internal */
+  readonly comboboxState: SiSelectComboboxTriggerState = {
+    role: signal<'combobox' | 'textbox'>('combobox'),
+    haspopup: this.haspopup,
+    expanded: this.isOpen,
+    controls: computed(() => (this.isOpen() ? this.dropdownId() : null)),
+    labelledby: this.labelledby,
+    disabled: this.disabled,
+    requestOpen: () => this.open()
+  };
 
   private onTouched: () => void = () => {};
 

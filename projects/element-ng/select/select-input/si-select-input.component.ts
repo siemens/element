@@ -22,6 +22,11 @@ import {
 } from '../options/si-select-options-strategy';
 import { SiSelectOptionComponent } from '../select-option/si-select-option.component';
 import { SiSelectSelectionStrategy } from '../selection/si-select-selection-strategy';
+import {
+  SI_SELECT_COMBOBOX_TRIGGER_STATE,
+  SiSelectComboboxTriggerDirective,
+  SiSelectComboboxTriggerState
+} from '../si-select-combobox-trigger.directive';
 import { SelectOption } from '../si-select.types';
 
 @Component({
@@ -29,29 +34,21 @@ import { SelectOption } from '../si-select.types';
   imports: [SiAutoCollapsableListModule, SiIconComponent, SiSelectOptionComponent, SiTranslatePipe],
   templateUrl: './si-select-input.component.html',
   styleUrl: './si-select-input.component.scss',
+  providers: [
+    {
+      provide: SI_SELECT_COMBOBOX_TRIGGER_STATE,
+      useFactory: () => inject(SiSelectInputComponent).comboboxState
+    }
+  ],
   host: {
     // In readonly mode, the select needs to be announced as a textbox.
     // Otherwise, screen-reader won't announce the readonly state.
     class: 'select focus-none dropdown-toggle d-flex align-items-center ps-4',
-    'aria-autocomplete': 'none',
-    '[attr.role]': 'readonly() ? "textbox": "combobox"',
-    '[attr.aria-haspopup]': 'readonly() ? undefined : "listbox"',
-    '[attr.aria-expanded]': 'readonly() ? undefined : open()',
-    '[attr.aria-controls]': 'readonly() ? undefined : controls()',
     '[attr.aria-readonly]': 'readonly()',
-    '[attr.aria-labelledby]': 'labeledBy()',
-    '[attr.aria-disabled]': 'selectionStrategy.disabled()',
-    '[attr.tabindex]': 'selectionStrategy.disabled() ? "-1" : "0"',
-    '[class.disabled]': 'selectionStrategy.disabled()',
     '[class.active]': 'open()',
-    '(blur)': 'blur()',
-    '(click)': 'click($event)',
-    '(keydown.arrowDown)': 'click($event)',
-    '(keydown.alt.arrowDown)': 'click($event)',
-    '(keydown.arrowUp)': 'click($event)',
-    '(keydown.enter)': 'click($event)',
-    '(keydown.space)': 'click($event)'
-  }
+    '(blur)': 'blur()'
+  },
+  hostDirectives: [SiSelectComboboxTriggerDirective]
 })
 export class SiSelectInputComponent<T> {
   /**
@@ -111,6 +108,17 @@ export class SiSelectInputComponent<T> {
   protected readonly selectedRows = this.selectOptions.selectedRows;
   protected readonly labeledBy = computed(() => `${this.baseId()}-aria-label ${this.labelledby()}`);
   protected readonly icons = addIcons({ elementDown2 });
+
+  /** State exposed to the composed {@link SiSelectComboboxTriggerDirective}. @internal */
+  readonly comboboxState: SiSelectComboboxTriggerState = {
+    role: computed(() => (this.readonly() ? 'textbox' : 'combobox')),
+    haspopup: computed(() => (this.readonly() ? undefined : 'listbox')),
+    expanded: computed(() => (this.readonly() ? undefined : this.open())),
+    controls: computed(() => (this.readonly() ? undefined : this.controls())),
+    labelledby: this.labeledBy,
+    disabled: this.selectionStrategy.disabled,
+    requestOpen: () => this.click()
+  };
 
   protected blur(): void {
     if (!this.open()) {
