@@ -11,7 +11,25 @@ test.describe('filtered search', () => {
     enabled: false
   };
 
+  test('should keep the dropdown aligned after pasting criteria', async ({ si, page }) => {
+    await si.visitExample('si-filtered-search/si-filtered-search-playground');
+    const freeTextSearch = page.getByLabel('search', { exact: true }).last();
+    await freeTextSearch.focus();
+    await expect(page.getByRole('listbox')).toBeVisible();
+
+    await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.evaluate(() => navigator.clipboard.writeText('Name:Alex;Country:Germany;'));
+    await page.keyboard.press('Control+KeyV');
+
+    await expect(page.locator('si-filtered-search-value')).toHaveCount(3);
+    await si.runVisualAndA11yTests('pasted-criteria');
+  });
+
   test('should create remove criteria', async ({ si, page }) => {
+    test.slow(
+      true,
+      'Six visual/accessibility checkpoints exceeded 30 seconds during snapshot generation at the final empty checkpoint.'
+    );
     await page.clock.setFixedTime('2022-02-20');
     await si.visitExample('si-filtered-search/si-filtered-search-playground');
     // FS lacks a11y features. One of the problems is that all inputs are labeled as search. The last one will always be the free text search.

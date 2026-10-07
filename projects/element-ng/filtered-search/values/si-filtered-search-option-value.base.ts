@@ -102,12 +102,20 @@ export abstract class SiFilteredSearchOptionValueBase extends SiFilteredSearchVa
     if (initialValue.value?.length) {
       // Emit normalization after initialization, not during change detection.
       this.options()
-        .pipe(take(1), observeOn(asapScheduler), takeUntilDestroyed(this.destroyRef))
-        .subscribe(options => {
+        .pipe(
+          take(1),
+          map(options =>
+            this.criterionValue() === initialValue
+              ? this.processTypeaheadOptions(options)
+              : undefined
+          ),
+          observeOn(asapScheduler),
+          takeUntilDestroyed(this.destroyRef)
+        )
+        .subscribe(value => {
           if (this.criterionValue() !== initialValue) {
             return;
           }
-          const value = this.processTypeaheadOptions(options);
           if (value !== undefined) {
             this.criterionValue.set({ ...initialValue, value });
           }
