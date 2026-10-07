@@ -16,9 +16,10 @@ import {
   output,
   signal
 } from '@angular/core';
+import { elementSpecialObject } from '@siemens/element-icons';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
-import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import {
   injectSiTranslateService,
@@ -39,7 +40,7 @@ import { SiWidgetEditorBase } from '../si-widget-editor-base';
   selector: 'si-widget-catalog',
   imports: [
     SiSearchBarComponent,
-    SiCircleStatusComponent,
+    SiIconComponent,
     SiEmptyStateComponent,
     SiTranslatePipe,
     CdkListbox,
@@ -129,6 +130,8 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   );
 
   private readonly translateService = injectSiTranslateService();
+  /** Default indicator for widgets without an `iconClass`, as specified in the design. */
+  protected readonly icons = addIcons({ elementSpecialObject });
   /**
    * TODO: Remove this property in v52. Use the signal `widgetList` instead.
    */
@@ -140,7 +143,10 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   protected labelPrevious = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.PREVIOUS:Previous`);
   protected labelNext = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.NEXT:Next`);
   protected labelAdd = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.ADD:Add`);
-  protected labelEmpty = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.EMPTY:Empty`);
+  protected labelEmpty = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.EMPTY:No widgets found`);
+  protected labelEmptyMessage = t(
+    () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.EMPTY_MESSAGE:Refine search`
+  );
 
   protected labelDialogHeading = t(
     () =>

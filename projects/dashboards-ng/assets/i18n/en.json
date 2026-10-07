@@ -16,7 +16,8 @@
       "ADD": "Add",
       "NEXT": "Next",
       "PREVIOUS": "Previous",
-      "EMPTY": "No widgets available.",
+      "EMPTY": "No widgets found",
+      "EMPTY_MESSAGE": "Refine search",
       "DISCARD_CONFIG_CHANGE_DIALOG": {
         "HEADING": "Widget configuration changed",
         "MESSAGE": "The widget configuration changed. Do you want to discard the changes?",

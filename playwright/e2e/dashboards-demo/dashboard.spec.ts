@@ -44,7 +44,8 @@ test.describe('dashboard', () => {
     const search = page.getByRole('textbox', { name: 'Search…' });
     await expect(search).toBeVisible();
     await search.fill('empty');
-    await expect(page.getByText('No widgets available.')).toBeVisible();
+    await expect(page.getByText('No widgets found')).toBeVisible();
+    await expect(page.getByText('Refine search')).toBeVisible();
     await si.runVisualAndA11yTests('empty');
   });
 

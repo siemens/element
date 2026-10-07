@@ -11,46 +11,55 @@
           (searchChange)="onSearch($event)"
         />
       </div>
-      <div class="si-layout-fixed-height text-pre-wrap text-break mt-6 background-1 rounded-2">
+      <div class="si-layout-fixed-height text-pre-wrap text-break mt-6">
         @if (filteredWidgetCatalog.length > 0) {
           <span id="widget-catalog-list-description" class="visually-hidden">
             {{ labelWidgetCatalogList | translate }}
           </span>
-          <ul
-            class="si-layout-fixed-height list-group overflow-auto mb-0"
-            aria-labelledby="widget-catalog-list-description"
-            cdkListbox
-            [cdkListboxValue]="selectedWidgets()"
-            [cdkListboxMultiple]="multiSelect()"
-            (cdkListboxValueChange)="selectWidgets($event.value)"
-          >
-            @for (widget of filteredWidgetCatalog; track $index) {
-              <li
-                class="list-group-item d-flex list-group-item-action"
-                [cdkOption]="widget"
-                [class.active]="selectedWidgets().includes(widget)"
-              >
-                @if (multiSelect()) {
-                  <div class="form-check d-flex align-items-center me-5 my-n1" inert>
+          <div class="card overflow-auto">
+            <ul
+              class="list list-divider"
+              aria-labelledby="widget-catalog-list-description"
+              cdkListbox
+              [cdkListboxValue]="selectedWidgets()"
+              [cdkListboxMultiple]="multiSelect()"
+              (cdkListboxValueChange)="selectWidgets($event.value)"
+            >
+              @for (widget of filteredWidgetCatalog; track $index) {
+                <li
+                  class="list-item list-item-action"
+                  [cdkOption]="widget"
+                  [class.active]="selectedWidgets().includes(widget)"
+                >
+                  @if (multiSelect()) {
                     <input
                       type="checkbox"
-                      class="form-check-input"
+                      class="form-check-input list-item-check"
                       aria-hidden="true"
+                      tabindex="-1"
+                      inert
                       [checked]="selectedWidgets().includes(widget)"
                     />
-                  </div>
-                }
-                <si-circle-status class="my-n4 me-5" [icon]="widget.iconClass" />
-                <div class="d-flex flex-column align-items-start align-self-center">
-                  <span class="si-h5">{{ widget.name | translate }}</span>
-                  <span class="si-body">{{ widget.description?.trim() | translate }}</span>
-                </div>
-              </li>
-            }
-          </ul>
+                  }
+                  <si-icon
+                    class="list-item-indicator icon"
+                    [icon]="widget.iconClass || icons.elementSpecialObject"
+                  />
+                  <span class="list-item-title">{{ widget.name | translate }}</span>
+                  @if (widget.description?.trim(); as description) {
+                    <p class="list-item-description">{{ description | translate }}</p>
+                  }
+                </li>
+              }
+            </ul>
+          </div>
         } @else {
           <div>
-            <si-empty-state icon="element-report" [heading]="labelEmpty" />
+            <si-empty-state
+              icon="element-search"
+              [heading]="labelEmpty"
+              [content]="searchTerm ? labelEmptyMessage : undefined"
+            />
           </div>
         }
       </div>

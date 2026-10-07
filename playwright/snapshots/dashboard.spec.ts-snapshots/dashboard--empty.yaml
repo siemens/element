@@ -12,6 +12,7 @@
   - heading "Add widget" [level=2]
   - textbox "Search…": empty
   - button "Clear"
-  - text: No widgets available.
+  - text: No widgets found
+  - paragraph: Refine search
   - button "Cancel"
   - button "Add" [disabled]

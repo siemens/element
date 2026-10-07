@@ -16,7 +16,8 @@
       "ADD": "Hinzufügen",
       "NEXT": "Weiter",
       "PREVIOUS": "Zurück",
-      "EMPTY": "Es sind keine Widgets vorhanden.",
+      "EMPTY": "Keine Widgets gefunden",
+      "EMPTY_MESSAGE": "Suche verfeinern",
       "DISCARD_CONFIG_CHANGE_DIALOG": {
         "HEADING": "Widgetkonfiguration geändert",
         "MESSAGE": "Die Widgetkonfiguration wurde geändert. Möchten Sie die Änderungen verwerfen?",
