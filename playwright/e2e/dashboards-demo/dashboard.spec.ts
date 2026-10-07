@@ -49,6 +49,107 @@ test.describe('dashboard', () => {
     await si.runVisualAndA11yTests('empty');
   });
 
+  test(example + ' catalog instance limits', async ({ page, si }) => {
+    await si.visitExample(example, undefined);
+    await openWidgetCatalog(page);
+    await page.getByRole('textbox', { name: 'Search…' }).fill('Chart');
+    await expect(page.getByRole('option')).toHaveCount(5);
+
+    const lineChart = page.getByRole('option', { name: /^Line Chart/ });
+    const barChart = page.getByRole('option', { name: /^Bar Chart/ });
+    const licensedChart = page.getByRole('option', { name: /^Circle Chart/ });
+    const addedChart = page.getByRole('option', { name: /^Gauge Chart/ });
+    const webComponentChart = page.getByRole('option', {
+      name: 'Chart (web-component)',
+      exact: true
+    });
+    const addButton = page.getByRole('button', { name: 'Add', exact: true });
+
+    await expect(lineChart).toBeEnabled();
+    await expect(licensedChart).toBeDisabled();
+    await expect(licensedChart.locator('si-badge')).toHaveText('Requires license');
+    await expect(licensedChart.locator('si-badge')).toHaveClass(/bg-info/);
+    await expect(licensedChart.locator('input')).toBeDisabled();
+    await expect(licensedChart.locator('input')).not.toBeChecked();
+    await expect(addedChart).toBeDisabled();
+    await expect(addedChart.locator('si-badge')).toHaveText('Added');
+    await expect(addedChart.locator('si-badge')).toHaveClass(/bg-default/);
+    await expect(addedChart.locator('input')).toBeDisabled();
+    await expect(addedChart.locator('input')).not.toBeChecked();
+    await expect(addButton).toBeDisabled();
+
+    for (const option of [licensedChart, addedChart]) {
+      const disabledColor = await option
+        .locator('.list-item-title')
+        .evaluate(element => getComputedStyle(element).color);
+      await expect(option.locator('.list-item-indicator')).toHaveCSS('color', disabledColor);
+      const background = await option.evaluate(
+        element => getComputedStyle(element).backgroundColor
+      );
+      await option.hover();
+      await expect
+        .poll(() => option.evaluate(element => getComputedStyle(element).backgroundColor))
+        .toBe(background);
+    }
+
+    await licensedChart.click({ force: true });
+    await addedChart.click({ force: true });
+    await expect(licensedChart).toHaveAttribute('aria-selected', 'false');
+    await expect(addedChart).toHaveAttribute('aria-selected', 'false');
+    await expect(addButton).toBeDisabled();
+
+    await lineChart.click();
+    await expect(lineChart).toHaveAttribute('aria-selected', 'true');
+    await expect(lineChart).toHaveClass(/active/);
+    await expect(lineChart.locator('input')).toBeChecked();
+    await expect(addButton).toBeEnabled();
+    await lineChart.press('ArrowDown');
+    await expect(barChart).toBeFocused();
+    await barChart.press('ArrowDown');
+    await expect(webComponentChart).toBeFocused();
+    await webComponentChart.press('ArrowDown');
+    await expect(lineChart).toBeFocused();
+    await expect(licensedChart).not.toHaveClass(/active/);
+    await expect(addedChart).not.toHaveClass(/active/);
+    await si.runVisualAndA11yTests('catalog-instance-limits');
+  });
+
+  test(example + ' catalog limit after removing and adding a widget', async ({ page, si }) => {
+    await si.visitExample(example, undefined);
+    await page.getByLabel('Edit').click();
+    await page
+      .locator('si-dashboard-card')
+      .filter({ hasText: 'Full Speed' })
+      .getByLabel('Remove')
+      .click();
+    await page
+      .locator('si-delete-confirmation-dialog')
+      .getByRole('button', { name: 'Remove', exact: true })
+      .click();
+    await expect(page.getByText('Full Speed', { exact: true })).not.toBeVisible();
+
+    await page.getByRole('button', { name: 'Add widget', exact: true }).click();
+    await page.getByRole('textbox', { name: 'Search…' }).fill('Gauge Chart');
+    await expect(page.getByRole('option')).toHaveCount(1);
+    const gaugeChart = page.getByRole('option', { name: /^Gauge Chart/ });
+    await expect(gaugeChart).toBeEnabled();
+    await expect(gaugeChart.locator('si-badge')).toHaveCount(0);
+    await gaugeChart.click();
+    await expect(gaugeChart.locator('input')).toBeChecked();
+    await page.getByRole('button', { name: 'Add', exact: true }).click();
+    await expect(page.getByText('Reasons to remember the name', { exact: true })).toBeVisible();
+
+    await page.getByRole('button', { name: 'Add widget', exact: true }).click();
+    await page.getByRole('textbox', { name: 'Search…' }).fill('Gauge Chart');
+    await expect(page.getByRole('option')).toHaveCount(1);
+    await expect(gaugeChart).toBeDisabled();
+    await expect(gaugeChart.locator('si-badge')).toHaveText('Added');
+    await expect(gaugeChart.locator('input')).not.toBeChecked();
+    await expect(gaugeChart).toHaveAttribute('aria-selected', 'false');
+    await expect(page.getByRole('button', { name: 'Add', exact: true })).toBeDisabled();
+    await si.runVisualAndA11yTests('catalog-limit-reached');
+  });
+
   test(example + 'helloWorld', async ({ page, si }) => {
     await si.visitExample(example, undefined);
     await openWidgetCatalog(page);

@@ -14,11 +14,12 @@ import {
   Type
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
-import { firstValueFrom, Observable, of, zip } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, of, zip } from 'rxjs';
 
-import { TestingModule } from '../../../test/testing.module';
+import { createTestingWidget, TestingModule } from '../../../test/testing.module';
 import {
   provideDashboardToolbarItems,
   SI_DASHBOARD_CONFIGURATION
@@ -86,6 +87,7 @@ export class GridComponent {
   readonly emitWidgetInstanceEditEvents = input(false);
   readonly editable = model(false);
   readonly widgetInstanceEdit = output<WidgetConfig>();
+  readonly visibleWidgetInstances$ = new BehaviorSubject<WidgetConfig[]>([]);
   addWidgetInstance(item: Omit<WidgetConfig, 'id'>): void {
     widgetConfig = item;
   }
@@ -174,6 +176,72 @@ describe('SiFlexibleDashboardComponent', () => {
       expect(widgetConfig).toBeDefined();
       expect(widgetConfig.widgetId).toEqual('widgetId');
       vi.useRealTimers();
+    });
+
+    it('should read visible dashboard instances directly in the widget catalog', async () => {
+      const widget: Widget = {
+        ...createTestingWidget('Limited widget', 'limited'),
+        maxInstances: 1
+      };
+      const instances: WidgetConfig[] = [{ id: 'limited-instance', widgetId: widget.id }];
+      fixture.componentRef.setInput('widgetCatalog', [widget]);
+      grid.visibleWidgetInstances$.next(instances);
+      component.showWidgetCatalog();
+      await fixture.whenStable();
+
+      const catalogElement = fixture.debugElement.query(By.directive(SiWidgetCatalogComponent));
+      expect(catalogElement.query(By.css('[role="option"]')).nativeElement).toHaveAttribute(
+        'aria-disabled',
+        'true'
+      );
+      expect(catalogElement.query(By.css('si-badge')).nativeElement).toHaveTextContent('Added');
+    });
+
+    it('should disable a catalog option when a dashboard instance reaches its limit', async () => {
+      const widget: Widget = {
+        ...createTestingWidget('Limited widget', 'limited'),
+        maxInstances: 1
+      };
+      fixture.componentRef.setInput('widgetCatalog', [widget]);
+      component.showWidgetCatalog();
+      await fixture.whenStable();
+
+      const option = fixture.debugElement.query(By.css('[role="option"]'))
+        .nativeElement as HTMLElement;
+      expect(option).toHaveAttribute('aria-disabled', 'false');
+      expect(option).toHaveAttribute('aria-selected', 'true');
+
+      grid.visibleWidgetInstances$.next([{ id: 'limited-instance', widgetId: widget.id }]);
+      await fixture.whenStable();
+
+      expect(option).toHaveAttribute('aria-disabled', 'true');
+      expect(option).toHaveAttribute('aria-selected', 'false');
+      expect(option.querySelector('si-badge')).toHaveTextContent('Added');
+    });
+
+    it('should enable a catalog option when a dashboard instance is removed', async () => {
+      const widget: Widget = {
+        ...createTestingWidget('Limited widget', 'limited'),
+        maxInstances: 1
+      };
+      fixture.componentRef.setInput('widgetCatalog', [widget]);
+      grid.visibleWidgetInstances$.next([{ id: 'limited-instance', widgetId: widget.id }]);
+      component.showWidgetCatalog();
+      await fixture.whenStable();
+
+      const option = fixture.debugElement.query(By.css('[role="option"]'))
+        .nativeElement as HTMLElement;
+      expect(option).toHaveAttribute('aria-disabled', 'true');
+
+      grid.visibleWidgetInstances$.next([]);
+      await fixture.whenStable();
+
+      expect(option).toHaveAttribute('aria-disabled', 'false');
+      expect(option.querySelector('si-badge')).toBeNull();
+      option.click();
+      await fixture.whenStable();
+
+      expect(option).toHaveAttribute('aria-selected', 'true');
     });
 
     it('addWidgetAction action shall call showWidgetCatalog()', () => {

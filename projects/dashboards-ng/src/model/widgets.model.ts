@@ -23,6 +23,27 @@ export interface Widget {
   name: TranslatableString;
   /** An optional description that is visible in the widget catalog. */
   description?: TranslatableString;
+  /**
+   * Maximum number of instances of this widget that can be added through the catalog.
+   *
+   * - `undefined` (default): unlimited instances.
+   * - `0`: creation is disabled, but the widget stays visible in the catalog.
+   * - `n > 0`: creation is allowed until `n` instances with the same `widgetId`
+   *   exist on the dashboard. Once the limit is reached, the catalog entry is
+   *   disabled and marked as added.
+   *
+   * @remarks This limit applies to the catalog only. It does not restrict
+   * programmatic calls to `addWidgetInstance()`.
+   * @defaultValue undefined
+   */
+  maxInstances?: number;
+  /**
+   * Optional translatable badge text displayed next to the widget name in the catalog,
+   * for example, "Requires license" when creation is disabled with `maxInstances: 0`.
+   * Consumer badges use the info style. The built-in added badge takes precedence
+   * when a positive instance limit has been reached.
+   */
+  badge?: TranslatableString;
   /** A CSS icon class that specifies the widget icon, displayed in the catalog. */
   iconClass?: string;
   /** The factory to instantiate a widget instance component that is added to the dashboard. */

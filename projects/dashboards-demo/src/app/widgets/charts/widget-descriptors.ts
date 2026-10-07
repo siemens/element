@@ -72,6 +72,8 @@ export const CIRCLE_CHART_DESC: Widget = {
   name: 'Circle Chart',
   id: '@siemens/dashboards-demo/circle-chart',
   description: 'This is a cart with a circle.',
+  maxInstances: 0,
+  badge: 'Requires license',
   iconClass: 'element-trend',
   componentFactory: {
     componentName: 'CircleComponent',
@@ -98,6 +100,7 @@ export const GAUGE_CHART_DESC: Widget = {
   name: 'Gauge Chart',
   id: '@siemens/dashboards-demo/gauge',
   description: 'A nice gauge charts',
+  maxInstances: 1,
   iconClass: 'element-trend',
   componentFactory: {
     componentName: 'GaugeComponent',
