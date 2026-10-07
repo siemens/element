@@ -304,6 +304,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
       bindings: [
         inputBinding('multiSelect', this.multiSelect),
         inputBinding('searchPlaceholder', this.searchPlaceholder),
+        inputBinding('visibleWidgetInstances', this.grid().visibleWidgetInstances),
         outputBinding<Omit<WidgetConfig, 'id'>[] | undefined>('closed', widgetConfigs => {
           this.viewState.set('dashboard');
           this.catalogHost().clear();

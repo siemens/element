@@ -253,6 +253,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
     readonly closed: _angular_core.OutputEmitterRef<Omit<WidgetConfig, "id">[] | undefined>;
     readonly multiSelect: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly visibleWidgetInstances: _angular_core.InputSignal<WidgetConfig[]>;
     // @deprecated
     widgetCatalog: Widget[];
     readonly widgetList: _angular_core.WritableSignal<Widget[]>;
@@ -305,11 +306,13 @@ export type WebComponent = CommonFactoryFields & {
 
 // @public
 export interface Widget {
+    badge?: TranslatableString;
     componentFactory: WidgetComponentFactory;
     defaults?: Pick<WidgetConfig, 'width' | 'height' | 'minWidth' | 'minHeight' | 'heading' | 'headingIcon' | 'expandable' | 'immutable' | 'image' | 'accentLine'>;
     description?: TranslatableString;
     iconClass?: string;
     id: string;
+    maxInstances?: number;
     name: TranslatableString;
     payload?: any;
     version?: string;

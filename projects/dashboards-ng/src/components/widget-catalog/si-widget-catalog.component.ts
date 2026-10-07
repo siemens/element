@@ -13,6 +13,7 @@ import {
   inject,
   input,
   isSignal,
+  linkedSignal,
   OnInit,
   output,
   signal,
@@ -21,6 +22,7 @@ import {
 import { debounce, form, FormField } from '@angular/forms/signals';
 import { elementSpecialObject } from '@siemens/element-icons';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
+import { SiBadgeComponent } from '@siemens/element-ng/badge';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
@@ -46,6 +48,7 @@ import { SiWidgetEditorBase } from '../si-widget-editor-base';
     SiSearchBarInputDirective,
     FormField,
     SiIconComponent,
+    SiBadgeComponent,
     SiEmptyStateComponent,
     SiTranslatePipe,
     CdkListbox,
@@ -109,6 +112,38 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   readonly widgetList = signal<Widget[]>([]);
 
   /**
+   * Current visible widget instances on the dashboard, used to enforce
+   * `maxInstances` limits and display the added state in the catalog.
+   *
+   * @defaultValue []
+   */
+  readonly visibleWidgetInstances = input<WidgetConfig[]>([]);
+
+  protected readonly widgetStates = computed(() => {
+    const counts = new Map<string, number>();
+    for (const instance of this.visibleWidgetInstances()) {
+      counts.set(instance.widgetId, (counts.get(instance.widgetId) ?? 0) + 1);
+    }
+
+    return new Map(
+      this.widgetCatalogList.map(widget => {
+        const added =
+          widget.maxInstances !== undefined &&
+          widget.maxInstances > 0 &&
+          (counts.get(widget.id) ?? 0) >= widget.maxInstances;
+        return [
+          widget.id,
+          {
+            disabled: widget.maxInstances === 0 || added,
+            added,
+            badge: added ? this.labelAdded : widget.badge
+          }
+        ];
+      })
+    );
+  });
+
+  /**
    * Holds the search term from the catalog to be visible when going back
    * by pressing the previous button from the widget edit view.
    */
@@ -119,7 +154,12 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
    * Array used to hold the search result on the widget catalog.
    * @defaultValue [] */
   protected filteredWidgetCatalog: Widget[] = [];
-  protected readonly selectedWidgets = signal<Widget[]>([]);
+  // Prune disabled widgets before the next selection read, without waiting for an effect.
+  protected readonly selectedWidgets = linkedSignal({
+    source: this.widgetStates,
+    computation: (states, previous): Widget[] =>
+      previous?.value.filter(widget => !states.get(widget.id)?.disabled) ?? []
+  });
   protected readonly hasSelection = computed(() => this.selectedWidgets().length > 0);
   /**
    * @deprecated Use `selectedWidgets` and `hasSelection` instead.
@@ -151,6 +191,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   protected labelPrevious = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.PREVIOUS:Previous`);
   protected labelNext = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.NEXT:Next`);
   protected labelAdd = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.ADD:Add`);
+  protected labelAdded = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.ADDED:Added`);
   protected labelEmpty = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.EMPTY:No widgets found`);
   protected labelEmptyMessage = t(
     () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.EMPTY_MESSAGE:Refine search`
@@ -186,8 +227,8 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
 
   protected readonly showPreviousButton = computed(() => this.view() === 'editor');
 
-  protected readonly disableAddButton = computed(() =>
-    this.view() === 'list' ? !this.hasSelection() : this.invalidConfig()
+  protected readonly disableAddButton = computed(
+    () => !this.hasSelection() || (this.view() !== 'list' && this.invalidConfig())
   );
   protected readonly disableNextButton = computed(() => {
     const wizardState = this.editorWizardState();
@@ -211,7 +252,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
     effect(() => {
       const selected = this.selected();
       if (selected) {
-        this.selectedWidgets.set([selected]);
+        this.selectWidgets([selected]);
       }
     });
     effect(() => {
@@ -226,8 +267,11 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
 
   ngOnInit(): void {
     this.filteredWidgetCatalog = this.widgetCatalogList;
-    if (this.widgetCatalogList.length > 0 && !this.multiSelect()) {
-      this.selectWidgets([this.widgetCatalogList[0]]);
+    if (!this.multiSelect()) {
+      const firstEnabledWidget = this.widgetCatalogList.find(widget =>
+        this.isWidgetEnabled(widget)
+      );
+      this.selectWidgets(firstEnabledWidget ? [firstEnabledWidget] : []);
     }
   }
 
@@ -375,11 +419,16 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   }
 
   protected selectWidgets(widgets: readonly Widget[]): void {
-    if (this.multiSelect()) {
-      this.selectedWidgets.set([...widgets]);
-    } else {
-      this.selected.set(widgets.length > 0 ? widgets[0] : undefined);
+    const enabledWidgets = widgets.filter(widget => this.isWidgetEnabled(widget));
+    const selection = this.multiSelect() ? enabledWidgets : enabledWidgets.slice(0, 1);
+    this.selectedWidgets.set(selection);
+    if (!this.multiSelect()) {
+      this.selected.set(selection[0]);
     }
+  }
+
+  private isWidgetEnabled(widget: Widget): boolean {
+    return !this.widgetStates().get(widget.id)?.disabled;
   }
 
   private updateSelectionOnFilter(): void {
@@ -389,16 +438,14 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
     );
 
     if (selectedFilteredWidgets.length > 0) {
-      this.selectedWidgets.set(selectedFilteredWidgets);
+      this.selectWidgets(selectedFilteredWidgets);
       return;
     }
 
-    if (this.filteredWidgetCatalog.length > 0) {
-      this.selectedWidgets.set([this.filteredWidgetCatalog[0]]);
-      return;
-    }
-
-    this.selectedWidgets.set([]);
+    const firstEnabledWidget = this.filteredWidgetCatalog.find(widget =>
+      this.isWidgetEnabled(widget)
+    );
+    this.selectWidgets(firstEnabledWidget ? [firstEnabledWidget] : []);
   }
 
   private createConfigForSelection(widget: Widget): Omit<WidgetConfig, 'id'> {
