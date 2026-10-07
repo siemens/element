@@ -14,7 +14,7 @@ import {
 } from '@siemens/element-ng/action-modal';
 import { MenuItemAction } from '@siemens/element-ng/menu';
 import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
-import { GridItemHTMLElement } from 'gridstack';
+import { GridItemHTMLElement, GridStack } from 'gridstack';
 import { firstValueFrom, Observable, Subject } from 'rxjs';
 import { page, userEvent } from 'vitest/browser';
 
@@ -24,6 +24,7 @@ import {
   TEST_WIDGET_STANDALONE
 } from '../../../test/test-widget/test-widget';
 import { TestingModule } from '../../../test/testing.module';
+import { WidgetConfig } from '../../model/widgets.model';
 import { SiWidgetHostComponent } from './si-widget-host.component';
 
 class SiActionDialogMockService {
@@ -43,6 +44,7 @@ describe('SiWidgetHostComponent', () => {
       let component: SiWidgetHostComponent;
       let fixture: ComponentFixture<SiWidgetHostComponent>;
       let actionDialogService: SiActionDialogMockService;
+      let grid: Pick<GridStack, 'update' | 'makeWidget'>;
 
       beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -58,14 +60,132 @@ describe('SiWidgetHostComponent', () => {
         ) as unknown as SiActionDialogMockService;
         fixture.componentRef.setInput('componentFactory', widget.componentFactory);
         fixture.componentRef.setInput('widgetConfig', TEST_WIDGET_CONFIG_0);
-        fixture.componentRef.setInput('grid', {
-          update: vi.fn(),
-          makeWidget: vi.fn()
-        });
+        grid = {
+          update: vi.fn<GridStack['update']>(),
+          makeWidget: vi.fn<GridStack['makeWidget']>()
+        };
+        fixture.componentRef.setInput('grid', grid);
       });
 
       it('should create', () => {
         expect(component).toBeTruthy();
+      });
+
+      it('should forward native GridStack options and prefer them over legacy aliases', async () => {
+        const config: WidgetConfig = {
+          ...TEST_WIDGET_CONFIG_0,
+          w: 4,
+          h: 3,
+          minW: 0,
+          minH: 0,
+          maxW: 6,
+          maxH: 5,
+          minWidth: 2,
+          minHeight: 2,
+          noMove: true,
+          noResize: true,
+          locked: true,
+          autoPosition: true,
+          print: { hide: true }
+        };
+        fixture.componentRef.setInput('widgetConfig', config);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(grid.makeWidget).toHaveBeenCalledWith(
+          component.elementRef,
+          expect.objectContaining({
+            w: 4,
+            h: 3,
+            minW: 0,
+            minH: 0,
+            maxW: 6,
+            maxH: 5,
+            noMove: true,
+            noResize: true,
+            locked: true,
+            autoPosition: true,
+            print: { hide: true }
+          })
+        );
+      });
+
+      it('should continue to map legacy sizing aliases for existing configurations', async () => {
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          minWidth: 3,
+          minHeight: 2
+        });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(grid.makeWidget).toHaveBeenCalledWith(
+          component.elementRef,
+          expect.objectContaining({ w: 6, h: 2, minW: 3, minH: 2 })
+        );
+      });
+
+      it('should update native GridStack options when the configuration changes', async () => {
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          w: 5,
+          h: 3,
+          minW: 2,
+          minH: 2,
+          maxW: 6,
+          maxH: 4,
+          noMove: false,
+          noResize: true,
+          locked: true
+        });
+        await fixture.whenStable();
+
+        expect(grid.update).toHaveBeenCalledWith(
+          component.elementRef,
+          expect.objectContaining({
+            w: 5,
+            h: 3,
+            minW: 2,
+            minH: 2,
+            maxW: 6,
+            maxH: 4,
+            noMove: false,
+            noResize: true,
+            locked: true
+          })
+        );
+      });
+
+      it('should clear native options that are removed from the configuration', async () => {
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          maxW: 6,
+          maxH: 4,
+          noMove: true,
+          noResize: true,
+          locked: true,
+          print: { hide: true }
+        });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        fixture.componentRef.setInput('widgetConfig', TEST_WIDGET_CONFIG_0);
+        await fixture.whenStable();
+
+        expect(grid.update).toHaveBeenCalledWith(
+          component.elementRef,
+          expect.objectContaining({
+            maxW: undefined,
+            maxH: undefined,
+            noMove: undefined,
+            noResize: undefined,
+            locked: undefined,
+            print: undefined
+          })
+        );
       });
 
       it('should show the configured heading icon only when provided', async () => {
@@ -323,6 +443,73 @@ describe('SiWidgetHostComponent', () => {
       expect(cardEl.getAttribute('tabindex')).toBeNull();
     });
 
+    it('should hide the resize handle and describe only moving when resizing is disabled', async () => {
+      fixture.componentRef.setInput('widgetConfig', {
+        ...TEST_WIDGET_CONFIG_0,
+        noResize: true
+      });
+      await fixture.whenStable();
+
+      expect(hostEl.querySelector('.resize-handle')).not.toBeInTheDocument();
+      expect(cardEl).toHaveAttribute(
+        'aria-description',
+        'Press Enter or Space to activate. Then use arrow keys to move, Escape to exit.'
+      );
+    });
+
+    it('should hide the drag overlay without replacing it when moving is re-enabled', async () => {
+      const overlay = hostEl.querySelector('.draggable-overlay');
+      fixture.componentRef.setInput('widgetConfig', {
+        ...TEST_WIDGET_CONFIG_0,
+        noMove: true
+      });
+      await fixture.whenStable();
+
+      expect(overlay).toHaveAttribute('hidden');
+      expect(cardEl).toHaveAttribute(
+        'aria-description',
+        'Press Enter or Space to activate. Then use Shift+arrow keys to resize, Escape to exit.'
+      );
+
+      fixture.componentRef.setInput('widgetConfig', {
+        ...TEST_WIDGET_CONFIG_0,
+        noMove: false
+      });
+      await fixture.whenStable();
+
+      expect(hostEl.querySelector('.draggable-overlay')).toBe(overlay);
+      expect(overlay).not.toHaveAttribute('hidden');
+    });
+
+    it('should not activate keyboard interaction when moving and resizing are disabled', async () => {
+      fixture.componentRef.setInput('widgetConfig', {
+        ...TEST_WIDGET_CONFIG_0,
+        noMove: true,
+        noResize: true
+      });
+      await fixture.whenStable();
+
+      cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+
+      expect(cardEl).not.toHaveAttribute('tabindex');
+      expect(cardEl).not.toHaveAttribute('role', 'application');
+      expect(cardEl).not.toHaveAttribute('aria-description');
+      expect(component.keyboardActive()).toBe(false);
+    });
+
+    it('should deactivate keyboard interaction when both restrictions are enabled', async () => {
+      component.keyboardActive.set(true);
+
+      fixture.componentRef.setInput('widgetConfig', {
+        ...TEST_WIDGET_CONFIG_0,
+        noMove: true,
+        noResize: true
+      });
+      await fixture.whenStable();
+
+      expect(component.keyboardActive()).toBe(false);
+    });
+
     it('should expose the host as a labeled list item when not editable', () => {
       fixture.componentRef.setInput('editable', false);
       fixture.detectChanges();
@@ -402,6 +589,23 @@ describe('SiWidgetHostComponent', () => {
         expect(mockGrid.update).toHaveBeenCalledWith(hostEl, { x: 3, y: 1 });
       });
 
+      it('should prevent moving without preventing resizing when noMove is set', async () => {
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          noMove: true
+        });
+        mockNode.noMove = true;
+        await fixture.whenStable();
+
+        cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+        expect(mockGrid.update).not.toHaveBeenCalled();
+
+        cardEl.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'ArrowRight', shiftKey: true, bubbles: true })
+        );
+        expect(mockGrid.update).toHaveBeenCalledWith(hostEl, { w: 5, h: 3 });
+      });
+
       it('should retain focus when Gridstack reorders the active widget', () => {
         mockGrid.update.mockImplementation((_el: unknown, opts: unknown) => {
           Object.assign(mockNode, opts);
@@ -453,6 +657,67 @@ describe('SiWidgetHostComponent', () => {
           new KeyboardEvent('keydown', { key: 'ArrowRight', shiftKey: true, bubbles: true })
         );
         expect(mockGrid.update).toHaveBeenCalledWith(hostEl, { w: 5, h: 3 });
+      });
+
+      it('should prevent resizing without preventing moving when noResize is set', async () => {
+        fixture.componentRef.setInput('widgetConfig', {
+          ...TEST_WIDGET_CONFIG_0,
+          noResize: true
+        });
+        mockNode.noResize = true;
+        await fixture.whenStable();
+
+        cardEl.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'ArrowRight', shiftKey: true, bubbles: true })
+        );
+        expect(mockGrid.update).not.toHaveBeenCalled();
+
+        cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+        expect(mockGrid.update).toHaveBeenCalledWith(hostEl, { x: 3, y: 1 });
+      });
+
+      it('should not increase width beyond maxW', () => {
+        mockNode.maxW = mockNode.w;
+        const gridEventSpy = vi.spyOn(component.gridEvent, 'emit');
+
+        cardEl.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'ArrowRight', shiftKey: true, bubbles: true })
+        );
+
+        expect(mockGrid.update).not.toHaveBeenCalled();
+        expect(gridEventSpy).not.toHaveBeenCalled();
+      });
+
+      it('should not decrease width below minW', () => {
+        mockNode.minW = mockNode.w;
+
+        cardEl.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'ArrowLeft', shiftKey: true, bubbles: true })
+        );
+
+        expect(mockGrid.update).not.toHaveBeenCalled();
+      });
+
+      it('should not increase height beyond maxH', () => {
+        mockNode.maxH = mockNode.h;
+        const gridEventSpy = vi.spyOn(component.gridEvent, 'emit');
+
+        cardEl.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'ArrowDown', shiftKey: true, bubbles: true })
+        );
+
+        expect(mockGrid.update).not.toHaveBeenCalled();
+        expect(gridEventSpy).not.toHaveBeenCalled();
+      });
+
+      it('should not decrease height below minH', () => {
+        mockNode.minH = mockNode.h;
+
+        cardEl.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'ArrowUp', shiftKey: true, bubbles: true })
+        );
+
+        expect(mockGrid.update).not.toHaveBeenCalled();
       });
 
       it('should decrease width with Shift+ArrowLeft', () => {

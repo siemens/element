@@ -1,24 +1,27 @@
 <div class="grid-stack-item-content p-4">
   @if (editable()) {
-    <div class="resize-handle">
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g>
-          <path d="M16 16H18V18H16V16Z" fill="currentColor" />
-          <path d="M11 16H13V18H11V16Z" fill="currentColor" />
-          <path d="M11 11H13V13H11V11Z" fill="currentColor" />
-          <path d="M6 16H8V18H6V16Z" fill="currentColor" />
-          <path d="M16 11H18V13H16V11Z" fill="currentColor" />
-          <path d="M16 6H18V8H16V6Z" fill="currentColor" />
-        </g>
-      </svg>
-    </div>
-    <div class="draggable-overlay"></div>
+    @if (!widgetConfig().noResize) {
+      <div class="resize-handle">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g>
+            <path d="M16 16H18V18H16V16Z" fill="currentColor" />
+            <path d="M11 16H13V18H11V16Z" fill="currentColor" />
+            <path d="M11 11H13V13H11V11Z" fill="currentColor" />
+            <path d="M6 16H8V18H6V16Z" fill="currentColor" />
+            <path d="M16 11H18V13H16V11Z" fill="currentColor" />
+            <path d="M16 6H18V8H16V6Z" fill="currentColor" />
+          </g>
+        </svg>
+      </div>
+    }
+    <!-- Keep the handle mounted because GridStack caches its drag listeners. -->
+    <div class="draggable-overlay" [hidden]="widgetConfig().noMove"></div>
   }
 
   <si-dashboard-card
@@ -27,12 +30,12 @@
     [class]="accentLine()"
     [class.shadow-3]="keyboardActive()"
     [class.si-widget-keyboard-active]="keyboardActive()"
-    [attr.tabindex]="editable() ? 0 : null"
-    [attr.role]="editable() ? 'application' : null"
-    [attr.aria-roledescription]="editable() ? 'widget' : null"
-    [attr.aria-label]="editable() ? (widgetConfig().heading | translate) : null"
+    [attr.tabindex]="keyboardEnabled() ? 0 : null"
+    [attr.role]="keyboardEnabled() ? 'application' : null"
+    [attr.aria-roledescription]="keyboardEnabled() ? 'widget' : null"
+    [attr.aria-label]="keyboardEnabled() ? (widgetConfig().heading | translate) : null"
     [attr.aria-description]="
-      editable() && !card.isExpanded() ? (a11yWidgetDescription | translate) : null
+      keyboardEnabled() && !card.isExpanded() ? (a11yWidgetKeyboardDescription() | translate) : null
     "
     [expandText]="labelExpand"
     [restoreText]="labelRestore"

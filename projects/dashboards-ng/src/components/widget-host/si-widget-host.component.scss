@@ -38,8 +38,8 @@
   }
 
   /* stylelint-disable declaration-no-important */
-  .ui-resizable-handle {
-    // Overwrite to always show the handle in edit mode
+  :not(.ui-resizable-disabled) > .ui-resizable-handle {
+    // Overwrite to always show enabled handles in edit mode
     display: block !important;
   }
 

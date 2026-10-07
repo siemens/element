@@ -9,10 +9,12 @@ import {
   output,
   OutputEmitterRef
 } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
+import { firstValueFrom } from 'rxjs';
 import type { Mock } from 'vitest';
 
 import { TEST_WIDGET } from '../../../test/test-widget/test-widget';
@@ -95,6 +97,49 @@ describe('SiGridComponent', () => {
     expect(component.editable()).toBe(false);
   });
 
+  it('should restore saved GridStack settings when widget edits are canceled', async () => {
+    fixture.componentRef.setInput('widgetCatalog', [TEST_WIDGET]);
+    await fixture.whenStable();
+    const config: WidgetConfig = {
+      id: 'cancel-widget',
+      widgetId: TEST_WIDGET.id,
+      x: 0,
+      y: 0,
+      w: 4,
+      h: 2
+    };
+    widgetStorage.save([config], []);
+    await fixture.whenStable();
+    component.edit();
+    await fixture.whenStable();
+
+    const modified = firstValueFrom(outputToObservable(component.isModified));
+    component.updateWidgetInstance({
+      ...config,
+      noMove: true,
+      noResize: true,
+      locked: true,
+      maxW: 4,
+      maxH: 2
+    });
+    await expect(modified).resolves.toBe(true);
+    await fixture.whenStable();
+    const host = fixture.nativeElement.querySelector('si-widget-host');
+    expect(host).toHaveAttribute('gs-no-move', 'true');
+    expect(host).toHaveAttribute('gs-no-resize', 'true');
+    expect(host).toHaveAttribute('gs-locked', 'true');
+
+    component.cancel();
+    await fixture.whenStable();
+    component.edit();
+    await fixture.whenStable();
+
+    expect(host).not.toHaveAttribute('gs-no-move');
+    expect(host).not.toHaveAttribute('gs-no-resize');
+    expect(host).not.toHaveAttribute('gs-locked');
+    expect(host.querySelector('.resize-handle')).toBeInTheDocument();
+  });
+
   describe('#save()', () => {
     it('should change editable state to false', async () => {
       fixture.componentRef.setInput('editable', true);
@@ -104,6 +149,72 @@ describe('SiGridComponent', () => {
       component.save();
       expect(spy).toHaveBeenCalled();
       expect(component.editable()).toBe(false);
+    });
+
+    it.each([
+      { name: 'native', initial: { w: 4, h: 2 }, expected: { w: 5, h: 3 } },
+      {
+        name: 'legacy',
+        initial: { width: 4, height: 2 },
+        expected: { width: 5, height: 3 }
+      },
+      {
+        name: 'mixed',
+        initial: { w: 4, h: 2, width: 4, height: 2 },
+        expected: { w: 5, h: 3, width: 5, height: 3 }
+      },
+      { name: 'unspecified', initial: {}, expected: { w: 5, h: 3 } }
+    ])('should persist updated dimensions using $name property names', async sizing => {
+      fixture.componentRef.setInput('widgetCatalog', [TEST_WIDGET]);
+      await fixture.whenStable();
+      const config: WidgetConfig = {
+        id: 'resized-widget',
+        widgetId: TEST_WIDGET.id,
+        x: 0,
+        y: 0,
+        ...sizing.initial,
+        noMove: true,
+        noResize: true,
+        locked: true,
+        minW: 2,
+        minH: 2,
+        maxW: 6,
+        maxH: 4
+      };
+      widgetStorage.save([config], []);
+      await fixture.whenStable();
+      component.edit();
+      await fixture.whenStable();
+      vi.spyOn(component.gridStackWrapper(), 'getWidgetLayout').mockReturnValue({
+        id: config.id,
+        x: 2,
+        y: 1,
+        w: 5,
+        h: 3,
+        width: 5,
+        height: 3
+      });
+
+      component.save();
+      await fixture.whenStable();
+
+      const [saved] = await firstValueFrom(widgetStorage.load());
+      expect(saved).toMatchObject({
+        ...sizing.expected,
+        x: 2,
+        y: 1,
+        noMove: true,
+        noResize: true,
+        locked: true,
+        minW: 2,
+        minH: 2,
+        maxW: 6,
+        maxH: 4
+      });
+      const sizes = (['w', 'h', 'width', 'height'] as const)
+        .filter(property => property in saved)
+        .map(property => [property, saved[property]]);
+      expect(Object.fromEntries(sizes)).toEqual(sizing.expected);
     });
   });
 

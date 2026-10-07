@@ -28,11 +28,12 @@ describe('SiGridstackWrapperComponent', () => {
   let component: SiGridstackWrapperComponent;
   let widgets: WritableSignal<WidgetConfig[]>;
   let widgetCatalogMap: WritableSignal<Map<string, Widget>>;
+  let editable: WritableSignal<boolean>;
 
   beforeEach(async () => {
     // Use a viewport comfortably above the responsive 1-column breakpoint (576px)
     // so gridstack does not intermittently collapse the layout to a single column.
-    page.viewport(1024, 768);
+    await page.viewport(1024, 768);
     await TestBed.configureTestingModule({
       imports: [TestingModule],
       providers: [SiActionDialogService]
@@ -47,10 +48,12 @@ describe('SiGridstackWrapperComponent', () => {
   ): Promise<void> => {
     widgets = signal(initialWidgets);
     widgetCatalogMap = signal(initialCatalogMap);
+    editable = signal(false);
     fixture = TestBed.createComponent(SiGridstackWrapperComponent, {
       bindings: [
         inputBinding('widgetConfigs', widgets),
-        inputBinding('widgetCatalogMap', widgetCatalogMap)
+        inputBinding('widgetCatalogMap', widgetCatalogMap),
+        inputBinding('editable', editable)
       ]
     });
     component = fixture.componentInstance;
@@ -80,6 +83,99 @@ describe('SiGridstackWrapperComponent', () => {
       );
 
       expect(fixture.debugElement.queryAll(By.css('si-widget-host'))).toHaveLength(2);
+    });
+
+    it('should apply native dimensions and restrictions across edit mode changes', async () => {
+      const config: WidgetConfig = {
+        ...TEST_WIDGET_CONFIG_0,
+        w: 4,
+        h: 3,
+        noMove: true,
+        noResize: true,
+        locked: true
+      };
+      await createComponent([config], new Map([[TEST_WIDGET.id, TEST_WIDGET]]));
+      const host = fixture.nativeElement.querySelector('si-widget-host');
+
+      editable.set(true);
+      await fixture.whenStable();
+      editable.set(false);
+      await fixture.whenStable();
+      editable.set(true);
+      await fixture.whenStable();
+
+      expect(host).toHaveAttribute('gs-w', '4');
+      expect(host).toHaveAttribute('gs-h', '3');
+      expect(host).toHaveAttribute('gs-no-move', 'true');
+      expect(host).toHaveAttribute('gs-no-resize', 'true');
+      expect(host).toHaveAttribute('gs-locked', 'true');
+      expect(component.getWidgetLayout(config.id)).toMatchObject({ w: 4, h: 3 });
+    });
+
+    it.each([
+      { w: 1, h: 1, minW: 3, minH: 2, expectedW: 3, expectedH: 2 },
+      { w: 8, h: 7, maxW: 4, maxH: 3, expectedW: 4, expectedH: 3 }
+    ])('should enforce native size constraints: $expectedW x $expectedH', async options => {
+      const { expectedW, expectedH, ...sizing } = options;
+      await createComponent(
+        [{ id: 'constrained', widgetId: TEST_WIDGET.id, ...sizing }],
+        new Map([[TEST_WIDGET.id, TEST_WIDGET]])
+      );
+
+      expect(component.getWidgetLayout('constrained')).toMatchObject({
+        w: expectedW,
+        h: expectedH
+      });
+    });
+
+    it.each([
+      { w: 1, h: 1 },
+      { w: 8, h: 5 }
+    ])('should clear removed restrictions and size constraints: $w x $h', async sizing => {
+      const config: WidgetConfig = {
+        ...TEST_WIDGET_CONFIG_0,
+        w: 4,
+        h: 3,
+        minW: 3,
+        minH: 2,
+        maxW: 6,
+        maxH: 4,
+        noMove: true,
+        noResize: true,
+        locked: true
+      };
+      await createComponent([config], new Map([[TEST_WIDGET.id, TEST_WIDGET]]));
+      editable.set(true);
+      await fixture.whenStable();
+
+      widgets.set([{ ...TEST_WIDGET_CONFIG_0, ...sizing }]);
+      await fixture.whenStable();
+
+      const host = fixture.nativeElement.querySelector('si-widget-host');
+      expect(host).not.toHaveAttribute('gs-no-move');
+      expect(host).not.toHaveAttribute('gs-no-resize');
+      expect(host).not.toHaveAttribute('gs-locked');
+      expect(component.getWidgetLayout(config.id)).toMatchObject(sizing);
+    });
+
+    it('should hide native resize handles when noResize is set and restore them when removed', async () => {
+      await createComponent([TEST_WIDGET_CONFIG_0], new Map([[TEST_WIDGET.id, TEST_WIDGET]]));
+      editable.set(true);
+      await fixture.whenStable();
+      const host = fixture.nativeElement.querySelector('si-widget-host');
+      const handle = host.querySelector('.ui-resizable-handle');
+      expect(handle).toBeVisible();
+
+      widgets.set([{ ...TEST_WIDGET_CONFIG_0, noResize: true }]);
+      await fixture.whenStable();
+
+      expect(handle).not.toBeVisible();
+      expect(host.querySelector('.resize-handle')).not.toBeInTheDocument();
+
+      widgets.set([TEST_WIDGET_CONFIG_0]);
+      await fixture.whenStable();
+
+      expect(handle).toBeVisible();
     });
 
     it('should group widgets as a labeled list when not editable', async () => {
@@ -178,6 +274,21 @@ describe('SiGridstackWrapperComponent', () => {
         expect(position!.y).toBeGreaterThanOrEqual(0);
         expect(position!.width).toBe(wg.width);
         expect(position!.height).toBe(wg.height);
+        expect(position).toMatchObject({ w: wg.width, h: wg.height });
+      });
+    });
+
+    it('should report default one-cell dimensions even when GridStack omits the attributes', async () => {
+      await createComponent(
+        [{ id: 'default-size', widgetId: TEST_WIDGET.id }],
+        new Map([[TEST_WIDGET.id, TEST_WIDGET]])
+      );
+
+      expect(component.getWidgetLayout('default-size')).toMatchObject({
+        w: 1,
+        h: 1,
+        width: 1,
+        height: 1
       });
     });
 

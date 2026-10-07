@@ -89,6 +89,20 @@ Direct <a href="../../../dashboards-demo/#/dashboard">Link</a> to dashboard demo
 
 <si-docs-api component="SiGridComponent" package="@siemens/dashboards-ng"></si-docs-api>
 
+### Widget configuration
+
+`WidgetConfig` inherits supported options from GridStack's `GridStackWidget`,
+including `noMove`, `noResize`, `locked`, and minimum and maximum size constraints.
+These options can also be supplied as `Widget.defaults`.
+
+Use GridStack's native sizing properties `w`, `h`, `minW`, and `minH` instead of
+the deprecated aliases `width`, `height`, `minWidth`, and `minHeight`. Legacy
+configurations remain supported; native properties take precedence if both are set.
+
+GridStack's `content`, `lazyLoad`, `subGridOpts`, `sizeToContent`, and
+`resizeToContentParent` options are omitted because the widget host renders Angular
+components inside a fixed-size dashboard card, without nested grids.
+
 ### Persistence of dashboard configuration
 
 <si-docs-type name="SiWidgetStorage" package="@siemens/dashboards-ng"></si-docs-type>

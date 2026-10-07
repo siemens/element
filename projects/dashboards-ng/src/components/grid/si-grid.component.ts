@@ -405,19 +405,25 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
     const wrapper = this.gridStackWrapper();
     const widgets = widgetConfigs.map(widget => {
       const position = wrapper.getWidgetLayout(widget.id);
+      const w = position?.w ?? position?.width;
+      const h = position?.h ?? position?.height;
       if (
         position &&
         (widget.x !== position.x ||
           widget.y !== position.y ||
-          widget.width !== position.width ||
-          widget.height !== position.height)
+          (widget.w ?? widget.width) !== w ||
+          (widget.h ?? widget.height) !== h ||
+          (widget.width !== undefined && widget.width !== w) ||
+          (widget.height !== undefined && widget.height !== h))
       ) {
         return {
           ...widget,
           x: position.x,
           y: position.y,
-          width: position.width,
-          height: position.height
+          ...(widget.width !== undefined ? { width: w } : {}),
+          ...(widget.height !== undefined ? { height: h } : {}),
+          ...(widget.w !== undefined || widget.width === undefined ? { w } : {}),
+          ...(widget.h !== undefined || widget.height === undefined ? { h } : {})
         };
       } else {
         return widget;

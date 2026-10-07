@@ -7,6 +7,7 @@ import { AccentLineType, MenuItem as MenuItemLegacy } from '@siemens/element-ng/
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { GridStackWidget } from 'gridstack';
 import { Subject } from 'rxjs';
 
 /**
@@ -28,19 +29,7 @@ export interface Widget {
   /** The factory to instantiate a widget instance component that is added to the dashboard. */
   componentFactory: WidgetComponentFactory;
   /** Optional default values that can be set to widget instances. */
-  defaults?: Pick<
-    WidgetConfig,
-    | 'width'
-    | 'height'
-    | 'minWidth'
-    | 'minHeight'
-    | 'heading'
-    | 'headingIcon'
-    | 'expandable'
-    | 'immutable'
-    | 'image'
-    | 'accentLine'
-  >;
+  defaults?: Omit<WidgetConfig, 'id' | 'widgetId' | 'version' | 'payload'>;
   /** Optional default payload object that is copied into every widget instance {@link WidgetConfig}. */
   payload?: any;
 }
@@ -142,8 +131,14 @@ export interface WidgetImage {
 /**
  * A {@link WidgetConfig} holds the configuration of a widget instance component that is visible on a dashboard.
  * It can be persisted and used to restore a dashboards state.
+ * GridStack widget options are supported except for content rendering, lazy loading,
+ * nested grids and automatic content sizing, which are incompatible with the widget host.
+ * Native GridStack sizing properties take precedence over their deprecated aliases.
  */
-export interface WidgetConfig {
+export interface WidgetConfig extends Omit<
+  GridStackWidget,
+  'content' | 'lazyLoad' | 'resizeToContentParent' | 'sizeToContent' | 'subGridOpts'
+> {
   /** A unique id of a widget instance */
   id: string;
   /**
@@ -157,28 +152,24 @@ export interface WidgetConfig {
   version?: string;
   /**
    * Width of the grid item, where number represents how many columns it spans (default?: 1)
+   * @deprecated Use `w` instead.
    */
-  width?: number;
+  width?: GridStackWidget['w'];
   /**
    * Height of the grid item, where number represents how many rows it takes. (default?: 1)
+   * @deprecated Use `h` instead.
    */
-  height?: number;
-  /**
-   * Grid item position on x axis of the grid (default?: 0)
-   */
-  x?: number;
-  /**
-   * Grid item position on y axis of the grid (default?: 0)
-   */
-  y?: number;
+  height?: GridStackWidget['h'];
   /**
    * minimum width allowed during resize/creation (default?: undefined = un-constrained)
+   * @deprecated Use `minW` instead.
    */
-  minWidth?: number;
+  minWidth?: GridStackWidget['minW'];
   /**
    * minimum height allowed during resize/creation (default?: undefined = un-constrained)
+   * @deprecated Use `minH` instead.
    */
-  minHeight?: number;
+  minHeight?: GridStackWidget['minH'];
   /**
    * grid item header text.
    */
@@ -354,9 +345,13 @@ export interface WidgetInstance {
 
 /**
  * Type to define the position of a widget instance, consisting of
- * the instance id and x, y, width and height.
+ * the instance id and x, y, w and h. The deprecated width and height aliases
+ * are included for backwards compatibility.
  */
-export type WidgetPositionConfig = Pick<WidgetConfig, 'id' | 'x' | 'y' | 'width' | 'height'>;
+export type WidgetPositionConfig = Pick<
+  WidgetConfig,
+  'id' | 'x' | 'y' | 'w' | 'h' | 'width' | 'height'
+>;
 
 /**
  * Function creates a new {@link WidgetConfig} without id from a {@link Widget} and

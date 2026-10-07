@@ -37,6 +37,12 @@
       }
     },
     "WIDGET": {
+      "A11Y": {
+        "ACTIVATED_MOVE": "Widget activated. Use arrow keys to move, Escape to exit.",
+        "ACTIVATED_RESIZE": "Widget activated. Use Shift+arrow keys to resize, Escape to exit.",
+        "DESCRIPTION_MOVE": "Press Enter or Space to activate. Then use arrow keys to move, Escape to exit.",
+        "DESCRIPTION_RESIZE": "Press Enter or Space to activate. Then use Shift+arrow keys to resize, Escape to exit."
+      },
       "REMOVE": "Remove",
       "EDIT": "Edit",
       "EXPAND": "Expand",

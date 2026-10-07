@@ -15,6 +15,7 @@ import { GridItemHTMLElement } from 'gridstack';
 import { GridStack } from 'gridstack';
 import { GridStackNode } from 'gridstack';
 import { GridStackOptions } from 'gridstack';
+import { GridStackWidget } from 'gridstack';
 import { InjectionToken } from '@angular/core';
 import { Injector } from '@angular/core';
 import { InputSignal } from '@angular/core';
@@ -305,7 +306,7 @@ export type WebComponent = CommonFactoryFields & {
 // @public
 export interface Widget {
     componentFactory: WidgetComponentFactory;
-    defaults?: Pick<WidgetConfig, 'width' | 'height' | 'minWidth' | 'minHeight' | 'heading' | 'headingIcon' | 'expandable' | 'immutable' | 'image' | 'accentLine'>;
+    defaults?: Omit<WidgetConfig, 'id' | 'widgetId' | 'version' | 'payload'>;
     description?: TranslatableString;
     iconClass?: string;
     id: string;
@@ -321,29 +322,31 @@ export type WidgetComponentFactory = WidgetComponentTypeFactory | FederatedModul
 export type WidgetComponentTypeFactory = CommonFactoryFields & (ModuleOptions | StandaloneOptions);
 
 // @public
-export interface WidgetConfig {
+export interface WidgetConfig extends Omit<GridStackWidget, 'content' | 'lazyLoad' | 'resizeToContentParent' | 'sizeToContent' | 'subGridOpts'> {
     accentLine?: AccentLineType;
     // (undocumented)
     actionBarViewType?: ViewType;
     expandable?: boolean;
     heading?: TranslatableString;
     headingIcon?: string | Record<string, string>;
-    height?: number;
+    // @deprecated
+    height?: GridStackWidget['h'];
     id: string;
     image?: WidgetImage;
     // (undocumented)
     immutable?: boolean;
     // (undocumented)
     isNotRemovable?: boolean;
-    minHeight?: number;
-    minWidth?: number;
+    // @deprecated
+    minHeight?: GridStackWidget['minH'];
+    // @deprecated
+    minWidth?: GridStackWidget['minW'];
     payload?: any;
     setupPending?: boolean;
     version?: string;
     widgetId: string;
-    width?: number;
-    x?: number;
-    y?: number;
+    // @deprecated
+    width?: GridStackWidget['w'];
 }
 
 // @public
@@ -407,7 +410,7 @@ export interface WidgetInstanceEditorWizardState {
 }
 
 // @public
-export type WidgetPositionConfig = Pick<WidgetConfig, 'id' | 'x' | 'y' | 'width' | 'height'>;
+export type WidgetPositionConfig = Pick<WidgetConfig, 'id' | 'x' | 'y' | 'w' | 'h' | 'width' | 'height'>;
 
 // (No @packageDocumentation comment for this package)
 

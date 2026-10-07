@@ -181,6 +181,46 @@ The Angular component should export the template as the public attribute `footer
 @ViewChild('footer', { static: true }) footer?: TemplateRef<unknown>;
 ```
 
+### Widget configuration
+
+`WidgetConfig` extends GridStack's `GridStackWidget` interface, so supported options
+are passed directly to GridStack without renaming them. For example:
+
+```ts
+import { WidgetConfig } from '@siemens/dashboards-ng';
+
+const widgetConfig: WidgetConfig = {
+  id: 'weather-1',
+  widgetId: 'weather',
+  w: 4,
+  h: 3,
+  minW: 2,
+  minH: 2,
+  maxW: 6,
+  maxH: 5,
+  noMove: true,
+  noResize: true,
+  locked: true
+};
+```
+
+`noMove` and `noResize` prevent moving and resizing respectively, including keyboard
+interaction in edit mode. `locked` prevents the widget from being pushed by other
+widgets; it does not replace `noMove` or `noResize`. Supported options can also be set
+in `Widget.defaults`.
+
+The sizing aliases `width`, `height`, `minWidth`, and `minHeight` are deprecated.
+Use `w`, `h`, `minW`, and `minH` instead. Existing configurations continue to work.
+When both names are provided, the native GridStack property takes precedence.
+Saving updates dimensions using the names already present in the configuration,
+keeping legacy configurations compatible with existing widget editors.
+Canceled widget edits also restore the previous interaction flags and size constraints.
+
+The properties `content`, `lazyLoad`, `subGridOpts`, `sizeToContent`, and
+`resizeToContentParent` are omitted. Widget content is rendered and loaded by the
+dashboard's component factory, not GridStack, and the widget host does not support
+nested grids or automatic content sizing.
+
 ### Remote Widget Loading (Microfrontends)
 
 The flexible dashboard supports loading widgets as remote microfrontends, allowing widgets to be deployed and updated independently from the host application. Three integration options are available:

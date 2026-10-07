@@ -146,9 +146,17 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
     () =>
       $localize`:@@DASHBOARD.WIDGET.A11Y.RESIZED:Widget resized to {{columns}} columns wide, {{rows}} rows tall.`
   );
-  private a11yWidgetActivatedMessage = t(
+  private a11yWidgetMoveResizeActivatedMessage = t(
     () =>
       $localize`:@@DASHBOARD.WIDGET.A11Y.ACTIVATED:Widget activated. Use arrow keys to move, Shift+arrow keys to resize, Escape to exit.`
+  );
+  private a11yWidgetMoveActivatedMessage = t(
+    () =>
+      $localize`:@@DASHBOARD.WIDGET.A11Y.ACTIVATED_MOVE:Widget activated. Use arrow keys to move, Escape to exit.`
+  );
+  private a11yWidgetResizeActivatedMessage = t(
+    () =>
+      $localize`:@@DASHBOARD.WIDGET.A11Y.ACTIVATED_RESIZE:Widget activated. Use Shift+arrow keys to resize, Escape to exit.`
   );
   private a11yWidgetDeactivatedMessage = t(
     () => $localize`:@@DASHBOARD.WIDGET.A11Y.DEACTIVATED:Widget deactivated.`
@@ -156,6 +164,33 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   protected a11yWidgetDescription = t(
     () =>
       $localize`:@@DASHBOARD.WIDGET.A11Y.DESCRIPTION:Press Enter or Space to activate. Then use arrow keys to move, Shift+arrow keys to resize, Escape to exit.`
+  );
+  private a11yWidgetMoveDescription = t(
+    () =>
+      $localize`:@@DASHBOARD.WIDGET.A11Y.DESCRIPTION_MOVE:Press Enter or Space to activate. Then use arrow keys to move, Escape to exit.`
+  );
+  private a11yWidgetResizeDescription = t(
+    () =>
+      $localize`:@@DASHBOARD.WIDGET.A11Y.DESCRIPTION_RESIZE:Press Enter or Space to activate. Then use Shift+arrow keys to resize, Escape to exit.`
+  );
+  private readonly a11yWidgetActivatedMessage = computed(() => {
+    const config = this.widgetConfig();
+    return config.noMove
+      ? this.a11yWidgetResizeActivatedMessage
+      : config.noResize
+        ? this.a11yWidgetMoveActivatedMessage
+        : this.a11yWidgetMoveResizeActivatedMessage;
+  });
+  protected readonly a11yWidgetKeyboardDescription = computed(() => {
+    const config = this.widgetConfig();
+    return config.noMove
+      ? this.a11yWidgetResizeDescription
+      : config.noResize
+        ? this.a11yWidgetMoveDescription
+        : this.a11yWidgetDescription;
+  });
+  protected readonly keyboardEnabled = computed(
+    () => this.editable() && (!this.widgetConfig().noMove || !this.widgetConfig().noResize)
   );
   protected readonly widgetAriaLabel = computed(() => {
     const widgetHeading = this.widgetConfig().heading;
@@ -240,19 +275,27 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
       if (headingIcon && typeof headingIcon !== 'string') {
         runInInjectionContext(this.injector, () => addIcons(headingIcon));
       }
-      const options = {
-        ...this.widgetConfig(),
-        w: this.widgetConfig().width,
-        h: this.widgetConfig().height,
-        x: this.widgetConfig().x,
-        y: this.widgetConfig().y,
-        minW: this.widgetConfig().minWidth,
-        minH: this.widgetConfig().minHeight
+      const widgetConfig = this.widgetConfig();
+      const removedOptions = Object.fromEntries(
+        Object.keys(changes.widgetConfig.previousValue ?? {})
+          .filter(key => !(key in widgetConfig))
+          .map(key => [key, undefined] as const)
+      );
+      const { width, height, minWidth, minHeight, ...options } = {
+        ...removedOptions,
+        ...widgetConfig
       };
+      options.w ??= width;
+      options.h ??= height;
+      options.minW ??= minWidth;
+      options.minH ??= minHeight;
       if (!changes.widgetConfig.firstChange) {
         this.grid()?.update(this.elementRef, options);
       } else {
         this.grid()?.makeWidget(this.elementRef, options);
+      }
+      if (!this.keyboardEnabled()) {
+        this.keyboardActive.set(false);
       }
     }
     if (changes.componentFactory && !changes.componentFactory.firstChange) {
@@ -293,14 +336,18 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   }
 
   protected onToggleActive(event: Event): void {
-    if (!this.editable() || this.card().isExpanded() || event.target !== event.currentTarget) {
+    if (
+      !this.keyboardEnabled() ||
+      this.card().isExpanded() ||
+      event.target !== event.currentTarget
+    ) {
       return;
     }
     event.preventDefault();
     const active = !this.keyboardActive();
     this.keyboardActive.set(active);
     this.announceTranslated(
-      active ? this.a11yWidgetActivatedMessage : this.a11yWidgetDeactivatedMessage,
+      active ? this.a11yWidgetActivatedMessage() : this.a11yWidgetDeactivatedMessage,
       {}
     );
   }
@@ -321,7 +368,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   }
 
   protected onArrowKey(event: Event): void {
-    if (!this.keyboardActive()) {
+    if (!this.keyboardActive() || !this.keyboardEnabled()) {
       return;
     }
 
@@ -343,17 +390,20 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   }
 
   private handleResize(event: KeyboardEvent, node: GridStackNode): void {
+    if (node.noResize) {
+      return;
+    }
     const el = this.elementRef;
     let { w, h } = node;
     switch (event.key) {
       case 'ArrowRight':
-        w = (w ?? 1) + 1;
+        w = Math.min(node.maxW ?? Number.POSITIVE_INFINITY, (w ?? 1) + 1);
         break;
       case 'ArrowLeft':
         w = Math.max(node.minW ?? 1, (w ?? 1) - 1);
         break;
       case 'ArrowDown':
-        h = (h ?? 1) + 1;
+        h = Math.min(node.maxH ?? Number.POSITIVE_INFINITY, (h ?? 1) + 1);
         break;
       case 'ArrowUp':
         h = Math.max(node.minH ?? 1, (h ?? 1) - 1);
@@ -372,6 +422,9 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   }
 
   private handleMove(event: KeyboardEvent, node: GridStackNode): void {
+    if (node.noMove) {
+      return;
+    }
     const el = this.elementRef;
     const { x, y } = node;
     const grid = node.grid;

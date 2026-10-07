@@ -37,6 +37,12 @@
       }
     },
     "WIDGET": {
+      "A11Y": {
+        "ACTIVATED_MOVE": "Widget aktiviert. Verwenden Sie die Pfeiltasten zum Verschieben und Escape zum Beenden.",
+        "ACTIVATED_RESIZE": "Widget aktiviert. Verwenden Sie Umschalt+Pfeiltasten zum Ändern der Größe und Escape zum Beenden.",
+        "DESCRIPTION_MOVE": "Drücken Sie Enter oder die Leertaste zum Aktivieren. Verwenden Sie anschließend die Pfeiltasten zum Verschieben und Escape zum Beenden.",
+        "DESCRIPTION_RESIZE": "Drücken Sie Enter oder die Leertaste zum Aktivieren. Verwenden Sie anschließend Umschalt+Pfeiltasten zum Ändern der Größe und Escape zum Beenden."
+      },
       "REMOVE": "Entfernen",
       "EDIT": "Bearbeiten",
       "EXPAND": "Vergrößern",

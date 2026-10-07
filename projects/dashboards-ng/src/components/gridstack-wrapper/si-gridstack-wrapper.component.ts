@@ -161,13 +161,18 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
     if (!gridItem) {
       return undefined;
     }
-    const element = gridItem.elementRef;
+    const node = gridItem.elementRef.gridstackNode;
+    if (!node) {
+      return undefined;
+    }
     return {
       id: widgetId,
-      x: Number(element.getAttribute('gs-x')) || 0,
-      y: Number(element.getAttribute('gs-y')) || 0,
-      width: Number(element.getAttribute('gs-w')) || 0,
-      height: Number(element.getAttribute('gs-h')) || 0
+      x: node.x,
+      y: node.y,
+      w: node.w,
+      h: node.h,
+      width: node.w,
+      height: node.h
     };
   }
 
