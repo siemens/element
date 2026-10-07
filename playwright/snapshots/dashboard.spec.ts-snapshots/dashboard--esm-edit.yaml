@@ -13,50 +13,40 @@
   - textbox "Search…"
   - text: Widget catalog
   - listbox "Widget catalog":
-    - option "report status none Hello World A dummy widget for testing.":
-      - status "report status none"
+    - option "Hello World A dummy widget for testing.":
       - text: ""
-    - option "user status none Contact Add a contact card to your dashboard.":
-      - status "user status none"
+      - paragraph: A dummy widget for testing.
+    - option "Contact Add a contact card to your dashboard.":
       - text: ""
-    - option "trend status none Line Chart A line chart is a type of chart used to show information that changes over time. Line charts are created by plotting a series of several points and connecting them with a straight line. Line charts are used to track changes over short and long periods.":
-      - status "trend status none"
-      - text: Line Chart A line chart is a type of chart used to show information that changes over time. Line charts are created by plotting a series of several points and connecting them with a straight line. Line charts are used to track changes over short and long periods.
-    - option "trend status none Bar Chart This is a bar chart widget.":
-      - status "trend status none"
+      - paragraph: Add a contact card to your dashboard.
+    - option "Line Chart A line chart is a type of chart used to show information that changes over time. Line charts are created by plotting a series of several points and connecting them with a straight line. Line charts are used to track changes over short and long periods.":
+      - text: Line Chart
+      - paragraph: A line chart is a type of chart used to show information that changes over time. Line charts are created by plotting a series of several points and connecting them with a straight line. Line charts are used to track changes over short and long periods.
+    - option "Bar Chart This is a bar chart widget.":
       - text: ""
-    - option "trend status none Circle Chart This is a cart with a circle.":
-      - status "trend status none"
+      - paragraph: This is a bar chart widget.
+    - option "Circle Chart This is a cart with a circle.":
       - text: ""
-    - option "trend status none Gauge Chart A nice gauge charts":
-      - status "trend status none"
+      - paragraph: This is a cart with a circle.
+    - option "Gauge Chart A nice gauge charts":
       - text: ""
-    - option "trend status none List Widget Displays a list of items":
-      - status "trend status none"
+      - paragraph: A nice gauge charts
+    - option "List Widget Displays a list of items":
       - text: ""
-    - option "trend status none Timeline Widget Displays events or steps over a period of time":
-      - status "trend status none"
+      - paragraph: Displays a list of items
+    - option "Timeline Widget Displays events or steps over a period of time":
       - text: ""
-    - option "trend status none Value Widget Displays a single KPI":
-      - status "trend status none"
+      - paragraph: Displays events or steps over a period of time
+    - option "Value Widget Displays a single KPI":
       - text: ""
-    - option "cloud status none Weather Current weather and multi-day forecast":
-      - status "cloud status none"
+      - paragraph: Displays a single KPI
+    - option "Weather Current weather and multi-day forecast":
       - text: ""
-    - option "status none Note (web-component)":
-      - status "status none"
-      - text: ""
-    - option "status none Contact (web-component)":
-      - status "status none"
-      - text: ""
-    - option "status none Chart (web-component)":
-      - status "status none"
-      - text: ""
-    - option "status none Download (native-federation)":
-      - status "status none"
-      - text: ""
-    - option "status none Upload (module-federation on native-federation shell)":
-      - status "status none"
-      - text: ""
+      - paragraph: Current weather and multi-day forecast
+    - option "Note (web-component)"
+    - option "Contact (web-component)"
+    - option "Chart (web-component)"
+    - option "Download (native-federation)"
+    - option "Upload (module-federation on native-federation shell)"
   - button "Cancel"
   - button "Add" [disabled]

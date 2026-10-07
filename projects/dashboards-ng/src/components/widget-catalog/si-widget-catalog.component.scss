@@ -9,12 +9,9 @@
   margin-block-start: map.get(variables.$negative-spacers-block, 2);
 }
 
-.list-group-item {
-  cursor: pointer;
-
-  .form-check {
-    block-size: 2.5rem;
-  }
+// The list has no built-in selected state, mark the selected widgets explicitly.
+.list-item.active {
+  background-color: variables.$si-sys-color-background-active;
 }
 
 .catalog-footer {

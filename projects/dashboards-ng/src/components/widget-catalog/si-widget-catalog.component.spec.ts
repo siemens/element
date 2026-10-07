@@ -59,7 +59,7 @@ describe('SiWidgetCatalogComponent', () => {
   it('should create', () => {
     fixture.detectChanges();
     expect(component).toBeTruthy();
-    expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(0);
+    expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(0);
     const addButtons = buttonsByName('Add');
     expect(addButtons).toHaveLength(1);
     expect(addButtons[0].attributes.disabled).toBeDefined();
@@ -203,13 +203,13 @@ describe('SiWidgetCatalogComponent', () => {
           .triggerEventHandler('searchChange', 'some');
         fixture.detectChanges();
 
-        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(0);
+        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(0);
 
         fixture.debugElement
           .query(By.css('si-search-bar'))
           .triggerEventHandler('searchChange', undefined);
         fixture.detectChanges();
-        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(3);
+        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(3);
       });
 
       it('with case-insensitive matching string should filter visible widgets', () => {
@@ -218,7 +218,7 @@ describe('SiWidgetCatalogComponent', () => {
           .triggerEventHandler('searchChange', 'WEI');
         fixture.detectChanges();
 
-        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
+        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(1);
       });
 
       it('with empty string should not filter visible widgets', () => {
@@ -226,13 +226,13 @@ describe('SiWidgetCatalogComponent', () => {
           .query(By.css('si-search-bar'))
           .triggerEventHandler('searchChange', 'some');
         fixture.detectChanges();
-        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(0);
+        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(0);
 
         fixture.debugElement
           .query(By.css('si-search-bar'))
           .triggerEventHandler('searchChange', '   ');
         fixture.detectChanges();
-        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(3);
+        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(3);
       });
 
       it('shall keep the search term and result after clicking `Next` to widget editor and `Previous` to catalog', async () => {
@@ -252,7 +252,7 @@ describe('SiWidgetCatalogComponent', () => {
         vi.useRealTimers();
 
         expect(buttonsByName('Next')).toHaveLength(1);
-        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
+        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(1);
 
         const nextButton = buttonsByName('Next')[0].nativeElement;
         expect(nextButton.innerHTML).toBe('Next');
@@ -277,7 +277,7 @@ describe('SiWidgetCatalogComponent', () => {
         expect(searchInput).not.toBeNull();
         expect(searchInput.value).toBe('zwei');
         expect(buttonsByName('Next')).toHaveLength(1);
-        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
+        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(1);
       });
     });
 
@@ -424,14 +424,14 @@ describe('SiWidgetCatalogComponent', () => {
         );
         fixture.detectChanges();
 
-        const listItems = fixture.debugElement.queryAll(By.css('.list-group-item'));
+        const listItems = fixture.debugElement.queryAll(By.css('.list-item'));
         expect(listItems).toHaveLength(1);
-        expect(listItems[0].query(By.css('.si-h5')).nativeElement).toHaveTextContent(
+        expect(listItems[0].query(By.css('.list-item-title')).nativeElement).toHaveTextContent(
           'Translated Widget Name'
         );
-        expect(listItems[0].query(By.css('.si-body')).nativeElement).toHaveTextContent(
-          'Translated Widget Description'
-        );
+        expect(
+          listItems[0].query(By.css('.list-item-description')).nativeElement
+        ).toHaveTextContent('Translated Widget Description');
       });
 
       it(`should filter widgets by translated name (${mode})`, () => {
@@ -447,16 +447,16 @@ describe('SiWidgetCatalogComponent', () => {
         );
         fixture.detectChanges();
 
-        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(2);
+        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(2);
 
         fixture.debugElement
           .query(By.css('si-search-bar'))
           .triggerEventHandler('searchChange', 'Translated');
         fixture.detectChanges();
 
-        expect(fixture.debugElement.queryAll(By.css('.list-group-item'))).toHaveLength(1);
+        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(1);
         expect(
-          fixture.debugElement.query(By.css('.list-group-item .si-h5')).nativeElement
+          fixture.debugElement.query(By.css('.list-item .list-item-title')).nativeElement
         ).toHaveTextContent('Translated Widget Name');
       });
     });
