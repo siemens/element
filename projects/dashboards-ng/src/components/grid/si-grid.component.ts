@@ -18,6 +18,7 @@ import {
   Type,
   viewChild
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { SiLoadingSpinnerDirective } from '@siemens/element-ng/loading-spinner';
 import { ModalOptions, SiModalService } from '@siemens/element-ng/modal';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -138,6 +139,13 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
    * @internal
    */
   readonly visibleWidgetInstances$ = new BehaviorSubject<WidgetConfig[]>([]);
+
+  /**
+   * Signal of all visible widget instance configurations on the grid.
+   *
+   * @internal
+   */
+  readonly visibleWidgetInstances = toSignal(this.visibleWidgetInstances$, { requireSync: true });
 
   /**
    * All widget instance configs that are on the grid by loading from the widget
