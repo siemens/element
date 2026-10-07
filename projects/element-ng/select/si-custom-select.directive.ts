@@ -28,6 +28,14 @@ import { filter, merge, Subject, takeUntil } from 'rxjs';
 
 import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
 
+/** @internal */
+export interface SiCustomSelectOverlayOptions {
+  origin: ElementRef<HTMLElement>;
+  panelClass: string[];
+  offsetX?: number;
+  push?: boolean;
+}
+
 /**
  * Host directive for building custom selects.
  *
@@ -197,6 +205,8 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
 
   private overlayRef?: OverlayRef;
   private focusTrap?: ConfigurableFocusTrap;
+  private overlayOrigin = this.elementRef;
+  private overlayOptions?: SiCustomSelectOverlayOptions;
   private readonly closeOverlay$ = new Subject<void>();
 
   private readonly dropdownDirective = signal<SiSelectDropdownDirective | undefined>(undefined);
@@ -239,31 +249,38 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     // Prevent default scrolling behavior for Space / ArrowUp / ArrowDown.
     event?.preventDefault();
 
-    const width = this.elementRef.nativeElement.getBoundingClientRect().width;
+    this.overlayOrigin = this.overlayOptions?.origin ?? this.elementRef;
+    const width = this.overlayOrigin.nativeElement.getBoundingClientRect().width;
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.overlayOrigin)
+      .withPositions([
+        // Preferred: below, aligned to the start edge of the trigger.
+        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
+        // Below, aligned to the end edge (trigger near the end of the viewport).
+        { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
+        // Above, aligned to the start edge (no space below).
+        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
+        // Above, aligned to the end edge (no space below, trigger near the end).
+        { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
+        // Below, centered (small screens, trigger in the middle).
+        { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top' },
+        // Above, centered.
+        { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom' }
+      ])
+      .withFlexibleDimensions(true)
+      .withPush(this.overlayOptions?.push ?? true);
+
+    if (this.overlayOptions?.offsetX) {
+      positionStrategy.withDefaultOffsetX(this.overlayOptions.offsetX);
+    }
+
     this.overlayRef = this.overlay.create({
-      positionStrategy: this.overlay
-        .position()
-        .flexibleConnectedTo(this.elementRef)
-        .withPositions([
-          // Preferred: below, aligned to the start edge of the trigger.
-          { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
-          // Below, aligned to the end edge (trigger near the end of the viewport).
-          { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
-          // Above, aligned to the start edge (no space below).
-          { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
-          // Above, aligned to the end edge (no space below, trigger near the end).
-          { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
-          // Below, centered (small screens, trigger in the middle).
-          { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top' },
-          // Above, centered.
-          { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom' }
-        ])
-        .withFlexibleDimensions(true)
-        .withPush(true),
+      positionStrategy,
       hasBackdrop: true,
       scrollStrategy: this.scrollStrategy(),
       backdropClass: 'cdk-overlay-transparent-backdrop',
-      panelClass: ['dropdown-menu', 'show'],
+      panelClass: this.overlayOptions?.panelClass ?? ['dropdown-menu', 'show'],
       minWidth: width + 2
     });
 
@@ -271,12 +288,14 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     this.overlayRef.attach(portal);
     this.overlayRef.overlayElement.id = this.dropdownId();
 
+    // To be discussed
     this.focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
     this.focusTrap.focusFirstTabbableElementWhenReady();
 
     this.isOpen.set(true);
     this.openChange.emit(true);
 
+    // To be discussed
     merge(
       this.overlayRef.backdropClick(),
       this.overlayRef.keydownEvents().pipe(filter(e => e.key === 'Escape'))
@@ -290,12 +309,13 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     if (!this.isOpen()) {
       return;
     }
+    // To be discussed
     this.isOpen.set(false);
     this.disposeOverlay();
     this.openChange.emit(false);
     this.onTouched();
     if (this.isBrowser) {
-      this.elementRef.nativeElement.focus();
+      this.overlayOrigin.nativeElement.focus();
     }
   }
 
@@ -317,6 +337,11 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   /** @internal */
   setDisabledState(isDisabled: boolean): void {
     this.disabledByForm.set(isDisabled);
+  }
+
+  /** @internal */
+  configureOverlayOptions(options: SiCustomSelectOverlayOptions): void {
+    this.overlayOptions = options;
   }
 
   private disposeOverlay(): void {
