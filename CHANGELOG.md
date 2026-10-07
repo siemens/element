@@ -1,3 +1,16 @@
+# [49.18.0](https://github.com/siemens/element/compare/v49.17.0...v49.18.0) (2026-10-07)
+
+
+### Features
+
+* **theme:** support dynamic dom target in `SiThemeService` ([0650800](https://github.com/siemens/element/commit/0650800b5a4a5373602451f6d635598c458cd745))
+
+
+### Bug Fixes
+
+* **filtered-search:** emit search once when clearing a criterion ([d692db6](https://github.com/siemens/element/commit/d692db6ee69dfc607a650b62d887e52d9be9a47a))
+* **filtered-search:** reposition typeahead after clearing a pill ([b900ac9](https://github.com/siemens/element/commit/b900ac9992ba138b6f9bfeb042817d87e4c45113))
+
 # [49.17.0](https://github.com/siemens/element/compare/v49.16.1...v49.17.0) (2026-09-29)
 
 
