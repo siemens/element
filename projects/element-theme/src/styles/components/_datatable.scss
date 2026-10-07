@@ -193,16 +193,16 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       }
     }
 
-    .datatable-header-cell {
-      .datatable-header-cell-template-wrap {
-        display: flex;
-        align-items: center;
-        min-inline-size: 0;
+    .datatable-header-label {
+      display: flex;
+      align-items: center;
+      justify-content: inherit;
+      flex: auto;
+    }
 
-        .datatable-header-cell-wrapper {
-          @include text-truncate.text-truncate;
-        }
-      }
+    .datatable-header-label,
+    .datatable-header-label-content {
+      @include text-truncate.text-truncate;
     }
   }
 
@@ -221,6 +221,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     .sort-btn {
       color: $datatable-header-color !important; // stylelint-disable-line declaration-no-important
       margin-inline-start: map.get(spacers.$spacers-inline, 1);
+      flex-shrink: 0;
     }
 
     .datatable-header-cell.resizeable {
@@ -261,8 +262,41 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       }
     }
 
-    .datatable-header-cell:focus-visible {
-      @include focus.make-outline-focus-inside();
+    .datatable-header-cell {
+      &:has(.datatable-header-sort-button) {
+        background-color: system-tokens.$si-sys-color-background-1;
+      }
+
+      &:has(.datatable-header-sort-button:not(:is(:disabled, .disabled)):is(:hover, .hover)) {
+        background-color: system-tokens.$si-sys-color-background-hover;
+      }
+
+      &:has(.datatable-header-sort-button:not(:is(:disabled, .disabled)):is(:active, .active)) {
+        background-color: system-tokens.$si-sys-color-background-active;
+      }
+
+      &:has(.datatable-header-sort-button:focus-visible) {
+        @include focus.make-outline-focus-inside();
+      }
+    }
+
+    .datatable-header-sort-button {
+      appearance: none;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: inherit;
+      block-size: 100%;
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+
+    .datatable-header-actions {
+      margin-inline-start: map.get(spacers.$spacers-inline, 2);
     }
   }
 
