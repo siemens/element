@@ -53,6 +53,7 @@ export class SampleComponent implements OnInit {
       {
         prop: 'user',
         name: '',
+        sortable: false,
         width: 80,
         resizeable: true,
         canAutoResize: false,

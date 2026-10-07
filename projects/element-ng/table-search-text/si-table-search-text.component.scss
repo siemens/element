@@ -1,0 +1,15 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: inline-block;
+}
+
+.search-dialog {
+  inline-size: 320px;
+  max-inline-size: calc(100vi - 16px);
+  background-color: variables.$si-sys-color-background-3;
+}
+
+.badge-dot::after {
+  background-color: variables.$si-sys-color-background-information;
+}

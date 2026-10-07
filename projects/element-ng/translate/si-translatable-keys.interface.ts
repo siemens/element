@@ -268,6 +268,9 @@ export interface SiTranslatableKeys {
   'SI_STATUS_BAR.ALL_OK'?: string;
   'SI_STATUS_BAR.MUTE'?: string;
   'SI_STATUS_BAR.TOGGLE'?: string;
+  'SI_TABLE_SEARCH_TEXT.ACTIVE_FILTER'?: string;
+  'SI_TABLE_SEARCH_TEXT.LABEL'?: string;
+  'SI_TABLE_SEARCH_TEXT.PLACEHOLDER'?: string;
   'SI_THRESHOLD.ADD'?: string;
   'SI_THRESHOLD.DELETE'?: string;
   'SI_THRESHOLD.INPUT_LABEL'?: string;

@@ -229,8 +229,8 @@ importers:
         specifier: 1.5.0
         version: 1.5.0
       '@siemens/ngx-datatable':
-        specifier: 27.1.0
-        version: 27.1.0(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2)
+        specifier: file:siemens-ngx-datatable-27.1.0.tgz
+        version: file:siemens-ngx-datatable-27.1.0.tgz(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2)
       '@softarc/native-federation':
         specifier: 4.7.1
         version: 4.7.1
@@ -3804,12 +3804,13 @@ packages:
       eslint: ^8.0.0||^9.0.0 || ^10.0.0
       typescript-eslint: ^8.0.0
 
-  '@siemens/ngx-datatable@27.1.0':
-    resolution: {integrity: sha512-A95179atnDuA10qDl1aE9F1dmXNI89Cza6xDtdi6Sbq6NHzGeGwiJGmLmCq0Dnf9kKyzDPKEbvnrTzuWykJjZQ==, tarball: https://registry.npmjs.org/@siemens/ngx-datatable/-/ngx-datatable-27.1.0.tgz}
+  '@siemens/ngx-datatable@file:siemens-ngx-datatable-27.1.0.tgz':
+    resolution: {integrity: sha512-mkbXyHfhSdKj3tEm2e0PkRadoiBW18KIDC4fSYrZfavsFvc4PsBvQR2dgIT4IBYcfaO8oMan6o8W/rAAwulo1A==, tarball: file:siemens-ngx-datatable-27.1.0.tgz}
+    version: 27.1.0
     peerDependencies:
-      '@angular/common': '>=22.0.0'
-      '@angular/core': '>=22.0.0'
-      '@angular/platform-browser': '>=22.0.0'
+      '@angular/common': '>=22.2.0'
+      '@angular/core': '>=22.2.0'
+      '@angular/platform-browser': '>=22.2.0'
       rxjs: ^7.8.1
 
   '@siemens/prettier-config@5.0.0':
@@ -12493,7 +12494,7 @@ snapshots:
       eslint: 10.12.0(jiti@2.7.0)(supports-color@10.2.2)
       typescript-eslint: 8.71.0(eslint@10.12.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
 
-  '@siemens/ngx-datatable@27.1.0(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2)':
+  '@siemens/ngx-datatable@file:siemens-ngx-datatable-27.1.0.tgz(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(@angular/platform-browser@22.0.8(@angular/common@22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)))(rxjs@7.8.2)':
     dependencies:
       '@angular/common': 22.0.8(@angular/core@22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2))(rxjs@7.8.2)
       '@angular/core': 22.0.8(@angular/compiler@22.0.8)(rxjs@7.8.2)

@@ -107,7 +107,7 @@ export class SampleComponent implements OnInit {
         sortable: false,
         resizeable: false,
         canAutoResize: false,
-        headerTemplate: this.checkboxHeaderTemplate(),
+        headerActionsTemplate: this.checkboxHeaderTemplate(),
         cellTemplate: this.checkboxCellTemplate()
       },
       { name: 'Name', prop: 'name' },

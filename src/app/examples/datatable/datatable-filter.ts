@@ -4,15 +4,23 @@
  */
 import { Component, computed, inject, signal, viewChild } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { form, FormField } from '@angular/forms/signals';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
+import { SiTableSearchTextComponent } from '@siemens/element-ng/table-search-text';
 import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
 
 import { CorporateEmployee, DataService, PageRequest } from './data.service';
 
 @Component({
   selector: 'app-sample',
-  imports: [NgxDatatableModule, SiDatatableModule, SiEmptyStateComponent],
+  imports: [
+    NgxDatatableModule,
+    SiDatatableModule,
+    SiEmptyStateComponent,
+    SiTableSearchTextComponent,
+    FormField
+  ],
   templateUrl: './datatable-filter.html',
   styleUrl: './datatable.scss',
   providers: [DataService]
@@ -26,7 +34,8 @@ export class SampleComponent {
 
   private dataService = inject(DataService);
   private readonly pageRequest = signal<PageRequest>({ offset: 0, pageSize: 50 });
-  private readonly filterValue = signal<string>('');
+  protected readonly filterValue = signal('');
+  protected readonly filterField = form(this.filterValue);
 
   readonly dataResource = rxResource({
     params: () => this.pageRequest(),
@@ -51,10 +60,7 @@ export class SampleComponent {
     this.pageRequest.set(pageRequest);
   }
 
-  updateFilter(event: any): void {
-    const val = event.target.value.toLowerCase();
-    this.filterValue.set(val);
-
+  resetOffset(): void {
     // Whenever the filter changes, always go back to the first page
     this.offset = 0;
   }
