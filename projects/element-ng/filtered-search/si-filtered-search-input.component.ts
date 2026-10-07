@@ -111,7 +111,7 @@ export class SiFilteredSearchInputComponent {
   /** Public method to focus the input element */
   focus(): void {
     this.inputElement().nativeElement.focus();
-    afterNextRender(() => this.typeahead().updateOverlayPosition(), { injector: this.injector });
+    this.updateOverlayPositionAfterRender();
   }
 
   protected readonly typeaheadCreateOption = computed(() =>
@@ -136,6 +136,7 @@ export class SiFilteredSearchInputComponent {
 
     const tokens = inputElement.value.split(';');
     let consumedTokenCount = 0;
+    let createdCriterion = false;
 
     for (const [index, token] of tokens.entries()) {
       const isLastToken = index === tokens.length - 1;
@@ -156,11 +157,15 @@ export class SiFilteredSearchInputComponent {
       if (!accepted) {
         break;
       }
+      createdCriterion = true;
       consumedTokenCount++;
     }
 
     inputElement.value = tokens.slice(consumedTokenCount).join(';');
     this.searchValue.set(inputElement.value);
+    if (createdCriterion) {
+      this.updateOverlayPositionAfterRender();
+    }
   }
 
   protected freeTextBlurHandler(): void {
@@ -186,6 +191,18 @@ export class SiFilteredSearchInputComponent {
     if (this.requestFreeTextPill(query)) {
       this.searchValue.set('');
     }
+  }
+
+  private updateOverlayPositionAfterRender(): void {
+    afterNextRender(
+      () => {
+        if (this.inputElement().nativeElement.matches(':focus')) {
+          this.inputElement().nativeElement.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        }
+        this.typeahead().updateOverlayPosition();
+      },
+      { injector: this.injector }
+    );
   }
 
   private requestCriterionByName(
