@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef, ScrollStrategy } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { isPlatformBrowser } from '@angular/common';
 import {
@@ -198,6 +198,12 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   private overlayRef?: OverlayRef;
   private focusTrap?: ConfigurableFocusTrap;
   private readonly closeOverlay$ = new Subject<void>();
+  private overlayOrigin = (): ElementRef<HTMLElement> => this.elementRef;
+  private overlayPanelClass: string[] = ['dropdown-menu', 'show'];
+  private overlayFocusTrap = true;
+  private overlayScrollStrategy = (): ScrollStrategy => this.scrollStrategy();
+  private overlayOffsetX = 0;
+  private overlayPush = true;
 
   private readonly dropdownDirective = signal<SiSelectDropdownDirective | undefined>(undefined);
 
@@ -215,6 +221,23 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    */
   registerDropdown(directive: SiSelectDropdownDirective): void {
     this.dropdownDirective.set(directive);
+  }
+
+  /** @internal */
+  configureOverlay(config: {
+    origin: () => ElementRef<HTMLElement>;
+    panelClass: string[];
+    focusTrap: boolean;
+    scrollStrategy: () => ScrollStrategy;
+    offsetX?: number;
+    push?: boolean;
+  }): void {
+    this.overlayOrigin = config.origin;
+    this.overlayPanelClass = config.panelClass;
+    this.overlayFocusTrap = config.focusTrap;
+    this.overlayScrollStrategy = config.scrollStrategy;
+    this.overlayOffsetX = config.offsetX ?? 0;
+    this.overlayPush = config.push ?? true;
   }
 
   /**
@@ -239,11 +262,12 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     // Prevent default scrolling behavior for Space / ArrowUp / ArrowDown.
     event?.preventDefault();
 
-    const width = this.elementRef.nativeElement.getBoundingClientRect().width;
+    const origin = this.overlayOrigin();
+    const width = origin.nativeElement.getBoundingClientRect().width;
     this.overlayRef = this.overlay.create({
       positionStrategy: this.overlay
         .position()
-        .flexibleConnectedTo(this.elementRef)
+        .flexibleConnectedTo(origin)
         .withPositions([
           // Preferred: below, aligned to the start edge of the trigger.
           { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
@@ -259,11 +283,12 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
           { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom' }
         ])
         .withFlexibleDimensions(true)
-        .withPush(true),
+        .withDefaultOffsetX(this.overlayOffsetX)
+        .withPush(this.overlayPush),
       hasBackdrop: true,
-      scrollStrategy: this.scrollStrategy(),
+      scrollStrategy: this.overlayScrollStrategy(),
       backdropClass: 'cdk-overlay-transparent-backdrop',
-      panelClass: ['dropdown-menu', 'show'],
+      panelClass: this.overlayPanelClass,
       minWidth: width + 2
     });
 
@@ -271,8 +296,10 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     this.overlayRef.attach(portal);
     this.overlayRef.overlayElement.id = this.dropdownId();
 
-    this.focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
-    this.focusTrap.focusFirstTabbableElementWhenReady();
+    if (this.overlayFocusTrap) {
+      this.focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
+      this.focusTrap.focusFirstTabbableElementWhenReady();
+    }
 
     this.isOpen.set(true);
     this.openChange.emit(true);
@@ -295,7 +322,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     this.openChange.emit(false);
     this.onTouched();
     if (this.isBrowser) {
-      this.elementRef.nativeElement.focus();
+      this.overlayOrigin().nativeElement.focus();
     }
   }
 

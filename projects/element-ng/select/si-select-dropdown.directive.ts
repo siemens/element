@@ -14,8 +14,8 @@ export type SiSelectDropdownContentType =
   'false' | 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
 
 /**
- * Structural directive marking the dropdown template for custom selects
- * built with {@link SiCustomSelectDirective}.
+ * Structural directive marking the dropdown template for {@link SiSelectComponent}
+ * and custom selects built with {@link SiCustomSelectDirective}.
  *
  * When placed on an `<ng-template>`, it automatically registers the template
  * with the parent {@link SiCustomSelectDirective}.

@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
   Component,
@@ -12,7 +11,6 @@ import {
   inject,
   input,
   output,
-  signal,
   TemplateRef,
   viewChild
 } from '@angular/core';
@@ -24,7 +22,9 @@ import { SiSelectInputComponent } from './select-input/si-select-input.component
 import { SiSelectListHasFilterComponent } from './select-list/si-select-list-has-filter.component';
 import { SiSelectListComponent } from './select-list/si-select-list.component';
 import { SiSelectSelectionStrategy } from './selection/si-select-selection-strategy';
+import { SiCustomSelectDirective } from './si-custom-select.directive';
 import { SiSelectActionsDirective } from './si-select-actions.directive';
+import { SiSelectDropdownDirective } from './si-select-dropdown.directive';
 import { SiSelectGroupTemplateDirective } from './si-select-group-template.directive';
 import { SiSelectOptionTemplateDirective } from './si-select-option-template.directive';
 import { SiSelectValueTemplateDirective } from './si-select-value-template.directive';
@@ -33,14 +33,17 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
 @Component({
   selector: 'si-select',
   imports: [
-    OverlayModule,
     SiSelectInputComponent,
     SiSelectListComponent,
-    SiSelectListHasFilterComponent
+    SiSelectListHasFilterComponent,
+    SiSelectDropdownDirective
   ],
   templateUrl: './si-select.component.html',
   styleUrl: './si-select.component.scss',
-  providers: [{ provide: SI_FORM_ITEM_CONTROL, useExisting: SiSelectComponent }],
+  providers: [
+    SiCustomSelectDirective,
+    { provide: SI_FORM_ITEM_CONTROL, useExisting: SiSelectComponent }
+  ],
   host: {
     class: 'dropdown',
     '[class.readonly]': 'readonly()',
@@ -110,7 +113,8 @@ export class SiSelectComponent<T> implements SiFormItemControl {
   /** Emits when the dropdown open state changes. */
   readonly openChange = output<boolean>();
 
-  protected readonly isOpen = signal(false);
+  private readonly customSelect = inject(SiCustomSelectDirective);
+  protected readonly isOpen = this.customSelect.isOpen;
 
   protected readonly optionTemplate = contentChild<
     SiSelectOptionTemplateDirective,
@@ -132,12 +136,9 @@ export class SiSelectComponent<T> implements SiFormItemControl {
     { read: TemplateRef }
   );
 
-  private readonly trigger = viewChild.required<CdkOverlayOrigin, ElementRef<HTMLDivElement>>(
-    CdkOverlayOrigin,
-    {
-      read: ElementRef
-    }
-  );
+  private readonly trigger = viewChild.required<HTMLElement, ElementRef<HTMLDivElement>>('trigger', {
+    read: ElementRef
+  });
 
   /** @internal */
   readonly labelledby = computed(() => this.labelledbyInput() ?? this.id() + '-label');
@@ -154,10 +155,7 @@ export class SiSelectComponent<T> implements SiFormItemControl {
   readonly errormessageId = input(`${this.id()}-errormessage`);
 
   protected rows: readonly SelectItem<T>[] = [];
-  protected overlayWidth = 0;
   protected readonly selectionStrategy = inject(SiSelectSelectionStrategy<T>);
-
-  private backdropClicked = false;
 
   /**
    * Enables the filter input
@@ -166,30 +164,28 @@ export class SiSelectComponent<T> implements SiFormItemControl {
    */
   readonly hasFilter = input(false, { transform: booleanAttribute });
 
+  constructor() {
+    this.customSelect.configureOverlay({
+      origin: () => this.trigger(),
+      panelClass: [],
+      focusTrap: false,
+      scrollStrategy: () => this.scrollStrategy(),
+      offsetX: -1,
+      push: false
+    });
+    this.customSelect.openChange.subscribe(open => this.openChange.emit(open));
+  }
+
   /** Opens the `si-select`. */
   open(): void {
     if (this.readonly() || this.selectionStrategy.disabled()) {
       return;
     }
-    this.overlayWidth = this.trigger().nativeElement.getBoundingClientRect().width + 2; // 2px border
-    this.isOpen.set(true);
-    this.openChange.emit(true);
+    this.customSelect.open();
   }
 
   /** Closes the `si-select`. */
   close(): void {
-    this.isOpen.set(false);
-    if (!this.backdropClicked) {
-      this.trigger().nativeElement.focus();
-    } else {
-      this.backdropClicked = false;
-      this.selectionStrategy.onTouched();
-    }
-    this.openChange.emit(false);
-  }
-
-  protected backdropClick(): void {
-    this.backdropClicked = true;
-    this.isOpen.set(false);
+    this.customSelect.close();
   }
 }
