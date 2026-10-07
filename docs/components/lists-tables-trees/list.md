@@ -114,6 +114,20 @@ place each item in an outlined container.
 
 ### List item configurations
 
+Add these optional slot classes to position content within a `.list-item`:
+
+| Class                         | Purpose                                                                                                                        |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `.list-item-check`            | Selection checkbox                                                                                                             |
+| `.list-item-indicator`        | Leading icon, status, or avatar                                                                                                |
+| `.list-item-timestamp`        | Timestamp above the title                                                                                                      |
+| `.list-item-title`            | Item heading                                                                                                                   |
+| `.list-item-primary-action`   | Primary action alongside the title                                                                                             |
+| `.list-item-description`      | Supporting description below the title                                                                                         |
+| `.list-item-metadata`         | Supplementary information below the description, such as workspace names, contributor counts, document links, or status badges |
+| `.list-item-metadata-divider` | Small dot separator between items within `.list-item-metadata`                                                                 |
+| `.list-item-quick-actions`    | Secondary actions below the item content                                                                                       |
+
 <si-docs-component example="list-item/list-item" height="400"></si-docs-component>
 
 ### Action list items
@@ -126,11 +140,6 @@ The item should be placed inside a `<ul>` + `<li>` structure to preserve list se
 Use `aria-labelledby` and `aria-describedby` on the interactive element to provide a concise accessible name (the title) and description, instead of exposing all inner text as the accessible name.
 
 <si-docs-component example="list-item/list-item-action" height="400"></si-docs-component>
-
-### Metadata
-
-Use `.list-item-metadata` to display supplementary contextual information below the description, such as workspace names, contributor counts, document links, or status badges.
-Items within the metadata row can be separated with `.list-item-metadata-divider`, which renders a small dot separator.
 
 ### Unread state
 
