@@ -89,6 +89,36 @@ Direct <a href="../../../dashboards-demo/#/dashboard">Link</a> to dashboard demo
 
 <si-docs-api component="SiGridComponent" package="@siemens/dashboards-ng"></si-docs-api>
 
+### Limit widget instances
+
+Set `maxInstances` on a `Widget` descriptor to limit how many instances can be
+added through the catalog. Omit it for unlimited instances, use a positive number
+for a maximum, or set it to `0` to disable creation while keeping the widget
+visible.
+
+When a positive limit is reached, the catalog shows the widget as disabled with
+a neutral, translatable **Added** badge. In multi-select mode, checkboxes
+represent only widgets selected to add. Added widgets remain unchecked and
+cannot be selected. Disabled widgets are skipped during keyboard navigation.
+
+Use the optional translatable `badge` text to explain a consumer restriction,
+for example by extending an existing widget descriptor:
+
+```ts
+const licensedWidget: Widget = {
+  ...existingWidget,
+  maxInstances: 0,
+  badge: 'Requires license'
+};
+```
+
+Consumer badges use the info style, and the built-in **Added** badge takes
+precedence when a positive limit is reached. The catalog reads the flexible
+dashboard's current grid instances directly.
+
+These limits apply to the catalog only; programmatic `addWidgetInstance()` calls
+are not restricted.
+
 ### Persistence of dashboard configuration
 
 <si-docs-type name="SiWidgetStorage" package="@siemens/dashboards-ng"></si-docs-type>

@@ -26,10 +26,13 @@
               (cdkListboxValueChange)="selectWidgets($event.value)"
             >
               @for (widget of filteredWidgetCatalog; track $index) {
+                @let widgetState = widgetStates().get(widget.id);
+                @let isSelected = !widgetState?.disabled && selectedWidgets().includes(widget);
                 <li
                   class="list-item list-item-action"
                   [cdkOption]="widget"
-                  [class.active]="selectedWidgets().includes(widget)"
+                  [cdkOptionDisabled]="widgetState?.disabled ?? false"
+                  [class.active]="isSelected"
                 >
                   @if (multiSelect()) {
                     <input
@@ -38,14 +41,23 @@
                       aria-hidden="true"
                       tabindex="-1"
                       inert
-                      [checked]="selectedWidgets().includes(widget)"
+                      [checked]="isSelected"
+                      [disabled]="widgetState?.disabled"
                     />
                   }
                   <si-icon
                     class="list-item-indicator icon"
+                    [class.text-disabled]="widgetState?.disabled"
                     [icon]="widget.iconClass || icons.elementSpecialObject"
                   />
-                  <span class="list-item-title">{{ widget.name | translate }}</span>
+                  <span class="list-item-title text-truncate">{{ widget.name | translate }}</span>
+                  @if (widgetState?.badge; as badge) {
+                    <si-badge
+                      class="list-item-primary-action"
+                      [type]="widgetState?.added ? 'default' : 'info'"
+                      >{{ badge | translate }}</si-badge
+                    >
+                  }
                   @if (widget.description?.trim(); as description) {
                     <p class="list-item-description">{{ description | translate }}</p>
                   }
