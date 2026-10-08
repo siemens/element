@@ -49,6 +49,7 @@ test('si-copyright-notice/si-copyright-notice', ({ si }) => si.static());
 test('si-card/card-grid', ({ si }) => si.static());
 test('si-card/card-group', ({ si }) => si.static());
 test('si-card/card-variants', ({ si }) => si.static());
+test('si-card/card-content-types', ({ si }) => si.static());
 test('si-card/si-card-multiple', ({ si }) => si.static());
 test('si-card/si-card-accent', ({ si }) => si.static());
 test('si-card/si-card', ({ si }) => si.static());

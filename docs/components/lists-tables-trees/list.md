@@ -114,6 +114,20 @@ place each item in an outlined container.
 
 ### List item configurations
 
+Add these optional slot classes to position content within a `.list-item`:
+
+| Class                         | Purpose                                                                                                                        |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `.list-item-check`            | Selection checkbox                                                                                                             |
+| `.list-item-indicator`        | Leading icon, status, or avatar                                                                                                |
+| `.list-item-timestamp`        | Timestamp above the title                                                                                                      |
+| `.list-item-title`            | Item heading                                                                                                                   |
+| `.list-item-primary-action`   | Primary action alongside the title                                                                                             |
+| `.list-item-description`      | Supporting description below the title                                                                                         |
+| `.list-item-metadata`         | Supplementary information below the description, such as workspace names, contributor counts, document links, or status badges |
+| `.list-item-metadata-divider` | Small dot separator between items within `.list-item-metadata`                                                                 |
+| `.list-item-quick-actions`    | Secondary actions below the item content                                                                                       |
+
 <si-docs-component example="list-item/list-item" height="400"></si-docs-component>
 
 ### Action list items
@@ -127,16 +141,29 @@ Use `aria-labelledby` and `aria-describedby` on the interactive element to provi
 
 <si-docs-component example="list-item/list-item-action" height="400"></si-docs-component>
 
-### Metadata
-
-Use `.list-item-metadata` to display supplementary contextual information below the description, such as workspace names, contributor counts, document links, or status badges.
-Items within the metadata row can be separated with `.list-item-metadata-divider`, which renders a small dot separator.
-
 ### Unread state
 
 Use the `.unread` class on `.list-item-title` to indicate unread items with a bold title and a dot indicator.
 
 <si-docs-component example="list-item/list-item-unread" height="400"></si-docs-component>
+
+### List in a card
+
+A list item can be placed inside a [card](../layout-navigation/cards.md) or an `si-card` body using any of its styles.
+Depending on the desired hierarchy, use dividers, ghost, or outline styles.
+If you use the filled style, the list item simply inherits the same background as the card, so there is no visible distinction between the two surfaces.
+
+Do not put a list inside `si-action-card`. Its host is a `<button>`.
+
+```html
+<div class="card">
+  <div class="card-header">Header text</div>
+  <ul class="list list-divider">
+    <li class="list-item">An item</li>
+    <li class="list-item">A second item</li>
+  </ul>
+</div>
+```
 
 ### Migrating from the list group
 
@@ -144,17 +171,17 @@ The Bootstrap based list group (`.list-group`) is deprecated in favor of the lis
 The list group is only a bordered container and has no notion of the list anatomy,
 so migrating means restructuring the markup, it is not a plain class rename.
 
-| Deprecated                          | Replacement                                                                                                |
-| ----------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `.list-group`                       | `.list`, optionally with `.list-divider`, `.list-filled` or `.list-outline`                                |
-| `.list-group-item`                  | `.list-item`, wrap the content in the slot classes such as `.list-item-title` and `.list-item-description` |
-| `.list-group-item-action`           | `.list-item.list-item-action` on a `<button>` or `<a>`                                                     |
-| `.list-group-flush`                 | `.list.list-divider` to preserve dividers; otherwise `.list`, which has no outer border                    |
-| `.list-group-md`, `.list-group-lg`  | No replacement, the height of a list item follows its content                                              |
-| `.list-group-horizontal*`           | No replacement, use flex or grid utilities                                                                 |
-| `.list-group-numbered`              | No replacement, use an ordered list with a custom counter because `.list-item` removes list markers        |
-| `.list-group-item-*` color variants | No replacement, use the background and text utilities, or an [indicator](#indicator)                       |
-| `.list-header`                      | No replacement, use a heading element                                                                      |
+| Deprecated                          | Replacement                                                                                         |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `.list-group`                       | `.list`, optionally with `.list-divider`, `.list-filled` or `.list-outline`                         |
+| `.list-group-item`                  | `.list-item`. Keep the existing text. [Slot classes](#list-item-configurations) are optional        |
+| `.list-group-item-action`           | `.list-item.list-item-action` on a `<button>` or `<a>`                                              |
+| `.list-group-flush`                 | `.list.list-divider` to preserve dividers; otherwise `.list`, which has no outer border             |
+| `.list-group-md`, `.list-group-lg`  | No replacement, the height of a list item follows its content                                       |
+| `.list-group-horizontal*`           | No replacement, use flex or grid utilities                                                          |
+| `.list-group-numbered`              | No replacement, use an ordered list with a custom counter because `.list-item` removes list markers |
+| `.list-group-item-*` color variants | No replacement, use the background and text utilities, or an [indicator](#indicator)                |
+| `.list-header`                      | No replacement, use a heading element                                                               |
 
 Start with the structural migration below, then choose the list style according to the application context.
 
@@ -166,9 +193,7 @@ Start with the structural migration below, then choose the list style according 
 
 <!-- After -->
 <ul class="list">
-  <li class="list-item">
-    <span class="list-item-title">Item</span>
-  </li>
+  <li class="list-item">Item</li>
 </ul>
 ```
 
@@ -181,6 +206,7 @@ When replacing `.list-group` with `.list`, change the style according to the con
   use `.list` for a ghost style or `.list.list-divider` for a divider style.
 - If `.list-group` is placed directly on the application's bottom layer or on a `base-0`
   background, use `.list.list-outline` or `.list.list-filled`.
-- To retain the exact same style as before, apply `.card` to `.list.list-divider`.
+- A `.card` can provide a surface for a `.list.list-divider`, but choose the list style for
+  the spacing, borders, and hierarchy required in its context.
 
 ![List group migration](images/list-group-migration.png)

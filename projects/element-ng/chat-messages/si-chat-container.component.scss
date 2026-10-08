@@ -52,7 +52,6 @@ $gap-inline: calc(map.get(variables.$spacers-inline, 9) + map.get(variables.$spa
 .messages-container {
   overflow-y: auto;
   overflow-x: visible;
-  padding-inline: map.get(variables.$spacers-inline, 4);
   // Ensure the messages can still be seen on very short screens
   min-block-size: 5rem;
   gap: $gap-block $gap-inline;
