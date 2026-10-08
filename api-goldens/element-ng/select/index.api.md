@@ -4,7 +4,6 @@
 
 ```ts
 
-import { AfterViewInit } from '@angular/core';
 import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import { ConfigurableFocusTrap } from '@angular/cdk/a11y';
@@ -91,7 +90,8 @@ export class SiSelectComboboxValueComponent {
 }
 
 // @public (undocumented)
-export class SiSelectComponent<T> implements AfterViewInit {
+export class SiSelectComponent<T> {
+    constructor();
     readonly ariaLabel: _angular_core.InputSignal<string | null>;
     close(): void;
     readonly filterPlaceholder: _angular_core.InputSignal<TranslatableString>;
