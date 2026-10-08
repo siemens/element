@@ -61,7 +61,6 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     readonly errormessageId: _angular_core.InputSignal<string>;
     readonly id: _angular_core.InputSignal<string>;
     readonly isOpen: _angular_core.WritableSignal<boolean>;
-    markAsTouched(): void;
     open(event?: Event): void;
     readonly openChange: _angular_core.OutputEmitterRef<boolean>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;

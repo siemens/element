@@ -322,7 +322,10 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     }
   }
 
-  /** Marks the control as touched. */
+  /**
+   * Marks the control as touched.
+   * @internal
+   */
   markAsTouched(): void {
     this.onTouched();
   }
