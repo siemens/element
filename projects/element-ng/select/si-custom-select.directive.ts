@@ -116,10 +116,10 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    *
    * @defaultValue
    * ```
-   * `__si-custom-select-${SiCustomSelectDirective.idCounter++}`
+   * `__si-select-${SiCustomSelectDirective.idCounter++}`
    * ```
    */
-  readonly id = input(`__si-custom-select-${SiCustomSelectDirective.idCounter++}`);
+  readonly id = input(`__si-select-${SiCustomSelectDirective.idCounter++}`);
 
   /**
    * Whether the select input is disabled.

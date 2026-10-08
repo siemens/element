@@ -92,21 +92,15 @@ export class SiSelectComboboxValueComponent {
 }
 
 // @public (undocumented)
-export class SiSelectComponent<T> implements AfterViewInit, SiFormItemControl {
+export class SiSelectComponent<T> implements AfterViewInit {
     readonly ariaLabel: _angular_core.InputSignal<string | null>;
     close(): void;
-    // (undocumented)
-    readonly errormessageId: _angular_core.InputSignal<string>;
     readonly filterPlaceholder: _angular_core.InputSignal<TranslatableString>;
     readonly hasFilter: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    readonly id: _angular_core.InputSignal<string>;
     readonly labelledbyInput: _angular_core.InputSignal<string | undefined>;
     readonly noResultsFoundLabel: _angular_core.InputSignal<TranslatableString>;
     open(): void;
     readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
 // @public

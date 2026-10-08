@@ -15,7 +15,7 @@ import {
   TemplateRef,
   viewChild
 } from '@angular/core';
-import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
+import { SI_FORM_ITEM_CONTROL } from '@siemens/element-ng/form';
 import { t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiSelectInputComponent } from './select-input/si-select-input.component';
@@ -59,10 +59,11 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
     }
   ]
 })
-export class SiSelectComponent<T> implements AfterViewInit, SiFormItemControl {
+export class SiSelectComponent<T> implements AfterViewInit {
   private readonly customSelect = inject(SiCustomSelectDirective);
 
-  readonly id = this.customSelect.id;
+  /** Unique identifier. */
+  protected readonly id = this.customSelect.id;
 
   /**
    * Aria label of the select.
@@ -99,7 +100,8 @@ export class SiSelectComponent<T> implements AfterViewInit, SiFormItemControl {
   /** Placeholder text to display when no options are selected. */
   readonly placeholder = input<TranslatableString>();
 
-  readonly readonly = this.customSelect.readonly;
+  /** Readonly state. Similar to disabled but with higher contrast. */
+  protected readonly readonly = this.customSelect.readonly;
 
   protected readonly isOpen = this.customSelect.isOpen;
   protected readonly optionTemplate = contentChild<
@@ -128,9 +130,12 @@ export class SiSelectComponent<T> implements AfterViewInit, SiFormItemControl {
   );
 
   /** @internal */
-  readonly labelledby = computed(() => this.labelledbyInput() ?? this.customSelect.id() + '-label');
+  protected readonly labelledby = computed(
+    () => this.labelledbyInput() ?? this.customSelect.id() + '-label'
+  );
 
-  readonly errormessageId = this.customSelect.errormessageId;
+  /** ID bound to the `aria-describedby` attribute of the select. */
+  protected readonly errormessageId = this.customSelect.errormessageId;
 
   protected rows: readonly SelectItem<T>[] = [];
   protected readonly selectionStrategy = inject(SiSelectSelectionStrategy<T>);
