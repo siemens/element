@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Directive, inject } from '@angular/core';
+import { DestroyRef, Directive, inject } from '@angular/core';
 
 import { PopoverComponent } from './si-popover.component';
 
@@ -16,4 +16,9 @@ import { PopoverComponent } from './si-popover.component';
 })
 export class SiPopoverTitleDirective {
   readonly popover = inject(PopoverComponent);
+
+  constructor() {
+    this.popover.hasTemplateTitle.set(true);
+    inject(DestroyRef).onDestroy(() => this.popover.hasTemplateTitle.set(false));
+  }
 }
