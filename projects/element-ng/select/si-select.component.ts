@@ -4,7 +4,7 @@
  */
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import {
-  AfterViewInit,
+  afterNextRender,
   booleanAttribute,
   Component,
   computed,
@@ -59,7 +59,7 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
     }
   ]
 })
-export class SiSelectComponent<T> implements AfterViewInit {
+export class SiSelectComponent<T> {
   private readonly customSelect = inject(SiCustomSelectDirective);
 
   /** Unique identifier. */
@@ -147,13 +147,15 @@ export class SiSelectComponent<T> implements AfterViewInit {
    */
   readonly hasFilter = input(false, { transform: booleanAttribute });
 
-  ngAfterViewInit(): void {
-    this.customSelect.configureOverlayOptions({
-      origin: this.trigger(),
-      panelClass: [],
-      offsetX: -1,
-      push: false,
-      markTouchedOnClose: false
+  constructor() {
+    afterNextRender(() => {
+      this.customSelect.configureOverlayOptions({
+        origin: this.trigger(),
+        panelClass: [],
+        offsetX: -1,
+        push: false,
+        markTouchedOnClose: false
+      });
     });
   }
 

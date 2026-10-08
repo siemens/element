@@ -38,7 +38,9 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> {
   // eslint-disable-next-line @angular-eslint/no-input-rename
   readonly disabledInput = input(false, { alias: 'disabled', transform: booleanAttribute });
 
-  /** The selected value(s). */
+  /**
+   *  The selected value(s).
+   */
   @Input() set value(value: IV | undefined) {
     if (this.customSelect) {
       this.customSelect.value.set(value);
@@ -47,7 +49,7 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> {
     }
   }
 
-  /** Emitted when the selection is changed. */
+  /** Emitted when the selection is changed */
   readonly valueChange = output<IV>();
 
   /**
