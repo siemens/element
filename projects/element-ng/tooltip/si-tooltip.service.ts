@@ -2,7 +2,12 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Overlay, OverlayRef, ScrollStrategy } from '@angular/cdk/overlay';
+import {
+  FlexibleConnectedPositionStrategy,
+  Overlay,
+  OverlayRef,
+  ScrollStrategy
+} from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
@@ -18,12 +23,7 @@ import {
   inputBinding,
   PLATFORM_ID
 } from '@angular/core';
-import {
-  getOverlay,
-  getOverlayPositions,
-  getPositionStrategy,
-  positions
-} from '@siemens/element-ng/common';
+import { isRTL, positions } from '@siemens/element-ng/common';
 import { fromEvent, Subject, Subscription, timer } from 'rxjs';
 import { delayWhen, filter, takeUntil } from 'rxjs/operators';
 
@@ -58,6 +58,7 @@ class BrowserTooltipRef {
   private isFocused = false;
   private isHovered = false;
   private overlayRef?: OverlayRef;
+  private positionStrategy?: FlexibleConnectedPositionStrategy;
   private positionSubscription?: Subscription;
   private canShowEffect?: EffectRef;
   private placementEffect?: EffectRef;
@@ -177,15 +178,21 @@ class BrowserTooltipRef {
   }
 
   private getOrCreateOverlay(): OverlayRef {
-    this.overlayRef ??= getOverlay(
-      this.config.element,
-      this.config.overlay,
-      false,
-      this.getPlacement(),
-      false,
-      true,
-      this.config.scrollStrategy?.()
-    );
+    if (!this.overlayRef) {
+      this.positionStrategy = this.config.overlay
+        .position()
+        .flexibleConnectedTo(this.config.element)
+        .withPush(false)
+        .withGrowAfterOpen(true)
+        .withFlexibleDimensions(false)
+        .withPositions(positions[this.getPlacement()]);
+      this.overlayRef = this.config.overlay.create({
+        positionStrategy: this.positionStrategy,
+        scrollStrategy:
+          this.config.scrollStrategy?.() ?? this.config.overlay.scrollStrategies.reposition(),
+        direction: isRTL() ? 'rtl' : 'ltr'
+      });
+    }
     return this.overlayRef;
   }
 
@@ -234,9 +241,8 @@ class BrowserTooltipRef {
       { injector: this.injector }
     );
 
-    const positionStrategy = getPositionStrategy(overlayRef);
     this.positionSubscription?.unsubscribe();
-    this.positionSubscription = positionStrategy?.positionChanges.subscribe(change =>
+    this.positionSubscription = this.positionStrategy?.positionChanges.subscribe(change =>
       tooltipRef.instance.updateTooltipPosition(change, this.config.element)
     );
   }
@@ -246,9 +252,8 @@ class BrowserTooltipRef {
   }
 
   private updatePlacement(placement: keyof typeof positions): void {
-    const positionStrategy = this.overlayRef && getPositionStrategy(this.overlayRef);
-    if (positionStrategy) {
-      positionStrategy.withPositions(getOverlayPositions(this.config.element, placement));
+    if (this.positionStrategy) {
+      this.positionStrategy.withPositions(positions[placement]);
       this.overlayRef?.updatePosition();
     }
   }

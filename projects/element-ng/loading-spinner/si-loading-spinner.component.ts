@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { booleanAttribute, Component, input } from '@angular/core';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-loading-spinner',
@@ -40,4 +40,9 @@ export class SiLoadingSpinnerComponent {
    * ```
    */
   readonly ariaLabel = input(t(() => $localize`:@@SI_LOADING_SPINNER.LABEL:Loading`));
+
+  /**
+   * Optional text to be displayed below the spinner.
+   */
+  readonly loadingText = input<TranslatableString>();
 }

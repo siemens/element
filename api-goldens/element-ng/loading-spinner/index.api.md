@@ -10,7 +10,6 @@ import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as rxjs from 'rxjs';
-import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
@@ -32,15 +31,17 @@ export class SiLoadingService {
 
 // @public (undocumented)
 export class SiLoadingSpinnerComponent {
-    readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly ariaLabel: _angular_core.InputSignal<TranslatableString>;
     readonly isBlockingSpinner: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly isSpinnerOverlay: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly loadingText: _angular_core.InputSignal<TranslatableString | undefined>;
 }
 
 // @public (undocumented)
 export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
     readonly blocking: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly initialDelay: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly loadingText: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly siLoading: _angular_core.InputSignal<number | boolean>;
 }
 

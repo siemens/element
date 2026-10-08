@@ -1,0 +1,4 @@
+- img "Loading…"
+- text: Retrieving data…
+- checkbox "With loading text" [checked]
+- text: With loading text
