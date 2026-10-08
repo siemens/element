@@ -139,6 +139,7 @@ export class SiFilteredSearchInputComponent {
 
     const tokens = inputElement.value.split(';');
     let consumedTokenCount = 0;
+    let createdCriterion = false;
 
     for (const [index, token] of tokens.entries()) {
       const isLastToken = index === tokens.length - 1;
@@ -159,12 +160,13 @@ export class SiFilteredSearchInputComponent {
       if (!accepted) {
         break;
       }
+      createdCriterion = true;
       consumedTokenCount++;
     }
 
     inputElement.value = tokens.slice(consumedTokenCount).join(';');
     this.searchValue.set(inputElement.value);
-    if (consumedTokenCount > 0) {
+    if (createdCriterion) {
       this.updateOverlayPositionAfterRender();
     }
   }
