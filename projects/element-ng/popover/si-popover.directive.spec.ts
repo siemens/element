@@ -8,6 +8,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { page, userEvent } from 'vitest/browser';
 
+import { SiPopoverTitleDirective } from './si-popover-title.directive';
 import { SiPopoverDirective } from './si-popover.directive';
 
 const generateKeyEvent = (key: string): KeyboardEvent => {
@@ -18,17 +19,33 @@ const generateKeyEvent = (key: string): KeyboardEvent => {
 
 @Component({
   imports: [SiPopoverDirective],
-  template: `<button type="button" siPopover="test popover content">Test</button>`
+  template: `
+    <button type="button" siPopover="test popover content" [siPopoverTitle]="title()">Test</button>
+  `
 })
 export class HostComponent {
+  readonly title = signal('');
   readonly popoverOverlay = viewChild(SiPopoverDirective);
 }
 
 @Component({
   imports: [SiPopoverDirective],
   template: `
+    <button type="button" siPopover="test popover content" [id]="triggerId()">Test with ID</button>
+  `
+})
+class HostWithIdComponent {
+  readonly triggerId = signal('existing-trigger');
+}
+
+@Component({
+  imports: [SiPopoverDirective, SiPopoverTitleDirective],
+  template: `
     <button type="button" [siPopover]="popoverTemplate">Test with custom template</button>
     <ng-template #popoverTemplate>
+      @if (showTitle()) {
+        <si-popover-title>Custom title</si-popover-title>
+      }
       <div class="popover-content">
         <label>
           Input
@@ -39,7 +56,9 @@ export class HostComponent {
     </ng-template>
   `
 })
-export class CustomTemplateHostComponent {}
+export class CustomTemplateHostComponent {
+  readonly showTitle = signal(false);
+}
 
 describe('SiPopoverNextDirective', () => {
   let fixture: ComponentFixture<HostComponent>;
@@ -48,6 +67,99 @@ describe('SiPopoverNextDirective', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HostComponent);
     wrapperComponent = fixture.componentInstance;
+  });
+
+  it('should use the trigger as the dialog label when no title is provided', async () => {
+    await fixture.whenStable();
+    const button = page.getByRole('button', { name: 'Test' });
+    await expect.element(button).toHaveAttribute('id', expect.stringMatching(/\S+/));
+
+    await userEvent.click(button);
+    await fixture.whenStable();
+
+    await expect
+      .element(page.getByRole('dialog', { name: 'Test' }))
+      .toHaveAttribute('aria-labelledby', button.element().id);
+  });
+
+  it('should preserve an existing trigger ID when using it as the label', async () => {
+    const idFixture = TestBed.createComponent(HostWithIdComponent);
+    await idFixture.whenStable();
+    const button = page.getByRole('button', { name: 'Test with ID' });
+
+    await userEvent.click(button);
+    await idFixture.whenStable();
+
+    await expect.element(button).toHaveAttribute('id', 'existing-trigger');
+    await expect
+      .element(page.getByRole('dialog', { name: 'Test with ID' }))
+      .toHaveAttribute('aria-labelledby', 'existing-trigger');
+  });
+
+  it('should update the dialog label reference when the bound trigger ID changes', async () => {
+    const idFixture = TestBed.createComponent(HostWithIdComponent);
+    await idFixture.whenStable();
+    await userEvent.click(page.getByRole('button', { name: 'Test with ID' }));
+    await idFixture.whenStable();
+
+    idFixture.componentInstance.triggerId.set('updated-trigger');
+    await idFixture.whenStable();
+
+    await expect
+      .element(page.getByRole('button', { name: 'Test with ID' }))
+      .toHaveAttribute('id', 'updated-trigger');
+    await expect
+      .element(page.getByRole('dialog', { name: 'Test with ID' }))
+      .toHaveAttribute('aria-labelledby', 'updated-trigger');
+  });
+
+  it('should preserve a static trigger ID', async () => {
+    @Component({
+      imports: [SiPopoverDirective],
+      template: `<button type="button" id="static-trigger" siPopover="test">Static ID</button>`
+    })
+    class StaticIdHostComponent {}
+
+    const idFixture = TestBed.createComponent(StaticIdHostComponent);
+    await idFixture.whenStable();
+    await userEvent.click(page.getByRole('button', { name: 'Static ID' }));
+    await idFixture.whenStable();
+
+    await expect
+      .element(page.getByRole('button', { name: 'Static ID' }))
+      .toHaveAttribute('id', 'static-trigger');
+    await expect
+      .element(page.getByRole('dialog', { name: 'Static ID' }))
+      .toHaveAttribute('aria-labelledby', 'static-trigger');
+  });
+
+  it('should prefer the provided title over the trigger label', async () => {
+    wrapperComponent.title.set('Popover title');
+    await fixture.whenStable();
+
+    await userEvent.click(page.getByRole('button', { name: 'Test' }));
+    await fixture.whenStable();
+
+    await expect
+      .element(page.getByRole('dialog', { name: 'Popover title' }))
+      .toHaveAttribute(
+        'aria-labelledby',
+        page.getByText('Popover title', { exact: true }).element().id
+      );
+  });
+
+  it('should update the label when the provided title changes', async () => {
+    await fixture.whenStable();
+    await userEvent.click(page.getByRole('button', { name: 'Test' }));
+    await fixture.whenStable();
+
+    wrapperComponent.title.set('Popover title');
+    await fixture.whenStable();
+    await expect.element(page.getByRole('dialog', { name: 'Popover title' })).toBeInTheDocument();
+
+    wrapperComponent.title.set('');
+    await fixture.whenStable();
+    await expect.element(page.getByRole('dialog', { name: 'Test' })).toBeInTheDocument();
   });
 
   it('should open/close on click', async () => {
@@ -163,6 +275,39 @@ describe('with custom template', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CustomTemplateHostComponent);
+  });
+
+  it('should use the trigger label when the template has no title', async () => {
+    await fixture.whenStable();
+
+    await userEvent.click(page.getByRole('button', { name: 'Test with custom template' }));
+    await fixture.whenStable();
+
+    await expect
+      .element(page.getByRole('dialog', { name: 'Test with custom template' }))
+      .toBeInTheDocument();
+  });
+
+  it('should prefer a template title and fall back to the trigger when it is removed', async () => {
+    fixture.componentInstance.showTitle.set(true);
+    await fixture.whenStable();
+
+    await userEvent.click(page.getByRole('button', { name: 'Test with custom template' }));
+    await fixture.whenStable();
+
+    await expect
+      .element(page.getByRole('dialog', { name: 'Custom title' }))
+      .toHaveAttribute(
+        'aria-labelledby',
+        page.getByText('Custom title', { exact: true }).element().id
+      );
+
+    fixture.componentInstance.showTitle.set(false);
+    await fixture.whenStable();
+
+    await expect
+      .element(page.getByRole('dialog', { name: 'Test with custom template' }))
+      .toBeInTheDocument();
   });
 
   it('should focus on the first interactive element', async () => {

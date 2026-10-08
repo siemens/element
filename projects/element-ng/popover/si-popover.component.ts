@@ -42,9 +42,20 @@ export class PopoverComponent implements OnInit, OnDestroy {
 
   /** @internal */
   labelledBy: string | undefined;
+  /**
+   * This property is set by the {@link SiPopoverTitleDirective} if present.
+   *
+   * @internal
+   */
+  readonly hasTemplateTitle = signal(false);
   /** @internal */
   describedBy: string | undefined;
   protected readonly positionClass = signal('');
+  protected readonly ariaLabelledBy = computed(() =>
+    this.popoverDirective().title() || this.hasTemplateTitle()
+      ? this.labelledBy
+      : this.popoverDirective().id()
+  );
   protected readonly arrowPos = signal<OverlayArrowPosition | undefined>(undefined);
   protected readonly description = computed(() => {
     const description = this.popoverDirective().siPopover();
