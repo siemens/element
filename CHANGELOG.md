@@ -1,3 +1,37 @@
+# [51.4.0](https://github.com/siemens/element/compare/v51.3.0...v51.4.0) (2026-10-08)
+
+
+
+
+### Features
+
+* **filtered-search:** support semicolon-separated free-text pills ([fbb3f45](https://github.com/siemens/element/commit/fbb3f451f22f9ab1f06bf8d69833f480d1284174))
+* **formly:** support ngx-formly v8 ([3063853](https://github.com/siemens/element/commit/3063853b4440e6896fa498aeca60eb66b321bbe3))
+* **maplibre:** provide cluster popover ([e149ed0](https://github.com/siemens/element/commit/e149ed037731f57cf5819068e0fe32a718ef0720))
+* **skills:** add Siemens Element skill ([c6b35cd](https://github.com/siemens/element/commit/c6b35cdf0025488f3d63369219add913ff4b4aab))
+* **theme:** support dynamic dom target in `SiThemeService` ([c09c257](https://github.com/siemens/element/commit/c09c257e547de37cb9ccbb0eec91830555caf26a))
+* **tooltip:** add overflow tooltip directive ([e39801c](https://github.com/siemens/element/commit/e39801c22fe0eae462b22dc1520696ade530df57))
+
+
+### Bug Fixes
+
+* **chat-messages:** remove unnecessary padding from chat container ([090a04c](https://github.com/siemens/element/commit/090a04ca9b1a58977d277d9642c03656c5ebc507))
+* **filtered-search:** emit search once when clearing a criterion ([e371c06](https://github.com/siemens/element/commit/e371c06924593bf12ca1a6306b2615385defb1b9))
+* **filtered-search:** resolve pasted criterion labels and values ([99d466c](https://github.com/siemens/element/commit/99d466cb9ea34f6ef929135ae83fb952c36ae67c))
+* **formly:** suppress unchanged option label translations ([6ae2304](https://github.com/siemens/element/commit/6ae23048970b618f0ed2af9a91b99dce738f5d35))
+* **list-item:** align padding with design specs ([11a81ba](https://github.com/siemens/element/commit/11a81ba27cf29ad7af238511ef4485df31a5227c)), closes [#2866](https://github.com/siemens/element/issues/2866)
+* **popover:** clear pending focus timeout on destroy ([822c3de](https://github.com/siemens/element/commit/822c3de62941b6fde7134a7c03b8d72e2bd65cc8))
+* **tooltip:** dismiss visible tooltips on global Escape presses ([18a6319](https://github.com/siemens/element/commit/18a6319d1feb9cc56988beafd95b5a4e7fd699d0)), closes [#1846](https://github.com/siemens/element/issues/1846)
+* **tooltip:** show overflow tooltips only for horizontally truncated text ([40c0725](https://github.com/siemens/element/commit/40c0725e4102d77a0ca7b7441b02d8a842d09d1c))
+* **tree-view:** treat full row as selectable target ([069eba5](https://github.com/siemens/element/commit/069eba55a406a029fc37139730e352daa37b001a))
+
+
+### DEPRECATIONS
+
+* **dashboard:** `ScrollbarHelper` service is deprecated and will be removed
+    in v52. Use `element.offsetWidth - element.clientWidth` on the
+    scrollable element instead.
+
 # [51.3.0](https://github.com/siemens/element/compare/v51.2.0...v51.3.0) (2026-09-30)
 
 
