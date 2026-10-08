@@ -4,6 +4,7 @@
 
 ```ts
 
+import { AfterViewInit } from '@angular/core';
 import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import { ConfigurableFocusTrap } from '@angular/cdk/a11y';
@@ -60,6 +61,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     readonly errormessageId: _angular_core.InputSignal<string>;
     readonly id: _angular_core.InputSignal<string>;
     readonly isOpen: _angular_core.WritableSignal<boolean>;
+    markAsTouched(): void;
     open(event?: Event): void;
     readonly openChange: _angular_core.OutputEmitterRef<boolean>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -90,20 +92,21 @@ export class SiSelectComboboxValueComponent {
 }
 
 // @public (undocumented)
-export class SiSelectComponent<T> implements SiFormItemControl {
+export class SiSelectComponent<T> implements AfterViewInit, SiFormItemControl {
     readonly ariaLabel: _angular_core.InputSignal<string | null>;
     close(): void;
+    // (undocumented)
     readonly errormessageId: _angular_core.InputSignal<string>;
     readonly filterPlaceholder: _angular_core.InputSignal<TranslatableString>;
     readonly hasFilter: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // (undocumented)
     readonly id: _angular_core.InputSignal<string>;
     readonly labelledbyInput: _angular_core.InputSignal<string | undefined>;
     readonly noResultsFoundLabel: _angular_core.InputSignal<TranslatableString>;
     open(): void;
-    readonly openChange: _angular_core.OutputEmitterRef<boolean>;
     readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
+    // (undocumented)
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly scrollStrategy: _angular_core.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
 }
 
 // @public

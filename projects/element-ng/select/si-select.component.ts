@@ -48,7 +48,13 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
   hostDirectives: [
     {
       directive: SiCustomSelectDirective,
-      inputs: ['id', 'readonly', 'siCustomSelectScrollStrategy:scrollStrategy', 'errormessageId'],
+      inputs: [
+        'id',
+        'disabled',
+        'readonly',
+        'siCustomSelectScrollStrategy:scrollStrategy',
+        'errormessageId'
+      ],
       outputs: ['openChange']
     }
   ]
@@ -141,7 +147,8 @@ export class SiSelectComponent<T> implements AfterViewInit, SiFormItemControl {
       origin: this.trigger(),
       panelClass: [],
       offsetX: -1,
-      push: false
+      push: false,
+      markTouchedOnClose: false
     });
   }
 

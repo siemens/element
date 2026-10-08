@@ -34,6 +34,7 @@ export interface SiCustomSelectOverlayOptions {
   panelClass: string[];
   offsetX?: number;
   push?: boolean;
+  markTouchedOnClose?: boolean;
 }
 
 /**
@@ -313,10 +314,17 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     this.isOpen.set(false);
     this.disposeOverlay();
     this.openChange.emit(false);
-    this.onTouched();
+    if (this.overlayOptions?.markTouchedOnClose ?? true) {
+      this.markAsTouched();
+    }
     if (this.isBrowser) {
       this.overlayOrigin.nativeElement.focus();
     }
+  }
+
+  /** Marks the control as touched. */
+  markAsTouched(): void {
+    this.onTouched();
   }
 
   /** @internal */
