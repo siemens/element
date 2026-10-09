@@ -53,6 +53,8 @@ will not upload the new image and will display an error message.
 
 ![Photo upload validation](images/photo-upload-validation.png)
 
+Instead of using `maxFileSize` and displaying errors to consumers, apps should just pre-process the image before uploading. Automatically handling resolution limits, compressing file size, and converting images to supported formats (such as JPEG or PNG) avoids upload errors and ensures a smooth user experience.
+
 ## Code ---
 
 ### Usage
