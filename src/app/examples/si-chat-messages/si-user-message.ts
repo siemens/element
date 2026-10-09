@@ -3,12 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject } from '@angular/core';
-import {
-  SiUserMessageComponent,
-  Attachment,
-  MessageAction
-} from '@siemens/element-ng/chat-messages';
+import { SiUserMessageComponent, Attachment } from '@siemens/element-ng/chat-messages';
 import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
+import { MenuItemAction } from '@siemens/element-ng/menu';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 import { markdownOptions } from './markdown-options';
@@ -38,18 +35,21 @@ I'm getting an error when I run it.`;
     }
   ];
 
-  actions: MessageAction[] = [
+  actions: MenuItemAction[] = [
     {
+      type: 'action',
       label: 'Edit message',
       icon: 'element-edit',
       action: (messageId: string) => this.logEvent(`Edit message ${messageId}`)
     },
     {
+      type: 'action',
       label: 'Copy message',
       icon: 'element-export',
       action: (messageId: string) => this.logEvent(`Copy message ${messageId}`)
     },
     {
+      type: 'action',
       label: 'Delete message',
       icon: 'element-delete',
       action: (messageId: string) => this.logEvent(`Delete message ${messageId}`)

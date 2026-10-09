@@ -31,7 +31,6 @@ import {
   SiChatInputComponent,
   SiChatMessageComponent,
   ChatInputAttachment,
-  MessageAction,
   SiChatMessageActionDirective,
   SiAttachmentListComponent,
   Attachment,
@@ -43,8 +42,9 @@ import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
-import { MenuItem } from '@siemens/element-ng/menu';
+import { MenuItemAction, SiMenuActionService } from '@siemens/element-ng/menu';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 import { markdownOptions } from './markdown-options';
@@ -53,7 +53,7 @@ interface ContentMessage {
   type: 'user' | 'ai' | 'custom';
   content: string;
   attachments?: Attachment[];
-  actions?: MessageAction[];
+  actions?: MenuItemAction[];
 }
 
 interface ActivityPart {
@@ -95,7 +95,8 @@ type ChatMessage = ContentMessage | ActivityMessage | ActivityTrace;
     SiMarkdownComponent,
     SiChatMessageActionDirective,
     SiAttachmentListComponent,
-    SiAiWelcomeScreenComponent
+    SiAiWelcomeScreenComponent,
+    SiTranslatePipe
   ],
   templateUrl: './si-chat-container.html'
 })
@@ -126,33 +127,39 @@ export class SampleComponent {
     elementShare
   });
 
-  protected readonly aiActions: MessageAction[] = [
+  protected readonly aiActions: MenuItemAction[] = [
     {
+      type: 'action',
       label: 'Good response',
       icon: this.icons.elementThumbsUp,
       action: (_message: ContentMessage) => this.logEvent('Thumbs up for AI message')
     },
     {
+      type: 'action',
       label: 'Bad response',
       icon: this.icons.elementThumbsDown,
       action: (_message: ContentMessage) => this.logEvent('Thumbs down for AI message')
     },
     {
+      type: 'action',
       label: 'Copy response',
       icon: this.icons.elementCopy,
       action: (_message: ContentMessage) => this.logEvent('Copy AI message')
     },
     {
+      type: 'action',
       label: 'Retry response',
       icon: this.icons.elementRefresh,
       action: (_message: ContentMessage) => this.logEvent('Retry AI message')
     },
     {
+      type: 'action',
       label: 'Bookmark',
       icon: this.icons.elementBookmark,
       action: (_message: ContentMessage) => this.logEvent('Bookmark AI message')
     },
     {
+      type: 'action',
       label: 'Share',
       icon: this.icons.elementShare,
       action: (_message: ContentMessage) => this.logEvent('Share AI message')
@@ -193,6 +200,7 @@ export class SampleComponent {
       ],
       actions: [
         {
+          type: 'action',
           label: 'Export message',
           icon: this.icons.elementExport,
           action: (message: ContentMessage) =>
@@ -262,6 +270,7 @@ export class SampleComponent {
         'Perfect! What should I focus on first\n\nI also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?',
       actions: [
         {
+          type: 'action',
           label: 'Export message',
           icon: this.icons.elementExport,
           action: (_message: ContentMessage) =>
@@ -310,22 +319,25 @@ export class SampleComponent {
       .some(next => ['activity', 'activity-trace', 'user'].includes(next.type));
   }
 
-  inputActions: MessageAction[] = [
+  inputActions: MenuItemAction[] = [
     {
+      type: 'action',
       label: 'Clear messages',
       icon: this.icons.elementDelete,
       action: () => this.onClearMessages()
     }
   ];
 
-  userActions: MessageAction[] = [
+  userActions: MenuItemAction[] = [
     {
+      type: 'action',
       label: 'Export message',
       icon: this.icons.elementExport,
       action: (_message: ContentMessage) =>
         this.logEvent(`Export user message ${_message.content.slice(0, 20)}...`)
     },
     {
+      type: 'action',
       label: 'Delete message',
       icon: this.icons.elementDelete,
       action: (_message: ContentMessage) =>
@@ -407,6 +419,7 @@ export class SampleComponent {
         content: event.content,
         actions: [
           {
+            type: 'action',
             label: 'Export message',
             icon: this.icons.elementExport,
             action: () => this.logEvent('Export user message')
@@ -470,42 +483,24 @@ export class SampleComponent {
     }, 1000);
   }
 
-  private readonly messageActionsCache = new WeakMap<
-    ContentMessage,
-    { primary: MessageAction[]; secondary: MenuItem[] }
-  >();
+  protected readonly renderedMessages = computed(() =>
+    this.messages().map(message => {
+      const actions = 'actions' in message ? (message.actions ?? []) : [];
+      return {
+        message,
+        primaryActions: actions.slice(0, 3),
+        secondaryActions: actions.slice(3)
+      };
+    })
+  );
 
-  private getMessageActions(message: ContentMessage): {
-    primary: MessageAction[];
-    secondary: MenuItem[];
-  } {
-    const cached = this.messageActionsCache.get(message);
-    if (cached) {
-      return cached;
+  private readonly menuActionService = inject(SiMenuActionService, { optional: true });
+
+  protected runAction(action: MenuItemAction, message: ContentMessage): void {
+    if (typeof action.action === 'function') {
+      action.action(message, action);
+    } else {
+      this.menuActionService?.actionTriggered(action, message);
     }
-
-    const actions = message.actions ?? [];
-
-    const primary = actions.slice(0, 3);
-    const secondary = actions.slice(3).map(
-      action =>
-        ({
-          ...action,
-          action: action.action as unknown as (actionParam: any, source: MenuItem) => void,
-          type: 'action'
-        }) as MenuItem
-    );
-
-    const result = { primary, secondary };
-    this.messageActionsCache.set(message, result);
-    return result;
-  }
-
-  protected getMessagePrimaryActions(message: ContentMessage): MessageAction[] {
-    return this.getMessageActions(message).primary;
-  }
-
-  protected getMessageSecondaryActions(message: ContentMessage): MenuItem[] {
-    return this.getMessageActions(message).secondary;
   }
 }

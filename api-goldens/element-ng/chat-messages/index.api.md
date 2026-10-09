@@ -7,25 +7,86 @@
 import { AfterContentInit } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
+import { Definition } from 'mdast';
 import { ElementRef } from '@angular/core';
 import { EnvironmentInjector } from '@angular/core';
+import { FootnoteDefinition } from 'mdast';
+import * as i1 from '@angular/cdk/menu';
+import { InjectionToken } from '@angular/core';
 import { Injector } from '@angular/core';
+import { InputSignal } from '@angular/core';
+import { isSignal } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
+import { Node as Node_2 } from 'mdast';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { Parent } from 'mdast';
+import { PluggableList } from 'unified';
+import { Plugin as Plugin_2 } from 'unified';
+import { Preset } from 'unified';
+import { Processor } from 'unified';
 import { ReplaySubject } from 'rxjs';
+import { Root } from 'mdast';
+import { RootContent } from 'mdast';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { Signal } from '@angular/core';
 import { StaticProvider } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
+import { Transformer as Transformer_2 } from 'unified';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
+import { Type } from '@angular/core';
+
+// @public
+export interface ActivityChatMessage {
+    autoExpand?: boolean;
+    autoExpandInputs?: boolean | string[];
+    autoExpandOutputs?: boolean;
+    content?: string | Signal<string>;
+    icon?: string | false;
+    input?: string | string[] | Record<string, string>;
+    inputArgumentsLabel?: TranslatableString_2;
+    loading?: boolean | Signal<boolean>;
+    messages?: ActivityChatMessage[];
+    name?: TranslatableString_2;
+    output?: string;
+    outputLabel?: TranslatableString_2;
+    // (undocumented)
+    type: 'activity';
+}
+
+// @public
+export type ActivityDetailsDisplay = 'auto' | 'inputs' | 'outputs' | 'both';
+
+// @public
+export interface ActivityTraceChatMessage {
+    autoExpand?: boolean;
+    messages: ActivityChatMessage[];
+    name: TranslatableString_2;
+    // (undocumented)
+    type: 'activity-trace';
+}
+
+// @public
+export interface AiChatMessage extends BaseChatMessage {
+    actions?: MenuItemAction[];
+    content: string | Signal<string>;
+    type: 'ai';
+}
 
 // @public
 export interface Attachment {
     name: string;
     previewTemplate?: TemplateRef<any> | (() => TemplateRef<any>);
+}
+
+// @public
+export interface BaseChatMessage {
+    content?: string | Signal<string>;
+    loading?: boolean | Signal<boolean>;
+    type: 'user' | 'ai';
 }
 
 // @public
@@ -36,12 +97,7 @@ export interface ChatInputAttachment extends Attachment {
 }
 
 // @public
-export interface MessageAction {
-    action: (actionParam: any, source: this) => void;
-    disabled?: boolean;
-    icon: string;
-    label: TranslatableString;
-}
+export type ChatMessage = UserChatMessage | AiChatMessage | ActivityChatMessage | ActivityTraceChatMessage | TemplateChatMessage;
 
 // @public (undocumented)
 export interface PromptCategory {
@@ -54,6 +110,9 @@ export interface PromptSuggestion {
     // (undocumented)
     text: TranslatableString;
 }
+
+// @public
+export const SI_CHAT_INPUT_PARENT: InjectionToken<SiChatInputParent>;
 
 // @public
 export class SiActivityMessageComponent {
@@ -77,12 +136,55 @@ export class SiActivityTraceComponent {
 }
 
 // @public
+export class SiAiChatComponent implements SiChatInputParent {
+    constructor();
+    readonly activityInputArgumentsLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly activityOutputLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly activityReasoningLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly aiIcon: _angular_core.InputSignal<string>;
+    readonly autoExpand: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
+    readonly disableInterrupt: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    focus(): void;
+    readonly greeting: _angular_core.InputSignal<TranslatableString>;
+    // (undocumented)
+    readonly inputInterruptible: Signal<boolean>;
+    // (undocumented)
+    readonly inputSending: Signal<boolean>;
+    readonly interrupting: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly markdownOptions: _angular_core.InputSignal<SiMarkdownOptions>;
+    readonly messages: _angular_core.InputSignal<ChatMessage[] | undefined>;
+    readonly messageSent: _angular_core.OutputEmitterRef<{
+        content: string;
+        attachments: ChatInputAttachment[];
+    }>;
+    readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // (undocumented)
+    onInputSend(): void;
+    readonly promptSuggestions: _angular_core.InputSignal<PromptSuggestion[] | Record<string, PromptSuggestion[]>>;
+    scrollToBottom(): void;
+    readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly show: _angular_core.InputSignal<ActivityDetailsDisplay>;
+    readonly statusAction: _angular_core.InputSignal<{
+        title: string;
+        href: string;
+        target?: string;
+    } | undefined>;
+    readonly statusHeading: _angular_core.InputSignal<string | undefined>;
+    readonly statusMessage: _angular_core.InputSignal<string | undefined>;
+    readonly statusSeverity: _angular_core.InputSignal<"info" | "success" | "warning" | "danger" | "caution" | "critical" | undefined>;
+    readonly welcomeMessage: _angular_core.InputSignal<TranslatableString>;
+}
+
+// @public
 export class SiAiMessageComponent {
     readonly actionParam: _angular_core.InputSignal<unknown>;
-    readonly actions: _angular_core.InputSignal<MessageAction[]>;
+    readonly actions: _angular_core.InputSignal<MenuItemAction[]>;
     readonly content: _angular_core.InputSignal<string>;
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
+    readonly secondaryActions: _angular_core.InputSignal<MenuItemAction[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly sourceClicked: _angular_core.OutputEmitterRef<SourceReference>;
     readonly sources: _angular_core.InputSignal<SourceReference[] | undefined>;
@@ -121,9 +223,10 @@ export class SiChatContainerInputDirective {
 
 // @public
 export class SiChatInputComponent implements AfterViewInit {
+    constructor();
     readonly accept: _angular_core.InputSignal<string | undefined>;
     readonly actionParam: _angular_core.InputSignal<any>;
-    readonly actions: _angular_core.InputSignal<MessageAction[]>;
+    readonly actions: _angular_core.InputSignal<MenuItemAction[]>;
     readonly allowAttachments: _angular_core.InputSignal<boolean>;
     readonly attachFileLabel: _angular_core.InputSignal<TranslatableString>;
     readonly attachments: _angular_core.ModelSignal<ChatInputAttachment[]>;
@@ -136,13 +239,13 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly followUpPromptSelected: _angular_core.OutputEmitterRef<string>;
     readonly interrupt: _angular_core.OutputEmitterRef<void>;
     readonly interruptButtonLabel: _angular_core.InputSignal<TranslatableString>;
-    readonly interruptible: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly interruptible: _angular_core.ModelSignal<boolean>;
     readonly label: _angular_core.InputSignal<string>;
     readonly maxFileSize: _angular_core.InputSignal<number>;
     readonly maxLength: _angular_core.InputSignal<number | undefined>;
     readonly placeholder: _angular_core.InputSignal<TranslatableString>;
     readonly removeAttachmentLabel: _angular_core.InputSignal<TranslatableString>;
-    readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
+    readonly secondaryActions: _angular_core.InputSignal<MenuItemAction[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString>;
     readonly send: _angular_core.OutputEmitterRef<{
         content: string;
@@ -150,7 +253,7 @@ export class SiChatInputComponent implements AfterViewInit {
     }>;
     readonly sendButtonIcon: _angular_core.InputSignal<string>;
     readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString>;
-    readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly sending: _angular_core.ModelSignal<boolean>;
     readonly value: _angular_core.ModelSignal<string>;
 }
 
@@ -159,7 +262,25 @@ export class SiChatInputDisclaimerDirective {
 }
 
 // @public
+export interface SiChatInputParent {
+    // (undocumented)
+    readonly inputInterruptible: Signal<boolean>;
+    // (undocumented)
+    readonly inputSending: Signal<boolean>;
+    // (undocumented)
+    onInputSend(): void;
+}
+
+// @public
 export class SiChatMessageActionDirective {
+}
+
+// @public
+export class SiChatMessageActionsComponent {
+    readonly actionParam: _angular_core.InputSignal<unknown>;
+    readonly actions: _angular_core.InputSignal<MenuItemAction[]>;
+    readonly secondaryActions: _angular_core.InputSignal<MenuItemAction[]>;
+    readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
 
 // @public
@@ -172,11 +293,25 @@ export class SiChatMessageComponent {
 // @public
 export class SiUserMessageComponent {
     readonly actionParam: _angular_core.InputSignal<any>;
-    readonly actions: _angular_core.InputSignal<MessageAction[]>;
+    readonly actions: _angular_core.InputSignal<MenuItemAction[]>;
     readonly attachments: _angular_core.InputSignal<Attachment[]>;
     readonly content: _angular_core.InputSignal<string>;
-    readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
+    readonly secondaryActions: _angular_core.InputSignal<MenuItemAction[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+}
+
+// @public
+export interface TemplateChatMessage {
+    template: TemplateRef<any>;
+    templateContext?: any;
+}
+
+// @public
+export interface UserChatMessage extends BaseChatMessage {
+    actions?: MenuItemAction[];
+    attachments?: Attachment[];
+    content: string;
+    type: 'user';
 }
 
 // (No @packageDocumentation comment for this package)
