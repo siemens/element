@@ -135,7 +135,7 @@ The `si-password-strength` component provides the user feedback about the streng
 Wrap the component around an input with `type="password"`. Add the `[siPasswordStrength]` directive
 to the input field and specify the requirements which have to be fulfilled for an eligible password.
 
-Utilize the output callback event [`(passwordStrengthChanged)`](./input.md#SiPasswordStrengthDirective_o) to get the current password strength.
+Utilize the output callback event [`(passwordStrengthChanged)`](./input.md#password-strength-policy) to get the current password strength.
 
 ```html
 <si-password-strength>

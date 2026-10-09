@@ -32,11 +32,19 @@ class DocsComposerPreprocessor(Preprocessor):
 
   def run(self, lines):
     if api_enabled:
+      current_file_path = self.extension.current_file_path
+      if not current_file_path and 'rendering_context' in self.md.preprocessors:
+        context = self.md.preprocessors['rendering_context']
+        # Zensical paths are docs-relative; Docs Composer indexes repo-relative paths.
+        current_file_path = os.path.relpath(os.path.join(
+          context.config['root_dir'], context.config['docs_dir'], context.page.path
+        ))
+
       source = '\n'.join(lines)
       processed_text: str = self.extension.docs_composer.buildFile(
         self.extension.docs_composer_configuration,
         source,
-        self.extension.current_file_path,
+        current_file_path,
         self.extension.is_serve,
         True,
         structured_output_path,
