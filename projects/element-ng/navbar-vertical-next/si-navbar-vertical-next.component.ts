@@ -29,7 +29,11 @@ import {
   elementLayoutPane2,
   elementLayoutPane2Right
 } from '@siemens/element-icons';
-import { SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
+import {
+  SI_NAVBAR_VERTICAL_LAYOUT,
+  SI_UI_STATE_SERVICE,
+  SiNavbarVerticalLayout
+} from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
@@ -57,7 +61,10 @@ interface UIState {
   ],
   templateUrl: './si-navbar-vertical-next.component.html',
   styleUrl: './si-navbar-vertical-next.component.scss',
-  providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useExisting: SiNavbarVerticalNextComponent }],
+  providers: [
+    { provide: SI_NAVBAR_VERTICAL_NEXT, useExisting: SiNavbarVerticalNextComponent },
+    { provide: SI_NAVBAR_VERTICAL_LAYOUT, useExisting: SiNavbarVerticalNextComponent }
+  ],
   host: {
     class: 'si-layout-inner ready',
     '[class.nav-collapsed]': 'collapsed()',
@@ -69,7 +76,7 @@ interface UIState {
     '[class.ready]': 'ready()'
   }
 })
-export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
+export class SiNavbarVerticalNextComponent implements OnChanges, OnInit, SiNavbarVerticalLayout {
   protected readonly icons = addIcons({
     elementDoubleLeft,
     elementDoubleRight,

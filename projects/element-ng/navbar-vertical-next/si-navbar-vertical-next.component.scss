@@ -6,8 +6,8 @@
 @use '@siemens/element-theme/src/styles/all-variables';
 @use './si-navbar-vertical-next-layout' as layout;
 
-$vertical-nav-width: 240px;
-$vertical-nav-collapsed-width: calc(1.5rem + 2 * map.get(all-variables.$spacers-inline, 5));
+$vertical-nav-width: all-variables.$si-navbar-vertical-width;
+$vertical-nav-collapsed-width: all-variables.$si-navbar-vertical-collapsed-width;
 $mobile-drawer-padding-block: map.get(all-variables.$spacers-block, 2);
 $mobile-drawer-padding-inline: map.get(all-variables.$spacers-inline, 4);
 $mobile-drawer-margin-block-start: map.get(all-variables.$spacers-block, 4);
