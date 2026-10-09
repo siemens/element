@@ -29,6 +29,7 @@ import { PopoverComponent } from './si-popover.component';
 @Directive({
   selector: '[siPopover]',
   host: {
+    'aria-haspopup': 'dialog',
     '[attr.aria-expanded]': 'isOpen()',
     '[attr.aria-controls]': 'popoverId',
     '(click)': 'onClick()'

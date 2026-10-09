@@ -1,3 +1,10 @@
 @if (loading) {
-  <si-loading-spinner />
+  <si-loading-spinner [loadingText]="withLoadingText() ? 'SI_LOADING.DATA' : undefined" />
 }
+
+<div class="form-check mt-4 ms-6 e2e-ignore">
+  <label class="form-check-label">
+    <input type="checkbox" class="form-check-input" [formField]="withLoadingTextField" />
+    With loading text
+  </label>
+</div>

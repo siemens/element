@@ -30,5 +30,8 @@
       "DESCRIPTION": "The server refuses to brew coffee because, well... it’s a teapot.",
       "ALT": "I’m a Teapot"
     }
+  },
+  "SI_LOADING": {
+    "DATA": "Retrieving data…"
   }
 }

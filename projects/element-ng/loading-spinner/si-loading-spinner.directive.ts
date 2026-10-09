@@ -17,6 +17,7 @@ import {
   OnInit,
   ViewContainerRef
 } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, combineLatest, merge, Subscription, timer } from 'rxjs';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
@@ -47,6 +48,11 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
    */
   readonly initialDelay = input(true, { transform: booleanAttribute });
 
+  /**
+   * Optional text to be displayed below the spinner.
+   */
+  readonly loadingText = input<TranslatableString>();
+
   private el = inject(ElementRef);
   private readonly viewRef = inject(ViewContainerRef);
   private cdRef = inject(ChangeDetectorRef);
@@ -63,7 +69,11 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
     this.viewRef,
     undefined,
     null,
-    [inputBinding('isBlockingSpinner', this.blocking), inputBinding('isSpinnerOverlay', () => true)]
+    [
+      inputBinding('isBlockingSpinner', this.blocking),
+      inputBinding('isSpinnerOverlay', () => true),
+      inputBinding('loadingText', this.loadingText)
+    ]
   );
 
   // this makes sure the spinner only displays with a delay of 500ms and stays for 500ms so
