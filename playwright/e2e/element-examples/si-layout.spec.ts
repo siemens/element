@@ -16,6 +16,17 @@ test.describe('si-layouts', () => {
     await si.runVisualAndA11yTests('side-panel-fullscreen');
   });
 
+  test('si-layouts/anatomy-navbar-vertical-next - fullscreen side panel', async ({ page, si }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await si.visitExample('si-layouts/anatomy-navbar-vertical-next');
+
+    await page.getByRole('button', { name: 'Show side pane', exact: true }).click();
+    await page.getByRole('button', { name: 'Full screen', exact: true }).click();
+    await si.runVisualAndA11yTests('side-panel-fullscreen-navbar-next-expanded');
+    await page.getByRole('button', { name: 'Show side navigation', exact: true }).click();
+    await si.runVisualAndA11yTests('side-panel-fullscreen-navbar-next');
+  });
+
   const example = 'si-layouts/content-tile-layout-full-scroll-vertical-nav';
 
   test(example, async ({ page, si }) => {

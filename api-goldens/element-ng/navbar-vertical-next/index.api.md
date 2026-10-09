@@ -11,6 +11,7 @@ import { DomPortal } from '@angular/cdk/portal';
 import { OnChanges } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { Signal } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';
 
@@ -19,7 +20,7 @@ export class SiNavbarVerticalNextChipMenuComponent {
 }
 
 // @public (undocumented)
-export class SiNavbarVerticalNextComponent implements OnChanges, OnInit {
+export class SiNavbarVerticalNextComponent implements OnChanges, OnInit, SiNavbarVerticalLayout {
     constructor();
     readonly alwaysFlyout: _angular_core.InputSignalWithTransform<boolean, unknown>;
     collapse(): void;
