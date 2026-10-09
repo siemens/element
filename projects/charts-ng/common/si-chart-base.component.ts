@@ -730,6 +730,11 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   protected getValidXAxis(): Set<number> | undefined {
     return undefined;
   }
+        
+  /** Returns `false` if the series at the given index has been hidden via the legend. */
+  protected isSeriesVisible(index: number): boolean {
+    return true;
+  }
 
   protected setZoomMode(): void {}
 
@@ -766,7 +771,9 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
     this.keyNavDataIndex = 0;
     const series = this.actualOptions.series;
     const firstDataSeriesIndex = Array.isArray(series)
-      ? series.findIndex((s: any) => Array.isArray(s?.data) && s.data.length > 0)
+      ? series.findIndex(
+          (s: any, i) => Array.isArray(s?.data) && s.data.length > 0 && this.isSeriesVisible(i)
+        )
       : -1;
     if (firstDataSeriesIndex < 0) {
       return;
@@ -924,9 +931,9 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
       return;
     }
 
-    // Find the first series that has actual data to navigate.
+    // Find the first visible series that has actual data to navigate.
     const firstDataSeriesIndex = series.findIndex(
-      (s: any) => Array.isArray(s?.data) && s.data.length > 0
+      (s: any, i) => Array.isArray(s?.data) && s.data.length > 0 && this.isSeriesVisible(i)
     );
     if (firstDataSeriesIndex < 0) {
       return;
@@ -969,7 +976,10 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
 
     let xLabel: string | undefined;
     const parts = series
-      .filter((s: any) => Array.isArray(s?.data) && s.data[dataIndex] != null)
+      .filter(
+        (s: any, i) =>
+          Array.isArray(s?.data) && s.data[dataIndex] != null && this.isSeriesVisible(i)
+      )
       .map((s: any) => {
         const point = s.data[dataIndex];
         const value = Array.isArray(point)
