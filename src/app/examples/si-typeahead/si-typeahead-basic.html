@@ -1,14 +1,30 @@
 <app-filter-settings [(variant)]="variant" [(disabled)]="disable" [(showIcon)]="showIcon">
-  <pre class="code-preview">Model: {{ selected | json }}</pre>
+  <pre class="code-preview">Model: {{ model() | json }}</pre>
+  @let showErrors = form().touched() && form().invalid();
   <si-search-bar
     placeholder="Placeholder"
-    aria-label="States"
-    [siTypeahead]="states"
-    [typeaheadSkipSortingMatches]="false"
-    [typeaheadTokenize]="false"
     [colorVariant]="variant"
     [disabled]="disable"
     [showIcon]="showIcon"
-    [(ngModel)]="selected"
-  />
+  >
+    <input
+      id="states"
+      aria-label="States"
+      siSearchBarInput
+      [class.is-invalid]="showErrors"
+      [attr.aria-describedby]="showErrors ? 'states-errormessage' : null"
+      [attr.aria-invalid]="showErrors ? 'true' : null"
+      [formField]="form"
+      [siTypeahead]="states"
+      [typeaheadSkipSortingMatches]="false"
+      [typeaheadTokenize]="false"
+    />
+  </si-search-bar>
+  @if (showErrors) {
+    <div id="states-errormessage" class="invalid-feedback d-block" aria-live="polite">
+      @for (error of form().errors(); track $index) {
+        <div>{{ error.message }}</div>
+      }
+    </div>
+  }
 </app-filter-settings>
