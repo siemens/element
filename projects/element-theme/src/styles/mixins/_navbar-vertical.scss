@@ -1,0 +1,26 @@
+@use '../bootstrap/mixins/breakpoints';
+@use '../variables/si-vars';
+
+@mixin spacing(
+  $collapsed: '.nav-collapsed',
+  $text-only: '.nav-text-only',
+  $hidden: '.ready:not(.visible)'
+) {
+  --element-navbar-vertical-spacing: 0;
+
+  @include breakpoints.media-breakpoint-up(sm) {
+    &:not(#{$text-only}) {
+      --element-navbar-vertical-spacing: #{si-vars.$si-navbar-vertical-collapsed-width};
+    }
+  }
+
+  @include breakpoints.media-breakpoint-up(lg) {
+    &:not(#{$collapsed}) {
+      --element-navbar-vertical-spacing: #{si-vars.$si-navbar-vertical-width};
+    }
+  }
+
+  &#{$hidden} {
+    --element-navbar-vertical-spacing: 0;
+  }
+}

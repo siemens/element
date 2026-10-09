@@ -29,6 +29,7 @@ import { PopoverComponent } from './si-popover.component';
 @Directive({
   selector: '[siPopover]',
   host: {
+    '[id]': 'id()',
     'aria-haspopup': 'dialog',
     '[attr.aria-expanded]': 'isOpen()',
     '[attr.aria-controls]': 'popoverId',
@@ -111,13 +112,23 @@ export class SiPopoverDirective implements OnDestroy {
   /** @internal */
   readonly popoverId = `__popover_${this.popoverCounter}`;
 
+  /**
+   * The ID of the trigger element.
+   *
+   * @defaultValue
+   * ```
+   * `__popover-trigger_${this.popoverCounter}`
+   * ```
+   */
+  readonly id = input(`__popover-trigger_${this.popoverCounter}`);
+
   /** @internal */
   protected readonly isOpen = signal<boolean>(false);
 
   private overlayref?: OverlayRef;
   private popoverRef?: ComponentRef<PopoverComponent>;
   private overlay = inject(Overlay);
-  private elementRef = inject(ElementRef);
+  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private destroyer = new Subject<void>();
 
   ngOnDestroy(): void {
