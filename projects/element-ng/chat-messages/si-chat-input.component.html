@@ -94,13 +94,18 @@
           @for (action of actions(); track $index) {
             <button
               type="button"
-              class="btn btn-tertiary-ghost btn-icon"
+              class="btn btn-tertiary-ghost"
+              [class.btn-icon]="!!action.icon"
               [disabled]="action.disabled"
               [siTooltip]="action.label | translate"
               [attr.aria-label]="action.label | translate"
-              (click)="action.action(actionParam(), action)"
+              (click)="runAction(action)"
             >
-              <si-icon [icon]="action.icon" />
+              @if (action.icon) {
+                <si-icon [icon]="action.icon" />
+              } @else {
+                {{ action.label | translate }}
+              }
             </button>
           }
         }

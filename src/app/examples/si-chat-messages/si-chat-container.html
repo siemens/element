@@ -1,11 +1,12 @@
 <div class="si-layout-fixed-height w-100 h-100">
   <si-chat-container #chatContainer colorVariant="base-0">
-    @for (message of messages(); track message) {
+    @for (entry of renderedMessages(); track entry.message) {
+      @let message = entry.message;
       @if (message.type === 'user') {
         <si-user-message
           [actionParam]="message"
-          [actions]="getMessagePrimaryActions(message)"
-          [secondaryActions]="getMessageSecondaryActions(message)"
+          [actions]="entry.primaryActions"
+          [secondaryActions]="entry.secondaryActions"
           [attachments]="message.attachments ?? []"
         >
           <si-markdown [markdown]="message.content" [options]="markdownOptions" />
@@ -14,8 +15,8 @@
       @if (message.type === 'ai') {
         <si-ai-message
           [actionParam]="message"
-          [actions]="getMessagePrimaryActions(message)"
-          [secondaryActions]="getMessageSecondaryActions(message)"
+          [actions]="entry.primaryActions"
+          [secondaryActions]="entry.secondaryActions"
         >
           <si-markdown [markdown]="message.content" [options]="markdownOptions" />
         </si-ai-message>
@@ -30,12 +31,18 @@
           @for (action of message.actions; track $index) {
             <button
               type="button"
-              class="btn btn-tertiary-ghost btn-circle"
+              class="btn btn-tertiary-ghost"
               siChatMessageAction
-              [attr.aria-label]="action.label"
-              (click)="action.action(message, action)"
+              [class.btn-circle]="!!action.icon"
+              [disabled]="action.disabled"
+              [attr.aria-label]="action.label | translate"
+              (click)="runAction(action, message)"
             >
-              <si-icon [icon]="action.icon" />
+              @if (action.icon) {
+                <si-icon [icon]="action.icon" />
+              } @else {
+                {{ action.label | translate }}
+              }
             </button>
           }
         </si-chat-message>

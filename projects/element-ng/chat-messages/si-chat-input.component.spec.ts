@@ -13,10 +13,9 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
-import { MenuItem } from '@siemens/element-ng/menu';
+import { MenuItemAction, SiMenuActionService } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { MessageAction } from './message-action.model';
 import {
   ChatInputAttachment,
   SiChatInputComponent as TestComponent
@@ -34,8 +33,8 @@ describe('SiChatInputComponent', () => {
   let interruptible: WritableSignal<boolean>;
   let maxLength: WritableSignal<number | undefined>;
   let disclaimer: WritableSignal<TranslatableString | undefined>;
-  let actions: WritableSignal<MessageAction[]>;
-  let secondaryActions: WritableSignal<MenuItem[]>;
+  let actions: WritableSignal<MenuItemAction[]>;
+  let secondaryActions: WritableSignal<MenuItemAction[]>;
   let allowAttachments: WritableSignal<boolean>;
   let maxFileSize: WritableSignal<number>;
   let sendButtonLabel: WritableSignal<TranslatableString>;
@@ -45,6 +44,7 @@ describe('SiChatInputComponent', () => {
   let fileErrorSpy = vi.fn();
   let followUpPrompts: WritableSignal<string[]>;
   let followUpPromptSelectedSpy = vi.fn();
+  const menuActionService = { actionTriggered: vi.fn() };
 
   beforeEach(() => {
     value = signal('');
@@ -55,8 +55,8 @@ describe('SiChatInputComponent', () => {
     interruptible = signal(false);
     maxLength = signal<number | undefined>(undefined);
     disclaimer = signal<TranslatableString | undefined>(undefined);
-    actions = signal<MessageAction[]>([]);
-    secondaryActions = signal<MenuItem[]>([]);
+    actions = signal<MenuItemAction[]>([]);
+    secondaryActions = signal<MenuItemAction[]>([]);
     allowAttachments = signal(false);
     maxFileSize = signal(10485760);
     sendButtonLabel = signal<TranslatableString>('Send');
@@ -66,6 +66,10 @@ describe('SiChatInputComponent', () => {
     fileErrorSpy = vi.fn();
     followUpPrompts = signal<string[]>([]);
     followUpPromptSelectedSpy = vi.fn();
+    menuActionService.actionTriggered.mockClear();
+    TestBed.configureTestingModule({
+      providers: [{ provide: SiMenuActionService, useValue: menuActionService }]
+    });
 
     fixture = TestBed.createComponent(TestComponent, {
       bindings: [
@@ -487,9 +491,24 @@ describe('SiChatInputComponent', () => {
     expect(disclaimerElement.nativeElement).toHaveTextContent('This is a disclaimer');
   });
 
+  it('should dispatch primary string actions through the menu action service', async () => {
+    const action: MenuItemAction = { type: 'action', label: 'Save draft', action: 'save' };
+    actions.set([action]);
+    await fixture.whenStable();
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector(
+      'button[aria-label="Save draft"]'
+    );
+    expect(button).toHaveTextContent('Save draft');
+    button.click();
+
+    expect(menuActionService.actionTriggered).toHaveBeenCalledExactlyOnceWith(action, undefined);
+  });
+
   it('should render primary actions inline without an actions menu', async () => {
     actions.set([
       {
+        type: 'action',
         label: 'Attach',
         icon: 'element-attachment',
         action: () => {}

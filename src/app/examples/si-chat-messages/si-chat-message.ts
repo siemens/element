@@ -17,12 +17,15 @@ import {
   SiChatMessageComponent,
   SiAttachmentListComponent,
   Attachment,
-  SiChatMessageActionDirective,
-  MessageAction
+  SiChatMessageActionDirective
 } from '@siemens/element-ng/chat-messages';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
-import { MenuItemAction, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
+import {
+  MenuItemAction,
+  SiMenuActionService,
+  SiMenuFactoryComponent
+} from '@siemens/element-ng/menu';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -45,6 +48,7 @@ import { markdownOptions } from './markdown-options';
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
+  private readonly menuActionService = inject(SiMenuActionService, { optional: true });
 
   protected markdownOptions = markdownOptions;
 
@@ -57,13 +61,15 @@ export class SampleComponent {
     elementDelete
   });
 
-  actions: MessageAction[] = [
+  actions: MenuItemAction[] = [
     {
+      type: 'action',
       label: 'Copy',
       icon: this.icons.elementExport,
       action: (messageId: string) => this.logEvent(`Copy message ${messageId}`)
     },
     {
+      type: 'action',
       label: 'Edit',
       icon: this.icons.elementEdit,
       action: (messageId: string) => this.logEvent(`Edit message ${messageId}`)
@@ -95,4 +101,12 @@ export class SampleComponent {
   ];
 
   readonly secondaryActionsLabel = 'More actions';
+
+  protected runAction(action: MenuItemAction, messageId: string): void {
+    if (typeof action.action === 'function') {
+      action.action(messageId, action);
+    } else {
+      this.menuActionService?.actionTriggered(action, messageId);
+    }
+  }
 }

@@ -5,9 +5,8 @@
 import { Component, DebugElement, inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MenuItem } from '@siemens/element-ng/menu';
+import { MenuItemAction } from '@siemens/element-ng/menu';
 
-import { MessageAction } from './message-action.model';
 import { Attachment } from './si-attachment-list.component';
 import { SiUserMessageComponent as TestComponent } from './si-user-message.component';
 
@@ -23,15 +22,15 @@ describe('SiUserMessageComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let debugElement: DebugElement;
   let content: WritableSignal<string>;
-  let actions: WritableSignal<MessageAction[]>;
-  let secondaryActions: WritableSignal<MenuItem[]>;
+  let actions: WritableSignal<MenuItemAction[]>;
+  let secondaryActions: WritableSignal<MenuItemAction[]>;
   let attachments: WritableSignal<Attachment[]>;
   let actionParam: WritableSignal<unknown>;
 
   beforeEach(() => {
     content = signal('');
-    actions = signal<MessageAction[]>([]);
-    secondaryActions = signal<MenuItem[]>([]);
+    actions = signal<MenuItemAction[]>([]);
+    secondaryActions = signal<MenuItemAction[]>([]);
     attachments = signal<Attachment[]>([]);
     actionParam = signal<unknown>(undefined);
 
@@ -75,6 +74,7 @@ describe('SiUserMessageComponent', () => {
   it('should render action buttons when actions are provided', async () => {
     actions.set([
       {
+        type: 'action',
         label: 'Edit',
         icon: 'element-edit',
         action: () => {}
@@ -113,11 +113,13 @@ describe('SiUserMessageComponent', () => {
   it('should render all action buttons', async () => {
     actions.set([
       {
+        type: 'action',
         label: 'Edit',
         icon: 'element-edit',
         action: () => {}
       },
       {
+        type: 'action',
         label: 'Copy',
         icon: 'element-export',
         action: () => {}
@@ -147,8 +149,9 @@ describe('SiUserMessageComponent', () => {
 
   it('should call action with actionParam', async () => {
     const actionSpy = vi.fn();
-    const testActions: MessageAction[] = [
+    const testActions: MenuItemAction[] = [
       {
+        type: 'action',
         label: 'Edit',
         icon: 'element-edit',
         action: actionSpy

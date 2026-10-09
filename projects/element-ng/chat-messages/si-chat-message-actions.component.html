@@ -1,0 +1,36 @@
+<div class="btn-group message-actions align-items-center" role="group" siChatMessageAction>
+  @for (action of actions(); track $index) {
+    <button
+      type="button"
+      class="btn btn-tertiary-ghost"
+      [class.btn-icon]="!!action.icon"
+      [disabled]="action.disabled"
+      [attr.aria-label]="action.label | translate"
+      (click)="runAction(action)"
+    >
+      @if (action.icon) {
+        <si-icon [icon]="action.icon" />
+      } @else {
+        {{ action.label | translate }}
+      }
+    </button>
+  }
+
+  @if (secondaryActions().length > 0) {
+    <button
+      type="button"
+      class="btn btn-tertiary-ghost btn-icon"
+      [cdkMenuTriggerFor]="secondaryActionsMenu"
+      [attr.aria-label]="secondaryActionsLabel() | translate"
+      [attr.title]="secondaryActionsLabel() | translate"
+    >
+      <si-icon [icon]="icons.elementOptionsVertical" />
+    </button>
+
+    <ng-template #secondaryActionsMenu>
+      <si-menu-factory [items]="secondaryActions()" [actionParam]="actionParam()" />
+    </ng-template>
+  }
+
+  <ng-content />
+</div>
