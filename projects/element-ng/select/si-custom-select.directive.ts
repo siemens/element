@@ -13,6 +13,7 @@ import {
   Directive,
   ElementRef,
   inject,
+  InjectionToken,
   input,
   model,
   output,
@@ -27,6 +28,11 @@ import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/for
 import { filter, merge, Subject, takeUntil } from 'rxjs';
 
 import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
+
+/** @internal */
+export const SI_CUSTOM_SELECT_HOST_IS_TRIGGER = new InjectionToken<boolean>(
+  'SI_CUSTOM_SELECT_HOST_IS_TRIGGER'
+);
 
 /** @internal */
 export interface SiCustomSelectOverlayOptions {
@@ -86,26 +92,26 @@ export interface SiCustomSelectOverlayOptions {
   host: {
     class: 'dropdown',
     '[style.--si-action-icon-offset.rem]': '1.5',
-    role: 'combobox',
-    'aria-autocomplete': 'none',
-    '[attr.aria-haspopup]': 'haspopup()',
-    '[attr.aria-labelledby]': 'labelledby()',
-    '[attr.aria-describedby]': 'errormessageId()',
-    '[attr.aria-controls]': 'isOpen() ? dropdownId() : null',
-    '[attr.aria-expanded]': 'isOpen()',
-    '[attr.aria-disabled]': 'disabled()',
+    '[attr.role]': 'hostIsTrigger() ? "combobox" : null',
+    '[attr.aria-autocomplete]': 'hostIsTrigger() ? "none" : null',
+    '[attr.aria-haspopup]': 'hostIsTrigger() ? haspopup() : null',
+    '[attr.aria-labelledby]': 'hostIsTrigger() ? labelledby() : null',
+    '[attr.aria-describedby]': 'hostIsTrigger() ? errormessageId() : null',
+    '[attr.aria-controls]': 'hostIsTrigger() && isOpen() ? dropdownId() : null',
+    '[attr.aria-expanded]': 'hostIsTrigger() ? isOpen() : null',
+    '[attr.aria-disabled]': 'hostIsTrigger() ? disabled() : null',
     '[attr.id]': 'id()',
-    '[attr.tabindex]': 'disabled() ? "-1" : "0"',
+    '[attr.tabindex]': 'hostIsTrigger() ? (disabled() ? "-1" : "0") : null',
     '[class.disabled]': 'disabled()',
     '[class.pe-none]': 'disabled()',
     '[class.readonly]': 'readonly()',
     '[class.open]': 'isOpen()',
     '[class.show]': 'isOpen()',
-    '(click)': 'open()',
-    '(keydown.enter)': 'open()',
-    '(keydown.space)': 'open($event)',
-    '(keydown.arrowDown)': 'open($event)',
-    '(keydown.arrowUp)': 'open($event)'
+    '(click)': 'openFromHost()',
+    '(keydown.enter)': 'openFromHost()',
+    '(keydown.space)': 'openFromHost($event)',
+    '(keydown.arrowDown)': 'openFromHost($event)',
+    '(keydown.arrowUp)': 'openFromHost($event)'
   }
 })
 export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormItemControl {
@@ -207,6 +213,9 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   private overlayRef?: OverlayRef;
   private focusTrap?: ConfigurableFocusTrap;
   private overlayOrigin = this.elementRef;
+  protected readonly hostIsTrigger = signal(
+    inject(SI_CUSTOM_SELECT_HOST_IS_TRIGGER, { optional: true }) ?? true
+  );
   private overlayOptions?: SiCustomSelectOverlayOptions;
   private readonly closeOverlay$ = new Subject<void>();
 
@@ -303,6 +312,12 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     )
       .pipe(takeUntil(this.closeOverlay$), takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.close());
+  }
+
+  protected openFromHost(event?: Event): void {
+    if (this.hostIsTrigger()) {
+      this.open(event);
+    }
   }
 
   /** Closes the dropdown overlay and restores focus. */

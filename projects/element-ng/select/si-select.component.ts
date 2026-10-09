@@ -22,7 +22,10 @@ import { SiSelectInputComponent } from './select-input/si-select-input.component
 import { SiSelectListHasFilterComponent } from './select-list/si-select-list-has-filter.component';
 import { SiSelectListComponent } from './select-list/si-select-list.component';
 import { SiSelectSelectionStrategy } from './selection/si-select-selection-strategy';
-import { SiCustomSelectDirective } from './si-custom-select.directive';
+import {
+  SI_CUSTOM_SELECT_HOST_IS_TRIGGER,
+  SiCustomSelectDirective
+} from './si-custom-select.directive';
 import { SiSelectActionsDirective } from './si-select-actions.directive';
 import { SiSelectDropdownDirective } from './si-select-dropdown.directive';
 import { SiSelectGroupTemplateDirective } from './si-select-group-template.directive';
@@ -41,7 +44,10 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
   ],
   templateUrl: './si-select.component.html',
   styleUrl: './si-select.component.scss',
-  providers: [{ provide: SI_FORM_ITEM_CONTROL, useExisting: SiSelectComponent }],
+  providers: [
+    { provide: SI_FORM_ITEM_CONTROL, useExisting: SiSelectComponent },
+    { provide: SI_CUSTOM_SELECT_HOST_IS_TRIGGER, useValue: false }
+  ],
   host: {
     '[class.si-select-has-filter]': 'hasFilter()'
   },
