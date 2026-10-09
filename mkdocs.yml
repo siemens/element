@@ -209,6 +209,7 @@ nav:
     - Theming:                            'architecture/theming.md'
     - UI state:                           'architecture/ui-state.md'
     - Zoneless:                           'architecture/zoneless.md'
+    - Micro frontends:                    'architecture/micro-frontends.md'
   - Contributing:
     - Guidelines:                         'CONTRIBUTING.md'
     - Code of conduct:                    'CODE_OF_CONDUCT.md'
