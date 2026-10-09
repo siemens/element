@@ -93,6 +93,7 @@ export class SampleComponent implements OnInit, OnDestroy {
       {
         prop: 'user',
         name: '',
+        sortable: false,
         width: 80,
         resizeable: false,
         canAutoResize: false,
@@ -126,6 +127,7 @@ export class SampleComponent implements OnInit, OnDestroy {
       {
         prop: 'status',
         name: 'Status',
+        sortable: false,
         minWidth: 100,
         resizeable: true,
         canAutoResize: true,
@@ -143,6 +145,7 @@ export class SampleComponent implements OnInit, OnDestroy {
       {
         prop: 'context',
         name: '',
+        sortable: false,
         width: 40,
         minWidth: 40,
         resizeable: false,

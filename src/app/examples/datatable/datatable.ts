@@ -110,7 +110,8 @@ export class SampleComponent implements OnInit {
       {
         prop: 'user',
         name: '',
-        headerTemplate: this.statusHeaderCellTemplate(),
+        sortable: false,
+        headerLabelTemplate: this.statusHeaderCellTemplate(),
         width: this.showCheckboxes ? 112 : 80,
         resizeable: false,
         canAutoResize: false,
@@ -145,6 +146,7 @@ export class SampleComponent implements OnInit {
       {
         prop: 'status',
         name: 'Status',
+        sortable: false,
         minWidth: 100,
         resizeable: true,
         canAutoResize: false,
@@ -161,7 +163,8 @@ export class SampleComponent implements OnInit {
       {
         prop: 'context',
         name: '',
-        headerTemplate: this.contextHeaderCellTemplate(),
+        sortable: false,
+        headerLabelTemplate: this.contextHeaderCellTemplate(),
         width: 40,
         resizeable: false,
         canAutoResize: false,

@@ -1,0 +1,56 @@
+<button
+  #trigger
+  #origin="cdkOverlayOrigin"
+  cdkOverlayOrigin
+  type="button"
+  class="btn btn-sm btn-icon btn-tertiary-ghost"
+  aria-haspopup="dialog"
+  [attr.aria-label]="label() | translate: { columnName: column.name() | translate }"
+  [attr.aria-describedby]="value() ? descriptionId : null"
+  [attr.aria-expanded]="open()"
+  [attr.aria-controls]="open() ? dialogId : null"
+  [disabled]="disabled()"
+  (click)="open.set(true)"
+  (blur)="onTriggerBlur()"
+>
+  <si-icon class="icon" [class.badge-dot]="value()" [icon]="icons.elementFilter" />
+</button>
+@if (value()) {
+  <span class="visually-hidden" [id]="descriptionId">
+    {{ activeFilterDescription() | translate: { value: value() } }}
+  </span>
+}
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="open()"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+  [cdkConnectedOverlayViewportMargin]="8"
+  (backdropClick)="close()"
+  (detach)="close()"
+  (overlayKeydown)="onOverlayKeydown($event)"
+>
+  <div
+    cdkTrapFocus
+    cdkTrapFocusAutoCapture
+    class="search-dialog p-5 rounded-2 shadow-3"
+    role="dialog"
+    aria-modal="true"
+    [id]="dialogId"
+    [attr.aria-label]="label() | translate: { columnName: column.name() | translate }"
+  >
+    <si-search-bar
+      colorVariant="base-0"
+      [value]="value()"
+      [placeholder]="placeholder() | translate: { columnName: column.name() | translate }"
+      [debounceTime]="debounceTime()"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [showIcon]="true"
+      (searchChange)="value.set($event)"
+    />
+  </div>
+</ng-template>

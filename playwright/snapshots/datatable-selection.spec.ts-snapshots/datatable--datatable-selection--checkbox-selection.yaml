@@ -3,9 +3,11 @@
     - row "Select all rows First name Last name Age":
       - columnheader "Select all rows First name":
         - checkbox "Select all rows"
-        - text: ""
-      - columnheader "Last name"
-      - columnheader "Age"
+        - button "First name"
+      - columnheader "Last name":
+        - button "Last name"
+      - columnheader "Age":
+        - button "Age"
   - rowgroup:
     - row /Select row First 1 Last 1 \d+/:
       - cell "Select row First 1":
