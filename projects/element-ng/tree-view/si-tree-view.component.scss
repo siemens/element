@@ -20,6 +20,8 @@
 }
 
 .si-tree-view-header-btn {
+  display: inline-flex;
+  vertical-align: middle;
   cursor: pointer;
   margin-inline-end: calc(var(--si-tree-view-padding-base-horizontal) / 2);
   font-size: var(--si-tree-view-icon-size);
