@@ -8,4 +8,4 @@
     - link "Item 2":
       - /url: /item2
   - button "Help"
-  - button "Jane Smith": JS
+  - button "Show account settings for Jane Smith"

@@ -12,7 +12,7 @@
     - button "About"
     - link "Corporate Information":
       - /url: http://www.siemens.com/corporate-information
-  - button "Jane Smith": JS
+  - button "Show account settings for Jane Smith"
 - navigation:
   - button "collapse" [expanded]
   - button "Home"

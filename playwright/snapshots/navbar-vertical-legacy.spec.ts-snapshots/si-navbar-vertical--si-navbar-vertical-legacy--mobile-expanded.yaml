@@ -2,7 +2,7 @@
 - link "Jump to Navigation"
 - banner:
   - heading "Navbar vertical" [level=1]
-  - button "Jane Smith": JS
+  - button "Show account settings for Jane Smith"
 - navigation:
   - button "collapse" [expanded]
   - textbox "Search..."
