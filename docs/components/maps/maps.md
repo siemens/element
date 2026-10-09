@@ -46,7 +46,7 @@ Element supports two implementation options:
 ### Location representation
 
 A _map pin_ represents a single location. Map pins can also represent different statuses.
-Avoid mixing the [status color palette](../../fundamentals/colors/ui-colors.md#status)
+Avoid mixing the [status color palette](../../fundamentals/colors/ui-colors.md#status-deprecated)
 with the default color.
 
 ![Map Pin](images/map-pin.png)
