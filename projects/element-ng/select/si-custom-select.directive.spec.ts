@@ -116,7 +116,7 @@ describe('SiCustomSelectDirective', () => {
 
     it('should have an id', () => {
       expect(getHost()).toHaveAttribute('id');
-      expect(getHost().id).toMatch(/^__si-custom-select-\d+$/);
+      expect(getHost().id).toMatch(/^__si-select-\d+$/);
     });
 
     it('should have aria-labelledby pointing to its label id and combobox content id', () => {

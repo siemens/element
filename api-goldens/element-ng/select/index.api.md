@@ -90,20 +90,16 @@ export class SiSelectComboboxValueComponent {
 }
 
 // @public (undocumented)
-export class SiSelectComponent<T> implements SiFormItemControl {
+export class SiSelectComponent<T> {
+    constructor();
     readonly ariaLabel: _angular_core.InputSignal<string | null>;
     close(): void;
-    readonly errormessageId: _angular_core.InputSignal<string>;
     readonly filterPlaceholder: _angular_core.InputSignal<TranslatableString>;
     readonly hasFilter: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly id: _angular_core.InputSignal<string>;
     readonly labelledbyInput: _angular_core.InputSignal<string | undefined>;
     readonly noResultsFoundLabel: _angular_core.InputSignal<TranslatableString>;
     open(): void;
-    readonly openChange: _angular_core.OutputEmitterRef<boolean>;
     readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
-    readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly scrollStrategy: _angular_core.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
 }
 
 // @public

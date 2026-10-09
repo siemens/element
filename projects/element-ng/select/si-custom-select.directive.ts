@@ -13,6 +13,7 @@ import {
   Directive,
   ElementRef,
   inject,
+  InjectionToken,
   input,
   model,
   output,
@@ -27,6 +28,20 @@ import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/for
 import { filter, merge, Subject, takeUntil } from 'rxjs';
 
 import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
+
+/** @internal */
+export const SI_CUSTOM_SELECT_HOST_IS_TRIGGER = new InjectionToken<boolean>(
+  'SI_CUSTOM_SELECT_HOST_IS_TRIGGER'
+);
+
+/** @internal */
+export interface SiCustomSelectOverlayOptions {
+  origin: ElementRef<HTMLElement>;
+  panelClass: string[];
+  offsetX?: number;
+  push?: boolean;
+  markTouchedOnClose?: boolean;
+}
 
 /**
  * Host directive for building custom selects.
@@ -77,26 +92,26 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
   host: {
     class: 'dropdown',
     '[style.--si-action-icon-offset.rem]': '1.5',
-    role: 'combobox',
-    'aria-autocomplete': 'none',
-    '[attr.aria-haspopup]': 'haspopup()',
-    '[attr.aria-labelledby]': 'labelledby()',
-    '[attr.aria-describedby]': 'errormessageId()',
-    '[attr.aria-controls]': 'isOpen() ? dropdownId() : null',
-    '[attr.aria-expanded]': 'isOpen()',
-    '[attr.aria-disabled]': 'disabled()',
+    '[attr.role]': 'hostIsTrigger() ? "combobox" : null',
+    '[attr.aria-autocomplete]': 'hostIsTrigger() ? "none" : null',
+    '[attr.aria-haspopup]': 'hostIsTrigger() ? haspopup() : null',
+    '[attr.aria-labelledby]': 'hostIsTrigger() ? labelledby() : null',
+    '[attr.aria-describedby]': 'hostIsTrigger() ? errormessageId() : null',
+    '[attr.aria-controls]': 'hostIsTrigger() && isOpen() ? dropdownId() : null',
+    '[attr.aria-expanded]': 'hostIsTrigger() ? isOpen() : null',
+    '[attr.aria-disabled]': 'hostIsTrigger() ? disabled() : null',
     '[attr.id]': 'id()',
-    '[attr.tabindex]': 'disabled() ? "-1" : "0"',
+    '[attr.tabindex]': 'hostIsTrigger() ? (disabled() ? "-1" : "0") : null',
     '[class.disabled]': 'disabled()',
     '[class.pe-none]': 'disabled()',
     '[class.readonly]': 'readonly()',
     '[class.open]': 'isOpen()',
     '[class.show]': 'isOpen()',
-    '(click)': 'open()',
-    '(keydown.enter)': 'open()',
-    '(keydown.space)': 'open($event)',
-    '(keydown.arrowDown)': 'open($event)',
-    '(keydown.arrowUp)': 'open($event)'
+    '(click)': 'openFromHost()',
+    '(keydown.enter)': 'openFromHost()',
+    '(keydown.space)': 'openFromHost($event)',
+    '(keydown.arrowDown)': 'openFromHost($event)',
+    '(keydown.arrowUp)': 'openFromHost($event)'
   }
 })
 export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormItemControl {
@@ -107,10 +122,10 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    *
    * @defaultValue
    * ```
-   * `__si-custom-select-${SiCustomSelectDirective.idCounter++}`
+   * `__si-select-${SiCustomSelectDirective.idCounter++}`
    * ```
    */
-  readonly id = input(`__si-custom-select-${SiCustomSelectDirective.idCounter++}`);
+  readonly id = input(`__si-select-${SiCustomSelectDirective.idCounter++}`);
 
   /**
    * Whether the select input is disabled.
@@ -197,6 +212,11 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
 
   private overlayRef?: OverlayRef;
   private focusTrap?: ConfigurableFocusTrap;
+  private overlayOrigin = this.elementRef;
+  protected readonly hostIsTrigger = signal(
+    inject(SI_CUSTOM_SELECT_HOST_IS_TRIGGER, { optional: true }) ?? true
+  );
+  private overlayOptions?: SiCustomSelectOverlayOptions;
   private readonly closeOverlay$ = new Subject<void>();
 
   private readonly dropdownDirective = signal<SiSelectDropdownDirective | undefined>(undefined);
@@ -239,31 +259,38 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     // Prevent default scrolling behavior for Space / ArrowUp / ArrowDown.
     event?.preventDefault();
 
-    const width = this.elementRef.nativeElement.getBoundingClientRect().width;
+    this.overlayOrigin = this.overlayOptions?.origin ?? this.elementRef;
+    const width = this.overlayOrigin.nativeElement.getBoundingClientRect().width;
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.overlayOrigin)
+      .withPositions([
+        // Preferred: below, aligned to the start edge of the trigger.
+        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
+        // Below, aligned to the end edge (trigger near the end of the viewport).
+        { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
+        // Above, aligned to the start edge (no space below).
+        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
+        // Above, aligned to the end edge (no space below, trigger near the end).
+        { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
+        // Below, centered (small screens, trigger in the middle).
+        { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top' },
+        // Above, centered.
+        { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom' }
+      ])
+      .withFlexibleDimensions(true)
+      .withPush(this.overlayOptions?.push ?? true);
+
+    if (this.overlayOptions?.offsetX) {
+      positionStrategy.withDefaultOffsetX(this.overlayOptions.offsetX);
+    }
+
     this.overlayRef = this.overlay.create({
-      positionStrategy: this.overlay
-        .position()
-        .flexibleConnectedTo(this.elementRef)
-        .withPositions([
-          // Preferred: below, aligned to the start edge of the trigger.
-          { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
-          // Below, aligned to the end edge (trigger near the end of the viewport).
-          { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
-          // Above, aligned to the start edge (no space below).
-          { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
-          // Above, aligned to the end edge (no space below, trigger near the end).
-          { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
-          // Below, centered (small screens, trigger in the middle).
-          { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top' },
-          // Above, centered.
-          { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom' }
-        ])
-        .withFlexibleDimensions(true)
-        .withPush(true),
+      positionStrategy,
       hasBackdrop: true,
       scrollStrategy: this.scrollStrategy(),
       backdropClass: 'cdk-overlay-transparent-backdrop',
-      panelClass: ['dropdown-menu', 'show'],
+      panelClass: this.overlayOptions?.panelClass ?? ['dropdown-menu', 'show'],
       minWidth: width + 2
     });
 
@@ -271,12 +298,14 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     this.overlayRef.attach(portal);
     this.overlayRef.overlayElement.id = this.dropdownId();
 
+    // To be discussed
     this.focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
     this.focusTrap.focusFirstTabbableElementWhenReady();
 
     this.isOpen.set(true);
     this.openChange.emit(true);
 
+    // To be discussed
     merge(
       this.overlayRef.backdropClick(),
       this.overlayRef.keydownEvents().pipe(filter(e => e.key === 'Escape'))
@@ -285,18 +314,35 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
       .subscribe(() => this.close());
   }
 
+  protected openFromHost(event?: Event): void {
+    if (this.hostIsTrigger()) {
+      this.open(event);
+    }
+  }
+
   /** Closes the dropdown overlay and restores focus. */
   close(): void {
     if (!this.isOpen()) {
       return;
     }
+    // To be discussed
     this.isOpen.set(false);
     this.disposeOverlay();
     this.openChange.emit(false);
-    this.onTouched();
-    if (this.isBrowser) {
-      this.elementRef.nativeElement.focus();
+    if (this.overlayOptions?.markTouchedOnClose ?? true) {
+      this.markAsTouched();
     }
+    if (this.isBrowser) {
+      this.overlayOrigin.nativeElement.focus();
+    }
+  }
+
+  /**
+   * Marks the control as touched.
+   * @internal
+   */
+  markAsTouched(): void {
+    this.onTouched();
   }
 
   /** @internal */
@@ -317,6 +363,11 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   /** @internal */
   setDisabledState(isDisabled: boolean): void {
     this.disabledByForm.set(isDisabled);
+  }
+
+  /** @internal */
+  configureOverlayOptions(options: SiCustomSelectOverlayOptions): void {
+    this.overlayOptions = options;
   }
 
   private disposeOverlay(): void {

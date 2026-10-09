@@ -6,19 +6,20 @@ import {
   booleanAttribute,
   computed,
   Directive,
+  effect,
   inject,
   input,
   Input,
   output,
-  signal,
-  Signal
+  Signal,
+  untracked
 } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
 
 import {
   SI_SELECT_OPTIONS_STRATEGY,
   SiSelectOptionsStrategy
 } from '../options/si-select-options-strategy';
+import { SiCustomSelectDirective } from '../si-custom-select.directive';
 
 /**
  * Selection strategy base class.
@@ -28,7 +29,7 @@ import {
     '[class.disabled]': 'disabled()'
   }
 })
-export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements ControlValueAccessor {
+export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> {
   /**
    * Whether the select input is disabled.
    *
@@ -38,10 +39,14 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
   readonly disabledInput = input(false, { alias: 'disabled', transform: booleanAttribute });
 
   /**
-   * The selected value(s).
+   *  The selected value(s).
    */
   @Input() set value(value: IV | undefined) {
-    this.updateFromInput(this.toArrayValue(value));
+    if (this.select) {
+      this.select.value.set(value);
+    } else {
+      this.selectOptions.onValueChange(this.toArrayValue(value));
+    }
   }
 
   /** Emitted when the selection is changed */
@@ -61,49 +66,43 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
     this.selectOptions.selectedRows().map(option => option.value)
   );
 
-  /**
-   * Registered form callback which shall be called on blur.
-   * @internal
-   */
-  onTouched: () => void = () => {};
-  /** @internal */
-  public readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
-  protected onChange: (_: any) => void = () => {};
-  private readonly disabledNgControl = signal(false);
+  private readonly select = inject<SiCustomSelectDirective<IV>>(SiCustomSelectDirective, {
+    optional: true
+  });
   private readonly selectOptions = inject<SiSelectOptionsStrategy<T>>(SI_SELECT_OPTIONS_STRATEGY);
 
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
+  /** @internal */
+  readonly disabled = computed(() => this.select?.disabled() ?? this.disabledInput());
 
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
+  constructor() {
+    if (this.select) {
+      effect(() => {
+        const value = this.select!.value();
+        untracked(() => this.selectOptions.onValueChange(this.toArrayValue(value)));
+      });
+    }
   }
 
   /**
    * CDK Listbox value changed handler.
    * @internal
    */
-  updateFromUser(values: T[]): void {
+  updateFromUser(values: readonly T[]): void {
     const parsedValue = this.fromArrayValue(values);
-    this.onChange(parsedValue);
+    this.select?.updateValue(parsedValue);
     this.valueChange.emit(parsedValue);
-    this.selectOptions.onValueChange(values);
+
+    if (!this.select) {
+      this.selectOptions.onValueChange(values);
+    }
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.disabledNgControl.set(isDisabled);
-  }
-
-  writeValue(obj: any): void {
-    this.updateFromInput(this.toArrayValue(obj));
+  /** @internal */
+  onTouched(): void {
+    this.select?.markAsTouched();
   }
 
   protected abstract toArrayValue(value: IV | undefined): readonly T[];
 
   protected abstract fromArrayValue(value: readonly T[]): IV;
-
-  private updateFromInput(values: readonly T[]): void {
-    this.selectOptions.onValueChange(values);
-  }
 }

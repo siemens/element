@@ -223,6 +223,16 @@ describe('SiSelectComponent', () => {
       expect(await item.getText()).toContain('Average');
     });
 
+    it('should expose only the input as combobox trigger', () => {
+      const select = fixture.nativeElement.querySelector('si-select');
+      const input = select.querySelector('si-select-input');
+
+      expect(select).not.toHaveAttribute('role');
+      expect(select).not.toHaveAttribute('tabindex');
+      expect(input).toHaveAttribute('role', 'combobox');
+      expect(input).toHaveAttribute('tabindex', '0');
+    });
+
     it('should open dropdown on click', async () => {
       await selectHarness.open('click');
       expect(await selectHarness.getList()).not.toBeNull();
