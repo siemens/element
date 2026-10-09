@@ -10,7 +10,7 @@ import {
   provideMissingTranslationHandlerForElement,
   provideNgxTranslateForElement
 } from '@siemens/element-translate-ng/ngx-translate';
-import { page } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 
 import { SiBreadcrumbComponent as TestComponent } from '.';
 import {
@@ -89,9 +89,8 @@ describe('SiBreadcrumbComponent', () => {
     vi.useRealTimers();
   });
 
-  const tick = async (ms = 100): Promise<void> => {
-    vi.advanceTimersByTime(ms);
-    fixture.detectChanges();
+  const tick = async (): Promise<void> => {
+    await vi.runAllTimersAsync();
     await fixture.whenStable();
   };
 
@@ -241,22 +240,27 @@ describe('SiBreadcrumbComponent', () => {
     expect(element.querySelector('.breadcrumb .breadcrumb-ellipses-item')).toBeInTheDocument();
   });
 
-  it('should move hidden items into a dropdown', () => {
+  it('should move hidden items into a dropdown', async () => {
     element.style.width = '500px';
     items.set(TEST_ITEMS);
 
-    fixture.detectChanges();
+    await tick();
 
-    const itemsShown = element.querySelectorAll(
-      '.breadcrumb .item:not(.breadcrumb-ellipses-item)'
-    ).length;
+    const breadcrumb = page.getByRole('navigation', { name: 'Breadcrumb navigation' });
+    const itemsShown = breadcrumb.getByRole('link').elements();
 
-    expect(itemsShown).toBeLessThan(items().length);
+    expect(itemsShown.length).toBeLessThan(items().length);
 
-    const dropdownItems = element.querySelectorAll(
-      '.breadcrumb .breadcrumb-ellipses-item .dropdown-menu .dropdown-item'
-    ).length;
-    expect(dropdownItems).toBe(items().length - itemsShown);
+    const toggle = breadcrumb.getByRole('button', { name: 'Hidden breadcrumb items' });
+    await userEvent.click(toggle);
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
+
+    const dropdownItems = page
+      .getByRole('dialog', { name: 'Hidden breadcrumb items' })
+      .getByRole('link')
+      .elements();
+    expect(dropdownItems).toHaveLength(items().length - itemsShown.length);
   });
 
   it('should display a certain number of items at the end if possible', () => {
@@ -282,54 +286,54 @@ describe('SiBreadcrumbComponent', () => {
     expect(itemsShown).toBe(1);
   });
 
-  it('should open and close a dropdown on click', () => {
+  it('should open and close a dropdown on click', async () => {
     element.style.width = '500px';
     items.set(TEST_ITEMS);
 
-    fixture.detectChanges();
+    await tick();
 
-    const ellipsesElement = element.querySelector('.breadcrumb .breadcrumb-ellipses-item')!;
-    const dropdownToggleElement =
-      ellipsesElement.querySelector<HTMLButtonElement>('button.btn.btn-link')!;
-    const dropdownElement = ellipsesElement.querySelector('.dropdown-menu');
-    const dropdownElementComputedStyle = window.getComputedStyle(dropdownElement!);
+    const toggle = page.getByRole('button', { name: 'Hidden breadcrumb items' });
+    const dropdown = page.getByRole('dialog', { name: 'Hidden breadcrumb items' });
 
-    expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
+    await expect.element(dropdown).not.toBeInTheDocument();
 
-    dropdownToggleElement.click();
-    fixture.detectChanges();
+    await userEvent.click(toggle);
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
 
-    expect(dropdownElementComputedStyle.getPropertyValue('display')).not.toEqual('none');
+    await expect.element(dropdown).toBeVisible();
 
-    dropdownToggleElement.click();
-    fixture.detectChanges();
+    await userEvent.click(toggle);
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
 
-    expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
+    await expect.element(dropdown).not.toBeInTheDocument();
   });
 
-  it('should close a dropdown on click anywhere else', () => {
+  it('should close a dropdown on click anywhere else', async () => {
     element.style.width = '500px';
     items.set(TEST_ITEMS);
 
-    fixture.detectChanges();
+    await tick();
 
-    const ellipsesElement = element.querySelector('.breadcrumb .breadcrumb-ellipses-item')!;
-    const dropdownToggleElement =
-      ellipsesElement.querySelector<HTMLButtonElement>('button.btn.btn-link')!;
-    const dropdownElement = ellipsesElement.querySelector('.dropdown-menu');
-    const dropdownElementComputedStyle = window.getComputedStyle(dropdownElement!);
+    const toggle = page.getByRole('button', { name: 'Hidden breadcrumb items' });
+    const dropdown = page.getByRole('dialog', { name: 'Hidden breadcrumb items' });
 
-    expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
+    await expect.element(dropdown).not.toBeInTheDocument();
 
-    dropdownToggleElement.click();
-    fixture.detectChanges();
+    await userEvent.click(toggle);
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
 
-    expect(dropdownElementComputedStyle.getPropertyValue('display')).not.toEqual('none');
+    await expect.element(dropdown).toBeVisible();
 
-    element.click();
-    fixture.detectChanges();
+    (
+      page.getByRole('navigation', { name: 'Breadcrumb navigation' }).element() as HTMLElement
+    ).click();
+    await vi.advanceTimersByTimeAsync(100);
+    await fixture.whenStable();
 
-    expect(dropdownElementComputedStyle.getPropertyValue('display')).toEqual('none');
+    await expect.element(dropdown).not.toBeInTheDocument();
   });
 
   it('should truncate long items with CSS and show their full title in a tooltip on focus', async () => {
@@ -337,16 +341,17 @@ describe('SiBreadcrumbComponent', () => {
     element.style.width = '740px';
     items.set([{ title: 'Root', link: '/' }, { title, href: '/pages/' }, { title: 'Current' }]);
 
-    await fixture.whenStable();
+    await tick();
 
     const link = page.getByRole('link', { name: title, exact: true }).element() as HTMLElement;
     expect(link).toHaveAttribute('href', '/pages/');
     expect(getComputedStyle(link).textOverflow).toBe('ellipsis');
     expect(link.scrollWidth).toBeGreaterThan(link.clientWidth);
 
+    // Earlier pointer interactions persist across fixtures; restore keyboard mode for :focus-visible.
+    await userEvent.keyboard('{Tab}');
     link.focus();
-    await vi.advanceTimersByTimeAsync(0);
-    await fixture.whenStable();
+    await tick();
 
     await expect.element(page.getByRole('tooltip')).toHaveTextContent(title);
   });

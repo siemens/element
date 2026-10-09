@@ -65,7 +65,9 @@ Clicking the label navigates directly to the entity.
 
 When a path contains more levels of entities that can be displayed, the breadcrumb auto-collapses and uses ellipses to indicate more information.
 It's best practice to show at least the first and last entity when collapsing.
-Users expand the breadcrumb by clicking on the ellipses.
+Users open a popover containing the hidden breadcrumb items by clicking on the ellipses.
+Selecting an item navigates to that entity and closes the popover.
+The popover also closes on an outside click or by pressing Escape, returning focus to the ellipses button.
 
 ## Code ---
 

@@ -1,9 +1,9 @@
 <nav class="py-2" [attr.aria-label]="ariaLabel() | translate">
   <ol #breadcrumb class="breadcrumb" (siResizeObserver)="resetBreadcrumb()">
-    @for (item of itemsShown; track $index; let isFirst = $first) {
+    @for (item of itemsShown; track $index) {
       @if (!breadcrumbShortened || item.level !== ellipsesLevel) {
         <li #breadcrumbItem class="item" [class.current-item]="item.lastItem">
-          @if (!isFirst) {
+          @if (!$first) {
             <si-icon class="d-block icon-sm separator flip-rtl" [icon]="icons.elementRight2" />
           }
           <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item }" />
@@ -11,22 +11,17 @@
       }
       @if (breadcrumbShortened && item.level === ellipsesLevel) {
         <li class="item breadcrumb-ellipses-item">
-          @if (!isFirst) {
+          @if (!$first) {
             <si-icon class="d-block icon-sm separator flip-rtl" [icon]="icons.elementRight2" />
           }
-          <div class="breadcrumb-dropdown-wrapper">
-            <ng-container *ngTemplateOutlet="toggleTemplate; context: { item: item }" />
-            <div
-              class="dropdown-menu"
-              role="menu"
-              [id]="controlId + item.level"
-              [class.show]="breadcrumbDropdownOpen === item.level"
-            >
-              @for (item of itemsHidden; track $index) {
-                <ng-container *ngTemplateOutlet="dropdownTemplate; context: { item: item }" />
-              }
-            </div>
-          </div>
+          <button
+            type="button"
+            class="btn btn-link"
+            siPopoverPlacement="bottom"
+            [attr.aria-label]="hiddenItemsLabel | translate"
+            [siPopover]="hiddenItemsTemplate"
+            >...</button
+          >
         </li>
       }
     }
@@ -54,28 +49,21 @@
   </a>
 </ng-template>
 
-<ng-template #toggleTemplate let-item="item" siBreadcrumbItemTemplate>
-  <button
-    type="button"
-    class="btn btn-link"
-    aria-haspopup="true"
-    [attr.aria-controls]="controlId + item.level"
-    [attr.aria-expanded]="breadcrumbDropdownOpen === item.level"
-    (click)="toggleBreadcrumbDropdown(item.level)"
-    >...</button
-  >
-</ng-template>
-
-<ng-template #dropdownTemplate let-item="item" siBreadcrumbItemTemplate>
-  <a
-    class="dropdown-item breadcrumb-link focus-inside"
-    activeClass="active"
-    ariaCurrent="page"
-    role="menuitem"
-    [class.disable-router-link]="!item.link && !item.action && !item.href"
-    [siLink]="item"
-    [exactMatch]="true"
-    [attr.aria-disabled]="!item.link && !item.action && !item.href"
-    >{{ item.title }}</a
-  >
+<ng-template #hiddenItemsTemplate>
+  <si-popover-title class="visually-hidden">{{ hiddenItemsLabel | translate }}</si-popover-title>
+  <div class="dropdown-menu show position-static m-0 shadow-none">
+    @for (item of itemsHidden; track $index) {
+      <a
+        class="dropdown-item breadcrumb-link focus-inside text-wrap"
+        activeClass="active"
+        ariaCurrent="page"
+        [class.disable-router-link]="!item.link && !item.action && !item.href"
+        [siLink]="item"
+        [exactMatch]="true"
+        [attr.aria-disabled]="!item.link && !item.action && !item.href"
+        (click)="closeBreadcrumbPopover()"
+        >{{ item.title }}</a
+      >
+    }
+  </div>
 </ng-template>
