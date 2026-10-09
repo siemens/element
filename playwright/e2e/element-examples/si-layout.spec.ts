@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { test } from '../../support/test-helpers';
+import { expect, test } from '../../support/test-helpers';
 
 test.describe('si-layouts', () => {
   test('si-layouts/anatomy - fullscreen side panel', async ({ page, si }) => {
@@ -11,6 +11,7 @@ test.describe('si-layouts', () => {
 
     await page.getByRole('button', { name: 'Show side pane', exact: true }).click();
     await page.getByRole('button', { name: 'Full screen', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Exit full screen', exact: true })).toBeVisible();
     await si.runVisualAndA11yTests('side-panel-fullscreen-navbar-expanded');
     await page.getByRole('button', { name: 'collapse', exact: true }).click();
     await si.runVisualAndA11yTests('side-panel-fullscreen');
