@@ -42,8 +42,8 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> {
    *  The selected value(s).
    */
   @Input() set value(value: IV | undefined) {
-    if (this.customSelect) {
-      this.customSelect.value.set(value);
+    if (this.select) {
+      this.select.value.set(value);
     } else {
       this.selectOptions.onValueChange(this.toArrayValue(value));
     }
@@ -66,18 +66,18 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> {
     this.selectOptions.selectedRows().map(option => option.value)
   );
 
-  private readonly customSelect = inject<SiCustomSelectDirective<IV>>(SiCustomSelectDirective, {
+  private readonly select = inject<SiCustomSelectDirective<IV>>(SiCustomSelectDirective, {
     optional: true
   });
   private readonly selectOptions = inject<SiSelectOptionsStrategy<T>>(SI_SELECT_OPTIONS_STRATEGY);
 
   /** @internal */
-  readonly disabled = computed(() => this.customSelect?.disabled() ?? this.disabledInput());
+  readonly disabled = computed(() => this.select?.disabled() ?? this.disabledInput());
 
   constructor() {
-    if (this.customSelect) {
+    if (this.select) {
       effect(() => {
-        const value = this.customSelect!.value();
+        const value = this.select!.value();
         untracked(() => this.selectOptions.onValueChange(this.toArrayValue(value)));
       });
     }
@@ -89,17 +89,17 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> {
    */
   updateFromUser(values: readonly T[]): void {
     const parsedValue = this.fromArrayValue(values);
-    this.customSelect?.updateValue(parsedValue);
+    this.select?.updateValue(parsedValue);
     this.valueChange.emit(parsedValue);
 
-    if (!this.customSelect) {
+    if (!this.select) {
       this.selectOptions.onValueChange(values);
     }
   }
 
   /** @internal */
   onTouched(): void {
-    this.customSelect?.markAsTouched();
+    this.select?.markAsTouched();
   }
 
   protected abstract toArrayValue(value: IV | undefined): readonly T[];
