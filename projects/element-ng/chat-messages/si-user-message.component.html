@@ -9,34 +9,13 @@
     <ng-content />
   }
   @if (actions().length > 0 || secondaryActions().length > 0) {
-    <div class="btn-group user-message-actions" role="group" siChatMessageAction>
-      @for (action of actions(); track $index) {
-        <button
-          type="button"
-          class="btn btn-tertiary-ghost btn-icon"
-          [disabled]="action.disabled"
-          [attr.aria-label]="action.label | translate"
-          (click)="action.action(actionParam(), action)"
-        >
-          <si-icon [icon]="action.icon" />
-        </button>
-      }
-
-      @if (secondaryActions().length > 0) {
-        <button
-          type="button"
-          class="btn btn-tertiary-ghost btn-icon"
-          [cdkMenuTriggerFor]="secondaryActionsMenu"
-          [attr.aria-label]="secondaryActionsLabel() | translate"
-          [attr.title]="secondaryActionsLabel() | translate"
-        >
-          <si-icon [icon]="icons.elementOptionsVertical" />
-        </button>
-
-        <ng-template #secondaryActionsMenu>
-          <si-menu-factory [items]="secondaryActions()" [actionParam]="actionParam()" />
-        </ng-template>
-      }
-    </div>
+    <si-chat-message-actions
+      class="user-message-actions"
+      siChatMessageAction
+      [actions]="actions()"
+      [secondaryActions]="secondaryActions()"
+      [actionParam]="actionParam()"
+      [secondaryActionsLabel]="secondaryActionsLabel()"
+    />
   }
 </si-chat-message>

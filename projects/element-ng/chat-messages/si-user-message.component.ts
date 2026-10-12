@@ -2,16 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { Component, input, computed } from '@angular/core';
-import { elementOptionsVertical } from '@siemens/element-icons';
-import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { MenuItem } from '@siemens/element-ng/menu';
+import { t } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
 import { Attachment, SiAttachmentListComponent } from './si-attachment-list.component';
 import { SiChatMessageActionDirective } from './si-chat-message-action.directive';
+import { SiChatMessageActionsComponent } from './si-chat-message-actions.component';
 import { SiChatMessageComponent } from './si-chat-message.component';
 
 /**
@@ -37,20 +35,15 @@ import { SiChatMessageComponent } from './si-chat-message.component';
 @Component({
   selector: 'si-user-message',
   imports: [
-    CdkMenuTrigger,
     SiAttachmentListComponent,
     SiChatMessageComponent,
-    SiIconComponent,
-    SiMenuFactoryComponent,
     SiChatMessageActionDirective,
-    SiTranslatePipe
+    SiChatMessageActionsComponent
   ],
   templateUrl: './si-user-message.component.html',
   styleUrl: './si-user-message.component.scss'
 })
 export class SiUserMessageComponent {
-  protected readonly icons = addIcons({ elementOptionsVertical });
-
   /**
    * The user message content
    * @defaultValue ''
