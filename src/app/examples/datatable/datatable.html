@@ -57,7 +57,7 @@
               class="form-check-input"
               type="checkbox"
               [(ngModel)]="enforceCheckboxes"
-              (ngModelChange)="selectionTypeChanged(!enforceCheckboxes)"
+              (ngModelChange)="selectionTypeChanged($event)"
             />
           </si-form-item>
         </div>
