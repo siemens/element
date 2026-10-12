@@ -1,0 +1,60 @@
+- table:
+  - rowgroup:
+    - row "Task Assignee Status Due Date Department Priority":
+      - columnheader
+      - columnheader "Task"
+      - columnheader "Assignee"
+      - columnheader "Status"
+      - columnheader "Due Date"
+      - columnheader "Department"
+      - columnheader "Priority"
+  - rowgroup:
+    - row /Complete project proposal John Smith In Progress Jul \d+, \d+ Marketing 1/:
+      - cell
+      - cell "Complete project proposal"
+      - cell "John Smith"
+      - cell "In Progress"
+      - cell /Jul \d+, \d+/
+      - cell "Marketing"
+      - cell "1"
+    - row /Update documentation Michael Chen Not Started Aug 2, \d+ Development 3/:
+      - cell
+      - cell "Update documentation"
+      - cell "Michael Chen"
+      - cell "Not Started"
+      - cell /Aug 2, \d+/
+      - cell "Development"
+      - cell "3"
+    - row /Prepare presentation slides Emily Rodriguez Not Started Aug 5, \d+ Marketing 4/:
+      - cell
+      - cell "Prepare presentation slides"
+      - cell "Emily Rodriguez"
+      - cell "Not Started"
+      - cell /Aug 5, \d+/
+      - cell "Marketing"
+      - cell "4"
+    - row /Schedule team meeting David Wilson Completed Jul \d+, \d+ Operations 5/:
+      - cell
+      - cell "Schedule team meeting"
+      - cell "David Wilson"
+      - cell "Completed"
+      - cell /Jul \d+, \d+/
+      - cell "Operations"
+      - cell "5"
+    - row /Review client feedback Sarah Johnson Not Started Jul \d+, \d+ Customer Relations 2/:
+      - cell
+      - cell "Review client feedback"
+      - cell "Sarah Johnson"
+      - cell "Not Started"
+      - cell /Jul \d+, \d+/
+      - cell "Customer Relations"
+      - cell "2"
+- text: 5 total
+- row /Review client feedback Sarah Johnson Not Started Jul \d+, \d+ Customer Relations 2/:
+  - cell
+  - cell "Review client feedback"
+  - cell "Sarah Johnson"
+  - cell "Not Started"
+  - cell /Jul \d+, \d+/
+  - cell "Customer Relations"
+  - cell "2"
