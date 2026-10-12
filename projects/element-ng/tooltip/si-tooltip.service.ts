@@ -136,7 +136,7 @@ class BrowserTooltipRef {
     // The tooltip may become eligible after the element is already focused or
     // hovered (e.g. validation errors appear on blur while the pointer still
     // hovers the element). In that case show it based on the live interaction state.
-    if (nativeElement === document.activeElement && nativeElement.matches(':focus-visible')) {
+    if (nativeElement === this.document.activeElement && nativeElement.matches(':focus-visible')) {
       this.isFocused = true;
       this.show();
     } else if (nativeElement.matches(':hover')) {
