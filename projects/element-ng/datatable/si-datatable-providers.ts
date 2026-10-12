@@ -40,7 +40,7 @@ export const SI_DATATABLE_CONFIG: SiDatatableConfig = {
     treeStatusExpanded: 'icon element-down-2 flip-rtl',
     treeStatusCollapsed: 'icon element-right-2 flip-rtl'
   },
-  headerHeight: 44, // 40px actual-height + 4px border-bottom
+  headerHeight: 41, // 40px actual-height + 1px border-bottom
   footerHeight: 40,
   rowHeight: 64,
   rowHeightSmall: 48,
