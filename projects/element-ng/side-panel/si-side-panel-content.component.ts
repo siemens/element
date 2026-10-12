@@ -9,6 +9,7 @@ import {
   Component,
   computed,
   DestroyRef,
+  DOCUMENT,
   effect,
   inject,
   input,
@@ -266,6 +267,7 @@ export class SiSidePanelContentComponent implements OnInit {
    * For the animation we need to wait until the resize is done.
    */
   private readonly resizeAnimationDelay = 500;
+  private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
   private readonly breakpointObserver = inject(BreakpointObserver);
 
@@ -332,7 +334,7 @@ export class SiSidePanelContentComponent implements OnInit {
   protected toggleSidePanel(event?: MouseEvent): void {
     if (event?.detail !== 0) {
       // Blur except if triggered by keyboard
-      (document?.activeElement as HTMLElement)?.blur();
+      (this.document.activeElement as HTMLElement)?.blur();
     }
     if (this.service.isTemporaryOpen()) {
       this.service.hideTemporaryContent();

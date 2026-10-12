@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, inject } from '@angular/core';
+import { Component, DOCUMENT, ElementRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { SiListDetailsComponent } from '../si-list-details.component';
@@ -22,6 +22,7 @@ import { SiListDetailsComponent } from '../si-list-details.component';
 })
 export class SiListPaneComponent {
   protected parent = inject(SiListDetailsComponent);
+  private readonly document = inject(DOCUMENT);
   private element: ElementRef<HTMLElement> = inject(ElementRef);
 
   constructor() {
@@ -30,10 +31,10 @@ export class SiListPaneComponent {
       .subscribe(previouslyFocusedElement => {
         // Needed so it's no longer "inert".
         setTimeout(() => {
-          const currentlyFocused = document?.activeElement;
+          const currentlyFocused = this.document.activeElement;
           previouslyFocusedElement?.focus();
           // If there was no previously focused element or if it couldn't be focused anymore, fall back to the focusing the list.
-          if (currentlyFocused === document?.activeElement) {
+          if (currentlyFocused === this.document.activeElement) {
             this.element?.nativeElement?.focus();
           }
         });

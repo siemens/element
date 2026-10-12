@@ -5,7 +5,9 @@
 import {
   Component,
   computed,
+  DOCUMENT,
   ElementRef,
+  inject,
   input,
   OnDestroy,
   signal,
@@ -26,6 +28,8 @@ import { SiMarkdownExtensionComponent } from '../../si-markdown.types';
   styleUrl: './si-markdown-table.component.scss'
 })
 export class SiMarkdownTableComponent implements SiMarkdownExtensionComponent, OnDestroy {
+  private readonly document = inject(DOCUMENT);
+
   readonly node = input.required<Node>();
   readonly parent = input.required<Parent>();
   readonly options = input<any>();
@@ -54,7 +58,7 @@ export class SiMarkdownTableComponent implements SiMarkdownExtensionComponent, O
   protected download(): void {
     const blob = new Blob([this.csv()], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = this.document.createElement('a');
     link.href = url;
     link.download = 'table.csv';
     link.click();

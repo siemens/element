@@ -7,6 +7,7 @@ import {
   booleanAttribute,
   Component,
   computed,
+  DOCUMENT,
   ElementRef,
   inject,
   input,
@@ -42,6 +43,7 @@ const DEFAULT_LIST_WIDTH_PERCENT = 32;
   }
 })
 export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
+  private readonly document = inject(DOCUMENT);
   private resizeSubs?: Subscription;
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private resizeObserver = inject(ResizeObserverService);
@@ -254,7 +256,8 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
         (!this.detailsActivePreviously || this.hadLargeSizePreviously)
       ) {
         if (!this.hadLargeSizePreviously) {
-          this.previouslyFocusedElementInList = document?.activeElement as HTMLElement | undefined;
+          this.previouslyFocusedElementInList =
+            (this.document.activeElement as HTMLElement | null) ?? undefined;
         }
         this.transferFocusToDetails.next(true);
       }
