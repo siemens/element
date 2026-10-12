@@ -1,3 +1,10 @@
+## [49.18.1](https://github.com/siemens/element/compare/v49.18.0...v49.18.1) (2026-10-12)
+
+
+### Bug Fixes
+
+* **pills-input:** prevent whitespace-only tags ([5dd3fc7](https://github.com/siemens/element/commit/5dd3fc77260041f61696a5a6064887c966e2ae18))
+
 # [49.18.0](https://github.com/siemens/element/compare/v49.17.0...v49.18.0) (2026-10-07)
 
 
