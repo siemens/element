@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Tree } from '@angular-devkit/schematics';
+import { callRule, Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
 import { addTestFiles, createTestApp } from '../../testing/index.js';
+import { missingTranslateMigrationRule } from './missing-translate-migration.js';
 
 const buildRelativeFromFile = (relativePath: string): string =>
   path.join(path.dirname(fileURLToPath(import.meta.url)), relativePath);
@@ -31,7 +32,18 @@ describe('missing translate migration', () => {
   ): Promise<void> => {
     addTestFiles(appTree, original);
 
-    const tree = await runner.runSchematic('migration-v51', { path: 'projects/app/src' }, appTree);
+    const context = runner.engine.createContext(
+      runner.engine.createSchematic('migration-v51', runner.engine.createCollection(collectionPath))
+    );
+    const tree = await callRule(
+      missingTranslateMigrationRule({ path: 'projects/app/src' }),
+      appTree,
+      context
+    ).toPromise();
+
+    if (!tree) {
+      throw new Error('missingTranslateMigrationRule returned undefined');
+    }
 
     for (const [fileName, expectedContent] of Object.entries(expected)) {
       const actual = tree.readText(fileName);

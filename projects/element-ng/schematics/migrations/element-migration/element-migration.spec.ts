@@ -17,21 +17,142 @@ const buildRelativeFromFile = (relativePath: string): string =>
 
 const collectionPath = buildRelativeFromFile('../../migration.json');
 
+interface MigrationCase {
+  name: string;
+  files: string[];
+}
+
+const migrationCases: MigrationCase[] = [
+  {
+    name: 'migrates si-icon used in a template',
+    files: ['icon-template.ts', 'icon-template.html']
+  },
+  { name: 'migrates si-icon used in an inline template', files: ['icon-inline-template.ts'] },
+  { name: 'migrates si-tab used in a template', files: ['tab-template.ts', 'tab-template.html'] },
+  { name: 'migrates si-tab used in an inline template', files: ['tab-inline-template.ts'] },
+  {
+    name: 'migrates siPopover used in a template',
+    files: ['popover-template.ts', 'popover-template.html']
+  },
+  { name: 'migrates siPopover used in an inline template', files: ['popover-inline-template.ts'] },
+  { name: 'removes the deprecated api from accordion', files: ['accordion-inline-template.ts'] },
+  {
+    name: 'removes the deprecated api from SiDateRangeComponent',
+    files: ['date-range-inline-template.ts']
+  },
+  {
+    name: 'removes the deprecated api from SiDateInputDirective',
+    files: ['date-input-directive-inline-template.ts']
+  },
+  {
+    name: 'removes the deprecated api from SiDatepickerDirective',
+    files: ['date-picker-inline-template.ts']
+  },
+  {
+    name: 'removes the deprecated api from SiFilteredSearchComponent',
+    files: ['filtered-search-inline-template.ts']
+  },
+  {
+    name: 'removes the deprecated api from SiFormItemComponent',
+    files: ['form-item-inline-template.ts']
+  },
+  {
+    name: 'removes the deprecated api from SiNavbarVerticalComponent',
+    files: ['navbar-vertical-inline.template.ts']
+  },
+  {
+    name: 'removes the deprecated api from SiSplitPartComponent',
+    files: ['split-inline.template.ts']
+  },
+  {
+    name: 'removes the deprecated api from SiTreeViewComponent',
+    files: ['tree-inline.template.ts']
+  },
+  {
+    name: 'removes the deprecated api from module based accordion',
+    files: ['module-based.accordion-inline-template.ts']
+  },
+  { name: 'migrates ToastStateName to StatusType', files: ['toast-state-name.ts'] },
+  {
+    name: 'migrates filtered search readonly attribute in inline templates',
+    files: ['filtered-search-inline-readonly.ts']
+  },
+  {
+    name: 'migrates unauthorized page component in inline templates',
+    files: ['unauthorized-page-inline.ts']
+  },
+  {
+    name: 'splits numberOfDecimals into minNumberOfDecimals and maxNumberOfDecimals',
+    files: ['chart-gauge-decimals.ts']
+  },
+  { name: 'moves map moreText to the map tooltip', files: ['map-tooltip-inline-template.ts'] },
+  { name: 'renames functions of classes', files: ['function-rename.ts'] },
+  { name: 'renames modal initialState to inputValues', files: ['modal-rename.ts'] },
+  {
+    name: 'migrates element classes in inline template',
+    files: ['element-class-inline-template.ts']
+  },
+  {
+    name: 'adds button classes to si-select without form-control',
+    files: ['select-class-inline-template.ts']
+  },
+  {
+    name: 'renames CSS custom properties in all supported usages',
+    files: [
+      'feedback-icon-property.ts',
+      'feedback-icon-property.html',
+      'feedback-icon-property.scss'
+    ]
+  },
+  {
+    name: 'renames direct and module-prefixed typography variables',
+    files: ['typography-variables.scss']
+  },
+  {
+    name: 'removes provideIconConfig from a providers array and drops its import',
+    files: ['provide-icon-config.ts']
+  },
+  {
+    name: 'removes provideIconConfig when it is the sole provider',
+    files: ['provide-icon-config-sole-provider.ts']
+  },
+  {
+    name: 'removes provideIconConfig but keeps other symbols from the same import',
+    files: ['provide-icon-config-mixed-import.ts']
+  }
+];
+
+const productionDataCases: MigrationCase[] = [
+  { name: 'preserves background classes on badges', files: ['badge-class-inline-template.ts'] },
+  {
+    name: 'migrates header logo imports and inline templates',
+    files: ['header-logo-inline-template.ts']
+  },
+  {
+    name: 'migrates header logo imports and external templates',
+    files: ['header-logo-template.ts', 'header-logo-template.html']
+  },
+  { name: 'preserves header logo import aliases', files: ['header-logo-alias.ts'] },
+  {
+    name: 'reuses an existing header logo directive import',
+    files: ['header-logo-existing-import.ts', 'header-logo-separate-import.ts']
+  }
+];
+
+const basePath = '/projects/app/src/components/test/';
+
 describe('to legacy migration', () => {
-  let runner: SchematicTestRunner;
-  let appTree: Tree;
-  const name = 'migration-v51';
+  let migratedTree: Tree;
+  let productionDataTree: Tree;
 
-  beforeEach(async () => {
-    runner = new SchematicTestRunner(name, collectionPath);
-    appTree = await createTestApp(runner, { style: 'scss' });
-  });
+  const runCases = async (
+    cases: MigrationCase[],
+    migrationData = getElementMigrationTestData()
+  ): Promise<Tree> => {
+    const runner = new SchematicTestRunner('migration-v51', collectionPath);
+    const appTree = await createTestApp(runner, { style: 'scss' });
+    const fileNames = [...new Set(cases.flatMap(migrationCase => migrationCase.files))];
 
-  const checkTemplateMigration = async (
-    fileNames: string[],
-    migrationData = getElementMigrationTestData(),
-    basePath = `/projects/app/src/components/test/`
-  ): Promise<void> => {
     addTestFiles(
       appTree,
       Object.fromEntries(
@@ -45,8 +166,6 @@ describe('to legacy migration', () => {
     const context = runner.engine.createContext(
       runner.engine.createSchematic('migration-v51', runner.engine.createCollection(collectionPath))
     );
-
-    // Run elementMigrationRule directly with test data
     const tree = await callRule(
       elementMigrationRule({ path: 'projects/app/src' }, migrationData),
       appTree,
@@ -56,164 +175,31 @@ describe('to legacy migration', () => {
     if (!tree) {
       throw new Error('elementMigrationRule returned undefined');
     }
-
-    for (const fileName of fileNames) {
-      const expected = readFileSync(
-        buildRelativeFromFile(path.join('files', 'expected.' + fileName)),
-        'utf8'
-      );
-      const actual = tree.read(path.join(basePath, fileName))?.toString('utf8');
-      expect(actual).toEqual(expected);
-    }
+    return tree;
   };
 
-  it('should migrate si-icon used in a template', async () => {
-    await checkTemplateMigration(['icon-template.ts', 'icon-template.html']);
-  });
-
-  it('should migrate si-icon used in an inline template', async () => {
-    await checkTemplateMigration(['icon-inline-template.ts']);
-  });
-
-  it('should migrate si-tab used in a template', async () => {
-    await checkTemplateMigration(['tab-template.ts', 'tab-template.html']);
-  });
-
-  it('should migrate si-tab used in an inline template', async () => {
-    await checkTemplateMigration(['tab-inline-template.ts']);
-  });
-
-  it('should migrate siPopover used in a template', async () => {
-    await checkTemplateMigration(['popover-template.ts', 'popover-template.html']);
-  });
-
-  it('should migrate siPopover used in an inline template', async () => {
-    await checkTemplateMigration(['popover-inline-template.ts']);
-  });
-
-  it('should remove the deprecated api from accordion', async () => {
-    await checkTemplateMigration(['accordion-inline-template.ts']);
-  });
-
-  it('should remove the deprecated api from SiDateRangeComponent', async () => {
-    await checkTemplateMigration(['date-range-inline-template.ts']);
-  });
-
-  it('should remove the deprecated api from SiDateInputDirective', async () => {
-    await checkTemplateMigration(['date-input-directive-inline-template.ts']);
-  });
-
-  it('should remove the deprecated api from SiDatepickerDirective', async () => {
-    await checkTemplateMigration(['date-picker-inline-template.ts']);
-  });
-
-  it('should remove the deprecated api from SiFilteredSearchComponent', async () => {
-    await checkTemplateMigration(['filtered-search-inline-template.ts']);
-  });
-
-  it('should remove the deprecated api from SiFormItemComponent', async () => {
-    await checkTemplateMigration(['form-item-inline-template.ts']);
-  });
-
-  it('should remove the deprecated api from SiNavbarVerticalComponent', async () => {
-    await checkTemplateMigration(['navbar-vertical-inline.template.ts']);
-  });
-
-  it('should remove the deprecated api from SiSplitPartComponent', async () => {
-    await checkTemplateMigration(['split-inline.template.ts']);
-  });
-
-  it('should remove the deprecated api from SiTreeViewComponent', async () => {
-    await checkTemplateMigration(['tree-inline.template.ts']);
-  });
-
-  it('should remove the deprecated api from module based accordion', async () => {
-    await checkTemplateMigration(['module-based.accordion-inline-template.ts']);
-  });
-
-  it('should migrate ToastStateName to StatusType', async () => {
-    await checkTemplateMigration(['toast-state-name.ts']);
-  });
-
-  it('should migrate filtered search readonly attribute in inline templates', async () => {
-    await checkTemplateMigration(['filtered-search-inline-readonly.ts']);
-  });
-
-  it('should migrate unauthorized page component in inline templates', async () => {
-    await checkTemplateMigration(['unauthorized-page-inline.ts']);
-  });
-
-  it('should split numberOfDecimals into minNumberOfDecimals and maxNumberOfDecimals', async () => {
-    await checkTemplateMigration(['chart-gauge-decimals.ts']);
-  });
-
-  it('should move map moreText to the map tooltip', async () => {
-    await checkTemplateMigration(['map-tooltip-inline-template.ts']);
-  });
-
-  it('should rename functions of classes', async () => {
-    await checkTemplateMigration(['function-rename.ts']);
-  });
-
-  it('should rename modal initialState to inputValues', async () => {
-    await checkTemplateMigration(['modal-rename.ts']);
-  });
-
-  it('should migrate element classes in inline template', async () => {
-    await checkTemplateMigration(['element-class-inline-template.ts']);
-  });
-
-  it('should preserve background classes on badges', async () => {
-    await checkTemplateMigration(['badge-class-inline-template.ts'], getElementMigrationData());
-  });
-
-  it('should migrate header logo imports and inline templates', async () => {
-    await checkTemplateMigration(['header-logo-inline-template.ts'], getElementMigrationData());
-  });
-
-  it('should migrate header logo imports and external templates', async () => {
-    await checkTemplateMigration(
-      ['header-logo-template.ts', 'header-logo-template.html'],
-      getElementMigrationData()
-    );
-  });
-
-  it('should preserve header logo import aliases', async () => {
-    await checkTemplateMigration(['header-logo-alias.ts'], getElementMigrationData());
-  });
-
-  it('should reuse an existing header logo directive import', async () => {
-    await checkTemplateMigration(
-      ['header-logo-existing-import.ts', 'header-logo-separate-import.ts'],
-      getElementMigrationData()
-    );
-  });
-
-  it('should add button classes to si-select without form-control', async () => {
-    await checkTemplateMigration(['select-class-inline-template.ts']);
-  });
-
-  it('should rename CSS custom properties in all supported usages', async () => {
-    await checkTemplateMigration([
-      'feedback-icon-property.ts',
-      'feedback-icon-property.html',
-      'feedback-icon-property.scss'
+  beforeAll(async () => {
+    [migratedTree, productionDataTree] = await Promise.all([
+      runCases(migrationCases),
+      runCases(productionDataCases, getElementMigrationData())
     ]);
   });
 
-  it('should rename direct and module-prefixed typography variables', async () => {
-    await checkTemplateMigration(['typography-variables.scss']);
+  const expectCase = (tree: Tree, migrationCase: MigrationCase): void => {
+    for (const fileName of migrationCase.files) {
+      const expected = readFileSync(
+        buildRelativeFromFile(path.join('files', `expected.${fileName}`)),
+        'utf8'
+      );
+      expect(tree.readText(path.join(basePath, fileName))).toEqual(expected);
+    }
+  };
+
+  it.each(migrationCases)('$name', migrationCase => {
+    expectCase(migratedTree, migrationCase);
   });
 
-  it('should remove provideIconConfig from a providers array and drop its import', async () => {
-    await checkTemplateMigration(['provide-icon-config.ts']);
-  });
-
-  it('should remove provideIconConfig when it is the sole provider', async () => {
-    await checkTemplateMigration(['provide-icon-config-sole-provider.ts']);
-  });
-
-  it('should remove provideIconConfig but keep other symbols from the same import', async () => {
-    await checkTemplateMigration(['provide-icon-config-mixed-import.ts']);
+  it.each(productionDataCases)('$name', migrationCase => {
+    expectCase(productionDataTree, migrationCase);
   });
 });
