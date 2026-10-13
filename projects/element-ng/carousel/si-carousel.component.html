@@ -18,7 +18,7 @@
           [aria-label]="previousButtonAriaLabel() | translate"
           (click)="previous()"
         >
-          <si-icon [icon]="icons.elementLeft2"
+          <si-icon class="flip-rtl" [icon]="icons.elementLeft2"
         /></button>
         <div class="d-flex align-items-center">
           <div
@@ -35,7 +35,7 @@
           >
             <div
               class="d-flex page-buttons"
-              [style.transform]="'translateX(-' + edgeLeftIndex() * dotBtn.clientWidth + 'px)'"
+              [style.margin-inline-start.px]="-edgeLeftIndex() * dotBtn.clientWidth"
             >
               @for (page of items(); track page) {
                 <button
@@ -71,7 +71,7 @@
           [aria-label]="nextButtonAriaLabel() | translate"
           (click)="next()"
         >
-          <si-icon [icon]="icons.elementRight2"
+          <si-icon class="flip-rtl" [icon]="icons.elementRight2"
         /></button>
       </div>
     }
