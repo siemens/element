@@ -148,8 +148,8 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
   protected readonly icons = addIcons({ elementDown2, elementSoundMute, elementSoundOn });
   protected statusId = `__si-status-bar-${idCounter++}`;
 
-  private timer: any;
-  private significanceUpdateTimer: any = 0;
+  private timer?: ReturnType<typeof setTimeout>;
+  private significanceUpdateTimer?: ReturnType<typeof setTimeout>;
 
   private blinkSubs?: Subscription;
 
@@ -184,13 +184,14 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
 
   ngOnDestroy(): void {
     this.blinkSubs?.unsubscribe();
+    clearTimeout(this.timer);
     clearTimeout(this.significanceUpdateTimer);
   }
 
   protected significanceChanged(): void {
     if (this.responsiveMode && !this.significanceUpdateTimer) {
       this.significanceUpdateTimer = setTimeout(() => {
-        this.significanceUpdateTimer = 0;
+        this.significanceUpdateTimer = undefined;
         this.calcResponsiveItems();
       });
     }
@@ -209,19 +210,17 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
       this.placeholderHeight.set(this.theBar().nativeElement.offsetHeight);
       this.contentHeight.set(0);
 
-      this.timer = window.setTimeout(() => {
+      this.timer = setTimeout(() => {
         this.contentHeight.set(this.content().nativeElement.scrollHeight);
-        window.setTimeout(() => {
-          this.contentHeight.set(undefined);
-        }, 500);
+        this.timer = setTimeout(() => this.contentHeight.set(undefined), 500);
       }, 10);
     } else {
       this.contentHeight.set(this.content().nativeElement.scrollHeight);
       this.expanded.set(1);
 
-      window.setTimeout(() => {
+      this.timer = setTimeout(() => {
         this.contentHeight.set(0);
-        window.setTimeout(() => {
+        this.timer = setTimeout(() => {
           this.placeholderHeight.set(0);
           this.expanded.set(0);
         }, 500);
@@ -277,6 +276,7 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
       this.contentHeight.set(this.expanded() ? this.content().nativeElement.scrollHeight : 0);
       this.significanceChanged();
     } else {
+      clearTimeout(this.timer);
       this.expanded.set(0);
       this.placeholderHeight.set(0);
       this.contentHeight.set(undefined);
