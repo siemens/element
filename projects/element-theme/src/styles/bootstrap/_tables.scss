@@ -47,8 +47,7 @@
 
   // Highlight border color between thead, tbody and tfoot.
   > :not(:first-child) {
-    border-block-start: (2 * variables.$table-border-width) solid
-      variables.$table-group-separator-color;
+    border-block-start: variables.$table-border-width solid variables.$table-group-separator-color;
   }
 
   :is(th, td) {
@@ -65,7 +64,7 @@
 
   thead {
     border-width: 0;
-    border-block-end: map.get(spacers.$spacers-block, 2) solid variables.$table-border-color;
+    border-block-end: variables.$table-border-width solid variables.$table-border-color;
 
     th {
       vertical-align: baseline;
