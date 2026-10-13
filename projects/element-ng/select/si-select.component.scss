@@ -18,4 +18,8 @@
   &.disabled {
     pointer-events: none;
   }
+
+  &.form-control.disabled {
+    opacity: all-variables.$element-action-disabled-opacity;
+  }
 }

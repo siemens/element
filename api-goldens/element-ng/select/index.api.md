@@ -10,6 +10,7 @@ import { ConfigurableFocusTrap } from '@angular/cdk/a11y';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { ControlValueAccessor } from '@angular/forms';
 import { ElementRef } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 import { InputSignal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
@@ -91,6 +92,7 @@ export class SiSelectComboboxValueComponent {
 
 // @public (undocumented)
 export class SiSelectComponent<T> implements SiFormItemControl {
+    constructor();
     readonly ariaLabel: _angular_core.InputSignal<string | null>;
     close(): void;
     readonly errormessageId: _angular_core.InputSignal<string>;
