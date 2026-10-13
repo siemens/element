@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /// <reference types="./ol-ext.d.ts" />
-import { Injectable } from '@angular/core';
+import { DestroyRef, DOCUMENT, inject, Injectable } from '@angular/core';
 import AnimatedCluster from 'ol-ext/layer/AnimatedCluster';
 import Chart from 'ol-ext/style/Chart';
 import Feature from 'ol/Feature';
@@ -46,8 +46,12 @@ import { getMarker } from '../shared/themes/marker';
   providedIn: 'root'
 })
 export class MapService {
+  private readonly document = inject(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
   private styleCache: Record<string, Style[]> = {};
-  private clusterStyleCache: Record<string, Style[]> = {};
+  private clusterStyleCache: Record<string, { feature: Feature; style: Style[] }> = {};
+  private clusterTextOffsetCache: Record<string, [number, number]> = {};
+  private clusterTextContext?: CanvasRenderingContext2D;
   private labelStyleCache: Record<string, Style[]> = {};
   private grouping?: Grouping;
 
@@ -56,9 +60,25 @@ export class MapService {
   private wrappedTextCache: Record<string, string> = {};
   private labelTextStyleCache: Record<string, Text[]> = {};
 
+  constructor() {
+    const onFontsLoaded = (): void => {
+      const cachedClusters = Object.values(this.clusterStyleCache);
+      this.clusterTextOffsetCache = {};
+      this.clusterStyleCache = {};
+      for (const { feature } of cachedClusters) {
+        feature.changed();
+      }
+    };
+    this.document.fonts.addEventListener('loadingdone', onFontsLoaded);
+    this.destroyRef.onDestroy(() =>
+      this.document.fonts.removeEventListener('loadingdone', onFontsLoaded)
+    );
+  }
+
   resetCaches(): void {
     this.styleCache = {};
     this.clusterStyleCache = {};
+    this.clusterTextOffsetCache = {};
     this.labelStyleCache = {};
     this.wrappedTextCache = {};
     this.labelTextStyleCache = {};
@@ -307,9 +327,12 @@ export class MapService {
       return this.getFeatureStyle(feature, true, features);
     }
 
-    let style: Style[] = this.clusterStyleCache[uid];
+    let style = this.clusterStyleCache[uid]?.style;
 
     if (!style) {
+      const text = size > MAX_CLUSTER_BUILDINGS ? `${MAX_CLUSTER_BUILDINGS}+` : size.toString();
+      const [offsetX, offsetY] = this.getClusterTextOffset(text);
+
       style = [
         new Style({
           image: new Circle({
@@ -326,20 +349,42 @@ export class MapService {
         new Style({
           image: this.getClusterChart(features, this.grouping!),
           text: new Text({
-            text: size > MAX_CLUSTER_BUILDINGS ? `${MAX_CLUSTER_BUILDINGS}+` : size.toString(),
+            text,
             placement: 'point',
             textAlign: 'center',
             textBaseline: 'middle',
+            offsetX,
+            offsetY,
             fill: new Fill({ color: this.theme.textColor }),
             font: SIEMENS_FONT
           })
         })
       ];
 
-      this.clusterStyleCache[uid] = style;
+      this.clusterStyleCache[uid] = { feature, style };
     }
 
     return style;
+  }
+
+  private getClusterTextOffset(text: string): [number, number] {
+    const cacheKey = `${SIEMENS_FONT}_${text}`;
+    if (this.clusterTextOffsetCache[cacheKey]) {
+      return this.clusterTextOffsetCache[cacheKey];
+    }
+
+    if (!this.clusterTextContext) {
+      this.clusterTextContext = this.document.createElement('canvas').getContext('2d')!;
+      this.clusterTextContext.font = SIEMENS_FONT;
+      this.clusterTextContext.textAlign = 'center';
+      this.clusterTextContext.textBaseline = 'middle';
+    }
+
+    const metrics = this.clusterTextContext.measureText(text);
+    return (this.clusterTextOffsetCache[cacheKey] = [
+      (metrics.actualBoundingBoxLeft - metrics.actualBoundingBoxRight) / 2,
+      (metrics.actualBoundingBoxAscent - metrics.actualBoundingBoxDescent) / 2
+    ]);
   }
 
   /**
