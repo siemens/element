@@ -1,0 +1,50 @@
+<si-chart-cartesian
+  #chart
+  class="bg-base-1"
+  style="height: 420px"
+  title="Network traffic — last 14 days"
+  ariaLabel="Network traffic over the last 14 days. Inbound traffic peaked on 25 Apr at 83 MB/s. Outbound traffic remained consistently lower. Error rates were minimal throughout."
+  [xAxis]="{
+    type: 'category',
+    data: [
+      '14 Apr',
+      '15 Apr',
+      '16 Apr',
+      '17 Apr',
+      '18 Apr',
+      '19 Apr',
+      '20 Apr',
+      '21 Apr',
+      '22 Apr',
+      '23 Apr',
+      '24 Apr',
+      '25 Apr',
+      '26 Apr',
+      '27 Apr'
+    ]
+  }"
+  [yAxis]="{ type: 'value', name: 'MB/s' }"
+  [series]="[
+    {
+      type: 'line',
+      name: 'Inbound',
+      symbol: 'circle',
+      data: [42, 58, 51, 67, 73, 39, 25, 48, 61, 55, 70, 83, 76, 64]
+    },
+    {
+      type: 'line',
+      name: 'Outbound',
+      symbol: 'diamond',
+      data: [18, 24, 20, 31, 35, 15, 10, 22, 28, 25, 33, 40, 37, 30]
+    },
+    {
+      type: 'line',
+      name: 'Errors',
+      symbol: 'triangle',
+      data: [2, 0, 1, 3, 0, 5, 1, 0, 2, 1, 0, 4, 1, 2]
+    }
+  ]"
+  [showCustomLegend]="true"
+  [zoomSlider]="true"
+  (siResizeObserver)="chart.resize()"
+/>

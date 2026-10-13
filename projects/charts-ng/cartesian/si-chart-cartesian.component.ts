@@ -192,6 +192,10 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
     return validXAxis;
   }
 
+  protected override isSeriesVisible(index: number): boolean {
+    return this.series()?.[index]?.visible !== false;
+  }
+
   protected override applyOptions(): void {
     this.actualOptions = {
       series: [],
