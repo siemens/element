@@ -78,7 +78,12 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
   readonly yAxis = input<ChartYAxis | ChartYAxis[]>();
   /** The x axis in cartesian(rectangular) coordinate. */
   readonly xAxis = input<ChartXAxis | ChartXAxis[]>();
-  /** The content formatter of tooltip's floating layer which supports string template and callback function (see (see {@link https://echarts.apache.org/en/option.html#tooltip.formatter }). */
+  /**
+   * The content formatter of the tooltip's floating layer, supporting string templates and callbacks.
+   * Custom formatters are responsible for escaping untrusted values with `echarts.format.encodeHTML`
+   * before inserting them into HTML. Built-in formatters display names and values as plain text.
+   * See {@link https://echarts.apache.org/en/option.html#tooltip.formatter}.
+   */
   readonly tooltipFormatter = input<TooltipComponentOption['formatter']>();
   /**
    * Used to display the chart as a stacked one.
@@ -107,7 +112,7 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
     const params = Array.isArray(p) ? p : [p];
     const label: string = params[0]?.axisValueLabel ?? '';
 
-    let html = label;
+    let html = echarts.format.encodeHTML(label);
     for (const series of params) {
       const isCandle = series.componentSubType === 'candlestick';
       const isPie = series.componentSubType === 'pie';
@@ -129,8 +134,8 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
 
       html += '<div style="display: flex; align-items: center;">';
       html += this.getSeriesMarkerSvg(name);
-      html += `<span style="margin-inline: 4px 8px">${name}</span>`;
-      html += `<span style="margin-inline-start: auto">${value}</span>`;
+      html += `<span style="margin-inline: 4px 8px">${echarts.format.encodeHTML(name)}</span>`;
+      html += `<span style="margin-inline-start: auto">${echarts.format.encodeHTML(value)}</span>`;
       html += '</div>';
     }
     return html;
@@ -145,9 +150,13 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
     if (seriesValue) {
       sym = this.getSeriesMarker(seriesName);
       const symbol = this.shapePaths[sym as string];
-      const color = this.getSeriesColorBySeriesName(seriesName);
+      const seriesColor = this.getSeriesColorBySeriesName(seriesName);
+      const color =
+        typeof seriesColor === 'string' && CSS.supports('color', seriesColor)
+          ? seriesColor
+          : 'transparent';
       return `<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
-                  <path  d="${symbol}" fill="${color}"  />
+                  <path  d="${symbol}" fill="${echarts.format.encodeHTML(color)}"  />
             </svg>`;
     }
     return '';

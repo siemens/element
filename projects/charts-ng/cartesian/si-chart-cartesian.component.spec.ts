@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, SimpleChange, viewChild } from '@angular/core';
+import { Component, inputBinding, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ChartXAxis, ChartYAxis, EChartOption } from '@siemens/charts-ng/common';
 
@@ -35,6 +35,9 @@ class TestHostComponent {
   subTitle?: string;
 }
 describe('SiChartBarLineComponent', () => {
+  const payload = '<img src=x onerror="alert(1)"> & \'text\'';
+  const colorPayload = '"/><img src=x onerror=alert(1)>';
+
   const getOption = (component: SiChartCartesianComponent): any =>
     component.chart.getOption() as any;
 
@@ -70,6 +73,144 @@ describe('SiChartBarLineComponent', () => {
   it('should have a defined component', async () => {
     const { component } = await createChartWithTestData();
     expect(component).toBeDefined();
+  });
+
+  it.each([
+    { name: 'scalar values', dataName: payload, value: payload, expectedValue: payload },
+    {
+      name: 'array values',
+      dataName: payload,
+      value: ['category', payload],
+      expectedValue: payload
+    },
+    { name: 'series name fallback', dataName: 'category', value: 42, expectedValue: '42' }
+  ])(
+    'should escape tooltip labels, names and $name with custom markers',
+    async ({ dataName, value, expectedValue }) => {
+      const fixture = TestBed.createComponent(SiChartCartesianComponent, {
+        bindings: [
+          inputBinding('xAxis', () => ({ type: 'category', data: ['category'] })),
+          inputBinding('yAxis', () => ({ type: 'value' })),
+          inputBinding('series', () => [
+            { type: 'line', name: payload, symbol: 'diamond', data: [42] }
+          ])
+        ]
+      });
+      fixture.detectChanges();
+      await fixture.whenStable();
+      const options = fixture.componentInstance.chart.getOption() as {
+        tooltip: { formatter: (params: object | object[]) => string }[];
+      };
+      const html = options.tooltip[0].formatter([
+        {
+          axisValueLabel: payload,
+          name: dataName,
+          axisValue: 'category',
+          seriesName: payload,
+          value,
+          encode: { y: [1] }
+        }
+      ]);
+      const tooltip = document.createElement('div');
+      tooltip.innerHTML = html;
+
+      expect(tooltip.querySelector('img')).toBeNull();
+      expect(tooltip.firstChild?.textContent).toBe(payload);
+      expect(Array.from(tooltip.querySelectorAll('span'), span => span.textContent)).toEqual([
+        payload,
+        expectedValue
+      ]);
+      expect(tooltip.querySelector('svg path')).not.toBeNull();
+    }
+  );
+
+  it.each([
+    { color: '#123456', expected: '#123456' },
+    {
+      color: `var(--series-color, '"><img src=x onerror=alert(1)>')`,
+      expected: `var(--series-color, '"><img src=x onerror=alert(1)>')`
+    },
+    { color: colorPayload, expected: 'transparent' },
+    { color: 'red;background:url(https://example.com/beacon)', expected: 'transparent' },
+    {
+      color: {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 1,
+        y2: 0,
+        colorStops: [
+          { offset: 0, color: 'red' },
+          { offset: 1, color: 'blue' }
+        ]
+      },
+      expected: 'transparent'
+    }
+  ])('should validate custom SVG marker color $color', async ({ color, expected }) => {
+    const fixture = TestBed.createComponent(SiChartCartesianComponent, {
+      bindings: [
+        inputBinding('xAxis', () => ({ type: 'category', data: ['category'] })),
+        inputBinding('yAxis', () => ({ type: 'value' })),
+        inputBinding('series', () => [
+          {
+            type: 'line',
+            name: payload,
+            symbol: 'diamond',
+            itemStyle: { color },
+            data: [42]
+          }
+        ])
+      ]
+    });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const tooltip = document.createElement('div');
+    tooltip.innerHTML = fixture.componentInstance.getSeriesMarkerSvg(payload);
+
+    expect(tooltip.querySelector('img')).toBeNull();
+    expect(tooltip.querySelector('svg path')?.getAttribute('fill')).toBe(expected);
+  });
+
+  it('should render a safe tooltip through the ECharts showTip path', async () => {
+    const fixture = TestBed.createComponent(SiChartCartesianComponent, {
+      bindings: [
+        inputBinding('xAxis', () => ({ type: 'category', data: [payload] })),
+        inputBinding('yAxis', () => ({ type: 'value' })),
+        inputBinding('series', () => [
+          {
+            type: 'line',
+            name: payload,
+            symbol: 'diamond',
+            itemStyle: { color: colorPayload },
+            data: [{ name: payload, value: 42 }]
+          }
+        ])
+      ]
+    });
+    const host: HTMLElement = fixture.nativeElement;
+    host.style.cssText = 'display: block; width: 300px; height: 300px';
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    fixture.componentInstance.chart.setOption({
+      animation: false,
+      tooltip: { className: 'test-tooltip', transitionDuration: 0 }
+    });
+    fixture.componentInstance.chart.dispatchAction({
+      type: 'showTip',
+      seriesIndex: 0,
+      dataIndex: 0
+    });
+    await fixture.whenStable();
+
+    await vi.waitFor(() => {
+      const tooltip = host.querySelector('.test-tooltip');
+      expect(tooltip).not.toBeNull();
+      expect(tooltip?.textContent).toContain(payload);
+      expect(tooltip?.textContent).toContain('42');
+      expect(tooltip?.querySelector('svg path')?.getAttribute('fill')).toBe('transparent');
+    });
+    expect(host.querySelector('img')).toBeNull();
   });
 
   it('should have a defined ECharts chart', async () => {
