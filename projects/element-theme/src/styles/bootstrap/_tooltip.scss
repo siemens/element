@@ -44,18 +44,7 @@
   border-radius: variables.$tooltip-border-radius;
 }
 
-// .bs-tooltip-*: standard BS
-// .tooltip-*-*: si-tooltip with CDK overlay
-// .bs-tooltip-auto*: popper.js
-// FIXME: remove popper.js selectors in next breaking release
-
-:is(
-  .bs-tooltip-top,
-  .tooltip-start-bottom,
-  .tooltip-end-bottom,
-  .tooltip-center-bottom,
-  .bs-tooltip-auto[data-popper-placement^='top']
-) {
+:is(.tooltip-start-bottom, .tooltip-end-bottom, .tooltip-center-bottom) {
   padding-block: variables.$tooltip-arrow-height;
 
   .tooltip-arrow {
@@ -71,7 +60,7 @@
   }
 }
 
-:is(.bs-tooltip-end, .tooltip-start-center, .bs-tooltip-auto[data-popper-placement^='right']) {
+.tooltip-start-center {
   padding-inline: variables.$tooltip-arrow-height;
 
   .tooltip-arrow {
@@ -89,13 +78,7 @@
   }
 }
 
-:is(
-  .bs-tooltip-bottom,
-  .tooltip-start-top,
-  .tooltip-end-top,
-  .tooltip-center-top,
-  .bs-tooltip-auto[data-popper-placement^='bottom']
-) {
+:is(.tooltip-start-top, .tooltip-end-top, .tooltip-center-top) {
   padding-block: variables.$tooltip-arrow-height;
 
   .tooltip-arrow {
@@ -111,7 +94,7 @@
   }
 }
 
-:is(.bs-tooltip-start, .tooltip-end-center, .bs-tooltip-auto[data-popper-placement^='left']) {
+.tooltip-end-center {
   padding-inline: variables.$tooltip-arrow-height;
 
   .tooltip-arrow {
