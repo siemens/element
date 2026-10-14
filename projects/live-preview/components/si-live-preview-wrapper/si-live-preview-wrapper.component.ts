@@ -170,7 +170,7 @@ export class SiLivePreviewWrapperComponent {
       const linkTarget = (target as HTMLAnchorElement).target;
       if (newUrl && !newUrl.startsWith(this.initialUrl) && filterTargets.includes(linkTarget)) {
         event.preventDefault();
-        window.open(newUrl, '_blank');
+        window.open(newUrl, '_blank', 'noopener,noreferrer');
       }
     }
   }
