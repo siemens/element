@@ -12,7 +12,8 @@ import {
   OnInit,
   signal,
   viewChild,
-  DOCUMENT
+  DOCUMENT,
+  NgZone
 } from '@angular/core';
 
 import { ModalRef } from './modalref';
@@ -30,6 +31,8 @@ import { ModalRef } from './modalref';
   }
 })
 export class SiModalComponent implements OnInit, AfterViewInit {
+  private readonly document = inject(DOCUMENT);
+  private readonly ngZone = inject(NgZone);
   protected readonly modalRef = inject(ModalRef<unknown, any>);
 
   protected readonly dialogClass = this.modalRef.dialogClass ?? '';
@@ -41,12 +44,13 @@ export class SiModalComponent implements OnInit, AfterViewInit {
   private origBodyOverflow?: string;
   private backdropGhostClickPrevention = true;
   private detachFn?: () => void;
-  private readonly document = inject(DOCUMENT);
 
   private readonly modalContainerRef = viewChild.required<ElementRef>('modalContainer');
 
   ngOnInit(): void {
-    setTimeout(() => (this.backdropGhostClickPrevention = false), 300);
+    this.ngZone.runOutsideAngular(() =>
+      setTimeout(() => (this.backdropGhostClickPrevention = false), 300)
+    );
   }
 
   ngAfterViewInit(): void {
