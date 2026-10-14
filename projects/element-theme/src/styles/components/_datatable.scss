@@ -168,9 +168,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
 
     .ghost-cell-strip {
       animation-name: shimmer !important; // stylelint-disable-line declaration-no-important
-      animation-duration: animations.element-transition-duration(
-        1.6s
-      ) !important; // stylelint-disable-line declaration-no-important
+      animation-duration: animations.element-transition-duration(1.6s) !important; // stylelint-disable-line declaration-no-important
       animation-timing-function: ease-in-out !important; // stylelint-disable-line declaration-no-important
       background-size: 200% 100%;
       background-position-x: 100%;

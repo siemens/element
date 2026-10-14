@@ -58,8 +58,5 @@ $filtered-search-criteria-margin: map.get(variables.$spacers-block, 2);
   aspect-ratio: auto;
   block-size: auto;
   inline-size: auto;
-  padding-inline: map.get(
-    variables.$spacers-block,
-    2
-  ) !important; // stylelint-disable-line declaration-no-important
+  padding-inline: map.get(variables.$spacers-block, 2) !important; // stylelint-disable-line declaration-no-important
 }

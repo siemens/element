@@ -70,10 +70,7 @@
 }
 
 .fullscreen-button {
-  display: var(
-    --fullscreen-button-display,
-    inline-flex
-  ) !important; // stylelint-disable-line declaration-no-important
+  display: var(--fullscreen-button-display, inline-flex) !important; // stylelint-disable-line declaration-no-important
 }
 
 .collapse-toggle {

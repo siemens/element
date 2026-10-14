@@ -40,4 +40,6 @@ export interface DashboardToolbarItemLink {
 
 /** Union type for all possible items in the dashboard toolbar. */
 export type DashboardToolbarItem =
-  DashboardToolbarItemAction | DashboardToolbarItemRouterLink | DashboardToolbarItemLink;
+  | DashboardToolbarItemAction
+  | DashboardToolbarItemRouterLink
+  | DashboardToolbarItemLink;
