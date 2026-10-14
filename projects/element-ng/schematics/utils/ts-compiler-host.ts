@@ -9,6 +9,9 @@ import { existsSync, readFileSync } from 'node:fs';
 import { isAbsolute, relative, resolve } from 'path/posix';
 import * as ts from 'typescript';
 
+// Declaration files outside the tree remain unchanged during a CLI or test process.
+const declarationFileCache = new Map<string, ts.SourceFile>();
+
 export const createTreeAwareCompilerHost = (
   tree: Tree,
   options: ts.CompilerOptions
@@ -84,6 +87,29 @@ export const createTreeAwareCompilerHost = (
     }
 
     return Array.from(entries);
+  };
+
+  const getSourceFile = host.getSourceFile.bind(host);
+  host.getSourceFile = (fileName, languageVersionOrOptions, onError, shouldCreateNewSourceFile) => {
+    const treePath = toTreePath(fileName);
+    if (
+      shouldCreateNewSourceFile ||
+      !fileName.endsWith('.d.ts') ||
+      (treePath && tree.exists(treePath))
+    ) {
+      return getSourceFile(fileName, languageVersionOrOptions, onError, shouldCreateNewSourceFile);
+    }
+
+    // moduleDetection/module drive setExternalModuleIndicator, which JSON.stringify drops.
+    const cacheKey = `${fileName}|${JSON.stringify(languageVersionOrOptions)}|${options.moduleDetection}|${options.module}`;
+    let sourceFile = declarationFileCache.get(cacheKey);
+    if (!sourceFile) {
+      sourceFile = getSourceFile(fileName, languageVersionOrOptions, onError, true);
+      if (sourceFile) {
+        declarationFileCache.set(cacheKey, sourceFile);
+      }
+    }
+    return sourceFile;
   };
 
   return host;
