@@ -25,6 +25,7 @@ export class SampleComponent implements OnInit {
       {
         prop: 'toggle',
         name: '',
+        sortable: false,
         width: 85,
         canAutoResize: false,
         resizeable: false,
