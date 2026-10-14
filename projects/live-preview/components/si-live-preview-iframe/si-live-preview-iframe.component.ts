@@ -86,7 +86,13 @@ export class SiLivePreviewIframeComponent implements OnInit {
   }
 
   private onMessage(event: MessageEvent): void {
-    if (event.data?.src !== 'renderer') {
+    const previewWindow = this.previewIframe()?.nativeElement.contentWindow;
+    if (
+      !previewWindow ||
+      event.origin !== window.location.origin ||
+      event.source !== previewWindow ||
+      event.data?.src !== 'renderer'
+    ) {
       return;
     }
 
@@ -163,7 +169,7 @@ export class SiLivePreviewIframeComponent implements OnInit {
         safeAreaLeft: viewport.safeAreaLeft,
         safeAreaRight: viewport.safeAreaRight
       },
-      '*'
+      window.location.origin
     );
   }
 }
