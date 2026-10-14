@@ -43,7 +43,7 @@ jobs:
       - run: pnpm run dashboards-demo:build-all --no-progress
       - run: pnpm run dashboards-demo:build-all:esm
 
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: dist
           path: dist
@@ -103,7 +103,7 @@ jobs:
         run: |
           # Extract only the badge line and total coverage line
           head -n 2 code-coverage-results.md > coverage/coverage-badge.md
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: coverage-reports
           path: coverage
@@ -175,7 +175,7 @@ jobs:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: pnpm install
       - run: pnpm exec playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: ${{ !cancelled() }}
         with:
           name: blob-report-${{ matrix.shardIndex }}
@@ -197,7 +197,7 @@ jobs:
           pattern: blob-report-*
           merge-multiple: true
       - run: npx playwright merge-reports --reporter html ./all-blob-reports
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: html-report
           path: playwright-report
