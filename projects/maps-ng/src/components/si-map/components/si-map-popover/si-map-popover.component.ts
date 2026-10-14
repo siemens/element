@@ -64,8 +64,9 @@ export class SiMapPopoverComponent {
       this.renderDefault(mapPoints);
     }
 
-    if (map) {
-      const mapHeight = map.getTargetElement().getBoundingClientRect().height;
+    const mapTarget = map?.getTargetElement();
+    if (mapTarget) {
+      const mapHeight = mapTarget.getBoundingClientRect().height;
       const contentY = this.elementRef().nativeElement.getBoundingClientRect().top;
       const maxheight = mapHeight - contentY - 20;
       this.maxHeight.set(maxheight);
