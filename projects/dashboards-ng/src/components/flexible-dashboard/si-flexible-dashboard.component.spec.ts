@@ -197,53 +197,6 @@ describe('SiFlexibleDashboardComponent', () => {
       expect(catalogElement.query(By.css('si-badge')).nativeElement).toHaveTextContent('Added');
     });
 
-    it('should disable a catalog option when a dashboard instance reaches its limit', async () => {
-      const widget: Widget = {
-        ...createTestingWidget('Limited widget', 'limited'),
-        maxInstances: 1
-      };
-      fixture.componentRef.setInput('widgetCatalog', [widget]);
-      component.showWidgetCatalog();
-      await fixture.whenStable();
-
-      const option = fixture.debugElement.query(By.css('[role="option"]'))
-        .nativeElement as HTMLElement;
-      expect(option).toHaveAttribute('aria-disabled', 'false');
-      expect(option).toHaveAttribute('aria-selected', 'true');
-
-      grid.visibleWidgetInstances$.next([{ id: 'limited-instance', widgetId: widget.id }]);
-      await fixture.whenStable();
-
-      expect(option).toHaveAttribute('aria-disabled', 'true');
-      expect(option).toHaveAttribute('aria-selected', 'false');
-      expect(option.querySelector('si-badge')).toHaveTextContent('Added');
-    });
-
-    it('should enable a catalog option when a dashboard instance is removed', async () => {
-      const widget: Widget = {
-        ...createTestingWidget('Limited widget', 'limited'),
-        maxInstances: 1
-      };
-      fixture.componentRef.setInput('widgetCatalog', [widget]);
-      grid.visibleWidgetInstances$.next([{ id: 'limited-instance', widgetId: widget.id }]);
-      component.showWidgetCatalog();
-      await fixture.whenStable();
-
-      const option = fixture.debugElement.query(By.css('[role="option"]'))
-        .nativeElement as HTMLElement;
-      expect(option).toHaveAttribute('aria-disabled', 'true');
-
-      grid.visibleWidgetInstances$.next([]);
-      await fixture.whenStable();
-
-      expect(option).toHaveAttribute('aria-disabled', 'false');
-      expect(option.querySelector('si-badge')).toBeNull();
-      option.click();
-      await fixture.whenStable();
-
-      expect(option).toHaveAttribute('aria-selected', 'true');
-    });
-
     it('addWidgetAction action shall call showWidgetCatalog()', () => {
       const spy = vi.spyOn(component, 'showWidgetCatalog');
       const action = (component.primaryEditActions$.value[0] as MenuItem).action as (

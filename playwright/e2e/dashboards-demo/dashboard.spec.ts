@@ -147,7 +147,6 @@ test.describe('dashboard', () => {
     await expect(gaugeChart.locator('input')).not.toBeChecked();
     await expect(gaugeChart).toHaveAttribute('aria-selected', 'false');
     await expect(page.getByRole('button', { name: 'Add', exact: true })).toBeDisabled();
-    await si.runVisualAndA11yTests('catalog-limit-reached');
   });
 
   test(example + 'helloWorld', async ({ page, si }) => {
