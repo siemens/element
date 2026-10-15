@@ -208,6 +208,62 @@ describe('SiFileUploaderComponent', () => {
     expect(getError()).not.toBeInTheDocument();
   });
 
+  it.each([
+    ['.txt', 'file.txtx', ''],
+    ['txt', 'file.mytxt', ''],
+    ['image/png', 'file.png', 'application/x-image/png'],
+    ['image/png', 'file.png', 'image/png-extra'],
+    ['image/*', 'file.png', 'application/x-image/png'],
+    ['.t+t', 'file.ttt', ''],
+    ['.t?t', 'file.tt', ''],
+    ['.t{2}', 'file.tt', ''],
+    ['.t[xy]t', 'file.txt', ''],
+    ['.t(x)t', 'file.txt', ''],
+    ['.txt$', 'file.txt', ''],
+    ['.txt\\d', 'file.txt1', ''],
+    [', .png | ', 'file.txt', ''],
+    [' , | ', 'file.txt', ''],
+    ['(', 'file.txt', ''],
+    ['[', 'file.txt', ''],
+    ['\\', 'file.txt', '']
+  ])(
+    'should reject nonmatching files for accept=%j, name=%j, type=%j',
+    async (value, name, type) => {
+      accept.set(value);
+
+      await handleFiles(createFileList([name], [type]));
+
+      expect(getError()).toMatchTextContent('Incorrect file type selected');
+      expect(getUploadButton()).toBeDisabled();
+    }
+  );
+
+  it.each([
+    ['.TXT', 'file.txt', ''],
+    [' .txt | .png ', 'file.PNG', ''],
+    [', .txt | ', 'file.txt', ''],
+    ['.a*b*c', 'file.axbyc', ''],
+    ['image/*', 'file.png', 'image/png'],
+    ['APPLICATION/*+JSON', 'file.json', 'application/ld+json'],
+    ['application/ld+json', 'file.json', 'application/ld+json'],
+    ...['+', '?', '^', '$', '{', '}', '(', ')', '[', ']', '\\'].map(character => [
+      `.t${character}t`,
+      `file.t${character}t`,
+      ''
+    ])
+  ])(
+    'should accept literal and wildcard matches for accept=%j, name=%j, type=%j',
+    async (value, name, type) => {
+      accept.set(value);
+
+      await handleFiles(createFileList([name], [type]));
+
+      expect(getFiles()).toHaveLength(1);
+      expect(getError()).not.toBeInTheDocument();
+      expect(getUploadButton()).toBeEnabled();
+    }
+  );
+
   it('should allow files that match extension only', async () => {
     accept.set('.blub');
     errorTextFileType.set('Incorrect type');

@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
+    "lib": ["es2025", "dom"],
     "declaration": true,
     "inlineSources": true,
     "types": ["@siemens/element-translate-ng/localize-types", "geojson"],
