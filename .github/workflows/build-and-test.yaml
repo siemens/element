@@ -149,16 +149,12 @@ jobs:
     env:
       PW_WORKERS: 3
     steps:
+      # Check out without LFS first so the local action is available.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # As we are in another container, we need to install LFS manually.
       # See: https://github.com/orgs/community/discussions/160433
-      - name: Install LFS
-        run: |
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-          apt install git-lfs
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          lfs: true
+      - name: Set up LFS
+        uses: ./.github/actions/setup-lfs
       - name: Install Node.js and pnpm
         uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
         with:
