@@ -12,6 +12,7 @@ export default defineConfig({
     include: ['schematics/**/*.spec.ts'],
     exclude: ['schematics/*/files/**/*'],
     globals: true,
+    isolate: false,
     setupFiles: ['schematics/vitest-setup.ts'],
     testTimeout: 60000
   }

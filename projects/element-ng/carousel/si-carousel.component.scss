@@ -19,7 +19,7 @@
 }
 
 .page-buttons {
-  transition: transform variables.$element-default-transition-duration ease;
+  transition: margin-inline-start variables.$element-default-transition-duration ease;
 }
 
 .carousel-track {

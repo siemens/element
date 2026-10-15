@@ -92,7 +92,12 @@ export class SiLivePreviewWrapperComponent {
   }
 
   private onMessage(event: MessageEvent): void {
-    if (event.data?.src !== 'editor') {
+    // Render requests can contain executable templates, so the sender must be the same-origin editor.
+    if (
+      event.origin !== window.location.origin ||
+      event.source !== window.parent ||
+      event.data?.src !== 'editor'
+    ) {
       return;
     }
 
@@ -165,13 +170,13 @@ export class SiLivePreviewWrapperComponent {
       const linkTarget = (target as HTMLAnchorElement).target;
       if (newUrl && !newUrl.startsWith(this.initialUrl) && filterTargets.includes(linkTarget)) {
         event.preventDefault();
-        window.open(newUrl, '_blank');
+        window.open(newUrl, '_blank', 'noopener,noreferrer');
       }
     }
   }
 
-  sendMessage(type: string, message?: any): void {
-    window.parent.postMessage({ src: 'renderer', type, message }, '*');
+  sendMessage(type: string, message?: unknown): void {
+    window.parent.postMessage({ src: 'renderer', type, message }, window.location.origin);
   }
 
   private setTheme(theme: ThemeType): void {

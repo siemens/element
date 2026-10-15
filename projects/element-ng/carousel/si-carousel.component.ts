@@ -19,6 +19,7 @@ import {
 } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { elementLeft2, elementRight2, elementPause, elementPlay } from '@siemens/element-icons';
+import { isRTL } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import {
@@ -466,8 +467,9 @@ export class SiCarouselComponent {
     // Clamp the target to the scrollable range. A wrapped slide can be placed right at the track
     // edge, where the rect-derived target may exceed the maximum by a sub-pixel; without clamping
     // the loop would never reach it and never settle (leaving the order normalization undone).
-    const maxScrollLeft = viewport.scrollWidth - viewport.clientWidth;
-    const target = Math.max(0, Math.min(this.animationTargetLeft, maxScrollLeft));
+    const scrollRange = viewport.scrollWidth - viewport.clientWidth;
+    const [minScrollLeft, maxScrollLeft] = isRTL(viewport) ? [-scrollRange, 0] : [0, scrollRange];
+    const target = Math.max(minScrollLeft, Math.min(this.animationTargetLeft, maxScrollLeft));
     const diff = target - current;
     if (Math.abs(diff) < SCROLL_SETTLE_THRESHOLD) {
       viewport.scrollLeft = target;

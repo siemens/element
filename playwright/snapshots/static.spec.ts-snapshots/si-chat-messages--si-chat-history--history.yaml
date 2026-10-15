@@ -1,0 +1,26 @@
+- button "Back to conversation"
+- paragraph: Chat history
+- button "Close"
+- textbox "Search conversations"
+- heading "Today" [level=2]
+- list:
+  - listitem:
+    - button "Building faults"
+  - listitem:
+    - button "Temperature fluctuation in west wing"
+  - listitem:
+    - button "HVAC airflow imbalance in meeting rooms"
+- heading "Yesterday" [level=2]
+- list:
+  - listitem:
+    - button "Chiller restart after overnight shutdown"
+- heading "Last 7 days" [level=2]
+- list:
+  - listitem:
+    - button "Heating loop imbalance investigation"
+- main:
+  - link "Siemens logo":
+    - /url: /
+  - heading "Application name" [level=1]
+  - button "AI assistant"
+  - button "Open AI assistant"
