@@ -308,7 +308,8 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
       this.overlayRef.keydownEvents().pipe(
         filter(e => e.key === 'Escape'),
         map(() => false)
-      )
+      ),
+      this.overlayRef.detachments().pipe(map(() => false))
     )
       .pipe(takeUntil(this.closeOverlay$), takeUntilDestroyed(this.destroyRef))
       .subscribe(fromBackdrop => this.closeOverlay(fromBackdrop));
