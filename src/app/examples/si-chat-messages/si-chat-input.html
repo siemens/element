@@ -17,6 +17,10 @@
     [attachments]="preAttachedFiles"
     [actions]="actions"
     [secondaryActions]="secondaryActions"
+    [models]="models()"
+    [modelSelectionHasFilter]="modelSettings().search"
+    [modelSelectionActions]="modelActions()"
+    [(selectedModel)]="selectedModel"
     (send)="onMessageSent($event)"
     (fileError)="onFileError($event)"
     (interrupt)="onInterrupt()"
@@ -31,4 +35,14 @@
       <si-icon icon="element-face-very-happy" />
     </button>
   </si-chat-input>
+  <div class="d-flex flex-wrap gap-5 mt-8">
+    <label class="form-check-label">
+      <input type="checkbox" class="form-check-input me-4" [formField]="modelForm.search" />
+      Show model search
+    </label>
+    <label class="form-check-label">
+      <input type="checkbox" class="form-check-input me-4" [formField]="modelForm.descriptions" />
+      Show model descriptions
+    </label>
+  </div>
 </div>

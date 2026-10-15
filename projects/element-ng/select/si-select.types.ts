@@ -43,6 +43,8 @@ export interface SelectOption<T> {
    * Is optional if a custom template is provided or if the value should directly be rendered.
    */
   label?: TranslatableString;
+  /** Optional secondary text for custom option templates. */
+  description?: TranslatableString;
   /**
    * Used for typeahead functionality when filtering is disabled.
    * If provided, this will be used, otherwise the innerText of the rendered element.
