@@ -114,6 +114,17 @@ Each `si-split-part` requires a numeric `size` and a `unit`. Use `unit="fr"`
 for a part that should scale with the available space. Use `unit="px"` for a
 part that should keep a fixed size while the split container changes size.
 
+### Horizontal collapsed heading direction
+
+In a horizontal split, the title of a collapsed part is displayed vertically.
+To change its direction so it faces the start, add the `align-heading-start` class to
+the `<si-split-part>`. This class only affects the title while the part is
+collapsed in a horizontal split.
+
+```html
+<si-split-part heading="..." collapsible="to-start" class="align-heading-start">...</si-split-part>
+```
+
 ### Horizontal split with fractional sizing
 
 <si-docs-component example="si-split/si-split-auto"></si-docs-component>
