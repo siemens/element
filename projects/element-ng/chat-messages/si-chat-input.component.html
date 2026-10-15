@@ -45,8 +45,14 @@
     ></textarea>
   </div>
 
-  <div class="d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center gap-0">
+  <div
+    class="d-flex align-items-center justify-content-between"
+    (siResizeObserver)="toolbarWidth.set($event.width)"
+  >
+    <div
+      class="d-flex align-items-center gap-0 flex-shrink-0"
+      (siResizeObserver)="actionsWidth.set($event.width)"
+    >
       <div class="btn-group" role="group">
         @if (allowAttachments()) {
           <input
@@ -110,15 +116,29 @@
       </div>
     </div>
 
-    <button
-      type="button"
-      class="btn btn-tertiary-ghost btn-icon"
-      [disabled]="buttonDisabled()"
-      [attr.aria-label]="buttonLabel() | translate"
-      (click)="onButtonClick()"
-    >
-      <si-icon class="text-accent" [icon]="buttonIcon()" />
-    </button>
+    <div class="d-flex align-items-center justify-content-end">
+      @if (models().length) {
+        <si-chat-model-select
+          [options]="models()"
+          [value]="selectedModel()"
+          [disabled]="disabled() || modelSelectionDisabled()"
+          [hasFilter]="modelSelectionHasFilter()"
+          [footerActions]="modelSelectionActions()"
+          [availableWidth]="modelAvailableWidth()"
+          (valueChange)="selectedModel.set($event)"
+        />
+      }
+      <button
+        type="button"
+        class="btn btn-tertiary-ghost btn-icon"
+        [disabled]="buttonDisabled()"
+        [attr.aria-label]="buttonLabel() | translate"
+        (siResizeObserver)="sendButtonWidth.set($event.width)"
+        (click)="onButtonClick()"
+      >
+        <si-icon class="text-accent" [icon]="buttonIcon()" />
+      </button>
+    </div>
   </div>
 </div>
 

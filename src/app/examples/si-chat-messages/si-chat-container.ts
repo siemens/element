@@ -44,6 +44,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
 import { MenuItem } from '@siemens/element-ng/menu';
+import { SelectItem } from '@siemens/element-ng/select';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -106,6 +107,28 @@ export class SampleComponent {
   private readonly chatContainer = viewChild<SiChatContainerComponent>(SiChatContainerComponent);
 
   protected markdownOptions = markdownOptions;
+
+  protected readonly selectedModel = signal('balanced');
+  protected readonly models: SelectItem<string>[] = [
+    {
+      type: 'option',
+      value: 'balanced',
+      label: 'Balanced',
+      description: 'Everyday questions and tasks'
+    },
+    {
+      type: 'option',
+      value: 'reasoning',
+      label: 'Reasoning',
+      description: 'Complex analysis and planning'
+    },
+    {
+      type: 'option',
+      value: 'fast',
+      label: 'Fast',
+      description: 'Quick answers to simple questions'
+    }
+  ];
 
   protected readonly icons = addIcons({
     elementAi,

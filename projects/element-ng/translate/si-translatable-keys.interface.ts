@@ -34,6 +34,9 @@ export interface SiTranslatableKeys {
   'SI_CHAT_INPUT.PLACEHOLDER'?: string;
   'SI_CHAT_INPUT.SECONDARY_ACTIONS'?: string;
   'SI_CHAT_INPUT.SEND'?: string;
+  'SI_CHAT_MODEL_SELECT.LABEL'?: string;
+  'SI_CHAT_MODEL_SELECT.NO_RESULTS'?: string;
+  'SI_CHAT_MODEL_SELECT.SEARCH'?: string;
   'SI_COLOR_PICKER.PALETTE_LABEL'?: string;
   'SI_COLOR_PICKER.SELECTED_LABEL'?: string;
   'SI_COLUMN_SELECTION_DIALOG.CANCEL'?: string;
