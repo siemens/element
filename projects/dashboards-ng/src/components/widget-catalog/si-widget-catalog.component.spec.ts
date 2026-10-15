@@ -287,24 +287,63 @@ describe('SiWidgetCatalogComponent', () => {
       ]);
     });
 
-    it('should clear multi-selection when a selected widget reaches its limit', async () => {
-      component.widgetList.set([limitedWidget]);
+    it.each([false, true])(
+      'should clear selection at the limit without restoring it on removal with multiSelect=%s',
+      async multiSelect => {
+        component.widgetList.set([limitedWidget]);
+        fixture.componentRef.setInput('multiSelect', multiSelect);
+        fixture.detectChanges();
+        const [option] = options();
+        if (multiSelect) {
+          option.click();
+          await fixture.whenStable();
+        }
+        expect(option.querySelectorAll('input:checked')).toHaveLength(multiSelect ? 1 : 0);
+        expect(option).toHaveAttribute('aria-selected', 'true');
+        expect(buttonsByName('Add')[0].nativeElement).toBeEnabled();
+
+        widgetInstances$.next([{ id: 'limited-instance', widgetId: limitedWidget.id }]);
+        await fixture.whenStable();
+
+        expect(option).toHaveAttribute('aria-disabled', 'true');
+        expect(option).toHaveAttribute('aria-selected', 'false');
+        expect(option).not.toHaveClass('active');
+        expect(option.querySelectorAll('input:checked')).toHaveLength(0);
+        expect(buttonsByName('Add')[0].nativeElement).toBeDisabled();
+
+        widgetInstances$.next([]);
+        await fixture.whenStable();
+
+        expect(option).toHaveAttribute('aria-disabled', 'false');
+        expect(option).toHaveAttribute('aria-selected', 'false');
+        expect(option).not.toHaveClass('active');
+        expect(buttonsByName('Add')[0].nativeElement).toBeDisabled();
+      }
+    );
+
+    it('should retain enabled selections when another selected widget reaches its limit', async () => {
+      component.widgetList.set([limitedWidget, enabledWidget]);
       fixture.componentRef.setInput('multiSelect', true);
       fixture.detectChanges();
-      const [option] = options();
-      option.click();
+      const closed = vi.fn();
+      component.closed.subscribe(closed);
+      const [limitedOption, enabledOption] = options();
+      limitedOption.click();
       await fixture.whenStable();
-      expect(option.querySelector('input')).toBeChecked();
-      expect(buttonsByName('Add')[0].nativeElement).not.toBeDisabled();
+      enabledOption.click();
+      await fixture.whenStable();
+      const addButton = buttonsByName('Add')[0].nativeElement as HTMLButtonElement;
 
       widgetInstances$.next([{ id: 'limited-instance', widgetId: limitedWidget.id }]);
+      addButton.click();
       await fixture.whenStable();
 
-      expect(option).toHaveAttribute('aria-disabled', 'true');
-      expect(option).toHaveAttribute('aria-selected', 'false');
-      expect(option).not.toHaveClass('active');
-      expect(option.querySelector('input')).not.toBeChecked();
-      expect(buttonsByName('Add')[0].nativeElement).toBeDisabled();
+      expect(limitedOption).toHaveAttribute('aria-selected', 'false');
+      expect(enabledOption).toHaveAttribute('aria-selected', 'true');
+      expect(addButton).toBeEnabled();
+      expect(closed).toHaveBeenCalledExactlyOnceWith([
+        expect.objectContaining({ widgetId: enabledWidget.id })
+      ]);
     });
 
     it.each([false, true])(
@@ -344,17 +383,23 @@ describe('SiWidgetCatalogComponent', () => {
       expect(options()[0].querySelector('si-badge')).toBeNull();
     });
 
-    it('should disable Add when the widget reaches its limit while its editor is open', async () => {
+    it('should reject adding when the widget reaches its limit while its editor is open', async () => {
       component.widgetList.set([{ ...TEST_WIDGET, maxInstances: 1 }]);
       fixture.detectChanges();
       buttonsByName('Next')[0].nativeElement.click();
       await fixture.whenStable();
-      expect(buttonsByName('Add')[0].nativeElement).not.toBeDisabled();
+      const closed = vi.fn();
+      component.closed.subscribe(closed);
+      const addButton = buttonsByName('Add')[0].nativeElement as HTMLButtonElement;
+      expect(addButton).toBeEnabled();
 
       widgetInstances$.next([{ id: 'test-instance', widgetId: TEST_WIDGET.id }]);
+      addButton.click();
       await fixture.whenStable();
 
-      expect(buttonsByName('Add')[0].nativeElement).toBeDisabled();
+      expect(closed).not.toHaveBeenCalled();
+      expect(addButton).toBeDisabled();
+      expect(fixture.debugElement.query(By.css('si-test-widget-editor'))).not.toBeNull();
     });
   });
 

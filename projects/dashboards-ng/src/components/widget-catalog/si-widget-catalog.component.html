@@ -27,7 +27,7 @@
             >
               @for (widget of filteredWidgetCatalog; track $index) {
                 @let widgetState = widgetStates().get(widget.id);
-                @let isSelected = !widgetState?.disabled && selectedWidgets().includes(widget);
+                @let isSelected = selectedWidgets().includes(widget);
                 <li
                   class="list-item list-item-action"
                   [cdkOption]="widget"

@@ -12,6 +12,7 @@ import {
   inject,
   input,
   isSignal,
+  linkedSignal,
   OnInit,
   output,
   signal
@@ -147,10 +148,13 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
    * Array used to hold the search result on the widget catalog.
    * @defaultValue [] */
   protected filteredWidgetCatalog: Widget[] = [];
-  protected readonly selectedWidgets = signal<Widget[]>([]);
-  protected readonly hasSelection = computed(() =>
-    this.selectedWidgets().some(widget => this.isWidgetEnabled(widget))
-  );
+  // Prune disabled widgets before the next selection read, without waiting for an effect.
+  protected readonly selectedWidgets = linkedSignal({
+    source: this.widgetStates,
+    computation: (states, previous): Widget[] =>
+      previous?.value.filter(widget => !states.get(widget.id)?.disabled) ?? []
+  });
+  protected readonly hasSelection = computed(() => this.selectedWidgets().length > 0);
   /**
    * @deprecated Use `selectedWidgets` and `hasSelection` instead.
    * This property only holds the first selected widget and is not updated when multiple selection is allowed.
@@ -158,7 +162,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
    */
   protected readonly selected = signal<Widget | undefined>(undefined);
   private readonly singleSelectedWidget = computed(() => {
-    const selectedWidgets = this.selectedWidgets().filter(widget => this.isWidgetEnabled(widget));
+    const selectedWidgets = this.selectedWidgets();
     return selectedWidgets.length === 1 ? selectedWidgets[0] : undefined;
   });
   private widgetConfig?: Omit<WidgetConfig, 'id'>;
@@ -242,13 +246,6 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
       const selected = this.selected();
       if (selected) {
         this.selectWidgets([selected]);
-      }
-    });
-    effect(() => {
-      const selectedWidgets = this.selectedWidgets();
-      const enabledWidgets = selectedWidgets.filter(widget => this.isWidgetEnabled(widget));
-      if (enabledWidgets.length !== selectedWidgets.length) {
-        this.selectWidgets(enabledWidgets);
       }
     });
   }
@@ -366,7 +363,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
 
   protected onAddWidget(): void {
     if (this.view() === 'list') {
-      const selectedWidgets = this.selectedWidgets().filter(widget => this.isWidgetEnabled(widget));
+      const selectedWidgets = this.selectedWidgets();
       if (selectedWidgets.length === 0) {
         return;
       }
@@ -419,8 +416,8 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
 
   private updateSelectionOnFilter(): void {
     const filteredWidgets = new Set(this.filteredWidgetCatalog);
-    const selectedFilteredWidgets = this.selectedWidgets().filter(
-      widget => filteredWidgets.has(widget) && this.isWidgetEnabled(widget)
+    const selectedFilteredWidgets = this.selectedWidgets().filter(widget =>
+      filteredWidgets.has(widget)
     );
 
     if (selectedFilteredWidgets.length > 0) {

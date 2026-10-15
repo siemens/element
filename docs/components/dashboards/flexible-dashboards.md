@@ -100,6 +100,8 @@ When a positive limit is reached, the catalog shows the widget as disabled with
 a neutral, translatable **Added** badge. In multi-select mode, checkboxes
 represent only widgets selected to add. Added widgets remain unchecked and
 cannot be selected. Disabled widgets are skipped during keyboard navigation.
+If a selected widget reaches its limit while the catalog is open, it is
+deselected and cannot be added, even from its editor.
 
 Use the optional translatable `badge` text to explain a consumer restriction,
 for example by extending an existing widget descriptor:
