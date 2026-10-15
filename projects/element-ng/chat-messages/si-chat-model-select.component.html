@@ -1,0 +1,81 @@
+<div
+  siCustomSelect
+  class="model-trigger btn btn-tertiary-ghost fw-normal"
+  [class.btn-icon]="isCompact()"
+  [id]="id"
+  [disabled]="selection.disabled()"
+  [ariaLabel]="(label() | translate: { model: selectedLabel() | translate })!"
+  [siTooltip]="label() | translate: { model: selectedLabel() | translate }"
+  (openChange)="onOpenChange($event)"
+>
+  <span class="visually-hidden" [id]="id + '-label'">
+    {{ label() | translate: { model: selectedLabel() | translate } }}
+  </span>
+  @if (isCompact()) {
+    <si-icon [icon]="icons.elementOptions" />
+  } @else {
+    <si-select-combobox>
+      <span class="model-name text-truncate">{{ selectedLabel() | translate }}</span>
+    </si-select-combobox>
+  }
+
+  <ng-template si-select-dropdown contentType="listbox">
+    <div #modelDropdown class="model-dropdown">
+      @if (hasFilter()) {
+        <si-select-list-has-filter
+          class="border-0 shadow-none bg-transparent m-0 py-0"
+          [class.py-4]="false"
+          [baseId]="id"
+          [labelledby]="id + '-label'"
+          [optionTemplate]="optionTemplate"
+          [filterPlaceholder]="filterPlaceholder()"
+          [noResultsFoundLabel]="noResultsFoundLabel()"
+          [actionsTemplate]="footerActions().length ? footerTemplate : undefined"
+          (closeOverlay)="select().close()"
+        />
+      } @else {
+        <si-select-list
+          class="border-0 shadow-none bg-transparent m-0 py-0"
+          [class.py-4]="false"
+          [baseId]="id"
+          [labelledby]="id + '-label'"
+          [optionTemplate]="optionTemplate"
+          [actionsTemplate]="footerActions().length ? footerTemplate : undefined"
+          (closeOverlay)="select().close()"
+        />
+      }
+    </div>
+  </ng-template>
+</div>
+
+<div
+  siCustomSelect
+  class="model-trigger model-trigger-sizer btn btn-tertiary-ghost fw-normal"
+  inert
+  aria-hidden="true"
+  [id]="id + '-sizer'"
+  (siResizeObserver)="triggerWidth.set($event.width)"
+>
+  <si-select-combobox>
+    <span class="model-name text-truncate">{{ selectedLabel() | translate }}</span>
+  </si-select-combobox>
+</div>
+
+<ng-template #optionTemplate let-option siSelectOptionTemplate>
+  <div
+    class="model-option d-flex flex-column gap-2 text-truncate"
+    [siTooltip]="
+      (option.label | translate) +
+      (option.description ? ': ' + (option.description | translate) : '')
+    "
+  >
+    <span class="si-body text-truncate">{{ option.label ?? option.value | translate }}</span>
+    @if (option.description) {
+      <span class="si-body text-secondary text-truncate">{{ option.description | translate }}</span>
+    }
+  </div>
+</ng-template>
+
+<ng-template #footerTemplate>
+  <si-menu-factory class="model-footer w-100" [items]="footerActions()" />
+</ng-template>
