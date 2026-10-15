@@ -25,6 +25,12 @@
   rebaseWhen: "conflicted",
   packageRules: [
     {
+      description: ["Allow npm packages on code.siemens.com without release timestamps"],
+      matchDatasources: ["npm"],
+      matchRegistryUrls: ["https://code.siemens.com/**"],
+      minimumReleaseAgeBehaviour: "timestamp-optional"
+    },
+    {
       description: ["Keep the native federation esbuild override pinned"],
       matchFileNames: ["pnpm-workspace.yaml"],
       matchDepNames: ["@angular-architects/native-federation>esbuild"],
