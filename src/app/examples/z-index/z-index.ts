@@ -16,24 +16,24 @@ import { Component } from '@angular/core';
       }
       div > span {
         position: absolute;
-        right: 5px;
-        bottom: 0;
+        inset-inline-end: 5px;
+        inset-block-end: 0;
       }
       :nth-child(2) {
-        top: 2rem;
-        left: 2rem;
+        inset-block-start: 2rem;
+        inset-inline-start: 2rem;
       }
       :nth-child(3) {
-        top: 3rem;
-        left: 3rem;
+        inset-block-start: 3rem;
+        inset-inline-start: 3rem;
       }
       :nth-child(4) {
-        top: 4rem;
-        left: 4rem;
+        inset-block-start: 4rem;
+        inset-inline-start: 4rem;
       }
       :nth-child(5) {
-        top: 5rem;
-        left: 5rem;
+        inset-block-start: 5rem;
+        inset-inline-start: 5rem;
       }
     }
   `,

@@ -25,6 +25,7 @@ import { ReplaySubject } from 'rxjs';
 import * as rxjs from 'rxjs';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { ScrollStrategy } from '@angular/cdk/overlay';
+import { Signal } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { StaticProvider } from '@angular/core';
 import { Subject } from 'rxjs';

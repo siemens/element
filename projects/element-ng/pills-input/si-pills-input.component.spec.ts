@@ -66,6 +66,14 @@ describe('SiPillsInputComponent', () => {
       expect(component.value()).toEqual(['item-1']);
     });
 
+    it.each(['{Enter}', '{Tab}'])('should not add a whitespace-only tag on %s', async key => {
+      await userEvent.type(inputElement, `   ${key}`);
+      await fixture.whenStable();
+
+      expect(component.value()).toEqual([]);
+      expect(componentElement.querySelectorAll('si-input-pill')).toHaveLength(0);
+    });
+
     it('should not update on input', async () => {
       await userEvent.type(inputElement, 'item-1');
       expect(component.value()).toEqual([]);

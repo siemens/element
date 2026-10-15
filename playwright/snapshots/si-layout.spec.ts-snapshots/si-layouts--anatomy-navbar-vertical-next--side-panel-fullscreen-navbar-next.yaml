@@ -1,0 +1,54 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- alert: System maintenance scheduled for 2 AM - 4 AM UTC
+- banner:
+  - button "Launchpad"
+  - link "Siemens logo":
+    - /url: /
+  - heading "Application name" [level=1]
+  - button "Support"
+  - button "Settings"
+  - button "Lars Vegas": LV
+- navigation:
+  - button "Show side navigation"
+  - button "Home"
+  - group "Home"
+  - button "Documentation"
+  - group "Documentation"
+  - link "Energy & Sustainability":
+    - /url: /energy
+  - link "Test Coverage":
+    - /url: /coverage
+- main:
+  - paragraph: Cooling coil
+  - button "Exit full screen"
+  - button "Show side pane" [expanded]
+  - textbox "Search…"
+  - button "Properties" [expanded]
+  - region "Properties": And here we have some content
+  - button "Documents"
+  - region "Documents"
+  - button "Graphics"
+  - region "Graphics"
+  - text: /4 Security \d+ Update \d+ Information/
+  - navigation "Breadcrumb navigation":
+    - list:
+      - listitem:
+        - link "Root":
+          - /url: /root
+      - listitem:
+        - link "Level 1":
+          - /url: /root/level1
+      - listitem:
+        - link "Level 2":
+          - /url: /root/level1/level2
+  - heading "Title describing what page content to expect" [level=2]
+  - paragraph: Lorem ipsum dolor sit amet, ...
+  - menubar:
+    - menuitem "Print"
+    - menuitem "Share"
+    - menuitem "Save As"
+    - menuitem "Show actions"
+  - textbox "Search"
+  - button "Toolbar item"
+  - text: Placeholder for the content of the page, using the fixed height layout.

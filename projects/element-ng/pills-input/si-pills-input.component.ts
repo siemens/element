@@ -201,7 +201,7 @@ export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFo
   }
 
   private rebuildValue(value: string, trigger: SiPillsInputValueHandlerTrigger): void {
-    if (value) {
+    if (value.trim()) {
       const valueParseResult = this.siPillsInputValueHandlerDirective?.handle(value, trigger);
       if (valueParseResult) {
         this.pills.update(pills => [...pills, ...valueParseResult.newPills]);

@@ -23,7 +23,7 @@
             @for (legendItem of leg.list; track legendItem.name) {
               <div class="legend-item" [class.hidden-legend]="!legendItem.selected">
                 <div
-                  class="me-4 d-flex align-items-center justify-content-center"
+                  class="left-legend-circle d-flex align-items-center justify-content-center"
                   (click)="legendIconClick(legendItem)"
                   (mouseenter)="legendHoverStartEvent.emit(legendItem)"
                   (mouseleave)="legendHoverEndEvent.emit(legendItem)"
@@ -42,7 +42,7 @@
                   {{ legendItem.displayName }}
                 </span>
                 @if (legendItem.tooltip) {
-                  <div class="tooltip show bs-tooltip-bottom" role="tooltip">
+                  <div class="tooltip show tooltip-center-top" role="tooltip">
                     <div class="tooltip-arrow"></div>
                     <div class="tooltip-inner">{{ legendItem.tooltip }}</div>
                   </div>
@@ -88,7 +88,7 @@
                   </svg>
                 </div>
                 @if (legendItem.tooltip) {
-                  <div class="tooltip show bs-tooltip-bottom" role="tooltip">
+                  <div class="tooltip show tooltip-center-top" role="tooltip">
                     <div class="tooltip-arrow"></div>
                     <div class="tooltip-inner">{{ legendItem.tooltip }}</div>
                   </div>

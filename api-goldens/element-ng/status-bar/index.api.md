@@ -21,6 +21,7 @@ import { Provider } from '@angular/core';
 import * as rxjs from 'rxjs';
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { Signal } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Type } from '@angular/core';

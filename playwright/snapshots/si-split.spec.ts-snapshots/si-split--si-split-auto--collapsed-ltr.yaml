@@ -1,0 +1,12 @@
+- button "Toggle details"
+- text: Filters
+- button "Collapse"
+- text: Employees
+- button "Collapse"
+- paragraph: Split Part with resizable content!
+- text: Details
+- button "Collapse"
+- paragraph: "Split Part #3"
+- paragraph:
+  - button "Set to vertical"
+  - button "Set to horizontal"

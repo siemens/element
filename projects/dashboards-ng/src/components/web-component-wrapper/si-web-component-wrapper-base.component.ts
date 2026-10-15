@@ -60,7 +60,7 @@ export abstract class SiWebComponentWrapperBaseComponent<
   }
 
   private isScriptLoaded(url: string): boolean {
-    const script = document.querySelector(`script[src='${url}']`);
+    const script = this.document.querySelector(`script[src='${url}']`);
     return script ? true : false;
   }
 }

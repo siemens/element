@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/all-variables';
+@use '@siemens/element-theme/src/styles/mixins/navbar-vertical';
 
 $rpanel-width-regular: 390px;
 $rpanel-width-wide: 500px;
@@ -65,7 +66,13 @@ $transition: opacity 0.15s linear;
   }
 
   &.rpanel-fullscreen-overlay {
-    --rpanel-width-fullscreen: 100vi;
+    @include navbar-vertical.spacing(
+      $collapsed: '.rpanel-navbar-collapsed',
+      $text-only: '.rpanel-navbar-text-only',
+      $hidden: '.rpanel-navbar-hidden'
+    );
+
+    --rpanel-width-fullscreen: calc(100vi - #{all-variables.$si-navbar-vertical-spacing});
   }
 
   &.rpanel-mode--over {
@@ -117,7 +124,7 @@ $transition: opacity 0.15s linear;
 
       .side-panel,
       .side-panel > .inner {
-        inline-size: 100vi;
+        inline-size: var(--rpanel-width-fullscreen, 100vi);
       }
     }
   }

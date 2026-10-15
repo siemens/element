@@ -7,6 +7,10 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  &.rpanel-fullscreen-overlay {
+    border-inline-start: 1px solid all-variables.$si-sys-color-border-4;
+  }
 }
 
 :host-context(.collapsible) {

@@ -27,6 +27,7 @@ export class SiPopoverDirective implements OnDestroy {
     readonly context: _angular_core.InputSignal<unknown>;
     hide(): void;
     readonly icon: _angular_core.InputSignal<string | undefined>;
+    readonly id: _angular_core.InputSignal<string>;
     readonly placement: _angular_core.InputSignal<"auto" | "start" | "end" | "top" | "bottom">;
     // (undocumented)
     readonly placementInternal: _angular_core.Signal<"auto" | "start" | "end" | "top" | "bottom">;
@@ -40,6 +41,7 @@ export class SiPopoverDirective implements OnDestroy {
 
 // @public (undocumented)
 export class SiPopoverTitleDirective {
+    constructor();
     // (undocumented)
     readonly popover: PopoverComponent;
 }

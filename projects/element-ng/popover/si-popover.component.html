@@ -9,7 +9,7 @@
     positionClass(),
     popover.containerClass()
   ]"
-  [attr.aria-labelledby]="labelledBy"
+  [attr.aria-labelledby]="ariaLabelledBy()"
   [attr.aria-describedby]="describedBy"
   (keydown.escape)="hide()"
 >

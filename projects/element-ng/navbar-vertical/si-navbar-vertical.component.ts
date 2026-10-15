@@ -26,7 +26,12 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { elementDoubleLeft, elementDoubleRight, elementSearch } from '@siemens/element-icons';
-import { MenuItem, SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
+import {
+  MenuItem,
+  SI_NAVBAR_VERTICAL_LAYOUT,
+  SI_UI_STATE_SERVICE,
+  SiNavbarVerticalLayout
+} from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
@@ -80,7 +85,10 @@ export class SiNavbarVerticalItemGuardDirective {
   ],
   templateUrl: './si-navbar-vertical.component.html',
   styleUrl: './si-navbar-vertical.component.scss',
-  providers: [{ provide: SI_NAVBAR_VERTICAL, useExisting: SiNavbarVerticalComponent }],
+  providers: [
+    { provide: SI_NAVBAR_VERTICAL, useExisting: SiNavbarVerticalComponent },
+    { provide: SI_NAVBAR_VERTICAL_LAYOUT, useExisting: SiNavbarVerticalComponent }
+  ],
   changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     class: 'si-layout-inner',
@@ -90,7 +98,7 @@ export class SiNavbarVerticalItemGuardDirective {
     '[class.ready]': 'ready()'
   }
 })
-export class SiNavbarVerticalComponent implements OnChanges, OnInit {
+export class SiNavbarVerticalComponent implements OnChanges, OnInit, SiNavbarVerticalLayout {
   protected readonly icons = addIcons({ elementDoubleLeft, elementDoubleRight, elementSearch });
   /**
    * Whether the navbar-vertical is collapsed.

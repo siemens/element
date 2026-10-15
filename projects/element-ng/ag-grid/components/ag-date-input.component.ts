@@ -3,7 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DOCUMENT,
+  ElementRef,
+  OnDestroy,
+  inject
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiCalendarButtonComponent, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
 import { IDateComp, IDateParams } from 'ag-grid-community';
@@ -31,6 +38,7 @@ import { IDateComp, IDateParams } from 'ag-grid-community';
 })
 export class AgDateInputComponent implements IDateComp, OnDestroy {
   private elementRef = inject(ElementRef);
+  private document = inject(DOCUMENT);
 
   /**
    * The selected date value.
@@ -66,7 +74,7 @@ export class AgDateInputComponent implements IDateComp, OnDestroy {
   afterGuiAttached(): void {
     // Remove any existing listener to prevent duplicates
     if (this.documentClickListener) {
-      document.removeEventListener('mousedown', this.documentClickListener, true);
+      this.document.removeEventListener('mousedown', this.documentClickListener, true);
     }
 
     // Intercept document click events to keep the filter open when clicking the calendar
@@ -78,12 +86,12 @@ export class AgDateInputComponent implements IDateComp, OnDestroy {
         event.stopPropagation();
       }
     };
-    document.addEventListener('mousedown', this.documentClickListener, true);
+    this.document.addEventListener('mousedown', this.documentClickListener, true);
   }
 
   ngOnDestroy(): void {
     if (this.documentClickListener) {
-      document.removeEventListener('mousedown', this.documentClickListener, true);
+      this.document.removeEventListener('mousedown', this.documentClickListener, true);
     }
   }
 

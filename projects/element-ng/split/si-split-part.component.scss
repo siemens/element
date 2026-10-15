@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/all-variables';
+@use '@siemens/element-theme/src/styles/variables/utilities';
 
 $header-height: 40px;
 
@@ -36,8 +37,12 @@ $header-height: 40px;
 
   .si-split-part-title {
     inline-size: 100%;
-    writing-mode: vertical-rl; // sideways is currently only supported in FF
     transform: rotate(180deg);
+    writing-mode: sideways-lr;
+
+    @include utilities.rtl {
+      writing-mode: sideways-rl;
+    }
   }
 
   .si-split-part-collapse-button {

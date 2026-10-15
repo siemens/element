@@ -216,7 +216,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "mkdocs-code-siemens-code-docs-theme", specifier = ">=8.1,<9", index = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/simple" },
+    { name = "mkdocs-code-siemens-code-docs-theme", specifier = ">=9,<10", index = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/simple" },
     { name = "mkdocs-element-docs-builder", editable = "projects/element-docs-builder" },
     { name = "mkdocs-minify-html-plugin", specifier = "==0.3.12" },
 ]
@@ -381,15 +381,15 @@ wheels = [
 
 [[package]]
 name = "mkdocs-code-siemens-code-docs-theme"
-version = "8.3.1"
+version = "9.0.0"
 source = { registry = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/simple" }
 dependencies = [
     { name = "mkdocs" },
     { name = "mkdocs-material" },
 ]
-sdist = { url = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/files/990506426d27bf1284906f59f2924793d296f3f6394e40b00cc7b7309f871376/mkdocs_code_siemens_code_docs_theme-8.3.1.tar.gz", hash = "sha256:990506426d27bf1284906f59f2924793d296f3f6394e40b00cc7b7309f871376" }
+sdist = { url = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/files/48122ff5e80031a95ff73af6be46cbdb7a51ac43e0d0fc1c2bea4b0fa0b901e1/mkdocs_code_siemens_code_docs_theme-9.0.0.tar.gz", hash = "sha256:48122ff5e80031a95ff73af6be46cbdb7a51ac43e0d0fc1c2bea4b0fa0b901e1" }
 wheels = [
-    { url = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/files/8008985972b8443b636ebb6529258535746c9ef5e9ac1461fde001080140fb22/mkdocs_code_siemens_code_docs_theme-8.3.1-py3-none-any.whl", hash = "sha256:8008985972b8443b636ebb6529258535746c9ef5e9ac1461fde001080140fb22" },
+    { url = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/files/fd64785ee4d72079e2726b2b729550d32ebf152ac606359f64a2c4f14c6d86f5/mkdocs_code_siemens_code_docs_theme-9.0.0-py3-none-any.whl", hash = "sha256:fd64785ee4d72079e2726b2b729550d32ebf152ac606359f64a2c4f14c6d86f5" },
 ]
 
 [[package]]

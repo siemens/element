@@ -19,6 +19,8 @@ $btn-width-normal: map.get(sizing.$sizing, 120);
 // Component styling
 
 $si-application-header-height: calc(map.get(sizing.$sizing, 100) + 1px);
+$si-navbar-vertical-width: 240px;
+$si-navbar-vertical-collapsed-width: calc(1.5rem + 2 * map.get(spacers.$spacers-inline, 5));
 $si-titlebar-padding-y: map.get(spacers.$spacers-block, 3);
 $si-titlebar-height: calc(1.5rem + 2 * $si-titlebar-padding-y);
 $si-system-banner-padding-y: map.get(spacers.$spacers-block, 2);
@@ -28,3 +30,4 @@ $si-system-banner-height: calc(1rem + 2 * $si-system-banner-padding-y);
 // stylelint-disable-next-line length-zero-no-unit
 $si-titlebar-spacing: var(--element-titlebar-spacing, 0px);
 $si-system-banner-spacing: var(--element-system-banner-spacing, 0px);
+$si-navbar-vertical-spacing: var(--element-navbar-vertical-spacing, 0px);

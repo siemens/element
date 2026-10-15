@@ -1,12 +1,16 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/all-variables';
+@use '@siemens/element-theme/src/styles/mixins/navbar-vertical';
 
-$vertical-nav-width: 240px;
-$vertical-nav-collapsed-width: calc(1.5rem + 2 * map.get(all-variables.$spacers-inline, 5));
+$vertical-nav-width: all-variables.$si-navbar-vertical-width;
+$vertical-nav-collapsed-width: all-variables.$si-navbar-vertical-collapsed-width;
 $vertical-nav-transition-duration: all-variables.$element-default-transition-duration;
 
 :host {
+  @include navbar-vertical.spacing();
+
   display: block;
+  padding-inline-start: all-variables.$si-navbar-vertical-spacing;
   --si-layout-header-first-element-offset: 40px;
 
   // This prevents applying the wrong padding-inline-start before the visible class is applied. This would trigger the animation
@@ -137,8 +141,6 @@ si-search-bar {
   }
 
   :host:not(.nav-text-only) {
-    padding-inline-start: $vertical-nav-collapsed-width;
-
     .mobile-drawer {
       background: transparent;
       box-shadow: none;
@@ -175,11 +177,5 @@ si-search-bar {
         inline-size: $vertical-nav-width;
       }
     }
-  }
-}
-
-@include all-variables.media-breakpoint-up(lg) {
-  :host:not(.nav-collapsed) {
-    padding-inline-start: $vertical-nav-width;
   }
 }

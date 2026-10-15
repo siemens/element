@@ -18,6 +18,7 @@ import { PositionStrategy } from '@angular/cdk/overlay';
 import { Provider } from '@angular/core';
 import * as rxjs from 'rxjs';
 import { ScrollStrategy } from '@angular/cdk/overlay';
+import { Signal } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Type } from '@angular/core';
