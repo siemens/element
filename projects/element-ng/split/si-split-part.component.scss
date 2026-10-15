@@ -50,6 +50,14 @@ $header-height: 40px;
   }
 }
 
+:host-context(.horizontal)
+  > :host(.is-collapsed.align-heading-start)
+  .si-split-part-header
+  .si-split-part-title {
+  transform: none;
+  text-align: end;
+}
+
 .si-split-part-title {
   font-weight: all-variables.$si-font-weight-h5;
   flex: 1;

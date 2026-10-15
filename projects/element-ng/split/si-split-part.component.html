@@ -1,5 +1,9 @@
 @if (!headerTemplate() && showHeader()) {
-  <div class="si-split-part-header" [class.is-collapsed]="collapsedState()">
+  <div
+    class="si-split-part-header"
+    [class.gap-4]="collapsedState()"
+    [class.is-collapsed]="collapsedState()"
+  >
     <div class="si-split-part-title text-truncate">
       {{ heading() | translate }}
     </div>
