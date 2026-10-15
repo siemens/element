@@ -8,7 +8,7 @@
   @if (titleText()) {
     <div class="apps-header">
       <span>
-        <p class="si-h4 lh-1 m-0">{{ titleText() | translate }}</p>
+        <p class="si-h4 lh-1 m-0" [id]="titleId">{{ titleText() | translate }}</p>
         @if (subtitleText()) {
           <p class="si-body text-secondary mt-4 mb-0">{{ subtitleText() | translate }}</p>
         }
@@ -28,6 +28,7 @@
       <si-launchpad-category
         [category]="{ name: favoriteAppsText(), apps: favorites() }"
         [enableFavorites]="enableFavorites()"
+        [labelledBy]="titleText() ? titleId : undefined"
         (favoriteChange)="toggleFavorite($event)"
       />
       <button
@@ -50,6 +51,7 @@
             [class.pt-6]="!!category.name && (hasFavorites() || !$first)"
             [category]="category"
             [enableFavorites]="enableFavorites()"
+            [labelledBy]="titleText() ? titleId : undefined"
             (favoriteChange)="toggleFavorite($event)"
           />
         }
