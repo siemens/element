@@ -1,0 +1,28 @@
+name: Set up Git LFS
+description: Install checksum-verified Git LFS for Linux AMD64 and fetch LFS files for the checked-out repository.
+
+runs:
+  using: composite
+  steps:
+    - name: Install Git LFS
+      shell: bash
+      env:
+        # Renovate updates the official release tag and archive checksum together.
+        GIT_LFS_VERSION: v3.8.0
+        GIT_LFS_SHA256: e455e00f15d9b95661b8d53498ffb0c3367962cf1ec73c31ab7369516cd6ab8d
+      run: |
+        set -euo pipefail
+        temp_dir=$(mktemp -d)
+        trap 'rm -rf "$temp_dir"' EXIT
+        archive="git-lfs-linux-amd64-${GIT_LFS_VERSION}.tar.gz"
+        curl --fail --show-error --silent --location \
+          "https://github.com/git-lfs/git-lfs/releases/download/${GIT_LFS_VERSION}/${archive}" \
+          --output "$temp_dir/$archive"
+        echo "$GIT_LFS_SHA256  $temp_dir/$archive" | sha256sum --check
+        tar -xzf "$temp_dir/$archive" -C "$temp_dir"
+        install -m 0755 "$temp_dir/git-lfs-${GIT_LFS_VERSION#v}/git-lfs" /usr/local/bin/git-lfs
+    - name: Fetch LFS files
+      shell: bash
+      run: |
+        git lfs install --local
+        git lfs pull
