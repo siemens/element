@@ -19,12 +19,29 @@ Prefer a pure CSS solution e.g.:
 
 ## Code ---
 
-The resize observer can be integrated into your application using either a service or a directive, depending on your requirements:
+The resize observer can be integrated into your application using a signal helper, a service, or a directive, depending on your requirements:
 
+- **Signal approach (experimental):** Use `observeSize` to react to an element's size changes with a signal.
 - **Service approach:** Use the `ResizeObserverService` to programmatically observe size changes on any element. This is useful when you need fine-grained control or want to react to changes in code.
 - **Directive approach:** Apply the `SiResizeObserverDirective` directly in your template to handle resize events declaratively. This is ideal for simple use cases where you want to bind resize logic directly to your component's view.
 
 Choose the method that best fits your application's architecture and complexity.
+
+**Use resize observer signal:**
+
+```ts
+import { Component, ElementRef, viewChild } from '@angular/core';
+import { observeSize } from '@siemens/element-ng/resize-observer';
+
+@Component({
+  selector: 'sample',
+  template: `<div #panel>{{ panelSize()?.width }} × {{ panelSize()?.height }}</div>`
+})
+export class SampleComponent {
+  readonly panel = viewChild<ElementRef<HTMLElement>>('panel');
+  readonly panelSize = observeSize(this.panel);
+}
+```
 
 **Use resize observer service:**
 
