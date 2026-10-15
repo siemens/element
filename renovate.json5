@@ -20,6 +20,15 @@
         "PLAYWRIGHT_IMAGE=\"(?<packageName>mcr\\.microsoft\\.com/playwright):(?<currentValue>[^\\s]+)\""
       ],
       datasourceTemplate: "docker"
+    },
+    {
+      customType: "regex",
+      managerFilePatterns: ["/^\\.github/actions/setup-lfs/action\\.yaml$/"],
+      matchStrings: [
+        "GIT_LFS_VERSION: (?<currentValue>v\\d+\\.\\d+\\.\\d+)\\s+GIT_LFS_SHA256: (?<currentDigest>[a-f0-9]{64})"
+      ],
+      packageNameTemplate: "git-lfs/git-lfs",
+      datasourceTemplate: "github-release-attachments"
     }
   ],
   rebaseWhen: "conflicted",
@@ -29,6 +38,11 @@
       matchDatasources: ["npm"],
       matchRegistryUrls: ["https://code.siemens.com/**"],
       minimumReleaseAgeBehaviour: "timestamp-optional"
+    },
+    {
+      description: ["Update Git LFS release tags and archive checksums together"],
+      matchPackageNames: ["git-lfs/git-lfs"],
+      groupName: "Git LFS"
     },
     {
       description: ["Keep the native federation esbuild override pinned"],
