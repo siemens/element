@@ -10,7 +10,13 @@
     @if (selectedPage().actions; as actions) {
       <div class="si-info-actions">
         @for (action of actions; track action.title) {
-          <button type="button" class="btn btn-secondary me-6 mb-6" (click)="action.action()">
+          <button
+            type="button"
+            class="btn me-6 mb-6"
+            [class.btn-primary]="action.style === 'primary'"
+            [class.btn-secondary]="action.style === 'secondary'"
+            (click)="action.action()"
+          >
             {{ action.title }}
           </button>
         }
