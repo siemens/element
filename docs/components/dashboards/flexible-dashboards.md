@@ -116,6 +116,10 @@ Consumer badges use the info style, and the built-in **Added** badge takes
 precedence when a positive limit is reached. The catalog reads the flexible
 dashboard's current grid instances directly.
 
+When used outside a flexible dashboard, the catalog treats the instance list as
+empty. Positive limits therefore do not track external widgets; `maxInstances: 0`
+still disables creation.
+
 These limits apply to the catalog only; programmatic `addWidgetInstance()` calls
 are not restricted.
 

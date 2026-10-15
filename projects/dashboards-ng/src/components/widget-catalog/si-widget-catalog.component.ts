@@ -28,6 +28,7 @@ import {
   SiTranslatePipe,
   t
 } from '@siemens/element-translate-ng/translate';
+import { of } from 'rxjs';
 
 import { createWidgetConfig, Widget, WidgetConfig } from '../../model/widgets.model';
 import { SiFlexibleDashboardComponent } from '../flexible-dashboard/si-flexible-dashboard.component';
@@ -108,7 +109,8 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   readonly widgetList = signal<Widget[]>([]);
 
   private readonly widgetInstances = toSignal(
-    inject(SiFlexibleDashboardComponent).grid().visibleWidgetInstances$,
+    inject(SiFlexibleDashboardComponent, { optional: true })?.grid().visibleWidgetInstances$ ??
+      of<WidgetConfig[]>([]),
     { requireSync: true }
   );
 
