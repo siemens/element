@@ -2,7 +2,7 @@
 - heading /\d+ Not Found/ [level=1]
 - paragraph: We’re not able to find that page. It may have been deleted or moved.
 - button "Search app"
-- button "Go back"
+- button "Open homepage"
 - text: Settings Choose HTTP error code
 - combobox "Choose HTTP error code":
   - option /\d+ Not Found/ [selected]
