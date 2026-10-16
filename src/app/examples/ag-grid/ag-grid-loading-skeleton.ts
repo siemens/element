@@ -8,24 +8,31 @@ import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 
 import { TableData, TableDataService } from '../../mocks/table-data.mock';
+import { injectIsRtl } from '../../shared/rtl';
 
 @Component({
   selector: 'app-sample',
   imports: [AgGridAngular],
-  template: `<ag-grid-angular
-    style="width: 100%; height: 100%;"
-    [rowData]="rowData"
-    [columnDefs]="colDefs"
-    [defaultColDef]="defaultColDef"
-    [pagination]="true"
-    [paginationPageSize]="20"
-    (gridReady)="onGridReady()"
-  />`,
+  template: `
+    @for (rtl of [enableRtl()]; track rtl) {
+      <ag-grid-angular
+        style="width: 100%; height: 100%;"
+        [enableRtl]="rtl"
+        [rowData]="rowData"
+        [columnDefs]="colDefs"
+        [defaultColDef]="defaultColDef"
+        [pagination]="true"
+        [paginationPageSize]="20"
+        (gridReady)="onGridReady()"
+      />
+    }
+  `,
   host: {
     class: 'p-5'
   }
 })
 export class SampleComponent {
+  protected readonly enableRtl = injectIsRtl();
   private destroyRef = inject(DestroyRef);
   private readonly tableDataService = inject(TableDataService);
   private cdRef = inject(ChangeDetectorRef);
