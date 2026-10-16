@@ -1,12 +1,6 @@
 @use './mixins/gradients';
 @use './variables';
 
-@keyframes progress-bar-stripes {
-  0% {
-    background-position-x: variables.$progress-height;
-  }
-}
-
 .progress {
   display: flex;
   block-size: variables.$progress-height;
@@ -26,17 +20,4 @@
   white-space: nowrap;
   background-color: variables.$progress-bar-bg;
   transition: variables.$progress-bar-transition;
-}
-
-.progress-bar-striped {
-  @include gradients.gradient-striped();
-  background-size: variables.$progress-height variables.$progress-height;
-}
-
-.progress-bar-animated {
-  animation: variables.$progress-bar-animation-timing progress-bar-stripes;
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
 }
