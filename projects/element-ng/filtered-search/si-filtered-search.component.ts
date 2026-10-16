@@ -756,11 +756,15 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   }
 
   protected freeTextFocus(): void {
+    this.scrollFreeTextIntoView();
+    this.freeTextFocused.next();
+  }
+
+  protected scrollFreeTextIntoView(): void {
     // Ensure that the free text input is fully visible in the scroll container
     const scrollDirection = isRTL() ? -1 : 1;
     const position = scrollDirection * this.scrollContainer().nativeElement.scrollWidth;
     this.scrollContainer().nativeElement.scrollLeft = position;
-    this.freeTextFocused.next();
   }
 
   protected freeTextBackspace(): void {

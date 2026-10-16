@@ -2745,6 +2745,55 @@ describe('SiFilteredSearchComponent - With translation', () => {
       return input;
     };
 
+    it('should reposition an open typeahead after pasting multiple complete criteria', async () => {
+      const input = await renderInput();
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+      await freeTextSearch.focus();
+      await expect.poll(() => freeTextSearch.getTypeaheadDimensions()).not.toBeNull();
+      const initialInputLeft = input.getBoundingClientRect().left;
+      const initialOverlayLeft = (await freeTextSearch.getTypeaheadDimensions())!.left;
+
+      await userEvent.fill(input, 'translated(Status):open;translated(Owner):team;');
+      await fixture.whenStable();
+
+      expect(await filteredSearch.getCriteria()).toHaveLength(2);
+      expect(document.activeElement).toBe(input);
+      const updatedInputLeft = input.getBoundingClientRect().left;
+      const updatedOverlayLeft = (await freeTextSearch.getTypeaheadDimensions())!.left;
+      expect(updatedInputLeft).toBeGreaterThan(initialInputLeft);
+      expect(updatedOverlayLeft - initialOverlayLeft).toBeCloseTo(
+        updatedInputLeft - initialInputLeft
+      );
+    });
+
+    it('should keep the focused input visible after pasted criteria overflow the search bar', async () => {
+      const input = await renderInput();
+      const search = (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>(
+        'si-filtered-search'
+      )!;
+      search.style.inlineSize = '300px';
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+      await freeTextSearch.focus();
+      await expect.poll(() => freeTextSearch.getTypeaheadDimensions()).not.toBeNull();
+
+      await userEvent.fill(input, 'translated(Status):open;translated(Owner):team;');
+      await fixture.whenStable();
+
+      const container = search.querySelector<HTMLElement>('.search-container')!;
+      expect(await filteredSearch.getCriteria()).toHaveLength(2);
+      expect(document.activeElement).toBe(input);
+      expect(container.scrollWidth).toBeGreaterThan(container.clientWidth);
+      expect(container.scrollLeft).toBeGreaterThan(0);
+      const inputBounds = input.getBoundingClientRect();
+      const containerBounds = container.getBoundingClientRect();
+      expect(inputBounds.left).toBeGreaterThanOrEqual(containerBounds.left);
+      expect(inputBounds.right).toBeLessThanOrEqual(containerBounds.right);
+      const overlay = (await freeTextSearch.getTypeaheadDimensions())!;
+      expect(overlay.left).toBeCloseTo(inputBounds.left);
+    });
+
     it('should create a free text pill after typing a semicolon', async () => {
       const input = await renderInput();
       await userEvent.type(input, 'first pill;');
