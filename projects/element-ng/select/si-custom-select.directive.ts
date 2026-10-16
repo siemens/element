@@ -42,6 +42,8 @@ export interface SiCustomSelectOverlayOptions {
   push?: boolean;
 }
 
+type CloseReason = 'backdrop' | 'detach' | 'escape' | 'programmatic' | 'tab';
+
 /**
  * Host directive for building custom selects.
  *
@@ -91,14 +93,16 @@ export interface SiCustomSelectOverlayOptions {
   host: {
     class: 'dropdown',
     '[style.--si-action-icon-offset.rem]': '1.5',
-    '[attr.role]': 'isHostTrigger ? "combobox" : null',
-    '[attr.aria-autocomplete]': 'isHostTrigger ? "none" : null',
-    '[attr.aria-haspopup]': 'isHostTrigger ? haspopup() : null',
-    '[attr.aria-labelledby]': 'isHostTrigger ? labelledby() : null',
+    '[attr.role]': 'isHostTrigger ? (readonly() ? "textbox" : "combobox") : null',
+    '[attr.aria-label]': 'isHostTrigger ? ariaLabel() : null',
+    '[attr.aria-autocomplete]': 'isHostTrigger && !readonly() ? "none" : null',
+    '[attr.aria-haspopup]': 'isHostTrigger && !readonly() ? haspopup() : null',
+    '[attr.aria-labelledby]': 'isHostTrigger ? hostLabelledby() : null',
     '[attr.aria-describedby]': 'errormessageId()',
-    '[attr.aria-controls]': 'isHostTrigger && isOpen() ? dropdownId() : null',
-    '[attr.aria-expanded]': 'isHostTrigger ? isOpen() : null',
+    '[attr.aria-controls]': 'isHostTrigger && !readonly() && isOpen() ? dropdownId() : null',
+    '[attr.aria-expanded]': 'isHostTrigger && !readonly() ? isOpen() : null',
     '[attr.aria-disabled]': 'disabled()',
+    '[attr.aria-readonly]': 'isHostTrigger ? readonly() : null',
     '[attr.id]': 'id()',
     '[attr.tabindex]': 'isHostTrigger ? (disabled() ? "-1" : "0") : null',
     '[class.disabled]': 'disabled()',
@@ -111,7 +115,8 @@ export interface SiCustomSelectOverlayOptions {
     '(keydown.space)': 'open($event)',
     '(keydown.arrowDown)': 'open($event)',
     '(keydown.alt.arrowDown)': 'open($event)',
-    '(keydown.arrowUp)': 'open($event)'
+    '(keydown.arrowUp)': 'open($event)',
+    '(blur)': 'blur()'
   }
 })
 export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormItemControl {
@@ -143,6 +148,21 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   readonly readonly = input(false, { transform: booleanAttribute });
 
   /**
+   * Aria label of the select.
+   *
+   * @defaultValue null
+   */
+  readonly ariaLabel = input<string | null>(null);
+
+  /**
+   * Aria labelledby of the select.
+   *
+   * @defaultValue undefined
+   */
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly labelledbyInput = input<string | undefined>(undefined, { alias: 'labelledby' });
+
+  /**
    * Optional CDK scroll strategy used for the custom select overlay.
    *
    * @defaultValue defaultConnectedOverlayScrollStrategy()
@@ -169,7 +189,11 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   readonly isOpen = signal(false);
 
   /** @internal */
-  readonly labelledby = computed(() => `${this.id()}-label ${this.id()}-combobox`);
+  readonly labelledby = computed(() => this.labelledbyInput() ?? `${this.id()}-label`);
+
+  protected readonly hostLabelledby = computed(
+    () => `${this.labelledby()} ${this.comboboxLabelId()}`
+  );
 
   /** @internal */
   readonly comboboxLabelId = computed(() => `${this.id()}-combobox`);
@@ -297,27 +321,31 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     this.overlayRef.attach(portal);
     this.overlayRef.overlayElement.id = this.dropdownId();
 
-    this.focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
-    this.focusTrap.focusFirstTabbableElementWhenReady();
-
     this.isOpen.set(true);
     this.openChange.emit(true);
 
+    this.focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
+    this.focusTrap.focusInitialElementWhenReady().then(focused => {
+      if (!focused && this.isOpen()) {
+        this.focusTrap?.focusFirstTabbableElementWhenReady();
+      }
+    });
+
     merge(
-      this.overlayRef.backdropClick().pipe(map(() => true)),
+      this.overlayRef.backdropClick().pipe(map((): CloseReason => 'backdrop')),
       this.overlayRef.keydownEvents().pipe(
-        filter(e => e.key === 'Escape'),
-        map(() => false)
+        filter(e => e.key === 'Escape' || e.key === 'Tab'),
+        map((e): CloseReason => (e.key === 'Tab' ? 'tab' : 'escape'))
       ),
-      this.overlayRef.detachments().pipe(map(() => false))
+      this.overlayRef.detachments().pipe(map((): CloseReason => 'detach'))
     )
       .pipe(takeUntil(this.closeOverlay$), takeUntilDestroyed(this.destroyRef))
-      .subscribe(fromBackdrop => this.closeOverlay(fromBackdrop));
+      .subscribe(reason => this.closeOverlay(reason));
   }
 
   /** Closes the dropdown overlay and restores focus. */
   close(): void {
-    this.closeOverlay(false);
+    this.closeOverlay('programmatic');
   }
 
   /**
@@ -328,9 +356,15 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     this.onTouched();
   }
 
+  protected blur(): void {
+    if (!this.isOpen()) {
+      this.markAsTouched();
+    }
+  }
+
   /** @internal */
-  writeValue(obj: T | undefined): void {
-    this.value.set(obj);
+  writeValue(obj: T | null | undefined): void {
+    this.value.set(obj as T | undefined);
   }
 
   /** @internal */
@@ -353,7 +387,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     this.overlayOptions = options;
   }
 
-  private closeOverlay(fromBackdrop: boolean): void {
+  private closeOverlay(reason: CloseReason): void {
     if (!this.isOpen()) {
       return;
     }
@@ -361,11 +395,10 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     this.disposeOverlay();
     this.openChange.emit(false);
 
-    // Without focus returning to the trigger, its blur handler cannot mark the control as touched.
-    if (this.isHostTrigger || fromBackdrop) {
+    if (this.isHostTrigger || reason === 'backdrop' || reason === 'tab') {
       this.markAsTouched();
     }
-    if ((this.isHostTrigger || !fromBackdrop) && this.isBrowser) {
+    if ((reason === 'programmatic' || reason === 'escape') && this.isBrowser) {
       this.overlayOrigin.nativeElement.focus();
     }
   }
