@@ -16,3 +16,11 @@
       - heading "Project Gamma" [level=5]
       - paragraph: Safety interlock logic for press station
       - text: ""
+  - listitem:
+    - button "Project Delta Currently open commissioning checklist":
+      - heading "Project Delta" [level=5]
+      - paragraph: Currently open commissioning checklist
+  - listitem:
+    - button "Project Epsilon Archived project, no longer available" [disabled]:
+      - heading "Project Epsilon" [level=5]
+      - paragraph: Archived project, no longer available
