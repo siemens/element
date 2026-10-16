@@ -119,4 +119,9 @@ and the matching `widget` definition. The `widget` must match the config's `widg
 
 <si-docs-api component="SiWidgetRendererComponent" package="@siemens/dashboards-ng"></si-docs-api>
 
+### Security considerations
+
+Widgets can be loaded via Module Federation, Native Federation or as web components from a URL.
+The loaded code is executed in your application. Only register widget factories that point to trusted sources.
+
 <si-docs-types></si-docs-types>

@@ -279,4 +279,10 @@ application's map functionality rather than the map data.
 - **Playwright tests:** Stub the `tiles.json` request and related requests using
   [`page.route(...)`](https://github.com/siemens/element/tree/main/playwright/e2e/element-examples/maps/static.spec.ts).
 
+### Security considerations
+
+The `description` of a map point can contain HTML and is rendered in the popover. Angular sanitizes this value.
+Do not pass untrusted content that was marked as trusted (e.g. via `bypassSecurityTrustHtml`).
+The point `name` is rendered as plain text.
+
 <si-docs-types></si-docs-types>
