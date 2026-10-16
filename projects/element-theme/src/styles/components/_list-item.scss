@@ -162,12 +162,19 @@ ol:has(.list-item) {
       background-color: variables.$si-sys-color-background-hover;
     }
 
+    &.active,
     &:active {
       background-color: variables.$si-sys-color-background-active;
     }
 
     &:focus-visible {
       outline-offset: focus.$focus-style-outline-inside-offset;
+    }
+
+    &:is(.disabled, :disabled) {
+      opacity: 0.5;
+      cursor: default;
+      pointer-events: none;
     }
   }
 
