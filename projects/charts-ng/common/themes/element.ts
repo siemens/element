@@ -14,7 +14,7 @@ const tooltipFormatter = (p: object | object[]): string => {
   const params = Array.isArray(p) ? p : [p];
   const label: string = params[0]?.axisValueLabel ?? '';
 
-  let html = label;
+  let html = echarts.format.encodeHTML(label);
   for (const series of params) {
     const isCandle = series.componentSubType === 'candlestick';
     const isPie = series.componentSubType === 'pie';
@@ -35,20 +35,24 @@ const tooltipFormatter = (p: object | object[]): string => {
           : series.value;
 
     html += '<div style="display: flex; align-items: center;">';
-    html += series.marker?.replace('margin-right', 'margin-inline-end');
-    html += `<span style="margin-inline: 4px 8px">${name}</span>`;
-    html += `<span style="margin-inline-start: auto">${value}</span>`;
+    html += series.marker?.replace('margin-right', 'margin-inline-end') ?? '';
+    html += `<span style="margin-inline: 4px 8px">${echarts.format.encodeHTML(name)}</span>`;
+    html += `<span style="margin-inline-start: auto">${echarts.format.encodeHTML(value)}</span>`;
     html += '</div>';
 
     if (isCandle) {
-      const miniMarker = `<span style="display:inline-block;vertical-align:middle;margin-inline:3px 8px;border-radius:4px;width:4px;height:4px;background:${series.color};"></span>`;
+      const color =
+        typeof series.color === 'string' && CSS.supports('color', series.color)
+          ? series.color
+          : 'transparent';
+      const miniMarker = `<span style="display:inline-block;vertical-align:middle;margin-inline:3px 8px;border-radius:4px;width:4px;height:4px;background-color:${echarts.format.encodeHTML(color)};"></span>`;
       for (let i = 0; i < candleStickValues.length; i++) {
         const v = candleStickValues[i];
         const idx = series.encode.y[i];
         html += '<div style="display: flex; align-items: center;">';
         html += miniMarker;
         html += `<span style="margin-inline-end: 8px">${v}</span>`;
-        html += `<span style="margin-inline-start: auto">${series.value[idx]}</span>`;
+        html += `<span style="margin-inline-start: auto">${echarts.format.encodeHTML(series.value[idx])}</span>`;
         html += '</div>';
       }
     }

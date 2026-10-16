@@ -36,11 +36,13 @@ export class SampleComponent {
       actions: [
         {
           title: 'Search app',
+          style: 'secondary',
           action: () => this.logEvent('Search app clicked')
         },
         {
-          title: 'Go back',
-          action: () => this.logEvent('Go back clicked')
+          title: 'Open homepage',
+          style: 'primary',
+          action: () => this.logEvent('Open homepage clicked')
         }
       ]
     },
@@ -55,10 +57,12 @@ export class SampleComponent {
       actions: [
         {
           title: 'Go back',
+          style: 'secondary',
           action: () => this.logEvent('Go back clicked')
         },
         {
           title: 'Open homepage',
+          style: 'primary',
           action: () => this.logEvent('Open homepage clicked')
         }
       ]
@@ -74,10 +78,12 @@ export class SampleComponent {
       actions: [
         {
           title: 'Go back',
+          style: 'secondary',
           action: () => this.logEvent('Go back clicked')
         },
         {
           title: 'Login',
+          style: 'primary',
           action: () => this.logEvent('Login clicked')
         }
       ]
@@ -93,10 +99,12 @@ export class SampleComponent {
       actions: [
         {
           title: 'Go back',
+          style: 'secondary',
           action: () => this.logEvent('Go back clicked')
         },
         {
           title: 'Open homepage',
+          style: 'primary',
           action: () => this.logEvent('Open homepage clicked')
         }
       ]
@@ -112,10 +120,12 @@ export class SampleComponent {
       actions: [
         {
           title: 'Go back',
+          style: 'secondary',
           action: () => this.logEvent('Go back clicked')
         },
         {
           title: 'Open homepage',
+          style: 'primary',
           action: () => this.logEvent('Open homepage clicked')
         }
       ]

@@ -209,7 +209,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
   // Header Styles
   .datatable-header {
     padding: 0;
-    border-block-end: 4px solid $datatable-header-border-color;
+    border-block-end: variables.$table-border-width solid $datatable-header-border-color;
     background-color: $datatable-header-background-color;
     color: $datatable-header-color;
     block-size: $datatable-header-height;
@@ -267,6 +267,11 @@ $datatable-ghost-cell-strip-radius: 0 !default;
   }
 
   // Summary Styles
+  .datatable-summary-row.sticky {
+    // ngx-datatable v27 scrolls the header and body in the same container.
+    inset-block-start: $datatable-header-height + variables.$table-border-width;
+  }
+
   .datatable-summary-row .datatable-body-row {
     background-color: $datatable-summary-background-color;
     font-weight: typography.$si-font-weight-h5;

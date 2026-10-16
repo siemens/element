@@ -11,6 +11,7 @@ export interface SiTranslatableKeys {
   'SI_APPLICATION_HEADER.TOGGLE_NAVIGATION'?: string;
   'SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT'?: string;
   'SI_BREADCRUMB'?: string;
+  'SI_BREADCRUMB.HIDDEN_ITEMS'?: string;
   'SI_BREADCRUMB_ROUTER_LABEL'?: string;
   'SI_CAROUSEL.NEXT'?: string;
   'SI_CAROUSEL.PAUSE'?: string;
