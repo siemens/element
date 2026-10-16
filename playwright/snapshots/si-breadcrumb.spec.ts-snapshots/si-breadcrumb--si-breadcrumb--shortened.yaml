@@ -14,7 +14,10 @@
       - link "Level 3":
         - /url: /root/level1/level2/level3
     - listitem:
-      - button "..."
+      - link "Level 4":
+        - /url: /root/level1/level2/level3/level4
+    - listitem:
+      - button "Hidden breadcrumb items": ...
     - listitem:
       - link "Level 8 thisHasALongNonSeparableTitle":
         - /url: /root/level1/level2/level3/level4/level5/level6/level7/level8
@@ -37,7 +40,10 @@
       - link "Level 3":
         - /url: /root/level1/level2/level3
     - listitem:
-      - button "..."
+      - link "Level 4":
+        - /url: /root/level1/level2/level3/level4
+    - listitem:
+      - button "Hidden breadcrumb items": ...
     - listitem:
       - link "Level 8 thisHasALongNonSeparableTitle":
         - /url: /root/level1/level2/level3/level4/level5/level6/level7/level8
