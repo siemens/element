@@ -1,4 +1,3 @@
-@use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 @use '@siemens/element-theme/src/styles/all-variables';
 
@@ -11,11 +10,13 @@
   &.open:not(.si-select-has-filter) {
     @include variables.make-outline-focus();
   }
-}
 
-:host {
-  &.readonly,
-  &.disabled {
+  // `.disabled` is covered by the `pe-none` class of the custom select directive.
+  &.readonly {
     pointer-events: none;
+  }
+
+  &.form-control.disabled {
+    opacity: all-variables.$element-action-disabled-opacity;
   }
 }
