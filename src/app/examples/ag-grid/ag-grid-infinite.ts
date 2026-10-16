@@ -15,28 +15,33 @@ import {
 } from 'ag-grid-community';
 
 import { TableData, TableDataService } from '../../mocks/table-data.mock';
+import { injectIsRtl } from '../../shared/rtl';
 
 @Component({
   selector: 'app-sample',
   imports: [AgGridAngular],
   template: `
-    <ag-grid-angular
-      style="width: 100%; height: 100%;"
-      [columnDefs]="colDefs"
-      [defaultColDef]="defaultColDef"
-      [gridOptions]="gridOptions"
-      [rowSelection]="{
-        mode: 'multiRow'
-      }"
-      (cellValueChanged)="onCellValueChanged($event)"
-      (gridReady)="onGridReady($event)"
-    />
+    @for (rtl of [enableRtl()]; track rtl) {
+      <ag-grid-angular
+        style="width: 100%; height: 100%;"
+        [enableRtl]="rtl"
+        [columnDefs]="colDefs"
+        [defaultColDef]="defaultColDef"
+        [gridOptions]="gridOptions"
+        [rowSelection]="{
+          mode: 'multiRow'
+        }"
+        (cellValueChanged)="onCellValueChanged($event)"
+        (gridReady)="onGridReady($event)"
+      />
+    }
   `,
   host: {
     class: 'p-5'
   }
 })
 export class SampleComponent {
+  protected readonly enableRtl = injectIsRtl();
   private logEvent = inject(LOG_EVENT);
   private readonly tableDataService = inject(TableDataService);
   private allData: TableData[] = [];
