@@ -25,6 +25,7 @@ import {
 } from '../../../test/test-widget/test-widget';
 import { TestingModule } from '../../../test/testing.module';
 import { SiWidgetHostComponent } from './si-widget-host.component';
+import { SiWidgetKeyboardInteractionDirective } from './si-widget-keyboard-interaction.directive';
 
 class SiActionDialogMockService {
   result = new Subject<DeleteConfirmationDialogResult>();
@@ -254,6 +255,7 @@ describe('SiWidgetHostComponent', () => {
 
   describe('keyboard a11y interaction', () => {
     let component: SiWidgetHostComponent;
+    let keyboardInteraction: SiWidgetKeyboardInteractionDirective;
     let fixture: ComponentFixture<SiWidgetHostComponent>;
     let hostEl: HTMLElement;
     let cardEl: HTMLElement;
@@ -282,6 +284,9 @@ describe('SiWidgetHostComponent', () => {
 
       hostEl = fixture.nativeElement;
       cardEl = hostEl.querySelector('si-dashboard-card')!;
+      keyboardInteraction = fixture.debugElement
+        .query(By.directive(SiWidgetKeyboardInteractionDirective))
+        .injector.get(SiWidgetKeyboardInteractionDirective);
       // Set gridstack attributes simulating a placed widget
       hostEl.setAttribute('gs-x', '2');
       hostEl.setAttribute('gs-y', '1');
@@ -337,14 +342,16 @@ describe('SiWidgetHostComponent', () => {
       expect(hostEl.getAttribute('aria-label')).toBeNull();
     });
 
-    it('should activate keyboard mode on Enter', () => {
+    it('should activate keyboard mode on Enter', async () => {
       cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-      expect(component.keyboardActive()).toBe(true);
+      expect(keyboardInteraction.keyboardActive()).toBe(true);
+      await fixture.whenStable();
+      expect(cardEl).toHaveClass('shadow-3', 'si-widget-keyboard-active');
     });
 
     it('should activate keyboard mode on Space', () => {
       cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
-      expect(component.keyboardActive()).toBe(true);
+      expect(keyboardInteraction.keyboardActive()).toBe(true);
     });
 
     it('should only describe keyboard activation when not expanded', () => {
@@ -371,20 +378,22 @@ describe('SiWidgetHostComponent', () => {
 
       for (const key of ['{Enter}', ' ']) {
         await userEvent.keyboard(key);
-        expect(component.keyboardActive()).toBe(false);
+        expect(keyboardInteraction.keyboardActive()).toBe(false);
       }
     });
 
     it('should deactivate keyboard mode on Enter/Space when active', () => {
-      component.keyboardActive.set(true);
+      keyboardInteraction.keyboardActive.set(true);
       cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-      expect(component.keyboardActive()).toBe(false);
+      expect(keyboardInteraction.keyboardActive()).toBe(false);
     });
 
-    it('should deactivate keyboard mode on Escape', () => {
-      component.keyboardActive.set(true);
+    it('should deactivate keyboard mode on Escape', async () => {
+      keyboardInteraction.keyboardActive.set(true);
       cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-      expect(component.keyboardActive()).toBe(false);
+      expect(keyboardInteraction.keyboardActive()).toBe(false);
+      await fixture.whenStable();
+      expect(cardEl).not.toHaveClass('shadow-3', 'si-widget-keyboard-active');
     });
 
     it('should not handle arrows when not active', () => {
@@ -394,12 +403,14 @@ describe('SiWidgetHostComponent', () => {
 
     describe('move with arrows', () => {
       beforeEach(() => {
-        component.keyboardActive.set(true);
+        keyboardInteraction.keyboardActive.set(true);
       });
 
       it('should move right', () => {
+        const gridEvent = vi.spyOn(component.gridEvent, 'emit');
         cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
         expect(mockGrid.update).toHaveBeenCalledWith(hostEl, { x: 3, y: 1 });
+        expect(gridEvent).toHaveBeenCalledWith(expect.objectContaining({ type: 'dragstop' }));
       });
 
       it('should retain focus when Gridstack reorders the active widget', () => {
@@ -412,7 +423,7 @@ describe('SiWidgetHostComponent', () => {
         cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
 
         expect(document.activeElement).toBe(cardEl);
-        expect(component.keyboardActive()).toBe(true);
+        expect(keyboardInteraction.keyboardActive()).toBe(true);
       });
 
       it('should move left', () => {
@@ -445,14 +456,16 @@ describe('SiWidgetHostComponent', () => {
 
     describe('resize with shift+arrows', () => {
       beforeEach(() => {
-        component.keyboardActive.set(true);
+        keyboardInteraction.keyboardActive.set(true);
       });
 
       it('should increase width with Shift+ArrowRight', () => {
+        const gridEvent = vi.spyOn(component.gridEvent, 'emit');
         cardEl.dispatchEvent(
           new KeyboardEvent('keydown', { key: 'ArrowRight', shiftKey: true, bubbles: true })
         );
         expect(mockGrid.update).toHaveBeenCalledWith(hostEl, { w: 5, h: 3 });
+        expect(gridEvent).toHaveBeenCalledWith(expect.objectContaining({ type: 'resizestop' }));
       });
 
       it('should decrease width with Shift+ArrowLeft', () => {
@@ -510,7 +523,7 @@ describe('SiWidgetHostComponent', () => {
       });
 
       it('should announce deactivation on Escape', () => {
-        component.keyboardActive.set(true);
+        keyboardInteraction.keyboardActive.set(true);
         cardEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
         expect(liveAnnouncer.announce).toHaveBeenCalledWith(
           expect.stringContaining('deactivated'),
@@ -519,10 +532,11 @@ describe('SiWidgetHostComponent', () => {
       });
     });
 
-    it('should deactivate keyboard mode when editable is set to false', () => {
-      component.keyboardActive.set(true);
-      component.setupEditable(false);
-      expect(component.keyboardActive()).toBe(false);
+    it('should deactivate keyboard mode when editable is set to false', async () => {
+      keyboardInteraction.keyboardActive.set(true);
+      fixture.componentRef.setInput('editable', false);
+      await fixture.whenStable();
+      expect(keyboardInteraction.keyboardActive()).toBe(false);
     });
   });
 });
