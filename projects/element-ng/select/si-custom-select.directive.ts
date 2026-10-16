@@ -24,7 +24,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { filter, merge, Subject, takeUntil } from 'rxjs';
+import { filter, map, merge, Subject, takeUntil } from 'rxjs';
 
 import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
 
@@ -77,14 +77,16 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
   host: {
     class: 'dropdown',
     '[style.--si-action-icon-offset.rem]': '1.5',
-    role: 'combobox',
-    'aria-autocomplete': 'none',
-    '[attr.aria-haspopup]': 'haspopup()',
-    '[attr.aria-labelledby]': 'labelledby()',
+    '[attr.role]': 'readonly() ? "textbox" : "combobox"',
+    '[attr.aria-label]': 'ariaLabel()',
+    '[attr.aria-autocomplete]': '!readonly() ? "none" : null',
+    '[attr.aria-haspopup]': '!readonly() ? haspopup() : null',
+    '[attr.aria-labelledby]': 'hostLabelledby()',
     '[attr.aria-describedby]': 'errormessageId()',
-    '[attr.aria-controls]': 'isOpen() ? dropdownId() : null',
-    '[attr.aria-expanded]': 'isOpen()',
+    '[attr.aria-controls]': '!readonly() && isOpen() ? dropdownId() : null',
+    '[attr.aria-expanded]': '!readonly() ? isOpen() : null',
     '[attr.aria-disabled]': 'disabled()',
+    '[attr.aria-readonly]': 'readonly()',
     '[attr.id]': 'id()',
     '[attr.tabindex]': 'disabled() ? "-1" : "0"',
     '[class.disabled]': 'disabled()',
@@ -96,7 +98,9 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
     '(keydown.enter)': 'open()',
     '(keydown.space)': 'open($event)',
     '(keydown.arrowDown)': 'open($event)',
-    '(keydown.arrowUp)': 'open($event)'
+    '(keydown.alt.arrowDown)': 'open($event)',
+    '(keydown.arrowUp)': 'open($event)',
+    '(blur)': 'blur()'
   }
 })
 export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormItemControl {
@@ -107,10 +111,10 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    *
    * @defaultValue
    * ```
-   * `__si-custom-select-${SiCustomSelectDirective.idCounter++}`
+   * `__si-select-${SiCustomSelectDirective.idCounter++}`
    * ```
    */
-  readonly id = input(`__si-custom-select-${SiCustomSelectDirective.idCounter++}`);
+  readonly id = input(`__si-select-${SiCustomSelectDirective.idCounter++}`);
 
   /**
    * Whether the select input is disabled.
@@ -126,6 +130,21 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    * @defaultValue false
    */
   readonly readonly = input(false, { transform: booleanAttribute });
+
+  /**
+   * Aria label of the select.
+   *
+   * @defaultValue null
+   */
+  readonly ariaLabel = input<string | null>(null);
+
+  /**
+   * Aria labelledby of the select.
+   *
+   * @defaultValue undefined
+   */
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly labelledbyInput = input<string | undefined>(undefined, { alias: 'labelledby' });
 
   /**
    * Optional CDK scroll strategy used for the custom select overlay.
@@ -154,7 +173,11 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   readonly isOpen = signal(false);
 
   /** @internal */
-  readonly labelledby = computed(() => `${this.id()}-label ${this.id()}-combobox`);
+  readonly labelledby = computed(() => this.labelledbyInput() ?? `${this.id()}-label`);
+
+  protected readonly hostLabelledby = computed(
+    () => `${this.labelledby()} ${this.comboboxLabelId()}`
+  );
 
   /** @internal */
   readonly comboboxLabelId = computed(() => `${this.id()}-combobox`);
@@ -240,6 +263,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     event?.preventDefault();
 
     const width = this.elementRef.nativeElement.getBoundingClientRect().width;
+
     this.overlayRef = this.overlay.create({
       positionStrategy: this.overlay
         .position()
@@ -259,7 +283,8 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
           { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom' }
         ])
         .withFlexibleDimensions(true)
-        .withPush(true),
+        .withPush(true)
+        .withDefaultOffsetX(-1),
       hasBackdrop: true,
       scrollStrategy: this.scrollStrategy(),
       backdropClass: 'cdk-overlay-transparent-backdrop',
@@ -271,37 +296,45 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     this.overlayRef.attach(portal);
     this.overlayRef.overlayElement.id = this.dropdownId();
 
-    this.focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
-    this.focusTrap.focusFirstTabbableElementWhenReady();
-
     this.isOpen.set(true);
     this.openChange.emit(true);
 
+    const focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
+    this.focusTrap = focusTrap;
+    focusTrap.focusInitialElementWhenReady().then(focused => {
+      if (!focused && this.focusTrap === focusTrap) {
+        focusTrap.focusFirstTabbableElementWhenReady();
+      }
+    });
+
     merge(
-      this.overlayRef.backdropClick(),
-      this.overlayRef.keydownEvents().pipe(filter(e => e.key === 'Escape'))
+      this.overlayRef.backdropClick().pipe(map(() => false)),
+      this.overlayRef
+        .keydownEvents()
+        .pipe(
+          filter(e => e.key === 'Escape' || e.key === 'Tab'),
+          map(() => true)
+        ),
+      this.overlayRef.detachments().pipe(map(() => true))
     )
       .pipe(takeUntil(this.closeOverlay$), takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.close());
+      .subscribe(restoreFocus => this.closeOverlay(restoreFocus));
   }
 
   /** Closes the dropdown overlay and restores focus. */
   close(): void {
+    this.closeOverlay(true);
+  }
+
+  protected blur(): void {
     if (!this.isOpen()) {
-      return;
-    }
-    this.isOpen.set(false);
-    this.disposeOverlay();
-    this.openChange.emit(false);
-    this.onTouched();
-    if (this.isBrowser) {
-      this.elementRef.nativeElement.focus();
+      this.onTouched();
     }
   }
 
   /** @internal */
-  writeValue(obj: T | null): void {
-    this.value.set(obj ?? undefined);
+  writeValue(obj: T | null | undefined): void {
+    this.value.set(obj as T | undefined);
   }
 
   /** @internal */
@@ -317,6 +350,22 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   /** @internal */
   setDisabledState(isDisabled: boolean): void {
     this.disabledByForm.set(isDisabled);
+  }
+
+  private closeOverlay(restoreFocus: boolean): void {
+    if (!this.isOpen()) {
+      return;
+    }
+    this.isOpen.set(false);
+    this.disposeOverlay();
+    this.openChange.emit(false);
+
+    // On Tab, focusing the trigger lets the browser move focus to the next element; blur marks touched.
+    if (restoreFocus && this.isBrowser) {
+      this.elementRef.nativeElement.focus();
+    } else {
+      this.onTouched();
+    }
   }
 
   private disposeOverlay(): void {
