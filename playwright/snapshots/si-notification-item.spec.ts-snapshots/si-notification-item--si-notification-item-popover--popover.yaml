@@ -26,4 +26,4 @@
     - link "Show all":
       - /url: "#"
   - button "Support"
-  - button "John Doe": JD
+  - button "Account of John Doe"
