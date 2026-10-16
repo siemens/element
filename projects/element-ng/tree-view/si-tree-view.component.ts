@@ -427,14 +427,38 @@ export class SiTreeViewComponent
     item.showOptionbox ??= this.enableOptionbox();
   }
 
+  private readonly defaultIcons = this.registerDefaultIcons();
+
+  private registerDefaultIcons(): TreeViewIconSet {
+    const registered = { ...DEFAULT_TREE_ICON_SET };
+    for (const [key, icon] of Object.entries(DEFAULT_TREE_ICON_SET)) {
+      registered[key as keyof TreeViewIconSet] = addIcons({ [key]: icon })[key];
+    }
+    return registered;
+  }
+
   /**
    * @internal
    */
   readonly computedIcons = computed(() => {
     return {
-      ...DEFAULT_TREE_ICON_SET,
+      ...this.defaultIcons,
       ...this.icons()
     };
+  });
+
+  /**
+   * @internal
+   * Per slot, whether the default icon is still in use. Default directional icons
+   * carry `flip-rtl`; user-provided icons are left untouched.
+   */
+  readonly usesDefaultIcon = computed(() => {
+    const icons = this.computedIcons();
+    const result = {} as Record<keyof TreeViewIconSet, boolean>;
+    for (const key of Object.keys(this.defaultIcons) as (keyof TreeViewIconSet)[]) {
+      result[key] = icons[key] === this.defaultIcons[key];
+    }
+    return result;
   });
 
   /** @internal */
