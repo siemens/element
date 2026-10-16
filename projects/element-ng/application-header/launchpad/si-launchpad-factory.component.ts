@@ -89,6 +89,7 @@ export class SiLaunchpadFactoryComponent {
 
   protected showAllApps = false;
   protected readonly allAppsId = '__si-launchpad-factory-all-apps';
+  protected readonly titleId = '__si-launchpad-factory-title';
   protected readonly categories = computed(() => {
     const apps = this.apps();
     if (this.isCategories(apps)) {
