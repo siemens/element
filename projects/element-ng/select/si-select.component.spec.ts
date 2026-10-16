@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, signal, viewChild } from '@angular/core';
@@ -40,6 +41,18 @@ class FormHostComponent {
   readonly select = viewChild.required<SiSelectComponent<string>>('select');
   readonly valueDirective = viewChild.required(SiSelectSelectionStrategy);
   readonly options: SelectOption<string>[] = OPTIONS_LIST;
+}
+
+@Component({
+  imports: [ReactiveFormsModule, SiSelectModule],
+  template: `<si-select [formControl]="control" [options]="options" />`
+})
+class NullFormHostComponent {
+  readonly control = new FormControl<string | null>(null);
+  readonly options: SelectOption<string | null>[] = [
+    { type: 'option', value: null, label: 'None' },
+    ...OPTIONS_LIST
+  ];
 }
 
 @Component({
@@ -226,6 +239,13 @@ describe('SiSelectComponent', () => {
     it('should open dropdown on click', async () => {
       await selectHarness.open('click');
       expect(await selectHarness.getList()).not.toBeNull();
+    });
+
+    it('should render a single dropdown surface', async () => {
+      await selectHarness.open('click');
+
+      const overlayContainer = TestBed.inject(OverlayContainer).getContainerElement();
+      expect(overlayContainer.querySelectorAll('.dropdown-menu')).toHaveLength(1);
     });
 
     it('should open dropdown on enter', async () => {
@@ -522,6 +542,13 @@ describe('SiSelectComponent', () => {
       expect(await selectHarness.getSelectedTexts()).toEqual(['Average']);
     });
 
+    it('should preserve null as an option value', async () => {
+      fixture = TestBed.createComponent(NullFormHostComponent);
+      selectHarness = await TestbedHarnessEnvironment.loader(fixture).getHarness(SiSelectHarness);
+
+      expect(await selectHarness.getSelectedTexts()).toEqual(['None']);
+    });
+
     it('updates the value in the form', async () => {
       await selectHarness.clickItemsByText('Poor');
       expect(component.form.controls.input.value).toBe('average'); // form will update after blur
@@ -692,6 +719,18 @@ describe('SiSelectComponent', () => {
       await selectHarness.clickActionByText({ text: 'nothing' });
       expect(await selectHarness.getList()).toBeTruthy();
       expect(component.actionClick).toHaveBeenCalled();
+    });
+
+    it('should keep drop down open on Tab so actions are reachable', async () => {
+      await selectHarness.open('click');
+      const listbox = TestBed.inject(OverlayContainer)
+        .getContainerElement()
+        .querySelector<HTMLElement>('[role="listbox"]')!;
+
+      listbox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+      await fixture.whenStable();
+
+      expect(await selectHarness.getList()).toBeTruthy();
     });
   });
 });

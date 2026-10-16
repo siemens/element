@@ -54,6 +54,8 @@
       (detach)="overlayDetach()"
     >
       <si-select-list-has-filter
+        class="dropdown-menu"
+        cdkTrapFocus
         [baseId]="id()"
         [filterPlaceholder]="placeholderForSearch()"
         [noResultsFoundLabel]="searchNoResultsFoundLabel()"

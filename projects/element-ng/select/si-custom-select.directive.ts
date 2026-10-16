@@ -78,10 +78,12 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
     class: 'dropdown',
     '[style.--si-action-icon-offset.rem]': '1.5',
     '[attr.role]': 'readonly() ? "textbox" : "combobox"',
+    '[attr.aria-label]': 'ariaLabel()',
+    '[attr.aria-autocomplete]': '!readonly() ? "none" : null',
     '[attr.aria-haspopup]': '!readonly() ? haspopup() : null',
     '[attr.aria-labelledby]': 'hostLabelledby()',
     '[attr.aria-describedby]': 'errormessageId()',
-    '[attr.aria-controls]': 'isOpen() ? dropdownId() : null',
+    '[attr.aria-controls]': '!readonly() && isOpen() ? dropdownId() : null',
     '[attr.aria-expanded]': '!readonly() ? isOpen() : null',
     '[attr.aria-disabled]': 'disabled()',
     '[attr.aria-readonly]': 'readonly()',
@@ -96,8 +98,8 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
     '(keydown.enter)': 'open()',
     '(keydown.space)': 'open($event)',
     '(keydown.arrowDown)': 'open($event)',
-    '(keydown.arrowUp)': 'open($event)',
     '(keydown.alt.arrowDown)': 'open($event)',
+    '(keydown.arrowUp)': 'open($event)',
     '(blur)': 'blur()'
   }
 })
@@ -128,6 +130,13 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    * @defaultValue false
    */
   readonly readonly = input(false, { transform: booleanAttribute });
+
+  /**
+   * Aria label of the select.
+   *
+   * @defaultValue null
+   */
+  readonly ariaLabel = input<string | null>(null);
 
   /**
    * Aria labelledby of the select.
@@ -254,6 +263,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     event?.preventDefault();
 
     const width = this.elementRef.nativeElement.getBoundingClientRect().width;
+
     this.overlayRef = this.overlay.create({
       positionStrategy: this.overlay
         .position()
@@ -299,10 +309,12 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
 
     merge(
       this.overlayRef.backdropClick().pipe(map(() => false)),
-      this.overlayRef.keydownEvents().pipe(
-        filter(e => e.key === 'Escape' || e.key === 'Tab'),
-        map(() => true)
-      ),
+      this.overlayRef
+        .keydownEvents()
+        .pipe(
+          filter(e => e.key === 'Escape' || e.key === 'Tab'),
+          map(() => true)
+        ),
       this.overlayRef.detachments().pipe(map(() => true))
     )
       .pipe(takeUntil(this.closeOverlay$), takeUntilDestroyed(this.destroyRef))

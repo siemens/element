@@ -36,7 +36,7 @@ import { SiSelectDropdownDirective } from './si-select-dropdown.directive';
   hostDirectives: [
     {
       directive: SiCustomSelectDirective,
-      inputs: ['disabled', 'labelledby', 'readonly', 'value'],
+      inputs: ['ariaLabel', 'disabled', 'labelledby', 'readonly', 'value'],
       outputs: ['valueChange']
     }
   ]
@@ -75,17 +75,20 @@ describe('SiCustomSelectDirective', () => {
     let value: ReturnType<typeof signal<string | undefined>>;
     let disabled: ReturnType<typeof signal<boolean>>;
     let readonly: ReturnType<typeof signal<boolean>>;
+    let ariaLabel: ReturnType<typeof signal<string | null>>;
     let labelledby: ReturnType<typeof signal<string | undefined>>;
 
     beforeEach(async () => {
       value = signal<string | undefined>(undefined);
       disabled = signal(false);
       readonly = signal(false);
+      ariaLabel = signal<string | null>(null);
       labelledby = signal<string | undefined>(undefined);
 
       fixture = TestBed.createComponent(SiTestSelectComponent, {
         bindings: [
           twoWayBinding('value', value),
+          inputBinding('ariaLabel', ariaLabel),
           inputBinding('disabled', disabled),
           inputBinding('labelledby', labelledby),
           inputBinding('readonly', readonly)
@@ -136,10 +139,12 @@ describe('SiCustomSelectDirective', () => {
       );
     });
 
-    it('should support configured aria-labelledby', async () => {
+    it('should support configured aria labels', async () => {
+      ariaLabel.set('Custom select');
       labelledby.set('external-label');
       await fixture.whenStable();
 
+      expect(getHost()).toHaveAttribute('aria-label', 'Custom select');
       expect(getHost()).toHaveAttribute(
         'aria-labelledby',
         `external-label ${getHost().id}-combobox`

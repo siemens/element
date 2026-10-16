@@ -15,7 +15,7 @@ import { SiSelectSelectedItemHarness } from './si-select-selected-item.harness';
 export class SiSelectHarness extends ComponentHarness {
   static hostSelector = 'si-select';
   readonly getSelectedItems = this.locatorForAll(SiSelectSelectedItemHarness);
-  private getSelectElement = this.locatorFor('.select');
+  private getSelectElement = this.host;
 
   /**
    * Clicks one or multiple items by their index. In the case of multi-select, this will toggle the selection state.
@@ -73,14 +73,15 @@ export class SiSelectHarness extends ComponentHarness {
    * Returns a ComponentHarness for the list of selectable items or null if the list is not opened.
    */
   async getList(): Promise<SiSelectListHarness | SiSelectFilterListHarness | null> {
-    const selectId = await this.getSelectElement().then(host => host.getAttribute('aria-controls'));
+    const selectId = await this.getSelectElement().then(host => host.getAttribute('id'));
+    const listboxId = `${selectId}-listbox`;
     if (await this.hasFilter()) {
       return this.documentRootLocatorFactory().locatorForOptional(
-        SiSelectFilterListHarness.with(selectId!)
+        SiSelectFilterListHarness.with(listboxId)
       )();
     } else {
       return this.documentRootLocatorFactory().locatorForOptional(
-        SiSelectListHarness.with(selectId!)
+        SiSelectListHarness.with(listboxId)
       )();
     }
   }
