@@ -174,33 +174,23 @@ $theme-element-light: (
   element-range-warning: linear-gradient(90deg, base.$color-deep-blue-100, base.$color-orange-700),
   element-range-caution: linear-gradient(90deg, base.$color-deep-blue-100, base.$color-yellow-500),
   element-range-information: linear-gradient(90deg, base.$color-deep-blue-100, base.$color-blue-500),
-  element-range-success: linear-gradient(
-      90deg,
-      base.$color-deep-blue-100,
-      data.$color-data-green-500
-    ),
-  element-range-temp-heating: linear-gradient(
-      90deg,
-      base.$color-deep-blue-100,
-      data.$color-data-orange-500
-    ),
-  element-range-temp-cooling: linear-gradient(
-      90deg,
-      base.$color-deep-blue-100,
-      data.$color-data-blue-700
-    ),
-  element-range-comfort: linear-gradient(
-      90deg,
-      base.$color-deep-blue-100,
-      data.$color-data-yellow-700
-    ),
-  element-range-temperature: linear-gradient(
+  element-range-success:
+    linear-gradient(90deg, base.$color-deep-blue-100, data.$color-data-green-500),
+  element-range-temp-heating:
+    linear-gradient(90deg, base.$color-deep-blue-100, data.$color-data-orange-500),
+  element-range-temp-cooling:
+    linear-gradient(90deg, base.$color-deep-blue-100, data.$color-data-blue-700),
+  element-range-comfort:
+    linear-gradient(90deg, base.$color-deep-blue-100, data.$color-data-yellow-700),
+  element-range-temperature:
+    linear-gradient(
       90deg,
       data.$color-data-orange-500,
       base.$color-deep-blue-100,
       data.$color-data-blue-700
     ),
-  element-range-humidity: linear-gradient(
+  element-range-humidity:
+    linear-gradient(
       90deg,
       data.$color-data-plum-500,
       base.$color-deep-blue-100,

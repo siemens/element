@@ -203,16 +203,13 @@ pnpm run lint:ng --fix
 
 ### Formatting
 
-This project uses [Prettier](https://prettier.io/) to apply and enforce code
-formatting for all `.html` and `.css` files.
+This project uses [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) to
+apply and enforce code formatting. The configuration is in `.oxfmtrc.jsonc`.
 
-The formatting is verified within the CI and uses a [custom ruleset](https://github.com/siemens/lint/blob/main/prettier-config/.prettierrc.json)
-to adhere closer to Angular's style guide.
-
-You can run Prettier with the following command:
+Formatting is verified within the CI. You can check formatting with:
 
 ```sh
-pnpm run format:check
+pnpm run lint:format
 ```
 
 To automatically fix the findings, run the following command:
@@ -221,8 +218,8 @@ To automatically fix the findings, run the following command:
 pnpm run format
 ```
 
-> **Note:** Many editors/IDEs have plugin support for Prettier, check out the
-> [official IDE integration guide](https://prettier.io/docs/en/editors.html)
+> **Note:** Many editors/IDEs have plugin support for Oxfmt, check out the
+> [official editor setup guide](https://oxc.rs/docs/guide/usage/formatter/editors.html).
 
 ## Commit message format
 

@@ -43,7 +43,7 @@ $escaped-characters: (
     $values: map.values($map);
     $first-value: list.nth($values, 1);
     @if $first-value != 0 {
-      @warn "First breakpoint in #{$map-name} must start at 0, but starts at #{$first-value}.";
+      @warn 'First breakpoint in #{$map-name} must start at 0, but starts at #{$first-value}.';
     }
   }
 }
@@ -156,7 +156,7 @@ $escaped-characters: (
     @return 0;
   }
   @if $divisor == 0 {
-    @error "Cannot divide by 0";
+    @error 'Cannot divide by 0';
   }
   $remainder: $dividend;
   $result: 0;

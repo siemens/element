@@ -6,4 +6,9 @@ import { ElementRef, TemplateRef, Type } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 export type SiTooltipContent =
-  TranslatableString | TemplateRef<any> | Type<any> | ElementRef<Element> | null | undefined;
+  | TranslatableString
+  | TemplateRef<any>
+  | Type<any>
+  | ElementRef<Element>
+  | null
+  | undefined;

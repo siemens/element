@@ -16,12 +16,8 @@
   display: flex;
   flex-wrap: wrap;
   // TODO: Revisit calc order after https://github.com/react-bootstrap/react-bootstrap/issues/6039 is fixed
-  margin-block-start: calc(
-    -1 * var(--#{variables.$variable-prefix}gutter-y)
-  ); // stylelint-disable-line function-disallowed-list
-  margin-inline: calc(
-    -0.5 * var(--#{variables.$variable-prefix}gutter-x)
-  ); // stylelint-disable-line function-disallowed-list
+  margin-block-start: calc(-1 * var(--#{variables.$variable-prefix}gutter-y)); // stylelint-disable-line function-disallowed-list
+  margin-inline: calc(-0.5 * var(--#{variables.$variable-prefix}gutter-x)); // stylelint-disable-line function-disallowed-list
 }
 
 @mixin make-col-ready($gutter: variables.$grid-gutter-width) {
@@ -35,9 +31,7 @@
   flex-shrink: 0;
   inline-size: 100%;
   max-inline-size: 100%; // Prevent `.col-auto`, `.col` (& responsive variants) from breaking out the grid
-  padding-inline: calc(
-    var(--#{variables.$variable-prefix}gutter-x) * 0.5
-  ); // stylelint-disable-line function-disallowed-list
+  padding-inline: calc(var(--#{variables.$variable-prefix}gutter-x) * 0.5); // stylelint-disable-line function-disallowed-list
   margin-block-start: var(--#{variables.$variable-prefix}gutter-y);
 }
 
@@ -121,7 +115,7 @@
 
         // `$columns - 1` because offsetting by the width of an entire row isn't possible
         @for $i from 0 through ($columns - 1) {
-          @if not($infix == '' and $i == 0) {
+          @if not ($infix == '' and $i == 0) {
             // Avoid emitting useless .offset-0
             .offset#{$infix}-#{$i} {
               @include make-col-offset($i, $columns);

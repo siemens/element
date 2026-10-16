@@ -56,7 +56,7 @@ pnpm run start
 
 ## Linting and formatting
 
-We use [ESLint](https://eslint.org/) and [Stylelint](https://stylelint.io/) for linting and [Prettier](https://prettier.io/) for formatting.
+We use [ESLint](https://eslint.org/) and [Stylelint](https://stylelint.io/) for linting and [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) for formatting.
 Use the following pnpm scripts to lint and format the code:
 
 ```shell
@@ -76,9 +76,9 @@ Third-party agent skills are managed through [skills.sh](https://skills.sh/).
 Use `pnx skills` to add or update them so their sources and hashes are recorded
 in `skills-lock.json`.
 
-When adding a third-party skill, add its path under `.agents/skills/` to
-`.prettierignore`. Third-party skill sources must not be reformatted by this
-repository's Prettier configuration.
+When adding a third-party skill, add its path under `.agents/skills/` to the
+`ignorePatterns` list in `.oxfmtrc.jsonc`. Third-party skill sources must not be
+reformatted by this repository's Oxfmt configuration.
 
 ## API Goldens
 

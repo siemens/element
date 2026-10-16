@@ -1,0 +1,52 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 100,
+  "trailingComma": "none",
+  "arrowParens": "avoid",
+  "htmlWhitespaceSensitivity": "strict",
+  "quoteProps": "preserve",
+  "singleQuote": true,
+  "sortPackageJson": false,
+  "associations": [
+    {
+      "files": ["**/*.html"],
+      "language": "angular-html"
+    },
+    {
+      "files": ["**/index.html"],
+      "language": "html"
+    }
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.json5"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ],
+  "ignorePatterns": [
+    // Ignore artifacts.
+    ".venv",
+    "build",
+    "coverage",
+    "dist",
+    "tmp",
+    "playwright/snapshots",
+    "pnpm-lock.yaml",
+    "CHANGELOG.md",
+    "api-goldens",
+    // Formatting is broken.
+    "mkdocs.yml",
+    "docs/**/dynamic-forms.md",
+    // Formatting is not possible because of extra MkDocs syntax.
+    "docs/_custom_theme/partials/toc.html",
+    // Ignore test files in schematics.
+    "**/schematics/**/files/**",
+    // Intentionally ignored files.
+    ".agents/skills/gh-stack",
+    ".agents/skills/playwright-cli",
+    // Updated from outside.
+    "src/assets/i18n/**/*.json"
+  ]
+}

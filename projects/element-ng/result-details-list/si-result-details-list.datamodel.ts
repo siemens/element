@@ -41,4 +41,8 @@ export interface ResultDetailStep {
  * This type defines the state that a detailed result step can have.
  */
 export type ResultDetailStepState =
-  'passed' | 'failed' | 'running' | 'not-supported' | 'not-started';
+  | 'passed'
+  | 'failed'
+  | 'running'
+  | 'not-supported'
+  | 'not-started';
