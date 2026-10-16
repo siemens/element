@@ -6,6 +6,7 @@ import {
   booleanAttribute,
   Component,
   computed,
+  contentChild,
   ElementRef,
   input,
   numberAttribute,
@@ -17,13 +18,16 @@ import {
   SimpleChanges,
   viewChild
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { FormField } from '@angular/forms/signals';
 import { elementCancel, elementSearch } from '@siemens/element-icons';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+
+import { SI_SEARCH_BAR, SiSearchBarInputDirective } from './si-search-bar-input.directive';
 
 @Component({
   selector: 'si-search-bar',
@@ -35,29 +39,70 @@ import { debounceTime } from 'rxjs/operators';
       provide: NG_VALUE_ACCESSOR,
       useExisting: SiSearchBarComponent,
       multi: true
-    }
+    },
+    { provide: SI_SEARCH_BAR, useExisting: SiSearchBarComponent }
   ],
   host: {
-    '[class.readonly]': 'readonly()'
+    '[class.readonly]': 'inputReadonly()'
   }
 })
 export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAccessor, OnChanges {
-  private readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('inputRef');
+  private readonly inputRef = viewChild<ElementRef<HTMLInputElement>>('inputRef');
+  private readonly projectedInput = contentChild(SiSearchBarInputDirective);
+  private readonly projectedControl = contentChild(NgControl);
+  private readonly projectedField = contentChild(FormField<string>);
   private debouncer = new Subject<string>();
   private readonly disabledNgControl = signal(false);
 
+  protected readonly searchBarInput = contentChild<
+    SiSearchBarInputDirective,
+    ElementRef<HTMLInputElement>
+  >(SiSearchBarInputDirective, { read: ElementRef });
+
   /**
    * Time unit change of search input takes effect.
+   *
+   * @deprecated Use a content-projected input and debounce its form value changes in
+   * application code, for example with RxJS `debounceTime` on `FormControl.valueChanges`:
+   * ```html
+   * <si-search-bar>
+   *   <input siSearchBarInput [formControl]="searchControl">
+   * </si-search-bar>
+   * ```
+   * ```typescript
+   * searchControl.valueChanges.pipe(debounceTime(400));
+   * ```
    *
    * @defaultValue 400
    */
   readonly debounceTime = input(400, { transform: numberAttribute });
   /**
    * Prohibited characters restricting search.
+   *
+   * @deprecated Use a reactive `FormControl` or Signal Forms on a content-projected input
+   * to validate prohibited characters:
+   * ```html
+   * <si-search-bar>
+   *   <input siSearchBarInput [formControl]="searchControl">
+   * </si-search-bar>
+   * ```
+   * Or with Signal Forms:
+   * ```html
+   * <si-search-bar>
+   *   <input siSearchBarInput [formField]="searchForm.search">
+   * </si-search-bar>
+   * ```
    */
   readonly prohibitedCharacters = input<string>();
   /**
    * Define search input placeholder.
+   *
+   * @deprecated Use a content-projected input with `placeholder` applied directly to it:
+   * ```html
+   * <si-search-bar>
+   *   <input siSearchBarInput placeholder="Search">
+   * </si-search-bar>
+   * ```
    *
    * @defaultValue ''
    */
@@ -71,11 +116,25 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
 
   /**
    * Define search input content.
+   *
+   * @deprecated Use a content-projected input with `value` applied directly to it:
+   * ```html
+   * <si-search-bar>
+   *   <input siSearchBarInput value="Search term">
+   * </si-search-bar>
+   * ```
    */
   readonly value = input<string>();
 
   /**
    * Whether the input can be focused but not edited.
+   *
+   * @deprecated Use a content-projected input with `readonly` applied directly to it:
+   * ```html
+   * <si-search-bar>
+   *   <input siSearchBarInput readonly>
+   * </si-search-bar>
+   * ```
    *
    * @defaultValue false
    */
@@ -90,6 +149,13 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
   /**
    * Whether the input is disabled.
    *
+   * @deprecated Use a content-projected input with `disabled` applied directly to it:
+   * ```html
+   * <si-search-bar>
+   *   <input siSearchBarInput disabled>
+   * </si-search-bar>
+   * ```
+   *
    * @defaultValue false
    */
   // eslint-disable-next-line @angular-eslint/no-input-rename
@@ -97,6 +163,13 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
 
   /**
    * Defines the maximum length of the search input.
+   *
+   * @deprecated Use a content-projected input with `maxlength` applied directly to it:
+   * ```html
+   * <si-search-bar>
+   *   <input siSearchBarInput maxlength="100">
+   * </si-search-bar>
+   * ```
    *
    * @defaultValue undefined
    */
@@ -114,6 +187,20 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
 
   /**
    * Output callback event will provide you with search term if search input changes.
+   *
+   * @deprecated Use a content-projected input and observe `FormControl.valueChanges`
+   * or the field value signal with Signal Forms:
+   * ```html
+   * <si-search-bar>
+   *   <input siSearchBarInput [formControl]="searchControl">
+   * </si-search-bar>
+   * ```
+   * Or with Signal Forms:
+   * ```html
+   * <si-search-bar>
+   *   <input siSearchBarInput [formField]="searchForm.search">
+   * </si-search-bar>
+   * ```
    */
   readonly searchChange = output<string>();
 
@@ -122,9 +209,18 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
   protected onChange = (val: any): void => {};
   protected onTouch = (): void => {};
 
-  protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
+  /** @internal */
+  readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
 
-  protected readonly searchValue = signal('');
+  protected readonly inputDisabled = computed(
+    () => this.projectedInput()?.disabled() ?? this.disabled()
+  );
+  protected readonly inputReadonly = computed(
+    () => this.projectedInput()?.readonly() ?? this.readonly()
+  );
+
+  /** @internal */
+  readonly searchValue = signal('');
   protected readonly icons = addIcons({ elementCancel, elementSearch });
 
   /** @internal */
@@ -167,7 +263,10 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
     value ??= '';
     if (value !== this.searchValue()) {
       this.searchValue.set(value);
-      this.inputRef().nativeElement.value = value;
+      const inputElement = this.getInput();
+      if (inputElement) {
+        inputElement.value = value;
+      }
       this.onChange(value);
       this.searchChange.emit(value);
     }
@@ -190,14 +289,15 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
 
   /** @internal */
   focus(): void {
-    this.inputRef().nativeElement.focus();
+    this.getInput()?.focus();
   }
 
   protected onCancelFocus(event: Event): void {
     event.stopPropagation();
   }
 
-  protected input(event: Event): void {
+  /** @internal */
+  input(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     if (!this.isProhibitedCharactersUsed(value)) {
       if (this.debounceTime() > 0) {
@@ -208,17 +308,31 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
     }
   }
 
-  protected onBlur(): void {
+  /** @internal */
+  onBlur(): void {
     this.onTouch();
   }
 
   protected resetForm(): void {
+    const projectedField = this.projectedField();
+    if (projectedField) {
+      projectedField.state().value.set('');
+    } else {
+      this.projectedControl()?.control?.setValue('');
+    }
     this.setSearch('');
     this.focus();
   }
 
   protected writeSearchValue(value: string): void {
     this.searchValue.set(value);
-    this.inputRef().nativeElement.value = value;
+    const inputElement = this.getInput();
+    if (inputElement) {
+      inputElement.value = value;
+    }
+  }
+
+  private getInput(): HTMLInputElement | undefined {
+    return this.searchBarInput()?.nativeElement ?? this.inputRef()?.nativeElement;
   }
 }
