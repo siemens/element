@@ -22,14 +22,21 @@ import { SiSelectDropdownDirective } from './si-select-dropdown.directive';
 
     <ng-template si-select-dropdown contentType="listbox">
       @for (opt of options(); track opt) {
-        <button type="button" class="dropdown-item" (click)="pick(opt)">{{ opt }}</button>
+        <button
+          type="button"
+          class="dropdown-item"
+          [attr.cdkFocusInitial]="select.value() === opt ? '' : null"
+          (click)="pick(opt)"
+        >
+          {{ opt }}
+        </button>
       }
     </ng-template>
   `,
   hostDirectives: [
     {
       directive: SiCustomSelectDirective,
-      inputs: ['disabled', 'readonly', 'value'],
+      inputs: ['ariaLabel', 'disabled', 'labelledby', 'readonly', 'value'],
       outputs: ['valueChange']
     }
   ]
@@ -68,16 +75,22 @@ describe('SiCustomSelectDirective', () => {
     let value: ReturnType<typeof signal<string | undefined>>;
     let disabled: ReturnType<typeof signal<boolean>>;
     let readonly: ReturnType<typeof signal<boolean>>;
+    let ariaLabel: ReturnType<typeof signal<string | null>>;
+    let labelledby: ReturnType<typeof signal<string | undefined>>;
 
     beforeEach(async () => {
       value = signal<string | undefined>(undefined);
       disabled = signal(false);
       readonly = signal(false);
+      ariaLabel = signal<string | null>(null);
+      labelledby = signal<string | undefined>(undefined);
 
       fixture = TestBed.createComponent(SiTestSelectComponent, {
         bindings: [
           twoWayBinding('value', value),
+          inputBinding('ariaLabel', ariaLabel),
           inputBinding('disabled', disabled),
+          inputBinding('labelledby', labelledby),
           inputBinding('readonly', readonly)
         ]
       });
@@ -116,13 +129,25 @@ describe('SiCustomSelectDirective', () => {
 
     it('should have an id', () => {
       expect(getHost()).toHaveAttribute('id');
-      expect(getHost().id).toMatch(/^__si-custom-select-\d+$/);
+      expect(getHost().id).toMatch(/^__si-select-\d+$/);
     });
 
     it('should have aria-labelledby pointing to its label id and combobox content id', () => {
       expect(getHost()).toHaveAttribute(
         'aria-labelledby',
         `${getHost().id}-label ${getHost().id}-combobox`
+      );
+    });
+
+    it('should support configured aria labels', async () => {
+      ariaLabel.set('Custom select');
+      labelledby.set('external-label');
+      await fixture.whenStable();
+
+      expect(getHost()).toHaveAttribute('aria-label', 'Custom select');
+      expect(getHost()).toHaveAttribute(
+        'aria-labelledby',
+        `external-label ${getHost().id}-combobox`
       );
     });
 
@@ -218,6 +243,38 @@ describe('SiCustomSelectDirective', () => {
       await fixture.whenStable();
 
       expect(getOverlayDropdown()).not.toBeInTheDocument();
+    });
+
+    it('should expose readonly controls as textboxes', async () => {
+      readonly.set(true);
+      await fixture.whenStable();
+
+      expect(getHost()).toHaveAttribute('role', 'textbox');
+      expect(getHost()).toHaveAttribute('aria-readonly', 'true');
+      expect(getHost()).not.toHaveAttribute('aria-haspopup');
+      expect(getHost()).not.toHaveAttribute('aria-expanded');
+    });
+
+    it('should initially focus the selected option', async () => {
+      value.set('Beta');
+      await fixture.whenStable();
+
+      getHost().click();
+      await fixture.whenStable();
+
+      expect(document.activeElement).toBe(getDropdownItems()[1]);
+    });
+
+    it('should close on Tab without restoring focus to the trigger', async () => {
+      getHost().click();
+      await fixture.whenStable();
+
+      const overlayPane = overlayContainerElement.querySelector('.cdk-overlay-pane')!;
+      overlayPane.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+      await fixture.whenStable();
+
+      expect(getOverlayDropdown()).not.toBeInTheDocument();
+      expect(document.activeElement).not.toBe(getHost());
     });
 
     it('should apply disabled host class', async () => {

@@ -54,12 +54,14 @@ export interface SelectOptionSource<TValue> {
 // @public
 export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormItemControl {
     constructor();
+    readonly ariaLabel: _angular_core.InputSignal<string | null>;
     close(): void;
     readonly disabled: _angular_core.Signal<boolean>;
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly errormessageId: _angular_core.InputSignal<string>;
     readonly id: _angular_core.InputSignal<string>;
     readonly isOpen: _angular_core.WritableSignal<boolean>;
+    readonly labelledbyInput: _angular_core.InputSignal<string | undefined>;
     open(event?: Event): void;
     readonly openChange: _angular_core.OutputEmitterRef<boolean>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
