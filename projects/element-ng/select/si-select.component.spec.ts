@@ -43,6 +43,18 @@ class FormHostComponent {
 }
 
 @Component({
+  imports: [ReactiveFormsModule, SiSelectModule],
+  template: `<si-select [formControl]="control" [options]="options" />`
+})
+class NullFormHostComponent {
+  readonly control = new FormControl<string | null>(null);
+  readonly options: SelectOption<string | null>[] = [
+    { type: 'option', value: null, label: 'None' },
+    ...OPTIONS_LIST
+  ];
+}
+
+@Component({
   imports: [SiSelectModule],
   template: `
     <si-select
@@ -520,6 +532,13 @@ describe('SiSelectComponent', () => {
 
     it('should set the initial value', async () => {
       expect(await selectHarness.getSelectedTexts()).toEqual(['Average']);
+    });
+
+    it('should preserve null as an option value', async () => {
+      fixture = TestBed.createComponent(NullFormHostComponent);
+      selectHarness = await TestbedHarnessEnvironment.loader(fixture).getHarness(SiSelectHarness);
+
+      expect(await selectHarness.getSelectedTexts()).toEqual(['None']);
     });
 
     it('updates the value in the form', async () => {
