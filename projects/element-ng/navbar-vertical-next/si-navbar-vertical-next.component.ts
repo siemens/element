@@ -50,7 +50,14 @@ interface UIState {
   expandedItems: Record<string, boolean>;
 }
 
-/** @experimental */
+/**
+ * Vertical navigation with support for collapsible and inline-collapsible layouts.
+ *
+ * Project a single button or link with `[si-navbar-vertical-next-navigation-action]` to provide
+ * an optional leading navigation action, such as Back or Home, in inline-collapse mode.
+ *
+ * @experimental
+ */
 @Component({
   selector: 'si-navbar-vertical-next',
   imports: [
