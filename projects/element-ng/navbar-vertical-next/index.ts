@@ -11,5 +11,5 @@ export * from './si-navbar-vertical-next-group-trigger.directive';
 export * from './si-navbar-vertical-next-group.component';
 export * from './si-navbar-vertical-next-header.component';
 export * from './si-navbar-vertical-next-item.component';
+export * from './si-navbar-vertical-next-navigation-action.component';
 export * from './si-navbar-vertical-next-search.component';
-export * from './si-navbar-vertical-next.component';
