@@ -103,6 +103,11 @@ page containing license information.
 
 <si-docs-component example="si-about/si-about-iframe" height="500"></si-docs-component>
 
+### Security considerations
+
+The `licenseInfo.iframe` URL is marked as a trusted resource URL and is not sanitized by Angular.
+Only pass URLs from trusted sources.
+
 <si-docs-api component="SiAboutComponent"></si-docs-api>
 
 <si-docs-types></si-docs-types>
