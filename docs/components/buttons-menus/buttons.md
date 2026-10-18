@@ -107,11 +107,8 @@ Apply the `.btn` base class together with a semantic variant such as `.btn-prima
 
 ### Navigation buttons
 
-There are cases in which a navigation links shall look like buttons. For example,
-the link in the info page looks like a primary button to raise attention
-and let the user navigate to a next page.
-
-For these cases, use a `<a>` element styled as a button.
+When a navigation link needs the visual appearance of a button, such as the primary call to action on an info page,
+apply button classes to an `<a>` element.
 
 ```html
 <a class="btn btn-primary" href="https://siemens.com">Go back</a>
@@ -119,20 +116,12 @@ For these cases, use a `<a>` element styled as a button.
 
 ### Placement
 
-In the following demo we showcase different button placements and dealing
-with long text, using the bootstrap utilities classes.
+Use [flex](../../fundamentals/styles/flex.md) and [grid](../../fundamentals/layouts/grid.md) utilities to handle long labels and adapt button layouts to available space:
 
-First row shows the default buttons. All text is always visible. Decreasing container
-width will increases the text lines.
-
-Second row uses text truncation to keep button text in one line. Make sure the user
-can read important text. Optionally, work with min-width.
-
-Third row uses the responsive grid to for a vertical button placement if width
-is smaller than 576px (see [Bootstrap Grid](https://getbootstrap.com/docs/5.1/layout/grid/)).
-
-Row four and five show the same layout for task based dialogs like a modal dialog.
-The first uses the `modal-footer` class, followed by the same CSS styling using
-the [Bootstrap Utilities](https://getbootstrap.com/docs/5.1/utilities/api/).
+- **Wrapping labels:** Without truncation, labels wrap onto additional lines as the available width decreases. Keep labels concise, and wrap only when users need to see the full label.
+- **Truncated labels:** Use `.text-truncate` to keep a long label on one line. Set a minimum width if needed to keep enough of the label visible.
+- **Responsive layout:** Use grid columns such as `.col-sm-6` to stack buttons vertically below 576px and place them side by side at 576px and above. See [Flexbox grid](../../fundamentals/layouts/grid.md).
+- **Dialog actions:** Use `.modal-footer` to right-align dialog actions and provide consistent spacing.
+- **Custom footers:** Use flex utilities such as `.d-flex`, `.flex-wrap`, `.justify-content-end`, and `.gap-6` to create a similar layout or customize the alignment. See [Flex utilities](../../fundamentals/styles/flex.md).
 
 <si-docs-component example="buttons/buttons-placement" height="450"></si-docs-component>
