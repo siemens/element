@@ -46,6 +46,7 @@ nav:
       - Colors:                            'fundamentals/styles/colors.md'
       - Display:                           'fundamentals/styles/display.md'
       - Flex:                              'fundamentals/styles/flex.md'
+      - Focus:                             'fundamentals/styles/focus.md'
       - Interactions:                      'fundamentals/styles/interactions.md'
       - Overflow:                          'fundamentals/styles/overflow.md'
       - Position:                          'fundamentals/styles/position.md'
