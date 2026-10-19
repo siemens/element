@@ -61,11 +61,10 @@ import {
   styleUrl: './si-tree-view-item.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: {
-    class: 'drop-line-placeholder',
+    class: 'drop-line-placeholder focus-inside',
     role: 'treeitem',
     '[attr.tabindex]':
       'treeItemContext.record.currentIndex === treeViewComponent.activeIndex ? 0 : -1',
-    '[class.focus-none]': 'true',
     '[class.si-tree-ellipsis]': 'treeViewComponent.horizontalScrolling()',
     '[class.si-tree-view-top-level-item]':
       '!treeViewComponent.compactMode() && (treeViewComponent.flatTree() || (treeItem.level ?? 0) < 1)',

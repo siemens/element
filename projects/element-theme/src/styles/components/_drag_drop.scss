@@ -136,9 +136,5 @@
   .cdk-drop-list-dragging {
     @include variables.make-outline-focus-inside();
     cursor: grabbing !important;
-
-    &.focus-none > .focus-direct-sub-inside {
-      @include variables.make-outline-focus-inside();
-    }
   }
 }
