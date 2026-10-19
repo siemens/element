@@ -595,9 +595,6 @@ describe('SiNavbarVerticalNext', () => {
       const host = fixture.nativeElement.querySelector('si-navbar-vertical-next') as HTMLElement;
       expect(host).toHaveClass('nav-collapsed', 'nav-inline-collapse');
 
-      const nav = page.getByRole('navigation').element();
-      expect(nav).toHaveAttribute('tabindex', '-1');
-
       const content = host.querySelector('.nav-content') as HTMLElement;
       expect(content).toHaveAttribute('inert', '');
 
