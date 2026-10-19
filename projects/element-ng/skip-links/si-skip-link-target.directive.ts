@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { InteractivityChecker } from '@angular/cdk/a11y';
 import { Directive, ElementRef, inject, input, OnDestroy, OnInit } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -9,7 +10,8 @@ import { SkipLinkService } from './skip-link.service';
 
 /**
  * Directive to mark an element as a target for a skip link.
- * If this directive is applied to a none interactive element, a tabindex of -1 must be added manually.
+ * Focuses the target if it is focusable, otherwise its first usable tabbable descendant.
+ * Add tabindex="-1" to a non-interactive element to focus the target itself.
  */
 @Directive({
   selector: '[siSkipLinkTarget]'
@@ -22,6 +24,7 @@ export class SiSkipLinkTargetDirective implements OnInit, OnDestroy {
 
   private skipLinkService = inject(SkipLinkService);
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private interactivityChecker = inject(InteractivityChecker);
 
   ngOnInit(): void {
     this.skipLinkService.registerLink(this);
@@ -32,10 +35,25 @@ export class SiSkipLinkTargetDirective implements OnInit, OnDestroy {
   }
 
   /**
-   * Call this methode to "activate" a skip link target. It will focus this element and scroll it into the view.
+   * Activate a skip link target by scrolling it into view and focusing it or its first tabbable descendant.
    */
   jumpToThisTarget(): void {
-    this.elementRef.nativeElement.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-    this.elementRef.nativeElement.focus();
+    const target = this.elementRef.nativeElement;
+    target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+
+    if (this.interactivityChecker.isFocusable(target)) {
+      target.focus();
+      return;
+    }
+
+    for (const descendant of target.querySelectorAll<HTMLElement>('*')) {
+      if (
+        this.interactivityChecker.isFocusable(descendant) &&
+        this.interactivityChecker.isTabbable(descendant)
+      ) {
+        descendant.focus();
+        return;
+      }
+    }
   }
 }
