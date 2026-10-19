@@ -73,7 +73,37 @@ describe('SiMarkdownTableComponent', () => {
     expect(element.querySelector('.copied')).toHaveTextContent('Copied');
   });
 
-  it('downloads rendered table cells as a CSV file', async () => {
+  it.each([
+    ['=1+1', "'=1+1"],
+    ['+1+1', "'+1+1"],
+    ['-1+1', "'-1+1"],
+    ['@SUM(1)', "'@SUM(1)"],
+    ['  =1+1', "'=1+1"],
+    ['\t=1+1', "'=1+1"],
+    ['`=1+1`', "'=1+1"],
+    ['&#61;1+1', "'=1+1"],
+    ['=SUM(1,2)', '"\'=SUM(1,2)"'],
+    ['=HYPERLINK("https://example.com")', '"\'=HYPERLINK(""https://example.com"")"']
+  ])('neutralizes formula cells when copying %s as CSV', async (value, expected) => {
+    vi.useFakeTimers();
+    const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
+    fixture.componentRef.setInput(
+      'markdown',
+      `| ${value} | Status |
+| --- | --- |
+| ${value} | Ready |`
+    );
+    fixture.detectChanges();
+    await vi.runAllTimersAsync();
+    await fixture.whenStable();
+
+    element.querySelector<HTMLButtonElement>('button[aria-label="Copy table as CSV"]')?.click();
+    await Promise.resolve();
+
+    expect(writeText).toHaveBeenCalledWith(`${expected},Status\r\n${expected},Ready`);
+  });
+
+  it('downloads rendered table cells as a CSV file with formulas neutralized', async () => {
     const createObjectURL = vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:table');
     const revokeObjectURL = vi.spyOn(URL, 'revokeObjectURL');
     const click = vi
@@ -81,14 +111,12 @@ describe('SiMarkdownTableComponent', () => {
       .mockImplementation(() => undefined);
     fixture.componentRef.setInput(
       'markdown',
-      `| Name | Status |
-| --- | --- |
-| Ada | Ready |`
+      ['| =1+1 | Status |', '| --- | --- |', '| =SUM(1,2) | Ready |'].join('\n')
     );
     await fixture.whenStable();
     await expect
-      .poll(() => element.querySelector('button[aria-label="Download table as CSV"]'))
-      .toBeInTheDocument();
+      .poll(() => element.querySelector('tbody td:last-child'))
+      .toHaveTextContent('Ready');
 
     element.querySelector<HTMLButtonElement>('button[aria-label="Download table as CSV"]')?.click();
 
@@ -96,6 +124,7 @@ describe('SiMarkdownTableComponent', () => {
     const link = click.mock.instances[0] as HTMLAnchorElement;
 
     expect(blob).toHaveProperty('type', 'text/csv;charset=utf-8');
+    expect(await blob.text()).toBe('\'=1+1,Status\r\n"\'=SUM(1,2)",Ready');
     expect(link.download).toBe('table.csv');
     expect(revokeObjectURL).toHaveBeenCalledWith('blob:table');
   });
