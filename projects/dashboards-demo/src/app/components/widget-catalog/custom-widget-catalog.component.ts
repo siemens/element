@@ -4,14 +4,14 @@
  */
 import { Component, output, signal } from '@angular/core';
 import { SiWidgetCatalogComponent, Widget, WidgetConfig } from '@siemens/dashboards-ng';
-import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { HELLO_DESCRIPTOR } from '../../widgets/hello-widget/widget-descriptors';
 
 @Component({
   selector: 'app-widget-catalog',
-  imports: [SiCircleStatusComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './custom-widget-catalog.component.html',
   styleUrl: './custom-widget-catalog.component.scss'
 })
