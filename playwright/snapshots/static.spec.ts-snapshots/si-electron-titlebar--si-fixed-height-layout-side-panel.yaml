@@ -33,51 +33,19 @@
   - text: A nice list of things
   - button "Show actions"
   - list:
-    - listitem:
-      - status "door in status info"
-      - text: Use the content action bar to toggle side panel
-    - listitem:
-      - status "lock in status danger"
-      - text: Dapibus ac facilisis in
-    - listitem:
-      - status "cooling in status info out"
-      - text: Porta ac consectetur ac
-    - listitem:
-      - status "user in status danger"
-      - text: Vestibulum at eros
-    - listitem:
-      - status "door in status info out"
-      - text: Cras justo odio
-    - listitem:
-      - status "lock in status danger"
-      - text: Dapibus ac facilisis in
-    - listitem:
-      - status "cooling in status info"
-      - text: Porta ac consectetur ac
-    - listitem:
-      - status "user in status danger"
-      - text: Vestibulum at eros
-    - listitem:
-      - status "door in status info"
-      - text: Cras justo odio
-    - listitem:
-      - status "lock in status danger"
-      - text: Dapibus ac facilisis in
-    - listitem:
-      - status "cooling in status info"
-      - text: Porta ac consectetur ac
-    - listitem:
-      - status "user in status danger"
-      - text: Vestibulum at eros
-    - listitem:
-      - status "door in status info"
-      - text: Cras justo odio
-    - listitem:
-      - status "lock in status danger"
-      - text: Dapibus ac facilisis in
-    - listitem:
-      - status "cooling in status info"
-      - text: Porta ac consectetur ac
-    - listitem:
-      - status "user in status danger"
-      - text: Vestibulum at eros
+    - listitem: Use the content action bar to toggle side panel
+    - listitem: Dapibus ac facilisis in
+    - listitem: Porta ac consectetur ac
+    - listitem: Vestibulum at eros
+    - listitem: Cras justo odio
+    - listitem: Dapibus ac facilisis in
+    - listitem: Porta ac consectetur ac
+    - listitem: Vestibulum at eros
+    - listitem: Cras justo odio
+    - listitem: Dapibus ac facilisis in
+    - listitem: Porta ac consectetur ac
+    - listitem: Vestibulum at eros
+    - listitem: Cras justo odio
+    - listitem: Dapibus ac facilisis in
+    - listitem: Porta ac consectetur ac
+    - listitem: Vestibulum at eros
