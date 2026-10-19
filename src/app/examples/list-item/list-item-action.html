@@ -48,4 +48,21 @@
       </div>
     </button>
   </li>
+  <li>
+    <button
+      type="button"
+      class="list-item list-item-action active"
+      aria-current="true"
+      (click)="logEvent('Open project Delta')"
+    >
+      <h5 class="list-item-title">Project Delta</h5>
+      <p class="list-item-description">Currently open commissioning checklist</p>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="list-item list-item-action" disabled>
+      <h5 class="list-item-title">Project Epsilon</h5>
+      <p class="list-item-description">Archived project, no longer available</p>
+    </button>
+  </li>
 </ul>

@@ -89,6 +89,7 @@ So the content may contain interactive elements, such as links or buttons.
 The content can be provided in the following ways:
 
 - using the inputs `siPopover` and `siPopoverTitle`
+
   ```html
   <button
     siPopover="Details Lorem ipsum ..."
@@ -99,7 +100,9 @@ The content can be provided in the following ways:
     More information about component xyz
   </button>
   ```
+
 - using a template
+
   ```html
   <button siPopover="popoverContent" type="button" class="btn btn-secondary">
     More information about component xyz
@@ -109,7 +112,9 @@ The content can be provided in the following ways:
     <si-popover-body> Details Lorem ipsum ... </si-popover-body>
   </ng-template>
   ```
+
 - using a template and the title input
+
   ```html
   <button
     siPopover="popoverContent"
@@ -123,6 +128,26 @@ The content can be provided in the following ways:
     Details Lorem ipsum ...
   </ng-template>
   ```
+
+### Container styling
+
+Use `siPopoverContainerClass` to add custom CSS classes to the popover container. Element also provides two built-in classes:
+
+- `.auto-width`: Removes the default max-width limit so the popover grows to fit its content.
+- `.no-content-padding`: Removes the default body padding, which is useful when placing lists, tables, or other full-width content.
+
+These classes can be used individually or combined:
+
+```html
+<button
+  [siPopover]="popoverContent"
+  siPopoverContainerClass="auto-width no-content-padding"
+  type="button"
+  class="btn btn-secondary"
+>
+  More information about component xyz
+</button>
+```
 
 ### Usage
 

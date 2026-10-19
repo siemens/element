@@ -89,18 +89,7 @@ $si-popover-bg: var(--popover-bg-color, variables.$popover-bg);
   color: variables.$popover-body-color;
 }
 
-// .bs-popover-*: standard BS
-// .popover-*-*: si-popover with CDK overlay
-// .bs-popover-auto*: popper.js
-// FIXME: remove popper.js selectors in next breaking release
-
-:is(
-  .bs-popover-top,
-  .popover-start-bottom,
-  .popover-end-bottom,
-  .popover-center-bottom,
-  .bs-popover-auto[data-popper-placement^='top']
-) {
+:is(.popover-start-bottom, .popover-end-bottom, .popover-center-bottom) {
   margin-block-end: $si-popover-arrow-height;
 
   > .popover-arrow {
@@ -116,7 +105,7 @@ $si-popover-bg: var(--popover-bg-color, variables.$popover-bg);
   }
 }
 
-:is(.bs-popover-end, .popover-start-center, .bs-popover-auto[data-popper-placement^='right']) {
+.popover-start-center {
   margin-inline-start: $si-popover-arrow-height;
 
   > .popover-arrow {
@@ -134,13 +123,7 @@ $si-popover-bg: var(--popover-bg-color, variables.$popover-bg);
   }
 }
 
-:is(
-  .bs-popover-bottom,
-  .popover-start-top,
-  .popover-end-top,
-  .popover-center-top,
-  .bs-popover-auto[data-popper-placement^='bottom']
-) {
+:is(.popover-start-top, .popover-end-top, .popover-center-top) {
   margin-block-start: $si-popover-arrow-height;
 
   > .popover-arrow {
@@ -156,7 +139,7 @@ $si-popover-bg: var(--popover-bg-color, variables.$popover-bg);
   }
 }
 
-:is(.bs-popover-start, .popover-end-center, .bs-popover-auto[data-popper-placement^='left']) {
+.popover-end-center {
   margin-inline-end: $si-popover-arrow-height;
 
   > .popover-arrow {
