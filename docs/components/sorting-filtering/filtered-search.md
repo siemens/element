@@ -131,6 +131,19 @@ import { SiFilteredSearchComponent } from '@siemens/element-ng/filtered-search';
 })
 ```
 
+### Search events
+
+To control how your application reacts to individual actions, use these outputs:
+
+- `(searchCriteriaSubmit)` emits the current `SearchCriteria` when the search
+  button is pressed or Enter submits the search, even when the criteria have not
+  changed.
+- `(searchCriteriaClear)` emits after the clear-all button
+  resets the criteria and free text.
+- `(searchCriteriaChange)` emits when the search criteria change.
+
+Calling `deleteAllCriteria()` programmatically does not emit `searchCriteriaClear`.
+
 ### Filtered search - Basic
 
 The following provides a basic example with pre-configured criteria and their
