@@ -8,17 +8,17 @@
       <h2 class="si-h5 m-0">Equipment</h2>
     </si-list-pane-header>
     <si-list-pane-body class="overflow-auto">
-      <div class="list-group list-group-flush">
+      <div class="list list-divider">
         @for (item of equipment; track item.id) {
           <button
             type="button"
-            class="list-group-item list-group-item-action text-start"
+            class="list-item list-item-action"
             [class.active]="selectedEquipment().id === item.id"
             [attr.aria-current]="selectedEquipment().id === item.id ? 'true' : null"
             (click)="selectEquipment(item)"
           >
-            <span class="d-block fw-semibold">{{ item.name }}</span>
-            <span class="d-block si-caption">{{ item.id }}</span>
+            <span class="list-item-title">{{ item.name }}</span>
+            <span class="list-item-description">{{ item.id }}</span>
           </button>
         }
       </div>
