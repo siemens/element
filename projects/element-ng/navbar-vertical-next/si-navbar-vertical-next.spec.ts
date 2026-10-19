@@ -80,6 +80,9 @@ class EmptyComponent {}
       @if (showNavigationAction()) {
         <button type="button" si-navbar-vertical-next-navigation-action aria-label="Back"></button>
       }
+      @if (showSecondNavigationAction()) {
+        <button type="button" si-navbar-vertical-next-navigation-action aria-label="Home"></button>
+      }
       <si-navbar-vertical-next-search [debounceTime]="0" (searchChange)="searchEvent($event)" />
       @if (showDeclarativeFlyoutGroup()) {
         <si-navbar-vertical-next-items>
@@ -192,6 +195,7 @@ class TestHostComponent {
   readonly inlineCollapse = signal(false);
   readonly alwaysFlyout = signal(false);
   readonly showNavigationAction = signal(false);
+  readonly showSecondNavigationAction = signal(false);
   readonly showDeclarativeFlyoutGroup = signal(false);
   readonly showDeclarativeNavigationGroup = signal(false);
   readonly showDeclarativeStateGroups = signal(false);
@@ -656,6 +660,13 @@ describe('SiNavbarVerticalNext', () => {
       component.inlineCollapse.set(false);
       await fixture.whenStable();
       await expect.element(page.getByRole('button', { name: 'Back' })).not.toBeInTheDocument();
+    });
+
+    it('should reject multiple navigation actions', () => {
+      component.showNavigationAction.set(true);
+      component.showSecondNavigationAction.set(true);
+
+      expect(() => fixture.detectChanges()).toThrow('Only one navigation action is allowed.');
     });
 
     describe('active item chip', () => {
