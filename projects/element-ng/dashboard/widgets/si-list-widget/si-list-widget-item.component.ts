@@ -43,7 +43,7 @@ export interface SiListWidgetItem {
   templateUrl: './si-list-widget-item.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: {
-    class: 'list-group-item d-flex align-items-center',
+    class: 'list-item d-flex align-items-center',
     role: 'listitem'
   }
 })
