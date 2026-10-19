@@ -133,6 +133,19 @@ import { SiFilteredSearchComponent } from '@siemens/element-ng/filtered-search';
 
 ### Filtered search - Basic
 
+To control how your application reacts to individual actions, use these outputs:
+
+- `(searchCriteriaSubmit)` emits the current `SearchCriteria` whenever the search
+  button is pressed, even when the criteria have not changed.
+- `(searchCriteriaClear)` emits the empty `SearchCriteria` after the clear-all
+  button resets the criteria and free text.
+- `(searchCriteriaChange)` emits when the search criteria change.
+
+The two button outputs are independent of `[doSearchOnInputChange]`. Pressing
+Enter does not emit `searchCriteriaSubmit`, and calling `deleteAllCriteria()`
+programmatically does not emit `searchCriteriaClear`. The existing `(doSearch)`
+behavior is unchanged.
+
 The following provides a basic example with pre-configured criteria and their
 options. At a minimum, you must define the criteria. Other optional parameters
 to define are:
