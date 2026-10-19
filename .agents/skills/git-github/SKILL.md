@@ -93,6 +93,7 @@ BREAKING CHANGE: <breaking change summary>
 - Always create DRAFT PRs.
 - PR title follows the same Conventional Commit format as a commit header.
 - Fill the PR body per `.github/PULL_REQUEST_TEMPLATE.md`. It should typically include your commit body and footer.
+- Never include which validation were run locally. We have CI for that.
 
 ```bash
 gh pr create --base main --title "feat(tree-view): add keyboard navigation" --body "..."
