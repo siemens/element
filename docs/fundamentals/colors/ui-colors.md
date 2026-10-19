@@ -183,14 +183,13 @@ specification specifically requires a palette value.
 ### Contextual colors
 
 The contextual colors represent the primary colors of each specific use-case and
-are defined by Bootstrap. They can be consumed directly using Bootstraps color
-utility classes.
+are based on the system color tokens. They can be consumed directly using
+Element's [color utility classes](../styles/colors.md).
 
 <si-docs-component example="colors/color-utils"></si-docs-component>
 
-Element extends the Bootstrap color utils with additional classes for Element
-specific colors. These classes are defined in the
-[\_utilities](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/bootstrap/_utilities.scss) file.
+The color utility classes for background, text, and borders are defined in the
+[\_utilities](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/mixins/_utilities.scss) file.
 
 Using contextual colors within SASS stylesheets is also possible by importing
 the Element Theme variables.
