@@ -260,7 +260,7 @@ $table-color: $body-color !default;
 $table-bg: system-tokens.$si-sys-color-background-1 !default;
 $table-accent-bg: transparent !default;
 
-$table-th-font-weight: null !default;
+$table-th-font-weight: typography.$si-font-weight-sbold !default;
 
 $table-striped-color: $table-color !default;
 $table-striped-bg: system-tokens.$si-sys-color-background-0 !default;
