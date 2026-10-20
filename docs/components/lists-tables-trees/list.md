@@ -128,6 +128,15 @@ Add these optional slot classes to position content within a `.list-item`:
 | `.list-item-metadata-divider` | Small dot separator between items within `.list-item-metadata`                                                                 |
 | `.list-item-quick-actions`    | Secondary actions below the item content                                                                                       |
 
+Titles use semibold typography by default. Add `.si-body` to `.list-item-title` for a
+regular-weight title.
+
+```html
+<li class="list-item">
+  <span class="list-item-title si-body">Regular-weight title</span>
+</li>
+```
+
 <si-docs-component example="list-item/list-item" height="400"></si-docs-component>
 
 ### Action list items
@@ -144,6 +153,7 @@ Use `aria-labelledby` and `aria-describedby` on the interactive element to provi
 ### Unread state
 
 Use the `.unread` class on `.list-item-title` to indicate unread items with a bold title and a dot indicator.
+Unread titles remain bold even when `.si-body` is applied.
 
 <si-docs-component example="list-item/list-item-unread" height="400"></si-docs-component>
 
