@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import angularTypescriptConfig from '@siemens/eslint-config-angular';
 import angularTemplateConfig from '@siemens/eslint-config-angular/template';
 import vitest from '@vitest/eslint-plugin';
+import oxlintPlugin from 'eslint-plugin-oxlint';
 import tsdocPlugin from 'eslint-plugin-tsdoc';
 import eslintPluginHeaders from 'eslint-plugin-headers';
 import { defineConfig } from 'eslint/config';
@@ -11,7 +12,37 @@ import { defineConfig } from 'eslint/config';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const tsConfig = defineConfig({
+const eslintRulesWithExistingSuppressions = new Set([
+  '@typescript-eslint/ban-ts-comment',
+  '@typescript-eslint/no-empty-object-type',
+  '@typescript-eslint/no-loop-func',
+  '@typescript-eslint/no-require-imports',
+  '@typescript-eslint/no-shadow',
+  '@typescript-eslint/no-unused-expressions',
+  '@typescript-eslint/no-var-requires',
+  '@typescript-eslint/prefer-for-of',
+  'no-console',
+  'no-restricted-imports',
+  'vitest/no-conditional-expect'
+]);
+
+const oxlintEslintConfig = oxlintPlugin
+  .buildFromOxlintConfigFile('./.oxlintrc.json')
+  .map(config => {
+    if (!config.rules) {
+      return config;
+    }
+
+    const rules = Object.fromEntries(
+      Object.entries(config.rules).filter(
+        ([rule]) => !eslintRulesWithExistingSuppressions.has(rule)
+      )
+    );
+
+    return { ...config, rules };
+  });
+
+const tsConfigBase = defineConfig({
   extends: [...angularTypescriptConfig],
   files: ['**/*.ts'],
   languageOptions: {
@@ -134,6 +165,8 @@ export const tsConfig = defineConfig({
     ]
   }
 });
+
+export const tsConfig = defineConfig(...tsConfigBase, ...oxlintEslintConfig);
 
 export const templateConfig = defineConfig({
   extends: [...angularTemplateConfig],

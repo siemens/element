@@ -132,6 +132,7 @@ jobs:
       - run: pnpm install
       - run: pnpm run lint:format
       - run: pnpm run lint:scss
+      - run: pnpm run lint:oxlint
       - run: pnpm run lint:ng
       - run: pnpm run lint:playwright:eslint
       - run: pnpm run api-goldens:test
