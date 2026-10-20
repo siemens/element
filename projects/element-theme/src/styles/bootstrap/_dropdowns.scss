@@ -59,6 +59,13 @@
   }
 }
 
+// Only leading icons reserve a column; nested dropdowns handle their own alignment.
+@scope (.dropdown-menu:has(.dropdown-item-icon)) to (.dropdown-menu) {
+  .item-title:first-child {
+    padding-inline-start: calc(variables.$si-icon-font-size + map.get(spacers.$spacers-inline, 4));
+  }
+}
+
 .dropdown-toggle {
   --caret-rotate: 0deg;
   text-align: start;
