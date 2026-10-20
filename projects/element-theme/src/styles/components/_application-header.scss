@@ -55,7 +55,10 @@
     order: initial;
 
     .dropdown-header {
-      padding-inline-start: 28px;
+      padding-inline-start: calc(
+        bootstrap-variables.$dropdown-item-padding-x + si-vars.$si-icon-font-size +
+          map.get(spacers.$spacers-inline, 4)
+      );
     }
   }
 }
