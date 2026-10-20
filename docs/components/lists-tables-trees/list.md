@@ -36,14 +36,14 @@ The following example shows the most common layout.
 
 ![List item anatomy](images/list-item-anatomy.png)
 
-> 1\. Indicator, 2. Timestamp, 3. Heading, 4. Description, 5. Primary action, 6. Metadata, 7. Quick actions
+> 1\. Indicator, 2. Timestamp, 3. Title, 4. Description, 5. Primary action, 6. Metadata, 7. Quick actions
 
 The anatomy above is a default example, but every slot can be swapped for a different control depending on the interaction the list needs to support. For example:
 
 - Add checkboxes to support multi-select and bulk actions,
   or radio buttons for single-select.
 - Add a drag handle to support manual reordering.
-- Replace the heading text with an input to support inline editing.
+- Replace the title text with an input to support inline editing.
 
 ![List item content](images/list-item-content.png)
 
