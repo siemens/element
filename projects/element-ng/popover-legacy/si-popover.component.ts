@@ -24,7 +24,7 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
   changeDetection: ChangeDetectionStrategy.Eager
 })
 export class PopoverComponent implements OnInit {
-  /** Text or template content displayed in the popover. */
+  /** Text or template content displayed in the popover. Strings are rendered as HTML and sanitized by Angular. */
   readonly popover = input<string | TemplateRef<any>>();
   /**
    * Title displayed at the top of the popover.

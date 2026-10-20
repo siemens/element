@@ -147,6 +147,11 @@ export class SampleComponent {
 
 <si-docs-component example="si-photo-upload/image-cropping" height="450"></si-docs-component>
 
+### Security considerations
+
+The `sourcePhotoUrl` is marked as a trusted resource URL and is not sanitized by Angular.
+Only pass URLs from trusted sources.
+
 <si-docs-api component="SiPhotoUploadComponent"></si-docs-api>
 
 <si-docs-types></si-docs-types>
