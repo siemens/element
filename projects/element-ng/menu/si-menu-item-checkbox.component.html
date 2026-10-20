@@ -1,9 +1,13 @@
 <div class="item-wrapper">
   @let iconValue = icon();
   @if (iconValue && !badgeDotHasContent()) {
-    <si-icon class="icon" [class.badge-dot]="iconBadgeDot()" [icon]="iconValue" />
+    <si-icon
+      class="icon dropdown-item-icon"
+      [class.badge-dot]="iconBadgeDot()"
+      [icon]="iconValue"
+    />
   } @else if (iconValue && badgeDotHasContent()) {
-    <si-icon class="icon badge-dot" [icon]="iconValue" />
+    <si-icon class="icon dropdown-item-icon badge-dot" [icon]="iconValue" />
     <span class="badge-text">{{ iconBadgeDot() }}</span>
   }
   <span class="item-title">
