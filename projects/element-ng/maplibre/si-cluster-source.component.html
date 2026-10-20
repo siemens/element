@@ -14,7 +14,7 @@
     <si-cluster-marker
       [feature]="feature"
       [segments]="clusterConfiguration().segments"
-      (markerClick)="clusterClick.emit(feature)"
+      (markerClick)="onClusterClick(feature)"
     />
   </ng-template>
 </mgl-markers-for-clusters>
