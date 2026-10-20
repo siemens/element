@@ -179,6 +179,11 @@ A custom background image needs to meet some basic criteria to make sure it look
 
 <si-docs-component example="si-landing-page/si-landing-page-custom" height="500"></si-docs-component>
 
+### Security considerations
+
+String values of `implicitLegalAcknowledge` and of `passwordPolicyContent` (`si-change-password`) are rendered as HTML
+and sanitized by Angular. Do not pass untrusted content that was marked as trusted (e.g. via `bypassSecurityTrustHtml`).
+
 <si-docs-api component="SiLandingPageComponent"></si-docs-api>
 
 <si-docs-types></si-docs-types>
