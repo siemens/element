@@ -47,6 +47,14 @@ The anatomy above is a default example, but every slot can be swapped for a diff
 
 ![List item content](images/list-item-content.png)
 
+List items can display a title alone or a title with a supporting description.
+
+- **Title and description:** Always use `s-bold` for the title and `body` for the
+  description to establish a clear visual hierarchy.
+- **Title only:** Use `s-bold` by default for primary entities users scan, such as
+  projects, people, or documents. Use `body` for simpler options or values, such as
+  settings or filters.
+
 ### Indicator
 
 The indicator can support icons, [circle status](../status-notifications/circle-status.md),
