@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use '@siemens/element-theme/src/styles/bootstrap/variables' as bootstrap-variables;
 @use '@siemens/element-theme/src/styles/variables';
 
 .item-end:empty {
@@ -7,7 +8,10 @@
 
 // this only works in mobile, so this is exactly what we need
 :host-context(.dropdown-menu .dropdown-menu) {
-  padding-inline-start: 28px;
+  padding-inline-start: calc(
+    bootstrap-variables.$dropdown-item-padding-x + variables.$si-icon-font-size +
+      map.get(variables.$spacers-inline, 4)
+  );
 }
 
 .dropdown-caret {
