@@ -26,17 +26,18 @@ export abstract class SiPillsInputPatternBase {
     value: string,
     trigger: SiPillsInputValueHandlerTrigger
   ): SiPillsInputValueParseResult | undefined {
-    const segments = value.split(this.separatorRegex()).map(s => s.trim());
+    const segments = value.split(this.separatorRegex());
     const itemRegex = this.validationRegex?.();
     if (segments.length) {
       const newValue = trigger === 'input' ? segments.pop()! : '';
+      const newPills = segments.map(segment => segment.trim());
       if (
-        segments.every(segment => {
+        newPills.every(segment => {
           return segment && (!itemRegex || segment.match(itemRegex));
         })
       ) {
         return {
-          newPills: segments,
+          newPills,
           newValue
         };
       }
