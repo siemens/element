@@ -589,9 +589,7 @@ $alert-margin-bottom: 0 !default;
 $alert-border-radius: 0 !default;
 $alert-link-font-weight: $font-weight-bold !default;
 $alert-border-width: 0 !default;
-$alert-dismissible-padding-r: calc(
-  $alert-padding-x * 3
-) !default; // 3x covers width of x plus default padding on either side
+$alert-dismissible-padding-r: calc($alert-padding-x * 3) !default; // 3x covers width of x plus default padding on either side
 
 // Progress bars
 

@@ -82,10 +82,7 @@
 
 @include breakpoints.media-breakpoint-up(sm) {
   .si-layout-breadcrumb {
-    margin-block-end: map.get(
-      variables.$spacers-block,
-      4
-    ) !important; // stylelint-disable-line declaration-no-important
+    margin-block-end: map.get(variables.$spacers-block, 4) !important; // stylelint-disable-line declaration-no-important
   }
 
   .si-layout-title {
@@ -110,9 +107,6 @@
 
   .si-layout-status {
     margin-block-start: 0;
-    margin-block-end: map.get(
-      variables.$spacers-block,
-      6
-    ) !important; // stylelint-disable-line declaration-no-important
+    margin-block-end: map.get(variables.$spacers-block, 6) !important; // stylelint-disable-line declaration-no-important
   }
 }

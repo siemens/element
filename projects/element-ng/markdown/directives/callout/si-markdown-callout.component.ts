@@ -19,7 +19,14 @@ import { SiMarkdownFragmentComponent } from '../../si-markdown-fragment.componen
 import { type DirectiveNode, type SiMarkdownExtensionComponent } from '../../si-markdown.types';
 
 type CalloutType =
-  'success' | 'info' | 'warning' | 'danger' | 'caution' | 'critical' | 'note' | 'tip';
+  | 'success'
+  | 'info'
+  | 'warning'
+  | 'danger'
+  | 'caution'
+  | 'critical'
+  | 'note'
+  | 'tip';
 
 interface Callout {
   label?: TranslatableString;

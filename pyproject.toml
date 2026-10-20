@@ -7,9 +7,9 @@ license = "MIT"
 requires-python = ">=3.11, <4"
 readme = "README.md"
 dependencies = [
-    "mkdocs-code-siemens-code-docs-theme>=9,<10",
-    "mkdocs-minify-html-plugin==0.3.12",
-    "mkdocs-element-docs-builder",
+  "mkdocs-code-siemens-code-docs-theme>=9,<10",
+  "mkdocs-minify-html-plugin==0.3.12",
+  "mkdocs-element-docs-builder"
 ]
 
 [project.urls]
@@ -34,6 +34,4 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.uv.workspace]
-members = [
-    "projects/element-docs-builder",
-]
+members = ["projects/element-docs-builder"]

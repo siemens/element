@@ -65,9 +65,9 @@ function* renameIdentifier({
         continue;
       }
 
-      if (!(
-        node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)
-      )) {
+      if (
+        !(node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings))
+      ) {
         continue;
       }
 

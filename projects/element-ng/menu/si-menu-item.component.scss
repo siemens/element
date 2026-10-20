@@ -71,10 +71,7 @@
     }
 
     .item-title {
-      padding-inline-start: map.get(
-        variables.$spacers-block,
-        2
-      ) !important; // stylelint-disable-line declaration-no-important
+      padding-inline-start: map.get(variables.$spacers-block, 2) !important; // stylelint-disable-line declaration-no-important
     }
   }
 }
