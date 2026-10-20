@@ -110,6 +110,44 @@ describe('SiPillsInputComponent', () => {
   });
 
   describe('with csv input handler', () => {
+    it('should preserve spaces while typing', async () => {
+      await userEvent.type(csvInputElement, 'XX ');
+      await fixture.whenStable();
+
+      expect(csvInputElement).toHaveValue('XX ');
+      expect(component.csvValue()).toEqual([]);
+    });
+
+    it('should commit a tag containing spaces on comma', async () => {
+      await userEvent.type(csvInputElement, 'XX XX,');
+      await fixture.whenStable();
+
+      expect(component.csvValue()).toEqual(['XX XX']);
+      expect(csvComponentElement.querySelector('si-input-pill')).toHaveTextContent('XX XX');
+    });
+
+    it('should trim a committed tag on comma', async () => {
+      await userEvent.type(csvInputElement, '  XX XX  ,');
+      await fixture.whenStable();
+
+      expect(component.csvValue()).toEqual(['XX XX']);
+      expect(csvInputElement).toHaveValue('');
+    });
+
+    it('should preserve spaces in pasted tags and the unfinished tag', async () => {
+      csvInputElement.value = 'XX XX, YY YY; ZZ ZZ ';
+      csvInputElement.dispatchEvent(new InputEvent('input', { inputType: 'insertFromPaste' }));
+      await fixture.whenStable();
+
+      expect(component.csvValue()).toEqual(['XX XX', 'YY YY']);
+      expect(csvInputElement).toHaveValue('ZZ ZZ ');
+
+      await userEvent.type(csvInputElement, '{Enter}');
+      await fixture.whenStable();
+
+      expect(component.csvValue()).toEqual(['XX XX', 'YY YY', 'ZZ ZZ']);
+    });
+
     it('should update on input with separator', async () => {
       await userEvent.type(csvInputElement, 'a');
       expect(component.csvValue()).toEqual([]);
