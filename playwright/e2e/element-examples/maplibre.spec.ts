@@ -31,8 +31,18 @@ testMap('maplibre/maplibre-cluster', ({ si }) =>
   })
 );
 
+testMap('maplibre cluster zoom on click', async ({ page, si }) => {
+  await si.visitExample('maplibre/maplibre-cluster');
+  const cluster = page.getByRole('button', { name: 'Cluster with 11 locations', exact: true });
+  await cluster.click();
+
+  await expect(cluster).toBeHidden();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+});
+
 testMap('maplibre cluster popover', async ({ page, si }) => {
   await si.visitExample('maplibre/maplibre-cluster');
+  await page.getByRole('switch', { name: 'Zoom into clusters on click' }).uncheck();
   const name = 'Cluster with 11 locations';
   await page.getByRole('button', { name, exact: true }).click();
 
