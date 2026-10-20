@@ -5,6 +5,7 @@
 import { booleanAttribute, Component, HostListener, inject, input, model } from '@angular/core';
 import { elementExport, elementFavorites, elementFavoritesFilled } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTooltipOverflowDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
@@ -12,7 +13,7 @@ import { SiApplicationHeaderComponent } from '../si-application-header.component
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'a[si-launchpad-app]',
-  imports: [SiIconComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTooltipOverflowDirective, SiTranslatePipe],
   templateUrl: './si-launchpad-app.component.html',
   styleUrl: './si-launchpad-app.component.scss',
   host: {

@@ -5,7 +5,7 @@
 }
 <div class="app-text">
   <div class="si-h4 d-flex align-items-center mw-100 gap-1">
-    <span class="text-truncate">
+    <span siTooltipOverflow>
       <ng-content select="[app-name]" />
     </span>
     @if (external()) {
@@ -16,7 +16,7 @@
       />
     }
   </div>
-  <div class="si-body text-secondary mt-2 text-truncate mw-100">
+  <div siTooltipOverflow class="si-body text-secondary mt-2 mw-100">
     <ng-content select="[app-systemName]" />
   </div>
 </div>
