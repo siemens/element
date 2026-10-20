@@ -34,9 +34,9 @@
   rebaseWhen: "conflicted",
   packageRules: [
     {
-      description: ["Allow npm packages on code.siemens.com without release timestamps"],
+      description: ["Allow internal npm packages without release timestamps"],
       matchDatasources: ["npm"],
-      matchRegistryUrls: ["https://code.siemens.com/**"],
+      matchPackageNames: ["@simpl/**", "@simpl-labs/**", "@siemens-ux/**"],
       minimumReleaseAgeBehaviour: "timestamp-optional"
     },
     {
