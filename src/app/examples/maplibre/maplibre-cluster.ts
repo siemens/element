@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { form, FormField } from '@angular/forms/signals';
 import {
   AttributionControlDirective,
   ControlComponent,
@@ -17,6 +18,7 @@ import {
   Position,
   ScaleControlDirective
 } from '@maplibre/ngx-maplibre-gl';
+import { provideSiFormFieldConfig, SiFormFieldComponent } from '@siemens/element-ng/form';
 import {
   injectSiMapStyle,
   injectSiMapTranslations,
@@ -54,6 +56,7 @@ const buildGeoJSON = (points: MapPoint[]): GeoJSON.FeatureCollection<GeoJSON.Poi
   imports: [
     AttributionControlDirective,
     ControlComponent,
+    FormField,
     FullscreenControlDirective,
     GeolocateControlDirective,
     GlobeControlDirective,
@@ -64,9 +67,11 @@ const buildGeoJSON = (points: MapPoint[]): GeoJSON.FeatureCollection<GeoJSON.Poi
     ScaleControlDirective,
     SiClusterPopoverComponent,
     SiClusterSourceComponent,
+    SiFormFieldComponent,
     SiStatusMarkerComponent
   ],
   templateUrl: './maplibre-cluster.html',
+  providers: [provideSiFormFieldConfig()],
   host: {
     class: 'h-100 d-flex flex-column p-5'
   }
@@ -77,6 +82,8 @@ export class SampleComponent {
   protected readonly mapTranslations = injectSiMapTranslations();
 
   protected readonly geoJson = buildGeoJSON(mockPoints);
+  protected readonly zoomOnClick = signal(true);
+  protected readonly zoomOnClickField = form(this.zoomOnClick);
 
   protected selectCluster(feature: ClusterPoint): void {
     this.logEvent('cluster click', feature.properties);

@@ -71,6 +71,8 @@ export class SiClusterSourceComponent {
     readonly groupProperty: _angular_core.InputSignal<string>;
     readonly sourceId: _angular_core.InputSignal<string>;
     readonly statusProperty: _angular_core.InputSignal<string | undefined>;
+    readonly zoomMaxLevel: _angular_core.InputSignal<number | undefined>;
+    readonly zoomOnClick: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
 // @public (undocumented)
