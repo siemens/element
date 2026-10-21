@@ -3,16 +3,11 @@
 // Unified focus styling
 
 *:focus-visible,
-*.focus-default:focus-visible,
-*:focus-visible .focus-sub,
-*:focus-visible > .focus-direct-sub,
-*:focus-visible > .focus-direct-sub-inside {
+*.focus-default:focus-visible {
   @include focus.make-outline-focus();
 }
 
-*.focus-inside:focus-visible,
-*:focus-visible .focus-sub-inside,
-*:focus-visible > .focus-direct-sub-inside {
+*.focus-inside:focus-visible {
   outline-offset: focus.$focus-style-outline-inside-offset;
 }
 
