@@ -9,10 +9,12 @@
       <div class="si-h5-bold mb-4">Tertiary button with menu</div>
       <button
         type="button"
-        class="btn btn-icon btn-tertiary element-options-vertical"
+        class="btn btn-icon btn-tertiary"
         aria-label="Options"
         [cdkMenuTriggerFor]="contextMenu"
-      ></button>
+      >
+        <si-icon [icon]="icons.elementOptionsVertical" />
+      </button>
     </div>
 
     <div
@@ -25,5 +27,5 @@
 </div>
 
 <ng-template #contextMenu>
-  <si-menu-factory [items]="items" />
+  <si-menu-factory [items]="items()" />
 </ng-template>

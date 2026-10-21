@@ -3,82 +3,87 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkContextMenuTrigger, CdkMenuTrigger } from '@angular/cdk/menu';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
-  MenuItemCheckbox,
-  MenuItem,
-  MenuItemRadio,
-  SiMenuFactoryComponent
-} from '@siemens/element-ng/menu';
+  elementChat,
+  elementCopy,
+  elementCut,
+  elementDelete,
+  elementExport,
+  elementOptionsVertical,
+  elementRestore
+} from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 
 @Component({
   selector: 'app-sample',
-  imports: [CdkContextMenuTrigger, CdkMenuTrigger, SiMenuFactoryComponent],
+  imports: [CdkContextMenuTrigger, CdkMenuTrigger, SiMenuFactoryComponent, SiIconComponent],
   templateUrl: './si-menu-factory.html'
 })
 export class SampleComponent {
-  items: MenuItem[] = [
-    { type: 'header', label: 'Actions' },
+  readonly icons = addIcons({
+    elementChat,
+    elementCopy,
+    elementCut,
+    elementDelete,
+    elementExport,
+    elementOptionsVertical,
+    elementRestore
+  });
+
+  readonly items = signal<MenuItem[]>([
+    { type: 'action', label: 'Cut', icon: this.icons.elementCut, action: () => alert('Cut') },
+    { type: 'action', label: 'Copy', icon: this.icons.elementCopy, action: () => alert('Copy') },
     {
       type: 'group',
-      label: 'Download as',
+      label: 'Paste as',
       children: [
-        { type: 'action', label: 'Image', action: () => alert('Image') },
-        { type: 'action', label: 'File', action: () => alert('File') },
-        {
-          type: 'group',
-          label: 'Other',
-          disabled: true,
-          children: [{ type: 'action', label: 'Zip', action: () => alert('Zip') }]
-        }
+        { type: 'action', label: 'Plain text', action: () => alert('Plain text') },
+        { type: 'action', label: 'Keep formatting', action: () => alert('Keep formatting') }
       ]
     },
-    { type: 'action', label: 'Clear', action: () => alert('Clear') },
-    { type: 'action', label: 'Hide', action: () => alert('Hide') },
-    { type: 'action', label: 'Update', action: () => alert('Update') },
+    {
+      type: 'action',
+      label: 'Delete',
+      icon: this.icons.elementDelete,
+      action: () => alert('Delete')
+    },
     { type: 'divider' },
+    { type: 'action', label: 'Rename', action: () => alert('Rename') },
+    { type: 'action', label: 'Share', disabled: true, action: () => {} },
+    { type: 'action', label: 'Archive', disabled: true, action: () => {} },
     {
       type: 'checkbox',
-      label: 'Be awesome',
+      label: 'Show archived',
       checked: true,
-      action: () => this.toggleAwesome()
-    },
-    { type: 'action', label: 'Do nothing', disabled: true, action: () => {} },
-    {
-      type: 'group',
-      label: 'Disabled menu',
-      disabled: true,
-      children: [
-        { type: 'action', label: 'Items 1', action: () => {} },
-        { type: 'action', label: 'Items 2', action: () => {} }
-      ]
-    },
-    {
-      type: 'group',
-      label: 'Menu with disabled children',
-      disabled: false,
-      children: [
-        { type: 'action', label: 'Items 1', disabled: true, action: () => {} },
-        { type: 'action', label: 'Items 2', disabled: true, action: () => {} }
-      ]
+      action: () => this.toggleArchived()
     },
     { type: 'divider' },
-    { type: 'radio', label: 'Beer', checked: true, action: () => this.setBeverage(1) },
-    { type: 'radio', label: 'Whisky', checked: false, action: () => this.setBeverage(2) },
-    { type: 'radio', label: 'Gin', checked: false, action: () => this.setBeverage(3) },
+    { type: 'header', label: 'View as' },
+    { type: 'radio', label: 'Table', checked: true, action: () => this.setView('Table') },
+    { type: 'radio', label: 'Cards', checked: false, action: () => this.setView('Cards') },
+    { type: 'radio', label: 'Timeline', checked: false, action: () => this.setView('Timeline') },
     { type: 'divider' },
     {
       type: 'action',
-      label: 'Import',
-      badge: 5,
-      badgeColor: 'danger',
-      action: () => alert('Import')
+      label: 'Comments',
+      icon: this.icons.elementChat,
+      badge: 3,
+      badgeColor: 'info',
+      action: () => alert('Comments')
     },
-    { type: 'action', label: 'Export', icon: 'element-export', action: () => alert('Export') },
+    {
+      type: 'action',
+      label: 'Version history',
+      icon: this.icons.elementRestore,
+      action: () => alert('Version history')
+    },
     { type: 'divider' },
     {
       type: 'group',
-      label: 'Save as',
+      label: 'Export as',
+      icon: this.icons.elementExport,
       children: [
         { type: 'action', label: 'Image', action: () => alert('Image') },
         { type: 'action', label: 'File', action: () => alert('File') },
@@ -89,16 +94,17 @@ export class SampleComponent {
         }
       ]
     }
-  ];
+  ]);
 
-  toggleAwesome(): void {
-    const item = this.items[6] as MenuItemCheckbox;
-    item.checked = !item.checked;
+  toggleArchived(): void {
+    this.items.update(items =>
+      items.map(item => (item.type === 'checkbox' ? { ...item, checked: !item.checked } : item))
+    );
   }
 
-  setBeverage(num: number): void {
-    (this.items[11] as MenuItemRadio).checked = num === 1;
-    (this.items[12] as MenuItemRadio).checked = num === 2;
-    (this.items[13] as MenuItemRadio).checked = num === 3;
+  setView(view: string): void {
+    this.items.update(items =>
+      items.map(item => (item.type === 'radio' ? { ...item, checked: item.label === view } : item))
+    );
   }
 }

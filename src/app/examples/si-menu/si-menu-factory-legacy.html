@@ -7,5 +7,5 @@
 <button type="button" class="btn btn-primary" [cdkMenuTriggerFor]="contextMenu">Open menu</button>
 
 <ng-template #contextMenu>
-  <si-menu-factory [items]="items" />
+  <si-menu-factory [items]="items()" />
 </ng-template>

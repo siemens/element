@@ -3,8 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkContextMenuTrigger, CdkMenuTrigger } from '@angular/cdk/menu';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import {
+  elementChat,
+  elementCopy,
+  elementCut,
+  elementDelete,
+  elementExport,
+  elementRestore
+} from '@siemens/element-icons';
 import { MenuItem } from '@siemens/element-ng/common';
+import { addIcons } from '@siemens/element-ng/icon';
 import { SiMenuModule } from '@siemens/element-ng/menu';
 
 @Component({
@@ -13,55 +22,64 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
   templateUrl: './si-menu-factory-legacy.html'
 })
 export class SampleComponent {
+  readonly icons = addIcons({
+    elementChat,
+    elementCopy,
+    elementCut,
+    elementDelete,
+    elementExport,
+    elementRestore
+  });
+
   // eslint-disable-next-line @typescript-eslint/no-deprecated
-  items: MenuItem[] = [
-    { title: 'Actions', isHeading: true },
+  readonly items = signal<MenuItem[]>([
+    { title: 'Cut', icon: this.icons.elementCut, action: () => alert('Cut') },
+    { title: 'Copy', icon: this.icons.elementCopy, action: () => alert('Copy') },
     {
-      title: 'Download as',
+      title: 'Paste as',
       items: [
-        { title: 'Image', action: () => alert('Image') },
-        { title: 'File', action: () => alert('File') },
-        {
-          title: 'Other',
-          disabled: true,
-          items: [{ title: 'Zip', action: () => alert('Zip') }]
-        }
+        { title: 'Plain text', action: () => alert('Plain text') },
+        { title: 'Keep formatting', action: () => alert('Keep formatting') }
       ]
     },
-    { title: 'Clear', action: () => alert('Clear') },
-    { title: 'Hide', action: () => alert('Hide') },
-    { title: 'Update', action: () => alert('Update') },
+    { title: 'Delete', icon: this.icons.elementDelete, action: () => alert('Delete') },
     { title: '-' },
+    { title: 'Rename', action: () => alert('Rename') },
+    { title: 'Share', disabled: true },
+    { title: 'Archive', disabled: true },
     {
-      title: 'Be awesome',
-      selectionState: 'check',
+      title: 'Show archived',
       type: 'check',
-      action: () => this.toggleAwesome()
-    },
-    { title: 'Do nothing', disabled: true },
-    {
-      title: 'Disabled menu',
-      disabled: true,
-      items: [{ title: 'Items 1' }, { title: 'Items 2' }]
-    },
-    {
-      title: 'Menu with disabled children',
-      disabled: false,
-      items: [
-        { title: 'Items 1', disabled: true },
-        { title: 'Items 2', disabled: true }
-      ]
+      selectionState: 'check',
+      action: () => this.toggleArchived()
     },
     { title: '-' },
-    { title: 'Beer', selectionState: 'radio', type: 'radio', action: () => this.setBeverage(1) },
-    { title: 'Whisky', selectionState: '', type: 'radio', action: () => this.setBeverage(2) },
-    { title: 'Gin', selectionState: '', type: 'radio', action: () => this.setBeverage(3) },
-    { title: '-' },
-    { title: 'Import', badge: 5, badgeColor: 'danger', action: () => alert('Import') },
-    { title: 'Export', icon: 'element-export', action: () => alert('Export') },
+    { title: 'View as', isHeading: true },
+    { title: 'Table', selectionState: 'radio', type: 'radio', action: () => this.setView('Table') },
+    { title: 'Cards', selectionState: '', type: 'radio', action: () => this.setView('Cards') },
+    {
+      title: 'Timeline',
+      selectionState: '',
+      type: 'radio',
+      action: () => this.setView('Timeline')
+    },
     { title: '-' },
     {
-      title: 'Save as',
+      title: 'Comments',
+      icon: this.icons.elementChat,
+      badge: 3,
+      badgeColor: 'info',
+      action: () => alert('Comments')
+    },
+    {
+      title: 'Version history',
+      icon: this.icons.elementRestore,
+      action: () => alert('Version history')
+    },
+    { title: '-' },
+    {
+      title: 'Export as',
+      icon: this.icons.elementExport,
       items: [
         { title: 'Image', action: () => alert('Image') },
         { title: 'File', action: () => alert('File') },
@@ -71,16 +89,25 @@ export class SampleComponent {
         }
       ]
     }
-  ];
+  ]);
 
-  toggleAwesome(): void {
-    const item = this.items[6];
-    item.selectionState = item.selectionState === 'check' ? '' : 'check';
+  toggleArchived(): void {
+    this.items.update(items =>
+      items.map(item =>
+        item.type === 'check'
+          ? { ...item, selectionState: item.selectionState === 'check' ? '' : 'check' }
+          : item
+      )
+    );
   }
 
-  setBeverage(num: number): void {
-    this.items[11].selectionState = num === 1 ? 'radio' : '';
-    this.items[12].selectionState = num === 2 ? 'radio' : '';
-    this.items[13].selectionState = num === 3 ? 'radio' : '';
+  setView(view: string): void {
+    this.items.update(items =>
+      items.map(item =>
+        item.type === 'radio'
+          ? { ...item, selectionState: item.title === view ? 'radio' : '' }
+          : item
+      )
+    );
   }
 }

@@ -3,7 +3,16 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import {
+  elementChat,
+  elementCopy,
+  elementCut,
+  elementDelete,
+  elementExport,
+  elementRestore
+} from '@siemens/element-icons';
+import { addIcons } from '@siemens/element-ng/icon';
 import { SiMenuModule } from '@siemens/element-ng/menu';
 
 @Component({
@@ -15,6 +24,19 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
   }
 })
 export class SampleComponent {
-  isAwesome = true;
-  beverage = 'beer';
+  readonly view = signal('table');
+  readonly showArchived = signal(true);
+
+  readonly icons = addIcons({
+    elementChat,
+    elementCopy,
+    elementCut,
+    elementDelete,
+    elementExport,
+    elementRestore
+  });
+
+  toggleArchived(): void {
+    this.showArchived.update(value => !value);
+  }
 }
