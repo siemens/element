@@ -85,13 +85,10 @@ Provide an accessible name with `aria-label` or an associated `<label>`;
 the placeholder does not replace a label. Native attributes such as `autocomplete`
 can also be set directly on the input.
 
-When using Signal Forms, configure disabled state in the form schema instead of
-binding `[disabled]` on the input.
-
-The `placeholder`, `maxlength`, `readonly`, and `disabled` inputs on `si-search-bar`
-are deprecated. For compatibility, omitted settings on the projected input fall
-back to the corresponding search bar settings. Explicit `false` values for
-`readonly` and `disabled` override `true` values on the search bar.
+The `placeholder`, `maxlength`, `readonly`, `disabled`, `value`, `debounceTime`, and
+`prohibitedCharacters` inputs and the `searchChange` output of `si-search-bar` are
+deprecated. They only apply to the input that the search bar renders when no input is
+projected.
 
 ### Migrate deprecated inputs and outputs
 
