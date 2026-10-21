@@ -193,6 +193,7 @@ test.describe('navbar vertical next', () => {
         await expect(page.getByRole('main')).toContainText("Content with path 'subItem4'");
 
         await page.getByRole('button', { name: 'Show side navigation', exact: true }).click();
+        await si.waitForAllAnimationsToComplete();
         await expect(page.getByRole('group', { name: 'Documentation' })).toBeVisible();
         await expect(page.getByRole('link', { name: 'Sub item 4' })).toHaveClass(/active/);
 

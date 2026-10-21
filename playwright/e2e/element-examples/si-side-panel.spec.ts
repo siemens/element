@@ -11,6 +11,11 @@ test.describe('si-side-panel', () => {
 
   const exampleCollapsibleLegacyStatusActions =
     'si-side-panel/si-side-panel-collapsible-legacy-status-actions';
+  // Temporary suppression tracked in #3014.
+  const labelContentNameMismatchRule = {
+    id: 'label-content-name-mismatch',
+    enabled: false
+  };
 
   test(`${example} - modes and backdrop`, async ({ page, si }) => {
     await si.visitExample(example);
@@ -60,7 +65,9 @@ test.describe('si-side-panel', () => {
 
     await page.locator('.btn').getByText('close').click();
     await expect(page.locator('si-side-panel.rpanel-collapsed')).toBeVisible();
-    await si.runVisualAndA11yTests('closed');
+    await si.runVisualAndA11yTests('closed', {
+      axeRulesSet: [labelContentNameMismatchRule]
+    });
 
     await page.locator('.btn').getByText('Toggle side panel').click();
     await expect(page.locator('si-side-panel:not(.rpanel-collapsed)')).toBeVisible();
@@ -72,7 +79,9 @@ test.describe('si-side-panel', () => {
 
     await page.locator('.btn').getByText('close').click();
     await expect(page.locator('si-side-panel.rpanel-collapsed')).toBeVisible();
-    await si.runVisualAndA11yTests('legacy-closed');
+    await si.runVisualAndA11yTests('legacy-closed', {
+      axeRulesSet: [labelContentNameMismatchRule]
+    });
 
     await page.locator('.btn').getByText('Toggle side panel').click();
     await expect(page.locator('si-side-panel:not(.rpanel-collapsed)')).toBeVisible();

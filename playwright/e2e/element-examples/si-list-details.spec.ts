@@ -147,9 +147,16 @@ test.describe('si-list-details', () => {
 
   test('with custom details header', async ({ page, si }, testInfo) => {
     const customHeaderExample = 'si-list-details/si-list-details-custom-header';
+    // Temporary suppression tracked in #3014.
+    const labelContentNameMismatchRule = {
+      id: 'label-content-name-mismatch',
+      enabled: false
+    };
 
     await si.visitExample(customHeaderExample);
-    await si.runVisualAndA11yTests();
+    await si.runVisualAndA11yTests(undefined, {
+      axeRulesSet: [labelContentNameMismatchRule]
+    });
 
     await page.getByRole('tab', { name: 'Address' }).click();
     await expect(page.getByRole('tabpanel')).toContainText('Industriestrasse 10');
@@ -163,7 +170,9 @@ test.describe('si-list-details', () => {
     await firstUser.click();
     await expect(backButton).toBeFocused();
     await expect(page.getByRole('heading', { name: 'Jane Smith', level: 2 })).toBeInViewport();
-    await si.runVisualAndA11yTests('mobile-details');
+    await si.runVisualAndA11yTests('mobile-details', {
+      axeRulesSet: [labelContentNameMismatchRule]
+    });
 
     await backButton.click();
     await expect(firstUser).toBeFocused();

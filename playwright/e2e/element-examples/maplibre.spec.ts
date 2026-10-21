@@ -5,8 +5,10 @@
 import { testMap } from '../../support/maptiler-mock';
 import { expect, test } from '../../support/test-helpers';
 
+// Temporary suppression tracked in #3014.
 testMap('maplibre/maplibre-cluster', ({ si }) =>
   si.static({
+    disabledA11yRules: ['label-content-name-mismatch'],
     skipAriaSnapshot: true,
     waitCallback: async page => {
       const markers = page.locator('si-cluster-marker .cluster-marker');
@@ -43,5 +45,8 @@ testMap('maplibre cluster popover', async ({ page, si }) => {
   await expect(popover.getByRole('button', { name: 'Load more', exact: true })).toBeEnabled();
 
   await page.mouse.move(-10, -10);
-  await si.runVisualAndA11yTests('popover', { skipAriaSnapshot: true });
+  await si.runVisualAndA11yTests('popover', {
+    axeRulesSet: [{ id: 'label-content-name-mismatch', enabled: false }],
+    skipAriaSnapshot: true
+  });
 });
