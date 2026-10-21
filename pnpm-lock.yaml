@@ -280,8 +280,8 @@ importers:
         specifier: 4.0.38
         version: 4.0.38(ol@10.11.0)
       ol-mapbox-style:
-        specifier: 13.5.1
-        version: 13.5.1(ol@10.11.0)
+        specifier: 13.8.0
+        version: 13.8.0(ol@10.11.0)
       remark-directive:
         specifier: ^4.0.0
         version: 4.0.0(supports-color@10.2.2)
@@ -7212,8 +7212,8 @@ packages:
     peerDependencies:
       ol: '>= 5.3.0'
 
-  ol-mapbox-style@13.5.1:
-    resolution: {integrity: sha512-xjUq4N97Z53x5jgTByV8UH0C0azbrO9F5w8lLd4DSCQo3S+KDowz2aaMr3o6DKqpBKP+dbQ8AbE7PvPFEMoMTw==, tarball: https://registry.npmjs.org/ol-mapbox-style/-/ol-mapbox-style-13.5.1.tgz}
+  ol-mapbox-style@13.8.0:
+    resolution: {integrity: sha512-Nanc5OvMnK4SgGPISMkmZ99EKP4OeGVMpP/kkqCmVirD67yeBnQXvDbXAhh1pRB4Ww3DlwagSyoj4viwr5PYUg==, tarball: https://registry.npmjs.org/ol-mapbox-style/-/ol-mapbox-style-13.8.0.tgz}
     peerDependencies:
       ol: '*'
 
@@ -16330,7 +16330,7 @@ snapshots:
     dependencies:
       ol: 10.11.0
 
-  ol-mapbox-style@13.5.1(ol@10.11.0):
+  ol-mapbox-style@13.8.0(ol@10.11.0):
     dependencies:
       '@maplibre/maplibre-gl-style-spec': 26.4.4
       mapbox-to-css-font: 3.2.1
