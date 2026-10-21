@@ -54,6 +54,13 @@ or an [avatar](../status-notifications/avatar.md), depending on the content need
 
 ![List item indicator](images/list-item-indicator.png)
 
+Center-align the indicator when both conditions are met:
+
+- The indicator is taller than the title slot.
+- Additional text is present either above or below the title slot, but not both.
+
+If text is present both above and below the title slot, keep the indicator title-aligned.
+
 ### Actions
 
 The list item supports two distinct action slots:
@@ -127,6 +134,17 @@ Add these optional slot classes to position content within a `.list-item`:
 | `.list-item-metadata`         | Supplementary information below the description, such as workspace names, contributor counts, document links, or status badges |
 | `.list-item-metadata-divider` | Small dot separator between items within `.list-item-metadata`                                                                 |
 | `.list-item-quick-actions`    | Secondary actions below the item content                                                                                       |
+
+By default, the indicator and selection checkbox are vertically centered alongside the title.
+Add `.align-indicator-center` to `.list-item` to center both across the entire item instead.
+
+```html
+<li class="list-item align-indicator-center">
+  <si-avatar class="list-item-indicator" />
+  <h5 class="list-item-title">Scheduled Maintenance</h5>
+  <p class="list-item-description">Annual condenser coil cleaning and refrigerant level check.</p>
+</li>
+```
 
 <si-docs-component example="list-item/list-item" height="400"></si-docs-component>
 
