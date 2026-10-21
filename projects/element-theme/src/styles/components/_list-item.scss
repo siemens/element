@@ -77,6 +77,17 @@ ol:has(.list-item) {
     margin-inline-end: map.get(variables.$spacers-inline, 4);
   }
 
+  &.align-indicator-center {
+    .list-item-check,
+    .list-item-indicator {
+      grid-row: 1 / -1;
+    }
+
+    .list-item-indicator {
+      max-block-size: none;
+    }
+  }
+
   .list-item-timestamp {
     grid-area: timestamp;
     color: variables.$si-sys-color-text-secondary;
