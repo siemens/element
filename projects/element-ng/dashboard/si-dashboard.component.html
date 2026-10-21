@@ -3,13 +3,15 @@
   [class.sticky]="sticky()"
 >
   <div class="si-dashboard-header" [class.sticky]="sticky()">
-    @if (heading()) {
-      <div class="si-layout-header">
-        <h2 class="si-layout-title si-layout-top-element">{{ heading() | translate }}</h2>
-      </div>
-    }
+    <ng-content select="[header]">
+      @if (heading()) {
+        <div class="si-layout-header">
+          <h2 class="si-layout-title si-layout-top-element">{{ heading() | translate }}</h2>
+        </div>
+      }
+    </ng-content>
     @if (!hideMenubarComputed()) {
-      <div class="mb-6" [class.si-layout-top-element]="!heading()">
+      <div class="si-dashboard-menubar si-layout-top-element mb-6">
         <ng-content select="[menubar]" />
       </div>
     }

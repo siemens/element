@@ -9,6 +9,10 @@
   - button "expand"
 - main:
   - heading "Dashboard" [level=2]
+  - paragraph: Weekly overview of team activity and building access
+  - menubar:
+    - menuitem "Share"
+    - menuitem "Export"
   - combobox "selection of day":
     - option "All days" [selected]
     - option "Mon"

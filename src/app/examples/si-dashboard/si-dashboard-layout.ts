@@ -19,7 +19,10 @@ import {
   SiHeaderLogoDirective,
   SiLaunchpadFactoryComponent
 } from '@siemens/element-ng/application-header';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
+import {
+  ContentActionBarMainItem,
+  SiContentActionBarComponent
+} from '@siemens/element-ng/content-action-bar';
 import {
   SiDashboardCardComponent,
   SiDashboardComponent,
@@ -45,6 +48,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiChartCircleComponent,
     SiChartGaugeComponent,
     SiChartProgressBarComponent,
+    SiContentActionBarComponent,
     SiDashboardCardComponent,
     SiDashboardComponent,
     SiIconComponent,
@@ -124,6 +128,10 @@ export class SampleComponent {
   linesAddedWeek = this.series[0].data.reduce((a: number, b: number) => a + b, 0);
   linesRemovedWeek = this.series[1].data.reduce((a: number, b: number) => a + b, 0);
   doorEventsWeek = this.doorAccessEvents.reduce((a: number, b: number) => a + b, 0);
+  pageActions: ContentActionBarMainItem[] = [
+    { type: 'action', label: 'Share', action: () => this.logEvent('Share clicked') },
+    { type: 'action', label: 'Export', action: () => this.logEvent('Export clicked') }
+  ];
   primaryActions: ContentActionBarMainItem[] = [
     { type: 'action', label: 'Settings', action: () => this.logEvent('Settings clicked') },
     { type: 'action', label: 'Copy', action: () => this.logEvent('Copy clicked') },
