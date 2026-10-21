@@ -105,7 +105,7 @@ describe('formly datetime-type', () => {
     const inputField = inputEl();
     inputField.value = startDateInputVal;
     inputField.dispatchEvent(new Event('input'));
-    vi.advanceTimersByTime(200);
+    await vi.advanceTimersByTimeAsync(200);
     await fixture.whenStable();
     expect(component.model().name).toEqual(new Date(startDateUTCShort));
   });
@@ -156,7 +156,7 @@ describe('formly datetime-type', () => {
     inputField.value = startDateInputVal;
     inputField.dispatchEvent(new Event('input'));
 
-    vi.advanceTimersByTime(200);
+    await vi.advanceTimersByTimeAsync(200);
     await fixture.whenStable();
     expect(component.model().name).toEqual(new Date(startDateUTCSLong));
   });
@@ -205,8 +205,7 @@ describe('formly datetime-type', () => {
     inputField.value = startDateInputVal;
     inputField.dispatchEvent(new Event('input'));
 
-    vi.advanceTimersByTime(200);
-    fixture.detectChanges();
+    await vi.advanceTimersByTimeAsync(200);
     await fixture.whenStable();
 
     expect(component.model().name.getTime()).toEqual(date.getTime());

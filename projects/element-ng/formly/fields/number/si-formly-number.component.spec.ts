@@ -56,6 +56,10 @@ describe('formly number type', () => {
     fixture = TestBed.createComponent(FormlyTestComponent);
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('should display the number input based on props provided', async () => {
     vi.useFakeTimers();
     const componentInstance = fixture.componentInstance;
@@ -79,10 +83,9 @@ describe('formly number type', () => {
     inputField.nativeElement.value = 2000;
     inputField.nativeElement.dispatchEvent(new Event('input'));
 
-    vi.advanceTimersByTime(200);
+    await vi.advanceTimersByTimeAsync(200);
     await fixture.whenStable();
     // Assert if input change reflects the model
     expect(componentInstance.model().cost).toBe(2000);
-    vi.useRealTimers();
   });
 });
