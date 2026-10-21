@@ -65,27 +65,29 @@ Infer the correct test command from the file path being edited. After implementa
 
 All unit tests use **Vitest**. Do NOT use `npx ng test` or Karma/Jasmine commands.
 
-| File path prefix                 | Command                   |
-| -------------------------------- | ------------------------- |
-| `projects/element-ng/`           | `pnpm lib:test`           |
-| `projects/charts-ng/`            | `pnpm charts:test`        |
-| `projects/native-charts-ng/`     | `pnpm native-charts:test` |
-| `projects/maps-ng/`              | `pnpm maps:test`          |
-| `projects/dashboards-ng/`        | `pnpm dashboards:test`    |
-| `projects/element-translate-ng/` | `pnpm translate:test`     |
+Always set `CI=true` when running unit tests. This disables watch mode so tests run once and configures browser tests to run headlessly.
 
-To run a specific test file, use `--include` and `--no-watch`:
+| File path prefix                 | Command                           |
+| -------------------------------- | --------------------------------- |
+| `projects/element-ng/`           | `CI=true pnpm lib:test`           |
+| `projects/charts-ng/`            | `CI=true pnpm charts:test`        |
+| `projects/native-charts-ng/`     | `CI=true pnpm native-charts:test` |
+| `projects/maps-ng/`              | `CI=true pnpm maps:test`          |
+| `projects/dashboards-ng/`        | `CI=true pnpm dashboards:test`    |
+| `projects/element-translate-ng/` | `CI=true pnpm translate:test`     |
+
+To run a specific test file, use `--include`:
 
 ```shell
-pnpm lib:test --include='**/component-name/component-name.component.spec.ts' --no-watch
+CI=true pnpm lib:test --include='**/component-name/component-name.component.spec.ts'
 ```
 
-Only these CLI flags are supported: `--include` (glob filter) and `--no-watch` (run once).
-Do NOT use `--reporter`, `--watch=false`, or any other flags.
+Only the `--include` CLI flag (glob filter) is supported for these commands.
+Do NOT use `--watch`, `--no-watch`, `--watch=false`, `--reporter`, or any other flags. Use `CI=true` instead of watch flags.
 
 ### Schematics Tests
 
-Run `npm run schematics:test` (uses Vitest). Config: `projects/element-ng/vitest.config.schematics.ts`.
+Run `CI=true npm run schematics:test` (uses Vitest). Config: `projects/element-ng/vitest.config.schematics.ts`.
 
 ### E2E Tests
 

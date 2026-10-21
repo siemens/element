@@ -50,7 +50,7 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
       background-color: variables.$si-sys-color-background-hover;
     }
 
-    &:is(:checked, .checked) {
+    &:is(:checked, .checked, :indeterminate) {
       background-color: variables.$si-sys-color-background-accent;
 
       &:hover {
@@ -74,6 +74,11 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
 
     &:is(:checked, .checked)::before {
       inset-inline-start: calc(#{$si-switch-slider-margin} + #{$si-switch-size} - 1px);
+      background-color: $si-switch-slider-on-color;
+    }
+
+    &:indeterminate::before {
+      inset-inline-start: calc(#{$si-switch-slider-margin} + #{$si-switch-size} / 2 - 1px);
       background-color: $si-switch-slider-on-color;
     }
   }

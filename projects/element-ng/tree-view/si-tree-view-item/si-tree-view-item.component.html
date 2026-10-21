@@ -1,7 +1,7 @@
 @if (!isGroupedItem) {
   <div
     #contextMenuTrigger="cdkContextMenuTriggerFor"
-    class="si-tree-view-li si-tree-view-li-item focus-direct-sub-inside grab-area"
+    class="si-tree-view-li si-tree-view-li-item grab-area"
     [class.si-tree-view-item-context-menu-visible]="
       !!(contextMenuTrigger.isOpen() || menuTrigger()?.isOpen())
     "
@@ -115,7 +115,7 @@
     </div>
   </div>
 } @else {
-  <div class="si-tree-view-li focus-direct-sub-inside">
+  <div class="si-tree-view-li">
     <div class="si-tree-view-item-group">
       @if (showFolderStateStart) {
         <ng-container

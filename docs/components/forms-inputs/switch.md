@@ -15,26 +15,27 @@ Examples are: `On`/`Off`, `Online`/`Offline` or `Installed`/`Not installed`.
 
 ### Best practices
 
-- A label next to the switch must describe the affected property.
-- Don't use the label to describe the states of the switch.
-- A switch never needs an extra button to submit the selected state.
+- Use a stable label that describes the setting being controlled, not the action or current state.
+- Let the switch communicate its state. Additional text such as On or Off may be displayed when
+  explicit state information is needed.
+- Do not change the label when the switch state changes.
+- Switches apply changes immediately and must not require an additional submit button.
 
 ## Design ---
 
-A switch consists of the following elements:
+### Anatomy
 
-![Construction](images/switch-usage-construction.png)
+![Switch elements](images/switch-usage-construction.png)
 
-> 1\. Background, 2. Switch element
+> 1\. Background, 2. Thumb
 
-### Background
+### Thumb position
 
-Its appearance depends on the current state of the switch.
-
-### Switch element
-
-- Shown on the right side for state `On`.
-- Shown on the left side for state `Off`.
+- **On:** Positioned on the right.
+- **Off:** Positioned on the left.
+- **Indeterminate:** Positioned in the center. Used when multiple values have mixed
+  states or when the setting has no defined value. Selecting the switch resolves it
+  to `On` or `Off`.
 
 ## Code ---
 

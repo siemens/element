@@ -9,18 +9,19 @@
   </button>
 </div>
 <div class="modal-body text-pre-wrap text-break overflow-y-auto widget-list">
-  <div class="list-group">
+  <div class="list">
     <button
       type="button"
-      class="list-group-item list-group-item-action d-flex align-items-center"
+      class="list-item list-item-action"
       [class.active]="selectedWidgets()[0] === myDescriptor"
       (click)="selectedWidgets.set([myDescriptor])"
     >
-      <si-circle-status class="my-n4 me-5" [icon]="myDescriptor.iconClass" />
-      <div class="d-flex flex-column align-items-start">
-        <span class="si-h5">{{ myDescriptor.name | translate }}</span>
-        <span class="si-body">{{ myDescriptor.description | translate }}</span>
-      </div>
+      <si-icon
+        class="list-item-indicator icon"
+        [icon]="myDescriptor.iconClass || icons.elementSpecialObject"
+      />
+      <span class="list-item-title">{{ myDescriptor.name | translate }}</span>
+      <span class="list-item-description">{{ myDescriptor.description | translate }}</span>
     </button>
   </div>
 </div>

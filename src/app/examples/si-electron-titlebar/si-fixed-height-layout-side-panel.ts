@@ -19,12 +19,12 @@ import {
   SiLaunchpadFactoryComponent
 } from '@siemens/element-ng/application-header';
 import { SiCardComponent } from '@siemens/element-ng/card';
-import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
 import { SiElectrontitlebarComponent } from '@siemens/element-ng/electron-titlebar';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
 import {
@@ -43,7 +43,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiNavbarVerticalComponent,
     SiSidePanelComponent,
     SiSidePanelContentComponent,
-    SiCircleStatusModule,
+    SiIconComponent,
     SiAccordionComponent,
     SiCollapsiblePanelComponent,
     SiElectrontitlebarComponent,

@@ -72,6 +72,9 @@ export class SiMarkdownTableComponent implements SiMarkdownExtensionComponent, O
   }
 
   private escapeCsvField(value: string): string {
+    if (/^[=+\-@\t\r\n]/.test(value)) {
+      value = `'${value}`;
+    }
     return /[",\r\n]/.test(value) ? `"${value.replaceAll('"', '""')}"` : value;
   }
 }

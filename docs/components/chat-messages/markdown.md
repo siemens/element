@@ -133,6 +133,32 @@ by the Element integrations, such as emoji shortcodes.
 > **Bundle size:** KaTeX, Mermaid, Highlight.js, and additional `unified` plugins increase the
 > application bundle size. Import and configure only the integrations your Markdown content requires.
 
+#### Mermaid security considerations
+
+Keep Mermaid configuration in trusted application code. When rendering diagrams from users,
+external services, or AI-generated responses, keep the default
+[`securityLevel: 'strict'`](https://mermaid.js.org/config/schema-docs/config.html#securitylevel).
+
+The Mermaid integration uses shared global configuration: options passed to `siMarkdownMermaid()`
+can affect other diagram renders using the same Mermaid instance. Separate `si-markdown` components
+or options objects do not provide configuration isolation. Use a consistent strict configuration
+throughout the application, and do not mix permissive Mermaid configuration with untrusted diagram
+rendering. Do not rely on Angular's HTML sanitization to compensate for permissive settings: the
+integration trusts Mermaid's generated SVG output.
+
+#### KaTeX security considerations
+
+Keep the default [`trust: false`](https://katex.org/docs/options.html) when rendering expressions
+from users, external services, or AI-generated responses. This setting disables commands that can
+create links, load external images, or add HTML attributes.
+
+Do not set `trust: true` unless all expressions rendered with that configuration come from sources
+you fully trust, such as application-controlled content. Do not enable it for user-provided,
+externally supplied, or AI-generated expressions. If specific commands are required for untrusted
+expressions, use a narrowly scoped `trust` callback that validates both the command and its arguments,
+including URLs. Keep KaTeX configuration in trusted application code. KaTeX renders directly into
+the DOM, so Angular's HTML sanitization does not provide an additional safeguard for these settings.
+
 ### Directives
 
 Directives add named, component-backed elements to Markdown. The renderer supports the directive

@@ -15,7 +15,7 @@ ol:has(.list-item) {
 }
 
 .list {
-  &.list-divider > li:not(:last-child) {
+  &.list-divider > .list-item:not(:last-child) {
     border-block-end: 1px solid variables.$si-sys-color-border-4;
   }
 

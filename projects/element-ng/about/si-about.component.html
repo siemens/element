@@ -5,8 +5,8 @@
         {{ aboutTitle() }}
       </div>
 
-      <div class="list-group">
-        <div class="list-group-item text-center">
+      <div class="list list-divider">
+        <div class="list-item d-block text-center">
           @let appIcon = iconName();
           @if (icon()) {
             <img
@@ -111,10 +111,10 @@
 
 <ng-template #linkTemplate let-link="link">
   <a
-    class="list-group-item si-h5 text-primary focus-inside"
+    class="list-item list-item-action text-primary focus-inside"
     siLinkDefaultTarget="_blank"
     [siLink]="link"
   >
-    {{ link.title | translate }}
+    <span class="list-item-title">{{ link.title | translate }}</span>
   </a>
 </ng-template>

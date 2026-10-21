@@ -1,20 +1,3 @@
-@use 'sass:map';
-
-@use '@siemens/element-theme/src/styles/variables';
-
-.list-group-item {
-  border-width: 0 0 1px;
-  padding-inline: map.get(variables.$spacers-inline, 6);
-
-  &.with-border:first-child {
-    border-block-start-width: 1px;
-  }
-
-  &:last-child {
-    border-block-end-width: 0;
-  }
-}
-
 .app-icon {
   font-size: 150px;
 }

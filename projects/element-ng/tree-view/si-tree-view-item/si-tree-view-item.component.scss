@@ -5,6 +5,8 @@
 
 :host {
   display: block;
+  // Keep the host's inset outline above the row background.
+  position: relative;
 
   &.cdk-drag:not(.cdk-drag-placeholder) {
     transform: none !important; // stylelint-disable-line declaration-no-important
@@ -41,7 +43,6 @@
 }
 
 .si-tree-view-li.si-tree-view-li-item {
-  position: relative;
   cursor: pointer;
 
   &:hover,
