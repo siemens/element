@@ -50,6 +50,9 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
   private readonly destroyRef = inject(DestroyRef);
   /**
    * Heading for the dashboard page.
+   *
+   * To show a custom header instead, e.g. with a description or page actions,
+   * project it using the `header` attribute. The heading is ignored in that case.
    */
   readonly heading = input<TranslatableString>();
 

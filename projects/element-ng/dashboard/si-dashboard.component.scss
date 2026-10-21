@@ -16,6 +16,11 @@
         padding-inline-end: map.get(all-variables.$spacers-inline, 9);
       }
     }
+
+    // Only the top element reserves space for the navigation, so drop it if a header is rendered.
+    > .si-dashboard-menubar:not(:first-child) {
+      margin-inline: 0;
+    }
   }
 
   .si-dashboard-content {

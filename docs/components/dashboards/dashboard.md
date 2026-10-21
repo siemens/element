@@ -99,6 +99,32 @@ import {
 
 <si-docs-component example="si-dashboard/si-dashboard-layout" height="700"></si-docs-component>
 
+### Custom header
+
+The `heading` input renders a plain page title. To show additional context like a
+description or page actions, project a custom header using the `header` attribute,
+as shown in the example above. The custom header replaces the default heading.
+
+Build the custom header according to the [page header](../../fundamentals/layouts/header.md)
+guidelines using the `.si-layout-header` CSS classes. Add the `.si-layout-top-element` CSS class
+to the title to reserve space for the vertical navigation and the side panel in the mobile viewport.
+
+```html
+<si-dashboard>
+  <div class="si-layout-header" header>
+    <h2 class="si-layout-title si-layout-top-element">Dashboard</h2>
+    <p class="si-layout-subtitle">Description</p>
+    <si-content-action-bar
+      class="si-layout-actions"
+      viewType="expanded"
+      [primaryActions]="pageActions"
+    />
+  </div>
+  <ng-container menubar>...</ng-container>
+  <ng-container dashboard>...</ng-container>
+</si-dashboard>
+```
+
 <si-docs-api component="SiDashboardComponent"></si-docs-api>
 
 <si-docs-api component="SiDashboardCardComponent"></si-docs-api>

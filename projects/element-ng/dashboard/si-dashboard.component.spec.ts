@@ -11,12 +11,15 @@ import { Subject } from 'rxjs';
 
 import { SiDashboardCardComponent, SiDashboardComponent } from './index';
 
+const menubarOffset = (element: HTMLElement): string =>
+  getComputedStyle(element.querySelector('select')!.parentElement!).marginInlineStart;
+
 @Component({
   imports: [SiDashboardCardComponent, SiDashboardComponent, NgTemplateOutlet],
   template: `
     <si-dashboard
-      heading="Dashboard"
       style="height: 300px"
+      [heading]="heading()"
       [enableExpandInteractions]="enableExpandInteractions()"
     >
       <ng-container menubar><select></select></ng-container>
@@ -42,11 +45,32 @@ import { SiDashboardCardComponent, SiDashboardComponent } from './index';
 class WrapperComponent {
   readonly dashboard = viewChild.required(SiDashboardComponent);
   readonly cardComponents = viewChildren(SiDashboardCardComponent);
+  readonly heading = signal<string | undefined>('Dashboard');
   readonly primaryActions = signal<any>(undefined);
   readonly secondaryActions = signal<any>(undefined);
   readonly enableExpandInteractions = signal(false);
   readonly cards = signal(['Item1', 'Item2']);
   readonly showMenubar = signal([true, true]);
+}
+
+@Component({
+  imports: [SiDashboardComponent],
+  template: `
+    <si-dashboard style="height: 300px" [heading]="heading()">
+      @if (showHeader()) {
+        <div class="si-layout-header" header>
+          <h2 class="si-layout-title si-layout-top-element">Custom heading</h2>
+          <p class="si-layout-subtitle">Custom description</p>
+        </div>
+      }
+      <ng-container menubar><select></select></ng-container>
+      <ng-container dashboard />
+    </si-dashboard>
+  `
+})
+class CustomHeaderWrapperComponent {
+  readonly heading = signal<string | undefined>(undefined);
+  readonly showHeader = signal(true);
 }
 
 describe('SiDashboardComponent', () => {
@@ -160,6 +184,25 @@ describe('SiDashboardComponent', () => {
     });
   });
 
+  describe('header', () => {
+    beforeEach(() => {
+      element.style.setProperty('--si-layout-header-first-element-offset', '40px');
+    });
+
+    it('should render the heading as page title', () => {
+      expect(element.querySelector('h2.si-layout-title')).toHaveTextContent('Dashboard');
+      expect(menubarOffset(element)).toBe('0px');
+    });
+
+    it('should reserve space for the navigation in the menu bar without heading', async () => {
+      component.heading.set(undefined);
+      await fixture.whenStable();
+
+      expect(element.querySelector('h2')).not.toBeInTheDocument();
+      expect(menubarOffset(element)).toBe('40px');
+    });
+  });
+
   it('resize should trigger setDashboardFrameEndPadding on resize', () => {
     const setPaddingSpy = vi.spyOn<SiDashboardComponent, any>(
       component.dashboard(),
@@ -238,5 +281,47 @@ describe('SiDashboardComponent', () => {
     expanded = fixture.debugElement.queryAll(By.css('div.position-relative'))[0];
     header = expanded.children[0].queryAll(By.css('.card-header'))[0].nativeElement.outerText;
     expect(header).toContain('heading 1');
+  });
+});
+
+describe('SiDashboardComponent with custom header', () => {
+  let fixture: ComponentFixture<CustomHeaderWrapperComponent>;
+  let element: HTMLElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [CustomHeaderWrapperComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(CustomHeaderWrapperComponent);
+    element = fixture.nativeElement;
+    element.style.setProperty('--si-layout-header-first-element-offset', '40px');
+    fixture.detectChanges();
+  });
+
+  it('should render the projected header', () => {
+    expect(element.querySelector('h2.si-layout-title')).toHaveTextContent('Custom heading');
+    expect(element.querySelector('.si-layout-subtitle')).toHaveTextContent('Custom description');
+  });
+
+  it('should not reserve space for the navigation in the menu bar', () => {
+    expect(menubarOffset(element)).toBe('0px');
+  });
+
+  it('should reserve space for the navigation in the menu bar if no header is rendered', async () => {
+    fixture.componentInstance.showHeader.set(false);
+    await fixture.whenStable();
+
+    expect(element.querySelector('h2')).not.toBeInTheDocument();
+    expect(menubarOffset(element)).toBe('40px');
+  });
+
+  it('should not render the heading input', async () => {
+    fixture.componentInstance.heading.set('Dashboard');
+    await fixture.whenStable();
+
+    const headings = element.querySelectorAll('h2');
+    expect(headings).toHaveLength(1);
+    expect(headings[0]).toHaveTextContent('Custom heading');
   });
 });

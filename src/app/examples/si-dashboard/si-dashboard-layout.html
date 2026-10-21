@@ -53,7 +53,16 @@
     [items]="menuItems"
     [textOnly]="true"
   >
-    <si-dashboard #dashboard heading="Dashboard" [sticky]="true">
+    <si-dashboard #dashboard [sticky]="true">
+      <div class="si-layout-header" header>
+        <h2 class="si-layout-title si-layout-top-element">Dashboard</h2>
+        <p class="si-layout-subtitle">Weekly overview of team activity and building access</p>
+        <si-content-action-bar
+          class="si-layout-actions"
+          viewType="expanded"
+          [primaryActions]="pageActions"
+        />
+      </div>
       <ng-container menubar>
         <div class="d-flex">
           <select
