@@ -77,6 +77,9 @@ export class SiLivePreviewWrapperComponent {
       });
     this.initialUrl = window.location.toString();
     this.isMobile = this.internalConfig.isMobile;
+    if (this.isMobile) {
+      setDeviceMode(this.state.viewport().mode);
+    }
 
     // send ready message only when locale/theme are communicated to avoid loops
     this.sendMessage('ready');
