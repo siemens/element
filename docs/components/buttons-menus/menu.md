@@ -1,26 +1,28 @@
 # Menu
 
-Contextual menus are lists of commands that are based on the context of a selection, mouse hover or keyboard focus.
-They are one of the most effective and highly used command surfaces, and can be used in a variety of places.
+**Menus** display a list of actions related to a specific element or context.
 
 ## Usage ---
+
+Menus open from a trigger, such as a buttons or right-click,
+and show actions related to the current context.
 
 ![Menu](images/menu.png)
 
 ### When to use
 
-- If users need to perform several actions on a content
-- If the actions are not used on a daily basis
+- When users need to perform several actions on the same content.
+- For actions that are not used frequently and don't need to be permanently visible.
+- To keep the interface clean by grouping secondary actions in one place.
 - If there is one action only, use [button](buttons.md) or [link](links.md) instead
 
 ### Best practices
 
-- Analyze what actions are most important. Order the actions accordingly.
-- Group similar actions.
+- Order actions by importance, with the most relevant ones at the top.
+- Group related actions and separate the groups with dividers.
 - Move less important actions to a submenu.
-- Keep disabled actions visible.
-- Do not use more than 2 submenus in a nested way.
-- Do not have a long and flat list of actions, which might not have space on a small screen.
+- Keep disabled actions visible so users know the action exists but is currently unavailable.
+- Avoid more than two levels of nested submenus.
 
 ## Design ---
 
@@ -28,14 +30,16 @@ They are one of the most effective and highly used command surfaces, and can be 
 
 ![Elements](images/menu-elements.png)
 
-> (1) Hover state, (2) Entry with submenu, (3) Header, (4) Entry menu with icon, (5) Disabled state, (6) Indication for submenu, (7) Divider
+> 1\. Item with submenu, 2. Section title, 3. Item with icon, 4. Divider
 
-### Alternatives
+### Selection
 
-![Alternatives](images/menu-alternatives.png)
+Menus can include selectable items with single choice or multiple choice.
 
-- Single choice should be used if the user has to select one of the options only. Make sure, that the options are grouped correctly.
-- Multi choice can be used, if the user can enable or disable some functionality over the menu.
+- Use single choice when only one option can be active at a time.
+- Use multiple choice when users can enable or disable several options independently.
+
+![Multiple and single choice](images/menu-alternatives.png)
 
 ## Code ---
 
