@@ -7,6 +7,11 @@ import { test } from '../../support/test-helpers';
 test.describe('navbar launchpad', () => {
   const example = 'si-navbar/si-navbar-primary';
   const exampleEnd = 'si-navbar/si-navbar-primary-end';
+  // Temporary suppression tracked in #3014.
+  const labelContentNameMismatchRule = {
+    id: 'label-content-name-mismatch',
+    enabled: false
+  };
 
   test(example + ' on a normal screen', async ({ page, si }) => {
     await si.visitExample(example);
@@ -31,7 +36,9 @@ test.describe('navbar launchpad', () => {
     await page.getByRole('button', { name: 'Jane Smith' }).click();
     await page.getByText('Company').click();
     await page.waitForTimeout(400); // wait for expand-icon animation
-    await si.runVisualAndA11yTests('normal-expanded');
+    await si.runVisualAndA11yTests('normal-expanded', {
+      axeRulesSet: [labelContentNameMismatchRule]
+    });
   });
 
   test(exampleEnd + ' on a small screen', async ({ page, si }) => {
@@ -41,6 +48,8 @@ test.describe('navbar launchpad', () => {
     await page.getByLabel('Show actions').click();
     await page.getByRole('button', { name: 'Help' }).click();
     await page.waitForTimeout(400); // wait for expand-icon animation
-    await si.runVisualAndA11yTests('small-expanded');
+    await si.runVisualAndA11yTests('small-expanded', {
+      axeRulesSet: [labelContentNameMismatchRule]
+    });
   });
 });

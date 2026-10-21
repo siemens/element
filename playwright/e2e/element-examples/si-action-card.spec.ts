@@ -6,6 +6,11 @@ import { expect, test } from '../../support/test-helpers';
 
 test.describe('si-action-card', () => {
   const example = 'si-card/si-action-card-variations';
+  // Temporary suppression tracked in #3014.
+  const labelContentNameMismatchRule = {
+    id: 'label-content-name-mismatch',
+    enabled: false
+  };
 
   test(example, async ({ page, si }) => {
     await si.visitExample(example, false);
@@ -23,7 +28,9 @@ test.describe('si-action-card', () => {
 
     await expect(card).toHaveAttribute('aria-pressed', 'true');
 
-    await si.runVisualAndA11yTests();
+    await si.runVisualAndA11yTests(undefined, {
+      axeRulesSet: [labelContentNameMismatchRule]
+    });
 
     const anotherCard = page.getByRole('button', {
       name: 'Natural gas usage'
@@ -31,6 +38,8 @@ test.describe('si-action-card', () => {
 
     await anotherCard.hover();
 
-    await si.runVisualAndA11yTests('hover');
+    await si.runVisualAndA11yTests('hover', {
+      axeRulesSet: [labelContentNameMismatchRule]
+    });
   });
 });

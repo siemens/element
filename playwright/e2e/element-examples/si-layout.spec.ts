@@ -25,6 +25,7 @@ test.describe('si-layouts', () => {
     await page.getByRole('button', { name: 'Full screen', exact: true }).click();
     await si.runVisualAndA11yTests('side-panel-fullscreen-navbar-next-expanded');
     await page.getByRole('button', { name: 'Show side navigation', exact: true }).click();
+    await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('side-panel-fullscreen-navbar-next');
   });
 

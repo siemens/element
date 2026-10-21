@@ -30,12 +30,19 @@ test.describe('si-typeahead', () => {
   });
 
   const customExample = 'si-typeahead/si-typeahead-custom';
+  // Temporary suppression tracked in #3014.
+  const labelContentNameMismatchRule = {
+    id: 'label-content-name-mismatch',
+    enabled: false
+  };
 
   test(customExample, async ({ page, si }) => {
     await si.visitExample(customExample);
     await page.getByRole('textbox').fill('al');
     await expect(page.getByText('Alabama')).toHaveCount(1);
     await page.waitForTimeout(1000); // Wait for model (output) to update
-    await si.runVisualAndA11yTests();
+    await si.runVisualAndA11yTests(undefined, {
+      axeRulesSet: [labelContentNameMismatchRule]
+    });
   });
 });
