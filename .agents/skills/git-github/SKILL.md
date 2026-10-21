@@ -44,7 +44,7 @@ Commit messages drive the changelog, so getting the format right is mandatory.
   `api`, `a11y`, `ionic`, `i18n`, `theme`, `webcomponents`.
 - For dependency changes use the npm package name.
 
-### Body
+### Body (required)
 
 Imperative present tense. Explain the motivation and contrast previous vs. new
 behavior where helpful.
