@@ -11,9 +11,11 @@ import {
   OnInit,
   output,
   OutputEmitterRef,
-  Type
+  Type,
+  viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
 import { firstValueFrom, Observable, of, zip } from 'rxjs';
@@ -113,6 +115,26 @@ class TestWidgetStorage extends SiDefaultWidgetStorage {
     };
   };
 }
+
+@Component({
+  imports: [SiFlexibleDashboardComponent],
+  template: `
+    <si-flexible-dashboard heading="Heading" [widgetCatalogComponent]="widgetCatalogComponent">
+      <div class="si-layout-header" header>
+        <h2 class="si-layout-title si-layout-top-element">Custom heading</h2>
+      </div>
+    </si-flexible-dashboard>
+  `
+})
+class CustomHeaderHostComponent {
+  readonly dashboard = viewChild.required(SiFlexibleDashboardComponent);
+  protected readonly widgetCatalogComponent = SiWidgetCatalogMockComponent;
+}
+
+const pageHeadings = (element: HTMLElement): string[] =>
+  Array.from(element.querySelectorAll('.si-dashboard-header h2')).map(
+    heading => heading.textContent?.trim() ?? ''
+  );
 
 describe('SiFlexibleDashboardComponent', () => {
   let component: SiFlexibleDashboardComponent;
@@ -230,6 +252,56 @@ describe('SiFlexibleDashboardComponent', () => {
       fixture.componentRef.setInput('dashboardId', '1');
       fixture.detectChanges();
       expect(component.editable()).toBe(false);
+    });
+
+    it('should render the heading as page title', () => {
+      expect(pageHeadings(fixture.nativeElement)).toEqual(['Heading']);
+    });
+
+    it('should render the widget catalog title while adding widgets', async () => {
+      fixture.componentRef.setInput('widgetCatalogComponent', SiWidgetCatalogMockComponent);
+      component.showWidgetCatalog();
+      await fixture.whenStable();
+
+      expect(pageHeadings(fixture.nativeElement)).toEqual(['Add widget']);
+    });
+  });
+
+  describe('with custom header', () => {
+    let hostFixture: ComponentFixture<CustomHeaderHostComponent>;
+
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        providers: [
+          { provide: SI_WIDGET_STORE, useClass: TestWidgetStorage },
+          { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} }
+        ],
+        imports: [CustomHeaderHostComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+      })
+        .overrideComponent(SiFlexibleDashboardComponent, {
+          remove: { imports: [SiDashboardToolbarComponent, SiGridComponent] },
+          add: { imports: [SiDashboardToolbarStubComponent, GridComponent] }
+        })
+        .compileComponents();
+      hostFixture = TestBed.createComponent(CustomHeaderHostComponent);
+      hostFixture.detectChanges();
+    });
+
+    it('should render the custom header instead of the heading', () => {
+      expect(pageHeadings(hostFixture.nativeElement)).toEqual(['Custom heading']);
+    });
+
+    it('should replace the custom header with the widget catalog title while adding widgets', async () => {
+      hostFixture.componentInstance.dashboard().showWidgetCatalog();
+      await hostFixture.whenStable();
+      expect(pageHeadings(hostFixture.nativeElement)).toEqual(['Add widget']);
+
+      hostFixture.debugElement
+        .query(By.directive(SiWidgetCatalogMockComponent))
+        .componentInstance.closed.emit(undefined);
+      await hostFixture.whenStable();
+      expect(pageHeadings(hostFixture.nativeElement)).toEqual(['Custom heading']);
     });
   });
 
