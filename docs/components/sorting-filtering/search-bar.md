@@ -93,6 +93,35 @@ are deprecated. For compatibility, omitted settings on the projected input fall
 back to the corresponding search bar settings. Explicit `false` values for
 `readonly` and `disabled` override `true` values on the search bar.
 
+### Migrate deprecated inputs and outputs
+
+Run the following schematic to migrate the deprecated inputs and outputs of
+`si-search-bar` to a projected input. Use `--path` to limit the migration to a directory.
+
+```sh
+ng g @siemens/element-ng:migrate-search-bar
+```
+
+The schematic:
+
+- Moves `placeholder`, `maxlength`, `readonly`, `disabled`, and `value`, as well as form,
+  typeahead, and `aria-*` bindings, to a projected `<input siSearchBarInput>`.
+- Replaces `(searchChange)` with a Signal Forms field in the component class. The
+  `debounce` rule replaces `debounceTime`, the `pattern` rule replaces
+  `prohibitedCharacters`, and an `effect` calls the former handler when the search term
+  changes.
+- Adds `SiSearchBarInputDirective`, and `FormField` if needed, to the imports of the
+  component or NgModule.
+
+By default, the search bar debounces form value changes by 400 ms. A projected input
+updates its form value immediately, so the schematic logs each migrated search bar with
+a form binding that loses this debounce. Debounce the value changes in your code where
+needed.
+
+The schematic also logs search bars that need a manual migration, for example if the
+`(searchChange)` handler uses template variables or the search bar is inside a `@for`
+block.
+
 ### Search Bar - Input Value
 
 Set the initial value on the projected input's `FormControl` or Signal Forms
