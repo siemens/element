@@ -89,6 +89,22 @@ Direct <a href="../../../dashboards-demo/#/dashboard">Link</a> to dashboard demo
 
 <si-docs-api component="SiGridComponent" package="@siemens/dashboards-ng"></si-docs-api>
 
+### Custom header
+
+Like the [dashboard](dashboard.md#custom-header), the flexible dashboard supports a custom header,
+e.g. with a description or page actions. Project it using the `header` attribute and follow the
+[page header](../../fundamentals/layouts/header.md) guidelines. The custom header replaces the
+`heading` in the dashboard view. While adding or editing widgets, the respective title is shown instead.
+
+```html
+<si-flexible-dashboard [dashboardId]="dashboardId" [widgetCatalog]="widgetCatalog">
+  <div class="si-layout-header" header>
+    <h2 class="si-layout-title si-layout-top-element">Dashboard</h2>
+    <p class="si-layout-subtitle">Description</p>
+  </div>
+</si-flexible-dashboard>
+```
+
 ### Persistence of dashboard configuration
 
 <si-docs-type name="SiWidgetStorage" package="@siemens/dashboards-ng"></si-docs-type>

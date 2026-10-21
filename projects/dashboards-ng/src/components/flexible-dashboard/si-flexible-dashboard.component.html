@@ -1,4 +1,13 @@
-<si-dashboard #dashboard [heading]="pageTitle()" [sticky]="true">
+<si-dashboard #dashboard [sticky]="true">
+  <ng-container header>
+    @if (isDashboardVisible()) {
+      <ng-content select="[header]">
+        <ng-container *ngTemplateOutlet="pageHeader" />
+      </ng-content>
+    } @else {
+      <ng-container *ngTemplateOutlet="pageHeader" />
+    }
+  </ng-container>
   <si-dashboard-toolbar
     #toolbar
     menubar
@@ -34,3 +43,11 @@
     <ng-container #catalogHost />
   </div>
 </si-dashboard>
+
+<ng-template #pageHeader>
+  @if (pageTitle()) {
+    <div class="si-layout-header">
+      <h2 class="si-layout-title si-layout-top-element">{{ pageTitle() | translate }}</h2>
+    </div>
+  }
+</ng-template>

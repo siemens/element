@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   booleanAttribute,
@@ -25,7 +25,7 @@ import {
 } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
-import { t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, combineLatest, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -55,7 +55,14 @@ type ViewState = 'dashboard' | 'catalog' | 'editor';
  */
 @Component({
   selector: 'si-flexible-dashboard',
-  imports: [SiDashboardComponent, SiDashboardToolbarComponent, SiGridComponent, AsyncPipe],
+  imports: [
+    SiDashboardComponent,
+    SiDashboardToolbarComponent,
+    SiGridComponent,
+    AsyncPipe,
+    NgTemplateOutlet,
+    SiTranslatePipe
+  ],
   templateUrl: './si-flexible-dashboard.component.html',
   styleUrl: './si-flexible-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager
@@ -70,6 +77,10 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
 
   /**
    * Heading for the dashboard.
+   *
+   * To show a custom header instead, e.g. with a description or page actions,
+   * project it using the `header` attribute. The heading is ignored in that case.
+   * While adding or editing widgets, the respective title is shown instead.
    */
   readonly heading = input<string>();
 
