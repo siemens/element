@@ -9,10 +9,12 @@
       <div class="si-h5-bold mb-4">Tertiary button with menu</div>
       <button
         type="button"
-        class="btn btn-icon btn-tertiary element-options-vertical"
+        class="btn btn-icon btn-tertiary"
         aria-label="Options"
         [cdkMenuTriggerFor]="contextMenu"
-      ></button>
+      >
+        <si-icon [icon]="icons.elementOptionsVertical" />
+      </button>
     </div>
 
     <div
@@ -26,65 +28,55 @@
 
 <ng-template #contextMenu>
   <si-menu>
-    <si-menu-header>Actions</si-menu-header>
-    <!-- Submenu using a template reference -->
-    <si-menu-item [cdkMenuTriggerFor]="fileTypes" [cdkMenuTriggerData]="{ disableOther: true }">
-      Download as
-    </si-menu-item>
-    <si-menu-item>Clear</si-menu-item>
-    <si-menu-item>Hide</si-menu-item>
-    <si-menu-item>Update</si-menu-item>
+    <si-menu-item [icon]="icons.elementCut">Cut</si-menu-item>
+    <si-menu-item [icon]="icons.elementCopy">Copy</si-menu-item>
+    <si-menu-item [cdkMenuTriggerFor]="pasteTypes">Paste as</si-menu-item>
+    <si-menu-item [icon]="icons.elementDelete">Delete</si-menu-item>
     <si-menu-divider />
-    <si-menu-item-checkbox [checked]="isAwesome" (triggered)="isAwesome = !isAwesome">
-      Be awesome
+    <si-menu-item>Rename</si-menu-item>
+    <si-menu-item disabled>Share</si-menu-item>
+    <si-menu-item disabled>Archive</si-menu-item>
+    <si-menu-item-checkbox [checked]="showArchived()" (triggered)="toggleArchived()">
+      Show archived
     </si-menu-item-checkbox>
-    <si-menu-item disabled>Do nothing</si-menu-item>
-    <si-menu-item disabled [cdkMenuTriggerFor]="disabledSubmenu"> Disabled menu</si-menu-item>
-    <si-menu-item [cdkMenuTriggerFor]="disabledItems"> Menu with disabled children</si-menu-item>
-    <si-menu-divider>Menu with disabled children</si-menu-divider>
-    <si-menu-item-radio [checked]="beverage === 'beer'" (triggered)="beverage = 'beer'">
-      Beer
+    <si-menu-divider />
+    <si-menu-header>View as</si-menu-header>
+    <si-menu-item-radio [checked]="view() === 'table'" (triggered)="view.set('table')">
+      Table
     </si-menu-item-radio>
-    <si-menu-item-radio [checked]="beverage === 'whisky'" (triggered)="beverage = 'whisky'">
-      Whisky
+    <si-menu-item-radio [checked]="view() === 'cards'" (triggered)="view.set('cards')">
+      Cards
     </si-menu-item-radio>
-    <si-menu-item-radio [checked]="beverage === 'gin'" (triggered)="beverage = 'gin'">
-      Gin
+    <si-menu-item-radio [checked]="view() === 'timeline'" (triggered)="view.set('timeline')">
+      Timeline
     </si-menu-item-radio>
     <si-menu-divider />
-    <si-menu-item badge="5" badgeColor="danger">Import</si-menu-item>
-    <si-menu-item icon="element-export">Export</si-menu-item>
+    <si-menu-item badge="3" badgeColor="info" [icon]="icons.elementChat">Comments</si-menu-item>
+    <si-menu-item [icon]="icons.elementRestore">Version history</si-menu-item>
     <si-menu-divider />
-    <si-menu-item [cdkMenuTriggerFor]="fileTypes">Save as</si-menu-item>
+    <si-menu-item [icon]="icons.elementExport" [cdkMenuTriggerFor]="fileTypes"
+      >Export as</si-menu-item
+    >
   </si-menu>
 </ng-template>
 
-<ng-template #fileTypes let-disableOther="disableOther">
+<ng-template #pasteTypes>
+  <si-menu>
+    <si-menu-item>Plain text</si-menu-item>
+    <si-menu-item>Keep formatting</si-menu-item>
+  </si-menu>
+</ng-template>
+
+<ng-template #fileTypes>
   <si-menu>
     <si-menu-item>Image</si-menu-item>
     <si-menu-item>File</si-menu-item>
-    <si-menu-item [disabled]="disableOther" [cdkMenuTriggerFor]="otherFileTypes">
-      Other
-    </si-menu-item>
+    <si-menu-item [cdkMenuTriggerFor]="otherFileTypes">Other</si-menu-item>
   </si-menu>
 </ng-template>
 
 <ng-template #otherFileTypes>
   <si-menu>
     <si-menu-item>Zip</si-menu-item>
-  </si-menu>
-</ng-template>
-
-<ng-template #disabledSubmenu>
-  <si-menu>
-    <si-menu-item>Items 1</si-menu-item>
-    <si-menu-item>Items 2</si-menu-item>
-  </si-menu>
-</ng-template>
-
-<ng-template #disabledItems>
-  <si-menu>
-    <si-menu-item disabled>Items 1</si-menu-item>
-    <si-menu-item disabled>Items 2</si-menu-item>
   </si-menu>
 </ng-template>

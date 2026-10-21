@@ -4,23 +4,21 @@
 - button "Options"
 - text: Right click here to open context menu
 - menu:
-  - text: Actions
-  - menuitem "Download as" [expanded]
-  - menuitem "Clear"
-  - menuitem "Hide"
-  - menuitem "Update"
-  - menuitemcheckbox "Be awesome" [checked]
-  - menuitem "Do nothing" [disabled]
-  - menuitem "Disabled menu" [disabled]
-  - menuitem "Menu with disabled children"
-  - text: Menu with disabled children
-  - menuitemradio "Beer" [checked]
-  - menuitemradio "Whisky"
-  - menuitemradio "Gin"
-  - menuitem "Import 5"
-  - menuitem "Export"
-  - menuitem "Save as"
+  - menuitem "Cut"
+  - menuitem "Copy"
+  - menuitem "Paste as" [expanded]
+  - menuitem "Delete"
+  - menuitem "Rename"
+  - menuitem "Share" [disabled]
+  - menuitem "Archive" [disabled]
+  - menuitemcheckbox "Show archived" [checked]
+  - text: View as
+  - menuitemradio "Table" [checked]
+  - menuitemradio "Cards"
+  - menuitemradio "Timeline"
+  - menuitem "Comments 3"
+  - menuitem "Version history"
+  - menuitem "Export as"
 - menu:
-  - menuitem "Image"
-  - menuitem "File"
-  - menuitem "Other" [disabled]
+  - menuitem "Plain text"
+  - menuitem "Keep formatting"

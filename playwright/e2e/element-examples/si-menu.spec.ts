@@ -11,6 +11,8 @@ test.describe('si-menu', () => {
       await page.setViewportSize({ width: 760, height: 600 });
       await si.visitExample(example, false);
       await page.getByRole('button', { name: 'Menu' }).click();
+      await page.getByRole('menuitem', { name: 'Paste as', exact: true }).focus();
+      await page.getByRole('menuitem', { name: 'Paste as', exact: true }).press('ArrowRight');
       await si.runVisualAndA11yTests('dropdown');
     });
   });
