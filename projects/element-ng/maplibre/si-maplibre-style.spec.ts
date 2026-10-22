@@ -2,15 +2,23 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { DOCUMENT } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { injectSiMapStyle } from './si-maplibre-style';
 
 describe('injectSiMapStyle', () => {
+  let testDocument: Document;
+  let rootClassName: string;
+
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    document.documentElement.classList.remove('app--dark');
+    testDocument = TestBed.inject(DOCUMENT);
+    rootClassName = testDocument.documentElement.className;
+    testDocument.documentElement.classList.remove('app--dark');
   });
+
+  afterEach(() => (testDocument.documentElement.className = rootClassName));
 
   it('includes the API key in the style URLs', () => {
     const style = TestBed.runInInjectionContext(() => injectSiMapStyle('my-api-key'));

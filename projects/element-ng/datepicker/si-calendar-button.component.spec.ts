@@ -51,6 +51,9 @@ describe('SiCalendarButtonComponent', () => {
     fixture.detectChanges();
   });
 
+  // setSystemTime mocks Date even without fake timers; only useRealTimers resets it.
+  afterEach(() => vi.useRealTimers());
+
   it('should show datepicker overlay', async () => {
     calendarToggleButton().click();
     fixture.detectChanges();
@@ -72,7 +75,7 @@ describe('SiCalendarButtonComponent', () => {
   });
 
   it('should mark as touched if button is blurred', () => {
-    const touchSpy = vi.spyOn(SiDatepickerDirective.prototype, 'touch');
+    using touchSpy = vi.spyOn(SiDatepickerDirective.prototype, 'touch');
     const button = calendarToggleButton();
     button.focus();
     button.blur();

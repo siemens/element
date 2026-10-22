@@ -262,7 +262,7 @@ describe('SiTranslateNgxT', () => {
     });
 
     it('should warn about missing SiMissingTranslateService', () => {
-      const consoleWarnSpy = vi.spyOn(console, 'warn');
+      using consoleWarnSpy = vi.spyOn(console, 'warn');
       TestBed.runInInjectionContext(() => injectSiTranslateService()) as SiTranslateNgxTService;
       expect(consoleWarnSpy).toHaveBeenCalledWith(
         'SiMissingTranslateService not provided as missingTranslateHandler, default translations will not work.'

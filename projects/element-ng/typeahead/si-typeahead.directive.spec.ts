@@ -317,7 +317,7 @@ describe('SiTypeaheadDirective', () => {
     it('should stop loading when source errors', async () => {
       const errorSource = vi.fn().mockReturnValue(throwError(() => new Error('source error')));
       wrapperComponent.items.set(errorSource);
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      using consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tes');
@@ -439,13 +439,13 @@ describe('SiTypeaheadDirective', () => {
     wrapperComponent.minLength.set(0);
     wrapperComponent.waitMs.set(333);
 
-    vi.spyOn(window, 'setTimeout');
+    using setTimeoutSpy = vi.spyOn(window, 'setTimeout');
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).focus();
 
     await tick(wrapperComponent.waitMs());
 
-    expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 333);
+    expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 333);
   });
 
   it('should properly select item on click', async () => {

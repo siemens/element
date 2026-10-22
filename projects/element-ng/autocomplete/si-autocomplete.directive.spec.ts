@@ -97,7 +97,7 @@ describe('SiAutocompleteDirective', () => {
     testComponent.hasValues.set(false);
     await fixture.whenStable();
     const spy = vi.spyOn(testComponent, 'submitted');
-    const spyError = vi.spyOn(ErrorHandler.prototype, 'handleError');
+    using spyError = vi.spyOn(ErrorHandler.prototype, 'handleError');
 
     await fixture.whenStable();
     const input = fixture.debugElement.query(By.css('input'));
