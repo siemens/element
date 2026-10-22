@@ -53,6 +53,14 @@ import { SiInitialFocusComponent } from './si-initial-focus.component';
 })
 export class SiDaySelectionComponent extends SiInitialFocusComponent {
   private readonly todayDefaultText = t(() => $localize`:@@SI_DATEPICKER.TODAY:Today`);
+  private readonly locale = inject(LOCALE_ID).toString();
+  private readonly dateFormatter = new Intl.DateTimeFormat(this.locale, {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    calendar: 'gregory'
+  });
   /**
    * Indicate whether the week numbers shall be hidden.
    *
@@ -114,12 +122,17 @@ export class SiDaySelectionComponent extends SiInitialFocusComponent {
       const activeMonth = isSameOrBetween(date, monthStart, monthEnd);
       const isToday = isSameDate(date, today());
       const outOfRange = !isSameOrBetween(date, minDate, maxDate);
+      const displayValue = date.getDate().toString();
+      const ariaLabel = this.dateFormatter
+        .formatToParts(date)
+        .map(part => (part.type === 'day' ? displayValue : part.value))
+        .join('');
 
       weeks.at(weekIndex)?.push({
         value: date.getDate(),
         disabled: outOfRange,
-        ariaLabel: date.toDateString(),
-        displayValue: date.getDate().toString(),
+        ariaLabel,
+        displayValue,
         isPreview: !activeMonth,
         isToday,
         valueRaw: createDate(date),
@@ -152,8 +165,6 @@ export class SiDaySelectionComponent extends SiInitialFocusComponent {
     const focusedDate = this.focusedDate();
     return maxDate && (isSameMonth(focusedDate, maxDate) || isAfterMonth(focusedDate, maxDate));
   });
-
-  private readonly locale = inject(LOCALE_ID).toString();
 
   protected calendarBodyKeyDown(event: KeyboardEvent): void {
     const isRtl = isRTL();

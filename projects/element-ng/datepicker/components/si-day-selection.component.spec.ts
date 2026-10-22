@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { DatePipe } from '@angular/common';
-import { inputBinding, outputBinding, signal, WritableSignal } from '@angular/core';
+import { inputBinding, LOCALE_ID, outputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {
   addDays,
   getFirstDateInMonth,
   getWeekOfYear,
+  getWeekStartDate,
   isSameDate,
   today as getToday,
   isSameMonth,
@@ -266,13 +267,24 @@ describe('SiDaySelectionComponent', () => {
         expect(tableHeaders.every(header => header.getAttribute('scope') === 'col')).toBe(true);
       });
 
-      it('should have date-string as aria-label', () => {
-        const cells = helper.getEnabledCells();
-        let currentDate = getFirstDayInMonth();
+      it('should use localized date strings as accessible names including the visible day', () => {
+        const cells = helper.getCells();
+        const dateFormatter = new Intl.DateTimeFormat(TestBed.inject(LOCALE_ID).toString(), {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+          calendar: 'gregory'
+        });
+        let currentDate = getWeekStartDate(getFirstDayInMonth(), weekStartDay());
         cells.forEach(cell => {
-          const label = cell.getAttribute('aria-label');
-          const dateString = currentDate.toDateString();
-          expect(label).toBe(dateString);
+          const displayValue = cell.textContent!.trim();
+          const expectedLabel = dateFormatter
+            .formatToParts(currentDate)
+            .map(part => (part.type === 'day' ? displayValue : part.value))
+            .join('');
+          expect(cell).toHaveAttribute('aria-label', expectedLabel);
+          expect(cell.getAttribute('aria-label')).toContain(displayValue);
           currentDate = addDays(currentDate, 1);
         });
       });
