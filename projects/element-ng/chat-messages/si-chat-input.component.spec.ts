@@ -201,6 +201,25 @@ describe('SiChatInputComponent', () => {
     expect(sendButton).toBeTruthy();
   });
 
+  it('should resize during IME composition before the model updates', async () => {
+    await fixture.whenStable();
+    const textarea: HTMLTextAreaElement = fixture.nativeElement.querySelector('textarea');
+    const initialHeight = parseFloat(textarea.style.height);
+    vi.spyOn(textarea, 'scrollHeight', 'get').mockReturnValue(180);
+
+    textarea.dispatchEvent(new CompositionEvent('compositionstart', { bubbles: true }));
+    textarea.value = 'Composing\na multiline\nmessage';
+    textarea.dispatchEvent(new InputEvent('input', { bubbles: true, isComposing: true }));
+    await fixture.whenStable();
+
+    expect(value()).toBe('');
+    expect(parseFloat(textarea.style.height)).toBeGreaterThan(initialHeight);
+
+    textarea.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true }));
+    await fixture.whenStable();
+    expect(value()).toBe(textarea.value);
+  });
+
   it('should disable send button when no content and no attachments', async () => {
     value.set('');
     attachments.set([]);
@@ -708,6 +727,8 @@ describe('SiChatInputComponent', () => {
 
     it('should show listening feedback and a disabled send button before speech arrives', async () => {
       value.set('Existing draft');
+      await fixture.whenStable();
+      button('Start dictation').focus();
       voiceState.set('listening');
       await fixture.whenStable();
 
@@ -745,6 +766,8 @@ describe('SiChatInputComponent', () => {
       };
       value.set('Transcribed message');
       attachments.set([attachment]);
+      await fixture.whenStable();
+      textarea().focus();
       voiceState.set('recording');
       await fixture.whenStable();
 
@@ -787,6 +810,125 @@ describe('SiChatInputComponent', () => {
       expect(sendSpy).not.toHaveBeenCalled();
     });
 
+    it('should ignore held Enter after confirmation until a fresh key press', async () => {
+      value.set('Transcript for review');
+      await fixture.whenStable();
+      textarea().focus();
+      voiceState.set('recording');
+      confirmSpy.mockImplementation(() => voiceState.set('idle'));
+      await fixture.whenStable();
+
+      textarea().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      await fixture.whenStable();
+      expect(textarea()).toHaveFocus();
+      const repeated = new KeyboardEvent('keydown', {
+        key: 'Enter',
+        repeat: true,
+        bubbles: true,
+        cancelable: true
+      });
+      textarea().dispatchEvent(repeated);
+      await fixture.whenStable();
+
+      expect(repeated.defaultPrevented).toBe(true);
+      expect(confirmSpy).toHaveBeenCalledTimes(1);
+      expect(sendSpy).not.toHaveBeenCalled();
+      expect(value()).toBe('Transcript for review');
+
+      textarea().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      expect(sendSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should prevent repeated Enter from activating a native dictation button', async () => {
+      voiceState.set('recording');
+      await fixture.whenStable();
+      const repeated = new KeyboardEvent('keydown', {
+        key: 'Enter',
+        repeat: true,
+        bubbles: true,
+        cancelable: true
+      });
+
+      button('Confirm dictation').dispatchEvent(repeated);
+
+      expect(repeated.defaultPrevented).toBe(true);
+      expect(confirmSpy).not.toHaveBeenCalled();
+    });
+
+    it('should use the recording icons and provisional text color until review', async () => {
+      voiceState.set('recording');
+      value.set('Provisional transcript');
+      await fixture.whenStable();
+
+      expect(button('Confirm dictation').querySelector('si-icon')).toHaveAttribute(
+        'data-icon',
+        'elementCheckedFilled'
+      );
+      expect(button('Cancel dictation').querySelector('si-icon')).toHaveAttribute(
+        'data-icon',
+        'elementStateClose'
+      );
+      expect(textarea()).toHaveClass('text-secondary');
+
+      voiceState.set('idle');
+      await fixture.whenStable();
+      expect(textarea()).not.toHaveClass('text-secondary');
+    });
+
+    it('should preserve disabled text styling while recording', async () => {
+      voiceState.set('recording');
+      disabled.set(true);
+      await fixture.whenStable();
+      expect(textarea()).not.toHaveClass('text-secondary');
+    });
+
+    it('should preserve contextual action focus when recording starts and ends', async () => {
+      allowAttachments.set(true);
+      voiceState.set('listening');
+      await fixture.whenStable();
+      button('Attach file').focus();
+
+      voiceState.set('recording');
+      value.set('First partial transcript');
+      await fixture.whenStable();
+      expect(button('Attach file')).toHaveFocus();
+
+      voiceState.set('idle');
+      await fixture.whenStable();
+      expect(button('Attach file')).toHaveFocus();
+    });
+
+    it('should move focus from cancel to confirm when speech begins', async () => {
+      voiceState.set('listening');
+      await fixture.whenStable();
+      button('Cancel dictation').focus();
+
+      voiceState.set('recording');
+      await fixture.whenStable();
+
+      expect(button('Confirm dictation')).toHaveFocus();
+    });
+
+    it('should preserve focus outside the component across dictation transitions', async () => {
+      const externalButton = document.createElement('button');
+      document.body.append(externalButton);
+      try {
+        voiceState.set('listening');
+        await fixture.whenStable();
+        externalButton.focus();
+
+        voiceState.set('recording');
+        await fixture.whenStable();
+        expect(externalButton).toHaveFocus();
+
+        voiceState.set('idle');
+        await fixture.whenStable();
+        expect(externalButton).toHaveFocus();
+      } finally {
+        externalButton.remove();
+      }
+    });
+
     it('should not confirm or send on Enter while waiting for speech', async () => {
       value.set('Existing draft');
       voiceState.set('listening');
@@ -826,6 +968,8 @@ describe('SiChatInputComponent', () => {
     });
 
     it('should restore editing and place the cursor after the transcript when dictation ends', async () => {
+      await fixture.whenStable();
+      textarea().focus();
       voiceState.set('recording');
       value.set('Confirmed transcript');
       await fixture.whenStable();
