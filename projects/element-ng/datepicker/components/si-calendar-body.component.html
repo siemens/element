@@ -33,9 +33,8 @@
           (mouseover)="emitActiveHover(col)"
           (click)="emitSelectCell(col)"
           (focus)="emitActiveDateChange(col)"
+          >{{ col.displayValue }}</button
         >
-          {{ col.displayValue }}
-        </button>
       </td>
     }
   </tr>

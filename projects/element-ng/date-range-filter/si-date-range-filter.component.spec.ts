@@ -6,7 +6,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { formatDate } from '@angular/common';
-import { inputBinding, signal, twoWayBinding, WritableSignal } from '@angular/core';
+import { inputBinding, LOCALE_ID, signal, twoWayBinding, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TestScheduler } from 'rxjs/testing';
@@ -310,9 +310,20 @@ describe('SiDateRangeFilterComponent', () => {
     expect(range().point1).toEqual(oneWeekAgo);
     expect(range().point2).toEqual(today);
     expect(range().range).toBeUndefined();
+    const dateFormatter = new Intl.DateTimeFormat(TestBed.inject(LOCALE_ID).toString(), {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      calendar: 'gregory'
+    });
+    const oneWeekAgoLabel = dateFormatter
+      .formatToParts(oneWeekAgo)
+      .map(part => (part.type === 'day' ? oneWeekAgo.getDate().toString() : part.value))
+      .join('');
     expect(
       fixture.debugElement.query(
-        By.css(`button.si-calendar-date-cell[aria-label="${oneWeekAgo.toDateString()}"]`)
+        By.css(`button.si-calendar-date-cell[aria-label="${oneWeekAgoLabel}"]`)
       )
     ).toBeTruthy();
   });

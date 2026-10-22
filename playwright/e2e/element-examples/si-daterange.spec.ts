@@ -4,13 +4,16 @@
  */
 import { test } from '../../support/test-helpers';
 
-test.describe('si-datepicker', () => {
-  // Temporary suppression tracked in #3014.
-  const labelContentNameMismatchRule = {
-    id: 'label-content-name-mismatch',
-    enabled: false
-  };
+const dateLabel = (date: Date): string =>
+  new Intl.DateTimeFormat('en', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    calendar: 'gregory'
+  }).format(date);
 
+test.describe('si-datepicker', () => {
   test.beforeEach(async ({ page }) => {
     // Ensure the current date and time for running the tests is always the same
     await page.clock.setFixedTime(Date.UTC(2022, 1, 28, 10, 34, 24, 345));
@@ -20,9 +23,7 @@ test.describe('si-datepicker', () => {
 
   test(example + ' default', async ({ page, si }) => {
     await si.visitExample(example);
-    await si.runVisualAndA11yTests(undefined, {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests(undefined);
   });
 
   test(example + ' selection', async ({ page, si }) => {
@@ -30,35 +31,23 @@ test.describe('si-datepicker', () => {
     await page.getByLabel('Open calendar').first().click();
     await page.locator('tbody > tr .si-h4').first().click();
     await page.locator('tbody > tr .si-h4').nth(5).click();
-    await si.runVisualAndA11yTests('selection', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests('selection');
   });
 
   test(example + ' input focus shows focus ring', async ({ page, si }) => {
     await si.visitExample(example);
     await page.locator('si-date-range input').first().focus();
-    await si.runVisualAndA11yTests('input-focus', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests('input-focus');
   });
 
   test(example + ' calendar button focus hides focus ring', async ({ page, si }) => {
     await si.visitExample(example);
     await page.getByLabel('Open calendar').first().focus();
-    await si.runVisualAndA11yTests('button-focus', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests('button-focus');
   });
 });
 
 test.describe('si-datepicker', () => {
-  // Temporary suppression tracked in #3014.
-  const labelContentNameMismatchRule = {
-    id: 'label-content-name-mismatch',
-    enabled: false
-  };
-
   test.beforeEach(async ({ page }) => {
     // Ensure the current date and time for running the tests is always the same
     await page.clock.setFixedTime(Date.UTC(2022, 1, 28, 10, 34, 24, 345));
@@ -71,21 +60,15 @@ test.describe('si-datepicker', () => {
     await page.getByLabel('Open calendar').first().click();
     await page.locator('tbody > tr .si-h4').first().click();
     await page.locator('tbody > tr .si-h4').nth(5).click();
-    await si.runVisualAndA11yTests('selection', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests('selection');
   });
 
   test(example + ' ignore-time', async ({ page, si }) => {
     await si.visitExample(example);
     await page.getByLabel('Open calendar').first().click();
-    await si.runVisualAndA11yTests('ignore-time-1', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests('ignore-time-1');
     await page.getByText('Include time').first().click();
-    await si.runVisualAndA11yTests('ignore-time-2', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests('ignore-time-2');
   });
 
   test(example + ' click-through-months', async ({ page, si }) => {
@@ -101,23 +84,19 @@ test.describe('si-datepicker', () => {
     for (let index = 0; index < 10; index++) {
       await button!.click();
     }
-    await si.runVisualAndA11yTests('click-through-months-1', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests('click-through-months-1');
     await page.locator('.second-datepicker').first().getByLabel('Back').click();
-    await si.runVisualAndA11yTests('click-through-months-2', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests('click-through-months-2');
   });
 
   test(example + ' preview-range', async ({ page, si }) => {
     await si.visitExample(example);
     await page.getByLabel('Open calendar').first().click();
-    await page.getByLabel('Sun Mar 26 2023').click();
-    await page.getByLabel('Sat Apr 08 2023').hover();
-    await si.runVisualAndA11yTests('preview-range-hover', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
-    await page.getByLabel('Sat Apr 08 2023').click();
+    const startDateLabel = dateLabel(new Date(2023, 2, 26));
+    const endDateLabel = dateLabel(new Date(2023, 3, 8));
+    await page.getByLabel(startDateLabel).click();
+    await page.getByLabel(endDateLabel).hover();
+    await si.runVisualAndA11yTests('preview-range-hover');
+    await page.getByLabel(endDateLabel).click();
   });
 });
