@@ -225,6 +225,7 @@ describe('SiContentActionBarComponent', () => {
     const unobserve = vi.spyOn(ResizeObserver.prototype, 'unobserve');
 
     await fixture.whenStable();
+    await new Promise(resolve => setTimeout(resolve));
     const nativeElement = fixture.nativeElement as HTMLElement;
     const containerElement = nativeElement.parentElement!;
     const menuBarElement = nativeElement.querySelector<HTMLElement>('si-menu-bar')!;

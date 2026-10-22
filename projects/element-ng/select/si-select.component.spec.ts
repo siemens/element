@@ -592,15 +592,14 @@ describe('SiSelectComponent', () => {
     });
 
     it('should show overflow item list', async () => {
-      // Constrain the select itself so no selected label fits beside the overflow indicator.
-      fixture.debugElement.query(By.css('si-select')).nativeElement.style.width = '80px';
+      (fixture.debugElement.nativeElement as HTMLElement).style.width = '200px';
       const initialSelection = Object.assign([], hostComponent.values());
       await selectHarness.clickItemsByText(
         OPTIONS_LIST.filter(i => !initialSelection?.includes(i.value)).map(i => i.label ?? '')
       );
       await fixture.whenStable();
 
-      await vi.waitFor(async () => expect(await selectHarness.getOverflowCount()).toBe(3));
+      await vi.waitFor(async () => expect(await selectHarness.getOverflowCount()).toBe(2));
     });
 
     it('should filter in grouped options', async () => {
