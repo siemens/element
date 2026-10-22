@@ -119,7 +119,7 @@ describe('SiEventBus', () => {
       ]);
 
       const result = eventBus.snapshot('filter', ['dateRange']);
-      expect(result.length).toBe(1);
+      expect(result).toHaveLength(1);
       expect(result[0].key).toBe('dateRange');
     });
 
@@ -127,7 +127,7 @@ describe('SiEventBus', () => {
       eventBus.emit('filter', [{ key: 'status', value: 'active' }]);
 
       const result = eventBus.snapshot('filter', ['nonExistentKey']);
-      expect(result.length).toBe(0);
+      expect(result).toHaveLength(0);
     });
   });
 });
