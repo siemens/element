@@ -2,9 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { AfterViewInit, booleanAttribute, computed, Directive, input, signal } from '@angular/core';
+import { AfterViewInit, booleanAttribute, computed, Directive, inject, input } from '@angular/core';
 
 import { SiAutoCollapsableListMeasurable } from './si-auto-collapsable-list-measurable.class';
+import { SI_AUTO_COLLAPSABLE_LIST } from './si-auto-collapsable-list.token';
 
 @Directive({
   selector: '[siAutoCollapsableListItem]',
@@ -21,6 +22,8 @@ export class SiAutoCollapsableListItemDirective
   extends SiAutoCollapsableListMeasurable
   implements AfterViewInit
 {
+  protected readonly list = inject(SI_AUTO_COLLAPSABLE_LIST);
+
   /**
    * Hide this item even if enough space is available.
    * When calculating the overall available size, this item is still considered when forceHide=true
@@ -34,7 +37,7 @@ export class SiAutoCollapsableListItemDirective
    *
    * @defaultValue false
    */
-  readonly canBeVisible = signal<boolean>(false);
+  readonly canBeVisible = computed(() => this.list.visibleItems().has(this));
 
   /**
    * True if this item is actually visible to the user

@@ -592,7 +592,8 @@ describe('SiSelectComponent', () => {
     });
 
     it('should show overflow item list', async () => {
-      (fixture.debugElement.nativeElement as HTMLElement).style.width = '200px';
+      // Constrain the select itself so no selected label fits beside the overflow indicator.
+      fixture.debugElement.query(By.css('si-select')).nativeElement.style.width = '80px';
       const initialSelection = Object.assign([], hostComponent.values());
       await selectHarness.clickItemsByText(
         OPTIONS_LIST.filter(i => !initialSelection?.includes(i.value)).map(i => i.label ?? '')

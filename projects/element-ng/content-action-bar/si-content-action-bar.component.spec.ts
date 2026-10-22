@@ -225,16 +225,16 @@ describe('SiContentActionBarComponent', () => {
     const unobserve = vi.spyOn(ResizeObserver.prototype, 'unobserve');
 
     await fixture.whenStable();
-    await new Promise(resolve => setTimeout(resolve));
     const nativeElement = fixture.nativeElement as HTMLElement;
-    const listElement = nativeElement.querySelector<HTMLElement>('.position-relative')!;
+    const containerElement = nativeElement.parentElement!;
     const menuBarElement = nativeElement.querySelector<HTMLElement>('si-menu-bar')!;
     const overflowItemElement = nativeElement.querySelector<HTMLElement>(
       '[siAutoCollapsableListOverflowItem]'
     )!;
+    unobserve.mockClear();
     fixture.destroy();
 
-    expect(unobserve).toHaveBeenCalledWith(listElement);
+    expect(unobserve).toHaveBeenCalledWith(containerElement);
     expect(unobserve).toHaveBeenCalledWith(menuBarElement);
     expect(unobserve).toHaveBeenCalledWith(overflowItemElement);
     unobserve.mockRestore();
