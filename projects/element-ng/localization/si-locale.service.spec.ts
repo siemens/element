@@ -41,7 +41,12 @@ class DeLocaleStore extends SiLocaleStore {
 
 describe('SiLocaleService', () => {
   let service: SiLocaleService;
-  Object.defineProperty(navigator, 'languages', { value: ['en-GB', 'en-US'] });
+
+  aroundEach(async runTest => {
+    using languagesSpy = vi.spyOn(navigator, 'languages', 'get');
+    languagesSpy.mockReturnValue(['en-GB', 'en-US']);
+    await runTest();
+  });
 
   describe('with empty configuration', () => {
     beforeEach(() => {

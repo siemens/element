@@ -391,7 +391,7 @@ describe('SiDaySelectionComponent', () => {
       });
 
       it('should go to today', () => {
-        const pipeSpy = vi.spyOn(DatePipe.prototype, 'transform');
+        using pipeSpy = vi.spyOn(DatePipe.prototype, 'transform');
 
         (element.querySelector('.today-button') as HTMLElement)!.click();
         fixture.detectChanges();

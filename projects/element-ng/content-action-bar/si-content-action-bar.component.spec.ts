@@ -222,7 +222,7 @@ describe('SiContentActionBarComponent', () => {
 
   it('should release auto-collapsable-list resize observers when destroyed', async () => {
     primaryActions.set([{ type: 'action', label: 'Item', action: () => {} }]);
-    const unobserve = vi.spyOn(ResizeObserver.prototype, 'unobserve');
+    using unobserve = vi.spyOn(ResizeObserver.prototype, 'unobserve');
 
     await fixture.whenStable();
     await new Promise(resolve => setTimeout(resolve));
@@ -237,6 +237,5 @@ describe('SiContentActionBarComponent', () => {
     expect(unobserve).toHaveBeenCalledWith(listElement);
     expect(unobserve).toHaveBeenCalledWith(menuBarElement);
     expect(unobserve).toHaveBeenCalledWith(overflowItemElement);
-    unobserve.mockRestore();
   });
 });

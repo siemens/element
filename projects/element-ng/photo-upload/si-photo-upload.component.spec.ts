@@ -5,6 +5,7 @@
 import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { type MockInstance } from 'vitest';
 
 import { SiPhotoUploadComponent } from './si-photo-upload.component';
 
@@ -16,22 +17,21 @@ describe(`SiPhotoUploadComponent`, () => {
   let componentRef: ComponentRef<SiPhotoUploadComponent>;
   let fixture: ComponentFixture<SiPhotoUploadComponent>;
   let callback: (e: any) => void;
-  let originalFileReader: typeof FileReader;
 
-  const mockFileReader = (data: string): any => {
+  const mockFileReader = (data: string): MockInstance<typeof window.FileReader> => {
     const readerSpy = {
       addEventListener: vi.fn((event: string, cb: (e: any) => void) => (callback = cb)),
       readAsDataURL: vi.fn(() => callback(data)),
       result: data
     };
 
-    originalFileReader = window.FileReader;
-    window.FileReader = class {
-      addEventListener = readerSpy.addEventListener;
-      readAsDataURL = readerSpy.readAsDataURL;
-      result = readerSpy.result;
-    } as any;
-    return readerSpy;
+    return vi.spyOn(window, 'FileReader').mockImplementation(
+      class {
+        addEventListener = readerSpy.addEventListener;
+        readAsDataURL = readerSpy.readAsDataURL;
+        result = readerSpy.result;
+      } as unknown as typeof FileReader
+    );
   };
 
   const generateImage = (): File => {
@@ -58,12 +58,6 @@ describe(`SiPhotoUploadComponent`, () => {
     fixture = TestBed.createComponent(SiPhotoUploadComponent);
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
-  });
-
-  afterEach(() => {
-    if (originalFileReader) {
-      window.FileReader = originalFileReader;
-    }
   });
 
   it('should display placeholder', () => {
@@ -135,7 +129,7 @@ describe(`SiPhotoUploadComponent`, () => {
         }
       });
     });
-    mockFileReader(redPng);
+    using fileReaderSpy = mockFileReader(redPng);
 
     fixture.debugElement.query(By.css('button'))!.nativeElement.click();
     fixture.changeDetectorRef.markForCheck();
@@ -143,6 +137,7 @@ describe(`SiPhotoUploadComponent`, () => {
     await fixture.whenStable();
     // expect.poll auto-retries until the cropping lib has decoded the image
     await expect.poll(() => document.querySelector('si-modal img')).toBeInTheDocument();
+    expect(fileReaderSpy).toHaveBeenCalled();
   });
 
   it('should apply photo', async () => {
@@ -155,7 +150,7 @@ describe(`SiPhotoUploadComponent`, () => {
         }
       });
     });
-    mockFileReader(redPng);
+    using fileReaderSpy = mockFileReader(redPng);
 
     fixture.debugElement.query(By.css('button'))!.nativeElement.click();
 
@@ -171,6 +166,7 @@ describe(`SiPhotoUploadComponent`, () => {
     await fixture.whenStable();
 
     expect(fixture.debugElement.query(By.css('img'))!.attributes.src).toBeTruthy();
+    expect(fileReaderSpy).toHaveBeenCalled();
   });
 
   it('should apply photo without modal when disabledCropping = true', async () => {
@@ -184,7 +180,7 @@ describe(`SiPhotoUploadComponent`, () => {
         }
       });
     });
-    mockFileReader(redPng);
+    using fileReaderSpy = mockFileReader(redPng);
 
     fixture.debugElement.query(By.css('button'))!.nativeElement.click();
 
@@ -192,6 +188,7 @@ describe(`SiPhotoUploadComponent`, () => {
     await fixture.whenStable();
 
     expect(fixture.debugElement.query(By.css('img'))!.attributes.src).toBeTruthy();
+    expect(fileReaderSpy).toHaveBeenCalled();
   });
 
   it('should show an error if a file is to big and remove it on photo change again', async () => {

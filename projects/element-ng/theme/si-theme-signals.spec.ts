@@ -12,6 +12,8 @@ describe('injectIsDarkTheme', () => {
     document.documentElement.classList.remove('app--dark');
   });
 
+  afterEach(() => document.documentElement.classList.remove('app--dark'));
+
   it('returns false when the page has no dark class', () => {
     const isDark = TestBed.runInInjectionContext(() => injectIsDarkTheme());
     expect(isDark()).toBe(false);

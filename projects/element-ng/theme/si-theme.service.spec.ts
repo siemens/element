@@ -10,7 +10,7 @@ import {
 } from '@siemens/element-ng/shadow-root';
 import { firstValueFrom, of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { type Mock } from 'vitest';
+import { type Mock, type MockInstance } from 'vitest';
 
 import { SI_THEME_LOCAL_STORAGE_KEY, SiThemeStore } from './si-theme-store';
 import { ELEMENT_THEME_NAME, Theme } from './si-theme.model';
@@ -29,15 +29,21 @@ describe('SiThemeService', () => {
   }
 
   let service: TestService;
+  let matchMediaSpy: MockInstance<typeof window.matchMedia>;
   let themeSwitchSpy: Mock;
 
   const setupTestBed = (prefersDarkColor: boolean = false, store?: Partial<SiThemeStore>): void => {
     document.documentElement.classList.remove('app--dark');
-    vi.spyOn(window, 'matchMedia').mockReturnValue({
+    matchMediaSpy.mockReturnValue({
       matches: prefersDarkColor,
-      addEventListener: () => {},
-      removeEventListener: () => {}
-    } as any);
+      media: '',
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn()
+    } satisfies MediaQueryList);
     TestBed.configureTestingModule({
       providers: [TestService, { provide: SiThemeStore, useValue: store }]
     });
@@ -45,6 +51,17 @@ describe('SiThemeService', () => {
     service.resolvedColorScheme$.subscribe(themeSwitchSpy);
   };
 
+  aroundEach(async runTest => {
+    using spy = vi.spyOn(window, 'matchMedia');
+    matchMediaSpy = spy;
+    const rootClassName = document.documentElement.className;
+    try {
+      await runTest();
+    } finally {
+      document.documentElement.className = rootClassName;
+      document.querySelectorAll('style[id^="__theme-"]').forEach(style => style.remove());
+    }
+  });
   beforeEach(() => (themeSwitchSpy = vi.fn()));
   afterEach(() => localStorage.removeItem(SI_THEME_LOCAL_STORAGE_KEY));
 
