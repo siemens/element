@@ -15,10 +15,23 @@ Commit messages drive the changelog, so getting the format right is mandatory.
 - Do NOT add AI/tool attribution, "Co-authored-by", or marketing footers to
   commit messages or PRs.
 - Never commit directly to `main`.
-- The changelog is only for consumers of the released packages `element-ng`, `element-theme`, `element-translate-ng`, `maps-ng`, `charts-ng`, `dashboards-ng`, `native-charts-ng`.
-  Only changes targeting those packages should be included.
+- Commits with type `feat`, `fix`, or `perf` appear in the changelog.
+  Reserve these types for consumer-facing changes to the released packages:
+  `element-ng`, `element-theme`, `element-translate-ng`, `maps-ng`,
+  `charts-ng`, `dashboards-ng`, and `native-charts-ng`.
+  Internal changes should use another appropriate type.
 
-## Type (required)
+## Commit message
+
+Follow the conventional commit guidelines.
+Do not use `!` in the header for breaking changes.
+Always be aware of the target audiences of the commit.
+`feat`/`fix`/`perf` header show up in the changelog.
+Write them in a way that they are understandable for consumer not knowing internals of Element.
+The body is mainly for ourselves.
+Beside a short summary it should also describe the reason why certain decisions were taken.
+
+### Type (required)
 
 | Type       | Meaning                                            | In changelog |
 | ---------- | -------------------------------------------------- | ------------ |
@@ -39,10 +52,12 @@ Commit messages drive the changelog, so getting the format right is mandatory.
 
 - Use the entry-point (folder) name of the component/service: `breadcrumb`,
   `tree-view`, `wizard`, etc.
+- For changes in the theme, use the file name: `_forms.scss` --> `forms`
 - Non `element-*` packages: Use `/` to narrow within an entry point: `charts/sankey`.
 - For cross-component changes use a common scope when possible: `angular`,
   `api`, `a11y`, `ionic`, `i18n`, `theme`, `webcomponents`.
 - For dependency changes use the npm package name.
+- For everything else determine the scope based on the main change aspect
 
 ### Body (required)
 
