@@ -75,18 +75,24 @@ During dictation, the text area remains visible and read-only so transcription u
 conflict with manual edits. Attachment and other contextual actions remain available.
 
 - **Idle:** The microphone starts dictation. Sending follows the usual input rules.
-- **Listening:** The placeholder changes to "Listening…", cancel replaces the microphone, and send is disabled.
-- **Recording:** Transcription appears in real time, and confirm replaces send.
-- **Confirm:** Dictation stops and the transcript remains editable. Confirmation never sends a message.
+- **Listening:** Guard startup immediately, including permission requests. Cancel replaces the microphone and send is disabled. Use "Starting voice input…" during startup, then "Listening…" while awaiting speech.
+- **Recording:** Transcription appears in real time, and confirm replaces send. The whole draft uses the secondary text color until dictation ends and normal text styling returns.
+- **Confirm:** The consumer requests recognition to stop. If final results are pending, enter finishing before returning to idle for review. Confirmation never sends a message.
+- **Finishing:** The draft remains read-only and uses the secondary text color while accepting final transcript updates. The status announces "Finishing dictation…". Confirm is disabled; Cancel and contextual actions remain available.
+- **Automatic completion:** When the recognition provider finishes, the consumer returns to idle and keeps the transcript editable for review, without sending.
 - **Cancel:** Dictation stops and the consumer restores the draft from before dictation.
 
 All controls use the existing tertiary ghost buttons, icon sizing, accent color, and spacing tokens.
 No waveform is rendered in this version.
 
-Focus moves to cancel while listening, then to confirm when recording begins. After dictation,
-focus returns to the text area with the cursor at the end. Enter in the text area confirms during
-recording and never sends during dictation; Escape cancels from anywhere within the input.
-Buttons also support their native Enter and Space activation.
+Focus moves to cancel while listening, then to confirm when recording begins, provided the user
+has stayed on the text area or dictation controls. If the user navigates to a contextual action,
+menu, or outside the input, automatic transitions preserve that focus. When finishing begins,
+focus moves from Confirm to Cancel, without taking focus from unrelated controls. After dictation, focus
+returns to the text area with the cursor at the end only if it remains on the dictation controls
+or text area. Enter in the text area confirms during recording and never sends during dictation;
+Escape cancels from anywhere within the input. Repeated Enter events are ignored, so holding
+Enter cannot confirm and immediately send. Buttons also support their native Enter and Space activation.
 
 ## Code ---
 
@@ -113,7 +119,12 @@ Clear the list (set to `[]`) on send and repopulate it after each AI response.
 
 Enable the controls with `voiceInput` and drive `voiceInputState` from your speech recognition
 integration. Element does not access the microphone or depend on a speech-to-text library.
-The example simulates partial transcription updates without requesting microphone access.
+The example simulates asynchronous startup and partial transcription updates without requesting
+microphone access. Startup is cancellable before the first transcript arrives. After the final
+simulated result, dictation finishes automatically and the transcript remains editable for review.
+Users can also confirm earlier to stop dictation and keep the partial transcript.
+Switch off **Automatic completion** below the example to require user confirmation after the final
+result. The switch is disabled during dictation so the completion mode stays fixed for each attempt.
 
 ```html
 <si-chat-input
@@ -129,26 +140,50 @@ The example simulates partial transcription updates without requesting microphon
 
 The consumer owns the recognition lifecycle, state, and transcript:
 
-1. On `voiceInputStart`, save the current draft, request microphone permission, and start your
-   recognition provider. Set the state to `listening` once the provider is ready.
+1. On `voiceInputStart`, reject concurrent starts, save the current draft, and set the state to
+   `listening` synchronously, before awaiting microphone permission or provider startup. This
+   locks editing and sending while keeping cancellation available. Use `listeningLabel` to
+   announce "Starting voice input…" during startup and "Listening…" once the provider is ready.
+   Associate asynchronous startup and transcript callbacks with the current attempt.
 2. When speech is detected, set the state to `recording`. Update `value` with each complete
    draft, including any existing text. Partial results can replace previous partial results;
    do not append the same interim words repeatedly. The text area resizes for external updates.
-3. On `voiceInputConfirm`, stop recognition, apply any final result, then set the state to
-   `idle`. The user can review, edit, dictate more, or send the message.
+3. On `voiceInputConfirm`, set the state to `finishing` and request recognition to stop. Keep
+   accepting final transcript updates through `value` without returning to `recording`. The draft
+   stays read-only, Confirm is disabled, and Cancel remains available. Once final results have
+   arrived and recognition has finished, set the state to `idle` for review, editing, further
+   dictation, or sending. If finalization is synchronous, the consumer can return directly to idle.
 4. On `voiceInputCancel`, stop recognition, restore the saved draft, then set the state to `idle`.
    Attachments are not cleared by dictation controls.
+5. When the provider ends the recognition session naturally, use `finishing` if final results are
+   pending. Apply the final result, release recognition resources, and set the state to `idle`,
+   keeping the transcript for review. Do not send the message automatically. This transition does
+   not require a `voiceInputConfirm` event.
+
+Silence detection and automatic stopping belong to the speech recognition integration, not the
+chat input. Providers may expose voice activity, end-of-utterance, silence timeout, or session-ended
+events. A speech pause or end of an utterance does not necessarily end a continuous recognition
+session. Follow the provider's lifecycle and your application's stopping policy, and keep dictation
+active until final results have been collected and recognition has finished.
 
 The events are requests: they do not change `voiceInputState` or `value` automatically. Keep
-the active state until asynchronous finalization completes. Ignore late recognition callbacks
-after cancellation, and release microphone resources when the view is destroyed. On permission
-denial or recognition failure, restore the draft, return to `idle`, and present an appropriate
-application error using an accessible status message or notification. Only enable voice input
-when your integration supports it. The microphone control is disabled during response generation.
+the state at `finishing` until asynchronous finalization completes. Cancel remains a consumer
+request in this state: stop finalization, restore the saved draft, and return to idle. Cancellation, completion, and
+destruction must invalidate the current attempt. Ignore both successful and failed callbacks
+from invalidated attempts: they must not update state or restore an old draft over edits made
+after cancellation or during a later attempt. Release any resources returned by a late startup
+result, and release microphone resources when the view is destroyed.
 
-Customize `startDictationLabel`, `cancelDictationLabel`, `confirmDictationLabel`, and
-`listeningLabel` with translatable strings. The listening status is announced without announcing
-every partial transcript. Consumers can hide irrelevant custom actions during dictation if needed.
+On permission denial or recognition failure for the current attempt, stop recognition, restore
+the draft protected by the startup lock, return to `idle`, and present an appropriate accessible
+error message or notification. Do not defer the startup lock until permission is granted or
+unconditionally restore a saved draft from a stale error handler. Only enable voice input when
+your integration supports it. The microphone control is disabled during response generation.
+
+Customize `startDictationLabel`, `cancelDictationLabel`, `confirmDictationLabel`, `listeningLabel`,
+and `finishingLabel` with translatable strings. Listening and finishing are announced through the
+status region without announcing every transcript update. Consumers can hide irrelevant custom
+actions during dictation if needed.
 Waveform rendering and audio-level inputs are intentionally deferred; no audio data is required by
 the current interface.
 

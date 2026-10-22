@@ -31,6 +31,7 @@ export interface SiTranslatableKeys {
   'SI_CHAT_INPUT.ATTACH_FILE'?: string;
   'SI_CHAT_INPUT.CANCEL_DICTATION'?: string;
   'SI_CHAT_INPUT.CONFIRM_DICTATION'?: string;
+  'SI_CHAT_INPUT.FINISHING'?: string;
   'SI_CHAT_INPUT.INTERRUPT'?: string;
   'SI_CHAT_INPUT.LABEL'?: string;
   'SI_CHAT_INPUT.LISTENING'?: string;

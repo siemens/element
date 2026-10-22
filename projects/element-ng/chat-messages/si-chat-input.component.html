@@ -36,12 +36,14 @@
       #textInput
       class="chat-textarea w-100 border-0"
       rows="1"
+      [class.text-secondary]="(voiceRecording() || voiceFinishing()) && !disabled()"
       [id]="id"
-      [placeholder]="(voiceActive() ? listeningLabel() : placeholder()) | translate"
+      [placeholder]="(voiceActive() ? voiceStatusLabel() : placeholder()) | translate"
       [disabled]="disabled()"
       [readOnly]="voiceActive()"
       [maxlength]="maxLength() || null"
       [(ngModel)]="value"
+      (input)="onInput($event)"
       (keydown)="onKeyDown($event)"
     ></textarea>
   </div>
@@ -122,7 +124,7 @@
           [attr.aria-label]="voiceButtonLabel() | translate"
           (click)="onVoiceButtonClick()"
         >
-          <si-icon [icon]="voiceActive() ? icons.elementCancel : icons.elementVoice" />
+          <si-icon [icon]="voiceActive() ? icons.elementStateClose : icons.elementVoice" />
         </button>
       }
       <button
@@ -140,7 +142,7 @@
   </div>
   @if (voiceInput()) {
     <span class="visually-hidden" role="status">{{
-      voiceActive() ? (listeningLabel() | translate) : ''
+      voiceActive() ? (voiceStatusLabel() | translate) : ''
     }}</span>
   }
 </div>
