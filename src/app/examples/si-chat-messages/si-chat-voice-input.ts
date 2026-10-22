@@ -15,31 +15,62 @@ export class SampleComponent {
   private readonly logEvent = inject(LOG_EVENT);
   private readonly destroyRef = inject(DestroyRef);
   private transcriptionTimer?: ReturnType<typeof setInterval>;
+  private dictationAttempt = 0;
   private draft = '';
 
   readonly value = signal('');
   readonly voiceInputState = signal<'idle' | 'listening' | 'recording'>('idle');
+  readonly automaticCompletion = signal(true);
+  readonly starting = signal(false);
+  readonly error = signal<string | undefined>(undefined);
 
   constructor() {
     this.destroyRef.onDestroy(() => this.stopTranscription());
   }
 
-  startDictation(): void {
+  async startDictation(): Promise<void> {
+    if (this.voiceInputState() !== 'idle') {
+      return;
+    }
+    const attempt = ++this.dictationAttempt;
     this.draft = this.value();
     this.voiceInputState.set('listening');
-    this.logEvent('Dictation started');
+    this.starting.set(true);
+    this.error.set(undefined);
 
-    const words = 'Show the energy consumption for the last seven days.'.split(' ');
-    let wordCount = 0;
-    this.transcriptionTimer = setInterval(() => {
-      wordCount++;
-      const transcript = words.slice(0, wordCount).join(' ');
-      this.value.set(this.draft ? `${this.draft} ${transcript}` : transcript);
-      this.voiceInputState.set('recording');
-      if (wordCount === words.length) {
-        this.stopTranscription();
+    try {
+      await new Promise<void>(resolve => setTimeout(resolve, 750));
+      if (attempt !== this.dictationAttempt || this.destroyRef.destroyed) {
+        return;
       }
-    }, 500);
+      this.starting.set(false);
+      const words = 'Show the energy consumption for the last seven days.'.split(' ');
+      let wordCount = 0;
+      this.transcriptionTimer = setInterval(() => {
+        if (attempt !== this.dictationAttempt) {
+          return;
+        }
+        wordCount++;
+        const transcript = words.slice(0, wordCount).join(' ');
+        this.value.set(this.draft ? `${this.draft} ${transcript}` : transcript);
+        this.voiceInputState.set('recording');
+        if (wordCount === words.length) {
+          this.stopTranscription();
+          if (this.automaticCompletion()) {
+            this.voiceInputState.set('idle');
+            this.logEvent('Dictation completed');
+          }
+        }
+      }, 500);
+      this.logEvent('Dictation started');
+    } catch {
+      if (attempt !== this.dictationAttempt || this.destroyRef.destroyed) {
+        return;
+      }
+      this.cancelDictation();
+      this.error.set('Voice input could not start. Please try again.');
+      this.logEvent('Voice input could not start');
+    }
   }
 
   confirmDictation(): void {
@@ -60,6 +91,8 @@ export class SampleComponent {
   }
 
   private stopTranscription(): void {
+    this.dictationAttempt++;
+    this.starting.set(false);
     clearInterval(this.transcriptionTimer);
     this.transcriptionTimer = undefined;
   }
