@@ -19,10 +19,10 @@ import {
 import { FormsModule } from '@angular/forms';
 import {
   elementAttachment,
-  elementCancel,
-  elementOk,
+  elementCheckedFilled,
   elementPlus,
   elementSendFilled,
+  elementStateClose,
   elementStopFilled,
   elementVoice
 } from '@siemens/element-icons';
@@ -106,10 +106,10 @@ export class SiChatInputComponent implements AfterViewInit {
   protected readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
   protected readonly icons = addIcons({
     elementAttachment,
-    elementCancel,
-    elementOk,
+    elementCheckedFilled,
     elementPlus,
     elementSendFilled,
+    elementStateClose,
     elementStopFilled,
     elementVoice
   });
@@ -127,11 +127,12 @@ export class SiChatInputComponent implements AfterViewInit {
   readonly voiceInput = input(false, { transform: booleanAttribute });
 
   /**
-   * Consumer-controlled voice input state. Use listening while awaiting speech and recording
-   * when transcription starts. Stream transcript updates through {@link value}.
+   * Consumer-controlled voice input state. Use listening during startup and while awaiting speech,
+   * recording during transcription, and finishing while awaiting final results after stopping.
+   * Stream transcript updates through {@link value}, including while finishing.
    * @defaultValue 'idle'
    */
-  readonly voiceInputState = input<'idle' | 'listening' | 'recording'>('idle');
+  readonly voiceInputState = input<'idle' | 'listening' | 'recording' | 'finishing'>('idle');
 
   /**
    * Start dictation button label.
@@ -175,6 +176,17 @@ export class SiChatInputComponent implements AfterViewInit {
    */
   readonly listeningLabel = input<TranslatableString>(
     t(() => $localize`:@@SI_CHAT_INPUT.LISTENING:Listening…`)
+  );
+
+  /**
+   * Status while awaiting final transcription results.
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_CHAT_INPUT.FINISHING:Finishing dictation…`)
+   * ```
+   */
+  readonly finishingLabel = input<TranslatableString>(
+    t(() => $localize`:@@SI_CHAT_INPUT.FINISHING:Finishing dictation…`)
   );
 
   /** Requests that the consumer start speech recognition. Does not change the state or value. */
@@ -395,6 +407,12 @@ export class SiChatInputComponent implements AfterViewInit {
   protected readonly voiceRecording = computed(
     () => this.voiceActive() && this.voiceInputState() === 'recording'
   );
+  protected readonly voiceFinishing = computed(
+    () => this.voiceActive() && this.voiceInputState() === 'finishing'
+  );
+  protected readonly voiceStatusLabel = computed(() =>
+    this.voiceFinishing() ? this.finishingLabel() : this.listeningLabel()
+  );
   protected readonly voiceButtonLabel = computed(() =>
     this.voiceActive() ? this.cancelDictationLabel() : this.startDictationLabel()
   );
@@ -440,14 +458,14 @@ export class SiChatInputComponent implements AfterViewInit {
     return !this.canSend();
   });
   protected readonly buttonIcon = computed(() =>
-    this.voiceRecording()
-      ? this.icons.elementOk
+    this.voiceRecording() || this.voiceFinishing()
+      ? this.icons.elementCheckedFilled
       : this.showInterruptButton()
         ? this.icons.elementStopFilled
         : this.sendButtonIcon()
   );
   protected readonly buttonLabel = computed(() =>
-    this.voiceRecording()
+    this.voiceRecording() || this.voiceFinishing()
       ? this.confirmDictationLabel()
       : this.showInterruptButton()
         ? this.interruptButtonLabel()
@@ -475,13 +493,23 @@ export class SiChatInputComponent implements AfterViewInit {
       if (this.disabled()) {
         return;
       }
+      const textarea = this.textInput()?.nativeElement;
+      const voiceButton = this.voiceButton()?.nativeElement;
+      const submitButton = this.submitButton()?.nativeElement;
+      const activeElement = textarea?.ownerDocument.activeElement;
+      if (
+        activeElement !== textarea &&
+        activeElement !== voiceButton &&
+        activeElement !== submitButton
+      ) {
+        return;
+      }
       if (state === 'idle') {
-        const textarea = this.textInput()?.nativeElement;
         textarea?.focus();
         textarea?.setSelectionRange(textarea.value.length, textarea.value.length);
       } else {
-        const button = state === 'listening' ? this.voiceButton() : this.submitButton();
-        button?.nativeElement.focus();
+        const button = state === 'recording' ? submitButton : voiceButton;
+        button?.focus();
       }
     });
   }
@@ -526,6 +554,9 @@ export class SiChatInputComponent implements AfterViewInit {
     }
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
+      if (event.repeat) {
+        return;
+      }
       if (this.voiceActive()) {
         this.onButtonClick();
         return;
@@ -552,11 +583,26 @@ export class SiChatInputComponent implements AfterViewInit {
   }
 
   protected onVoiceKeyDown(event: KeyboardEvent): void {
+    if (
+      event.key === 'Enter' &&
+      !event.shiftKey &&
+      event.repeat &&
+      !event.isComposing &&
+      (event.target === this.voiceButton()?.nativeElement ||
+        event.target === this.submitButton()?.nativeElement)
+    ) {
+      event.preventDefault();
+      return;
+    }
     if (event.key === 'Escape' && this.voiceActive() && !this.disabled() && !event.isComposing) {
       event.preventDefault();
       event.stopPropagation();
       this.voiceInputCancel.emit();
     }
+  }
+
+  protected onInput(event: Event): void {
+    this.setTextareaHeight(event.target as HTMLTextAreaElement);
   }
 
   protected onFilesAdded(uploadFiles: UploadFile[]): void {

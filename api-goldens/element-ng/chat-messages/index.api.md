@@ -134,6 +134,7 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly disclaimer: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly fileError: _angular_core.OutputEmitterRef<FileUploadError>;
+    readonly finishingLabel: _angular_core.InputSignal<TranslatableString>;
     focus(): void;
     readonly followUpPrompts: _angular_core.InputSignal<string[]>;
     readonly followUpPromptSelected: _angular_core.OutputEmitterRef<string>;
@@ -161,7 +162,7 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly voiceInputCancel: _angular_core.OutputEmitterRef<void>;
     readonly voiceInputConfirm: _angular_core.OutputEmitterRef<void>;
     readonly voiceInputStart: _angular_core.OutputEmitterRef<void>;
-    readonly voiceInputState: _angular_core.InputSignal<"idle" | "listening" | "recording">;
+    readonly voiceInputState: _angular_core.InputSignal<"idle" | "listening" | "recording" | "finishing">;
 }
 
 // @public
