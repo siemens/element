@@ -263,7 +263,11 @@ Note that this hash key will only be appended to the translation based JSON file
 
 ### Translatable keys in Element
 
-<si-docs-type name="SiTranslatableKeys"></si-docs-type>
+All keys are members of the SiTranslatableKeys type of each package:
+
+- [SiTranslatableKeys in @siemens/element-ng](../../api/siemens/element-ng/types/SiTranslatableKeys/)
+- [SiTranslatableKeys in @siemens/dashboards-ng](../../api/siemens/dashboards-ng/types/SiTranslatableKeys/)
+- [SiTranslatableKeys in @siemens/maps-ng](../../api/siemens/maps-ng/types/SiTranslatableKeys/)
 
 ### Extracting translatable keys
 
