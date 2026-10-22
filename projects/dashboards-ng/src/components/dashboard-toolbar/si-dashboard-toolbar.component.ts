@@ -2,14 +2,21 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { Component, computed, inject, input, model, output, viewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { elementEdit } from '@siemens/element-icons';
+import { elementEdit, elementOptionsVertical } from '@siemens/element-icons';
+import {
+  SiAutoCollapsableListDirective,
+  SiAutoCollapsableListItemDirective,
+  SiAutoCollapsableListOverflowItemDirective
+} from '@siemens/element-ng/auto-collapsable-list';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-bar';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
+import { SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
 import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -22,15 +29,21 @@ import { SiGridComponent } from '../grid/si-grid.component';
  * `editable`, it supports content projection for applications to inject toolbar
  * controls for e.g. filtering. Use the attribute `filters-slot` to inject the filters.
  * In addition it shows the button to switch to the `editable`. When `editable`, it support
- * the cancel and save buttons, as well as displaying primary and secondary actions.
+ * the cancel and save buttons, as well as primary and secondary actions.
+ * Actions collapse together into a menu when space is limited.
  */
 @Component({
   selector: 'si-dashboard-toolbar',
   imports: [
+    CdkMenuTrigger,
+    SiAutoCollapsableListDirective,
+    SiAutoCollapsableListItemDirective,
+    SiAutoCollapsableListOverflowItemDirective,
     SiContentActionBarComponent,
     SiLinkDirective,
     SiLoadingButtonComponent,
     SiIconComponent,
+    SiMenuFactoryComponent,
     RouterLink,
     SiResponsiveContainerDirective,
     SiTranslatePipe,
@@ -42,7 +55,7 @@ import { SiGridComponent } from '../grid/si-grid.component';
   }
 })
 export class SiDashboardToolbarComponent {
-  protected readonly icons = addIcons({ elementEdit });
+  protected readonly icons = addIcons({ elementEdit, elementOptionsVertical });
 
   /**
    * Set primary actions that are in `editable` mode first visible or in
@@ -105,19 +118,18 @@ export class SiDashboardToolbarComponent {
   protected labelEdit = t(() => $localize`:@@DASHBOARD.EDIT:Edit`);
   protected labelCancel = t(() => $localize`:@@DASHBOARD.CANCEL:Cancel`);
   protected labelSave = t(() => $localize`:@@DASHBOARD.SAVE:Save`);
+  protected labelMoreActions = t(() => $localize`:@@DASHBOARD.MORE_ACTIONS:More actions`);
 
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
 
   private readonly dashboardToolbarContainer = viewChild.required(SiResponsiveContainerDirective);
 
-  protected readonly showContentActionBar = computed(
-    () => this.primaryEditActions()?.length + this.secondaryEditActions()?.length > 3
-  );
-
   protected readonly editActions = computed(() => [
     ...this.primaryEditActions(),
     ...this.secondaryEditActions()
   ]);
+
+  protected readonly showContentActionBar = computed(() => this.editActions().length > 3);
 
   protected readonly primaryEditActionsComputed = computed(() => {
     return this.primaryEditActions().map(item => this.proxyMenuItemAction(item));
@@ -126,6 +138,11 @@ export class SiDashboardToolbarComponent {
   protected readonly secondaryEditActionsComputed = computed(() => {
     return this.secondaryEditActions().map(item => this.proxyMenuItemAction(item));
   });
+
+  protected readonly overflowMenuItems = computed(() => [
+    ...this.primaryEditActionsComputed(),
+    ...this.secondaryEditActionsComputed()
+  ]);
 
   protected onEdit(): void {
     this.editable.set(true);
@@ -155,7 +172,7 @@ export class SiDashboardToolbarComponent {
     item: MenuItem | DashboardToolbarItem
   ): MenuItem | DashboardToolbarItem {
     if (item.type === 'action' && typeof item.action === 'function') {
-      item.action = item.action.bind(this, this.grid());
+      return { ...item, action: item.action.bind(this, this.grid()) };
     }
     return item;
   }
