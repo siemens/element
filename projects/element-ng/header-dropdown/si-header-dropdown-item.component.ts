@@ -2,12 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { elementDown2, elementOk, elementRecordFilled } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
-import { SiHeaderDropdownTriggerDirective } from './si-header-dropdown-trigger.directive';
-import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
+import { SiHeaderDropdownItemBase } from './si-header-dropdown-item-base.directive';
 
 /**
  * Creates a dropdown-item. Must be used within an {@link SiHeaderDropdownComponent}.
@@ -23,33 +22,12 @@ import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
     '(click)': 'click()'
   }
 })
-export class SiHeaderDropdownItemComponent {
+export class SiHeaderDropdownItemComponent extends SiHeaderDropdownItemBase {
   protected readonly icons = addIcons({ elementDown2, elementOk, elementRecordFilled });
 
-  /** Optional icon that will be rendered before the label. */
-  readonly icon = input<string>();
-  /** Badge that is rendered after the label. */
-  readonly badge = input<string | number>();
-  /** Badge (always red) that is attached to the icon. */
-  readonly iconBadge = input<string | number>();
-  /** Color of the badge (not iconBadge). */
-  readonly badgeColor = input<string>();
-  /** Whether the icon is checked with a radio or check mark. */
+  /**
+   * Whether the icon is checked with a radio or check mark.
+   * @deprecated Use `si-header-dropdown-radio-item` or `si-header-dropdown-check-item` instead.
+   */
   readonly checked = input<'radio' | 'check' | ''>();
-
-  protected readonly ownTrigger = inject(SiHeaderDropdownTriggerDirective, {
-    self: true,
-    optional: true
-  });
-  protected readonly parentTrigger = inject(SiHeaderDropdownTriggerDirective, { skipSelf: true });
-  protected readonly navbar = inject(SI_HEADER_WITH_DROPDOWNS, { optional: true });
-
-  protected click(): void {
-    if (!this.ownTrigger) {
-      this.parentTrigger.close({ all: true });
-      if (this.navbar?.onDropdownItemTriggered) {
-        this.navbar?.onDropdownItemTriggered();
-      }
-    }
-  }
 }
