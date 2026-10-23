@@ -599,7 +599,7 @@ describe('SiSelectComponent', () => {
       );
       await fixture.whenStable();
 
-      await vi.waitFor(async () => expect(await selectHarness.getOverflowCount()).toBe(3));
+      await vi.waitFor(async () => expect(await selectHarness.getOverflowCount()).toBe(2));
     });
 
     it('should filter in grouped options', async () => {

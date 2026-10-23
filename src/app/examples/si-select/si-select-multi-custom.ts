@@ -67,7 +67,7 @@ import {
           #overflow="siAutoCollapsableListOverflowItem"
           siAutoCollapsableListOverflowItem
           class="pill py-0 ms-2"
-          >{{ overflow.hiddenItemCount }}+</span
+          >{{ overflow.hiddenItemCount() }}+</span
         >
       </div>
     </si-select-combobox>
