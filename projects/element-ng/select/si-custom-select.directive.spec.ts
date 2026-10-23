@@ -7,6 +7,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, inject, inputBinding, signal, twoWayBinding } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { SI_FORM_ITEM_CONTROL, SiFormItemComponent } from '@siemens/element-ng/form';
 
 import { SiCustomSelectDirective } from './si-custom-select.directive';
@@ -36,7 +37,7 @@ import { SiSelectDropdownDirective } from './si-select-dropdown.directive';
   ]
 })
 class SiTestSelectComponent {
-  readonly select = inject(SiCustomSelectDirective<string>);
+  readonly select = inject(SiCustomSelectDirective<string | null>);
   readonly options = signal<string[]>(['Alpha', 'Beta', 'Gamma']);
 
   pick(opt: string): void {
@@ -56,7 +57,7 @@ class SiTestSelectComponent {
   `
 })
 class FormHostComponent {
-  readonly control = new FormControl<string | undefined>(undefined);
+  readonly control = new FormControl<string | null | undefined>(undefined);
   readonly scrollStrategy: ScrollStrategy = inject(Overlay).scrollStrategies.close();
   readonly openChanges: boolean[] = [];
 }
@@ -74,13 +75,13 @@ describe('SiCustomSelectDirective', () => {
     Array.from(overlayContainerElement.querySelectorAll('.dropdown-item'));
 
   describe('direct usage', () => {
-    let value: ReturnType<typeof signal<string | undefined>>;
+    let value: ReturnType<typeof signal<string | null | undefined>>;
     let disabled: ReturnType<typeof signal<boolean>>;
     let readonly: ReturnType<typeof signal<boolean>>;
     let labelledby: ReturnType<typeof signal<string | undefined>>;
 
     beforeEach(async () => {
-      value = signal<string | undefined>(undefined);
+      value = signal<string | null | undefined>(undefined);
       disabled = signal(false);
       readonly = signal(false);
       labelledby = signal(undefined);
@@ -345,6 +346,24 @@ describe('SiCustomSelectDirective', () => {
 
       const host = formFixture.nativeElement.querySelector('si-test-select');
       expect(host).toHaveTextContent('Alpha');
+    });
+
+    it('should preserve null value from form control', async () => {
+      formHost.control.setValue(null);
+      await formFixture.whenStable();
+
+      const select = formFixture.debugElement.query(By.directive(SiTestSelectComponent))
+        .componentInstance.select;
+      expect(select.value()).toBeNull();
+    });
+
+    it('should update form control with null', async () => {
+      const select = formFixture.debugElement.query(By.directive(SiTestSelectComponent))
+        .componentInstance.select;
+      select.updateValue(null);
+      await formFixture.whenStable();
+
+      expect(formHost.control.value).toBeNull();
     });
 
     it('should update form control when value is selected', async () => {
