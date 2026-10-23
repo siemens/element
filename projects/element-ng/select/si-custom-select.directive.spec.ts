@@ -277,7 +277,7 @@ describe('SiCustomSelectDirective', () => {
       expect(formHost.control.value).toBe('Gamma');
     });
 
-    it('should mark control as touched when dropdown is closed', async () => {
+    it('should mark control as touched when focus leaves after dropdown is closed', async () => {
       const host: HTMLElement = formFixture.nativeElement.querySelector('si-test-select');
       expect(formHost.control.touched).toBe(false);
 
@@ -287,6 +287,12 @@ describe('SiCustomSelectDirective', () => {
       expect(formHost.control.touched).toBe(false);
 
       getDropdownItems()[0].click();
+      await formFixture.whenStable();
+
+      expect(host).toHaveFocus();
+      expect(formHost.control.touched).toBe(false);
+
+      host.blur();
       await formFixture.whenStable();
 
       expect(formHost.control.touched).toBe(true);
