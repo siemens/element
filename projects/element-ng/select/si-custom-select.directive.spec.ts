@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { OverlayContainer } from '@angular/cdk/overlay';
+import { Overlay, OverlayContainer, ScrollStrategy } from '@angular/cdk/overlay';
+import { DOCUMENT } from '@angular/common';
 import { Component, inject, inputBinding, signal, twoWayBinding } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -29,8 +30,8 @@ import { SiSelectDropdownDirective } from './si-select-dropdown.directive';
   hostDirectives: [
     {
       directive: SiCustomSelectDirective,
-      inputs: ['disabled', 'readonly', 'value'],
-      outputs: ['valueChange']
+      inputs: ['disabled', 'readonly', 'value', 'siCustomSelectScrollStrategy'],
+      outputs: ['valueChange', 'openChange']
     }
   ]
 })
@@ -46,10 +47,18 @@ class SiTestSelectComponent {
 
 @Component({
   imports: [SiTestSelectComponent, ReactiveFormsModule],
-  template: `<si-test-select [formControl]="control" />`
+  template: `
+    <si-test-select
+      [formControl]="control"
+      [siCustomSelectScrollStrategy]="scrollStrategy"
+      (openChange)="openChanges.push($event)"
+    />
+  `
 })
 class FormHostComponent {
   readonly control = new FormControl<string | undefined>(undefined);
+  readonly scrollStrategy: ScrollStrategy = inject(Overlay).scrollStrategies.close();
+  readonly openChanges: boolean[] = [];
 }
 
 describe('SiCustomSelectDirective', () => {
@@ -185,6 +194,7 @@ describe('SiCustomSelectDirective', () => {
       await fixture.whenStable();
 
       expect(getOverlayDropdown()).not.toBeInTheDocument();
+      expect(getHost()).not.toHaveFocus();
     });
 
     it('should close dropdown on Escape key', async () => {
@@ -198,6 +208,7 @@ describe('SiCustomSelectDirective', () => {
       await fixture.whenStable();
 
       expect(getOverlayDropdown()).not.toBeInTheDocument();
+      expect(getHost()).toHaveFocus();
     });
 
     it('should not open when disabled', async () => {
@@ -277,7 +288,7 @@ describe('SiCustomSelectDirective', () => {
       expect(formHost.control.value).toBe('Gamma');
     });
 
-    it('should mark control as touched when dropdown is closed', async () => {
+    it('should mark control as touched when focus leaves after dropdown is closed', async () => {
       const host: HTMLElement = formFixture.nativeElement.querySelector('si-test-select');
       expect(formHost.control.touched).toBe(false);
 
@@ -287,6 +298,12 @@ describe('SiCustomSelectDirective', () => {
       expect(formHost.control.touched).toBe(false);
 
       getDropdownItems()[0].click();
+      await formFixture.whenStable();
+
+      expect(host).toHaveFocus();
+      expect(formHost.control.touched).toBe(false);
+
+      host.blur();
       await formFixture.whenStable();
 
       expect(formHost.control.touched).toBe(true);
@@ -304,6 +321,50 @@ describe('SiCustomSelectDirective', () => {
       await formFixture.whenStable();
 
       expect(formHost.control.touched).toBe(true);
+    });
+
+    it('should not mark control as touched when closing via Escape until focus leaves', async () => {
+      const host: HTMLElement = formFixture.nativeElement.querySelector('si-test-select');
+      host.click();
+      await formFixture.whenStable();
+
+      const overlayPane = overlayContainerElement.querySelector('.cdk-overlay-pane')!;
+      overlayPane.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      await formFixture.whenStable();
+
+      expect(getOverlayDropdown()).not.toBeInTheDocument();
+      expect(host).toHaveFocus();
+      expect(formHost.control.touched).toBe(false);
+
+      host.blur();
+      await formFixture.whenStable();
+
+      expect(formHost.control.touched).toBe(true);
+    });
+
+    it('should reset state when the overlay detaches on scroll', async () => {
+      const host: HTMLElement = formFixture.nativeElement.querySelector('si-test-select');
+      host.click();
+      await formFixture.whenStable();
+
+      expect(getOverlayDropdown()).toBeInTheDocument();
+      expect(host).toHaveAttribute('aria-expanded', 'true');
+
+      TestBed.inject(DOCUMENT).dispatchEvent(new Event('scroll'));
+      await formFixture.whenStable();
+
+      expect(getOverlayDropdown()).not.toBeInTheDocument();
+      expect(host).toHaveAttribute('aria-expanded', 'false');
+      expect(formHost.openChanges).toEqual([true, false]);
+      expect(host).not.toHaveFocus();
+      expect(formHost.control.touched).toBe(true);
+
+      host.click();
+      await formFixture.whenStable();
+
+      expect(getOverlayDropdown()).toBeInTheDocument();
+      expect(host).toHaveAttribute('aria-expanded', 'true');
+      expect(formHost.openChanges).toEqual([true, false, true]);
     });
 
     it('should disable via form control', async () => {
