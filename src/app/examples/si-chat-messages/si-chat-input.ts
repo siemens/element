@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { form, FormField } from '@angular/forms/signals';
 import {
   SiChatInputComponent,
   MessageAction,
@@ -10,13 +11,14 @@ import {
 } from '@siemens/element-ng/chat-messages';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { MenuItemAction } from '@siemens/element-ng/menu';
+import { MenuItem, MenuItemAction } from '@siemens/element-ng/menu';
+import { SelectOption } from '@siemens/element-ng/select';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiChatInputComponent, SiIconComponent],
+  imports: [SiChatInputComponent, SiIconComponent, FormField],
   templateUrl: './si-chat-input.html'
 })
 export class SampleComponent {
@@ -27,6 +29,63 @@ export class SampleComponent {
   readonly sending = signal(false);
   readonly disabled = signal(false);
   readonly interruptible = signal(false);
+  readonly selectedModel = signal('balanced');
+  readonly modelSettings = signal({ search: false, descriptions: false });
+  readonly modelForm = form(this.modelSettings);
+  readonly availableModels = signal<SelectOption<string>[]>([
+    {
+      type: 'option',
+      value: 'balanced',
+      label: 'Balanced',
+      description: 'Everyday questions and tasks'
+    },
+    {
+      type: 'option',
+      value: 'reasoning',
+      label: 'Reasoning',
+      description: 'Complex analysis and planning'
+    },
+    {
+      type: 'option',
+      value: 'fast',
+      label: 'Fast',
+      description: 'Quick answers to simple questions'
+    }
+  ]);
+  readonly models = computed(() =>
+    this.availableModels().map(option => ({
+      ...option,
+      description: this.modelSettings().descriptions ? option.description : undefined
+    }))
+  );
+  readonly modelActions = computed<MenuItem[]>(() => [
+    {
+      type: 'group',
+      label: 'Other models',
+      children: [
+        {
+          type: 'radio',
+          label: 'Coding',
+          checked: this.selectedModel() === 'coding',
+          action: () => {
+            if (!this.availableModels().some(item => item.value === 'coding')) {
+              this.availableModels.update(items => [
+                ...items,
+                {
+                  type: 'option',
+                  value: 'coding',
+                  label: 'Coding',
+                  description: 'Code generation and review'
+                }
+              ]);
+            }
+            this.selectedModel.set('coding');
+          }
+        }
+      ]
+    },
+    { type: 'action', label: 'Manage models', action: () => this.logEvent('Manage models clicked') }
+  ]);
 
   actions: MessageAction[] = [
     {

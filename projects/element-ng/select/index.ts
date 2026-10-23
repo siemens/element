@@ -13,6 +13,7 @@ export * from './si-select-value-template.directive';
 export * from './si-select-group-template.directive';
 export * from './si-select.module';
 export * from './select-list/si-select-list-has-filter.component';
+export * from './select-list/si-select-list.component';
 export * from './si-select-action.directive';
 export * from './si-select-actions.directive';
 export * from './si-select.types';

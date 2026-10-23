@@ -11,6 +11,7 @@ import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { ControlValueAccessor } from '@angular/forms';
 import { ElementRef } from '@angular/core';
 import { InputSignal } from '@angular/core';
+import { ListboxValueChangeEvent } from '@angular/cdk/listbox';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
@@ -31,6 +32,7 @@ export type SelectItem<T> = SelectGroup<T> | SelectOption<T>;
 
 // @public
 export interface SelectOption<T> {
+    description?: TranslatableString;
     disabled?: boolean;
     icon?: string;
     iconColor?: string;
@@ -54,6 +56,7 @@ export interface SelectOptionSource<TValue> {
 // @public
 export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormItemControl {
     constructor();
+    readonly ariaLabel: _angular_core.InputSignal<string | undefined>;
     close(): void;
     readonly disabled: _angular_core.Signal<boolean>;
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -134,6 +137,10 @@ export class SiSelectLazyOptionsDirective<T> implements SiSelectOptionsStrategy<
     readonly optionSource: _angular_core.InputSignal<SelectOptionSource<T>>;
     readonly rows: _angular_core.WritableSignal<SelectItem<T>[]>;
     readonly selectedRows: _angular_core.WritableSignal<SelectOption<T>[]>;
+}
+
+// @public
+export class SiSelectListComponent<T> extends SiSelectListBase<T> implements OnInit {
 }
 
 // @public (undocumented)
