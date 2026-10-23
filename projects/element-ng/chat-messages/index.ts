@@ -11,6 +11,7 @@ export * from './si-chat-container.component';
 export * from './si-chat-container-input.directive';
 export * from './si-chat-input.component';
 export * from './si-chat-input-disclaimer.directive';
+export * from './si-voice-waveform.component';
 export * from './si-chat-message-action.directive';
 export * from './si-chat-message.component';
 export * from './si-user-message.component';
