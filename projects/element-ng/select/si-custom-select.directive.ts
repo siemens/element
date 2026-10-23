@@ -320,8 +320,8 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   }
 
   /** @internal */
-  writeValue(obj: T | null): void {
-    this.value.set(obj ?? undefined);
+  writeValue(obj: T | null | undefined): void {
+    this.value.set(obj as T | undefined);
   }
 
   /** @internal */
