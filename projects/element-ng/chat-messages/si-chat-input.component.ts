@@ -38,6 +38,7 @@ import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-transla
 
 import { MessageAction } from './message-action.model';
 import { Attachment, SiAttachmentListComponent } from './si-attachment-list.component';
+import { SiVoiceWaveformComponent } from './si-voice-waveform.component';
 
 /**
  * Attachment item interface for file attachments in chat messages, extension of {@link Attachment} for {@link SiAttachmentListComponent} to use within {@link SiChatInputComponent}.
@@ -92,7 +93,8 @@ export interface ChatInputAttachment extends Attachment {
     SiAttachmentListComponent,
     SiMenuFactoryComponent,
     SiFileUploadDirective,
-    SiTooltipDirective
+    SiTooltipDirective,
+    SiVoiceWaveformComponent
   ],
   templateUrl: './si-chat-input.component.html',
   styleUrl: './si-chat-input.component.scss'
@@ -132,6 +134,13 @@ export class SiChatInputComponent implements AfterViewInit {
    * @defaultValue 'idle'
    */
   readonly voiceInputState = input<'idle' | 'listening' | 'recording'>('idle');
+
+  /**
+   * Latest normalized audio level, from 0 (silence) to 1 (maximum volume).
+   * Omit to use simulated speech bursts while recording. Audio capture is managed by the consumer.
+   * @defaultValue undefined
+   */
+  readonly voiceInputLevel = input<number>();
 
   /**
    * Start dictation button label.

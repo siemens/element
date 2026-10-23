@@ -82,7 +82,11 @@ conflict with manual edits. Attachment and other contextual actions remain avail
 - **Cancel:** Dictation stops and the consumer restores the draft from before dictation.
 
 All controls use the existing tertiary ghost buttons, icon sizing, accent color, and spacing tokens.
-No waveform is rendered in this version.
+A waveform appears before cancel and confirm during dictation. It shows a silent baseline while
+listening and scrolls from right to left while recording. Silence uses the disabled text color;
+other samples use the primary text color. The waveform is decorative: the existing listening
+status and button labels provide accessible feedback without announcing every audio sample.
+Reduced-motion preferences keep the waveform static.
 
 Focus moves to cancel while listening, then to confirm when recording begins, provided the user
 has stayed on the text area or dictation controls. If the user navigates to a contextual action,
@@ -122,12 +126,15 @@ microphone access. Startup is cancellable before the first transcript arrives. A
 simulated result, dictation finishes automatically and the transcript remains editable for review.
 Users can also confirm earlier to stop dictation and keep the partial transcript.
 Switch off **Automatic completion** below the example to require user confirmation after the final
-result. The switch is disabled during dictation so the completion mode stays fixed for each attempt.
+result. Enable **Simulated audio levels** to demonstrate consumer-provided levels instead of the
+built-in fallback. These levels are demonstration data, not microphone measurements. The switches
+are disabled during dictation so the settings stay fixed for each attempt.
 
 ```html
 <si-chat-input
   [voiceInput]="true"
   [voiceInputState]="voiceInputState()"
+  [voiceInputLevel]="audioLevel()"
   [(value)]="draft"
   (voiceInputStart)="startDictation()"
   (voiceInputConfirm)="confirmDictation()"
@@ -176,9 +183,39 @@ your integration supports it. The microphone control is disabled during response
 Customize `startDictationLabel`, `cancelDictationLabel`, `confirmDictationLabel`, and
 `listeningLabel` with translatable strings. The listening status is announced without announcing
 every partial transcript. Consumers can hide irrelevant custom actions during dictation if needed.
-Waveform rendering and audio-level inputs are intentionally deferred; no audio data is required by
-the current interface.
+
+### Waveform
+
+`voiceInputLevel` accepts the latest normalized audio level: `0` means silence and `1` means maximum
+volume. Derive it from your audio provider's volume or amplitude measurement, independently of the
+transcript. Element samples the latest value every 60 ms; it does not queue provider updates.
+Values outside this range are clamped, and non-finite values are treated as silence. Do not pass
+raw PCM samples, decibels, or frequency arrays without converting them to the normalized range.
+
+Omit `voiceInputLevel` (or pass `undefined`) when your provider does not expose audio levels.
+The waveform then simulates alternating speech bursts and quiet periods while recording. This
+animation indicates activity, not measured microphone volume. An explicit `0` shows real silence
+and never enables the fallback. No audio-level data is required to stream transcripts through `value`.
+
+The waveform has a fixed 120 by 16 px viewport, with 1 px bars and 2 px gaps. Each new sample enters
+on the right every 60 ms, with a height between 2 and 16 px. Samples remain vertically centered.
+Recording stops when the consumer changes `voiceInputState`; disabling the input also stops the
+animation. Returning to idle removes the waveform, and the next dictation starts with silence.
+
+For other voice controls, import `SiVoiceWaveformComponent` from `@siemens/element-ng/chat-messages`:
+
+```html
+<si-voice-waveform [active]="recording()" [level]="audioLevel()" />
+```
+
+`active` defaults to `false`. Setting it to `false` freezes the current samples; setting it to
+`true` resumes sampling. The standalone waveform is hidden from assistive technology. Pair it with
+an accessible recording status and labeled controls. Timers stop on destruction and while the user
+prefers reduced motion. Both the chat input and standalone component remain independent of microphone
+permissions, audio capture, and speech recognition libraries.
 
 <si-docs-api component="SiChatInputComponent"></si-docs-api>
+
+<si-docs-api component="SiVoiceWaveformComponent"></si-docs-api>
 
 <si-docs-types></si-docs-types>

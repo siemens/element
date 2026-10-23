@@ -1,0 +1,29 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+  flex: 0 0 auto;
+  inline-size: 120px;
+  block-size: map.get(variables.$spacers-block, 6);
+  overflow: hidden;
+  direction: ltr;
+}
+
+.waveform-track {
+  display: flex;
+  align-items: center;
+  gap: map.get(variables.$spacers-inline, 1);
+  block-size: 100%;
+  inline-size: max-content;
+}
+
+.waveform-bar {
+  display: block;
+  flex: 0 0 1px;
+  background-color: variables.$si-sys-color-text-primary;
+
+  &.silent {
+    background-color: variables.$si-sys-color-text-disabled;
+  }
+}

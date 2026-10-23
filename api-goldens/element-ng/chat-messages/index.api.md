@@ -160,6 +160,7 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly voiceInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly voiceInputCancel: _angular_core.OutputEmitterRef<void>;
     readonly voiceInputConfirm: _angular_core.OutputEmitterRef<void>;
+    readonly voiceInputLevel: _angular_core.InputSignal<number | undefined>;
     readonly voiceInputStart: _angular_core.OutputEmitterRef<void>;
     readonly voiceInputState: _angular_core.InputSignal<"idle" | "listening" | "recording">;
 }
@@ -187,6 +188,13 @@ export class SiUserMessageComponent {
     readonly content: _angular_core.InputSignal<string>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+}
+
+// @public
+export class SiVoiceWaveformComponent {
+    constructor();
+    readonly active: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly level: _angular_core.InputSignal<number | undefined>;
 }
 
 // (No @packageDocumentation comment for this package)

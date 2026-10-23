@@ -4,6 +4,7 @@
     disclaimer="The content is AI generated. Always verify the information for accuracy."
     [voiceInput]="true"
     [voiceInputState]="voiceInputState()"
+    [voiceInputLevel]="voiceInputLevel()"
     [listeningLabel]="starting() ? 'Starting voice input…' : 'Listening…'"
     [allowAttachments]="true"
     [(value)]="value"
@@ -26,5 +27,17 @@
       (change)="automaticCompletion.set(!automaticCompletion())"
     />
     <label for="automatic-completion" class="form-check-label">Automatic completion</label>
+  </div>
+  <div class="form-check form-switch mt-4">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      role="switch"
+      id="measured-levels"
+      [checked]="measuredLevels()"
+      [disabled]="voiceInputState() !== 'idle'"
+      (change)="measuredLevels.set(!measuredLevels())"
+    />
+    <label for="measured-levels" class="form-check-label">Simulated audio levels</label>
   </div>
 </div>

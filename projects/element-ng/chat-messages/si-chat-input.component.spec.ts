@@ -21,6 +21,7 @@ import {
   ChatInputAttachment,
   SiChatInputComponent as TestComponent
 } from './si-chat-input.component';
+import { SiVoiceWaveformComponent } from './si-voice-waveform.component';
 
 describe('SiChatInputComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -47,6 +48,7 @@ describe('SiChatInputComponent', () => {
   let followUpPromptSelectedSpy = vi.fn();
   let voiceInput: WritableSignal<boolean>;
   let voiceState: WritableSignal<'idle' | 'listening' | 'recording'>;
+  let voiceLevel: WritableSignal<number | undefined>;
   let startSpy = vi.fn<() => void>();
   let confirmSpy = vi.fn<() => void>();
   let cancelSpy = vi.fn<() => void>();
@@ -79,6 +81,7 @@ describe('SiChatInputComponent', () => {
     followUpPromptSelectedSpy = vi.fn();
     voiceInput = signal(false);
     voiceState = signal<'idle' | 'listening' | 'recording'>('idle');
+    voiceLevel = signal<number | undefined>(undefined);
     startSpy = vi.fn<() => void>();
     confirmSpy = vi.fn<() => void>();
     cancelSpy = vi.fn<() => void>();
@@ -112,6 +115,7 @@ describe('SiChatInputComponent', () => {
         outputBinding('followUpPromptSelected', followUpPromptSelectedSpy),
         inputBinding('voiceInput', voiceInput),
         inputBinding('voiceInputState', voiceState),
+        inputBinding('voiceInputLevel', voiceLevel),
         outputBinding('voiceInputStart', startSpy),
         outputBinding('voiceInputConfirm', confirmSpy),
         outputBinding('voiceInputCancel', cancelSpy),
@@ -179,6 +183,47 @@ describe('SiChatInputComponent', () => {
 
     const textarea = debugElement.query(By.css('textarea'));
     expect(textarea).toBeTruthy();
+  });
+
+  it('should not render a waveform when voice controls are unavailable or idle', async () => {
+    voiceState.set('recording');
+    await fixture.whenStable();
+    expect(debugElement.query(By.directive(SiVoiceWaveformComponent))).toBeNull();
+
+    voiceInput.set(true);
+    voiceState.set('idle');
+    await fixture.whenStable();
+    expect(debugElement.query(By.directive(SiVoiceWaveformComponent))).toBeNull();
+  });
+
+  it('should show a silent waveform while listening and sample supplied levels while recording', async () => {
+    voiceInput.set(true);
+    voiceState.set('listening');
+    voiceLevel.set(0.75);
+    await fixture.whenStable();
+    const waveform = debugElement.query(By.directive(SiVoiceWaveformComponent));
+    const waveformComponent = waveform.componentInstance as SiVoiceWaveformComponent;
+
+    expect(waveformComponent.active()).toBe(false);
+    expect(waveformComponent.level()).toBe(0.75);
+    expect(waveform.nativeElement.nextElementSibling).toHaveAttribute(
+      'aria-label',
+      'Cancel dictation'
+    );
+
+    voiceState.set('recording');
+    value.set('Live transcript');
+    await fixture.whenStable();
+    expect(waveformComponent.active()).toBe(true);
+    expect(debugElement.query(By.css('textarea')).nativeElement).toHaveValue('Live transcript');
+
+    disabled.set(true);
+    await fixture.whenStable();
+    expect(waveformComponent.active()).toBe(false);
+
+    voiceState.set('idle');
+    await fixture.whenStable();
+    expect(debugElement.query(By.directive(SiVoiceWaveformComponent))).toBeNull();
   });
 
   it('should resize the textarea when the value is updated externally', async () => {
