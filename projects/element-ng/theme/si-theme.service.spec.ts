@@ -51,6 +51,7 @@ describe('SiThemeService', () => {
     service.resolvedColorScheme$.subscribe(themeSwitchSpy);
   };
 
+  // Keep the `using` spy alive for the test body and always restore shared DOM state afterward.
   aroundEach(async runTest => {
     using spy = vi.spyOn(window, 'matchMedia');
     matchMediaSpy = spy;

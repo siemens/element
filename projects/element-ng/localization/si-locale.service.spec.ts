@@ -42,6 +42,7 @@ class DeLocaleStore extends SiLocaleStore {
 describe('SiLocaleService', () => {
   let service: SiLocaleService;
 
+  // Keep the `using` spy alive for the test body; a `beforeEach` scope would dispose it immediately.
   aroundEach(async runTest => {
     using languagesSpy = vi.spyOn(navigator, 'languages', 'get');
     languagesSpy.mockReturnValue(['en-GB', 'en-US']);

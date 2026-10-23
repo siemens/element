@@ -2,17 +2,23 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { DOCUMENT } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { injectIsDarkTheme } from './si-theme-signals';
 
 describe('injectIsDarkTheme', () => {
+  let testDocument: Document;
+  let rootClassName: string;
+
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    document.documentElement.classList.remove('app--dark');
+    testDocument = TestBed.inject(DOCUMENT);
+    rootClassName = testDocument.documentElement.className;
+    testDocument.documentElement.classList.remove('app--dark');
   });
 
-  afterEach(() => document.documentElement.classList.remove('app--dark'));
+  afterEach(() => (testDocument.documentElement.className = rootClassName));
 
   it('returns false when the page has no dark class', () => {
     const isDark = TestBed.runInInjectionContext(() => injectIsDarkTheme());
@@ -20,7 +26,7 @@ describe('injectIsDarkTheme', () => {
   });
 
   it('returns true when the page has the dark class', () => {
-    document.documentElement.classList.add('app--dark');
+    testDocument.documentElement.classList.add('app--dark');
     const isDark = TestBed.runInInjectionContext(() => injectIsDarkTheme());
     expect(isDark()).toBe(true);
   });
@@ -32,7 +38,7 @@ describe('injectIsDarkTheme', () => {
   });
 
   it('updates to false when a light theme-switch event fires', () => {
-    document.documentElement.classList.add('app--dark');
+    testDocument.documentElement.classList.add('app--dark');
     const isDark = TestBed.runInInjectionContext(() => injectIsDarkTheme());
     expect(isDark()).toBe(true);
     window.dispatchEvent(new CustomEvent('theme-switch', { detail: { dark: false } }));
