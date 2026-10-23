@@ -52,7 +52,7 @@
 
 * **charts:** Built-in tooltips now display labels, names and values as plain text.
 
-    HTML tags such as <b> and <br> are displayed literally. Pass raw strings
+    HTML tags such as `<b>` and `<br>` are displayed literally. Pass raw strings
     rather than pre-escaped strings to avoid double-escaping. Null and
     undefined values display as empty text. Custom tooltip formatters remain
     unchanged and must escape untrusted content themselves.
