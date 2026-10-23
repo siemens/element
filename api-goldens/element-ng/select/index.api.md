@@ -66,8 +66,8 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     readonly openChange: _angular_core.OutputEmitterRef<boolean>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly scrollStrategy: _angular_core.InputSignal<_angular_cdk_overlay.ScrollStrategy>;
-    updateValue(value: T | undefined): void;
-    readonly value: _angular_core.ModelSignal<T | undefined>;
+    updateValue(value: T | null | undefined): void;
+    readonly value: _angular_core.ModelSignal<T | null | undefined>;
 }
 
 // @public (undocumented)
