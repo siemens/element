@@ -24,7 +24,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { filter, merge, Subject, takeUntil } from 'rxjs';
+import { filter, map, merge, Subject, takeUntil } from 'rxjs';
 
 import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
 
@@ -96,7 +96,8 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
     '(keydown.enter)': 'open()',
     '(keydown.space)': 'open($event)',
     '(keydown.arrowDown)': 'open($event)',
-    '(keydown.arrowUp)': 'open($event)'
+    '(keydown.arrowUp)': 'open($event)',
+    '(blur)': 'blur()'
   }
 })
 export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormItemControl {
@@ -278,24 +279,25 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     this.openChange.emit(true);
 
     merge(
-      this.overlayRef.backdropClick(),
-      this.overlayRef.keydownEvents().pipe(filter(e => e.key === 'Escape'))
+      this.overlayRef.backdropClick().pipe(map(() => false)),
+      this.overlayRef.keydownEvents().pipe(
+        filter(e => e.key === 'Escape' || e.key === 'Tab'),
+        map(() => true)
+      ),
+      this.overlayRef.detachments().pipe(map(() => true))
     )
       .pipe(takeUntil(this.closeOverlay$), takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.close());
+      .subscribe(restoreFocus => this.closeOverlay(restoreFocus));
   }
 
   /** Closes the dropdown overlay and restores focus. */
   close(): void {
+    this.closeOverlay(true);
+  }
+
+  protected blur(): void {
     if (!this.isOpen()) {
-      return;
-    }
-    this.isOpen.set(false);
-    this.disposeOverlay();
-    this.openChange.emit(false);
-    this.onTouched();
-    if (this.isBrowser) {
-      this.elementRef.nativeElement.focus();
+      this.onTouched();
     }
   }
 
@@ -317,6 +319,22 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   /** @internal */
   setDisabledState(isDisabled: boolean): void {
     this.disabledByForm.set(isDisabled);
+  }
+
+  private closeOverlay(restoreFocus: boolean): void {
+    if (!this.isOpen()) {
+      return;
+    }
+    this.isOpen.set(false);
+    this.disposeOverlay();
+    this.openChange.emit(false);
+
+    // Focus restoration lets the browser continue Tab navigation from the trigger.
+    if (restoreFocus && this.isBrowser) {
+      this.elementRef.nativeElement.focus();
+    } else {
+      this.onTouched();
+    }
   }
 
   private disposeOverlay(): void {
