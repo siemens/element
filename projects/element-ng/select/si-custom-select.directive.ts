@@ -272,8 +272,13 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
       .overlayCloseEvents(this.overlayRef)
       .subscribe(restoreFocus => this.closeOverlay(restoreFocus));
 
-    this.focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
-    this.focusTrap.focusFirstTabbableElementWhenReady();
+    const focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
+    this.focusTrap = focusTrap;
+    focusTrap.focusInitialElementWhenReady().then(focused => {
+      if (!focused && this.focusTrap === focusTrap) {
+        focusTrap.focusFirstTabbableElementWhenReady();
+      }
+    });
 
     this.isOpen.set(true);
     this.openChange.emit(true);
