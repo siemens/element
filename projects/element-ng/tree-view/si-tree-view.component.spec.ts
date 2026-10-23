@@ -124,7 +124,6 @@ describe('SiTreeViewComponent', () => {
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
     vi.useRealTimers();
   });
 
@@ -873,7 +872,7 @@ describe('SiTreeViewComponent', () => {
       return [...items];
     });
     await vi.advanceTimersByTimeAsync(0);
-    const scrollObserver = vi.spyOn(window.IntersectionObserver.prototype, 'observe');
+    using scrollObserver = vi.spyOn(window.IntersectionObserver.prototype, 'observe');
     const nextNode = debugElement.queryAll(By.css('.si-tree-view-item-toggle'))[
       lastVisibleNode + 1
     ];

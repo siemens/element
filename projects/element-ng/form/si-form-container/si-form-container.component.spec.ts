@@ -162,7 +162,7 @@ describe('SiFormContainerComponent', () => {
     });
 
     it('should create', async () => {
-      const spy = vi.spyOn(SiResponsiveContainerDirective.prototype as any, 'setResponsiveSize');
+      using spy = vi.spyOn(SiResponsiveContainerDirective.prototype as any, 'setResponsiveSize');
       await vi.advanceTimersByTimeAsync(100);
 
       expect(spy).toHaveBeenCalledTimes(1);

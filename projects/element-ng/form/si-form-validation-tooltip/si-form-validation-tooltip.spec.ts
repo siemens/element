@@ -84,7 +84,7 @@ describe('SiFormValidationTooltipDirective', () => {
   it('should reposition the overlay when the validation errors change while open', async () => {
     const control = fixture.componentInstance.control;
     control.addValidators(Validators.minLength(5));
-    const createSpy = vi.spyOn(Overlay.prototype, 'create');
+    using createSpy = vi.spyOn(Overlay.prototype, 'create');
 
     control.markAsTouched();
     await fixture.whenStable();

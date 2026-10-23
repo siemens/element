@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DatePipe } from '@angular/common';
 import { inputBinding, outputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -12,8 +11,6 @@ import {
   getWeekOfYear,
   isSameDate,
   today as getToday,
-  isSameMonth,
-  isSameYear,
   daysInMonth
 } from '../date-time-helper';
 import { WeekStart } from '../si-datepicker.model';
@@ -391,22 +388,15 @@ describe('SiDaySelectionComponent', () => {
       });
 
       it('should go to today', () => {
-        const pipeSpy = vi.spyOn(DatePipe.prototype, 'transform');
-
         (element.querySelector('.today-button') as HTMLElement)!.click();
         fixture.detectChanges();
 
         const today = getToday();
+        const month = new Intl.DateTimeFormat('en', { month: 'long' }).format(today);
+        const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(today);
 
-        expect(pipeSpy).toHaveBeenCalledTimes(2);
-
-        const month = vi.mocked(pipeSpy).mock.calls[0];
-        expect(isSameMonth(month[0] as Date, today)).toBe(true);
-        expect(month[1] as string).toBe('MMMM');
-
-        const year = vi.mocked(pipeSpy).mock.calls[1];
-        expect(isSameYear(year[0] as Date, today)).toBe(true);
-        expect(year[1] as string).toBe('yyyy');
+        expect(helper.getOpenMonthViewLink()).toHaveTextContent(month);
+        expect(helper.getOpenYearViewLink()).toHaveTextContent(year);
 
         const activeCell = helper
           .getCalendarBody()

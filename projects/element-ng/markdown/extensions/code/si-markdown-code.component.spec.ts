@@ -15,6 +15,8 @@ describe('SiMarkdownCodeComponent', () => {
     element = fixture.nativeElement;
   });
 
+  afterEach(() => vi.useRealTimers());
+
   it('renders a fenced code block without a highlighter', async () => {
     fixture.componentRef.setInput('markdown', '```typescript\nconst answer = 42;\n```');
     await fixture.whenStable();
@@ -29,7 +31,7 @@ describe('SiMarkdownCodeComponent', () => {
 
   it('shows a copied confirmation for 1.5 seconds after copying the code block content', async () => {
     vi.useFakeTimers();
-    const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
+    using writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
     fixture.componentRef.setInput('markdown', '```typescript\nconst answer = 42;\n```');
     fixture.detectChanges();
     await vi.runAllTimersAsync();
@@ -54,22 +56,23 @@ describe('SiMarkdownCodeComponent', () => {
 
   it('cancels the copied confirmation timeout when destroyed', async () => {
     vi.useFakeTimers();
-    const clearTimeout = vi.spyOn(globalThis, 'clearTimeout');
-    vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
+    using clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
+    using writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
     fixture.componentRef.setInput('markdown', '```typescript\nconst answer = 42;\n```');
     fixture.detectChanges();
     await vi.runAllTimersAsync();
     await fixture.whenStable();
 
-    const setTimeout = vi.spyOn(globalThis, 'setTimeout');
+    using setTimeoutSpy = vi.spyOn(globalThis, 'setTimeout');
 
     const copyButton = element.querySelector('si-markdown-code button') as HTMLButtonElement;
     copyButton.click();
     await Promise.resolve();
-    const copyTimeout = setTimeout.mock.results.at(-1)?.value;
+    const copyTimeout = setTimeoutSpy.mock.results.at(-1)?.value;
 
     fixture.destroy();
 
-    expect(clearTimeout).toHaveBeenCalledWith(copyTimeout);
+    expect(writeText).toHaveBeenCalled();
+    expect(clearTimeoutSpy).toHaveBeenCalledWith(copyTimeout);
   });
 });

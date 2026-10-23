@@ -20,6 +20,7 @@ import { TestingModule } from '../../../test/testing.module';
 import { SI_DASHBOARD_CONFIGURATION } from '../../model/configuration';
 import { SI_WIDGET_ID_PROVIDER } from '../../model/si-widget-id-provider';
 import {
+  DEFAULT_WIDGET_STORAGE_TOKEN,
   SI_WIDGET_STORE,
   SiDefaultWidgetStorage,
   SiWidgetStorage
@@ -27,6 +28,11 @@ import {
 import { WidgetConfig } from '../../model/widgets.model';
 import { SiWidgetInstanceEditorDialogComponent } from '../widget-instance-editor-dialog/si-widget-instance-editor-dialog.component';
 import { SiGridComponent } from './si-grid.component';
+
+const testStorage = {
+  getItem: () => null,
+  setItem: () => undefined
+};
 
 @Component({
   selector: 'si-widget-editor-dialog',
@@ -58,6 +64,7 @@ describe('SiGridComponent', () => {
       imports: [SiGridComponent],
       providers: [
         { provide: SiWidgetStorage, useClass: SiDefaultWidgetStorage },
+        { provide: DEFAULT_WIDGET_STORAGE_TOKEN, useValue: testStorage },
         { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} },
         SiActionDialogService
       ]
@@ -67,13 +74,17 @@ describe('SiGridComponent', () => {
         add: { imports: [SiWidgetEditorDialogMockComponent] }
       })
       .compileComponents();
-    sessionStorage.clear();
     fixture = TestBed.createComponent(SiGridComponent);
     component = fixture.componentInstance;
 
     widgetStorage = TestBed.inject(SI_WIDGET_STORE);
     widgetStorageLoadSpy = vi.spyOn(widgetStorage, 'load');
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    SiWidgetEditorDialogMockComponent.staticClosed = undefined;
   });
 
   it('should create', () => {
@@ -148,7 +159,6 @@ describe('SiGridComponent', () => {
     fixture.componentRef.setInput('editable', false);
     fixture.detectChanges();
     expect(component.visibleWidgetInstances$.value).toEqual(savedWidgets);
-    vi.useRealTimers();
   });
 
   it('should restoreSavedState on calling cancel()', () => {
@@ -168,7 +178,6 @@ describe('SiGridComponent', () => {
     component.cancel();
     fixture.detectChanges();
     expect(component.visibleWidgetInstances$.value).toEqual(savedWidgets);
-    vi.useRealTimers();
   });
 
   it('#addWidget() shall add a new WidgetConfig to the visible widgets of the grid and assign unique ids', () => {
@@ -213,7 +222,6 @@ describe('SiGridComponent', () => {
       vi.advanceTimersByTime(200);
       fixture.detectChanges();
       expect(component.visibleWidgetInstances$.value[0].minHeight).toBe(2);
-      vi.useRealTimers();
     });
 
     it('shall emit an edit event if #emitWidgetInstanceEditEvents is set to true', async () => {
@@ -293,6 +301,7 @@ describe('SiGridComponent with custom id resolver', () => {
       imports: [SiGridComponent],
       providers: [
         { provide: SiWidgetStorage, useClass: SiDefaultWidgetStorage },
+        { provide: DEFAULT_WIDGET_STORAGE_TOKEN, useValue: testStorage },
         {
           provide: SI_WIDGET_ID_PROVIDER,
           useValue: {
@@ -310,7 +319,6 @@ describe('SiGridComponent with custom id resolver', () => {
         add: { imports: [SiWidgetEditorDialogMockComponent] }
       })
       .compileComponents();
-    sessionStorage.clear();
     fixture = TestBed.createComponent(SiGridComponent);
     component = fixture.componentInstance;
 
