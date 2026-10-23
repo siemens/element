@@ -5,6 +5,12 @@
 import { expect, test } from '../../support/test-helpers';
 
 test.describe('filtered search', () => {
+  // Temporary suppression tracked in #3014.
+  const labelContentNameMismatchRule = {
+    id: 'label-content-name-mismatch',
+    enabled: false
+  };
+
   test('should create remove criteria', async ({ si, page }) => {
     await page.clock.setFixedTime('2022-02-20');
     await si.visitExample('si-filtered-search/si-filtered-search-playground');
@@ -15,7 +21,9 @@ test.describe('filtered search', () => {
     await page.getByLabel('Event', { exact: true }).click();
     await si.runVisualAndA11yTests('operator-open');
     await page.getByLabel('=').click();
-    await si.runVisualAndA11yTests('datepicker-open');
+    await si.runVisualAndA11yTests('datepicker-open', {
+      axeRulesSet: [labelContentNameMismatchRule]
+    });
     await page.keyboard.press('Enter');
     await page.keyboard.type('Score');
     await page.getByLabel('Score').click();

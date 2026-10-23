@@ -2,9 +2,28 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 
 import { expect, test } from '../../support/test-helpers';
+
+const waitForStableGridItemHeight = async (
+  gridItem: Locator,
+  expectedHeight: number
+): Promise<void> => {
+  await expect(gridItem).toHaveCSS('height', `${expectedHeight}px`);
+  await expect
+    .poll(async () =>
+      gridItem.evaluate(async element => {
+        const heights: number[] = [];
+        for (let frame = 0; frame < 3; frame++) {
+          await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+          heights.push(element.getBoundingClientRect().height);
+        }
+        return heights;
+      })
+    )
+    .toEqual([expectedHeight, expectedHeight, expectedHeight]);
+};
 
 test.describe('dashboard', () => {
   const example = 'dashboard';
@@ -145,12 +164,18 @@ test.describe('dashboard', () => {
 
   test(example + ' delete', async ({ page, si }) => {
     await si.visitExample(example, undefined);
+    const gridItems = page.locator('.grid-stack-item');
+    const projectIssues = page.locator('si-widget-host', { hasText: 'Project Issues!' });
+    await expect(gridItems).toHaveCount(8);
+    await expect(projectIssues).toHaveCount(1);
+    await expect(projectIssues).toHaveAttribute('gs-h', '3');
+    await waitForStableGridItemHeight(projectIssues, 300);
+
     await expect(page.getByLabel('Edit')).toBeVisible();
     const editBtn = page.getByLabel('Edit');
     await editBtn.click();
     const pieChart = page.locator('si-dashboard-card').filter({ hasText: 'Pie Chart' });
     await pieChart.getByLabel('Remove').click();
-    await page.waitForTimeout(100);
     await expect(page.locator('si-delete-confirmation-dialog')).toBeVisible();
     await si.waitForAllAnimationsToComplete();
     await si.runVisualAndA11yTests('delete-confirmation-dialog');
@@ -161,8 +186,11 @@ test.describe('dashboard', () => {
     await deleteBtn.click();
     await expect(page.locator('.modal-backdrop')).not.toBeVisible();
     await expect(page.getByText('Pie Chart', { exact: true })).not.toBeVisible();
+    await expect(gridItems).toHaveCount(7);
 
     await si.waitForAllAnimationsToComplete();
+    await expect(projectIssues).toHaveAttribute('gs-h', '3');
+    await waitForStableGridItemHeight(projectIssues, 300);
     await si.runVisualAndA11yTests('delete');
   });
 

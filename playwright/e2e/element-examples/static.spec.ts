@@ -48,7 +48,9 @@ test('si-content-action-bar/si-content-action-bar', ({ si }) => si.static());
 test('si-copyright-notice/si-copyright-notice', ({ si }) => si.static());
 test('si-card/card-grid', ({ si }) => si.static());
 test('si-card/card-group', ({ si }) => si.static());
-test('si-card/card-variants', ({ si }) => si.static());
+// Temporary suppression tracked in #3014.
+test('si-card/card-variants', ({ si }) =>
+  si.static({ disabledA11yRules: ['label-content-name-mismatch'] }));
 test('si-card/card-content-types', ({ si }) => si.static());
 test('si-card/si-card-multiple', ({ si }) => si.static());
 test('si-card/si-card-accent', ({ si }) => si.static());

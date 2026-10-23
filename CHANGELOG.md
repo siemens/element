@@ -1,3 +1,70 @@
+# [51.5.0](https://github.com/siemens/element/compare/v51.4.0...v51.5.0) (2026-10-23)
+
+
+
+
+### Features
+
+* **dropdown:** align item labels with leading icons ([58b05a8](https://github.com/siemens/element/commit/58b05a8c3f577ec758d7701952977f54a29d9db9))
+* **formly:** support ngx-formly v10 ([4ad8ef4](https://github.com/siemens/element/commit/4ad8ef496f2903d0701f047f27fef9c997dc206b))
+* **formly:** support ngx-formly v9 ([640a286](https://github.com/siemens/element/commit/640a2864de59e0b346e73f23e572bbb593863b9a))
+* **list-item:** support selected and disabled action states ([2efb15d](https://github.com/siemens/element/commit/2efb15d4a454d539417652f465f997f38bea7059))
+* **list-item:** support vertically centered indicators ([2ff59ad](https://github.com/siemens/element/commit/2ff59ad7d37312463490d54e3997d381c32f3e8c))
+* **loading-spinner:** support loading text below spinner ([6ce5db2](https://github.com/siemens/element/commit/6ce5db2d8d7306794f0179674a9275a81475105e))
+* **split:** support `.align-heading-start` to change horizontal collapsed title direction ([2360b8f](https://github.com/siemens/element/commit/2360b8f4bbdb1241516603355ed415d5a22bded9))
+* **theme:** add indeterminate state to switch ([41fd000](https://github.com/siemens/element/commit/41fd0000872dec1802b80d09ad17a3970158d5af)), closes [#2826](https://github.com/siemens/element/issues/2826)
+
+
+### Bug Fixes
+
+* **application-header:** align mobile submenu text with parent labels ([0040ceb](https://github.com/siemens/element/commit/0040cebf814b3133d8734d1b4db1c66dcb2c963b))
+* **carousel:** support rtl navigation ([536c52f](https://github.com/siemens/element/commit/536c52f9592ce29b8540e1a18591e4f25a43a784))
+* **charts/custom-legend:** fix icon spacing in rtl ([1867f28](https://github.com/siemens/element/commit/1867f288f72d78ba1d1e5fead8524971e8e2dffd))
+* **charts:** escape tooltip content to prevent XSS ([267e338](https://github.com/siemens/element/commit/267e33897654024543a655497b72abd6666e5e45))
+* **datatable:** use thinner header border ([04d8ecb](https://github.com/siemens/element/commit/04d8ecbb143f5004a8b59b0a3acb6a0955e2324a)), closes [#2908](https://github.com/siemens/element/issues/2908)
+* **list-item:** prevent title-aligned avatars from being distorted ([1327853](https://github.com/siemens/element/commit/132785387c84e86b00fa46024b868b5d30def943))
+* **list:** simplify divider selector ([eec2a4d](https://github.com/siemens/element/commit/eec2a4df88cf43b0f6a80c84881851a112fe23e4))
+* **live-preview:** ensure mobile mode is fully set during initialization ([aed5efe](https://github.com/siemens/element/commit/aed5efea35f489d76d8685a4ec71b1ccf57a077f))
+* **live-preview:** prevent external links from accessing the preview window ([ff9d6f5](https://github.com/siemens/element/commit/ff9d6f5580f6bd8b107865be61237389b380a44a))
+* **live-preview:** validate iframe message origin and source ([044150e](https://github.com/siemens/element/commit/044150ecad38f18e92706c612342fc89e5580171))
+* **markdown:** prevent CSV formula injection ([63317d4](https://github.com/siemens/element/commit/63317d452539283aa8ff903fba5e87fa47a7c344))
+* **modal:** schedule ghost-click guard outside Angular zone ([23d2b16](https://github.com/siemens/element/commit/23d2b16516c997665b6b2b22a4a1eda551085d46))
+* **native-charts-ng:** don't highlight single mode gauge series on hover ([8df9860](https://github.com/siemens/element/commit/8df986059dcb62fe59843343f81be080339cf30a))
+* **pills-input:** preserve spaces while typing CSV tags ([54e085d](https://github.com/siemens/element/commit/54e085df4933b2f117217032615bffa223111fdd))
+* **pills-input:** prevent whitespace-only tags ([cd5a0e4](https://github.com/siemens/element/commit/cd5a0e420b0f07b0d00abee7e2c9cf9a75066149))
+* **popover:** add `aria-haspopup` to trigger ([78713ed](https://github.com/siemens/element/commit/78713edb6f1bee568dd09bc59d733a75eefd1987))
+* **popover:** use trigger as fallback dialog label ([1b5cfb0](https://github.com/siemens/element/commit/1b5cfb0d1efa8244d988db17ad196eb69391c2fc))
+* **side-panel:** navbar shouldn't overlap side-panel overlay fullscreen mode ([2577d23](https://github.com/siemens/element/commit/2577d23bf0606d666eb06ba6ed7d9b4619475e0b)), closes [#2016](https://github.com/siemens/element/issues/2016)
+* **skip-links:** focus first tabbable descendant of non-focusable targets ([083f1cf](https://github.com/siemens/element/commit/083f1cf917588b2d53196f981c65f55f9c59d619))
+* **split:** move collapsed label position to top ([40a4b66](https://github.com/siemens/element/commit/40a4b6609d332e9b90eacc10c4be62c53dc28ef8)), closes [#2894](https://github.com/siemens/element/issues/2894)
+* **status-bar:** improve si-status-bar appearance in compact mode ([1d64e4e](https://github.com/siemens/element/commit/1d64e4e7562084d529f438dcfb898f31b02123df)), closes [#2993](https://github.com/siemens/element/issues/2993)
+* **table:** use correct table header font weight semi-bold ([96e0764](https://github.com/siemens/element/commit/96e0764598765e6e1bb5131dd285c5138d10805d))
+* **table:** use thinner HTML table header borders ([0de1454](https://github.com/siemens/element/commit/0de1454ec017b01a50d5df11d4b959f256da94fc)), closes [#2908](https://github.com/siemens/element/issues/2908)
+* **theme:** base list dividers on list-item classes ([37eca46](https://github.com/siemens/element/commit/37eca46154807e2440e718b83d782188eacd2fed))
+
+
+### Performance Improvements
+
+* **schematics:** cache declaration files in tree-aware compiler host ([ff6fec0](https://github.com/siemens/element/commit/ff6fec02c1be4a772afc7c1d7ba7edb6f1691d00))
+
+
+### NOTES
+
+* **charts:** Built-in tooltips now display labels, names and values as plain text.
+
+    HTML tags such as <b> and <br> are displayed literally. Pass raw strings
+    rather than pre-escaped strings to avoid double-escaping. Null and
+    undefined values display as empty text. Custom tooltip formatters remain
+    unchanged and must escape untrusted content themselves.
+
+* **dashboards/widget-catalog:** The widget catalog has a new visual appearance.
+
+    Widgets use divider-separated ghost list items inside a shared card.
+    The circle status indicator is replaced by a regular icon, and the empty
+    state shows a search icon with "No widgets found" and "Refine search".
+    Applications with visual regression tests covering the widget catalog
+    need to update their snapshots.
+
 # [51.4.0](https://github.com/siemens/element/compare/v51.3.0...v51.4.0) (2026-10-08)
 
 
