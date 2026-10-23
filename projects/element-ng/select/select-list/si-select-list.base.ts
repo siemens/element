@@ -15,7 +15,7 @@ import { SelectGroup, SelectOption } from '../si-select.types';
   host: {
     class: 'position-static w-100 py-4 d-flex flex-column',
     '[class.si-multi-select]': 'multiSelect',
-    '(keydown.tab)': 'keydownTab()'
+    '(keydown.tab)': 'keydownTab($event)'
   }
 })
 export abstract class SiSelectListBase<T> {
@@ -58,9 +58,10 @@ export abstract class SiSelectListBase<T> {
 
   protected multiSelect = this.selectionStrategy.allowMultiple;
 
-  protected keydownTab(): void {
-    // Ignore tab key if actions are displayed.
-    if (!this.actionsTemplate()) {
+  protected keydownTab(event: Event): void {
+    if (this.actionsTemplate()) {
+      event.stopPropagation();
+    } else {
       this.closeOverlayAlways();
     }
   }
