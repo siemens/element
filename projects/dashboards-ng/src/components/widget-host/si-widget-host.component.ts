@@ -49,7 +49,8 @@ import {
   WidgetComponentFactory,
   WidgetConfig,
   WidgetConfigEvent,
-  WidgetInstance
+  WidgetInstance,
+  WidgetSlotTargets
 } from '../../model/widgets.model';
 import { setupWidgetInstance } from '../../widget-loader';
 
@@ -117,6 +118,8 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
   readonly card = viewChild.required<SiDashboardCardComponent>('card');
 
   readonly widgetHost = viewChild.required('widgetHost', { read: ViewContainerRef });
+  private readonly widgetFooterHost =
+    viewChild.required<ElementRef<HTMLElement>>('widgetFooterHost');
 
   protected labelEdit = t(() => $localize`:@@DASHBOARD.WIDGET.EDIT:Edit`);
   protected labelRemove = t(() => $localize`:@@DASHBOARD.WIDGET.REMOVE:Remove`);
@@ -458,6 +461,14 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
           this.attaching = false;
           this.widgetInstance = widgetRef.instance;
           this.widgetRef = widgetRef;
+          const widgetSlots: WidgetSlotTargets = {
+            footer: this.widgetFooterHost().nativeElement
+          };
+          if (isSignal(this.widgetInstance.widgetSlots)) {
+            this.widgetRef.setInput('widgetSlots', widgetSlots);
+          } else {
+            this.widgetInstance.widgetSlots = widgetSlots;
+          }
           if (this.widgetInstance.configChange) {
             // Note: setTimeout is needed to prevent ExpressionChangedAfterItHasBeenCheckedError
             // on web component, who pushes their configuration through an event after being attached
@@ -489,6 +500,7 @@ export class SiWidgetHostComponent implements AfterViewInit, OnChanges {
     this.widgetRef = undefined;
     this.widgetInstance = undefined;
     this.widgetInstanceFooter.set(undefined);
+    this.widgetFooterHost().nativeElement.replaceChildren();
     this.widgetHost().clear();
   }
 
