@@ -273,7 +273,8 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
           { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom' }
         ])
         .withFlexibleDimensions(true)
-        .withPush(true),
+        .withPush(true)
+        .withDefaultOffsetX(-1),
       hasBackdrop: true,
       scrollStrategy: this.scrollStrategy(),
       backdropClass: 'cdk-overlay-transparent-backdrop',
