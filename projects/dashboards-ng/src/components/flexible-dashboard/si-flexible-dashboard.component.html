@@ -1,4 +1,9 @@
 <si-dashboard #dashboard [sticky]="true">
+  <!--
+    Do not replace the default title below with [heading]="pageTitle()" on si-dashboard.
+    Forwarding the header slot always fills it, even if no custom header is supplied. Angular then
+    never renders the heading fallback of si-dashboard, so the default title is rendered here.
+  -->
   <ng-container header>
     @if (isDashboardVisible()) {
       <ng-content select="[header]">
