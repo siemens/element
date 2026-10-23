@@ -21,6 +21,8 @@ export class SampleComponent {
   readonly value = signal('');
   readonly voiceInputState = signal<'idle' | 'listening' | 'recording'>('idle');
   readonly automaticCompletion = signal(true);
+  readonly measuredLevels = signal(false);
+  readonly voiceInputLevel = signal<number | undefined>(undefined);
   readonly starting = signal(false);
   readonly error = signal<string | undefined>(undefined);
 
@@ -37,6 +39,7 @@ export class SampleComponent {
     this.voiceInputState.set('listening');
     this.starting.set(true);
     this.error.set(undefined);
+    this.voiceInputLevel.set(this.measuredLevels() ? 0 : undefined);
 
     try {
       await new Promise<void>(resolve => setTimeout(resolve, 750));
@@ -54,6 +57,9 @@ export class SampleComponent {
         const transcript = words.slice(0, wordCount).join(' ');
         this.value.set(this.draft ? `${this.draft} ${transcript}` : transcript);
         this.voiceInputState.set('recording');
+        if (this.measuredLevels()) {
+          this.voiceInputLevel.set((wordCount % 4) / 3);
+        }
         if (wordCount === words.length) {
           this.stopTranscription();
           if (this.automaticCompletion()) {

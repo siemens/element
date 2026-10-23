@@ -114,6 +114,9 @@
     </div>
 
     <div class="d-flex align-items-center flex-shrink-0 gap-4">
+      @if (voiceActive()) {
+        <si-voice-waveform [active]="voiceRecording() && !disabled()" [level]="voiceInputLevel()" />
+      }
       @if (voiceInput()) {
         <button
           #voiceButton

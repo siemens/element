@@ -22,6 +22,7 @@ for (const viewport of [
     const confirm = input.getByRole('button', { name: 'Confirm dictation', exact: true });
     const send = input.getByRole('button', { name: 'Send', exact: true });
     const automaticCompletion = page.getByRole('switch', { name: 'Automatic completion' });
+    const waveform = input.locator('si-voice-waveform');
 
     const checkState = async (state: string): Promise<void> => {
       const accessibility = await new AxeBuilder({ page })
@@ -36,6 +37,7 @@ for (const viewport of [
     };
 
     await checkState('idle');
+    await expect(waveform).toHaveCount(0);
     await expect(automaticCompletion).toBeChecked();
     await textarea.fill('Existing draft');
     await start.focus();
@@ -46,6 +48,13 @@ for (const viewport of [
     await expect(textarea).toHaveAttribute('placeholder', 'Starting voice input…');
     await expect(textarea).toHaveJSProperty('readOnly', true);
     await expect(start).toHaveCount(0);
+    await expect(waveform).toHaveAttribute('aria-hidden', 'true');
+    await expect(waveform).toHaveCSS('width', '120px');
+    await expect(waveform).toHaveCSS('height', '16px');
+    await expect(waveform.locator('span')).toHaveCount(41);
+    expect(
+      await waveform.locator('span').evaluateAll(bars => bars.every(bar => bar.clientHeight === 2))
+    ).toBe(true);
     await testInfo.attach('listening', {
       body: await input.screenshot(),
       contentType: 'image/png'
@@ -98,11 +107,14 @@ for (const viewport of [
     await expect(cancel.locator('si-icon')).toHaveAttribute('data-icon', 'elementStateClose');
     await expect(textarea).toHaveClass(/text-secondary/);
     const provisionalColor = await textarea.evaluate(element => getComputedStyle(element).color);
+    expect(
+      await waveform.locator('span').evaluateAll(bars => bars.some(bar => bar.clientHeight > 2))
+    ).toBe(true);
     await checkState('recording');
 
-    const hasHorizontalOverflow = await input.evaluate(
-      element => element.scrollWidth > element.clientWidth
-    );
+    const hasHorizontalOverflow = await input
+      .locator('.input-wrapper')
+      .evaluate(element => element.scrollWidth > element.clientWidth);
     expect(hasHorizontalOverflow).toBe(false);
 
     await page.keyboard.down('Enter');
@@ -112,6 +124,7 @@ for (const viewport of [
     await page.keyboard.up('Enter');
     await expect(textarea).toBeEditable();
     await expect(send).toBeEnabled();
+    await expect(waveform).toHaveCount(0);
     const confirmedDraft = await textarea.inputValue();
     expect(confirmedDraft).toMatch(/^Existing draft Show/);
     await page.clock.runFor(6500);
@@ -163,5 +176,64 @@ for (const viewport of [
     await send.click();
     await expect(textarea).toHaveValue('');
     await expect(send).toBeDisabled();
+  });
+
+  test(`voice waveform levels and reduced motion on ${viewport.name}`, async ({
+    page,
+    si
+  }, testInfo) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await si.visitExample('si-chat-messages/si-chat-voice-input');
+    await page.clock.install();
+    await page.getByRole('switch', { name: 'Automatic completion' }).uncheck();
+    await page.getByRole('switch', { name: 'Simulated audio levels' }).check();
+
+    const input = page.locator('si-chat-input');
+    const waveform = input.locator('si-voice-waveform');
+    const bars = waveform.locator('span');
+    const heights = (): Promise<string[]> =>
+      bars.evaluateAll(elements => elements.map(element => element.style.blockSize));
+
+    await input.getByRole('button', { name: 'Start dictation', exact: true }).click();
+    await expect(page.getByRole('switch', { name: 'Simulated audio levels' })).toBeDisabled();
+    await page.clock.runFor(2400);
+    await expect(bars.last()).toHaveCSS('height', '16px');
+    expect(
+      await waveform.evaluate(element => {
+        const bounds = element.getBoundingClientRect();
+        return [...element.querySelectorAll('span')].every(bar => {
+          const sample = bar.getBoundingClientRect();
+          return sample.top >= bounds.top && sample.bottom <= bounds.bottom;
+        });
+      })
+    ).toBe(true);
+
+    const accessibility = await new AxeBuilder({ page })
+      .include('si-chat-input')
+      .include('.form-switch')
+      .analyze();
+    expect(accessibility.violations).toEqual([]);
+    await testInfo.attach('measured waveform', {
+      body: await input.screenshot(),
+      contentType: 'image/png'
+    });
+
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.clock.runFor(30);
+    const frozenHeights = await heights();
+    await page.clock.runFor(600);
+    expect(await heights()).toEqual(frozenHeights);
+    expect(
+      await waveform.evaluate(element => element.getAnimations({ subtree: true }).length)
+    ).toBe(0);
+
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.clock.runFor(120);
+    await expect(bars.last()).toHaveCSS('height', '2px');
+    expect(await heights()).not.toEqual(frozenHeights);
+
+    await input.getByRole('button', { name: 'Confirm dictation', exact: true }).click();
+    await expect(waveform).toHaveCount(0);
+    await expect(input.getByRole('textbox')).toBeEditable();
   });
 }
