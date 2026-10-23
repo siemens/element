@@ -1,7 +1,7 @@
 - text: Button variant
 - combobox "Select locations..."
 - text: Form-control variant Locations (required)*
-- combobox "Company1"
+- combobox "Locations (required)* Company1"
 - text: "Control panel Selected (ngModel): none Selected (formControl): Company1 Locations valid: true"
 - checkbox "Readonly"
 - text: Readonly

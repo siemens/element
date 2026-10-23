@@ -7,7 +7,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, inject, inputBinding, signal, twoWayBinding } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { SI_FORM_ITEM_CONTROL } from '@siemens/element-ng/form';
+import { SI_FORM_ITEM_CONTROL, SiFormItemComponent } from '@siemens/element-ng/form';
 
 import { SiCustomSelectDirective } from './si-custom-select.directive';
 import { SiSelectComboboxComponent } from './si-select-combobox.component';
@@ -30,7 +30,7 @@ import { SiSelectDropdownDirective } from './si-select-dropdown.directive';
   hostDirectives: [
     {
       directive: SiCustomSelectDirective,
-      inputs: ['disabled', 'readonly', 'value', 'siCustomSelectScrollStrategy'],
+      inputs: ['disabled', 'readonly', 'value', 'labelledby', 'siCustomSelectScrollStrategy'],
       outputs: ['valueChange', 'openChange']
     }
   ]
@@ -77,17 +77,20 @@ describe('SiCustomSelectDirective', () => {
     let value: ReturnType<typeof signal<string | undefined>>;
     let disabled: ReturnType<typeof signal<boolean>>;
     let readonly: ReturnType<typeof signal<boolean>>;
+    let labelledby: ReturnType<typeof signal<string | undefined>>;
 
     beforeEach(async () => {
       value = signal<string | undefined>(undefined);
       disabled = signal(false);
       readonly = signal(false);
+      labelledby = signal(undefined);
 
       fixture = TestBed.createComponent(SiTestSelectComponent, {
         bindings: [
           twoWayBinding('value', value),
           inputBinding('disabled', disabled),
-          inputBinding('readonly', readonly)
+          inputBinding('readonly', readonly),
+          inputBinding('labelledby', labelledby)
         ]
       });
       overlayContainerElement = TestBed.inject(OverlayContainer).getContainerElement();
@@ -135,6 +138,13 @@ describe('SiCustomSelectDirective', () => {
       );
     });
 
+    it('should use a custom labelledby value with the combobox content id', async () => {
+      labelledby.set('custom-label');
+      await fixture.whenStable();
+
+      expect(getHost()).toHaveAttribute('aria-labelledby', `custom-label ${getHost().id}-combobox`);
+    });
+
     it('should have aria-describedby pointing to its error message id', () => {
       expect(getHost()).toHaveAttribute('aria-describedby', getHost().id + '-errormessage');
     });
@@ -145,6 +155,16 @@ describe('SiCustomSelectDirective', () => {
 
     it('should open dropdown on click', async () => {
       getHost().click();
+      await fixture.whenStable();
+
+      expect(getOverlayDropdown()).toBeInTheDocument();
+      expect(getHost()).toHaveAttribute('aria-expanded', 'true');
+    });
+
+    it('should open dropdown on Alt+ArrowDown', async () => {
+      getHost().dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'ArrowDown', altKey: true, bubbles: true })
+      );
       await fixture.whenStable();
 
       expect(getOverlayDropdown()).toBeInTheDocument();
@@ -269,6 +289,17 @@ describe('SiCustomSelectDirective', () => {
       await fixture.whenStable();
 
       expect(getOverlayDropdown()).not.toBeInTheDocument();
+    });
+
+    it('should expose readonly combobox ARIA attributes', async () => {
+      readonly.set(true);
+      await fixture.whenStable();
+
+      expect(getHost()).toHaveAttribute('role', 'combobox');
+      expect(getHost()).toHaveAttribute('aria-autocomplete', 'none');
+      expect(getHost()).toHaveAttribute('aria-readonly', 'true');
+      expect(getHost()).toHaveAttribute('aria-haspopup', 'listbox');
+      expect(getHost()).toHaveAttribute('aria-expanded', 'false');
     });
 
     it('should apply disabled host class', async () => {
@@ -429,6 +460,26 @@ describe('SiCustomSelectDirective', () => {
       const formItemControl = fixture.debugElement.injector.get(SI_FORM_ITEM_CONTROL);
       expect(formItemControl).toBeTruthy();
       expect(formItemControl.errormessageId).toBeDefined();
+    });
+
+    it('should provide a label id without spaces to the form item', async () => {
+      @Component({
+        imports: [SiFormItemComponent, SiTestSelectComponent],
+        template: `
+          <si-form-item label="Custom select">
+            <si-test-select />
+          </si-form-item>
+        `
+      })
+      class FormItemHostComponent {}
+
+      const formItemFixture = TestBed.createComponent(FormItemHostComponent);
+      await formItemFixture.whenStable();
+
+      const select = formItemFixture.nativeElement.querySelector('si-test-select');
+      const label = formItemFixture.nativeElement.querySelector('.form-label span');
+      expect(label.id).toBe(`${select.id}-label`);
+      expect(select).toHaveAttribute('aria-labelledby', `${label.id} ${select.id}-combobox`);
     });
   });
 });
