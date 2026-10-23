@@ -153,7 +153,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    *
    * @defaultValue undefined
    */
-  readonly value = model<T | undefined>(undefined);
+  readonly value = model<T | null | undefined>(undefined);
 
   /**
    * Whether the dropdown is currently open.
@@ -198,7 +198,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
 
   private onTouched: () => void = () => {};
 
-  private onChange: (_: T | undefined) => void = () => {};
+  private onChange: (_: T | null | undefined) => void = () => {};
   private readonly disabledByForm = signal(false);
 
   private readonly overlay = inject(Overlay);
@@ -233,7 +233,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    * Updates the value programmatically.
    * Call this from your dropdown template to set the new value.
    */
-  updateValue(value: T | undefined): void {
+  updateValue(value: T | null | undefined): void {
     this.value.set(value);
     this.onChange(value);
   }
@@ -305,12 +305,12 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   }
 
   /** @internal */
-  writeValue(obj: T | null): void {
-    this.value.set(obj ?? undefined);
+  writeValue(obj: T | null | undefined): void {
+    this.value.set(obj);
   }
 
   /** @internal */
-  registerOnChange(fn: (_: T | undefined) => void): void {
+  registerOnChange(fn: (_: T | null | undefined) => void): void {
     this.onChange = fn;
   }
 
