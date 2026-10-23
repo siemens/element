@@ -34,6 +34,7 @@ import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { TemplateRef } from '@angular/core';
+import { Theme } from '@siemens/element-ng/theme';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Type } from '@angular/core';
 import { ViewContainerRef } from '@angular/core';
@@ -188,6 +189,36 @@ export class SiDefaultWidgetStorage extends SiWidgetStorage {
     // (undocumented)
     protected update(widgetConfigs: WidgetConfig[], dashboardId?: string): void;
 }
+
+// @public
+export class SiEventBus<in out ET> implements SiEventBusApi<EventTypeOrDefault<ET>> {
+    readonly emit: SiEventBusApi<EventTypeOrDefault<ET>>['emit'];
+    readonly on: SiEventBusApi<EventTypeOrDefault<ET>>['on'];
+    readonly snapshot: SiEventBusApi<EventTypeOrDefault<ET>>['snapshot'];
+}
+
+// @public
+export interface SiEventBusApi<ET extends {
+    name: string;
+    data: unknown;
+} = SiEventType> {
+    emit<A extends keyof EventNameToData<ET | SiEventType>>(eventName: A, payload?: EventNameToData<ET | SiEventType>[A]): void;
+    on<R = never, A extends keyof EventNameToData<ET | SiEventType> = keyof EventNameToData<ET | SiEventType>>(eventName: A): Observable<[R] extends [never] ? EventNameToData<ET | SiEventType>[A] : R>;
+    snapshot<R = never, A extends keyof EventNameToData<ET | SiEventType> = keyof EventNameToData<ET | SiEventType>, K extends string = string>(eventName: A, keys: K[]): [R] extends [never] ? NarrowByKeys<EventNameToData<ET | SiEventType>[A], K> : NarrowByKeys<R, K>;
+    snapshot<A extends keyof EventNameToData<ET | SiEventType>>(eventName: A): EventNameToData<ET | SiEventType>[A];
+}
+
+// @public
+export type SiEventType = {
+    name: 'filter';
+    data: Filter[];
+} | {
+    name: 'languageChange';
+    data: LanguageChange;
+} | {
+    name: 'themeChange';
+    data: ThemeChange;
+};
 
 // @public
 export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestroy {
