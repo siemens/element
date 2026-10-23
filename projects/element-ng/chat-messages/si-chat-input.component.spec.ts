@@ -23,6 +23,7 @@ import {
   ChatInputAttachment,
   SiChatInputComponent as TestComponent
 } from './si-chat-input.component';
+import { SiVoiceWaveformComponent } from './si-voice-waveform.component';
 
 describe('SiChatInputComponent', () => {
   let fixture: ComponentFixture<TestComponent> | ComponentFixture<VoiceTestHostComponent>;
@@ -50,6 +51,7 @@ describe('SiChatInputComponent', () => {
   let voiceInput: WritableSignal<boolean>;
   let voiceDisabled: WritableSignal<boolean>;
   let voiceState: WritableSignal<'idle' | 'listening' | 'recording' | 'finishing'>;
+  let voiceLevel: WritableSignal<number | undefined>;
   let startSpy = vi.fn<() => void>();
   let confirmSpy = vi.fn<() => void>();
   let cancelSpy = vi.fn<() => void>();
@@ -88,6 +90,7 @@ describe('SiChatInputComponent', () => {
         @if (voiceInput()) {
           <si-chat-input-voice
             [state]="voiceState()"
+            [level]="voiceLevel()"
             [disabled]="voiceDisabled()"
             [startDictationLabel]="voiceLabels().start"
             [cancelDictationLabel]="voiceLabels().cancel"
@@ -121,6 +124,7 @@ describe('SiChatInputComponent', () => {
     readonly voiceInput = voiceInput;
     readonly voiceDisabled = voiceDisabled;
     readonly voiceState = voiceState;
+    readonly voiceLevel = voiceLevel;
     readonly voiceLabels = voiceLabels;
     readonly sendSpy = sendSpy;
     readonly interruptSpy = interruptSpy;
@@ -154,6 +158,7 @@ describe('SiChatInputComponent', () => {
     voiceInput = signal(false);
     voiceDisabled = signal(false);
     voiceState = signal<'idle' | 'listening' | 'recording' | 'finishing'>('idle');
+    voiceLevel = signal<number | undefined>(undefined);
     startSpy = vi.fn<() => void>();
     confirmSpy = vi.fn<() => void>();
     cancelSpy = vi.fn<() => void>();
@@ -246,6 +251,116 @@ describe('SiChatInputComponent', () => {
 
     const textarea = debugElement.query(By.css('textarea'));
     expect(textarea).toBeTruthy();
+  });
+
+  describe('projected voice waveform', () => {
+    beforeEach(() => {
+      fixture.destroy();
+      fixture = TestBed.createComponent(VoiceTestHostComponent);
+      debugElement = fixture.debugElement;
+      component = debugElement.query(By.directive(TestComponent)).componentInstance;
+    });
+
+    it('should not render a waveform when voice controls are unavailable or idle', async () => {
+      voiceState.set('recording');
+      await fixture.whenStable();
+      expect(debugElement.query(By.directive(SiVoiceWaveformComponent))).toBeNull();
+
+      voiceInput.set(true);
+      voiceState.set('idle');
+      await fixture.whenStable();
+      expect(debugElement.query(By.directive(SiVoiceWaveformComponent))).toBeNull();
+    });
+
+    it('should show a silent waveform while listening and sample supplied levels while recording', async () => {
+      voiceInput.set(true);
+      voiceState.set('listening');
+      voiceLevel.set(0.75);
+      await fixture.whenStable();
+      const waveform = debugElement.query(By.directive(SiVoiceWaveformComponent));
+      const waveformComponent = waveform.componentInstance as SiVoiceWaveformComponent;
+
+      expect(waveformComponent.active()).toBe(false);
+      expect(waveformComponent.level()).toBe(0.75);
+      expect(waveform.nativeElement.nextElementSibling).toHaveAttribute(
+        'aria-label',
+        'Cancel dictation'
+      );
+
+      voiceState.set('recording');
+      value.set('Live transcript');
+      await fixture.whenStable();
+      expect(waveformComponent.active()).toBe(true);
+      expect(debugElement.query(By.css('textarea')).nativeElement).toHaveValue('Live transcript');
+
+      disabled.set(true);
+      await fixture.whenStable();
+      expect(waveformComponent.active()).toBe(false);
+
+      voiceState.set('idle');
+      await fixture.whenStable();
+      expect(debugElement.query(By.directive(SiVoiceWaveformComponent))).toBeNull();
+    });
+
+    it('should retain the frozen waveform while final transcript updates arrive', async () => {
+      const animationFlag = '--element-animations-enabled';
+      const originalAnimationFlag = document.documentElement.style.getPropertyValue(animationFlag);
+      document.documentElement.style.setProperty(animationFlag, '1');
+      vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] });
+      try {
+        voiceInput.set(true);
+        voiceState.set('recording');
+        voiceLevel.set(1);
+        value.set('Partial transcript');
+        await fixture.whenStable();
+        await vi.advanceTimersByTimeAsync(60);
+        await fixture.whenStable();
+
+        const waveform: HTMLElement = fixture.nativeElement.querySelector('si-voice-waveform');
+        const recordedBars = Array.from(waveform.querySelectorAll<HTMLElement>('.waveform-bar'));
+        const recordedHeights = recordedBars.map(bar => bar.style.blockSize);
+        expect(recordedHeights.at(-1)).toBe('16px');
+
+        voiceState.set('finishing');
+        await fixture.whenStable();
+        expect(waveform.getAnimations({ subtree: true })).toHaveLength(0);
+
+        voiceLevel.set(0);
+        value.set('Final transcript with additional words');
+        await fixture.whenStable();
+        await vi.advanceTimersByTimeAsync(180);
+        await fixture.whenStable();
+
+        expect(fixture.nativeElement.querySelector('si-voice-waveform')).toBe(waveform);
+        const frozenBars = Array.from(waveform.querySelectorAll<HTMLElement>('.waveform-bar'));
+        expect(frozenBars).toEqual(recordedBars);
+        expect(frozenBars.map(bar => bar.style.blockSize)).toEqual(recordedHeights);
+        expect(waveform.getAnimations({ subtree: true })).toHaveLength(0);
+        expect(vi.getTimerCount()).toBe(0);
+        expect(fixture.nativeElement.querySelector('textarea')).toHaveValue(value());
+        expect(fixture.nativeElement.querySelector('textarea')).toHaveProperty('readOnly', true);
+        expect(sendSpy).not.toHaveBeenCalled();
+
+        voiceState.set('idle');
+        await fixture.whenStable();
+        expect(fixture.nativeElement.querySelector('si-voice-waveform')).toBeNull();
+
+        voiceState.set('listening');
+        await fixture.whenStable();
+        const nextWaveform: HTMLElement = fixture.nativeElement.querySelector('si-voice-waveform');
+        expect(nextWaveform).not.toBe(waveform);
+        expect(
+          Array.from(
+            nextWaveform.querySelectorAll<HTMLElement>('.waveform-bar'),
+            bar => bar.style.blockSize
+          )
+        ).toEqual(Array(41).fill('2px'));
+      } finally {
+        fixture.destroy();
+        document.documentElement.style.setProperty(animationFlag, originalAnimationFlag);
+        vi.useRealTimers();
+      }
+    });
   });
 
   it('should resize the textarea when the value is updated externally', async () => {

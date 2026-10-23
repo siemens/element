@@ -6,3 +6,7 @@
 - button "Send" [disabled]
 - status
 - text: The content is AI generated. Always verify the information for accuracy.
+- switch "Automatic completion" [checked]
+- text: Automatic completion
+- switch "Simulated audio levels"
+- text: Simulated audio levels

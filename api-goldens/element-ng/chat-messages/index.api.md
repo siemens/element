@@ -234,6 +234,13 @@ export class SiUserMessageComponent {
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
 
+// @public
+export class SiVoiceWaveformComponent {
+    constructor();
+    readonly active: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly level: _angular_core.InputSignal<number | undefined>;
+}
+
 // (No @packageDocumentation comment for this package)
 
 ```
