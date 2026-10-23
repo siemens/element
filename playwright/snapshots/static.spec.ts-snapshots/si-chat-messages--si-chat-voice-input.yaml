@@ -1,0 +1,8 @@
+- textbox "Chat input":
+  - /placeholder: Enter a command, question or topic…
+- group:
+  - button "Attach file"
+- button "Start dictation"
+- button "Send" [disabled]
+- status
+- text: The content is AI generated. Always verify the information for accuracy.
