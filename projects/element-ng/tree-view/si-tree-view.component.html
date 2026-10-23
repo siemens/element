@@ -25,20 +25,25 @@
     <span
       class="si-tree-view-header-btn si-tree-view-header-root"
       tabindex="0"
-      [class]="computedIcons().headerHome"
       [class.disabled]="headerShowsRoot"
       (click)="onFlatTreeNavigateHome()"
       (keydown.enter)="onFlatTreeNavigateHome()"
-    ></span>
+    >
+      <si-icon [icon]="computedIcons().headerHome" />
+    </span>
     @if (lastBreadCrumbItem) {
       <span
         class="si-tree-view-header-btn"
         tabindex="0"
-        [class]="computedIcons().headerArrow"
         [class.disabled]="headerShowsRoot"
         (click)="onFlatTreeNavigateUp()"
         (keydown.enter)="onFlatTreeNavigateUp()"
-      ></span>
+      >
+        <si-icon
+          [class.flip-rtl]="usesDefaultIcon().headerArrow"
+          [icon]="computedIcons().headerArrow"
+        />
+      </span>
       <span class="text-center text-truncate">{{ lastBreadCrumbItem.label | translate }}</span>
     }
   </div>
