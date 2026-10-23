@@ -24,16 +24,13 @@
   <si-dashboard-card
     #card
     class="h-100 dragging-card"
+    [siWidgetKeyboardInteraction]="elementRef"
+    [editable]="editable()"
     [class]="accentLine()"
-    [class.shadow-3]="keyboardActive()"
-    [class.si-widget-keyboard-active]="keyboardActive()"
     [attr.tabindex]="editable() ? 0 : null"
     [attr.role]="editable() ? 'application' : null"
     [attr.aria-roledescription]="editable() ? 'widget' : null"
     [attr.aria-label]="editable() ? (widgetConfig().heading | translate) : null"
-    [attr.aria-description]="
-      editable() && !card.isExpanded() ? (a11yWidgetDescription | translate) : null
-    "
     [expandText]="labelExpand"
     [restoreText]="labelRestore"
     [heading]="widgetConfig().heading"
@@ -46,18 +43,7 @@
     [imgObjectFit]="widgetConfig().image?.objectFit"
     [imgObjectPosition]="widgetConfig().image?.objectPosition"
     [imgSrc]="!setupPending() ? widgetConfig().image?.src : ''"
-    (keydown.enter)="onToggleActive($event)"
-    (keydown.space)="onToggleActive($event)"
-    (keydown.escape)="onDeactivate($event)"
-    (keydown.arrowRight)="onArrowKey($event)"
-    (keydown.arrowLeft)="onArrowKey($event)"
-    (keydown.arrowUp)="onArrowKey($event)"
-    (keydown.arrowDown)="onArrowKey($event)"
-    (keydown.shift.arrowRight)="onArrowKey($event)"
-    (keydown.shift.arrowLeft)="onArrowKey($event)"
-    (keydown.shift.arrowUp)="onArrowKey($event)"
-    (keydown.shift.arrowDown)="onArrowKey($event)"
-    (focusout)="onFocusOut()"
+    (gridEvent)="gridEvent.emit($event)"
   >
     @let headingIcon = headingIconName();
     @if (headingIcon) {
