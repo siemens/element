@@ -75,14 +75,14 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
   host: {
     class: 'dropdown',
     '[style.--si-action-icon-offset.rem]': '1.5',
-    role: 'combobox',
-    'aria-autocomplete': 'none',
-    '[attr.aria-haspopup]': 'haspopup()',
-    '[attr.aria-labelledby]': 'labelledby()',
+    '[attr.role]': 'readonly() ? "textbox" : "combobox"',
+    '[attr.aria-haspopup]': '!readonly() ? haspopup() : null',
+    '[attr.aria-labelledby]': 'hostLabelledby()',
     '[attr.aria-describedby]': 'errormessageId()',
     '[attr.aria-controls]': 'isOpen() ? dropdownId() : null',
-    '[attr.aria-expanded]': 'isOpen()',
+    '[attr.aria-expanded]': '!readonly() ? isOpen() : null',
     '[attr.aria-disabled]': 'disabled()',
+    '[attr.aria-readonly]': 'readonly()',
     '[attr.id]': 'id()',
     '[attr.tabindex]': 'disabled() ? "-1" : "0"',
     '[class.disabled]': 'disabled()',
@@ -95,6 +95,7 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
     '(keydown.space)': 'open($event)',
     '(keydown.arrowDown)': 'open($event)',
     '(keydown.arrowUp)': 'open($event)',
+    '(keydown.alt.arrowDown)': 'open($event)',
     '(blur)': 'blur()'
   }
 })
@@ -127,6 +128,14 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   readonly readonly = input(false, { transform: booleanAttribute });
 
   /**
+   * Aria labelledby of the select.
+   *
+   * @defaultValue undefined
+   */
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly labelledbyInput = input<string | undefined>(undefined, { alias: 'labelledby' });
+
+  /**
    * Optional CDK scroll strategy used for the custom select overlay.
    *
    * @defaultValue defaultConnectedOverlayScrollStrategy()
@@ -153,7 +162,11 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   readonly isOpen = signal(false);
 
   /** @internal */
-  readonly labelledby = computed(() => `${this.id()}-label ${this.id()}-combobox`);
+  readonly labelledby = computed(() => this.labelledbyInput() ?? `${this.id()}-label`);
+
+  protected readonly hostLabelledby = computed(
+    () => `${this.labelledby()} ${this.comboboxLabelId()}`
+  );
 
   /** @internal */
   readonly comboboxLabelId = computed(() => `${this.id()}-combobox`);
