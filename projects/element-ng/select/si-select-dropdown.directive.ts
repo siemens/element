@@ -2,7 +2,9 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { OverlayRef } from '@angular/cdk/overlay';
 import { Directive, inject, input, TemplateRef } from '@angular/core';
+import { filter, map, merge, Observable, tap } from 'rxjs';
 
 import { SiCustomSelectDirective } from './si-custom-select.directive';
 
@@ -47,5 +49,22 @@ export class SiSelectDropdownDirective {
   constructor() {
     const customSelect = inject(SiCustomSelectDirective, { optional: true });
     customSelect?.registerDropdown(this);
+  }
+
+  /**
+   * Emits when the overlay should close; the value indicates whether focus should be restored.
+   * Completes when the overlay is disposed.
+   * @internal
+   */
+  overlayCloseEvents(overlayRef: OverlayRef): Observable<boolean> {
+    const escape$ = overlayRef.keydownEvents().pipe(
+      filter(event => event.key === 'Escape'),
+      tap(event => event.stopPropagation()),
+      map(() => true)
+    );
+    const dismiss$ = merge(overlayRef.backdropClick(), overlayRef.detachments()).pipe(
+      map(() => false)
+    );
+    return merge(escape$, dismiss$);
   }
 }

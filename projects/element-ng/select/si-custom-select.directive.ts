@@ -20,11 +20,9 @@ import {
   signal,
   ViewContainerRef
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { filter, merge, Subject, takeUntil } from 'rxjs';
 
 import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
 
@@ -96,7 +94,8 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
     '(keydown.enter)': 'open()',
     '(keydown.space)': 'open($event)',
     '(keydown.arrowDown)': 'open($event)',
-    '(keydown.arrowUp)': 'open($event)'
+    '(keydown.arrowUp)': 'open($event)',
+    '(blur)': 'blur()'
   }
 })
 export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormItemControl {
@@ -197,14 +196,13 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
 
   private overlayRef?: OverlayRef;
   private focusTrap?: ConfigurableFocusTrap;
-  private readonly closeOverlay$ = new Subject<void>();
 
   private readonly dropdownDirective = signal<SiSelectDropdownDirective | undefined>(undefined);
 
   constructor() {
     this.destroyRef.onDestroy(() => {
+      this.isOpen.set(false);
       this.disposeOverlay();
-      this.closeOverlay$.complete();
     });
   }
 
@@ -270,32 +268,25 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     const portal = new TemplatePortal(this.dropdownDirective()!.templateRef, this.viewContainerRef);
     this.overlayRef.attach(portal);
     this.overlayRef.overlayElement.id = this.dropdownId();
+    this.dropdownDirective()!
+      .overlayCloseEvents(this.overlayRef)
+      .subscribe(restoreFocus => this.closeOverlay(restoreFocus));
 
     this.focusTrap = this.focusTrapFactory.create(this.overlayRef.overlayElement);
     this.focusTrap.focusFirstTabbableElementWhenReady();
 
     this.isOpen.set(true);
     this.openChange.emit(true);
-
-    merge(
-      this.overlayRef.backdropClick(),
-      this.overlayRef.keydownEvents().pipe(filter(e => e.key === 'Escape'))
-    )
-      .pipe(takeUntil(this.closeOverlay$), takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.close());
   }
 
   /** Closes the dropdown overlay and restores focus. */
   close(): void {
+    this.closeOverlay(true);
+  }
+
+  protected blur(): void {
     if (!this.isOpen()) {
-      return;
-    }
-    this.isOpen.set(false);
-    this.disposeOverlay();
-    this.openChange.emit(false);
-    this.onTouched();
-    if (this.isBrowser) {
-      this.elementRef.nativeElement.focus();
+      this.onTouched();
     }
   }
 
@@ -319,14 +310,27 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     this.disabledByForm.set(isDisabled);
   }
 
-  private disposeOverlay(): void {
-    if (this.overlayRef) {
-      this.closeOverlay$.next();
-      this.focusTrap?.destroy();
-      this.focusTrap = undefined;
-      this.overlayRef.detach();
-      this.overlayRef.dispose();
-      this.overlayRef = undefined;
+  private closeOverlay(restoreFocus: boolean): void {
+    // Also guards re-entry from the detachment emitted synchronously by dispose().
+    if (!this.isOpen()) {
+      return;
     }
+    this.isOpen.set(false);
+    this.disposeOverlay();
+    this.openChange.emit(false);
+
+    // Focus restoration lets the browser continue Tab navigation from the trigger.
+    if (restoreFocus) {
+      this.elementRef.nativeElement.focus();
+    } else {
+      this.onTouched();
+    }
+  }
+
+  private disposeOverlay(): void {
+    this.focusTrap?.destroy();
+    this.overlayRef?.dispose();
+    this.focusTrap = undefined;
+    this.overlayRef = undefined;
   }
 }

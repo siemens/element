@@ -124,12 +124,21 @@ test.describe('si-select', () => {
     await expect(buttonCombobox).not.toHaveAttribute('aria-expanded', 'true');
     await expect(buttonCombobox).toContainText('Milano');
 
-    // Form-control variant: open, then close and snapshot the closed (invalid) state.
+    // Form-control variant: validation is only shown after the control loses focus.
     await formControlCombobox.click();
     await expect(formControlCombobox).toHaveAttribute('aria-expanded', 'true');
+    const validationMessage = await si.getDescription(formControlCombobox);
+    await expect(validationMessage).not.toBeVisible();
 
     await page.keyboard.press('Escape');
     await expect(formControlCombobox).not.toHaveAttribute('aria-expanded', 'true');
+    await expect(formControlCombobox).toBeFocused();
+    await expect(validationMessage).not.toBeVisible();
+    await si.runVisualAndA11yTests('custom-form-control-escaped');
+
+    await formControlCombobox.blur();
+    await expect(validationMessage).toBeVisible();
+    await expect(validationMessage).toHaveText('Required');
     await si.runVisualAndA11yTests('custom-form-control-closed');
   });
 
