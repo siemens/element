@@ -443,7 +443,6 @@ eventBus.on('statusUpdate').subscribe(status => console.log(status));
 | --------------------------- | ------------------------------------------------------------------ |
 | `emit(eventName, payload)`  | Broadcasts an event to all subscribers                             |
 | `on(eventName)`             | Returns an `Observable` that emits whenever the event is broadcast |
-| `snapshot()`                | Returns the full event bus state                                   |
 | `snapshot(eventName)`       | Returns the current data for a single event                        |
 | `snapshot(eventName, keys)` | Narrows array-typed event data to items matching the given keys    |
 

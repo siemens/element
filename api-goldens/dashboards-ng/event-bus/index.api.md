@@ -20,10 +20,7 @@ export interface SiEventBusApi<ET extends {
 } = SiEventType> {
     emit<A extends keyof EventNameToData<ET | SiEventType>>(eventName: A, payload?: EventNameToData<ET | SiEventType>[A]): void;
     on<R = never, A extends keyof EventNameToData<ET | SiEventType> = keyof EventNameToData<ET | SiEventType>>(eventName: A): Observable<[R] extends [never] ? EventNameToData<ET | SiEventType>[A] : R>;
-    snapshot(): EventNameToData<ET | SiEventType>;
-    // (undocumented)
     snapshot<R = never, A extends keyof EventNameToData<ET | SiEventType> = keyof EventNameToData<ET | SiEventType>, K extends string = string>(eventName: A, keys: K[]): [R] extends [never] ? NarrowByKeys<EventNameToData<ET | SiEventType>[A], K> : NarrowByKeys<R, K>;
-    // (undocumented)
     snapshot<A extends keyof EventNameToData<ET | SiEventType>>(eventName: A): EventNameToData<ET | SiEventType>[A];
 }
 

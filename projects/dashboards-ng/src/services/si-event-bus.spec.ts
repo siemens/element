@@ -4,8 +4,11 @@
  */
 import { TestBed } from '@angular/core/testing';
 import { getEventBusInstance } from '@siemens/dashboards-ng/event-bus';
+import { Observable } from 'rxjs';
 
 import { SiEventBus, SiEventType } from './si-event-bus';
+
+type StatusEvent = { name: 'statusUpdate'; data: boolean };
 
 describe('SiEventBus', () => {
   let eventBus: SiEventBus<SiEventType>;
@@ -90,17 +93,11 @@ describe('SiEventBus', () => {
   });
 
   describe('#snapshot()', () => {
-    it('should return the full state when called without arguments', () => {
+    it('should not expose the full state when called without an event name', () => {
       eventBus.emit('languageChange', 'de');
-      eventBus.emit('themeChange', { name: 'dark', schemes: {} } as any);
 
-      const state = eventBus.snapshot();
-      expect(state).toEqual(
-        expect.objectContaining({
-          languageChange: 'de',
-          themeChange: expect.objectContaining({ name: 'dark' })
-        })
-      );
+      // @ts-expect-error the full state is intentionally not accessible
+      expect(eventBus.snapshot()).toBeUndefined();
     });
 
     it('should return undefined for an event that was never emitted', () => {
@@ -134,14 +131,27 @@ describe('SiEventBus', () => {
 
   describe('custom event types', () => {
     it('should emit and receive custom events', () => {
-      type MyEvent = { name: 'statusUpdate'; data: boolean };
-      const customEventBus = TestBed.inject(SiEventBus<MyEvent>);
+      const customEventBus = TestBed.inject(SiEventBus<StatusEvent>);
       const values: boolean[] = [];
       customEventBus.on('statusUpdate').subscribe(val => values.push(val));
 
       customEventBus.emit('statusUpdate', true);
 
       expect(values).toEqual([true]);
+    });
+  });
+
+  describe('typing', () => {
+    it('should infer the default event types when injected without a type argument', () => {
+      const defaultEventBus = TestBed.inject(SiEventBus);
+
+      expectTypeOf(defaultEventBus.on('languageChange')).toEqualTypeOf<Observable<string>>();
+    });
+
+    it('should infer custom event types when injected with a type argument', () => {
+      const customEventBus = TestBed.inject(SiEventBus<StatusEvent>);
+
+      expectTypeOf(customEventBus.on('statusUpdate')).toEqualTypeOf<Observable<boolean>>();
     });
   });
 

@@ -57,7 +57,6 @@ export class SiEventBusImpl<
     return win[key] as Record<string, unknown>;
   }
 
-  snapshot(): EventNameToData<ET | SiEventType>;
   snapshot<
     R = never,
     A extends keyof EventNameToData<ET | SiEventType> = keyof EventNameToData<ET | SiEventType>,
@@ -72,19 +71,10 @@ export class SiEventBusImpl<
     eventName: A
   ): EventNameToData<ET | SiEventType>[A];
   snapshot<A extends keyof EventNameToData<ET | SiEventType>, K extends string>(
-    eventName?: A,
+    eventName: A,
     keys?: K[]
-  ):
-    | EventNameToData<ET>
-    | EventNameToData<ET>[A]
-    | NarrowByKeys<EventNameToData<ET>[A], K>
-    | undefined {
+  ): EventNameToData<ET>[A] | NarrowByKeys<EventNameToData<ET>[A], K> | undefined {
     const state = this.sharedEventsState as EventNameToData<ET>;
-
-    if (!eventName) {
-      return state;
-    }
-
     const data = state[eventName];
     if (!data) {
       return undefined;

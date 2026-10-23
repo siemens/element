@@ -77,14 +77,16 @@ export type NarrowByKeys<Data, K extends string> = Data extends (infer U)[]
  */
 export interface SiEventBusApi<ET extends { name: string; data: unknown } = SiEventType> {
   /**
-   * Returns a point-in-time snapshot of the current event bus state.
+   * Returns a point-in-time snapshot of the data of a single event, narrowed to
+   * the items matching the given keys.
    *
-   * @returns The full state object when called without arguments.
-   * @param eventName - Optional event name to retrieve data for a single event.
-   * @param keys - Optional array of keys to narrow array-typed event data
-   *   (e.g. filter items) to only those matching the given keys.
-   *   A custom return type `R` can be provided to override the inferred
-   *   payload type when keys are passed.
+   * The full event bus state is intentionally not accessible. Consumers need to
+   * know the events they are interested in.
+   *
+   * @param eventName - The name of the event to retrieve the data for.
+   * @param keys - Keys to narrow array-typed event data (e.g. filter items) to
+   *   only those matching the given keys. A custom return type `R` can be
+   *   provided to override the inferred payload type.
    *
    * @example
    * ```ts
@@ -93,7 +95,6 @@ export interface SiEventBusApi<ET extends { name: string; data: unknown } = SiEv
    * // => {key: 'processed' | 'sent', value: boolean}[]
    * ```
    */
-  snapshot(): EventNameToData<ET | SiEventType>;
   snapshot<
     R = never,
     A extends keyof EventNameToData<ET | SiEventType> = keyof EventNameToData<ET | SiEventType>,
@@ -104,6 +105,14 @@ export interface SiEventBusApi<ET extends { name: string; data: unknown } = SiEv
   ): [R] extends [never]
     ? NarrowByKeys<EventNameToData<ET | SiEventType>[A], K>
     : NarrowByKeys<R, K>;
+  /**
+   * Returns a point-in-time snapshot of the data of a single event.
+   *
+   * The full event bus state is intentionally not accessible. Consumers need to
+   * know the events they are interested in.
+   *
+   * @param eventName - The name of the event to retrieve the data for.
+   */
   snapshot<A extends keyof EventNameToData<ET | SiEventType>>(
     eventName: A
   ): EventNameToData<ET | SiEventType>[A];
