@@ -11,10 +11,10 @@ import { Theme } from '@siemens/element-ng/theme';
 export const getEventBusInstance: <ET extends {
     name: string;
     data: unknown;
-} = SiEventType>() => SiEventBusBase<ET>;
+} = SiEventType>() => SiEventBusApi<ET>;
 
-// @public (undocumented)
-export class SiEventBusBase<ET extends {
+// @public
+export interface SiEventBusApi<ET extends {
     name: string;
     data: unknown;
 } = SiEventType> {

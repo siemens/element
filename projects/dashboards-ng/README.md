@@ -415,6 +415,16 @@ eventBus.on('themeChange').subscribe(theme => console.log(theme));
 eventBus.emit('languageChange', 'de');
 ```
 
+Both `SiEventBus` and `getEventBusInstance()` implement the `SiEventBusApi` interface, so code
+shared between Angular and non-Angular widgets can depend on the interface only:
+
+```ts
+import type { SiEventBusApi } from '@siemens/dashboards-ng/event-bus';
+
+export const logThemeChanges = (eventBus: SiEventBusApi) =>
+  eventBus.on('themeChange').subscribe(theme => console.log(theme));
+```
+
 #### Custom event types
 
 To define application-specific events, pass a custom type union as a generic argument:

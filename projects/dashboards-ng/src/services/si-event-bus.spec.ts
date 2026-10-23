@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { TestBed } from '@angular/core/testing';
+import { getEventBusInstance } from '@siemens/dashboards-ng/event-bus';
 
 import { SiEventBus, SiEventType } from './si-event-bus';
 
@@ -128,6 +129,42 @@ describe('SiEventBus', () => {
 
       const result = eventBus.snapshot('filter', ['nonExistentKey']);
       expect(result).toHaveLength(0);
+    });
+  });
+
+  describe('custom event types', () => {
+    it('should emit and receive custom events', () => {
+      type MyEvent = { name: 'statusUpdate'; data: boolean };
+      const customEventBus = TestBed.inject(SiEventBus<MyEvent>);
+      const values: boolean[] = [];
+      customEventBus.on('statusUpdate').subscribe(val => values.push(val));
+
+      customEventBus.emit('statusUpdate', true);
+
+      expect(values).toEqual([true]);
+    });
+  });
+
+  describe('interoperability with getEventBusInstance()', () => {
+    it('should notify non-Angular subscribers and share the state', () => {
+      const externalEventBus = getEventBusInstance();
+      const values: string[] = [];
+      externalEventBus.on('languageChange').subscribe(val => values.push(val));
+
+      eventBus.emit('languageChange', 'de');
+
+      expect(values).toEqual(['de']);
+      expect(externalEventBus.snapshot('languageChange')).toBe('de');
+    });
+
+    it('should receive events emitted by non-Angular code', () => {
+      const values: string[] = [];
+      eventBus.on('languageChange').subscribe(val => values.push(val));
+
+      getEventBusInstance().emit('languageChange', 'fr');
+
+      expect(values).toEqual(['fr']);
+      expect(eventBus.snapshot('languageChange')).toBe('fr');
     });
   });
 });

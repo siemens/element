@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import type { Theme } from '@siemens/element-ng/theme';
-import { fromEvent, Observable, Subject } from 'rxjs';
+import type { Observable } from 'rxjs';
 
 type Filter = { key: unknown; value: unknown } | DateRangeChange | TimeZoneChange;
 type LanguageChange = string;
@@ -41,7 +41,7 @@ export type SiEventType =
  *   { filter: Filter[]; languageChange: LanguageChange; themeChange: ThemeChange }
  * ```
  */
-type EventNameToData<ET extends { name: string; data: unknown }> = {
+export type EventNameToData<ET extends { name: string; data: unknown }> = {
   [K in ET as K['name']]: K['data'];
 };
 
@@ -61,47 +61,21 @@ type EventNameToData<ET extends { name: string; data: unknown }> = {
  * // => string  (unchanged, not an array)
  * ```
  */
-type NarrowByKeys<Data, K extends string> = Data extends (infer U)[]
+export type NarrowByKeys<Data, K extends string> = Data extends (infer U)[]
   ? (U & { key: K; value: unknown })[]
   : Data;
 
-export class SiEventBusBase<ET extends { name: string; data: unknown } = SiEventType> {
-  private eventObservables: Map<ET['name'], Subject<any>> = new Map();
-
-  private customEventSuffix = 'θ';
-
-  /**
-   * Shared state symbol used as a key on `window` to store the event bus state.
-   * A Symbol is used instead of a string key so the property is not discoverable
-   * via `Object.keys(window)` or accidental string-based access.
-   */
-  private static sharedStateSymbol = Symbol.for('eventBusSharedState');
-
-  /**
-   * Returns the shared events state object stored on `window`.
-   *
-   * Widgets running in separate Angular runtimes each get their own `SiEventBusBase`
-   * instance, so per-instance state would be out of sync. By storing the state on
-   * `window`, all instances share a single source of truth.
-   *
-   * The property is defined with `writable: false` and `configurable: false` so
-   * that outside code cannot replace the object, while its own properties remain
-   * mutable for internal event state updates.
-   */
-  private get sharedEventsState(): Record<string, unknown> {
-    const win = window as unknown as Record<symbol, unknown>;
-    const key = SiEventBusBase.sharedStateSymbol;
-    if (!win[key]) {
-      Object.defineProperty(window, key, {
-        value: {},
-        writable: false,
-        enumerable: false,
-        configurable: false
-      });
-    }
-    return win[key] as Record<string, unknown>;
-  }
-
+/**
+ * Public API of the event bus used for cross-widget communication.
+ *
+ * It is implemented by the Angular `SiEventBus` service and returned by
+ * `getEventBusInstance()` for non-Angular code, so code shared between both
+ * can depend on this interface instead of a concrete implementation.
+ *
+ * @typeParam ET - Union of custom event types. The default {@link SiEventType}
+ *   events are always available in addition to the custom ones.
+ */
+export interface SiEventBusApi<ET extends { name: string; data: unknown } = SiEventType> {
   /**
    * Returns a point-in-time snapshot of the current event bus state.
    *
@@ -133,36 +107,10 @@ export class SiEventBusBase<ET extends { name: string; data: unknown } = SiEvent
   snapshot<A extends keyof EventNameToData<ET | SiEventType>>(
     eventName: A
   ): EventNameToData<ET | SiEventType>[A];
-  snapshot<A extends keyof EventNameToData<ET | SiEventType>, K extends string>(
-    eventName?: A,
-    keys?: K[]
-  ):
-    | EventNameToData<ET>
-    | EventNameToData<ET>[A]
-    | NarrowByKeys<EventNameToData<ET>[A], K>
-    | undefined {
-    const state = this.sharedEventsState as EventNameToData<ET>;
-
-    if (!eventName) {
-      return state;
-    }
-
-    const data = state[eventName];
-    if (!data) {
-      return undefined;
-    }
-
-    if (keys?.length) {
-      const items = Array.isArray(data) ? data : [data];
-      return items.filter(f => keys.includes(f.key)) as EventNameToData<ET>[A];
-    }
-
-    return data;
-  }
 
   /**
    * Emits an event, updating the shared state so that all observables
-   * returned by {@link on} for the same event type receive the new value.
+   * returned by {@link SiEventBusApi.on} for the same event type receive the new value.
    *
    * @param eventName - The name of the event to emit.
    * @param payload - The data associated with the event.
@@ -170,17 +118,11 @@ export class SiEventBusBase<ET extends { name: string; data: unknown } = SiEvent
   emit<A extends keyof EventNameToData<ET | SiEventType>>(
     eventName: A,
     payload?: EventNameToData<ET | SiEventType>[A]
-  ): void {
-    this.sharedEventsState[String(eventName)] = payload;
-    // We just propagate this as custom event so widgets in other angular runtime contexts can also be notified
-    window.dispatchEvent(
-      new CustomEvent(`${this.customEventSuffix}${String(eventName)}`, { detail: payload })
-    );
-  }
+  ): void;
 
   /**
    * Subscribes to an event and returns an observable that emits whenever
-   * {@link emit} is called with the matching event name.
+   * {@link SiEventBusApi.emit} is called with the matching event name.
    *
    * @param eventName - The name of the event to listen for.
    * @returns An observable of the event payload. A custom return type `R` can
@@ -201,24 +143,7 @@ export class SiEventBusBase<ET extends { name: string; data: unknown } = SiEvent
   on<
     R = never,
     A extends keyof EventNameToData<ET | SiEventType> = keyof EventNameToData<ET | SiEventType>
-  >(eventName: A): Observable<[R] extends [never] ? EventNameToData<ET | SiEventType>[A] : R> {
-    if (!this.eventObservables.has(eventName)) {
-      const eventSubject = new Subject<
-        [R] extends [never] ? EventNameToData<ET | SiEventType>[A] : R
-      >();
-      this.eventObservables.set(eventName, eventSubject);
-
-      // emit will dispatch a custom event on window, we listen to that and forward to our subject
-      fromEvent(window, `${this.customEventSuffix}${String(eventName)}`).subscribe(
-        (event: Event) => {
-          const customEvent = event as CustomEvent;
-          this.eventObservables.get(eventName)!.next(customEvent.detail);
-        }
-      );
-
-      return eventSubject.asObservable();
-    }
-
-    return this.eventObservables.get(eventName)!.asObservable();
-  }
+  >(
+    eventName: A
+  ): Observable<[R] extends [never] ? EventNameToData<ET | SiEventType>[A] : R>;
 }
