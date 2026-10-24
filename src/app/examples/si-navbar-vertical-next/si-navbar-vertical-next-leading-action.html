@@ -1,0 +1,139 @@
+<div class="has-navbar-fixed-top">
+  <si-application-header>
+    <si-header-brand>
+      <a routerLink="/" siHeaderLogo></a>
+      <h1 class="application-name">Navbar Vertical Next Leading Action</h1>
+    </si-header-brand>
+  </si-application-header>
+
+  <si-navbar-vertical-next
+    stateId="navbar-vertical-next-leading-action"
+    toggleButtonText="Show side navigation"
+    inlineCollapse
+  >
+    <ng-container ngProjectAs="[si-navbar-vertical-next-navigation-action]">
+      @if (configurationOpen()) {
+        <button
+          type="button"
+          si-navbar-vertical-next-navigation-action
+          aria-label="Back to main navigation"
+          (click)="closeConfiguration()"
+        ></button>
+      }
+    </ng-container>
+    <ng-container ngProjectAs="si-navbar-vertical-next-search">
+      @if (!configurationOpen()) {
+        <si-navbar-vertical-next-search placeholder="Search..." />
+      }
+    </ng-container>
+    <ng-container ngProjectAs="si-navbar-vertical-next-items">
+      @if (configurationOpen()) {
+        <si-navbar-vertical-next-items>
+          <si-navbar-vertical-next-header>Configuration</si-navbar-vertical-next-header>
+          <a
+            si-navbar-vertical-next-item
+            routerLink="configuration-item-1"
+            routerLinkActive
+            icon="element-parameter"
+            label="Configuration item 1"
+            (click)="selectConfigurationItem(1)"
+          ></a>
+          <a
+            si-navbar-vertical-next-item
+            routerLink="configuration-item-2"
+            routerLinkActive
+            icon="element-parameter"
+            label="Configuration item 2"
+            (click)="selectConfigurationItem(2)"
+          ></a>
+        </si-navbar-vertical-next-items>
+      } @else {
+        <si-navbar-vertical-next-items>
+          <a
+            si-navbar-vertical-next-item
+            routerLink="home"
+            routerLinkActive
+            icon="element-home"
+            label="Home"
+          ></a>
+          <si-navbar-vertical-next-header>Modules</si-navbar-vertical-next-header>
+          <a
+            si-navbar-vertical-next-item
+            routerLink="energy"
+            routerLinkActive
+            icon="element-trend"
+            label="Energy &amp; sustainability"
+          ></a>
+          <button
+            type="button"
+            si-navbar-vertical-next-item
+            icon="element-user-group"
+            label="User management"
+            [siNavbarVerticalNextGroupTriggerFor]="userManagement"
+          ></button>
+          <a
+            si-navbar-vertical-next-item
+            routerLink="coverage"
+            routerLinkActive
+            icon="element-diagnostic"
+            label="Test coverage"
+          ></a>
+          <si-navbar-vertical-next-divider />
+          <button
+            type="button"
+            si-navbar-vertical-next-item
+            icon="element-document"
+            stateId="documentation-leading-action"
+            label="Documentation"
+            [siNavbarVerticalNextGroupTriggerFor]="documentation"
+          ></button>
+          <button
+            type="button"
+            si-navbar-vertical-next-item
+            icon="element-warning"
+            label="Action"
+            (click)="logEvent('Callback for action called')"
+          ></button>
+        </si-navbar-vertical-next-items>
+      }
+    </ng-container>
+    <ng-container ngProjectAs="si-navbar-vertical-next-footer-items">
+      @if (!configurationOpen()) {
+        <si-navbar-vertical-next-footer-items>
+          <button
+            type="button"
+            si-navbar-vertical-next-item
+            icon="element-parameter"
+            label="Configuration"
+            (click)="openConfiguration()"
+          ></button>
+        </si-navbar-vertical-next-footer-items>
+      }
+    </ng-container>
+
+    <div class="si-layout-main-padding">
+      <div class="si-layout-header">
+        <h2 class="si-layout-title si-layout-top-element">
+          {{ configurationOpen() ? 'Configuration' : 'Here is a title' }}
+        </h2>
+      </div>
+      <router-outlet />
+    </div>
+  </si-navbar-vertical-next>
+</div>
+
+<ng-template #userManagement>
+  <si-navbar-vertical-next-group routerLinkActive>
+    <a si-navbar-vertical-next-item routerLink="subItem" routerLinkActive label="Sub item"></a>
+    <a si-navbar-vertical-next-item routerLink="subItem2" routerLinkActive label="Sub item 2"></a>
+    <a si-navbar-vertical-next-item routerLink="subItem3" routerLinkActive label="Sub item 3"></a>
+  </si-navbar-vertical-next-group>
+</ng-template>
+
+<ng-template #documentation>
+  <si-navbar-vertical-next-group routerLinkActive>
+    <a si-navbar-vertical-next-item routerLink="subItem4" routerLinkActive label="Sub item 4"></a>
+    <a si-navbar-vertical-next-item routerLink="subItem5" routerLinkActive label="Sub item 5"></a>
+    <a si-navbar-vertical-next-item routerLink="subItem6" routerLinkActive label="Sub item 6"></a>
+  </si-navbar-vertical-next-group>
+</ng-template>

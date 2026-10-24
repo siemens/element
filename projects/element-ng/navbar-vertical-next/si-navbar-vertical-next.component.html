@@ -9,6 +9,11 @@
     [class.text-only]="textOnly()"
   >
     <div class="collapse-toggle ms-auto">
+      @if (inlineCollapse()) {
+        <div class="navigation-action">
+          <ng-content select="[si-navbar-vertical-next-navigation-action]" />
+        </div>
+      }
       <div class="mobile-drawer focus-inside">
         <button
           type="button"
