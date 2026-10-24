@@ -96,6 +96,133 @@ class TestHostComponent {
   searchCriteriaChange(event: SearchCriteria): void {}
 }
 
+describe('SiFilteredSearchComponent button events', () => {
+  const initialCriteria: SearchCriteria = {
+    criteria: [{ name: 'location', value: 'Munich' }],
+    value: 'text'
+  };
+
+  const setup = async (
+    doSearchOnInputChange = false
+  ): Promise<{
+    fixture: ComponentFixture<SiFilteredSearchComponent>;
+    filteredSearch: SiFilteredSearchHarness;
+    searchCriteriaSubmit: ReturnType<typeof vi.fn>;
+    searchCriteriaClear: ReturnType<typeof vi.fn>;
+  }> => {
+    const searchCriteriaSubmit = vi.fn();
+    const searchCriteriaClear = vi.fn();
+    const fixture = TestBed.createComponent(SiFilteredSearchComponent, {
+      bindings: [
+        inputBinding('searchCriteria', () => initialCriteria),
+        inputBinding('doSearchOnInputChange', () => doSearchOnInputChange),
+        inputBinding('searchDebounceTime', () => 0),
+        outputBinding<SearchCriteria>('searchCriteriaSubmit', searchCriteriaSubmit),
+        outputBinding<SearchCriteria>('searchCriteriaClear', searchCriteriaClear)
+      ]
+    });
+    fixture.detectChanges();
+    const filteredSearch = await TestbedHarnessEnvironment.harnessForFixture(
+      fixture,
+      SiFilteredSearchHarness
+    );
+    return { fixture, filteredSearch, searchCriteriaSubmit, searchCriteriaClear };
+  };
+
+  it.each([false, true])(
+    'should emit submit on every search button click with automatic search %s',
+    async automaticSearch => {
+      const { filteredSearch, searchCriteriaSubmit, searchCriteriaClear } =
+        await setup(automaticSearch);
+
+      await filteredSearch.clickSearchButton();
+      await filteredSearch.clickSearchButton();
+
+      expect(searchCriteriaSubmit).toHaveBeenCalledTimes(2);
+      expect(searchCriteriaSubmit).toHaveBeenNthCalledWith(1, initialCriteria);
+      expect(searchCriteriaSubmit).toHaveBeenNthCalledWith(2, initialCriteria);
+      expect(searchCriteriaClear).not.toHaveBeenCalled();
+    }
+  );
+
+  it('should emit submit with updated text after an automatic search', async () => {
+    const { fixture, filteredSearch, searchCriteriaSubmit } = await setup(true);
+    const doSearch = vi.fn();
+    fixture.componentInstance.doSearch.subscribe(doSearch);
+    const freeText = await filteredSearch.freeTextSearch();
+    const updatedCriteria: SearchCriteria = { ...initialCriteria, value: 'updated text' };
+
+    await freeText.clearText();
+    await freeText.typeText(updatedCriteria.value);
+    await fixture.whenStable();
+
+    await vi.waitFor(() => {
+      expect(doSearch).toHaveBeenLastCalledWith(updatedCriteria);
+    });
+    expect(searchCriteriaSubmit).not.toHaveBeenCalled();
+    doSearch.mockClear();
+
+    await filteredSearch.clickSearchButton();
+    await fixture.whenStable();
+
+    expect(searchCriteriaSubmit).toHaveBeenCalledExactlyOnceWith(updatedCriteria);
+    expect(doSearch).not.toHaveBeenCalled();
+  });
+
+  it.each([false, true])(
+    'should emit clear after resetting the value with automatic search %s',
+    async automaticSearch => {
+      const { fixture, filteredSearch, searchCriteriaClear, searchCriteriaSubmit } =
+        await setup(automaticSearch);
+      searchCriteriaClear.mockImplementation(() => {
+        expect(fixture.componentInstance.searchCriteria()).toEqual({ criteria: [], value: '' });
+      });
+
+      await filteredSearch.clickClearButton();
+      await fixture.whenStable();
+
+      expect(searchCriteriaClear).toHaveBeenCalledExactlyOnceWith({ criteria: [], value: '' });
+      expect(await filteredSearch.getCriteria()).toHaveLength(0);
+      expect(await (await filteredSearch.freeTextSearch()).getValue()).toBe('');
+      expect(searchCriteriaSubmit).not.toHaveBeenCalled();
+    }
+  );
+
+  it('should not emit button events on Enter', async () => {
+    const { fixture, filteredSearch, searchCriteriaSubmit, searchCriteriaClear } = await setup();
+    const freeText = await filteredSearch.freeTextSearch();
+
+    await freeText.sendKeys(TestKey.ENTER);
+    await fixture.whenStable();
+
+    expect(searchCriteriaSubmit).not.toHaveBeenCalled();
+    expect(searchCriteriaClear).not.toHaveBeenCalled();
+  });
+
+  it('should not emit button events when clearing programmatically', async () => {
+    const { fixture, searchCriteriaSubmit, searchCriteriaClear } = await setup();
+
+    fixture.componentInstance.deleteAllCriteria();
+    await fixture.whenStable();
+
+    expect(fixture.componentInstance.searchCriteria()).toEqual({ criteria: [], value: '' });
+    expect(searchCriteriaSubmit).not.toHaveBeenCalled();
+    expect(searchCriteriaClear).not.toHaveBeenCalled();
+  });
+
+  it('should not emit button events when deleting a single criterion', async () => {
+    const { fixture, filteredSearch, searchCriteriaSubmit, searchCriteriaClear } = await setup();
+    const criteria = await filteredSearch.getCriteria();
+
+    await criteria[0].clickClearButton();
+    await fixture.whenStable();
+
+    expect(await filteredSearch.getCriteria()).toHaveLength(0);
+    expect(searchCriteriaSubmit).not.toHaveBeenCalled();
+    expect(searchCriteriaClear).not.toHaveBeenCalled();
+  });
+});
+
 describe('SiFilteredSearchComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
