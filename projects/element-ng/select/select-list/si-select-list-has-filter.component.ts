@@ -70,8 +70,7 @@ export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> imple
     }
   }
 
-  override ngOnInit(): void {
-    super.ngOnInit();
+  ngOnInit(): void {
     this.selectOptions.onFilter!();
     setTimeout(() => this.filterInput().nativeElement.focus());
   }
