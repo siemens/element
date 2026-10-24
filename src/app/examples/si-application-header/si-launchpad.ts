@@ -49,8 +49,8 @@ export class SampleComponent {
       href: '.'
     },
     {
-      name: 'Statistics',
-      systemName: 'System name',
+      name: 'Statistics and performance analytics',
+      systemName: 'Building automation and monitoring system',
       iconUrl: './assets/app-icons/statistics.svg',
       favorite: true,
       type: 'router-link',

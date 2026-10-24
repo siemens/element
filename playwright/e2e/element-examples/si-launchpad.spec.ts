@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { test } from '../../support/test-helpers';
+import { expect, test } from '../../support/test-helpers';
 
 test.describe('launchpad', () => {
   const example = 'si-application-header/si-launchpad';
@@ -14,6 +14,12 @@ test.describe('launchpad', () => {
     await si.runVisualAndA11yTests();
 
     await page.getByRole('link', { name: 'Fischbach' }).first().locator('.favorite-icon').click();
+    await page
+      .getByText('Statistics and performance analytics', { exact: true })
+      .first()
+      .locator('..')
+      .hover();
+    await expect(page.getByRole('tooltip')).toHaveText('Statistics and performance analytics');
     await si.runVisualAndA11yTests('new favorite');
   });
 
