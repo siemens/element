@@ -8,11 +8,6 @@ test.describe('si-notification-item', () => {
   const variantsExample = 'si-notification-item/si-notification-item';
   const popoverExample = 'si-notification-item/si-notification-item-popover';
   const sidePanelExample = 'si-notification-item/si-notification-item-side-panel';
-  // Temporary suppression tracked in #3014.
-  const labelContentNameMismatchRule = {
-    id: 'label-content-name-mismatch',
-    enabled: false
-  };
 
   test(popoverExample, async ({ page, si }) => {
     await si.visitExample(popoverExample);
@@ -20,9 +15,7 @@ test.describe('si-notification-item', () => {
     await page.locator('.header-item').nth(1).click();
     await expect(page.locator('si-notification-item').first()).toBeVisible();
 
-    await si.runVisualAndA11yTests('popover', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests('popover');
   });
 
   test(sidePanelExample, async ({ page, si }) => {
@@ -31,22 +24,16 @@ test.describe('si-notification-item', () => {
     await page.locator('.header-item').nth(1).click();
     await expect(page.locator('si-side-panel > div').first()).toBeVisible();
 
-    await si.runVisualAndA11yTests('popover', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests('popover');
   });
 
   test(variantsExample, async ({ page, si }) => {
     await si.visitExample(variantsExample);
 
-    await si.runVisualAndA11yTests('default', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests('default');
 
     await page.locator('input').nth(0).click();
 
-    await si.runVisualAndA11yTests('unread', {
-      axeRulesSet: [labelContentNameMismatchRule]
-    });
+    await si.runVisualAndA11yTests('unread');
   });
 });

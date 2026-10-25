@@ -6,6 +6,7 @@ import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { page, userEvent } from 'vitest/browser';
 
 import {
   SiNotificationItemComponent,
@@ -77,18 +78,23 @@ describe('SiNotificationItemComponent', () => {
   });
 
   it('should link with the item link', async () => {
+    description.set('Description');
     itemLink.set({ type: 'link', href: '/test' });
     await fixture.whenStable();
-    expect(element.querySelector('a')).toHaveAttribute('href', '/test');
+    const link = page.getByRole('link', { name: 'Today 12:00 Heading Description' });
+    expect(link).toHaveAttribute('href', '/test');
   });
 
   it('should link with the router link', async () => {
     const router = TestBed.inject(Router);
     vi.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
+    description.set('Description');
+
     itemLink.set({ type: 'router-link', routerLink: '/test' });
     await fixture.whenStable();
 
-    element.querySelector<HTMLElement>('a')?.click();
+    const link = page.getByRole('link', { name: 'Today 12:00 Heading Description' });
+    await userEvent.click(link);
     expect(router.navigateByUrl).toHaveBeenCalled();
   });
 
