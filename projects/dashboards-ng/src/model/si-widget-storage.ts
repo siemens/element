@@ -74,6 +74,9 @@ export abstract class SiWidgetStorage {
  */
 export const STORAGE_KEY = 'dashboard-store';
 
+const getStorageKey = (dashboardId?: string): string =>
+  dashboardId ? `${STORAGE_KEY}-${dashboardId}` : STORAGE_KEY;
+
 /**
  * Injection token to optionally inject the {@link Storage} implementation
  * that will be used by the {@link SiDefaultWidgetStorage}. The default implementation
@@ -100,7 +103,6 @@ export class SiDefaultWidgetStorage extends SiWidgetStorage {
   storage: Storage;
 
   private map = new Map<string, BehaviorSubject<WidgetConfig[]>>();
-  private widgets?: BehaviorSubject<WidgetConfig[]>;
 
   constructor() {
     super();
@@ -108,16 +110,16 @@ export class SiDefaultWidgetStorage extends SiWidgetStorage {
   }
 
   load(dashboardId?: string): Observable<WidgetConfig[]> {
-    if (!dashboardId) {
-      this.widgets ??= new BehaviorSubject<WidgetConfig[]>(this.loadFromStorage());
-      return this.widgets;
-    } else if (!this.map.has(dashboardId)) {
+    const key = dashboardId ?? '';
+    if (!this.map.has(key)) {
       this.map.set(
-        dashboardId,
-        new BehaviorSubject<WidgetConfig[]>(this.loadFromStorage(dashboardId))
+        key,
+        new BehaviorSubject<WidgetConfig[]>(
+          dashboardId ? this.loadFromStorage(dashboardId) : this.loadFromStorage()
+        )
       );
     }
-    return this.map.get(dashboardId)!;
+    return this.map.get(key)!;
   }
 
   save(
@@ -134,20 +136,11 @@ export class SiDefaultWidgetStorage extends SiWidgetStorage {
   protected update(widgetConfigs: WidgetConfig[], dashboardId?: string): void {
     const widgets$ = this.load(dashboardId) as BehaviorSubject<WidgetConfig[]>;
     widgets$.next(widgetConfigs);
-    if (!dashboardId) {
-      this.storage.setItem(STORAGE_KEY, JSON.stringify(widgetConfigs));
-    } else {
-      this.storage.setItem(`${STORAGE_KEY}-${dashboardId}`, JSON.stringify(widgetConfigs));
-    }
+    this.storage.setItem(getStorageKey(dashboardId), JSON.stringify(widgetConfigs));
   }
 
   protected loadFromStorage(dashboardId?: string): WidgetConfig[] {
-    let configStr;
-    if (!dashboardId) {
-      configStr = this.storage.getItem(STORAGE_KEY);
-    } else {
-      configStr = this.storage.getItem(`${STORAGE_KEY}-${dashboardId}`);
-    }
+    const configStr = this.storage.getItem(getStorageKey(dashboardId));
 
     let widgetConfigs: WidgetConfig[] = [];
     if (configStr) {
