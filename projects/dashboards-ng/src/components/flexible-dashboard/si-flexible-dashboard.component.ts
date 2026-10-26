@@ -321,20 +321,20 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
       ...this.secondaryEditActions(),
       ...this.globalEditActions.secondary
     ];
+    const storageMenuItems =
+      primaryEditActions.length && secondaryEditActions.length
+        ? undefined
+        : this.widgetStorage.getToolbarMenuItems?.(this.dashboardId());
     const primaryMenuItems = primaryEditActions.length
       ? of(primaryEditActions)
-      : this.widgetStorage.getToolbarMenuItems
-        ? this.widgetStorage.getToolbarMenuItems(this.dashboardId()).primary
-        : of([]);
+      : (storageMenuItems?.primary ?? of([]));
     combineLatest([primaryMenuItems, this.hideAddWidgetInstanceButton$])
       .pipe(takeUntil(this.dashboardId$))
       .subscribe(([items, hideAddButton]) => this.setupPrimaryMenuItems(items, hideAddButton));
 
     const secondaryMenuItems = secondaryEditActions.length
       ? of(secondaryEditActions)
-      : this.widgetStorage.getToolbarMenuItems
-        ? this.widgetStorage.getToolbarMenuItems(this.dashboardId()).secondary
-        : undefined;
+      : storageMenuItems?.secondary;
 
     if (secondaryMenuItems) {
       secondaryMenuItems
