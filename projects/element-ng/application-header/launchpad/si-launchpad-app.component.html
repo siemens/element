@@ -5,7 +5,7 @@
 }
 <div class="app-text">
   <div class="si-h4 d-flex align-items-center mw-100 gap-1">
-    <span class="text-truncate">
+    <span #appName class="text-truncate">
       <ng-content select="[app-name]" />
     </span>
     @if (external()) {
@@ -16,10 +16,16 @@
       />
     }
   </div>
-  <div class="si-body text-secondary mt-2 text-truncate mw-100">
+  <div #systemName class="si-body text-secondary mt-2 text-truncate mw-100">
     <ng-content select="[app-systemName]" />
   </div>
 </div>
+<ng-template #appTooltip>
+  <div class="si-body-sbold">{{ appName.textContent?.trim() }}</div>
+  @if (systemName.textContent?.trim(); as systemNameText) {
+    <div class="si-body">{{ systemNameText }}</div>
+  }
+</ng-template>
 @if (enableFavoriteToggle()) {
   <si-icon
     class="icon favorite-icon"

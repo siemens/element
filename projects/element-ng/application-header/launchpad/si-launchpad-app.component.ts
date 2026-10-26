@@ -2,9 +2,20 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, HostListener, inject, input, model } from '@angular/core';
+import {
+  booleanAttribute,
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  input,
+  model,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
 import { elementExport, elementFavorites, elementFavoritesFilled } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTooltipService } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
@@ -15,6 +26,7 @@ import { SiApplicationHeaderComponent } from '../si-application-header.component
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-launchpad-app.component.html',
   styleUrl: './si-launchpad-app.component.scss',
+  providers: [SiTooltipService],
   host: {
     class: 'focus-inside',
     '[class.active]': 'active()',
@@ -72,6 +84,26 @@ export class SiLaunchpadAppComponent {
   protected readonly icons = addIcons({ elementExport, elementFavorites, elementFavoritesFilled });
 
   private header = inject(SiApplicationHeaderComponent);
+  private readonly appName = viewChild<ElementRef<HTMLElement>>('appName');
+  private readonly systemName = viewChild<ElementRef<HTMLElement>>('systemName');
+  private readonly tooltip = viewChild.required<TemplateRef<unknown>>('appTooltip');
+
+  constructor() {
+    inject(SiTooltipService).createTooltip({
+      element: inject(ElementRef),
+      placement: () => 'auto',
+      canShow: () => {
+        const appName = this.appName()?.nativeElement;
+        const systemName = this.systemName()?.nativeElement;
+        return !!(
+          (appName && appName.scrollWidth > appName.clientWidth) ||
+          (systemName && systemName.scrollWidth > systemName.clientWidth)
+        );
+      },
+      tooltip: this.tooltip,
+      tooltipContext: () => undefined
+    });
+  }
 
   @HostListener('keydown.space', ['$event'])
   protected favoriteClicked(event: Event): void {
