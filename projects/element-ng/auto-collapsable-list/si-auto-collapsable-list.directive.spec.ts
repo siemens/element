@@ -34,7 +34,7 @@ import { SiAutoCollapsableListModule } from './si-auto-collapsable-list.module';
           }
         }
         <div #overflowItem="siAutoCollapsableListOverflowItem" siAutoCollapsableListOverflowItem>
-          Overflown Items: {{ overflowItem.hiddenItemCount }}
+          Overflown Items: {{ overflowItem.hiddenItemCount() }}
         </div>
       </div>
     </div>
@@ -112,7 +112,7 @@ describe('SiAutoCollapsableListDirective', () => {
     fixture.detectChanges();
     hostElement
       .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
-      .forEach(element => expect(element).toHaveClass('invisible'));
+      .forEach(element => expect(element).toHaveClass('visible'));
 
     await waitForResizeObserver();
     await fixture.whenStable();
@@ -251,14 +251,14 @@ describe('SiAutoCollapsableListDirective', () => {
     unobserve.mockRestore();
   });
 
-  it('should release an item resize observer after its last subscriber unsubscribes', () => {
+  it('should release an item resize observer when the item is removed', async () => {
     component.disabled.set(true);
     fixture.detectChanges();
+    await fixture.whenStable();
     const unobserve = vi.spyOn(ResizeObserver.prototype, 'unobserve');
     const itemElement = hostElement.querySelector<HTMLElement>('[siAutoCollapsableListItem]')!;
-    const itemSizeSubscription = component.items()[0].size$.subscribe();
-
-    itemSizeSubscription.unsubscribe();
+    component.renderItems.set(false);
+    await fixture.whenStable();
 
     expect(unobserve).toHaveBeenCalledWith(itemElement);
     unobserve.mockRestore();

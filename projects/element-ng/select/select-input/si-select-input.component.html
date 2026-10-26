@@ -21,7 +21,7 @@
   }
   @if (selectionStrategy.allowMultiple) {
     <div #overflowItem="siAutoCollapsableListOverflowItem" siAutoCollapsableListOverflowItem>
-      <div class="pill py-0 ms-2"> {{ overflowItem.hiddenItemCount }}+</div>
+      <div class="pill py-0 ms-2"> {{ overflowItem.hiddenItemCount() }}+</div>
     </div>
   }
 </div>
