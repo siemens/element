@@ -82,6 +82,12 @@ The following points are known and documented. They are not considered vulnerabi
   hosting domain and renders the version selector via `innerHTML` (`docs/_src/version-selector.js`). The file is generated
   and uploaded by our release pipeline and is trusted. Anyone hosting the documentation must make sure this file cannot be
   modified by untrusted parties.
+- **Live-preview iframes**: `@siemens/live-preview` is intended for documentation only and must never be used in production
+  applications or environments. Its example iframes intentionally run without a `sandbox` attribute to preserve example
+  functionality. They execute example code and editable templates on the same origin as the documentation application and
+  do not provide a security boundary against that code. This lack of sandbox isolation is an accepted risk for documentation
+  use only. Do not use live-preview to execute untrusted content or host it on an origin containing sensitive applications
+  or data.
 
 ### Responsibilities of application developers
 
