@@ -15,7 +15,11 @@ import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
 import type { Mock } from 'vitest';
 
-import { TEST_WIDGET } from '../../../test/test-widget/test-widget';
+import {
+  TEST_WIDGET,
+  TEST_WIDGET_CONFIG_0,
+  TEST_WIDGET_CONFIG_1
+} from '../../../test/test-widget/test-widget';
 import { TestingModule } from '../../../test/testing.module';
 import { SI_DASHBOARD_CONFIGURATION } from '../../model/configuration';
 import { SI_WIDGET_ID_PROVIDER } from '../../model/si-widget-id-provider';
@@ -192,6 +196,32 @@ describe('SiGridComponent', () => {
     const widget1 = component.visibleWidgetInstances$.value[0];
     component.removeWidgetInstance(widget1.id);
     expect(component.visibleWidgetInstances$.value).toHaveLength(1);
+  });
+
+  it('#updateWidgetInstance() should read each widget layout only once while applying an edit', async () => {
+    fixture.componentRef.setInput('widgetCatalog', [TEST_WIDGET]);
+    await fixture.whenStable();
+    const widgets = [{ ...TEST_WIDGET_CONFIG_0 }, { ...TEST_WIDGET_CONFIG_1 }];
+    widgetStorage.save(widgets, []);
+    const editedWidget = { ...widgets[0], heading: 'Updated heading' };
+    const layouts = [
+      { id: widgets[0].id, x: 1, y: 2, width: 5, height: 3 },
+      { id: widgets[1].id, x: 6, y: 3, width: 6, height: 2 }
+    ];
+    const layoutSpy = vi
+      .spyOn(component.gridStackWrapper(), 'getWidgetLayout')
+      .mockImplementation(id => layouts.find(layout => layout.id === id));
+    const modified = vi.fn();
+    component.isModified.subscribe(modified);
+
+    component.updateWidgetInstance(editedWidget);
+
+    expect(layoutSpy).toHaveBeenCalledTimes(widgets.length);
+    expect(component.visibleWidgetInstances$.value).toEqual([
+      { ...editedWidget, ...layouts[0] },
+      { ...widgets[1], ...layouts[1] }
+    ]);
+    await vi.waitFor(() => expect(modified).toHaveBeenCalledExactlyOnceWith(true));
   });
 
   describe('#editWidgetInstance()', () => {

@@ -340,14 +340,12 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
    * @param editedWidgetConfig - The config of the widget instance that was updated.
    */
   updateWidgetInstance(editedWidgetConfig: WidgetConfig): void {
-    const index = this.visibleWidgetInstances$.value.findIndex(
-      wc => wc.id === editedWidgetConfig.id
-    );
+    const widgets = this.visibleWidgetInstances$.value;
+    const index = widgets.findIndex(wc => wc.id === editedWidgetConfig.id);
     if (index >= 0) {
-      let nextWidgets = this.updateWidgetPositions([...this.visibleWidgetInstances$.value]);
+      const nextWidgets = [...widgets];
       nextWidgets[index] = editedWidgetConfig;
-      nextWidgets = this.updateWidgetPositions(nextWidgets);
-      this.visibleWidgetInstances$.next(nextWidgets);
+      this.visibleWidgetInstances$.next(this.updateWidgetPositions(nextWidgets));
       setTimeout(() => this.setModified(true), 0);
     }
   }
