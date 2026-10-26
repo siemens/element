@@ -6,15 +6,15 @@
 
 import * as _angular_core from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { Translatable } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export interface Filter {
-    description?: TranslatableString;
+    description?: Translatable;
     filterName: string;
     // @deprecated (undocumented)
     status?: FilterStatusType;
-    title?: TranslatableString;
+    title?: Translatable;
 }
 
 // @public @deprecated (undocumented)
