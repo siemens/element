@@ -2,10 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Injectable } from '@angular/core';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { Injectable, signal } from '@angular/core';
 import { SortPropDir } from '@siemens/ngx-datatable';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
 // The following is based on the demo code of ngx-datatable (https://github.com/swimlane/ngx-datatable)
 // which is distributed under MIT license.
@@ -70,6 +71,12 @@ export class CorporateEmployee {
 @Injectable()
 export class DataService {
   totalElements = 10000;
+  /**
+   * HTTP status code of the mocked server responses to `getResults` requests.
+   * Any status other than `200` lets the requests fail with an `HttpErrorResponse`.
+   * Use status `0` to simulate a network error.
+   */
+  readonly responseStatus = signal<number>(HttpStatusCode.Ok);
   private elements: CorporateEmployee[] = [];
 
   constructor() {
@@ -79,7 +86,11 @@ export class DataService {
   }
 
   public getResults(page: PageRequest): Observable<PagedData<CorporateEmployee>> {
-    return of(this.getPagedData(page)).pipe(delay(this.optionalDelay(3000 * Math.random())));
+    return of(this.getPagedData(page)).pipe(
+      delay(this.optionalDelay(3000 * Math.random())),
+      // The status is checked on response, so it also applies to pending requests.
+      map(pagedData => this.respond(pagedData))
+    );
   }
 
   public getResultsById(id: number): Observable<CorporateEmployee> {
@@ -93,6 +104,14 @@ export class DataService {
 
   private optionalDelay(ms: number): number {
     return navigator.webdriver ? 0 : ms;
+  }
+
+  private respond<T>(body: T): T {
+    const status = this.responseStatus();
+    if (status !== HttpStatusCode.Ok) {
+      throw new HttpErrorResponse({ status, statusText: 'Simulated error', url: 'api/employees' });
+    }
+    return body;
   }
 
   private getPagedData(pageRequest: PageRequest): PagedData<CorporateEmployee> {
