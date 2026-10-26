@@ -5,6 +5,7 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { inputBinding, outputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { page } from 'vitest/browser';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
 import { SiLaunchpadHarness } from '../testing/si-launchpad.harness';
@@ -36,6 +37,49 @@ describe('SiLaunchpad', () => {
       ]
     });
     harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, SiLaunchpadHarness);
+  });
+
+  it('shows both labels on focus when either the name or system name is truncated', async () => {
+    const longName = 'Application name that is too long to fit in a launchpad tile';
+    const longSystemName = 'System name that is too long to fit in a launchpad tile';
+    apps.set([
+      { name: longName, systemName: 'System', href: '/name' },
+      { name: 'App', systemName: longSystemName, href: '/system' }
+    ]);
+    await fixture.whenStable();
+    const nameLink = page.getByRole('link', { name: `${longName} System`, exact: true }).element();
+    const systemLink = page
+      .getByRole('link', { name: `App ${longSystemName}`, exact: true })
+      .element();
+
+    nameLink.focus();
+    await fixture.whenStable();
+
+    await expect
+      .element(page.getByRole('tooltip').getByText(longName, { exact: true }))
+      .toBeVisible();
+    await expect
+      .element(page.getByRole('tooltip').getByText('System', { exact: true }))
+      .toBeVisible();
+
+    systemLink.focus();
+    await fixture.whenStable();
+
+    await expect.element(page.getByRole('tooltip').getByText('App', { exact: true })).toBeVisible();
+    await expect
+      .element(page.getByRole('tooltip').getByText(longSystemName, { exact: true }))
+      .toBeVisible();
+  });
+
+  it('does not show a tooltip on focus when both labels fit', async () => {
+    apps.set([{ name: 'App', systemName: 'System', href: '/app' }]);
+    await fixture.whenStable();
+    const link = page.getByRole('link', { name: 'App System', exact: true }).element();
+
+    link.focus();
+    await fixture.whenStable();
+
+    await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
   });
 
   describe('with favorites', () => {
