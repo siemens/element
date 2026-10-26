@@ -6,13 +6,17 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
-  HostListener,
+  DestroyRef,
+  ElementRef,
   inject,
   input,
-  model
+  model,
+  TemplateRef,
+  viewChild
 } from '@angular/core';
 import { elementExport, elementFavorites, elementFavoritesFilled } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTooltipService } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
@@ -23,11 +27,14 @@ import { SiApplicationHeaderComponent } from '../si-application-header.component
   imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-launchpad-app.component.html',
   styleUrl: './si-launchpad-app.component.scss',
+  providers: [SiTooltipService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'focus-inside',
     '[class.active]': 'active()',
-    '[class.action]': 'action()'
+    '[class.action]': 'action()',
+    '(keydown.space)': 'favoriteClicked($event)',
+    '(click)': 'click()'
   }
 })
 export class SiLaunchpadAppComponent {
@@ -81,15 +88,35 @@ export class SiLaunchpadAppComponent {
   protected readonly icons = addIcons({ elementExport, elementFavorites, elementFavoritesFilled });
 
   private header = inject(SiApplicationHeaderComponent);
+  private readonly appName = viewChild<ElementRef<HTMLElement>>('appName');
+  private readonly systemName = viewChild<ElementRef<HTMLElement>>('systemName');
+  private readonly tooltip = viewChild.required<TemplateRef<unknown>>('appTooltip');
 
-  @HostListener('keydown.space', ['$event'])
+  constructor() {
+    const tooltip = inject(SiTooltipService).createTooltip({
+      element: inject(ElementRef),
+      placement: 'auto',
+      canShow: () => {
+        const appName = this.appName()?.nativeElement;
+        const systemName = this.systemName()?.nativeElement;
+        return !!(
+          (appName && appName.scrollWidth > appName.clientWidth) ||
+          (systemName && systemName.scrollWidth > systemName.clientWidth)
+        );
+      },
+      tooltip: this.tooltip,
+      tooltipContext: () => undefined
+    });
+    inject(DestroyRef).onDestroy(() => tooltip.destroy());
+  }
+
   protected favoriteClicked(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
     this.favorite.update(old => !old);
   }
 
-  @HostListener('click') protected click(): void {
+  protected click(): void {
     this.header.closeLaunchpad();
   }
 }

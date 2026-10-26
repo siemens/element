@@ -42,6 +42,7 @@ class BrowserTooltipRef {
 
   constructor(
     private config: {
+      canShow?: () => boolean;
       describedBy?: string;
       element: ElementRef;
       injector?: Injector;
@@ -146,6 +147,9 @@ class BrowserTooltipRef {
   }
 
   private show(): void {
+    if (this.config.canShow && !this.config.canShow()) {
+      return;
+    }
     const overlayRef = this.getOrCreateOverlay();
     if (overlayRef.hasAttached()) {
       return;
@@ -196,6 +200,7 @@ export class SiTooltipService {
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   createTooltip(config: {
+    canShow?: () => boolean;
     describedBy?: string;
     element: ElementRef;
     placement: keyof typeof positions;
