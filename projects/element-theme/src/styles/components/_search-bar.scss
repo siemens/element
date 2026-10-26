@@ -23,6 +23,11 @@
   border-radius: semantic-tokens.$element-radius-2;
   border-width: 0;
 
+  // The component provides an accessible clear button for native search inputs.
+  &::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
   &::placeholder {
     color: system-tokens.$si-sys-color-text-secondary;
   }
@@ -42,6 +47,14 @@
       #{bootstrap-variables.$btn-font-size} * #{bootstrap-variables.$btn-line-height} +
         #{bootstrap-variables.$btn-padding-y-sm} * 2 + #{map.get(variables.$spacers-inline, 2)} * 2
     );
+  }
+
+  si-search-field .search-bar:has(.search-bar-clear) & {
+    --si-action-icon-offset: calc(
+      #{bootstrap-variables.$btn-font-size} * #{bootstrap-variables.$btn-line-height} +
+        #{bootstrap-variables.$btn-padding-y-sm} * 2 + #{map.get(variables.$spacers-inline, 2)}
+    );
+    padding-inline-end: var(--si-input-padding-inline-end);
   }
 
   .search-bar.variant-background-0 & {

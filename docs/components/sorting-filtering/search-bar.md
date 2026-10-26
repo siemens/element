@@ -40,6 +40,60 @@ surrounding background. Use `background-2` or `background-1` accordingly.
 
 ## Code ---
 
+### Search with signal forms
+
+Use `si-search-field` with Angular signal forms to add a search icon and a clear
+button around a native input. Set `type="search"`, add the
+`form-control search-bar-input` classes and bind the input using `[formField]`.
+
+```ts
+import { Component, debounced, signal } from '@angular/core';
+import { form, FormField } from '@angular/forms/signals';
+import { provideSiFormFieldConfig } from '@siemens/element-ng/form';
+import { SiSearchFieldComponent } from '@siemens/element-ng/search-field';
+
+@Component({
+  imports: [FormField, SiSearchFieldComponent],
+  providers: [provideSiFormFieldConfig()],
+  template: `
+    <si-search-field>
+      <input
+        type="search"
+        class="form-control search-bar-input"
+        aria-label="Search products"
+        placeholder="Search products…"
+        [formField]="searchField"
+      />
+    </si-search-field>
+    <p>Search term: {{ debouncedSearchTerm.value() }}</p>
+  `
+})
+export class SearchComponent {
+  readonly searchTerm = signal('');
+  readonly searchField = form(this.searchTerm);
+  readonly debouncedSearchTerm = debounced(this.searchTerm, 400);
+}
+```
+
+Set the placeholder and accessible label directly on the input. The placeholder
+is empty when omitted.
+
+The clear button appears when the input contains text and is editable. Clicking
+it clears the field and returns focus to the input. Disabled and readonly states
+are configured through the signal form.
+
+Use Angular's `debounced()` to delay search updates while keeping the input
+responsive. The example uses a delay of 400 ms.
+
+Use `provideSiFormFieldConfig()` to enable invalid-state styling. Provide any
+validation messages and associated ARIA attributes in the application.
+
+<si-docs-component example="si-search-field/si-search-field"></si-docs-component>
+
+<si-docs-api component="SiSearchFieldComponent"></si-docs-api>
+
+### Search bar with reactive or template-driven forms
+
 It has a callback, which can be seen in example as call to `getData()`, which
 triggers every time a user has interaction with search bar. It also includes the
 actual search term.

@@ -1,0 +1,6 @@
+- combobox "Search states" [expanded]: Ala
+- button "Clear"
+- paragraph: "Debounced search term: Ala"
+- listbox "Suggestions":
+  - option "Alabama": Ala bama
+  - option "Alaska": Ala ska

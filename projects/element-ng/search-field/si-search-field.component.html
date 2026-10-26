@@ -1,0 +1,14 @@
+<div class="search-bar" [class.variant-background-0]="colorVariant() === 'base-0'">
+  <si-icon class="search-bar-icon" [icon]="icons.elementSearch" />
+  <ng-content select="input" />
+  @if (hasValue() && editable()) {
+    <button
+      type="button"
+      class="btn btn-icon btn-sm btn-tertiary-ghost search-bar-clear"
+      [attr.aria-label]="clearButtonAriaLabel() | translate"
+      (click)="clear()"
+    >
+      <si-icon [icon]="icons.elementCancel" />
+    </button>
+  }
+</div>
