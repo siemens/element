@@ -26,28 +26,32 @@ We recommend to follow the same behavior as users changes to locales are seldom.
 
 Element provides the service `SiLocaleService` to set the current locale like `en`, `fr` or a
 variant like `fr-CA` or `en-GB` as well as the available locales of the application. The service is
-configured by an in injected `SiLocaleConfig` object in the main module.
+configured by an injected `SiLocaleConfig` object in the application configuration.
 
 In addition you need to register and initialize the locale packages for Angular. The following shows a
 generic example that only loads the selected Angular locale into the applications.
 
-Note, the `/* webpackInclude: /(en|de|fr)\.js$/ */` statement that need to match the supported locales.
+Use explicit imports so the bundler only includes the supported locales.
 
 ```ts
-// On locale change, we dynamically reload the locale definition
-// for angular. With this configuration, we only load the current
-// locale into the client and not all application locales.
-const genericLocaleInitializer = (localeId: string): Promise<any> => {
-  console.log('Registering locale data for ' + localeId);
-  return import(
-    // The following trick only includes en, de and fr.
-    // Applications need to set their locales in the regex.
-    // note: the `/node_modules/` is due to a webpack bug: webpack/webpack#13865
-    /* webpackInclude: /(en|de|fr)\.m?js$/ */
-    `/node_modules/@angular/common/locales/${localeId}`
-  ).then(module => {
-    registerLocaleData(module.default);
-  });
+import { registerLocaleData } from '@angular/common';
+import { ApplicationConfig, LOCALE_ID } from '@angular/core';
+import { SI_LOCALE_CONFIG, SiLocaleConfig, SiLocaleId } from '@siemens/element-ng/localization';
+
+const genericLocaleInitializer = async (localeId: string): Promise<void> => {
+  switch (localeId) {
+    case 'en':
+      registerLocaleData((await import('@angular/common/locales/en')).default);
+      break;
+    case 'de':
+      registerLocaleData((await import('@angular/common/locales/de')).default);
+      break;
+    case 'fr':
+      registerLocaleData((await import('@angular/common/locales/fr')).default);
+      break;
+    default:
+      throw new Error('Unsupported locale: ' + localeId);
+  }
 };
 
 const localeConfig: SiLocaleConfig = {
@@ -60,10 +64,8 @@ const localeConfig: SiLocaleConfig = {
 
 export const APP_CONFIG: ApplicationConfig = {
   providers: [
-    { provide: LOCALE_ID, useClass: SiLocaleId, deps: [SiLocaleService] },
+    { provide: LOCALE_ID, useClass: SiLocaleId },
     { provide: SI_LOCALE_CONFIG, useValue: localeConfig }
-    // , { provide: APP_INITIALIZER, useFactory: appLoadFactory, multi: true, deps: [DemoLocaleService] },
-    // { provide: SiLocaleStore, useClass: DemoLocaleService }
   ]
 };
 ```
@@ -78,30 +80,22 @@ the changed locale. By default, a localStorage implementation is used. You can i
 persist the user preferred locale from a setting backend that is shared across applications.
 
 We implemented a [demo store](https://github.com/siemens/element/tree/main/src/app/examples/si-localization/demo-locale.service.ts)
-that loads a locale from a backend before the angular application initializes. The store is configured in the providers of the main
-module definition. In the following you find the key code snippets.
+that loads a locale from a backend before the Angular application initializes.
+The store is configured in the application providers. In the following you find the key code snippet.
 
 ```ts
-// Load the locale from a backend service before the app initializes
-export function appLoadFactory(service: DemoLocaleService) {
-  return () => service.loadConfig().toPromise();
-}
-```
+import { ApplicationConfig, inject, LOCALE_ID, provideAppInitializer } from '@angular/core';
+import { SI_LOCALE_CONFIG, SiLocaleId, SiLocaleStore } from '@siemens/element-ng/localization';
+import { lastValueFrom } from 'rxjs';
 
-```ts
-// Configure the APP_INITIALIZER provider and configure to use the
-// DemoLocaleService as a locale store.
+// Load the locale before the application initializes, then use the demo store.
+// DemoLocaleService is the application-specific store linked above.
 export const APP_CONFIG: ApplicationConfig = {
   providers: [
-    { provide: LOCALE_ID, useClass: SiLocaleId, deps: [SiLocaleService] },
+    { provide: LOCALE_ID, useClass: SiLocaleId },
     { provide: SI_LOCALE_CONFIG, useValue: localeConfig },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: appLoadFactory,
-      multi: true,
-      deps: [DemoLocaleService]
-    },
-    { provide: SiLocaleStore, useClass: DemoLocaleService }
+    provideAppInitializer(() => lastValueFrom(inject(DemoLocaleService).loadConfig())),
+    { provide: SiLocaleStore, useExisting: DemoLocaleService }
   ]
 };
 ```
