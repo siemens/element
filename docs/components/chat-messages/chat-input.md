@@ -192,6 +192,34 @@ and `finishingLabel` with translatable strings. Listening and finishing are anno
 status region without announcing every transcript update. Consumers can hide irrelevant custom
 actions during dictation if needed.
 
+### Browser voice input
+
+<si-docs-component example="si-chat-messages/si-chat-voice-input-browser"></si-docs-component>
+
+This interactive example uses the browser's Web Speech API for real dictation and the Web Audio
+API for measured microphone levels. It has no speech SDK, API key, or application backend.
+The integration belongs to the example, not the Element library. Applications can use their
+own speech recognition provider with the same component inputs and outputs.
+
+Microphone access requires HTTPS or localhost. Before enabling dictation, acknowledge that the
+browser may send audio to its speech recognition service. Do not dictate sensitive information.
+Recognition availability depends on the browser, language, network, and browser policies;
+feature detection alone does not guarantee that its service is available. If the required APIs
+are missing, the example keeps normal text input available without voice controls.
+
+The example uses the browser language and requests interim results for one utterance at a time.
+Recognition can end automatically after a pause; the exact stopping behavior is browser-dependent.
+Confirm requests final results before unlocking the draft, while cancel restores the previous
+draft immediately. Neither operation sends the message. Permission and recognition errors restore
+the previous draft and display an accessible error. If confirmation times out, the current text
+is retained for review.
+
+Speech recognition does not expose audio levels. The example separately acquires a microphone
+stream and measures its amplitude with an `AnalyserNode`, without playing or storing the audio.
+It releases that stream and its audio context on confirmation, cancellation, completion, errors,
+and destruction, and stops streams returned after a cancelled permission request.
+The simulated example above remains available without microphone access or a recognition service.
+
 ### Waveform
 
 `voiceInputLevel` accepts the latest normalized audio level: `0` means silence and `1` means maximum
