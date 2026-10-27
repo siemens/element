@@ -14,10 +14,10 @@ import { SiCardHeaderComponent } from './si-card-header.component';
  *
  * Usage:
  * as selectable card:
- * `<button si-card selectable type="button" [(selected)]="isSelected">...</button>`
+ * `<button si-action-card selectable type="button" [(selected)]="isSelected">...</button>`
  *
  * or as an action card:
- * `<button si-card type="button" (click)="doSomeAction()">...</button>`
+ * `<button si-action-card type="button" (click)="doSomeAction()">...</button>`
  */
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
