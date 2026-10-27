@@ -6,6 +6,7 @@ import { inputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
+import { page } from 'vitest/browser';
 
 import { SiCardComponent } from './index';
 
@@ -68,6 +69,39 @@ describe('SiCardComponent', () => {
     await fixture.whenStable();
     expect(element.querySelector('.si-h5')).not.toHaveAttribute('id');
     expect(element.querySelector('.si-body')).not.toHaveAttribute('id');
+  });
+
+  describe('overflow tooltips', () => {
+    beforeEach(() => {
+      vi.useFakeTimers();
+      vi.setTimerTickMode('nextTimerAsync');
+      element.style.width = '160px';
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it.each([
+      { name: 'heading', selector: '.si-h5', text: 'A very long card heading that overflows' },
+      {
+        name: 'subheading',
+        selector: '.si-body',
+        text: 'A very long card subheading that overflows'
+      }
+    ])('shows the full $name when truncated', async ({ selector, text }) => {
+      heading.set('A very long card heading that overflows');
+      subHeading.set('A very long card subheading that overflows');
+      await fixture.whenStable();
+
+      const target = element.querySelector<HTMLElement>(selector)!;
+      expect(target.scrollWidth).toBeGreaterThan(target.clientWidth);
+      target.dispatchEvent(new MouseEvent('mouseenter'));
+      await vi.advanceTimersByTimeAsync(500);
+      await fixture.whenStable();
+
+      await expect.element(page.getByRole('tooltip', { name: text })).toBeInTheDocument();
+    });
   });
 
   describe('content action bar', () => {
