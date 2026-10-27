@@ -8,6 +8,7 @@
 
 See [translation](https://element.siemens.io/fundamentals/translation/)
 for application configuration and usage.
+For Element development, see the [translation abstraction](https://element.siemens.io/architecture/translation/) guide.
 
 ## Usage
 
@@ -20,7 +21,7 @@ npm install --save @siemens/element-translate-ng
 An important part of the translation tooling is the extraction of translatable keys as a TypeScript
 interface as well as extracting a JSON messages file with default translations. This is provided by
 the separate `@siemens/element-translate-cli` package via the `update-translatable-keys` CLI. See
-[Extracting translatable keys](https://element.siemens.io/fundamentals/localization/#extracting-translatable-keys)
+[Extracting translatable keys](https://element.siemens.io/architecture/translation/#extracting-translatable-keys)
 for details on how to run it and how to configure it.
 
 ## Testing

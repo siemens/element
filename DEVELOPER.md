@@ -44,6 +44,11 @@ pnpm run <module-name>:build
 pnpm run translate:build
 ```
 
+## Translatable component text
+
+See the [translation abstraction](https://element.siemens.io/architecture/translation/) guide
+for declaring and rendering translatable text, extracting keys, and testing translation behavior.
+
 ## Running the example application
 
 As for other builds, the translation layer must be built before running the application.

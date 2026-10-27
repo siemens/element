@@ -163,7 +163,7 @@ All keys are members of the `SiTranslatableKeys` type of each package:
 
 The packages also include a `template-i18n.json` file with their keys and default text.
 It can be used as a starting point for your application's translation files.
-To extract keys when developing an Element component or library, see [extracting translatable keys](localization.md#extracting-translatable-keys).
+To extract keys when developing an Element component or library, see [extracting translatable keys](../architecture/translation.md#extracting-translatable-keys).
 
 ## Caching translation files
 
@@ -186,3 +186,4 @@ This only changes requests for translation files.
 
 - [Localization and locale configuration](localization.md)
 - [Language switcher](../components/forms-inputs/language-switcher.md)
+- [Translation abstraction for Element contributors](../architecture/translation.md)
