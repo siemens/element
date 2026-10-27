@@ -45,6 +45,10 @@ jobs:
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: pnpm install
+      - name: Check system tokens (run pnpm sync:tokens to update)
+        run: |
+          pnpm run sync:tokens
+          git diff --exit-code -- projects/element-theme/src/styles/variables/si-sys-variables.scss
       - run: pnpm list @simpl/brand --json
       - run: pnpm run lint:commit
       - run: pnpm run build:all

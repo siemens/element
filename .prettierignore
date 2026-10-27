@@ -25,3 +25,4 @@ docs/_custom_theme/partials/toc.html
 
 # Updated from outside
 src/assets/i18n/**/*.json
+projects/element-theme/src/styles/variables/si-sys-variables.scss
