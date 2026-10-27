@@ -1,0 +1,39 @@
+<div class="p-2">
+  <si-chat-input
+    placeholder="Enter a command, question or topic..."
+    [voiceInput]="supported && consent()"
+    [voiceInputState]="voiceInputState()"
+    [voiceInputLevel]="voiceInputLevel()"
+    [listeningLabel]="starting() ? 'Starting voice input...' : 'Listening...'"
+    [allowAttachments]="true"
+    [(value)]="value"
+    (voiceInputStart)="startDictation()"
+    (voiceInputConfirm)="confirmDictation()"
+    (voiceInputCancel)="cancelDictation()"
+    (send)="sendMessage($event)"
+  />
+  @if (error()) {
+    <p class="text-danger mt-4 mb-0" role="alert">{{ error() }}</p>
+  }
+  @if (supported) {
+    <div class="form-check mt-6">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="browser-voice-consent"
+        [checked]="consent()"
+        [disabled]="voiceInputState() !== 'idle'"
+        (change)="consent.set(!consent())"
+      />
+      <label for="browser-voice-consent" class="form-check-label">
+        I agree to use my microphone. My browser may send audio to its speech recognition service. I
+        will not dictate sensitive information.
+      </label>
+    </div>
+  } @else {
+    <p class="text-secondary mt-4 mb-0" role="status">
+      Voice input is unavailable in this browser or context. Use a supported browser over HTTPS or
+      localhost. You can still type a message.
+    </p>
+  }
+</div>
