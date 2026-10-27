@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Directive, inject, input, TemplateRef } from '@angular/core';
+import { booleanAttribute, Directive, inject, input, TemplateRef } from '@angular/core';
 import { filter, map, merge, Observable, tap } from 'rxjs';
 
 import { SiCustomSelectDirective } from './si-custom-select.directive';
@@ -43,6 +43,15 @@ export class SiSelectDropdownDirective {
    */
   readonly contentType = input.required<SiSelectDropdownContentType>();
 
+  /**
+   * Whether pressing Tab closes the dropdown.
+   *
+   * Keep this disabled when the dropdown contains controls that users must reach with Tab.
+   *
+   * @defaultValue false
+   */
+  readonly closeOnTab = input(false, { transform: booleanAttribute });
+
   /** @internal */
   readonly templateRef = inject<TemplateRef<void>>(TemplateRef);
 
@@ -62,9 +71,13 @@ export class SiSelectDropdownDirective {
       tap(event => event.stopPropagation()),
       map(() => true)
     );
+    const tab$ = overlayRef.keydownEvents().pipe(
+      filter(event => event.key === 'Tab' && this.closeOnTab()),
+      map(() => true)
+    );
     const dismiss$ = merge(overlayRef.backdropClick(), overlayRef.detachments()).pipe(
       map(() => false)
     );
-    return merge(escape$, dismiss$);
+    return merge(escape$, tab$, dismiss$);
   }
 }

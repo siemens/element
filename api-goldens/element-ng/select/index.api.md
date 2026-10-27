@@ -113,6 +113,7 @@ export type SiSelectDropdownContentType = 'false' | 'true' | 'menu' | 'listbox' 
 // @public
 export class SiSelectDropdownDirective {
     constructor();
+    readonly closeOnTab: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly contentType: _angular_core.InputSignal<SiSelectDropdownContentType>;
 }
 
