@@ -41,6 +41,7 @@ nav:
     - Elevation:                          'fundamentals/elevation.md'
     - Icons:                              'fundamentals/icons.md'
     - Localization:                       'fundamentals/localization.md'
+    - Translation:                        'fundamentals/translation.md'
     - Styles:
       - Borders:                           'fundamentals/styles/borders.md'
       - Colors:                            'fundamentals/styles/colors.md'
