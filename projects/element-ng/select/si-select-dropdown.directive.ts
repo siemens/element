@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Directive, inject, input, TemplateRef } from '@angular/core';
+import { booleanAttribute, Directive, inject, input, TemplateRef } from '@angular/core';
 
 import { SiCustomSelectDirective } from './si-custom-select.directive';
 
@@ -40,6 +40,15 @@ export class SiSelectDropdownDirective {
    * the parent {@link SiCustomSelectDirective}.
    */
   readonly contentType = input.required<SiSelectDropdownContentType>();
+
+  /**
+   * Whether pressing Tab closes the dropdown.
+   *
+   * Keep this disabled when the dropdown contains controls that users must reach with Tab.
+   *
+   * @defaultValue false
+   */
+  readonly closeOnTab = input(false, { transform: booleanAttribute });
 
   /** @internal */
   readonly templateRef = inject<TemplateRef<void>>(TemplateRef);

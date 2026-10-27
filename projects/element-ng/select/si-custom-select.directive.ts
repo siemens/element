@@ -281,7 +281,9 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
     merge(
       this.overlayRef.backdropClick().pipe(map(() => false)),
       this.overlayRef.keydownEvents().pipe(
-        filter(e => e.key === 'Escape'),
+        filter(
+          e => e.key === 'Escape' || (e.key === 'Tab' && this.dropdownDirective()!.closeOnTab())
+        ),
         map(() => true)
       ),
       this.overlayRef.detachments().pipe(map(() => true))
