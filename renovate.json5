@@ -56,6 +56,13 @@
       matchSourceUrls: ["https://github.com/siemens/lint"]
     },
     {
+      groupName: "Siemens design dependencies",
+      description: [
+        "Update design tokens and brand separately because token changes require a manual sync"
+      ],
+      matchPackageNames: ["@siemens-ux/design-tokens", "@simpl/brand"]
+    },
+    {
       description: [
         "Prevent Angular related major and minor updates. Those should be manually done"
       ],
