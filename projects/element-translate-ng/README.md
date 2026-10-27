@@ -6,8 +6,8 @@
 - Angular localize
 - Other frameworks in the future
 
-See [here](https://element.siemens.io/fundamentals/localization/#translation-in-element)
-for details how it works and how to use it.
+See [translation](https://element.siemens.io/fundamentals/translation/)
+for application configuration and usage.
 
 ## Usage
 
