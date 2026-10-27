@@ -209,6 +209,7 @@ nav:
     - Motion and animation:               'architecture/motion-animation.md'
     - Resize observer:                    'architecture/resize-observer.md'
     - Theming:                            'architecture/theming.md'
+    - Translation abstraction:            'architecture/translation.md'
     - UI state:                           'architecture/ui-state.md'
     - Zoneless:                           'architecture/zoneless.md'
   - Contributing:
