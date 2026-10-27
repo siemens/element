@@ -47,25 +47,28 @@ By default the data visualization palette is used. UX recommends only using colo
 from that palette. To modify the color palette use the respective input and provide the token names without the leading $:
 
 ```html
-<si-color-picker [colorPalette]="['element-data-1']"
+<si-color-picker
+  [colorPalette]="['si-sys-color-data-categorical-1']"
+  color="si-sys-color-data-categorical-1"
+/>
 ```
 
 To use custom colors that are not part of element you need to provide them as CSS variables for dark and light in the global style sheet:
 
-```scss
+```css
 :root {
-  --my-custom-color: #11g671;
+  --my-custom-color: #116671;
+}
 
-  &.app--dark: {
-    --my-custom-color: #da1611;
-  }
+:root.app--dark {
+  --my-custom-color: #da1611;
 }
 ```
 
-Then just provide the name in the color palette:
+Then provide the variable name without the leading `--` in the color palette:
 
 ```html
-<si-color-picker [colorPalette]="['my-custom-color']"
+<si-color-picker [colorPalette]="['my-custom-color']" color="my-custom-color" />
 ```
 
 ### Usage
