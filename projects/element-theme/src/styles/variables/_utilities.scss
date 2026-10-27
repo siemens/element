@@ -2,7 +2,7 @@
 
 @use '../bootstrap/variables';
 @use 'spacers';
-@use 'system-tokens';
+@use 'si-sys-variables';
 
 $_margins-inline: map.merge(
   spacers.$spacers-inline,
@@ -64,10 +64,10 @@ $utilities: (
       sm: variables.$box-shadow-sm,
       // Deprecated: Use shadow-3 instead.
       lg: variables.$box-shadow-lg,
-      1: system-tokens.$si-sys-color-effects-shadow-1,
-      2: system-tokens.$si-sys-color-effects-shadow-2,
-      3: system-tokens.$si-sys-color-effects-shadow-3,
-      4: system-tokens.$si-sys-color-effects-shadow-4,
+      1: si-sys-variables.$si-sys-color-effects-shadow-1,
+      2: si-sys-variables.$si-sys-color-effects-shadow-2,
+      3: si-sys-variables.$si-sys-color-effects-shadow-3,
+      4: si-sys-variables.$si-sys-color-effects-shadow-4,
       none: none
     )
   ),

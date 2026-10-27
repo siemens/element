@@ -1,11 +1,11 @@
-@use '../variables/system-tokens';
+@use '../variables/si-sys-variables';
 @use '../selectors';
 
 #{selectors.$document} {
   scrollbar-color: color-mix(
       in srgb,
-      system-tokens.$si-sys-color-border-2 60%,
-      system-tokens.$si-sys-color-background-1
+      si-sys-variables.$si-sys-color-border-2 60%,
+      si-sys-variables.$si-sys-color-background-1
     )
-    system-tokens.$si-sys-color-background-1;
+    si-sys-variables.$si-sys-color-background-1;
 }
