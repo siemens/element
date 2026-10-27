@@ -13,7 +13,10 @@
   (blur)="blur()"
   (click)="openOverlay()"
 >
-  <div class="inside-box" [style.background-color]="color() ? 'var(--' + color() + ')' : null"></div>
+  <div
+    class="inside-box"
+    [style.background-color]="color() ? 'var(--' + color() + ')' : null"
+  ></div>
 </button>
 
 <ng-template
