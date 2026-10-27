@@ -1,5 +1,5 @@
 @use '../variables';
-@use '../variables/system-tokens';
+@use '../variables/si-sys-variables';
 @use '../variables/spacers';
 @use '../variables/typography';
 @use '../variables/zindex';
@@ -133,8 +133,8 @@
 
   // duplicating hover styles from bootstrap. To split them from focus styles. Otherwise hover on focus elements will not work.
   &:hover {
-    color: system-tokens.$si-sys-color-text-primary;
-    background-color: system-tokens.$si-sys-color-background-hover;
+    color: si-sys-variables.$si-sys-color-text-primary;
+    background-color: si-sys-variables.$si-sys-color-background-hover;
     text-decoration: none;
   }
 
@@ -169,7 +169,7 @@
 // FIXME: drop when dropping si-menu-legacy
 .dropdown-item-static {
   &:is(.active, :active, :hover, :hover:focus:not(:focus-visible), :focus) {
-    background-color: system-tokens.$si-sys-color-background-1;
+    background-color: si-sys-variables.$si-sys-color-background-1;
   }
 }
 

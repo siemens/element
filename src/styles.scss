@@ -4,7 +4,7 @@
 @use '@siemens/element-ng/element-ng';
 @use '@siemens/element-theme/src/styles/variables/spacers';
 @use '@siemens/element-theme/src/styles/variables/semantic-tokens';
-@use '@siemens/element-theme/src/styles/variables/system-tokens';
+@use '@siemens/element-theme/src/styles/variables/si-sys-variables';
 @use '@siemens/element-theme/src/styles/variables/utilities';
 @use '@siemens/live-preview/styles/live-preview';
 
@@ -46,7 +46,7 @@ body {
 }
 
 .code-preview {
-  border: 1px solid system-tokens.$si-sys-color-border-4;
+  border: 1px solid si-sys-variables.$si-sys-color-border-4;
   border-radius: semantic-tokens.$element-radius-2;
   padding: map.get(spacers.$spacers-block, 4) map.get(spacers.$spacers-inline, 4);
 }

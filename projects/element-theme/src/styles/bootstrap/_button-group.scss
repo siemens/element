@@ -1,7 +1,7 @@
 @use '../variables/focus';
 @use '../variables/semantic-tokens';
 @use '../variables/spacers';
-@use '../variables/system-tokens';
+@use '../variables/si-sys-variables';
 @use '../variables/typography';
 @use './variables';
 
@@ -88,11 +88,11 @@
   .btn-check + .btn,
   label.btn:has(.btn-check) {
     --btn-border-width: 1px;
-    --btn-border-color: #{system-tokens.$si-sys-color-border-4};
-    --btn-border-color-hover: #{system-tokens.$si-sys-color-border-4};
+    --btn-border-color: #{si-sys-variables.$si-sys-color-border-4};
+    --btn-border-color-hover: #{si-sys-variables.$si-sys-color-border-4};
     cursor: pointer;
     background: transparent;
-    color: system-tokens.$si-sys-color-text-primary;
+    color: si-sys-variables.$si-sys-color-text-primary;
     transition: none;
 
     &.btn-icon {
@@ -115,20 +115,20 @@
 
   .btn-check + .btn:hover,
   label:has(.btn-check:not(:checked)):hover > * {
-    color: system-tokens.$si-sys-color-text-accent-hover;
+    color: si-sys-variables.$si-sys-color-text-accent-hover;
   }
 
   .btn-check:checked {
     + .btn {
-      background: system-tokens.$si-sys-color-background-accent-secondary-active;
-      border-color: system-tokens.$si-sys-color-border-accent-active;
-      color: system-tokens.$si-sys-color-text-accent-active;
+      background: si-sys-variables.$si-sys-color-background-accent-secondary-active;
+      border-color: si-sys-variables.$si-sys-color-border-accent-active;
+      color: si-sys-variables.$si-sys-color-text-accent-active;
       z-index: 2;
     }
 
     + .btn:hover,
     &:hover + .btn {
-      color: system-tokens.$si-sys-color-text-primary;
+      color: si-sys-variables.$si-sys-color-text-primary;
     }
   }
 

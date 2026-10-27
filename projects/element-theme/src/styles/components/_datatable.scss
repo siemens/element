@@ -3,7 +3,7 @@
 @use '../variables/animations';
 @use '../variables/focus';
 @use '../variables/semantic-tokens';
-@use '../variables/system-tokens';
+@use '../variables/si-sys-variables';
 @use '../variables/spacers';
 @use '../variables/typography';
 @use '../variables/utilities';
@@ -12,10 +12,10 @@
 
 $datatable-header-border-color: variables.$table-border-color !default;
 $datatable-header-background-color: variables.$table-bg !default;
-$datatable-header-color: system-tokens.$si-sys-color-text-primary !default;
+$datatable-header-color: si-sys-variables.$si-sys-color-text-primary !default;
 $datatable-footer-background-color: transparent !default;
 
-$datatable-summary-background-color: system-tokens.$si-sys-color-background-2 !default;
+$datatable-summary-background-color: si-sys-variables.$si-sys-color-background-2 !default;
 $datatable-striped-background-color: variables.$table-striped-bg !default;
 
 $datatable-header-height: 40px !default;
@@ -24,12 +24,12 @@ $datatable-body-row-min-height: 48px !default;
 
 $datatable-ghost-cell-container-background: variables.$table-bg !default;
 
-$datatable-ghost-cell-strip-background: system-tokens.$si-sys-color-background-hover !default;
+$datatable-ghost-cell-strip-background: si-sys-variables.$si-sys-color-background-hover !default;
 $datatable-ghost-cell-strip-background-image: linear-gradient(
   90deg,
-  system-tokens.$si-sys-color-background-hover 0%,
-  system-tokens.$si-sys-color-background-active 25%,
-  system-tokens.$si-sys-color-background-hover 50%
+  si-sys-variables.$si-sys-color-background-hover 0%,
+  si-sys-variables.$si-sys-color-background-active 25%,
+  si-sys-variables.$si-sys-color-background-hover 50%
 ) !default;
 $datatable-ghost-cell-strip-radius: 0 !default;
 
@@ -121,7 +121,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     .datatable-row-left {
       .datatable-body-cell:last-child,
       .datatable-header-cell:last-child {
-        box-shadow: system-tokens.$si-sys-color-effects-shadow-3;
+        box-shadow: si-sys-variables.$si-sys-color-effects-shadow-3;
         clip-path: inset(0 -8px 0 0);
       }
     }
@@ -129,7 +129,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     .datatable-row-right {
       .datatable-body-cell:first-child,
       .datatable-header-cell:first-child {
-        box-shadow: system-tokens.$si-sys-color-effects-shadow-3;
+        box-shadow: si-sys-variables.$si-sys-color-effects-shadow-3;
         clip-path: inset(0 0 0 -8px);
       }
     }
@@ -245,7 +245,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
         inset-inline: 0;
         margin-inline: auto;
         inline-size: map.get(spacers.$spacers-inline, 1);
-        background-color: system-tokens.$si-sys-color-border-4;
+        background-color: si-sys-variables.$si-sys-color-border-4;
       }
     }
 
@@ -343,7 +343,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     align-items: flex-end;
     align-content: flex-end;
     background-color: $datatable-footer-background-color;
-    color: system-tokens.$si-sys-color-text-secondary;
+    color: si-sys-variables.$si-sys-color-text-secondary;
     font-size: typography.$si-font-size-body-sm;
     margin-block-start: -1px;
     position: relative;
@@ -362,7 +362,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
         inset-inline-start: 0;
         inline-size: 100%;
         block-size: 1px;
-        background-color: system-tokens.$si-sys-color-background-0;
+        background-color: si-sys-variables.$si-sys-color-background-0;
       }
     }
   }
