@@ -1,3 +1,20 @@
+# [51.6.0](https://github.com/siemens/element/compare/v51.5.0...v51.6.0) (2026-10-27)
+
+
+### Features
+
+* **dashboards:** support custom header in flexible dashboard ([c1d011c](https://github.com/siemens/element/commit/c1d011ca141335b9a2df207dc41c94b71da2ea91))
+* **dashboard:** support custom header via content projection ([92bac1d](https://github.com/siemens/element/commit/92bac1de05c890d922a1def963ffa4c472f5f0e9))
+
+
+### Bug Fixes
+
+* **application-header:** allow to customize account item title and tooltip ([9501f12](https://github.com/siemens/element/commit/9501f1239b57bf988e3981c7ae16980740abfb8f))
+* **application-header:** reveal truncated launchpad labels on focus ([db82611](https://github.com/siemens/element/commit/db82611b972cc216533418b14eb1cbaf0f29e3ba)), closes [#2999](https://github.com/siemens/element/issues/2999)
+* **datepicker:** ensure datepicker is WCAG 2.5.3 compliant ([bc92c32](https://github.com/siemens/element/commit/bc92c32d4567549712a77a1a1fd3874c49ddfbf9)), closes [#3014](https://github.com/siemens/element/issues/3014)
+* **filtered-search:** reposition dropdown after pasting criteria ([b9e209f](https://github.com/siemens/element/commit/b9e209fb508444b7e0509e0508287a299b8785a4))
+* **notification-item:** ensure notification-item is WCAG 2.5.3 compliant ([a58c23f](https://github.com/siemens/element/commit/a58c23f9acd51a8c71bd2031e2c16babd6729d01)), closes [#3014](https://github.com/siemens/element/issues/3014)
+
 # [51.5.0](https://github.com/siemens/element/compare/v51.4.0...v51.5.0) (2026-10-23)
 
 
