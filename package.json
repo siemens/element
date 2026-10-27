@@ -27,6 +27,7 @@
     "start": "ng serve",
     "start:prod": "http-server dist/element-examples -s -p 4200 -a 127.0.0.1",
     "format": "prettier --log-level warn --write .",
+    "sync:tokens": "cpy --flat node_modules/@siemens-ux/design-tokens/dist/scss/si-sys-variables.scss projects/element-theme/src/styles/variables",
     "lint:format": "prettier --check .",
     "lint:commit": "commitlint --from=origin/main",
     "lint:scss": "stylelint **.scss",
