@@ -10,6 +10,7 @@ import {
   ViewType
 } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
+import { SiTooltipOverflowDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 /**
@@ -20,7 +21,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
  */
 @Component({
   selector: 'si-card-header',
-  imports: [SiContentActionBarComponent, SiTranslatePipe],
+  imports: [SiContentActionBarComponent, SiTranslatePipe, SiTooltipOverflowDirective],
   templateUrl: './si-card-header.component.html',
   styleUrl: './si-card-header.component.scss',
   host: {
