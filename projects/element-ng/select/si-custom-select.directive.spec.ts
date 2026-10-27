@@ -21,7 +21,7 @@ import { SiSelectDropdownDirective } from './si-select-dropdown.directive';
       {{ select.value() ?? 'Pick...' }}
     </si-select-combobox>
 
-    <ng-template si-select-dropdown contentType="listbox">
+    <ng-template si-select-dropdown contentType="listbox" closeOnTab>
       @for (opt of options(); track opt) {
         <button type="button" class="dropdown-item" (click)="pick(opt)">{{ opt }}</button>
       }
@@ -209,6 +209,46 @@ describe('SiCustomSelectDirective', () => {
 
       expect(getOverlayDropdown()).not.toBeInTheDocument();
       expect(getHost()).toHaveFocus();
+    });
+
+    it('should close dropdown on Tab when configured', async () => {
+      getHost().click();
+      await fixture.whenStable();
+
+      const overlayPane = overlayContainerElement.querySelector('.cdk-overlay-pane')!;
+      overlayPane.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+      await fixture.whenStable();
+
+      expect(getOverlayDropdown()).not.toBeInTheDocument();
+      expect(getHost()).toHaveFocus();
+    });
+
+    it('should keep dropdown open on Tab when it contains action controls', async () => {
+      @Component({
+        imports: [SiSelectDropdownDirective],
+        template: `
+          <ng-template si-select-dropdown contentType="dialog">
+            <button type="button">Cancel</button>
+            <button type="button">Apply</button>
+          </ng-template>
+        `,
+        hostDirectives: [SiCustomSelectDirective]
+      })
+      class ActionSelectComponent {}
+
+      const actionFixture = TestBed.createComponent(ActionSelectComponent);
+      await actionFixture.whenStable();
+
+      actionFixture.nativeElement.click();
+      await actionFixture.whenStable();
+
+      const cancel = overlayContainerElement.querySelector<HTMLButtonElement>('button')!;
+      cancel.focus();
+      cancel.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+      await actionFixture.whenStable();
+
+      expect(getOverlayDropdown()).toBeInTheDocument();
+      expect(actionFixture.nativeElement).toHaveAttribute('aria-expanded', 'true');
     });
 
     it('should not open when disabled', async () => {
