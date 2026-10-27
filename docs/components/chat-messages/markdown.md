@@ -319,7 +319,7 @@ protected readonly markdownOptions = makeSiMarkdownOptions().installExtension(si
 
 ### Example
 
-<si-docs-component example="si-markdown/si-markdown" height="700"></si-docs-component>
+[[ example("si-markdown/si-markdown", height=700) ]]
 
 <si-docs-api component="SiMarkdownComponent"></si-docs-api>
 

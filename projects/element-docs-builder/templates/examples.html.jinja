@@ -1,0 +1,15 @@
+{% macro example(path, height=204, title='Interactive component example') -%}
+{%- set examples_url = examples_base -%}
+{%- if '://' not in examples_url -%}
+  {%- set examples_url = '../' * page.url.count('/') ~ examples_url.lstrip('/') -%}
+{%- endif -%}
+<iframe
+  class="component-preview"
+  data-src="[[ (examples_url ~ '#/viewer/editor?' ~ {'base': '', 'e': path} | urlencode) | e ]]"
+  height="[[ height + 411 ]]px"
+  width="100%"
+  style="opacity: 0;"
+  allowfullscreen="true"
+  title="[[ title | e ]]"
+></iframe>
+{%- endmacro %}
