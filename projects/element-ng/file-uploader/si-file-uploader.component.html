@@ -24,44 +24,41 @@
 
 <div class="file-list">
   @for (file of files(); track file) {
-    <div class="file" [class.fade-out]="file.fadeOut">
-      <si-icon class="icon align-self-center ms-6 me-4" icon="element-document" />
-      <div class="flex-fill overflow-hidden mt-6">
-        <div class="file-info">
-          <div class="file-name text-truncate si-h5">{{ file.fileName }}</div>
-          <div class="file-size text-secondary">{{ file.size }}</div>
-          @if (file.errorText) {
-            <div
-              class="d-inline-flex gap-2 error text-truncate"
-              [class.text-warning]="file.status === 'invalid'"
-              [class.text-danger]="file.status === 'error'"
-            >
-              <si-status-icon
-                class="icon-sm"
-                [status]="file.status === 'invalid' ? 'warning' : 'danger'"
-              />
-              {{ file.errorText | translate: file.errorParams }}
-              @if (file.httpErrorText) {
-                : {{ file.httpErrorText }}
-              }
-            </div>
-          } @else {
-            <div class="position-relative mt-1 mb-5">
-              <div class="position-absolute end-0 progress-value">{{ file.progress }} %</div>
-              <si-progressbar
-                height="small"
-                [value]="file.progress"
-                [ariaLabel]="uploadingText() | translate"
-              />
-            </div>
-          }
+    <div class="file" [class.opacity-0]="file.fadeOut">
+      <si-icon class="file-icon icon-lg" icon="element-document" />
+      <div class="file-name text-truncate si-body-sbold">{{ file.fileName }}</div>
+      <div class="file-size text-secondary">{{ file.size }}</div>
+      @if (file.errorText) {
+        <div
+          class="d-flex align-items-center align-self-start gap-2 error"
+          [class.text-warning]="file.status === 'invalid'"
+          [class.text-danger]="file.status === 'error'"
+        >
+          <si-status-icon
+            class="icon-sm flex-shrink-0"
+            [status]="file.status === 'invalid' ? 'warning' : 'danger'"
+          />
+          <span class="text-truncate">
+            {{ file.errorText | translate: file.errorParams }}
+            @if (file.httpErrorText) {
+              : {{ file.httpErrorText }}
+            }
+          </span>
         </div>
-      </div>
-      <div class="status align-self-center text-nowrap ps-4 pe-6">
+      } @else {
+        <div class="progress-value si-body-sm text-nowrap"> {{ file.progress }} % </div>
+        <si-progressbar
+          class="align-self-start mt-1"
+          height="small"
+          [value]="file.progress"
+          [ariaLabel]="uploadingText() | translate"
+        />
+      }
+      <div class="status d-flex gap-2">
         @if (file.status === 'error') {
           <button
             type="button"
-            class="btn btn-circle btn-tertiary me-4"
+            class="btn btn-circle btn-tertiary"
             [disabled]="!uploadEnabled()"
             [title]="uploadButtonText() | translate"
             [attr.aria-label]="uploadButtonText() | translate"

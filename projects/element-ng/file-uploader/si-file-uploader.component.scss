@@ -2,11 +2,16 @@
 
 @use '@siemens/element-theme/src/styles/variables';
 
+@mixin area($selector, $name) {
+  #{$selector} {
+    grid-area: $name;
+  }
+}
+
 :host {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: stretch;
 
   > * {
     min-inline-size: 320px;
@@ -17,29 +22,32 @@
 }
 
 .file-list {
-  overflow-y: auto;
-}
-
-.file-info {
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  gap: map.get(variables.$spacers-block, 4);
+  padding-inline: map.get(variables.$spacers-inline, 6);
+  overflow-y: auto;
+
+  &:not(:empty) {
+    margin-block-end: map.get(variables.$spacers-block, 4);
+  }
 }
 
-.progress-value {
-  inset-block-start: -1lh;
-}
+@include area('.file-icon', icon);
+@include area('.file-name', name);
+@include area('.file-size', size);
+@include area('.progress-value', value);
+@include area('.error, si-progressbar', feedback);
+@include area('.status', status);
 
 .file {
-  display: flex;
-  position: relative;
-  margin-block-end: map.get(variables.$spacers-block, 4);
-  min-block-size: calc(
-    map.get(variables.$spacers-block, 4) + map.get(variables.$spacers-block, 13)
-  );
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  // Reserve the bottom spacer for feedback, but keep room for one line in every upload state.
+  grid-template-rows: 1lh 1lh max(1lh, map.get(variables.$spacers-block, 6));
+  grid-template-areas: 'icon name name status' 'icon size value status' '. feedback feedback .';
+  align-items: center;
+  column-gap: map.get(variables.$spacers-inline, 4);
+  padding-block-start: map.get(variables.$spacers-block, 6);
   transition: opacity variables.$element-default-transition-duration;
-}
-
-.fade-out {
-  opacity: 0;
 }
