@@ -69,16 +69,15 @@ export class SampleComponent {
         addText: 'Add', // Text is translated. If not set a '+' as is used as caption
         removeText: 'Remove' // Text is translated. If not set a '-' as is used as caption
       },
-      expressionProperties: {
-        'props.readonly': (model: any, formState: any, field?: FormlyFieldConfig) => {
-          formState.readonly = field!.parent?.model?.readonly; // hack to reach the array fields...
+      expressions: {
+        'props.readonly': field => {
+          const formState = field.options?.formState;
+          formState.readonly = field.parent?.model?.readonly; // hack to reach the array fields...
           // In a real world example use formState and not this hack!
           return formState.readonly;
         },
-        'props.noAdd': (model: any, formState: any, field?: FormlyFieldConfig) =>
-          field!.parent?.model?.noAdd,
-        'props.noRemove': (model: any, formState: any, field?: FormlyFieldConfig) =>
-          field!.parent?.model?.noRemove
+        'props.noAdd': field => field.parent?.model?.noAdd,
+        'props.noRemove': field => field.parent?.model?.noRemove
       },
       fieldArray: {
         fieldGroup: [
@@ -88,7 +87,7 @@ export class SampleComponent {
             props: {
               label: 'Firstname'
             },
-            expressionProperties: {
+            expressions: {
               'props.readonly': 'formState.readonly'
             }
           },
@@ -98,7 +97,7 @@ export class SampleComponent {
             props: {
               label: 'Lastname'
             },
-            expressionProperties: {
+            expressions: {
               'props.readonly': 'formState.readonly'
             }
           },
