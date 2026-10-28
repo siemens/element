@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import { Component, signal, SimpleChange, viewChild } from '@angular/core';
+import { Component, inputBinding, signal, SimpleChange, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 
@@ -12,6 +12,51 @@ import { SiSidePanelComponent } from './si-side-panel.component';
 import { SiSidePanelModule } from './si-side-panel.module';
 import { SiSidePanelService } from './si-side-panel.service';
 import { SidePanelMode } from './side-panel.model';
+
+describe('SiSidePanelComponent fullscreen transitions', () => {
+  afterEach(() => vi.useRealTimers());
+
+  it('should retain fullscreen when the opening transition finishes', async () => {
+    const fixture = TestBed.createComponent(SiSidePanelComponent);
+    const service = TestBed.inject(SiSidePanelService);
+    await fixture.whenStable();
+    vi.useFakeTimers();
+
+    service.open();
+    await vi.advanceTimersByTimeAsync(0);
+    service.setFullscreen(true);
+    await vi.advanceTimersByTimeAsync(500);
+    vi.setTimerTickMode('nextTimerAsync');
+    await fixture.whenStable();
+
+    expect(fixture.nativeElement).toHaveClass('rpanel-fullscreen-overlay');
+  });
+
+  it.each([false, true])(
+    'should exit fullscreen after closing with collapsible=%s',
+    async collapsible => {
+      const fixture = TestBed.createComponent(SiSidePanelComponent, {
+        bindings: [inputBinding('collapsible', () => collapsible)]
+      });
+      const service = TestBed.inject(SiSidePanelService);
+      await fixture.whenStable();
+      vi.useFakeTimers();
+      service.open();
+      await vi.advanceTimersByTimeAsync(500);
+      service.setFullscreen(true);
+      await vi.advanceTimersByTimeAsync(0);
+      expect(fixture.nativeElement).toHaveClass('rpanel-fullscreen-overlay');
+
+      service.close();
+      await vi.advanceTimersByTimeAsync(500);
+      vi.setTimerTickMode('nextTimerAsync');
+      await fixture.whenStable();
+
+      expect(fixture.nativeElement).toHaveClass('rpanel-collapsed');
+      expect(fixture.nativeElement).not.toHaveClass('rpanel-fullscreen-overlay');
+    }
+  );
+});
 
 @Component({
   imports: [SiSidePanelModule, PortalModule],

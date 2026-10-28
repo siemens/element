@@ -230,9 +230,12 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
         .subscribe(() => {
           this.openingOrClosing = false;
           this.emitResizeOutputs();
-          this.service.setFullscreen(false);
-          if (this.isCollapsedInternal && !this.collapsible()) {
-            this.isHidden.set(true);
+          // Fullscreen may have been requested while the panel was opening.
+          if (this.isCollapsedInternal) {
+            this.service.setFullscreen(false);
+            if (!this.collapsible()) {
+              this.isHidden.set(true);
+            }
           }
         });
     }
