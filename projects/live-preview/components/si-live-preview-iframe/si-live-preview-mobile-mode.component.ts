@@ -16,9 +16,11 @@ import {
   viewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { SI_LIVE_PREVIEW_CONFIG } from '../../interfaces/live-preview-config';
 import { LivePreviewStateService } from '../../services/live-preview-state.service';
+import { LivePreviewUrlService } from '../../services/live-preview-url.service';
 import { SiLivePreviewQrComponent } from '../si-live-preview-qr/si-live-preview-qr.component';
 import { availableDevices, Device } from './devices';
 
@@ -31,6 +33,10 @@ import { availableDevices, Device } from './devices';
 export class SiLivePreviewMobileModeComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly previewIframe = viewChild.required<ElementRef>('previewIframe');
   private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  private readonly urls = inject(LivePreviewUrlService);
+  protected readonly previewUrl = inject(DomSanitizer).bypassSecurityTrustResourceUrl(
+    this.urls.iframeUrl
+  );
   protected readonly state = inject(LivePreviewStateService);
 
   readonly iframeChange = output<ElementRef | undefined>();
@@ -93,8 +99,10 @@ export class SiLivePreviewMobileModeComponent implements OnInit, AfterViewInit, 
   }
 
   protected openQrMenu(): void {
-    this.plainUrl.set(this.createTemplateLink(false));
-    this.plainUrlShort.set(this.createTemplateLink(true));
+    this.plainUrl.set(this.urls.viewerUrl('plain', { deviceMode: this.mode() }));
+    this.plainUrlShort.set(
+      this.urls.viewerUrl('plain', { deviceMode: this.mode(), skipTemplate: true })
+    );
     this.showQrMenu.set(true);
   }
 
@@ -108,36 +116,5 @@ export class SiLivePreviewMobileModeComponent implements OnInit, AfterViewInit, 
       safeAreaLeft: safeArea?.left,
       safeAreaRight: safeArea?.right
     });
-  }
-
-  private createTemplateLink(skipTemplate: boolean): string {
-    let url = `${window.location.protocol}//${window.location.host}`;
-    url += window.location.pathname;
-    url += '#/viewer/plain?';
-    url += 'theme=' + this.state.theme();
-    url += '&mode=' + this.mode();
-    if (this.state.isRTL()) {
-      url += '&isRTL=true';
-    }
-    const locale = this.state.locale();
-    if (locale) {
-      url += '&locale=' + locale;
-    }
-    if (this.state.rootFontSize()) {
-      url += '&rfs=' + this.state.rootFontSize();
-    }
-    if (this.state.templateModified() && !skipTemplate) {
-      url += '&t=' + this.encode(this.state.template());
-    }
-    const exampleUrl = this.state.example();
-    if (exampleUrl) {
-      url += '&e=' + this.encode(exampleUrl);
-    }
-    return url;
-  }
-
-  private encode(value: string): string {
-    // Using `+` for spaces produces shorter QR code URLs than `%20`.
-    return encodeURIComponent(value).replace(/%20/g, '+');
   }
 }

@@ -2,11 +2,22 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { AfterViewInit, Component, ElementRef, OnDestroy, output, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  OnDestroy,
+  output,
+  viewChild
+} from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+
+import { LivePreviewUrlService } from '../../services/live-preview-url.service';
 
 @Component({
   selector: 'si-live-preview-iframe-mode',
-  template: `<iframe #previewIframe src="#/iframe" title="Example view"></iframe>`,
+  template: `<iframe #previewIframe title="Example view" [src]="previewUrl"></iframe>`,
   styles: `
     :host {
       display: block;
@@ -23,6 +34,9 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, output, viewChild } fr
   `
 })
 export class SiLivePreviewIframeModeComponent implements AfterViewInit, OnDestroy {
+  protected readonly previewUrl = inject(DomSanitizer).bypassSecurityTrustResourceUrl(
+    inject(LivePreviewUrlService).iframeUrl
+  );
   private readonly previewIframe = viewChild.required<ElementRef>('previewIframe');
 
   readonly iframeChange = output<ElementRef | undefined>();

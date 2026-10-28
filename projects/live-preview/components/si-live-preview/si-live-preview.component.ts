@@ -33,6 +33,7 @@ import {
   LivePreviewFramework,
   LivePreviewStateService
 } from '../../services/live-preview-state.service';
+import { LivePreviewUrlService } from '../../services/live-preview-url.service';
 import { SiLivePreviewIframeComponent } from '../si-live-preview-iframe/si-live-preview-iframe.component';
 import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.component';
 
@@ -54,6 +55,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private readonly self = inject(ElementRef);
   private readonly http = inject(HttpClient);
+  private readonly urls = inject(LivePreviewUrlService);
   protected readonly localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
   protected readonly state = inject(LivePreviewStateService);
 
@@ -62,7 +64,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   protected readonly reactVueElem = viewChild.required<ElementRef>('codeReactVue');
   protected readonly consoleElem = viewChild.required<ElementRef>('consoleContainer');
 
-  protected readonly baseUrl = this.config.examplesBaseUrl;
+  protected readonly baseUrl = this.urls.examplesBaseUrl;
 
   protected readonly isFullscreen = signal(false);
   protected readonly isMobile = this.internalConfig.isMobile;
@@ -89,7 +91,6 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
 
   private compileSubject = new Subject<string>();
 
-  private templateModified = false;
   private skipInitialLoad = false;
   private flaskTemplate: any;
   private flaskTypescript: any;
@@ -131,7 +132,6 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
             this.state.templateVue() ||
             this.state.templateJs()
           );
-        this.templateModified = !!this.state.template();
         this.loadFromUrl(this.skipInitialLoad);
         if (this.webcomponents) {
           this.reactLoaded = false;
@@ -190,9 +190,6 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
     });
 
     this.flaskTemplate.onUpdate((code: string) => {
-      if (code !== this.state.template()) {
-        this.templateModified = true;
-      }
       this.compileSubject.next(code);
     });
 
@@ -262,7 +259,6 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   }
 
   private updateTemplate(template: string): void {
-    this.templateModified = false;
     this.state.template.set(template);
     if (this.flaskTemplate) {
       this.flaskTemplate.updateCode(this.state.template());
@@ -321,10 +317,11 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
     }
     this.handleInProgressEvent(true);
     this.http
-      .get(this.baseUrl + example + '.html', { responseType: 'text' })
+      .get(this.urls.sourceUrl(example + '.html'), { responseType: 'text' })
       .pipe(timeout(3000), retry(1))
       .subscribe({
         next: data => {
+          this.state.originalTemplate.set(data);
           this.updateTemplate(data);
           setTimeout(() => {
             this.handleInProgressEvent(false);
@@ -343,7 +340,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
     }
     this.handleInProgressEvent(true);
     this.http
-      .get(this.baseUrl + example + '.ts', { responseType: 'text' })
+      .get(this.urls.sourceUrl(example + '.ts'), { responseType: 'text' })
       .pipe(timeout(3000), retry(1))
       .subscribe({
         next: data => {
@@ -361,7 +358,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   }
 
   checkWebComponentsAvailable(): void {
-    const baseUrl = this.baseUrl;
+    const baseUrl = this.config.examplesBaseUrl;
     const example = this.state.example() ?? '';
     if (this.webcomponentsList.includes(baseUrl + example + '-react')) {
       this.frameworks.set('React', 'react');
@@ -419,10 +416,9 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
       }
     }
     this.handleInProgressEvent(true);
-    const baseUrl = this.baseUrl;
     const example = this.state.example() ?? '';
     this.http
-      .get(`${baseUrl}${example}-${framework}.${fileType}`, { responseType: 'text' })
+      .get(this.urls.sourceUrl(`${example}-${framework}.${fileType}`), { responseType: 'text' })
       .subscribe({
         next: (res: any) => {
           if (framework === 'react') {
@@ -582,44 +578,11 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   }
 
   createLink(): void {
-    const url = this.createTemplateLink('editor');
-    this.clipboardCopy(url);
+    this.clipboardCopy(this.urls.viewerUrl('editor'));
   }
 
   openTab(): void {
-    const url = this.createTemplateLink('viewer');
-    window.open(url, '_blank');
-  }
-
-  private createTemplateLink(mode: string): string {
-    const locale = this.state.locale();
-    let url = `${window.location.protocol}//${window.location.host}`;
-    url += window.location.pathname;
-    url += `#/viewer/${mode}?`;
-    url += 'theme=' + this.state.theme();
-    if (this.state.isRTL()) {
-      url += '&isRTL=true';
-    }
-    if (locale) {
-      url += '&locale=' + locale;
-    }
-    if (this.state.rootFontSize()) {
-      url += '&rfs=' + this.state.rootFontSize();
-    }
-    if (this.activeTab() === 'react') {
-      url += '&t=' + encodeURIComponent(this.state.templateReact()) + '&framework=react';
-    } else if (this.activeTab() === 'vue') {
-      url += '&t=' + encodeURIComponent(this.state.templateVue()) + '&framework=vue';
-    } else if (this.activeTab() === 'js') {
-      url += '&t=' + encodeURIComponent(this.state.templateJs()) + '&framework=js';
-    } else if (this.templateModified) {
-      url += '&t=' + encodeURIComponent(this.state.template());
-    }
-    const example = this.state.example();
-    if (example) {
-      url += '&e=' + encodeURIComponent(example);
-    }
-    return url;
+    window.open(this.urls.viewerUrl('viewer'), '_blank');
   }
 
   protected onFullscreenChange(): void {

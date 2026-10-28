@@ -20,11 +20,9 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent } from 'rxjs';
 
-import {
-  SI_LIVE_PREVIEW_CONFIG,
-  SI_LIVE_PREVIEW_INTERNALS
-} from '../../interfaces/live-preview-config';
+import { SI_LIVE_PREVIEW_INTERNALS } from '../../interfaces/live-preview-config';
 import { LivePreviewStateService } from '../../services/live-preview-state.service';
+import { LivePreviewUrlService } from '../../services/live-preview-url.service';
 import { SiLivePreviewIframeModeComponent } from './si-live-preview-iframe-mode.component';
 import { SiLivePreviewMobileModeComponent } from './si-live-preview-mobile-mode.component';
 
@@ -50,20 +48,14 @@ export class SiLivePreviewIframeComponent implements OnInit {
   readonly previewIframe = this.previewIframeRef.asReadonly();
 
   private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
-  private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
+  private readonly urls = inject(LivePreviewUrlService);
   private readonly ngZone = inject(NgZone);
   private readonly destroyRef = inject(DestroyRef);
   private readonly cdRef = inject(ChangeDetectorRef);
 
   protected readonly isMobile = this.internalConfig.isMobile;
-  protected readonly ticketLinkBug = computed(
-    () =>
-      `${this.config.ticketBaseUrl}?issue%5Btitle%5D=%3C${this.state.example()}%3E:&issuable_template=Bug`
-  );
-  protected readonly ticketLinkFeature = computed(
-    () =>
-      `${this.config.ticketBaseUrl}?issue%5Btitle%5D=%3C${this.state.example()}%3E:&issuable_template=Feature Request`
-  );
+  protected readonly ticketLinkBug = computed(() => this.urls.issueUrl('Bug'));
+  protected readonly ticketLinkFeature = computed(() => this.urls.issueUrl('Feature Request'));
 
   constructor() {
     effect(() => {
