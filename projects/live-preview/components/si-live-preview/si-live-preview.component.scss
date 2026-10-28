@@ -172,8 +172,13 @@ $font-size-small: 11px;
       font-family: variables.$font-family-monospace;
     }
 
-    .btn-clear:hover {
-      color: variables.$live-preview-alert-color;
+    .btn-clear.on-danger {
+      &,
+      &:hover,
+      &:focus,
+      &:active {
+        color: variables.$live-preview-alert-color;
+      }
     }
   }
 }

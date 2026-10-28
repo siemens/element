@@ -400,6 +400,7 @@
             class="btn-command btn-clear"
             title="Clear log"
             aria-label="Clear log"
+            [class.on-danger]="state.renderingError()"
             (click)="logClear()"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
