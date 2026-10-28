@@ -6,6 +6,9 @@
 export * from './live-preview-routes';
 export { provideLivePreview, type SiLivePreviewProviderConfig } from './live-preview.provider';
 
+// Internal component shared with the optional elements entry point.
+export { SiDocsComponentComponent as ɵSiDocsComponentComponent } from './components/si-docs-component/si-docs-component.component';
+
 export * from './components/si-dummy.component';
 export * from './components/si-live-preview-renderer/si-live-preview-runtime.component';
 export * from './components/si-live-preview-renderer/si-live-preview-application-runtime.component';
