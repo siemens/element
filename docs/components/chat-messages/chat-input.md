@@ -152,6 +152,39 @@ final results are pending. `continuous` controls whether the provider continues 
 utterance. `silenceTimeout` stops after silence, including a session with no speech; zero
 disables the timer. `lang` supplies a BCP 47 language tag.
 
+### Browser voice input
+
+<si-docs-component example="si-chat-messages/si-chat-voice-input-browser"></si-docs-component>
+
+This interactive example uses the browser's Web Speech API for real dictation and the Web Audio
+API for measured microphone levels. It has no speech SDK, API key, or application backend.
+The integration belongs to the example, not the Element library. Applications can use their
+own speech recognition provider with the same component inputs and outputs.
+
+Microphone access requires HTTPS or localhost and browser permission. The example discloses that
+the browser may send audio to its speech recognition service. Do not dictate sensitive information.
+Recognition availability depends on the browser, language, network, and browser policies;
+feature detection alone does not guarantee that its service is available. If the required APIs
+are missing, the example keeps normal text input available without voice controls.
+
+The example uses the browser language and requests interim results for one utterance at a time.
+Recognition can end automatically after a pause; the exact stopping behavior is browser-dependent.
+Confirm enters the finishing state and requests final results before unlocking the draft.
+The waveform freezes, Confirm is disabled, and Cancel remains available. Late speech and transcript
+events do not return the input to recording. Cancel restores the previous draft immediately.
+Neither operation sends the message. Recognition errors retain visible text with an accessible
+warning that it may be incomplete. Permission denial before any results leaves the original draft
+unchanged. If confirmation times out, the current text is retained for review.
+
+The example follows the basic dictation flow: live text stays in the composer, with dictation
+actions on the right. It does not switch to a separate voice-only prompt layout.
+
+Speech recognition does not expose audio levels. The example separately acquires a microphone
+stream and measures its amplitude with an `AnalyserNode`, without playing or storing the audio.
+It releases that stream and its audio context on confirmation, cancellation, completion, errors,
+and destruction, and stops streams returned after a cancelled permission request.
+The simulated example above remains available without microphone access or a recognition service.
+
 #### Audio waveform
 
 Import `SiVoiceWaveformComponent` from `@siemens/element-ng/chat-messages` and place it

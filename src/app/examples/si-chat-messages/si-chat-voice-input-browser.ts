@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) Siemens 2016 - 2026
+ * SPDX-License-Identifier: MIT
+ */
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { ChatInputAttachment, SiChatInputComponent } from '@siemens/element-ng/chat-messages';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -53,9 +57,8 @@ export class SampleComponent {
     typeof navigator.mediaDevices?.getUserMedia === 'function' &&
     typeof window.AudioContext === 'function'
   );
-  readonly consent = signal(false);
   readonly value = signal('');
-  readonly voiceInputState = signal<'idle' | 'listening' | 'recording'>('idle');
+  readonly voiceInputState = signal<'idle' | 'listening' | 'recording' | 'finishing'>('idle');
   readonly voiceInputLevel = signal(0);
   readonly starting = signal(false);
   readonly error = signal<string | undefined>(undefined);
@@ -65,7 +68,7 @@ export class SampleComponent {
   }
 
   async startDictation(): Promise<void> {
-    if (!this.recognitionType || !this.supported || !this.consent() || this.session) {
+    if (!this.recognitionType || !this.supported || this.session) {
       return;
     }
     this.voiceInputState.set('listening');
@@ -86,13 +89,15 @@ export class SampleComponent {
         if (this.session === current) this.starting.set(false);
       };
       recognition.onspeechstart = () => {
-        if (this.session === current) this.voiceInputState.set('recording');
+        if (this.session === current && !current.finishing) {
+          this.voiceInputState.set('recording');
+        }
       };
       recognition.onresult = event => {
         if (this.session !== current) return;
         const transcript = Array.from(event.results, result => result[0].transcript).join('');
         this.value.set(current.draft ? `${current.draft} ${transcript}` : transcript);
-        this.voiceInputState.set('recording');
+        if (!current.finishing) this.voiceInputState.set('recording');
       };
       recognition.onerror = event => {
         if (this.session !== current) return;
@@ -101,7 +106,7 @@ export class SampleComponent {
             ? 'Microphone or speech recognition access was denied.'
             : event.error === 'no-speech'
               ? 'No speech was detected. Please try again.'
-              : 'Speech recognition failed. Check your connection and try again.'
+              : 'Speech recognition stopped unexpectedly. Check your connection and try again.'
         );
       };
       recognition.onend = () => {
@@ -146,6 +151,7 @@ export class SampleComponent {
     const session = this.session;
     if (!session || session.finishing) return;
     session.finishing = true;
+    this.voiceInputState.set('finishing');
     this.stopAudio(session);
     session.finishTimer = setTimeout(() => {
       if (this.session !== session) return;
@@ -172,9 +178,11 @@ export class SampleComponent {
   }
 
   private failDictation(message: string): void {
-    if (this.session) this.value.set(this.session.draft);
+    const hasTranscript = this.session && this.value() !== this.session.draft;
     this.releaseSession();
-    this.error.set(message);
+    this.error.set(
+      hasTranscript ? `${message} Your text was kept and may be incomplete.` : message
+    );
   }
 
   private stopAudio(session: DictationSession): void {
