@@ -1,0 +1,33 @@
+<div class="p-2">
+  <si-chat-input
+    placeholder="Enter a command, question or topic..."
+    disclaimer="The content is AI generated. Always verify the information for accuracy."
+    [voiceInput]="supported"
+    [voiceInputState]="voiceInputState()"
+    [voiceInputLevel]="voiceInputLevel()"
+    [listeningLabel]="starting() ? 'Starting voice input...' : 'Listening...'"
+    [allowAttachments]="true"
+    [(value)]="value"
+    (voiceInputStart)="startDictation()"
+    (voiceInputConfirm)="confirmDictation()"
+    (voiceInputCancel)="cancelDictation()"
+    (send)="sendMessage($event)"
+  />
+  @if (voiceInputState() === 'finishing') {
+    <p class="text-secondary mt-4 mb-0">Finishing dictation...</p>
+  }
+  @if (error()) {
+    <p class="text-danger mt-4 mb-0" role="alert">{{ error() }}</p>
+  }
+  @if (supported) {
+    <p class="text-secondary mt-6 mb-0">
+      Your browser may send audio to its speech recognition service. Do not dictate sensitive
+      information.
+    </p>
+  } @else {
+    <p class="text-secondary mt-4 mb-0" role="status">
+      Voice input is unavailable in this browser or context. Use a supported browser over HTTPS or
+      localhost. You can still type a message.
+    </p>
+  }
+</div>

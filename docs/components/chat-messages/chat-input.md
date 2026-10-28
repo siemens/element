@@ -181,16 +181,50 @@ from invalidated attempts: they must not update state or restore an old draft ov
 after cancellation or during a later attempt. Release any resources returned by a late startup
 result, and release microphone resources when the view is destroyed.
 
-On permission denial or recognition failure for the current attempt, stop recognition, restore
-the draft protected by the startup lock, return to `idle`, and present an appropriate accessible
-error message or notification. Do not defer the startup lock until permission is granted or
-unconditionally restore a saved draft from a stale error handler. Only enable voice input when
+On permission denial or recognition failure for the current attempt, stop recognition, keep the
+latest visible text for review, return to `idle`, and present an appropriate accessible error
+message or notification. If no transcript has arrived, the original draft stays unchanged.
+Only explicit cancellation restores the saved draft. Do not defer the startup lock until permission
+is granted or restore a saved draft from a stale error handler. Only enable voice input when
 your integration supports it. The microphone control is disabled during response generation.
 
 Customize `startDictationLabel`, `cancelDictationLabel`, `confirmDictationLabel`, `listeningLabel`,
 and `finishingLabel` with translatable strings. Listening and finishing are announced through the
 status region without announcing every transcript update. Consumers can hide irrelevant custom
 actions during dictation if needed.
+
+### Browser voice input
+
+<si-docs-component example="si-chat-messages/si-chat-voice-input-browser"></si-docs-component>
+
+This interactive example uses the browser's Web Speech API for real dictation and the Web Audio
+API for measured microphone levels. It has no speech SDK, API key, or application backend.
+The integration belongs to the example, not the Element library. Applications can use their
+own speech recognition provider with the same component inputs and outputs.
+
+Microphone access requires HTTPS or localhost and browser permission. The example discloses that
+the browser may send audio to its speech recognition service. Do not dictate sensitive information.
+Recognition availability depends on the browser, language, network, and browser policies;
+feature detection alone does not guarantee that its service is available. If the required APIs
+are missing, the example keeps normal text input available without voice controls.
+
+The example uses the browser language and requests interim results for one utterance at a time.
+Recognition can end automatically after a pause; the exact stopping behavior is browser-dependent.
+Confirm enters the finishing state and requests final results before unlocking the draft.
+The waveform freezes, Confirm is disabled, and Cancel remains available. Late speech and transcript
+events do not return the input to recording. Cancel restores the previous draft immediately.
+Neither operation sends the message. Recognition errors retain visible text with an accessible
+warning that it may be incomplete. Permission denial before any results leaves the original draft
+unchanged. If confirmation times out, the current text is retained for review.
+
+The example follows the basic dictation flow: live text stays in the composer, with dictation
+actions on the right. It does not switch to a separate voice-only prompt layout.
+
+Speech recognition does not expose audio levels. The example separately acquires a microphone
+stream and measures its amplitude with an `AnalyserNode`, without playing or storing the audio.
+It releases that stream and its audio context on confirmation, cancellation, completion, errors,
+and destruction, and stops streams returned after a cancelled permission request.
+The simulated example above remains available without microphone access or a recognition service.
 
 ### Waveform
 
