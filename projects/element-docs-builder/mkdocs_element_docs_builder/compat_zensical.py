@@ -33,16 +33,11 @@ def makeExtension(**kwargs: Any) -> DocsComposerExtension:
   )
 
 
-def _construct_relative(loader: Any, node: Any) -> str:
-  return loader.construct_scalar(node)
-
-
 def _patch_zensical_config() -> bool:
   zensical_config = sys.modules.get('zensical.config')
   if zensical_config is None:
     return False
 
-  zensical_config.Loader.add_constructor('!relative', _construct_relative)
   apply_defaults = getattr(zensical_config, '_apply_defaults')
   if getattr(apply_defaults, PATCH_MARKER, False):
     return True
