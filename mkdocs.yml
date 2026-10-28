@@ -253,6 +253,7 @@ extra_javascript:
   - 'https://assets.adobedtm.com/5dfc7d97c6fb/f16b45bec907/launch-af252bb19983.min.js'
   - '_src/version-selector.js'
 extra:
+  examples_base: !ENV [ EXAMPLES_BASE, 'http://localhost:4200' ]
   links:
     - name: 'GitHub'
       value: 'https://github.com/siemens/element'
@@ -288,4 +289,12 @@ markdown_extensions:
 plugins:
   - material/search
   - minify_html
+  - macros:
+      module_name: projects/element-docs-builder/macros
+      include_dir: projects/element-docs-builder/templates
+      j2_variable_start_string: '[['
+      j2_variable_end_string: ']]'
+      render_by_default: true
+      on_error_fail: true
+      on_undefined: strict
   - element-docs-builder

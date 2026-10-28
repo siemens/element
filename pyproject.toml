@@ -10,6 +10,7 @@ dependencies = [
     "mkdocs-code-siemens-code-docs-theme>=9,<10",
     "mkdocs-minify-html-plugin==0.3.16",
     "mkdocs-element-docs-builder",
+    "mkdocs-macros-plugin>=1.3,<2",
 ]
 
 [project.urls]
