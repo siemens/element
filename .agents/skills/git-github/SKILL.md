@@ -112,9 +112,26 @@ BREAKING CHANGE: <breaking change summary>
 - Push to origin remote.
 - Always create DRAFT PRs.
 - PR title follows the same Conventional Commit format as a commit header.
-- Fill the PR body per `.github/PULL_REQUEST_TEMPLATE.md`. It should typically include your commit body and footer.
 - Never include which validation were run locally. We have CI for that.
 
+### PR description
+
+- The commit message is the source of truth.
+- For a single-commit PR, copy the commit body and footer into the PR
+  description. Exclude only the commit subject.
+- Do not summarize, paraphrase, add headings, or append test results.
+- If the description needs improvement, improve the commit message first.
+- If the commit body is empty, write a proper commit body before creating the PR.
+- For multiple commits, identify the appropriate source explicitly; do not
+  silently use the latest commit.
+
+For a single-commit PR, copy the subject and body directly from Git:
+
 ```bash
-gh pr create --base main --title "feat(tree-view): add keyboard navigation" --body "..."
+git log -1 --format=%b |
+  gh pr create \
+    --draft \
+    --base main \
+    --title "$(git log -1 --format=%s)" \
+    --body-file -
 ```
