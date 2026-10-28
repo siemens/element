@@ -237,6 +237,25 @@ export const strictLinterOptions = defineConfig({
 
 export default defineConfig(
   ...tsConfig,
+  {
+    files: ['src/app/examples/si-status-bar/si-status-bar-custom.ts'],
+    rules: {
+      // Custom colours are intentionally retained despite deprecation; keep this example working.
+      // Allow only StatusBarItem so unrelated deprecated APIs remain checked.
+      '@typescript-eslint/no-deprecated': [
+        'error',
+        {
+          allow: [
+            {
+              from: 'file',
+              name: 'StatusBarItem',
+              path: 'projects/element-ng/status-bar/si-status-bar-item/si-status-bar-item.model.ts'
+            }
+          ]
+        }
+      ]
+    }
+  },
   ...templateConfig,
   ...indexBarrelConfig,
   ...strictLinterOptions
