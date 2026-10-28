@@ -73,7 +73,7 @@ export class SampleComponent {
       props: {
         label: 'Text expression'
       },
-      expressionProperties: {
+      expressions: {
         'props.readonly': 'model.readonly',
         'props.required': 'model.required'
       }
@@ -84,9 +84,9 @@ export class SampleComponent {
       props: {
         label: 'Disabled by method expression'
       },
-      expressionProperties: {
-        'props.disabled': (model: any) => model.readonly,
-        'props.required': (model: any) => model.required
+      expressions: {
+        'props.disabled': field => field.model.readonly,
+        'props.required': field => field.model.required
       }
     },
     {
@@ -96,7 +96,7 @@ export class SampleComponent {
         label: 'Readonly by observable observable',
         readonly: this.observableStateReadonly
       },
-      expressionProperties: {
+      expressions: {
         'props.readonly': this.readonlySubject.asObservable(),
         'props.required': this.requiredSubject.asObservable()
       }
@@ -115,9 +115,9 @@ export class SampleComponent {
       key: 'usingFormstate',
       type: 'input',
       props: {},
-      expressionProperties: {
-        'props.label': (_model: any, formState: any) => {
-          if (formState.permissions.someUserspecificPermission) {
+      expressions: {
+        'props.label': field => {
+          if (field.options?.formState.permissions.someUserspecificPermission) {
             return 'Permitted';
           }
           return 'Prohibited';
