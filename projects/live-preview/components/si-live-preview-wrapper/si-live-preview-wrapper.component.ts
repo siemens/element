@@ -54,6 +54,7 @@ export class SiLivePreviewWrapperComponent {
     optional: true
   });
   private readonly cdRef = inject(ChangeDetectorRef);
+  private readonly parentOrigin = this.resolveParentOrigin();
 
   private isMobile = false;
   private initialUrl: string;
@@ -95,9 +96,10 @@ export class SiLivePreviewWrapperComponent {
   }
 
   private onMessage(event: MessageEvent): void {
-    // Render requests can contain executable templates, so the sender must be the same-origin editor.
+    // Render requests contain executable templates. Only trust the embedding editor, with
+    // a loopback-only exception for documentation development on a separate local port.
     if (
-      event.origin !== window.location.origin ||
+      event.origin !== this.parentOrigin ||
       event.source !== window.parent ||
       event.data?.src !== 'editor'
     ) {
@@ -157,7 +159,7 @@ export class SiLivePreviewWrapperComponent {
           config: this.config
         },
         {
-          inProgress: this.sendMessage
+          inProgress: (type: string, message?: unknown) => this.sendMessage(type, message)
         }
       );
     } else {
@@ -179,7 +181,27 @@ export class SiLivePreviewWrapperComponent {
   }
 
   sendMessage(type: string, message?: unknown): void {
-    window.parent.postMessage({ src: 'renderer', type, message }, window.location.origin);
+    window.parent.postMessage({ src: 'renderer', type, message }, this.parentOrigin);
+  }
+
+  private resolveParentOrigin(): string {
+    const location = window.location;
+    // Keep the editor origin across locale-triggered reloads, which replace the referrer.
+    const parameters = new URLSearchParams(location.hash.split('?')[1]);
+    const source = parameters.get('parentOrigin') ?? document.referrer;
+    if (!source || !URL.canParse(source)) {
+      return location.origin;
+    }
+    const parent = new URL(source);
+    const isLoopback = (hostname: string): boolean =>
+      hostname === 'localhost' || hostname === '[::1]' || /^127(?:\.\d{1,3}){3}$/.test(hostname);
+    return parent.origin === location.origin ||
+      (parent.protocol === 'http:' &&
+        location.protocol === 'http:' &&
+        isLoopback(parent.hostname) &&
+        isLoopback(location.hostname))
+      ? parent.origin
+      : location.origin;
   }
 
   private setTheme(theme: ThemeType): void {

@@ -21,10 +21,10 @@ export interface LivePreviewRenderRequest extends LivePreviewViewport {
 
 @Service()
 export class LivePreviewStateService {
-  private readonly router = inject(Router);
+  private readonly router = inject(Router, { optional: true });
   private readonly overviewExample = computed(() => {
-    this.router.lastSuccessfulNavigation();
-    const route = this.findOverviewRoute(this.router.routerState.root);
+    this.router?.lastSuccessfulNavigation();
+    const route = this.router && this.findOverviewRoute(this.router.routerState.root);
     return this.getOverviewExample(route?.snapshot.url ?? []);
   });
   private delayedLogClearTimer?: ReturnType<typeof setTimeout>;
