@@ -11,6 +11,7 @@ import {
   ElementRef,
   effect,
   inject,
+  input,
   OnInit,
   signal,
   untracked,
@@ -51,6 +52,7 @@ import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.
   }
 })
 export class SiLivePreviewComponent implements OnInit, AfterViewInit {
+  readonly initialTheme = input<ThemeType>();
   private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
   private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private readonly self = inject(ElementRef);
@@ -155,7 +157,8 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.state.theme.set(
-      localStorage.getItem('si-live-preview-theme') === 'dark' ? 'dark' : 'light'
+      this.initialTheme() ??
+        (localStorage.getItem('si-live-preview-theme') === 'dark' ? 'dark' : 'light')
     );
     const rfs = localStorage.getItem('si-live-preview-rfs') ?? '';
     this.state.rootFontSize.set(rfs === 'initial' ? rfs : rfs ? parseInt(rfs, 10) : 0);

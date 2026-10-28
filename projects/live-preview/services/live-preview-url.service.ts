@@ -16,7 +16,10 @@ export class LivePreviewUrlService {
   private readonly applicationUrl = new URL('.', new URL(import.meta.url));
 
   readonly origin = this.applicationUrl.origin;
-  readonly iframeUrl = this.routeUrl('iframe');
+  readonly iframeUrl = this.routeUrl(
+    'iframe',
+    new URLSearchParams({ parentOrigin: this.document.location.origin })
+  );
   readonly examplesBaseUrl = new URL(this.config.examplesBaseUrl, this.applicationUrl).href;
 
   sourceUrl(path: string): string {

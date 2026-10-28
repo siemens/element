@@ -6,6 +6,8 @@
 export * from './live-preview-routes';
 export { provideLivePreview, type SiLivePreviewProviderConfig } from './live-preview.provider';
 
+export { SiDocsComponentComponent } from './components/si-docs-component/si-docs-component.component';
+
 export * from './components/si-dummy.component';
 export * from './components/si-live-preview-renderer/si-live-preview-runtime.component';
 export * from './components/si-live-preview-renderer/si-live-preview-application-runtime.component';

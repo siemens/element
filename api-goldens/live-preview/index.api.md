@@ -6,11 +6,11 @@
 
 import { ActivatedRoute } from '@angular/router';
 import { AfterViewInit } from '@angular/core';
+import * as _angular_core from '@angular/core';
 import { ApplicationConfig } from '@angular/core';
 import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { EnvironmentProviders } from '@angular/core';
-import * as i0 from '@angular/core';
 import * as i1 from '@angular/router';
 import { InjectionToken } from '@angular/core';
 import { Injector } from '@angular/core';
@@ -139,11 +139,11 @@ export { SiLivePreviewRoutingModule as SimplLivePreviewRoutingModule }
 // @public
 export abstract class SiLivePreviewRuntimeComponent implements AfterViewInit, DoCheck, OnDestroy {
     // (undocumented)
-    readonly component: i0.InputSignal<Type<unknown>>;
+    readonly component: _angular_core.InputSignal<Type<unknown>>;
     // (undocumented)
-    readonly ready: i0.OutputEmitterRef<void>;
+    readonly ready: _angular_core.OutputEmitterRef<void>;
     // (undocumented)
-    readonly renderingError: i0.OutputEmitterRef<Error>;
+    readonly renderingError: _angular_core.OutputEmitterRef<Error>;
 }
 
 // @public (undocumented)

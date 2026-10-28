@@ -34,6 +34,7 @@
   "peerDependencies": {
     "@angular/common": "22",
     "@angular/core": "22",
+    "@angular/elements": "22",
     "@angular/forms": "22",
     "@angular/router": "22",
     "@babel/standalone": "8",
@@ -43,6 +44,9 @@
     "vue3-sfc-loader": "0.9.5"
   },
   "peerDependenciesMeta": {
+    "@angular/elements": {
+      "optional": true
+    },
     "react": {
       "optional": true
     },
