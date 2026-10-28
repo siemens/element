@@ -162,7 +162,10 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    const root = this.self.nativeElement.getRootNode();
+    const styleParent = root instanceof ShadowRoot ? root : undefined;
     this.flaskTemplate = new CodeFlask(this.templateElem().nativeElement, {
+      styleParent,
       lineNumbers: true,
       language: 'html',
       defaultTheme: false,
@@ -172,6 +175,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
     });
 
     this.flaskTypescript = new CodeFlask(this.typescriptElem().nativeElement, {
+      styleParent,
       lineNumbers: true,
       language: 'typescript',
       readonly: true,
@@ -181,6 +185,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
     });
 
     this.flaskReactVue = new CodeFlask(this.reactVueElem().nativeElement, {
+      styleParent,
       lineNumbers: true,
       language: 'typescript',
       readonly: false,
@@ -495,8 +500,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   }
 
   toggleFullscreen(exampleOnly = false): void {
-    const fullscreenElement =
-      document.fullscreenElement ?? (document as any).webkitFullscreenElement;
+    const fullscreenElement = this.getFullscreenElement();
     if (fullscreenElement) {
       const exitFunction = document.exitFullscreen ?? (document as any).webkitExitFullscreen;
       if (exitFunction) {
@@ -586,11 +590,21 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   }
 
   protected onFullscreenChange(): void {
+    const fullscreenElement = this.getFullscreenElement();
     this.isFullscreen.set(
-      !!document.fullscreenElement || !!(document as any).webkitFullscreenElement
+      !!fullscreenElement && this.self.nativeElement.contains(fullscreenElement)
     );
     if (!this.isFullscreen()) {
       this.exampleFullscreen.set(false);
     }
+  }
+
+  private getFullscreenElement(): Element | null {
+    const root: Document | ShadowRoot = this.self.nativeElement.getRootNode();
+    return (
+      root.fullscreenElement ??
+      (document as Document & { webkitFullscreenElement?: Element }).webkitFullscreenElement ??
+      null
+    );
   }
 }
