@@ -81,7 +81,7 @@
               "tsConfig": "src/tsconfig.app.prod.json",
               "crossOrigin": "use-credentials",
               "optimization": true,
-              "outputHashing": "all",
+              "outputHashing": "media",
               "namedChunks": false,
               "budgets": [
                 {
