@@ -108,14 +108,12 @@ export class SampleComponent {
     {
       filterName: 'date',
       title: 'Date',
-      description: '27-12-2022',
-      status: 'default'
+      description: '27-12-2022'
     },
     {
       filterName: 'location',
       title: 'Location',
-      description: 'Zug',
-      status: 'default'
+      description: 'Zug'
     }
   ];
 
