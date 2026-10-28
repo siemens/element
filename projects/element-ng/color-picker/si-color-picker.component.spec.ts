@@ -5,6 +5,7 @@
 import { Component, ComponentRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Locator, page, userEvent } from 'vitest/browser';
 
 import { SiColorPickerComponent as TestComponent } from './index';
 
@@ -16,6 +17,10 @@ class FormHostComponent {
   readonly colorPickerComp = viewChild.required(TestComponent);
   colorPickerControl = new FormControl('si-sys-color-data-categorical-2');
 }
+
+/** Locates the swatch of the n-th default data color. */
+const swatch = (n: number): Locator =>
+  page.getByRole('gridcell', { name: `si-sys-color-data-categorical-${n}`, exact: true });
 
 describe('SiColorPickerComponent', () => {
   describe('with direct usage', () => {
@@ -29,6 +34,12 @@ describe('SiColorPickerComponent', () => {
       componentRef.setInput('color', 'si-sys-color-data-categorical-2');
       element = fixture.nativeElement.querySelector('.input-color-box');
     });
+
+    const openWithKeyboard = async (): Promise<void> => {
+      await fixture.whenStable();
+      element.focus();
+      await userEvent.keyboard('{ArrowDown}');
+    };
 
     it('should show color input box', () => {
       expect(element).toBeDefined();
@@ -56,76 +67,103 @@ describe('SiColorPickerComponent', () => {
       expect(el).toBeDefined();
     });
 
-    it('should have default colors', () => {
-      fixture.detectChanges();
+    it('should announce the palette popup and whether it is open on the color input', async () => {
+      await fixture.whenStable();
+      expect(element).toHaveAttribute('aria-haspopup', 'grid');
+      expect(element).toHaveAttribute('aria-expanded', 'false');
+      expect(element).not.toHaveAttribute('aria-controls');
+
       element.click();
-      fixture.detectChanges();
-      const el = document.querySelector('.colors');
-      expect(el).toBeDefined();
-      const colorBoxes = el?.querySelectorAll('.color-box');
-      expect(colorBoxes?.length).toBe(16);
+      await fixture.whenStable();
+      const palette = page.getByRole('grid').element();
+      expect(palette.id).not.toBe('');
+      expect(element).toHaveAttribute('aria-expanded', 'true');
+      expect(element).toHaveAttribute('aria-controls', palette.id);
+
+      await expect.element(swatch(2)).toHaveFocus();
+      await userEvent.keyboard('{Tab}');
+      await expect.element(element).toHaveAttribute('aria-expanded', 'false');
+      expect(element).not.toHaveAttribute('aria-controls');
     });
 
-    it('should be possible to select a color using the keyboard', () => {
-      let changedColor: string | undefined;
-      fixture.componentInstance.color.subscribe(c => (changedColor = c));
+    it('should name the palette with colorPaletteAriaLabel', async () => {
+      element.click();
+      await fixture.whenStable();
+      await expect
+        .element(page.getByRole('grid', { name: 'Color palette', exact: true }))
+        .toBeInTheDocument();
 
-      fixture.detectChanges();
-      element.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
-      fixture.detectChanges();
-      const el = document.querySelector('.colors');
-      expect(el).toBeDefined();
-      const colorBoxes = el?.querySelectorAll('input');
-      expect(colorBoxes?.length).toBe(16);
-      const firstColorBox = colorBoxes![0] as HTMLElement;
-      firstColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-      fixture.detectChanges();
-      expect(changedColor).toEqual('si-sys-color-data-categorical-1');
+      componentRef.setInput('colorPaletteAriaLabel', 'Background color palette');
+      await fixture.whenStable();
 
-      // Traverse to the last when the at the edge
-      const lastColorBox = colorBoxes![15] as HTMLElement;
-      firstColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
-      expect(document.activeElement).toBe(lastColorBox);
-      lastColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-      fixture.detectChanges();
-      expect(changedColor).toEqual('si-sys-color-data-categorical-16');
-
-      // Traverse to the first when the at the edge
-      lastColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
-      expect(document.activeElement).toBe(firstColorBox);
-
-      // Check if the arrow down works
-      const fifthColorBox = colorBoxes![4] as HTMLElement;
-      firstColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
-      fixture.detectChanges();
-      expect(document.activeElement).toBe(fifthColorBox);
-      fifthColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-      fixture.detectChanges();
-      expect(changedColor).toEqual('si-sys-color-data-categorical-5');
-
-      // Check if arrow up works
-      fifthColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
-      fixture.detectChanges();
-      expect(document.activeElement).toBe(firstColorBox);
+      await expect
+        .element(page.getByRole('grid', { name: 'Background color palette', exact: true }))
+        .toBeInTheDocument();
     });
 
-    it('should close the overlay on selection if autoClose is enabled', () => {
+    it('should show the default colors in rows of four', async () => {
+      element.click();
+      await fixture.whenStable();
+
+      const rows = page.getByRole('row').all();
+      expect(rows).toHaveLength(4);
+      for (const row of rows) {
+        expect(row.getByRole('gridcell').elements()).toHaveLength(4);
+      }
+    });
+
+    it('should focus the first color when opened without a selection', async () => {
+      componentRef.setInput('color', undefined);
+      await openWithKeyboard();
+
+      await expect.element(swatch(1)).toHaveFocus();
+    });
+
+    it('should move the focus with the arrow keys', async () => {
+      await openWithKeyboard();
+      await expect.element(swatch(2)).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowDown}');
+      await expect.element(swatch(6)).toHaveFocus();
+      await userEvent.keyboard('{ArrowRight}{ArrowRight}');
+      await expect.element(swatch(8)).toHaveFocus();
+      // At the end of a row, the focus continues in the next row.
+      await userEvent.keyboard('{ArrowRight}');
+      await expect.element(swatch(9)).toHaveFocus();
+    });
+
+    it('should select the focused color with Enter and Space', async () => {
+      await openWithKeyboard();
+      await expect.element(swatch(2)).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowRight}');
+      await expect.element(swatch(3)).toHaveFocus();
+      await userEvent.keyboard('{Enter}');
+      expect(componentRef.instance.color()).toBe('si-sys-color-data-categorical-3');
+
+      await userEvent.keyboard('{ArrowRight}');
+      await expect.element(swatch(4)).toHaveFocus();
+      await userEvent.keyboard(' ');
+      expect(componentRef.instance.color()).toBe('si-sys-color-data-categorical-4');
+
+      await fixture.whenStable();
+      expect(swatch(4).element()).toHaveAttribute('aria-selected', 'true');
+      expect(swatch(3).element()).toHaveAttribute('aria-selected', 'false');
+      expect(swatch(2).element()).toHaveAttribute('aria-selected', 'false');
+    });
+
+    it('should close the overlay on selection if autoClose is enabled', async () => {
       componentRef.setInput('autoClose', true);
-      let changedColor: string | undefined;
-      fixture.componentInstance.color.subscribe(c => (changedColor = c));
-      fixture.detectChanges();
-      element.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
-      fixture.detectChanges();
-      const el = document.querySelector('.colors');
-      const colorBoxes = el?.querySelectorAll('input');
-      const firstColorBox = colorBoxes![0] as HTMLElement;
-      fixture.detectChanges();
-      firstColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-      fixture.detectChanges();
+      await openWithKeyboard();
+      await expect.element(swatch(2)).toHaveFocus();
 
-      expect(changedColor).toEqual('si-sys-color-data-categorical-1');
-      const overlay = document.querySelector('.colors');
-      expect(overlay).toBeNull();
+      await userEvent.keyboard('{ArrowLeft}');
+      await expect.element(swatch(1)).toHaveFocus();
+      await userEvent.keyboard('{Enter}');
+
+      expect(componentRef.instance.color()).toBe('si-sys-color-data-categorical-1');
+      await expect.element(page.getByRole('grid')).not.toBeInTheDocument();
+      await expect.element(element).toHaveFocus();
     });
   });
 
@@ -146,20 +184,34 @@ describe('SiColorPickerComponent', () => {
       expect(host.colorPickerControl.dirty).toBe(false);
     });
 
-    it('should mark as dirty if the input is blurred', () => {
-      fixture.detectChanges();
-      element.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
-      fixture.detectChanges();
-      const el = document.querySelector('.colors');
-      const colorBoxes = el?.querySelectorAll('input');
-      const fourthColorBox = colorBoxes![3] as HTMLElement;
-      fourthColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-      fixture.detectChanges();
+    it('should mark as dirty when a color is selected', async () => {
+      element.click();
+      await fixture.whenStable();
+      await userEvent.click(swatch(4));
       expect(host.colorPickerControl.value).toBe('si-sys-color-data-categorical-4');
-
-      element.dispatchEvent(new Event('blur'));
-      fixture.detectChanges();
       expect(host.colorPickerControl.dirty).toBe(true);
+    });
+
+    it('should keep the form untouched when the selected color is chosen again', async () => {
+      const valueChanges = vi.fn();
+      host.colorPickerControl.valueChanges.subscribe(valueChanges);
+      const expectUnchanged = async (): Promise<void> => {
+        await fixture.whenStable();
+        expect(swatch(2).element()).toHaveAttribute('aria-selected', 'true');
+        expect(host.colorPickerControl.value).toBe('si-sys-color-data-categorical-2');
+        expect(host.colorPickerControl.pristine).toBe(true);
+        expect(valueChanges).not.toHaveBeenCalled();
+      };
+      await fixture.whenStable();
+      element.focus();
+      await userEvent.keyboard('{ArrowDown}');
+      await expect.element(swatch(2)).toHaveFocus();
+
+      await userEvent.keyboard('{Enter}');
+      await expectUnchanged();
+
+      await userEvent.click(swatch(2));
+      await expectUnchanged();
     });
 
     it('should clear the preview background when the form value is emptied', async () => {
@@ -176,21 +228,20 @@ describe('SiColorPickerComponent', () => {
       expect(preview.style).toHaveProperty('backgroundColor', '');
     });
 
-    it('should read and write the form value', () => {
-      fixture.detectChanges();
+    it('should read and write the form value', async () => {
       host.colorPickerControl.setValue('si-sys-color-data-categorical-5');
-      fixture.detectChanges();
+      await fixture.whenStable();
       expect(host.colorPickerComp().color()).toBe('si-sys-color-data-categorical-5');
 
-      fixture.detectChanges();
-      element.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
-      fixture.detectChanges();
-      const el = document.querySelector('.colors');
-      const colorBoxes = el?.querySelectorAll('input');
-      const fourthColorBox = colorBoxes![6] as HTMLElement;
-      fourthColorBox.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-      fixture.detectChanges();
+      element.click();
+      await fixture.whenStable();
+      expect(swatch(5).element()).toHaveAttribute('aria-selected', 'true');
+
+      const valueChanges = vi.fn();
+      host.colorPickerControl.valueChanges.subscribe(valueChanges);
+      await userEvent.click(swatch(7));
       expect(host.colorPickerControl.value).toBe('si-sys-color-data-categorical-7');
+      expect(valueChanges).toHaveBeenCalledExactlyOnceWith('si-sys-color-data-categorical-7');
     });
   });
 });

@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { Grid, GridCell, GridRow } from '@angular/aria/grid';
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
@@ -16,7 +17,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { elementOk } from '@siemens/element-icons';
-import { defaultConnectedOverlayScrollStrategy, isRTL } from '@siemens/element-ng/common';
+import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -44,7 +45,15 @@ const defaultDataColors: string[] = [
 ];
 @Component({
   selector: 'si-color-picker',
-  imports: [SiIconComponent, SiTranslatePipe, CdkConnectedOverlay, CdkOverlayOrigin],
+  imports: [
+    SiIconComponent,
+    SiTranslatePipe,
+    CdkConnectedOverlay,
+    CdkOverlayOrigin,
+    Grid,
+    GridRow,
+    GridCell
+  ],
   templateUrl: './si-color-picker.component.html',
   styleUrl: './si-color-picker.component.scss',
   providers: [
@@ -56,6 +65,8 @@ const defaultDataColors: string[] = [
   ]
 })
 export class SiColorPickerComponent implements ControlValueAccessor {
+  private static idCounter = 0;
+
   // eslint-disable-next-line defaultValue/tsdoc-defaultValue-annotation
   /**
    * The color palette to choose the colors from. As colors, only valid CSS
@@ -108,20 +119,40 @@ export class SiColorPickerComponent implements ControlValueAccessor {
     t(() => $localize`:@@SI_COLOR_PICKER.SELECTED_LABEL:Selected color {{color}}`)
   );
 
+  /**
+   * Aria label for the color palette.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_COLOR_PICKER.PALETTE_LABEL:Color palette`)
+   * ```
+   */
+  readonly colorPaletteAriaLabel = input(
+    t(() => $localize`:@@SI_COLOR_PICKER.PALETTE_LABEL:Color palette`)
+  );
+
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};
 
   private readonly colorInputRef =
     viewChild.required<ElementRef<HTMLInputElement>>('colorInputBox');
-  private readonly swatchInputs = viewChildren<ElementRef<HTMLInputElement>>('swatchInput');
-  private readonly selectedSwatchInput = computed(() =>
-    this.swatchInputs().find(swatchInput => swatchInput.nativeElement.checked)
-  );
+  private readonly swatches = viewChildren(GridCell);
   private readonly disabledNgControl = signal(false);
   private readonly numberOfColumns = 4;
   protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
   protected readonly isOverlayOpen = signal(false);
+  protected readonly paletteId = `__si-color-picker-palette-${SiColorPickerComponent.idCounter++}`;
   protected readonly icons = addIcons({ elementOk });
+
+  /** The palette split into the visible rows, so that the grid navigation follows the layout. */
+  protected readonly colorRows = computed(() => {
+    const palette = this.colorPalette();
+    const rows: string[][] = [];
+    for (let i = 0; i < palette.length; i += this.numberOfColumns) {
+      rows.push(palette.slice(i, i + this.numberOfColumns));
+    }
+    return rows;
+  });
 
   protected blur(): void {
     if (!this.autoClose()) {
@@ -129,35 +160,14 @@ export class SiColorPickerComponent implements ControlValueAccessor {
     }
   }
 
-  protected arrowDown(index: number, event: Event): void {
-    const nextIndex = index + this.numberOfColumns;
-    this.focusLabel(nextIndex);
-    event.preventDefault();
-  }
-
-  protected arrowUp(index: number, event: Event): void {
-    const prevIndex = index - this.numberOfColumns;
-    this.focusLabel(prevIndex);
-    event.preventDefault();
-  }
-
-  protected arrowLeft(index: number, event: Event): void {
-    const prevIndex = index + (isRTL() ? 1 : -1);
-    this.focusLabel(prevIndex);
-    event.preventDefault();
-  }
-
-  protected arrowRight(index: number, event: Event): void {
-    const prevIndex = index + (isRTL() ? -1 : +1);
-    this.focusLabel(prevIndex);
-    event.preventDefault();
-  }
-
-  private focusLabel(index: number): void {
-    const labels = this.swatchInputs();
-    const totalSwatches = labels.length;
-    const normalizedIndex = (index + totalSwatches) % totalSwatches;
-    labels[normalizedIndex].nativeElement.focus();
+  protected swatchSelectedChange(swatch: GridCell, color: string, selected: boolean): void {
+    if (selected) {
+      this.selectColor(color);
+    } else if (swatch.active() && this.color() === color) {
+      // The grid toggles the selected swatch off when it is chosen again, but a color stays selected.
+      // Restoring it emits `selectedChange` again, so it is handled like any other selection.
+      swatch.selected.set(true);
+    }
   }
 
   protected openOverlay(): void {
@@ -174,13 +184,16 @@ export class SiColorPickerComponent implements ControlValueAccessor {
 
   private focusSelectedColor(): void {
     setTimeout(() => {
-      this.selectedSwatchInput()?.nativeElement.focus();
+      const swatches = this.swatches();
+      (swatches.find(swatch => swatch.selected()) ?? swatches.at(0))?.element.focus();
     });
   }
 
-  protected selectColor(color: string): void {
-    this.color.set(color);
-    this.onChange(color!);
+  private selectColor(color: string): void {
+    if (this.color() !== color) {
+      this.color.set(color);
+      this.onChange(color);
+    }
     if (this.autoClose()) {
       this.overlayDetach();
     }

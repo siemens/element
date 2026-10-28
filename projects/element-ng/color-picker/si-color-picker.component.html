@@ -4,7 +4,10 @@
   cdkOverlayOrigin
   class="input-color-box"
   type="button"
+  aria-haspopup="grid"
   [class.is-open]="isOverlayOpen()"
+  [attr.aria-expanded]="isOverlayOpen()"
+  [attr.aria-controls]="isOverlayOpen() ? paletteId : null"
   [attr.aria-label]="
     ariaLabel() ? (ariaLabel() | translate: { color: color() ?? '' }) : (color() ?? null)
   "
@@ -30,38 +33,34 @@
   (backdropClick)="overlayDetach()"
   (detach)="overlayDetach()"
 >
-  <div #colorPaletteRef role="grid" class="colors shadow-3 rounded-2 background-1 p-4 mt-1">
-    <div role="row" class="colors-row gap-4">
-      @for (paint of colorPalette(); track $index) {
-        <div role="gridcell" class="swatch">
-          <input
-            #swatchInput
-            type="radio"
-            name="color"
-            class="btn-check"
-            [id]="paint"
+  <div
+    ngGrid
+    class="colors shadow-3 rounded-2 background-1 p-4 mt-1 d-flex flex-column gap-4"
+    selectionMode="explicit"
+    colWrap="continuous"
+    enableSelection
+    [id]="paletteId"
+    [attr.aria-label]="colorPaletteAriaLabel() | translate"
+    (keydown.tab)="overlayDetach()"
+  >
+    @for (row of colorRows(); track $index) {
+      <div ngGridRow class="colors-row gap-4">
+        @for (paint of row; track $index) {
+          <div
+            #swatch="ngGridCell"
+            ngGridCell
+            class="color-box"
             [attr.aria-label]="paint"
-            [value]="paint"
-            [checked]="color() === paint"
-            (change)="selectColor(paint)"
-            (keydown.enter)="selectColor(paint)"
-            (keydown.arrowUp)="arrowUp($index, $event)"
-            (keydown.arrowDown)="arrowDown($index, $event)"
-            (keydown.arrowLeft)="arrowLeft($index, $event)"
-            (keydown.arrowRight)="arrowRight($index, $event)"
-            (keydown.tab)="overlayDetach()"
-          />
-          <label
-            class="color-box swatch-label"
-            [attr.for]="paint"
             [style.background]="'var(--' + paint + ')'"
+            [selected]="color() === paint"
+            (selectedChange)="swatchSelectedChange(swatch, paint, $event)"
           >
             @if (color() === paint) {
               <si-icon class="icon text-inverse p-1" [icon]="icons.elementOk" />
             }
-          </label>
-        </div>
-      }
-    </div>
+          </div>
+        }
+      </div>
+    }
   </div>
 </ng-template>
