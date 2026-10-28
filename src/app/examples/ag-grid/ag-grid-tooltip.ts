@@ -4,7 +4,7 @@
  */
 import { Component, inject } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef, ITooltipParams } from 'ag-grid-community';
+import { ColDef } from 'ag-grid-community';
 
 import { TableData, TableDataService } from '../../mocks/table-data.mock';
 
@@ -37,8 +37,7 @@ export class SampleComponent {
       field: 'name',
       filter: true,
       headerTooltip: 'Tooltip for Name Column Header',
-      tooltipValueGetter: (p: ITooltipParams) =>
-        'This is a dynamic tooltip using the value of ' + p.value
+      tooltip: p => 'This is a dynamic tooltip using the value of ' + p.value
     },
     { field: 'role', headerTooltip: 'Tooltip for Role Column Header' },
     {
@@ -48,8 +47,7 @@ export class SampleComponent {
         return params.value + ' years';
       },
       headerTooltip: 'Tooltip for Age Column Header',
-      tooltipValueGetter: (p: ITooltipParams) =>
-        'This is a dynamic tooltip using the value of ' + p.value
+      tooltip: p => 'This is a dynamic tooltip using the value of ' + p.value
     },
     {
       field: 'company',
