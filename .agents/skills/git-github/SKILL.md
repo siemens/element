@@ -12,6 +12,11 @@ Commit messages drive the changelog, so getting the format right is mandatory.
 ## Golden rules
 
 - One logical change per commit. Keep the working tree clean.
+- When addressing review feedback, fold corrections into the commit that
+  introduced the affected change. Do not leave separate review-fix commits
+  unless the user explicitly requests them.
+- Amend the owning commit, or use fixup commits and autosquash before pushing.
+  Preserve unrelated commits and their authorship.
 - Do NOT add AI/tool attribution, "Co-authored-by", or marketing footers to
   commit messages or PRs.
 - Never commit directly to `main`.

@@ -9,4 +9,7 @@
 The Element Translate CLI is the command-line companion to the Element translation abstraction layer.
 It extracts translatable keys and default messages from compiled sources into TypeScript interfaces and JSON files.
 
+See [extracting translatable keys](https://element.siemens.io/architecture/translation/#extracting-translatable-keys)
+for the build prerequisites, command, and configuration.
+
 **Get started, explore components and read the docs at [element.siemens.io](https://element.siemens.io).**

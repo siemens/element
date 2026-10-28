@@ -8,8 +8,8 @@ runs:
       shell: bash
       env:
         # Renovate updates the official release tag and archive checksum together.
-        GIT_LFS_VERSION: v3.8.0
-        GIT_LFS_SHA256: e455e00f15d9b95661b8d53498ffb0c3367962cf1ec73c31ab7369516cd6ab8d
+        GIT_LFS_VERSION: v3.8.1
+        GIT_LFS_SHA256: e72cf723a4a660438862282e8aecf3885fc8123e88bfcad534cf6b941a354b75
       run: |
         set -euo pipefail
         temp_dir=$(mktemp -d)

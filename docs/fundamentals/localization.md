@@ -3,12 +3,15 @@
 Localization or internationalization (i18n) is the process of designing and preparing your app to be usable in different locales around the world.
 Localization includes the support for different languages as well as different formats for entities like dates, time, decimals, currency, etc.
 
+This guide covers locale selection and formatting.
+For translating Element component text, see [translation](translation.md).
+
 Angular supports localization as described in the [i18n](https://angular.dev/guide/i18n) guide and is supported by [pipes](https://angular.dev/guide/templates/pipes).
 Angular applies a compile time localization concept. It does not support the change of locales (language and formats) at runtime. Instead, for each locale
 it generates a new web application that supports exactly one locale. It replaces text in the HTML templates with the translations and sets a fixed
 [LOCALE_ID](https://angular.dev/guide/i18n/locale-id) which is used by the pipes. Changing locales is realized by changing the web application.
 
-Element localization supports a single web application with many languages and formats by dynamically loading languages by using [ngx-translate](https://github.com/ngx-translate/core).
+With a runtime translation framework such as [ngx-translate](https://github.com/ngx-translate/core), Element supports a single web application with many languages and formats.
 We localize formats by following the angular [pipes](https://angular.dev/guide/templates/pipes) concept and reuse the locale and region definitions
 from [Angular common locales](https://github.com/angular/angular/tree/master/packages/common/locales). This is sufficient and standard conform for
 most applications. For example, if you want to display a date in a compact format use the date pipe like `{{ date | date:'short' }}`.
@@ -69,6 +72,7 @@ export const APP_CONFIG: ApplicationConfig = {
 ```
 
 In addition, `fallbackEnabled` enables ngx-translate to use the translation from the `defaultLocale` language when a translate value is missing.
+This is separate from [Element's default text fallback](translation.md#default-text-with-ngx-translatecore).
 
 ## Persisting locales using SiLocaleStore
 
@@ -120,199 +124,6 @@ If you need to support locale changes without reloading, we recommend to extend 
 export class DateImpurePipe extends DatePipe implements PipeTransform {}
 ```
 
-## Translation in Element
-
-Element >= v43 includes a translation abstraction layer which allows us to support multiple translation frameworks.
-There is no hard dependency to a specific translation library anymore. Therefore, by default, translation keys
-(`TranslatableString`) will no longer be translated.
-
-### Supported Frameworks
-
-If a translation framework is used, Element must be configured to use this framework as well.
-For module-based applications, the respective module must be imported in the root module.
-For standalone applications, the respective provider factory must be imported in the application configuration.
-
-Supported frameworks:
-
-<!-- markdownlint-disable MD013 -->
-
-| Framework           | Path                                             | Module                        | Provider factory                | Remarks                                                                                                        |
-| ------------------- | ------------------------------------------------ | ----------------------------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `ngx-translate`     | `@siemens/element-translate-ng/ngx-translate`    | `SiTranslateNgxTModule`       | `provideNgxTranslateForElement` |                                                                                                                |
-| `@angular/localize` | `@siemens/element-translate-ng/angular-localize` | `SiTranslateNgLocalizeModule` | `provideNgLocalizeForElement`   | The support is experimental. Please reach out to us via an issue, if you plan to use this in a productive app. |
-
-<!-- markdownlint-enable MD013 -->
-
-Remember, this is only the activation of the respective layer for Element, you still need to import and configure
-the framework in your application as you would normally do.
-
-If no framework is configured, Element will fall back to English.
-
-!!! info "Support for other translation frameworks"
-
-    Support for `@ngneat/transloco` and other frameworks might be added in the future on request.
-
-### Overriding default text keys globally
-
-Element provides the possibility to override text keys on a global level. This can be used to change the default value of
-text keys that are used multiple times within an application but have most likely the same value. This is usually the case
-for static labels like `Close`, `Ok`, ...
-
-All keys that can be overridden can be found <a href="../../api/element-ng/types/SiTranslatableKeys">here.</a>
-
-The overriding of text keys is available for every framework except `@angular/localize` due to technical limitations.
-
-Overrides are declared like this:
-
-```ts
-import { provideSiTranslatableOverrides } from '@siemens/element-ng/translate';
-
-@NgModule({
-  providers: [
-    provideSiTranslatableOverrides({
-      'SI_TOAST.CLOSE': 'MY_CUSTOM_CLOSE'
-    })
-  ]
-})
-export class AppModule {}
-```
-
-### How it works
-
-Within Element, a `TranslatableString` is declared using a syntax based on `@angular/localize`:
-
-```ts
-const value = $localize`:description@@id:default-value`;
-```
-
-- **description:** A description for a translator. Can be omitted.
-- **id:** An id or key that will be passed to the translation framework.
-- **default-value:** The default value will be used when no translation framework is used.
-
-Unless `@angular/localize` is used for translation, Element provides its own implementation of `$localize`. In addition,
-Element has its own translate pipe. Both, `$localize` and the `translate` pipe are needed for translation.
-
-`$localize` resolves its input either to the id, if a translation framework is used, or to the default value, if no
-translation framework is used. In addition, a key can
-be [overridden by a global provider](#overriding-default-text-keys-globally).
-
-The `translate` pipe is needed for frameworks like `ngx-translate` where translation happens at runtime.
-It resolves a `TranslatableString` generated by `$localize` using an actual translation framework.
-
-### Default text with @ngx-translate/core
-
-During application development, translations may be missing for certain translation keys, especially when adding new features or supporting additional languages. Without proper handling, missing translations can result in translation keys being displayed directly to users instead of meaningful text.
-
-Element provides default text values for all translatable strings used in its components and directives. These default values serve as fallbacks when a translation is not available in your application's translation files, ensuring a better user experience during development and preventing broken UI text in production.
-
-To enable default text fallbacks for missing translation keys, configure the `provideMissingTranslationHandlerForElement` provider function as the `missingTranslationHandler` when setting up `@ngx-translate/core` in your application.
-
-```ts
-import { ApplicationConfig } from '@angular/core';
-import { provideMissingTranslationHandler, provideTranslateService } from '@ngx-translate/core';
-import {
-  provideMissingTranslationHandlerForElement,
-  provideNgxTranslateForElement
-} from '@siemens/element-translate-ng/ngx-translate';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideTranslateService({
-      // Enable default text values for missing translations
-      // Without custom handler by your application
-      missingTranslationHandler: provideMissingTranslationHandlerForElement(),
-      // With custom handler by your application
-      missingTranslationHandler: provideMissingTranslationHandlerForElement(
-        provideMissingTranslationHandler(MyMissingTranslationHandler)
-      )
-    }),
-    // Activate Element translation support for @ngx-translate/core
-    provideNgxTranslateForElement()
-  ]
-};
-```
-
-### Adding Cache busting feature to the translation \*.json files
-
-By default, the `*.json` files used for translation, are not hashed by Webpack during the build and may cause caching issues when newer versions of the applications are deployed.
-To counter this, we can either use the bundler to load translations
-OR
-we could simply provide a randomly generated string as a query parameter to the `GET` HTTP call, which fetches the `*.json` from the server.
-
-- Define a random hash key in `environment.ts` file for each environment
-
-```ts
-export const environment = {
-  production: false,
-  hash: `${new Date().valueOf()}`
-};
-```
-
-- When you initialize `TranslateHttpLoader` in your application, just append the below query parameter at the end:
-
-```ts
-export const createTranslateLoader = (http: HttpClient) =>
-  new TranslateHttpLoader(http, './assets/i18n/', '.json?hash=' + environment.hash);
-```
-
-Note that this hash key will only be appended to the translation based JSON files which will be loaded by the `TranslateHttpLoader` and rest of the API calls will be working as usual.
-
 <si-docs-api injectable="SiLocaleService"></si-docs-api>
 
 <si-docs-types></si-docs-types>
-
-### Translatable keys in Element
-
-All keys are members of the SiTranslatableKeys type of each package:
-
-- [SiTranslatableKeys in @siemens/element-ng](../../api/siemens/element-ng/types/SiTranslatableKeys/)
-- [SiTranslatableKeys in @siemens/dashboards-ng](../../api/siemens/dashboards-ng/types/SiTranslatableKeys/)
-- [SiTranslatableKeys in @siemens/maps-ng](../../api/siemens/maps-ng/types/SiTranslatableKeys/)
-
-### Extracting translatable keys
-
-An important part of the translation tooling is the extraction of translatable keys as a TypeScript
-interface as well as the extraction of a JSON messages file with default translations. This is
-provided by the `@siemens/element-translate-cli` package, which exposes the
-`update-translatable-keys` command. Install it as a dev dependency:
-
-```sh
-npm install --save-dev @siemens/element-translate-cli
-```
-
-The extraction happens on compiled files. I.e. make sure to run the build first. Then, to run these
-extractions:
-
-```sh
-npx update-translatable-keys
-```
-
-By default, this will pick up the configuration from a file `element-translate.conf.json`. To use a
-different config file, pass it as the only argument to the command.
-
-The config file looks like this:
-
-```json
-{
-  "files": "dist/@siemens/**/fesm2022/**/*.mjs",
-  "configs": [
-    {
-      "name": "element",
-      "locationPrefix": "projects/element-ng",
-      "keysFile": "projects/element-ng/translate/si-translatable-keys.interface.ts",
-      "keysInterfaceName": "SiTranslatableKeys",
-      "messagesFile": "dist/@siemens/element-ng/template-i18n.json"
-    }
-  ]
-}
-```
-
-- `files` is a glob pattern for defining the files to scan.
-- `configs` is an array of configs. For mono-repos building multiple libraries, they can be
-  separated into different configs. All keys are required:
-  - `name` is a unique name.
-  - `locationPrefix` defines the path prefix of the source files, important to distinguish between
-    different libraries in a mono-repo.
-  - `keysFile` defines the path of the generated TypeScript interfaces file.
-  - `keysInterfaceName` defines the name of the TypeScript `interface`.
-  - `messagesFile` defines the path of the generated messages JSON file.

@@ -1,6 +1,6 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
-@use '@siemens/element-theme/src/styles/variables/system-tokens';
+@use '@siemens/element-theme/src/styles/variables/si-sys-variables';
 
 .item-wrapper {
   display: flex;
@@ -19,7 +19,7 @@
 
 :host-context(si-menu-bar, si-content-action-bar) {
   :host {
-    --btn-bg: #{system-tokens.$si-sys-color-background-1};
+    --btn-bg: #{si-sys-variables.$si-sys-color-background-1};
     --btn-font-weight: #{variables.$si-font-weight-body};
     min-inline-size: auto !important; // stylelint-disable-line declaration-no-important
   }

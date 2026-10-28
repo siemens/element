@@ -162,6 +162,20 @@ describe('SiColorPickerComponent', () => {
       expect(host.colorPickerControl.dirty).toBe(true);
     });
 
+    it('should clear the preview background when the form value is emptied', async () => {
+      await fixture.whenStable();
+      const preview = element.querySelector<HTMLElement>('.inside-box')!;
+      expect(preview.style).toHaveProperty(
+        'backgroundColor',
+        'var(--si-sys-color-data-categorical-2)'
+      );
+
+      host.colorPickerControl.setValue('');
+      await fixture.whenStable();
+
+      expect(preview.style).toHaveProperty('backgroundColor', '');
+    });
+
     it('should read and write the form value', () => {
       fixture.detectChanges();
       host.colorPickerControl.setValue('si-sys-color-data-categorical-5');
