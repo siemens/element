@@ -270,15 +270,22 @@ export class SiFileUploadDirective {
     }
     // Spec says that comma is the delimiter for filetypes. Also allow pipe for compatibility
     return accept.split(/,|\|/).some(acceptedType => {
-      // convert accept glob into regex (example: images/* --> images/.*)
-      const acceptedRegexStr = acceptedType.replace(/\./g, '\\.').replace('*', '.*').trim();
-      const acceptedRegex = new RegExp(acceptedRegexStr, 'i');
+      acceptedType = acceptedType.trim();
+      if (!acceptedType) {
+        return false;
+      }
+      // Escape regex syntax before expanding every wildcard (example: image/* --> image/.*).
+      const acceptedRegexStr = acceptedType
+        .split('*')
+        .map(part => RegExp.escape(part))
+        .join('.*');
+      const acceptedRegex = new RegExp(`^(?:${acceptedRegexStr})$`, 'i');
 
       // if fileType is set and accepted type looks like a MIME type, match that otherwise extension
       if (fileType && acceptedType.includes('/')) {
-        return !!fileType.match(acceptedRegex);
+        return acceptedRegex.test(fileType);
       }
-      return !!ext?.match(acceptedRegex);
+      return ext !== undefined && acceptedRegex.test(ext);
     });
   }
 

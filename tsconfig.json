@@ -15,7 +15,7 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "target": "es2024",
+    "target": "es2025",
     "strict": true,
     "allowUmdGlobalAccess": true,
     "isolatedModules": true,
