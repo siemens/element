@@ -16,7 +16,13 @@ $color-size: 1.5rem;
   block-size: $color-size;
   inline-size: $color-size;
 
-  input:focus ~ & {
+  &:hover {
+    box-shadow:
+      0 0 0 1px variables.$element-button-focus-overlay-color,
+      0 0 0 2px variables.$si-sys-color-border-3;
+  }
+
+  &:focus {
     @include variables.make-outline-focus();
   }
 }
@@ -47,20 +53,6 @@ $color-size: 1.5rem;
   &:disabled {
     cursor: default;
     border-color: variables.$si-sys-color-border-3;
-  }
-}
-
-.swatch {
-  block-size: $color-size;
-}
-
-.swatch-label {
-  cursor: pointer;
-
-  &:hover {
-    box-shadow:
-      0 0 0 1px variables.$element-button-focus-overlay-color,
-      0 0 0 2px variables.$si-sys-color-border-3;
   }
 }
 

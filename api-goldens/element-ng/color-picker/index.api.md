@@ -7,6 +7,7 @@
 import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
+import { GridCell } from '@angular/aria/grid';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
@@ -15,6 +16,7 @@ export class SiColorPickerComponent implements ControlValueAccessor {
     readonly autoClose: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly color: _angular_core.ModelSignal<string | undefined>;
     readonly colorPalette: _angular_core.InputSignal<string[]>;
+    readonly colorPaletteAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly disabledInput: _angular_core.InputSignal<boolean>;
     // (undocumented)
     registerOnChange(fn: (value: string) => void): void;
