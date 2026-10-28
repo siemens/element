@@ -76,7 +76,8 @@ test.describe('si-modal-dialogs', () => {
     await page.getByRole('option', { name: 'Row 8' }).press('Enter');
     await expect(page.getByRole('textbox', { name: 'Rename column' })).toBeFocused();
     await page.keyboard.type(' M');
-    await page.getByRole('option', { name: 'Row 8' }).press('Enter');
+    await page.keyboard.press('Enter');
+    await expect(page.getByRole('textbox', { name: 'Rename column' })).toHaveCount(0);
     await page.getByRole('option', { name: 'Row 8' }).press('Space');
 
     await si.runVisualAndA11yTests('columns-many');
