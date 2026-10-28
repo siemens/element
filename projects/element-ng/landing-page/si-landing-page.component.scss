@@ -98,7 +98,7 @@ footer {
 }
 
 // large tablet
-@include all-variables.media-breakpoint-down(xl) {
+@include all-variables.media-breakpoint-down(xxl) {
   .landing-page-background {
     padding: $margin-content-large-tablet;
   }
