@@ -298,7 +298,7 @@ describe('SiCustomSelectDirective', () => {
 
       expect(getHost()).toHaveAttribute('role', 'combobox');
       expect(getHost()).toHaveAttribute('aria-autocomplete', 'none');
-      expect(getHost()).toHaveAttribute('aria-readonly', 'true');
+      expect(getHost()).toHaveAttribute('aria-disabled', 'true');
       expect(getHost()).toHaveAttribute('aria-haspopup', 'listbox');
       expect(getHost()).toHaveAttribute('aria-expanded', 'false');
     });
