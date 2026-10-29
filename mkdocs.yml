@@ -252,6 +252,10 @@ extra_javascript:
   - '//w3.siemens.com/ote/sinet/ote.js'
   - 'https://assets.adobedtm.com/5dfc7d97c6fb/f16b45bec907/launch-af252bb19983.min.js'
   - '_src/version-selector.js'
+  - path: !ENV [ LIVE_PREVIEW_JS, 'http://127.0.0.1:4200/main.js' ]
+    type: module
+    async: true
+    defer: true
 extra:
   links:
     - name: 'GitHub'
@@ -279,9 +283,7 @@ markdown_extensions:
   - pymdownx.superfences
   - admonition
   - md_in_html
-  - element-docs:
-      examples_base: !ENV [ EXAMPLES_BASE, 'http://localhost:4200' ]
-      md_file: !relative
+  - element-docs
   - toc:
       permalink: true
 

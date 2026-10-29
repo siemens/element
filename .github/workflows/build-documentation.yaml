@@ -23,6 +23,8 @@ permissions: read-all
 jobs:
   documentation:
     runs-on: ubuntu-26.04
+    env:
+      LIVE_PREVIEW_JS: element-examples/main.js
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -50,12 +52,8 @@ jobs:
           UV_INDEX_CODE_DOCS_THEME_PASSWORD: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: pnpm run icon-viewer:build-docs
       - run: pnpm run docs:build:generate
-        env:
-          EXAMPLES_BASE: /element-examples/
         if: ${{ github.ref == 'refs/heads/main' }}
       - run: pnpm run docs:build:api
-        env:
-          EXAMPLES_BASE: /element-examples/
         if: ${{ github.ref != 'refs/heads/main' }}
       - run: mv dist/element-examples/ dist/design/
       - run: mv dist/dashboards-demo/ dist/design/
