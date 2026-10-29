@@ -40,30 +40,85 @@ surrounding background. Use `background-2` or `background-1` accordingly.
 
 ## Code ---
 
-It has a callback, which can be seen in example as call to `getData()`, which
-triggers every time a user has interaction with search bar. It also includes the
-actual search term.
+Use a native input with `siSearchBarInput` inside `si-search-bar`. Bind a reactive
+`FormControl` or a Signal Forms field to the input to manage its value, validation,
+and disabled state. Observe form value changes to trigger searches and debounce
+them in application code when needed.
 
-Input `[debounceTime]` is the wait time in `ms` for the search bar to notify
-changes after a user stops typing. (Type: `number`, Default value: `400`).
-
-Input `[showIcon]` defines if a search icon is displayed (false by default).
+Set `[showIcon]="true"` on `si-search-bar` to display a search icon. The icon is
+hidden by default.
 
 ### Usage
 
 ```ts
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import {
+  SiSearchBarComponent,
+  SiSearchBarInputDirective
+} from '@siemens/element-ng/search-bar';
 
 @Component({
-  imports: [SiSearchBarComponent, ...]
+  imports: [SiSearchBarComponent, SiSearchBarInputDirective, ...]
 })
 ```
 
 <si-docs-component example="si-search-bar/si-search-bar"></si-docs-component>
 
+### Projected input
+
+Apply input settings directly to the projected input. Keep appearance settings,
+such as `showIcon` and `colorVariant`, on `si-search-bar`:
+
+```html
+<si-search-bar [showIcon]="true">
+  <input
+    siSearchBarInput
+    aria-label="Search users"
+    placeholder="Search users"
+    maxlength="40"
+    [readonly]="readonly"
+    [disabled]="disabled"
+  />
+</si-search-bar>
+```
+
+Provide an accessible name with `aria-label` or an associated `<label>`;
+the placeholder does not replace a label. Native attributes such as `autocomplete`
+can also be set directly on the input.
+
+### Migrate deprecated inputs and outputs
+
+Run the following schematic to migrate the deprecated inputs and outputs of
+`si-search-bar` to a projected input. Use `--path` to limit the migration to a directory.
+
+```sh
+ng g @siemens/element-ng:migrate-search-bar
+```
+
+The schematic:
+
+- Moves `placeholder`, `maxlength`, `readonly`, `disabled`, and `value`, as well as form,
+  typeahead, and `aria-*` bindings, to a projected `<input siSearchBarInput>`.
+- Replaces `(searchChange)` with a Signal Forms field in the component class. The
+  `debounce` rule replaces `debounceTime`, the `pattern` rule replaces
+  `prohibitedCharacters`, and an `effect` calls the former handler when the search term
+  changes.
+- Adds `SiSearchBarInputDirective`, and `FormField` if needed, to the imports of the
+  component or NgModule.
+
+By default, the search bar debounces form value changes by 400 ms. A projected input
+updates its form value immediately, so the schematic logs each migrated search bar with
+a form binding that loses this debounce. Debounce the value changes in your code where
+needed.
+
+The schematic also logs search bars that need a manual migration, for example if the
+`(searchChange)` handler uses template variables or is inside a `@for` block or conditional
+control flow (`@if`, `@switch`, or `*ngIf`). Conditional handlers stay unchanged to preserve
+template type narrowing.
+
 ### Search Bar - Input Value
 
-Modify input value by setting `value`.
+Set the initial value on the projected input's `FormControl` or Signal Forms
+model. The clear button resets the bound form value to an empty string.
 
 <si-docs-component example="si-search-bar/si-search-bar-value"></si-docs-component>
 

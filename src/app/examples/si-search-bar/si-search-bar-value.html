@@ -1,6 +1,3 @@
-<si-search-bar
-  placeholder="Placeholder"
-  [debounceTime]="400"
-  [value]="value"
-  (searchChange)="logEvent($event)"
-/>
+<si-search-bar>
+  <input siSearchBarInput placeholder="Placeholder" [formControl]="control" />
+</si-search-bar>

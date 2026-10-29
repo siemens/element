@@ -38,10 +38,11 @@
   }
 
   .search-bar:has(.search-bar-clear) & {
-    padding-inline-end: calc(
+    --si-action-icon-offset: calc(
       #{bootstrap-variables.$btn-font-size} * #{bootstrap-variables.$btn-line-height} +
         #{bootstrap-variables.$btn-padding-y-sm} * 2 + #{map.get(variables.$spacers-inline, 2)} * 2
     );
+    padding-inline-end: calc(var(--si-action-icon-offset) + var(--si-feedback-icon-size, 0px));
   }
 
   .search-bar.variant-background-0 & {

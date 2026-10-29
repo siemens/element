@@ -19,6 +19,7 @@ export interface DiscoveredSourceFile {
   path: string;
   sourceFile: ts.SourceFile;
   typeChecker: ts.TypeChecker;
+  program: ts.Program;
 }
 
 export const getGlobalStyles = async (tree: Tree): Promise<string[]> => {
@@ -135,7 +136,8 @@ export async function* discoverSourceFiles(
       yield {
         path: relativePath,
         sourceFile,
-        typeChecker
+        typeChecker,
+        program
       };
     }
   }
