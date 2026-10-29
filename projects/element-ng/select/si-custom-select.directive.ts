@@ -82,8 +82,9 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
     '[attr.aria-describedby]': 'errormessageId()',
     '[attr.aria-controls]': 'isOpen() ? dropdownId() : null',
     '[attr.aria-expanded]': 'isOpen()',
-    '[attr.aria-disabled]': 'disabled()',
-    '[attr.aria-readonly]': 'readonly()',
+    // Use aria-disabled as a workaround because screen readers currently do not announce
+    // aria-readonly on comboboxes. Readonly selects remain focusable.
+    '[attr.aria-disabled]': 'disabled() || readonly()',
     '[attr.id]': 'id()',
     '[attr.tabindex]': 'disabled() ? "-1" : "0"',
     '[class.disabled]': 'disabled()',

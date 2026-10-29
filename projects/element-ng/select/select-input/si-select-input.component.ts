@@ -30,17 +30,16 @@ import { SelectOption } from '../si-select.types';
   templateUrl: './si-select-input.component.html',
   styleUrl: './si-select-input.component.scss',
   host: {
-    // In readonly mode, the select needs to be announced as a textbox.
-    // Otherwise, screen-reader won't announce the readonly state.
     class: 'select focus-none dropdown-toggle d-flex align-items-center ps-4',
+    role: 'combobox',
     'aria-autocomplete': 'none',
-    '[attr.role]': 'readonly() ? "textbox": "combobox"',
-    '[attr.aria-haspopup]': 'readonly() ? undefined : "listbox"',
-    '[attr.aria-expanded]': 'readonly() ? undefined : open()',
-    '[attr.aria-controls]': 'readonly() ? undefined : controls()',
-    '[attr.aria-readonly]': 'readonly()',
+    'aria-haspopup': 'listbox',
+    '[attr.aria-expanded]': 'open()',
+    '[attr.aria-controls]': 'controls()',
     '[attr.aria-labelledby]': 'labeledBy()',
-    '[attr.aria-disabled]': 'selectionStrategy.disabled()',
+    // Use aria-disabled as a workaround because screen readers currently do not announce
+    // aria-readonly on comboboxes. Readonly selects remain focusable.
+    '[attr.aria-disabled]': 'selectionStrategy.disabled() || readonly()',
     '[attr.tabindex]': 'selectionStrategy.disabled() ? "-1" : "0"',
     '[class.disabled]': 'selectionStrategy.disabled()',
     '[class.active]': 'open()',
