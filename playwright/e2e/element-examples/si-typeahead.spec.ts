@@ -33,7 +33,7 @@ test.describe('si-typeahead', () => {
 
   test(customExample, async ({ page, si }) => {
     await si.visitExample(customExample);
-    await page.getByRole('textbox').fill('al');
+    await page.getByRole('combobox', { name: 'States' }).fill('al');
     await expect(page.getByText('Alabama')).toHaveCount(1);
     await page.waitForTimeout(1000); // Wait for model (output) to update
     await si.runVisualAndA11yTests();
