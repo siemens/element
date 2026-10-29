@@ -25,6 +25,7 @@
   "prettier": "@siemens/prettier-config/.prettierrc.json",
   "scripts": {
     "start": "ng serve",
+    "start:web-components": "ng run element-examples:serve-web-components",
     "start:prod": "http-server dist/element-examples -s -p 4200 -a 127.0.0.1",
     "format": "prettier --log-level warn --write .",
     "lint:format": "prettier --check .",
@@ -35,6 +36,7 @@
     "build:examples": "ng build",
     "build:examples:prod": "ng build --configuration production",
     "build:examples:aot": "ng build --configuration aot",
+    "build:examples:web-components": "ng run element-examples:build-web-components",
     "build:all": "pnpm run translate:build && pnpm run \"/^(lib|schematics|live-preview|charts|native-charts|dashboards|map-styles|maps):build$/\"",
     "build:all:update-translatable-keys": "pnpm --filter . exec update-translatable-keys",
     "lib:build": "ng build element-ng && cpy \"projects/element-ng/*.scss\" \"./dist/@siemens/element-ng\" && cpy \"README.md\" \"./dist/@siemens/element-ng/\"",

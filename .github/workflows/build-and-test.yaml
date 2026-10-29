@@ -52,6 +52,7 @@ jobs:
       - run: pnpm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
       - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
       - run: pnpm run build:examples --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
+      - run: pnpm run build:examples:web-components
       - run: pnpm run dashboards-demo:build-all --no-progress
       - run: pnpm run dashboards-demo:build-all:esm
 
