@@ -121,6 +121,7 @@ export class SiChatContainerInputDirective {
 
 // @public
 export class SiChatInputComponent implements AfterViewInit {
+    constructor();
     readonly accept: _angular_core.InputSignal<string | undefined>;
     readonly actionParam: _angular_core.InputSignal<any>;
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
@@ -128,9 +129,12 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly attachFileLabel: _angular_core.InputSignal<TranslatableString>;
     readonly attachments: _angular_core.ModelSignal<ChatInputAttachment[]>;
     readonly autoFocus: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly cancelDictationLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly confirmDictationLabel: _angular_core.InputSignal<TranslatableString>;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly disclaimer: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly fileError: _angular_core.OutputEmitterRef<FileUploadError>;
+    readonly finishingLabel: _angular_core.InputSignal<TranslatableString>;
     focus(): void;
     readonly followUpPrompts: _angular_core.InputSignal<string[]>;
     readonly followUpPromptSelected: _angular_core.OutputEmitterRef<string>;
@@ -138,6 +142,7 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly interruptButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly interruptible: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly label: _angular_core.InputSignal<string>;
+    readonly listeningLabel: _angular_core.InputSignal<TranslatableString>;
     readonly maxFileSize: _angular_core.InputSignal<number>;
     readonly maxLength: _angular_core.InputSignal<number | undefined>;
     readonly placeholder: _angular_core.InputSignal<TranslatableString>;
@@ -151,7 +156,13 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly sendButtonIcon: _angular_core.InputSignal<string>;
     readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly startDictationLabel: _angular_core.InputSignal<TranslatableString>;
     readonly value: _angular_core.ModelSignal<string>;
+    readonly voiceInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly voiceInputCancel: _angular_core.OutputEmitterRef<void>;
+    readonly voiceInputConfirm: _angular_core.OutputEmitterRef<void>;
+    readonly voiceInputStart: _angular_core.OutputEmitterRef<void>;
+    readonly voiceInputState: _angular_core.InputSignal<"idle" | "listening" | "recording" | "finishing">;
 }
 
 // @public

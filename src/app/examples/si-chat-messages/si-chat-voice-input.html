@@ -1,0 +1,30 @@
+<div class="p-2">
+  <si-chat-input
+    placeholder="Enter a command, question or topic…"
+    disclaimer="The content is AI generated. Always verify the information for accuracy."
+    [voiceInput]="true"
+    [voiceInputState]="voiceInputState()"
+    [listeningLabel]="starting() ? 'Starting voice input…' : 'Listening…'"
+    [allowAttachments]="true"
+    [(value)]="value"
+    (voiceInputStart)="startDictation()"
+    (voiceInputConfirm)="confirmDictation()"
+    (voiceInputCancel)="cancelDictation()"
+    (send)="sendMessage($event)"
+  />
+  @if (error()) {
+    <p class="text-danger mt-4 mb-0" role="alert">{{ error() }}</p>
+  }
+  <div class="form-check form-switch mt-6">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      role="switch"
+      id="automatic-completion"
+      [checked]="automaticCompletion()"
+      [disabled]="voiceInputState() !== 'idle'"
+      (change)="automaticCompletion.set(!automaticCompletion())"
+    />
+    <label for="automatic-completion" class="form-check-label">Automatic completion</label>
+  </div>
+</div>
