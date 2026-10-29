@@ -102,13 +102,9 @@ describe('SiCarouselComponent', () => {
     it('should navigate to correct page when pager dot is clicked', async () => {
       const slide3pagerDot = page.getByRole('button', { name: 'Slide 3 of 5' });
       await userEvent.click(slide3pagerDot);
-      await fixture.whenStable();
-      const carouselItems = fixture.nativeElement.querySelectorAll('.carousel-item');
-      await vi.waitFor(async () => {
-        await fixture.whenStable();
-        expect(carouselItems[0]).toHaveAttribute('inert');
-      });
-      expect(carouselItems[2]).not.toHaveAttribute('inert');
+
+      await expect.element(page.getByText('Slide 3', { exact: true })).not.toHaveAttribute('inert');
+      await expect.element(page.getByText('Slide 1', { exact: true })).toHaveAttribute('inert');
     });
   });
 
@@ -124,12 +120,8 @@ describe('SiCarouselComponent', () => {
 
       // The active slide is tracked by an IntersectionObserver, which reacts
       // asynchronously after scrolling, so wait until the DOM reflects the change.
-      await vi.waitFor(async () => {
-        await fixture.whenStable();
-        expect(carouselItems[1]).not.toHaveAttribute('inert');
-      });
-
-      expect(carouselItems[0]).toHaveAttribute('inert');
+      await expect.element(page.getByText('Slide 2', { exact: true })).not.toHaveAttribute('inert');
+      await expect.element(page.getByText('Slide 1', { exact: true })).toHaveAttribute('inert');
     });
   });
 
@@ -151,12 +143,8 @@ describe('SiCarouselComponent', () => {
       await vi.advanceTimersByTimeAsync(5000);
 
       // Wait for the carousel to process the navigation and update the DOM.
-      await vi.waitFor(async () => {
-        await fixture.whenStable();
-        expect(carouselItems[1]).not.toHaveAttribute('inert');
-      });
-
-      expect(carouselItems[0]).toHaveAttribute('inert');
+      await expect.element(page.getByText('Slide 2', { exact: true })).not.toHaveAttribute('inert');
+      await expect.element(page.getByText('Slide 1', { exact: true })).toHaveAttribute('inert');
     });
 
     it('should automatically navigate to the next slide with specified duration', async () => {
