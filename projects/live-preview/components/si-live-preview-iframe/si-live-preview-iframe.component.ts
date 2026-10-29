@@ -44,6 +44,7 @@ export class SiLivePreviewIframeComponent implements OnInit {
   protected readonly state = inject(LivePreviewStateService);
   private rendererInProgress = false;
   private readonly previewIframeRef = signal<ElementRef | undefined>(undefined);
+  private readonly rendererReady = signal(false);
 
   readonly previewIframe = this.previewIframeRef.asReadonly();
 
@@ -81,7 +82,7 @@ export class SiLivePreviewIframeComponent implements OnInit {
     const previewWindow = this.previewIframe()?.nativeElement.contentWindow;
     if (
       !previewWindow ||
-      event.origin !== window.location.origin ||
+      event.origin !== this.urls.origin ||
       event.source !== previewWindow ||
       event.data?.src !== 'renderer'
     ) {
@@ -94,6 +95,7 @@ export class SiLivePreviewIframeComponent implements OnInit {
   private onMessageInZone(event: MessageEvent): void {
     switch (event.data.type) {
       case 'ready':
+        this.rendererReady.set(true);
         this.sendMessage();
         break;
       case 'landscapeMode':
@@ -137,10 +139,14 @@ export class SiLivePreviewIframeComponent implements OnInit {
   }
 
   protected setPreviewIframe(iframe: ElementRef | undefined): void {
+    this.rendererReady.set(false);
     this.previewIframeRef.set(iframe);
   }
 
   private sendMessage(): void {
+    if (!this.rendererReady()) {
+      return;
+    }
     const viewport = this.state.viewport();
     this.previewIframe()?.nativeElement.contentWindow.postMessage(
       {
@@ -161,7 +167,7 @@ export class SiLivePreviewIframeComponent implements OnInit {
         safeAreaLeft: viewport.safeAreaLeft,
         safeAreaRight: viewport.safeAreaRight
       },
-      window.location.origin
+      this.urls.origin
     );
   }
 }

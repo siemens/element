@@ -1,0 +1,37 @@
+@use '../../styles/components/tabs';
+
+:host {
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  border: 1px solid var(--si-sys-color-border-4);
+  color: var(--si-sys-color-text-primary);
+  background: var(--si-sys-color-background-0);
+}
+
+// Keep resets local while inheriting the host's theme and typography.
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+button,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  block-size: calc(var(--preview-height, 204px) + 411px);
+}
+
+.lp-tabs {
+  border-block-end: 1px solid var(--si-sys-color-border-4);
+}

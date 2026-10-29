@@ -1,0 +1,38 @@
+<slot hidden></slot>
+@defer (on viewport) {
+  @if (tabs().length > 1) {
+    <div role="tablist" class="lp-tabs" aria-label="Examples">
+      @for (tab of tabs(); track $index) {
+        <button
+          type="button"
+          role="tab"
+          class="tab-item tab-link"
+          aria-controls="example-panel"
+          [id]="'example-tab-' + $index"
+          [class.tab-active]="activeTabIndex() === $index"
+          [attr.aria-selected]="activeTabIndex() === $index"
+          [tabIndex]="activeTabIndex() === $index ? 0 : -1"
+          (click)="activateTab($index)"
+          (keydown.arrowRight)="activateTab(($index + 1) % $count, true); $event.preventDefault()"
+          (keydown.arrowLeft)="
+            activateTab(($index + $count - 1) % $count, true); $event.preventDefault()
+          "
+          (keydown.home)="activateTab(0, true); $event.preventDefault()"
+          (keydown.end)="activateTab($count - 1, true); $event.preventDefault()"
+        >
+          {{ tab.heading || tab.example }}
+        </button>
+      }
+    </div>
+  }
+  <div
+    id="example-panel"
+    class="preview"
+    [attr.role]="tabs().length > 1 ? 'tabpanel' : null"
+    [attr.aria-labelledby]="tabs().length > 1 ? 'example-tab-' + activeTabIndex() : null"
+  >
+    <si-live-preview [initialTheme]="previewTheme()" />
+  </div>
+} @placeholder {
+  <div class="preview" aria-hidden="true"></div>
+}
