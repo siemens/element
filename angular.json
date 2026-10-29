@@ -112,6 +112,51 @@
             }
           }
         },
+        "build-web-components": {
+          "builder": "@angular-builders/custom-esbuild:application",
+          "options": {
+            "plugins": ["projects/live-preview/esbuild-component-loader.mjs"],
+            "outputPath": {
+              "base": "dist/element-examples-web-components",
+              "browser": ""
+            },
+            "index": false,
+            "browser": "src/main.web-components.ts",
+            "tsConfig": "src/tsconfig.web-components.json",
+            "outputHashing": "media",
+            "allowedCommonJsDependencies": ["prismjs/components/prism-typescript"],
+            "define": {
+              "livePreviewApplicationUrl": "'../element-examples/'"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "600kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "define": {
+                "livePreviewApplicationUrl": "'http://localhost:4200/'"
+              }
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-web-components": {
+          "builder": "@angular-builders/custom-esbuild:dev-server",
+          "options": {
+            "buildTarget": "element-examples:build-web-components:development",
+            "port": 4206
+          }
+        },
         "serve": {
           "builder": "@angular-builders/custom-esbuild:dev-server",
           "options": {

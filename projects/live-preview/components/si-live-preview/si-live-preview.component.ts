@@ -84,7 +84,8 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   protected readonly webcomponents = this.config.webcomponents;
   protected readonly frameworks = new Map<string, LivePreviewFramework>([['Angular', 'angular']]);
 
-  readonly availableLocales = this.localeApi?.availableLocales() ?? [];
+  readonly availableLocales =
+    this.config.availableLocales ?? this.localeApi?.availableLocales() ?? [];
 
   protected readonly editorCollapsed = signal(
     localStorage.getItem('si-live-preview-editor-collapsed') === 'true' && !this.isMobile

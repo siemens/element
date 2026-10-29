@@ -9,6 +9,8 @@ import type { SiLivePreviewRuntimeComponent } from '../components/si-live-previe
 
 export interface SiLivePreviewConfig {
   errorHandler?: (err: any) => void;
+  /** URL of the application hosting the renderer, relative to the live-preview script if not absolute. */
+  applicationUrl?: string;
   /**
    * Optional shell for rendered examples. The shell receives the standalone example through
    * `component` and is responsible for rendering it, for example by composing the default shell.
@@ -30,6 +32,8 @@ export interface SiLivePreviewConfig {
   landscapeToggle?: boolean;
   webcomponents?: boolean;
   rootFontSizes?: number[];
+  /** Locales offered by an iframe-only host without an application locale service. */
+  availableLocales?: string[];
 }
 
 export interface SiLivePreviewInternals {
