@@ -23,6 +23,7 @@ export class SampleComponent implements OnInit {
   muteButton = false;
   blinkOn = false;
 
+  /* eslint-disable @typescript-eslint/no-deprecated -- Demonstrate intentional custom colors. */
   statusItems: StatusBarItem[] = [
     { title: 'Emergency', color: '#f00', value: 4, action: item => this.logEvent(item) },
     { title: 'Life safety', color: '#f00', value: 0, action: item => this.logEvent(item) },
@@ -52,6 +53,7 @@ export class SampleComponent implements OnInit {
       action: item => this.logEvent(item)
     }
   ];
+  /* eslint-enable @typescript-eslint/no-deprecated */
 
   shouldBlink = !navigator.webdriver;
 
