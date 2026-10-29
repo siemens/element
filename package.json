@@ -15,7 +15,7 @@
   "type": "module",
   "packageManager": "pnpm@12.15.0",
   "engines": {
-    "node": "^24.0.0"
+    "node": "^26.0.0"
   },
   "commitlint": {
     "extends": [
@@ -153,7 +153,7 @@
     "@types/google-libphonenumber": "7.4.31",
     "@types/json-schema": "7.0.15",
     "@types/mdast": "4.0.4",
-    "@types/node": "24.19.2",
+    "@types/node": "26.6.5",
     "@vitest/browser-playwright": "5.0.5",
     "@vitest/coverage-v8": "5.0.5",
     "@vitest/eslint-plugin": "1.6.28",
