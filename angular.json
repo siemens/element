@@ -523,11 +523,6 @@
               "projects/dashboards-demo/src/assets",
               "projects/dashboards-demo/src/favicon.png",
               {
-                "glob": "*",
-                "input": "projects/dashboards-ng/assets/i18n",
-                "output": "assets/i18n/dashboards-ng/"
-              },
-              {
                 "glob": "*.svg",
                 "input": "node_modules/@meteocons/svg-static/fill",
                 "output": "/assets/meteocons/"
