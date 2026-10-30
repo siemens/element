@@ -1,39 +1,40 @@
 @use 'sass:map';
+@use 'si-sys-variables';
 
 $spacers-inline: (
   0: 0,
-  1: var(--si-sys-sizing-spacing-x-10),
-  2: var(--si-sys-sizing-spacing-x-20),
-  3: var(--si-sys-sizing-spacing-x-30),
-  4: var(--si-sys-sizing-spacing-x-40),
-  5: var(--si-sys-sizing-spacing-x-50),
-  6: var(--si-sys-sizing-spacing-x-60),
-  7: var(--si-sys-sizing-spacing-x-70),
-  8: var(--si-sys-sizing-spacing-x-80),
-  9: var(--si-sys-sizing-spacing-x-90),
-  10: var(--si-sys-sizing-spacing-x-100),
-  11: var(--si-sys-sizing-spacing-x-110),
-  12: var(--si-sys-sizing-spacing-x-120),
-  13: var(--si-sys-sizing-spacing-x-130),
-  14: var(--si-sys-sizing-spacing-x-140)
+  1: si-sys-variables.$si-sys-sizing-spacing-x-10,
+  2: si-sys-variables.$si-sys-sizing-spacing-x-20,
+  3: si-sys-variables.$si-sys-sizing-spacing-x-30,
+  4: si-sys-variables.$si-sys-sizing-spacing-x-40,
+  5: si-sys-variables.$si-sys-sizing-spacing-x-50,
+  6: si-sys-variables.$si-sys-sizing-spacing-x-60,
+  7: si-sys-variables.$si-sys-sizing-spacing-x-70,
+  8: si-sys-variables.$si-sys-sizing-spacing-x-80,
+  9: si-sys-variables.$si-sys-sizing-spacing-x-90,
+  10: si-sys-variables.$si-sys-sizing-spacing-x-100,
+  11: si-sys-variables.$si-sys-sizing-spacing-x-110,
+  12: si-sys-variables.$si-sys-sizing-spacing-x-120,
+  13: si-sys-variables.$si-sys-sizing-spacing-x-130,
+  14: si-sys-variables.$si-sys-sizing-spacing-x-140
 );
 
 $spacers-block: (
   0: 0,
-  1: var(--si-sys-sizing-spacing-y-10),
-  2: var(--si-sys-sizing-spacing-y-20),
-  3: var(--si-sys-sizing-spacing-y-30),
-  4: var(--si-sys-sizing-spacing-y-40),
-  5: var(--si-sys-sizing-spacing-y-50),
-  6: var(--si-sys-sizing-spacing-y-60),
-  7: var(--si-sys-sizing-spacing-y-70),
-  8: var(--si-sys-sizing-spacing-y-80),
-  9: var(--si-sys-sizing-spacing-y-90),
-  10: var(--si-sys-sizing-spacing-y-100),
-  11: var(--si-sys-sizing-spacing-y-110),
-  12: var(--si-sys-sizing-spacing-y-120),
-  13: var(--si-sys-sizing-spacing-y-130),
-  14: var(--si-sys-sizing-spacing-y-140)
+  1: si-sys-variables.$si-sys-sizing-spacing-y-10,
+  2: si-sys-variables.$si-sys-sizing-spacing-y-20,
+  3: si-sys-variables.$si-sys-sizing-spacing-y-30,
+  4: si-sys-variables.$si-sys-sizing-spacing-y-40,
+  5: si-sys-variables.$si-sys-sizing-spacing-y-50,
+  6: si-sys-variables.$si-sys-sizing-spacing-y-60,
+  7: si-sys-variables.$si-sys-sizing-spacing-y-70,
+  8: si-sys-variables.$si-sys-sizing-spacing-y-80,
+  9: si-sys-variables.$si-sys-sizing-spacing-y-90,
+  10: si-sys-variables.$si-sys-sizing-spacing-y-100,
+  11: si-sys-variables.$si-sys-sizing-spacing-y-110,
+  12: si-sys-variables.$si-sys-sizing-spacing-y-120,
+  13: si-sys-variables.$si-sys-sizing-spacing-y-130,
+  14: si-sys-variables.$si-sys-sizing-spacing-y-140
 );
 
 @function negative-spacer-map($spacers) {
