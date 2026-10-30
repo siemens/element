@@ -1,18 +1,88 @@
 @use 'sass:map';
-
 @use '@siemens/element-theme/src/styles/variables';
 
 .empty-state-container {
-  min-block-size: 100%;
+  block-size: 100%;
+  min-block-size: 3.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-inline: map.get(variables.$spacers-inline, 8);
-  padding-block: map.get(variables.$spacers-block, 9);
-}
+  padding-block: map.get(variables.$spacers-block, 6);
 
-.state-icon {
-  color: variables.$si-sys-color-text-secondary;
-  font-size: 4rem;
+  .state-icon {
+    font-size: 4rem;
+    margin-block-end: map.get(variables.$spacers-block, 6);
+  }
+
+  .state-heading {
+    margin-block: 0;
+
+    @include variables.si-font(
+      variables.$si-font-size-h3,
+      variables.$si-line-height-h3,
+      variables.$si-font-weight-h3
+    );
+  }
+
+  .state-content {
+    margin-block: map.get(variables.$spacers-block, 4) 0;
+
+    @include variables.si-font(
+      variables.$si-font-size-body-paragraph,
+      variables.$si-line-height-body-paragraph,
+      variables.$si-font-weight-body-paragraph
+    );
+  }
+
+  .state-actions {
+    margin-block-start: map.get(variables.$spacers-block, 8);
+
+    &:not(:has(*)) {
+      display: none;
+    }
+  }
+
+  &.auto-responsive {
+    container-type: size;
+    container-name: empty-state;
+
+    .state-heading,
+    .state-content {
+      max-inline-size: 100%;
+      flex-shrink: 0;
+    }
+  }
+
+  // Approximate height tiers; container queries measure the content box, excluding padding.
+  &:has(.state-actions > *) {
+    min-block-size: 7rem;
+
+    @container empty-state (height < 11.75rem) {
+      .state-icon {
+        display: none;
+      }
+    }
+
+    @container empty-state (height < 6.75rem) {
+      .state-content {
+        display: none;
+      }
+    }
+  }
+
+  &:not(:has(.state-actions > *)) {
+    @container empty-state (height < 8.25rem) {
+      .state-icon {
+        display: none;
+      }
+    }
+
+    @container empty-state (height < 3.25rem) {
+      .state-content {
+        display: none;
+      }
+    }
+  }
 }
