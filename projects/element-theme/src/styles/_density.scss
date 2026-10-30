@@ -4,14 +4,22 @@
 @use 'variables/si-sys-sizing.compact.map-flat' as sizing-compact;
 @use 'variables/typography';
 
-@mixin define-spacers($tokens) {
-  // Currently exclude all non-spacing tokens; other sizing tokens will be migrated separately.
-  @each $name, $value in $tokens {
-    $is-inline-spacing: string.index($name, 'si-sys-sizing-spacing-x-') == 1;
-    $is-block-spacing: string.index($name, 'si-sys-sizing-spacing-y-') == 1;
+@mixin define-sizing($tokens) {
+  $size-prefix: 'si-sys-sizing-size-';
 
-    @if $is-inline-spacing or $is-block-spacing {
+  // Exclude tokens other than spacing and size until the remaining categories are migrated.
+  @each $name, $value in $tokens {
+    $is-spacing: string.index($name, 'si-sys-sizing-spacing-') == 1;
+    $is-size: string.index($name, $size-prefix) == 1;
+
+    @if $is-spacing or $is-size {
       --#{$name}: #{$value};
+    }
+
+    @if $is-size {
+      // Keep the existing property names until consumers migrate to the size tokens.
+      $step: string.slice($name, string.length($size-prefix) + 1);
+      --si-sys-sizing-sizing-#{$step}: #{$value};
     }
   }
 }
@@ -21,16 +29,12 @@
   --si-sys-typography-line-height-#{$name}: #{typography.px-to-ratio($font-size, $line-height)};
 }
 
-@mixin define-sizing($name, $size) {
-  --si-sys-sizing-sizing-#{$name}: #{$size};
-}
-
 @mixin define-icon-size($name, $size) {
   --si-sys-sizing-icon-#{$name}: #{typography.px-to-rem($size)};
 }
 
 #{selectors.$root} {
-  @include define-spacers(sizing-default.$tokens);
+  @include define-sizing(sizing-default.$tokens);
 
   @include define-font(body-sm, 12px, 16px);
   @include define-font(body, 14px, 16px);
@@ -50,27 +54,6 @@
   @include define-font(code, 14px, 20px);
   @include define-font(code-lg, 16px, 20px);
 
-  @include define-sizing(10, 2px);
-  @include define-sizing(20, 4px);
-  @include define-sizing(30, 8px);
-  @include define-sizing(40, 12px);
-  @include define-sizing(50, 16px);
-  @include define-sizing(60, 20px);
-  @include define-sizing(70, 24px);
-  @include define-sizing(80, 32px);
-  @include define-sizing(90, 40px);
-  @include define-sizing(100, 48px);
-  @include define-sizing(110, 64px);
-  @include define-sizing(120, 80px);
-  @include define-sizing(130, 96px);
-  @include define-sizing(140, 120px);
-  @include define-sizing(150, 160px);
-  @include define-sizing(160, 240px);
-  @include define-sizing(170, 320px);
-  @include define-sizing(180, 480px);
-  @include define-sizing(190, 600px);
-  @include define-sizing(200, 720px);
-
   @include define-icon-size(sm, 16px);
   @include define-icon-size(md, 20px);
   @include define-icon-size(lg, 24px);
@@ -79,7 +62,7 @@
 }
 
 .density-compact {
-  @include define-spacers(sizing-compact.$tokens);
+  @include define-sizing(sizing-compact.$tokens);
 
   @include define-font(body-sm, 10px, 12px);
   @include define-font(body, 12px, 14px);
@@ -98,27 +81,6 @@
   @include define-font(code-sm, 12px, 16px);
   @include define-font(code, 14px, 20px);
   @include define-font(code-lg, 16px, 20px);
-
-  @include define-sizing(10, 2px);
-  @include define-sizing(20, 2px);
-  @include define-sizing(30, 4px);
-  @include define-sizing(40, 8px);
-  @include define-sizing(50, 12px);
-  @include define-sizing(60, 16px);
-  @include define-sizing(70, 20px);
-  @include define-sizing(80, 24px);
-  @include define-sizing(90, 32px);
-  @include define-sizing(100, 40px);
-  @include define-sizing(110, 48px);
-  @include define-sizing(120, 64px);
-  @include define-sizing(130, 80px);
-  @include define-sizing(140, 96px);
-  @include define-sizing(150, 120px);
-  @include define-sizing(160, 160px);
-  @include define-sizing(170, 240px);
-  @include define-sizing(180, 320px);
-  @include define-sizing(190, 480px);
-  @include define-sizing(200, 600px);
 
   @include define-icon-size(sm, 12px);
   @include define-icon-size(md, 16px);
