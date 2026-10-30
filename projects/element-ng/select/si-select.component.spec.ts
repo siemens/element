@@ -38,7 +38,6 @@ class FormHostComponent {
     input: new FormControl('average', { updateOn: 'blur' })
   });
   readonly select = viewChild.required<SiSelectComponent<string>>('select');
-  readonly valueDirective = viewChild.required(SiSelectSelectionStrategy);
   readonly options: SelectOption<string>[] = OPTIONS_LIST;
 }
 
@@ -551,8 +550,11 @@ describe('SiSelectComponent', () => {
 
     it('sets the disabled state', async () => {
       component.form.disable();
-      expect(component.valueDirective().disabled()).toBe(true);
       expect(await selectHarness.getTabindex()).toBe('-1');
+      expect(fixture.nativeElement.querySelector('si-select')).toHaveAttribute(
+        'aria-disabled',
+        'true'
+      );
     });
   });
 

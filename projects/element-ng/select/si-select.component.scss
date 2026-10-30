@@ -14,8 +14,7 @@
 }
 
 :host {
-  &.readonly,
-  &.disabled {
+  &.readonly {
     pointer-events: none;
   }
 }

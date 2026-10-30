@@ -15,7 +15,6 @@ import { SiSelectSelectedItemHarness } from './si-select-selected-item.harness';
 export class SiSelectHarness extends ComponentHarness {
   static hostSelector = 'si-select';
   readonly getSelectedItems = this.locatorForAll(SiSelectSelectedItemHarness);
-  private getSelectElement = this.locatorFor('.select');
 
   /**
    * Clicks one or multiple items by their index. In the case of multi-select, this will toggle the selection state.
@@ -61,11 +60,11 @@ export class SiSelectHarness extends ComponentHarness {
   async open(trigger?: 'click' | 'enter' | 'space'): Promise<void> {
     switch (trigger) {
       case 'enter':
-        return this.getSelectElement().then(element => element.sendKeys(TestKey.ENTER));
+        return this.host().then(element => element.sendKeys(TestKey.ENTER));
       case 'space':
-        return this.getSelectElement().then(element => element.sendKeys(' '));
+        return this.host().then(element => element.sendKeys(' '));
       default:
-        return this.getSelectElement().then(element => element.click());
+        return this.host().then(element => element.click());
     }
   }
 
@@ -73,20 +72,20 @@ export class SiSelectHarness extends ComponentHarness {
    * Returns a ComponentHarness for the list of selectable items or null if the list is not opened.
    */
   async getList(): Promise<SiSelectListHarness | SiSelectFilterListHarness | null> {
-    const selectId = await this.getSelectElement().then(host => host.getAttribute('aria-controls'));
+    const selectId = await this.host().then(host => host.getAttribute('id'));
     if (await this.hasFilter()) {
       return this.documentRootLocatorFactory().locatorForOptional(
-        SiSelectFilterListHarness.with(selectId!)
+        SiSelectFilterListHarness.with(`${selectId}-listbox`)
       )();
     } else {
       return this.documentRootLocatorFactory().locatorForOptional(
-        SiSelectListHarness.with(selectId!)
+        SiSelectListHarness.with(`${selectId}-listbox`)
       )();
     }
   }
 
   async getTabindex(): Promise<string | null> {
-    return this.getSelectElement().then(element => element.getAttribute('tabindex'));
+    return this.host().then(element => element.getAttribute('tabindex'));
   }
 
   async getSelectedTexts(): Promise<string[]> {
@@ -94,7 +93,7 @@ export class SiSelectHarness extends ComponentHarness {
   }
 
   async blur(): Promise<void> {
-    return this.getSelectElement().then(host => host.blur());
+    return this.host().then(host => host.blur());
   }
 
   async getOverflowCount(): Promise<number> {
