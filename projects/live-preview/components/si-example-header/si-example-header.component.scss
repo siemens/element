@@ -1,0 +1,29 @@
+@use '../../styles/variables';
+@use '../../styles/components/tabs';
+@use '../../styles/components/focus';
+
+.wrapper {
+  background-color: variables.$live-preview-background-color;
+  color: variables.$live-preview-font-color;
+}
+
+:host-context(.has-tabs) {
+  .tab-wrapper {
+    background-color: variables.$live-preview-background-color;
+  }
+}
+
+:host-context(.has-tabs-mobile) {
+  .wrapper {
+    background-color: variables.$live-preview-background-color;
+  }
+}
+
+.tab-wrapper {
+  margin-block-end: 10px;
+  border-block-end: 1px solid variables.$live-preview-border-color;
+}
+
+:host {
+  display: contents;
+}
