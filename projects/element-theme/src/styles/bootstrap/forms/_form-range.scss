@@ -43,7 +43,7 @@ $thumb-size: 24px !default;
 }
 
 .form-range {
-  --thumb-shadow: #{si-sys-variables.$si-sys-color-effects-shadow-2};
+  --thumb-shadow: #{si-sys-variables.$si-sys-color-effects-shadow-20};
   -webkit-appearance: none; // stylelint-disable-line property-no-vendor-prefix
   background: transparent;
   inline-size: 100%;

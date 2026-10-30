@@ -8,15 +8,17 @@
 - img "Loading…"
 - button "Tertiary" [disabled]
 - img "Loading…"
+- button "Ghost" [disabled]
+- img "Loading…"
 - button "Warning" [disabled]
 - img "Loading…"
 - button "Danger" [disabled]
 - img "Loading…"
 - button "Default" [disabled]
 - img "Loading…"
-- button "clock" [disabled]
+- button "clock" [disabled]: 
 - img "Loading…"
-- button "clock" [disabled]
+- button "clock" [disabled]: 
 - img "Loading…"
 - text: Control panel
 - checkbox "Toggle loading" [checked]

@@ -5,7 +5,7 @@
 - text: Readonly
 - checkbox "Disabled"
 - text: Disabled
-- combobox "Lazy options" [expanded]
+- combobox "Lazy options" [expanded]: sw
 - listbox "Lazy options":
   - option "BW - Botswana"
   - option "SZ - Eswatini"

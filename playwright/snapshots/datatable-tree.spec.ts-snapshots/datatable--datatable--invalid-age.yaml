@@ -126,4 +126,6 @@
   - option "checkbox"
 - checkbox "Enforce checkboxes"
 - text: Enforce checkboxes
+- checkbox "Striped rows"
+- text: Striped rows
 - tooltip "Min. 2 characters Required value format not fulfilled"

@@ -8,3 +8,10 @@
 - region "This is disabled"
 - button "Heading via content projection"
 - region "Heading via content projection"
+- heading "Initially opened panel in tabs" [level=4]
+- tablist:
+  - tab "First tab"
+  - tab "Initially opened panel" [selected]
+- tabpanel "Initially opened panel":
+  - button "Initially opened" [expanded]
+  - region "Initially opened": No animation on initial render

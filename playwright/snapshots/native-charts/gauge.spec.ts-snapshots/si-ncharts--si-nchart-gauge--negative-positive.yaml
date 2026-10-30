@@ -11,17 +11,17 @@
       - cell /\d+/
       - cell "Series 2 Optional description"
 - text: Angle*
-- spinbutton "Angle*"
+- spinbutton "Angle*": /\d+/
 - text: Value range*
-- spinbutton "Value range*"
+- spinbutton "Value range*": /\d+/
 - text: Unit
-- textbox "Unit"
+- textbox "Unit": KWh
 - text: Min. decimals*
-- spinbutton "Min. decimals*"
+- spinbutton "Min. decimals*": "0"
 - text: Max. decimals*
-- spinbutton "Max. decimals*"
+- spinbutton "Max. decimals*": "2"
 - text: Num. axis decimals*
-- spinbutton "Num. axis decimals*"
+- spinbutton "Num. axis decimals*": "0"
 - text: Legend position*
 - combobox "Legend position*":
   - option "In a column"

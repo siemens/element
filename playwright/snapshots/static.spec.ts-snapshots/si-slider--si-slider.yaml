@@ -5,6 +5,6 @@
   - button "Increment"
   - text: /0 % \d+ %/
 - text: Write
-- spinbutton "Write"
+- spinbutton "Write": /\d+/
 - checkbox "Disabled"
 - text: Disabled

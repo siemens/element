@@ -15,4 +15,10 @@
   --#{variables.$variable-prefix}body-line-height: #{variables.$line-height-base};
   --#{variables.$variable-prefix}body-color: #{variables.$body-color};
   --#{variables.$variable-prefix}body-bg: #{variables.$body-bg};
+
+  // Support the new shadow token names with themes that still define the old names.
+  --si-sys-color-effects-shadow-10: var(--si-sys-color-effects-shadow-1);
+  --si-sys-color-effects-shadow-20: var(--si-sys-color-effects-shadow-2);
+  --si-sys-color-effects-shadow-30: var(--si-sys-color-effects-shadow-3);
+  --si-sys-color-effects-shadow-40: var(--si-sys-color-effects-shadow-4);
 }
