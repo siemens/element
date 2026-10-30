@@ -78,7 +78,8 @@ import type { SiSelectDropdownDirective } from './si-select-dropdown.directive';
     role: 'combobox',
     'aria-autocomplete': 'none',
     '[attr.aria-haspopup]': 'haspopup()',
-    '[attr.aria-labelledby]': 'hostLabelledby()',
+    '[attr.aria-labelledby]': 'ariaLabel() ? null : hostLabelledby()',
+    '[attr.aria-label]': 'ariaLabel()',
     '[attr.aria-describedby]': 'errormessageId()',
     '[attr.aria-controls]': 'isOpen() ? dropdownId() : null',
     '[attr.aria-expanded]': 'isOpen()',
@@ -112,6 +113,9 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
    * ```
    */
   readonly id = input(`__si-custom-select-${SiCustomSelectDirective.idCounter++}`);
+
+  /** Explicit accessible label. Overrides the generated label references. @defaultValue undefined */
+  readonly ariaLabel = input<string>();
 
   /**
    * Whether the select input is disabled.
