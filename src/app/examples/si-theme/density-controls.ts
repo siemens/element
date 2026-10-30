@@ -118,8 +118,8 @@ const typographyControlDefinitions: readonly (readonly [string, string, number, 
 
 const typographyControls: TypographyControlPair[] = typographyControlDefinitions.map(
   ([suffix, label, fontSize, lineHeight]) => {
-    const fontSizeName = `--si-sys-typography-font-size-${suffix}`;
-    const lineHeightName = `--si-sys-typography-line-height-${suffix}`;
+    const fontSizeName = `--si-sys-typography-${suffix}-font-size`;
+    const lineHeightName = `--si-sys-typography-${suffix}-line-height`;
 
     return {
       fontSize: {

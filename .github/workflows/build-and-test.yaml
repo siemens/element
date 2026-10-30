@@ -51,7 +51,9 @@ jobs:
           git diff --exit-code -- \
             projects/element-theme/src/styles/variables/si-sys-variables.scss \
             projects/element-theme/src/styles/variables/si-sys-sizing.default.map-flat.scss \
-            projects/element-theme/src/styles/variables/si-sys-sizing.compact.map-flat.scss
+            projects/element-theme/src/styles/variables/si-sys-sizing.compact.map-flat.scss \
+            projects/element-theme/src/styles/variables/si-sys-typography.default.map-flat.scss \
+            projects/element-theme/src/styles/variables/si-sys-typography.compact.map-flat.scss
       - run: pnpm list @simpl/brand --json
       - run: pnpm run lint:commit
       - run: pnpm run build:all
