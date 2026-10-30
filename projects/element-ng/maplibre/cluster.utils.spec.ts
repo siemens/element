@@ -2,7 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { createClusterConfiguration, createClusterGradient } from './cluster.utils';
+import {
+  createClusterBox,
+  createClusterConfiguration,
+  createClusterGradient
+} from './cluster.utils';
 
 const clusterFeature = (properties: GeoJSON.GeoJsonProperties): GeoJSON.Feature<GeoJSON.Point> => ({
   type: 'Feature',
@@ -124,5 +128,24 @@ describe('cluster utils', () => {
     expect(gradient).toContain('red');
     expect(gradient).toContain('yellow');
     expect(gradient).toContain('var(--si-sys-color-background-accent)');
+  });
+
+  it('boxes the projected children around their bounding box center', () => {
+    const box = createClusterBox([
+      { x: 140, y: 100 },
+      { x: 60, y: 120 },
+      { x: 100, y: 90 }
+    ]);
+
+    expect(box).toEqual({ center: { x: 100, y: 105 }, size: { x: 80, y: 30 } });
+  });
+
+  it('boxes nothing when all children share the same position', () => {
+    const box = createClusterBox([
+      { x: 10, y: 10 },
+      { x: 10, y: 10 }
+    ]);
+
+    expect(box).toEqual({ center: { x: 10, y: 10 }, size: { x: 0, y: 0 } });
   });
 });

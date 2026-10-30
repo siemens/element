@@ -137,6 +137,13 @@ The following example uses `SiClusterSourceComponent` to cluster GeoJSON points 
 `SiStatusMarkerComponent` for unclustered markers. Cluster markers show the number of
 contained points and their distribution by group or status.
 
+Clicking a cluster frames all of its children and zooms in as far as possible while they stay
+visible. The animation is skipped when `prefers-reduced-motion` is set. Zooming stops at
+`clusterMaxZoom`, above which points are no longer clustered. Clusters whose children stay within
+`clusterRadius` up to that zoom cannot be pulled apart, so they emit `clusterClick` and open the
+projected popover instead. Set `zoomOnClick` to `false` to always open the popover, as the switch
+in the example demonstrates.
+
 <si-docs-component example="maplibre/maplibre-cluster" height="580"></si-docs-component>
 
 ### 3D buildings example

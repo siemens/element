@@ -43,6 +43,22 @@ interface ClusterBucket extends ClusterSegment {
   mapExpression: unknown;
 }
 
+/** A position in map container pixels. */
+interface ClusterPixel {
+  x: number;
+  y: number;
+}
+
+/**
+ * The bounding box of projected cluster children in map container pixels.
+ *
+ * @internal
+ */
+export interface ClusterBox {
+  center: ClusterPixel;
+  size: ClusterPixel;
+}
+
 /** @internal */
 export interface ClusterConfiguration {
   clusterProperties: ClusterProperties;
@@ -154,4 +170,27 @@ export const createClusterGradient = (
 const getNumberProperty = (feature: ClusterPoint, property: string): number => {
   const value = feature.properties?.[property];
   return typeof value === 'number' ? value : Number(value) || 0;
+};
+
+/**
+ * Returns the bounding box of the projected children in container pixels.
+ *
+ * @internal
+ */
+export const createClusterBox = (children: readonly ClusterPixel[]): ClusterBox => {
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minY = Infinity;
+  let maxY = -Infinity;
+  for (const child of children) {
+    minX = Math.min(minX, child.x);
+    maxX = Math.max(maxX, child.x);
+    minY = Math.min(minY, child.y);
+    maxY = Math.max(maxY, child.y);
+  }
+
+  return {
+    center: { x: (minX + maxX) / 2, y: (minY + maxY) / 2 },
+    size: { x: maxX - minX, y: maxY - minY }
+  };
 };

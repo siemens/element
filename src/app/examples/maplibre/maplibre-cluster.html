@@ -1,5 +1,5 @@
 <mgl-map
-  class="h-100"
+  class="flex-grow-1"
   [attributionControl]="false"
   [locale]="mapTranslations()"
   [mapStyle]="mapStyle()"
@@ -19,9 +19,11 @@
     sourceId="cluster-source"
     statusProperty="status"
     [data]="geoJson"
+    [zoomOnClick]="zoomOnClick()"
     (clusterClick)="selectCluster($event)"
   >
-    <si-cluster-popover />
+    <!-- Required for vrt tests to avoid the popover close when the map size change -->
+    <si-cluster-popover closeOnMove="false" />
   </si-cluster-source>
 
   <mgl-markers-for-clusters source="cluster-source">
@@ -30,3 +32,18 @@
     </ng-template>
   </mgl-markers-for-clusters>
 </mgl-map>
+<div class="py-6 e2e-ignore">
+  <div class="card">
+    <div class="card-header">Control panel</div>
+    <div class="card-body">
+      <si-form-field class="form-switch mb-5" label="Zoom into clusters on click">
+        <input
+          type="checkbox"
+          role="switch"
+          class="form-check-input"
+          [formField]="zoomOnClickField"
+        />
+      </si-form-field>
+    </div>
+  </div>
+</div>
