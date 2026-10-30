@@ -7,6 +7,6 @@
 - img
 - img
 - text: Bar micro chart Progress micro chart
-- progressbar
-- progressbar
+- progressbar "Example 1"
+- progressbar "Example 2"
 - text: Markers

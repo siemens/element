@@ -90,6 +90,6 @@ active theme.
 @use '@siemens/element-theme/src/styles/variables';
 
 .my-element {
-  box-shadow: variables.$si-sys-color-effects-shadow-2;
+  box-shadow: variables.$si-sys-color-effects-shadow-20;
 }
 ```

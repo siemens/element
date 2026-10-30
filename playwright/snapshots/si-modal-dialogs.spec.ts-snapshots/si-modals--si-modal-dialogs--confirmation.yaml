@@ -19,7 +19,7 @@
 - button "Many columns"
 - dialog "Replace Yes/No with clear actions":
   - text: ""
-  - button "No"
+  - button "No": 
   - text: Avoid using 'Yes' and 'No' as buttons, instead use suitable verbs to make the action directly understandable
   - button "No"
   - button "Yes"

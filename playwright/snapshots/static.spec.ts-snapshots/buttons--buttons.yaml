@@ -21,33 +21,33 @@
 - button "Input"
 - button /\d+\.\d+\.\d+ - \d+\.\d+\.\d+/
 - heading "Icon buttons" [level=4]
-- button "clock"
-- button "bath"
-- button "library"
+- button "clock": 
+- button "bath": 
+- button "library": 
 - button "rocket"
-- button "secondary badge"
-- button "secondary warning badge"
-- button "secondary danger badge"
-- button "secondary ghost badge"
-- button "tertiary badge"
-- button "tertiary warning badge"
-- button "tertiary danger badge"
-- button "tertiary ghost badge"
+- button "secondary badge": 
+- button "secondary warning badge": 
+- button "secondary danger badge": 
+- button "secondary ghost badge": 
+- button "tertiary badge": 
+- button "tertiary warning badge": 
+- button "tertiary danger badge": 
+- button "tertiary ghost badge": 
 - heading "Circle buttons" [level=4]
-- button "clock"
-- button "bath"
-- button "library"
-- button "rocket"
-- button "secondary badge"
-- button "secondary warning badge"
-- button "secondary danger badge"
-- button "secondary ghost badge"
-- button "tertiary badge"
-- button "tertiary warning badge"
-- button "tertiary danger badge"
-- button "tertiary ghost badge"
-- button "close"
-- button "close"
+- button "clock": 
+- button "bath": 
+- button "library": 
+- button "rocket": 
+- button "secondary badge": 
+- button "secondary warning badge": 
+- button "secondary danger badge": 
+- button "secondary ghost badge": 
+- button "tertiary badge": 
+- button "tertiary warning badge": 
+- button "tertiary danger badge": 
+- button "tertiary ghost badge": 
+- button "close": ✕
+- button "close": ✕
 - heading "Button sizing" [level=4]
 - button "Large"
 - button "Default"
@@ -56,12 +56,12 @@
 - button "Default"
 - button "Small"
 - heading "Icon button sizing" [level=4]
-- button "default icon button"
-- button "default circle button"
-- button "default icon button"
-- button "default circle button"
-- button "small icon button"
-- button "small circle button"
+- button "default icon button": 
+- button "default circle button": 
+- button "default icon button": 
+- button "default circle button": 
+- button "small icon button": 
+- button "small circle button": 
 - heading "Button links" [level=4]
 - link "Primary Link":
   - /url: "#"

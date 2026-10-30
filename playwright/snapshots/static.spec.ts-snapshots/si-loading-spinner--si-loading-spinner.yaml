@@ -1,1 +1,3 @@
 - img "Loading…"
+- checkbox "With loading text"
+- text: With loading text

@@ -46,6 +46,9 @@
     - option "Note (web-component)"
     - option "Contact (web-component)"
     - option "Chart (web-component)"
+    - option "Note (native web-component) Framework-agnostic native web component widget showcasing integration of vanilla custom elements in the flexible dashboard":
+      - text: ""
+      - paragraph: Framework-agnostic native web component widget showcasing integration of vanilla custom elements in the flexible dashboard
     - option "Download (module-federation)"
     - option "Upload (module-federation)"
   - button "Cancel"
