@@ -307,7 +307,8 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
 
   /** @internal */
   writeValue(obj: T | null | undefined): void {
-    this.value.set(obj);
+    // Copy arrays so a mutated array written back with the same reference still notifies.
+    this.value.set(Array.isArray(obj) ? ([...obj] as T) : obj);
   }
 
   /** @internal */

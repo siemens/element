@@ -1,9 +1,11 @@
-@if (ariaLabel()) {
-  <span class="visually-hidden" [id]="baseId() + '-aria-label'">{{ ariaLabel() }}</span>
-}
+<span class="visually-hidden" [id]="select.comboboxLabelId()">
+  @if (ariaLabel()) {
+    <span [id]="select.id() + '-aria-label'">{{ ariaLabel() }}</span>
+  }
+</span>
 <div
   class="d-flex align-items-center flex-fill overflow-hidden h-100"
-  [id]="baseId() + '-content'"
+  [id]="select.id() + '-content'"
   [siAutoCollapsableList]="selectionStrategy.allowMultiple && selectedRows().length > 1"
 >
   @for (activeOption of selectedRows(); track activeOption) {
@@ -28,7 +30,7 @@
 <div class="form-control-actions">
   <si-icon
     class="dropdown-caret icon flip-rtl ps-0 m-0"
-    [class.text-disabled]="readonly()"
+    [class.text-disabled]="select.readonly()"
     [icon]="icons.elementDown2"
   />
 </div>
