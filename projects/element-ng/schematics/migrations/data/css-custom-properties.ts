@@ -362,47 +362,47 @@ export const CSS_CUSTOM_PROPERTIES_MIGRATION: CssCustomPropertyInstruction[] = [
   },
   {
     replace: '$box-shadow',
-    replaceWith: '$si-sys-color-effects-shadow-2'
+    replaceWith: '$si-sys-color-effects-shadow-20'
   },
   {
     replace: '$box-shadow-sm',
-    replaceWith: '$si-sys-color-effects-shadow-1'
+    replaceWith: '$si-sys-color-effects-shadow-10'
   },
   {
     replace: '$box-shadow-lg',
-    replaceWith: '$si-sys-color-effects-shadow-3'
+    replaceWith: '$si-sys-color-effects-shadow-30'
   },
   {
     replace: '$popover-box-shadow',
-    replaceWith: '$si-sys-color-effects-shadow-3'
+    replaceWith: '$si-sys-color-effects-shadow-30'
   },
   {
     replace: '$modal-content-box-shadow-xs',
-    replaceWith: '$si-sys-color-effects-shadow-3'
+    replaceWith: '$si-sys-color-effects-shadow-30'
   },
   {
     replace: '$modal-content-box-shadow-sm-up',
-    replaceWith: '$si-sys-color-effects-shadow-2'
+    replaceWith: '$si-sys-color-effects-shadow-20'
   },
   {
     replace: '$thumbnail-box-shadow',
-    replaceWith: '$si-sys-color-effects-shadow-1'
+    replaceWith: '$si-sys-color-effects-shadow-10'
   },
   {
     replace: '$element-elevation-1',
-    replaceWith: '$si-sys-color-effects-shadow-1'
+    replaceWith: '$si-sys-color-effects-shadow-10'
   },
   {
     replace: '$element-elevation-2',
-    replaceWith: '$si-sys-color-effects-shadow-2'
+    replaceWith: '$si-sys-color-effects-shadow-20'
   },
   {
     replace: '$element-elevation-3',
-    replaceWith: '$si-sys-color-effects-shadow-3'
+    replaceWith: '$si-sys-color-effects-shadow-30'
   },
   {
     replace: '$element-elevation-4',
-    replaceWith: '$si-sys-color-effects-shadow-4'
+    replaceWith: '$si-sys-color-effects-shadow-40'
   },
   ...['font-size', 'line-height', 'font-weight'].flatMap(property => [
     {

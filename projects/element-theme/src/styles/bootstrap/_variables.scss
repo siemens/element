@@ -134,12 +134,12 @@ $border-radius-sm: semantic-tokens.$element-radius-1 !default;
 $border-radius-lg: semantic-tokens.$element-radius-2 !default;
 $border-radius-pill: 50rem !default;
 
-// DEPRECATED: Use $si-sys-color-effects-shadow-2 instead.
-$box-shadow: si-sys-variables.$si-sys-color-effects-shadow-2 !default;
-// DEPRECATED: Use $si-sys-color-effects-shadow-1 instead.
-$box-shadow-sm: si-sys-variables.$si-sys-color-effects-shadow-1 !default;
-// DEPRECATED: Use $si-sys-color-effects-shadow-3 instead.
-$box-shadow-lg: si-sys-variables.$si-sys-color-effects-shadow-3 !default;
+// DEPRECATED: Use $si-sys-color-effects-shadow-20 instead.
+$box-shadow: si-sys-variables.$si-sys-color-effects-shadow-20 !default;
+// DEPRECATED: Use $si-sys-color-effects-shadow-10 instead.
+$box-shadow-sm: si-sys-variables.$si-sys-color-effects-shadow-10 !default;
+// DEPRECATED: Use $si-sys-color-effects-shadow-30 instead.
+$box-shadow-lg: si-sys-variables.$si-sys-color-effects-shadow-30 !default;
 // DEPRECATED: There is no replacement.
 $box-shadow-inset: inset 0 1px 1px var(--element-box-shadow-color-2);
 
@@ -464,7 +464,7 @@ $dropdown-bg: si-sys-variables.$si-sys-color-background-3 !default;
 $dropdown-border-radius: semantic-tokens.$element-radius-2 !default;
 $dropdown-divider-bg: si-sys-variables.$si-sys-color-border-4 !default;
 $dropdown-divider-margin-y: 4px !default;
-$dropdown-box-shadow: si-sys-variables.$si-sys-color-effects-shadow-2 !default;
+$dropdown-box-shadow: si-sys-variables.$si-sys-color-effects-shadow-20 !default;
 $dropdown-link-color: si-sys-variables.$si-sys-color-text-primary !default;
 $dropdown-link-disabled-color: si-sys-variables.$si-sys-color-text-disabled !default;
 $dropdown-item-padding-y: map.get(spacers.$spacers-block, 2);
@@ -516,7 +516,7 @@ $popover-inner-border-radius: functions.subtract(
   $popover-border-radius,
   $popover-border-width
 ) !default;
-// DEPRECATED: Use $si-sys-color-effects-shadow-3 instead.
+// DEPRECATED: Use $si-sys-color-effects-shadow-30 instead.
 $popover-box-shadow: $box-shadow !default;
 
 $popover-header-bg: si-sys-variables.$si-sys-color-background-3 !default;
@@ -555,9 +555,9 @@ $modal-content-inner-border-radius: functions.subtract(
   $modal-content-border-radius,
   $modal-content-border-width
 ) !default;
-// DEPRECATED: Use $si-sys-color-effects-shadow-3 instead.
+// DEPRECATED: Use $si-sys-color-effects-shadow-30 instead.
 $modal-content-box-shadow-xs: $box-shadow-sm !default;
-// DEPRECATED: Use $si-sys-color-effects-shadow-2 instead.
+// DEPRECATED: Use $si-sys-color-effects-shadow-20 instead.
 $modal-content-box-shadow-sm-up: $box-shadow !default;
 
 $modal-backdrop-bg: si-sys-variables.$si-sys-color-effects-backdrop !default;
@@ -639,7 +639,7 @@ $thumbnail-bg: $body-bg !default;
 $thumbnail-border-width: $border-width !default;
 $thumbnail-border-color: $border-color !default;
 $thumbnail-border-radius: $border-radius !default;
-// DEPRECATED: Use $si-sys-color-effects-shadow-1 instead.
+// DEPRECATED: Use $si-sys-color-effects-shadow-10 instead.
 $thumbnail-box-shadow: $box-shadow-sm !default;
 
 // Figures

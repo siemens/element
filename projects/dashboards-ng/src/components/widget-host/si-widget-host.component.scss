@@ -28,7 +28,7 @@
   .ui-draggable-dragging,
   .ui-resizable-resizing {
     .dragging-card {
-      box-shadow: variables.$si-sys-color-effects-shadow-3 !important; // stylelint-disable-line declaration-no-important
+      box-shadow: variables.$si-sys-color-effects-shadow-30 !important; // stylelint-disable-line declaration-no-important
     }
 
     > .grid-stack-item-content {
