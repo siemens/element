@@ -9,12 +9,16 @@
 @mixin define-sizing($tokens) {
   $size-prefix: 'si-sys-sizing-size-';
 
-  // Exclude tokens other than spacing and size until the remaining categories are migrated.
+  // Exclude tokens other than spacing, size, and icons until the remaining categories are migrated.
   @each $name, $value in $tokens {
     $is-spacing: string.index($name, 'si-sys-sizing-spacing-') == 1;
     $is-size: string.index($name, $size-prefix) == 1;
+    $is-icon: string.index($name, 'si-sys-sizing-icon-') == 1;
 
-    @if $is-spacing or $is-size {
+    @if $is-icon {
+      // Keep icons in rem so they scale with the root font size.
+      --#{$name}: #{typography.px-to-rem($value)};
+    } @else if $is-spacing or $is-size {
       --#{$name}: #{$value};
     }
 
@@ -49,30 +53,14 @@
   }
 }
 
-@mixin define-icon-size($name, $size) {
-  --si-sys-sizing-icon-#{$name}: #{typography.px-to-rem($size)};
-}
-
 #{selectors.$root} {
   @include define-sizing(sizing-default.$tokens);
 
   @include define-typography(typography-default.$tokens);
-
-  @include define-icon-size(sm, 16px);
-  @include define-icon-size(md, 20px);
-  @include define-icon-size(lg, 24px);
-  @include define-icon-size(xl, 32px);
-  @include define-icon-size(xxl, 48px);
 }
 
 .density-compact {
   @include define-sizing(sizing-compact.$tokens);
 
   @include define-typography(typography-compact.$tokens);
-
-  @include define-icon-size(sm, 12px);
-  @include define-icon-size(md, 16px);
-  @include define-icon-size(lg, 20px);
-  @include define-icon-size(xl, 24px);
-  @include define-icon-size(xxl, 32px);
 }
