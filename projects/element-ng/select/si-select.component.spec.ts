@@ -543,6 +543,12 @@ describe('SiSelectComponent', () => {
       expect(await selectHarness.getSelectedTexts()).toEqual(['Poor']);
     });
 
+    it('clears the selection when the form control is reset', async () => {
+      component.form.controls.input.reset();
+
+      expect(await selectHarness.getSelectedTexts()).toEqual([]);
+    });
+
     it('sets the disabled state', async () => {
       component.form.disable();
       expect(component.valueDirective().disabled()).toBe(true);
