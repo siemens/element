@@ -1,9 +1,19 @@
+@use 'sass:string';
 @use 'selectors';
+@use 'variables/si-sys-sizing.default.map-flat' as sizing-default;
+@use 'variables/si-sys-sizing.compact.map-flat' as sizing-compact;
 @use 'variables/typography';
 
-@mixin define-spacer($spacer, $block-size, $inline-size) {
-  --si-sys-sizing-spacing-y-#{$spacer}: #{$block-size};
-  --si-sys-sizing-spacing-x-#{$spacer}: #{$inline-size};
+@mixin define-spacers($tokens) {
+  // Currently exclude all non-spacing tokens; other sizing tokens will be migrated separately.
+  @each $name, $value in $tokens {
+    $is-inline-spacing: string.index($name, 'si-sys-sizing-spacing-x-') == 1;
+    $is-block-spacing: string.index($name, 'si-sys-sizing-spacing-y-') == 1;
+
+    @if $is-inline-spacing or $is-block-spacing {
+      --#{$name}: #{$value};
+    }
+  }
 }
 
 @mixin define-font($name, $font-size, $line-height) {
@@ -20,20 +30,7 @@
 }
 
 #{selectors.$root} {
-  @include define-spacer(10, 2px, 2px);
-  @include define-spacer(20, 4px, 4px);
-  @include define-spacer(30, 6px, 6px);
-  @include define-spacer(40, 8px, 8px);
-  @include define-spacer(50, 12px, 12px);
-  @include define-spacer(60, 16px, 16px);
-  @include define-spacer(70, 20px, 20px);
-  @include define-spacer(80, 24px, 24px);
-  @include define-spacer(90, 32px, 32px);
-  @include define-spacer(100, 40px, 40px);
-  @include define-spacer(110, 48px, 48px);
-  @include define-spacer(120, 64px, 64px);
-  @include define-spacer(130, 80px, 80px);
-  @include define-spacer(140, 96px, 96px);
+  @include define-spacers(sizing-default.$tokens);
 
   @include define-font(body-sm, 12px, 16px);
   @include define-font(body, 14px, 16px);
@@ -82,20 +79,7 @@
 }
 
 .density-compact {
-  @include define-spacer(10, 2px, 2px);
-  @include define-spacer(20, 2px, 2px);
-  @include define-spacer(30, 4px, 4px);
-  @include define-spacer(40, 6px, 6px);
-  @include define-spacer(50, 8px, 8px);
-  @include define-spacer(60, 12px, 12px);
-  @include define-spacer(70, 16px, 16px);
-  @include define-spacer(80, 20px, 20px);
-  @include define-spacer(90, 24px, 24px);
-  @include define-spacer(100, 32px, 32px);
-  @include define-spacer(110, 40px, 40px);
-  @include define-spacer(120, 48px, 48px);
-  @include define-spacer(130, 64px, 64px);
-  @include define-spacer(140, 80px, 80px);
+  @include define-spacers(sizing-compact.$tokens);
 
   @include define-font(body-sm, 10px, 12px);
   @include define-font(body, 12px, 14px);
