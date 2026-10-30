@@ -33,8 +33,7 @@ export class SiSelectListComponent<T> extends SiSelectListBase<T> implements OnI
     }
   );
 
-  override ngOnInit(): void {
-    super.ngOnInit();
+  ngOnInit(): void {
     setTimeout(() => this.listbox().nativeElement.focus());
   }
 
