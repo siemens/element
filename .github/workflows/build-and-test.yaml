@@ -37,7 +37,7 @@ jobs:
       - name: Install Node.js and pnpm
         uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
-          runtime: node@krypton
+          runtime: node@^26.0.0
           cache: true
           install: false
       - name: Set up registry authentication
@@ -78,7 +78,7 @@ jobs:
       - name: Install Node.js and pnpm
         uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
-          runtime: node@krypton
+          runtime: node@^26.0.0
           cache: true
           install: false
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
@@ -134,7 +134,7 @@ jobs:
       - name: Install Node.js and pnpm
         uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
-          runtime: node@krypton
+          runtime: node@^26.0.0
           cache: true
           install: false
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
@@ -174,7 +174,7 @@ jobs:
       - name: Install Node.js and pnpm
         uses: pnpm/setup@fa36a5ef7dcdefc3a7cb25655c122e00cf6e636e # v3.1.2
         with:
-          runtime: node@krypton
+          runtime: node@^26.0.0
           cache: true
           install: false
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
