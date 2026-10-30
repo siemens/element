@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
@@ -33,6 +34,7 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
 @Component({
   selector: 'si-select',
   imports: [
+    CdkTrapFocus,
     OverlayModule,
     SiSelectInputComponent,
     SiSelectListComponent,

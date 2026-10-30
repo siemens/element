@@ -29,6 +29,7 @@
   @if (!hasFilter()) {
     <si-select-list
       class="dropdown-menu"
+      cdkTrapFocus
       [baseId]="id()"
       [optionTemplate]="optionTemplate()"
       [groupTemplate]="groupTemplate()"
@@ -39,6 +40,7 @@
   } @else {
     <si-select-list-has-filter
       class="dropdown-menu"
+      cdkTrapFocus
       [baseId]="id()"
       [filterPlaceholder]="filterPlaceholder()"
       [noResultsFoundLabel]="noResultsFoundLabel()"
