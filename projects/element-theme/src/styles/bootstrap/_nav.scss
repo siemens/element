@@ -76,8 +76,7 @@ $nav-tabs-min-width: 100px;
     border-style: solid;
     border-color: transparent;
     border-width: 0 0 variables.$nav-tabs-border-width;
-    border-start-start-radius: variables.$btn-border-radius;
-    border-start-end-radius: variables.$btn-border-radius;
+    border-radius: 0;
     cursor: pointer;
     font-weight: typography.$si-font-weight-body-lg;
 

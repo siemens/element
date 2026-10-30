@@ -5,6 +5,8 @@
   flex: none;
   inline-size: 100%;
   overflow: hidden;
+  border-start-start-radius: all-variables.$card-inner-border-radius;
+  border-start-end-radius: all-variables.$card-inner-border-radius;
 
   &:empty {
     display: none;
