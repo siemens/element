@@ -94,11 +94,10 @@
               (cdkMenuClosed)="onToggleContextMenuClose()"
               (click)="$event.stopPropagation()"
             >
-              <i
-                aria-hidden="true"
+              <si-icon
                 class="si-tree-view-item-icon si-tree-view-menu-btn"
-                [class]="icons().itemMenu"
-              ></i>
+                [icon]="icons().itemMenu"
+              />
             </div>
           </div>
         }
@@ -171,20 +170,26 @@
   let-toggleIcon="toggleIcon"
   let-positionEnd="positionEnd"
 >
-  @let folderStateClass = getItemFolderStateClass();
+  @let folderStateIcon = getItemFolderStateIcon();
   <a
     class="si-tree-stretch-center si-tree-view-item-toggle"
     tabindex="-1"
     [class.si-tree-view-item-toggle-end]="positionEnd"
-    [class.disabled]="!folderStateClass"
+    [class.disabled]="!folderStateIcon"
     [style.margin-inline-start]="biggerPaddingStart"
     [style.padding-inline-start]="paddingStart"
     (click)="onItemFolderClicked(); $event.stopPropagation()"
   >
     @if (isExpanding) {
       <si-loading-spinner />
+    } @else if (folderStateIcon) {
+      <si-icon
+        [class]="toggleIcon"
+        [class.flip-rtl]="treeItem.state === 'collapsed' && flipCollapsedIcon()"
+        [icon]="folderStateIcon"
+      />
     } @else {
-      <i aria-hidden="true" [class]="`${toggleIcon} ${folderStateClass}`"></i>
+      <i aria-hidden="true" [class]="toggleIcon"></i>
     }
   </a>
 </ng-template>

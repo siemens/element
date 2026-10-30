@@ -168,10 +168,14 @@ describe('SiTreeViewComponent', () => {
     await fixture.whenStable();
     expect(component.treeViewComponent().folderStateStart()).toBe(true);
     expect(
-      element.querySelector('.si-tree-view-root-ul .si-tree-view-li-item a .element-down-2')
+      element.querySelector(
+        '.si-tree-view-root-ul .si-tree-view-li-item a si-icon[data-icon="itemCollapsed"]'
+      )
     ).toBeFalsy();
     expect(
-      element.querySelector('.si-tree-view-root-ul .si-tree-view-li-item a .element-right-2')
+      element.querySelector(
+        '.si-tree-view-root-ul .si-tree-view-li-item a si-icon[data-icon="itemCollapsedLeft"]'
+      )
     ).toBeTruthy();
   });
 
@@ -179,10 +183,14 @@ describe('SiTreeViewComponent', () => {
     component.folderStateStart.set(false);
     await fixture.whenStable();
     expect(
-      element.querySelector('.si-tree-view-root-ul .si-tree-view-li-item a .element-down-2')
+      element.querySelector(
+        '.si-tree-view-root-ul .si-tree-view-li-item a si-icon[data-icon="itemCollapsed"]'
+      )
     ).toBeTruthy();
     expect(
-      element.querySelector('.si-tree-view-root-ul .si-tree-view-li-item a .element-right-2')
+      element.querySelector(
+        '.si-tree-view-root-ul .si-tree-view-li-item a si-icon[data-icon="itemCollapsedLeft"]'
+      )
     ).toBeFalsy();
   });
 
@@ -191,10 +199,14 @@ describe('SiTreeViewComponent', () => {
     component.groupedList.set(true);
     await fixture.whenStable();
     expect(
-      element.querySelector('.si-tree-view-root-ul .si-tree-view-item-group a .element-down-2')
+      element.querySelector(
+        '.si-tree-view-root-ul .si-tree-view-item-group a si-icon[data-icon="itemCollapsed"]'
+      )
     ).toBeTruthy();
     expect(
-      element.querySelector('.si-tree-view-root-ul .si-tree-view-item-group a .element-right-2')
+      element.querySelector(
+        '.si-tree-view-root-ul .si-tree-view-item-group a si-icon[data-icon="itemCollapsedLeft"]'
+      )
     ).toBeFalsy();
   });
 
@@ -203,10 +215,14 @@ describe('SiTreeViewComponent', () => {
     component.groupedList.set(true);
     await fixture.whenStable();
     expect(
-      element.querySelector('.si-tree-view-root-ul .si-tree-view-item-group a .element-down-2')
+      element.querySelector(
+        '.si-tree-view-root-ul .si-tree-view-item-group a si-icon[data-icon="itemCollapsed"]'
+      )
     ).toBeFalsy();
     expect(
-      element.querySelector('.si-tree-view-root-ul .si-tree-view-item-group a .element-right-2')
+      element.querySelector(
+        '.si-tree-view-root-ul .si-tree-view-item-group a si-icon[data-icon="itemCollapsedLeft"]'
+      )
     ).toBeTruthy();
   });
 
@@ -363,7 +379,9 @@ describe('SiTreeViewComponent', () => {
     component.enableContextMenuButton.set(false);
     await fixture.whenStable();
     expect(component.treeViewComponent().enableContextMenuButton()).toBe(false);
-    expect(element.querySelector('.si-tree-view-menu-btn.element-options-vertical')).toBeFalsy();
+    expect(
+      element.querySelector('si-icon.si-tree-view-menu-btn[data-icon="itemMenu"]')
+    ).toBeFalsy();
   });
 
   it('should show menu button', async () => {
@@ -371,7 +389,9 @@ describe('SiTreeViewComponent', () => {
     component.enableContextMenuButton.set(true);
     await fixture.whenStable();
     expect(component.treeViewComponent().enableContextMenuButton()).toBe(true);
-    expect(element.querySelector('.si-tree-view-menu-btn.element-options-vertical')).toBeTruthy();
+    expect(
+      element.querySelector('si-icon.si-tree-view-menu-btn[data-icon="itemMenu"]')
+    ).toBeTruthy();
   });
 
   it('should hide state pipe', async () => {
@@ -446,7 +466,9 @@ describe('SiTreeViewComponent', () => {
     expect(input.checked).toBeTruthy();
 
     debugElement
-      .query(By.css('.si-tree-view-root-ul .si-tree-view-li-item a .element-down-2'))
+      .query(
+        By.css('.si-tree-view-root-ul .si-tree-view-li-item a si-icon[data-icon="itemCollapsed"]')
+      )
       .triggerEventHandler('click', null);
     expect(input.checked).toBeTruthy();
   });
@@ -1073,7 +1095,7 @@ describe('SiTreeViewComponent', () => {
 
     it('should display icons', () => {
       expect(
-        element.querySelectorAll('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)')
+        element.querySelectorAll('si-icon.si-tree-view-item-icon:not(.si-tree-view-menu-btn)')
       ).toHaveLength(10);
     });
 
@@ -1081,7 +1103,7 @@ describe('SiTreeViewComponent', () => {
       component.enableIcon.set(false);
       await fixture.whenStable();
       expect(
-        element.querySelectorAll('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)')
+        element.querySelectorAll('si-icon.si-tree-view-item-icon:not(.si-tree-view-menu-btn)')
       ).toHaveLength(0);
     });
   });
