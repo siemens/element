@@ -1,15 +1,15 @@
 - heading "Inline" [level=4]
-- textbox "Inline"
+- combobox "Inline" [disabled]: Fair
 - heading "FormControl" [level=4]
-- textbox "FormControl"
+- combobox "FormControl" [disabled]: Good
 - heading "Multi select" [level=4]
-- textbox "Multi select"
+- combobox "Multi select" [disabled]: Good , Fair
 - heading "Multi-select with groups" [level=4]
-- textbox "Multi-select with groups"
+- combobox "Multi-select with groups" [disabled]: Value 1.1 , Value 2.2
 - heading "Select with custom template" [level=4]
-- textbox "Select with custom template"
+- combobox "Select with custom template" [disabled]: Beer 2 (Alc.:7%)
 - heading "Select with actions" [level=4]
-- textbox "Select with actions"
+- combobox "Select with actions" [disabled]: Select an option
 - text: "Control panel Current value: fair"
 - checkbox "Readonly" [checked]
 - text: Readonly
