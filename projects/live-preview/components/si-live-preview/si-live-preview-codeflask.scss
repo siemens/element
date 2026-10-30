@@ -34,8 +34,8 @@ $tag: element-vars.$si-sys-color-code-10;
 $attr: element-vars.$si-sys-color-code-3;
 $type: element-vars.$si-sys-color-code-11;
 $addition: element-vars.$si-sys-color-code-12;
-$lines-color: element-vars.$element-text-disabled;
-$lines-background: element-vars.$element-base-4;
+$lines-color: element-vars.$si-sys-color-text-disabled;
+$lines-background: variables.$live-preview-background-color;
 
 :host ::ng-deep {
   .readonly .codeflask {

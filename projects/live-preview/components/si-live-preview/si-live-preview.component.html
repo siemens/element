@@ -133,7 +133,9 @@
           type="button"
           class="btn-command rtl-selection"
           [title]="state.isRTL() ? 'Right-to-left layout' : 'Left-to-right layout'"
-          [attr.aria-label]="state.isRTL() ? 'Right-to-left layout' : 'Left-to-right layout'"
+          [attr.aria-label]="
+            state.isRTL() ? 'RTL (right-to-left layout)' : 'LTR (left-to-right layout)'
+          "
           (click)="toggleRTL()"
         >
           {{ state.isRTL() ? 'RTL' : 'LTR' }}
