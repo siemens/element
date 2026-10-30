@@ -228,6 +228,13 @@ describe('SiSelectComponent', () => {
       expect(await selectHarness.getList()).not.toBeNull();
     });
 
+    it('should close dropdown on Tab', async () => {
+      await selectHarness.open();
+      await selectHarness.getList().then(list => list!.sendKeys(TestKey.TAB));
+
+      expect(await selectHarness.getList()).toBeNull();
+    });
+
     it('should open dropdown on enter', async () => {
       await selectHarness.open('enter');
       expect(await selectHarness.getList()).not.toBeNull();
@@ -692,6 +699,13 @@ describe('SiSelectComponent', () => {
       await selectHarness.clickActionByText({ text: 'nothing' });
       expect(await selectHarness.getList()).toBeTruthy();
       expect(component.actionClick).toHaveBeenCalled();
+    });
+
+    it('should keep the dropdown open on Tab', async () => {
+      await selectHarness.open();
+      await selectHarness.getList().then(list => list!.sendKeys(TestKey.TAB));
+
+      expect(await selectHarness.getList()).toBeTruthy();
     });
   });
 });
