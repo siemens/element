@@ -56,7 +56,7 @@ const createSpacerControls = (direction: 'x' | 'y'): CssVariableControl[] => {
 const createSizingControls = (): CssVariableControl[] => {
   return sizingDefaults.map((value, index) => {
     const number = (index + 1) * 10;
-    const name = `--si-sys-sizing-sizing-${number}`;
+    const name = `--si-sys-sizing-size-${number}`;
 
     return {
       id: name.slice(2),
