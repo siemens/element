@@ -64,10 +64,10 @@ $utilities: (
       sm: variables.$box-shadow-sm,
       // Deprecated: Use shadow-3 instead.
       lg: variables.$box-shadow-lg,
-      1: si-sys-variables.$si-sys-color-effects-shadow-1,
-      2: si-sys-variables.$si-sys-color-effects-shadow-2,
-      3: si-sys-variables.$si-sys-color-effects-shadow-3,
-      4: si-sys-variables.$si-sys-color-effects-shadow-4,
+      1: si-sys-variables.$si-sys-color-effects-shadow-10,
+      2: si-sys-variables.$si-sys-color-effects-shadow-20,
+      3: si-sys-variables.$si-sys-color-effects-shadow-30,
+      4: si-sys-variables.$si-sys-color-effects-shadow-40,
       none: none
     )
   ),

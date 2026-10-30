@@ -121,7 +121,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     .datatable-row-left {
       .datatable-body-cell:last-child,
       .datatable-header-cell:last-child {
-        box-shadow: si-sys-variables.$si-sys-color-effects-shadow-3;
+        box-shadow: si-sys-variables.$si-sys-color-effects-shadow-30;
         clip-path: inset(0 -8px 0 0);
       }
     }
@@ -129,7 +129,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     .datatable-row-right {
       .datatable-body-cell:first-child,
       .datatable-header-cell:first-child {
-        box-shadow: si-sys-variables.$si-sys-color-effects-shadow-3;
+        box-shadow: si-sys-variables.$si-sys-color-effects-shadow-30;
         clip-path: inset(0 0 0 -8px);
       }
     }

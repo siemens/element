@@ -486,8 +486,8 @@ importers:
         version: 5.0.5(@types/node@24.19.2)(@vitest/browser-playwright@5.0.5)(@vitest/coverage-v8@5.0.5)(@vitest/ui@5.0.5)(vite@7.3.6(@types/node@24.19.2)(jiti@2.7.0)(less@4.9.1(supports-color@10.2.2))(lightningcss@1.33.0)(sass@1.105.0)(terser@5.46.2)(tsx@4.23.15)(yaml@2.9.0))
     optionalDependencies:
       '@siemens-ux/design-tokens':
-        specifier: 0.15.0
-        version: 0.15.0
+        specifier: 0.16.1
+        version: 0.16.1
       '@simpl/brand':
         specifier: 4.1.0
         version: 4.1.0
@@ -3688,8 +3688,8 @@ packages:
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==, tarball: https://registry.npmjs.org/@shikijs/vscode-textmate/-/vscode-textmate-10.0.2.tgz}
 
-  '@siemens-ux/design-tokens@0.15.0':
-    resolution: {integrity: sha1-un+9qgzf8tfLVG0rcOMpBe8HQTc=, tarball: https://code.siemens.com/api/v4/projects/516167/packages/npm/@siemens-ux/design-tokens/-/@siemens-ux/design-tokens-0.15.0.tgz}
+  '@siemens-ux/design-tokens@0.16.1':
+    resolution: {integrity: sha1-BWU+A+q0k2c2PkJV8QOBRBqrt1Y=, tarball: https://code.siemens.com/api/v4/projects/516167/packages/npm/@siemens-ux/design-tokens/-/@siemens-ux/design-tokens-0.16.1.tgz}
 
   '@siemens/commitlint-config@5.0.0':
     resolution: {integrity: sha512-Ca0kqUMc6TSzMspmWIXzsdirT2LODVQfJCBVg2fMhMeCNEqdD0rrQhjPTTpwqQ7Q1Pghy/ZGRS3SpZbDaYdtHw==, tarball: https://registry.npmjs.org/@siemens/commitlint-config/-/commitlint-config-5.0.0.tgz}
@@ -12338,7 +12338,7 @@ snapshots:
   '@shikijs/vscode-textmate@10.0.2':
     optional: true
 
-  '@siemens-ux/design-tokens@0.15.0':
+  '@siemens-ux/design-tokens@0.16.1':
     optional: true
 
   '@siemens/commitlint-config@5.0.0(@commitlint/cli@21.2.4(conventional-commits-parser@7.1.2)(typescript@6.0.3))(@commitlint/config-conventional@21.2.4)':

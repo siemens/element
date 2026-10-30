@@ -1,0 +1,10 @@
+@use 'si-sys-variables';
+
+// @deprecated Use $si-sys-color-effects-shadow-10 instead.
+$si-sys-color-effects-shadow-1: si-sys-variables.$si-sys-color-effects-shadow-10;
+// @deprecated Use $si-sys-color-effects-shadow-20 instead.
+$si-sys-color-effects-shadow-2: si-sys-variables.$si-sys-color-effects-shadow-20;
+// @deprecated Use $si-sys-color-effects-shadow-30 instead.
+$si-sys-color-effects-shadow-3: si-sys-variables.$si-sys-color-effects-shadow-30;
+// @deprecated Use $si-sys-color-effects-shadow-40 instead.
+$si-sys-color-effects-shadow-4: si-sys-variables.$si-sys-color-effects-shadow-40;
