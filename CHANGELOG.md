@@ -1,3 +1,16 @@
+# [49.19.0](https://github.com/siemens/element/compare/v49.18.1...v49.19.0) (2026-10-30)
+
+
+### Features
+
+* **dropdown:** align item labels with leading icons ([4ef9c39](https://github.com/siemens/element/commit/4ef9c39502e67097a4b8192738e29452f613ce12))
+
+
+### Bug Fixes
+
+* bring native popover to top layer for special cases ([0d0ed6b](https://github.com/siemens/element/commit/0d0ed6b07a0c5790f3261e89aefa29e39fb879d2)), closes [#2619](https://github.com/siemens/element/issues/2619)
+* **modal:** schedule ghost-click guard outside Angular zone ([f109406](https://github.com/siemens/element/commit/f1094067024ecba92cab66b231b1670f96fed15e))
+
 ## [49.18.1](https://github.com/siemens/element/compare/v49.18.0...v49.18.1) (2026-10-12)
 
 
