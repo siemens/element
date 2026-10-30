@@ -77,6 +77,5 @@ export class SampleComponent {
 
   onOptionSelected(match: TypeaheadMatch): void {
     this.selectedOption = match.text;
-    this.selected = '';
   }
 }
