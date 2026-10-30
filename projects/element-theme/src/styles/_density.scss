@@ -2,6 +2,8 @@
 @use 'selectors';
 @use 'variables/si-sys-sizing.default.map-flat' as sizing-default;
 @use 'variables/si-sys-sizing.compact.map-flat' as sizing-compact;
+@use 'variables/si-sys-typography.default.map-flat' as typography-default;
+@use 'variables/si-sys-typography.compact.map-flat' as typography-compact;
 @use 'variables/typography';
 
 @mixin define-sizing($tokens) {
@@ -24,9 +26,27 @@
   }
 }
 
-@mixin define-font($name, $font-size, $line-height) {
-  --si-sys-typography-font-size-#{$name}: #{typography.px-to-rem($font-size)};
-  --si-sys-typography-line-height-#{$name}: #{typography.px-to-ratio($font-size, $line-height)};
+@mixin define-typography($tokens) {
+  $prefix: 'si-sys-typography-';
+
+  // Only migrate font size and line height; leave the other typography properties unchanged.
+  @each $name, $value in $tokens {
+    @each $property in 'font-size', 'line-height' {
+      $suffix: '-#{$property}';
+
+      @if string.slice($name, - string.length($suffix)) == $suffix {
+        --#{$name}: #{$value};
+
+        // Keep the existing property names until consumers migrate to the canonical tokens.
+        $role: string.slice(
+          $name,
+          string.length($prefix) + 1,
+          string.length($name) - string.length($suffix)
+        );
+        --#{$prefix}#{$property}-#{$role}: #{$value};
+      }
+    }
+  }
 }
 
 @mixin define-icon-size($name, $size) {
@@ -36,23 +56,7 @@
 #{selectors.$root} {
   @include define-sizing(sizing-default.$tokens);
 
-  @include define-font(body-sm, 12px, 16px);
-  @include define-font(body, 14px, 16px);
-  @include define-font(body-lg, 16px, 20px);
-  @include define-font(body-paragraph, 14px, 20px);
-  @include define-font(h1, 28px, 36px);
-  @include define-font(h2, 24px, 32px);
-  @include define-font(h3, 20px, 24px);
-  @include define-font(h4, 16px, 20px);
-  @include define-font(h5, 14px, 20px);
-  @include define-font(h6, 12px, 16px);
-  @include define-font(display, 32px, 40px);
-  @include define-font(display-lg, 40px, 52px);
-  @include define-font(display-xl, 48px, 64px);
-  @include define-font(display-xxl, 58px, 72px);
-  @include define-font(code-sm, 12px, 16px);
-  @include define-font(code, 14px, 20px);
-  @include define-font(code-lg, 16px, 20px);
+  @include define-typography(typography-default.$tokens);
 
   @include define-icon-size(sm, 16px);
   @include define-icon-size(md, 20px);
@@ -64,23 +68,7 @@
 .density-compact {
   @include define-sizing(sizing-compact.$tokens);
 
-  @include define-font(body-sm, 10px, 12px);
-  @include define-font(body, 12px, 14px);
-  @include define-font(body-lg, 14px, 16px);
-  @include define-font(body-paragraph, 12px, 16px);
-  @include define-font(h1, 24px, 28px);
-  @include define-font(h2, 20px, 24px);
-  @include define-font(h3, 16px, 18px);
-  @include define-font(h4, 14px, 16px);
-  @include define-font(h5, 14px, 16px);
-  @include define-font(h6, 12px, 16px);
-  @include define-font(display, 28px, 32px);
-  @include define-font(display-lg, 32px, 40px);
-  @include define-font(display-xl, 40px, 48px);
-  @include define-font(display-xxl, 48px, 56px);
-  @include define-font(code-sm, 12px, 16px);
-  @include define-font(code, 14px, 20px);
-  @include define-font(code-lg, 16px, 20px);
+  @include define-typography(typography-compact.$tokens);
 
   @include define-icon-size(sm, 12px);
   @include define-icon-size(md, 16px);
