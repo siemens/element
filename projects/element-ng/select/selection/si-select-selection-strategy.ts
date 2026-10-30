@@ -6,12 +6,14 @@ import {
   booleanAttribute,
   computed,
   Directive,
+  effect,
   inject,
   input,
   Input,
   output,
   signal,
-  Signal
+  Signal,
+  untracked
 } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 
@@ -41,7 +43,7 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
    * The selected value(s).
    */
   @Input() set value(value: IV | undefined) {
-    this.updateFromInput(this.toArrayValue(value));
+    this.currentValue.set(value);
   }
 
   /** Emitted when the selection is changed */
@@ -71,6 +73,15 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
   protected onChange: (_: any) => void = () => {};
   private readonly disabledNgControl = signal(false);
   private readonly selectOptions = inject<SiSelectOptionsStrategy<T>>(SI_SELECT_OPTIONS_STRATEGY);
+  // Re-sync even when a form writes the same mutable array reference.
+  private readonly currentValue = signal<IV | null | undefined>(undefined, { equal: () => false });
+
+  constructor() {
+    effect(() => {
+      const value = this.currentValue();
+      untracked(() => this.selectOptions.onValueChange([...this.toArrayValue(value)]));
+    });
+  }
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
@@ -84,11 +95,11 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
    * CDK Listbox value changed handler.
    * @internal
    */
-  updateFromUser(values: T[]): void {
+  updateFromUser(values: readonly T[]): void {
     const parsedValue = this.fromArrayValue(values);
+    this.currentValue.set(parsedValue);
     this.onChange(parsedValue);
     this.valueChange.emit(parsedValue);
-    this.selectOptions.onValueChange(values);
   }
 
   setDisabledState(isDisabled: boolean): void {
@@ -96,14 +107,10 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
   }
 
   writeValue(obj: any): void {
-    this.updateFromInput(this.toArrayValue(obj));
+    this.currentValue.set(obj);
   }
 
-  protected abstract toArrayValue(value: IV | undefined): readonly T[];
+  protected abstract toArrayValue(value: IV | null | undefined): readonly T[];
 
   protected abstract fromArrayValue(value: readonly T[]): IV;
-
-  private updateFromInput(values: readonly T[]): void {
-    this.selectOptions.onValueChange(values);
-  }
 }

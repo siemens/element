@@ -39,8 +39,8 @@ export class SiSelectSingleValueDirective<T> extends SiSelectSelectionStrategy<T
    */
   override allowMultiple = false;
 
-  protected toArrayValue(value: T | undefined): readonly T[] {
-    return value !== undefined ? [value] : [];
+  protected toArrayValue(value: T | null | undefined): readonly T[] {
+    return value !== undefined && value !== null ? [value] : [];
   }
 
   protected fromArrayValue([value]: readonly T[]): T {
