@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { LowerCasePipe } from '@angular/common';
 import {
@@ -45,6 +46,7 @@ import { CountryInfo, PhoneDetails } from './si-phone-number-input.models';
 @Component({
   selector: 'si-phone-number-input',
   imports: [
+    CdkTrapFocus,
     CdkOverlayOrigin,
     CdkConnectedOverlay,
     SiIconComponent,
