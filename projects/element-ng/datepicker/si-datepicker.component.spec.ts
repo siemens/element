@@ -62,6 +62,9 @@ describe('SiDatepickerComponent', () => {
     picker = await loader.getHarness(SiDatepickerComponentHarness);
   });
 
+  // setSystemTime mocks Date even without fake timers; only useRealTimers resets it.
+  afterEach(() => vi.useRealTimers());
+
   it('should includeTimeLabel matches enabledTimeText', async () => {
     const enabledTimeText = 'Consider Time';
     await updateConfig({ ...component.config(), enabledTimeText, showTime: true });

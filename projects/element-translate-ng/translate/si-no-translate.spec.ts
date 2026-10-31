@@ -36,28 +36,13 @@ describe('SiNoTranslate', () => {
     expect(service.translateSync('VALUE-3')).toBe('VALUE-3');
   });
 
-  it('should return language code from different browser locales', () => {
-    // Mock different browser languages
-    const originalNavigator = window.navigator;
+  it.each([
+    ['de-DE', 'de'],
+    ['fr-FR', 'fr']
+  ])('should return language code for browser locale %s', (locale, language) => {
+    using languagesSpy = vi.spyOn(window.navigator, 'languages', 'get').mockReturnValue([locale]);
 
-    // Test German
-    Object.defineProperty(window, 'navigator', {
-      value: { ...originalNavigator, language: 'de-DE' },
-      writable: true
-    });
-    expect(getBrowserLanguage()).toBe('de');
-
-    // Test French
-    Object.defineProperty(window, 'navigator', {
-      value: { ...originalNavigator, language: 'fr-FR' },
-      writable: true
-    });
-    expect(getBrowserLanguage()).toBe('fr');
-
-    // Restore original navigator
-    Object.defineProperty(window, 'navigator', {
-      value: originalNavigator,
-      writable: true
-    });
+    expect(getBrowserLanguage()).toBe(language);
+    expect(languagesSpy).toHaveBeenCalled();
   });
 });

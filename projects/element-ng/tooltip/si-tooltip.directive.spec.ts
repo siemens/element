@@ -116,8 +116,8 @@ describe('SiTooltipDirective', () => {
     it.each(['focusout', 'destroy'])(
       'should listen only while visible and remove the global key listener on %s',
       async close => {
-        const addListener = vi.spyOn(document, 'addEventListener');
-        const removeListener = vi.spyOn(document, 'removeEventListener');
+        using addListener = vi.spyOn(document, 'addEventListener');
+        using removeListener = vi.spyOn(document, 'removeEventListener');
         await fixture.whenStable();
         expect(addListener.mock.calls.filter(([type]) => type === 'keydown')).toHaveLength(0);
 
@@ -236,7 +236,7 @@ describe('SiTooltipDirective', () => {
     });
 
     it('should reposition the overlay when content changes while open', async () => {
-      const createSpy = vi.spyOn(Overlay.prototype, 'create');
+      using createSpy = vi.spyOn(Overlay.prototype, 'create');
 
       button.dispatchEvent(new FocusEvent('focus'));
       await vi.advanceTimersByTimeAsync(0);

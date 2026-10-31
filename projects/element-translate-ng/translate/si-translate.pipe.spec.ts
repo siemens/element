@@ -112,8 +112,8 @@ describe('SiTranslatePipe', () => {
     });
 
     it('should not call translate when no param changed', () => {
-      const pipeSpy = vi.spyOn(SiTranslatePipe.prototype, 'transform');
-      const translateSpy = vi.spyOn(SiAsyncTranslateService.prototype, 'translate');
+      using pipeSpy = vi.spyOn(SiTranslatePipe.prototype, 'transform');
+      using translateSpy = vi.spyOn(SiAsyncTranslateService.prototype, 'translate');
       component.cdRef.detectChanges();
       expect(pipeSpy).toHaveBeenCalled();
       expect(translateSpy).not.toHaveBeenCalled();
