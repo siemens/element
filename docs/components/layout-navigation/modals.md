@@ -58,25 +58,31 @@ Modals serve various purposes depending on the scenario. Common examples include
 
 ## Code ---
 
-In Element modals are created with the `SiModalService` or alternatively with
-the `SiActionDialogService` for predefined modal dialogs.
+Modals support various content structures, sizes, and behaviors to organize information effectively. Choose the appropriate pattern based on your workflow needs.
+
+Below are examples of what’s supported. Consumers can display modals programmatically
+using the [SiModalService](#generic-modals) or use [predefined modal dialogs](#predefined-modal-dialogs).
 
 ### Generic modals
 
-To display a modal dialog in any component, you need to follow these steps:
+To display a modal dialog in any component, follow these steps:
 
 - Import and inject the `SiModalService` in your component.
 - Use the `show` method of `SiModalService` to display the modal. This method
-  takes either the component or template you want to display in the modal.
+  takes either a `TemplateRef` or a component you want to display in the modal.
+- Pass configuration options like `class` to customize sizing, scrolling, or positioning.
 
 ```ts
-import { viewChild } from '@angular/core';
+import { Component, inject, TemplateRef, viewChild } from '@angular/core';
+import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
 
 @Component({
   template: `
-    <ng-template #sampleModal>
+    <button type="button" class="btn btn-secondary" (click)="openModal()">Open modal</button>
+
+    <ng-template #sampleModal let-modalRef="modalRef">
       <div class="modal-header">
-        <h4 class="modal-title">Modal</h4>
+        <h4 class="modal-title" id="sample-modal-title">Modal title</h4>
         <button
           type="button"
           class="btn btn-circle btn-tertiary-ghost element-cancel"
@@ -85,29 +91,149 @@ import { viewChild } from '@angular/core';
         ></button>
       </div>
       <div class="modal-body">
-        <span>This is the body.</span>
+        <p>This is the modal body.</p>
       </div>
       <div class="modal-footer">
-        <span>This is the footer.</span>
-        <button type="button" class="btn btn-secondary" (click)="modalRef.hide('close')"
-          >Close</button
-        >
+        <button type="button" class="btn btn-secondary" (click)="modalRef.hide('close')">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="modalRef.hide('save')">
+          Save
+        </button>
       </div>
     </ng-template>
   `
 })
 export class SampleComponent {
   private modalService = inject(SiModalService);
-  private modal = viewChild.required<TemplateRef<void>>('sampleModal');
-  private modalRef?: SiModalRef;
+  private modal = viewChild.required<TemplateRef<unknown>>('sampleModal');
+  private modalRef?: ModalRef<unknown>;
 
   openModal(): void {
-    this.modalRef = this.modalService.show(template, {/* Options go here. */});
+    this.modalRef = this.modalService.show(this.modal(), {
+      class: 'modal-dialog-centered',
+      ariaLabelledBy: 'sample-modal-title'
+    });
   }
 }
 ```
 
 <si-docs-component example="si-modals/si-modal-service" height="450"></si-docs-component>
+
+### Modal content
+
+When displaying modals with `SiModalService`, the outer dialog container, backdrop, and surface are automatically managed by the service. Consumers only need to structure the template or component content placed inside the dialog:
+
+- **Header (optional)**: Apply `.modal-header` for the title bar containing `.modal-title`, an optional status icon, and a dismiss button
+- **Body (required)**: Apply `.modal-body` for the main content area with standardized padding and spacing
+- **Footer (optional)**: Apply `.modal-footer` for action buttons, right-aligned with standardized spacing
+
+```html
+<ng-template #sampleModal let-modalRef="modalRef">
+  <div class="modal-header">
+    <h4 class="modal-title" id="sample-modal-title">Modal title</h4>
+    <button
+      type="button"
+      class="btn btn-circle btn-tertiary-ghost element-cancel"
+      aria-label="Close modal"
+      (click)="modalRef.hide('cancel')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p>Modal body content goes here.</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.hide('close')">
+      Close
+    </button>
+    <button type="button" class="btn btn-primary" (click)="modalRef.hide('save')">
+      Save changes
+    </button>
+  </div>
+</ng-template>
+```
+
+**Available content classes:**
+
+| Class           | Element                   | Purpose          | Usage                                                                            |
+| --------------- | ------------------------- | ---------------- | -------------------------------------------------------------------------------- |
+| `.modal-header` | `<div>`                   | Header container | Top bar placing title, optional status icon, and dismiss button on opposite ends |
+| `.modal-title`  | `<h1>` - `<h6>`, `<span>` | Primary heading  | Heading for the modal dialog with standardized typography and line height        |
+| `.modal-body`   | `<div>`                   | Content area     | Main container for dialog content, forms, and scrollable data                    |
+| `.modal-footer` | `<div>`                   | Action bar       | Container for action buttons with right alignment and standardized spacing       |
+
+**Best practices:**
+
+- Always associate `.modal-title` with the dialog by setting `ariaLabelledBy` in modal options
+- Include a dismiss button in `.modal-header` with an accessible `aria-label`
+- If an icon is placed in `.modal-header`, add the `.icon` class to ensure standard sizing and margin before `.modal-title`
+- Place primary actions on the right and cancel or dismiss actions to the left in `.modal-footer`
+
+### Modal sizes
+
+Modals support several width options to accommodate different content requirements. By default, a modal dialog has a maximum width of 500px on viewports above the small (`sm`) breakpoint.
+
+To change the width, pass a size modifier class in the `class` property of `ModalOptions` when calling `SiModalService.show()`:
+
+**Available size classes:**
+
+| Class               | Max width (`sm` and up) | Purpose             | Usage                                                               |
+| ------------------- | ----------------------- | ------------------- | ------------------------------------------------------------------- |
+| `.modal-sm`         | 300px                   | Small dialogs       | Simple alerts, short prompts, or compact confirmation dialogs       |
+| _(default)_         | 500px                   | Standard dialogs    | General transactional tasks, settings, and standard confirmations   |
+| `.modal-lg`         | 800px                   | Large dialogs       | Multi-step forms, complex inputs, or data tables with multiple cols |
+| `.modal-xl`         | 1140px                  | Extra large dialogs | Data-heavy views, wizards, or advanced configuration panels         |
+| `.modal-fullscreen` | 100vw / 100%            | Fullscreen dialogs  | Full-viewport coverage for immersive workflows or mobile layouts    |
+
+**Responsive full-screen variants:**
+
+Responsive full-screen classes make the dialog full-screen only below a specific breakpoint, returning to standard dialog sizing on larger viewports:
+
+| Class                        | Full-screen breakpoint           |
+| ---------------------------- | -------------------------------- |
+| `.modal-fullscreen-sm-down`  | Full-screen below 576px (`sm`)   |
+| `.modal-fullscreen-md-down`  | Full-screen below 768px (`md`)   |
+| `.modal-fullscreen-lg-down`  | Full-screen below 992px (`lg`)   |
+| `.modal-fullscreen-xl-down`  | Full-screen below 1200px (`xl`)  |
+| `.modal-fullscreen-xxl-down` | Full-screen below 1400px (`xxl`) |
+
+```ts
+this.modalService.show(template, {
+  class: 'modal-lg'
+});
+```
+
+### Centered modals
+
+By default, modals are aligned near the top of the viewport. Pass `.modal-dialog-centered` in the `class` property of `ModalOptions` to vertically center the modal in the viewport:
+
+```ts
+this.modalService.show(template, {
+  class: 'modal-dialog-centered'
+});
+```
+
+### Scrollable modals
+
+When modal content exceeds the viewport height, the default behavior scrolls the entire modal container. To keep the header and footer fixed in place while making only the body content scrollable, pass `.modal-dialog-scrollable` in the `class` property of `ModalOptions`.
+
+This sets `overflow-y: auto` on `.modal-body` and limits the dialog height to the viewport, ensuring that dialog titles and action buttons remain visible at all times:
+
+```ts
+this.modalService.show(template, {
+  class: 'modal-dialog-scrollable'
+});
+```
+
+### Combining modifier classes
+
+Modifier classes can be combined as needed. For example, combine `.modal-lg`, `.modal-dialog-centered`, and `.modal-dialog-scrollable` for a large, vertically centered dialog with internal body scrolling:
+
+```ts
+this.modalService.show(template, {
+  class: 'modal-lg modal-dialog-centered modal-dialog-scrollable'
+});
+```
 
 ### Predefined modal dialogs
 
