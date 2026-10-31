@@ -19,7 +19,7 @@ import { TemplateRef } from '@angular/core';
 export class SiNavbarVerticalNextChipMenuComponent {
 }
 
-// @public (undocumented)
+// @public
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit, SiNavbarVerticalLayout {
     constructor();
     readonly alwaysFlyout: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -82,6 +82,11 @@ export class SiNavbarVerticalNextItemComponent implements OnInit {
 
 // @public
 export class SiNavbarVerticalNextItemsComponent {
+}
+
+// @public
+export class SiNavbarVerticalNextNavigationActionComponent {
+    readonly icon: _angular_core.InputSignal<string>;
 }
 
 // @public (undocumented)

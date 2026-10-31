@@ -42,6 +42,7 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { SiNavbarVerticalNextChipMenuComponent } from './si-navbar-vertical-next-chip-menu.component';
 import { SiNavbarVerticalNextItemComponent } from './si-navbar-vertical-next-item.component';
 import { SiNavbarVerticalNextItemsComponent } from './si-navbar-vertical-next-items.component';
+import { SiNavbarVerticalNextNavigationActionComponent } from './si-navbar-vertical-next-navigation-action.component';
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
 /** @experimental */
@@ -50,7 +51,14 @@ interface UIState {
   expandedItems: Record<string, boolean>;
 }
 
-/** @experimental */
+/**
+ * Vertical navigation with support for collapsible and inline-collapsible layouts.
+ *
+ * Project a single button or link with `[si-navbar-vertical-next-navigation-action]` to provide
+ * an optional leading navigation action, such as Back or Home, in inline-collapse mode.
+ *
+ * @experimental
+ */
 @Component({
   selector: 'si-navbar-vertical-next',
   imports: [
@@ -209,6 +217,10 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit, SiNavba
     descendants: true
   });
 
+  private readonly navigationActions = contentChildren(
+    SiNavbarVerticalNextNavigationActionComponent
+  );
+
   /** The active root-level item; group triggers resolve for nested routes.
    * @internal
    */
@@ -259,6 +271,12 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit, SiNavba
   readonly hasVisibleChip = computed(() => this.chipMode() && !!this.activeItem());
 
   constructor() {
+    effect(() => {
+      if (this.navigationActions().length > 1) {
+        throw new Error('Only one navigation action is allowed.');
+      }
+    });
+
     effect(() => {
       if (!this.flatMode()) {
         this.closeFlatGroup();

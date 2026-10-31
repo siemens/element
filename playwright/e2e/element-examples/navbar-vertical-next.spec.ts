@@ -238,6 +238,48 @@ test.describe('navbar vertical next', () => {
   });
 });
 
+test.describe('navbar vertical next leading action', () => {
+  const example = 'si-navbar-vertical-next/si-navbar-vertical-next-leading-action';
+
+  test(example, async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.getByRole('link', { name: 'Test coverage' }).click();
+    await expect(page.getByRole('link', { name: 'Test coverage' })).toHaveClass(/active/);
+
+    await page.getByRole('button', { name: 'Configuration' }).click();
+
+    await page.getByRole('link', { name: 'Configuration item 1' }).click();
+    await expect(page.getByRole('button', { name: 'Back to main navigation' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Configuration item 1' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Configuration item 2' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Configuration item 1' })).toHaveClass(/active/);
+
+    await expect(page.getByRole('searchbox')).toHaveCount(0);
+
+    await si.waitForAllAnimationsToComplete();
+    await si.runVisualAndA11yTests();
+
+    await page.getByRole('button', { name: 'Back to main navigation' }).click();
+    await expect(page.getByRole('link', { name: 'Test coverage' })).toHaveClass(/active/);
+    await expect(page.getByRole('main')).toContainText("Content with path 'coverage'");
+  });
+
+  test(example + ' collapsed', async ({ page, si }) => {
+    await si.visitExample(example);
+    await page.getByRole('button', { name: 'Configuration' }).click();
+    await page.getByRole('link', { name: 'Configuration item 1' }).click();
+
+    const toggle = page.getByRole('button', { name: 'Show side navigation', exact: true });
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.getByRole('button', { name: 'Back to main navigation' })).toBeVisible();
+
+    await si.waitForAllAnimationsToComplete();
+    await si.runVisualAndA11yTests('collapsed');
+  });
+});
+
 test.describe('navbar vertical next badges', () => {
   const example = 'si-navbar-vertical-next/si-navbar-vertical-next-badges';
 
