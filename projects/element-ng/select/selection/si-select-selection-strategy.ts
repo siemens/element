@@ -41,7 +41,7 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
    * The selected value(s).
    */
   @Input() set value(value: IV | undefined) {
-    this.updateFromInput(this.toArrayValue(value));
+    this.syncSelection(value);
   }
 
   /** Emitted when the selection is changed */
@@ -84,11 +84,11 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
    * CDK Listbox value changed handler.
    * @internal
    */
-  updateFromUser(values: T[]): void {
+  updateFromUser(values: readonly T[]): void {
     const parsedValue = this.fromArrayValue(values);
+    this.syncSelection(parsedValue);
     this.onChange(parsedValue);
     this.valueChange.emit(parsedValue);
-    this.selectOptions.onValueChange(values);
   }
 
   setDisabledState(isDisabled: boolean): void {
@@ -96,14 +96,14 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
   }
 
   writeValue(obj: any): void {
-    this.updateFromInput(this.toArrayValue(obj));
+    this.syncSelection(obj);
   }
 
-  protected abstract toArrayValue(value: IV | undefined): readonly T[];
+  protected abstract toArrayValue(value: IV | null | undefined): readonly T[];
 
   protected abstract fromArrayValue(value: readonly T[]): IV;
 
-  private updateFromInput(values: readonly T[]): void {
-    this.selectOptions.onValueChange(values);
+  private syncSelection(value: IV | null | undefined): void {
+    this.selectOptions.onValueChange([...this.toArrayValue(value)]);
   }
 }
