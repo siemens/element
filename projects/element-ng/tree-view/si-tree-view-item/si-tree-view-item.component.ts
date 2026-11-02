@@ -164,7 +164,7 @@ export class SiTreeViewItemComponent implements OnInit, AfterViewInit, Focusable
 
   ngDoCheck(): void {
     if (this.treeItem.parent?.children && this.ariaPosinset) {
-      if (this.treeItem.parent.children[this.ariaPosinset] !== this.treeItem) {
+      if (this.treeItem.parent.children[this.ariaPosinset - 1] !== this.treeItem) {
         this.ariaPosinset = this.treeItem.parent.children.indexOf(this.treeItem) + 1;
       }
     } else if (this.treeItem.parent?.children) {

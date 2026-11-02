@@ -204,6 +204,10 @@ detection mechanism of the tree view:
 - Call `refresh()` function on the tree component
 - Use `addChildItems()` function on the tree component
 
+For bulk updates, pass all new items to a single `addChildItems()` call, or update
+the model and call `refresh()` once. The tree applies each batch before checking
+the rendered item views.
+
 Note: If items should be lazy-loaded when expanding a parent, consider using the
 `loadChildren` event which allows to append children while properly handling
 change detection.

@@ -104,15 +104,10 @@ export class SiTreeViewItemDirective implements AfterViewInit, OnDestroy {
         } else if (currentIndex == null) {
           viewContainer.remove(adjustedPreviousIndex ?? undefined);
         } else if (adjustedPreviousIndex !== null) {
-          const view = viewContainer.get(adjustedPreviousIndex)!;
+          const view = viewContainer.get(adjustedPreviousIndex) as EmbeddedViewRef<TreeItemContext>;
           viewContainer.move(view, currentIndex);
-          (view as EmbeddedViewRef<TreeItemContext>).context = {
-            treeItem: record.item,
-            index: record.currentIndex!,
-            parent: this.parent
-          };
+          view.context.treeItem = record.item;
         }
-        this.cdRef.detectChanges();
       }
     );
 
@@ -125,14 +120,11 @@ export class SiTreeViewItemDirective implements AfterViewInit, OnDestroy {
     changes.forEachIdentityChange((record: IterableChangeRecord<TreeItem>) => {
       if (record.currentIndex !== null) {
         const viewRef = viewContainer.get(record.currentIndex) as EmbeddedViewRef<TreeItemContext>;
-        viewRef.context = {
-          treeItem: record.item,
-          index: record.currentIndex,
-          parent: this.parent
-        };
-        this.cdRef.detectChanges();
+        viewRef.context.treeItem = record.item;
       }
     });
+
+    this.cdRef.detectChanges();
   }
 
   static ngTemplateContextGuard(
