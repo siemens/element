@@ -43,7 +43,7 @@ export class SiSelectMultiValueDirective<T> extends SiSelectSelectionStrategy<T,
     return value;
   }
 
-  protected toArrayValue(value: T[] | undefined): T[] {
+  protected toArrayValue(value: T[] | null | undefined): T[] {
     return value ?? [];
   }
 }

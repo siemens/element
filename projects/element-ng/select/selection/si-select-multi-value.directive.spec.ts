@@ -37,8 +37,11 @@ class TestComponent {
 
   changedValue?: string[];
 
+  valueChangeHandler: (value: string[]) => void = () => {};
+
   valueChange(valueChange: string[]): void {
     this.changedValue = valueChange;
+    this.valueChangeHandler(valueChange);
   }
 }
 
@@ -81,5 +84,24 @@ describe('SiSelectMultiValueDirective', () => {
     expect(await selectHarness.getSelectedTexts()).toEqual([]);
     // changedValue should not be updated on value write
     expect(component.changedValue).toEqual(undefined);
+  });
+
+  it('should update selection when setting a mutated array with the same reference', async () => {
+    const values = ['a', 'b'];
+    component.control.setValue(values);
+
+    values.push('c');
+    component.control.setValue(values);
+
+    expect(await selectHarness.getSelectedTexts()).toEqual(['a', 'b', 'c']);
+  });
+
+  it('should keep the latest value written by a valueChange handler', async () => {
+    component.valueChangeHandler = () => component.control.setValue(['d']);
+
+    await selectHarness.clickItems(2);
+
+    expect(await selectHarness.getSelectedTexts()).toEqual(['d']);
+    expect(component.control.value).toEqual(['d']);
   });
 });

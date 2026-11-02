@@ -43,6 +43,24 @@ class FormHostComponent {
 }
 
 @Component({
+  imports: [ReactiveFormsModule, SiSelectModule],
+  template: `
+    <form [formGroup]="form">
+      <si-select #select formControlName="input" [options]="options" />
+    </form>
+  `
+})
+class NullValueFormHostComponent {
+  readonly form = new FormGroup({
+    input: new FormControl<string | null>('other')
+  });
+  readonly options: SelectOption<string | null>[] = [
+    { type: 'option', value: 'other', label: 'Other' },
+    { type: 'option', value: null, label: 'None' }
+  ];
+}
+
+@Component({
   imports: [SiSelectModule],
   template: `
     <si-select
@@ -543,10 +561,41 @@ describe('SiSelectComponent', () => {
       expect(await selectHarness.getSelectedTexts()).toEqual(['Poor']);
     });
 
+    it('clears the selection when the form control is reset', async () => {
+      component.form.controls.input.reset();
+
+      expect(await selectHarness.getSelectedTexts()).toEqual([]);
+    });
+
     it('sets the disabled state', async () => {
       component.form.disable();
       expect(component.valueDirective().disabled()).toBe(true);
       expect(await selectHarness.getTabindex()).toBe('-1');
+    });
+  });
+
+  describe('as form control with a null-valued option', () => {
+    let component: NullValueFormHostComponent;
+
+    beforeEach(async () => {
+      const typedFixture = TestBed.createComponent(NullValueFormHostComponent);
+      fixture = typedFixture;
+      loader = TestbedHarnessEnvironment.loader(fixture);
+      selectHarness = await loader.getHarness(SiSelectHarness);
+      component = typedFixture.componentInstance;
+    });
+
+    it('selects a null-valued option from the list', async () => {
+      await selectHarness.clickItemsByText('None');
+
+      expect(await selectHarness.getSelectedTexts()).toEqual(['None']);
+      expect(component.form.controls.input.value).toBeNull();
+    });
+
+    it('selects a null-valued option when written by the form control', async () => {
+      component.form.controls.input.setValue(null);
+
+      expect(await selectHarness.getSelectedTexts()).toEqual(['None']);
     });
   });
 
