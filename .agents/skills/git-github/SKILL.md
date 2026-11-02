@@ -36,6 +36,13 @@ Write them in a way that they are understandable for consumer not knowing intern
 The body is mainly for ourselves.
 Beside a short summary it should also describe the reason why certain decisions were taken.
 
+Author the commit body and footer independently of the PR template. Never copy
+any part of the PR template, including its instructions, HTML comments,
+placeholders, or checklists, into a commit message.
+
+Before committing, inspect the complete message, including any file passed to
+`git commit -F`, and remove copied PR-template boilerplate.
+
 ### Type (required)
 
 | Type       | Meaning                                            | In changelog |
@@ -116,19 +123,29 @@ BREAKING CHANGE: <breaking change summary>
 
 ### PR description
 
-- The commit message is the source of truth.
-- For a single-commit PR, copy the commit body and footer into the PR
-  description. Exclude only the commit subject.
-- Do not summarize, paraphrase, add headings, or append test results.
-- If the description needs improvement, improve the commit message first.
+- The authored commit body and footer are the source of truth for the
+  substantive PR description, not for PR-template scaffolding.
+- Read the repository's PR template before assembling the description. Preserve
+  its headings, HTML comments, and checklists in their original order, and
+  replace placeholders with accurate details. This scaffolding belongs only in
+  the PR description; never copy it into a commit to satisfy the verbatim-copy
+  rule.
+- For a single-commit PR, copy the authored commit body and footer verbatim into
+  the appropriate template sections. Exclude only the commit subject.
+- Do not summarize or paraphrase the authored content, add headings beyond
+  those required by the template, or append test results.
+- If the substantive description needs improvement, improve the authored
+  commit message first. Template-only changes belong in the PR description.
 - If the commit body is empty, write a proper commit body before creating the PR.
 - For multiple commits, identify the appropriate source explicitly; do not
   silently use the latest commit.
 
-For a single-commit PR, copy the subject and body directly from Git:
+The repository template currently contains only an HTML comment. For a
+single-commit PR, keep it above the commit body and pipe both directly into
+`gh`, so the template never passes through a commit message file:
 
 ```bash
-git log -1 --format=%b |
+{ cat .github/PULL_REQUEST_TEMPLATE.md; echo; git log -1 --format=%b; } |
   gh pr create \
     --draft \
     --base main \
