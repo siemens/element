@@ -6,7 +6,7 @@ import { inject, InjectionToken } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
-import type { SiFlexibleDashboardComponent } from '../components/flexible-dashboard/si-flexible-dashboard.component';
+import type { SiDashboardToolbarComponent } from '../components/dashboard-toolbar/si-dashboard-toolbar.component';
 import type { provideDashboardToolbarItems } from './configuration';
 import { DashboardToolbarItem } from './si-dashboard-toolbar.model';
 import { WidgetConfig } from './widgets.model';
@@ -59,8 +59,9 @@ export abstract class SiWidgetStorage {
    * Optional method to provide primary and secondary toolbar menu items.
    * @param dashboardId - The id of the dashboard if present to allow dashboard specific menu items.
    *
-   * @deprecated use {@link provideDashboardToolbarItems} to provide common toolbar items.
-   * Additionally configure individual dashboard actions via {@link SiFlexibleDashboardComponent.primaryEditActions} and {@link SiFlexibleDashboardComponent.secondaryEditActions} respectively.
+   * @deprecated Use {@link provideDashboardToolbarItems} to provide common toolbar items.
+   * Configure individual dashboard actions via {@link SiDashboardToolbarComponent.primaryEditActions}
+   * and {@link SiDashboardToolbarComponent.secondaryEditActions} on a toolbar projected into the dashboard.
    */
   getToolbarMenuItems?: (dashboardId?: string) => {
     primary: Observable<(MenuItem | DashboardToolbarItem)[]>;

@@ -105,6 +105,34 @@ e.g. with a description or page actions. Project it using the `header` attribute
 </si-flexible-dashboard>
 ```
 
+### Custom toolbar
+
+The recommended way to configure the toolbar is to project `SiDashboardToolbarComponent`
+from `@siemens/dashboards-ng` into the dashboard. The dashboard still manages editing,
+disabled states, saving, cancelling and visibility while adding or editing widgets.
+
+```html
+<si-flexible-dashboard [dashboardId]="dashboardId" [widgetCatalog]="widgetCatalog">
+  <si-dashboard-toolbar [showEditButtonLabel]="true" editButtonLabel="Customize">
+    <div filters-slot>
+      <button type="button" class="btn btn-secondary">My filters</button>
+    </div>
+  </si-dashboard-toolbar>
+</si-flexible-dashboard>
+```
+
+The dashboard-level `hideEditButton`, `showEditButtonLabel`, `hideAddWidgetInstanceButton`,
+`primaryEditActions` and `secondaryEditActions` inputs are deprecated. Move these bindings
+to the projected toolbar; the old inputs remain supported for the default toolbar.
+Put custom filter controls inside the toolbar's `filters-slot`. Keep `editable` on the
+dashboard. Custom actions are automatically combined with global actions and per-side
+storage fallbacks, with Add widget prepended unless hidden.
+
+See the [toolbar configuration guide](https://github.com/siemens/element/blob/main/projects/dashboards-ng/README.md#configure-the-toolbar)
+for configuration, translated labels and save-event semantics.
+
+<si-docs-api component="SiDashboardToolbarComponent" package="@siemens/dashboards-ng" hideImplicitlyPublic="true"></si-docs-api>
+
 ### Persistence of dashboard configuration
 
 <si-docs-type name="SiWidgetStorage" package="@siemens/dashboards-ng"></si-docs-type>
