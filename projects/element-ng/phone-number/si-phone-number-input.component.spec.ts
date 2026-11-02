@@ -108,10 +108,22 @@ describe('SiPhoneNumberInputComponent', () => {
 
     // Selecting this option should update the selected value to +41
     await list.getItem(0).then(item => item.click());
+    await fixture.whenStable();
     const displaySelectedCountry = element.querySelector(
       '.dropdown-toggle .si-body'
     ) as HTMLElement;
     expect(displaySelectedCountry).toMatchTextContent('+41');
+    expect(inputElement).toHaveFocus();
+  });
+
+  it('should focus the phone input after dismissing the country dropdown', async () => {
+    await userEvent.click(countrySelect);
+    await fixture.whenStable();
+
+    await userEvent.keyboard('{Escape}');
+    await fixture.whenStable();
+
+    expect(inputElement).toHaveFocus();
   });
 
   it('should display all the countries  when user clears the search countries input', async () => {
@@ -267,6 +279,7 @@ describe('SiPhoneNumberInputComponent', () => {
     it('should not have tabindex 0', async () => {
       expect(phoneInput).toHaveClass('disabled');
       element = phoneInput.querySelector<HTMLElement>('button')!;
+      expect(element).toBeDisabled();
       expect(element).toHaveAttribute('tabindex', '-1');
     });
   });

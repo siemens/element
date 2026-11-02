@@ -5,23 +5,19 @@
   [attr.aria-disabled]="disabled()"
 >
   <button
-    #trigger="cdkOverlayOrigin"
-    cdkOverlayOrigin
     siPhoneNumberInputSelect
     class="dropdown-toggle d-flex align-items-center ms-n4 my-n4 py-2 px-4 border-0"
     type="button"
-    role="combobox"
-    aria-haspopup="listbox"
+    [id]="id() + '-country'"
     [disabled]="disabled()"
-    [class.readonly]="readonly()"
-    [attr.aria-labelledby]="id() + '-aria-label ' + id() + '-value'"
-    [attr.aria-expanded]="open()"
+    [readonly]="readonly()"
+    [labelledby]="id() + '-aria-label'"
+    [errormessageId]="errormessageId()"
+    [scrollStrategy]="scrollStrategy()"
     [options]="countryList()"
     [value]="selectedCountry()"
-    [tabindex]="disabled() ? '-1' : '0'"
-    [attr.aria-controls]="id() + '-listbox'"
     (valueChange)="countryInput($event)"
-    (click)="openOverlay()"
+    (openChange)="countrySelectOpenChange($event)"
     (focus)="countryFocused.set(true)"
     (blur)="countryFocused.set(false)"
   >
@@ -32,35 +28,22 @@
       aria-hidden="true"
       [class]="`fi fi-${(selectedCountry()?.isoCode | lowercase) ?? 'xx'}`"
     ></span>
-    @if (selectedCountry(); as selectedCountry) {
-      <span class="si-body ms-4" [id]="id() + '-value'">
+    <span class="si-body" [class.ms-4]="!!selectedCountry()" [id]="id() + '-country-combobox'">
+      @if (selectedCountry(); as selectedCountry) {
         <span class="visually-hidden">{{ selectedCountry.name }}</span>
         +{{ selectedCountry.countryCode }}
-      </span>
-    }
+      }
+    </span>
     <si-icon class="icon dropdown-caret" [icon]="icons.elementDown2" />
 
-    <ng-template
-      cdkConnectedOverlay
-      cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
-      [cdkConnectedOverlayHasBackdrop]="true"
-      [cdkConnectedOverlayOrigin]="trigger"
-      [cdkConnectedOverlayOpen]="open()"
-      [cdkConnectedOverlayScrollStrategy]="scrollStrategy()"
-      [cdkConnectedOverlayFlexibleDimensions]="true"
-      [cdkConnectedOverlayOffsetX]="-1"
-      [cdkConnectedOverlayMinWidth]="overlayWidth"
-      (backdropClick)="overlayDetach()"
-      (detach)="overlayDetach()"
-    >
+    <ng-template si-select-dropdown contentType="listbox">
       <si-select-list-has-filter
-        class="dropdown-menu"
-        cdkTrapFocus
+        [style.min-width.px]="dropdownWidth()"
         [baseId]="id()"
         [filterPlaceholder]="placeholderForSearch()"
         [noResultsFoundLabel]="searchNoResultsFoundLabel()"
         [optionTemplate]="optionTemplate"
-        (closeOverlay)="overlayDetach()"
+        (closeOverlay)="countrySelect().close()"
       />
     </ng-template>
     <ng-template #optionTemplate let-option>

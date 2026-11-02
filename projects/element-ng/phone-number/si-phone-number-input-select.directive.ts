@@ -4,17 +4,29 @@
  */
 import { Directive } from '@angular/core';
 import {
+  SiCustomSelectDirective,
   SiSelectSimpleOptionsDirective,
   SiSelectSingleValueDirective
 } from '@siemens/element-ng/select';
 
 /**
- * This directive provides the si-select options and value strategy for the phone number input.
- * As we don't use si-select directly, we need to provide these strategies manually.
+ * Composes custom-select behavior with the options and value strategies for country selection.
  */
 @Directive({
   selector: '[siPhoneNumberInputSelect]',
   hostDirectives: [
+    {
+      directive: SiCustomSelectDirective,
+      inputs: [
+        'id',
+        'disabled',
+        'readonly',
+        'labelledby',
+        'errormessageId',
+        'siCustomSelectScrollStrategy: scrollStrategy'
+      ],
+      outputs: ['openChange']
+    },
     {
       directive: SiSelectSimpleOptionsDirective,
       inputs: ['options']

@@ -28,7 +28,7 @@
     background-color: all-variables.$si-sys-color-background-neutral;
   }
 
-  &:disabled {
+  &.disabled {
     opacity: all-variables.$element-action-disabled-opacity;
   }
 

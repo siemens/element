@@ -2,8 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { CdkTrapFocus } from '@angular/cdk/a11y';
-import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { LowerCasePipe } from '@angular/common';
 import {
   booleanAttribute,
@@ -32,7 +30,12 @@ import { elementDown2 } from '@siemens/element-icons';
 import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { SelectOption, SiSelectListHasFilterComponent } from '@siemens/element-ng/select';
+import {
+  SelectOption,
+  SiCustomSelectDirective,
+  SiSelectDropdownDirective,
+  SiSelectListHasFilterComponent
+} from '@siemens/element-ng/select';
 import {
   injectSiTranslateService,
   SiTranslatePipe,
@@ -46,11 +49,9 @@ import { CountryInfo, PhoneDetails } from './si-phone-number-input.models';
 @Component({
   selector: 'si-phone-number-input',
   imports: [
-    CdkTrapFocus,
-    CdkOverlayOrigin,
-    CdkConnectedOverlay,
     SiIconComponent,
     SiPhoneNumberInputSelectDirective,
+    SiSelectDropdownDirective,
     SiSelectListHasFilterComponent,
     SiTranslatePipe,
     LowerCasePipe
@@ -90,7 +91,6 @@ export class SiPhoneNumberInputComponent
   private phoneUtil = PhoneNumberUtil.getInstance();
   private translate = injectSiTranslateService();
   private locale = inject(LOCALE_ID).toString();
-  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
   /**
    * Unique identifier.
@@ -210,9 +210,10 @@ export class SiPhoneNumberInputComponent
   readonly errormessageId = input(`${this.id()}-errormessage`);
 
   protected readonly phoneInput = viewChild.required<ElementRef<HTMLInputElement>>('phoneInput');
+  protected readonly countrySelect = viewChild.required(SiCustomSelectDirective);
+  protected readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  protected readonly dropdownWidth = signal(0);
   protected readonly countryFocused = signal(false);
-  protected readonly open = signal(false);
-  protected overlayWidth = 0;
   protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
   protected readonly phoneInputValue = signal('');
   protected readonly countryList = computed(() => {
@@ -366,16 +367,13 @@ export class SiPhoneNumberInputComponent
     this.handleChange();
   }
 
-  protected openOverlay(): void {
-    if (!this.readonly()) {
-      this.open.set(true);
-      this.overlayWidth = this.elementRef.nativeElement.getBoundingClientRect().width + 2; // 2px border
+  protected countrySelectOpenChange(open: boolean): void {
+    if (open) {
+      this.dropdownWidth.set(this.elementRef.nativeElement.getBoundingClientRect().width);
+    } else {
+      // Move focus after the custom select has restored focus to its trigger.
+      queueMicrotask(() => this.phoneInput().nativeElement.focus());
     }
-  }
-
-  protected overlayDetach(): void {
-    this.open.set(false);
-    this.phoneInput().nativeElement.focus();
   }
 
   private getCountryName(countryCode: string): string {
