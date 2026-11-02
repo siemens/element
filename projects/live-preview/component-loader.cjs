@@ -29,8 +29,8 @@ exports.default = function () {
     files.push(...glob.sync(baseDir.replace('*.ts', '*-js.html')));
   }
 
-  const tsRegex = new RegExp(`${root}(.+)\.(ts|vue|tsx|jsx|html)`);
-  const reactVueRegex = new RegExp(`${root}(.+)-(react|vue|js)\.(vue|tsx|jsx|html)`);
+  const tsRegex = new RegExp(`${root}(.+)\\.(ts|vue|tsx|jsx|html)`);
+  const reactVueRegex = new RegExp(`${root}(.+)-(react|vue|js)\\.(vue|tsx|jsx|html)`);
   const list = [];
   const webcomponentsList = [];
   let code = 'export default { load: function (path) {';
