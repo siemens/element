@@ -56,7 +56,8 @@ export class SiIconComponent {
       return undefined;
     }
 
-    return `url("${icon.replace(/"/g, '\\"')}")`;
+    // Escape backslashes before quotes so existing backslashes cannot undo CSS string escaping.
+    return `url("${icon.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}")`;
   });
 
   /** Icon class, which is ensured to be kebab-case. */
