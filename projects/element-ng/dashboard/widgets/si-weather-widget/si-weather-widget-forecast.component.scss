@@ -7,9 +7,9 @@
 .si-weather-widget-forecast-range,
 .si-weather-widget-forecast.si-weather-widget-horizontal .si-weather-widget-forecast-day-range {
   @include typography.si-font(
-    typography.$si-font-size-body-lg,
-    typography.$si-line-height-body-lg,
-    typography.$si-font-weight-body-lg
+    variables.$si-sys-typography-body-lg-font-size,
+    variables.$si-sys-typography-body-lg-line-height,
+    variables.$si-sys-typography-body-lg-font-weight
   );
 }
 

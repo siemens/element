@@ -8,7 +8,7 @@
   padding-block: 3px;
   block-size: auto !important; // stylelint-disable-line declaration-no-important
   min-block-size: calc(
-    #{variables.$si-line-height-body}em + 2 * map.get(variables.$spacers-block, 4)
+    #{variables.$si-sys-typography-body-line-height}em + 2 * map.get(variables.$spacers-block, 4)
   );
 
   &:focus-within {

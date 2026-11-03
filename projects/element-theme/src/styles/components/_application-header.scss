@@ -4,7 +4,6 @@
 @use '../variables/si-sys-variables';
 @use '../variables/semantic-tokens';
 @use '../variables/spacers';
-@use '../variables/typography';
 @use '../variables/zindex';
 
 @use 'sass:map';
@@ -81,8 +80,8 @@
 }
 
 .application-name {
-  font-size: typography.$si-font-size-body-lg;
-  font-weight: typography.$si-font-weight-body-lg;
+  font-size: si-sys-variables.$si-sys-typography-body-lg-font-size;
+  font-weight: si-sys-variables.$si-sys-typography-body-lg-font-weight;
   padding: map.get(spacers.$spacers-block, 5) map.get(spacers.$spacers-inline, 5);
   margin: 0;
   line-height: normal;
@@ -152,9 +151,9 @@
   position: relative;
   color: si-sys-variables.$si-sys-color-text-primary;
   inline-size: 100%;
-  font-size: typography.$si-font-size-h4;
-  line-height: typography.$si-line-height-h4;
-  font-weight: typography.$si-font-weight-h4;
+  font-size: si-sys-variables.$si-sys-typography-h4-font-size;
+  line-height: si-sys-variables.$si-sys-typography-h4-line-height;
+  font-weight: si-sys-variables.$si-sys-typography-h4-font-weight;
   padding-block: map.get(spacers.$spacers-block, 5);
   padding-inline: map.get(spacers.$spacers-inline, 5);
   background: none;
@@ -197,9 +196,9 @@
 
   &.header-selection-item {
     color: si-sys-variables.$si-sys-color-text-accent;
-    font-size: typography.$si-font-size-h5;
-    font-weight: typography.$si-font-weight-h5;
-    line-height: typography.$si-line-height-h5;
+    font-size: si-sys-variables.$si-sys-typography-h5-font-size;
+    font-weight: si-sys-variables.$si-sys-typography-h5-font-weight;
+    line-height: si-sys-variables.$si-sys-typography-h5-line-height;
 
     &:hover {
       color: si-sys-variables.$si-sys-color-text-accent-hover;

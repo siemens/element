@@ -1,13 +1,14 @@
 @use 'sass:map';
 
 @use '../../variables/spacers';
+@use '../../variables/si-sys-variables';
 @use '../../variables/typography';
 @use '.././variables';
 
 @mixin badge-text {
   min-inline-size: 0.875rem;
   border-radius: 0.4375rem;
-  font-size: typography.$si-font-size-body-sm;
+  font-size: si-sys-variables.$si-sys-typography-body-sm-font-size;
   line-height: 0.875rem;
   padding-block: 0;
   padding-inline: map.get(spacers.$spacers-inline, 2);

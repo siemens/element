@@ -28,7 +28,6 @@
 
 @use '../variables/focus';
 @use '../variables/si-sys-variables';
-@use '../variables/typography';
 @use 'mixins/breakpoints';
 @use 'variables';
 
@@ -143,7 +142,7 @@
 
 // @deprecated No replacement, use a heading element.
 .list-header {
-  font-size: typography.$si-font-size-body-sm;
+  font-size: si-sys-variables.$si-sys-typography-body-sm-font-size;
   padding-block: variables.$list-group-item-padding-y;
   padding-inline: variables.$list-group-item-padding-x;
   color: variables.$headings-color;

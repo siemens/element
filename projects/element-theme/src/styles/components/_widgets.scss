@@ -10,7 +10,8 @@
   @extend .si-display-lg-sbold;
   display: inline-block;
   min-block-size: calc(
-    #{variables.$si-font-size-display-lg-sbold} * #{variables.$si-line-height-display-lg-sbold}
+    variables.$si-sys-typography-display-lg-sbold-font-size *
+      variables.$si-sys-typography-display-lg-sbold-line-height
   );
 }
 
@@ -22,7 +23,7 @@
   @extend .si-display-lg-sbold;
   @extend .si-skeleton;
   display: inline-block;
-  block-size: #{variables.$si-font-size-display-lg-sbold};
+  block-size: variables.$si-sys-typography-display-lg-sbold-font-size;
   vertical-align: middle;
   inline-size: 100%;
 }
@@ -49,7 +50,9 @@
 
 .si-link-widget-skeleton {
   @extend .si-skeleton;
-  block-size: calc(#{variables.$si-font-size-body} * #{variables.$si-line-height-body});
+  block-size: calc(
+    variables.$si-sys-typography-body-font-size * variables.$si-sys-typography-body-line-height
+  );
   inline-size: 100%;
 }
 

@@ -23,7 +23,7 @@
   &.tiny,
   &.xsmall,
   &.small {
-    --initials-size: #{variables.$si-font-size-h5};
+    --initials-size: #{variables.$si-sys-typography-h5-font-size};
     --indicator-size: 1rem;
     --indicator-offset-x: -0.5rem;
     --indicator-offset-y: -0.25rem;
@@ -63,8 +63,8 @@
 }
 
 .initials {
-  font-weight: variables.$si-font-weight-h3;
-  font-size: var(--initials-size, variables.$si-font-size-h3);
+  font-weight: variables.$si-sys-typography-h3-font-weight;
+  font-size: var(--initials-size, variables.$si-sys-typography-h3-font-size);
   line-height: 1;
 }
 

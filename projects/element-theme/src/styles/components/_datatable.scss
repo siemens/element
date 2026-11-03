@@ -5,7 +5,6 @@
 @use '../variables/semantic-tokens';
 @use '../variables/si-sys-variables';
 @use '../variables/spacers';
-@use '../variables/typography';
 @use '../variables/utilities';
 
 @use 'sass:map';
@@ -182,7 +181,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       padding-block: 0;
       padding-inline: map.get(spacers.$spacers-inline, 4);
       min-inline-size: $datatable-cell-min-width;
-      line-height: typography.$si-line-height-body;
+      line-height: si-sys-variables.$si-sys-typography-body-line-height;
 
       &:first-child {
         padding-inline-start: map.get(spacers.$spacers-inline, 6);
@@ -213,9 +212,9 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     background-color: $datatable-header-background-color;
     color: $datatable-header-color;
     block-size: $datatable-header-height;
-    font-size: typography.$si-font-size-h5;
-    font-weight: typography.$si-font-weight-h5;
-    line-height: typography.$si-line-height-h5;
+    font-size: si-sys-variables.$si-sys-typography-h5-font-size;
+    font-weight: si-sys-variables.$si-sys-typography-h5-font-weight;
+    line-height: si-sys-variables.$si-sys-typography-h5-line-height;
     user-select: none;
 
     .sort-btn {
@@ -274,7 +273,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
 
   .datatable-summary-row .datatable-body-row {
     background-color: $datatable-summary-background-color;
-    font-weight: typography.$si-font-weight-h5;
+    font-weight: si-sys-variables.$si-sys-typography-h5-font-weight;
   }
 
   // Body Styles
@@ -344,7 +343,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     align-content: flex-end;
     background-color: $datatable-footer-background-color;
     color: si-sys-variables.$si-sys-color-text-secondary;
-    font-size: typography.$si-font-size-body-sm;
+    font-size: si-sys-variables.$si-sys-typography-body-sm-font-size;
     margin-block-start: -1px;
     position: relative;
     z-index: 11;

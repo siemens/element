@@ -134,9 +134,9 @@ button.card {
   color: variables.$card-cap-color;
 
   @include typography.si-font(
-    typography.$si-font-size-h5,
-    typography.$si-line-height-h5,
-    typography.$si-font-weight-h5
+    si-sys-variables.$si-sys-typography-h5-font-size,
+    si-sys-variables.$si-sys-typography-h5-line-height,
+    si-sys-variables.$si-sys-typography-h5-font-weight
   );
 
   + * .card-body, // for action cards, where we wrap the content
