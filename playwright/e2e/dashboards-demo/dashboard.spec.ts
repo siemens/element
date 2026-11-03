@@ -28,6 +28,7 @@ const waitForStableGridItemHeight = async (
 test.describe('dashboard', () => {
   const example = 'dashboard';
   const customCatalog = 'custom-catalog';
+  const fixedWidgets = 'fixed-widgets';
 
   test(example, async ({ page, si }) => {
     await si.visitExample(example, undefined);
@@ -47,6 +48,15 @@ test.describe('dashboard', () => {
     await si.visitExample(example, false);
     await expect(page.getByRole('heading', { name: 'Sample Dashboard' })).toBeVisible();
     await si.runVisualAndA11yTests('mobile');
+  });
+
+  test(fixedWidgets, async ({ page, si }) => {
+    await si.visitExample(fixedWidgets, undefined);
+    await expect(
+      page.getByRole('heading', { name: 'Fixed number of widgets (no adding, no removing)' })
+    ).toBeVisible();
+    await expect(page.getByText('Some data is outdated')).toBeVisible();
+    await si.runVisualAndA11yTests('normal');
   });
 
   test(example + 'edit', async ({ page, si }) => {

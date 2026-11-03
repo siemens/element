@@ -105,6 +105,30 @@ e.g. with a description or page actions. Project it using the `header` attribute
 </si-flexible-dashboard>
 ```
 
+### Dashboard notifications
+
+Project
+[`si-inline-notification`](../status-notifications/inline-notification.md) elements using the
+`dashboard-notification` attribute. Other elements are not accepted by this slot. Notifications are
+displayed below the dashboard toolbar and above the widget grid. They stay pinned with the dashboard
+header while the widget grid scrolls, and the region collapses completely when no notification is
+projected.
+
+Use this region for important, persistent states that affect the entire dashboard or multiple
+widgets, such as outdated data or failed widget loading. Keep messages concise and avoid using the
+region for routine or transient widget updates.
+
+```html
+<si-flexible-dashboard [dashboardId]="dashboardId" [widgetCatalog]="widgetCatalog">
+  <si-inline-notification
+    dashboard-notification
+    severity="warning"
+    heading="Some data is outdated"
+    message="The dashboard could not refresh all widgets."
+  />
+</si-flexible-dashboard>
+```
+
 ### Persistence of dashboard configuration
 
 <si-docs-type name="SiWidgetStorage" package="@siemens/dashboards-ng"></si-docs-type>

@@ -52,6 +52,10 @@ type ViewState = 'dashboard' | 'catalog' | 'editor';
 /**
  * The component implements a dashboard with adding, removing and resizing widgets.
  * It consists and connects a toolbar, a grid with widgets, and a widget catalog.
+ *
+ * Project `si-inline-notification` elements using the `dashboard-notification` attribute.
+ * Other element types are not accepted. Notifications are displayed below the toolbar and above
+ * the widget grid in the dashboard view.
  */
 @Component({
   selector: 'si-flexible-dashboard',

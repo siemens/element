@@ -29,6 +29,12 @@
     <ng-content select="[filters-slot]" filters-slot />
   </si-dashboard-toolbar>
 
+  @if (isDashboardVisible()) {
+    <ng-container menubar>
+      <ng-content select="si-inline-notification[dashboard-notification]" />
+    </ng-container>
+  }
+
   <div dashboard class="d-contents">
     <si-grid
       #grid
