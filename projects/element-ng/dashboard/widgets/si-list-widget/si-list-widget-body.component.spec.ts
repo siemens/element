@@ -250,6 +250,8 @@ describe('SiListWidgetBodyComponent with translations', () => {
     element = fixture.nativeElement;
   });
 
+  afterEach(() => vi.useRealTimers());
+
   it('should filter by translated label, not translation key', async () => {
     value.set([
       { label: 'KEY_APPLE' as any },
@@ -276,7 +278,6 @@ describe('SiListWidgetBodyComponent with translations', () => {
 
     items = element.querySelectorAll('si-list-widget-item');
     expect(items).toHaveLength(0);
-    vi.useRealTimers();
   });
 
   it('should sort by translated label, not translation key', async () => {
@@ -315,6 +316,5 @@ describe('SiListWidgetBodyComponent with translations', () => {
     const items = element.querySelectorAll('si-list-widget-item');
     expect(items).toHaveLength(1);
     expect(items.item(0).textContent).toContain('Cherry');
-    vi.useRealTimers();
   });
 });

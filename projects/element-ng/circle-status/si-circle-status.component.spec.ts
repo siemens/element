@@ -40,6 +40,8 @@ describe('SiCircleStatusComponent', () => {
     element = fixture.nativeElement;
   });
 
+  afterEach(() => vi.useRealTimers());
+
   it('should not set icon class, if no icon is configured', async () => {
     icon.set(undefined);
     await fixture.whenStable();
@@ -89,7 +91,6 @@ describe('SiCircleStatusComponent', () => {
     await fixture.whenStable();
     expect(statusIndication).toHaveClass('pulse');
     fixture.componentInstance.ngOnDestroy();
-    vi.useRealTimers();
   });
 
   it('should show event out indication', async () => {

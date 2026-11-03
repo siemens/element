@@ -15,6 +15,8 @@ describe('SiMarkdownCodeComponent', () => {
     element = fixture.nativeElement;
   });
 
+  afterEach(() => vi.useRealTimers());
+
   it('renders a fenced code block without a highlighter', async () => {
     fixture.componentRef.setInput('markdown', '```typescript\nconst answer = 42;\n```');
     await fixture.whenStable();

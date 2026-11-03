@@ -112,6 +112,8 @@ describe('SiSidePanelComponent', () => {
     service = TestBed.inject(SiSidePanelService);
   });
 
+  afterEach(() => vi.useRealTimers());
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -134,7 +136,6 @@ describe('SiSidePanelComponent', () => {
     fixture.detectChanges();
 
     expect(sidePanelElement).toHaveClass('rpanel-collapsed');
-    vi.useRealTimers();
   });
 
   it('resize should not trigger contentResize output', async () => {

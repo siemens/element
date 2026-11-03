@@ -103,6 +103,8 @@ describe('SiNumberInputComponent', () => {
       element = fixture.nativeElement;
     });
 
+    afterEach(() => vi.useRealTimers());
+
     it('should support short press increments', async () => {
       value.set(50);
       await fixture.whenStable();
@@ -128,7 +130,6 @@ describe('SiNumberInputComponent', () => {
       fakeClick('.inc', 2500);
       expect(valueChangeSpy.mock.calls.length).toBeGreaterThan(8);
       expect(valueChangeSpy.mock.calls.at(-1)![0]).toBeGreaterThan(55);
-      vi.useRealTimers();
     });
 
     it('should support short press decrements', async () => {
@@ -155,7 +156,6 @@ describe('SiNumberInputComponent', () => {
       fakeClick('.dec', 2500);
       expect(valueChangeSpy.mock.calls.length).toBeGreaterThan(8);
       expect(valueChangeSpy.mock.lastCall![0]).toBeLessThan(5);
-      vi.useRealTimers();
     });
 
     it('should not go beyond upper limit', async () => {

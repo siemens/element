@@ -86,7 +86,7 @@ describe('SiTabset', () => {
     component = testComponent.tabSet();
   });
 
-  beforeEach(async () => {
+  beforeEach(() => {
     vi.useFakeTimers();
   });
 

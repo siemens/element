@@ -183,6 +183,8 @@ describe('SiSearchBarComponent', () => {
       input.dispatchEvent(new Event('input'));
     };
 
+    afterEach(() => vi.useRealTimers());
+
     it('should default to 400ms', () => {
       vi.useFakeTimers();
 
@@ -200,8 +202,6 @@ describe('SiSearchBarComponent', () => {
 
       vi.advanceTimersByTime(1);
       expect(searchChange).toHaveBeenCalledWith('hello');
-
-      vi.useRealTimers();
     });
 
     it('should respect custom debounceTime', () => {
@@ -225,8 +225,6 @@ describe('SiSearchBarComponent', () => {
 
       vi.advanceTimersByTime(1);
       expect(searchChange).toHaveBeenCalledWith('world');
-
-      vi.useRealTimers();
     });
   });
 });

@@ -51,6 +51,9 @@ describe('SiCalendarButtonComponent', () => {
     fixture.detectChanges();
   });
 
+  // setSystemTime mocks Date without enabling fake timers.
+  afterEach(() => vi.useRealTimers());
+
   it('should show datepicker overlay', async () => {
     calendarToggleButton().click();
     fixture.detectChanges();

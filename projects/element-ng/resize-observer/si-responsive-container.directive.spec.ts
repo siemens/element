@@ -35,6 +35,8 @@ describe('SiResponsiveContainerDirective', () => {
     element = fixture.nativeElement;
   });
 
+  afterEach(() => vi.useRealTimers());
+
   const testSize = async (size: string | number, clazz: string | number): Promise<void> => {
     vi.useFakeTimers();
     await page.viewport(parseInt(size as string, 10), 100);
@@ -43,7 +45,6 @@ describe('SiResponsiveContainerDirective', () => {
     await fixture.whenStable();
 
     expect(element.querySelector<HTMLElement>('div')!).toHaveClass(clazz.toString());
-    vi.useRealTimers();
   };
 
   it.for([

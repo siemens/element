@@ -105,6 +105,8 @@ describe('SiFileUploaderComponent', () => {
     element = fixture.nativeElement;
   });
 
+  afterEach(() => vi.useRealTimers());
+
   const createFileList = (files: string[], type?: string[]): DataTransfer => {
     const dt = new DataTransfer();
     files.forEach((f, i) => dt.items.add(new File(['blub'], f, { type: type?.[i] })));
@@ -443,7 +445,6 @@ describe('SiFileUploaderComponent', () => {
     expect(vi.mocked(uploadCompletedSpy).mock.calls[0][0].error).toBeUndefined();
 
     expect(getFiles()).toHaveLength(0);
-    vi.useRealTimers();
   });
 
   it('should allow re-uploading file', async () => {
@@ -533,6 +534,5 @@ describe('SiFileUploaderComponent', () => {
     fixture.detectChanges();
 
     expect(element.querySelector('span[aria-label="Upload completed"]')).toBeDefined();
-    vi.useRealTimers();
   });
 });
