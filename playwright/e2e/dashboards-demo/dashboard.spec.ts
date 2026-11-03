@@ -25,6 +25,22 @@ const waitForStableGridItemHeight = async (
     .toEqual([expectedHeight, expectedHeight, expectedHeight]);
 };
 
+const waitForStableBoundingBox = async (locator: Locator): Promise<void> => {
+  await expect
+    .poll(async () =>
+      locator.evaluate(async element => {
+        const boxes = new Set<string>();
+        for (let frame = 0; frame < 3; frame++) {
+          await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+          const { x, y, width, height } = element.getBoundingClientRect();
+          boxes.add(`${x},${y},${width},${height}`);
+        }
+        return boxes.size;
+      })
+    )
+    .toBe(1);
+};
+
 test.describe('dashboard', () => {
   const example = 'dashboard';
   const customCatalog = 'custom-catalog';
@@ -72,32 +88,27 @@ test.describe('dashboard', () => {
     await si.visitExample(example, undefined);
     await openWidgetCatalog(page);
 
-    const helloWorld = page.getByRole('option', {
-      name: 'Hello World'
-    });
-    await helloWorld.click();
-    const next = page.getByText('Next', {
-      exact: true
-    });
-    await next.click();
-    await page.waitForTimeout(1000); // Wait for 1 second to allow the page to stabilize
+    await page.getByRole('option', { name: 'Hello World' }).click();
+    await page.getByText('Next', { exact: true }).click();
 
+    // The editor is lazy loaded; its Title field signals it is ready.
     const title = page.getByRole('textbox', { name: 'Title' });
-    const addBtn = page.getByText('Add', {
-      exact: true
-    });
-    await expect(addBtn).not.toBeDisabled();
+    const addBtn = page.getByText('Add', { exact: true });
+    await expect(title).toBeVisible();
+    await expect(addBtn).toBeEnabled();
     await title.fill('');
     await expect(addBtn).toBeDisabled();
 
     await title.fill('Dashboard World');
+    await expect(addBtn).toBeEnabled();
     await si.runVisualAndA11yTests('hello-world-editor');
     await addBtn.click();
 
-    await page.waitForTimeout(1000);
-    await expect(page.getByText('Dashboard World', { exact: true })).toBeVisible();
-
-    await page.getByText('Dashboard World', { exact: true }).scrollIntoViewIfNeeded();
+    // Wait for the lazy loaded widget content and for the grid layout to settle.
+    const helloWorldHost = page.locator('si-widget-host', { hasText: 'Dashboard World' });
+    await expect(helloWorldHost.getByRole('heading', { name: 'Hello Widgets!' })).toBeVisible();
+    await waitForStableBoundingBox(helloWorldHost);
+    await helloWorldHost.getByText('Dashboard World', { exact: true }).scrollIntoViewIfNeeded();
 
     await si.runVisualAndA11yTests('hello-world');
   });
@@ -116,28 +127,22 @@ test.describe('dashboard', () => {
     await contact.click();
     await expect(contact).toHaveClass(/active/);
 
-    const next = page.getByText('Next', {
-      exact: true
-    });
+    // The catalog and the editor wizard share the same Next button.
+    const next = page.getByText('Next', { exact: true });
     await next.click();
-    await page.waitForTimeout(1000); // Wait for 1 second to allow the page to stabilize
 
-    const nextStepBtn = page.getByText('Next', {
-      exact: true
-    });
-    await expect(nextStepBtn).toBeVisible();
-    await expect(nextStepBtn).toBeDisabled();
-    await si.runVisualAndA11yTests('contact-editor-step-1');
-
+    // The editor is lazy loaded; its first field signals it is ready.
     const firstName = page.getByRole('textbox', { name: 'First Name' });
     const lastName = page.getByRole('textbox', { name: 'Last Name' });
-    await firstName.focus();
+    await expect(firstName).toBeVisible();
+    await expect(next).toBeDisabled();
+    await si.runVisualAndA11yTests('contact-editor-step-1');
+
     await firstName.fill('Lorem Ipsum');
-    await lastName.focus();
     await lastName.fill('Dolor Sit');
     await lastName.press('Tab');
-    await expect(nextStepBtn).not.toBeDisabled();
-    await nextStepBtn.click();
+    await expect(next).toBeEnabled();
+    await next.click();
     await expect(page.getByText('Company Information')).toBeVisible();
 
     const addBtn = page.getByText('Add', {
