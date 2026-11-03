@@ -40,16 +40,7 @@
 .dropdown-menu-scroller {
   overflow: auto;
   // ~266px with rfs 16px, based on Figma and gives 6-8 items. Depending on the number of headings
-  max-block-size: min(
-    100vb,
-    calc(
-      (
-          bootstrap-variables.$dropdown-line-height + 2 *
-            bootstrap-variables.$dropdown-item-padding-y
-        ) *
-        8.3125
-    )
-  );
+  max-block-size: min(100vb, calc(bootstrap-variables.$dropdown-item-min-height * 8.3125));
 }
 
 :is(.dropdown-menu, .dropdown-item) {
@@ -102,7 +93,7 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  min-block-size: calc(1lh + 2 * bootstrap-variables.$dropdown-item-padding-y);
+  min-block-size: bootstrap-variables.$dropdown-item-min-height;
   inline-size: 100%;
   padding-block: bootstrap-variables.$dropdown-item-padding-y;
   padding-inline: bootstrap-variables.$dropdown-item-padding-x;
@@ -173,7 +164,10 @@
 }
 
 .dropdown-header {
-  display: block;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-block-size: bootstrap-variables.$dropdown-item-min-height;
   padding-block: bootstrap-variables.$dropdown-item-padding-y;
   padding-inline: bootstrap-variables.$dropdown-item-padding-x;
   margin-block-end: 0; // for use with heading elements

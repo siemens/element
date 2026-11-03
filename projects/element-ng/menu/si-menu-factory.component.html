@@ -140,9 +140,7 @@
         }
         @default {
           @if (item.isHeading) {
-            <div class="dropdown-item-text dropdown-header">
-              {{ item.title | translate }}
-            </div>
+            <si-menu-header>{{ item.title | translate }}</si-menu-header>
           } @else {
             @if (item.title !== '-') {
               <a
