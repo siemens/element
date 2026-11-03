@@ -69,6 +69,8 @@ describe('SiPopoverNextDirective', () => {
     wrapperComponent = fixture.componentInstance;
   });
 
+  afterEach(() => vi.useRealTimers());
+
   it('should use the trigger as the dialog label when no title is provided', async () => {
     await fixture.whenStable();
     const button = page.getByRole('button', { name: 'Test' });
@@ -228,7 +230,6 @@ describe('SiPopoverNextDirective', () => {
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeInTheDocument();
-    vi.useRealTimers();
   });
 
   it('should not close if click ends on the popover', async () => {
@@ -247,7 +248,6 @@ describe('SiPopoverNextDirective', () => {
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeInTheDocument();
-    vi.useRealTimers();
   });
 
   it('should focus on the popover wrapper', async () => {
@@ -265,8 +265,6 @@ describe('SiPopoverNextDirective', () => {
     await fixture.whenStable();
 
     expect(document.activeElement).toBe(document.querySelector('.popover'));
-
-    vi.useRealTimers();
   });
 });
 
@@ -276,6 +274,8 @@ describe('with custom template', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CustomTemplateHostComponent);
   });
+
+  afterEach(() => vi.useRealTimers());
 
   it('should use the trigger label when the template has no title', async () => {
     await fixture.whenStable();
@@ -323,7 +323,6 @@ describe('with custom template', () => {
     await fixture.whenStable();
 
     await expect.element(page.getByRole('textbox', { name: 'Input' })).toHaveFocus();
-    vi.useRealTimers();
   });
 });
 
