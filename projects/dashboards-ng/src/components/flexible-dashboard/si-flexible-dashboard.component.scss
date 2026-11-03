@@ -3,3 +3,11 @@
   flex: 1 1 0;
   flex-direction: column;
 }
+
+.dashboard-notifications {
+  display: flex;
+
+  &:empty {
+    display: none;
+  }
+}
