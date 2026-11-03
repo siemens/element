@@ -1,5 +1,5 @@
 @use '../variables/spacers';
-@use '../variables/typography';
+@use '../variables/si-sys-variables';
 @use 'mixins/breakpoints';
 @use 'mixins/table-row';
 @use 'variables';
@@ -68,9 +68,9 @@
 
     th {
       vertical-align: baseline;
-      font-size: typography.$si-font-size-h5;
-      font-weight: typography.$si-font-weight-h5;
-      line-height: typography.$si-line-height-h5;
+      font-size: si-sys-variables.$si-sys-typography-h5-font-size;
+      font-weight: si-sys-variables.$si-sys-typography-h5-font-weight;
+      line-height: si-sys-variables.$si-sys-typography-h5-line-height;
     }
   }
 

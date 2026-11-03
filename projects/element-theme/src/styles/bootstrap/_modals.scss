@@ -1,6 +1,5 @@
 @use '../variables/spacers';
 @use '../variables/si-sys-variables';
-@use '../variables/typography';
 @use '../variables/zindex';
 @use '../variables/si-vars';
 @use '../variables/animations';
@@ -107,8 +106,8 @@
 }
 
 .modal-title {
-  font-size: typography.$si-font-size-h4;
-  font-weight: typography.$si-font-weight-h4;
+  font-size: si-sys-variables.$si-sys-typography-h4-font-size;
+  font-weight: si-sys-variables.$si-sys-typography-h4-font-weight;
   line-height: variables.$modal-title-line-height;
   margin-block-end: 0;
 }

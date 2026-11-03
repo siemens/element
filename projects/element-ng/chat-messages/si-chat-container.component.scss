@@ -111,7 +111,7 @@ $gap-inline: calc(map.get(variables.$spacers-inline, 9) + map.get(variables.$spa
 :host-context(.si-container-xs, .si-container-sm) ::ng-deep {
   si-inline-notification {
     :is(.alert, .alert-link) {
-      font-size: variables.$si-font-size-body;
+      font-size: variables.$si-sys-typography-body-font-size;
     }
   }
 }

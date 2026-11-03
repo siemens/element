@@ -1,5 +1,5 @@
 @use '../../variables/spacers';
-@use '../../variables/typography';
+@use '../../variables/si-sys-variables';
 @use '../../variables/si-vars';
 @use '../variables';
 @use 'sass:map';
@@ -62,7 +62,7 @@
   font-size: variables.$form-feedback-font-size;
   display: none;
   inline-size: 100%;
-  line-height: typography.$si-line-height-body-sm;
+  line-height: si-sys-variables.$si-sys-typography-body-sm-line-height;
   margin-block: map.get(spacers.$spacers-block, 1);
   margin-inline: map.get(spacers.$spacers-inline, 1);
 }

@@ -161,15 +161,15 @@ $aspect-ratios: (
 //
 // Font, line-height, and color for body text, headings, and more.
 $font-family-sans-serif: var(--element-body-font-family);
-$font-family-monospace: typography.$si-font-family-mono !default;
+$font-family-monospace: si-sys-variables.$si-sys-typography-code-font-family !default;
 
 $font-family-base: $font-family-sans-serif !default;
 $font-family-code: $font-family-monospace !default;
 
 // $font-size-base effects the font size of the body text
-$font-size-base: typography.$si-font-size-body !default;
-$font-size-lg: typography.$si-font-size-body-lg !default;
-$font-size-sm: typography.$si-font-size-body-sm !default;
+$font-size-base: si-sys-variables.$si-sys-typography-body-font-size !default;
+$font-size-lg: si-sys-variables.$si-sys-typography-body-lg-font-size !default;
+$font-size-sm: si-sys-variables.$si-sys-typography-body-sm-font-size !default;
 
 $font-weight-lighter: typography.$si-font-weight-lighter;
 $font-weight-light: typography.$si-font-weight-light;
@@ -181,16 +181,16 @@ $font-weight-bolder: typography.$si-font-weight-bolder;
 
 $font-weight-base: $font-weight-normal !default;
 
-$line-height-base: typography.$si-line-height-body !default;
+$line-height-base: si-sys-variables.$si-sys-typography-body-line-height !default;
 $line-height-sm: 1.25 !default;
 $line-height-lg: 2 !default;
 
-$h1-font-size: typography.$si-font-size-h1 !default;
-$h2-font-size: typography.$si-font-size-h2 !default;
-$h3-font-size: typography.$si-font-size-h3 !default;
-$h4-font-size: typography.$si-font-size-h4 !default;
-$h5-font-size: typography.$si-font-size-h5 !default;
-$h6-font-size: typography.$si-font-size-h6 !default;
+$h1-font-size: si-sys-variables.$si-sys-typography-h1-font-size !default;
+$h2-font-size: si-sys-variables.$si-sys-typography-h2-font-size !default;
+$h3-font-size: si-sys-variables.$si-sys-typography-h3-font-size !default;
+$h4-font-size: si-sys-variables.$si-sys-typography-h4-font-size !default;
+$h5-font-size: si-sys-variables.$si-sys-typography-h5-font-size !default;
+$h6-font-size: si-sys-variables.$si-sys-typography-h6-font-size !default;
 
 $font-sizes: (
   1: $h1-font-size,
@@ -208,11 +208,11 @@ $headings-font-weight: typography.$si-font-weight-sbold !default;
 $headings-line-height: 1.2 !default;
 $headings-color: si-sys-variables.$si-sys-color-text-primary !default;
 
-$lead-font-size: typography.$si-font-size-body-lg !default;
-$lead-line-height: typography.$si-line-height-body-lg !default;
-$lead-font-weight: typography.$si-font-weight-body-lg !default;
+$lead-font-size: si-sys-variables.$si-sys-typography-body-lg-font-size !default;
+$lead-line-height: si-sys-variables.$si-sys-typography-body-lg-line-height !default;
+$lead-font-weight: si-sys-variables.$si-sys-typography-body-lg-font-weight !default;
 
-$small-font-size: typography.$si-font-size-body-sm !default;
+$small-font-size: si-sys-variables.$si-sys-typography-body-sm-font-size !default;
 
 $sub-sup-font-size: 0.75em !default;
 
@@ -221,7 +221,7 @@ $initialism-font-size: $small-font-size !default;
 $text-disabled: si-sys-variables.$si-sys-color-text-disabled !default;
 
 $blockquote-margin-y: map.get(spacers.$spacers-block, 6) !default;
-$blockquote-font-size: typography.$si-font-size-body-lg !default;
+$blockquote-font-size: si-sys-variables.$si-sys-typography-body-lg-font-size !default;
 $blockquote-footer-color: si-sys-variables.$si-sys-color-text-secondary !default;
 $blockquote-footer-font-size: $small-font-size !default;
 
@@ -325,7 +325,7 @@ $form-text-font-weight: null !default;
 $form-text-color: si-sys-variables.$si-sys-color-text-secondary !default;
 
 $form-label-margin-bottom: 4px !default;
-$form-label-font-size: typography.$si-font-size-body !default;
+$form-label-font-size: si-sys-variables.$si-sys-typography-body-font-size !default;
 $form-label-font-style: null !default;
 $form-label-font-weight: null !default;
 $form-label-color: si-sys-variables.$si-sys-color-text-secondary !default;
@@ -339,7 +339,10 @@ $input-font-size: $font-size-base;
 $input-font-weight: $font-weight-base;
 // Use an explicit rem value instead of a unitless ratio to prevent cross-browser
 // rounding differences (Safari rounds 14 × 1.1428... to 15px, Chrome to 16px). See #2031
-$input-line-height: calc(typography.$si-font-size-body * typography.$si-line-height-body);
+$input-line-height: calc(
+  si-sys-variables.$si-sys-typography-body-font-size *
+    si-sys-variables.$si-sys-typography-body-line-height
+);
 
 $input-bg: si-sys-variables.$si-sys-color-background-1 !default;
 $input-disabled-bg: si-sys-variables.$si-sys-color-background-1 !default;
@@ -423,9 +426,9 @@ $form-validation-states: (
 
 $nav-link-padding-y: 10px;
 $nav-link-padding-x: map.get(spacers.$spacers-inline, 8);
-$nav-link-font-size: typography.$si-font-size-h4;
-$nav-link-font-weight: typography.$si-font-weight-h4;
-$nav-link-line-height: typography.$si-line-height-h4;
+$nav-link-font-size: si-sys-variables.$si-sys-typography-h4-font-size;
+$nav-link-font-weight: si-sys-variables.$si-sys-typography-h4-font-weight;
+$nav-link-line-height: si-sys-variables.$si-sys-typography-h4-line-height;
 $nav-link-color: si-sys-variables.$si-sys-color-text-primary !default;
 $nav-link-hover-color: $link-hover-color !default;
 $nav-link-transition: ();
@@ -439,8 +442,8 @@ $nav-tabs-link-active-color: si-sys-variables.$si-sys-color-text-accent-active !
 $nav-tabs-link-active-bg: transparent !default;
 
 // Badges
-$badge-font-size: typography.$si-font-size-body;
-$badge-font-weight: typography.$si-font-weight-body;
+$badge-font-size: si-sys-variables.$si-sys-typography-body-font-size;
+$badge-font-weight: si-sys-variables.$si-sys-typography-body-font-weight;
 $badge-color: si-sys-variables.$si-sys-color-text-inverse !default;
 $badge-padding-y: map.get(spacers.$spacers-block, 1);
 $badge-padding-x: map.get(spacers.$spacers-inline, 4);
@@ -545,7 +548,7 @@ $modal-footer-margin-between: map.get(spacers.$spacers-block, 6);
 $modal-dialog-margin: map.get(spacers.$spacers-block, 4);
 $modal-dialog-margin-y-sm-up: map.get(spacers.$spacers-block, 9);
 
-$modal-title-line-height: typography.$si-line-height-h4 !default;
+$modal-title-line-height: si-sys-variables.$si-sys-typography-h4-line-height !default;
 
 $modal-content-color: null !default;
 $modal-content-bg: si-sys-variables.$si-sys-color-background-1 !default;
@@ -663,8 +666,8 @@ $breadcrumb-border-radius: 0 !default;
 
 // Code
 
-$code-font-size: typography.$si-font-size-body !default;
-$code-line-height: typography.$si-line-height-body !default;
+$code-font-size: si-sys-variables.$si-sys-typography-body-font-size !default;
+$code-line-height: si-sys-variables.$si-sys-typography-body-line-height !default;
 $code-color: si-sys-variables.$si-sys-color-text-primary !default;
 $code-background: si-sys-variables.$si-sys-color-background-active !default;
 $code-padding-y: map.get(spacers.$spacers-block, 1) !default;

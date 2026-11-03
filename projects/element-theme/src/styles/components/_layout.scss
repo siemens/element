@@ -52,9 +52,9 @@
   grid-area: title;
   margin-block-end: 0;
   @include variables.si-font(
-    variables.$si-font-size-h3,
-    variables.$si-line-height-h3,
-    variables.$si-font-weight-h3
+    variables.$si-sys-typography-h3-font-size,
+    variables.$si-sys-typography-h3-line-height,
+    variables.$si-sys-typography-h3-font-weight
   );
 
   &.si-layout-top-element + .si-layout-subtitle {
@@ -69,9 +69,9 @@
   margin-block-end: 0;
   color: variables.$si-sys-color-text-secondary;
   @include variables.si-font(
-    variables.$si-font-size-body,
-    variables.$si-line-height-body,
-    variables.$si-font-weight-body
+    variables.$si-sys-typography-body-font-size,
+    variables.$si-sys-typography-body-line-height,
+    variables.$si-sys-typography-body-font-weight
   );
 }
 
@@ -90,9 +90,9 @@
 
   .si-layout-title {
     @include variables.si-font(
-      variables.$si-font-size-h2,
-      variables.$si-line-height-h2,
-      variables.$si-font-weight-h2
+      variables.$si-sys-typography-h2-font-size,
+      variables.$si-sys-typography-h2-line-height,
+      variables.$si-sys-typography-h2-font-weight
     );
   }
 }

@@ -32,7 +32,7 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
   @extend %base-control;
 
   font:
-    12px/20px variables.$si-font-family,
+    12px/20px variables.$si-sys-typography-body-font-family,
     sans-serif;
   overflow: hidden;
   position: relative;

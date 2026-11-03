@@ -256,17 +256,16 @@ Change text alignment, colors, decoration, line-height, style, transform and wei
 
 ### Typography specification
 
-All font-sizes, line-heights and font-weights are specified as SASS
-variables, which can be used if required. The variables come in the form of
-`$si-font-size-[name]`, `$si-line-height-[name]`, `$si-font-weight-[name]` and
-are defined in [\_typography.scss](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/variables/_typography.scss).
+Font families, font sizes, line heights, and font weights are available as system-token
+SASS variables in the form `$si-sys-typography-[name]-[property]`.
+They reference CSS custom properties, with font sizes and line heights adapting to the active density.
 
 ```scss
 @use '@siemens/element-theme/src/styles/variables';
 
-font-size: variables.$si-font-size-h1;
-line-height: variables.$si-line-height-h1;
-font-weight: variables.$si-font-weight-h1;
+font-size: variables.$si-sys-typography-h1-font-size;
+line-height: variables.$si-sys-typography-h1-line-height;
+font-weight: variables.$si-sys-typography-h1-font-weight;
 ```
 
 We use the specifications for defining the style CSS classes and for configuring

@@ -23,14 +23,23 @@
 }
 
 @mixin define-typography($tokens) {
-  // Only migrate font size and line height; leave the other typography properties unchanged.
+  // Emit all typography tokens except letter spacing and font families other than body/code,
+  // because they are unused.
   @each $name, $value in $tokens {
-    @each $property in 'font-size', 'line-height' {
+    @each $property in 'font-size', 'line-height', 'font-weight' {
       $suffix: '-#{$property}';
 
       @if string.slice($name, - string.length($suffix)) == $suffix {
         --#{$name}: #{$value};
       }
+    }
+
+    @if $name ==
+      'si-sys-typography-body-font-family' or
+      $name ==
+      'si-sys-typography-code-font-family'
+    {
+      --#{$name}: #{$value};
     }
   }
 }

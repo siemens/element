@@ -48,9 +48,9 @@ ol:has(.list-item) {
   padding-inline: map.get(variables.$spacers-inline, 6);
 
   @include typography.si-font(
-    typography.$si-font-size-body,
-    typography.$si-line-height-body,
-    typography.$si-font-weight-body
+    variables.$si-sys-typography-body-font-size,
+    variables.$si-sys-typography-body-line-height,
+    variables.$si-sys-typography-body-font-weight
   );
 
   > * {
@@ -98,9 +98,9 @@ ol:has(.list-item) {
     margin-block-end: 0;
 
     @include typography.si-font(
-      typography.$si-font-size-body-sbold,
-      typography.$si-line-height-body-sbold,
-      typography.$si-font-weight-body-sbold
+      variables.$si-sys-typography-body-sbold-font-size,
+      variables.$si-sys-typography-body-sbold-line-height,
+      variables.$si-sys-typography-body-sbold-font-weight
     );
 
     &.unread {

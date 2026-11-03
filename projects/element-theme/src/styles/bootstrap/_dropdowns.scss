@@ -1,7 +1,6 @@
 @use '../variables';
 @use '../variables/si-sys-variables';
 @use '../variables/spacers';
-@use '../variables/typography';
 @use '../variables/zindex';
 @use './variables' as bootstrap-variables;
 
@@ -180,8 +179,8 @@
   margin-block-end: 0; // for use with heading elements
   color: bootstrap-variables.$dropdown-header-color;
   white-space: nowrap; // as with > li > a
-  font-size: typography.$si-font-size-h5;
-  font-weight: typography.$si-font-weight-h5;
+  font-size: si-sys-variables.$si-sys-typography-h5-font-size;
+  font-weight: si-sys-variables.$si-sys-typography-h5-font-weight;
   line-height: bootstrap-variables.$dropdown-line-height;
 }
 

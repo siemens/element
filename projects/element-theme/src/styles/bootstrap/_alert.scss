@@ -1,5 +1,4 @@
 @use '../variables/si-sys-variables';
-@use '../variables/typography';
 @use 'variables';
 
 .alert {
@@ -22,12 +21,12 @@
 
 .alert,
 .alert-link {
-  font-size: typography.$si-font-size-h4;
-  line-height: typography.$si-line-height-h4;
+  font-size: si-sys-variables.$si-sys-typography-h4-font-size;
+  line-height: si-sys-variables.$si-sys-typography-h4-line-height;
 }
 
 .alert-link {
-  font-weight: typography.$si-font-weight-h4;
+  font-weight: si-sys-variables.$si-sys-typography-h4-font-weight;
   color: inherit;
 
   &:hover {

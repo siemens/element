@@ -57,7 +57,7 @@ ul {
 
 .preset-item {
   cursor: pointer;
-  line-height: variables.$si-line-height-body;
+  line-height: variables.$si-sys-typography-body-line-height;
 
   &:hover {
     background: variables.$si-sys-color-background-hover;
