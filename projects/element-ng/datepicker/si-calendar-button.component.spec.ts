@@ -75,7 +75,7 @@ describe('SiCalendarButtonComponent', () => {
   });
 
   it('should mark as touched if button is blurred', () => {
-    const touchSpy = vi.spyOn(SiDatepickerDirective.prototype, 'touch');
+    using touchSpy = vi.spyOn(SiDatepickerDirective.prototype, 'touch');
     const button = calendarToggleButton();
     button.focus();
     button.blur();

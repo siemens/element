@@ -11,12 +11,14 @@ import {
   inputBinding,
   output,
   signal,
-  viewChild
+  viewChild,
+  WritableSignal
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MapService, PopupComponent } from '@maplibre/ngx-maplibre-gl';
 import { Subject } from 'rxjs';
+import type { Mock } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 
 import { ClusterPoint } from './cluster-types';
@@ -126,31 +128,29 @@ describe('SiClusterPopoverComponent', () => {
   let element: HTMLElement;
   let trigger: HTMLButtonElement | undefined;
   let clusterClick: ReturnType<typeof output<ClusterPoint>>;
-  const pageSize = signal(1);
-  const closeOnMove = signal(true);
-  const labelProperty = signal('name');
-  const descriptionProperty = signal('description');
-  const customContent = signal(false);
-  let clusterPosition = 0.8;
-  const mapMove = new Subject<void>();
-  const data = signal<GeoJSON.FeatureCollection<GeoJSON.Point>>({
-    type: 'FeatureCollection',
-    features: []
-  });
-  const statusProperty = signal<string | undefined>(undefined);
-  const getClusterLeaves = vi.fn<SiClusterSourceComponent['getClusterLeaves']>();
+  let pageSize: WritableSignal<number>;
+  let customContent: WritableSignal<boolean>;
+  let labelProperty: WritableSignal<string>;
+  let descriptionProperty: WritableSignal<string>;
+  let data: WritableSignal<GeoJSON.FeatureCollection<GeoJSON.Point>>;
+  let statusProperty: WritableSignal<string | undefined>;
+  let getClusterLeaves: Mock<SiClusterSourceComponent['getClusterLeaves']>;
+  let clusterPosition: number;
 
   beforeEach(async () => {
     await page.viewport(640, 600);
     autoOpenPopup = true;
-    pageSize.set(1);
-    closeOnMove.set(true);
-    labelProperty.set('name');
-    descriptionProperty.set('description');
-    customContent.set(false);
+    pageSize = signal(1);
+    customContent = signal(false);
+    labelProperty = signal('name');
+    descriptionProperty = signal('description');
+    data = signal({ type: 'FeatureCollection', features: [] });
+    statusProperty = signal(undefined);
+    getClusterLeaves = vi
+      .fn<SiClusterSourceComponent['getClusterLeaves']>()
+      .mockResolvedValue([firstFeature]);
     clusterPosition = 0.8;
-    statusProperty.set(undefined);
-    getClusterLeaves.mockReset().mockResolvedValue([firstFeature]);
+    const mapMove = new Subject<void>();
     TestBed.configureTestingModule({
       providers: [
         {
@@ -193,7 +193,6 @@ describe('SiClusterPopoverComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent, {
       bindings: [
         inputBinding('pageSize', pageSize),
-        inputBinding('closeOnMove', closeOnMove),
         inputBinding('labelProperty', labelProperty),
         inputBinding('descriptionProperty', descriptionProperty),
         inputBinding('customContent', customContent)
@@ -207,7 +206,6 @@ describe('SiClusterPopoverComponent', () => {
   afterEach(() => {
     trigger?.remove();
     trigger = undefined;
-    vi.restoreAllMocks();
   });
 
   it('uses the visible title to label the dialog and a separate label for its scroll region', async () => {

@@ -197,7 +197,7 @@ describe('SiTreeViewComponentWithDragDrop', () => {
   });
 
   it('shall not move item into its own child', async () => {
-    vi.spyOn(console, 'error');
+    using errorSpy = vi.spyOn(console, 'error');
     fixture.componentInstance.items.update(items => {
       items[0].state = 'expanded';
       return [...items];
@@ -210,7 +210,7 @@ describe('SiTreeViewComponentWithDragDrop', () => {
       previousContainer: fixture.componentInstance.treeOneList(),
       container: fixture.componentInstance.treeOneList()
     });
-    expect(console.error).toHaveBeenCalledWith('Cannot move parent into its own child');
+    expect(errorSpy).toHaveBeenCalledWith('Cannot move parent into its own child');
   });
 
   it('removes item from tree if node is found', async () => {

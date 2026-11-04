@@ -527,12 +527,13 @@ describe('ListDetailsComponent', () => {
     });
 
     it('should navigate back and forward in mobile mode by clicking', async () => {
-      vi.spyOn(ResizeObserverService.prototype, 'observe').mockReturnValue(
-        of({ width: 100, height: 100 })
-      );
+      using observeSpy = vi
+        .spyOn(ResizeObserverService.prototype, 'observe')
+        .mockReturnValue(of({ width: 100, height: 100 }));
       routerHarness = await RouterTestingHarness.create('/list');
       debugElement = routerHarness.fixture.debugElement;
       await routerHarness.fixture.whenStable();
+      expect(observeSpy).toHaveBeenCalled();
       // Also technical visible in mobile mode
       expect(debugElement.query(By.css('si-empty'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeFalsy();
@@ -547,12 +548,13 @@ describe('ListDetailsComponent', () => {
     });
 
     it('should navigate back and forward in mobile mode by navigation', async () => {
-      vi.spyOn(ResizeObserverService.prototype, 'observe').mockReturnValue(
-        of({ width: 100, height: 100 })
-      );
+      using observeSpy = vi
+        .spyOn(ResizeObserverService.prototype, 'observe')
+        .mockReturnValue(of({ width: 100, height: 100 }));
       routerHarness = await RouterTestingHarness.create('/list');
       debugElement = routerHarness.fixture.debugElement;
       await routerHarness.fixture.whenStable();
+      expect(observeSpy).toHaveBeenCalled();
       // Also technical visible in mobile mode
       expect(debugElement.query(By.css('si-empty'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeFalsy();

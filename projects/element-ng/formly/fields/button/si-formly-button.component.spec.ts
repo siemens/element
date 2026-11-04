@@ -324,7 +324,7 @@ describe('formly button type', () => {
     });
 
     it('should trigger the clickListener function with custom params (object)', () => {
-      vi.spyOn(console, 'warn');
+      using warnSpy = vi.spyOn(console, 'warn');
       spy.mockImplementation(() => {
         throw new Error('error');
       });
@@ -341,14 +341,14 @@ describe('formly button type', () => {
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
       expect(spy).toHaveBeenCalled();
-      expect(console.warn).toHaveBeenCalledWith(
+      expect(warnSpy).toHaveBeenCalledWith(
         'Error while executing dyn ui button "btn" direct click listener.',
         new Error('error')
       );
     });
 
     it('should log warning when click listener raised exception', () => {
-      vi.spyOn(console, 'warn');
+      using warnSpy = vi.spyOn(console, 'warn');
       spy.mockImplementation(() => {
         throw new Error('error');
       });
@@ -370,14 +370,14 @@ describe('formly button type', () => {
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
       expect(spy).toHaveBeenCalled();
-      expect(console.warn).toHaveBeenCalledWith(
+      expect(warnSpy).toHaveBeenCalledWith(
         'Error while executing dyn ui button "btn" click listener.',
         new Error('error')
       );
     });
 
     it('should log warning when click listener is not a function', () => {
-      vi.spyOn(console, 'warn');
+      using warnSpy = vi.spyOn(console, 'warn');
       spy.mockImplementation(() => {
         throw new Error('error');
       });
@@ -398,9 +398,7 @@ describe('formly button type', () => {
       fixture.detectChanges();
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
-      expect(console.warn).toHaveBeenCalledWith(
-        'The dyn ui button btn has no valid click listener'
-      );
+      expect(warnSpy).toHaveBeenCalledWith('The dyn ui button btn has no valid click listener');
     });
   });
 });
