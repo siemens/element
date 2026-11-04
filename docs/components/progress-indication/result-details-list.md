@@ -46,6 +46,10 @@ Each step contains a `description` and a `state`. Optionally a step can have a
 `value` as well as an `error message`. Each step can also define a `custom icon`
 to be displayed.
 
+The list is vertical by default; set `orientation="horizontal"` to display the
+steps in a single row. Horizontal labels are clipped after two lines, so use the
+vertical orientation when space is limited.
+
 This component requires an array of `ResultDetailStep` objects as
 an input. The possible states are defined in the enum
 `ResultDetailStepState`. More information can be found below.
@@ -63,6 +67,8 @@ import { SiResultDetailsListComponent } from '@siemens/element-ng/result-details
 ```
 
 <si-docs-component example="si-result-details-list/si-result-details-list"></si-docs-component>
+
+<si-docs-component example="si-result-details-list/si-result-details-list-horizontal"></si-docs-component>
 
 <si-docs-api component="SiResultDetailsListComponent"></si-docs-api>
 
