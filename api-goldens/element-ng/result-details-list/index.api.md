@@ -23,6 +23,7 @@ export type ResultDetailStepState = 'passed' | 'failed' | 'running' | 'not-suppo
 
 // @public (undocumented)
 export class SiResultDetailsListComponent {
+    readonly orientation: i0.InputSignal<"horizontal" | "vertical">;
     readonly steps: i0.InputSignal<ResultDetailStep[]>;
 }
 
