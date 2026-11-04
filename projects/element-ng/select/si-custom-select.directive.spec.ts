@@ -160,6 +160,7 @@ describe('SiCustomSelectDirective', () => {
 
       expect(getOverlayDropdown()).toBeInTheDocument();
       expect(getHost()).toHaveAttribute('aria-expanded', 'true');
+      expect(getHost()).toHaveAttribute('aria-controls', `${getHost().id}-dropdown`);
     });
 
     it('should open dropdown on Alt+ArrowDown', async () => {
@@ -432,7 +433,7 @@ describe('SiCustomSelectDirective', () => {
       expect(formHost.control.touched).toBe(true);
     });
 
-    it('should reset state when the overlay detaches on scroll', async () => {
+    it('should restore focus without touching the control when the overlay detaches on scroll', async () => {
       const host: HTMLElement = formFixture.nativeElement.querySelector('si-test-select');
       host.click();
       await formFixture.whenStable();
@@ -446,8 +447,8 @@ describe('SiCustomSelectDirective', () => {
       expect(getOverlayDropdown()).not.toBeInTheDocument();
       expect(host).toHaveAttribute('aria-expanded', 'false');
       expect(formHost.openChanges).toEqual([true, false]);
-      expect(host).not.toHaveFocus();
-      expect(formHost.control.touched).toBe(true);
+      expect(host).toHaveFocus();
+      expect(formHost.control.touched).toBe(false);
 
       host.click();
       await formFixture.whenStable();

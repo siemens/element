@@ -569,8 +569,11 @@ describe('SiSelectComponent', () => {
 
     it('sets the disabled state', async () => {
       component.form.disable();
-      expect(component.valueDirective().disabled()).toBe(true);
       expect(await selectHarness.getTabindex()).toBe('-1');
+      expect(fixture.nativeElement.querySelector('si-select')).toHaveAttribute(
+        'aria-disabled',
+        'true'
+      );
     });
   });
 

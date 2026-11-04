@@ -56,8 +56,7 @@ export class SiSelectDropdownDirective {
   readonly templateRef = inject<TemplateRef<void>>(TemplateRef);
 
   constructor() {
-    const customSelect = inject(SiCustomSelectDirective, { optional: true });
-    customSelect?.registerDropdown(this);
+    inject(SiCustomSelectDirective).registerDropdown(this);
   }
 
   /**
@@ -75,9 +74,9 @@ export class SiSelectDropdownDirective {
       filter(event => event.key === 'Tab' && this.closeOnTab()),
       map(() => true)
     );
-    const dismiss$ = merge(overlayRef.backdropClick(), overlayRef.detachments()).pipe(
-      map(() => false)
-    );
-    return merge(escape$, tab$, dismiss$);
+    const backdrop$ = overlayRef.backdropClick().pipe(map(() => false));
+    // E.g. closed by the scroll strategy; the detachment from our own dispose() is ignored by the caller.
+    const detach$ = overlayRef.detachments().pipe(map(() => true));
+    return merge(escape$, tab$, backdrop$, detach$);
   }
 }
