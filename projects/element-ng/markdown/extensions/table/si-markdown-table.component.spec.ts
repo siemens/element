@@ -51,7 +51,7 @@ describe('SiMarkdownTableComponent', () => {
 
   it('copies rendered table cells as CSV', async () => {
     vi.useFakeTimers();
-    const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
+    using writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
     fixture.componentRef.setInput(
       'markdown',
       `| Name | Status |
@@ -86,7 +86,7 @@ describe('SiMarkdownTableComponent', () => {
     ['=HYPERLINK("https://example.com")', '"\'=HYPERLINK(""https://example.com"")"']
   ])('neutralizes formula cells when copying %s as CSV', async (value, expected) => {
     vi.useFakeTimers();
-    const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
+    using writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
     fixture.componentRef.setInput(
       'markdown',
       `| ${value} | Status |
@@ -104,9 +104,9 @@ describe('SiMarkdownTableComponent', () => {
   });
 
   it('downloads rendered table cells as a CSV file with formulas neutralized', async () => {
-    const createObjectURL = vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:table');
-    const revokeObjectURL = vi.spyOn(URL, 'revokeObjectURL');
-    const click = vi
+    using createObjectURL = vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:table');
+    using revokeObjectURL = vi.spyOn(URL, 'revokeObjectURL');
+    using click = vi
       .spyOn(HTMLAnchorElement.prototype, 'click')
       .mockImplementation(() => undefined);
     fixture.componentRef.setInput(
