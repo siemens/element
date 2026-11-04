@@ -15,7 +15,7 @@
   "homepage": "https://github.com/siemens/element",
   "bugs": "https://github.com/siemens/element/issues/new",
   "dependencies": {
-    "@ngx-translate/http-loader": "18.0.0"
+    "@ngx-translate/http-loader": "18.1.0"
   },
   "devDependencies": {
     "ngx-build-plus": "20.0.0"
