@@ -1,13 +1,55 @@
 import re
 import xml.etree.ElementTree as etree
 from abc import abstractmethod
+from html.parser import HTMLParser
 from pathlib import PurePosixPath
 from typing import Any, cast
 from urllib.parse import urlencode, urlparse
 
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
+from markdown.postprocessors import Postprocessor
 from markdown.treeprocessors import Treeprocessor
+
+
+class ElementCodeBlockParser(HTMLParser):
+  def __init__(self):
+    super().__init__()
+    self.ids = set()
+    self.code_blocks = []
+
+  def handle_starttag(self, tag, attrs):
+    attributes = dict(attrs)
+    element_id = attributes.get('id')
+    if element_id:
+      self.ids.add(element_id)
+    if tag == 'pre' and 'id' not in attributes:
+      self.code_blocks.append(self.getpos())
+
+
+class ElementCodeBlockPostProcessor(Postprocessor):
+  def run(self, text):
+    # The theme uses the closest ancestor ID for clipboard targets. Without
+    # IDs on code blocks, every block in a tab gets the same panel-based target.
+    # Run after raw HTML is restored so fenced and generated code are included.
+    parser = ElementCodeBlockParser()
+    parser.feed(text)
+    line_offsets = [0] + [match.end() for match in re.finditer('\n', text)]
+
+    replacements = []
+    index = 0
+    for line, column in parser.code_blocks:
+      while f'element-code-{index}' in parser.ids:
+        index += 1
+      code_id = f'element-code-{index}'
+      parser.ids.add(code_id)
+      index += 1
+      offset = line_offsets[line - 1] + column + len('<pre')
+      replacements.append((offset, f' id="{code_id}"'))
+
+    for offset, attribute in reversed(replacements):
+      text = text[:offset] + attribute + text[offset:]
+    return text
 
 
 class ElementTabTreeProcessor(Treeprocessor):
@@ -165,6 +207,7 @@ class ElementDocsExtension(Extension):
     page = getattr(current_page, 'abs_url', '') or ''
     md.preprocessors.register(ElementExamplePreProcessor(self.config.get('examples_base')[0], page, md), 'element_example', 10)
     md.treeprocessors.register(ElementTabTreeProcessor(md), 'element_tabs', 10)
+    md.postprocessors.register(ElementCodeBlockPostProcessor(md), 'element_code_blocks', 25)
 
 
 def makeExtension(*args, **kwargs):
