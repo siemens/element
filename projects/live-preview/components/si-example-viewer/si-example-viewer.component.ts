@@ -112,7 +112,7 @@ export class SiExampleViewerComponent {
       handled = true;
     }
     if (params.rfs) {
-      setRootFontSize(parseInt(params.rfs, 10));
+      setRootFontSize(params.rfs === 'initial' ? params.rfs : parseInt(params.rfs, 10));
     }
     if (params.isRTL) {
       this.setRTL(params.isRTL);
