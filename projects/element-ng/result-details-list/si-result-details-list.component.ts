@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import {
   elementCircleFilled,
   elementNotChecked,
@@ -30,8 +30,6 @@ export class SiResultDetailsListComponent {
    * @defaultValue []
    */
   readonly steps = input<ResultDetailStep[]>([]);
-
-  protected readonly stepHasValue = computed(() => this.steps().some(item => !!item.value));
 
   protected readonly icons = addIcons({
     elementCircleFilled,
