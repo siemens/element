@@ -40,7 +40,7 @@ import { SiSelectListBase } from './si-select-list.base';
   templateUrl: './si-select-list-has-filter.component.html',
   styleUrl: './si-select-list-has-filter.component.scss',
   host: {
-    class: 'pt-0',
+    class: 'mt-n4',
     '[attr.id]': 'id()'
   }
 })

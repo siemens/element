@@ -13,7 +13,7 @@ import { SelectGroup, SelectOption } from '../si-select.types';
 
 @Directive({
   host: {
-    class: 'position-static w-100 py-4 d-flex flex-column',
+    class: 'position-static w-100 d-flex flex-column',
     '[class.si-multi-select]': 'multiSelect',
     '(keydown.tab)': 'keydownTab()'
   }

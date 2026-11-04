@@ -200,6 +200,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   private onTouched: () => void = () => {};
 
   private onChange: (_: T | null | undefined) => void = () => {};
+  private onValueWrite?: (value: T | null | undefined) => void;
   private readonly disabledByForm = signal(false);
 
   private readonly overlay = inject(Overlay);
@@ -231,11 +232,20 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   }
 
   /**
+   * Registers a callback invoked synchronously on every value write, including same-reference writes.
+   * @internal
+   */
+  registerOnValueWrite(fn: (value: T | null | undefined) => void): void {
+    this.onValueWrite = fn;
+  }
+
+  /**
    * Updates the value programmatically.
    * Call this from your dropdown template to set the new value.
    */
   updateValue(value: T | null | undefined): void {
     this.value.set(value);
+    this.onValueWrite?.(value);
     this.onChange(value);
   }
 
@@ -308,6 +318,7 @@ export class SiCustomSelectDirective<T> implements ControlValueAccessor, SiFormI
   /** @internal */
   writeValue(obj: T | null | undefined): void {
     this.value.set(obj);
+    this.onValueWrite?.(obj);
   }
 
   /** @internal */

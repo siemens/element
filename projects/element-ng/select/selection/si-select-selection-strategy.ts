@@ -2,46 +2,24 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  booleanAttribute,
-  computed,
-  Directive,
-  inject,
-  input,
-  Input,
-  output,
-  signal,
-  Signal
-} from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import { computed, Directive, inject, Input, output, Signal } from '@angular/core';
 
 import {
   SI_SELECT_OPTIONS_STRATEGY,
   SiSelectOptionsStrategy
 } from '../options/si-select-options-strategy';
+import { SiCustomSelectDirective } from '../si-custom-select.directive';
 
 /**
  * Selection strategy base class.
  */
-@Directive({
-  host: {
-    '[class.disabled]': 'disabled()'
-  }
-})
-export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements ControlValueAccessor {
-  /**
-   * Whether the select input is disabled.
-   *
-   * @defaultValue false
-   */
-  // eslint-disable-next-line @angular-eslint/no-input-rename
-  readonly disabledInput = input(false, { alias: 'disabled', transform: booleanAttribute });
-
+@Directive()
+export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> {
   /**
    * The selected value(s).
    */
   @Input() set value(value: IV | undefined) {
-    this.syncSelection(value);
+    this.select.writeValue(value);
   }
 
   /** Emitted when the selection is changed */
@@ -61,23 +39,13 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
     this.selectOptions.selectedRows().map(option => option.value)
   );
 
-  /**
-   * Registered form callback which shall be called on blur.
-   * @internal
-   */
-  onTouched: () => void = () => {};
-  /** @internal */
-  public readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
-  protected onChange: (_: any) => void = () => {};
-  private readonly disabledNgControl = signal(false);
   private readonly selectOptions = inject<SiSelectOptionsStrategy<T>>(SI_SELECT_OPTIONS_STRATEGY);
+  private readonly select = inject<SiCustomSelectDirective<IV>>(SiCustomSelectDirective, {
+    self: true
+  });
 
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
+  constructor() {
+    this.select.registerOnValueWrite(value => this.syncSelection(value));
   }
 
   /**
@@ -86,17 +54,8 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
    */
   updateFromUser(values: readonly T[]): void {
     const parsedValue = this.fromArrayValue(values);
-    this.syncSelection(parsedValue);
-    this.onChange(parsedValue);
+    this.select.updateValue(parsedValue);
     this.valueChange.emit(parsedValue);
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.disabledNgControl.set(isDisabled);
-  }
-
-  writeValue(obj: any): void {
-    this.syncSelection(obj);
   }
 
   protected abstract toArrayValue(value: IV | null | undefined): readonly T[];
