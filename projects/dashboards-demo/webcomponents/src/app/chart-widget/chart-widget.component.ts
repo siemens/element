@@ -4,15 +4,21 @@
  */
 
 import { AsyncPipe } from '@angular/common';
-import { Component, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
-import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
+import { SiEventBus, WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
-import { Observable, of } from 'rxjs';
+import { combineLatest, map, Observable, of, shareReplay } from 'rxjs';
 
-import { CartesianChartData } from '../../../../src/app/widgets/charts/data.service';
+import {
+  CartesianChartData,
+  days,
+  Filter,
+  filterChanges,
+  severity
+} from '../../../../src/app/widgets/charts/data.service';
 
 export interface WidgetChartCartesianConfig {
   stacked: boolean;
@@ -40,6 +46,7 @@ export class ChartWidgetComponent implements OnInit, WidgetInstance {
   ];
 
   data!: Observable<CartesianChartData>;
+  private readonly filter = filterChanges(inject(SiEventBus)).pipe(shareReplay(1));
 
   ngOnInit(): void {
     this.data = this.getCartesianChartData();
@@ -75,6 +82,26 @@ export class ChartWidgetComponent implements OnInit, WidgetInstance {
       ]
     };
 
-    return of(data);
+    return combineLatest([of(data), this.filter]).pipe(
+      map<[CartesianChartData, Filter], CartesianChartData>(([result, filter]) => {
+        const filteredData = JSON.parse(JSON.stringify(result));
+
+        if (filter.severity && filter.severity !== severity[0]) {
+          filteredData.series = filteredData.series.filter(
+            (entry: any) => entry.name === filter.severity
+          );
+        }
+
+        if (filter.days && filter.days !== days[0]) {
+          const index = days.indexOf(filter.days) - 1;
+          filteredData.series.forEach((seriesEntry: any) => {
+            seriesEntry.data = [seriesEntry.data![index]];
+          });
+          filteredData.xAxis.data = [filteredData.xAxis.data[index]];
+        }
+        return filteredData;
+      }),
+      shareReplay()
+    );
   }
 }
