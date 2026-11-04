@@ -31,6 +31,13 @@ export class SiResultDetailsListComponent {
    */
   readonly steps = input<ResultDetailStep[]>([]);
 
+  /**
+   * Orientation of the result steps.
+   *
+   * @defaultValue 'vertical'
+   */
+  readonly orientation = input<'vertical' | 'horizontal'>('vertical');
+
   protected readonly icons = addIcons({
     elementCircleFilled,
     elementNotChecked,
