@@ -35,7 +35,10 @@ import {
   SiNavbarVerticalLayout
 } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
+import {
+  BOOTSTRAP_BREAKPOINTS,
+  SiResizeObserverDirective
+} from '@siemens/element-ng/resize-observer';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -56,6 +59,7 @@ interface UIState {
   imports: [
     SiIconComponent,
     SiNavbarVerticalNextChipMenuComponent,
+    SiResizeObserverDirective,
     SiSkipLinkTargetDirective,
     SiTranslatePipe
   ],
@@ -73,7 +77,8 @@ interface UIState {
     '[class.has-visible-chip]': 'hasVisibleChip()',
     '[class.visible]': 'visible()',
     '[class.nav-flat-group-open]': '!!openFlatGroupId()',
-    '[class.ready]': 'ready()'
+    '[class.ready]': 'ready()',
+    '[style.--si-navbar-actions-width.px]': 'actionsWidth()'
   }
 })
 export class SiNavbarVerticalNextComponent implements OnChanges, OnInit, SiNavbarVerticalLayout {
@@ -201,6 +206,9 @@ export class SiNavbarVerticalNextComponent implements OnChanges, OnInit, SiNavba
    * @internal
    */
   readonly itemsComponent = contentChild(SiNavbarVerticalNextItemsComponent);
+
+  /** Rendered width of the leading navigation actions; offsets the parked toggle and chip. */
+  protected readonly actionsWidth = signal(0);
 
   /** All projected nav items, including descendants inside group templates.
    * @internal

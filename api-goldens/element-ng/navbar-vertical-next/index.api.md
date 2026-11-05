@@ -16,6 +16,11 @@ import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';
 
 // @public
+export class SiNavbarVerticalNextActionComponent {
+    readonly icon: _angular_core.InputSignal<string>;
+}
+
+// @public
 export class SiNavbarVerticalNextChipMenuComponent {
 }
 
