@@ -10,158 +10,81 @@ for (const viewport of [
   { name: 'desktop', width: 1000, height: 660 },
   { name: 'mobile', width: 320, height: 640 }
 ]) {
-  test(`voice input dictation on ${viewport.name}`, async ({ page, si }, testInfo) => {
+  test(`speech input on ${viewport.name}`, async ({ page, si }, testInfo) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
     await si.visitExample('si-chat-messages/si-chat-voice-input');
     await page.clock.install();
-
     const input = page.locator('si-chat-input');
     const textarea = input.getByRole('textbox');
     const start = input.getByRole('button', { name: 'Start dictation', exact: true });
-    const cancel = input.getByRole('button', { name: 'Cancel dictation', exact: true });
-    const confirm = input.getByRole('button', { name: 'Confirm dictation', exact: true });
-    const send = input.getByRole('button', { name: 'Send', exact: true });
-    const automaticCompletion = page.getByRole('switch', { name: 'Automatic completion' });
+    const stop = input.getByRole('button', { name: 'Stop dictation', exact: true });
 
-    const checkState = async (state: string): Promise<void> => {
-      const accessibility = await new AxeBuilder({ page })
-        .include('si-chat-input')
-        .include('.form-switch')
-        .analyze();
+    const capture = async (state: string): Promise<void> => {
+      const accessibility = await new AxeBuilder({ page }).include('app-sample').analyze();
       expect(accessibility.violations).toEqual([]);
+      expect(await input.evaluate(element => element.scrollWidth > element.clientWidth)).toBe(
+        false
+      );
+      const dictationBounds = await input.locator('button[siSpeechInput]').evaluate(element => {
+        const bounds = element.getBoundingClientRect();
+        return { right: bounds.right, top: bounds.top };
+      });
+      const submitBounds = await input
+        .getByRole('button', { name: 'Send', exact: true })
+        .evaluate(element => {
+          const bounds = element.getBoundingClientRect();
+          return { left: bounds.left, top: bounds.top };
+        });
+      expect(submitBounds.left - dictationBounds.right).toBeGreaterThanOrEqual(0);
+      expect(submitBounds.left - dictationBounds.right).toBeLessThanOrEqual(8);
+      expect(Math.abs(submitBounds.top - dictationBounds.top)).toBeLessThan(1);
       await testInfo.attach(state, {
-        body: await input.screenshot(),
+        body: await page.locator('app-sample').screenshot(),
         contentType: 'image/png'
       });
     };
 
-    await checkState('idle');
-    await expect(automaticCompletion).toBeChecked();
+    await capture('idle');
     await textarea.fill('Existing draft');
     await start.focus();
     await page.keyboard.press('Space');
-    await expect(cancel).toBeFocused();
-    await expect(automaticCompletion).toBeDisabled();
-    await expect(send).toBeDisabled();
-    await expect(textarea).toHaveAttribute('placeholder', 'Starting voice input…');
-    await expect(textarea).toHaveJSProperty('readOnly', true);
-    await expect(start).toHaveCount(0);
-    await testInfo.attach('listening', {
-      body: await input.screenshot(),
-      contentType: 'image/png'
-    });
+    await page.clock.runFor(50);
+    await expect(stop).toBeFocused();
+    await expect(stop).toHaveAttribute('aria-pressed', 'true');
+    await page.clock.runFor(1800);
+    await expect(textarea).toHaveValue(/^Existing draft Show the/);
+    await capture('listening');
+    await stop.click();
+    await page.clock.runFor(50);
+    await expect(start).toBeFocused();
+    const retainedDraft = await textarea.inputValue();
+    expect(retainedDraft).toMatch(/^Existing draft Show the/);
+    await capture('review');
+
+    await start.click();
     await page.keyboard.press('Escape');
-    await expect(textarea).toHaveValue('Existing draft');
-    await expect(textarea).toBeFocused();
-    await textarea.fill('Edited after cancellation');
-    await page.clock.runFor(1500);
-    await expect(textarea).toHaveValue('Edited after cancellation');
+    await page.clock.runFor(8000);
+    await expect(textarea).toHaveValue(retainedDraft);
     await expect(start).toBeEnabled();
-    await textarea.fill('Existing draft');
 
-    await page.evaluate(() => {
-      const originalSetTimeout = window.setTimeout;
-      window.setTimeout = (handler, timeout, ...args) => {
-        if (timeout === 750) {
-          window.setTimeout = originalSetTimeout;
-          throw new Error('Simulated recognition startup failure');
-        }
-        return originalSetTimeout(handler, timeout, ...args);
-      };
-    });
+    await page.getByRole('combobox', { name: 'Voice input mode' }).selectOption('push-to-talk');
+    await page.clock.runFor(50);
+    await start.focus();
+    await page.keyboard.down('Space');
+    await page.clock.runFor(1800);
+    await page.keyboard.up('Space');
+    await page.clock.runFor(50);
+    await expect(start).toBeFocused();
+    await expect(textarea).toHaveValue(`${retainedDraft} Show the`);
+
+    await page.getByRole('combobox', { name: 'Voice input mode' }).selectOption('toggle');
+    await page.clock.runFor(50);
+    await page.getByRole('switch', { name: 'Send after dictation' }).check();
+    await textarea.fill('');
     await start.click();
-    await page.clock.runFor(900);
-    await expect(page.getByRole('alert')).toHaveText(
-      'Voice input could not start. Please try again.'
-    );
-    await expect(textarea).toHaveValue('Existing draft');
-    await expect(textarea).toBeEditable();
+    await page.clock.runFor(8500);
     await expect(start).toBeEnabled();
-    await expect(send).toBeEnabled();
-
-    await start.click();
-    await expect(page.getByRole('alert')).toHaveCount(0);
-    await input.getByRole('button', { name: 'Attach file', exact: true }).focus();
-    await page.clock.runFor(1500);
-    await expect(input.getByRole('button', { name: 'Attach file', exact: true })).toBeFocused();
-    await expect(textarea).toHaveClass(/text-secondary/);
-    await cancel.focus();
-    await page.keyboard.press('Escape');
-    await expect(textarea).toHaveValue('Existing draft');
-
-    await start.click();
-    await page.clock.runFor(1500);
-    await expect(confirm).toBeFocused();
-    await expect(textarea).toHaveValue(/^Existing draft Show/);
-    await expect(input.getByRole('button', { name: 'Attach file', exact: true })).toBeEnabled();
-    await expect(confirm.locator('si-icon')).toHaveAttribute('data-icon', 'elementCheckedFilled');
-    await expect(cancel.locator('si-icon')).toHaveAttribute('data-icon', 'elementStateClose');
-    await expect(textarea).toHaveClass(/text-secondary/);
-    const provisionalColor = await textarea.evaluate(element => getComputedStyle(element).color);
-    await checkState('recording');
-
-    const hasHorizontalOverflow = await input.evaluate(
-      element => element.scrollWidth > element.clientWidth
-    );
-    expect(hasHorizontalOverflow).toBe(false);
-
-    await page.keyboard.down('Enter');
-    await expect(textarea).toBeFocused();
-    await page.keyboard.down('Enter');
-    await page.keyboard.down('Enter');
-    await page.keyboard.up('Enter');
-    await expect(textarea).toBeEditable();
-    await expect(send).toBeEnabled();
-    const confirmedDraft = await textarea.inputValue();
-    expect(confirmedDraft).toMatch(/^Existing draft Show/);
-    await page.clock.runFor(6500);
-    await expect(textarea).toHaveValue(confirmedDraft);
-    await expect(textarea).not.toHaveClass(/text-secondary/);
-    expect(await textarea.evaluate(element => getComputedStyle(element).color)).not.toBe(
-      provisionalColor
-    );
-    await checkState('review');
-
-    await textarea.fill('Existing draft');
-    await start.click();
-    await page.clock.runFor(6500);
-    await expect(textarea).toHaveValue(
-      'Existing draft Show the energy consumption for the last seven days.'
-    );
-    await expect(textarea).toBeFocused();
-    await expect(textarea).toBeEditable();
-    await expect(textarea).not.toHaveClass(/text-secondary/);
-    await expect(start).toBeEnabled();
-    await expect(send).toBeEnabled();
-    await expect(confirm).toHaveCount(0);
-    await expect(cancel).toHaveCount(0);
-    await checkState('automatic completion');
-
-    await expect(automaticCompletion).toBeEnabled();
-    await automaticCompletion.uncheck();
-    await textarea.fill('Existing draft');
-    await start.click();
-    await expect(automaticCompletion).toBeDisabled();
-    await page.clock.runFor(6500);
-    const completedDraft = 'Existing draft Show the energy consumption for the last seven days.';
-    await expect(textarea).toHaveValue(completedDraft);
-    await expect(textarea).toHaveJSProperty('readOnly', true);
-    await expect(textarea).toHaveClass(/text-secondary/);
-    await expect(confirm).toBeFocused();
-    await expect(cancel).toBeEnabled();
-    await page.clock.runFor(1500);
-    await expect(textarea).toHaveValue(completedDraft);
-    await expect(confirm).toBeEnabled();
-    await checkState('user completion');
-    await confirm.click();
-    await expect(textarea).toHaveValue(completedDraft);
-    await expect(textarea).toBeEditable();
-    await expect(textarea).not.toHaveClass(/text-secondary/);
-    await expect(automaticCompletion).toBeEnabled();
-    await expect(automaticCompletion).not.toBeChecked();
-
-    await send.click();
     await expect(textarea).toHaveValue('');
-    await expect(send).toBeDisabled();
+    await capture('auto-send');
   });
 }

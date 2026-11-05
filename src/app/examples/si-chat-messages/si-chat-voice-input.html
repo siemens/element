@@ -1,17 +1,31 @@
 <div class="p-2">
   <si-chat-input
+    #chat
     placeholder="Enter a command, question or topic…"
     disclaimer="The content is AI generated. Always verify the information for accuracy."
-    [voiceInput]="true"
-    [voiceInputState]="voiceInputState()"
-    [listeningLabel]="starting() ? 'Starting voice input…' : 'Listening…'"
     [allowAttachments]="true"
     [(value)]="value"
-    (voiceInputStart)="startDictation()"
-    (voiceInputConfirm)="confirmDictation()"
-    (voiceInputCancel)="cancelDictation()"
     (send)="sendMessage($event)"
-  />
+  >
+    <button
+      #speech="siSpeechInput"
+      type="button"
+      class="btn btn-tertiary-ghost btn-icon"
+      siChatInputEnd
+      siSpeechInput
+      continuous
+      noPermissionHint
+      [mode]="mode()"
+      [silenceTimeout]="2000"
+      [siTooltip]="speech.listening() ? 'Stop dictation' : 'Start dictation'"
+      [(value)]="value"
+      (listeningChange)="onListeningChange($event, chat, speech)"
+      (errorOccurred)="onSpeechError($event)"
+    >
+      <si-icon [icon]="speech.listening() ? icons.elementStopFilled : icons.elementVoice" />
+    </button>
+  </si-chat-input>
+  <span class="visually-hidden" role="status">{{ listening() ? 'Listening…' : '' }}</span>
   @if (error()) {
     <p class="text-danger mt-4 mb-0" role="alert">{{ error() }}</p>
   }
@@ -20,11 +34,24 @@
       type="checkbox"
       class="form-check-input"
       role="switch"
-      id="automatic-completion"
-      [checked]="automaticCompletion()"
-      [disabled]="voiceInputState() !== 'idle'"
-      (change)="automaticCompletion.set(!automaticCompletion())"
+      id="auto-send"
+      [checked]="autoSend()"
+      [disabled]="listening()"
+      (change)="autoSend.set(!autoSend())"
     />
-    <label for="automatic-completion" class="form-check-label">Automatic completion</label>
+    <label for="auto-send" class="form-check-label">Send after dictation</label>
+  </div>
+  <div class="mt-4">
+    <label class="form-label" for="voice-mode">Voice input mode</label>
+    <select
+      id="voice-mode"
+      class="form-select"
+      [disabled]="listening()"
+      [value]="mode()"
+      (change)="setMode($event)"
+    >
+      <option value="toggle">Toggle</option>
+      <option value="push-to-talk">Push-to-talk</option>
+    </select>
   </div>
 </div>

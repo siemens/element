@@ -29,16 +29,11 @@ export interface SiTranslatableKeys {
   'SI_CHANGE_PASSWORD.NEW_PASSWORD'?: string;
   'SI_CHANGE_PASSWORD.PASSWORD_POLICY'?: string;
   'SI_CHAT_INPUT.ATTACH_FILE'?: string;
-  'SI_CHAT_INPUT.CANCEL_DICTATION'?: string;
-  'SI_CHAT_INPUT.CONFIRM_DICTATION'?: string;
-  'SI_CHAT_INPUT.FINISHING'?: string;
   'SI_CHAT_INPUT.INTERRUPT'?: string;
   'SI_CHAT_INPUT.LABEL'?: string;
-  'SI_CHAT_INPUT.LISTENING'?: string;
   'SI_CHAT_INPUT.PLACEHOLDER'?: string;
   'SI_CHAT_INPUT.SECONDARY_ACTIONS'?: string;
   'SI_CHAT_INPUT.SEND'?: string;
-  'SI_CHAT_INPUT.START_DICTATION'?: string;
   'SI_COLOR_PICKER.PALETTE_LABEL'?: string;
   'SI_COLOR_PICKER.SELECTED_LABEL'?: string;
   'SI_COLUMN_SELECTION_DIALOG.CANCEL'?: string;
@@ -272,6 +267,9 @@ export interface SiTranslatableKeys {
   'SI_SLIDER.INCREMENT'?: string;
   'SI_SLIDER.LABEL'?: string;
   'SI_SOURCE_CHIP.SOURCES'?: string;
+  'SI_SPEECH_INPUT.NO_PERMISSION'?: string;
+  'SI_SPEECH_INPUT.START'?: string;
+  'SI_SPEECH_INPUT.STOP'?: string;
   'SI_SPLIT.COLLAPSE_LABEL'?: string;
   'SI_STATUS_BAR.ALL_OK'?: string;
   'SI_STATUS_BAR.MUTE'?: string;
