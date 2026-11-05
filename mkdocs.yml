@@ -276,6 +276,8 @@ markdown_extensions:
       emoji_index: !!python/name:mkdocs_siemens.icons.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.details
+  - pymdownx.blocks.tab:
+      alternate_style: true
   - pymdownx.tasklist
   - pymdownx.tilde
   - pymdownx.snippets:
