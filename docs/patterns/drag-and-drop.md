@@ -153,20 +153,35 @@ placeholders automatically.
 
 #### List
 
-<si-docs-component base="drag-drop" height="550">
-  <si-docs-tab example="drag-drop" heading="List"></si-docs-tab>
-  <si-docs-tab example="drag-drop-cards" heading="Cards"></si-docs-tab>
-</si-docs-component>
+/// tab | List
+<si-docs-component example="drag-drop/drag-drop" height="550"></si-docs-component>
+///
+
+/// tab | Cards
+<si-docs-component example="drag-drop/drag-drop-cards" height="550"></si-docs-component>
+///
 
 #### Tree with different drag and drop use cases
 
-<si-docs-component base="si-tree-view" height="400">
-  <si-docs-tab example="si-tree-view-drag-drop-move" heading="Moving between trees"></si-docs-tab>
-  <si-docs-tab example="si-tree-view-drag-drop-copy" heading="Copying between trees"></si-docs-tab>
-  <si-docs-tab example="si-tree-view-drag-drop-copy-from-list" heading="Copying from a list to a tree"></si-docs-tab>
-  <si-docs-tab example="si-tree-view-drag-drop-reorder" heading="Reordering"></si-docs-tab>
-  <si-docs-tab example="si-tree-view-drag-drop-assign" heading="Assignment"></si-docs-tab>
-</si-docs-component>
+/// tab | Moving between trees
+<si-docs-component example="si-tree-view/si-tree-view-drag-drop-move" height="400"></si-docs-component>
+///
+
+/// tab | Copying between trees
+<si-docs-component example="si-tree-view/si-tree-view-drag-drop-copy" height="400"></si-docs-component>
+///
+
+/// tab | Copying from a list to a tree
+<si-docs-component example="si-tree-view/si-tree-view-drag-drop-copy-from-list" height="400"></si-docs-component>
+///
+
+/// tab | Reordering
+<si-docs-component example="si-tree-view/si-tree-view-drag-drop-reorder" height="400"></si-docs-component>
+///
+
+/// tab | Assignment
+<si-docs-component example="si-tree-view/si-tree-view-drag-drop-assign" height="400"></si-docs-component>
+///
 
 ### Datatable with reorderable rows
 

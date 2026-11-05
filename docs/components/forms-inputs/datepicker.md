@@ -138,10 +138,13 @@ Optionally, you can provide a custom date and time format using the `config` obj
 
 The directive implements the Angular `ControlValueAccessor` and can be used in Angular Forms.
 
-<si-docs-component base="si-datepicker" height="650">
-  <si-docs-tab example="si-datepicker-input" heading="Datepicker Input"></si-docs-tab>
-  <si-docs-tab example="si-datepicker-input-playground" heading="Datepicker Input Playground"></si-docs-tab>
-</si-docs-component>
+/// tab | Datepicker Input
+<si-docs-component example="si-datepicker/si-datepicker-input" height="650"></si-docs-component>
+///
+
+/// tab | Datepicker Input Playground
+<si-docs-component example="si-datepicker/si-datepicker-input-playground" height="650"></si-docs-component>
+///
 
 ### Input element with date range picker
 
@@ -149,10 +152,13 @@ The `SiDateRangeComponent` component is a custom component which can be used to 
 
 The component implements the Angular `ControlValueAccessor` and can be used in Angular Forms.
 
-<si-docs-component base="si-datepicker" height="450">
-  <si-docs-tab example="si-date-range" heading="Date Range"></si-docs-tab>
-  <si-docs-tab example="si-date-range-playground" heading="Date Range Playground"></si-docs-tab>
-</si-docs-component>
+/// tab | Date Range
+<si-docs-component example="si-datepicker/si-date-range" height="450"></si-docs-component>
+///
+
+/// tab | Date Range Playground
+<si-docs-component example="si-datepicker/si-date-range-playground" height="450"></si-docs-component>
+///
 
 ### Timepicker
 
@@ -160,9 +166,7 @@ The timepicker component is a custom component with individual input fields for 
 parts of the time individually, like hours, and minutes. It implements the `ControlValueAccessor`
 and can be used in Angular Forms.
 
-<si-docs-component base="si-datepicker">
-  <si-docs-tab example="si-timepicker" heading="Timepicker"  height="350"></si-docs-tab>
-</si-docs-component>
+<si-docs-component example="si-datepicker/si-timepicker" height="350"></si-docs-component>
 
 <si-docs-api component="SiDatepickerComponent"></si-docs-api>
 

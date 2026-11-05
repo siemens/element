@@ -21,10 +21,13 @@ import { SiElectrontitlebarComponent } from '@siemens/element-ng/electron-titleb
 })
 ```
 
-<si-docs-component base="si-electron-titlebar">
-  <si-docs-tab example="si-electron-titlebar" heading="Basic usage"></si-docs-tab>
-  <si-docs-tab example="si-fixed-height-layout-side-panel" heading="Full layout example"></si-docs-tab>
-</si-docs-component>
+/// tab | Basic usage
+<si-docs-component example="si-electron-titlebar/si-electron-titlebar"></si-docs-component>
+///
+
+/// tab | Full layout example
+<si-docs-component example="si-electron-titlebar/si-fixed-height-layout-side-panel"></si-docs-component>
+///
 
 ### Correct rendering
 
