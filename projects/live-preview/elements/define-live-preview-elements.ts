@@ -8,7 +8,6 @@ import { SiDocsComponentComponent } from '@siemens/live-preview';
 
 /** Registers the existing documentation markup as live-preview custom elements. */
 export const defineLivePreviewElements = (injector: Injector): void => {
-  customElements.define('si-docs-tab', class extends HTMLElement {});
   customElements.define(
     'si-docs-component',
     createCustomElement(SiDocsComponentComponent, { injector })

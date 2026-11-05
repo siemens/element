@@ -32,9 +32,7 @@ A status toggle is a good way to directly set a status on a screen, e.g. the res
 
 ## Code ---
 
-<si-docs-component base="si-status-toggle" height="600">
-  <si-docs-tab example="si-status-toggle" heading="All examples"></si-docs-tab>
-</si-docs-component>
+<si-docs-component example="si-status-toggle/si-status-toggle" height="600"></si-docs-component>
 
 <si-docs-api component="SiStatusToggleComponent"></si-docs-api>
 

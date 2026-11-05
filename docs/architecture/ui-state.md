@@ -19,11 +19,17 @@ The supported components are
 
 Expanded and split size states are persisted in e.g. the `localStorage` of the browser and re-applied on reload.
 
-<si-docs-component editor="false" height="500">
-  <si-docs-tab example="si-navbar-vertical/si-navbar-vertical" heading="Vertical Navigation"></si-docs-tab>
-  <si-docs-tab example="si-split/si-split-mixed" heading="Split"></si-docs-tab>
-  <si-docs-tab example="si-list-details/si-list-details" heading="List-Details"></si-docs-tab>
-</si-docs-component>
+/// tab | Vertical Navigation
+<si-docs-component example="si-navbar-vertical/si-navbar-vertical" editor="false" height="500"></si-docs-component>
+///
+
+/// tab | Split
+<si-docs-component example="si-split/si-split-mixed" editor="false" height="500"></si-docs-component>
+///
+
+/// tab | List-Details
+<si-docs-component example="si-list-details/si-list-details" editor="false" height="500"></si-docs-component>
+///
 
 ## How to enable the UI state storage
 

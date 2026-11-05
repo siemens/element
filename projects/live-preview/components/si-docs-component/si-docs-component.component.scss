@@ -1,5 +1,3 @@
-@use '../../styles/components/tabs';
-
 :host {
   display: block;
   box-sizing: border-box;
@@ -30,8 +28,4 @@ button {
   display: flex;
   flex-direction: column;
   block-size: calc(var(--preview-height, 204px) + 411px);
-}
-
-.lp-tabs {
-  border-block-end: 1px solid var(--si-sys-color-border-4);
 }

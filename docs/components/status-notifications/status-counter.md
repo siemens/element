@@ -18,9 +18,7 @@ import { SiStatusCounterComponent } from '@siemens/element-ng/status-counter';
 
     When using stacked icons we recommend using the composite icons to create harmonious icons.
 
-<si-docs-component base="si-status-counter" height="600">
-  <si-docs-tab example="si-status-counter" heading="Status Counter"></si-docs-tab>
-</si-docs-component>
+<si-docs-component example="si-status-counter/si-status-counter" height="600"></si-docs-component>
 
 <si-docs-api component="SiStatusCounterComponent"></si-docs-api>
 <si-docs-api component="SiIconStatusComponent"></si-docs-api>

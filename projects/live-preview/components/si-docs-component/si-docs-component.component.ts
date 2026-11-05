@@ -8,7 +8,6 @@ import {
   DestroyRef,
   DOCUMENT,
   effect,
-  ElementRef,
   inject,
   input,
   numberAttribute,
@@ -20,11 +19,6 @@ import { ThemeType } from '../../interfaces/si-live-preview.api';
 import { LivePreviewStateService } from '../../services/live-preview-state.service';
 import { LivePreviewUrlService } from '../../services/live-preview-url.service';
 import { SiLivePreviewComponent } from '../si-live-preview/si-live-preview.component';
-
-interface DocsExample {
-  example: string;
-  heading: string;
-}
 
 /**
  * Documentation component shared with the optional elements entry point.
@@ -49,37 +43,14 @@ export class SiDocsComponentComponent {
 
   protected readonly state = inject(LivePreviewStateService);
   private readonly document = inject(DOCUMENT);
-  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   private readonly documentTheme = signal<ThemeType>(this.readDocumentTheme());
-  private readonly childExamples = signal<DocsExample[]>([]);
   protected readonly previewTheme = computed(() => this.theme() ?? this.documentTheme());
-  protected readonly activeTabIndex = signal(0);
   protected readonly previewHeight = computed(() => {
     const height = this.height();
     return Number.isFinite(height) && height >= 0 ? height : 204;
   });
-  protected readonly tabs = computed(() => [
-    ...(this.example() ? [{ example: this.example(), heading: '' }] : []),
-    ...this.childExamples()
-  ]);
 
   constructor() {
-    const readTabs = (): void => {
-      this.childExamples.set(
-        Array.from(this.host.querySelectorAll(':scope > si-docs-tab[example]'), tab => ({
-          example: tab.getAttribute('example') ?? '',
-          heading: tab.getAttribute('heading') ?? ''
-        }))
-      );
-    };
-    readTabs();
-    const observer = new MutationObserver(readTabs);
-    observer.observe(this.host, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['example', 'heading']
-    });
     const themeObserver = new MutationObserver(() =>
       this.documentTheme.set(this.readDocumentTheme())
     );
@@ -87,20 +58,13 @@ export class SiDocsComponentComponent {
       attributes: true,
       attributeFilter: ['data-md-color-scheme']
     });
-    inject(DestroyRef).onDestroy(() => {
-      observer.disconnect();
-      themeObserver.disconnect();
-    });
+    inject(DestroyRef).onDestroy(() => themeObserver.disconnect());
 
     effect(() => {
-      this.tabs();
-      this.activeTabIndex.set(0);
-    });
-    effect(() => {
-      const tab = this.tabs()[this.activeTabIndex()];
+      const example = this.example();
       const base = this.base().replace(/\/$/, '');
       this.state.clearTemplates();
-      this.state.example.set(tab ? `${base ? base + '/' : ''}${tab.example}` : '');
+      this.state.example.set(example ? `${base ? base + '/' : ''}${example}` : '');
     });
     effect(() => {
       this.state.theme.set(this.previewTheme());
@@ -109,12 +73,5 @@ export class SiDocsComponentComponent {
 
   private readDocumentTheme(): ThemeType {
     return this.document.body.getAttribute('data-md-color-scheme') === 'dark' ? 'dark' : 'light';
-  }
-
-  protected activateTab(index: number, focus = false): void {
-    this.activeTabIndex.set(index);
-    if (focus) {
-      this.host.shadowRoot?.querySelector<HTMLButtonElement>(`#example-tab-${index}`)?.focus();
-    }
   }
 }

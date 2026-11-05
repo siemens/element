@@ -167,10 +167,13 @@ directive to have it automatically select on keyboard navigation.
 
 ### Filter and sort
 
-<si-docs-component base="datatable" height="300">
-  <si-docs-tab example="datatable-filter-sort-server" heading="Server side"></si-docs-tab>
-  <si-docs-tab example="datatable-filter" heading="Client side"></si-docs-tab>
-</si-docs-component>
+/// tab | Server side
+<si-docs-component example="datatable/datatable-filter-sort-server" height="300"></si-docs-component>
+///
+
+/// tab | Client side
+<si-docs-component example="datatable/datatable-filter" height="300"></si-docs-component>
+///
 
 ### Responsive
 
