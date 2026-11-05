@@ -31,8 +31,8 @@
     [attr.role]="tabs().length > 1 ? 'tabpanel' : null"
     [attr.aria-labelledby]="tabs().length > 1 ? 'example-tab-' + activeTabIndex() : null"
   >
-    <si-live-preview [initialTheme]="previewTheme()" />
+    <si-live-preview class="embedded" [initialTheme]="previewTheme()" />
   </div>
 } @placeholder {
-  <div class="preview" aria-hidden="true"></div>
+  <div class="preview placeholder" aria-hidden="true"></div>
 }
