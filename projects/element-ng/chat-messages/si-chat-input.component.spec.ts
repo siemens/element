@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  Component,
   DebugElement,
   inputBinding,
   outputBinding,
@@ -17,13 +18,14 @@ import { MenuItem } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
+import { SiChatInputVoiceComponent } from './si-chat-input-voice.component';
 import {
   ChatInputAttachment,
   SiChatInputComponent as TestComponent
 } from './si-chat-input.component';
 
 describe('SiChatInputComponent', () => {
-  let fixture: ComponentFixture<TestComponent>;
+  let fixture: ComponentFixture<TestComponent> | ComponentFixture<VoiceTestHostComponent>;
   let debugElement: DebugElement;
   let component: TestComponent;
   let value: WritableSignal<string>;
@@ -46,6 +48,7 @@ describe('SiChatInputComponent', () => {
   let followUpPrompts: WritableSignal<string[]>;
   let followUpPromptSelectedSpy = vi.fn();
   let voiceInput: WritableSignal<boolean>;
+  let voiceDisabled: WritableSignal<boolean>;
   let voiceState: WritableSignal<'idle' | 'listening' | 'recording' | 'finishing'>;
   let startSpy = vi.fn<() => void>();
   let confirmSpy = vi.fn<() => void>();
@@ -57,6 +60,76 @@ describe('SiChatInputComponent', () => {
     listening: string;
     finishing: string;
   }>;
+
+  @Component({
+    imports: [TestComponent, SiChatInputVoiceComponent],
+    template: `
+      <si-chat-input
+        [placeholder]="placeholder()"
+        [disabled]="disabled()"
+        [sending]="sending()"
+        [interruptible]="interruptible()"
+        [maxLength]="maxLength()"
+        [disclaimer]="disclaimer()"
+        [actions]="actions()"
+        [secondaryActions]="secondaryActions()"
+        [allowAttachments]="allowAttachments()"
+        [maxFileSize]="maxFileSize()"
+        [sendButtonLabel]="sendButtonLabel()"
+        [sendButtonIcon]="sendButtonIcon()"
+        [followUpPrompts]="followUpPrompts()"
+        [(value)]="value"
+        [(attachments)]="attachments"
+        (send)="sendSpy($event)"
+        (interrupt)="interruptSpy()"
+        (fileError)="fileErrorSpy($event)"
+        (followUpPromptSelected)="followUpPromptSelectedSpy($event)"
+      >
+        @if (voiceInput()) {
+          <si-chat-input-voice
+            [state]="voiceState()"
+            [disabled]="voiceDisabled()"
+            [startDictationLabel]="voiceLabels().start"
+            [cancelDictationLabel]="voiceLabels().cancel"
+            [confirmDictationLabel]="voiceLabels().confirm"
+            [listeningLabel]="voiceLabels().listening"
+            [finishingLabel]="voiceLabels().finishing"
+            (startRequested)="startSpy()"
+            (confirmRequested)="confirmSpy()"
+            (cancelRequested)="cancelSpy()"
+          />
+        }
+      </si-chat-input>
+    `
+  })
+  class VoiceTestHostComponent {
+    readonly value = value;
+    readonly attachments = attachments;
+    readonly placeholder = placeholder;
+    readonly disabled = disabled;
+    readonly sending = sending;
+    readonly interruptible = interruptible;
+    readonly maxLength = maxLength;
+    readonly disclaimer = disclaimer;
+    readonly actions = actions;
+    readonly secondaryActions = secondaryActions;
+    readonly allowAttachments = allowAttachments;
+    readonly maxFileSize = maxFileSize;
+    readonly sendButtonLabel = sendButtonLabel;
+    readonly sendButtonIcon = sendButtonIcon;
+    readonly followUpPrompts = followUpPrompts;
+    readonly voiceInput = voiceInput;
+    readonly voiceDisabled = voiceDisabled;
+    readonly voiceState = voiceState;
+    readonly voiceLabels = voiceLabels;
+    readonly sendSpy = sendSpy;
+    readonly interruptSpy = interruptSpy;
+    readonly fileErrorSpy = fileErrorSpy;
+    readonly followUpPromptSelectedSpy = followUpPromptSelectedSpy;
+    readonly startSpy = startSpy;
+    readonly confirmSpy = confirmSpy;
+    readonly cancelSpy = cancelSpy;
+  }
 
   beforeEach(() => {
     value = signal('');
@@ -79,6 +152,7 @@ describe('SiChatInputComponent', () => {
     followUpPrompts = signal<string[]>([]);
     followUpPromptSelectedSpy = vi.fn();
     voiceInput = signal(false);
+    voiceDisabled = signal(false);
     voiceState = signal<'idle' | 'listening' | 'recording' | 'finishing'>('idle');
     startSpy = vi.fn<() => void>();
     confirmSpy = vi.fn<() => void>();
@@ -111,17 +185,7 @@ describe('SiChatInputComponent', () => {
         outputBinding('interrupt', interruptSpy),
         outputBinding('fileError', fileErrorSpy),
         inputBinding('followUpPrompts', followUpPrompts),
-        outputBinding('followUpPromptSelected', followUpPromptSelectedSpy),
-        inputBinding('voiceInput', voiceInput),
-        inputBinding('voiceInputState', voiceState),
-        outputBinding('voiceInputStart', startSpy),
-        outputBinding('voiceInputConfirm', confirmSpy),
-        outputBinding('voiceInputCancel', cancelSpy),
-        inputBinding('startDictationLabel', () => voiceLabels().start),
-        inputBinding('cancelDictationLabel', () => voiceLabels().cancel),
-        inputBinding('confirmDictationLabel', () => voiceLabels().confirm),
-        inputBinding('listeningLabel', () => voiceLabels().listening),
-        inputBinding('finishingLabel', () => voiceLabels().finishing)
+        outputBinding('followUpPromptSelected', followUpPromptSelectedSpy)
       ]
     });
     debugElement = fixture.debugElement;
@@ -700,8 +764,72 @@ describe('SiChatInputComponent', () => {
     const textarea = (): HTMLTextAreaElement => fixture.nativeElement.querySelector('textarea');
 
     beforeEach(() => {
+      fixture.destroy();
+      const hostFixture = TestBed.createComponent(VoiceTestHostComponent);
+      fixture = hostFixture;
+      debugElement = fixture.debugElement.query(By.directive(TestComponent));
+      component = debugElement.componentInstance;
       voiceInput.set(true);
     });
+
+    it('should disable only the microphone when voice input is unavailable', async () => {
+      value.set('Typed message');
+      voiceDisabled.set(true);
+      await fixture.whenStable();
+
+      expect(button('Start dictation')).toBeDisabled();
+      expect(textarea()).toBeEnabled();
+      expect(textarea()).toHaveProperty('readOnly', false);
+      expect(button('Send')).toBeEnabled();
+      button('Start dictation').click();
+      button('Send').click();
+      await fixture.whenStable();
+
+      expect(startSpy).not.toHaveBeenCalled();
+      expect(sendSpy).toHaveBeenCalledExactlyOnceWith({
+        content: 'Typed message',
+        attachments: []
+      });
+    });
+
+    it('should allow starting dictation again after availability is restored', async () => {
+      voiceDisabled.set(true);
+      await fixture.whenStable();
+      voiceDisabled.set(false);
+      await fixture.whenStable();
+
+      expect(button('Start dictation')).toBeEnabled();
+      button('Start dictation').click();
+      await fixture.whenStable();
+
+      expect(startSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should expose a consumer-provided label when voice input is unavailable', async () => {
+      voiceDisabled.set(true);
+      voiceLabels.update(labels => ({ ...labels, start: 'Microphone access is blocked' }));
+      await fixture.whenStable();
+
+      expect(button('Microphone access is blocked')).toBeDisabled();
+      expect(button('Start dictation')).toBeNull();
+    });
+
+    it.each(['listening', 'recording', 'finishing'] as const)(
+      'should preserve cancellation when availability changes during %s',
+      async state => {
+        voiceState.set(state);
+        await fixture.whenStable();
+        voiceDisabled.set(true);
+        await fixture.whenStable();
+
+        expect(button('Cancel dictation')).toBeEnabled();
+        button('Cancel dictation').click();
+        await fixture.whenStable();
+
+        expect(cancelSpy).toHaveBeenCalledTimes(1);
+        expect(voiceState()).toBe(state);
+      }
+    );
 
     it.each(['recording', 'finishing'] as const)(
       'should leave the standard input unchanged when voice input is not enabled while %s',

@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   afterRenderEffect,
   AfterViewInit,
   booleanAttribute,
   Component,
   computed,
+  contentChild,
   ElementRef,
   input,
   model,
@@ -19,12 +21,9 @@ import {
 import { FormsModule } from '@angular/forms';
 import {
   elementAttachment,
-  elementCheckedFilled,
   elementPlus,
   elementSendFilled,
-  elementStateClose,
-  elementStopFilled,
-  elementVoice
+  elementStopFilled
 } from '@siemens/element-icons';
 import {
   SiFileUploadDirective,
@@ -38,6 +37,7 @@ import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-transla
 
 import { MessageAction } from './message-action.model';
 import { Attachment, SiAttachmentListComponent } from './si-attachment-list.component';
+import { SiChatInputControl } from './si-chat-input-control';
 
 /**
  * Attachment item interface for file attachments in chat messages, extension of {@link Attachment} for {@link SiAttachmentListComponent} to use within {@link SiChatInputComponent}.
@@ -86,6 +86,7 @@ export interface ChatInputAttachment extends Attachment {
   selector: 'si-chat-input',
   imports: [
     CdkMenuTrigger,
+    NgTemplateOutlet,
     FormsModule,
     SiIconComponent,
     SiTranslatePipe,
@@ -100,18 +101,15 @@ export interface ChatInputAttachment extends Attachment {
 export class SiChatInputComponent implements AfterViewInit {
   private static idCounter = 0;
   private readonly textInput = viewChild<ElementRef<HTMLTextAreaElement>>('textInput');
-  private readonly voiceButton = viewChild<ElementRef<HTMLButtonElement>>('voiceButton');
   private readonly submitButton = viewChild<ElementRef<HTMLButtonElement>>('submitButton');
+  private focusedControl?: HTMLElement;
   private readonly fileUploadDirective = viewChild(SiFileUploadDirective);
   protected readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
   protected readonly icons = addIcons({
     elementAttachment,
-    elementCheckedFilled,
     elementPlus,
     elementSendFilled,
-    elementStateClose,
-    elementStopFilled,
-    elementVoice
+    elementStopFilled
   });
 
   /**
@@ -119,84 +117,6 @@ export class SiChatInputComponent implements AfterViewInit {
    * @defaultValue ''
    */
   readonly value = model<string>('');
-
-  /**
-   * Whether voice input controls are available. Speech recognition is managed by the consumer.
-   * @defaultValue false
-   */
-  readonly voiceInput = input(false, { transform: booleanAttribute });
-
-  /**
-   * Consumer-controlled voice input state. Use listening during startup and while awaiting speech,
-   * recording during transcription, and finishing while awaiting final results after stopping.
-   * Stream transcript updates through {@link value}, including while finishing.
-   * @defaultValue 'idle'
-   */
-  readonly voiceInputState = input<'idle' | 'listening' | 'recording' | 'finishing'>('idle');
-
-  /**
-   * Start dictation button label.
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_CHAT_INPUT.START_DICTATION:Start dictation`)
-   * ```
-   */
-  readonly startDictationLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_CHAT_INPUT.START_DICTATION:Start dictation`)
-  );
-
-  /**
-   * Cancel dictation button label.
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_CHAT_INPUT.CANCEL_DICTATION:Cancel dictation`)
-   * ```
-   */
-  readonly cancelDictationLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_CHAT_INPUT.CANCEL_DICTATION:Cancel dictation`)
-  );
-
-  /**
-   * Confirm dictation button label.
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_CHAT_INPUT.CONFIRM_DICTATION:Confirm dictation`)
-   * ```
-   */
-  readonly confirmDictationLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_CHAT_INPUT.CONFIRM_DICTATION:Confirm dictation`)
-  );
-
-  /**
-   * Placeholder while waiting for speech.
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_CHAT_INPUT.LISTENING:Listening…`)
-   * ```
-   */
-  readonly listeningLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_CHAT_INPUT.LISTENING:Listening…`)
-  );
-
-  /**
-   * Status while awaiting final transcription results.
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_CHAT_INPUT.FINISHING:Finishing dictation…`)
-   * ```
-   */
-  readonly finishingLabel = input<TranslatableString>(
-    t(() => $localize`:@@SI_CHAT_INPUT.FINISHING:Finishing dictation…`)
-  );
-
-  /** Requests that the consumer start speech recognition. Does not change the state or value. */
-  readonly voiceInputStart = output<void>();
-
-  /** Requests that the consumer stop recognition and keep the transcript for review, without sending. */
-  readonly voiceInputConfirm = output<void>();
-
-  /** Requests that the consumer stop recognition and restore the draft from before dictation. */
-  readonly voiceInputCancel = output<void>();
 
   /**
    * Placeholder text for the input
@@ -401,21 +321,8 @@ export class SiChatInputComponent implements AfterViewInit {
   protected readonly hasContent = computed(() => this.value().trim().length > 0);
   protected readonly hasAttachments = computed(() => this.attachments().length > 0);
   protected readonly hasActions = computed(() => this.actions().length > 0);
-  protected readonly voiceActive = computed(
-    () => this.voiceInput() && this.voiceInputState() !== 'idle'
-  );
-  protected readonly voiceRecording = computed(
-    () => this.voiceActive() && this.voiceInputState() === 'recording'
-  );
-  protected readonly voiceFinishing = computed(
-    () => this.voiceActive() && this.voiceInputState() === 'finishing'
-  );
-  protected readonly voiceStatusLabel = computed(() =>
-    this.voiceFinishing() ? this.finishingLabel() : this.listeningLabel()
-  );
-  protected readonly voiceButtonLabel = computed(() =>
-    this.voiceActive() ? this.cancelDictationLabel() : this.startDictationLabel()
-  );
+  protected readonly inputControl = contentChild(SiChatInputControl);
+  protected readonly controlActive = computed(() => this.inputControl()?.active() ?? false);
   protected readonly hasSecondaryActions = computed(() => this.secondaryActions().length > 0);
   protected readonly combinedMenuActions = computed<MenuItem[]>(() => [
     ...(this.allowAttachments()
@@ -442,34 +349,23 @@ export class SiChatInputComponent implements AfterViewInit {
       (this.hasContent() || this.hasAttachments()) &&
       !this.disabled() &&
       !this.sending() &&
-      !this.voiceActive()
+      !this.controlActive()
   );
 
   protected readonly showInterruptButton = computed(
-    () => this.interruptible() && !this.voiceActive()
+    () => this.interruptible() && !this.controlActive()
   );
   protected readonly buttonDisabled = computed(() => {
-    if (this.voiceActive()) {
-      return this.disabled() || !this.voiceRecording();
-    }
     if (this.showInterruptButton()) {
       return this.disabled() || this.sending();
     }
     return !this.canSend();
   });
   protected readonly buttonIcon = computed(() =>
-    this.voiceRecording() || this.voiceFinishing()
-      ? this.icons.elementCheckedFilled
-      : this.showInterruptButton()
-        ? this.icons.elementStopFilled
-        : this.sendButtonIcon()
+    this.showInterruptButton() ? this.icons.elementStopFilled : this.sendButtonIcon()
   );
   protected readonly buttonLabel = computed(() =>
-    this.voiceRecording() || this.voiceFinishing()
-      ? this.confirmDictationLabel()
-      : this.showInterruptButton()
-        ? this.interruptButtonLabel()
-        : this.sendButtonLabel()
+    this.showInterruptButton() ? this.interruptButtonLabel() : this.sendButtonLabel()
   );
 
   protected readonly dragOver = signal(false);
@@ -483,33 +379,36 @@ export class SiChatInputComponent implements AfterViewInit {
       }
     });
 
-    let previousState = 'idle';
+    let previousActive = false;
+    let previousTarget: HTMLButtonElement | undefined;
     afterRenderEffect(() => {
-      const state = this.voiceActive() ? this.voiceInputState() : 'idle';
-      if (state === previousState) {
+      const control = this.inputControl();
+      const active = this.controlActive();
+      const target = control?.focusTarget();
+      if (active === previousActive && target === previousTarget) {
         return;
       }
-      previousState = state;
-      if (this.disabled()) {
-        return;
-      }
+      previousActive = active;
+      previousTarget = target;
       const textarea = this.textInput()?.nativeElement;
-      const voiceButton = this.voiceButton()?.nativeElement;
       const submitButton = this.submitButton()?.nativeElement;
       const activeElement = textarea?.ownerDocument.activeElement;
-      if (
-        activeElement !== textarea &&
-        activeElement !== voiceButton &&
-        activeElement !== submitButton
-      ) {
+      const moveFocus =
+        !this.disabled() &&
+        !!activeElement &&
+        (activeElement === textarea ||
+          activeElement === submitButton ||
+          !!control?.containsFocus(activeElement) ||
+          (activeElement === textarea?.ownerDocument.body &&
+            this.focusedControl?.isConnected === false));
+      if (!moveFocus) {
         return;
       }
-      if (state === 'idle') {
+      if (!active) {
         textarea?.focus();
         textarea?.setSelectionRange(textarea.value.length, textarea.value.length);
       } else {
-        const button = state === 'recording' ? submitButton : voiceButton;
-        button?.focus();
+        target?.focus();
       }
     });
   }
@@ -535,10 +434,8 @@ export class SiChatInputComponent implements AfterViewInit {
     if (this.disabled()) {
       return;
     }
-    if (this.voiceActive()) {
-      if (this.voiceRecording()) {
-        this.voiceInputConfirm.emit();
-      }
+    if (this.controlActive()) {
+      this.inputControl()?.activate();
       return;
     }
     if (this.showInterruptButton()) {
@@ -557,7 +454,7 @@ export class SiChatInputComponent implements AfterViewInit {
       if (event.repeat) {
         return;
       }
-      if (this.voiceActive()) {
+      if (this.controlActive()) {
         this.onButtonClick();
         return;
       }
@@ -571,38 +468,18 @@ export class SiChatInputComponent implements AfterViewInit {
     }
   }
 
-  protected onVoiceButtonClick(): void {
-    if (this.disabled() || (!this.voiceActive() && (this.sending() || this.interruptible()))) {
-      return;
-    }
-    if (this.voiceActive()) {
-      this.voiceInputCancel.emit();
-    } else {
-      this.voiceInputStart.emit();
-    }
-  }
-
-  protected onVoiceKeyDown(event: KeyboardEvent): void {
-    if (
-      event.key === 'Enter' &&
-      !event.shiftKey &&
-      event.repeat &&
-      !event.isComposing &&
-      (event.target === this.voiceButton()?.nativeElement ||
-        event.target === this.submitButton()?.nativeElement)
-    ) {
-      event.preventDefault();
-      return;
-    }
-    if (event.key === 'Escape' && this.voiceActive() && !this.disabled() && !event.isComposing) {
-      event.preventDefault();
-      event.stopPropagation();
-      this.voiceInputCancel.emit();
-    }
-  }
-
   protected onInput(event: Event): void {
     this.setTextareaHeight(event.target as HTMLTextAreaElement);
+  }
+
+  protected onControlFocus(event: FocusEvent): void {
+    const target = event.target as HTMLElement;
+    this.focusedControl =
+      target === this.textInput()?.nativeElement ||
+      target === this.submitButton()?.nativeElement ||
+      this.inputControl()?.containsFocus(target)
+        ? target
+        : undefined;
   }
 
   protected onFilesAdded(uploadFiles: UploadFile[]): void {
@@ -652,7 +529,7 @@ export class SiChatInputComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const textarea = this.textInput();
     if (textarea?.nativeElement) {
-      if (this.autoFocus() && !this.voiceActive()) {
+      if (this.autoFocus() && !this.controlActive()) {
         // Use setTimeout to ensure the element is fully rendered
         setTimeout(() => {
           textarea.nativeElement.focus();

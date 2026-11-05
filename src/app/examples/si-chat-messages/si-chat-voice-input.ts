@@ -3,12 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { ChatInputAttachment, SiChatInputComponent } from '@siemens/element-ng/chat-messages';
+import {
+  ChatInputAttachment,
+  ChatInputVoiceState,
+  SiChatInputComponent,
+  SiChatInputVoiceComponent
+} from '@siemens/element-ng/chat-messages';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiChatInputComponent],
+  imports: [SiChatInputComponent, SiChatInputVoiceComponent],
   templateUrl: './si-chat-voice-input.html'
 })
 export class SampleComponent {
@@ -19,7 +24,7 @@ export class SampleComponent {
   private draft = '';
 
   readonly value = signal('');
-  readonly voiceInputState = signal<'idle' | 'listening' | 'recording'>('idle');
+  readonly voiceInputState = signal<ChatInputVoiceState>('idle');
   readonly automaticCompletion = signal(true);
   readonly starting = signal(false);
   readonly error = signal<string | undefined>(undefined);

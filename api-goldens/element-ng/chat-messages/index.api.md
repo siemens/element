@@ -16,6 +16,7 @@ import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { Signal } from '@angular/core';
 import { StaticProvider } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
@@ -34,6 +35,9 @@ export interface ChatInputAttachment extends Attachment {
     size: number;
     type: string;
 }
+
+// @public
+export type ChatInputVoiceState = 'idle' | 'listening' | 'recording' | 'finishing';
 
 // @public
 export interface MessageAction {
@@ -129,12 +133,9 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly attachFileLabel: _angular_core.InputSignal<TranslatableString>;
     readonly attachments: _angular_core.ModelSignal<ChatInputAttachment[]>;
     readonly autoFocus: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly cancelDictationLabel: _angular_core.InputSignal<TranslatableString>;
-    readonly confirmDictationLabel: _angular_core.InputSignal<TranslatableString>;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly disclaimer: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly fileError: _angular_core.OutputEmitterRef<FileUploadError>;
-    readonly finishingLabel: _angular_core.InputSignal<TranslatableString>;
     focus(): void;
     readonly followUpPrompts: _angular_core.InputSignal<string[]>;
     readonly followUpPromptSelected: _angular_core.OutputEmitterRef<string>;
@@ -142,7 +143,6 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly interruptButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly interruptible: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly label: _angular_core.InputSignal<string>;
-    readonly listeningLabel: _angular_core.InputSignal<TranslatableString>;
     readonly maxFileSize: _angular_core.InputSignal<number>;
     readonly maxLength: _angular_core.InputSignal<number | undefined>;
     readonly placeholder: _angular_core.InputSignal<TranslatableString>;
@@ -156,17 +156,61 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly sendButtonIcon: _angular_core.InputSignal<string>;
     readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly startDictationLabel: _angular_core.InputSignal<TranslatableString>;
     readonly value: _angular_core.ModelSignal<string>;
-    readonly voiceInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly voiceInputCancel: _angular_core.OutputEmitterRef<void>;
-    readonly voiceInputConfirm: _angular_core.OutputEmitterRef<void>;
-    readonly voiceInputStart: _angular_core.OutputEmitterRef<void>;
-    readonly voiceInputState: _angular_core.InputSignal<"idle" | "listening" | "recording" | "finishing">;
+}
+
+// @public
+export abstract class SiChatInputControl {
+    // (undocumented)
+    abstract activate(): void;
+    // (undocumented)
+    abstract readonly active: Signal<boolean>;
+    // (undocumented)
+    abstract containsFocus(element: Element | null | undefined): boolean;
+    // (undocumented)
+    abstract readonly controls: Signal<TemplateRef<unknown> | undefined>;
+    // (undocumented)
+    abstract readonly focusTarget: Signal<HTMLButtonElement | undefined>;
+    // (undocumented)
+    abstract onKeyDown(event: KeyboardEvent): void;
+    // (undocumented)
+    abstract readonly placeholder: Signal<TranslatableString>;
+    // (undocumented)
+    abstract readonly textSecondary: Signal<boolean>;
 }
 
 // @public
 export class SiChatInputDisclaimerDirective {
+}
+
+// @public
+export class SiChatInputVoiceComponent extends SiChatInputControl {
+    // (undocumented)
+    activate(): void;
+    // (undocumented)
+    readonly active: _angular_core.Signal<boolean>;
+    readonly cancelDictationLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly cancelRequested: _angular_core.OutputEmitterRef<void>;
+    readonly confirmDictationLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly confirmRequested: _angular_core.OutputEmitterRef<void>;
+    // (undocumented)
+    containsFocus(element: Element | null | undefined): boolean;
+    // (undocumented)
+    readonly controls: _angular_core.Signal<TemplateRef<unknown> | undefined>;
+    readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly finishingLabel: _angular_core.InputSignal<TranslatableString>;
+    // (undocumented)
+    readonly focusTarget: _angular_core.Signal<HTMLButtonElement | undefined>;
+    readonly listeningLabel: _angular_core.InputSignal<TranslatableString>;
+    // (undocumented)
+    onKeyDown(event: KeyboardEvent): void;
+    // (undocumented)
+    readonly placeholder: _angular_core.Signal<TranslatableString>;
+    readonly startDictationLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly startRequested: _angular_core.OutputEmitterRef<void>;
+    readonly state: _angular_core.InputSignal<ChatInputVoiceState>;
+    // (undocumented)
+    readonly textSecondary: _angular_core.Signal<boolean>;
 }
 
 // @public
@@ -175,7 +219,7 @@ export class SiChatMessageActionDirective {
 
 // @public
 export class SiChatMessageComponent {
-    readonly actionsPosition: _angular_core.InputSignal<"bottom" | "side">;
+    readonly actionsPosition: _angular_core.InputSignal<"side" | "bottom">;
     readonly alignment: _angular_core.InputSignal<"start" | "end">;
     readonly loading: _angular_core.InputSignal<boolean>;
 }

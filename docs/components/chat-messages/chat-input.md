@@ -117,8 +117,12 @@ Clear the list (set to `[]`) on send and repopulate it after each AI response.
 
 <si-docs-component example="si-chat-messages/si-chat-voice-input"></si-docs-component>
 
-Enable the controls with `voiceInput` and drive `voiceInputState` from your speech recognition
-integration. Element does not access the microphone or depend on a speech-to-text library.
+Import `SiChatInputVoiceComponent` alongside `SiChatInputComponent` and project one
+`si-chat-input-voice` directly inside the input. Drive its `state` from your speech recognition
+integration. The base input does not import the voice extension, so applications that do not
+import it can tree-shake its implementation and voice-specific icons. Hiding an imported
+extension at runtime is not a bundle-size optimization.
+Element does not access the microphone or depend on a speech-to-text library.
 The example simulates asynchronous startup and partial transcription updates without requesting
 microphone access. Startup is cancellable before the first transcript arrives. After the final
 simulated result, dictation finishes automatically and the transcript remains editable for review.
@@ -127,20 +131,23 @@ Switch off **Automatic completion** below the example to require user confirmati
 result. The switch is disabled during dictation so the completion mode stays fixed for each attempt.
 
 ```html
-<si-chat-input
-  [voiceInput]="true"
-  [voiceInputState]="voiceInputState()"
-  [(value)]="draft"
-  (voiceInputStart)="startDictation()"
-  (voiceInputConfirm)="confirmDictation()"
-  (voiceInputCancel)="cancelDictation()"
-  (send)="sendMessage($event)"
-/>
+<si-chat-input [(value)]="draft" (send)="sendMessage($event)">
+  <si-chat-input-voice
+    [state]="voiceInputState()"
+    [disabled]="!voiceAvailable()"
+    (startRequested)="startDictation()"
+    (confirmRequested)="confirmDictation()"
+    (cancelRequested)="cancelDictation()"
+  />
+</si-chat-input>
 ```
 
 The consumer owns the recognition lifecycle, state, and transcript:
 
-1. On `voiceInputStart`, reject concurrent starts, save the current draft, and set the state to
+Use `ChatInputVoiceState` for the consumer's state signal. Keep the complete draft in the
+parent's existing `value` model; the extension does not introduce another transcript model.
+
+1. On `startRequested`, reject concurrent starts, save the current draft, and set the state to
    `listening` synchronously, before awaiting microphone permission or provider startup. This
    locks editing and sending while keeping cancellation available. Use `listeningLabel` to
    announce "Starting voice input…" during startup and "Listening…" once the provider is ready.
@@ -148,17 +155,17 @@ The consumer owns the recognition lifecycle, state, and transcript:
 2. When speech is detected, set the state to `recording`. Update `value` with each complete
    draft, including any existing text. Partial results can replace previous partial results;
    do not append the same interim words repeatedly. The text area resizes for external updates.
-3. On `voiceInputConfirm`, set the state to `finishing` and request recognition to stop. Keep
+3. On `confirmRequested`, set the state to `finishing` and request recognition to stop. Keep
    accepting final transcript updates through `value` without returning to `recording`. The draft
    stays read-only, Confirm is disabled, and Cancel remains available. Once final results have
    arrived and recognition has finished, set the state to `idle` for review, editing, further
    dictation, or sending. If finalization is synchronous, the consumer can return directly to idle.
-4. On `voiceInputCancel`, stop recognition, restore the saved draft, then set the state to `idle`.
+4. On `cancelRequested`, stop recognition, restore the saved draft, then set the state to `idle`.
    Attachments are not cleared by dictation controls.
 5. When the provider ends the recognition session naturally, use `finishing` if final results are
    pending. Apply the final result, release recognition resources, and set the state to `idle`,
    keeping the transcript for review. Do not send the message automatically. This transition does
-   not require a `voiceInputConfirm` event.
+   not require a `confirmRequested` event.
 
 Silence detection and automatic stopping belong to the speech recognition integration, not the
 chat input. Providers may expose voice activity, end-of-utterance, silence timeout, or session-ended
@@ -166,27 +173,44 @@ events. A speech pause or end of an utterance does not necessarily end a continu
 session. Follow the provider's lifecycle and your application's stopping policy, and keep dictation
 active until final results have been collected and recognition has finished.
 
-The events are requests: they do not change `voiceInputState` or `value` automatically. Keep
+The events are requests: they do not change `state` or the parent's `value` automatically. Keep
 the state at `finishing` until asynchronous finalization completes. Cancel remains a consumer
 request in this state: stop finalization, restore the saved draft, and return to idle. Cancellation, completion, and
 destruction must invalidate the current attempt. Ignore both successful and failed callbacks
 from invalidated attempts: they must not update state or restore an old draft over edits made
 after cancellation or during a later attempt. Release any resources returned by a late startup
-result, and release microphone resources when the view is destroyed.
+result, and release microphone resources when the view is destroyed. Stop recognition and
+complete cleanup before removing the projected extension.
 
 On permission denial or recognition failure for the current attempt, stop recognition, restore
 the draft protected by the startup lock, return to `idle`, and present an appropriate accessible
 error message or notification. Do not defer the startup lock until permission is granted or
-unconditionally restore a saved draft from a stale error handler. Only enable voice input when
-your integration supports it. The microphone control is disabled during response generation.
+unconditionally restore a saved draft from a stale error handler.
+
+Feature visibility, availability, and recognition state are separate:
+
+- Omit the extension when the application does not support voice input. Use conditional projection
+  when availability is only known at runtime.
+- Set the extension's `disabled` input when voice is temporarily unavailable or microphone access
+  is blocked. Typing and sending remain available. Changing this input during dictation does not
+  disable Cancel or change recognition state; the consumer must stop or cancel the current attempt.
+- Set `SiChatInputComponent.disabled` only when the entire composer should be disabled.
+
+For permission denial, explain the reason and recovery action in an accessible error message or
+notification. Do not rely only on a tooltip on a disabled button. The extension's
+`startDictationLabel` can also describe its unavailable state. Re-enable voice input when the
+application can retry or permission is restored; do not permanently disable every transient
+startup failure. The microphone control is also disabled during response generation.
 
 Customize `startDictationLabel`, `cancelDictationLabel`, `confirmDictationLabel`, `listeningLabel`,
-and `finishingLabel` with translatable strings. Listening and finishing are announced through the
+and `finishingLabel` on the extension with translatable strings. Listening and finishing are announced through the
 status region without announcing every transcript update. Consumers can hide irrelevant custom
 actions during dictation if needed.
 Waveform rendering and audio-level inputs are intentionally deferred; no audio data is required by
 the current interface.
 
 <si-docs-api component="SiChatInputComponent"></si-docs-api>
+
+<si-docs-api component="SiChatInputVoiceComponent"></si-docs-api>
 
 <si-docs-types></si-docs-types>

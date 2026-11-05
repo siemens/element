@@ -4,7 +4,7 @@
       <button
         type="button"
         class="btn btn-secondary-ghost fw-normal"
-        [disabled]="disabled() || sending() || voiceActive()"
+        [disabled]="disabled() || sending() || controlActive()"
         (click)="selectFollowUpPrompt(prompt)"
         >{{ prompt }}</button
       >
@@ -15,7 +15,8 @@
 <div
   class="input-wrapper border rounded-3"
   [class.drag-over]="dragOver()"
-  (keydown)="onVoiceKeyDown($event)"
+  (keydown)="inputControl()?.onKeyDown($event)"
+  (focusin)="onControlFocus($event)"
   (click)="onContainerClick($event)"
   (drop)="dropHandler($event)"
   (dragover)="dragOverHandler($event)"
@@ -36,11 +37,11 @@
       #textInput
       class="chat-textarea w-100 border-0"
       rows="1"
-      [class.text-secondary]="(voiceRecording() || voiceFinishing()) && !disabled()"
+      [class.text-secondary]="controlActive() && inputControl()?.textSecondary() && !disabled()"
       [id]="id"
-      [placeholder]="(voiceActive() ? voiceStatusLabel() : placeholder()) | translate"
+      [placeholder]="(controlActive() ? inputControl()!.placeholder() : placeholder()) | translate"
       [disabled]="disabled()"
-      [readOnly]="voiceActive()"
+      [readOnly]="controlActive()"
       [maxlength]="maxLength() || null"
       [(ngModel)]="value"
       (input)="onInput($event)"
@@ -114,37 +115,22 @@
     </div>
 
     <div class="d-flex align-items-center flex-shrink-0 gap-4">
-      @if (voiceInput()) {
+      <ng-container [ngTemplateOutlet]="inputControl()?.controls() ?? null" />
+      @if (!controlActive()) {
         <button
-          #voiceButton
+          #submitButton
           type="button"
           class="btn btn-tertiary-ghost btn-icon"
-          [disabled]="disabled() || (!voiceActive() && (sending() || interruptible()))"
-          [siTooltip]="voiceButtonLabel() | translate"
-          [attr.aria-label]="voiceButtonLabel() | translate"
-          (click)="onVoiceButtonClick()"
+          [disabled]="buttonDisabled()"
+          [siTooltip]="buttonLabel() | translate"
+          [attr.aria-label]="buttonLabel() | translate"
+          (click)="onButtonClick()"
         >
-          <si-icon [icon]="voiceActive() ? icons.elementStateClose : icons.elementVoice" />
+          <si-icon class="text-accent" [icon]="buttonIcon()" />
         </button>
       }
-      <button
-        #submitButton
-        type="button"
-        class="btn btn-tertiary-ghost btn-icon"
-        [disabled]="buttonDisabled()"
-        [siTooltip]="buttonLabel() | translate"
-        [attr.aria-label]="buttonLabel() | translate"
-        (click)="onButtonClick()"
-      >
-        <si-icon class="text-accent" [icon]="buttonIcon()" />
-      </button>
     </div>
   </div>
-  @if (voiceInput()) {
-    <span class="visually-hidden" role="status">{{
-      voiceActive() ? (voiceStatusLabel() | translate) : ''
-    }}</span>
-  }
 </div>
 
 <div class="disclaimer-wrapper text-center mt-4 px-3">
