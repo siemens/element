@@ -157,7 +157,7 @@
           "options": {
             "outputPath": "dist/element-ng-test",
             "browser": "projects/element-ng/test-main.ts",
-            "tsConfig": "projects/element-ng/tsconfig.lib.json",
+            "tsConfig": "projects/element-ng/tsconfig.spec.json",
             "assets": [
               {
                 "glob": "**/*",
@@ -464,7 +464,7 @@
           "options": {
             "outputPath": "dist/dashboards-ng-test",
             "browser": "projects/dashboards-ng/src/test-main.ts",
-            "tsConfig": "projects/dashboards-ng/tsconfig.lib.json",
+            "tsConfig": "projects/dashboards-ng/tsconfig.spec.json",
             "styles": [
               "projects/element-theme/src/theme.scss",
               "node_modules/gridstack/dist/gridstack.css"

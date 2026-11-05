@@ -74,7 +74,7 @@
     "dashboards-demo:build:webcomponents": "ng build dashboards-demo-webcomponents --configuration production --output-hashing none && node projects/dashboards-demo/webcomponents/concat.cjs",
     "api-goldens:test": "pnpm exec tsx tools/api-goldens/index",
     "api-goldens:accept": "pnpm exec tsx tools/api-goldens/index accept",
-    "api-goldens:build-accept": "rimraf .angular dist && pnpm run build:all && pnpm run api-goldens:accept"
+    "api-goldens:build-accept": "rimraf dist && pnpm run build:all && pnpm run api-goldens:accept"
   },
   "dependencies": {
     "@angular-architects/module-federation": "22.0.0",

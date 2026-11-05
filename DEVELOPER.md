@@ -92,6 +92,12 @@ Whenever the public API is changed, the corresponding golden must be updated.
 
 `protected` members are considered internal and are excluded from the public API report.
 
+Library builds set `compilerOptions.incremental` to `false` in `tsconfig.lib.json`.
+Restoring ng-packagr's cached TypeScript build information can change declaration ordering
+without source changes, causing spurious API golden differences on repeated builds.
+Angular's disk cache remains enabled, including for unit tests and the dev server.
+Browser test builds use `tsconfig.spec.json`, independently of the library compiler settings.
+
 ```shell
 # Build and updates the API goldens. This is the main command needed for local development.
 pnpm run api-goldens:build-accept
