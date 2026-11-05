@@ -1,58 +1,35 @@
 import re
-import xml.etree.ElementTree as etree
 from abc import abstractmethod
 
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
-from markdown.treeprocessors import Treeprocessor
 
 
-class ElementTabTreeProcessor(Treeprocessor):
-  def run(self, root):
-    replace_dash = re.compile(r'\s*---$')
-    tab_elements = []
-    tab_headers = []
-    current_tab_elements = []
-    current_element = None
+class ElementTabPreProcessor(Preprocessor):
+  def run(self, lines):
+    tab_heading = re.compile(r'^ {0,3}##[ \t]+(.+?)[ \t]*---[ \t]*(?:#+[ \t]*)?$')
+    # Keep any existing Blocks syntax nested inside the generated tabs.
+    fences = [match[1] for line in lines if (match := re.match(r'^ {0,3}(/{3,})', line))]
+    fence = max(fences, key=len, default='//') + '/'
+    processed_lines = []
+    in_tab = False
 
-    # Extrac all elements that belong inside a tab
-    for index, child in enumerate(root):
-      if child.tag == 'h2' and child.text is not None and child.text.endswith('---'):
-        child.text = replace_dash.sub('', child.text)
-        child.set('class', 'tab-anchor') # This makes the tab invisible
-        tab_headers.append(child.text)
-        if current_element is not None:
-          tab_elements.append(current_tab_elements)
-          current_tab_elements = []
-        current_element = child
-        current_tab_elements.append(child)
-      elif current_element is not None:
-        current_tab_elements.append(child)
+    for line in lines:
+      match = tab_heading.match(line)
+      if match:
+        if in_tab:
+          processed_lines.extend(['', fence, ''])
+        title = match[1].strip()
+        # Retain headings for existing deep links and the table of contents.
+        processed_lines.extend([f'{fence} tab | {title}', '', f'## {title} {{.tab-anchor}}', ''])
+        in_tab = True
+      else:
+        processed_lines.append(line)
 
-    # Add the last remaining tab to the tab_elements
-    if current_element is not None:
-      tab_elements.append(current_tab_elements)
+    if in_tab:
+      processed_lines.extend(['', fence, ''])
 
-    # Remove all elements that belong inside a tab
-    for tab in tab_elements:
-      for child in tab:
-        root.remove(child)
-
-    # Add the tab control (the clickable one)
-    tab_control = etree.Element('div', {'role': 'tablist', 'class': 'tabs', 'markdown': '0'})
-    for index, tab in enumerate(tab_headers):
-      tab_element = etree.Element('button', {'role': 'tab', 'aria-selected': 'true' if index == 0 else 'false', 'aria-controls': f'panel-{index}'})
-      tab_element.text = tab
-      tab_control.append(tab_element)
-    root.append(tab_control)
-
-    # Add the tab panels
-    for index, tab in enumerate(tab_elements):
-      tab_element = etree.Element('section', {'id': f'panel-{index}', 'role': 'tabpanel'})
-      if index > 0:
-        tab_element.set('hidden', 'true')
-      tab_element.extend(tab)
-      root.append(tab_element)
+    return processed_lines
 
 class ElementHtmlPreProcessor(Preprocessor):
   def __init__(self, tag_name, *args, **kwargs):
@@ -102,9 +79,10 @@ class ElementExamplePreProcessor(ElementHtmlPreProcessor):
 
 class ElementDocsExtension(Extension):
   def extendMarkdown(self, md):
-    """Add Tabbed to Markdown instance."""
+    """Add Element examples and tab Markdown to the Markdown instance."""
     md.preprocessors.register(ElementExamplePreProcessor(md), 'element_example', 10)
-    md.treeprocessors.register(ElementTabTreeProcessor(md), 'element_tabs', 10)
+    # Run after code fences and HTML are stashed so their headings stay untouched.
+    md.preprocessors.register(ElementTabPreProcessor(md), 'element_tabs', 5)
 
 
 def makeExtension(*args, **kwargs):
