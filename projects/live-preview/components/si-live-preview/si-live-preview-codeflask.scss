@@ -37,6 +37,28 @@ $addition: element-vars.$si-sys-color-code-12;
 $lines-color: element-vars.$si-sys-color-text-disabled;
 $lines-background: variables.$live-preview-background-color;
 
+// Let the highlighted code determine the editor height while its textarea
+// continues to provide editing and scrolling within the height cap.
+:host(.embedded:not(.editor-fullscreen):not(.is-mobile)) ::ng-deep {
+  .codeflask {
+    position: relative;
+    block-size: auto;
+    max-block-size: 25rem;
+  }
+
+  .codeflask__pre {
+    position: relative;
+    inset: 0;
+    inline-size: max-content;
+    min-inline-size: 100%;
+  }
+
+  // Preserve the final blank line so the height matches the textarea.
+  .codeflask__code::after {
+    content: '\200b';
+  }
+}
+
 :host ::ng-deep {
   .readonly .codeflask {
     background-color: $background-readonly;
