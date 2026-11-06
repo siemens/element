@@ -12,13 +12,24 @@
   - paragraph: Switch app
   - paragraph: Access all of your apps
   - button "Close launchpad"
-  - link "Assets":
-    - /url: .
-  - link "Water":
-    - /url: .
-  - link "Rocket":
-    - /url: .
-  - link "Statistics":
-    - /url: .
-  - link "Add more":
-    - /url: https://example.org
+  - grid "Switch app":
+    - row "Assets":
+      - gridcell "Assets":
+        - link "Assets":
+          - /url: .
+    - row "Water":
+      - gridcell "Water":
+        - link "Water":
+          - /url: .
+    - row "Rocket":
+      - gridcell "Rocket":
+        - link "Rocket":
+          - /url: .
+    - row "Statistics":
+      - gridcell "Statistics":
+        - link "Statistics":
+          - /url: .
+    - row "Add more":
+      - gridcell "Add more":
+        - link "Add more":
+          - /url: https://example.org
