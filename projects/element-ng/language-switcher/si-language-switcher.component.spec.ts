@@ -33,6 +33,17 @@ describe('SiLanguageSwitcherComponent', () => {
   let component: TestHostComponent;
   let ngxTranslate: TranslateService;
 
+  // Changing the language sets the lang attribute on the root element.
+  let rootLang: string;
+
+  beforeEach(() => {
+    rootLang = document.documentElement.lang;
+  });
+
+  afterEach(() => {
+    document.documentElement.lang = rootLang;
+  });
+
   beforeEach(() =>
     TestBed.configureTestingModule({
       providers: [
