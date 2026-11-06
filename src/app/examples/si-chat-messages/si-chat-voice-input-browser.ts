@@ -2,8 +2,23 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { ChatInputAttachment, SiChatInputComponent } from '@siemens/element-ng/chat-messages';
+import {
+  afterRenderEffect,
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  signal,
+  viewChild
+} from '@angular/core';
+import { elementCheckedFilled, elementStateClose, elementVoice } from '@siemens/element-icons';
+import {
+  ChatInputAttachment,
+  SiChatInputComponent,
+  SiVoiceWaveformComponent
+} from '@siemens/element-ng/chat-messages';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 interface RecognitionResult {
@@ -36,12 +51,19 @@ interface DictationSession {
 
 @Component({
   selector: 'app-sample',
-  imports: [SiChatInputComponent],
-  templateUrl: './si-chat-voice-input-browser.html'
+  imports: [SiChatInputComponent, SiVoiceWaveformComponent, SiIconComponent, SiTooltipDirective],
+  templateUrl: './si-chat-voice-input-browser.html',
+  host: { '(keydown.escape)': 'cancelOnEscape($event)' }
 })
 export class SampleComponent {
   private readonly logEvent = inject(LOG_EVENT);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly chatInput = viewChild.required<SiChatInputComponent, ElementRef<HTMLElement>>(
+    'chatInput',
+    { read: ElementRef }
+  );
+  private readonly voiceButton = viewChild<ElementRef<HTMLButtonElement>>('voiceButton');
+  private readonly confirmButton = viewChild<ElementRef<HTMLButtonElement>>('confirmButton');
   private readonly recognitionConstructor = window as unknown as Record<
     'SpeechRecognition' | 'webkitSpeechRecognition',
     (new () => BrowserRecognition) | undefined
@@ -58,17 +80,51 @@ export class SampleComponent {
     typeof window.AudioContext === 'function'
   );
   readonly value = signal('');
+  readonly icons = addIcons({ elementCheckedFilled, elementStateClose, elementVoice });
   readonly voiceInputState = signal<'idle' | 'listening' | 'recording' | 'finishing'>('idle');
+  readonly voiceUnavailable = signal(false);
   readonly voiceInputLevel = signal(0);
   readonly starting = signal(false);
   readonly error = signal<string | undefined>(undefined);
 
   constructor() {
     this.destroyRef.onDestroy(() => this.releaseSession());
+    let previousState = this.voiceInputState();
+    afterRenderEffect(() => {
+      const state = this.voiceInputState();
+      const textarea = this.chatInput().nativeElement.querySelector('textarea');
+      if (!textarea) return;
+      textarea.readOnly = state !== 'idle';
+      textarea.classList.toggle('text-secondary', state === 'recording' || state === 'finishing');
+      const focused = document.activeElement;
+      if (
+        state !== previousState &&
+        (focused === document.body ||
+          focused === textarea ||
+          focused === this.voiceButton()?.nativeElement ||
+          focused === this.confirmButton()?.nativeElement)
+      ) {
+        const target =
+          state === 'idle'
+            ? textarea
+            : state === 'recording'
+              ? this.confirmButton()?.nativeElement
+              : this.voiceButton()?.nativeElement;
+        target?.focus();
+      }
+      previousState = state;
+    });
+  }
+
+  cancelOnEscape(event: Event): void {
+    if (!this.session) return;
+    event.preventDefault();
+    event.stopPropagation();
+    this.cancelDictation();
   }
 
   async startDictation(): Promise<void> {
-    if (!this.recognitionType || !this.supported || this.session) {
+    if (!this.recognitionType || !this.supported || this.voiceUnavailable() || this.session) {
       return;
     }
     this.voiceInputState.set('listening');
@@ -101,9 +157,11 @@ export class SampleComponent {
       };
       recognition.onerror = event => {
         if (this.session !== current) return;
+        const denied = event.error === 'not-allowed' || event.error === 'service-not-allowed';
+        if (denied) this.voiceUnavailable.set(true);
         this.failDictation(
-          event.error === 'not-allowed' || event.error === 'service-not-allowed'
-            ? 'Microphone or speech recognition access was denied.'
+          denied
+            ? 'Microphone or speech recognition access was denied. Allow access in your browser settings, then retry voice input.'
             : event.error === 'no-speech'
               ? 'No speech was detected. Please try again.'
               : 'Speech recognition stopped unexpectedly. Check your connection and try again.'
@@ -139,9 +197,11 @@ export class SampleComponent {
       this.logEvent('Dictation started');
     } catch (error: unknown) {
       if (session && this.session !== session) return;
+      const denied = error instanceof DOMException && error.name === 'NotAllowedError';
+      if (denied) this.voiceUnavailable.set(true);
       this.failDictation(
-        error instanceof DOMException && error.name === 'NotAllowedError'
-          ? 'Microphone access was denied. Allow microphone access to use dictation.'
+        denied
+          ? 'Microphone access was denied. Allow access in your browser settings, then retry voice input.'
           : 'Voice input could not start. Check your microphone and try again.'
       );
     }
@@ -164,6 +224,11 @@ export class SampleComponent {
       this.releaseSession();
       this.error.set('Speech recognition could not finish. The current text was kept.');
     }
+  }
+
+  retryVoiceInput(): void {
+    this.voiceUnavailable.set(false);
+    this.error.set(undefined);
   }
 
   cancelDictation(): void {

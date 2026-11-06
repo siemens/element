@@ -1,23 +1,79 @@
 <div class="p-2">
   <si-chat-input
-    placeholder="Enter a command, question or topic..."
+    #chatInput
     disclaimer="The content is AI generated. Always verify the information for accuracy."
-    [voiceInput]="supported"
-    [voiceInputState]="voiceInputState()"
-    [voiceInputLevel]="voiceInputLevel()"
-    [listeningLabel]="starting() ? 'Starting voice input...' : 'Listening...'"
+    [placeholder]="
+      voiceInputState() === 'idle'
+        ? 'Enter a command, question or topic...'
+        : voiceInputState() === 'finishing'
+          ? 'Finishing dictation...'
+          : starting()
+            ? 'Starting voice input...'
+            : 'Listening...'
+    "
+    [sending]="voiceInputState() !== 'idle'"
     [allowAttachments]="true"
     [(value)]="value"
-    (voiceInputStart)="startDictation()"
-    (voiceInputConfirm)="confirmDictation()"
-    (voiceInputCancel)="cancelDictation()"
     (send)="sendMessage($event)"
-  />
-  @if (voiceInputState() === 'finishing') {
-    <p class="text-secondary mt-4 mb-0">Finishing dictation...</p>
+  >
+    @if (supported) {
+      <ng-container siChatInputEnd>
+        @if (voiceInputState() !== 'idle') {
+          <si-voice-waveform
+            siChatInputEnd
+            [active]="voiceInputState() === 'recording'"
+            [level]="voiceInputLevel()"
+          />
+        }
+        <button
+          #voiceButton
+          type="button"
+          class="btn btn-tertiary-ghost btn-icon"
+          siChatInputEnd
+          [disabled]="voiceInputState() === 'idle' && voiceUnavailable()"
+          [attr.aria-label]="voiceInputState() === 'idle' ? 'Start dictation' : 'Cancel dictation'"
+          [siTooltip]="voiceInputState() === 'idle' ? 'Start dictation' : 'Cancel dictation'"
+          (click)="voiceInputState() === 'idle' ? startDictation() : cancelDictation()"
+        >
+          <si-icon
+            [icon]="voiceInputState() === 'idle' ? icons.elementVoice : icons.elementStateClose"
+          />
+        </button>
+        @if (voiceInputState() !== 'idle') {
+          <button
+            #confirmButton
+            type="button"
+            class="btn btn-tertiary-ghost btn-icon"
+            siChatInputEnd
+            aria-label="Confirm dictation"
+            siTooltip="Confirm dictation"
+            [disabled]="voiceInputState() !== 'recording'"
+            (click)="confirmDictation()"
+          >
+            <si-icon class="text-accent" [icon]="icons.elementCheckedFilled" />
+          </button>
+        }
+      </ng-container>
+    }
+  </si-chat-input>
+  @if (supported) {
+    <span class="visually-hidden" role="status">{{
+      voiceInputState() === 'idle'
+        ? ''
+        : voiceInputState() === 'finishing'
+          ? 'Finishing dictation...'
+          : starting()
+            ? 'Starting voice input...'
+            : 'Listening...'
+    }}</span>
   }
   @if (error()) {
     <p class="text-danger mt-4 mb-0" role="alert">{{ error() }}</p>
+  }
+  @if (voiceUnavailable()) {
+    <button type="button" class="btn btn-secondary mt-4" (click)="retryVoiceInput()">
+      Retry voice input
+    </button>
   }
   @if (supported) {
     <p class="text-secondary mt-6 mb-0">
