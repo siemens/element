@@ -5,9 +5,12 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { Signal } from '@angular/core';
 
 // @public (undocumented)
 export const BOOTSTRAP_BREAKPOINTS: Breakpoints;
@@ -33,6 +36,22 @@ export interface ElementDimensions {
     // (undocumented)
     width: number;
 }
+
+// @public
+export function observeSize(target: ObserveSizeTarget | (() => ObserveSizeTarget), options?: ObserveSizeOptions): Signal<ElementDimensions>;
+
+// @public (undocumented)
+export function observeSize(target: ObserveSizeTarget | undefined | (() => ObserveSizeTarget | undefined), options?: ObserveSizeOptions): Signal<ElementDimensions | undefined>;
+
+// @public
+export interface ObserveSizeOptions {
+    emitImmediate?: boolean;
+    injector?: Injector;
+    throttle?: number;
+}
+
+// @public
+export type ObserveSizeTarget = Element | ElementRef<Element>;
 
 // @public
 export class ResizeObserverService {
