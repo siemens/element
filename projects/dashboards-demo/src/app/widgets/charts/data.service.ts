@@ -72,7 +72,7 @@ export class DataService {
         }
         return filteredData;
       }),
-      shareReplay()
+      shareReplay({ bufferSize: 1, refCount: true })
     );
   }
 
