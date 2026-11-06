@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { ChatInputAttachment, SiChatInputComponent } from '@siemens/element-ng/chat-messages';
+import {
+  ChatInputAttachment,
+  ChatInputVoiceState,
+  SiChatInputComponent,
+  SiChatInputVoiceComponent
+} from '@siemens/element-ng/chat-messages';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 interface RecognitionResult {
@@ -36,7 +41,7 @@ interface DictationSession {
 
 @Component({
   selector: 'app-sample',
-  imports: [SiChatInputComponent],
+  imports: [SiChatInputComponent, SiChatInputVoiceComponent],
   templateUrl: './si-chat-voice-input-browser.html'
 })
 export class SampleComponent {
@@ -58,7 +63,8 @@ export class SampleComponent {
     typeof window.AudioContext === 'function'
   );
   readonly value = signal('');
-  readonly voiceInputState = signal<'idle' | 'listening' | 'recording' | 'finishing'>('idle');
+  readonly voiceInputState = signal<ChatInputVoiceState>('idle');
+  readonly voiceUnavailable = signal(false);
   readonly voiceInputLevel = signal(0);
   readonly starting = signal(false);
   readonly error = signal<string | undefined>(undefined);
@@ -68,7 +74,7 @@ export class SampleComponent {
   }
 
   async startDictation(): Promise<void> {
-    if (!this.recognitionType || !this.supported || this.session) {
+    if (!this.recognitionType || !this.supported || this.voiceUnavailable() || this.session) {
       return;
     }
     this.voiceInputState.set('listening');
@@ -101,9 +107,11 @@ export class SampleComponent {
       };
       recognition.onerror = event => {
         if (this.session !== current) return;
+        const denied = event.error === 'not-allowed' || event.error === 'service-not-allowed';
+        if (denied) this.voiceUnavailable.set(true);
         this.failDictation(
-          event.error === 'not-allowed' || event.error === 'service-not-allowed'
-            ? 'Microphone or speech recognition access was denied.'
+          denied
+            ? 'Microphone or speech recognition access was denied. Allow access in your browser settings, then retry voice input.'
             : event.error === 'no-speech'
               ? 'No speech was detected. Please try again.'
               : 'Speech recognition stopped unexpectedly. Check your connection and try again.'
@@ -139,9 +147,11 @@ export class SampleComponent {
       this.logEvent('Dictation started');
     } catch (error: unknown) {
       if (session && this.session !== session) return;
+      const denied = error instanceof DOMException && error.name === 'NotAllowedError';
+      if (denied) this.voiceUnavailable.set(true);
       this.failDictation(
-        error instanceof DOMException && error.name === 'NotAllowedError'
-          ? 'Microphone access was denied. Allow microphone access to use dictation.'
+        denied
+          ? 'Microphone access was denied. Allow access in your browser settings, then retry voice input.'
           : 'Voice input could not start. Check your microphone and try again.'
       );
     }
@@ -164,6 +174,11 @@ export class SampleComponent {
       this.releaseSession();
       this.error.set('Speech recognition could not finish. The current text was kept.');
     }
+  }
+
+  retryVoiceInput(): void {
+    this.voiceUnavailable.set(false);
+    this.error.set(undefined);
   }
 
   cancelDictation(): void {

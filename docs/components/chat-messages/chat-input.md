@@ -230,6 +230,12 @@ Recognition availability depends on the browser, language, network, and browser 
 feature detection alone does not guarantee that its service is available. If the required APIs
 are missing, the example keeps normal text input available without voice controls.
 
+Permission denial disables only the projected voice extension, leaving typing and sending
+available. The accessible error explains how to allow microphone or speech recognition access in
+browser settings. After changing those settings, use **Retry voice input** to re-enable the
+microphone control. This explicit recovery also works without Permissions API support. Network,
+no-speech, and other transient startup failures do not disable future attempts.
+
 The example uses the browser language and requests interim results for one utterance at a time.
 Recognition can end automatically after a pause; the exact stopping behavior is browser-dependent.
 Confirm enters the finishing state and requests final results before unlocking the draft.
