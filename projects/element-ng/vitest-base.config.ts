@@ -14,7 +14,7 @@ export default defineConfig({
     env: {
       TZ: 'UTC'
     },
-    isolate: true
+    isolate: false
   },
   resolve: {
     dedupe: ['@angular/core', '@angular/common', '@angular/platform-browser']
