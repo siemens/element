@@ -9,6 +9,21 @@
   margin-block-start: map.get(variables.$negative-spacers-block, 2);
 }
 
+.list-item[aria-disabled='true'] {
+  cursor: default;
+
+  &:hover,
+  &:active {
+    background-color: transparent;
+  }
+
+  .list-item-indicator,
+  .list-item-title,
+  .list-item-description {
+    color: variables.$si-sys-color-text-disabled;
+  }
+}
+
 .catalog-footer {
   align-items: center;
   display: flex;
