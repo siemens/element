@@ -4,6 +4,7 @@
  */
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { resetViewport } from '@siemens/element-ng/test-helpers';
 import { page } from 'vitest/browser';
 
 import { SiResponsiveContainerDirective } from './index';
@@ -35,16 +36,14 @@ describe('SiResponsiveContainerDirective', () => {
     element = fixture.nativeElement;
   });
 
-  afterEach(() => vi.useRealTimers());
+  afterEach(() => resetViewport());
 
   const testSize = async (size: string | number, clazz: string | number): Promise<void> => {
-    vi.useFakeTimers();
     await page.viewport(parseInt(size as string, 10), 100);
-
-    vi.advanceTimersByTime(100);
     await fixture.whenStable();
-
-    expect(element.querySelector<HTMLElement>('div')!).toHaveClass(clazz.toString());
+    await vi.waitFor(() =>
+      expect(element.querySelector<HTMLElement>('div')!).toHaveClass(clazz.toString())
+    );
   };
 
   it.for([
