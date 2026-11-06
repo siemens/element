@@ -79,7 +79,8 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
 
   /**
    * Is `true` if a card is expanded.
-   * @defaultref {@link isExpandedSignal}
+   *
+   * @defaultValue false
    */
   get isExpanded(): boolean {
     return this.isExpandedSignal();
