@@ -1,10 +1,7 @@
-<ul class="list-unstyled d-flex flex-column mb-0">
+<ul class="list-unstyled mb-0">
   @for (step of steps(); track $index) {
-    <li
-      class="position-relative d-flex align-items-center timeline px-6 py-5"
-      [class.text-accent]="step.state === 'running'"
-    >
-      <div class="icon-stack icon me-4">
+    <li class="result-step" [class.text-accent]="step.state === 'running'">
+      <div class="icon-stack icon">
         @if (step.state === 'running') {
           <si-loading-spinner />
         } @else {
@@ -34,29 +31,24 @@
         }
       </div>
 
-      <div class="d-flex flex-column justify-content-center w-100 overflow-hidden">
-        <div class="d-flex">
-          <div class="result-description">
-            <span class="si-h5">{{ step.description | translate: step.translationParams }}</span>
-            @if (step.detail) {
-              <div class="si-body text-secondary result-detail">{{
-                step.detail | translate: step.translationParams
-              }}</div>
-            }
-            @if (step.errorMessage) {
-              <div class="si-h5 text-danger">{{
-                step.errorMessage | translate: step.translationParams
-              }}</div>
-            }
-          </div>
-          @if (step.value) {
-            <span class="result-value">{{ step.value }}</span>
-          } @else if (stepHasValue()) {
-            <!-- empty placeholder to align step description with other steps-->
-            <span class="result-value"></span>
-          }
-        </div>
+      <div class="result-description">
+        <span class="si-h5 result-label">{{
+          step.description | translate: step.translationParams
+        }}</span>
+        @if (step.detail) {
+          <div class="si-body text-secondary result-detail">{{
+            step.detail | translate: step.translationParams
+          }}</div>
+        }
+        @if (step.errorMessage) {
+          <div class="si-h5 text-danger result-error">{{
+            step.errorMessage | translate: step.translationParams
+          }}</div>
+        }
       </div>
+      @if (step.value) {
+        <span class="result-value">{{ step.value }}</span>
+      }
     </li>
   }
 </ul>

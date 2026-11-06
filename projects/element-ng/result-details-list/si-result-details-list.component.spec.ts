@@ -20,12 +20,15 @@ describe('SiResultDetailsListComponent', () => {
     element = fixture.nativeElement;
   });
 
-  it('should create', () => {
-    expect(fixture.componentInstance).toBeTruthy();
+  it('renders an empty list', async () => {
+    await fixture.whenStable();
+
+    expect(element.querySelector('ul')).not.toBeNull();
+    expect(element.querySelectorAll('li')).toHaveLength(0);
   });
 
-  it('should show the steps', () => {
-    steps.set([
+  it('should show the steps', async () => {
+    const configuredSteps = [
       {
         description: 'Test volume flow sensor',
         state: 'failed'
@@ -51,13 +54,18 @@ describe('SiResultDetailsListComponent', () => {
         description: 'Test valve fully operational',
         state: 'failed'
       }
-    ]);
-    fixture.detectChanges();
+    ] satisfies ResultDetailStep[];
+    steps.set(configuredSteps);
+    await fixture.whenStable();
 
-    expect(element.querySelectorAll('.result-description')).toHaveLength(steps().length);
+    const listItems = element.querySelectorAll('li');
+    expect(listItems).toHaveLength(configuredSteps.length);
+    configuredSteps.forEach((step, index) => {
+      expect(listItems[index]).toMatchTextContent(new RegExp(step.description));
+    });
   });
 
-  it('should show step values if provided', () => {
+  it('should show step values if provided', async () => {
     steps.set([
       {
         description: 'Test maximum volume flow',
@@ -65,24 +73,38 @@ describe('SiResultDetailsListComponent', () => {
         value: '3.7 m3/h'
       }
     ]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
-    expect(element.querySelectorAll('.result-value')).toHaveLength(1);
+    const listItem = element.querySelector<HTMLElement>('li')!;
+    expect(listItem).toMatchTextContent(/Test maximum volume flow/);
+    expect(listItem).toMatchTextContent(/3\.7 m3\/h/);
   });
 
-  it('should show no test step values if none provided', () => {
+  it('should show no test step values if none provided', async () => {
+    steps.set([
+      {
+        description: 'Test maximum volume flow',
+        state: 'passed',
+        value: '3.7 m3/h'
+      }
+    ]);
+    await fixture.whenStable();
+    expect(element.querySelector<HTMLElement>('ul')!).toMatchTextContent(/3\.7 m3\/h/);
+
     steps.set([
       {
         description: 'Test maximum volume flow',
         state: 'passed'
       }
     ]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
-    expect(element.querySelectorAll('.result-value')).toHaveLength(0);
+    const list = element.querySelector<HTMLElement>('ul')!;
+    expect(list).toMatchTextContent(/Test maximum volume flow/);
+    expect(list).not.toMatchTextContent(/3\.7 m3\/h/);
   });
 
-  it('should show step errors if provided', () => {
+  it('should show step errors if provided', async () => {
     steps.set([
       {
         description: 'Test maximum volume flow',
@@ -90,24 +112,38 @@ describe('SiResultDetailsListComponent', () => {
         errorMessage: 'an error message'
       }
     ]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
-    expect(element.querySelectorAll('.text-danger')).toHaveLength(1);
+    const listItem = element.querySelector<HTMLElement>('li')!;
+    expect(listItem).toMatchTextContent(/Test maximum volume flow/);
+    expect(listItem).toMatchTextContent(/an error message/);
   });
 
-  it('should show no step errors if none provided', () => {
+  it('should show no step errors if none provided', async () => {
+    steps.set([
+      {
+        description: 'Test maximum volume flow',
+        state: 'failed',
+        errorMessage: 'an error message'
+      }
+    ]);
+    await fixture.whenStable();
+    expect(element.querySelector<HTMLElement>('ul')!).toMatchTextContent(/an error message/);
+
     steps.set([
       {
         description: 'Test maximum volume flow',
         state: 'passed'
       }
     ]);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
-    expect(element.querySelectorAll('.result-error')).toHaveLength(0);
+    const list = element.querySelector<HTMLElement>('ul')!;
+    expect(list).toMatchTextContent(/Test maximum volume flow/);
+    expect(list).not.toMatchTextContent(/an error message/);
   });
 
-  it('should show detail text if provided', () => {
+  it('should show detail text if provided', async () => {
     steps.set([
       {
         description: 'Test maximum volume flow',
@@ -115,7 +151,10 @@ describe('SiResultDetailsListComponent', () => {
         detail: 'Test this detail'
       }
     ]);
-    fixture.detectChanges();
-    expect(element.querySelectorAll('.result-detail')).toHaveLength(1);
+    await fixture.whenStable();
+
+    const listItem = element.querySelector<HTMLElement>('li')!;
+    expect(listItem).toMatchTextContent(/Test maximum volume flow/);
+    expect(listItem).toMatchTextContent(/Test this detail/);
   });
 });
