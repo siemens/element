@@ -1,5 +1,9 @@
 @if (viewType() !== 'mobile' && primaryActions()?.length) {
-  <div siAutoCollapsableList class="d-flex" [siAutoCollapsableListContainerElement]="parentElement">
+  <div
+    siAutoCollapsableList
+    class="d-flex"
+    [siAutoCollapsableListContainerElement]="parentElement()"
+  >
     @if (viewType() === 'collapsible' && !expanded() && collapsibleListItem.canBeVisible()) {
       <button
         #expandElement
