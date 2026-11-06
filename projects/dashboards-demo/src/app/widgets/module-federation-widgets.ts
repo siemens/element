@@ -63,3 +63,24 @@ export const UPLOAD_WIDGET: Widget = environment.useModuleFederation
         height: 3
       }
     };
+
+export const DOWNLOAD_VITE_WIDGET: Widget = {
+  id: 'download-vite',
+  name: 'Download (module-federation vite)',
+  componentFactory: environment.useModuleFederation
+    ? {
+        factoryType: 'module-federation',
+        type: 'module',
+        remoteEntry: `${environment.mfeViteBaseUrl}/remoteEntry.js`,
+        exposedModule: './Download',
+        componentName: 'DownloadComponent'
+      }
+    : {
+        factoryType: 'native-federation-module-bridge',
+        id: 'mfeVite/Download',
+        componentName: 'DownloadComponent'
+      },
+  defaults: {
+    height: 3
+  }
+};

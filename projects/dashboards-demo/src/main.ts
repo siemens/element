@@ -49,17 +49,26 @@ import { environment } from './environments/environment';
       await import('@softarc/native-federation-orchestrator/module-federation');
     const shared = createGetShared(nfInstance.adapters)();
 
-    // Step 3: Initialize Module Federation runtime for Webpack-based remotes
+    // Step 3: Initialize Module Federation runtime for Webpack-based and Vite-based (`@module-federation/vite`) remotes
     // Note: Consider loading this config dynamically via fetch API for flexibility
     // Resolve relative mfeBaseUrl against the document's baseURI to get an absolute URL
     // This ensures the remote entry URL works correctly when deployed in subdirectories (e.g., S3 bucket paths)
     const mfeEntryUrl = new URL(`${environment.mfeBaseUrl}/remoteEntry.js`, document.baseURI).href;
+    const mfeViteEntryUrl = new URL(
+      `${environment.mfeViteBaseUrl}/remoteEntry.js`,
+      document.baseURI
+    ).href;
     const mfInstance = createInstance({
       name: 'shell',
       remotes: [
         {
           name: 'mfe',
           entry: mfeEntryUrl,
+          type: 'esm'
+        },
+        {
+          name: 'mfeVite',
+          entry: mfeViteEntryUrl,
           type: 'esm'
         }
       ],

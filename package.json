@@ -65,12 +65,14 @@
     "map-styles:build": "ng build map-styles",
     "dashboards:test": "ng test dashboards-ng",
     "dashboards:build": "ng build dashboards-ng",
-    "dashboards-demo:build-all:esm": "ng run dashboards-demo:build-esm:production && pnpm run dashboards-demo:build:webcomponents &&  ng build dashboards-demo-mfe --configuration production,bridge --output-hashing none && ng run dashboards-demo-mfe:build-esm:production",
-    "dashboards-demo:build-all": "ng build dashboards-demo --configuration demo-deployment && pnpm run dashboards-demo:build:webcomponents && ng build dashboards-demo-mfe --configuration production --output-hashing none",
+    "dashboards-demo:build-all:esm": "ng run dashboards-demo:build-esm:production && pnpm run dashboards-demo:build:webcomponents &&  ng build dashboards-demo-mfe --configuration production,bridge --output-hashing none && ng run dashboards-demo-mfe:build-esm:production && pnpm run dashboards-demo:build:mfe-vite",
+    "dashboards-demo:build-all": "ng build dashboards-demo --configuration demo-deployment && pnpm run dashboards-demo:build:webcomponents && ng build dashboards-demo-mfe --configuration production --output-hashing none && pnpm run dashboards-demo:build:mfe-vite --outDir ../../../dist/dashboards-demo/mfe-vite",
     "dashboards-demo:build-and-run-all:esm": "pnpm run dashboards-demo:build-all:esm && http-server dist/dashboards-demo-esm -s -p 4204 -a 127.0.0.1",
     "dashboards-demo:build-and-run-all": "pnpm run dashboards-demo:build-all && http-server dist/dashboards-demo -s -p 4201 -a 127.0.0.1",
-    "dashboards-demo:run-all:local": "pnpm run dashboards-demo:build:webcomponents && (ng serve dashboards-demo-mfe & http-server dist/dashboards-demo-webcomponents -s -p 4202 & ng serve dashboards-demo)",
-    "dashboards-demo:run-all:esm:local": "rm -rf dist/dashboards-demo-esm && pnpm run dashboards-demo:build:webcomponents && (ng serve dashboards-demo-mfe & http-server dist/dashboards-demo-webcomponents -s -p 4202 & ng run dashboards-demo-mfe:serve-esm & ng run dashboards-demo:serve-esm) ",
+    "dashboards-demo:run-all:local": "pnpm run dashboards-demo:build:webcomponents && (ng serve dashboards-demo-mfe & http-server dist/dashboards-demo-webcomponents -s -p 4202 & pnpm run dashboards-demo:serve:mfe-vite & ng serve dashboards-demo)",
+    "dashboards-demo:run-all:esm:local": "rm -rf dist/dashboards-demo-esm && pnpm run dashboards-demo:build:webcomponents && (ng serve dashboards-demo-mfe & http-server dist/dashboards-demo-webcomponents -s -p 4202 & ng run dashboards-demo-mfe:serve-esm & pnpm run dashboards-demo:serve:mfe-vite & ng run dashboards-demo:serve-esm) ",
+    "dashboards-demo:build:mfe-vite": "vite build --config projects/dashboards-demo/mfe/vite.config.mjs",
+    "dashboards-demo:serve:mfe-vite": "vite --config projects/dashboards-demo/mfe/vite.config.mjs",
     "dashboards-demo:build:webcomponents": "ng build dashboards-demo-webcomponents --configuration production --output-hashing none && node projects/dashboards-demo/webcomponents/concat.cjs",
     "api-goldens:test": "pnpm exec tsx tools/api-goldens/index",
     "api-goldens:accept": "pnpm exec tsx tools/api-goldens/index accept",
@@ -124,6 +126,7 @@
     "unified": "^11.0.5"
   },
   "devDependencies": {
+    "@analogjs/vite-plugin-angular": "2.9.6",
     "@angular-builders/custom-esbuild": "22.0.1",
     "@angular-devkit/build-angular": "22.0.8",
     "@angular-devkit/core": "22.0.8",
@@ -139,6 +142,7 @@
     "@commitlint/config-conventional": "21.2.4",
     "@eslint/js": "10.0.1",
     "@microsoft/api-extractor": "7.60.1",
+    "@module-federation/vite": "1.23.11",
     "@playwright/test": "1.64.1",
     "@schematics/angular": "22.2.5",
     "@semantic-release/changelog": "7.0.0",
@@ -182,6 +186,7 @@
     "tsx": "4.23.15",
     "typescript": "6.0.3",
     "typescript-eslint": "8.72.1",
+    "vite": "7.3.6",
     "vitest": "5.0.5"
   },
   "optionalDependencies": {
