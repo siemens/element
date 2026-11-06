@@ -120,13 +120,14 @@
 }
 <ng-template #presets>
   @if (presetSearch()) {
-    <si-search-bar
-      colorVariant="base-0"
-      class="mx-6 mt-5 mb-6"
-      [placeholder]="searchLabel() | translate"
-      [showIcon]="true"
-      [(ngModel)]="presetFilter"
-    />
+    <si-search-bar colorVariant="base-0" class="mx-6 mt-5 mb-6" [showIcon]="true">
+      <input
+        siSearchBarInput
+        [formField]="presetFilterField"
+        [placeholder]="searchLabel() | translate"
+        [attr.aria-label]="searchLabel() | translate"
+      />
+    </si-search-bar>
   }
   <ul
     class="overflow-auto"

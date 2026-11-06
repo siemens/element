@@ -14,13 +14,15 @@ import {
   isSignal,
   OnInit,
   output,
-  signal
+  signal,
+  untracked
 } from '@angular/core';
+import { debounce, form, FormField } from '@angular/forms/signals';
 import { elementSpecialObject } from '@siemens/element-icons';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import {
   injectSiTranslateService,
   SiTranslatePipe,
@@ -40,6 +42,8 @@ import { SiWidgetEditorBase } from '../si-widget-editor-base';
   selector: 'si-widget-catalog',
   imports: [
     SiSearchBarComponent,
+    SiSearchBarInputDirective,
+    FormField,
     SiIconComponent,
     SiEmptyStateComponent,
     SiTranslatePipe,
@@ -108,6 +112,8 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
    * by pressing the previous button from the widget edit view.
    */
   protected searchTerm = '';
+  protected readonly searchText = signal('');
+  protected readonly searchField = form(this.searchText, path => debounce(path, 400));
   /**
    * Array used to hold the search result on the widget catalog.
    * @defaultValue [] */
@@ -206,6 +212,10 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
         this.selectedWidgets.set([selected]);
       }
     });
+    effect(() => {
+      const searchText = this.searchText();
+      untracked(() => this.onSearch(searchText));
+    });
   }
 
   ngOnInit(): void {
@@ -227,6 +237,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
         return name.toLowerCase().includes(term);
       });
     }
+    this.searchText.set(this.searchTerm);
     // In multi selection mode, filter is independent of the selection,
     // so we don't need to update the selection with the filtered catalog.
     if (!this.multiSelect()) {

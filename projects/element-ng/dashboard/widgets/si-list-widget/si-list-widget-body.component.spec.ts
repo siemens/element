@@ -9,7 +9,6 @@ import {
   SiTranslateService
 } from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
-import { TestScheduler } from 'rxjs/testing';
 import { userEvent } from 'vitest/browser';
 
 import { SiListWidgetBodyComponent, SortOrder } from './si-list-widget-body.component';
@@ -18,17 +17,10 @@ import { SiListWidgetItem } from './si-list-widget-item.component';
 describe('SiListWidgetBodyComponent', () => {
   let fixture: ComponentFixture<SiListWidgetBodyComponent>;
   let element: HTMLElement;
-  let testScheduler: TestScheduler;
   let value: WritableSignal<SiListWidgetItem[] | undefined>;
   let numberOfLinks: WritableSignal<number | undefined>;
   let sort: WritableSignal<SortOrder | undefined>;
   let search: WritableSignal<boolean>;
-
-  beforeEach(() => {
-    testScheduler = new TestScheduler((actual, expected) => {
-      expect(actual).toEqual(expected);
-    });
-  });
 
   beforeEach(() => {
     value = signal(undefined);
@@ -125,77 +117,49 @@ describe('SiListWidgetBodyComponent', () => {
     expect(items.item(0).textContent).toContain('item_1');
   });
 
-  it('should support search', () => {
-    testScheduler.run(({ flush }) => {
-      value.set([
-        { label: { title: 'item_1' } },
-        { label: { title: 'item_2' } },
-        { label: 'item_2' },
-        { label: 'item_3' }
-      ]);
-      fixture.detectChanges();
+  it('should support search', async () => {
+    value.set([
+      { label: { title: 'item_1' } },
+      { label: { title: 'item_2' } },
+      { label: 'item_2' },
+      { label: 'item_3' }
+    ]);
+    await fixture.whenStable();
 
-      // No search as default
-      expect(element.querySelector('si-search-bar')).toBeNull();
+    expect(element.querySelector('si-search-bar')).not.toBeInTheDocument();
 
-      // Show the search bar
-      search.set(true);
-      fixture.detectChanges();
-      const searchBar = element.querySelector('si-search-bar');
-      expect(searchBar).not.toBeNull();
+    search.set(true);
+    await fixture.whenStable();
+    expect(element.querySelector('si-search-bar')).toBeInTheDocument();
 
-      // Enter text in the search input and search
-      const searchBarInput = element.querySelector('input');
-      searchBarInput!.value = 'item_3';
-      searchBarInput!.dispatchEvent(new Event('input'));
-      flush();
-      fixture.detectChanges();
+    const searchBarInput = element.querySelector<HTMLInputElement>('input')!;
+    const items = (): NodeListOf<Element> => element.querySelectorAll('si-list-widget-item');
+    await userEvent.fill(searchBarInput, 'item_3');
+    await fixture.whenStable();
 
-      let items = element.querySelectorAll('si-list-widget-item');
-      expect(items).toHaveLength(1);
-      expect(items.item(0).textContent).not.toContain('item_1');
-      expect(items.item(0).textContent).toContain('item_3');
+    await expect.poll(items).toHaveLength(1);
+    expect(items().item(0)).toHaveTextContent('item_3');
 
-      // Clear search again
-      searchBarInput!.value = '';
-      searchBarInput!.dispatchEvent(new Event('input'));
-      flush();
-      fixture.detectChanges();
-
-      items = element.querySelectorAll('si-list-widget-item');
-      expect(items).toHaveLength(4);
-    });
+    await userEvent.fill(searchBarInput, '');
+    await fixture.whenStable();
+    await expect.poll(items).toHaveLength(4);
   });
 
-  it('should not fail when searching without value', () => {
-    testScheduler.run(({ flush }) => {
-      search.set(true);
-      fixture.detectChanges();
+  it('should not fail when searching without value', async () => {
+    search.set(true);
+    await fixture.whenStable();
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(6);
 
-      // Should show 6 skeletons
-      expect(element.querySelector('.si-link-widget-skeleton')).toBeDefined();
+    const searchBarInput = element.querySelector<HTMLInputElement>('input')!;
+    await userEvent.fill(searchBarInput, 'item_3');
+    await userEvent.tab();
+    await fixture.whenStable();
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(6);
 
-      // Enter text in the search input and search
-      const searchBarInput = element.querySelector('input');
-      searchBarInput!.value = 'item_3';
-      searchBarInput!.dispatchEvent(new Event('input'));
-      flush();
-      fixture.detectChanges();
-
-      // Should show 6 skeletons after search
-      let items = element.querySelectorAll('.si-link-widget-skeleton');
-      expect(items).toHaveLength(6);
-
-      // Clear search again
-      searchBarInput!.value = '';
-      searchBarInput!.dispatchEvent(new Event('input'));
-      flush();
-      fixture.detectChanges();
-
-      // Should still show 6 skeletons after clearing search
-      items = element.querySelectorAll('si-list-widget-item');
-      expect(items).toHaveLength(6);
-    });
+    await userEvent.fill(searchBarInput, '');
+    await userEvent.tab();
+    await fixture.whenStable();
+    expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(6);
   });
 });
 
@@ -250,8 +214,6 @@ describe('SiListWidgetBodyComponent with translations', () => {
     element = fixture.nativeElement;
   });
 
-  afterEach(() => vi.useRealTimers());
-
   it('should filter by translated label, not translation key', async () => {
     value.set([
       { label: 'KEY_APPLE' as any },
@@ -261,23 +223,19 @@ describe('SiListWidgetBodyComponent with translations', () => {
     search.set(true);
     await fixture.whenStable();
 
-    vi.useFakeTimers();
     // Searching by translated value should find the item
     await userEvent.fill(searchInput(), 'Banana');
-    vi.advanceTimersByTime(400);
     await fixture.whenStable();
 
-    let items = element.querySelectorAll('si-list-widget-item');
-    expect(items).toHaveLength(1);
+    await expect.poll(() => element.querySelectorAll('si-list-widget-item')).toHaveLength(1);
+    const items = element.querySelectorAll('si-list-widget-item');
     expect(items.item(0).textContent).toContain('Banana');
 
     // Searching by translation key should NOT find the item
     await userEvent.fill(searchInput(), 'KEY_BANANA');
-    vi.advanceTimersByTime(400);
     await fixture.whenStable();
 
-    items = element.querySelectorAll('si-list-widget-item');
-    expect(items).toHaveLength(0);
+    await expect.poll(() => element.querySelectorAll('si-list-widget-item')).toHaveLength(0);
   });
 
   it('should sort by translated label, not translation key', async () => {
@@ -308,13 +266,11 @@ describe('SiListWidgetBodyComponent with translations', () => {
     search.set(true);
     await fixture.whenStable();
 
-    vi.useFakeTimers();
     await userEvent.fill(searchInput(), 'Cherry');
-    vi.advanceTimersByTime(400);
     await fixture.whenStable();
 
+    await expect.poll(() => element.querySelectorAll('si-list-widget-item')).toHaveLength(1);
     const items = element.querySelectorAll('si-list-widget-item');
-    expect(items).toHaveLength(1);
     expect(items.item(0).textContent).toContain('Cherry');
   });
 });
