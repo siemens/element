@@ -7,6 +7,7 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   DoCheck,
   inject,
   input,
@@ -14,6 +15,7 @@ import {
   OnInit,
   viewChild
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { elementDown2 } from '@siemens/element-icons';
 import { MenuItem } from '@siemens/element-ng/common';
 import {
@@ -63,10 +65,14 @@ export class SiNavbarItemComponent implements OnInit, DoCheck, OnDestroy {
   protected active = false;
   protected navbar = inject(SiNavbarPrimaryComponent);
 
+  private readonly destroyRef = inject(DestroyRef);
   private hasBadge = false;
 
   ngOnInit(): void {
-    this.navbar.header().closeMobileMenus.subscribe(() => this.dropdownTrigger()?.close());
+    this.navbar
+      .header()
+      .closeMobileMenus.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.dropdownTrigger()?.close());
     this.navbar.navItemCount.update(value => value + 1);
   }
 

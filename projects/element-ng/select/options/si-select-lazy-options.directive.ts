@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Directive, input, OnDestroy, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { of, Subject, switchMap } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
@@ -58,7 +59,8 @@ export class SiSelectLazyOptionsDirective<T> implements SiSelectOptionsStrategy<
               return of(this.selectedRows());
             }
           }
-        })
+        }),
+        takeUntilDestroyed()
       )
       .subscribe(rows => {
         this.loading.set(false);

@@ -100,6 +100,7 @@ export class SiCalendarButtonComponent implements OnInit, AfterContentInit {
           this.datepicker().touch();
         }
       });
+    this.destroyerRef.onDestroy(() => this.focusMonitor.stopMonitoring(this.elementRef));
   }
 
   ngAfterContentInit(): void {

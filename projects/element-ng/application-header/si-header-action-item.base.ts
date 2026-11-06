@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Directive, inject, OnInit } from '@angular/core';
+import { DestroyRef, Directive, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { elementDown2 } from '@siemens/element-icons';
 import { SiHeaderDropdownTriggerDirective } from '@siemens/element-ng/header-dropdown';
 import { addIcons } from '@siemens/element-ng/icon';
@@ -27,10 +28,13 @@ export abstract class SiHeaderActionItemBase implements OnInit {
   protected readonly icons = addIcons({ elementDown2 });
 
   private readonly header = inject(SiApplicationHeaderComponent);
+  private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     if (this.dropdownTrigger) {
-      this.header.closeMobileMenus.subscribe(() => this.dropdownTrigger!.close());
+      this.header.closeMobileMenus
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => this.dropdownTrigger!.close());
     }
   }
 
