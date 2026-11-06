@@ -13,6 +13,7 @@ export * from './si-chat-input.component';
 export * from './si-chat-input-control';
 export * from './si-chat-input-voice.component';
 export * from './si-chat-input-disclaimer.directive';
+export * from './si-voice-waveform.component';
 export * from './si-chat-message-action.directive';
 export * from './si-chat-message.component';
 export * from './si-user-message.component';
