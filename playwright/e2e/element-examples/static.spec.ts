@@ -105,6 +105,7 @@ test('si-pagination/si-pagination', ({ si }) => si.static());
 test('si-phone-number-input/si-phone-number-input', ({ si }) => si.static());
 test('si-progressbar/si-progressbar-dynamic', ({ si }) => si.static());
 test('si-result-details-list/si-result-details-list', ({ si }) => si.static());
+test('si-result-details-list/si-result-details-list-horizontal', ({ si }) => si.static());
 test('si-search-bar/si-search-bar-value', ({ si }) => si.static());
 test('si-search-bar/si-search-bar', ({ si }) => si.static());
 test('si-slider/si-slider', ({ si }) => si.static());

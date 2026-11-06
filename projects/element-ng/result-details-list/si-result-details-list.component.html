@@ -1,4 +1,4 @@
-<ul class="list-unstyled mb-0">
+<ul class="list-unstyled mb-0" [class.horizontal]="orientation() === 'horizontal'">
   @for (step of steps(); track $index) {
     <li class="result-step" [class.text-accent]="step.state === 'running'">
       <div class="icon-stack icon">
