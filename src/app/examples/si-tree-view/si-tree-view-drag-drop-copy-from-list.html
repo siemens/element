@@ -10,7 +10,7 @@
 
     <ul
       aria-label="Device template catalog"
-      class="list-group list-group-flush me-8"
+      class="list list-divider background-1 me-8"
       style="width: 300px"
       cdkDropList
       cdkDropListHasAnchor
@@ -19,7 +19,7 @@
       [cdkDropListData]="catalogList"
     >
       @for (item of catalogList; track item.label) {
-        <li class="catalog-item list-group-item" cdkDrag [cdkDragData]="item">
+        <li class="catalog-item list-item" cdkDrag [cdkDragData]="item">
           <span>{{ item.label }}</span>
         </li>
       }
