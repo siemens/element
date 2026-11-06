@@ -9,26 +9,22 @@ import {
   provideMockTranslateServiceBuilder
 } from '@siemens/element-translate-ng/translate';
 import { firstValueFrom, Observable, of } from 'rxjs';
+import type { Mock } from 'vitest';
 
 import { SiFormlyTranslateExtension } from './si-formly-translate.extension';
 
 describe('Formly translations', () => {
   let extension: SiFormlyTranslateExtension;
-  const translateAsyncSpy = vi.fn();
-  const mockTranslationService = {
-    translateAsync: translateAsyncSpy
-  } as unknown as SiTranslateService;
+  let translateAsyncSpy: Mock<SiTranslateService['translateAsync']>;
+  let mockTranslationService: SiTranslateService;
 
   beforeEach(() => {
-    translateAsyncSpy.mockReturnValue(of('translated'));
+    translateAsyncSpy = vi.fn().mockReturnValue(of('translated'));
+    mockTranslationService = { translateAsync: translateAsyncSpy } as unknown as SiTranslateService;
     TestBed.configureTestingModule({
       providers: [provideMockTranslateServiceBuilder(() => mockTranslationService)]
     });
     extension = TestBed.runInInjectionContext(() => new SiFormlyTranslateExtension());
-  });
-
-  afterEach(() => {
-    vi.clearAllMocks();
   });
 
   it('should not be called if translate is prohibited', () => {

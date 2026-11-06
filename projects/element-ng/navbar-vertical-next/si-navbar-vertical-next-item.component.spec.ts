@@ -27,23 +27,6 @@ class TestHostComponent {
   readonly icon = signal<string | undefined>(undefined);
 }
 
-@Component({
-  imports: [SiNavbarVerticalNextItemComponent],
-  template: `<a
-    si-navbar-vertical-next-item
-    [badge]="badge()"
-    [badgeColor]="badgeColor()"
-    [hideBadgeWhenCollapsed]="hideBadgeWhenCollapsed()"
-  >
-    Test Item
-  </a>`
-})
-class TestHostWithBadgeVisibilityComponent {
-  readonly badge = signal<string | number | undefined>(undefined);
-  readonly badgeColor = signal<string | undefined>(undefined);
-  readonly hideBadgeWhenCollapsed = signal(false);
-}
-
 describe('SiNavbarVerticalNextItemComponent', () => {
   let component: TestHostComponent;
   let fixture: ComponentFixture<TestHostComponent>;
@@ -67,6 +50,8 @@ describe('SiNavbarVerticalNextItemComponent', () => {
     mockNavbar.flyoutMode.set(false);
     mockNavbar.flatMode.set(false);
     mockNavbar.inlineCollapse.set(false);
+    mockNavbar.chipMode.set(false);
+    mockNavbar.chipMenuOpen.set(false);
     await TestBed.configureTestingModule({
       providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useValue: mockNavbar }]
     }).compileComponents();
@@ -75,8 +60,6 @@ describe('SiNavbarVerticalNextItemComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  afterEach(() => vi.clearAllMocks());
 
   describe('formattedBadge() behavior through template', () => {
     it('should not display badge for undefined badge', () => {
@@ -232,65 +215,51 @@ describe('SiNavbarVerticalNextItemComponent', () => {
   });
 
   describe('hideBadgeWhenCollapsed behavior', () => {
-    let badgeTestComponent: TestHostWithBadgeVisibilityComponent;
-    let badgeTestFixture: ComponentFixture<TestHostWithBadgeVisibilityComponent>;
+    it('should add class when true', async () => {
+      component.badge.set(5);
+      component.badgeColor.set('default');
+      component.hideBadgeWhenCollapsed.set(true);
+      await fixture.whenStable();
 
-    beforeEach(async () => {
-      TestBed.resetTestingModule();
-      await TestBed.configureTestingModule({
-        providers: [{ provide: SI_NAVBAR_VERTICAL_NEXT, useValue: mockNavbar }]
-      }).compileComponents();
-
-      badgeTestFixture = TestBed.createComponent(TestHostWithBadgeVisibilityComponent);
-      badgeTestComponent = badgeTestFixture.componentInstance;
-      badgeTestFixture.detectChanges();
-    });
-
-    it('should add class when true', () => {
-      badgeTestComponent.badge.set(5);
-      badgeTestComponent.badgeColor.set('default');
-      badgeTestComponent.hideBadgeWhenCollapsed.set(true);
-      badgeTestFixture.detectChanges();
-
-      const linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
+      const linkElement = fixture.nativeElement.querySelector('a.navbar-vertical-item');
       expect(linkElement).toHaveClass('hide-badge-collapsed');
     });
 
-    it('should not add class when false', () => {
-      badgeTestComponent.badge.set(5);
-      badgeTestComponent.badgeColor.set('default');
-      badgeTestComponent.hideBadgeWhenCollapsed.set(false);
-      badgeTestFixture.detectChanges();
+    it('should not add class when false', async () => {
+      component.badge.set(5);
+      component.badgeColor.set('default');
+      component.hideBadgeWhenCollapsed.set(false);
+      await fixture.whenStable();
 
-      const linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
+      const linkElement = fixture.nativeElement.querySelector('a.navbar-vertical-item');
       expect(linkElement).not.toHaveClass('hide-badge-collapsed');
     });
 
-    it('should default to false', () => {
-      badgeTestComponent.badge.set(5);
-      badgeTestComponent.badgeColor.set('default');
-      badgeTestFixture.detectChanges();
+    it('should default to false', async () => {
+      component.badge.set(5);
+      component.badgeColor.set('default');
+      await fixture.whenStable();
 
-      const linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
+      const linkElement = fixture.nativeElement.querySelector('a.navbar-vertical-item');
       expect(linkElement).not.toHaveClass('hide-badge-collapsed');
     });
 
-    it('should toggle class when value changes', () => {
-      badgeTestComponent.badge.set(5);
-      badgeTestComponent.badgeColor.set('default');
-      badgeTestComponent.hideBadgeWhenCollapsed.set(false);
-      badgeTestFixture.detectChanges();
-      let linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
+    it('should toggle class when value changes', async () => {
+      component.badge.set(5);
+      component.badgeColor.set('default');
+      component.hideBadgeWhenCollapsed.set(false);
+      await fixture.whenStable();
+      let linkElement = fixture.nativeElement.querySelector('a.navbar-vertical-item');
       expect(linkElement).not.toHaveClass('hide-badge-collapsed');
 
-      badgeTestComponent.hideBadgeWhenCollapsed.set(true);
-      badgeTestFixture.detectChanges();
-      linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
+      component.hideBadgeWhenCollapsed.set(true);
+      await fixture.whenStable();
+      linkElement = fixture.nativeElement.querySelector('a.navbar-vertical-item');
       expect(linkElement).toHaveClass('hide-badge-collapsed');
 
-      badgeTestComponent.hideBadgeWhenCollapsed.set(false);
-      badgeTestFixture.detectChanges();
-      linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
+      component.hideBadgeWhenCollapsed.set(false);
+      await fixture.whenStable();
+      linkElement = fixture.nativeElement.querySelector('a.navbar-vertical-item');
       expect(linkElement).not.toHaveClass('hide-badge-collapsed');
     });
   });
