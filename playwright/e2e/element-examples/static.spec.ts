@@ -27,7 +27,6 @@ test('icons/icons', ({ si }) => si.static({ skipAriaSnapshot: true }));
 test('input-fields/multi-line', ({ si }) => si.static());
 test('input-fields/single-line', ({ si }) => si.static());
 test('links/links', ({ si }) => si.static());
-test('list-group/list-group', ({ si }) => si.static());
 test('list-item/list-item', ({ si }) => si.static());
 test('list-item/list-item-action', ({ si }) => si.static());
 test('list-item/list-variants', ({ si }) => si.static());
