@@ -194,45 +194,48 @@ describe('SiLinkDirective', () => {
       // link needs to reflect the change
       expect(anchor).toHaveAttribute('href', '/test2?q=456&a=b#fragment');
     });
+  });
+});
 
-    describe('with SI_LINK_DEFAULT_NAVIGATION_EXTRA', () => {
-      beforeEach(async () => {
-        TestBed.resetTestingModule();
-        TestBed.configureTestingModule({
-          imports: [SiLinkDirective, TestHostComponent],
-          providers: [
-            SiLinkActionService,
-            provideRouter([]),
-            {
-              provide: SI_LINK_DEFAULT_NAVIGATION_EXTRA,
-              useValue: { preserveFragment: false, queryParamsHandling: '' }
-            }
-          ]
-        });
+describe('SiLinkDirective with SI_LINK_DEFAULT_NAVIGATION_EXTRA', () => {
+  let fixture: ComponentFixture<TestHostComponent>;
+  let component: TestHostComponent;
+  let element: HTMLElement;
 
-        fixture = TestBed.createComponent(TestHostComponent);
-        component = fixture.componentInstance;
-        element = fixture.nativeElement;
-        await fixture.whenStable();
-      });
-
-      it('should allow default navigationExtras overwrites', async () => {
-        const router = TestBed.inject(Router);
-        router.resetConfig([{ path: 'test', component: SiEmptyComponent }]);
-        component.link.set({
-          link: '/test2',
-          navigationExtras: {
-            queryParams: { a: 'b' }
-          }
-        });
-
-        await fixture.whenStable();
-        await router.navigateByUrl('/test?q=123#fragment');
-        await fixture.whenStable();
-
-        const anchor = element.querySelector('a')!;
-        expect(anchor).toHaveAttribute('href', '/test2?a=b');
-      });
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      imports: [SiLinkDirective, TestHostComponent],
+      providers: [
+        SiLinkActionService,
+        provideRouter([]),
+        {
+          provide: SI_LINK_DEFAULT_NAVIGATION_EXTRA,
+          useValue: { preserveFragment: false, queryParamsHandling: '' }
+        }
+      ]
     });
+
+    fixture = TestBed.createComponent(TestHostComponent);
+    component = fixture.componentInstance;
+    element = fixture.nativeElement;
+    await fixture.whenStable();
+  });
+
+  it('should allow default navigationExtras overwrites', async () => {
+    const router = TestBed.inject(Router);
+    router.resetConfig([{ path: 'test', component: SiEmptyComponent }]);
+    component.link.set({
+      link: '/test2',
+      navigationExtras: {
+        queryParams: { a: 'b' }
+      }
+    });
+
+    await fixture.whenStable();
+    await router.navigateByUrl('/test?q=123#fragment');
+    await fixture.whenStable();
+
+    const anchor = element.querySelector('a')!;
+    expect(anchor).toHaveAttribute('href', '/test2?a=b');
   });
 });

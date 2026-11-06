@@ -21,18 +21,6 @@ class TestHostComponent {
   });
 }
 
-@Component({
-  imports: [SiNavbarVerticalItemComponent],
-  template: `<a class="navbar-vertical-item" [si-navbar-vertical-item]="item()"> Test Item </a> `
-})
-class TestHostWithBadgeVisibilityComponent {
-  readonly item = signal<NavbarVerticalItemLink>({
-    type: 'link',
-    label: 'Test Item',
-    href: '#'
-  });
-}
-
 describe('SiNavbarVerticalItemComponent', () => {
   let component: TestHostComponent;
   let fixture: ComponentFixture<TestHostComponent>;
@@ -55,8 +43,6 @@ describe('SiNavbarVerticalItemComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  afterEach(() => vi.clearAllMocks());
 
   describe('formattedBadge() behavior through template', () => {
     it('should not display badge for undefined badge', () => {
@@ -252,100 +238,35 @@ describe('SiNavbarVerticalItemComponent', () => {
   });
 
   describe('hideBadgeWhenCollapsed behavior', () => {
-    let badgeTestComponent: TestHostWithBadgeVisibilityComponent;
-    let badgeTestFixture: ComponentFixture<TestHostWithBadgeVisibilityComponent>;
+    const renderItemLink = async (hideBadgeWhenCollapsed?: boolean): Promise<Element | null> => {
+      component.item.set({
+        type: 'link',
+        label: 'Test',
+        href: '#',
+        badge: 5,
+        badgeColor: 'default',
+        hideBadgeWhenCollapsed
+      });
+      await fixture.whenStable();
+      return fixture.nativeElement.querySelector('a.navbar-vertical-item');
+    };
 
-    beforeEach(async () => {
-      TestBed.resetTestingModule();
-      await TestBed.configureTestingModule({
-        providers: [{ provide: SI_NAVBAR_VERTICAL, useValue: mockNavbar }]
-      }).compileComponents();
-
-      badgeTestFixture = TestBed.createComponent(TestHostWithBadgeVisibilityComponent);
-      badgeTestComponent = badgeTestFixture.componentInstance;
-      badgeTestFixture.detectChanges();
+    it('should add class when true', async () => {
+      expect(await renderItemLink(true)).toHaveClass('hide-badge-collapsed');
     });
 
-    it('should add class when true', () => {
-      badgeTestComponent.item.set({
-        type: 'link',
-        label: 'Test',
-        href: '#',
-        badge: 5,
-        badgeColor: 'default',
-        hideBadgeWhenCollapsed: true
-      });
-      badgeTestFixture.detectChanges();
-
-      const linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
-      expect(linkElement).toHaveClass('hide-badge-collapsed');
+    it('should not add class when false', async () => {
+      expect(await renderItemLink(false)).not.toHaveClass('hide-badge-collapsed');
     });
 
-    it('should not add class when false', () => {
-      badgeTestComponent.item.set({
-        type: 'link',
-        label: 'Test',
-        href: '#',
-        badge: 5,
-        badgeColor: 'default',
-        hideBadgeWhenCollapsed: false
-      });
-      badgeTestFixture.detectChanges();
-
-      const linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
-      expect(linkElement).not.toHaveClass('hide-badge-collapsed');
+    it('should default to false', async () => {
+      expect(await renderItemLink()).not.toHaveClass('hide-badge-collapsed');
     });
 
-    it('should default to false', () => {
-      badgeTestComponent.item.set({
-        type: 'link',
-        label: 'Test',
-        href: '#',
-        badge: 5,
-        badgeColor: 'default'
-      });
-      badgeTestFixture.detectChanges();
-
-      const linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
-      expect(linkElement).not.toHaveClass('hide-badge-collapsed');
-    });
-
-    it('should toggle class when value changes', () => {
-      badgeTestComponent.item.set({
-        type: 'link',
-        label: 'Test',
-        href: '#',
-        badge: 5,
-        badgeColor: 'default',
-        hideBadgeWhenCollapsed: false
-      });
-      badgeTestFixture.detectChanges();
-      let linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
-      expect(linkElement).not.toHaveClass('hide-badge-collapsed');
-
-      badgeTestComponent.item.set({
-        type: 'link',
-        label: 'Test',
-        href: '#',
-        badge: 5,
-        badgeColor: 'default',
-        hideBadgeWhenCollapsed: true
-      });
-      badgeTestFixture.detectChanges();
-      linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
-      expect(linkElement).toHaveClass('hide-badge-collapsed');
-
-      badgeTestComponent.item.set({
-        type: 'link',
-        label: 'Test',
-        href: '#',
-        badge: 5,
-        badgeColor: 'default',
-        hideBadgeWhenCollapsed: false
-      });
-      badgeTestFixture.detectChanges();
-      linkElement = badgeTestFixture.nativeElement.querySelector('a.navbar-vertical-item');
-      expect(linkElement).not.toHaveClass('hide-badge-collapsed');
+    it('should toggle class when value changes', async () => {
+      expect(await renderItemLink(false)).not.toHaveClass('hide-badge-collapsed');
+      expect(await renderItemLink(true)).toHaveClass('hide-badge-collapsed');
+      expect(await renderItemLink(false)).not.toHaveClass('hide-badge-collapsed');
     });
   });
 });
