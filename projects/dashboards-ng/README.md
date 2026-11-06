@@ -120,43 +120,9 @@ The correct approach is to use the full page height as explained at
 ### Translations
 
 The dashboard comes with a couple of components with i18n support.
-The library uses translation keys in the components and ships English
-and German (`en.json`, `de.json`) translations for demonstration. The
-files are located at the folder `node_modules/@siemens/dashboards-ng/assets/i18n/`
-and provides you all used keys. You should include the keys in your translation
-files and update the translations to your need.
+The library uses translation keys in the components, see the SiTranslatableKeys interface.
 
-For a quick test you can include the files from the library in your app.
-Copy the files to your target by updated the `assets` definition in the `angular.json`
-file.
-
-```json
-{
-  "glob": "**/*",
-  "input": "node_modules/@siemens/dashboards-ng/assets/i18n",
-  "output": "./assets/i18n/dashboard/"
-}
-```
-
-Use the `MultiTranslateHttpLoader` to load your and the library translation
-files.
-
-```ts
-...
-export function createTranslateLoader(_httpBackend: HttpBackend) {
-  return new MultiTranslateHttpLoader(_httpBackend, ['/assets/i18n/', '/assets/i18n/dashboard/']);
-}
-
-...
-
-provideTranslateService({
-  loader: {
-    provide: TranslateLoader,
-    useFactory: (createTranslateLoader),
-    deps: [HttpBackend]
-  }
-})
-```
+For more details, refer to [Localization](https://element.siemens.io/fundamentals/localization).
 
 ### Widget development
 
