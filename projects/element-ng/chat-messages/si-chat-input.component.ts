@@ -33,13 +33,12 @@ import {
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { SelectItem } from '@siemens/element-ng/select';
 import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
 import { Attachment, SiAttachmentListComponent } from './si-attachment-list.component';
-import { SiChatModelSelectComponent } from './si-chat-model-select.component';
+import { ChatModelItem, SiChatModelSelectComponent } from './si-chat-model-select.component';
 
 /**
  * Attachment item interface for file attachments in chat messages, extension of {@link Attachment} for {@link SiAttachmentListComponent} to use within {@link SiChatInputComponent}.
@@ -120,16 +119,13 @@ export class SiChatInputComponent implements AfterViewInit {
   readonly value = model<string>('');
 
   /** Available model options, supplied by the product. @defaultValue [] */
-  readonly models = input<SelectItem<string>[]>([]);
+  readonly models = input<ChatModelItem[]>([]);
 
   /** Active model ID. Supports two-way binding; selecting a model does not send a message. */
   readonly selectedModel = model<string>();
 
   /** Independently disables model selection. @defaultValue false */
   readonly modelSelectionDisabled = input(false, { transform: booleanAttribute });
-
-  /** Enables search in the model dropdown. @defaultValue false */
-  readonly modelSelectionHasFilter = input(false, { transform: booleanAttribute });
 
   /** Product-supplied footer actions and submenus. @defaultValue [] */
   readonly modelSelectionActions = input<MenuItem[]>([]);

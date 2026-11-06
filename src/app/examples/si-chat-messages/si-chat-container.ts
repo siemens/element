@@ -37,14 +37,14 @@ import {
   Attachment,
   SiAiWelcomeScreenComponent,
   PromptCategory,
-  PromptSuggestion
+  PromptSuggestion,
+  ChatModelItem
 } from '@siemens/element-ng/chat-messages';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
 import { MenuItem } from '@siemens/element-ng/menu';
-import { SelectItem } from '@siemens/element-ng/select';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -108,25 +108,22 @@ export class SampleComponent {
 
   protected markdownOptions = markdownOptions;
 
-  protected readonly selectedModel = signal('balanced');
-  protected readonly models: SelectItem<string>[] = [
+  protected readonly selectedModel = signal('claude-quantum');
+  protected readonly models: ChatModelItem[] = [
     {
       type: 'option',
-      value: 'balanced',
-      label: 'Balanced',
-      description: 'Everyday questions and tasks'
+      value: 'claude-quantum',
+      label: 'Claude Quantum'
     },
     {
       type: 'option',
-      value: 'reasoning',
-      label: 'Reasoning',
-      description: 'Complex analysis and planning'
+      value: 'gemini-nova',
+      label: 'Gemini Nova'
     },
     {
       type: 'option',
-      value: 'fast',
-      label: 'Fast',
-      description: 'Quick answers to simple questions'
+      value: 'gpt-horizon',
+      label: 'GPT Horizon'
     }
   ];
 
