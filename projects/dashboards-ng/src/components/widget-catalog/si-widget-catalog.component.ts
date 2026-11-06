@@ -5,6 +5,7 @@
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   booleanAttribute,
   Component,
   computed,
@@ -16,16 +17,19 @@ import {
   output,
   signal
 } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { form, FormField } from '@angular/forms/signals';
 import { elementSpecialObject } from '@siemens/element-icons';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import {
   injectSiTranslateService,
   SiTranslatePipe,
   t
 } from '@siemens/element-translate-ng/translate';
+import { debounceTime, filter } from 'rxjs';
 
 import { createWidgetConfig, Widget, WidgetConfig } from '../../model/widgets.model';
 import { SiWidgetEditorBase } from '../si-widget-editor-base';
@@ -40,6 +44,8 @@ import { SiWidgetEditorBase } from '../si-widget-editor-base';
   selector: 'si-widget-catalog',
   imports: [
     SiSearchBarComponent,
+    SiSearchBarInputDirective,
+    FormField,
     SiIconComponent,
     SiEmptyStateComponent,
     SiTranslatePipe,
@@ -108,6 +114,8 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
    * by pressing the previous button from the widget edit view.
    */
   protected searchTerm = '';
+  protected readonly searchText = signal('');
+  protected readonly searchField = form(this.searchText);
   /**
    * Array used to hold the search result on the widget catalog.
    * @defaultValue [] */
@@ -130,6 +138,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   );
 
   private readonly translateService = injectSiTranslateService();
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
   /** Default indicator for widgets without an `iconClass`, as specified in the design. */
   protected readonly icons = addIcons({ elementSpecialObject });
   /**
@@ -206,6 +215,13 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
         this.selectedWidgets.set([selected]);
       }
     });
+    toObservable(this.searchText)
+      .pipe(
+        filter(() => this.searchField().dirty()),
+        debounceTime(400),
+        takeUntilDestroyed()
+      )
+      .subscribe(searchText => this.onSearch(searchText));
   }
 
   ngOnInit(): void {
@@ -227,11 +243,13 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
         return name.toLowerCase().includes(term);
       });
     }
+    this.searchText.set(this.searchTerm);
     // In multi selection mode, filter is independent of the selection,
     // so we don't need to update the selection with the filtered catalog.
     if (!this.multiSelect()) {
       this.updateSelectionOnFilter();
     }
+    this.changeDetectorRef.markForCheck();
   }
 
   protected onCancel(): void {

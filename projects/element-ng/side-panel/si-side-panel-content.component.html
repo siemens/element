@@ -127,16 +127,14 @@
   <ng-content select="si-side-panel-actions" />
   @if (searchable() && focusable()) {
     <div class="nav-search px-6 auto-hide">
-      <si-search-bar
-        #searchBar
-        class="m-0"
-        colorVariant="base-0"
-        prohibitedCharacters="*?"
-        [placeholder]="searchPlaceholder() | translate"
-        [debounceTime]="400"
-        [showIcon]="true"
-        (searchChange)="searchEvent.emit($event)"
-      />
+      <si-search-bar class="m-0" colorVariant="base-0" [showIcon]="true">
+        <input
+          siSearchBarInput
+          [formField]="searchField"
+          [placeholder]="searchPlaceholder() | translate"
+          [attr.aria-label]="searchPlaceholder() | translate"
+        />
+      </si-search-bar>
     </div>
   }
   @if (focusable()) {

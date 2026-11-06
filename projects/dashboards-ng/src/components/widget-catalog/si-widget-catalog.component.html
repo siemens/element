@@ -2,14 +2,14 @@
   @if (view() === 'list') {
     <div class="si-layout-fixed-height">
       <div class="mx-0 d-flex">
-        <si-search-bar
-          class="w-100"
-          colorVariant="base-1"
-          showIcon="true"
-          [placeholder]="searchPlaceholder() | translate"
-          [value]="searchTerm"
-          (searchChange)="onSearch($event)"
-        />
+        <si-search-bar class="w-100" colorVariant="base-1" showIcon="true">
+          <input
+            siSearchBarInput
+            [formField]="searchField"
+            [placeholder]="searchPlaceholder() | translate"
+            [attr.aria-label]="searchPlaceholder() | translate"
+          />
+        </si-search-bar>
       </div>
       <div class="si-layout-fixed-height text-pre-wrap text-break mt-6">
         @if (filteredWidgetCatalog.length > 0) {

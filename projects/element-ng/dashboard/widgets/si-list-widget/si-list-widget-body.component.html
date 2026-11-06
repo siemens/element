@@ -1,12 +1,12 @@
 @if (search()) {
-  <si-search-bar
-    class="px-6 py-4"
-    showIcon
-    colorVariant="base-0"
-    [debounceTime]="400"
-    [placeholder]="searchPlaceholderLabel() | translate"
-    [(ngModel)]="searchText"
-  />
+  <si-search-bar class="px-6 py-4" showIcon colorVariant="base-0">
+    <input
+      siSearchBarInput
+      [formField]="searchField"
+      [placeholder]="searchPlaceholderLabel() | translate"
+      [attr.aria-label]="searchPlaceholderLabel() | translate"
+    />
+  </si-search-bar>
 }
 @let filteredListWidgetItemsList = filteredListWidgetItems();
 @if (!showLoadingIndicator() && filteredListWidgetItemsList) {

@@ -11,6 +11,8 @@ import {
   Component,
   computed,
   Directive,
+  effect,
+  ElementRef,
   inject,
   Injector,
   input,
@@ -20,10 +22,12 @@ import {
   output,
   signal,
   SimpleChanges,
+  untracked,
   viewChild,
   viewChildren
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { form, FormField, pattern } from '@angular/forms/signals';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { elementDoubleLeft, elementDoubleRight, elementSearch } from '@siemens/element-icons';
 import {
@@ -34,10 +38,11 @@ import {
 } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
 import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { debounce, filter, of, timer } from 'rxjs';
 
 import { SiNavbarVerticalDividerComponent } from './si-navbar-vertical-divider.component';
 import { SiNavbarVerticalGroupTriggerDirective } from './si-navbar-vertical-group-trigger.directive';
@@ -79,6 +84,8 @@ export class SiNavbarVerticalItemGuardDirective {
     SiNavbarVerticalItemGuardDirective,
     SiNavbarVerticalItemLegacyComponent,
     SiSearchBarComponent,
+    SiSearchBarInputDirective,
+    FormField,
     SiSkipLinkTargetDirective,
     SiTranslatePipe,
     SiTooltipDirective
@@ -218,7 +225,10 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, SiNavbarVer
    */
   readonly searchEvent = output<string>();
 
-  private readonly searchBar = viewChild.required(SiSearchBarComponent);
+  protected readonly searchTerm = signal('');
+  protected readonly searchField = form(this.searchTerm, path => pattern(path, /^[^*?]*$/));
+
+  private readonly searchInput = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
   private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
   private breakpointObserver = inject(BreakpointObserver);
@@ -249,6 +259,27 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, SiNavbarVer
       .subscribe(({ matches }) => {
         this.collapsed.set(matches || this.preferCollapse);
         this.smallScreen.set(matches);
+      });
+
+    effect(() => {
+      if (!this.searchable() || !this.visible()) {
+        untracked(() => this.searchField().reset(''));
+      }
+    });
+
+    toObservable(this.searchTerm)
+      .pipe(
+        filter(() => this.searchField().dirty() && this.searchField().valid()),
+        debounce(() => {
+          const delay = this.searchDebounceTime();
+          return delay > 0 ? timer(delay) : of(0);
+        }),
+        takeUntilDestroyed()
+      )
+      .subscribe(searchTerm => {
+        if (this.searchable() && this.visible() && this.searchField().dirty()) {
+          this.doSearch(searchTerm);
+        }
       });
   }
 
@@ -303,7 +334,7 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, SiNavbarVer
 
   protected expandForSearch(): void {
     this.expand();
-    setTimeout(() => this.searchBar().focus());
+    setTimeout(() => this.searchInput().nativeElement.focus());
   }
 
   protected doSearch(event: string): void {
