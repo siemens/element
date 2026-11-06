@@ -4,14 +4,12 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import {
-  afterNextRender,
+  afterRenderEffect,
   AfterViewInit,
   booleanAttribute,
   Component,
   computed,
   ElementRef,
-  inject,
-  Injector,
   input,
   model,
   output,
@@ -74,6 +72,7 @@ export interface ChatInputAttachment extends Attachment {
  *
  * Additionally to the inputs and outputs documented here, the component supports content projection via the following slots:
  * - Default content: Custom action buttons to display inline, prefer using the `actions` input for buttons, can be used in addition.
+ * - `siChatInputEnd` selector: Custom action buttons to display immediately before the submit button.
  * - `siChatInputDisclaimer` selector: Custom disclaimer content to display below the input area, prefer using the `disclaimer` input for simple text disclaimers.
  *
  * @see {@link SiAttachmentListComponent} for the base attachment component
@@ -358,24 +357,20 @@ export class SiChatInputComponent implements AfterViewInit {
 
   protected readonly dragOver = signal(false);
 
-  private readonly injector = inject(Injector);
-
-  protected onInputChange(value: string): void {
-    this.value.set(value);
+  constructor() {
+    afterRenderEffect(() => {
+      const value = this.value();
+      const textarea = this.textInput()?.nativeElement;
+      if (textarea) {
+        textarea.value = value;
+        this.setTextareaHeight(textarea);
+      }
+    });
   }
 
   protected selectFollowUpPrompt(prompt: string): void {
     this.followUpPromptSelected.emit(prompt);
     this.focus();
-    afterNextRender(
-      () => {
-        const textarea = this.textInput();
-        if (textarea?.nativeElement) {
-          this.setTextareaHeight(textarea.nativeElement);
-        }
-      },
-      { injector: this.injector }
-    );
   }
 
   protected onSend(): void {
@@ -391,6 +386,9 @@ export class SiChatInputComponent implements AfterViewInit {
   }
 
   protected onButtonClick(): void {
+    if (this.disabled()) {
+      return;
+    }
     if (this.showInterruptButton()) {
       this.interrupt.emit();
     } else {
@@ -399,8 +397,14 @@ export class SiChatInputComponent implements AfterViewInit {
   }
 
   protected onKeyDown(event: KeyboardEvent): void {
+    if (event.isComposing || this.disabled()) {
+      return;
+    }
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
+      if (event.repeat) {
+        return;
+      }
       if (!this.canSend()) {
         return;
       }
@@ -409,6 +413,10 @@ export class SiChatInputComponent implements AfterViewInit {
       }
       this.onSend();
     }
+  }
+
+  protected onInput(event: Event): void {
+    this.setTextareaHeight(event.target as HTMLTextAreaElement);
   }
 
   protected onFilesAdded(uploadFiles: UploadFile[]): void {
@@ -458,8 +466,6 @@ export class SiChatInputComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const textarea = this.textInput();
     if (textarea?.nativeElement) {
-      this.setTextareaHeight(textarea.nativeElement);
-
       if (this.autoFocus()) {
         // Use setTimeout to ensure the element is fully rendered
         setTimeout(() => {
@@ -469,9 +475,12 @@ export class SiChatInputComponent implements AfterViewInit {
     }
   }
 
-  protected adjustTextareaHeight(event: Event): void {
-    const textarea = event.target as HTMLTextAreaElement;
-    this.setTextareaHeight(textarea);
+  /**
+   * Send the current draft and attachments, respecting disabled and sending states.
+   * Does not activate the interrupt action.
+   */
+  sendCurrent(): void {
+    this.onSend();
   }
 
   /**

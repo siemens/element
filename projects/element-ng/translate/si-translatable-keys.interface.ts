@@ -267,6 +267,9 @@ export interface SiTranslatableKeys {
   'SI_SLIDER.INCREMENT'?: string;
   'SI_SLIDER.LABEL'?: string;
   'SI_SOURCE_CHIP.SOURCES'?: string;
+  'SI_SPEECH_INPUT.NO_PERMISSION'?: string;
+  'SI_SPEECH_INPUT.START'?: string;
+  'SI_SPEECH_INPUT.STOP'?: string;
   'SI_SPLIT.COLLAPSE_LABEL'?: string;
   'SI_STATUS_BAR.ALL_OK'?: string;
   'SI_STATUS_BAR.MUTE'?: string;

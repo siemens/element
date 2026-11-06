@@ -1,0 +1,13 @@
+- textbox "Chat input":
+  - /placeholder: Enter a command, question or topic…
+- group:
+  - button "Attach file"
+- button "Start dictation"
+- button "Send" [disabled]
+- text: The content is AI generated. Always verify the information for accuracy.
+- status
+- switch "Send after dictation"
+- text: Send after dictation Voice input mode
+- combobox "Voice input mode":
+  - option "Toggle" [selected]
+  - option "Push-to-talk"
