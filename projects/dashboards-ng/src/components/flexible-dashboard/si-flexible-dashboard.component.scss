@@ -1,5 +1,13 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/all-variables';
+
 :host {
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
+
+  ::ng-deep si-inline-notification[dashboard-notification] {
+    margin-block-start: map.get(all-variables.$spacers-block, 4);
+  }
 }
