@@ -18,6 +18,8 @@ docs/_src/icon-viewer
 # dependencies
 /node_modules
 /projects/*/node_modules
+/tools/skill-eval/node_modules
+/tools/skill-eval/results
 
 # profiling files
 chrome-profiler-events*.json
@@ -54,6 +56,8 @@ messages.json
 __pycache__
 
 # Environment variables
+/.env
+/.env.*
 /src/environments/environment.local*
 
 # System Files

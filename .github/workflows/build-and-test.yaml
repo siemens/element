@@ -155,6 +155,8 @@ jobs:
       - run: pnpm run lint:scss
       - run: pnpm run lint:ng
       - run: pnpm run lint:playwright:eslint
+      - run: pnpm run skills:eval:lint
+      - run: pnpm run skills:eval:test
       - run: pnpm run api-goldens:test
 
   e2e:

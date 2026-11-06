@@ -85,6 +85,58 @@ When adding a third-party skill, add its path under `.agents/skills/` to
 `.prettierignore`. Third-party skill sources must not be reformatted by this
 repository's Prettier configuration.
 
+## Element skill evaluation
+
+`tools/skill-eval` measures whether `skills/element/SKILL.md` helps an agent build
+Element features. For each case, skill variant, and repeat, OpenCode works on a fresh
+copy of the official Element starter. The result is then linted, built, unit tested,
+and checked in a browser (behavior, axe, and layout). Promptfoo shows the variants side
+by side. Failed checks are only reported, while provider and verifier errors fail the run.
+
+Run the **Element Skill Evaluation** workflow from GitHub Actions. It needs the
+`SKILL_EVAL_API_KEY` and `SIEMENS_NPM_TOKEN` secrets and uploads the reports as an
+artifact. Open `promptfoo.html` to compare the variants.
+
+To run locally (requires access to the Siemens npm registry):
+
+```shell
+pnpm install --filter @siemens/element-skill-eval --frozen-lockfile
+pnpm --filter @siemens/element-skill-eval exec playwright install chromium
+
+export SKILL_EVAL_API_KEY='<api-key>' SKILL_EVAL_PROVIDER=openai SKILL_EVAL_MODEL='<model-id>'
+SKILL_EVAL_VARIANTS=working-tree,origin/main,none pnpm skills:eval --repeat 3
+
+# Promptfoo options are passed through, for example to run a single case
+pnpm skills:eval --filter-pattern form-validation
+
+# Promptfoo show report
+pnpm --filter @siemens/element-skill-eval exec promptfoo view
+
+# Tooling checks without model calls
+pnpm skills:eval:lint
+CI=true pnpm skills:eval:test
+pnpm --filter @siemens/element-skill-eval test:integration
+```
+
+| Variable              | Purpose                                                                             |
+| --------------------- | ----------------------------------------------------------------------------------- |
+| `SKILL_EVAL_API_KEY`  | API key for the OpenCode provider                                                   |
+| `SKILL_EVAL_PROVIDER` | OpenCode provider ID, such as `anthropic` or `openai`                               |
+| `SKILL_EVAL_MODEL`    | Model ID within that provider                                                       |
+| `SKILL_EVAL_BASE_URL` | Optional API base URL, for example of a compatible gateway                          |
+| `SKILL_EVAL_VARIANTS` | `none`, `working-tree` (the file on disk), or Git refs; default `working-tree,none` |
+| `SKILL_EVAL_FIXTURE`  | Optional absolute path to a starter from `pnpm skills:eval:prepare`                 |
+| `SKILL_EVAL_OUTPUT`   | Optional report directory; default `tools/skill-eval/results/<timestamp>`           |
+
+Each report contains `promptfoo.html`, the evaluated `SKILL.md` of each variant, and one
+folder per trial with the transcript, changed files, verifier logs, and screenshots.
+
+The agent can only read files, edit `src/`, load the Element skill, and fetch
+`element.siemens.io`. It has no shell. This is not a sandbox for the generated code the
+verifier runs, so use a limited API key on a disposable machine.
+
+To add a case, create `cases/<id>.ts` and add it to `cases/index.ts`.
+
 ## API Goldens
 
 We guard our APIs against unintentional changes using API goldens based on [API Extractor](https://api-extractor.com/).
