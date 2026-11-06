@@ -26,8 +26,8 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { debounce, form, FormField, pattern } from '@angular/forms/signals';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { form, FormField, pattern } from '@angular/forms/signals';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { elementDoubleLeft, elementDoubleRight, elementSearch } from '@siemens/element-icons';
 import {
@@ -42,6 +42,7 @@ import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/elemen
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
 import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { debounce, filter, of, timer } from 'rxjs';
 
 import { SiNavbarVerticalDividerComponent } from './si-navbar-vertical-divider.component';
 import { SiNavbarVerticalGroupTriggerDirective } from './si-navbar-vertical-group-trigger.directive';
@@ -225,19 +226,7 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, SiNavbarVer
   readonly searchEvent = output<string>();
 
   protected readonly searchTerm = signal('');
-  protected readonly searchField = form(this.searchTerm, path => {
-    debounce(path, (_context, abortSignal) => {
-      const delay = this.searchDebounceTime();
-      if (delay > 0) {
-        return new Promise<void>(resolve => {
-          const timeout = setTimeout(resolve, delay);
-          abortSignal.addEventListener('abort', () => clearTimeout(timeout), { once: true });
-        });
-      }
-      return;
-    });
-    pattern(path, /^[^*?]*$/);
-  });
+  protected readonly searchField = form(this.searchTerm, path => pattern(path, /^[^*?]*$/));
 
   private readonly searchInput = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
@@ -275,14 +264,23 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, SiNavbarVer
     effect(() => {
       if (!this.searchable() || !this.visible()) {
         untracked(() => this.searchField().reset(''));
-        return;
-      }
-
-      const searchTerm = this.searchTerm();
-      if (this.searchField().valid()) {
-        untracked(() => this.doSearch(searchTerm));
       }
     });
+
+    toObservable(this.searchTerm)
+      .pipe(
+        filter(() => this.searchField().dirty() && this.searchField().valid()),
+        debounce(() => {
+          const delay = this.searchDebounceTime();
+          return delay > 0 ? timer(delay) : of(0);
+        }),
+        takeUntilDestroyed()
+      )
+      .subscribe(searchTerm => {
+        if (this.searchable() && this.visible() && this.searchField().dirty()) {
+          this.doSearch(searchTerm);
+        }
+      });
   }
 
   ngOnChanges(changes: SimpleChanges<this>): void {

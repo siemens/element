@@ -137,7 +137,7 @@
     (cdkListboxValueChange)="selectPresetItem($event.value[0])"
   >
     @for (item of filteredPresetList(); track $index) {
-      @if (item.label | translate | presetMatchFilter: presetFilter()) {
+      @if (item.label | translate | presetMatchFilter: debouncedPresetFilter()) {
         <li class="preset-item focus-inside px-8 py-5" [cdkOption]="item.label">
           {{ item.label | translate }}
         </li>

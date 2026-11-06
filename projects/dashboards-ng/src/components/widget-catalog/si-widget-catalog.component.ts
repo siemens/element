@@ -15,10 +15,10 @@ import {
   isSignal,
   OnInit,
   output,
-  signal,
-  untracked
+  signal
 } from '@angular/core';
-import { debounce, form, FormField } from '@angular/forms/signals';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { form, FormField } from '@angular/forms/signals';
 import { elementSpecialObject } from '@siemens/element-icons';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
@@ -29,6 +29,7 @@ import {
   SiTranslatePipe,
   t
 } from '@siemens/element-translate-ng/translate';
+import { debounceTime, filter } from 'rxjs';
 
 import { createWidgetConfig, Widget, WidgetConfig } from '../../model/widgets.model';
 import { SiWidgetEditorBase } from '../si-widget-editor-base';
@@ -114,7 +115,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
    */
   protected searchTerm = '';
   protected readonly searchText = signal('');
-  protected readonly searchField = form(this.searchText, path => debounce(path, 400));
+  protected readonly searchField = form(this.searchText);
   /**
    * Array used to hold the search result on the widget catalog.
    * @defaultValue [] */
@@ -214,10 +215,13 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
         this.selectedWidgets.set([selected]);
       }
     });
-    effect(() => {
-      const searchText = this.searchText();
-      untracked(() => this.onSearch(searchText));
-    });
+    toObservable(this.searchText)
+      .pipe(
+        filter(() => this.searchField().dirty()),
+        debounceTime(400),
+        takeUntilDestroyed()
+      )
+      .subscribe(searchText => this.onSearch(searchText));
   }
 
   ngOnInit(): void {

@@ -2,22 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  Component,
-  effect,
-  ElementRef,
-  inject,
-  input,
-  output,
-  signal,
-  untracked,
-  viewChild
-} from '@angular/core';
-import { debounce, form, FormField, pattern } from '@angular/forms/signals';
+import { Component, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { form, FormField, pattern } from '@angular/forms/signals';
 import { elementSearch } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { debounce, filter, of, timer } from 'rxjs';
 
 import { SI_NAVBAR_VERTICAL_NEXT } from './si-navbar-vertical-next.provider';
 
@@ -61,30 +53,22 @@ export class SiNavbarVerticalNextSearchComponent {
   readonly searchChange = output<string>();
 
   protected readonly searchTerm = signal('');
-  protected readonly searchField = form(this.searchTerm, path => {
-    debounce(path, (_context, abortSignal) => {
-      const delay = this.debounceTime();
-      if (delay > 0) {
-        return new Promise<void>(resolve => {
-          const timeout = setTimeout(resolve, delay);
-          abortSignal.addEventListener('abort', () => clearTimeout(timeout), { once: true });
-        });
-      }
-      return;
-    });
-    pattern(path, /^[^*?]*$/);
-  });
+  protected readonly searchField = form(this.searchTerm, path => pattern(path, /^[^*?]*$/));
 
   private readonly navbar = inject(SI_NAVBAR_VERTICAL_NEXT);
   private readonly searchInput = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
 
   constructor() {
-    effect(() => {
-      const searchTerm = this.searchTerm();
-      if (this.searchField().valid()) {
-        untracked(() => this.searchChange.emit(searchTerm));
-      }
-    });
+    toObservable(this.searchTerm)
+      .pipe(
+        filter(() => this.searchField().dirty() && this.searchField().valid()),
+        debounce(() => {
+          const delay = this.debounceTime();
+          return delay > 0 ? timer(delay) : of(0);
+        }),
+        takeUntilDestroyed()
+      )
+      .subscribe(searchTerm => this.searchChange.emit(searchTerm));
   }
 
   protected expandForSearch(): void {

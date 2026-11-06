@@ -21,8 +21,9 @@ import {
   signal,
   SimpleChanges
 } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { debounce, form, FormField } from '@angular/forms/signals';
+import { form, FormField } from '@angular/forms/signals';
 import { elementDown2 } from '@siemens/element-icons';
 import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import {
@@ -38,6 +39,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { debounceTime } from 'rxjs';
 
 import { SiDateRangeCalculationService } from './si-date-range-calculation.service';
 import {
@@ -384,7 +386,11 @@ export class SiDateRangeFilterComponent implements OnChanges {
     return isValid(date) ? date : undefined;
   });
   protected readonly presetFilter = signal('');
-  protected readonly presetFilterField = form(this.presetFilter, path => debounce(path, 400));
+  protected readonly presetFilterField = form(this.presetFilter);
+  protected readonly debouncedPresetFilter = toSignal(
+    toObservable(this.presetFilter).pipe(debounceTime(400)),
+    { initialValue: '' }
+  );
   protected readonly presetOpen = signal(false);
   protected readonly inputMode = computed(
     () => this.basicMode() === 'input' || this.enableTimeSelection()
