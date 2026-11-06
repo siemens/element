@@ -57,7 +57,7 @@ test.describe('si-list-details', () => {
     });
 
     // Click back button
-    await page.locator('button').and(page.getByText('Back')).click();
+    await page.getByRole('button', { name: 'Back', exact: true }).click();
     await expect(page.locator('ngx-datatable')).toBeInViewport({ ratio: 0.05 });
     await si.runVisualAndA11yTests('small-viewport-back-list', {
       axeRulesSet: [
