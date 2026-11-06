@@ -1,0 +1,386 @@
+<div class="si-layout-fixed-height p-6 gap-6">
+  <header>
+    <h2 class="si-h4 mb-2">Fire alarm responders</h2>
+    <p class="text-secondary mb-0">
+      Members are notified from top to bottom when a fire alarm is raised.
+    </p>
+  </header>
+
+  @if (sideBySide()) {
+    <div class="si-layout-fixed-height">
+      <div class="row flex-nowrap g-4 h-100">
+        <section class="col si-layout-fixed-height gap-4" aria-labelledby="available-title">
+          <h3 id="available-title" class="si-h5 mb-0">All users</h3>
+          <div class="card si-layout-fixed-height overflow-hidden">
+            <app-user-list-header
+              placeholder="Search users"
+              selectAllLabel="Select all shown users"
+              [list]="assignment.availableList"
+            />
+            <div class="si-layout-fixed-height position-relative">
+              <ul
+                #availableListbox="ngListbox"
+                id="available-drop-list"
+                class="list list-divider flex-grow-1 overflow-auto"
+                aria-label="All users"
+                aria-describedby="available-keyboard-help"
+                ngListbox
+                multi
+                selectionMode="explicit"
+                cdkDropList
+                cdkDropListSortingDisabled
+                [class.droppable-container]="draggingMember()"
+                [cdkDropListConnectedTo]="['members-drop-list']"
+                [cdkDropListData]="assignment.availableUsers()"
+                [value]="assignment.availableList.visibleSelectedIds()"
+                (valueChange)="assignment.availableList.updateVisibleSelection($event)"
+                (cdkDropListDropped)="droppedOnAvailable($event)"
+              >
+                @for (user of assignment.availableList.visibleUsers(); track user.id) {
+                  <li
+                    class="list-item list-item-action align-indicator-center user-select-none"
+                    ngOption
+                    cdkDrag
+                    [class.active]="assignment.availableList.isSelected(user.id)"
+                    [value]="user.id"
+                    [label]="user.name"
+                    [cdkDragData]="user"
+                  >
+                    <app-user-row
+                      [user]="user"
+                      [selected]="assignment.availableList.isSelected(user.id)"
+                    >
+                      <span
+                        cdkDragHandle
+                        class="btn btn-icon btn-tertiary-ghost"
+                        aria-hidden="true"
+                        (click)="$event.stopPropagation()"
+                      >
+                        <si-icon [icon]="icons.elementMenu" />
+                      </span>
+                    </app-user-row>
+                  </li>
+                }
+              </ul>
+              @if (!assignment.availableList.visibleUsers().length) {
+                <!-- Overlays the empty list, so the list stays in place as a drop target. -->
+                <div
+                  class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center pe-none"
+                >
+                  @if (assignment.availableUsers().length) {
+                    <si-empty-state
+                      heading="No matching users"
+                      content="Try a different name or email address."
+                      [icon]="icons.elementSearch"
+                    />
+                  } @else {
+                    <si-empty-state
+                      heading="Everyone is a member"
+                      content="All users are already in this group."
+                      [icon]="icons.elementUsers"
+                    />
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        </section>
+
+        <div class="col-auto d-flex flex-column justify-content-center gap-4">
+          @let shownUsers = assignment.availableList.visibleUsers();
+          @let selectedUsers = assignment.availableList.orderedSelectedIds();
+          @let selectedMembers = assignment.memberList.orderedSelectedIds();
+          @let shownMembers = assignment.memberList.visibleUsers();
+          <button
+            type="button"
+            class="btn btn-icon btn-secondary"
+            [attr.aria-label]="'Add all shown to group (' + shownUsers.length + ')'"
+            [siTooltip]="'Add all shown to group (' + shownUsers.length + ')'"
+            [disabled]="!shownUsers.length"
+            (click)="add(assignment.availableList.visibleIds())"
+          >
+            <si-icon class="flip-rtl" [icon]="icons.elementDoubleRight" />
+          </button>
+          <button
+            type="button"
+            class="btn btn-icon btn-secondary"
+            [attr.aria-label]="'Add to group (' + selectedUsers.length + ')'"
+            [siTooltip]="'Add to group (' + selectedUsers.length + ')'"
+            [disabled]="!selectedUsers.length"
+            (click)="add(selectedUsers)"
+          >
+            <si-icon class="flip-rtl" [icon]="icons.elementRight2" />
+          </button>
+          <button
+            type="button"
+            class="btn btn-icon btn-secondary"
+            aria-keyshortcuts="Delete"
+            [attr.aria-label]="'Remove from group (' + selectedMembers.length + ')'"
+            [siTooltip]="'Remove from group (' + selectedMembers.length + ')'"
+            [disabled]="!selectedMembers.length"
+            (click)="remove(selectedMembers)"
+          >
+            <si-icon class="flip-rtl" [icon]="icons.elementLeft2" />
+          </button>
+          <button
+            type="button"
+            class="btn btn-icon btn-secondary"
+            [attr.aria-label]="'Remove all shown from group (' + shownMembers.length + ')'"
+            [siTooltip]="'Remove all shown from group (' + shownMembers.length + ')'"
+            [disabled]="!shownMembers.length"
+            (click)="remove(assignment.memberList.visibleIds())"
+          >
+            <si-icon class="flip-rtl" [icon]="icons.elementDoubleLeft" />
+          </button>
+        </div>
+
+        <section class="col si-layout-fixed-height gap-4" aria-labelledby="members-title">
+          <h3 id="members-title" class="si-h5 mb-0">Group members</h3>
+          <ng-container *ngTemplateOutlet="membersCard" />
+        </section>
+
+        <div class="col-auto d-flex flex-column justify-content-center gap-4">
+          @for (action of assignment.reorderActions; track action.direction) {
+            <button
+              type="button"
+              class="btn btn-icon btn-secondary"
+              [attr.aria-label]="action.label"
+              [attr.aria-keyshortcuts]="action.shortcut"
+              [siTooltip]="action.label"
+              [disabled]="!assignment.canMove(action.direction)"
+              (click)="move(action.direction)"
+            >
+              <si-icon [icon]="action.icon" />
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  } @else {
+    <section class="si-layout-fixed-height gap-4" aria-labelledby="members-title">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-4">
+        <h3 id="members-title" class="si-h5 mb-0">Group members</h3>
+        <button type="button" class="btn btn-secondary" (click)="openPicker(picker)">
+          <si-icon class="icon" [icon]="icons.elementPlus" />
+          Add members
+        </button>
+      </div>
+      <ng-container *ngTemplateOutlet="membersCard" />
+    </section>
+  }
+
+  <div class="d-flex justify-content-end gap-4">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      [disabled]="!assignment.hasChanges()"
+      (click)="assignment.reset()"
+    >
+      Reset
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!assignment.hasChanges()"
+      (click)="save()"
+    >
+      Save
+    </button>
+  </div>
+</div>
+
+<p id="members-keyboard-help" class="visually-hidden">
+  Arrow keys move between members, Space selects, Shift with arrow keys extends the selection and
+  Control plus A selects all shown members. Alt with Up or Down arrow, Home or End changes the
+  order. Delete removes from the group.
+</p>
+<p id="available-keyboard-help" class="visually-hidden">
+  Arrow keys move between users, Space selects, Shift with arrow keys extends the selection and
+  Control plus A selects all shown users.
+</p>
+
+<ng-template #membersCard>
+  <div class="card si-layout-fixed-height overflow-hidden">
+    <app-user-list-header
+      placeholder="Search members"
+      selectAllLabel="Select all shown members"
+      [list]="assignment.memberList"
+    >
+      @if (!sideBySide()) {
+        @let selectedMembers = assignment.memberList.orderedSelectedIds();
+        <button
+          type="button"
+          class="btn btn-secondary text-nowrap"
+          aria-keyshortcuts="Delete"
+          [disabled]="!selectedMembers.length"
+          (click)="remove(selectedMembers)"
+        >
+          Remove from group ({{ selectedMembers.length }})
+        </button>
+        @for (action of narrowReorderActions; track action.direction) {
+          <button
+            type="button"
+            class="btn btn-icon btn-secondary"
+            [attr.aria-label]="action.label"
+            [attr.aria-keyshortcuts]="action.shortcut"
+            [siTooltip]="action.label"
+            [disabled]="!assignment.canMove(action.direction)"
+            (click)="move(action.direction)"
+          >
+            <si-icon [icon]="action.icon" />
+          </button>
+        }
+      }
+    </app-user-list-header>
+    <div class="si-layout-fixed-height position-relative">
+      <ul
+        #memberListbox="ngListbox"
+        id="members-drop-list"
+        class="list list-divider flex-grow-1 overflow-auto"
+        aria-label="Group members"
+        aria-describedby="members-keyboard-help"
+        aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown Alt+Home Alt+End Delete"
+        ngListbox
+        multi
+        selectionMode="explicit"
+        cdkDropList
+        [cdkDropListConnectedTo]="sideBySide() ? ['available-drop-list'] : []"
+        [cdkDropListData]="assignment.members()"
+        [cdkDropListDisabled]="assignment.memberList.isFiltering()"
+        [value]="assignment.memberList.visibleSelectedIds()"
+        (valueChange)="assignment.memberList.updateVisibleSelection($event)"
+        (cdkDropListDropped)="droppedOnMembers($event)"
+        (keydown)="memberKeydown($event)"
+      >
+        @for (user of assignment.memberList.visibleUsers(); track user.id) {
+          <li
+            class="list-item list-item-action align-indicator-center user-select-none"
+            ngOption
+            cdkDrag
+            [class.active]="assignment.memberList.isSelected(user.id)"
+            [value]="user.id"
+            [label]="user.name"
+            [cdkDragData]="user"
+            [cdkDragDisabled]="assignment.memberList.isFiltering()"
+            [attr.aria-posinset]="assignment.memberList.isFiltering() ? null : $index + 1"
+            [attr.aria-setsize]="
+              assignment.memberList.isFiltering() ? null : assignment.members().length
+            "
+            (cdkDragStarted)="draggingMember.set(true)"
+            (cdkDragEnded)="draggingMember.set(false)"
+          >
+            <app-user-row [user]="user" [selected]="assignment.memberList.isSelected(user.id)">
+              @if (!assignment.memberList.isFiltering()) {
+                <span
+                  cdkDragHandle
+                  class="btn btn-icon btn-tertiary-ghost"
+                  aria-hidden="true"
+                  (click)="$event.stopPropagation()"
+                >
+                  <si-icon [icon]="icons.elementMenu" />
+                </span>
+              }
+            </app-user-row>
+          </li>
+        }
+      </ul>
+      @if (!assignment.memberList.visibleUsers().length) {
+        <!-- Overlays the empty list, so the list stays in place as a drop target. -->
+        <div
+          class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center pe-none"
+        >
+          @if (assignment.members().length) {
+            <si-empty-state
+              heading="No matching members"
+              content="Try a different name or email address."
+              [icon]="icons.elementSearch"
+            />
+          } @else {
+            <si-empty-state
+              heading="No members yet"
+              [content]="
+                sideBySide()
+                  ? 'Drag users here, or select them and choose Add to group.'
+                  : 'Add members to define who is notified when a fire alarm is raised.'
+              "
+              [icon]="icons.elementUsers"
+            />
+          }
+        </div>
+      }
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #picker let-modalRef="modalRef">
+  <div class="modal-header">
+    <h2 id="add-members-title" class="modal-title">Add members</h2>
+    <button
+      type="button"
+      class="btn btn-circle btn-tertiary-ghost element-cancel"
+      aria-label="Close"
+      (click)="modalRef.hide('cancel')"
+    ></button>
+  </div>
+  <div class="modal-body d-flex flex-column">
+    <div class="card border overflow-hidden">
+      <app-user-list-header
+        placeholder="Search users"
+        selectAllLabel="Select all shown users"
+        [list]="assignment.availableList"
+      />
+      @if (assignment.availableList.visibleUsers().length) {
+        <ul
+          class="list list-divider overflow-auto"
+          aria-label="Users that are not in the group"
+          aria-describedby="available-keyboard-help"
+          ngListbox
+          multi
+          selectionMode="explicit"
+          [value]="assignment.availableList.visibleSelectedIds()"
+          (valueChange)="assignment.availableList.updateVisibleSelection($event)"
+        >
+          @for (user of assignment.availableList.visibleUsers(); track user.id) {
+            <li
+              class="list-item list-item-action align-indicator-center user-select-none"
+              ngOption
+              [class.active]="assignment.availableList.isSelected(user.id)"
+              [value]="user.id"
+              [label]="user.name"
+            >
+              <app-user-row
+                [user]="user"
+                [selected]="assignment.availableList.isSelected(user.id)"
+              />
+            </li>
+          }
+        </ul>
+      } @else if (assignment.availableUsers().length) {
+        <si-empty-state
+          heading="No matching users"
+          content="Try a different name or email address."
+          [icon]="icons.elementSearch"
+        />
+      } @else {
+        <si-empty-state
+          heading="Everyone is a member"
+          content="All users are already in this group."
+          [icon]="icons.elementUsers"
+        />
+      }
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.hide('cancel')">
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary text-nowrap"
+      [disabled]="!assignment.availableList.selectedCount()"
+      (click)="addSelected()"
+    >
+      Add to group ({{ assignment.availableList.selectedCount() }})
+    </button>
+  </div>
+</ng-template>
