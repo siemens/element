@@ -135,8 +135,6 @@ export const themeElement = {
       'path://M-9.35,34.56V42m0-40V9.5m-2,0h4a2,2,0,0,1,2,2v21a2,2,0,0,1-2,2h-4a2,2,0,0,1-2-2v-21A2,2,0,0,1-11.35,9.5Z';
     const dataZoomHandleColor = borderAccent;
 
-    const rtl = style.direction === 'rtl';
-
     // For E2E testing to get rid of font-loading instability.
     const fontFamily = navigator.webdriver ? 'sans-serif' : undefined;
 
@@ -263,7 +261,6 @@ export const themeElement = {
         }
       },
       timeAxis: {
-        inverse: rtl,
         nameTextStyle: {
           fontFamily,
           color: textSecondary
@@ -292,7 +289,6 @@ export const themeElement = {
         }
       },
       categoryAxis: {
-        inverse: rtl,
         nameTextStyle: {
           fontFamily,
           color: textSecondary

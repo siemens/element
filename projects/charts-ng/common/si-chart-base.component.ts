@@ -51,6 +51,20 @@ import {
 } from './si-chart.interfaces';
 import { themeSupport } from './theme-support';
 
+// ECharts has no RTL support, so in RTL the x-axes are inverted and the y-axes move to the other
+// side. Preprocessors run on a copy of the options, so the chart options keep the LTR layout.
+echarts.registerPreprocessor((option: any) => {
+  if (getComputedStyle(document.documentElement).direction !== 'rtl') {
+    return;
+  }
+  for (const axis of [option.xAxis ?? []].flat()) {
+    axis.inverse = !axis.inverse;
+  }
+  for (const axis of [option.yAxis ?? []].flat()) {
+    axis.position = axis.position === 'right' ? 'left' : 'right';
+  }
+});
+
 @Component({
   selector: 'si-chart-base',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
@@ -283,6 +297,7 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   private dataZoomSetupDone = false;
   private requestedDataZoom?: DataZoomRange;
   private measureCanvas?: CanvasRenderingContext2D;
+  private dirObserver?: MutationObserver;
   private readonly cdRef = inject(ChangeDetectorRef);
   private readonly ngZone = inject(NgZone);
 
@@ -510,6 +525,10 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
       };
     }
     this.applyTheme();
+    // The theme and the mirrored layout depend on the document direction. A full re-render is
+    // needed, as merging the options would keep the explicit positions of the previous direction.
+    this.dirObserver = new MutationObserver(() => this.resetChart());
+    this.dirObserver.observe(document.documentElement, { attributeFilter: ['dir'] });
     // this is to clean the legend item list
     if (this.showCustomLegend() && this.customLegend && this.customLegend.length > 0) {
       this.customLegend.forEach(cl => {
@@ -583,6 +602,7 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   }
 
   ngOnDestroy(): void {
+    this.dirObserver?.disconnect();
     this.getEChartInner()?.removeEventListener('mousedown', this.echartMouseDown);
     this.getEChartExternalSliderInner()?.removeEventListener(
       'mousedown',
