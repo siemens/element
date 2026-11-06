@@ -336,6 +336,32 @@ fieldset {
   }
 }
 
+// Embedded docs size the example independently of the code panel.
+:host(.embedded:not(.editor-fullscreen):not(.is-mobile)) {
+  .example {
+    flex: 0 0 var(--preview-height, 204px);
+    min-block-size: 0;
+    overflow: hidden;
+  }
+
+  .code:not(.is-collapsed) {
+    max-block-size: none;
+  }
+
+  .tab-content {
+    block-size: auto;
+  }
+
+  .tab-pane,
+  .codeflask-editor {
+    min-inline-size: 0;
+  }
+
+  .codeflask-editor {
+    flex: none;
+  }
+}
+
 .progress-container {
   position: absolute;
   inset: 0;
