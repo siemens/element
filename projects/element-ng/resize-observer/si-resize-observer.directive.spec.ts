@@ -4,6 +4,7 @@
  */
 import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { resetViewport } from '@siemens/element-ng/test-helpers';
 import { MockInstance } from 'vitest';
 import { page } from 'vitest/browser';
 
@@ -41,33 +42,33 @@ describe('SiResizeObserverDirective', () => {
     component = fixture.componentInstance;
     spy = vi.spyOn(component, 'resizeHandler');
     vi.useFakeTimers();
+    await fixture.whenStable();
   });
 
-  afterEach(() => {
-    spy.mockClear();
+  afterEach(async () => {
+    // Reset while timers are still faked so the throttled callback cannot fire after the test.
+    await resetViewport();
     vi.useRealTimers();
   });
 
   it('emits initial size event', async () => {
     await fixture.whenStable();
     vi.advanceTimersByTime(100);
-    expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 100 });
+    expect(spy).toHaveBeenCalledWith({ width: 100, height: 100 });
   });
 
   it('emits on width change', async () => {
     await page.viewport(200, 100);
-    expect(component.resizeHandler).not.toHaveBeenCalled();
-
+    expect(spy).not.toHaveBeenCalled();
     vi.advanceTimersByTime(100);
-    expect(component.resizeHandler).toHaveBeenCalledWith({ width: 200, height: 100 });
+    expect(spy).toHaveBeenCalledWith({ width: 200, height: 100 });
   });
 
   it('emits on height change', async () => {
     await page.viewport(100, 200);
-    expect(component.resizeHandler).not.toHaveBeenCalled();
-
+    expect(spy).not.toHaveBeenCalled();
     vi.advanceTimersByTime(100);
-    expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 200 });
+    expect(spy).toHaveBeenCalledWith({ width: 100, height: 200 });
   });
 });
 
@@ -76,19 +77,19 @@ describe('SiResizeObserverDirective with emitInitial=false', () => {
   let component: TestHostComponent;
   let spy: MockInstance;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     component.emitInitial.set(false);
     spy = vi.spyOn(component, 'resizeHandler');
-    fixture.detectChanges();
+    vi.useFakeTimers();
+    await fixture.whenStable();
   });
 
-  afterEach(() => {
-    spy.mockClear();
-  });
+  afterEach(() => vi.useRealTimers());
 
   it('does not emit initial size event', () => {
+    vi.advanceTimersByTime(100);
     expect(spy).not.toHaveBeenCalled();
   });
 });
