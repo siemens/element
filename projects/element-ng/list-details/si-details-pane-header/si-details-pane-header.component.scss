@@ -17,20 +17,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
-    > .nav-link {
-      min-inline-size: auto;
-    }
   }
 
   .si-details-header-title {
     display: flex;
     align-items: center;
     padding-block: all-variables.$nav-link-padding-y;
-  }
-
-  .si-details-header-back {
-    isolation: isolate; // Otherwise the bottom outline of the button is not visible on focus without hover.
   }
 
   ::ng-deep si-menu-bar si-menu-item {

@@ -4,11 +4,11 @@
       <button
         #backButton
         type="button"
-        class="si-details-header-back nav-link focus-inside px-6"
+        class="btn btn-ghost btn-icon align-self-center ms-2"
+        [attr.aria-label]="backButtonText() | translate"
         (click)="backClicked()"
       >
-        <si-icon class="pe-2 d-inline-block position-relative icon" [icon]="icons.elementBack" />
-        {{ backButtonText() | translate }}
+        <si-icon class="icon" [icon]="icons.elementBack" />
       </button>
     }
     @if (title()) {
