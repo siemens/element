@@ -45,7 +45,13 @@ describe('SiLocaleService', () => {
   aroundEach(async runTest => {
     using languagesSpy = vi.spyOn(navigator, 'languages', 'get');
     languagesSpy.mockReturnValue(['en-GB', 'en-US']);
-    await runTest();
+    // Changing the locale sets the lang attribute on the root element.
+    const lang = document.documentElement.lang;
+    try {
+      await runTest();
+    } finally {
+      document.documentElement.lang = lang;
+    }
   });
 
   describe('with empty configuration', () => {

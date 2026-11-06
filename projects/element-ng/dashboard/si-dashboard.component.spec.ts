@@ -80,6 +80,11 @@ describe('SiDashboardComponent', () => {
   const dashboardResizeObserver = new Subject<ElementDimensions>();
   const frameResizeObserver = new Subject<ElementDimensions>();
 
+  // restoreDashboard() never restores the root scroll-behavior when sticky (the default).
+  afterEach(() => {
+    document.documentElement.style.scrollBehavior = '';
+  });
+
   beforeEach(async () => {
     const resizeSpy = {
       observe: vi.fn().mockName('ResizeObserverService.observe')
