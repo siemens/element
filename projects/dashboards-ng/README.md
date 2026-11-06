@@ -369,6 +369,145 @@ the input property `SiFlexibleDashboardComponent.config = {...}`.
 
 Here is the [demo](https://github.com/siemens/element/blob/main/projects/dashboards-demo/src/app/pages/fixed-widgets-dashboard/fixed-widgets-dashboard.component.ts)
 
+### Communicating between widgets
+
+Widgets on a dashboard can communicate with each other through an event bus. It works across
+separately built Angular runtimes (e.g. WebComponents, Module Federation remotes) and
+non-Angular code, as all instances share their events and state through `window`.
+
+Events follow the [CloudEvents 1.0](https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md)
+structure:
+
+```ts
+interface SiEvent {
+  specversion: '1.0';
+  id: string; // unique id of the event
+  type: string; // e.g. 'filter.dateRange'
+  source: string; // emitter of the event, defaults to '/'
+  time: string; // ISO 8601 time of the emit
+  subject?: string;
+  data: unknown; // typed per event type
+}
+```
+
+The following events are built in:
+
+| Type               | Data                                           |
+| ------------------ | ---------------------------------------------- |
+| `filter.dateRange` | `{ start: Date; end: Date } \| null`           |
+| `filter.timeZone`  | IANA time zone like `Europe/Berlin` or `null`  |
+| `filter.location`  | `unknown`, override it with your location type |
+| `app.theme`        | `Theme` of `@siemens/element-ng/theme`         |
+| `app.language`     | BCP 47 language code like `de`                 |
+
+The event bus is passive. The application is responsible for emitting events like `app.theme`
+and `app.language`.
+
+#### Angular usage
+
+Inject the `SiEventBus` service:
+
+```ts
+import { SiEventBus } from '@siemens/dashboards-ng';
+
+private eventBus = inject(SiEventBus);
+
+// Emit an event. Emit `null` to clear a filter.
+this.eventBus.emit('filter.timeZone', 'Europe/Berlin', { source: '/widgets/time-zone-picker' });
+
+// Emit multiple events at once. All are stored before any is delivered.
+this.eventBus.emit({ 'filter.timeZone': 'UTC', 'filter.dateRange': null });
+
+// Subscribe to a single event type
+this.eventBus.on('app.theme').subscribe(event => console.log(event.data));
+
+// Subscribe to multiple event types, to all filters (`filter.*`) or to all events (`*`)
+this.eventBus.on(['filter.*', 'app.language']).subscribe(event => {
+  switch (event.type) {
+    case 'filter.dateRange': // event.data is { start: Date; end: Date } | null
+      break;
+    case 'app.language': // event.data is string
+      break;
+  }
+});
+
+// Read the latest event of a type, `undefined` if it was never emitted
+const timeZone = this.eventBus.snapshot('filter.timeZone')?.data;
+```
+
+`on()` only delivers events emitted after subscribing. Use `snapshot()` to get the current value,
+e.g. to refresh whenever any filter changes:
+
+```ts
+readonly filter = this.eventBus.on('filter.*').pipe(
+  startWith(undefined),
+  map(() => ({
+    dateRange: this.eventBus.snapshot('filter.dateRange')?.data,
+    timeZone: this.eventBus.snapshot('filter.timeZone')?.data
+  }))
+);
+```
+
+Every `emit()` creates a new event, also if the data did not change. Use `distinctUntilChanged()` if
+needed. The default `source` of the service can be set by providing the `SI_EVENT_BUS_SOURCE` token.
+
+#### Non-Angular usage
+
+For non-Angular frameworks (React, Vue, plain JS/TS), use `getEventBusInstance()`, optionally
+with a default `source`. Repeated calls with the same source return the same instance:
+
+```ts
+import { getEventBusInstance } from '@siemens/dashboards-ng/event-bus';
+
+const eventBus = getEventBusInstance({ source: '/widgets/my-react-widget' });
+eventBus.on('app.theme').subscribe(event => console.log(event.data));
+eventBus.emit('app.language', 'de');
+```
+
+Both implement the `SiEventBusApi` interface, so code shared between Angular and non-Angular
+widgets can depend on the interface only.
+
+#### Custom events
+
+Register custom events or override the data type of built-in events by augmenting the
+`SiEventMap` interface. Each build only needs to declare the events it uses itself, built-in
+events need no declaration. Builds sharing a custom event must agree on its data type, consider
+a shared types package for this.
+
+Name custom filters `filter.<name>`, so they are included in `filter.*` subscriptions. Prefix
+other custom events with your application or domain, e.g. `acme.order.selected`.
+
+```ts
+declare module '@siemens/dashboards-ng/event-bus' {
+  interface SiEventMap {
+    'filter.severity': 'low' | 'high' | null; // custom filter
+    'acme.order.selected': { orderId: string }; // custom event
+    'filter.location': { id: string; path: string[] } | null; // overrides the built-in type
+  }
+}
+
+eventBus.emit('acme.order.selected', { orderId: '42' });
+```
+
+Unregistered event types are rejected by the compiler. At runtime, `on('*')` may still deliver
+events of types not registered in the current build, e.g. emitted by plain JavaScript code.
+Event types must not contain `*`.
+
+#### API
+
+| Method                       | Description                                                          |
+| ---------------------------- | -------------------------------------------------------------------- |
+| `emit(type, data, options?)` | Emits an event, `options` can set `source` and `subject`             |
+| `emit(events, options?)`     | Emits one event per entry of `{ [type]: data }`                      |
+| `on(pattern \| patterns)`    | Returns an `Observable` of events matching a type, `prefix.*` or `*` |
+| `snapshot(type)`             | Returns the latest event of the type or `undefined`                  |
+
+Events are frozen and must not be modified. Without `window` (e.g. during SSR), the event bus
+does nothing.
+
+The [dashboard demo project](https://github.com/siemens/element/blob/main/projects/dashboards-demo/) includes a
+working example with a filter component emitting events and chart widgets reacting to them.
+
 ## License
 
 Code and documentation Copyright (c) Siemens 2016 - 2026
