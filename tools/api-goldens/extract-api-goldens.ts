@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /* eslint-disable no-console */
+import { parseArgs } from 'node:util';
 import * as path from 'path';
 
 import { main } from './index_npm_packages';
@@ -17,20 +18,32 @@ const packages = [
 ];
 
 (async () => {
-  const approveGolden = process.argv[2] === 'accept';
-  const argvPackages = process.argv[3] ? process.argv[3].split(':') : undefined;
-
-  const actualPackages = argvPackages ?? packages;
+  const { values } = parseArgs({
+    options: {
+      test: { type: 'boolean', default: false },
+      accept: { type: 'boolean', default: false },
+      'doc-model': { type: 'boolean', default: false },
+      packages: { type: 'string' }
+    }
+  });
+  if (values.test && values.accept) {
+    throw new Error('Use either --test or --accept, not both.');
+  }
+  if (!values.test && !values.accept && !values['doc-model']) {
+    throw new Error('Specify at least one operation: --test, --accept, or --doc-model.');
+  }
+  const actualPackages = values.packages?.split(':') ?? packages;
 
   const outdatedGoldens: string[] = [];
   for (const packageName of actualPackages) {
     console.log('Extracting API for package:', packageName);
     const outdated = await main(
-      path.resolve(`api-goldens/${packageName}`),
+      values.test || values.accept ? path.resolve(`api-goldens/${packageName}`) : undefined,
       path.resolve(`dist/@siemens/${packageName}`),
-      approveGolden,
+      values.accept,
       /^ɵ|^SiTranslatableKeys$/,
-      []
+      [],
+      values['doc-model'] ? path.resolve(`dist/api-docs/${packageName}`) : undefined
     );
     outdatedGoldens.push(...outdated.map(file => `${packageName}/${file}`));
   }

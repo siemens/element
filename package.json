@@ -72,8 +72,8 @@
     "dashboards-demo:run-all:local": "pnpm run dashboards-demo:build:webcomponents && (ng serve dashboards-demo-mfe & http-server dist/dashboards-demo-webcomponents -s -p 4202 & ng serve dashboards-demo)",
     "dashboards-demo:run-all:esm:local": "rm -rf dist/dashboards-demo-esm && pnpm run dashboards-demo:build:webcomponents && (ng serve dashboards-demo-mfe & http-server dist/dashboards-demo-webcomponents -s -p 4202 & ng run dashboards-demo-mfe:serve-esm & ng run dashboards-demo:serve-esm) ",
     "dashboards-demo:build:webcomponents": "ng build dashboards-demo-webcomponents --configuration production --output-hashing none && node projects/dashboards-demo/webcomponents/concat.cjs",
-    "api-goldens:test": "pnpm exec tsx tools/api-goldens/index",
-    "api-goldens:accept": "pnpm exec tsx tools/api-goldens/index accept",
+    "api-goldens:test": "pnpm exec tsx tools/api-goldens/index --test",
+    "api-goldens:accept": "pnpm exec tsx tools/api-goldens/index --accept",
     "api-goldens:build-accept": "rimraf .angular dist && pnpm run build:all && pnpm run api-goldens:accept"
   },
   "dependencies": {
@@ -139,6 +139,7 @@
     "@commitlint/config-conventional": "21.2.4",
     "@eslint/js": "10.0.1",
     "@microsoft/api-extractor": "7.60.1",
+    "@microsoft/api-extractor-model": "7.33.16",
     "@playwright/test": "1.64.1",
     "@schematics/angular": "22.2.5",
     "@semantic-release/changelog": "7.0.0",

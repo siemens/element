@@ -1,14 +1,16 @@
 # API Goldens
 
-This directory contains the script needed to generate and verify API goldens for the Element library.
-This script is using [API Extractor](https://api-extractor.com/) internally.
-Since the API Extractor is currently not supporting multiple entrypoints, it is called separately for each entrypoint.
+Runs [API Extractor](https://api-extractor.com/) once per entry point against built libraries.
 
-The script patches the API Extractor to flag all protected members as `internal`.
-This excludes them from the public API report.
+- `--test`: validate goldens.
+- `--accept`: update goldens.
+- `--doc-model`: generate documentation models, optionally alongside `--test` or `--accept`.
+- `--packages element-ng:native-charts-ng`: limit packages.
 
-See the [Developer Guide](../../DEVELOPER.md) for usage instructions.
+At least one operation is required. `--test` and `--accept` cannot be combined.
 
+Models are written to `dist/api-docs/<package>/<subpath>/index.api.json`. They retain internal
+Angular metadata that is excluded from public reports. Both outputs share one extraction.
 
 ## License
 
