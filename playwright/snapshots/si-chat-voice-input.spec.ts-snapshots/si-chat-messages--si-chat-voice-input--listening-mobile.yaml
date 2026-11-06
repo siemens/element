@@ -1,12 +1,15 @@
 - textbox "Chat input":
-  - /placeholder: Starting voice input…
+  - /placeholder: Enter a command, question or topic…
 - group:
   - button "Attach file"
-- button "Cancel dictation"
+- button "Stop dictation" [pressed]
 - button "Send" [disabled]
-- status: Starting voice input…
 - text: The content is AI generated. Always verify the information for accuracy.
-- switch "Automatic completion" [disabled]
-- text: Automatic completion
+- status: Listening…
+- switch "Send after dictation" [disabled]
+- text: Send after dictation
 - switch "Simulated audio levels" [checked] [disabled]
-- text: Simulated audio levels
+- text: Simulated audio levels Voice input mode
+- combobox "Voice input mode" [disabled]:
+  - option "Toggle" [selected]
+  - option "Push-to-talk"

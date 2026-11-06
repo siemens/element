@@ -1,13 +1,17 @@
 - textbox "Chat input":
-  - /placeholder: Listening…
+  - /placeholder: Enter a command, question or topic…
   - text: Show the energy consumption
 - group:
   - button "Attach file"
-- button "Cancel dictation"
-- button "Confirm dictation"
-- status: Listening…
+- button "Stop dictation" [pressed]
+- button "Send"
 - text: The content is AI generated. Always verify the information for accuracy.
-- switch "Automatic completion" [disabled]
-- text: Automatic completion
+- status: Listening…
+- switch "Send after dictation" [disabled]
+- text: Send after dictation
 - switch "Simulated audio levels" [checked] [disabled]
-- text: Simulated audio levels
+- text: Simulated audio levels Voice input mode
+- combobox "Voice input mode" [disabled]:
+  - option "Toggle" [selected]
+  - option "Push-to-talk"
+- tooltip "Stop dictation"

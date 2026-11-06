@@ -4,7 +4,11 @@
  */
 import { Component, inject, signal } from '@angular/core';
 import { elementVoice, elementStopFilled } from '@siemens/element-icons';
-import { ChatInputAttachment, SiChatInputComponent } from '@siemens/element-ng/chat-messages';
+import {
+  ChatInputAttachment,
+  SiChatInputComponent,
+  SiVoiceWaveformComponent
+} from '@siemens/element-ng/chat-messages';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import {
   SI_SPEECH_INPUT_RECOGNITION,
@@ -17,7 +21,13 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiChatInputComponent, SiSpeechInputDirective, SiIconComponent, SiTooltipDirective],
+  imports: [
+    SiChatInputComponent,
+    SiSpeechInputDirective,
+    SiIconComponent,
+    SiTooltipDirective,
+    SiVoiceWaveformComponent
+  ],
   templateUrl: './si-chat-voice-input.html',
   providers: [
     {
@@ -31,6 +41,9 @@ export class SampleComponent {
   readonly icons = addIcons({ elementVoice, elementStopFilled });
   readonly value = signal('');
   readonly listening = signal(false);
+  readonly hasTranscript = signal(false);
+  readonly measuredLevels = signal(false);
+  readonly voiceInputLevel = signal<number | undefined>(undefined);
   readonly autoSend = signal(false);
   readonly mode = signal<'toggle' | 'push-to-talk'>('toggle');
   readonly error = signal<string | undefined>(undefined);
@@ -43,6 +56,8 @@ export class SampleComponent {
     this.listening.set(listening);
     if (listening) {
       this.error.set(undefined);
+      this.hasTranscript.set(false);
+      this.voiceInputLevel.set(this.measuredLevels() ? 0 : undefined);
     } else if (
       this.autoSend() &&
       speech.completionReason() === 'completed' &&
@@ -52,6 +67,13 @@ export class SampleComponent {
       chat.sendCurrent();
     }
     this.logEvent(listening ? 'Dictation started' : 'Dictation ended');
+  }
+
+  onTranscript(transcript: string): void {
+    this.hasTranscript.set(!!transcript);
+    if (this.measuredLevels()) {
+      this.voiceInputLevel.set((transcript.split(' ').length % 4) / 3);
+    }
   }
 
   onSpeechError(error: string): void {
