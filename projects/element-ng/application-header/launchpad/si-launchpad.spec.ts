@@ -5,7 +5,7 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { inputBinding, outputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { page } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
 import { SiLaunchpadHarness } from '../testing/si-launchpad.harness';
@@ -52,8 +52,9 @@ describe('SiLaunchpad', () => {
       .getByRole('link', { name: `App ${longSystemName}`, exact: true })
       .element();
 
-    nameLink.focus();
-    await fixture.whenStable();
+    // The tooltip requires :focus-visible, which programmatic focus only gets after keyboard input.
+    await userEvent.tab();
+    expect(nameLink).toHaveFocus();
 
     await expect
       .element(page.getByRole('tooltip').getByText(longName, { exact: true }))
@@ -62,8 +63,8 @@ describe('SiLaunchpad', () => {
       .element(page.getByRole('tooltip').getByText('System', { exact: true }))
       .toBeVisible();
 
-    systemLink.focus();
-    await fixture.whenStable();
+    await userEvent.tab();
+    expect(systemLink).toHaveFocus();
 
     await expect.element(page.getByRole('tooltip').getByText('App', { exact: true })).toBeVisible();
     await expect

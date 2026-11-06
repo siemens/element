@@ -15,6 +15,16 @@ import { addIcons, IconService } from './si-icons';
 // I don't know why.
 
 describe('SiSvgIconComponent', () => {
+  // Applying a theme adds a root class and style element to the document.
+  let rootClassName: string;
+
+  beforeEach(() => (rootClassName = document.documentElement.className));
+
+  afterEach(() => {
+    document.documentElement.className = rootClassName;
+    document.querySelectorAll('style[id^="__theme-"]').forEach(style => style.remove());
+  });
+
   describe('with one instance', () => {
     let component: TestHostComponent;
     let fixture: ComponentFixture<TestHostComponent>;

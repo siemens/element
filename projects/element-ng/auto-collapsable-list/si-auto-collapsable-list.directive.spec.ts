@@ -122,30 +122,21 @@ describe('SiAutoCollapsableListDirective', () => {
     component.items().forEach(item => expect(item.canBeVisible()).toBe(true));
   });
 
-  it.skipIf(!document.hasFocus())(
-    'should collapse and expand items on container size changes',
-    async () => {
-      fixture.detectChanges();
-      await detectSizeChange({ width: 300 });
-      expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
-      expect(
-        hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
-      ).toHaveTextContent('Overflown Items: 3');
-      await detectSizeChange({ width: 600 });
-      expect(readVisibilityStates()).toEqual([
-        'visible',
-        'visible',
-        'visible',
-        'visible',
-        'visible'
-      ]);
-      expect(
-        hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
-      ).toHaveStyle({ visibility: 'hidden' });
-    }
-  );
+  it('should collapse and expand items on container size changes', async () => {
+    fixture.detectChanges();
+    await detectSizeChange({ width: 300 });
+    expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
+    expect(
+      hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
+    ).toHaveTextContent('Overflown Items: 3');
+    await detectSizeChange({ width: 600 });
+    expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'visible', 'visible']);
+    expect(
+      hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
+    ).toHaveStyle({ visibility: 'hidden' });
+  });
 
-  it.skipIf(!document.hasFocus())('should respect additional content', async () => {
+  it('should respect additional content', async () => {
     fixture.detectChanges();
     await detectSizeChange();
     component.showAdditionalContent.set(true);
@@ -153,7 +144,7 @@ describe('SiAutoCollapsableListDirective', () => {
     expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
   });
 
-  it.skipIf(!document.hasFocus())('should react to item changes', async () => {
+  it('should react to item changes', async () => {
     fixture.detectChanges();
     await detectSizeChange();
     component.moreItems.update(items => [...items, 100, 100]);

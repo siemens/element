@@ -74,6 +74,11 @@ describe('SiCustomSelectDirective', () => {
   const getDropdownItems = (): HTMLElement[] =>
     Array.from(overlayContainerElement.querySelectorAll('.dropdown-item'));
 
+  // The directive overwrites the id of the root element, so TestBed no longer finds it to remove.
+  afterEach(() => {
+    document.querySelectorAll('body > [id^="__si-select-"]').forEach(host => host.remove());
+  });
+
   describe('direct usage', () => {
     let value: ReturnType<typeof signal<string | null | undefined>>;
     let disabled: ReturnType<typeof signal<boolean>>;
