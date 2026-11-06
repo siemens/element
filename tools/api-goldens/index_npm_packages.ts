@@ -29,21 +29,21 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /**
- * Entry point for the `api_golden_test_npm_package` Bazel rule. This function determines
- * all types within the specified NPM package and builds API reports that will be compared
- * against golden files within the given golden directory.
+ * Extracts API reports and documentation models for a package's declaration entry points.
+ * When a golden directory is provided, reports are compared with or written to that directory.
  */
 export async function main(
-  goldenDir: string,
+  goldenDir: string | undefined,
   npmPackageDir: string,
   approveGolden: boolean,
   stripExportPattern: RegExp,
-  typeNames: string[]
+  typeNames: string[],
+  docModelDir?: string
 ) {
   const packageJsonPath = path.join(npmPackageDir, 'package.json');
   const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8')) as PackageJson;
   const entryPoints = findEntryPointsWithinNpmPackage(npmPackageDir, packageJson);
-  const worker = new Piscina<Parameters<typeof testApiGolden>, string>({
+  const worker = new Piscina<Parameters<typeof testApiGolden>, string | null>({
     filename: path.resolve(__dirname, './test_api_report.ts'),
     maxThreads: process.env.API_GOLDENS_WORKERS
       ? parseInt(process.env.API_GOLDENS_WORKERS, 10)
@@ -56,7 +56,6 @@ export async function main(
     // based on the name of the defining NodeJS exports subpath in the NPM package,
     // See: https://api-extractor.com/pages/overview/demo_api_report/.
     const goldenName = path.join(subpath, 'index.api.md');
-    const goldenFilePath = path.join(goldenDir, goldenName);
     const moduleName = normalizePathToPosix(path.join(packageJson.name, subpath));
 
     // Run API extractor in child processes. This is because API extractor is very
@@ -66,23 +65,27 @@ export async function main(
       stripExportPattern,
       typeNames,
       packageJsonPath,
-      moduleName
+      moduleName,
+      docModelDir ? path.join(docModelDir, subpath, 'index.api.json') : undefined,
+      goldenDir !== undefined
     ]);
 
     if (actual === null) {
-      console.error(`Could not generate API golden for subpath: "${subpath}". See errors above.`);
-      process.exit(1);
+      throw new Error(`Could not extract API for subpath: "${subpath}". See errors above.`);
     }
 
-    if (approveGolden) {
-      await fs.promises.mkdir(path.dirname(goldenFilePath), { recursive: true });
-      await fs.promises.writeFile(goldenFilePath, actual, 'utf8');
-    } else {
-      const expected = await fs.promises.readFile(goldenFilePath, 'utf8');
-      if (actual !== expected) {
-        // Keep track of outdated goldens for error message.
-        outdatedGoldens.push(goldenName);
-        return false;
+    if (goldenDir !== undefined) {
+      const goldenFilePath = path.join(goldenDir, goldenName);
+      if (approveGolden) {
+        await fs.promises.mkdir(path.dirname(goldenFilePath), { recursive: true });
+        await fs.promises.writeFile(goldenFilePath, actual, 'utf8');
+      } else {
+        const expected = await fs.promises.readFile(goldenFilePath, 'utf8');
+        if (actual !== expected) {
+          // Keep track of outdated goldens for error message.
+          outdatedGoldens.push(goldenName);
+          return false;
+        }
       }
     }
 
@@ -107,6 +110,7 @@ export async function main(
 
   // Wait for final batch/retrieve all results.
   await Promise.all(tasks);
+  await worker.destroy();
 
   return outdatedGoldens;
 }
