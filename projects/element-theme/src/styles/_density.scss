@@ -13,11 +13,9 @@
     $is-size: string.index($name, 'si-sys-sizing-size-') == 1;
     $is-icon: string.index($name, 'si-sys-sizing-icon-') == 1;
 
-    @if $is-icon {
-      // Keep icons in rem so they scale with the root font size.
+    @if $is-spacing or $is-size or $is-icon {
+      // Scale spacing, sizes, and icons together with the root font size.
       --#{$name}: #{typography.px-to-rem($value)};
-    } @else if $is-spacing or $is-size {
-      --#{$name}: #{$value};
     }
   }
 }
