@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { inject, Injectable, DOCUMENT } from '@angular/core';
+import { Translatable } from '@siemens/element-translate-ng/translate-types';
 import { NEVER, Observable } from 'rxjs';
 
 export type TranslationResult<T> = T extends string ? string : Record<string, string>;
@@ -84,7 +85,7 @@ export abstract class SiTranslateService {
    * be wrapped in an Observable.
    */
   abstract translate<T extends string | string[]>(
-    keys: T,
+    keys: T | Translatable,
     params?: Record<string, unknown>
   ): Observable<TranslationResult<T>> | TranslationResult<T>;
 
@@ -98,7 +99,7 @@ export abstract class SiTranslateService {
    * @returns Returns the translated key or an object with the translated keys wrapped in an Observable.
    */
   abstract translateAsync<T extends string | string[]>(
-    keys: T,
+    keys: T | Translatable,
     params?: Record<string, unknown>
   ): Observable<TranslationResult<T>>;
 
@@ -114,7 +115,7 @@ export abstract class SiTranslateService {
    * @returns Returns the translated key or an object with the translated keys.
    */
   abstract translateSync<T extends string | string[]>(
-    keys: T,
+    keys: T | Translatable,
     params?: Record<string, unknown>
   ): TranslationResult<T>;
 
