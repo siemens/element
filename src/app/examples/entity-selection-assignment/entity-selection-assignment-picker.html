@@ -1,0 +1,216 @@
+<div class="si-layout-fixed-height p-6">
+  <si-wizard verticalLayout showVerticalDivider class="card si-layout-fixed-height">
+    <si-wizard-step heading="Group" [isValid]="!!groupName().value().trim()">
+      <div class="d-flex flex-column gap-2">
+        <label for="group-name" class="form-label">Group name</label>
+        <input id="group-name" type="text" class="form-control" [formField]="groupName" />
+      </div>
+    </si-wizard-step>
+
+    <si-wizard-step heading="Members" [isValid]="assignment.members().length > 0">
+      <section class="si-layout-fixed-height gap-4 h-100" aria-labelledby="members-title">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-4">
+          <h3 id="members-title" class="si-h5 mb-0">Group members</h3>
+          <button type="button" class="btn btn-secondary" (click)="openPicker(picker)">
+            <si-icon class="icon" [icon]="icons.elementPlus" />
+            Add members
+          </button>
+        </div>
+
+        <!-- Outlined instead of a card, as the wizard is already a card. -->
+        <div class="border rounded-2 si-layout-fixed-height overflow-hidden">
+          <app-user-list-header
+            placeholder="Search members"
+            selectAllLabel="Select all shown members"
+            [list]="assignment.memberList"
+          >
+            @let selectedMembers = assignment.memberList.orderedSelectedIds();
+            <button
+              type="button"
+              class="btn btn-secondary text-nowrap"
+              aria-keyshortcuts="Delete"
+              [disabled]="!selectedMembers.length"
+              (click)="remove(selectedMembers)"
+            >
+              Remove from group ({{ selectedMembers.length }})
+            </button>
+            @for (action of reorderActions; track action.direction) {
+              <button
+                type="button"
+                class="btn btn-icon btn-secondary"
+                [attr.aria-label]="action.label"
+                [attr.aria-keyshortcuts]="action.shortcut"
+                [siTooltip]="action.label"
+                [disabled]="!assignment.canMove(action.direction)"
+                (click)="move(action.direction)"
+              >
+                <si-icon [icon]="action.icon" />
+              </button>
+            }
+          </app-user-list-header>
+
+          @if (assignment.memberList.visibleUsers().length) {
+            <ul
+              #memberListbox="ngListbox"
+              class="list list-divider flex-grow-1 overflow-auto"
+              aria-label="Group members"
+              aria-describedby="members-keyboard-help"
+              aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown Alt+Home Alt+End Delete"
+              ngListbox
+              multi
+              selectionMode="explicit"
+              cdkDropList
+              cdkDropListLockAxis="y"
+              [cdkDropListData]="assignment.members()"
+              [cdkDropListDisabled]="assignment.memberList.isFiltering()"
+              [value]="assignment.memberList.visibleSelectedIds()"
+              (valueChange)="assignment.memberList.updateVisibleSelection($event)"
+              (cdkDropListDropped)="dropped($event)"
+              (keydown)="memberKeydown($event)"
+            >
+              @for (user of assignment.memberList.visibleUsers(); track user.id) {
+                <li
+                  class="list-item list-item-action align-indicator-center user-select-none"
+                  ngOption
+                  cdkDrag
+                  [class.active]="assignment.memberList.isSelected(user.id)"
+                  [value]="user.id"
+                  [label]="user.name"
+                  [cdkDragData]="user"
+                  [cdkDragDisabled]="assignment.memberList.isFiltering()"
+                  [attr.aria-posinset]="assignment.memberList.isFiltering() ? null : $index + 1"
+                  [attr.aria-setsize]="
+                    assignment.memberList.isFiltering() ? null : assignment.members().length
+                  "
+                >
+                  <app-user-row
+                    [user]="user"
+                    [selected]="assignment.memberList.isSelected(user.id)"
+                  >
+                    @if (!assignment.memberList.isFiltering()) {
+                      <span
+                        cdkDragHandle
+                        class="btn btn-icon btn-tertiary-ghost"
+                        aria-hidden="true"
+                        (click)="$event.stopPropagation()"
+                      >
+                        <si-icon [icon]="icons.elementMenu" />
+                      </span>
+                    }
+                  </app-user-row>
+                </li>
+              }
+            </ul>
+          } @else if (assignment.members().length) {
+            <si-empty-state
+              class="my-auto"
+              heading="No matching members"
+              content="Try a different name or email address."
+              [icon]="icons.elementSearch"
+            />
+          } @else {
+            <si-empty-state
+              class="my-auto"
+              heading="No members yet"
+              content="Add members to define who is notified when a fire alarm is raised."
+              [icon]="icons.elementUsers"
+            />
+          }
+        </div>
+      </section>
+    </si-wizard-step>
+
+    <si-wizard-step heading="Review" (save)="save()">
+      <h3 class="si-h5">{{ groupName().value() }}</h3>
+      <p class="text-secondary">Members are notified in this order:</p>
+      <ol>
+        @for (user of assignment.members(); track user.id) {
+          <li>{{ user.name }}</li>
+        }
+      </ol>
+    </si-wizard-step>
+  </si-wizard>
+</div>
+
+<p id="members-keyboard-help" class="visually-hidden">
+  Arrow keys move between members, Space selects, Shift with arrow keys extends the selection and
+  Control plus A selects all shown members. Alt with Up or Down arrow, Home or End changes the
+  order. Delete removes from the group.
+</p>
+<p id="available-keyboard-help" class="visually-hidden">
+  Arrow keys move between users, Space selects, Shift with arrow keys extends the selection and
+  Control plus A selects all shown users.
+</p>
+
+<ng-template #picker let-modalRef="modalRef">
+  <div class="modal-header">
+    <h2 id="add-members-title" class="modal-title">Add members</h2>
+    <button
+      type="button"
+      class="btn btn-circle btn-tertiary-ghost element-cancel"
+      aria-label="Close"
+      (click)="modalRef.hide('cancel')"
+    ></button>
+  </div>
+  <div class="modal-body d-flex flex-column">
+    <div class="card border overflow-hidden">
+      <app-user-list-header
+        placeholder="Search users"
+        selectAllLabel="Select all shown users"
+        [list]="assignment.availableList"
+      />
+      @if (assignment.availableList.visibleUsers().length) {
+        <ul
+          class="list list-divider overflow-auto"
+          aria-label="Users that are not in the group"
+          aria-describedby="available-keyboard-help"
+          ngListbox
+          multi
+          selectionMode="explicit"
+          [value]="assignment.availableList.visibleSelectedIds()"
+          (valueChange)="assignment.availableList.updateVisibleSelection($event)"
+        >
+          @for (user of assignment.availableList.visibleUsers(); track user.id) {
+            <li
+              class="list-item list-item-action align-indicator-center user-select-none"
+              ngOption
+              [class.active]="assignment.availableList.isSelected(user.id)"
+              [value]="user.id"
+              [label]="user.name"
+            >
+              <app-user-row
+                [user]="user"
+                [selected]="assignment.availableList.isSelected(user.id)"
+              />
+            </li>
+          }
+        </ul>
+      } @else if (assignment.availableUsers().length) {
+        <si-empty-state
+          heading="No matching users"
+          content="Try a different name or email address."
+          [icon]="icons.elementSearch"
+        />
+      } @else {
+        <si-empty-state
+          heading="Everyone is a member"
+          content="All users are already in this group."
+          [icon]="icons.elementUsers"
+        />
+      }
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.hide('cancel')">
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary text-nowrap"
+      [disabled]="!assignment.availableList.selectedCount()"
+      (click)="addSelected()"
+    >
+      Add to group ({{ assignment.availableList.selectedCount() }})
+    </button>
+  </div>
+</ng-template>
