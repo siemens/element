@@ -9,7 +9,7 @@ from mkdocs.structure.files import Files, File
 
 from os.path import dirname
 
-from md_extension_element_docs_composer import DocsComposerExtension, structured_output_path
+from md_extension_element_docs_composer import DocsComposerExtension
 
 api_enabled = os.environ.get('DOCS_COMPOSER', 'false') in ('true', '1', 'yes', 'y')
 api_generate = True if os.environ.get('DOCS_COMPOSER_GENERATE', 'false') in ('true', '1', 'yes', 'y') else (
@@ -95,18 +95,6 @@ class ElementDocsBuilderPlugin(BasePlugin):
       # Save the file path (relative to the repo dir) to the extension for later use
       self.extension.current_file_path = relpath(page.file.abs_src_path, os.getcwd())
     return markdown
-
-  def on_post_build(self, config: Config) -> None:
-      if not api_enabled:
-        return
-
-      if self.extension is not None:
-        docs_composer.saveLLMsTxt(
-          self.docs_composer_configuration,
-          '.',
-          structured_output_path,
-          timeout=1000 * 60 * 1,  # 1 minute timeout
-        )
 
   def on_files(self, files: Files, config: Config):
     files.append(File('docs-builder.css', dirname(__file__), config.get('site_dir'), config.get('use_directory_urls')))
