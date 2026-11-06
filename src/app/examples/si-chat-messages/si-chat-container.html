@@ -134,7 +134,6 @@
       [interruptible]="loading() && !sending()"
       [followUpPrompts]="messages().length ? followUpPrompts() : []"
       [models]="models"
-      [modelSelectionHasFilter]="true"
       [(value)]="inputValue"
       [(selectedModel)]="selectedModel"
       (send)="onMessageSent($event)"

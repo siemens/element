@@ -1,5 +1,4 @@
 @use '@siemens/element-theme/src/styles/variables/spacers';
-@use '@siemens/element-theme/src/styles/variables/system-tokens';
 @use '@siemens/element-theme/src/styles/bootstrap/variables' as bootstrap-variables;
 @use 'sass:map';
 
@@ -9,12 +8,13 @@
 }
 
 .model-trigger {
+  display: inline-flex;
+  align-items: center;
   block-size: calc(var(--btn-font-size) * var(--btn-line-height) + 2 * var(--btn-padding-y));
   max-inline-size: 100%;
 }
 
-.model-name,
-.model-option {
+.model-name {
   min-inline-size: 0;
 }
 
@@ -28,32 +28,14 @@
     calc(#{bootstrap-variables.$dropdown-min-width} * 2.5),
     calc(100vi - #{map.get(spacers.$spacers-inline, 8)} * 2)
   );
+  max-block-size: min(480px, calc(100vb - #{map.get(spacers.$spacers-block, 8)} * 2));
+  overflow-y: auto;
 }
 
-.model-dropdown ::ng-deep {
-  si-select-option-row {
-    padding-block: map.get(spacers.$spacers-block, 4);
-    padding-inline: map.get(spacers.$spacers-inline, 5);
-    padding-inline-end: map.get(
-      spacers.$spacers-inline,
-      5
-    ) !important; // stylelint-disable-line declaration-no-important
-  }
-
-  si-select-list-has-filter > div:first-child {
-    padding-block-start: map.get(
-      spacers.$spacers-block,
-      2
-    ) !important; // stylelint-disable-line declaration-no-important
-  }
-
-  .search-bar.variant-background-0 .search-bar-input.form-control {
-    background-color: system-tokens.$si-sys-color-background-2 !important; // stylelint-disable-line declaration-no-important
-  }
-
-  .dropdown-divider {
-    margin-block: map.get(spacers.$spacers-block, 3);
-  }
+.model-option {
+  min-inline-size: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .model-trigger-sizer {
@@ -64,12 +46,4 @@
   white-space: nowrap;
   inline-size: max-content;
   max-inline-size: none;
-}
-
-.model-footer ::ng-deep > si-menu {
-  border: 0;
-  box-shadow: none;
-  background: transparent;
-  margin-block: 0;
-  padding-block: 0;
 }

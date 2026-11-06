@@ -74,15 +74,16 @@ They help users continue the conversation without having to formulate the next m
 
 ### Model selection
 
-Supply `models` as `SelectItem<string>[]` and bind the active model ID with `[(selectedModel)]`.
+Supply `models` as `ChatModelItem[]` and bind the active model ID with `[(selectedModel)]`.
 Options support a label, an optional description and a disabled state. The selector appears before
 Send and switches to an icon-only trigger when the toolbar cannot fit the active model name.
-Enable optional search with `modelSelectionHasFilter` and supply footer actions or submenus through
-`modelSelectionActions`, using the existing `MenuItem` API.
+Models are rendered as radio items in a standard menu. Supply footer actions or submenus through
+`modelSelectionActions`, using the existing `MenuItem` API. Group models using `ChatModelGroup`;
+group headings do not affect the single selection across all models.
 
-Search is disabled by default and is most useful for long model lists. Descriptions appear only when
-provided on the options. The example starts with both features off and provides controls to enable
-them independently.
+Descriptions use the standard menu description support and appear only when provided on the options.
+The chat-input example starts without descriptions and provides a control to enable them.
+The chat-container example uses plain model labels. Model search is not currently supported.
 
 Footer items retain the standard menu callback and checked-state behavior. Activating a footer item
 closes the selector, including links and items in submenus; opening a submenu keeps it open.

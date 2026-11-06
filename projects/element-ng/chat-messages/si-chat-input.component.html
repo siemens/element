@@ -127,7 +127,6 @@
           [options]="models()"
           [value]="selectedModel()"
           [disabled]="disabled() || modelSelectionDisabled()"
-          [hasFilter]="modelSelectionHasFilter()"
           [footerActions]="modelSelectionActions()"
           [availableWidth]="modelAvailableWidth()"
           (valueChange)="selectedModel.set($event)"

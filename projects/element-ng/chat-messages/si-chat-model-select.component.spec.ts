@@ -3,18 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { inputBinding, signal, twoWayBinding, WritableSignal } from '@angular/core';
+import { inputBinding, outputBinding, signal, twoWayBinding, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NavigationEnd, provideRouter, Router } from '@angular/router';
 import { MenuItem, MenuItemRadio, SiMenuActionService } from '@siemens/element-ng/menu';
-import { SelectItem } from '@siemens/element-ng/select';
 import { userEvent } from 'vitest/browser';
 
 import { SiChatInputComponent } from './si-chat-input.component';
-import { SiChatModelSelectComponent } from './si-chat-model-select.component';
+import { ChatModelItem, SiChatModelSelectComponent } from './si-chat-model-select.component';
 
 describe('SiChatModelSelectComponent', () => {
-  const models: SelectItem<string>[] = [
+  const models: ChatModelItem[] = [
     { type: 'option', value: 'balanced', label: 'Balanced', description: 'Everyday tasks' },
     { type: 'option', value: 'fast', label: 'Fast', description: 'Quick answers' },
     { type: 'option', value: 'locked', label: 'Locked', disabled: true }
@@ -25,9 +24,8 @@ describe('SiChatModelSelectComponent', () => {
       compact?: boolean;
       availableWidth?: number;
       disabled?: boolean;
-      hasFilter?: boolean;
       footerActions?: MenuItem[];
-      models?: SelectItem<string>[];
+      models?: ChatModelItem[];
     } = {}
   ): Promise<{
     fixture: ComponentFixture<SiChatModelSelectComponent>;
@@ -44,13 +42,12 @@ describe('SiChatModelSelectComponent', () => {
         inputBinding('compact', () => settings.compact ?? false),
         inputBinding('availableWidth', () => settings.availableWidth ?? Infinity),
         inputBinding('disabled', () => settings.disabled ?? false),
-        inputBinding('hasFilter', () => settings.hasFilter ?? false),
         inputBinding('footerActions', () => settings.footerActions ?? [])
       ]
     });
     await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
-    const trigger = host.querySelector<HTMLElement>('[role="combobox"]')!;
+    const trigger = host.querySelector<HTMLElement>('button')!;
     const overlay = TestBed.inject(OverlayContainer).getContainerElement();
     return { fixture, value, host, trigger, overlay };
   };
@@ -61,21 +58,19 @@ describe('SiChatModelSelectComponent', () => {
     expect(trigger).toHaveAccessibleName('Model: Balanced');
     await userEvent.click(trigger);
     await fixture.whenStable();
-    expect(overlay.querySelector('.model-option .text-secondary')).toHaveTextContent(
-      'Everyday tasks'
-    );
+    expect(overlay.querySelector('.item-description')).toHaveTextContent('Everyday tasks');
     expect(
-      overlay.querySelector('[role="option"][aria-selected="true"] .model-option span')
+      overlay.querySelector('[role="menuitemradio"][aria-checked="true"] .model-option > span')
     ).toHaveTextContent('Balanced');
-    expect(overlay.querySelectorAll('.selected-marker')).toHaveLength(1);
+    expect(overlay.querySelectorAll('[role="menuitemradio"][aria-checked="true"]')).toHaveLength(1);
   });
 
   it('updates the bound ID and restores focus after selection', async () => {
     const { fixture, trigger, overlay, value } = await setup();
     await userEvent.click(trigger);
     await fixture.whenStable();
-    const option = Array.from(overlay.querySelectorAll<HTMLElement>('[role="option"]')).find(item =>
-      item.textContent?.includes('Fast')
+    const option = Array.from(overlay.querySelectorAll<HTMLElement>('[role="menuitemradio"]')).find(
+      item => item.textContent?.includes('Fast')
     )!;
     await userEvent.click(option);
     await fixture.whenStable();
@@ -89,8 +84,58 @@ describe('SiChatModelSelectComponent', () => {
     const { fixture, trigger, overlay } = await setup({ disabled: true });
     trigger.click();
     await fixture.whenStable();
-    expect(trigger).toHaveAttribute('aria-disabled', 'true');
-    expect(overlay.querySelector('[role="option"]')).toBeNull();
+    expect(trigger).toBeDisabled();
+    expect(overlay.querySelector('[role="menuitemradio"]')).toBeNull();
+  });
+
+  it('does not select a disabled model', async () => {
+    const { fixture, trigger, overlay, value } = await setup();
+    await userEvent.click(trigger);
+    await fixture.whenStable();
+    const locked = overlay.querySelector<HTMLElement>(
+      '[role="menuitemradio"][aria-disabled="true"]'
+    )!;
+    locked.click();
+    await fixture.whenStable();
+    expect(value()).toBe('balanced');
+    expect(trigger).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('keeps one selection across model groups and renders no search field', async () => {
+    const { fixture, trigger, overlay, value } = await setup({
+      models: [
+        {
+          type: 'group',
+          label: 'General',
+          options: [{ type: 'option', value: 'balanced', label: 'Balanced' }]
+        },
+        {
+          type: 'group',
+          label: 'Specialized',
+          options: [{ type: 'option', value: 'coding', label: 'Coding' }]
+        }
+      ]
+    });
+    await userEvent.click(trigger);
+    await fixture.whenStable();
+    expect(overlay.textContent).toContain('General');
+    expect(overlay.textContent).toContain('Specialized');
+    expect(overlay.querySelector('input')).toBeNull();
+    await userEvent.click(overlay.querySelectorAll<HTMLElement>('[role="menuitemradio"]')[1]);
+    await fixture.whenStable();
+    expect(value()).toBe('coding');
+    await userEvent.click(trigger);
+    await fixture.whenStable();
+    expect(overlay.querySelectorAll('[role="menuitemradio"][aria-checked="true"]')).toHaveLength(1);
+    expect(overlay.querySelector('[aria-checked="true"]')).toHaveTextContent('Coding');
+  });
+
+  it('updates the trigger when the product changes the selected ID', async () => {
+    const { fixture, trigger, value } = await setup();
+    value.set('fast');
+    await fixture.whenStable();
+    expect(trigger).toHaveAccessibleName('Model: Fast');
+    expect(trigger.querySelector('.model-name')).toHaveTextContent('Fast');
   });
 
   it('provides an accessible active model name in compact mode', async () => {
@@ -102,16 +147,6 @@ describe('SiChatModelSelectComponent', () => {
   it('collapses when the available toolbar space cannot fit the label', async () => {
     const { trigger } = await setup({ availableWidth: 0 });
     await expect.poll(() => trigger.className).toContain('btn-icon');
-  });
-
-  it('filters the supplied options', async () => {
-    const { fixture, trigger, overlay } = await setup({ hasFilter: true });
-    await userEvent.click(trigger);
-    await fixture.whenStable();
-    await userEvent.fill(overlay.querySelector<HTMLInputElement>('input')!, 'Fast');
-    await fixture.whenStable();
-    expect(overlay.querySelector('.model-option span')).toHaveTextContent('Fast');
-    expect(overlay.textContent).not.toContain('Everyday tasks');
   });
 
   it('invokes footer actions and closes the dropdown', async () => {
@@ -237,13 +272,16 @@ describe('SiChatModelSelectComponent', () => {
     });
     await userEvent.click(trigger);
     await fixture.whenStable();
-    await userEvent.click(overlay.querySelectorAll<HTMLElement>('[role="menuitemradio"]')[1]);
+    const secondRadio = Array.from(
+      overlay.querySelectorAll<HTMLElement>('[role="menuitemradio"]')
+    ).find(item => item.querySelector('.item-title')?.textContent?.trim() === 'Second')!;
+    await userEvent.click(secondRadio);
     await fixture.whenStable();
     expect(action).toHaveBeenCalledExactlyOnceWith(undefined, second);
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
     await userEvent.click(trigger);
     await fixture.whenStable();
-    const radios = overlay.querySelectorAll('[role="menuitemradio"]');
+    const radios = overlay.querySelectorAll('[role="group"]:last-of-type [role="menuitemradio"]');
     expect(radios[0]).toHaveAttribute('aria-checked', 'false');
     expect(radios[1]).toHaveAttribute('aria-checked', 'true');
   });
@@ -280,7 +318,7 @@ describe('SiChatModelSelectComponent', () => {
         submenuTrigger.focus();
         await userEvent.keyboard('{ArrowRight}');
       } else {
-        await userEvent.click(submenuTrigger);
+        await userEvent.hover(submenuTrigger);
       }
       await fixture.whenStable();
       const item = Array.from(overlay.querySelectorAll<HTMLElement>('[role="menuitem"]')).find(
@@ -302,26 +340,29 @@ describe('SiChatModelSelectComponent', () => {
   it('keeps the chat draft independent of selection', async () => {
     const selected = signal<string | undefined>('balanced');
     const draft = signal('A draft');
+    const send = vi.fn();
     const fixture = TestBed.createComponent(SiChatInputComponent, {
       bindings: [
         inputBinding('models', () => models),
         twoWayBinding('selectedModel', selected),
-        twoWayBinding('value', draft)
+        twoWayBinding('value', draft),
+        outputBinding('send', send)
       ]
     });
     await fixture.whenStable();
     const host = fixture.nativeElement as HTMLElement;
-    const trigger = host.querySelector<HTMLElement>('[role="combobox"]')!;
+    const trigger = host.querySelector<HTMLElement>('.model-trigger')!;
     await userEvent.click(trigger);
     await fixture.whenStable();
     const overlay = TestBed.inject(OverlayContainer).getContainerElement();
-    const option = Array.from(overlay.querySelectorAll<HTMLElement>('[role="option"]')).find(item =>
-      item.textContent?.includes('Fast')
+    const option = Array.from(overlay.querySelectorAll<HTMLElement>('[role="menuitemradio"]')).find(
+      item => item.textContent?.includes('Fast')
     )!;
     await userEvent.click(option);
     await fixture.whenStable();
     expect(selected()).toBe('fast');
     expect(draft()).toBe('A draft');
+    expect(send).not.toHaveBeenCalled();
     expect(trigger).toHaveFocus();
   });
 });

@@ -6,12 +6,8 @@
 
 import { AfterContentInit } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
-import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
 import { Binding } from '@angular/core';
-import { ConfigurableFocusTrap } from '@angular/cdk/a11y';
-import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
-import { ControlValueAccessor } from '@angular/forms';
 import { Definition } from 'mdast';
 import { ElementRef } from '@angular/core';
 import { EnvironmentInjector } from '@angular/core';
@@ -21,13 +17,11 @@ import { InjectionToken } from '@angular/core';
 import { Injector } from '@angular/core';
 import { InputSignal } from '@angular/core';
 import { isSignal } from '@angular/core';
-import { ListboxValueChangeEvent } from '@angular/cdk/listbox';
 import { NavigationExtras } from '@angular/router';
 import { Node as Node_2 } from 'mdast';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { OverlayRef } from '@angular/cdk/overlay';
 import { Parent } from 'mdast';
 import { PluggableList } from 'unified';
 import { Plugin as Plugin_2 } from 'unified';
@@ -105,6 +99,25 @@ export interface ChatInputAttachment extends Attachment {
 
 // @public
 export type ChatMessage = UserChatMessage | AiChatMessage | ActivityChatMessage | ActivityTraceChatMessage | TemplateChatMessage;
+
+// @public
+export interface ChatModelGroup {
+    label?: TranslatableString;
+    options: ChatModelOption[];
+    type: 'group';
+}
+
+// @public
+export type ChatModelItem = ChatModelOption | ChatModelGroup;
+
+// @public
+export interface ChatModelOption {
+    description?: TranslatableString;
+    disabled?: boolean;
+    label?: TranslatableString;
+    type: 'option';
+    value: string;
+}
 
 // @public (undocumented)
 export interface PromptCategory {
@@ -250,10 +263,9 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly label: _angular_core.InputSignal<string>;
     readonly maxFileSize: _angular_core.InputSignal<number>;
     readonly maxLength: _angular_core.InputSignal<number | undefined>;
-    readonly models: _angular_core.InputSignal<SelectItem<string>[]>;
-    readonly modelSelectionActions: _angular_core.InputSignal<MenuItem[]>;
+    readonly models: _angular_core.InputSignal<ChatModelItem[]>;
+    readonly modelSelectionActions: _angular_core.InputSignal<MenuItem_2[]>;
     readonly modelSelectionDisabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly modelSelectionHasFilter: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly placeholder: _angular_core.InputSignal<TranslatableString>;
     readonly removeAttachmentLabel: _angular_core.InputSignal<TranslatableString>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItemAction[]>;
@@ -304,14 +316,13 @@ export class SiChatMessageComponent {
 
 // @public
 export class SiChatModelSelectComponent {
-    constructor();
     readonly availableWidth: _angular_core.InputSignal<number>;
     readonly compact: _angular_core.InputSignal<boolean>;
-    readonly filterPlaceholder: _angular_core.InputSignal<TranslatableString>;
-    readonly footerActions: _angular_core.InputSignal<MenuItem[]>;
-    readonly hasFilter: _angular_core.InputSignal<boolean>;
+    readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly footerActions: _angular_core.InputSignal<MenuItem_2[]>;
     readonly label: _angular_core.InputSignal<TranslatableString>;
-    readonly noResultsFoundLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly options: _angular_core.InputSignal<ChatModelItem[]>;
+    readonly value: _angular_core.ModelSignal<string | undefined>;
 }
 
 // @public
