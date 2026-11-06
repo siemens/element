@@ -292,5 +292,29 @@ markdown_extensions:
 plugins:
   - material/search
   - element-docs-builder
+  - llmstxt:
+      base_url: '.'
+      sections:
+        Home:
+          - 'README.md'
+          - 'get-started/*.md'
+          - 'update-guides/*.md'
+          - 'CHANGELOG.md'
+        Fundamentals:
+          - 'fundamentals/*.md'
+        Components:
+          - 'components/*.md'
+        API reference:
+          - 'api/*.md'
+        Icons:
+          - 'icons.md'
+        Patterns:
+          - 'patterns/*.md'
+        Architecture:
+          - 'architecture/*.md'
+        Contributing:
+          - 'CONTRIBUTING.md'
+          - 'CODE_OF_CONDUCT.md'
+          - 'DEVELOPER.md'
   - minify:
       minify_html: true

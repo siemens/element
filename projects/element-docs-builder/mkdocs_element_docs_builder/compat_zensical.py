@@ -1,10 +1,8 @@
-import atexit
 import shutil
 import sys
-from functools import partial
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Any, Callable
+from typing import Any
 
 from md_extension_element_docs_composer import DocsComposerExtension
 
@@ -14,12 +12,6 @@ PATCH_MARKER = '_mkdocs_element_docs_builder_patch'
 
 _TEMP_DIR: TemporaryDirectory[str] | None = None
 _COMPOSER_EXTENSION: DocsComposerExtension | None = None
-_POST_BUILD: Callable[[], None] | None = None
-
-
-def _run_post_build() -> None:
-  if _POST_BUILD is not None:
-    _POST_BUILD()
 
 
 def makeExtension(**kwargs: Any) -> DocsComposerExtension:
@@ -45,7 +37,6 @@ def _patch_zensical_config() -> bool:
   def apply_defaults_with_element_docs(
     config: dict[str, Any], path: str
   ) -> dict[str, Any]:
-    global _POST_BUILD
     enabled = any(
       entry == 'element-docs-builder'
       or isinstance(entry, dict) and 'element-docs-builder' in entry
@@ -53,7 +44,6 @@ def _patch_zensical_config() -> bool:
     )
     result = apply_defaults(config, path)
     if not enabled:
-      _POST_BUILD = None
       return result
 
     plugin = ElementDocsBuilderPlugin()
@@ -92,14 +82,10 @@ def _patch_zensical_config() -> bool:
       result['mdx_configs']
     )
     result['plugins_hash'] = getattr(zensical_config, '_hash')(result['plugins'])
-    _POST_BUILD = partial(plugin.on_post_build, result)
     return result
 
   setattr(apply_defaults_with_element_docs, PATCH_MARKER, True)
   setattr(zensical_config, '_apply_defaults', apply_defaults_with_element_docs)
-  # Zensical has no post-build hook. Finalize at exit, after rendering and before
-  # the JavaScript bridge's earlier-registered shutdown callback runs.
-  atexit.register(_run_post_build)
   return True
 
 

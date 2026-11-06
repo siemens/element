@@ -1,6 +1,8 @@
 import re
 import xml.etree.ElementTree as etree
 from abc import abstractmethod
+from html import escape
+from pathlib import Path
 
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
@@ -62,7 +64,6 @@ class ElementHtmlPreProcessor(Preprocessor):
 
   def run(self, lines):
     escape_regex = re.compile(r'.*`.*`.*')
-    full_line_regex = re.compile(rf'<{self.tag_name}.*</{self.tag_name}>')
     lines_processed = []
     line_processing_buffer = []
     for line in lines:
@@ -74,13 +75,13 @@ class ElementHtmlPreProcessor(Preprocessor):
       match_start = f'<{self.tag_name}' in line
       match_end = f'</{self.tag_name}>' in line
       if match_start and match_end:
-        lines_processed.append(full_line_regex.sub(line, self.convert_tag(line)))
+        lines_processed.append(self.convert_tag(line))
         line_processing_buffer.clear()
       elif match_start:
         line_processing_buffer.append(line)
       elif match_end:
         line_processing_buffer.append(line)
-        lines_processed.append(self.convert_tag(''.join(line_processing_buffer)))
+        lines_processed.append(self.convert_tag('\n'.join(line_processing_buffer)))
         line_processing_buffer.clear()
       elif len(line_processing_buffer) > 0:
         line_processing_buffer.append(line)
@@ -97,13 +98,37 @@ class ElementExamplePreProcessor(ElementHtmlPreProcessor):
   def __init__(self, *args, **kwargs):
     super().__init__('si-docs-component', *args, **kwargs)
 
+  def source_html(self, example: str) -> str:
+    blocks = []
+    for extension, language in (('html', 'html'), ('ts', 'typescript')):
+      path = Path('src/app/examples') / f'{example}.{extension}'
+      # Inline-template examples have no separate HTML file.
+      if extension == 'html' and not path.is_file():
+        continue
+      source = escape(path.read_text(encoding='utf-8'), quote=False)
+      blocks.append(
+        f'<div class="highlight"><span class="filename">{escape(example)}.{extension}</span>'
+        f'<pre><code class="language-{language}">{source}</code></pre></div>'
+      )
+    return ''.join(blocks)
+
   def convert_tag(self, line) -> str:
-    return self.md.htmlStash.store(line)
+    base_match = re.search(r'\bbase\s*=\s*(["\'])(.*?)\1', line.split('>', 1)[0])
+    base = base_match[2].rstrip('/') + '/' if base_match else ''
+
+    def inject_source(match: re.Match[str]) -> str:
+      example = re.search(r'\bexample\s*=\s*(["\'])(.*?)\1', match[0])
+      return match[0] + self.source_html(base + example[2]) if example else match[0]
+
+    html = re.sub(r'<si-docs-(?:component|tab)\b[^>]*>', inject_source, line)
+    return self.md.htmlStash.store(html)
 
 class ElementDocsExtension(Extension):
   def extendMarkdown(self, md):
-    """Add Tabbed to Markdown instance."""
-    md.preprocessors.register(ElementExamplePreProcessor(md), 'element_example', 10)
+    """Add documentation tabs and static example sources to Markdown."""
+    md.block_level_elements.append('si-docs-component')
+    # Run after fenced code extraction, but before raw HTML stashing.
+    md.preprocessors.register(ElementExamplePreProcessor(md), 'element_example', 21)
     md.treeprocessors.register(ElementTabTreeProcessor(md), 'element_tabs', 10)
 
 
