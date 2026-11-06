@@ -201,6 +201,7 @@ export class SiChatInputVoiceComponent extends SiChatInputControl {
     readonly finishingLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     readonly focusTarget: _angular_core.Signal<HTMLButtonElement | undefined>;
+    readonly level: _angular_core.InputSignal<number | undefined>;
     readonly listeningLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     onKeyDown(event: KeyboardEvent): void;
@@ -219,7 +220,7 @@ export class SiChatMessageActionDirective {
 
 // @public
 export class SiChatMessageComponent {
-    readonly actionsPosition: _angular_core.InputSignal<"side" | "bottom">;
+    readonly actionsPosition: _angular_core.InputSignal<"bottom" | "side">;
     readonly alignment: _angular_core.InputSignal<"start" | "end">;
     readonly loading: _angular_core.InputSignal<boolean>;
 }

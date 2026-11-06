@@ -18,7 +18,7 @@ import { MenuItem } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
-import { SiChatInputVoiceComponent } from './si-chat-input-voice.component';
+import { ChatInputVoiceState, SiChatInputVoiceComponent } from './si-chat-input-voice.component';
 import {
   ChatInputAttachment,
   SiChatInputComponent as TestComponent
@@ -50,7 +50,7 @@ describe('SiChatInputComponent', () => {
   let followUpPromptSelectedSpy = vi.fn();
   let voiceInput: WritableSignal<boolean>;
   let voiceDisabled: WritableSignal<boolean>;
-  let voiceState: WritableSignal<'idle' | 'listening' | 'recording' | 'finishing'>;
+  let voiceState: WritableSignal<ChatInputVoiceState>;
   let voiceLevel: WritableSignal<number | undefined>;
   let startSpy = vi.fn<() => void>();
   let confirmSpy = vi.fn<() => void>();
@@ -157,7 +157,7 @@ describe('SiChatInputComponent', () => {
     followUpPromptSelectedSpy = vi.fn();
     voiceInput = signal(false);
     voiceDisabled = signal(false);
-    voiceState = signal<'idle' | 'listening' | 'recording' | 'finishing'>('idle');
+    voiceState = signal<ChatInputVoiceState>('idle');
     voiceLevel = signal<number | undefined>(undefined);
     startSpy = vi.fn<() => void>();
     confirmSpy = vi.fn<() => void>();
@@ -302,65 +302,108 @@ describe('SiChatInputComponent', () => {
       expect(debugElement.query(By.directive(SiVoiceWaveformComponent))).toBeNull();
     });
 
-    it('should retain the frozen waveform while final transcript updates arrive', async () => {
-      const animationFlag = '--element-animations-enabled';
-      const originalAnimationFlag = document.documentElement.style.getPropertyValue(animationFlag);
-      document.documentElement.style.setProperty(animationFlag, '1');
-      vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] });
-      try {
-        voiceInput.set(true);
-        voiceState.set('recording');
-        voiceLevel.set(1);
-        value.set('Partial transcript');
-        await fixture.whenStable();
-        await vi.advanceTimersByTimeAsync(60);
-        await fixture.whenStable();
+    it.each(['complete', 'cancel'] as const)(
+      'should retain the frozen waveform until finishing sessions %s',
+      async outcome => {
+        const animationFlag = '--element-animations-enabled';
+        const originalAnimationFlag =
+          document.documentElement.style.getPropertyValue(animationFlag);
+        document.documentElement.style.setProperty(animationFlag, '1');
+        vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] });
+        try {
+          voiceInput.set(true);
+          voiceState.set('recording');
+          voiceLevel.set(1);
+          value.set('Partial transcript');
+          await fixture.whenStable();
+          await vi.advanceTimersByTimeAsync(60);
+          await fixture.whenStable();
 
-        const waveform: HTMLElement = fixture.nativeElement.querySelector('si-voice-waveform');
-        const recordedBars = Array.from(waveform.querySelectorAll<HTMLElement>('.waveform-bar'));
-        const recordedHeights = recordedBars.map(bar => bar.style.blockSize);
-        expect(recordedHeights.at(-1)).toBe('16px');
+          const waveform: HTMLElement = fixture.nativeElement.querySelector('si-voice-waveform');
+          const recordedBars = Array.from(waveform.querySelectorAll<HTMLElement>('.waveform-bar'));
+          const recordedHeights = recordedBars.map(bar => bar.style.blockSize);
+          expect(recordedHeights.at(-1)).toBe('16px');
 
-        voiceState.set('finishing');
-        await fixture.whenStable();
-        expect(waveform.getAnimations({ subtree: true })).toHaveLength(0);
+          const cancel: HTMLButtonElement = fixture.nativeElement.querySelector(
+            'button[aria-label="Cancel dictation"]'
+          );
+          cancel.focus();
+          voiceDisabled.set(true);
+          await fixture.whenStable();
+          await vi.advanceTimersByTimeAsync(60);
+          await fixture.whenStable();
+          expect(vi.getTimerCount()).toBe(1);
+          expect(fixture.nativeElement.querySelector('si-voice-waveform')).toBe(waveform);
+          expect(cancel).toBeEnabled();
+          expect(cancel).toHaveFocus();
 
-        voiceLevel.set(0);
-        value.set('Final transcript with additional words');
-        await fixture.whenStable();
-        await vi.advanceTimersByTimeAsync(180);
-        await fixture.whenStable();
+          const latestBars = Array.from(waveform.querySelectorAll<HTMLElement>('.waveform-bar'));
+          const latestHeights = latestBars.map(bar => bar.style.blockSize);
+          expect(latestHeights.at(-1)).toBe('16px');
 
-        expect(fixture.nativeElement.querySelector('si-voice-waveform')).toBe(waveform);
-        const frozenBars = Array.from(waveform.querySelectorAll<HTMLElement>('.waveform-bar'));
-        expect(frozenBars).toEqual(recordedBars);
-        expect(frozenBars.map(bar => bar.style.blockSize)).toEqual(recordedHeights);
-        expect(waveform.getAnimations({ subtree: true })).toHaveLength(0);
-        expect(vi.getTimerCount()).toBe(0);
-        expect(fixture.nativeElement.querySelector('textarea')).toHaveValue(value());
-        expect(fixture.nativeElement.querySelector('textarea')).toHaveProperty('readOnly', true);
-        expect(sendSpy).not.toHaveBeenCalled();
+          voiceState.set('finishing');
+          await fixture.whenStable();
+          expect(waveform.getAnimations({ subtree: true })).toHaveLength(0);
 
-        voiceState.set('idle');
-        await fixture.whenStable();
-        expect(fixture.nativeElement.querySelector('si-voice-waveform')).toBeNull();
+          voiceLevel.set(outcome === 'complete' ? 0 : undefined);
+          value.set('Final transcript with additional words');
+          await fixture.whenStable();
+          await vi.advanceTimersByTimeAsync(180);
+          await fixture.whenStable();
 
-        voiceState.set('listening');
-        await fixture.whenStable();
-        const nextWaveform: HTMLElement = fixture.nativeElement.querySelector('si-voice-waveform');
-        expect(nextWaveform).not.toBe(waveform);
-        expect(
-          Array.from(
-            nextWaveform.querySelectorAll<HTMLElement>('.waveform-bar'),
-            bar => bar.style.blockSize
-          )
-        ).toEqual(Array(41).fill('2px'));
-      } finally {
-        fixture.destroy();
-        document.documentElement.style.setProperty(animationFlag, originalAnimationFlag);
-        vi.useRealTimers();
+          expect(fixture.nativeElement.querySelector('si-voice-waveform')).toBe(waveform);
+          const frozenBars = Array.from(waveform.querySelectorAll<HTMLElement>('.waveform-bar'));
+          expect(frozenBars).toEqual(latestBars);
+          expect(frozenBars.map(bar => bar.style.blockSize)).toEqual(latestHeights);
+          expect(waveform.getAnimations({ subtree: true })).toHaveLength(0);
+          expect(vi.getTimerCount()).toBe(0);
+          expect(fixture.nativeElement.querySelector('textarea')).toHaveValue(value());
+          expect(fixture.nativeElement.querySelector('textarea')).toHaveProperty('readOnly', true);
+          expect(
+            fixture.nativeElement.querySelector('button[aria-label="Confirm dictation"]')
+          ).toBeDisabled();
+          expect(cancel).toBeEnabled();
+          expect(cancel).toHaveFocus();
+          expect(fixture.nativeElement.querySelector('[role="status"]')).toHaveTextContent(
+            'Finishing dictation…'
+          );
+          expect(sendSpy).not.toHaveBeenCalled();
+
+          if (outcome === 'cancel') {
+            cancelSpy.mockImplementationOnce(() => {
+              value.set('Saved draft');
+              voiceState.set('idle');
+            });
+            cancel.click();
+          } else {
+            voiceState.set('idle');
+          }
+          await fixture.whenStable();
+          expect(fixture.nativeElement.querySelector('si-voice-waveform')).toBeNull();
+          expect(fixture.nativeElement.querySelector('textarea')).toHaveValue(
+            outcome === 'cancel' ? 'Saved draft' : 'Final transcript with additional words'
+          );
+          expect(cancelSpy).toHaveBeenCalledTimes(outcome === 'cancel' ? 1 : 0);
+          expect(sendSpy).not.toHaveBeenCalled();
+
+          voiceState.set('listening');
+          await fixture.whenStable();
+          const nextWaveform: HTMLElement =
+            fixture.nativeElement.querySelector('si-voice-waveform');
+          expect(nextWaveform).not.toBe(waveform);
+          expect(
+            Array.from(
+              nextWaveform.querySelectorAll<HTMLElement>('.waveform-bar'),
+              bar => bar.style.blockSize
+            )
+          ).toEqual(Array(41).fill('2px'));
+        } finally {
+          fixture.destroy();
+          document.documentElement.style.setProperty(animationFlag, originalAnimationFlag);
+          vi.useRealTimers();
+        }
       }
-    });
+    );
   });
 
   it('should resize the textarea when the value is updated externally', async () => {

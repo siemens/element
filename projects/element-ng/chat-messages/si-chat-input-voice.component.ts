@@ -20,6 +20,7 @@ import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-transla
 
 import { SiChatInputControl } from './si-chat-input-control';
 import { SiChatInputComponent } from './si-chat-input.component';
+import { SiVoiceWaveformComponent } from './si-voice-waveform.component';
 
 /**
  * Consumer-owned recognition lifecycle.
@@ -34,9 +35,15 @@ export type ChatInputVoiceState = 'idle' | 'listening' | 'recording' | 'finishin
  */
 @Component({
   selector: 'si-chat-input-voice',
-  imports: [SiIconComponent, SiTooltipDirective, SiTranslatePipe],
+  imports: [SiIconComponent, SiTooltipDirective, SiTranslatePipe, SiVoiceWaveformComponent],
   template: `
     <ng-template #controls>
+      @if (active()) {
+        <si-voice-waveform
+          [active]="state() === 'recording' && !chatInput.disabled()"
+          [level]="level()"
+        />
+      }
       <button
         #voiceButton
         type="button"
@@ -91,6 +98,13 @@ export class SiChatInputVoiceComponent extends SiChatInputControl {
    * @defaultValue 'idle'
    */
   readonly state = input<ChatInputVoiceState>('idle');
+
+  /**
+   * Latest normalized audio level, from 0 (silence) to 1 (maximum volume).
+   * Omit to use simulated speech bursts while recording. Audio capture is managed by the consumer.
+   * @defaultValue undefined
+   */
+  readonly level = input<number>();
 
   /**
    * Disable starting dictation without disabling typing, sending, or cancellation.
