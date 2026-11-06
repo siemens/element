@@ -51,8 +51,12 @@ describe('SiToastNotificationComponent', () => {
   it('calls the close() function on clicking close icon', async () => {
     const closeSpy = vi.fn();
     component.toast.update(t => ({ ...t, close: closeSpy }));
+    await fixture.whenStable();
 
+    const toastEl = element.querySelector<HTMLElement>('si-toast-notification')!;
     await userEvent.click(element.querySelector<HTMLElement>(`[aria-label="Close"]`)!);
+    // Move the real pointer off the toast so it does not trigger mouseenter in the next test.
+    await userEvent.unhover(toastEl);
 
     expect(closeSpy).toHaveBeenCalled();
   });
