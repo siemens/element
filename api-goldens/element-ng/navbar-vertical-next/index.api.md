@@ -6,6 +6,7 @@
 
 import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
+import * as _angular_forms_signals from '@angular/forms/signals';
 import { ConnectedPosition } from '@angular/cdk/overlay';
 import { DomPortal } from '@angular/cdk/portal';
 import { OnChanges } from '@angular/core';
@@ -86,6 +87,7 @@ export class SiNavbarVerticalNextItemsComponent {
 
 // @public (undocumented)
 export class SiNavbarVerticalNextSearchComponent {
+    constructor();
     readonly debounceTime: _angular_core.InputSignal<number>;
     readonly placeholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly searchChange: _angular_core.OutputEmitterRef<string>;

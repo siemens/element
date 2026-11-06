@@ -5,6 +5,7 @@
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   booleanAttribute,
   Component,
   computed,
@@ -136,6 +137,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
   );
 
   private readonly translateService = injectSiTranslateService();
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
   /** Default indicator for widgets without an `iconClass`, as specified in the design. */
   protected readonly icons = addIcons({ elementSpecialObject });
   /**
@@ -243,6 +245,7 @@ export class SiWidgetCatalogComponent extends SiWidgetEditorBase implements OnIn
     if (!this.multiSelect()) {
       this.updateSelectionOnFilter();
     }
+    this.changeDetectorRef.markForCheck();
   }
 
   protected onCancel(): void {
