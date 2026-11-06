@@ -1,0 +1,96 @@
+<div class="has-navbar-fixed-top">
+  <si-application-header>
+    <si-header-brand>
+      <a routerLink="/" siHeaderLogo></a>
+      <h1 class="application-name">Navbar Vertical Next Leading Action</h1>
+    </si-header-brand>
+  </si-application-header>
+
+  <si-navbar-vertical-next
+    stateId="navbar-vertical-next-leading-action"
+    toggleButtonText="Show side navigation"
+    inlineCollapse
+  >
+    <ng-container ngProjectAs="[si-navbar-vertical-next-action]">
+      @if (configurationOpen()) {
+        <button
+          type="button"
+          si-navbar-vertical-next-action
+          aria-label="Back to main navigation"
+          (click)="closeConfiguration()"
+        ></button>
+      }
+    </ng-container>
+    <ng-container ngProjectAs="si-navbar-vertical-next-items">
+      <si-navbar-vertical-next-items>
+        @if (configurationOpen()) {
+          <a
+            si-navbar-vertical-next-item
+            routerLink="notification"
+            routerLinkActive
+            icon="element-notification"
+            label="Notifications"
+            (click)="selectConfigurationItem(1)"
+          ></a>
+          <a
+            si-navbar-vertical-next-item
+            routerLink="floorplan"
+            routerLinkActive
+            icon="element-floorplan"
+            label="Floorplan"
+            (click)="selectConfigurationItem(2)"
+          ></a>
+        } @else {
+          <a
+            si-navbar-vertical-next-item
+            routerLink="overview"
+            routerLinkActive
+            icon="element-building"
+            label="Overview"
+          ></a>
+          <a
+            si-navbar-vertical-next-item
+            routerLink="alarms"
+            routerLinkActive
+            icon="element-alarm"
+            label="Alarms"
+          ></a>
+          <si-navbar-vertical-next-divider />
+          <si-navbar-vertical-next-header>Building Vico</si-navbar-vertical-next-header>
+          <a
+            si-navbar-vertical-next-item
+            routerLink="equipment"
+            routerLinkActive
+            icon="element-room-equipment"
+            label="Equipment"
+          ></a>
+          <a
+            si-navbar-vertical-next-item
+            routerLink="energy"
+            routerLinkActive
+            icon="element-power"
+            label="Energy"
+          ></a>
+        }
+      </si-navbar-vertical-next-items>
+    </ng-container>
+    <si-navbar-vertical-next-footer-items>
+      @if (!configurationOpen()) {
+        <button
+          type="button"
+          si-navbar-vertical-next-item
+          icon="element-parameter"
+          label="Configuration"
+          (click)="openConfiguration()"
+        ></button>
+      }
+    </si-navbar-vertical-next-footer-items>
+
+    <div class="si-layout-main-padding">
+      <div class="si-layout-header">
+        <h2 class="si-layout-title si-layout-top-element"> Here is a title </h2>
+      </div>
+      <router-outlet />
+    </div>
+  </si-navbar-vertical-next>
+</div>

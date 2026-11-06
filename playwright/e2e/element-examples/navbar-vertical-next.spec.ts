@@ -238,6 +238,46 @@ test.describe('navbar vertical next', () => {
   });
 });
 
+test.describe('navbar vertical next leading action', () => {
+  const example = 'si-navbar-vertical-next/si-navbar-vertical-next-leading-action';
+
+  test(example, async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.getByRole('link', { name: 'Overview' }).click();
+    await expect(page.getByRole('link', { name: 'Overview' })).toHaveClass(/active/);
+
+    await page.getByRole('button', { name: 'Configuration' }).click();
+
+    await expect(page.getByRole('link', { name: 'Notifications' })).toHaveClass(/active/);
+    await expect(page.getByRole('button', { name: 'Back to main navigation' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Notifications' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Floorplan' })).toBeVisible();
+
+    await expect(page.getByRole('searchbox')).toHaveCount(0);
+
+    await si.waitForAllAnimationsToComplete();
+    await si.runVisualAndA11yTests();
+
+    await page.getByRole('button', { name: 'Back to main navigation' }).click();
+    await expect(page.getByRole('link', { name: 'Overview' })).toHaveClass(/active/);
+    await expect(page.getByRole('main')).toContainText("Content with path 'overview'");
+  });
+
+  test(example + ' collapsed', async ({ page, si }) => {
+    await si.visitExample(example);
+    await page.getByRole('button', { name: 'Configuration' }).click();
+
+    const toggle = page.getByRole('button', { name: 'Show side navigation', exact: true });
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.getByRole('button', { name: 'Back to main navigation' })).toBeVisible();
+
+    await si.waitForAllAnimationsToComplete();
+    await si.runVisualAndA11yTests('collapsed');
+  });
+});
+
 test.describe('navbar vertical next badges', () => {
   const example = 'si-navbar-vertical-next/si-navbar-vertical-next-badges';
 

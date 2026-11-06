@@ -25,6 +25,7 @@ import {
   SiNavbarVerticalNextGroupComponent,
   SiNavbarVerticalNextGroupTriggerDirective,
   SiNavbarVerticalNextItemComponent,
+  SiNavbarVerticalNextActionComponent,
   SiNavbarVerticalNextSearchComponent
 } from './index';
 import { SiNavbarVerticalNextHarness } from './testing/si-navbar-vertical-next.harness';
@@ -66,7 +67,8 @@ class EmptyComponent {}
     SiNavbarVerticalNextComponent,
     SiNavbarVerticalNextGroupComponent,
     SiNavbarVerticalNextGroupTriggerDirective,
-    SiNavbarVerticalNextItemComponent
+    SiNavbarVerticalNextItemComponent,
+    SiNavbarVerticalNextActionComponent
   ],
   template: `<si-navbar-vertical-next
       [textOnly]="textOnly()"
@@ -75,6 +77,12 @@ class EmptyComponent {}
       [inlineCollapse]="inlineCollapse()"
       [alwaysFlyout]="alwaysFlyout()"
     >
+      @if (showNavigationAction()) {
+        <button type="button" si-navbar-vertical-next-action aria-label="Back"></button>
+      }
+      @if (showSecondNavigationAction()) {
+        <button type="button" si-navbar-vertical-next-action aria-label="Home"></button>
+      }
       <si-navbar-vertical-next-search [debounceTime]="0" (searchChange)="searchEvent($event)" />
       @if (showDeclarativeFlyoutGroup()) {
         <si-navbar-vertical-next-items>
@@ -186,6 +194,8 @@ class TestHostComponent {
   readonly collapsed = signal(false);
   readonly inlineCollapse = signal(false);
   readonly alwaysFlyout = signal(false);
+  readonly showNavigationAction = signal(false);
+  readonly showSecondNavigationAction = signal(false);
   readonly showDeclarativeFlyoutGroup = signal(false);
   readonly showDeclarativeNavigationGroup = signal(false);
   readonly showDeclarativeStateGroups = signal(false);
@@ -625,6 +635,54 @@ describe('SiNavbarVerticalNext', () => {
       component.collapsed.set(false);
       await fixture.whenStable();
       expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    });
+
+    it('should keep the navigation action before the toggle in both states', async () => {
+      component.showNavigationAction.set(true);
+      component.collapsed.set(true);
+      await fixture.whenStable();
+
+      const expectActionBeforeToggle = async (): Promise<void> => {
+        const [action, toggle] = page.getByRole('button').all();
+        await expect.element(action).toHaveAccessibleName('Back');
+        await expect.element(toggle).toHaveAccessibleName('Show side navigation');
+      };
+
+      await expectActionBeforeToggle();
+
+      component.collapsed.set(false);
+      await fixture.whenStable();
+      await expectActionBeforeToggle();
+
+      component.inlineCollapse.set(false);
+      await fixture.whenStable();
+      await expect.element(page.getByRole('button', { name: 'Back' })).not.toBeInTheDocument();
+    });
+
+    it('should render multiple navigation actions in order before the toggle', async () => {
+      component.showNavigationAction.set(true);
+      component.showSecondNavigationAction.set(true);
+      component.collapsed.set(true);
+      await fixture.whenStable();
+
+      const [first, second, toggle] = page.getByRole('button').all();
+      await expect.element(first).toHaveAccessibleName('Back');
+      await expect.element(second).toHaveAccessibleName('Home');
+      await expect.element(toggle).toHaveAccessibleName('Show side navigation');
+    });
+
+    it('should park the toggle after all navigation actions when collapsed', async () => {
+      component.showNavigationAction.set(true);
+      component.showSecondNavigationAction.set(true);
+      component.collapsed.set(true);
+      await fixture.whenStable();
+
+      const home = page.getByRole('button', { name: 'Home' }).element();
+      const toggle = page.getByRole('button', { name: 'Show side navigation' }).element();
+      // Measured action width is applied asynchronously, so poll until the layout settles.
+      await expect
+        .poll(() => toggle.getBoundingClientRect().left - home.getBoundingClientRect().right)
+        .toBeGreaterThanOrEqual(0);
     });
 
     describe('active item chip', () => {
