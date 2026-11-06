@@ -2,6 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import {
+  elementHome,
+  elementOptionsVertical,
+  elementDown2,
+  elementDown3,
+  elementUp2,
+  elementLeft2,
+  elementRight2
+} from '@siemens/element-icons';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -176,15 +185,15 @@ export class ItemsVirtualizedArgs {
 }
 
 export const DEFAULT_TREE_ICON_SET: TreeViewIconSet = {
-  headerHome: 'element-home',
-  headerArrow: 'element-left-2 flip-rtl',
-  itemMenu: 'element-options-vertical',
-  itemCollapsed: 'element-down-2',
-  itemCollapsedFlat: 'element-right-2 flip-rtl',
-  itemCollapsedLeft: 'element-right-2 flip-rtl',
-  itemExpanded: 'element-up-2',
-  itemExpandedFlat: 'element-down-3',
-  itemExpandedLeft: 'element-down-2'
+  headerHome: elementHome,
+  headerArrow: elementLeft2,
+  itemMenu: elementOptionsVertical,
+  itemCollapsed: elementDown2,
+  itemCollapsedFlat: elementRight2,
+  itemCollapsedLeft: elementRight2,
+  itemExpanded: elementUp2,
+  itemExpandedFlat: elementDown3,
+  itemExpandedLeft: elementDown2
 };
 
 export const DEFAULT_CHILDREN_INDENTATION = 14;
