@@ -1,0 +1,21 @@
+<si-example-header
+  [tabs]="routeController.tabs()"
+  [activeTabIndex]="routeController.activeTabIndex()"
+  (tabSelected)="routeController.activateTab($event)"
+>
+  @if (!state.example() && !state.template()) {
+    <p class="text-information" style="margin: 1em">
+      No example specified. Head to
+      <strong><a href="#/overview">/overview</a></strong>
+      for a list of them.
+    </p>
+  }
+  @if (state.template() || state.templateReact() || state.templateVue() || state.templateJs()) {
+    <p class="text-information" style="margin: 1em">
+      This is an adopted example built from the URL. Head to
+      <strong><a href="#/overview">/overview</a></strong> for a list of examples.
+    </p>
+  }
+</si-example-header>
+
+<si-live-preview />
