@@ -100,7 +100,8 @@ class TypeaheadSearch<T> {
 
   private search(options: SearchOptions<T>[], query: string): Match<T>[] {
     try {
-      const entireQueryRegex = new RegExp(this.escapeRegex(query), 'gi');
+      const entireQueryRegex = new RegExp(this.escapeRegex(query), 'i');
+      const normalizedQuery = query.toLocaleLowerCase().trim();
 
       const queryParts = !this.options.disableTokenizing
         ? query.split(/\s+/g).filter(queryPart => queryPart)
@@ -115,8 +116,7 @@ class TypeaheadSearch<T> {
       const matches: Match<T>[] = [];
       options.forEach(option => {
         const optionValue = option.text;
-        const stringMatch =
-          optionValue.toLocaleLowerCase().trim() === query.toLocaleLowerCase().trim();
+        const stringMatch = optionValue.toLocaleLowerCase().trim() === normalizedQuery;
         const candidate: Match<T> = {
           option: option.option,
           text: optionValue,
@@ -144,9 +144,9 @@ class TypeaheadSearch<T> {
           matches.push(candidate);
         } else {
           const allResults: { index: number; start: number; end: number; result: string }[] = [];
-          const allIndexes: number[] = [];
+          const allIndexes = new Set<number>();
 
-          candidate.matchesEntireQuery = !!optionValue.match(entireQueryRegex);
+          candidate.matchesEntireQuery = entireQueryRegex.test(optionValue);
 
           // Loop through the option value to find multiple matches, then store every segment (matching or non-matching) in the results.
           queryRegexes.forEach((queryRegex, index) => {
@@ -162,14 +162,12 @@ class TypeaheadSearch<T> {
               if (!regexMatch.index) {
                 candidate.atBeginning = true;
               }
-              if (!allIndexes.includes(index)) {
-                allIndexes.push(index);
-              }
+              allIndexes.add(index);
               regexMatch = queryRegex.exec(optionValue);
             }
           });
 
-          candidate.matchesAllParts = allIndexes.length === queryParts.length;
+          candidate.matchesAllParts = allIndexes.size === queryParts.length;
 
           // Check if all parts of the query match at least once (if required).
           if (this.options.matchAllTokens === 'no' || candidate.matchesAllParts) {
@@ -186,26 +184,25 @@ class TypeaheadSearch<T> {
             allResults
               .sort((a, b) => a.start - b.start || a.end - b.end)
               .forEach(result => {
-                if (combinedResults.length) {
-                  const foundPreviousResult = combinedResults.find(previousResult =>
-                    this.options.matchAllTokens === 'independently'
-                      ? result.start <= previousResult.end
-                      : result.start < previousResult.end
+                const previousResult = combinedResults[combinedResults.length - 1];
+                if (
+                  previousResult &&
+                  (this.options.matchAllTokens === 'independently'
+                    ? result.start <= previousResult.end
+                    : result.start < previousResult.end)
+                ) {
+                  previousResult.result += result.result.slice(
+                    previousResult.end - result.start,
+                    result.result.length
                   );
-                  if (foundPreviousResult) {
-                    foundPreviousResult.result += result.result.slice(
-                      foundPreviousResult.end - result.start,
-                      result.result.length
-                    );
-                    if (result.end > foundPreviousResult.end) {
-                      foundPreviousResult.end = result.end;
-                    }
-                    foundPreviousResult.indexes.push(result.index);
-                    if (!foundPreviousResult.uniqueIndexes.includes(result.index)) {
-                      foundPreviousResult.uniqueIndexes.push(result.index);
-                    }
-                    return;
+                  if (result.end > previousResult.end) {
+                    previousResult.end = result.end;
                   }
+                  previousResult.indexes.push(result.index);
+                  if (!previousResult.uniqueIndexes.includes(result.index)) {
+                    previousResult.uniqueIndexes.push(result.index);
+                  }
+                  return;
                 }
                 combinedResults.push({
                   ...result,
@@ -214,23 +211,35 @@ class TypeaheadSearch<T> {
                 });
               });
 
-            // Recursively go through all unique combinations of the unique indexes to get the option which has the most indexes.
-            const countUniqueSubindexes = (
-              indexIndex = 0,
-              previousIndexes: number[] = []
-            ): number =>
-              indexIndex === combinedResults.length
-                ? previousIndexes.length
-                : Math.max(
-                    previousIndexes.length,
-                    ...combinedResults[indexIndex].uniqueIndexes
-                      .filter(index => !previousIndexes.includes(index))
-                      .map(index =>
-                        countUniqueSubindexes(indexIndex + 1, [index, ...previousIndexes])
-                      )
-                  );
+            // Find a maximum matching between segments and query tokens, reassigning earlier tokens when needed.
+            const matchedIndexes = new Map<number, number>();
+            const assignIndex = (resultIndex: number, visitedIndexes: Set<number>): boolean => {
+              for (const index of combinedResults[resultIndex].uniqueIndexes) {
+                if (visitedIndexes.has(index)) {
+                  continue;
+                }
+                visitedIndexes.add(index);
+                const previousResultIndex = matchedIndexes.get(index);
+                if (
+                  previousResultIndex === undefined ||
+                  assignIndex(previousResultIndex, visitedIndexes)
+                ) {
+                  matchedIndexes.set(index, resultIndex);
+                  return true;
+                }
+              }
+              return false;
+            };
 
-            candidate.uniqueSeparateMatches = countUniqueSubindexes();
+            for (
+              let index = 0;
+              index < combinedResults.length && matchedIndexes.size < queryParts.length;
+              index++
+            ) {
+              assignIndex(index, new Set<number>());
+            }
+
+            candidate.uniqueSeparateMatches = matchedIndexes.size;
             candidate.matchesAllPartsSeparately =
               candidate.uniqueSeparateMatches === queryParts.length;
 
