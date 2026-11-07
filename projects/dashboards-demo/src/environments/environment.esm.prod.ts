@@ -9,6 +9,7 @@
 export const environment = {
   mfeBaseUrl: './mfe',
   mfeEsmBaseUrl: './mfe-esm',
+  mfeViteBaseUrl: './mfe-vite',
   webComponentsBaseUrl: './webcomponents',
   useModuleFederation: false
 };

@@ -9,6 +9,7 @@
 export const environment = {
   mfeBaseUrl: 'http://localhost:4203',
   mfeEsmBaseUrl: 'http://localhost:4205',
+  mfeViteBaseUrl: 'http://localhost:4206',
   webComponentsBaseUrl: 'http://localhost:4202',
   useModuleFederation: false
 };

@@ -20,7 +20,11 @@ import {
 } from '../../widgets/charts/widget-descriptors';
 import { WIZARD_WIDGET_DESCRIPTOR } from '../../widgets/contact-widget/contact-descriptors';
 import { HELLO_DESCRIPTOR } from '../../widgets/hello-widget/widget-descriptors';
-import { DOWNLOAD_WIDGET, UPLOAD_WIDGET } from '../../widgets/module-federation-widgets';
+import {
+  DOWNLOAD_VITE_WIDGET,
+  DOWNLOAD_WIDGET,
+  UPLOAD_WIDGET
+} from '../../widgets/module-federation-widgets';
 import { WEATHER_WIDGET } from '../../widgets/weather';
 
 @Component({
@@ -115,6 +119,7 @@ export class DashboardPageComponent {
       }
     },
     DOWNLOAD_WIDGET,
-    UPLOAD_WIDGET
+    UPLOAD_WIDGET,
+    DOWNLOAD_VITE_WIDGET
   ];
 }
