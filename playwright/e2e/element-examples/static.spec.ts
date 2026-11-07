@@ -147,6 +147,7 @@ test('si-chat-messages/si-chat-history', async ({ page, si }) => {
   await expect(page.locator('.header-title')).toHaveText('Chat history');
   await si.runVisualAndA11yTests('history');
 });
+test('si-chat-messages/si-ai-chat-container', ({ si }) => si.static());
 test('ag-grid/ag-grid-empty-state', async ({ si }) => {
   await si.static({ disabledA11yRules: ['aria-required-children'] });
 });
