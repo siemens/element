@@ -48,6 +48,17 @@ describe('SiLocaleService', () => {
     await runTest();
   });
 
+  // Changing the locale sets the lang attribute on the root element.
+  let rootLang: string;
+
+  beforeEach(() => {
+    rootLang = document.documentElement.lang;
+  });
+
+  afterEach(() => {
+    document.documentElement.lang = rootLang;
+  });
+
   describe('with empty configuration', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
