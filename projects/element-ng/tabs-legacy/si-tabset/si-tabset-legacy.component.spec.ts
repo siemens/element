@@ -197,11 +197,13 @@ describe('SiTabset', () => {
     expect(preventDefault).toHaveBeenCalledTimes(3);
   });
 
-  it.skipIf(!document.hasFocus())('should handle focus correctly', async () => {
+  it('should handle focus correctly', async () => {
     testComponent.tabs = ['1', '2', '3'];
     fixture.detectChanges();
+    vi.advanceTimersByTime(1000);
     await fixture.whenStable();
     getElement(0).focus();
+    vi.advanceTimersByTime(1000);
     await fixture.whenStable();
     expect(getElement(0).getAttribute('tabindex')).toEqual('-1');
     focusNext();
@@ -210,26 +212,24 @@ describe('SiTabset', () => {
     expect(document.activeElement).toBe(getElement(0));
   });
 
-  it.skipIf(!document.hasFocus())(
-    'should restore focus to active element when blurred',
-    async () => {
-      testComponent.tabs = ['1', '2'];
-      fixture.detectChanges();
-      await fixture.whenStable();
-      getElement(0).focus();
-      vi.advanceTimersByTime(500);
-      await fixture.whenStable();
-      focusNext();
-      vi.advanceTimersByTime(500);
-      await fixture.whenStable();
-      expect(document.activeElement).toBe(getElement(1));
-      (document.activeElement! as HTMLElement).blur();
-      vi.advanceTimersByTime(500);
-      await fixture.whenStable();
+  it('should restore focus to active element when blurred', async () => {
+    testComponent.tabs = ['1', '2'];
+    fixture.detectChanges();
+    vi.advanceTimersByTime(1000);
+    await fixture.whenStable();
+    getElement(0).focus();
+    vi.advanceTimersByTime(500);
+    await fixture.whenStable();
+    focusNext();
+    vi.advanceTimersByTime(500);
+    await fixture.whenStable();
+    expect(document.activeElement).toBe(getElement(1));
+    (document.activeElement! as HTMLElement).blur();
+    vi.advanceTimersByTime(500);
+    await fixture.whenStable();
 
-      expect(getElement(0).getAttribute('tabindex')).toBe('0');
-    }
-  );
+    expect(getElement(0).getAttribute('tabindex')).toBe('0');
+  });
 
   it('should use defined tabButtonMaxWidth value', async () => {
     testComponent.tabButtonMaxWidth.set(110);

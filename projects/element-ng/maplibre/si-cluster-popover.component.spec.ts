@@ -17,6 +17,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MapService, PopupComponent } from '@maplibre/ngx-maplibre-gl';
+import { resetViewport } from '@siemens/element-ng/test-helpers';
 import { Subject } from 'rxjs';
 import type { Mock } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
@@ -203,9 +204,10 @@ describe('SiClusterPopoverComponent', () => {
     fixture.detectChanges();
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     trigger?.remove();
     trigger = undefined;
+    await resetViewport();
   });
 
   it('uses the visible title to label the dialog and a separate label for its scroll region', async () => {
