@@ -9,7 +9,7 @@ import { Directive } from '@angular/core';
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'si-menu-header',
   host: {
-    class: 'dropdown-item-text dropdown-header'
+    class: 'dropdown-header'
   }
 })
 export class SiMenuHeaderDirective {}
