@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject } from '@angular/core';
-import { SiFlexibleDashboardComponent, Widget } from '@siemens/dashboards-ng';
+import {
+  SiDashboardToolbarComponent,
+  SiFlexibleDashboardComponent,
+  Widget
+} from '@siemens/dashboards-ng';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 
 import { environment } from '../../../environments/environment';
@@ -25,7 +29,12 @@ import { WEATHER_WIDGET } from '../../widgets/weather';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [SiFlexibleDashboardComponent, DashboardFiltersComponent, SiEmptyStateComponent],
+  imports: [
+    SiFlexibleDashboardComponent,
+    SiDashboardToolbarComponent,
+    DashboardFiltersComponent,
+    SiEmptyStateComponent
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

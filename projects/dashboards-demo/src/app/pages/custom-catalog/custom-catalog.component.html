@@ -4,11 +4,13 @@
   dashboardId="custom-library"
   [widgetCatalogComponent]="customWidgetCatalogComponent"
   [widgetCatalog]="widgetCatalog"
-  [primaryEditActions]="primaryMenuItems"
-  [secondaryEditActions]="secondaryMenuItems"
   (editableChange)="onEditableChange($event)"
   (isModified)="appStateService.editable$.next($event)"
 >
+  <si-dashboard-toolbar
+    [primaryEditActions]="primaryMenuItems"
+    [secondaryEditActions]="secondaryMenuItems"
+  />
   <si-empty-state empty-state heading="Your own dashboard" [icon]="emptyIcon" [content]="emptyText">
     @if (!dashboard.editable()) {
       <button type="button" class="btn btn-primary" (click)="dashboard.showWidgetCatalog()">

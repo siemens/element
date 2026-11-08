@@ -2,11 +2,12 @@
   #dashboard
   heading="Sample Dashboard"
   [widgetCatalog]="widgetCatalog"
-  [showEditButtonLabel]="true"
   [multiSelect]="true"
   (isModified)="appStateService.editable$.next($event)"
 >
-  <app-dashboard-filters menubar filters-slot />
+  <si-dashboard-toolbar [showEditButtonLabel]="true">
+    <app-dashboard-filters filters-slot />
+  </si-dashboard-toolbar>
   <si-empty-state
     empty-state
     icon="element-dashboard"

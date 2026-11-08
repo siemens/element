@@ -13,21 +13,20 @@
       <ng-container *ngTemplateOutlet="pageHeader" />
     }
   </ng-container>
-  <si-dashboard-toolbar
-    #toolbar
-    menubar
-    [class.d-none]="!isDashboardVisible()"
-    [primaryEditActions]="(primaryEditActions$ | async) ?? []"
-    [secondaryEditActions]="(secondaryEditActions$ | async) ?? []"
-    [disabled]="(grid.isLoading | async) ?? false"
-    [hideEditButton]="hideEditButton()"
-    [showEditButtonLabel]="showEditButtonLabel()"
-    [grid]="grid"
-    [(editable)]="editable"
-    (save)="grid.save()"
-  >
-    <ng-content select="[filters-slot]" filters-slot />
-  </si-dashboard-toolbar>
+  <ng-container menubar>
+    <ng-content select="si-dashboard-toolbar">
+      <si-dashboard-toolbar
+        #toolbar
+        [primaryEditActions]="primaryEditActions()"
+        [secondaryEditActions]="secondaryEditActions()"
+        [hideAddWidgetInstanceButton]="hideAddWidgetInstanceButton()"
+        [hideEditButton]="hideEditButton()"
+        [showEditButtonLabel]="showEditButtonLabel()"
+      >
+        <ng-content select="[filters-slot]" filters-slot />
+      </si-dashboard-toolbar>
+    </ng-content>
+  </ng-container>
 
   <div dashboard class="d-contents">
     <si-grid

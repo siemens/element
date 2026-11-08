@@ -4,6 +4,7 @@
  */
 import { NgModule } from '@angular/core';
 
+import { SiDashboardToolbarComponent } from './components/dashboard-toolbar/si-dashboard-toolbar.component';
 import { SiFlexibleDashboardComponent } from './components/flexible-dashboard/si-flexible-dashboard.component';
 import { SiGridComponent } from './components/grid/si-grid.component';
 import { SiWidgetCatalogComponent } from './components/widget-catalog/si-widget-catalog.component';
@@ -11,12 +12,14 @@ import { SiWidgetInstanceEditorDialogComponent } from './components/widget-insta
 
 @NgModule({
   imports: [
+    SiDashboardToolbarComponent,
     SiFlexibleDashboardComponent,
     SiGridComponent,
     SiWidgetCatalogComponent,
     SiWidgetInstanceEditorDialogComponent
   ],
   exports: [
+    SiDashboardToolbarComponent,
     SiFlexibleDashboardComponent,
     SiGridComponent,
     SiWidgetCatalogComponent,

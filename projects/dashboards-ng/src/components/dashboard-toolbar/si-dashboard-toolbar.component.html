@@ -8,14 +8,14 @@
           type="button"
           class="btn ms-auto"
           [class]="showEditButtonLabelDesktop ? 'btn-secondary' : 'btn-icon btn-tertiary'"
-          [attr.aria-label]="labelEdit | translate"
-          [siTooltip]="labelEdit"
+          [attr.aria-label]="editButtonLabel() | translate"
+          [siTooltip]="editButtonLabel()"
           [isDisabled]="showEditButtonLabelDesktop"
           [disabled]="disabled()"
           (click)="onEdit()"
         >
           @if (showEditButtonLabelDesktop) {
-            {{ labelEdit | translate }}
+            {{ editButtonLabel() | translate }}
           } @else {
             <si-icon [icon]="icons.elementEdit" />
           }
@@ -24,11 +24,12 @@
     } @else {
       @if (showContentActionBar()) {
         <si-content-action-bar
-          toggleItemLabel="toggle"
           viewType="expanded"
+          [toggleItemLabel]="toggleItemLabel()"
           [disabled]="disabled()"
-          [primaryActions]="primaryEditActionsComputed()"
-          [secondaryActions]="secondaryEditActionsComputed()"
+          [primaryActions]="primaryMenuItems()"
+          [secondaryActions]="secondaryMenuItems()"
+          [actionParam]="grid()"
         />
       } @else {
         <div>
@@ -93,7 +94,7 @@
           [disabled]="disabled()"
           (click)="onCancel()"
         >
-          {{ labelCancel | translate }}
+          {{ cancelButtonLabel() | translate }}
         </button>
         <si-loading-button
           class="align-top"
@@ -102,7 +103,7 @@
           [loading]="disabled()"
           (click)="onSave()"
         >
-          {{ labelSave | translate }}
+          {{ saveButtonLabel() | translate }}
         </si-loading-button>
       </div>
     }
