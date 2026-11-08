@@ -17,6 +17,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MenuItem } from '@siemens/element-ng/common';
+import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
 import { firstValueFrom, Observable, of, zip } from 'rxjs';
 
@@ -117,12 +118,18 @@ class TestWidgetStorage extends SiDefaultWidgetStorage {
 }
 
 @Component({
-  imports: [SiFlexibleDashboardComponent],
+  imports: [SiFlexibleDashboardComponent, SiInlineNotificationComponent],
   template: `
     <si-flexible-dashboard heading="Heading" [widgetCatalogComponent]="widgetCatalogComponent">
       <div class="si-layout-header" header>
         <h2 class="si-layout-title si-layout-top-element">Custom heading</h2>
       </div>
+      <si-inline-notification
+        dashboard-notification
+        severity="warning"
+        message="Dashboard notification"
+      />
+      <div dashboard-notification>Invalid dashboard notification</div>
     </si-flexible-dashboard>
   `
 })
@@ -135,6 +142,9 @@ const pageHeadings = (element: HTMLElement): string[] =>
   Array.from(element.querySelectorAll('.si-dashboard-header h2')).map(
     heading => heading.textContent?.trim() ?? ''
   );
+
+const dashboardNotification = (element: HTMLElement): HTMLElement | null =>
+  element.querySelector('si-inline-notification[dashboard-notification]');
 
 describe('SiFlexibleDashboardComponent', () => {
   let component: SiFlexibleDashboardComponent;
@@ -290,6 +300,30 @@ describe('SiFlexibleDashboardComponent', () => {
 
     it('should render the custom header instead of the heading', () => {
       expect(pageHeadings(hostFixture.nativeElement)).toEqual(['Custom heading']);
+    });
+
+    it('should render dashboard notifications above the widget grid', () => {
+      const notification = dashboardNotification(hostFixture.nativeElement)!;
+      const gridElement = hostFixture.nativeElement.querySelector('si-grid')!;
+
+      expect(notification.textContent).toContain('Dashboard notification');
+      expect(hostFixture.nativeElement).not.toHaveTextContent('Invalid dashboard notification');
+      expect(notification.compareDocumentPosition(gridElement)).toBe(
+        Node.DOCUMENT_POSITION_FOLLOWING
+      );
+    });
+
+    it('should apply spacing above projected dashboard notifications', () => {
+      const notification = dashboardNotification(hostFixture.nativeElement)!;
+
+      expect(getComputedStyle(notification).marginBlockStart).toBe('8px');
+    });
+
+    it('should hide dashboard notifications while adding widgets', async () => {
+      hostFixture.componentInstance.dashboard().showWidgetCatalog();
+      await hostFixture.whenStable();
+
+      expect(dashboardNotification(hostFixture.nativeElement)).toBeNull();
     });
 
     it('should replace the custom header with the widget catalog title while adding widgets', async () => {
