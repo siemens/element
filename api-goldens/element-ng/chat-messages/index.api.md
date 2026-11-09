@@ -121,6 +121,7 @@ export class SiChatContainerInputDirective {
 
 // @public
 export class SiChatInputComponent implements AfterViewInit {
+    constructor();
     readonly accept: _angular_core.InputSignal<string | undefined>;
     readonly actionParam: _angular_core.InputSignal<any>;
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
@@ -150,6 +151,7 @@ export class SiChatInputComponent implements AfterViewInit {
     }>;
     readonly sendButtonIcon: _angular_core.InputSignal<string>;
     readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString>;
+    sendCurrent(): void;
     readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly value: _angular_core.ModelSignal<string>;
 }

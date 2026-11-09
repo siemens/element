@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  Component,
   DebugElement,
   inputBinding,
   outputBinding,
@@ -21,6 +22,15 @@ import {
   ChatInputAttachment,
   SiChatInputComponent as TestComponent
 } from './si-chat-input.component';
+
+@Component({
+  imports: [TestComponent],
+  template: `<si-chat-input>
+    <button type="button">Leading action</button>
+    <button type="button" siChatInputEnd>Trailing action</button>
+  </si-chat-input>`
+})
+class ProjectionTestComponent {}
 
 describe('SiChatInputComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -98,6 +108,59 @@ describe('SiChatInputComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should project trailing actions next to submit without moving default actions', async () => {
+    const projectionFixture = TestBed.createComponent(ProjectionTestComponent);
+    await projectionFixture.whenStable();
+    const buttons: HTMLButtonElement[] = Array.from(
+      projectionFixture.nativeElement.querySelectorAll('button')
+    );
+    const leading = buttons.find(button => button.textContent?.trim() === 'Leading action');
+    const trailing = buttons.find(button => button.textContent?.trim() === 'Trailing action');
+    const submit = buttons.find(button => button.getAttribute('aria-label') === 'Send');
+
+    expect(trailing).toBeDefined();
+    expect(submit).toBeDefined();
+    expect(trailing?.nextElementSibling).toBe(submit);
+    expect(trailing?.parentElement).not.toBe(leading?.parentElement);
+  });
+
+  it('should resize the textarea when a shared draft changes externally', async () => {
+    await fixture.whenStable();
+    const textarea: HTMLTextAreaElement = fixture.nativeElement.querySelector('textarea');
+    const initialHeight = textarea.getBoundingClientRect().height;
+
+    value.set('First line\nSecond line\nThird line\nFourth line');
+    await fixture.whenStable();
+
+    expect(textarea).toHaveValue(value());
+    expect(textarea.getBoundingClientRect().height).toBeGreaterThan(initialHeight);
+  });
+
+  it('should send the current draft and attachments through the public API', async () => {
+    value.set('Recognized message');
+    await fixture.whenStable();
+
+    component.sendCurrent();
+    await fixture.whenStable();
+
+    expect(sendSpy).toHaveBeenCalledExactlyOnceWith({
+      content: 'Recognized message',
+      attachments: []
+    });
+    expect(value()).toBe('');
+  });
+
+  it.each(['disabled', 'sending'] as const)('should not auto-send when %s', async state => {
+    value.set('Recognized message');
+    (state === 'disabled' ? disabled : sending).set(true);
+    await fixture.whenStable();
+
+    component.sendCurrent();
+
+    expect(sendSpy).not.toHaveBeenCalled();
+    expect(value()).toBe('Recognized message');
+  });
+
   it('should have default empty value', async () => {
     await fixture.whenStable();
     expect(value()).toBe('');
@@ -150,11 +213,43 @@ describe('SiChatInputComponent', () => {
     expect(textarea).toBeTruthy();
   });
 
+  it('should resize the textarea when the value is updated externally', async () => {
+    await fixture.whenStable();
+    const textarea: HTMLTextAreaElement = fixture.nativeElement.querySelector('textarea');
+    const initialHeight = parseFloat(textarea.style.height);
+    vi.spyOn(textarea, 'scrollHeight', 'get').mockReturnValue(80);
+
+    value.set('A transcript\nwith multiple lines\nupdated by the consumer');
+    await fixture.whenStable();
+
+    expect(textarea.value).toBe(value());
+    expect(parseFloat(textarea.style.height)).toBeGreaterThan(initialHeight);
+  });
+
   it('should render send button', async () => {
     await fixture.whenStable();
 
     const sendButton = debugElement.query(By.css('button'));
     expect(sendButton).toBeTruthy();
+  });
+
+  it('should resize during IME composition before the model updates', async () => {
+    await fixture.whenStable();
+    const textarea: HTMLTextAreaElement = fixture.nativeElement.querySelector('textarea');
+    const initialHeight = parseFloat(textarea.style.height);
+    vi.spyOn(textarea, 'scrollHeight', 'get').mockReturnValue(180);
+
+    textarea.dispatchEvent(new CompositionEvent('compositionstart', { bubbles: true }));
+    textarea.value = 'Composing\na multiline\nmessage';
+    textarea.dispatchEvent(new InputEvent('input', { bubbles: true, isComposing: true }));
+    await fixture.whenStable();
+
+    expect(value()).toBe('');
+    expect(parseFloat(textarea.style.height)).toBeGreaterThan(initialHeight);
+
+    textarea.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true }));
+    await fixture.whenStable();
+    expect(value()).toBe(textarea.value);
   });
 
   it('should disable send button when no content and no attachments', async () => {
