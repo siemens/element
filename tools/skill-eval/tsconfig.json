@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "paths": {},
+    "noEmit": true,
+    "skipLibCheck": true
+  },
+  "include": ["cases/**/*.ts", "src/**/*.ts", "promptfooconfig.ts", "vitest.config.ts"],
+  "files": [],
+  "references": []
+}
