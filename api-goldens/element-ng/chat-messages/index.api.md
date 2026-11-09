@@ -36,6 +36,25 @@ export interface ChatInputAttachment extends Attachment {
 }
 
 // @public
+export interface ChatModelGroup {
+    label?: TranslatableString;
+    options: ChatModelOption[];
+    type: 'group';
+}
+
+// @public
+export type ChatModelItem = ChatModelOption | ChatModelGroup;
+
+// @public
+export interface ChatModelOption {
+    description?: TranslatableString;
+    disabled?: boolean;
+    label?: TranslatableString;
+    type: 'option';
+    value: string;
+}
+
+// @public
 export interface MessageAction {
     action: (actionParam: any, source: this) => void;
     disabled?: boolean;
@@ -140,10 +159,14 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly label: _angular_core.InputSignal<string>;
     readonly maxFileSize: _angular_core.InputSignal<number>;
     readonly maxLength: _angular_core.InputSignal<number | undefined>;
+    readonly models: _angular_core.InputSignal<ChatModelItem[]>;
+    readonly modelSelectionActions: _angular_core.InputSignal<MenuItem[]>;
+    readonly modelSelectionDisabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly placeholder: _angular_core.InputSignal<TranslatableString>;
     readonly removeAttachmentLabel: _angular_core.InputSignal<TranslatableString>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly selectedModel: _angular_core.ModelSignal<string | undefined>;
     readonly send: _angular_core.OutputEmitterRef<{
         content: string;
         attachments: ChatInputAttachment[];
@@ -167,6 +190,17 @@ export class SiChatMessageComponent {
     readonly actionsPosition: _angular_core.InputSignal<"bottom" | "side">;
     readonly alignment: _angular_core.InputSignal<"start" | "end">;
     readonly loading: _angular_core.InputSignal<boolean>;
+}
+
+// @public
+export class SiChatModelSelectComponent {
+    readonly availableWidth: _angular_core.InputSignal<number>;
+    readonly compact: _angular_core.InputSignal<boolean>;
+    readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly footerActions: _angular_core.InputSignal<MenuItem[]>;
+    readonly label: _angular_core.InputSignal<TranslatableString>;
+    readonly options: _angular_core.InputSignal<ChatModelItem[]>;
+    readonly value: _angular_core.ModelSignal<string | undefined>;
 }
 
 // @public

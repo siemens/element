@@ -2,21 +2,23 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { form, FormField } from '@angular/forms/signals';
 import {
   SiChatInputComponent,
+  ChatModelOption,
   MessageAction,
   ChatInputAttachment
 } from '@siemens/element-ng/chat-messages';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { MenuItemAction } from '@siemens/element-ng/menu';
+import { MenuItem, MenuItemAction } from '@siemens/element-ng/menu';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiChatInputComponent, SiIconComponent],
+  imports: [SiChatInputComponent, SiIconComponent, FormField],
   templateUrl: './si-chat-input.html'
 })
 export class SampleComponent {
@@ -27,6 +29,73 @@ export class SampleComponent {
   readonly sending = signal(false);
   readonly disabled = signal(false);
   readonly interruptible = signal(false);
+  readonly selectedModel = signal('claude-quantum');
+  readonly modelSettings = signal({ descriptions: false });
+  readonly modelForm = form(this.modelSettings);
+  readonly availableModels = signal<ChatModelOption[]>([
+    {
+      type: 'option',
+      value: 'claude-quantum',
+      label: 'Claude Quantum',
+      description: 'Everyday questions and tasks'
+    },
+    {
+      type: 'option',
+      value: 'gemini-nova',
+      label: 'Gemini Nova',
+      description: 'Complex analysis and planning'
+    },
+    {
+      type: 'option',
+      value: 'gpt-horizon',
+      label: 'GPT Horizon',
+      description: 'Quick answers to simple questions'
+    }
+  ]);
+  readonly models = computed(() =>
+    this.availableModels().map(option => ({
+      ...option,
+      description: this.modelSettings().descriptions ? option.description : undefined
+    }))
+  );
+  readonly otherModels: ChatModelOption[] = [
+    {
+      type: 'option',
+      value: 'claude-echo',
+      label: 'Claude Echo',
+      description: 'Writing and editing'
+    },
+    {
+      type: 'option',
+      value: 'gemini-spark',
+      label: 'Gemini Spark',
+      description: 'Creative ideas and exploration'
+    },
+    {
+      type: 'option',
+      value: 'gpt-code',
+      label: 'GPT Code',
+      description: 'Code generation and review'
+    }
+  ];
+  readonly modelActions = computed<MenuItem[]>(() => [
+    {
+      type: 'group',
+      label: 'Other models',
+      children: this.otherModels.map(option => ({
+        type: 'radio',
+        label: option.label ?? option.value,
+        checked: this.selectedModel() === option.value,
+        action: () => {
+          if (!this.availableModels().some(item => item.value === option.value)) {
+            this.availableModels.update(items => [...items, option]);
+          }
+          this.selectedModel.set(option.value);
+        }
+      }))
+    },
+    { type: 'action', label: 'Manage models', action: () => this.logEvent('Manage models clicked') }
+  ]);
 
   actions: MessageAction[] = [
     {

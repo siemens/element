@@ -32,11 +32,13 @@ import {
 } from '@siemens/element-ng/file-uploader';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
+import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
 import { Attachment, SiAttachmentListComponent } from './si-attachment-list.component';
+import { ChatModelItem, SiChatModelSelectComponent } from './si-chat-model-select.component';
 
 /**
  * Attachment item interface for file attachments in chat messages, extension of {@link Attachment} for {@link SiAttachmentListComponent} to use within {@link SiChatInputComponent}.
@@ -91,6 +93,8 @@ export interface ChatInputAttachment extends Attachment {
     SiAttachmentListComponent,
     SiMenuFactoryComponent,
     SiFileUploadDirective,
+    SiChatModelSelectComponent,
+    SiResizeObserverDirective,
     SiTooltipDirective
   ],
   templateUrl: './si-chat-input.component.html',
@@ -113,6 +117,18 @@ export class SiChatInputComponent implements AfterViewInit {
    * @defaultValue ''
    */
   readonly value = model<string>('');
+
+  /** Available model options, supplied by the product. @defaultValue [] */
+  readonly models = input<ChatModelItem[]>([]);
+
+  /** Active model ID. Supports two-way binding; selecting a model does not send a message. */
+  readonly selectedModel = model<string>();
+
+  /** Independently disables model selection. @defaultValue false */
+  readonly modelSelectionDisabled = input(false, { transform: booleanAttribute });
+
+  /** Product-supplied footer actions and submenus. @defaultValue [] */
+  readonly modelSelectionActions = input<MenuItem[]>([]);
 
   /**
    * Placeholder text for the input
@@ -357,6 +373,12 @@ export class SiChatInputComponent implements AfterViewInit {
   );
 
   protected readonly dragOver = signal(false);
+  protected readonly toolbarWidth = signal(0);
+  protected readonly actionsWidth = signal(0);
+  protected readonly sendButtonWidth = signal(0);
+  protected readonly modelAvailableWidth = computed(() =>
+    Math.max(0, this.toolbarWidth() - this.actionsWidth() - this.sendButtonWidth())
+  );
 
   private readonly injector = inject(Injector);
 
@@ -446,6 +468,7 @@ export class SiChatInputComponent implements AfterViewInit {
       target.tagName === 'INPUT' ||
       target.tagName === 'TEXTAREA' ||
       target.closest('button') ||
+      target.closest('[role="combobox"]') ||
       target.closest('[siChatMessageAction]') ||
       (target.closest('si-attachment-list') && target.closest('.attachment-item'))
     ) {
