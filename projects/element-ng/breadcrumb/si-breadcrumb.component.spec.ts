@@ -10,7 +10,7 @@ import {
   provideMissingTranslationHandlerForElement,
   provideNgxTranslateForElement
 } from '@siemens/element-translate-ng/ngx-translate';
-import { page } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 
 import { SiBreadcrumbComponent as TestComponent } from '.';
 import {
@@ -387,7 +387,10 @@ describe('SiBreadcrumbComponent', () => {
     expect(getComputedStyle(link).textOverflow).toBe('ellipsis');
     expect(link.scrollWidth).toBeGreaterThan(link.clientWidth);
 
-    link.focus();
+    // The tooltip requires :focus-visible, which programmatic focus only gets after keyboard input.
+    await userEvent.tab();
+    await userEvent.tab();
+    expect(link).toHaveFocus();
     await vi.advanceTimersByTimeAsync(0);
     await fixture.whenStable();
 

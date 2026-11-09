@@ -41,6 +41,8 @@ describe('SiToastNotificationComponent', () => {
       message: 'A successful event has occurred.',
       hidden: new Subject()
     });
+    // Bind the input before yielding, a pointer left over a previous test can fire mouseenter earlier.
+    fixture.detectChanges();
     await fixture.whenStable();
   });
 
@@ -51,8 +53,10 @@ describe('SiToastNotificationComponent', () => {
   it('calls the close() function on clicking close icon', async () => {
     const closeSpy = vi.fn();
     component.toast.update(t => ({ ...t, close: closeSpy }));
+    await fixture.whenStable();
 
-    await userEvent.click(element.querySelector<HTMLElement>(`[aria-label="Close"]`)!);
+    // A DOM click keeps the real pointer from staying over the toast and affecting the next test.
+    element.querySelector<HTMLElement>(`[aria-label="Close"]`)!.click();
 
     expect(closeSpy).toHaveBeenCalled();
   });

@@ -203,9 +203,10 @@ describe('SiClusterPopoverComponent', () => {
     fixture.detectChanges();
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     trigger?.remove();
     trigger = undefined;
+    await page.viewport(1024, 768);
   });
 
   it('uses the visible title to label the dialog and a separate label for its scroll region', async () => {
