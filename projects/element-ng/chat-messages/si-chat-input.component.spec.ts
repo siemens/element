@@ -15,6 +15,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
 import { MenuItem } from '@siemens/element-ng/menu';
+import {
+  SI_SPEECH_INPUT_RECOGNITION,
+  SiSpeechInputDirective,
+  SpeechInputRecognition
+} from '@siemens/element-ng/speech-input';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
@@ -22,6 +27,7 @@ import {
   ChatInputAttachment,
   SiChatInputComponent as TestComponent
 } from './si-chat-input.component';
+import { SiVoiceWaveformComponent } from './si-voice-waveform.component';
 
 @Component({
   imports: [TestComponent],
@@ -31,6 +37,34 @@ import {
   </si-chat-input>`
 })
 class ProjectionTestComponent {}
+
+@Component({
+  imports: [TestComponent, SiSpeechInputDirective, SiVoiceWaveformComponent],
+  template: `
+    <si-chat-input [(value)]="value" (send)="sendSpy($event)">
+      @if (speech.listening()) {
+        <si-voice-waveform siChatInputEnd [active]="recording()" [level]="level()" />
+      }
+      <button
+        #speech="siSpeechInput"
+        type="button"
+        siChatInputEnd
+        siSpeechInput
+        [disabled]="voiceDisabled()"
+        [(value)]="value"
+      >
+        Voice input
+      </button>
+    </si-chat-input>
+  `
+})
+class SpeechWaveformTestComponent {
+  readonly value = signal('Saved draft');
+  readonly recording = signal(false);
+  readonly level = signal<number | undefined>(undefined);
+  readonly voiceDisabled = signal(false);
+  readonly sendSpy = vi.fn();
+}
 
 describe('SiChatInputComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -722,4 +756,145 @@ describe('SiChatInputComponent', () => {
       expect(focusSpy).toHaveBeenCalled();
     });
   });
+});
+
+describe('SiChatInputComponent with projected speech waveform', () => {
+  let fixture: ComponentFixture<SpeechWaveformTestComponent>;
+  let recognition: SpeechInputRecognition;
+  let originalAnimationFlag: string;
+  const animationFlag = '--element-animations-enabled';
+
+  beforeEach(async () => {
+    originalAnimationFlag = document.documentElement.style.getPropertyValue(animationFlag);
+    document.documentElement.style.setProperty(animationFlag, '1');
+    vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] });
+    recognition = {
+      continuous: false,
+      interimResults: true,
+      lang: '',
+      onstart: null,
+      onend: null,
+      onresult: null,
+      onerror: null,
+      onspeechstart: null,
+      onspeechend: null,
+      start: vi.fn(),
+      stop: vi.fn(),
+      abort: vi.fn()
+    };
+    TestBed.configureTestingModule({
+      providers: [{ provide: SI_SPEECH_INPUT_RECOGNITION, useValue: () => recognition }]
+    });
+    fixture = TestBed.createComponent(SpeechWaveformTestComponent);
+    await fixture.whenStable();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    document.documentElement.style.setProperty(animationFlag, originalAnimationFlag);
+    vi.useRealTimers();
+  });
+
+  it('should keep typing and sending available when only the microphone is disabled', async () => {
+    fixture.componentInstance.voiceDisabled.set(true);
+    await fixture.whenStable();
+
+    expect(fixture.nativeElement.querySelector('button[siSpeechInput]')).toBeDisabled();
+    expect(fixture.nativeElement.querySelector('textarea')).toBeEnabled();
+    expect(fixture.nativeElement.querySelector('textarea')).toHaveProperty('readOnly', false);
+    expect(fixture.nativeElement.querySelector('si-voice-waveform')).toBeNull();
+    fixture.nativeElement.querySelector('button[aria-label="Send"]').click();
+    await fixture.whenStable();
+
+    expect(fixture.componentInstance.sendSpy).toHaveBeenCalledExactlyOnceWith({
+      content: 'Saved draft',
+      attachments: []
+    });
+  });
+
+  it.each(['complete', 'cancel'] as const)(
+    'should retain frozen samples while collecting final results until sessions %s',
+    async outcome => {
+      const button: HTMLButtonElement =
+        fixture.nativeElement.querySelector('button[siSpeechInput]');
+      button.focus();
+      button.click();
+      await fixture.whenStable();
+
+      const waveform: HTMLElement = fixture.nativeElement.querySelector('si-voice-waveform');
+      expect(waveform.nextElementSibling).toBe(button);
+      expect(button.nextElementSibling).toHaveAttribute('aria-label', 'Send');
+      expect(waveform.querySelectorAll('.waveform-bar')).toHaveLength(41);
+      expect(vi.getTimerCount()).toBe(0);
+
+      recognition.onstart?.();
+      fixture.componentInstance.recording.set(true);
+      fixture.componentInstance.level.set(1);
+      recognition.onresult?.({
+        results: [{ isFinal: false, 0: { transcript: 'Partial transcript' } }]
+      });
+      await fixture.whenStable();
+      await vi.advanceTimersByTimeAsync(60);
+      await fixture.whenStable();
+      const bars = Array.from(waveform.querySelectorAll<HTMLElement>('.waveform-bar'));
+      const heights = bars.map(bar => bar.style.blockSize);
+      expect(heights.at(-1)).toBe('16px');
+      expect(button).toHaveFocus();
+
+      button.click();
+      fixture.componentInstance.recording.set(false);
+      fixture.componentInstance.level.set(undefined);
+      await fixture.whenStable();
+      expect(recognition.stop).toHaveBeenCalledTimes(1);
+
+      recognition.onresult?.({
+        results: [{ isFinal: true, 0: { transcript: 'Final transcript' } }]
+      });
+      await fixture.whenStable();
+      await vi.advanceTimersByTimeAsync(180);
+      await fixture.whenStable();
+      expect(fixture.nativeElement.querySelector('si-voice-waveform')).toBe(waveform);
+      const frozenBars = Array.from(waveform.querySelectorAll<HTMLElement>('.waveform-bar'));
+      expect(frozenBars).toEqual(bars);
+      expect(frozenBars.map(bar => bar.style.blockSize)).toEqual(heights);
+      expect(waveform.getAnimations({ subtree: true })).toHaveLength(0);
+      expect(vi.getTimerCount()).toBe(0);
+      expect(button).toHaveFocus();
+      expect(fixture.nativeElement.querySelector('textarea')).toHaveValue(
+        'Saved draft Final transcript'
+      );
+      expect(fixture.componentInstance.sendSpy).not.toHaveBeenCalled();
+
+      if (outcome === 'complete') {
+        recognition.onend?.();
+      } else {
+        button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      }
+      await fixture.whenStable();
+      expect(fixture.nativeElement.querySelector('si-voice-waveform')).toBeNull();
+      expect(fixture.nativeElement.querySelector('textarea')).toHaveValue(
+        outcome === 'complete' ? 'Saved draft Final transcript' : 'Saved draft'
+      );
+      expect(fixture.componentInstance.sendSpy).not.toHaveBeenCalled();
+
+      button.click();
+      await fixture.whenStable();
+      const nextWaveform: HTMLElement = fixture.nativeElement.querySelector('si-voice-waveform');
+      expect(nextWaveform).not.toBe(waveform);
+      expect(
+        Array.from(
+          nextWaveform.querySelectorAll<HTMLElement>('.waveform-bar'),
+          bar => bar.style.blockSize
+        )
+      ).toEqual(Array(41).fill('2px'));
+
+      fixture.componentInstance.voiceDisabled.set(true);
+      await fixture.whenStable();
+      expect(fixture.nativeElement.querySelector('si-voice-waveform')).toBeNull();
+      expect(button).toBeDisabled();
+      expect(fixture.nativeElement.querySelector('textarea')).toHaveValue(
+        outcome === 'complete' ? 'Saved draft Final transcript' : 'Saved draft'
+      );
+    }
+  );
 });

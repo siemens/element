@@ -81,7 +81,8 @@ it does not send a message unless the consumer opts in.
 
 The consumer controls the icon, contextual actions, and chat state. The directive supplies
 translated start/stop labels and the pressed state. It preserves button focus, including
-when recognition finishes. No audio waveform is rendered.
+when recognition finishes. Consumers can optionally project a provider-independent audio
+waveform beside the button without adding waveform behavior to chat or speech input.
 
 ## Code ---
 
@@ -150,6 +151,30 @@ defines how those edits should interact with recognition updates.
 final results are pending. `continuous` controls whether the provider continues after an
 utterance. `silenceTimeout` stops after silence, including a session with no speech; zero
 disables the timer. `lang` supplies a BCP 47 language tag.
+
+#### Audio waveform
+
+Import `SiVoiceWaveformComponent` from `@siemens/element-ng/chat-messages` and place it
+before the speech button in the same `siChatInputEnd` slot:
+
+```html
+@if (speech.listening()) {
+<si-voice-waveform siChatInputEnd [active]="capturing()" [level]="audioLevel()" />
+}
+```
+
+The waveform is decorative (`aria-hidden="true"`) and occupies a fixed 120 by 16 pixel
+viewport. Supply normalized audio levels from 0 to 1; zero represents silence, while
+undefined uses simulated speech-like levels. Non-finite values become silence and values
+outside the range are clamped. The example uses simulated levels, not microphone audio.
+
+`active` controls sampling independently of the recognition attempt. Keep the waveform
+mounted with `active` false while collecting final results to preserve its history, and
+remove it when the attempt ends. A new mount starts at the silent baseline. The speech
+directive's `listening()` includes permission startup and final-result collection; it
+does not indicate that audio is currently being captured. Use your provider's capture
+lifecycle for `capturing()`. Reduced motion and Element's disabled-animation policy stop
+sampling and movement without discarding existing samples.
 
 #### Auto-send after speaking
 
@@ -226,5 +251,7 @@ API error code and restore the draft. `startLabel` and `stopLabel` accept transl
 <si-docs-api component="SiChatInputComponent"></si-docs-api>
 
 <si-docs-api directive="SiSpeechInputDirective"></si-docs-api>
+
+<si-docs-api component="SiVoiceWaveformComponent"></si-docs-api>
 
 <si-docs-types></si-docs-types>

@@ -7,6 +7,9 @@
     [(value)]="value"
     (send)="sendMessage($event)"
   >
+    @if (speech.listening()) {
+      <si-voice-waveform siChatInputEnd [active]="hasTranscript()" [level]="voiceInputLevel()" />
+    }
     <button
       #speech="siSpeechInput"
       type="button"
@@ -19,6 +22,7 @@
       [silenceTimeout]="2000"
       [siTooltip]="speech.listening() ? 'Stop dictation' : 'Start dictation'"
       [(value)]="value"
+      (transcript)="onTranscript($event)"
       (listeningChange)="onListeningChange($event, chat, speech)"
       (errorOccurred)="onSpeechError($event)"
     >
@@ -40,6 +44,18 @@
       (change)="autoSend.set(!autoSend())"
     />
     <label for="auto-send" class="form-check-label">Send after dictation</label>
+  </div>
+  <div class="form-check form-switch mt-4">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      role="switch"
+      id="measured-levels"
+      [checked]="measuredLevels()"
+      [disabled]="listening()"
+      (change)="measuredLevels.set(!measuredLevels())"
+    />
+    <label for="measured-levels" class="form-check-label">Simulated audio levels</label>
   </div>
   <div class="mt-4">
     <label class="form-label" for="voice-mode">Voice input mode</label>

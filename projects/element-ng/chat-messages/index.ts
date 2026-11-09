@@ -16,3 +16,4 @@ export * from './si-chat-message.component';
 export * from './si-user-message.component';
 export * from './message-action.model';
 export * from './si-ai-welcome-screen.component';
+export * from './si-voice-waveform.component';
