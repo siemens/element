@@ -4,22 +4,13 @@
  */
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { resetViewport } from '@siemens/element-ng/test-helpers';
-import { page } from 'vitest/browser';
 
 import { SiResponsiveContainerDirective } from './index';
 
 @Component({
   imports: [SiResponsiveContainerDirective],
   template: `
-    <div
-      siResponsiveContainer
-      class="vh-100 w-100"
-      [resizeThrottle]="10"
-      [style.width.px]="width()"
-    >
-      Testli
-    </div>
+    <div siResponsiveContainer [resizeThrottle]="10" [style.width.px]="width()">Testli</div>
   `
 })
 class TestHostComponent {
@@ -30,16 +21,13 @@ describe('SiResponsiveContainerDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let element: HTMLElement;
 
-  beforeEach(async () => {
-    await page.viewport(100, 100);
+  beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     element = fixture.nativeElement;
   });
 
-  afterEach(() => resetViewport());
-
   const testSize = async (size: string | number, clazz: string | number): Promise<void> => {
-    await page.viewport(parseInt(size as string, 10), 100);
+    fixture.componentInstance.width.set(parseInt(size as string, 10));
     await fixture.whenStable();
     await vi.waitFor(() =>
       expect(element.querySelector<HTMLElement>('div')!).toHaveClass(clazz.toString())

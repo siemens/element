@@ -17,7 +17,6 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MapService, PopupComponent } from '@maplibre/ngx-maplibre-gl';
-import { resetViewport } from '@siemens/element-ng/test-helpers';
 import { Subject } from 'rxjs';
 import type { Mock } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
@@ -55,7 +54,7 @@ class TestPopupComponent {
 @Component({
   imports: [TestComponent, SiClusterPopoverTemplateDirective],
   template: `
-    <div #mapContainer class="vh-100 w-100">
+    <div #mapContainer style="width: 640px; height: 600px">
       @if (showPopover()) {
         <si-cluster-popover
           [pageSize]="pageSize()"
@@ -139,7 +138,6 @@ describe('SiClusterPopoverComponent', () => {
   let clusterPosition: number;
 
   beforeEach(async () => {
-    await page.viewport(640, 600);
     autoOpenPopup = true;
     pageSize = signal(1);
     customContent = signal(false);
@@ -204,10 +202,10 @@ describe('SiClusterPopoverComponent', () => {
     fixture.detectChanges();
   });
 
-  afterEach(async () => {
+  afterEach(() => {
+    vi.useRealTimers();
     trigger?.remove();
     trigger = undefined;
-    await resetViewport();
   });
 
   it('uses the visible title to label the dialog and a separate label for its scroll region', async () => {
@@ -375,6 +373,8 @@ describe('SiClusterPopoverComponent', () => {
   });
 
   it('keeps the rendered locations and popup height while the next batch loads under an overlay', async () => {
+    // The loading overlay is delayed by an rxjs timer, which runs on setInterval.
+    vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] });
     clusterClick.emit(cluster);
     await fixture.whenStable();
     const dialog = page.getByRole('dialog').element();
@@ -389,6 +389,7 @@ describe('SiClusterPopoverComponent', () => {
     expect(element.querySelector('.list-unstyled li')).toBe(row);
     expect(page.getByRole('status')).not.toBeInTheDocument();
     expect(dialog.getBoundingClientRect().height).toBe(height);
+    await vi.advanceTimersByTimeAsync(500);
     await expect.poll(() => element.querySelector('.spinner-overlay')).toBeInTheDocument();
     expect(element.querySelector('.list-unstyled')).toHaveTextContent('First location');
     expect(dialog.getBoundingClientRect().height).toBe(height);

@@ -106,6 +106,39 @@ describe('SiCarouselComponent', () => {
       await expect.element(page.getByText('Slide 3', { exact: true })).not.toHaveAttribute('inert');
       await expect.element(page.getByText('Slide 1', { exact: true })).toHaveAttribute('inert');
     });
+
+    it('should settle on the clicked slide when consecutive frames share a timestamp', async () => {
+      const viewport: HTMLElement = fixture.nativeElement.querySelector('.carousel-viewport');
+      const requestFrame = window.requestAnimationFrame.bind(window);
+      const animationFrames: number[] = [];
+      // The first two animation frames share a timestamp, later ones are far apart to settle fast.
+      using requestFrameSpy = vi
+        .spyOn(window, 'requestAnimationFrame')
+        .mockImplementation(callback =>
+          requestFrame(time => {
+            if (viewport.style.scrollSnapType !== 'none') {
+              return callback(time);
+            }
+            if (!animationFrames.includes(time)) {
+              animationFrames.push(time);
+            }
+            callback(Math.max(1, animationFrames.indexOf(time)) * 1000);
+          })
+        );
+
+      await userEvent.click(page.getByRole('button', { name: 'Slide 3 of 5' }));
+
+      const slide3 = page.getByText('Slide 3', { exact: true });
+      await expect
+        .poll(
+          () =>
+            slide3.element().getBoundingClientRect().left - viewport.getBoundingClientRect().left
+        )
+        .toBeCloseTo(0, 0);
+      await expect.element(slide3).not.toHaveAttribute('inert');
+      await expect.element(page.getByText('Slide 1', { exact: true })).toHaveAttribute('inert');
+      expect(requestFrameSpy).toHaveBeenCalled();
+    });
   });
 
   describe('Scroll', () => {

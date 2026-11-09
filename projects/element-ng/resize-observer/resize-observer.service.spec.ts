@@ -4,15 +4,13 @@
  */
 import { Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { resetViewport } from '@siemens/element-ng/test-helpers';
 import { Subscription } from 'rxjs';
 import { Mock } from 'vitest';
-import { page } from 'vitest/browser';
 
 import { ElementDimensions, ResizeObserverService } from './resize-observer.service';
 
 @Component({
-  template: `<div #theDiv class="w-100 vh-100">Testli</div>`
+  template: `<div #theDiv style="width: 100px; height: 100px">Testli</div>`
 })
 class TestHostComponent {
   readonly theDiv = viewChild.required<ElementRef>('theDiv');
@@ -33,7 +31,6 @@ describe('ResizeObserverService', () => {
 
   beforeEach(async () => {
     subscriptions = new Subscription();
-    await page.viewport(100, 100);
     service = TestBed.inject(ResizeObserverService);
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
@@ -41,10 +38,13 @@ describe('ResizeObserverService', () => {
     spy = vi.fn();
   });
 
-  afterEach(async () => {
-    subscriptions.unsubscribe();
-    await resetViewport();
-  });
+  afterEach(() => subscriptions.unsubscribe());
+
+  const resize = (width: number, height: number): void => {
+    const style = component.theDiv().nativeElement.style;
+    style.width = `${width}px`;
+    style.height = `${height}px`;
+  };
 
   it('emits initial size event when asked', async () => {
     subscribe(true);
@@ -61,7 +61,7 @@ describe('ResizeObserverService', () => {
 
   it('emits on width change', async () => {
     subscribe(false);
-    await page.viewport(200, 100);
+    resize(200, 100);
     await vi.waitFor(() =>
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }))
     );
@@ -69,7 +69,7 @@ describe('ResizeObserverService', () => {
 
   it('emits on height change', async () => {
     subscribe(false);
-    await page.viewport(100, 200);
+    resize(100, 200);
     await vi.waitFor(() =>
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 200 }))
     );
@@ -88,7 +88,7 @@ describe('ResizeObserverService', () => {
       expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
     });
 
-    await page.viewport(200, 100);
+    resize(200, 100);
     await vi.waitFor(() => {
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
       expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));

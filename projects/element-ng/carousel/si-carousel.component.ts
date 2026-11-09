@@ -461,7 +461,9 @@ export class SiCarouselComponent {
 
   private animationFrame(now: number): void {
     const viewport = this.viewport().nativeElement;
-    const dt = this.lastFrameTime ? now - this.lastFrameTime : FIRST_FRAME_DELTA;
+    // Browsers can repeat a frame timestamp; a zero delta would be mistaken for a stall.
+    const elapsed = now - this.lastFrameTime;
+    const dt = this.lastFrameTime && elapsed > 0 ? elapsed : FIRST_FRAME_DELTA;
     this.lastFrameTime = now;
     const current = viewport.scrollLeft;
     // Clamp the target to the scrollable range. A wrapped slide can be placed right at the track
