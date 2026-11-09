@@ -248,6 +248,48 @@ denied attempt. The application may also show an accessible error or set the dir
 `disabled` input independently of typing and sending. Other failures emit their Web Speech
 API error code and restore the draft. `startLabel` and `stopLabel` accept translatable strings.
 
+### Browser voice input
+
+<si-docs-component example="si-chat-messages/si-chat-voice-input-browser"></si-docs-component>
+
+This interactive example uses the browser's Web Speech API for real dictation and the Web Audio
+API for measured microphone levels. It has no speech SDK, API key, or application backend.
+It projects ordinary buttons and `SiVoiceWaveformComponent` into `siChatInputEnd`. Recognition
+belongs to the example, independently of `SiSpeechInputDirective`, to retain visible text on errors
+and provide explicit confirmation, cancellation, and bounded final-result collection.
+
+Microphone access requires HTTPS or localhost and browser permission. The example discloses that
+the browser may send audio to its speech recognition service. Do not dictate sensitive information.
+Recognition availability depends on the browser, language, network, and browser policies;
+feature detection alone does not guarantee that its service is available. If the required APIs
+are missing, the example keeps normal text input available without voice controls.
+
+Permission denial disables only the microphone button, leaving typing and sending available.
+The accessible error explains how to allow microphone or speech recognition access in browser
+settings. After changing those settings, use **Retry voice input** to re-enable the microphone
+control. This explicit recovery also works without Permissions API support. Network, no-speech,
+and other transient startup failures do not disable future attempts.
+
+The example uses the browser language and requests interim results for one utterance at a time.
+Recognition can end automatically after a pause; the exact stopping behavior is browser-dependent.
+The draft stays read-only and sending is blocked during startup, recognition, and finalization.
+Confirm enters the finishing state and requests final results before unlocking the draft.
+The waveform freezes, Confirm is disabled, and Cancel remains available. Late speech and transcript
+events do not return the input to recording. Cancel restores the previous draft immediately.
+Neither operation sends the message. Recognition errors retain visible text with an accessible
+warning that it may be incomplete. Permission denial before any results leaves the original draft
+unchanged. If confirmation times out, the current text is retained for review.
+
+Live text stays in the composer, with dictation actions on the right. It does not switch to a
+separate voice-only prompt layout. Focus follows the dictation controls and returns to the draft
+when dictation ends, without stealing focus from other controls.
+
+Speech recognition does not expose audio levels. The example separately acquires a microphone
+stream and measures its amplitude with an `AnalyserNode`, without playing or storing the audio.
+It releases that stream and its audio context on confirmation, cancellation, completion, errors,
+and destruction, and stops streams returned after a cancelled permission request.
+The simulated example above remains available without microphone access or a recognition service.
+
 <si-docs-api component="SiChatInputComponent"></si-docs-api>
 
 <si-docs-api directive="SiSpeechInputDirective"></si-docs-api>
