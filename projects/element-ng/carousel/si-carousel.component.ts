@@ -44,9 +44,9 @@ const MAX_PAGES = 5;
 const SCROLL_SMOOTHING_TAU = 100;
 
 /**
- * Assumed duration (in milliseconds) of the first animation frame, used before two timestamps are
- * available to measure a real delta. 16ms corresponds to one frame at ~60Hz, a safe default that
- * keeps the first easing step the same size as a normal frame.
+ * Assumed duration (in milliseconds) of an animation frame whose delta cannot be measured: the
+ * first frame, or a frame repeating the previous timestamp. 16ms corresponds to one frame at ~60Hz,
+ * a safe default that keeps the easing step the same size as a normal frame.
  */
 const FIRST_FRAME_DELTA = 16;
 
@@ -461,7 +461,9 @@ export class SiCarouselComponent {
 
   private animationFrame(now: number): void {
     const viewport = this.viewport().nativeElement;
-    const dt = this.lastFrameTime ? now - this.lastFrameTime : FIRST_FRAME_DELTA;
+    // Browsers can repeat a frame timestamp; a zero delta would be mistaken for a stall.
+    const elapsed = now - this.lastFrameTime;
+    const dt = this.lastFrameTime && elapsed > 0 ? elapsed : FIRST_FRAME_DELTA;
     this.lastFrameTime = now;
     const current = viewport.scrollLeft;
     // Clamp the target to the scrollable range. A wrapped slide can be placed right at the track
