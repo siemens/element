@@ -120,13 +120,14 @@
 }
 <ng-template #presets>
   @if (presetSearch()) {
-    <si-search-bar
-      colorVariant="base-0"
-      class="mx-6 mt-5 mb-6"
-      [placeholder]="searchLabel() | translate"
-      [showIcon]="true"
-      [(ngModel)]="presetFilter"
-    />
+    <si-search-bar colorVariant="base-0" class="mx-6 mt-5 mb-6" [showIcon]="true">
+      <input
+        siSearchBarInput
+        [formField]="presetFilterField"
+        [placeholder]="searchLabel() | translate"
+        [attr.aria-label]="searchLabel() | translate"
+      />
+    </si-search-bar>
   }
   <ul
     class="overflow-auto"
@@ -136,7 +137,7 @@
     (cdkListboxValueChange)="selectPresetItem($event.value[0])"
   >
     @for (item of filteredPresetList(); track $index) {
-      @if (item.label | translate | presetMatchFilter: presetFilter()) {
+      @if (item.label | translate | presetMatchFilter: debouncedPresetFilter()) {
         <li class="preset-item focus-inside px-8 py-5" [cdkOption]="item.label">
           {{ item.label | translate }}
         </li>

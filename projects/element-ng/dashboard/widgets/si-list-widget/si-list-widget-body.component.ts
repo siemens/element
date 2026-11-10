@@ -12,16 +12,16 @@ import {
   OnChanges
 } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { FormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
 import { Link } from '@siemens/element-ng/link';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import {
   injectSiTranslateService,
   SiTranslatePipe,
   t,
   TranslatableString
 } from '@siemens/element-translate-ng/translate';
-import { map, of, switchMap } from 'rxjs';
+import { debounceTime, map, of, switchMap } from 'rxjs';
 
 import { SiWidgetBaseDirective } from '../si-widget-base.directive';
 import { SiListWidgetItem, SiListWidgetItemComponent } from './si-list-widget-item.component';
@@ -35,7 +35,13 @@ export type SortOrder = 'ASC' | 'DSC';
  */
 @Component({
   selector: 'si-list-widget-body',
-  imports: [SiListWidgetItemComponent, SiSearchBarComponent, SiTranslatePipe, FormsModule],
+  imports: [
+    SiListWidgetItemComponent,
+    SiSearchBarComponent,
+    SiSearchBarInputDirective,
+    FormField,
+    SiTranslatePipe
+  ],
   templateUrl: './si-list-widget-body.component.html',
   styleUrl: './si-list-widget-body.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -177,7 +183,7 @@ export class SiListWidgetBodyComponent
   protected readonly filteredListWidgetItems = computed(() => {
     const value = this.translatedItems();
     const sort = this.sort();
-    const searchText = this.searchText();
+    const searchText = this.debouncedSearchText();
     let filteredListWidgetItems: SiListWidgetItem[] | undefined;
     if (searchText.length > 0) {
       filteredListWidgetItems = value?.filter((item: SiListWidgetItem) =>
@@ -203,4 +209,9 @@ export class SiListWidgetBodyComponent
    * @defaultValue ''
    */
   protected readonly searchText = model('');
+  protected readonly searchField = form(this.searchText);
+  private readonly debouncedSearchText = toSignal(
+    toObservable(this.searchText).pipe(debounceTime(400)),
+    { initialValue: '' }
+  );
 }
