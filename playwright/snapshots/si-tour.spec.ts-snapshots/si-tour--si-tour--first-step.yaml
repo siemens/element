@@ -43,8 +43,8 @@
   - text: Placeholder for the content of the page, using the fixed height layout.
 - text: Status bar Page title Thank you
 - dialog "Status bar":
-  - text: 1 of 7 Status bar
+  - text: ""
   - button "Close"
-  - text: Information about events or actions that requires user attention.
+  - text: Information about events or actions that requires user attention. 1 of 7
   - button "Skip"
   - button "Next"
